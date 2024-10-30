@@ -122,13 +122,6 @@
     attributes:
       gender: male
   - type: Sharp
-  - type: LanguageKnowledge
-    speaks:
-    - GalacticCommon
-    - Mouse
-    understands:
-    - GalacticCommon
-    - Mouse
 
 - type: entity
   id: MobRatKingBuff
@@ -206,14 +199,6 @@
     - map: [ "enum.DamageStateVisualLayers.BaseUnshaded"]
       state: eyes
       shader: unshaded
-  - type: LanguageKnowledge
-    speaks:
-    - Mouse
-    understands:
-    - GalacticCommon
-    - Mouse
-
-
 
   - type: SpriteMovement
     movementLayers:

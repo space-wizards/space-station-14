@@ -4,7 +4,6 @@ using Content.Server.Heretic.Components;
 using Content.Server.Speech.EntitySystems;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
-using Content.Shared.Chat;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
@@ -121,7 +120,7 @@ public sealed partial class MansusGraspSystem : EntitySystem
 
         if (HasComp<StatusEffectsComponent>(target))
         {
-            _chat.TrySendInGameICMessage(args.User, Loc.GetString("heretic-speech-mansusgrasp"), SharedChatSystem.InGameICChatType.Speak, false);
+            _chat.TrySendInGameICMessage(args.User, Loc.GetString("heretic-speech-mansusgrasp"), InGameICChatType.Speak, false);
             _audio.PlayPvs(new SoundPathSpecifier("/Audio/Items/welder.ogg"), target);
             _stun.TryKnockdown(target, TimeSpan.FromSeconds(3f), true);
             _stamina.TakeStaminaDamage(target, 65f);

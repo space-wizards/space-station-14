@@ -217,11 +217,7 @@
     - FootstepSound
     - DoorBumpOpener
     - AnomalyHost
-  - type: LanguageKnowledge # This is here so all with no LanguageSpeaker at least spawn with the default languages.
-    speaks:
-    - GalacticCommon
-    understands:
-    - GalacticCommon
+
 - type: entity
   save: false
   parent:

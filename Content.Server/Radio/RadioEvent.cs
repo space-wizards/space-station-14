@@ -1,24 +1,11 @@
 using Content.Shared.Chat;
-using Content.Shared._EinsteinEngine.Language;
 using Content.Shared.Radio;
 
 namespace Content.Server.Radio;
 
-/// <summary>
-/// <param name="OriginalChatMsg">The message to display when the speaker can understand "language"</param>
-/// <param name="LanguageObfuscatedChatMsg">The message to display when the speaker cannot understand "language"</param>
-/// </summary>
 [ByRefEvent]
-public readonly record struct RadioReceiveEvent(
-    // Einstein-Engines - languages mechanic
-    EntityUid MessageSource,
-    RadioChannelPrototype Channel,
-    ChatMessage OriginalChatMsg,
-    ChatMessage LanguageObfuscatedChatMsg,
-    LanguagePrototype Language,
-    EntityUid RadioSource
+public readonly record struct RadioReceiveEvent(string Message, EntityUid MessageSource, RadioChannelPrototype Channel, EntityUid RadioSource, MsgChatMessage ChatMsg);
 
-);
 /// <summary>
 /// Use this event to cancel sending message per receiver
 /// </summary>

@@ -356,11 +356,6 @@
       - FauxTileAstroSnow
       - OreBagOfHolding
       - DeviceQuantumSpinInverter
-      - BubblishTranslator
-      - DraconicTranslator
-      - SolCommonTranslator
-      - RootSpeakTranslator
-      - XenoTranslator
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - BoxBeanbag

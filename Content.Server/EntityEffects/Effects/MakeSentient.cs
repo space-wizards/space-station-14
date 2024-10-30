@@ -1,13 +1,7 @@
-using System.Linq;
-using Content.Server._EinsteinEngine.Language;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Speech.Components;
 using Content.Shared.EntityEffects;
-using Content.Shared._EinsteinEngine.Language;
-using Content.Shared._EinsteinEngine.Language.Components;
-using Content.Shared._EinsteinEngine.Language.Systems;
 using Content.Shared.Mind.Components;
-using Content.Shared._EinsteinEngine.Language.Events;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.EntityEffects.Effects;
@@ -27,18 +21,6 @@ public sealed partial class MakeSentient : EntityEffect
         // We call this before the mind check to allow things like player-controlled mice to be able to benefit from the effect
         entityManager.RemoveComponent<ReplacementAccentComponent>(uid);
         entityManager.RemoveComponent<MonkeyAccentComponent>(uid);
-
-        var speaker = entityManager.EnsureComponent<LanguageSpeakerComponent>(uid);
-        var knowledge = entityManager.EnsureComponent<LanguageKnowledgeComponent>(uid);
-        var fallback = SharedLanguageSystem.FallbackLanguagePrototype;
-
-        if (!knowledge.UnderstoodLanguages.Contains(fallback))
-            knowledge.UnderstoodLanguages.Add(fallback);
-
-        if (!knowledge.SpokenLanguages.Contains(fallback))
-            knowledge.SpokenLanguages.Add(fallback);
-
-        IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<LanguageSystem>().UpdateEntityLanguages(uid);
 
         // Stops from adding a ghost role to things like people who already have a mind
         if (entityManager.TryGetComponent<MindContainerComponent>(uid, out var mindContainer) && mindContainer.HasMind)

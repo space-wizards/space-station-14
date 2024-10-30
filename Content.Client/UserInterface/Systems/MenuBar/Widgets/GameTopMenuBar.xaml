@@ -74,16 +74,6 @@
         AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
         />
     <ui:MenuButton
-        Name="LanguageButton"
-        Access="Internal"
-        Icon="{xe:Tex '/Textures/_EinsteinEngine/Interface/language.png'}"
-        BoundKey = "{x:Static is:ContentKeyFunctions.OpenLanguageMenu}"
-        ToolTip="Open the Language Menu"
-        MinSize="42 64"
-        HorizontalExpand="True"
-        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
-    />
-    <ui:MenuButton
         Name="AdminButton"
         Access="Internal"
         Icon="{xe:Tex '/Textures/Interface/gavel.svg.192dpi.png'}"

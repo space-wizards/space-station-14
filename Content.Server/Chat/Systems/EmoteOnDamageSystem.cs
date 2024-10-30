@@ -1,5 +1,3 @@
-using Content.Shared.Chat;
-
 namespace Content.Server.Chat.Systems;
 
 using Content.Shared.Chat.Prototypes;
@@ -40,7 +38,7 @@ public sealed class EmoteOnDamageSystem : EntitySystem
         var emote = _random.Pick(emoteOnDamage.Emotes);
         if (emoteOnDamage.WithChat)
         {
-            _chatSystem.TryEmoteWithChat(uid, emote, emoteOnDamage.HiddenFromChatWindow ? SharedChatSystem.ChatTransmitRange.HideChat : SharedChatSystem.ChatTransmitRange.Normal);
+            _chatSystem.TryEmoteWithChat(uid, emote, emoteOnDamage.HiddenFromChatWindow ? ChatTransmitRange.HideChat : ChatTransmitRange.Normal);
         }
         else
         {

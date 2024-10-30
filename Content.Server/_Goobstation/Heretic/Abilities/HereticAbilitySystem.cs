@@ -28,7 +28,6 @@ using Robust.Shared.Map;
 using Content.Shared.StatusEffect;
 using Content.Shared.Throwing;
 using Content.Server.Station.Systems;
-using Content.Shared.Chat;
 using Content.Shared.Localizations;
 using Robust.Shared.Audio;
 using Content.Shared.Mobs.Components;
@@ -128,7 +127,7 @@ public sealed partial class HereticAbilitySystem : EntitySystem
 
         // shout the spell out
         if (!string.IsNullOrWhiteSpace(actionComp.MessageLoc))
-            _chat.TrySendInGameICMessage(ent, Loc.GetString(actionComp.MessageLoc!), SharedChatSystem.InGameICChatType.Speak, false);
+            _chat.TrySendInGameICMessage(ent, Loc.GetString(actionComp.MessageLoc!), InGameICChatType.Speak, false);
 
         return true;
     }

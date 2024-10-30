@@ -88,13 +88,6 @@
   - type: Speech
     speechVerb: Plant
     allowedEmotes: ['Chirp']
-  - type: LanguageKnowledge
-    speaks:
-    - GalacticCommon
-    - RootSpeak
-    understands:
-    - GalacticCommon
-    - RootSpeak
   - type: Vocal
     sounds:
       Male: UnisexDiona

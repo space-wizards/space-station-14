@@ -6,7 +6,6 @@ using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
 using Content.Server.Popups;
 using Content.Shared.Atmos;
-using Content.Shared.Chat;
 using Content.Shared.Dataset;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
@@ -125,7 +124,7 @@ namespace Content.Server.RatKing
                 return;
 
             var msg = Random.Pick(datasetPrototype.Values);
-            _chat.TrySendInGameICMessage(uid, msg, SharedChatSystem.InGameICChatType.Speak, true);
+            _chat.TrySendInGameICMessage(uid, msg, InGameICChatType.Speak, true);
         }
     }
 }

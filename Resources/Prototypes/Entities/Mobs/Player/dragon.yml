@@ -152,14 +152,7 @@
     - DoorBumpOpener
   - type: Puller
     needsHands: false
-  - type: LanguageKnowledge
-    speaks:
-    - GalacticCommon
-    - Draconic
-    understands:
-    - GalacticCommon
-    - Draconic
-
+    
 - type: entity
   parent: BaseMobDragon
   id: MobDragon

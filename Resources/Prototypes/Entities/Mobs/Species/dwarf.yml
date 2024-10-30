@@ -48,13 +48,6 @@
       Male: UnisexDwarf
       Female: FemaleDwarf
       Unsexed: UnisexDwarf
-  - type: LanguageKnowledge
-    speaks:
-    - GalacticCommon
-    - SolCommon
-    understands:
-    - GalacticCommon
-    - SolCommon
   - type: ReplacementAccent
     accent: dwarf
   - type: Speech
