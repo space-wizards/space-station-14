@@ -61,7 +61,7 @@ public sealed partial class EmotePrototype : IPrototype
     [DataField]
     public List<string> ChatMessages = new();
 
-    /// <summary>
+    /// <summary>customEmote
     ///     Trigger words for emote. Case independent.
     ///     When typed into players chat they will activate emote event.
     ///     All words should be unique across all emote prototypes.
@@ -81,5 +81,6 @@ public enum EmoteCategory : byte
     Invalid = 0,
     Vocal = 1 << 0,
     Hands = 1 << 1,
+    GlobalCustom = 1 << 7,
     General = byte.MaxValue
 }

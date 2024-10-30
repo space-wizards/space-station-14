@@ -101,6 +101,35 @@ public partial class ChatSystem
     }
 
     /// <summary>
+    ///     Makes selected entity to emote using a custom emote <see cref="EmotePrototype"/> and sends message to chat.
+    /// </summary>
+    /// <param name="source">The entity that is speaking</param>
+    /// <param name="emote">The emote prototype. Should has valid <see cref="EmotePrototype.ChatMessages"/></param>
+    /// <param name="hideLog">Whether or not this message should appear in the adminlog window</param>
+    /// <param name="hideChat">Whether or not this message should appear in the chat window</param>
+    /// <param name="range">Conceptual range of transmission, if it shows in the chat window, if it shows to far-away ghosts or ghosts at all...</param>
+    /// <param name="nameOverride">The name to use for the speaking entity. Usually this should just be modified via <see cref="TransformSpeakerNameEvent"/>. If this is set, the event will not get raised.</param>
+    public void TryCustomEmote(
+        EntityUid source,
+        EmotePrototype emote,
+        string? action,
+        ChatTransmitRange range = ChatTransmitRange.Normal,
+        bool hideLog = false,
+        string? nameOverride = null,
+        bool ignoreActionBlocker = false
+    )
+    {
+        if (!AllowedToUseEmote(source, emote))
+            return;
+
+        // check if proto has valid message for chat
+        if (!string.IsNullOrEmpty(action))
+        {
+            SendEntityEmote(source, action, range, nameOverride, hideLog: hideLog, checkEmote: true, ignoreActionBlocker: ignoreActionBlocker);
+        }
+    }
+
+    /// <summary>
     ///     Makes selected entity to emote using <see cref="EmotePrototype"/> without sending any messages to chat.
     /// </summary>
     public void TryEmoteWithoutChat(EntityUid uid, string emoteId, bool ignoreActionBlocker = false)

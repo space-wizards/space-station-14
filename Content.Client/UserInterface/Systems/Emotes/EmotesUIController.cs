@@ -118,8 +118,8 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
         _menu = null;
     }
 
-    private void OnPlayEmote(ProtoId<EmotePrototype> protoId)
+    private void OnPlayEmote(ProtoId<EmotePrototype> protoId, string? customEmote)
     {
-        _entityManager.RaisePredictiveEvent(new PlayEmoteMessage(protoId));
+        _entityManager.RaisePredictiveEvent(new PlayEmoteMessage(protoId, customEmote));
     }
 }
