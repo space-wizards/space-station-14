@@ -24,7 +24,7 @@
     stealGroup: NukeDisk
 
 - type: entity
-  name: nuclear authentication disk
+  name: Artifact Bypass Code
   parent: BaseItem
   id: NukeDiskFake
   suffix: Fake
