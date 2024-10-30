@@ -1,2 +1,2 @@
-nuke-ops-no-more-threat-announcement-shuttle-call = Based on our scans from our long-range sensors, the nuclear threat is now eliminated. We will call emergency shuttle that will arrive shortly. ETA: {$time} {$units}. You can recall the shuttle to extend the shift.
-nuke-ops-no-more-threat-announcement = Based on our scans from our long-range sensors, the nuclear threat is now eliminated. Shuttle is already called.
+nuke-ops-no-more-threat-announcement-shuttle-call = Internal scanners indicate all operatives have been eliminated. A SolGov humanitarian vessel is en-route. ETA: {$time} {$units}. You can broadcast an all-clear to prevent their arrival.
+nuke-ops-no-more-threat-announcement = Internal scanners indicate all operatives have been eliminated. Humanitarian vessel already en-route.
