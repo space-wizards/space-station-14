@@ -14,7 +14,7 @@
             !type:NanotrasenNameGenerator
             prefixCreator: '-IMP-DC'
         - type: StationEmergencyShuttle
-          emergencyShuttlePath: /Maps/Shuttles/emergency_courser.yml
+          emergencyShuttlePath: /Maps/_Impstation/Shuttles/emergency_courser_hummingbird.yml
         - type: StationJobs
           availableJobs:
             #command
@@ -58,9 +58,9 @@
             SalvageSpecialist: [ 3, 3 ]
             #civilian
             Passenger: [ -1, -1 ]
-            Clown: [ 1, 1 ]
-            Mime: [ 1, 1 ]
-            Musician: [ 1, 1 ]
+            Clown: [ 1, 2 ]
+            Mime: [ 1, 2 ]
+            Musician: [ 1, 2 ]
             Boxer: [ 2, 2 ]
             Reporter: [ 2, 2 ]
             # silicon

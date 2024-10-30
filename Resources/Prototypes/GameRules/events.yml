@@ -31,6 +31,7 @@
     - id: RevenantSpawn
     - id: SleeperAgents
     - id: ZombieOutbreak
+    - id: LoneOpsSpawn
     - id: ChangelingAwakening
 
 - type: entityTable
@@ -43,6 +44,7 @@
     - id: NinjaSpawn
     - id: RevenantSpawn
     - id: ZombieOutbreak
+    - id: LoneOpsSpawn
     - id: ChangelingAwakening
 
 - type: entity
@@ -368,7 +370,7 @@
     duration: 1
   - type: RuleGrids
   - type: LoadMapRule
-    preloadedGrid: ShuttleStriker
+    mapPath: /Maps/Shuttles/ShuttleEvent/striker.yml
   - type: NukeopsRule
     roundEndBehavior: Nothing
   - type: AntagSelection

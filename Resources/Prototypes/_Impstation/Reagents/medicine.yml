@@ -1,7 +1,7 @@
-- type: reagent # not sure why these are a medicine?
+- type: reagent
   id: Subjuzine
-  name: reagent-name-subjuzine
-  desc: reagent-desc-subjuzine
+  name: reagent-name-inert-subjuzine
+  desc: reagent-desc-inert-subjuzine
   group: Medicine
   physicalDesc: reagent-physical-desc-enigmatic
   flavor: magical
@@ -12,8 +12,6 @@
       - !type:MakeSentient
         conditions:
         - !type:ReagentThreshold
-          min: 5
-
 
 - type: reagent
   id: ActivatedSubjuzine
@@ -30,7 +28,7 @@
         conditions:
         - !type:ReagentThreshold
           min: 5
-
+          
 - type: reagent
   id: Caramexinin
   name: reagent-name-caramexinin
@@ -50,3 +48,4 @@
         damage:
           types:
             Poison: -0.2
+

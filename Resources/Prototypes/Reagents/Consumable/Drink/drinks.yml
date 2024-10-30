@@ -447,6 +447,19 @@
       effects:
       - !type:SatiateThirst
         factor: 4
+    Gas: # imp special.
+      effects:
+      - !type:Oxygenate
+        conditions:
+        - !type:OrganType
+          type: Decapoid
+      - !type:ModifyLungGas
+        conditions:
+        - !type:OrganType
+          type: Decapoid
+        ratios:
+          Ammonia: 1.0
+          WaterVapor: -1.0 # end imp special.
 
 - type: reagent
   id: Ice
