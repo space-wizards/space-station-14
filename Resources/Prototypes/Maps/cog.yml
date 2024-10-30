@@ -28,7 +28,7 @@
             Reporter: [ 2, 2 ]
             Librarian: [ 1, 1 ]
             ServiceWorker: [ 3, 3 ]
-            Zookeeper: [ 1, 1 ] 
+            Zookeeper: [ 1, 1 ]
             #engineering
             ChiefEngineer: [ 1, 1 ]
             AtmosphericTechnician: [ 3, 3 ]
@@ -40,7 +40,6 @@
             MedicalDoctor: [ 4, 4 ]
             MedicalIntern: [ 3, 3 ]
             Psychologist: [ 1, 1 ]
-            Paramedic: [ 1, 1 ]
             #science
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 5, 5 ]
