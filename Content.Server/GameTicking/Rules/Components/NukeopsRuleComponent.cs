@@ -94,6 +94,18 @@ public sealed partial class NukeopsRuleComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier GreetSoundNotification = new SoundPathSpecifier("/Audio/Ambience/Antag/nukeops_start.ogg");
+
+    /// <summary>
+    ///     Delay between the nuke exploding and the round ending, to give time for the nuke to potentionally kill the nukies and downgrade their win.
+    /// </summary>
+    [DataField]
+    public TimeSpan NukeExplodedRoundEndDelay = TimeSpan.FromSeconds(10);
+
+    /// <summary>
+    ///     Time when the nuke exploded, or null while it has not. Used to delay round end.
+    /// </summary>
+    [DataField]
+    public TimeSpan? NukeExplodedTime;
 }
 
 public enum WinType : byte
