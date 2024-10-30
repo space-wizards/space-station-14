@@ -12,3 +12,44 @@
   license: "CC-BY-3.0"
   copyright: "https://github.com/tgstation/tgstation/commit/95731342b97167d7883ff091d389f79c36442ee6"
   source: "https://github.com/tgstation/tgstation/blob/ea4870f6d1c0d6b553bb0540d3f4d6efd6f4a3a3/sound/ai/intern/alerts/9.ogg"
+
+##All sound below are for weaselstation
+- files: ["VOXbangindonk.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "VGStation"
+  source: "https://gitlab.com/vgstation/vgstation"
+
+- files: ["bangindonk.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "TGStation"
+  source: "https://github.com/tgstation/tgstation/tree/master/config/reboot_themes"
+
+- files: ["gondolabridge.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "VGStation"
+  source: "https://gitlab.com/vgstation/vgstation"
+
+- files: ["sisyphus_sisyphus.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "VGStation"
+  source: "https://gitlab.com/vgstation/vgstation"
+
+- files: ["yeehaw.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "TGStation"
+  source: "https://github.com/tgstation/tgstation/tree/master/config/reboot_themes"
+
+- files: ["Engrev Cuboos.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "https://soundcloud.com/cuboos"
+  source: "https://soundcloud.com/cuboos/engrev"
+
+- files: ["Beepsky Cuboos.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "https://soundcloud.com/cuboos"
+  source: "https://soundcloud.com/cuboos/beepsky"
+
+- files: ["Wiz Cuboos.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "https://soundcloud.com/cuboos"
+  source: "https://soundcloud.com/cuboos/wiz"

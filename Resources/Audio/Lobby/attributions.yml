@@ -76,10 +76,25 @@
 
 - files: ["LISAonthemoon.ogg"]
   license: "CC-BY-NC-SA-3.0"
-  copyright: "LISA - TinTin on the moon by Admiral Hippie"
+  copyright: "LISAonthemoon by Admiral Hippie"
   source: "https://www.youtube.com/watch?v=bjVSd62LdEA"
 
 - files: ["thewizard.ogg"]
   license: "Custom"
   copyright: "The Wizard by Chris Remo is used with special permission from the author, under the condition that the project remains non-commercial and open source. The author also requested that a link to his bandcamp be included: https://chrisremo.bandcamp.com/"
   source: "https://idlethumbs.bandcamp.com/track/the-wizard"
+
+- files: ["moonbaseoddity.ogg"]
+  license: "Custom"
+  copyright: "Moonbase Oddity by Moonbase Alpha"
+  source: "https://gitlab.com/vgstation/vgstation/-/tree/Bleeding-Edge/sound/music/login"
+
+- files: ["TrackingDevice.ogg"]
+  license: "Custom"
+  copyright: "Tracking Device - Valve by Kelly Bailey"
+  source: "https://gitlab.com/vgstation/vgstation/-/tree/Bleeding-Edge/sound/music/login"
+
+- files: ["Tango.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Tango with bloodshed by Bolgarich"
+  source: "https://github.com/RMC-14/RMC-14/tree/master/Resources/Audio/_RMC14/Hijack"
