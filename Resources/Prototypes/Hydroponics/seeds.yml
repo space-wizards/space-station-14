@@ -519,7 +519,6 @@
   waterConsumption: 0.60
   nutrientConsumption: 0.40
   idealHeat: 298
-  splatPrototype: PuddleSplatter
   chemicals:
     Nutriment:
       Min: 1
@@ -552,7 +551,6 @@
   waterConsumption: 0.60
   nutrientConsumption: 0.70
   idealHeat: 298
-  splatPrototype: PuddleSplatter
   chemicals:
     Nutriment:
       Min: 1
@@ -587,7 +585,6 @@
   waterConsumption: 0.60
   nutrientConsumption: 0.70
   idealHeat: 298
-  splatPrototype: PuddleSplatter
   chemicals:
     Blood:
       Min: 1
@@ -617,7 +614,6 @@
   nutrientConsumption: 0.70
   idealHeat: 298
   growthStages: 2
-  splatPrototype: PuddleSplatter
   chemicals:
     Blood:
       Min: 1

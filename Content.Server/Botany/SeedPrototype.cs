@@ -217,11 +217,6 @@ public partial class SeedData
     /// </summary>
     [DataField] public bool TurnIntoKudzu;
 
-    /// <summary>
-    /// Only set on tomatoes and variants. Unused, their entry isn't even defined. Removing in the next commit.
-    /// </summary>
-    [DataField] public string? SplatPrototype { get; set; }
-
     #endregion
 
     /// <summary>
@@ -283,7 +278,6 @@ public partial class SeedData
             PlantIconState = PlantIconState,
             CanScream = CanScream,
             TurnIntoKudzu = TurnIntoKudzu,
-            SplatPrototype = SplatPrototype,
             Mutations = new List<RandomPlantMutation>(),
 
             // Newly cloned seed is unique. No need to unnecessarily clone if repeatedly modified.
@@ -343,7 +337,6 @@ public partial class SeedData
             PlantIconState = other.PlantIconState,
             CanScream = CanScream,
             TurnIntoKudzu = TurnIntoKudzu,
-            SplatPrototype = other.SplatPrototype,
 
             // Newly cloned seed is unique. No need to unnecessarily clone if repeatedly modified.
             Unique = true,
