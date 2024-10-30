@@ -32,7 +32,7 @@ public sealed partial class CartridgeLoaderComponent : Component
     /// <summary>
     /// The maximum amount of programs that can be installed on the cartridge loader entity
     /// </summary>
-    [DataField("diskSpace")]
+    [DataField]
     public int DiskSpace = 8;
 
     /// <summary>
