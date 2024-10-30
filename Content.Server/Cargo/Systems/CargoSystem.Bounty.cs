@@ -420,6 +420,13 @@ public sealed partial class CargoSystem
             return false;
 
         _nameIdentifier.GenerateUniqueName(uid, BountyNameIdentifierGroup, out var randomVal);
+        var newBounty = new CargoBountyData(bounty, randomVal);
+        // This bounty id already exists! Probably because NameIdentifierSystem ran out of ids.
+        if (component.Bounties.Any(b => b.Id == newBounty.Id))
+        {
+            Log.Error("Failed to add bounty {ID} because another one with the same ID already existed!", newBounty.Id);
+            return false;
+        }
         component.Bounties.Add(new CargoBountyData(bounty, randomVal));
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"Added bounty \"{bounty.ID}\" (id:{component.TotalBounties}) to station {ToPrettyString(uid)}");
         component.TotalBounties++;
