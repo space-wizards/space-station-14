@@ -242,7 +242,7 @@
     footstepSoundCollection:
       collection: FootstepSpurs
       params:
-        variation: 0.09
+        variation: 0.09 #making a note so this is in the commit if we want to change this later - ruddygreat
 
 - type: entity
   parent: ClothingShoesBootsCowboyBrown
