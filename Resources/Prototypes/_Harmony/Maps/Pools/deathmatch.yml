@@ -1,0 +1,4 @@
+- type: gameMapPool
+  id: DeathMatchPROMODMapPool
+  maps:
+  - dm01-entryway

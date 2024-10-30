@@ -12,3 +12,16 @@
     - MeteorSwarmScheduler
     - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
+
+- type: gamePreset
+  id: DeathmatchPROMOD
+  alias:
+    - deathmatchpromod
+    - dmpm
+  name: death-match-promod-title
+  description: death-match-promod-description
+  maxPlayers: 15
+  showInVote: true
+  supportedMaps: DeathMatchPROMODMapPool
+  rules:
+    - DeathMatchPROMOD

@@ -63,7 +63,8 @@ namespace Content.IntegrationTests.Tests
             "Oasis",
             "Cog",
             "Xeno", // Xeno map playtest
-            "Barratry" // Update of old map
+            "Barratry", // Update of old map
+            "dm01-entryway" // deathmatch PROMOD map
         };
 
         /// <summary>
