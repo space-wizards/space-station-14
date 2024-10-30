@@ -4,6 +4,6 @@
     sprite: _Weaselstation/Objects/Consumable/Drinks/weh_max.rsi
     state: icon
   product: WeaselstationSodaSupply
-  cost: 5000
+  cost: 850
   category: cargoproduct-category-name-food
   group: market
