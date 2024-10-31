@@ -1,17 +1,20 @@
 - type: soundCollection
   id: LobbyMusic
   files:
-    - /Audio/Lobby/thunderdome.ogg
-    - /Audio/Lobby/absconditus.ogg
-    - /Audio/Lobby/space_asshole.ogg
-    - /Audio/Lobby/endless_space.ogg
-    - /Audio/Lobby/singuloose.ogg
-    - /Audio/Lobby/comet_haley.ogg
-    - /Audio/Lobby/title2.ogg
-    - /Audio/Lobby/title3.ogg
-    - /Audio/Lobby/mod.flip-flap.ogg
-    - /Audio/Lobby/Spac_Stac.ogg
-    - /Audio/Lobby/pwmur.ogg
-    - /Audio/Lobby/lasers_rip_apart_the_bulkhead.ogg
-    - /Audio/Lobby/every_light_is_blinking_at_once.ogg
-    - /Audio/Lobby/atomicamnesiammx.ogg
+    # - /Audio/Lobby/thunderdome.ogg HALLOWEEN!!!
+    # - /Audio/Lobby/absconditus.ogg HALLOWEEN!!!
+    # - /Audio/Lobby/space_asshole.ogg HALLOWEEN!!!
+    # - /Audio/Lobby/endless_space.ogg HALLOWEEN!!!
+    # - /Audio/Lobby/singuloose.ogg HALLOWEEN!!!
+    # - /Audio/Lobby/comet_haley.ogg HALLOWEEN!!!
+    # - /Audio/Lobby/title2.ogg HALLOWEEN!!!
+    # - /Audio/Lobby/title3.ogg HALLOWEEN!!!
+    # - /Audio/Lobby/mod.flip-flap.ogg HALLOWEEN!!!
+    # - /Audio/Lobby/Spac_Stac.ogg HALLOWEEN!!!
+    # - /Audio/Lobby/pwmur.ogg HALLOWEEN!!!
+    # - /Audio/Lobby/lasers_rip_apart_the_bulkhead.ogg HALLOWEEN!!!
+    # - /Audio/Lobby/every_light_is_blinking_at_once.ogg HALLOWEEN!!!
+    # - /Audio/Lobby/atomicamnesiammx.ogg HALLOWEEN!!!
+    - /Audio/Lobby/Halloween/spook.ogg
+    - /Audio/Lobby/Halloween/spook2.ogg
+    - /Audio/Lobby/Halloween/spook4.ogg

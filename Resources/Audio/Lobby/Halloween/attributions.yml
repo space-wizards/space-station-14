@@ -1,0 +1,14 @@
+﻿- files: ["spook.ogg"]
+  license: "CC BY 4.0"
+  copyright: "Spook by Peri Tune."
+  source: "https://peritune.com/blog/2015/09/30/spook/"
+
+- files: ["spook4.ogg"]
+  license: "CC BY 4.0"
+  copyright: "Spook4 by Peri Tune."
+  source: "https://peritune.com/blog/2018/09/28/spook4/"
+
+- files: ["spook2.ogg"]
+  license: "CC BY 4.0"
+  copyright: "Spook2 by Peri Tune. Convetred from MP3 to OGG"
+  source: "https://peritune.com/blog/2015/10/19/spook2/"
