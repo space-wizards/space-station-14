@@ -1,7 +1,7 @@
 # When adding new drinks also add to random spawner located in Resources\Prototypes\Entities\Markers\Spawners\Random\Food_Drinks\drinks_glass.yml
 # ^^^ dat shit was in the original yml, do it or not, i'm not your boss
 # but you probably should as long as it's not as dangerous as horsepussy
-# alchohol
+# alcohol
 - type: entity
   parent: DrinkGlass
   id: DrinkTheeHorsePussyGlass
