@@ -57,8 +57,7 @@
         ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
         whitelist:
           tags:
-            - PowerCell
-            - PowerCellSmall
+            - MagCell
   - type: Appearance
   - type: StaticPrice
     price: 500
@@ -496,9 +495,6 @@
       fireRate: 3
       soundGunshot:
         path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
-    - type: ProjectileBatteryAmmoProvider
-      proto: NtBolt
-      fireCost: 120
 
 - type: entity
   name: NT-331 energy carbine
