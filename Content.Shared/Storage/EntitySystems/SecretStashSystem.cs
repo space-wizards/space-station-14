@@ -14,6 +14,8 @@ using Content.Shared.Verbs;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Tools.EntitySystems;
 using Content.Shared.Whitelist;
+using Content.Shared.Materials;
+using Robust.Shared.Map;
 
 namespace Content.Shared.Storage.EntitySystems;
 
@@ -35,6 +37,7 @@ public sealed class SecretStashSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<SecretStashComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<SecretStashComponent, DestructionEventArgs>(OnDestroyed);
+        SubscribeLocalEvent<SecretStashComponent, GotReclaimedEvent>(OnReclaimed);
         SubscribeLocalEvent<SecretStashComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(ToolOpenableSystem) });
         SubscribeLocalEvent<SecretStashComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<SecretStashComponent, GetVerbsEvent<InteractionVerb>>(OnGetVerb);
@@ -47,12 +50,12 @@ public sealed class SecretStashSystem : EntitySystem
 
     private void OnDestroyed(Entity<SecretStashComponent> entity, ref DestructionEventArgs args)
     {
-        var storedInside = _containerSystem.EmptyContainer(entity.Comp.ItemContainer);
-        if (storedInside != null && storedInside.Count >= 1)
-        {
-            var popup = Loc.GetString("comp-secret-stash-on-destroyed-popup", ("stashname", GetStashName(entity)));
-            _popupSystem.PopupEntity(popup, storedInside[0], PopupType.MediumCaution);
-        }
+        DropContentsAndAlert(entity);
+    }
+
+    private void OnReclaimed(Entity<SecretStashComponent> entity, ref GotReclaimedEvent args)
+    {
+        DropContentsAndAlert(entity, args.ReclaimerCoordinates);
     }
 
     private void OnInteractUsing(Entity<SecretStashComponent> entity, ref InteractUsingEvent args)
@@ -209,6 +212,19 @@ public sealed class SecretStashSystem : EntitySystem
     private bool HasItemInside(Entity<SecretStashComponent> entity)
     {
         return entity.Comp.ItemContainer.ContainedEntity != null;
+    }
+
+    /// <summary>
+    ///     Drop the item stored in the stash and alert all nearby players with a popup.
+    /// </summary>
+    private void DropContentsAndAlert(Entity<SecretStashComponent> entity, EntityCoordinates? cords = null)
+    {
+        var storedInside = _containerSystem.EmptyContainer(entity.Comp.ItemContainer, true, cords);
+        if (storedInside != null && storedInside.Count >= 1)
+        {
+            var popup = Loc.GetString("comp-secret-stash-on-destroyed-popup", ("stashname", GetStashName(entity)));
+            _popupSystem.PopupPredicted(popup, storedInside[0], null, PopupType.MediumCaution);
+        }
     }
 
     #endregion
