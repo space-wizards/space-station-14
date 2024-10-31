@@ -1478,6 +1478,12 @@
   id: WeaponShotgunKammerer
 
 - type: Tag
+  id: WeaponSurvivalRifleUpgradeSMGKit
+
+- type: Tag
+  id: WeaponSurvivalRifleUpgradeRifleKit
+
+- type: Tag
   id: WeldingMask
 
 - type: Tag
