@@ -191,7 +191,7 @@
     unlitRunningState: unlit-building
     staticPacks:
     - ChemistryStatic
-    - SurgeryStatic
+    #- SurgeryStatic # Disabled until surgery matters
     - ScienceToolsStatic
     dynamicPacks:
     - AdvancedTools
@@ -258,7 +258,6 @@
     dynamicPacks:
     - EngineeringBoards
     - CargoBoards
-    - ChemistryBoards
     - MedicalBoards
     - ServiceBoards
     - ScienceBoards
