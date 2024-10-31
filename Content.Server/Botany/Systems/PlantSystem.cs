@@ -172,7 +172,16 @@ public sealed class PlantSystem : EntitySystem
     public bool DoHarvest(EntityUid plantEntity, EntityUid user)
     {
         GetEverything(plantEntity, out var plant, out var seed, out var holder);
-        if (Deleted(user) || plant == null || seed == null || holder == null || plant.Dead || !plant.Harvest)
+        if (Deleted(user) || plant == null || seed == null || holder == null)
+            return false;
+
+        if (plant.Dead)
+        {
+            RemovePlant(plantEntity);
+            return true;
+        }
+
+        if (!plant.Harvest)
             return false;
 
         if (TryComp<HandsComponent>(user, out var hands))
@@ -221,7 +230,6 @@ public sealed class PlantSystem : EntitySystem
 
         if (seed.HarvestRepeat == HarvestType.NoRepeat)
         {
-            holder.PlantUid = null;
             RemovePlant(uid);
         }
         else
