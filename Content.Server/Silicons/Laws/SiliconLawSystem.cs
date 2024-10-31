@@ -28,12 +28,12 @@ namespace Content.Server.Silicons.Laws;
 public sealed class SiliconLawSystem : SharedSiliconLawSystem
 {
     [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
-    [Dependency] private readonly StationSystem _station = default!;
-    [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
-    [Dependency] private readonly SharedStunSystem _stunSystem = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
+    [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly SharedStunSystem _stunSystem = default!;
+    [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -178,10 +178,8 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         if (component.AntagonistRole == null || !_mind.TryGetMind(uid, out var mindId, out _))
             return;
 
-        if (_roles.MindHasRole<SubvertedSiliconRoleComponent>(mindId))
-            return;
-
-        _roles.MindAddRole(mindId, new SubvertedSiliconRoleComponent { PrototypeId = component.AntagonistRole });
+        if (!_roles.MindHasRole<SubvertedSiliconRoleComponent>(mindId))
+            _roles.MindAddRole(mindId, "MindRoleSubvertedSilicon");
     }
 
     public SiliconLawset GetLaws(EntityUid uid, SiliconLawBoundComponent? component = null)
@@ -295,6 +293,8 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         while (query.MoveNext(out var update))
         {
             SetLaws(lawset, update);
+            if (provider.LawUploadSound != null && _mind.TryGetMind(update, out var mindId, out _))
+                _roles.MindPlaySound(mindId, provider.LawUploadSound);
         }
     }
 }
