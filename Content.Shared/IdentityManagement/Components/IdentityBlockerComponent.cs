@@ -21,7 +21,7 @@ public enum IdentityBlockerCoverage
     NONE  = 0,
     MOUTH = 1 << 0,
     EYES  = 1 << 1,
-    OUTER = 1 << 1,
+    OUTER = 1 << 2,
     FULL  = MOUTH | EYES | OUTER
 }
 
