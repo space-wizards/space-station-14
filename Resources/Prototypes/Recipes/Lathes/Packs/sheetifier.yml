@@ -1,0 +1,7 @@
+## Static
+
+- type: latheRecipePack
+  id: Sheetifier
+  recipes:
+  - MaterialSheetMeat
+  - SheetPaper

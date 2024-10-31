@@ -1,0 +1,100 @@
+## Static
+
+- type: latheRecipePack
+  id: TopicalsStatic
+  recipes:
+  - Brutepack
+  - Ointment
+  - Gauze
+
+- type: latheRecipePack
+  id: BasicChemistryStatic
+  recipes:
+
+- type: latheRecipePack
+  parent: BasicChemistryStatic
+  id: ChemistryStatic
+  recipes:
+  - HandLabeler
+  - Beaker
+  - Jug
+  - Syringe
+  - PillCanister
+  - ChemistryEmptyBottle01
+
+- type: latheRecipePack
+  id: SurgeryStatic
+  recipes:
+  - Scalpel
+  - Retractor
+  - Cautery
+  - Drill
+  - Saw
+  - Hemostat
+
+- type: latheRecipePack
+  id: MedicalStatic
+  recipes:
+  - Implanter
+  - Defibrillator
+  - HandheldHealthAnalyzer
+  - DiseaseSwab
+  - BodyBag
+  - RollerBedSpawnFolded
+  - CheapRollerBedSpawnFolded
+  - EmergencyRollerBedSpawnFolded
+  - WhiteCane
+
+- type: latheRecipePack
+  id: MedicalClothingStatic
+  recipes:
+  - ClothingHandsGlovesLatex
+  - ClothingHandsGlovesNitrile
+  - ClothingMaskSterile
+
+# These are all empty
+- type: latheRecipePack
+  id: EmptyMedkitsStatic
+  recipes:
+  - Medkit
+  - MedkitBurn
+  - MedkitToxin
+  - MedkitO2
+  - MedkitBrute
+  - MedkitAdvanced
+  - MedkitRadiation
+  - MedkitCombat
+
+- type: latheRecipePack
+  id: MedicalBoardsStatic
+  recipes:
+  - ElectrolysisUnitMachineCircuitboard
+  - CentrifugeMachineCircuitboard
+  - ChemDispenserMachineCircuitboard
+  - ChemMasterMachineCircuitboard
+  - CondenserMachineCircuitBoard
+  - HotplateMachineCircuitboard
+
+## Dynamic
+
+# Shared with protolathe
+- type: latheRecipePack
+  id: Chemistry
+  recipes:
+  - ChemicalPayload
+  - CryostasisBeaker
+  - SyringeCryostasis
+  - BluespaceBeaker
+  - SyringeBluespace
+
+- type: latheRecipePack
+  id: MedicalBoards
+  recipes:
+  - CloningPodMachineCircuitboard
+  - MedicalScannerMachineCircuitboard
+  - CloningConsoleComputerCircuitboard
+  - StasisBedMachineCircuitboard
+  - CryoPodMachineCircuitboard
+  - VaccinatorMachineCircuitboard
+  - DiagnoserMachineCircuitboard
+  - BiomassReclaimerMachineCircuitboard
