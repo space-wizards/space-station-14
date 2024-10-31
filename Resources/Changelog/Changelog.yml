@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Added tooltips to the agent ID job icons
-    type: Add
-  id: 7069
-  time: '2024-08-09T06:14:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28575
 - author: stalengd
   changes:
   - message: Head bandana no longer blocks food eating.
@@ -3943,3 +3936,11 @@
   id: 7568
   time: '2024-10-31T14:53:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32601
+- author: Psychpsyo
+  changes:
+  - message: Carp plushies can now be placed in mop buckets, along with other rehydratable
+      things like monkey cubes.
+    type: Add
+  id: 7569
+  time: '2024-10-31T18:46:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33079
