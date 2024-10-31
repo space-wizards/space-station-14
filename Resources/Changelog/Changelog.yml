@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Ian321
-  changes:
-  - message: The warden is now an important job.
-    type: Tweak
-  id: 7068
-  time: '2024-08-09T05:45:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30745
 - author: slarticodefast
   changes:
   - message: Added tooltips to the agent ID job icons
@@ -3939,3 +3932,14 @@
   id: 7567
   time: '2024-10-31T14:12:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33078
+- author: BramvanZijp
+  changes:
+  - message: The maximum amount of programs that can be installed on a PDA has been
+      increased from 5 to 8
+    type: Tweak
+  - message: The Detective and Head of Security now get the logprobe program pre-installed
+      on their PDA.
+    type: Tweak
+  id: 7568
+  time: '2024-10-31T14:53:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32601
