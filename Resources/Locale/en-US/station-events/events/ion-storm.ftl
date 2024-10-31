@@ -9,6 +9,7 @@ ion-storm-the-job = THE {$job}
 ion-storm-clowns = CLOWNS
 ion-storm-heads = HEADS OF STAFF
 ion-storm-crew = CREW
+ion-storm-people = PEOPLE
 
 ion-storm-adjective-things = {$adjective} THINGS
 ion-storm-x-and-y = {$x} AND {$y}

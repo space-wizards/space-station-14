@@ -476,3 +476,21 @@
         amount: !type:ConstantNumberSelector
           value: 3
 
+- type: entity
+  parent: MarkerBase
+  id: SalvageSpawnerMobMiningAsteroid
+  name: Mining Asteroid Mob Spawner
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Aliens/Asteroid/goliath.rsi
+      state: goliath
+  - type: EntityTableSpawner
+    table: !type:GroupSelector
+      children:
+      - id: MobGoliath
+        weight: 65
+      - id: MobHivelord
+        weight: 35
+

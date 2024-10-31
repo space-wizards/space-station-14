@@ -62944,11 +62944,6 @@ entities:
     - type: Transform
       pos: 35.5,16.5
       parent: 60
-  - uid: 24676
-    components:
-    - type: Transform
-      pos: 11.5,-11.5
-      parent: 60
 - proto: DefaultStationBeaconAICore
   entities:
   - uid: 18703
@@ -63341,6 +63336,13 @@ entities:
     components:
     - type: Transform
       pos: 3.5,-6.5
+      parent: 60
+- proto: DefaultStationBeaconVox
+  entities:
+  - uid: 23890
+    components:
+    - type: Transform
+      pos: 11.5,-11.5
       parent: 60
 - proto: DefaultStationBeaconWardensOffice
   entities:
@@ -154188,12 +154190,36 @@ entities:
       parent: 60
 - proto: WindoorSecure
   entities:
+  - uid: 2538
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 13.5,-11.5
+      parent: 60
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        3481:
+        - DoorStatus: DoorBolt
   - uid: 3269
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 23.5,-46.5
       parent: 60
+  - uid: 3481
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 14.5,-13.5
+      parent: 60
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        2538:
+        - DoorStatus: DoorBolt
   - uid: 3911
     components:
     - type: Transform
@@ -154249,30 +154275,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -23.5,-9.5
       parent: 60
-  - uid: 2538
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 14.5,-13.5
-      parent: 60
-    - type: DeviceLinkSink
-      invokeCounter: 1
-    - type: DeviceLinkSource
-      linkedPorts:
-        3481:
-        - DoorStatus: DoorBolt
-  - uid: 3481
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 13.5,-11.5
-      parent: 60
-    - type: DeviceLinkSink
-      invokeCounter: 1
-    - type: DeviceLinkSource
-      linkedPorts:
-        2538:
-        - DoorStatus: DoorBolt
   - uid: 12188
     components:
     - type: Transform

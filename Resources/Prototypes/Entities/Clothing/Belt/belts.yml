@@ -487,7 +487,6 @@
         - CartridgeAmmo
         - DoorRemote
         - Whistle
-        - HolosignProjector
         - BalloonPopper
   - type: ItemMapper
     mapLayers:
@@ -621,7 +620,7 @@
     sprite: Clothing/Belt/securitywebbing.rsi
 
 - type: entity
-  parent: ClothingBeltStorageBase
+  parent: [ ClothingBeltStorageBase, BaseSecurityCargoContraband ]
   id: ClothingBeltMercWebbing
   name: mercenary webbing
   description: Ideal for storing everything from ammo to weapons and combat essentials.

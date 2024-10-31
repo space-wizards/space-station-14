@@ -42,20 +42,6 @@
 
 - type: entity
   abstract: true
-  parent: Clothing
-  id: HatBase
-  components:
-  - type: Clothing
-    slots:
-    - HEAD
-  - type: Sprite
-    state: icon
-  - type: Tag
-    tags:
-      - WhitelistChameleon
-
-- type: entity
-  abstract: true
   parent: ClothingHeadBase
   id: ClothingHeadLightBase
   name: base helmet with light
