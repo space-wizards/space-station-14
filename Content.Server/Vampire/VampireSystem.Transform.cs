@@ -50,7 +50,7 @@ public sealed partial class VampireSystem
     /// <summary>
     /// Add vulnerability to holy water when ingested or slashed, and take damage from the bible
     /// </summary>
-    private void MakeVulnerableToHoly(Entity<VampireComponent> vampire)
+    public void MakeVulnerableToHoly(Entity<VampireComponent> vampire)
     {
         //React to being beaten with the bible
         EnsureComp<UnholyComponent>(vampire);
@@ -101,16 +101,21 @@ public sealed partial class VampireSystem
             if (!action.HasValue)
                 return;
             
-            if (!TryComp<InstantActionComponent>(action, out var instantActionComponent))
-                return;
-            
-            var actionEvent = instantActionComponent.Event as VampireSelfPowerEvent;
+            if (TryComp<InstantActionComponent>(action, out var instantActionComponent))
+            {
+                if (instantActionComponent.Event is VampireSelfPowerEvent instantActionEvent)
+                {
+                    comp.UnlockedPowers.Add(instantActionEvent.DefinitionName, action);
+                }
+            }
 
-            if (actionEvent == null)
-                return;
-
-            comp.UnlockedPowers.Add(actionEvent.DefinitionName, action);
-            
+            if (TryComp<EntityTargetActionComponent>(action, out var entityActionComponent))
+            {
+                if (entityActionComponent.Event is VampireTargetedPowerEvent entityActionEvent)
+                {
+                    comp.UnlockedPowers.Add(entityActionEvent.DefinitionName, action);
+                }
+            }
         }
 
         UpdateBloodDisplay(vampire);
