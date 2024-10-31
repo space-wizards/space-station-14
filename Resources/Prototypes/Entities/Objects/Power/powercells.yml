@@ -38,6 +38,30 @@
     fireCost: 50
 
 - type: entity
+  name: NT standard magcell
+  description: A rechargeable energy magazine. For use with compatible NT energy weaponry.
+  id: BaseMagCell
+  suffix: Full
+  parent: BasePowerCell
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.PowerCellVisualLayers.Base" ]
+      state: medium
+    - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      state: o2
+      shader: unshaded
+  - type: Battery
+    maxCharge: 720
+    startingCharge: 720
+  - type: ProjectileBatteryAmmoProvider
+    proto: NtBolt
+    fireCost: 70
+  - type: Tag
+    tags:
+      - MagCell
+
+- type: entity
   name: potato battery
   description: Someone's stuck two nails and some wire in a large potato. Somehow it provides a little charge.
   id: PowerCellPotato
