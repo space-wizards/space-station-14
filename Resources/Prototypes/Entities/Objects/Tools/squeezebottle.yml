@@ -2,7 +2,7 @@
   parent: DrinkBase
   id: SqueezeBottle
   name: squeeze bottle
-  description:
+  description: For squeezing various reagents!
   components:
   - type: ApplyReagentToItem
     amountConsumedOnUse: 5
@@ -47,7 +47,7 @@
   parent: SqueezeBottle
   id: SqueezeBottleOfGlue
   name: bottle of space glue
-  description: High performance glue intended for maintenance of extremely complex mechanical equipment. DON'T DRINK!
+  description: High performance glue able to create extremely strong bonds. DO NOT DRINK!
   components:
   - type: SolutionContainerManager
     solutions:
