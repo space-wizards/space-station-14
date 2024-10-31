@@ -1,16 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Hardsuits and EVA suits now count as protection for unscrewing lightbulbs.
-    type: Add
-  - message: More gloves were given the ability to unscrew light bulbs.
-    type: Add
-  - message: Behonkers no longer hurt you when melee attacking them or interacting
-      with them.
-    type: Remove
-  id: 7067
-  time: '2024-08-09T05:32:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30244
 - author: Ian321
   changes:
   - message: The warden is now an important job.
@@ -3943,3 +3931,11 @@
   id: 7566
   time: '2024-10-31T13:26:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32363
+- author: justinbrick
+  changes:
+  - message: Added a pop-up notification when extra items are dropped while unequipping
+      something.
+    type: Tweak
+  id: 7567
+  time: '2024-10-31T14:12:26.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33078
