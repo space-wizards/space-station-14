@@ -387,11 +387,3 @@
         - !type:ReagentThreshold
           reagent: SeaWater
           min: 0.5
-      - !type:Emote
-         conditions:
-        - !type:ReagentThreshold
-           reagent: SeaWater
-           min: 0.5
-         emote: Cough #TODO: add gurgle sound effect while processing seawater through breathing
-         showInChat: true
-         probability: 0.4

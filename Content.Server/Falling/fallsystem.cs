@@ -37,10 +37,6 @@ namespace Content.Server.Falling
             if (args.OldParent == null || args.Transform.GridUid != null || TerminatingOrDeleted(owner)) // If you came from space or are switching to another valid grid, nothing happens.
                 return;
 
-            // Makes sure that ghosts aren't getting teleported during observation
-            if (!args.CanAccess || !HasComp<GhostComponent>(args.User))
-            return;
-
             // Try to find an object with the FallingDestinationComponent
             var destination = EntityManager.EntityQuery<FallingDestinationComponent>().FirstOrDefault();
             if (destination != null)

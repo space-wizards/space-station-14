@@ -1,0 +1,29 @@
+- type: listing
+  id: UplinkCaptainSabre
+  name: uplink-CaptainSabre-name
+  description: uplink-CaptainSabre-desc
+  productEntity: CaptainSabre
+  cost:
+    BluespaceCrystal: 13
+  categories:
+  - UplinkNtWeaponry
+
+- type: listing
+  id: UplinkPistolN1984
+  name: uplink-pistol-N1984-name
+  description: uplink-pistol-N1984-desc
+  productEntity: WeaponPistolN1984
+  cost:
+    BluespaceCrystal: 8
+  categories:
+  - UplinkNtWeaponry
+
+- type: listing
+  id: UplinkPistolMk58
+  name: uplink-pistol-Mk58-name
+  description: uplink-pistol-Mk58-desc
+  productEntity: WeaponPistolMk58
+  cost:
+    BluespaceCrystal: 5
+  categories:
+  - UplinkNtWeaponry

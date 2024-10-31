@@ -6,6 +6,13 @@
   canWithdraw: true
 
 - type: currency
+  id: BluespaceCrystal
+  displayName: store-currency-display-bluespace-crystal
+  cash:
+    1: BluespaceCrystal1
+  canWithdraw: true
+
+- type: currency
   id: StolenEssence
   displayName: store-currency-display-stolen-essence
   canWithdraw: false
