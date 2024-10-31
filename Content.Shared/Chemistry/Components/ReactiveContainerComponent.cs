@@ -11,7 +11,6 @@ public sealed partial class ReactiveContainerComponent : Component
     ///     The container that holds the solution.
     /// </summary>
     [DataField(required: true)]
-    [ViewVariables]
     public string Container = default!;
 
     /// <summary>
