@@ -754,6 +754,7 @@
     reagents:
     - SpaceDrugs
     - BrosochloricBros
+    - JuiceThatMakesYouUngh
     - Pilk
     - Nocturine
     - MuteToxin
@@ -808,12 +809,12 @@
 - type: artifactEffect
   id: EffectPolyRod
   targetDepth: 4
-  effectProb: 0.05
+  effectProb: 0.15
   effectHint: artifact-effect-hint-polymorph
   components:
   - type: PolyOthersArtifact
     polymorphPrototypeName: ArtifactRod
-    range: 2
+    range: 4
 
 - type: artifactEffect
   id: EffectHealAllPowerful
@@ -856,13 +857,14 @@
   components:
   - type: DamageNearbyArtifact
     damageChance: 0.85
+    radius: 15
     whitelist:
       tags:
       - Window
       - Wall
     damage:
       types:
-        Structural: 300
+        Structural: 50
 
 - type: artifactEffect
   id: EffectPresentSpawn
@@ -873,14 +875,14 @@
     maxSpawns: 7
     spawns:
     - id: PresentRandom
-      prob: 0.9
+      prob: 0.7
     - id: PresentRandomUnsafe
-      prob: 0.1
+      prob: 0.2
     - id: PresentRandomInsane
-      prob: 0.05
+      prob: 0.1
 
 - type: artifactEffect
-  id: EffectBookSpawn
+  id: EffectBookSpawnMundane
   targetDepth: 4
   effectHint: artifact-effect-hint-creation
   components:
@@ -959,24 +961,34 @@
       prob: 0.05
     - id: BookNarsieLegend
       prob: 0.05
+
+- type: artifactEffect
+  id: EffectBookSpawnMagic
+  targetDepth: 4
+  effectHint: artifact-effect-hint-creation
+  effectProb: 0.1
+  components:
+  - type: SpawnArtifact
+    maxSpawns: 1
+    spawns:
     - id: WizardsGrimoire
-      prob: 0.001
+      prob: 0.1
     - id: SpawnSpellbook
-      prob: 0.01
+      prob: 1
     - id: ForceWallSpellbook
-      prob: 0.01
+      prob: 1
     - id: BlinkBook
-      prob: 0.01
+      prob: 1
     - id: SmiteBook
-      prob: 0.003
+      prob: 0.3
     - id: KnockSpellbook
-      prob: 0.01
+      prob: 1
     - id: FireballSpellbook
-      prob: 0.01
+      prob: 1
     - id: SpawnSpaceGreaseSpellbook
-      prob: 0.01
+      prob: 1
     - id: ScrollRunes
-      prob: 0.01
+      prob: 1
 
 - type: artifactEffect
   id: EffectSingulo
