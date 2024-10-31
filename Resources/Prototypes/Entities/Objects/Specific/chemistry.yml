@@ -482,7 +482,7 @@
       food:
         maxVol: 20
   - type: ExplosionResistance
-    damageCoefficient: 0.025
+    damageCoefficient: 0.025 # survives conventional explosives and not minibombs and nukes
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
