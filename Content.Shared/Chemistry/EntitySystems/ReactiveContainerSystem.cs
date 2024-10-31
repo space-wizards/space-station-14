@@ -17,7 +17,7 @@ public sealed class ReactiveContainerSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ReactiveContainerComponent, EntInsertedIntoContainerMessage>(OnInserted);
-        SubscribeLocalEvent<ReactiveContainerComponent, SolutionChangedEvent>(OnSolutionChange);
+        SubscribeLocalEvent<ReactiveContainerComponent, SolutionContainerChangedEvent>(OnSolutionChange);
     }
 
     private void OnInserted(EntityUid uid, ReactiveContainerComponent comp, EntInsertedIntoContainerMessage args)
@@ -31,11 +31,10 @@ public sealed class ReactiveContainerSystem : EntitySystem
         if (solution.Volume == 0)
             return;
 
-        _popupSystem.PopupEntity(Loc.GetString("reactive-container-component-touch-reaction", ("container", uid), ("entity", args.Entity)), uid);
         _reactiveSystem.DoEntityReaction(args.Entity, solution, ReactionMethod.Touch);
     }
 
-    private void OnSolutionChange(EntityUid uid, ReactiveContainerComponent comp, SolutionChangedEvent args)
+    private void OnSolutionChange(EntityUid uid, ReactiveContainerComponent comp, SolutionContainerChangedEvent args)
     {
         if (!_solutionContainerSystem.TryGetSolution(uid, comp.Solution, out _, out var solution))
             return;
@@ -48,7 +47,6 @@ public sealed class ReactiveContainerSystem : EntitySystem
         {
             if (!HasComp<ReactiveComponent>(entity))
                 continue;
-            _popupSystem.PopupEntity(Loc.GetString("reactive-container-component-touch-reaction", ("container", uid), ("entity", entity)), uid);
             _reactiveSystem.DoEntityReaction(entity, solution, ReactionMethod.Touch);
         }
     }
