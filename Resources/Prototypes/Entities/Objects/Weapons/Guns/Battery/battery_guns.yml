@@ -698,6 +698,20 @@
       fireCost: 100
 
 - type: entity
+  name: experimental C.H.I.M.P. handcannon
+  parent: [BaseWeaponPistolCHIMP, BaseMajorContraband]
+  id: WeaponPistolCHIMPExperiment
+  description: This strange C.H.I.M.P. model is malfunctioning and fires only one particle type...
+  components:
+  - type: ProjectileBatteryAmmoProvider
+    proto: AnomalousParticleOmegaStrong
+    fireCost: 100
+  - type: BatteryWeaponFireModes # Both components needed otherwise fires delta particles by default
+    fireModes:
+    - proto: AnomalousParticleOmegaStrong
+      fireCost: 100
+
+- type: entity
   name: eye of a behonker
   parent: BaseWeaponBatterySmall
   id: WeaponBehonkerLaser
