@@ -33,7 +33,7 @@
     interactSuccessSound:
       path: /Audio/_Impstation/Animals/Gorilla_Laugh.ogg
     interactFailureSound:
-      path: /Audio/_Impstation/Animals/Gorilla_chuff.ogg
+      path: /Audio/_Impstation/Animals/Gorilla_Chuff.ogg
   - type: Speech
     speechSounds: Gorilla
     speechVerb: Monkey

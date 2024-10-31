@@ -1291,9 +1291,9 @@
     interactFailureString: petting-failure-monkey
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
-      path: /Audio/_Impstation/Animals/Gorilla_Laugh
+      path: /Audio/Animals/ferret_happy.ogg
     interactFailureSound:
-      path: /Audio/_Impstation/Animals/Gorilla_Chuff
+      path: /Audio/Items/wirecutter.ogg
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Effects/bite.ogg
