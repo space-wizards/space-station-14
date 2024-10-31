@@ -29,6 +29,7 @@
     name: store-preset-name-uplink-nt
     categories:
     - UplinkNtWeaponry
+    - UplinkNtArmor
     currencyWhitelist:
     - BluespaceCrystal
     balance:

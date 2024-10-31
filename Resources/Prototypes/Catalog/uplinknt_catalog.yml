@@ -9,12 +9,42 @@
   - UplinkNtWeaponry
 
 - type: listing
+  id: UplinkHardsuitERTLeader
+  name: uplink-bluehardsuit-name
+  description: uplink-bluehardsuit-desc
+  productEntity: ClothingOuterHardsuitERTLeader
+  cost:
+    BluespaceCrystal: 8
+  categories:
+  - UplinkNtArmor
+
+- type: listing
+  id: UplinkEnergyCarbine
+  name: uplink-carbine-name
+  description: uplink-carbine-desc
+  productEntity: WeaponEnergyCarbine
+  cost:
+    BluespaceCrystal: 16
+  categories:
+  - UplinkNtWeaponry
+
+- type: listing
+  id: UplinkNtBlaster
+  name: uplink-blaster-name
+  description: uplink-blaster-desc
+  productEntity: WeaponNtBlaster
+  cost:
+    BluespaceCrystal: 6
+  categories:
+  - UplinkNtWeaponry
+
+- type: listing
   id: UplinkPistolN1984
   name: uplink-pistol-N1984-name
   description: uplink-pistol-N1984-desc
   productEntity: WeaponPistolN1984
   cost:
-    BluespaceCrystal: 8
+    BluespaceCrystal: 10
   categories:
   - UplinkNtWeaponry
 
@@ -24,6 +54,6 @@
   description: uplink-pistol-Mk58-desc
   productEntity: WeaponPistolMk58
   cost:
-    BluespaceCrystal: 5
+    BluespaceCrystal: 3
   categories:
   - UplinkNtWeaponry

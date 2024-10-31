@@ -95,6 +95,11 @@
   name: store-category-weapons
   priority: 0
 
+- type: storeCategory
+  id: UplinkNtArmor
+  name: store-category-wearables
+  priority: 1
+
 #revenant
 - type: storeCategory
   id: RevenantAbilities

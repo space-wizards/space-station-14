@@ -735,27 +735,3 @@
       tags:
       - MicrowaveMachineBoard
 
-- type: cargoBounty
-  id: BountyDrifter
-  reward: 1500
-  description: bounty-description-drifter
-  idPrefix: IP
-  entries:
-  - name: bounty-item-drifter
-    amount: 2
-    whitelist:
-      tags:
-      - Drifter
-
-- type: cargoBounty
-  id: BountyFish
-  reward: 2000
-  description: bounty-description-fish
-  idPrefix: SG
-  entries:
-  - name: bounty-item-fish
-    amount: 4
-    whitelist:
-      tags:
-      - Fish
-
