@@ -12,7 +12,7 @@
       components:
       - Anchorable
       - Item
-      tags: 
+      tags:
       - Bot # for funny bot moments
     blacklist:
       components:
@@ -22,6 +22,7 @@
       - Pda # PDAs currently make you invisible /!\
     polymorph:
       entity: ChameleonDisguise
+      initializeDamage: false
 
 - type: entity
   categories: [ HideSpawnMenu ]

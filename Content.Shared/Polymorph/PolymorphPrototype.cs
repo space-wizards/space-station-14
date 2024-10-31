@@ -67,6 +67,13 @@ public sealed partial record PolymorphConfiguration
     public bool TransferDamage = true;
 
     /// <summary>
+    /// Whether or not the entity should transfer damage when first polymorphed.
+    /// Should be used in combination with TransferDamage
+    /// </summary>
+    [DataField(serverOnly: true)]
+    public bool InitializeDamage = true;
+
+    /// <summary>
     /// Whether or not the entity transfers its name between forms.
     /// </summary>
     [DataField(serverOnly: true)]

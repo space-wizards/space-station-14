@@ -215,7 +215,7 @@ public sealed partial class PolymorphSystem : EntitySystem
             _container.Insert(child, cont);
 
         //Transfers all damage from the original to the new one
-        if (configuration.TransferDamage &&
+        if (configuration.TransferDamage && configuration.InitializeDamage &&
             TryComp<DamageableComponent>(child, out var damageParent) &&
             _mobThreshold.GetScaledDamage(uid, child, out var damage) &&
             damage != null)
@@ -296,7 +296,7 @@ public sealed partial class PolymorphSystem : EntitySystem
             _mobThreshold.GetScaledDamage(uid, parent, out var damage) &&
             damage != null)
         {
-            _damageable.SetDamage(parent, damageParent, damage);
+            _damageable.TryChangeDamage(parent, damage);
         }
 
         if (component.Configuration.Inventory == PolymorphInventoryChange.Transfer)
