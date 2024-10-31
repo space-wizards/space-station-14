@@ -16,7 +16,7 @@
           Quantity: 30
   - type: Icon
     sprite: _Impstation/Objects/Consumable/Drinks/thee_horsepussy.rsi
-    state: 
+    state: icon
     
 - type: entity
   parent: DrinkGlass
@@ -224,7 +224,7 @@
           Quantity: 30
   - type: Icon
     sprite: Objects/Consumable/Drinks/thin_glass.rsi
-    state: icon
+    state: icon_empty #i think literally every other glass rsi has an 'icon' state except this one which is fucked
 
 - type: entity
   parent: DrinkGlass
