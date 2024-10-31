@@ -1,6 +1,5 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
-using Content.Shared.Popups;
 using Robust.Shared.Containers;
 
 namespace Content.Shared.Chemistry.EntitySystems;
