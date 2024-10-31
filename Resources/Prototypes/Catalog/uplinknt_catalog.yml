@@ -9,6 +9,36 @@
   - UplinkNtWeaponry
 
 - type: listing
+  id: UplinkClothingGlovesCombat
+  name: uplink-combat-gloves-name
+  description: uplink-combat-gloves-desc
+  productEntity: ClothingHandsGlovesCombat
+  cost:
+    BluespaceCrystal: 4
+  categories:
+  - UplinkNtArmor
+
+- type: listing
+  id: UplinkDuffelNtCburnFilled
+  name: uplink-cburn-name
+  description: uplink-cburn-desc
+  productEntity: ClothingBackpackDuffelNtCburnFilled
+  cost:
+    BluespaceCrystal: 14
+  categories:
+  - UplinkNtWeaponry
+  
+- type: listing
+  id: UplinkClothingBulletproof
+  name: uplink-bulletproof-name
+  description: uplink-bulletproof-desc
+  productEntity: ClothingOuterArmorBulletproof
+  cost:
+    BluespaceCrystal: 5
+  categories:
+  - UplinkNtArmor
+
+- type: listing
   id: UplinkHardsuitERTLeader
   name: uplink-bluehardsuit-name
   description: uplink-bluehardsuit-desc
@@ -24,7 +54,7 @@
   description: uplink-carbine-desc
   productEntity: WeaponEnergyCarbine
   cost:
-    BluespaceCrystal: 16
+    BluespaceCrystal: 17
   categories:
   - UplinkNtWeaponry
 
