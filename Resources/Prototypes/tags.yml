@@ -7,6 +7,9 @@
   id: AirAlarmElectronics
 
 - type: Tag
+  id: MagCell
+
+- type: Tag
   id: Airlock
 
 - type: Tag
