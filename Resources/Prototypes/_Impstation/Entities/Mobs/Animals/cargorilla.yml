@@ -21,6 +21,8 @@
       state: crawling
       sprite: _Impstation/Mobs/Animals/cargorilla.rsi
   - type: Physics
+  - type: RandomMetadata
+    nameSegments: [names_cargorilla]
   - type: BodyEmotes
     soundsId: Gorilla
   - type: InteractionPopup
@@ -41,6 +43,11 @@
     tags:
     - DoorBumpOpener
   - type: Emoting
+  - type: Vocal
+    sounds:
+      Male: Gorilla
+      Female: Gorilla
+      Unsexed: Gorilla
   - type: Fixtures
     fixtures:
       fix1:
