@@ -8,6 +8,16 @@
   categories:
   - UplinkNtWeaponry
 
+  - type: listing
+  id: UplinkMagCell
+  name: uplink-magcell-name
+  description: uplink-magcell-desc
+  productEntity: BaseMagCell
+  cost:
+    BluespaceCrystal: 5
+  categories:
+  - UplinkNtAmmo
+
 - type: listing
   id: UplinkClothingGlovesCombat
   name: uplink-combat-gloves-name
