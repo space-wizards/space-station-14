@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: You should have significantly less friction when moving in space.
-    type: Tweak
-  id: 7066
-  time: '2024-08-09T04:52:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29383
 - author: Plykiya
   changes:
   - message: Hardsuits and EVA suits now count as protection for unscrewing lightbulbs.
@@ -3943,3 +3936,10 @@
   id: 7565
   time: '2024-10-31T10:56:07.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33074
+- author: Jarmer123
+  changes:
+  - message: You can now find a spare bible in the PietyVend
+    type: Add
+  id: 7566
+  time: '2024-10-31T13:26:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32363
