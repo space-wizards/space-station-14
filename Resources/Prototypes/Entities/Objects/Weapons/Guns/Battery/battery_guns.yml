@@ -625,7 +625,8 @@
     price: 63
 
 - type: entity
-  parent: [BaseWeaponBatterySmall]
+  parent: BaseWeaponBatterySmall
+  description: Just because it's a little C.H.I.M.P. doesn't mean it can't punch like an A.P.E.
   id: BaseWeaponPistolCHIMP
   abstract: true
   components:
@@ -673,7 +674,6 @@
   name: C.H.I.M.P. handcannon
   parent: [BaseWeaponPistolCHIMP, BaseScienceContraband]
   id: WeaponPistolCHIMP
-  description: Just because it's a little C.H.I.M.P. doesn't mean it can't punch like an A.P.E.
 
 - type: entity
   name: C.H.I.M.P. handcannon
