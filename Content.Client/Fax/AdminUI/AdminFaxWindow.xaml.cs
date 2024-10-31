@@ -14,7 +14,7 @@ public sealed partial class AdminFaxWindow : DefaultWindow
 {
     private const string StampsRsiPath = "/Textures/Objects/Misc/bureaucracy.rsi";
 
-    public Action<(NetEntity entity, string title, string stampedBy, string message, string stampSprite, Color stampColor)>? OnMessageSend;
+    public Action<(NetEntity entity, string title, string stampedBy, string message, string stampSprite, Color stampColor, bool locked)>? OnMessageSend;
     public Action<NetEntity>? OnFollowFax;
 
     [Dependency] private readonly IResourceCache _resCache = default!;
@@ -98,6 +98,7 @@ public sealed partial class AdminFaxWindow : DefaultWindow
 
         var from = FromEdit.Text;
         var stampColor = StampColorSelector.Color;
-        OnMessageSend?.Invoke((faxEntity.Value, title, from, message, stamp, stampColor));
+        var locked = LockPageCheckbox.Pressed;
+        OnMessageSend?.Invoke((faxEntity.Value, title, from, message, stamp, stampColor, locked));
     }
 }

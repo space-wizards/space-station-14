@@ -22,6 +22,7 @@ public sealed class FollowerSystemTest
         var mapMan = server.ResolveDependency<IMapManager>();
         var sysMan = server.ResolveDependency<IEntitySystemManager>();
         var logMan = server.ResolveDependency<ILogManager>();
+        var mapSys = server.System<SharedMapSystem>();
         var logger = logMan.RootSawmill;
 
         await server.WaitPost(() =>
@@ -29,7 +30,7 @@ public sealed class FollowerSystemTest
             var followerSystem = sysMan.GetEntitySystem<FollowerSystem>();
 
             // Create a map to spawn the observers on.
-            var map = mapMan.CreateMap();
+            mapSys.CreateMap(out var map);
 
             // Spawn an observer to be followed.
             var followed = entMan.SpawnEntity(GameTicker.ObserverPrototypeName, new MapCoordinates(0, 0, map));
@@ -41,7 +42,7 @@ public sealed class FollowerSystemTest
 
             followerSystem.StartFollowingEntity(follower, followed);
 
-            entMan.DeleteEntity(mapMan.GetMapEntityId(map));
+            entMan.DeleteEntity(mapSys.GetMap(map));
         });
         await pair.CleanReturnAsync();
     }

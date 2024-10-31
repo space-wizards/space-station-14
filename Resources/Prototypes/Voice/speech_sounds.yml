@@ -150,3 +150,12 @@
     path: /Audio/Animals/dog_bark3.ogg
   exclaimSound:
     path: /Audio/Animals/dog_bark2.ogg
+
+- type: speechSounds
+  id: Cluck
+  saySound:
+    path: /Audio/Animals/chicken_cluck_happy.ogg
+  askSound:
+    path: /Audio/Animals/chicken_cluck_happy.ogg
+  exclaimSound:
+    path: /Audio/Animals/chicken_cluck_happy.ogg

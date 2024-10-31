@@ -38,7 +38,7 @@
   id: CrateEmergencyInternals
   parent: CrateInternals
   name: internals crate
-  description: Master your life energy and control your breathing with three breath masks, three emergency oxygen tanks and three large air tanks.
+  description: Master your life energy and control your breathing with 3 breath masks, emergency suits and large air tanks.
   components:
   - type: StorageFill
     contents:
@@ -57,7 +57,7 @@
   id: CrateEmergencyInternalsLarge
   parent: CrateInternals
   name: internals crate (large)
-  description: Master your life energy and control your breathing with six breath masks, six emergency oxygen tanks and six large air tanks.
+  description: Master your life energy and control your breathing with 6 breath masks, emergency suits and large air tanks.
   components:
     - type: StorageFill
       contents:

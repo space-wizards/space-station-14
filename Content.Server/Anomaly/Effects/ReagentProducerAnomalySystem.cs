@@ -1,5 +1,5 @@
 using Content.Server.Anomaly.Components;
-using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Sprite;
@@ -28,7 +28,7 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
     //Useful:
     //Those reagents that the players are hunting for. Very low percentage of loss.
 
-    [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly PointLightSystem _light = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -76,7 +76,7 @@ public sealed class ReagentProducerAnomalySystem : EntitySystem
             if (anomaly.Severity >= 0.97) reagentProducingAmount *= component.SupercriticalReagentProducingModifier;
 
             newSol.AddReagent(component.ProducingReagent, reagentProducingAmount);
-            _solutionContainer.TryAddSolution(component.Solution.Value, newSol); //TO DO - the container is not fully filled. 
+            _solutionContainer.TryAddSolution(component.Solution.Value, newSol); // TODO - the container is not fully filled.
 
             component.AccumulatedFrametime = 0;
 

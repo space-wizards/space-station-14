@@ -4,38 +4,104 @@
   graph:
   - node: start
     edges:
-    - to: logic_gate
+    - to: empty
       steps:
       - material: Steel
         amount: 3
         doAfter: 1
+  - node: empty
+    entity: LogicEmptyCircuit
+    edges:
+    - to: start
+      steps:
+      - tool: Screwing
+        doAfter: 2
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 3
+      - !type:DeleteEntity {}
+    - to: logic_gate
+      steps:
       - material: Cable
         amount: 2
         doAfter: 1
     - to: edge_detector
       steps:
-      - material: Steel
-        amount: 3
+      - material: Glass
+        amount: 2
         doAfter: 1
       - material: Cable
         amount: 2
         doAfter: 1
     - to: power_sensor
       steps:
-      - material: Steel
-        amount: 3
-        doAfter: 1
-      - material: Cable
-        amount: 2
-        doAfter: 1
       - tag: Multitool
         icon:
           sprite: Objects/Tools/multitool.rsi
           state: icon
         name: a multitool
+      - material: Cable
+        amount: 2
+        doAfter: 1
+    - to: memory_cell
+      steps:
+      - tag: CapacitorStockPart
+        icon:
+          sprite: Objects/Misc/stock_parts.rsi
+          state: capacitor
+        name: a capacitor
+      - material: Cable
+        amount: 2
+        doAfter: 1
   - node: logic_gate
-    entity: LogicGate
+    entity: LogicGateOr
+    edges:
+    - to: empty
+      steps:
+      - tool: Prying
+        doAfter: 2
+      completed:
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 2
   - node: edge_detector
     entity: EdgeDetector
+    edges:
+    - to: empty
+      steps:
+      - tool: Prying
+        doAfter: 2
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetGlass1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 2
   - node: power_sensor
     entity: PowerSensor
+    edges:
+    - to: empty
+      steps:
+      - tool: Prying
+        doAfter: 2
+      completed:
+      - !type:SpawnPrototype
+        prototype: Multitool
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 2
+  - node: memory_cell
+    entity: MemoryCell
+    edges:
+    - to: empty
+      steps:
+      - tool: Prying
+        doAfter: 2
+      completed:
+      - !type:SpawnPrototype
+        prototype: CapacitorStockPart
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 2

@@ -23,11 +23,24 @@ public sealed partial class BorgTransponderComponent : Component
     public string Name = string.Empty;
 
     /// <summary>
-    /// Popup shown to everyone when a borg is disabled.
+    /// Popup shown to everyone after a borg is disabled.
     /// Gets passed a string "name".
     /// </summary>
     [DataField]
     public LocId DisabledPopup = "borg-transponder-disabled-popup";
+
+    /// <summary>
+    /// Popup shown to the borg when it is being disabled.
+    /// </summary>
+    [DataField]
+    public LocId DisablingPopup = "borg-transponder-disabling-popup";
+
+    /// <summary>
+    /// Popup shown to everyone when a borg is being destroyed.
+    /// Gets passed a string "name".
+    /// </summary>
+    [DataField]
+    public LocId DestroyingPopup = "borg-transponder-destroying-popup";
 
     /// <summary>
     /// How long to wait between each broadcast.
@@ -40,4 +53,28 @@ public sealed partial class BorgTransponderComponent : Component
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan NextBroadcast = TimeSpan.Zero;
+
+    /// <summary>
+    /// When to next disable the borg.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan? NextDisable;
+
+    /// <summary>
+    /// How long to wait to disable the borg after RD has ordered it.
+    /// </summary>
+    [DataField]
+    public TimeSpan DisableDelay = TimeSpan.FromSeconds(5);
+
+    /// <summary>
+    /// Pretend that the borg cannot be disabled due to being on delay.
+    /// </summary>
+    [DataField]
+    public bool FakeDisabling;
+
+    /// <summary>
+    /// Pretend that the borg has no brain inserted.
+    /// </summary>
+    [DataField]
+    public bool FakeDisabled;
 }

@@ -63,8 +63,8 @@
     Steel: 30
 
 - type: latheRecipe
-  id: Crowbar
-  result: Crowbar
+  id: CrowbarGreen
+  result: CrowbarGreen
   category: Tools
   completetime: 2
   materials:
@@ -196,15 +196,6 @@
     Steel: 300
     Glass: 50
     Plastic: 50
-
-- type: latheRecipe
-  id: MiningDrill
-  result: MiningDrill
-  category: Tools
-  completetime: 3
-  materials:
-    Steel: 500
-    Plastic: 100
 
 - type: latheRecipe
   id: WelderExperimental

@@ -19,5 +19,5 @@ public sealed partial class ShowHealthBarsComponent : Component
     public List<string> DamageContainers = new();
 
     [DataField]
-    public ProtoId<StatusIconPrototype>? HealthStatusIcon = "HealthIconFine";
+    public ProtoId<HealthIconPrototype>? HealthStatusIcon = "HealthIconFine";
 }

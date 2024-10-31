@@ -84,18 +84,21 @@ public abstract partial class InteractionTest
     /// <summary>
     /// Spawn an entity entity and set it as the target.
     /// </summary>
-    [MemberNotNull(nameof(Target))]
-    protected async Task SpawnTarget(string prototype)
+    [MemberNotNull(nameof(Target), nameof(STarget), nameof(CTarget))]
+#pragma warning disable CS8774 // Member must have a non-null value when exiting.
+    protected async Task<NetEntity> SpawnTarget(string prototype)
     {
         Target = NetEntity.Invalid;
         await Server.WaitPost(() =>
         {
-            Target = SEntMan.GetNetEntity(SEntMan.SpawnEntity(prototype, SEntMan.GetCoordinates(TargetCoords)));
+            Target = SEntMan.GetNetEntity(SEntMan.SpawnAtPosition(prototype, SEntMan.GetCoordinates(TargetCoords)));
         });
 
         await RunTicks(5);
         AssertPrototype(prototype);
+        return Target!.Value;
     }
+#pragma warning restore CS8774 // Member must have a non-null value when exiting.
 
     /// <summary>
     /// Spawn an entity in preparation for deconstruction
@@ -168,7 +171,7 @@ public abstract partial class InteractionTest
             // turn on welders
             if (enableToggleable && SEntMan.TryGetComponent(item, out itemToggle) && !itemToggle.Activated)
             {
-                Assert.That(ItemToggleSys.TryActivate(item, playerEnt, itemToggle: itemToggle));
+                Assert.That(ItemToggleSys.TryActivate((item, itemToggle), user: playerEnt));
             }
         });
 
@@ -568,11 +571,11 @@ public abstract partial class InteractionTest
 
         var tile = Tile.Empty;
         var serverCoords = SEntMan.GetCoordinates(coords ?? TargetCoords);
-        var pos = serverCoords.ToMap(SEntMan, Transform);
+        var pos = Transform.ToMapCoordinates(serverCoords);
         await Server.WaitPost(() =>
         {
-            if (MapMan.TryFindGridAt(pos, out _, out var grid))
-                tile = grid.GetTileRef(serverCoords).Tile;
+            if (MapMan.TryFindGridAt(pos, out var gridUid, out var grid))
+                tile = MapSystem.GetTileRef(gridUid, grid, serverCoords).Tile;
         });
 
         Assert.That(tile.TypeId, Is.EqualTo(targetTile.TypeId));
@@ -754,33 +757,41 @@ public abstract partial class InteractionTest
     /// <summary>
     /// Set the tile at the target position to some prototype.
     /// </summary>
-    protected async Task SetTile(string? proto, NetCoordinates? coords = null, MapGridComponent? grid = null)
+    protected async Task SetTile(string? proto, NetCoordinates? coords = null, Entity<MapGridComponent>? grid = null)
     {
         var tile = proto == null
             ? Tile.Empty
             : new Tile(TileMan[proto].TileId);
 
-        var pos = SEntMan.GetCoordinates(coords ?? TargetCoords).ToMap(SEntMan, Transform);
+        var pos = Transform.ToMapCoordinates(SEntMan.GetCoordinates(coords ?? TargetCoords));
 
+        EntityUid gridUid;
+        MapGridComponent? gridComp;
         await Server.WaitPost(() =>
         {
-            if (grid != null || MapMan.TryFindGridAt(pos, out var gridUid, out grid))
+            if (grid is { } gridEnt)
             {
-                grid.SetTile(SEntMan.GetCoordinates(coords ?? TargetCoords), tile);
+                MapSystem.SetTile(gridEnt, SEntMan.GetCoordinates(coords ?? TargetCoords), tile);
+                return;
+            }
+            else if (MapMan.TryFindGridAt(pos, out var gUid, out var gComp))
+            {
+                MapSystem.SetTile(gUid, gComp, SEntMan.GetCoordinates(coords ?? TargetCoords), tile);
                 return;
             }
 
             if (proto == null)
                 return;
 
-            var gridEnt = MapMan.CreateGridEntity(MapData.MapId);
+            gridEnt = MapMan.CreateGridEntity(MapData.MapId);
             grid = gridEnt;
             gridUid = gridEnt;
+            gridComp = gridEnt.Comp;
             var gridXform = SEntMan.GetComponent<TransformComponent>(gridUid);
             Transform.SetWorldPosition(gridXform, pos.Position);
-            grid.SetTile(SEntMan.GetCoordinates(coords ?? TargetCoords), tile);
+            MapSystem.SetTile((gridUid, gridComp), SEntMan.GetCoordinates(coords ?? TargetCoords), tile);
 
-            if (!MapMan.TryFindGridAt(pos, out _, out grid))
+            if (!MapMan.TryFindGridAt(pos, out _, out _))
                 Assert.Fail("Failed to create grid?");
         });
         await AssertTile(proto, coords);
@@ -1170,14 +1181,17 @@ public abstract partial class InteractionTest
 
     #region Inputs
 
+
+
     /// <summary>
     ///     Make the client press and then release a key. This assumes the key is currently released.
+    ///     This will default to using the <see cref="Target"/> entity and <see cref="TargetCoords"/> coordinates.
     /// </summary>
     protected async Task PressKey(
         BoundKeyFunction key,
         int ticks = 1,
         NetCoordinates? coordinates = null,
-        NetEntity cursorEntity = default)
+        NetEntity? cursorEntity = null)
     {
         await SetKey(key, BoundKeyState.Down, coordinates, cursorEntity);
         await RunTicks(ticks);
@@ -1186,16 +1200,19 @@ public abstract partial class InteractionTest
     }
 
     /// <summary>
-    ///     Make the client press or release a key
+    ///     Make the client press or release a key.
+    ///     This will default to using the <see cref="Target"/> entity and <see cref="TargetCoords"/> coordinates.
     /// </summary>
     protected async Task SetKey(
         BoundKeyFunction key,
         BoundKeyState state,
         NetCoordinates? coordinates = null,
-        NetEntity cursorEntity = default)
+        NetEntity? cursorEntity = null,
+        ScreenCoordinates? screenCoordinates = null)
     {
         var coords = coordinates ?? TargetCoords;
-        ScreenCoordinates screen = default;
+        var target = cursorEntity ?? Target ?? default;
+        var screen = screenCoordinates ?? default;
 
         var funcId = InputManager.NetworkBindMap.KeyFunctionID(key);
         var message = new ClientFullInputCmdMessage(CTiming.CurTick, CTiming.TickFraction, funcId)
@@ -1203,7 +1220,7 @@ public abstract partial class InteractionTest
             State = state,
             Coordinates = CEntMan.GetCoordinates(coords),
             ScreenCoordinates = screen,
-            Uid = CEntMan.GetEntity(cursorEntity),
+            Uid = CEntMan.GetEntity(target),
         };
 
         await Client.WaitPost(() => InputSystem.HandleInputCommand(ClientSession, key, message));

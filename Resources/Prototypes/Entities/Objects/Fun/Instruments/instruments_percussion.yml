@@ -54,6 +54,7 @@
     instrumentList:
       "Aah": {52: 0}
       "Ooh": {53: 0}
+      "Kweh": {4: 1}
   - type: Sprite
     sprite: Objects/Fun/Instruments/microphone.rsi
     state: icon
@@ -140,7 +141,8 @@
     respectMidiLimits: false
   - type: Sprite
     sprite: Objects/Fun/Instruments/h_synthesizer.rsi
-    state: icon
+    state: supersynth
   - type: Item
+    heldPrefix: super
     size: Normal
     sprite: Objects/Fun/Instruments/h_synthesizer.rsi

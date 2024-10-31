@@ -3,313 +3,179 @@
   suffix: Filled
   parent: LockerSyndicatePersonal
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingBeltMilitaryWebbing
-      - id: ClothingHandsGlovesCombat
-      - id: JetpackBlackFilled
-      - id: ClothingUniformJumpsuitOperative
-      - id: ClothingUniformJumpskirtOperative
-      - id: ClothingHeadsetAltSyndicate
-      - id: ClothingEyesHudSyndicate
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: ClothingBeltMilitaryWebbing
+        - id: ClothingHandsGlovesCombat
+        - id: JetpackBlackFilled
+        - id: ClothingUniformJumpsuitOperative
+        - id: ClothingUniformJumpskirtOperative
+        - id: ClothingHeadsetAltSyndicate
+        - id: ClothingEyesHudSyndicate
+
+- type: entityTable
+  id: FillLockerEmergencyStandard
+  table: !type:AllSelector
+    children:
+    - id: ClothingMaskBreath
+    - id: ClothingOuterSuitEmergency
+    - !type:GroupSelector
+      children:
+      - id: EmergencyOxygenTankFilled
+      - id: OxygenTankFilled
+    - id: ToolboxEmergencyFilled
+      prob: 0.5
+    - id: MedkitOxygenFilled
+      prob: 0.2
+    - id: WeaponFlareGun
+      prob: 0.05
+    - id: BoxMRE
+      prob: 0.1
 
 - type: entity
   id: ClosetEmergencyFilledRandom
   parent: ClosetEmergency
   suffix: Filled, Random
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingOuterSuitEmergency
-      - id: ClothingMaskBreath
-      - id: EmergencyOxygenTankFilled
-        prob: 0.80
-        orGroup: EmergencyTankOrRegularTank
-      - id: OxygenTankFilled
-        prob: 0.20
-        orGroup: EmergencyTankOrRegularTank
-      - id: ToolboxEmergencyFilled
-        prob: 0.4
-      - id: MedkitOxygenFilled
-        prob: 0.2
-      - id: WeaponFlareGun
-        prob: 0.05
-      - id: BoxMRE
-        prob: 0.1
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillLockerEmergencyStandard
 
 - type: entity
   id: ClosetWallEmergencyFilledRandom
   parent: ClosetWallEmergency
   suffix: Filled, Random
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingOuterSuitEmergency
-      - id: ClothingMaskBreath
-      - id: EmergencyOxygenTankFilled
-        prob: 0.80
-        orGroup: EmergencyTankOrRegularTank
-      - id: OxygenTankFilled
-        prob: 0.20
-        orGroup: EmergencyTankOrRegularTank
-      - id: ToolboxEmergencyFilled
-        prob: 0.4
-      - id: MedkitOxygenFilled
-        prob: 0.2
-      - id: WeaponFlareGun
-        prob: 0.05
-      - id: BoxMRE
-        prob: 0.1
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillLockerEmergencyStandard
 
 - type: entity
   id: ClosetEmergencyN2FilledRandom
   parent: ClosetEmergencyN2
   suffix: Filled, Random
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingMaskBreath
-      - id: EmergencyNitrogenTankFilled
-        prob: 0.80
-        orGroup: EmergencyTankOrRegularTank
-      - id: NitrogenTankFilled
-        prob: 0.20
-        orGroup: EmergencyTankOrRegularTank
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: ClothingMaskBreath
+        - id: ClothingOuterSuitEmergency
+        - !type:GroupSelector
+          children:
+          - id: EmergencyNitrogenTankFilled
+          - id: NitrogenTankFilled
+
+- type: entityTable
+  id: FillLockerFireStandard
+  table: !type:AllSelector
+    children:
+    - id: ClothingOuterSuitFire
+    - id: ClothingHeadHelmetFire
+    - id: ClothingMaskGas
+    - !type:GroupSelector
+      children:
+      - id: EmergencyOxygenTankFilled
+      - id: OxygenTankFilled
+    - id: CrowbarRed
+    - !type:GroupSelector
+      children:
+      - id: FireExtinguisher
+        weight: 98
+      - id: SprayBottleWater #It's just budget cut after budget cut man
+        weight: 2
 
 - type: entity
   id: ClosetFireFilled
   parent: ClosetFire
   suffix: Filled
   components:
-    - type: StorageFill
-      contents:
-        - id: ClothingOuterSuitFire
-        - id: ClothingHeadHelmetFire
-        - id: ClothingMaskGas
-        - id: OxygenTankFilled
-        - id: FireExtinguisher
-          prob: 0.25
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillLockerFireStandard
+
 - type: entity
   id: ClosetWallFireFilledRandom
   parent: ClosetWallFire
   suffix: Filled
   components:
-    - type: StorageFill
-      contents:
-        - id: ClothingOuterSuitFire
-        - id: ClothingHeadHelmetFire
-        - id: ClothingMaskGas
-        - id: OxygenTankFilled
-        - id: FireExtinguisher
-          prob: 0.25
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillLockerFireStandard
+
+- type: entityTable
+  id: SyndieMaintLoot
+  table: !type:GroupSelector
+    children:
+    - !type:GroupSelector
+      children:
+      - id: ClothingUniformJumpsuitOperative
+      - id: ClothingUniformJumpskirtOperative
+    - id: ClothingBackpackDuffelSyndicate
+    - id: CyberPen
+    - id: CigPackSyndicate
+    - id: ClothingBackpackDuffelSyndicatePyjamaBundle
+    - id: ClothingBeltMilitaryWebbing
+    - id: ClothingShoesBootsCombatFilled
+    - id: ToolboxSyndicateFilled
+    - id: BalloonSyn
+    - id: WeaponSniperMosin
+      weight: 2
+
+- type: entityTable
+  id: MaintenanceLockerLoot
+  table: !type:AllSelector
+    children:
+    - id: StrangePill
+      prob: 0.20
+    # Tools
+    - !type:NestedSelector
+      tableId: MaintToolsTable
+      rolls: !type:RangeNumberSelector
+        range: 1, 5
+    # Fluff
+    - !type:NestedSelector
+      tableId: MaintFluffTable
+      prob: 0.33
+      rolls: !type:RangeNumberSelector
+        range: 0, 2
+    # Plushies
+    - !type:NestedSelector
+      tableId: AllPlushiesTable
+      prob: 0.10
+      rolls: !type:RangeNumberSelector
+        range: 1, 2
+    # Weapons
+    - !type:NestedSelector
+      tableId: MaintWeaponTable
+      prob: 0.075
+    # Syndie Loot
+    - !type:NestedSelector
+      tableId: SyndieMaintLoot
+      prob: 0.05
+
 - type: entity
   id: ClosetMaintenanceFilledRandom
   suffix: Filled, Random
   parent: ClosetMaintenance
   components:
-    - type: StorageFill
-      contents:
-        - id: Lantern
-          prob: 0.50
-        - id: Wirecutter
-          prob: 0.33
-        - id: Screwdriver
-          prob: 0.33
-        - id: Wrench
-          prob: 0.33
-        - id: Crowbar
-          prob: 0.50
-        - id: Welder
-          prob: 0.33
-        - id: Multitool
-          prob: 0.10
-        - id: Soap
-          prob: 0.44
-        - id: null
-          prob: 0.67
-          orGroup: carp
-        - id: PlushieCarp
-          prob: 0.2
-          orGroup: carp
-        - id: PlushieHolocarp
-          prob: 0.05
-          orGroup: carp
-        - id: PlushieMagicarp
-          prob: 0.05
-          orGroup: carp
-        - id: PlushieRainbowCarp
-          prob: 0.03
-          orGroup: carp
-        - id: PlushieSlime
-          prob: 0.2
-        - id: PlushieSnake
-          prob: 0.2
-        - id: ClothingShoesSkates
-          prob: 0.1
-        - id: ClothingHandsGlovesColorYellow
-          prob: 0.05
-        - id: ClothingHandsGlovesFingerlessInsulated
-          prob: 0.07
-        - id: ClothingBeltUtility
-          prob: 0.10
-        - id: ClothingHeadHatCone
-          prob: 0.2
-        - id: WeaponFlareGun
-          prob: 0.1
-        - id: ClothingHandsGlovesColorYellowBudget
-          prob: 0.25
-        - id: StrangePill
-          prob: 0.20
-        - id: DrinkMopwataBottleRandom
-          prob: 0.20
-        - id: ModularReceiver
-          prob: 0.1
-        - id: DrinkSpaceGlue
-          prob: 0.20
-        - id: DrinkSpaceLube
-          prob: 0.20
-        - id: BarberScissors
-          prob: 0.05
-        - id: BookRandomStory
-          prob: 0.1
-        # Syndicate loot
-        - id: null
-          prob: 0.95
-          orGroup: syndiemaintloot
-        - id: ClothingUniformJumpskirtOperative
-          prob: 0.005
-          orGroup: syndiemaintloot
-        - id: ClothingUniformJumpsuitOperative
-          prob: 0.005
-          orGroup: syndiemaintloot
-        - id: ClothingBackpackDuffelSyndicate
-          prob: 0.005
-          orGroup: syndiemaintloot
-        - id: CyberPen
-          prob: 0.005
-          orGroup: syndiemaintloot
-        - id: CigPackSyndicate
-          prob: 0.005
-          orGroup: syndiemaintloot
-        - id: ClothingBackpackDuffelSyndicatePyjamaBundle
-          prob: 0.005
-          orGroup: syndiemaintloot
-        - id: ClothingBeltMilitaryWebbing
-          prob: 0.005
-          orGroup: syndiemaintloot
-        - id: ClothingShoesBootsCombatFilled
-          prob: 0.005
-          orGroup: syndiemaintloot
-        - id: ToolboxSyndicateFilled
-          prob: 0.005
-          orGroup: syndiemaintloot
-        - id: BalloonSyn
-          prob: 0.005
-          orGroup: syndiemaintloot
-        - id: WeaponSniperMosin
-          prob: 0.0010
-          orGroup: syndiemaintloot
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: MaintenanceLockerLoot
 
 - type: entity
   id: ClosetWallMaintenanceFilledRandom
   parent: ClosetWall
   suffix: Filled, Random
   components:
-  - type: StorageFill
-    contents:
-        - id: Lantern
-          prob: 0.50
-        - id: Wirecutter
-          prob: 0.33
-        - id: Screwdriver
-          prob: 0.33
-        - id: Wrench
-          prob: 0.33
-        - id: Crowbar
-          prob: 0.50
-        - id: Welder
-          prob: 0.33
-        - id: Multitool
-          prob: 0.10
-        - id: Soap
-          prob: 0.44
-        - id: null
-          prob: 0.67
-          orGroup: carp
-        - id: PlushieCarp
-          prob: 0.2
-          orGroup: carp
-        - id: PlushieHolocarp
-          prob: 0.05
-          orGroup: carp
-        - id: PlushieMagicarp
-          prob: 0.05
-          orGroup: carp
-        - id: PlushieRainbowCarp
-          prob: 0.03
-          orGroup: carp
-        - id: PlushieSlime
-          prob: 0.2
-        - id: PlushieSnake
-          prob: 0.2
-        - id: ClothingHandsGlovesColorYellow
-          prob: 0.05
-        - id: ClothingBeltQuiver
-          prob: 0.02
-        - id: ClothingBeltUtility
-          prob: 0.10
-        - id: ClothingHeadHatCone
-          prob: 0.2
-        - id: WeaponFlareGun
-          prob: 0.1
-        - id: ClothingHandsGlovesColorYellowBudget
-          prob: 0.25
-        - id: StrangePill
-          prob: 0.20
-        - id: DrinkSpaceGlue
-          prob: 0.20
-        - id: ModularReceiver
-          prob: 0.1
-        # Syndicate loot
-        - id: null
-          prob: 0.95
-          orGroup: syndiemaintloot
-        - id: ClothingUniformJumpskirtOperative
-          prob: 0.005
-          orGroup: syndiemaintloot
-        - id: ClothingUniformJumpsuitOperative
-          prob: 0.005
-          orGroup: syndiemaintloot
-        - id: ClothingBackpackDuffelSyndicate
-          prob: 0.005
-          orGroup: syndiemaintloot
-        - id: CyberPen
-          prob: 0.005
-          orGroup: syndiemaintloot
-        - id: ClothingHeadHatOutlawHat
-          prob: 0.005
-          orGroup: syndiemaintloot
-        - id: ClothingEyesGlassesOutlawGlasses
-          prob: 0.005
-          orGroup: syndiemaintloot
-        - id: CigPackSyndicate
-          prob: 0.005
-          orGroup: syndiemaintloot
-        - id: ClothingBackpackDuffelSyndicatePyjamaBundle
-          prob: 0.005
-          orGroup: syndiemaintloot
-        - id: ClothingBeltMilitaryWebbing
-          prob: 0.005
-          orGroup: syndiemaintloot
-        - id: ClothingShoesBootsCombatFilled
-          prob: 0.005
-          orGroup: syndiemaintloot
-        - id: ToolboxSyndicateFilled
-          prob: 0.005
-          orGroup: syndiemaintloot
-        - id: BalloonSyn
-          prob: 0.005
-          orGroup: syndiemaintloot
-        - id: WeaponSniperMosin
-          prob: 0.0010
-          orGroup: syndiemaintloot
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: MaintenanceLockerLoot

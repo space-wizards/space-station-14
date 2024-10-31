@@ -139,7 +139,7 @@ public sealed class PanicBunkerMinAccountAgeCommand : LocalizedCommands
         if (args.Length == 0)
         {
             var current = _cfg.GetCVar(CCVars.PanicBunkerMinAccountAge);
-            shell.WriteLine(Loc.GetString("panicbunker-command-min-account-age-is", ("hours", current / 60)));
+            shell.WriteLine(Loc.GetString("panicbunker-command-min-account-age-is", ("minutes", current)));
         }
 
         if (args.Length > 1)
@@ -148,30 +148,30 @@ public sealed class PanicBunkerMinAccountAgeCommand : LocalizedCommands
             return;
         }
 
-        if (!int.TryParse(args[0], out var hours))
+        if (!int.TryParse(args[0], out var minutes))
         {
             shell.WriteError(Loc.GetString("shell-argument-must-be-number"));
             return;
         }
 
-        _cfg.SetCVar(CCVars.PanicBunkerMinAccountAge, hours * 60);
-        shell.WriteLine(Loc.GetString("panicbunker-command-min-account-age-set", ("hours", hours)));
+        _cfg.SetCVar(CCVars.PanicBunkerMinAccountAge, minutes);
+        shell.WriteLine(Loc.GetString("panicbunker-command-min-account-age-set", ("minutes", minutes)));
     }
 }
 
 [AdminCommand(AdminFlags.Server)]
-public sealed class PanicBunkerMinOverallHoursCommand : LocalizedCommands
+public sealed class PanicBunkerMinOverallMinutesCommand : LocalizedCommands
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
 
-    public override string Command => "panicbunker_min_overall_hours";
+    public override string Command => "panicbunker_min_overall_minutes";
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length == 0)
         {
-            var current = _cfg.GetCVar(CCVars.PanicBunkerMinOverallHours);
-            shell.WriteLine(Loc.GetString("panicbunker-command-min-overall-hours-is", ("minutes", current)));
+            var current = _cfg.GetCVar(CCVars.PanicBunkerMinOverallMinutes);
+            shell.WriteLine(Loc.GetString("panicbunker-command-min-overall-minutes-is", ("minutes", current)));
         }
 
         if (args.Length > 1)
@@ -180,13 +180,13 @@ public sealed class PanicBunkerMinOverallHoursCommand : LocalizedCommands
             return;
         }
 
-        if (!int.TryParse(args[0], out var hours))
+        if (!int.TryParse(args[0], out var minutes))
         {
             shell.WriteError(Loc.GetString("shell-argument-must-be-number"));
             return;
         }
 
-        _cfg.SetCVar(CCVars.PanicBunkerMinOverallHours, hours);
-        shell.WriteLine(Loc.GetString("panicbunker-command-overall-hours-age-set", ("hours", hours)));
+        _cfg.SetCVar(CCVars.PanicBunkerMinOverallMinutes, minutes);
+        shell.WriteLine(Loc.GetString("panicbunker-command-overall-minutes-age-set", ("minutes", minutes)));
     }
 }

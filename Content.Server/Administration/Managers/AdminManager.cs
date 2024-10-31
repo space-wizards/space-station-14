@@ -240,7 +240,6 @@ namespace Content.Server.Administration.Managers
             _sawmill = _logManager.GetSawmill("admin");
 
             _netMgr.RegisterNetMessage<MsgUpdateAdminStatus>();
-            _netMgr.RegisterNetMessage<ShowRulesPopupMessage>();
 
             // Cache permissions for loaded console commands with the requisite attributes.
             foreach (var (cmdName, cmd) in _consoleHost.AvailableCommands)
@@ -459,7 +458,7 @@ namespace Content.Server.Administration.Managers
                     Flags = flags
                 };
 
-                if (dbData.Title != null)
+                if (dbData.Title != null  && _cfg.GetCVar(CCVars.AdminUseCustomNamesAdminRank))
                 {
                     data.Title = dbData.Title;
                 }
@@ -659,7 +658,7 @@ public record struct CommandPermissionsUnassignedError(CommandSpec Command) : IC
 {
     public FormattedMessage DescribeInner()
     {
-        return FormattedMessage.FromMarkup($"The command {Command.FullName()} is missing permission flags and cannot be executed.");
+        return FormattedMessage.FromMarkupOrThrow($"The command {Command.FullName()} is missing permission flags and cannot be executed.");
     }
 
     public string? Expression { get; set; }
@@ -672,7 +671,7 @@ public record struct NoPermissionError(CommandSpec Command) : IConError
 {
     public FormattedMessage DescribeInner()
     {
-        return FormattedMessage.FromMarkup($"You do not have permission to execute {Command.FullName()}");
+        return FormattedMessage.FromMarkupOrThrow($"You do not have permission to execute {Command.FullName()}");
     }
 
     public string? Expression { get; set; }

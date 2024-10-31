@@ -117,15 +117,15 @@
               amount: 2
           steps:
             - tool: Prying
+              doAfter: 1
 
     - node: computer
       entity: !type:BoardNodeEntity { container: board }
       edges:
         - to: monitorUnsecured
-          conditions:
-            - !type:AllWiresCut {}
           steps:
-            - tool: Screwing
+            - tool: Prying
+              doAfter: 1
 
     - node: monitorBroken
       entity: ComputerBroken

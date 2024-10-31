@@ -1,6 +1,6 @@
 - type: entity
   name: stun baton
-  parent: BaseItem
+  parent: [BaseItem, BaseRestrictedContraband]
   id: Stunbaton
   description: A stun baton for incapacitating people with. Actively harming with this is considered bad tone.
   components:
@@ -43,6 +43,7 @@
   - type: StaminaDamageOnCollide
     damage: 35
     sound: /Audio/Weapons/egloves.ogg
+  - type: LandAtCursor # it deals stamina damage when thrown
   - type: Battery
     maxCharge: 1000
     startingCharge: 1000
@@ -86,10 +87,11 @@
   - type: GuideHelp
     guides:
     - Security
+    - Antagonists
 
 - type: entity
   name: truncheon
-  parent: BaseItem
+  parent: [BaseItem, BaseRestrictedContraband]
   id: Truncheon
   description: A rigid, steel-studded baton, meant to harm.
   components:
@@ -107,7 +109,7 @@
   - type: Item
     size: Normal
   - type: Tag
-    tags: 
+    tags:
     - Truncheon
   - type: Clothing
     sprite: Objects/Weapons/Melee/truncheon.rsi
@@ -122,10 +124,11 @@
   - type: GuideHelp
     guides:
     - Security
+    - Antagonists
 
 - type: entity
   name: flash
-  parent: BaseItem
+  parent: [BaseItem, BaseSecurityScienceCommandContraband]
   id: Flash
   description: An ultrabright flashbulb with a trigger, which causes the victim to be dazed and lose their eyesight for a moment. Useless when burnt out.
   components:
@@ -167,6 +170,7 @@
     - type: GuideHelp
       guides:
       - Security
+      - Antagonists
 
 - type: entity
   name: flash
@@ -180,7 +184,7 @@
 
 - type: entity
   name: portable flasher
-  parent: BaseStructure
+  parent: [BaseMachine, BaseRestrictedContraband]
   id: PortableFlasher
   description: An ultrabright flashbulb with a proximity trigger, useful for making an area security-only.
   components:
@@ -196,14 +200,11 @@
         !type:PhysShapeCircle
           radius: 2
       repeating: true
-    - type: Anchorable
     - type: Sprite
       sprite: Objects/Weapons/pflash.rsi
       layers:
         - state: "off"
           map: ["enum.ProximityTriggerVisualLayers.Base"]
-    - type: InteractionOutline
-    - type: Physics
     - type: Fixtures
       fixtures:
         fix1:
@@ -225,3 +226,4 @@
     - type: GuideHelp
       guides:
       - Security
+      - Antagonists

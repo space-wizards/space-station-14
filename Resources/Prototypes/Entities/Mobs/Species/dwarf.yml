@@ -56,11 +56,25 @@
     hideLayersOnEquip:
     - Hair
     - Snout
+  - type: Inventory
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
 
 - type: entity
   parent: BaseSpeciesDummy
   id: MobDwarfDummy
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     scale: 1, 0.8
+  - type: Inventory
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female

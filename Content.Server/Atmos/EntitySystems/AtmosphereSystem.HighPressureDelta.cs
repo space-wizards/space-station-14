@@ -1,5 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Physics;
 using Robust.Shared.Audio;
@@ -209,7 +210,7 @@ namespace Content.Server.Atmos.EntitySystems
                                      MovedByPressureComponent.ProbabilityOffset);
 
             // Can we yeet the thing (due to probability, strength, etc.)
-            if (moveProb > MovedByPressureComponent.ProbabilityOffset && _robustRandom.Prob(MathF.Min(moveProb / 100f, 1f))
+            if (moveProb > MovedByPressureComponent.ProbabilityOffset && _random.Prob(MathF.Min(moveProb / 100f, 1f))
                                                                       && !float.IsPositiveInfinity(component.MoveResist)
                                                                       && (physics.BodyType != BodyType.Static
                                                                           && (maxForce >= (component.MoveResist * MovedByPressureComponent.MoveForcePushRatio)))
@@ -236,7 +237,7 @@ namespace Content.Server.Atmos.EntitySystems
                     // TODO: Technically these directions won't be correct but uhh I'm just here for optimisations buddy not to fix my old bugs.
                     if (throwTarget != EntityCoordinates.Invalid)
                     {
-                        var pos = ((throwTarget.ToMap(EntityManager, _transformSystem).Position - xform.WorldPosition).Normalized() + dirVec).Normalized();
+                        var pos = ((_transformSystem.ToMapCoordinates(throwTarget).Position - _transformSystem.GetWorldPosition(xform)).Normalized() + dirVec).Normalized();
                         _physics.ApplyLinearImpulse(uid, pos * moveForce, body: physics);
                     }
                     else

@@ -30,15 +30,24 @@ public sealed partial class ToolTileCompatibleComponent : Component
 [Serializable, NetSerializable]
 public sealed partial class TileToolDoAfterEvent : DoAfterEvent
 {
-    public NetCoordinates Coordinates;
+    public NetEntity Grid;
+    public Vector2i GridTile;
 
-    public TileToolDoAfterEvent(NetCoordinates coordinates)
+    public TileToolDoAfterEvent(NetEntity grid, Vector2i gridTile)
     {
-        Coordinates = coordinates;
+        Grid = grid;
+        GridTile = gridTile;
     }
 
     public override DoAfterEvent Clone()
     {
         return this;
+    }
+
+    public override bool IsDuplicate(DoAfterEvent other)
+    {
+        return other is TileToolDoAfterEvent otherTile
+               && Grid == otherTile.Grid
+               && GridTile == otherTile.GridTile;
     }
 }

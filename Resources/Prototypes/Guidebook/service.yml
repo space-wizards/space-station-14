@@ -1,0 +1,31 @@
+- type: guideEntry
+  id: Service
+  name: guide-entry-service
+  text: "/ServerInfo/Guidebook/Service/Service.xml"
+  filterEnabled: True
+  children:
+  - Bartender
+  - Botany
+  - Chef
+  - Janitorial
+  
+- type: guideEntry
+  id: Bartender
+  name: guide-entry-bartender
+  text: "/ServerInfo/Guidebook/Service/Bartender.xml"
+  filterEnabled: True
+
+- type: guideEntry
+  id: Botany
+  name: guide-entry-botany
+  text: "/ServerInfo/Guidebook/Service/Botany.xml"
+
+- type: guideEntry
+  id: Chef
+  name: guide-entry-chef
+  text: "/ServerInfo/Guidebook/Service/Chef.xml"
+
+- type: guideEntry
+  id: Janitorial
+  name: guide-entry-janitorial
+  text: "/ServerInfo/Guidebook/Service/Janitorial.xml"

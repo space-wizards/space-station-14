@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from cev-eris at commit https://github.com/discordia-space/CEV-Eris/commit/a75dee2e6d236612dbd403dd5f8687ca930c01f1",
+  "copyright": "Made by Flareguy for SS14. Based on the HOS cap sprite taken from tgstation at commit https://github.com/tgstation/tgstation/commit/d90c7e5de6f6d94596c164da78dbc8d3cd35bb99.",
   "size": {
     "x": 32,
     "y": 32
@@ -12,10 +12,6 @@
     },
     {
       "name": "equipped-HELMET",
-      "directions": 4
-    },
-    {
-      "name": "equipped-HELMET-hamster",
       "directions": 4
     },
     {

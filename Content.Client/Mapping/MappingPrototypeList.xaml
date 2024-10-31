@@ -1,0 +1,21 @@
+﻿<mapping:MappingPrototypeList
+    xmlns="https://spacestation14.io"
+    xmlns:mapping="clr-namespace:Content.Client.Mapping">
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Horizontal">
+            <Button Name="CollapseAllButton" Access="Public" Text="-" SetSize="48 48"
+                    StyleClasses="ButtonSquare" ToolTip="Collapse All" TooltipDelay="0" />
+            <LineEdit Name="SearchBar" SetHeight="48" HorizontalExpand="True" Access="Public" />
+            <Button Name="ClearSearchButton" Access="Public" Text="X" SetSize="48 48"
+                    StyleClasses="ButtonSquare" />
+        </BoxContainer>
+        <ScrollContainer Name="ScrollContainer" Access="Public" VerticalExpand="True"
+                         ReserveScrollbarSpace="True">
+            <BoxContainer Name="PrototypeList" Access="Public" Orientation="Vertical" />
+            <PrototypeListContainer Name="SearchList" Access="Public" Visible="False" />
+        </ScrollContainer>
+        <mapping:MappingDoNotMeasure Visible="False">
+            <mapping:MappingSpawnButton Name="MeasureButton" Access="Public" />
+        </mapping:MappingDoNotMeasure>
+    </BoxContainer>
+</mapping:MappingPrototypeList>

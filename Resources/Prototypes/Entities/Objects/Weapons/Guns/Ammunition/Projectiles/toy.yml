@@ -4,12 +4,31 @@
   name: foam dart
   parent: BaseItem
   components:
-    - type: Tag
-      tags:
-        - BulletFoam
-        - Trash
-    - type: Ammo
-    - type: Sprite
-      sprite: Objects/Fun/toys.rsi
-      layers:
-        - state: foamdart
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PolygonShape
+          vertices:
+            - -0.05,-0.15
+            - -0.05,0.25
+            - 0.05,-0.15
+            - 0.05,0.25
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+  - type: Tag
+    tags:
+      - BulletFoam
+      - Trash
+  - type: Ammo
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    layers:
+      - state: foamdart
+  - type: EmbeddableProjectile
+    removalTime: .2
+  - type: ThrowingAngle
+    angle: 180
+  - type: LandAtCursor

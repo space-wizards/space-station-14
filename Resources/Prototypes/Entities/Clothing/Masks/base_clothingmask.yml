@@ -9,6 +9,8 @@
     size: Small
   - type: Clothing
     slots: [mask]
+  - type: StaticPrice
+    price: 25
 
 - type: entity
   abstract: true
