@@ -35,6 +35,7 @@
     damage:
       types:
         Blunt: 0
+    hidden: true
   - type: PhysicalComposition
     materialComposition:
       Cloth: 100
