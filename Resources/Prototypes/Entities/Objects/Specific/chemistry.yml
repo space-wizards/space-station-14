@@ -528,5 +528,5 @@
     storageRemoveSound: /Audio/Effects/pill_remove.ogg
     whitelist: 
       tags:
-        - Pill
+      - Pill
   - type: Dumpable
