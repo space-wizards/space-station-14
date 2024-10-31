@@ -8,7 +8,6 @@ namespace Content.Shared.Chemistry.EntitySystems;
 public sealed class ReactiveContainerSystem : EntitySystem
 {
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly ReactiveSystem _reactiveSystem = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
@@ -40,9 +39,11 @@ public sealed class ReactiveContainerSystem : EntitySystem
             return;
         if (solution.Volume == 0)
             return;
+        if (!TryComp<ContainerManagerComponent>(uid, out var manager))
+            return;
+        if (!_containerSystem.TryGetContainer(uid, comp.Container, out var container))
+            return;
 
-        var manager = EnsureComp<ContainerManagerComponent>(uid);
-        var container = _containerSystem.EnsureContainer<ContainerSlot>(uid, comp.Container, manager);
         foreach (var entity in container.ContainedEntities)
         {
             if (!HasComp<ReactiveComponent>(entity))

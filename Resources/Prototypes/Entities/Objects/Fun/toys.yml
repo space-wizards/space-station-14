@@ -601,6 +601,8 @@
     animation: WeaponArcBite # Rrrr!
   - type: Tag
     tags:
+      - Payload
+      - ClothMade
       - PlushieCarp
 
 - type: entity
