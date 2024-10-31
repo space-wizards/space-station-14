@@ -68,6 +68,12 @@ public sealed partial class MeleeWeaponComponent : Component
     public bool AutoAttack;
 
     /// <summary>
+    /// If true, attacks will bypass armor resistances.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    public bool ResistanceBypass = false;
+    
+    /// <summary>
     /// Base damage for this weapon. Can be modified via heavy damage or other means.
     /// </summary>
     [DataField(required: true)]

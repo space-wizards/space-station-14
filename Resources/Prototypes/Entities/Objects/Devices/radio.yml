@@ -4,6 +4,7 @@
   parent: BaseItem
   id: RadioHandheld
   components:
+  - type: TelecomExempt
   - type: RadioMicrophone
     broadcastChannel: Handheld
   - type: RadioSpeaker
@@ -27,7 +28,7 @@
 - type: entity
   name: security radio
   description: A handy security radio.
-  parent: RadioHandheld
+  parent: [ RadioHandheld, BaseRestrictedContraband ]
   id: RadioHandheldSecurity
   components:
   - type: RadioMicrophone

@@ -25,4 +25,16 @@ public sealed partial class NpcFactionMemberComponent : Component
     /// </summary>
     [ViewVariables]
     public readonly HashSet<ProtoId<NpcFactionPrototype>> HostileFactions = new();
+
+    /// <summary>
+    /// Used to add friendly factions in prototypes.
+    /// </summary>
+    [DataField, ViewVariables]
+    public HashSet<ProtoId<NpcFactionPrototype>>? AddFriendlyFactions;
+
+    /// <summary>
+    /// Used to add hostile factions in prototypes.
+    /// </summary>
+    [DataField, ViewVariables]
+    public HashSet<ProtoId<NpcFactionPrototype>>? AddHostileFactions;
 }

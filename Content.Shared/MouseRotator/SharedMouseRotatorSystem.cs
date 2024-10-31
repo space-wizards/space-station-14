@@ -1,5 +1,4 @@
 ﻿using Content.Shared.Interaction;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.MouseRotator;
 
@@ -16,7 +15,6 @@ public abstract class SharedMouseRotatorSystem : EntitySystem
         base.Initialize();
 
         SubscribeAllEvent<RequestMouseRotatorRotationEvent>(OnRequestRotation);
-        SubscribeAllEvent<RequestMouseRotatorRotationSimpleEvent>(OnRequestSimpleRotation);
     }
 
     public override void Update(float frameTime)
@@ -50,26 +48,13 @@ public abstract class SharedMouseRotatorSystem : EntitySystem
     private void OnRequestRotation(RequestMouseRotatorRotationEvent msg, EntitySessionEventArgs args)
     {
         if (args.SenderSession.AttachedEntity is not { } ent
-            || !TryComp<MouseRotatorComponent>(ent, out var rotator) || rotator.Simple4DirMode)
+            || !TryComp<MouseRotatorComponent>(ent, out var rotator))
         {
             Log.Error($"User {args.SenderSession.Name} ({args.SenderSession.UserId}) tried setting local rotation directly without a valid mouse rotator component attached!");
             return;
         }
 
         rotator.GoalRotation = msg.Rotation;
-        Dirty(ent, rotator);
-    }
-
-    private void OnRequestSimpleRotation(RequestMouseRotatorRotationSimpleEvent ev, EntitySessionEventArgs args)
-    {
-        if (args.SenderSession.AttachedEntity is not { } ent
-            || !TryComp<MouseRotatorComponent>(ent, out var rotator) || !rotator.Simple4DirMode)
-        {
-            Log.Error($"User {args.SenderSession.Name} ({args.SenderSession.UserId}) tried setting 4-dir rotation directly without a valid mouse rotator component attached!");
-            return;
-        }
-
-        rotator.GoalRotation = ev.Direction.ToAngle();
         Dirty(ent, rotator);
     }
 }

@@ -8,7 +8,7 @@
     noRot: true
     sprite: Structures/Power/Generation/Tesla/generator.rsi
     state: icon 
-  - type: SingularityGenerator #To do: rename the generator
+  - type: SingularityGenerator # TODO: rename the generator
     spawnId: TeslaEnergyBall
   - type: InteractionOutline
   - type: Fixtures
@@ -25,5 +25,5 @@
         layer:
         - Opaque
   - type: Anchorable
-  #- type: GuideHelp #   To Do - add Tesla Guide
+  #- type: GuideHelp # TODO - add Tesla Guide
 

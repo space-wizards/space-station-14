@@ -8,7 +8,7 @@
   id: AtmosDrobeAds
   values:
     prefix: advertisement-atmosdrobe-
-    count: 3
+    count: 5
 
 - type: localizedDataset
   id: BarDrobeAds
@@ -21,6 +21,12 @@
   values:
     prefix: advertisement-boozeomat-
     count: 19
+
+- type: localizedDataset
+  id: BruiseOMatAds
+  values:
+    prefix: advertisement-bruiseomat-
+    count: 15
 
 - type: localizedDataset
   id: CargoDrobeAds
@@ -38,7 +44,7 @@
   id: ChefDrobeAds
   values:
     prefix: advertisement-chefdrobe-
-    count: 3
+    count: 4
 
 - type: localizedDataset
   id: ChefvendAds
@@ -50,7 +56,7 @@
   id: ChemDrobeAds
   values:
     prefix: advertisement-chemdrobe-
-    count: 3
+    count: 4
 
 - type: localizedDataset
   id: CigaretteMachineAds
@@ -110,7 +116,7 @@
   id: DonutAds
   values:
     prefix: advertisement-donut-
-    count: 5
+    count: 6
 
 - type: localizedDataset
   id: EngiDrobeAds
@@ -123,6 +129,12 @@
   values:
     prefix: fat-extractor-fact-
     count: 6
+
+- type: localizedDataset
+  id: FirebotAd
+  values:
+    prefix: advertisement-firebot-
+    count: 4
 
 - type: localizedDataset
   id: GoodCleanFunAds
@@ -146,19 +158,19 @@
   id: HyDrobeAds
   values:
     prefix: advertisement-hydrobe-
-    count: 4
+    count: 5
 
 - type: localizedDataset
   id: JaniDrobeAds
   values:
     prefix: advertisement-janidrobe-
-    count: 3
+    count: 5
 
 - type: localizedDataset
   id: LawDrobeAds
   values:
     prefix: advertisement-lawdrobe-
-    count: 8
+    count: 9
 
 - type: localizedDataset
   id: MagiVendAds
@@ -170,7 +182,7 @@
   id: MediDrobeAds
   values:
     prefix: advertisement-medidrobe-
-    count: 3
+    count: 4
 
 - type: localizedDataset
   id: MegaSeedAds

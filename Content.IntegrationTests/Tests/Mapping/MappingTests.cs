@@ -13,7 +13,7 @@ public sealed class MappingTests
     [Test]
     public async Task MappingTest()
     {
-        await using var pair = await PoolManager.GetServerClient(new PoolSettings {Dirty = true, Connected = true, DummyTicker = false});
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Dirty = true, Connected = true, DummyTicker = false });
 
         var server = pair.Server;
         var entMan = server.EntMan;

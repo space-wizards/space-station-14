@@ -8,7 +8,7 @@
     mode: SnapgridCenter
   components:
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Glass
   - type: Destructible
     thresholds:

@@ -340,7 +340,7 @@
 
 - type: entity
   name: syndicate encryption key box
-  parent: BoxEncryptionKeyPassenger
+  parent: [BoxEncryptionKeyPassenger, BaseSyndicateContraband]
   id: BoxEncryptionKeySyndie
   description: Two syndicate encryption keys for the price of one. Miniaturized for ease of use.
   components:
@@ -432,3 +432,17 @@
       - id: DartYellow
         amount: 2
 
+- type: entity
+  name: envelope box
+  parent: BoxCardboard
+  id: BoxEnvelope
+  description: A box filled with envelopes.
+  components:
+  - type: Sprite
+    layers:
+      - state: box
+      - state: envelope
+  - type: StorageFill
+    contents:
+      - id: Envelope
+        amount: 9

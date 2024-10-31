@@ -18,7 +18,7 @@ public sealed class ChemicalPuddleArtifactSystem : EntitySystem
     /// The key for the node data entry containing
     /// the chemicals that the puddle is made of.
     /// </summary>
-    public const string NodeDataChemicalList = "nodeDataSpawnAmount";
+    public const string NodeDataChemicalList = "nodeDataChemicalList";
 
     /// <inheritdoc/>
     public override void Initialize()

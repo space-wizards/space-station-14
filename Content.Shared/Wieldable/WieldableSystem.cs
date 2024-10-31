@@ -47,6 +47,7 @@ public sealed class WieldableSystem : EntitySystem
         SubscribeLocalEvent<WieldableComponent, HandDeselectedEvent>(OnDeselectWieldable);
 
         SubscribeLocalEvent<MeleeRequiresWieldComponent, AttemptMeleeEvent>(OnMeleeAttempt);
+        SubscribeLocalEvent<GunRequiresWieldComponent, ExaminedEvent>(OnExamineRequires);
         SubscribeLocalEvent<GunRequiresWieldComponent, ShotAttemptedEvent>(OnShootAttempt);
         SubscribeLocalEvent<GunWieldBonusComponent, ItemWieldedEvent>(OnGunWielded);
         SubscribeLocalEvent<GunWieldBonusComponent, ItemUnwieldedEvent>(OnGunUnwielded);
@@ -116,8 +117,17 @@ public sealed class WieldableSystem : EntitySystem
         }
     }
 
+    private void OnExamineRequires(Entity<GunRequiresWieldComponent> entity, ref ExaminedEvent args)
+    {
+        if(entity.Comp.WieldRequiresExamineMessage != null)
+            args.PushText(Loc.GetString(entity.Comp.WieldRequiresExamineMessage));
+    }
+
     private void OnExamine(EntityUid uid, GunWieldBonusComponent component, ref ExaminedEvent args)
     {
+        if (HasComp<GunRequiresWieldComponent>(uid)) 
+            return;
+
         if (component.WieldBonusExamineMessage != null)
             args.PushText(Loc.GetString(component.WieldBonusExamineMessage));
     }

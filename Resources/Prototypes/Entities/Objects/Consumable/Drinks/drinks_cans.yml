@@ -66,6 +66,7 @@
   - type: Tag
     tags:
     - DrinkCan
+  - type: DnaSubstanceTrace
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -432,6 +433,7 @@
     whitelist:
       tags:
         - Cola
+    hideStackVisualsWhenClosed: false
   - type: StorageFill
     contents:
       - id: DrinkColaCan

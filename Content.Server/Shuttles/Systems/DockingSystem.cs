@@ -23,6 +23,7 @@ namespace Content.Server.Shuttles.Systems
     public sealed partial class DockingSystem : SharedDockingSystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly SharedMapSystem _mapSystem = default!;
         [Dependency] private readonly DoorSystem _doorSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly PathfindingSystem _pathfinding = default!;
@@ -262,7 +263,7 @@ namespace Content.Server.Shuttles.Systems
 
                 joint.LocalAnchorA = anchorA;
                 joint.LocalAnchorB = anchorB;
-                joint.ReferenceAngle = (float) (_transform.GetWorldRotation(gridBXform) - _transform.GetWorldRotation(gridAXform));
+                joint.ReferenceAngle = (float)(_transform.GetWorldRotation(gridBXform) - _transform.GetWorldRotation(gridAXform));
                 joint.CollideConnected = true;
                 joint.Stiffness = stiffness;
                 joint.Damping = damping;
@@ -281,24 +282,24 @@ namespace Content.Server.Shuttles.Systems
             {
                 if (_doorSystem.TryOpen(dockAUid, doorA))
                 {
-                    doorA.ChangeAirtight = false;
                     if (TryComp<DoorBoltComponent>(dockAUid, out var airlockA))
                     {
                         _doorSystem.SetBoltsDown((dockAUid, airlockA), true);
                     }
                 }
+                doorA.ChangeAirtight = false;
             }
 
             if (TryComp(dockBUid, out DoorComponent? doorB))
             {
                 if (_doorSystem.TryOpen(dockBUid, doorB))
                 {
-                    doorB.ChangeAirtight = false;
                     if (TryComp<DoorBoltComponent>(dockBUid, out var airlockB))
                     {
                         _doorSystem.SetBoltsDown((dockBUid, airlockB), true);
                     }
                 }
+                doorB.ChangeAirtight = false;
             }
 
             if (_pathfinding.TryCreatePortal(dockAXform.Coordinates, dockBXform.Coordinates, out var handle))

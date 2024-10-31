@@ -22,7 +22,7 @@ Each technology costs [color=#a4885c]Research Points[/color] and unlocks recipes
 [textlink="Click here to see a list of technologies." link="Technologies"].
 
 ## Disciplines
-Technologies are spread over 5 different Disciplines:
+Technologies are spread over 4 different Disciplines:
   <Box>
     <GuideEntityEmbed Entity="Wrench" Caption="Industrial"/>
     <GuideEntityEmbed Entity="WeaponTetherGun" Caption="Experimental"/>
