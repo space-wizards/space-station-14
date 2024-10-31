@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: stalengd
-  changes:
-  - message: Head bandana no longer blocks food eating.
-    type: Fix
-  id: 7070
-  time: '2024-08-09T06:17:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28910
 - author: Ubaser
   changes:
   - message: Oxygen and nitrogen canisters now have new sprites when worn.
@@ -3944,3 +3937,13 @@
   id: 7569
   time: '2024-10-31T18:46:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33079
+- author: Bhijn and Myr
+  changes:
+  - message: Tail thumping has been downmixed to mono to fix the sound lacking any
+      sort of positioning. They're now capable of having a presence in the actual
+      soundspace, in turn meaning lizards are no longer occupying your headset at
+      all times of day.
+    type: Fix
+  id: 7570
+  time: '2024-10-31T21:30:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33092
