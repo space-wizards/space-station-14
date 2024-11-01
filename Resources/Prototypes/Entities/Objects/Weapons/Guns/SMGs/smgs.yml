@@ -102,7 +102,7 @@
   - type: Gun
     minAngle: 21
     maxAngle: 32
-    shotsPerBurst: 5
+    shotsPerBurst: 3
     availableModes:
     - SemiAuto
     - Burst
@@ -249,7 +249,7 @@
     angleIncrease: 1.5
     angleDecay: 6
     selectedMode: FullAuto
-    shotsPerBurst: 5
+    shotsPerBurst: 3
     availableModes:
     - SemiAuto
     - Burst
