@@ -31,7 +31,7 @@ namespace Content.Client.Crayon.UI
         private void PopulateCrayons()
         {
             var crayonDecals = _protoManager.EnumeratePrototypes<DecalPrototype>().Where(x => x.Tags.Contains("crayon"));
-            _menu?.Populate(crayonDecals);
+            _menu?.Populate(crayonDecals.ToList());
         }
 
         public override void OnProtoReload(PrototypesReloadedEventArgs args)

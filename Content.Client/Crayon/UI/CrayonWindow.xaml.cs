@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Content.Client.Stylesheets;
 using Content.Shared.Crayon;
 using Content.Shared.Decals;
@@ -18,7 +19,7 @@ namespace Content.Client.Crayon.UI
     [GenerateTypedNameReferences]
     public sealed partial class CrayonWindow : DefaultWindow
     {
-        private Dictionary<string, Texture>? _decals;
+        private Dictionary<string, List<(string Name, Texture Texture)>>? _decals;
         private string? _selected;
         private Color _color;
 
@@ -44,42 +45,67 @@ namespace Content.Client.Crayon.UI
         private void RefreshList()
         {
             // Clear
-            Grid.DisposeAllChildren();
+            Grids.DisposeAllChildren();
+
             if (_decals == null)
                 return;
 
             var filter = Search.Text;
-            foreach (var (decal, tex) in _decals)
+
+            var names = _decals.Keys.ToList();
+            names.Sort((a, b) => a == "random" ? 1 : b == "random" ? -1 : a.CompareTo(b));
+
+            foreach (var categoryName in names)
             {
-                if (!decal.Contains(filter))
+                var category = _decals[categoryName].Where(d => categoryName.Contains(filter) || d.Name.Contains(filter)).ToList();
+
+                if (category.Count == 0)
                     continue;
 
-                var button = new TextureButton()
+                var label = new Label
                 {
-                    TextureNormal = tex,
-                    Name = decal,
-                    ToolTip = decal,
-                    Modulate = _color,
+                    Text = Loc.GetString("crayon-category-" + categoryName)
                 };
-                button.OnPressed += ButtonOnPressed;
-                if (_selected == decal)
+
+                var grid = new GridContainer
                 {
-                    var panelContainer = new PanelContainer()
+                    Columns = 6,
+                    Margin = new Thickness(0, 0, 0, 16)
+                };
+
+                Grids.AddChild(label);
+                Grids.AddChild(grid);
+
+                foreach (var (name, texture) in category)
+                {
+                    var button = new TextureButton()
                     {
-                        PanelOverride = new StyleBoxFlat()
-                        {
-                            BackgroundColor = StyleNano.ButtonColorDefault,
-                        },
-                        Children =
-                        {
-                            button,
-                        },
+                        TextureNormal = texture,
+                        Name = name,
+                        ToolTip = name,
+                        Modulate = _color,
+                        Scale = new System.Numerics.Vector2(2, 2)
                     };
-                    Grid.AddChild(panelContainer);
-                }
-                else
-                {
-                    Grid.AddChild(button);
+                    button.OnPressed += ButtonOnPressed;
+                    if (_selected == name)
+                    {
+                        var panelContainer = new PanelContainer()
+                        {
+                            PanelOverride = new StyleBoxFlat()
+                            {
+                                BackgroundColor = StyleNano.ButtonColorDefault,
+                            },
+                            Children =
+                            {
+                                button,
+                            },
+                        };
+                        grid.AddChild(panelContainer);
+                    }
+                    else
+                    {
+                        grid.AddChild(button);
+                    }
                 }
             }
         }
@@ -107,12 +133,19 @@ namespace Content.Client.Crayon.UI
             RefreshList();
         }
 
-        public void Populate(IEnumerable<DecalPrototype> prototypes)
+        public void Populate(List<DecalPrototype> prototypes)
         {
-            _decals = new Dictionary<string, Texture>();
+            _decals = [];
+
+            prototypes.Sort((a, b) => a.ID.CompareTo(b.ID));
+
             foreach (var decalPrototype in prototypes)
             {
-                _decals.Add(decalPrototype.ID, decalPrototype.Sprite.Frame0());
+                var category = "random";
+                if (decalPrototype.Tags.Count > 1 && decalPrototype.Tags[1].StartsWith("crayon-"))
+                    category = decalPrototype.Tags[1].Replace("crayon-", "");
+                var list = _decals.GetOrNew(category);
+                list.Add((decalPrototype.ID, decalPrototype.Sprite.Frame0()));
             }
 
             RefreshList();
