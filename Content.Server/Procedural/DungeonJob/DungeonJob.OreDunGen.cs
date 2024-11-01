@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Content.Shared.Maps;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.Components;
 using Content.Shared.Procedural.DungeonLayers;
@@ -20,44 +21,50 @@ public sealed partial class DungeonJob
     {
         // Doesn't use dungeon data because layers and we don't need top-down support at the moment.
 
-        var emptyTiles = false;
         var replaceEntities = new Dictionary<Vector2i, EntityUid>();
         var availableTiles = new List<Vector2i>();
+        var tiles = _maps.GetAllTilesEnumerator(_gridUid, _grid);
 
-        foreach (var node in dungeon.AllTiles)
+        while (tiles.MoveNext(out var tileRef))
         {
-            // Empty tile, skip if relevant.
-            if (!emptyTiles && (!_maps.TryGetTile(_grid, node, out var tile) || tile.IsEmpty))
-                continue;
+            var tile = tileRef.Value.GridIndices;
 
-            // Check if it's a valid spawn, if so then use it.
-            var enumerator = _maps.GetAnchoredEntitiesEnumerator(_gridUid, _grid, node);
-            var found = false;
-
-            // We use existing entities as a mark to spawn in place
-            // OR
-            // We check for any existing entities to see if we can spawn there.
-            while (enumerator.MoveNext(out var uid))
+            //Tile mask filtering
+            if (gen.TileMask is not null)
             {
-                // We can't replace so just stop here.
-                if (gen.Replacement == null)
-                    break;
+                if (!gen.TileMask.Contains(((ContentTileDefinition) _tileDefManager[tileRef.Value.Tile.TypeId]).ID))
+                    continue;
 
-                var prototype = _entManager.GetComponent<MetaDataComponent>(uid.Value).EntityPrototype;
-
-                if (prototype?.ID == gen.Replacement)
-                {
-                    replaceEntities[node] = uid.Value;
-                    found = true;
-                    break;
-                }
+                //If entity mask null - we ignore the tiles that have anything on them.
+                if (gen.EntityMask is null && !_anchorable.TileFree(_grid, tile, DungeonSystem.CollisionLayer, DungeonSystem.CollisionMask))
+                    continue;
             }
 
-            if (!found)
-                continue;
+            //Entity mask filtering
+            if (gen.EntityMask is not null)
+            {
+                var found = false;
+                var enumerator2 = _maps.GetAnchoredEntitiesEnumerator(_gridUid, _grid, tile);
+                while (enumerator2.MoveNext(out var uid))
+                {
+                    var prototype = _entManager.GetComponent<MetaDataComponent>(uid.Value).EntityPrototype;
+
+                    if (prototype?.ID is null)
+                        continue;
+
+                    if (!gen.EntityMask.Contains(prototype.ID))
+                        continue;
+
+                    replaceEntities[tile] = uid.Value;
+                    found = true;
+                }
+
+                if (!found)
+                    continue;
+            }
 
             // Add it to valid nodes.
-            availableTiles.Add(node);
+            availableTiles.Add(tile);
 
             await SuspendDungeon();
 
@@ -139,7 +146,7 @@ public sealed partial class DungeonJob
 
             if (groupSize > 0)
             {
-                _sawmill.Warning($"Found remaining group size for ore veins of {gen.Replacement ?? "null"}!");
+                _sawmill.Warning($"Found remaining group size for ore veins of {gen.Entity.Id ?? "null"}!");
             }
         }
     }
