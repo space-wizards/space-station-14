@@ -119379,6 +119379,16 @@ entities:
     - type: Transform
       pos: 95.5,34.5
       parent: 2
+  - uid: 11507
+    components:
+    - type: Transform
+      pos: 75.5,-14.5
+      parent: 2
+  - uid: 11564
+    components:
+    - type: Transform
+      pos: 76.5,-14.5
+      parent: 2
   - uid: 11590
     components:
     - type: Transform
@@ -119445,6 +119455,11 @@ entities:
     components:
     - type: Transform
       pos: 106.5,47.5
+      parent: 2
+  - uid: 12640
+    components:
+    - type: Transform
+      pos: 77.5,-14.5
       parent: 2
   - uid: 12655
     components:
@@ -132109,21 +132124,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 90.5,41.5
-      parent: 2
-  - uid: 13242
-    components:
-    - type: Transform
-      pos: 77.5,-14.5
-      parent: 2
-  - uid: 13307
-    components:
-    - type: Transform
-      pos: 76.5,-14.5
-      parent: 2
-  - uid: 13369
-    components:
-    - type: Transform
-      pos: 75.5,-14.5
       parent: 2
   - uid: 18596
     components:
@@ -150228,7 +150228,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -78924.195
+      secondsUntilStateChange: -79044.125
       state: Opening
     - type: Airlock
       autoClose: False
