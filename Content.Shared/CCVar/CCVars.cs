@@ -1537,6 +1537,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> VotekickBanDuration =
             CVarDef.Create("votekick.ban_duration", 180, CVar.SERVERONLY);
 
+        /// <summary>
+        ///     Whether the ghost requirement settings for votekicks should be ignored for the lobby. 
+        /// </summary>
+        public static readonly CVarDef<bool> VotekickIgnoreGhostReqInLobby =
+            CVarDef.Create("votekick.ignore_ghost_req_in_lobby", true, CVar.SERVERONLY);
+
         /*
          * BAN
          */
