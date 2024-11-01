@@ -15,11 +15,16 @@
     Plastic: 50
 
 - type: latheRecipe
-  id: DrinkMug
-  result: DrinkMug
+  abstract: true
+  id: BaseGlasswareRecipe
   completetime: 0.8
   materials:
     Glass: 100
+
+- type: latheRecipe
+  parent: BaseGlasswareRecipe
+  id: DrinkMug
+  result: DrinkMug
 
 - type: latheRecipe
   parent: DrinkMug
@@ -52,7 +57,7 @@
     Plastic: 200
 
 - type: latheRecipe
-  parent: DrinkMug
+  parent: BaseGlasswareRecipe
   id: FoodPlate
   result: FoodPlate
 
@@ -97,6 +102,8 @@
     Steel: 50
 
 - type: latheRecipe
-  parent: FoodPlateTin
   id: FoodKebabSkewer
   result: FoodKebabSkewer
+  completetime: 0.4
+  materials:
+    Steel: 100

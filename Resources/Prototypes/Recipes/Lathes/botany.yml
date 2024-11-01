@@ -12,12 +12,13 @@
 
 - type: latheRecipe
   parent: BaseHydroToolRecipe
-  id: MiniHoe
+  id: HydroponicsToolMiniHoe
   result: HydroponicsToolMiniHoe
 
 - type: latheRecipe
   parent: BaseHydroToolRecipe
   id: HydroponicsToolScythe
+  result: HydroponicsToolScythe
   materials:
     Steel: 300
     Plastic: 200
@@ -25,13 +26,14 @@
 - type: latheRecipe
   parent: BaseHydroToolRecipe
   id: HydroponicsToolHatchet
+  result: HydroponicsToolHatchet
 
 - type: latheRecipe
   parent: BaseHydroToolRecipe
-  id: Spade
+  id: HydroponicsToolSpade
   result: HydroponicsToolSpade
 
 - type: latheRecipe
   parent: BaseHydroToolRecipe
-  id: Clippers
+  id: HydroponicsToolClippers
   result: HydroponicsToolClippers
