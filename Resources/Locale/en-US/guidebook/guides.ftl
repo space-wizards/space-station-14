@@ -19,6 +19,7 @@ guide-entry-pneumaticvalve = Pneumatic Valve
 guide-entry-passivegate = Passive Gate
 guide-entry-mixingandfiltering = Mixing and Filtering
 guide-entry-gascanisters = Gas Canisters
+guide-entry-thermomachines = Thermomachines
 guide-entry-atmosphericssystems = Atmospherics Systems
 guide-entry-pipenetworks = Pipe Networks
 guide-entry-devicemonitoringandcontrol = Device Monitoring and Control

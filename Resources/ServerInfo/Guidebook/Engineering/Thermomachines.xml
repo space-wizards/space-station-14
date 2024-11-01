@@ -1,0 +1,29 @@
+﻿<Document>
+  # Thermomachines
+  Thermomachines are devices that manipulate the temperature of gases within a pipe network or exposed atmosphere.
+  <Box>
+    <GuideEntityEmbed Entity="SpaceHeater" Caption=""/>
+    <GuideEntityEmbed Entity="GasThermoMachineHeater" Caption=""/>
+    <GuideEntityEmbed Entity="GasThermoMachineFreezer" Caption=""/>
+  </Box>
+  They are essential for maintaining the temperature of gasses for various applications.
+
+  All thermomachines work by using electrical power to preform work on the atmosphere to either heat or cool it. The amount of work they do is directly related to the amount of power they consume.
+
+  Thermomachines also have an efficiency coefficient, which determines how much work they can do per unit of power consumed.
+
+  ## Space Heater
+  The Space Heater is a simple device that preforms work to heat or cool gas in the atmosphere it's exposed to.
+  It's a simple and effective way to maintain the temperature of a room, without having to build a pipenet or other system.
+
+  <Box>
+    <GuideEntityEmbed Entity="SpaceHeater"/>
+  </Box>
+
+  The space heater has three power settings, which determine how much power it consumes and how much work it does.
+  - Low: 1750 W
+  - Medium: 3500 W
+  - High: 7000 W
+
+  For space heaters, heating is 100% efficient, while cooling is only 90% efficient.
+</Document>

@@ -82,4 +82,16 @@
   <Box>
     [color=#999999][italic]Storing and transporting gas for easy use by the crew[italic][/color]
   </Box>
+
+  <Box>
+    <GuideEntityEmbed Entity="SpaceHeater" Caption=""/>
+    <GuideEntityEmbed Entity="GasThermoMachineHeater" Caption=""/>
+    <GuideEntityEmbed Entity="GasThermoMachineFreezer" Caption=""/>
+  </Box>
+  <Box>
+    ## Thermomachines
+  </Box>
+  <Box>
+    [color=#999999][italic]Manipulating the temperature of gasses in a pipenet or atmosphere[italic][/color]
+  </Box>
 </Document>

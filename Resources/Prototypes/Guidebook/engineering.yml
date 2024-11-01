@@ -41,6 +41,7 @@
   - Valves
   - MixingAndFiltering
   - GasCanisters
+  - Thermomachines
 
 - type: guideEntry
   id: Pipes
@@ -127,6 +128,11 @@
   id: GasCanisters
   name: guide-entry-gascanisters
   text: "/ServerInfo/Guidebook/Engineering/GasCanisters.xml"
+
+- type: guideEntry
+  id: Thermomachines
+  name: guide-entry-thermomachines
+  text: "/ServerInfo/Guidebook/Engineering/Thermomachines.xml"
 
 - type: guideEntry
   id: Fires
