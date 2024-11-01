@@ -71,8 +71,8 @@ namespace Content.Shared.Containers.ItemSlots
                 if (slot.HasItem || string.IsNullOrEmpty(slot.StartingItem))
                     continue;
 
-                var item = EntityManager.SpawnEntity(slot.StartingItem,
-                    EntityManager.GetComponent<TransformComponent>(uid).Coordinates);
+               var item = Spawn(slot.StartingItem, Transform(uid).Coordinates);
+                    
                 if (slot.ContainerSlot != null)
                     _containers.Insert(item, slot.ContainerSlot);
             }
