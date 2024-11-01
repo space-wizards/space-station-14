@@ -24,7 +24,7 @@ public sealed class RoomFillSystem : EntitySystem
         if (xform.GridUid != null)
         {
             var random = new Random();
-            var room = _dungeon.GetRoomPrototype(component.Size, random, component.RoomWhitelist);
+            var room = _dungeon.GetRoomPrototype(random, component.RoomWhitelist, component.Size);
 
             if (room != null)
             {
