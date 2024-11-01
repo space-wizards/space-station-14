@@ -101,38 +101,10 @@
     - !type:OreDunGen
       tileMask:
       - FloorAsteroidSand
-      entity: CrystalGreen
-      count: 10
-      minGroupSize: 3
-      maxGroupSize: 5
-    - !type:OreDunGen
-      tileMask:
-      - FloorAsteroidSand
-      entity: CrystalPink
-      count: 10
-      minGroupSize: 3
-      maxGroupSize: 5
-    - !type:OreDunGen
-      tileMask:
-      - FloorAsteroidSand
-      entity: CrystalOrange
-      count: 10
-      minGroupSize: 3
-      maxGroupSize: 5
-    - !type:OreDunGen
-      tileMask:
-      - FloorAsteroidSand
-      entity:  CrystalBlue
-      count: 10
-      minGroupSize: 3
-      maxGroupSize: 5
-    - !type:OreDunGen
-      tileMask:
-      - FloorAsteroidSand
-      entity:  CrystalCyan
-      count: 10
-      minGroupSize: 3
-      maxGroupSize: 5
+      entity: FloraRockSolid01
+      count: 20
+      minGroupSize: 1
+      maxGroupSize: 2
 
 # Configs
 - type: dungeonConfig
