@@ -37,7 +37,7 @@ Entries:
   time: '2024-09-16T03:31:00.000'
 - author: Kirikii
   changes:
-    - type: update
+    - type: tweak
       message: Updated uoui.yml.
   id: 7
   time: '2024-09-20T04:20:00.000'
@@ -49,7 +49,7 @@ Entries:
   time: '2024-09-20T20:58:00.000'
 - author: Kirikii
   changes:
-    - type: update
+    - type: add
       message: Added items to Uoui map.
   id: 9
   time: '2024-09-20T23:50:00.000'
@@ -61,7 +61,7 @@ Entries:
   time: '2024-09-21T10:28:00.000'
 - author: Kirikii
   changes:
-    - type: update
+    - type: tweak
       message: Added items to Uoui map.
   id: 11
   time: '2024-09-23T07:59:00.000'
@@ -73,7 +73,7 @@ Entries:
   time: '2024-09-24T16:29:00.000'
 - author: Kirikii
   changes:
-    - type: update
+    - type: tweak
       message: Added some items and made some changes to Uoui map.
   id: 13
   time: '2024-09-27T03:17:00.000'
@@ -97,7 +97,7 @@ Entries:
   time: '2024-10-01T20:15:00.000'
 - author: Kirikii
   changes:
-    - type: update
+    - type: tweak
       message: Made minor changes to Uoui map.
   id: 17
   time: '2024-10-02T03:22:00.000'
@@ -133,19 +133,19 @@ Entries:
   time: '2024-10-12T04:30:00.000'
 - author: Kirikii
   changes:
-    - type: update
+    - type: tweak
       message: Made minor changes to Uoui map.
   id: 23
   time: '2024-10-15T06:17:00.000'
 - author: DEATHB4DEFEAT
   changes: 
-    - type: update
+    - type: tweak
       message: Updated CDN workflow.
   id: 24
   time: '2024-10-19T03:14:00.000'
 - author: Kirikii
   changes:
-    - type: update
+    - type: tweak
       message: Made minor changes to Uoui map.
   id: 25
   time: '2024-10-26T22:25:00.000'
@@ -170,6 +170,6 @@ Entries:
 - author: GroggleG
   changes:
     - type: tweak
-      message: Removed upsteams logo and added a new custom WeaselStation logo.
+      message: Removed upstreams logo and added a new custom WeaselStation logo.
   id: 29
   time: '2024-10-30T16:14:00.000'
