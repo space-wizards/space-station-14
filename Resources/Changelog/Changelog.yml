@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Buckling someone now triggers a short do-after.
-    type: Tweak
-  id: 7072
-  time: '2024-08-09T15:43:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29621
 - author: Ubaser
   changes:
   - message: Normal crowbars cannot be placed in pockets, but can now fit in belts.
@@ -3947,3 +3940,10 @@
   id: 7571
   time: '2024-11-01T01:43:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33013
+- author: SlamBamActionman
+  changes:
+  - message: Votekicks can now be initiated during the pregame lobby.
+    type: Fix
+  id: 7572
+  time: '2024-11-01T01:52:55.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32528
