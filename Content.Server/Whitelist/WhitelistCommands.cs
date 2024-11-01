@@ -27,7 +27,7 @@ public sealed class AddWhitelistCommand : LocalizedCommands
         var loc = IoCManager.Resolve<IPlayerLocator>();
 
         var name = string.Join(' ', args).Trim();
-        var data = await loc.LookupIdByNameAsync(name);
+        var data = await loc.LookupIdByNameOrIdAsync(name);
 
         if (data != null)
         {
@@ -76,7 +76,7 @@ public sealed class RemoveWhitelistCommand : LocalizedCommands
         var loc = IoCManager.Resolve<IPlayerLocator>();
 
         var name = string.Join(' ', args).Trim();
-        var data = await loc.LookupIdByNameAsync(name);
+        var data = await loc.LookupIdByNameOrIdAsync(name);
 
         if (data != null)
         {

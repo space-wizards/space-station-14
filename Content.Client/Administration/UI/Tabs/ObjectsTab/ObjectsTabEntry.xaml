@@ -5,13 +5,25 @@
                   HorizontalExpand="True"
                   SeparationOverride="4">
         <Label Name="NameLabel"
-               SizeFlagsStretchRatio="3"
+               SizeFlagsStretchRatio="5"
                HorizontalExpand="True"
                ClipText="True"/>
         <customControls:VSeparator/>
         <Label Name="EIDLabel"
+               SizeFlagsStretchRatio="5"
+               HorizontalExpand="True"
+               ClipText="True"/>
+        <customControls:VSeparator/>
+        <Button Name="TeleportButton"
+                Text="{Loc object-tab-entity-teleport}"
                SizeFlagsStretchRatio="3"
                HorizontalExpand="True"
                ClipText="True"/>
+        <customControls:VSeparator/>
+        <Button Name="DeleteButton"
+                Text="{Loc object-tab-entity-delete}"
+                SizeFlagsStretchRatio="3"
+                HorizontalExpand="True"
+                ClipText="True"/>
     </BoxContainer>
 </PanelContainer>

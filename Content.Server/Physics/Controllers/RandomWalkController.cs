@@ -77,8 +77,7 @@ internal sealed class RandomWalkController : VirtualController
             randomWalk.BiasVector *= 0f;
         var pushStrength = _random.NextFloat(randomWalk.MinSpeed, randomWalk.MaxSpeed);
 
-        _physics.SetLinearVelocity(uid, physics.LinearVelocity * randomWalk.AccumulatorRatio, body: physics);
-        _physics.ApplyLinearImpulse(uid, pushVec * (pushStrength * physics.Mass), body: physics);
+        _physics.SetLinearVelocity(uid, physics.LinearVelocity * randomWalk.AccumulatorRatio + pushVec * pushStrength, body: physics);
     }
 
     /// <summary>

@@ -102,11 +102,20 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
 
             offering.AddContent(new Label
             {
-                Text = faction,
+                Text = string.IsNullOrWhiteSpace(Loc.GetString(_protoManager.Index<SalvageFactionPrototype>(faction).Description))
+                        ? LogAndReturnDefaultFactionDescription(faction)
+                        : Loc.GetString(_protoManager.Index<SalvageFactionPrototype>(faction).Description),
                 FontColorOverride = StyleNano.NanoGold,
                 HorizontalAlignment = Control.HAlignment.Left,
                 Margin = new Thickness(0f, 0f, 0f, 5f),
             });
+
+            string LogAndReturnDefaultFactionDescription(string faction)
+            {
+                Logger.Error($"Description is null or white space for SalvageFactionPrototype: {faction}");
+                return Loc.GetString(_protoManager.Index<SalvageFactionPrototype>(faction).ID);
+            }
+
 
             // Duration
             offering.AddContent(new Label
@@ -132,11 +141,19 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
 
             offering.AddContent(new Label
             {
-                Text = Loc.GetString(_protoManager.Index<SalvageBiomeModPrototype>(biome).ID),
+                Text = string.IsNullOrWhiteSpace(Loc.GetString(_protoManager.Index<SalvageBiomeModPrototype>(biome).Description))
+                        ? LogAndReturnDefaultBiomDescription(biome)
+                        : Loc.GetString(_protoManager.Index<SalvageBiomeModPrototype>(biome).Description),
                 FontColorOverride = StyleNano.NanoGold,
                 HorizontalAlignment = Control.HAlignment.Left,
                 Margin = new Thickness(0f, 0f, 0f, 5f),
             });
+
+            string LogAndReturnDefaultBiomDescription(string biome)
+            {
+                Logger.Error($"Description is null or white space for SalvageBiomeModPrototype: {biome}");
+                return Loc.GetString(_protoManager.Index<SalvageBiomeModPrototype>(biome).ID);
+            }
 
             // Modifiers
             offering.AddContent(new Label

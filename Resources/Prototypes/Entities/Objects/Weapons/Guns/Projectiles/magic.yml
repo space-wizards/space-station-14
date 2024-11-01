@@ -179,7 +179,7 @@
   id: ProjectilePolyboltCluwne
   parent: ProjectilePolyboltBase
   name: cluwne polybolt
-  description: knoH KnoH!
+  description: KnoH KnoH!
   categories: [ HideSpawnMenu ]
   components:
   - type: PolymorphOnCollide

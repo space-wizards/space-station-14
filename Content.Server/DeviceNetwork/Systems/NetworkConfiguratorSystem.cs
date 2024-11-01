@@ -106,6 +106,13 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         if (!targetUid.HasValue || !Resolve(targetUid.Value, ref device, false))
             return;
 
+        //This checks if the device is marked as having a savable address,
+        //to avoid adding pdas and whatnot to air alarms. This flag is true
+        //by default, so this will only prevent devices from being added to
+        //network configurator lists if manually set to false in the prototype
+        if (!device.SavableAddress)
+            return;
+
         var address = device.Address;
         if (string.IsNullOrEmpty(address))
         {
