@@ -44,6 +44,16 @@ namespace Content.Client.Crayon.UI
             PopulateCrayons();
         }
 
+        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+        {
+            base.ReceiveMessage(message);
+
+            if (_menu is null || message is not CrayonUsedMessage crayonMessage)
+                return;
+
+            _menu.AdvanceState(crayonMessage.DrawnDecal);
+        }
+
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);

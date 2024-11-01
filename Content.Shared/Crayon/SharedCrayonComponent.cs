@@ -38,6 +38,17 @@ namespace Content.Shared.Crayon
     }
 
     [Serializable, NetSerializable]
+    public sealed class CrayonUsedMessage : BoundUserInterfaceMessage
+    {
+        public readonly string DrawnDecal;
+
+        public CrayonUsedMessage(string drawn)
+        {
+            DrawnDecal = drawn;
+        }
+    }
+
+    [Serializable, NetSerializable]
     public enum CrayonVisuals
     {
         State,

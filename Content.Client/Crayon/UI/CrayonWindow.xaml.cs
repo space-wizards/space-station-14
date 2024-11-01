@@ -20,6 +20,8 @@ namespace Content.Client.Crayon.UI
     public sealed partial class CrayonWindow : DefaultWindow
     {
         private Dictionary<string, List<(string Name, Texture Texture)>>? _decals;
+        private List<string>? _allDecals;
+        private string? _autoSelected;
         private string? _selected;
         private Color _color;
 
@@ -30,7 +32,7 @@ namespace Content.Client.Crayon.UI
         {
             RobustXamlLoader.Load(this);
 
-            Search.OnTextChanged += _ => RefreshList();
+            Search.OnTextChanged += SearchChanged;
             ColorSelector.OnColorChanged += SelectColor;
         }
 
@@ -47,24 +49,34 @@ namespace Content.Client.Crayon.UI
             // Clear
             Grids.DisposeAllChildren();
 
-            if (_decals == null)
+            if (_decals == null || _allDecals == null)
                 return;
 
             var filter = Search.Text;
+            var comma = filter.IndexOf(',');
+            var first = (comma == -1 ? filter : filter[..comma]).Trim();
 
             var names = _decals.Keys.ToList();
             names.Sort((a, b) => a == "random" ? 1 : b == "random" ? -1 : a.CompareTo(b));
 
+            if (_autoSelected != null && first != _autoSelected && _allDecals.Contains(first))
+            {
+                _selected = first;
+                _autoSelected = _selected;
+                OnSelected?.Invoke(_selected);
+            }
+
             foreach (var categoryName in names)
             {
-                var category = _decals[categoryName].Where(d => categoryName.Contains(filter) || d.Name.Contains(filter)).ToList();
+                var locName = Loc.GetString("crayon-category-" + categoryName);
+                var category = _decals[categoryName].Where(d => locName.Contains(first) || d.Name.Contains(first)).ToList();
 
                 if (category.Count == 0)
                     continue;
 
                 var label = new Label
                 {
-                    Text = Loc.GetString("crayon-category-" + categoryName)
+                    Text = locName
                 };
 
                 var grid = new GridContainer
@@ -87,6 +99,7 @@ namespace Content.Client.Crayon.UI
                         Scale = new System.Numerics.Vector2(2, 2)
                     };
                     button.OnPressed += ButtonOnPressed;
+
                     if (_selected == name)
                     {
                         var panelContainer = new PanelContainer()
@@ -110,11 +123,18 @@ namespace Content.Client.Crayon.UI
             }
         }
 
+        private void SearchChanged(LineEdit.LineEditEventArgs obj)
+        {
+            _autoSelected = ""; // Placeholder to kick off the auto-select in refreshlist()
+            RefreshList();
+        }
+
         private void ButtonOnPressed(ButtonEventArgs obj)
         {
             if (obj.Button.Name == null) return;
 
             _selected = obj.Button.Name;
+            _autoSelected = null;
             OnSelected?.Invoke(_selected);
             RefreshList();
         }
@@ -133,9 +153,27 @@ namespace Content.Client.Crayon.UI
             RefreshList();
         }
 
+        public void AdvanceState(string drawnDecal)
+        {
+            var filter = Search.Text;
+            if (!filter.Contains(',') || !filter.Contains(drawnDecal))
+                return;
+
+            var first = filter[..filter.IndexOf(',')].Trim();
+
+            if (first.Equals(drawnDecal, StringComparison.InvariantCultureIgnoreCase))
+            {
+                Search.Text = filter[(filter.IndexOf(',') + 1)..].Trim();
+                _autoSelected = first;
+            }
+
+            RefreshList();
+        }
+
         public void Populate(List<DecalPrototype> prototypes)
         {
             _decals = [];
+            _allDecals = [];
 
             prototypes.Sort((a, b) => a.ID.CompareTo(b.ID));
 
@@ -146,6 +184,7 @@ namespace Content.Client.Crayon.UI
                     category = decalPrototype.Tags[1].Replace("crayon-", "");
                 var list = _decals.GetOrNew(category);
                 list.Add((decalPrototype.ID, decalPrototype.Sprite.Frame0()));
+                _allDecals.Add(decalPrototype.ID);
             }
 
             RefreshList();
