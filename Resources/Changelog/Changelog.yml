@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Oxygen and nitrogen canisters now have new sprites when worn.
-    type: Add
-  id: 7071
-  time: '2024-08-09T10:32:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30809
 - author: Plykiya
   changes:
   - message: Buckling someone now triggers a short do-after.
@@ -3947,3 +3940,10 @@
   id: 7570
   time: '2024-10-31T21:30:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33092
+- author: reesque
+  changes:
+  - message: pie not dropping tin on thrown
+    type: Fix
+  id: 7571
+  time: '2024-11-01T01:43:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33013
