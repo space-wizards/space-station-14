@@ -33,5 +33,5 @@ public sealed partial class DungeonRoomPrototype : IPrototype
     /// allowing you to make rooms of irregular shapes that blend seamlessly into their surroundings
     /// </summary>
     [DataField]
-    public HashSet<ProtoId<ContentTileDefinition>> IgnoreTile = new();
+    public ProtoId<ContentTileDefinition>? IgnoreTile;
 }
