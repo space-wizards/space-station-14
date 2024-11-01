@@ -8,6 +8,7 @@ crayon-interact-invalid-location = Can't reach there!
 
 ## UI
 crayon-window-title = Crayon
+crayon-window-placeholder = Search or comma separated exact names
 crayon-category-1-brushes = Brushes
 crayon-category-2-alphanum = Numbers and letters
 crayon-category-3-symbols = Symbols
