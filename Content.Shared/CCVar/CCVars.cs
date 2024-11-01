@@ -1469,7 +1469,7 @@ namespace Content.Shared.CCVar
         ///     Config for when the votekick should be allowed to be called based on number of eligible voters.
         /// </summary>
         public static readonly CVarDef<int> VotekickEligibleNumberRequirement =
-            CVarDef.Create("votekick.eligible_number", 10, CVar.SERVERONLY);
+            CVarDef.Create("votekick.eligible_number", 5, CVar.SERVERONLY);
 
         /// <summary>
         ///     Whether a votekick initiator must be a ghost or not.
@@ -1493,7 +1493,7 @@ namespace Content.Shared.CCVar
         ///     Config for how many seconds a player must have been dead to initiate a votekick / be able to vote on a votekick.
         /// </summary>
         public static readonly CVarDef<int> VotekickEligibleVoterDeathtime =
-            CVarDef.Create("votekick.voter_deathtime", 180, CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("votekick.voter_deathtime", 30, CVar.REPLICATED | CVar.SERVER);
 
         /// <summary>
         ///     The required ratio of eligible voters that must agree for a votekick to go through.
