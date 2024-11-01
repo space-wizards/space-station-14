@@ -81,12 +81,21 @@ public sealed class ResearchTest
 
             Assert.Multiple(() =>
             {
+                // check that every recipe a tech adds can be made on some lathe
+                var unlockedTechs = new HashSet<ProtoId<LatheRecipePrototype>>();
                 foreach (var tech in protoManager.EnumeratePrototypes<TechnologyPrototype>())
                 {
+                    unlockedTechs.UnionWith(tech.RecipeUnlocks);
                     foreach (var recipe in tech.RecipeUnlocks)
                     {
                         Assert.That(latheTechs, Does.Contain(recipe), $"Recipe '{recipe}' from tech '{tech.ID}' cannot be unlocked on any lathes.");
                     }
+                }
+
+                // now check that every dynamic recipe a lathe lists can be unlocked
+                foreach (var recipe in latheTechs)
+                {
+                    Assert.That(unlockedTechs, Does.Contain(recipe), $"Recipe '{recipe}' is dynamic on a lathe but cannot be unlocked by research.");
                 }
             });
         });
