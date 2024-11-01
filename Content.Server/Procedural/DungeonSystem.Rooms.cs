@@ -156,6 +156,12 @@ public sealed partial class DungeonSystem
                 if (!clearExisting && reservedTiles?.Contains(rounded) == true)
                     continue;
 
+                if (room.IgnoreTile.Count > 0)
+                {
+                    if (_maps.TryGetTileDef(templateGrid, indices, out var tileDef) && room.IgnoreTile.Contains(tileDef.ID))
+                        continue;
+                }
+
                 _tiles.Add((rounded, tileRef.Tile));
             }
         }
