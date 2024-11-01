@@ -52,13 +52,16 @@ public sealed class ResearchTest
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
 
+        var entMan = server.ResolveDependency<IEntityManager>();
         var protoManager = server.ResolveDependency<IPrototypeManager>();
         var compFact = server.ResolveDependency<IComponentFactory>();
+
+        var latheSys = entMan.System<LatheSystem>();
 
         await server.WaitAssertion(() =>
         {
             var allEnts = protoManager.EnumeratePrototypes<EntityPrototype>();
-            var allLathes = new HashSet<LatheComponent>();
+            var latheTechs = new HashSet<ProtoId<LatheRecipePrototype>>();
             foreach (var proto in allEnts)
             {
                 if (proto.Abstract)
@@ -69,19 +72,11 @@ public sealed class ResearchTest
 
                 if (!proto.TryGetComponent<LatheComponent>(out var lathe, compFact))
                     continue;
-                allLathes.Add(lathe);
-            }
 
-            var latheTechs = new HashSet<string>();
-            foreach (var lathe in allLathes)
-            {
-                if (lathe.DynamicRecipes == null)
-                    continue;
+                latheSys.AddRecipesFromPacks(latheTechs, lathe.DynamicPacks);
 
-                foreach (var recipe in lathe.DynamicRecipes)
-                {
-                    latheTechs.Add(recipe);
-                }
+                if (proto.TryGetComponent<EmagLatheComponent>(out var emag, compFact))
+                    latheSys.AddRecipesFromPacks(latheTechs, emag.EmagDynamicPacks);
             }
 
             Assert.Multiple(() =>
@@ -90,7 +85,7 @@ public sealed class ResearchTest
                 {
                     foreach (var recipe in tech.RecipeUnlocks)
                     {
-                        Assert.That(latheTechs, Does.Contain(recipe), $"Recipe \"{recipe}\" cannot be unlocked on any lathes.");
+                        Assert.That(latheTechs, Does.Contain(recipe), $"Recipe '{recipe}' from tech '{tech.ID}' cannot be unlocked on any lathes.");
                     }
                 }
             });
