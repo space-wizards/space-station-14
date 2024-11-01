@@ -56,7 +56,7 @@ public sealed class ResearchTest
         var protoManager = server.ResolveDependency<IPrototypeManager>();
         var compFact = server.ResolveDependency<IComponentFactory>();
 
-        var latheSys = entMan.System<LatheSystem>();
+        var latheSys = entMan.System<SharedLatheSystem>();
 
         await server.WaitAssertion(() =>
         {
@@ -75,7 +75,7 @@ public sealed class ResearchTest
 
                 latheSys.AddRecipesFromPacks(latheTechs, lathe.DynamicPacks);
 
-                if (proto.TryGetComponent<EmagLatheComponent>(out var emag, compFact))
+                if (proto.TryGetComponent<EmagLatheRecipesComponent>(out var emag, compFact))
                     latheSys.AddRecipesFromPacks(latheTechs, emag.EmagDynamicPacks);
             }
 
