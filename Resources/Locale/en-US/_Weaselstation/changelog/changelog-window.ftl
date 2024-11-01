@@ -1,1 +1,1 @@
-changelog-tab-title-WeaselChangelog = "Weaselog"
+changelog-tab-title-WeaselStation = "Weaselog"
