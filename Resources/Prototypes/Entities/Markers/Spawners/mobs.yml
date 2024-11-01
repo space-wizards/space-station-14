@@ -1008,3 +1008,18 @@
       prototypes:
         - MobBros
         - MobSorb
+
+- type: entity
+  name: Duck Duck Goose Spawner
+  id: DuckDuckGooseSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: blue
+        - sprite: Mobs/Animals/goose.rsi
+    - type: GroupSpawner
+      prototypes:
+        - MobDuckMallard
+        - MobDuckWhite
+        - MobGoose
