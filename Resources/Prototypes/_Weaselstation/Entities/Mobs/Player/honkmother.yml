@@ -2,7 +2,7 @@
   abstract: true
   id: MobHonkmotherBase
   name: Honkmother
-  description: Your mind fills with mania, yet at the same time is filled with intense fear. It is the legendary honkmother!
+  description: Your mind froths and bubbles at what is percieved. The honkmother that can be named is not the eternal Honkmother. The nameless is what sets the stage.
   components:
   - type: Sprite
     sprite: Mobs/Demons/honkmother.rsi
