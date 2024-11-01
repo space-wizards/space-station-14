@@ -1,0 +1,174 @@
+- author: Verbalase
+  changes:
+    - type: tweak
+      message: Ahelp and erase verb sound effects.
+  id: 1
+  time: '2024-08-24T21:39:00.000'
+- author: Froxxin
+  changes:
+    - type: add
+      message: Added  weasels!
+  id: 2
+  time: '2024-08-25T21:00:00.000'
+- author: Froxxin
+  changes:
+    - type: fix
+      message: Corrected copyright information.
+  id: 3
+  time: '2024-08-26T18:10:00.000'
+- author: Froxxin
+  changes:
+    - type: add
+      message: Added the ability to toggle jetpacks on a zero gravity grid.
+  id: 4
+  time: '2024-08-30T19:59:00.000'
+- author: Verbalase
+  changes:
+    - type: tweak
+      message: Omega and Packed minimum player requirements are now 1.
+  id: 5
+  time: '2024-09-02T19:42:00.000'
+- author: Kirikii
+  changes:
+    - type: add
+      message: Added map.
+  id: 6
+  time: '2024-09-16T03:31:00.000'
+- author: Kirikii
+  changes:
+    - type: update
+      message: Updated uoui.yml.
+  id: 7
+  time: '2024-09-20T04:20:00.000'
+- author: GroggleG
+  changes:
+    - type: add
+      message: Added 3 pieces of art for the lobby.
+  id: 8
+  time: '2024-09-20T20:58:00.000'
+- author: Kirikii
+  changes:
+    - type: update
+      message: Added items to Uoui map.
+  id: 9
+  time: '2024-09-20T23:50:00.000'
+- author: GroggleG
+  changes:
+    - type: add 
+      message: Added new lobby art and music.
+  id: 10
+  time: '2024-09-21T10:28:00.000'
+- author: Kirikii
+  changes:
+    - type: update
+      message: Added items to Uoui map.
+  id: 11
+  time: '2024-09-23T07:59:00.000'
+- author: Gameandglitch3
+  changes:
+    - type: tweak
+      message: Reach minimum player requirement is now 2.
+  id: 12
+  time: '2024-09-24T16:29:00.000'
+- author: Kirikii
+  changes:
+    - type: update
+      message: Added some items and made some changes to Uoui map.
+  id: 13
+  time: '2024-09-27T03:17:00.000'
+- author: Teapug
+  changes:
+    - type: add
+      message: Added new WeaselStation icons.
+  id: 14
+  time: '2024-09-30T06:13:00.000'
+- author: Froxxin
+  changes:
+    - type: add
+      message: Added head of chuckles uniform.
+  id: 15
+  time: '2024-10-01T18:52:00.000'
+- author: Froxxin
+  changes:
+    - type: add
+      message: Added new soda "Weh MAX"
+  id: 16
+  time: '2024-10-01T20:15:00.000'
+- author: Kirikii
+  changes:
+    - type: update
+      message: Made minor changes to Uoui map.
+  id: 17
+  time: '2024-10-02T03:22:00.000'
+- author: Froxxin
+  changes:
+    - type: add
+      message: Added two new plushies
+  id: 18
+  time: '2024-10-04T05:08:00.000'
+- author: Froxxin
+  changes:
+    - type: add
+      message: Added a new 'special soda' crate
+  id: 19
+  time: '2024-10-04T18:27:00.000'
+- author: Gameandglitch3
+  changes:
+    - type: tweak
+      message: Doubled capacity of all crayons and fifths the price of them in cargo.
+  id: 20
+  time: '2024-10-05T01:04:00.000'
+- author: Gameandglitch3
+  changes:
+    - type: add
+      message: Added two new terms to the glossary.
+  id: 21
+  time: '2024-10-05T01:37:00.000'
+- author: Froxxin
+  changes:
+    - type: add
+      message: Added abductor walls and floors
+  id: 22
+  time: '2024-10-12T04:30:00.000'
+- author: Kirikii
+  changes:
+    - type: update
+      message: Made minor changes to Uoui map.
+  id: 23
+  time: '2024-10-15T06:17:00.000'
+- author: DEATHB4DEFEAT
+  changes: 
+    - type: update
+      message: Updated CDN workflow.
+  id: 24
+  time: '2024-10-19T03:14:00.000'
+- author: Kirikii
+  changes:
+    - type: update
+      message: Made minor changes to Uoui map.
+  id: 25
+  time: '2024-10-26T22:25:00.000'
+- author: Froxxin
+  changes:
+    - type: add
+      message: Added new lobby art, songs, and endround SFX.
+  id: 26
+  time: '2024-10-28T00:01:00.000'
+- author: GroggleG
+  changes:
+    - type: remove
+      message: Removed upstreams lobby art from the lobbyart pool.
+  id: 27
+  time: '2024-10-30T11:02:00.000'
+- author: Froxxin
+  changes: 
+    - type: tweak
+      message: Changed price of 'speacial soda crate'.
+  id: 28
+  time: '2024-10-30T15:56:00.000'
+- author: GroggleG
+  changes:
+    - type: tweak
+      message: Removed upsteams logo and added a new custom WeaselStation logo.
+  id: 29
+  time: '2024-10-30T16:14:00.000'
