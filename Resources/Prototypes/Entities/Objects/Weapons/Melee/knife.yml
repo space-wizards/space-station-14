@@ -289,3 +289,34 @@
         Piercing: 15
   - type: Item
     sprite: Objects/Weapons/Melee/throwing_knife.rsi
+
+- type: entity
+  name: метательный нож
+  parent: [BaseKnife, BaseRestrictedContraband]
+  id: SuperYbica
+  description: A deadly knife intended for melee confrontations.
+  components:
+  - type: Tag
+    tags:
+    - CombatKnife
+    - Knife
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/combat_knife.rsi
+    state: icon
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    attackRate: 12
+    damage:
+      types:
+        Slash: 87
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: LandAtCursor
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 47
+  - type: Item
+    sprite: Objects/Weapons/Melee/combat_knife.rsi
+  - type: DisarmMalus
+    malus: 0.225
