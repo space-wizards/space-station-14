@@ -769,6 +769,20 @@
     NuclearCola: 5
 
 - type: reaction
+  id: NuclearColaBreakdown
+  source: true
+  requiredMixerCategories:
+  - Centrifuge
+  reactants:
+    NuclearCola:
+      amount: 10 # assuming we loose all o2 released as gas in the centrifugal process
+  products:
+    Ipecac: 2
+    Water: 2
+    Sugar: 2
+    Uranium: 1
+
+- type: reaction
   id: Patron
   requiredMixerCategories:
   - Shake
@@ -940,6 +954,18 @@
       amount: 1
   products:
     SnowWhite: 3
+
+- type: reaction
+  id: SodaWater
+  requiredMixerCategories:
+  - Shake
+  reactants:
+    Water:
+      amount: 5
+    CarbonDioxide:
+      amount: 1
+  products:
+    SodaWater: 6
 
 - type: reaction
   id: SoyLatte
@@ -1145,6 +1171,18 @@
       amount: 1
   products:
     TheMartinez: 6
+
+- type: reaction
+  id: Vodka
+  requiredMixerCategories:
+  - Stir
+  reactants:
+    Ethanol:
+      amount: 1
+    Water:
+      amount: 1
+  products:
+    Vodka: 2
 
 - type: reaction
   id: WaterBreakdown

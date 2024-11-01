@@ -27,6 +27,9 @@
       whitelist:
         components:
         - Paper
+      blacklist:
+        tags:
+        - Book
   - type: ItemSlots
   - type: DamageOnHighSpeedImpact
     damage:
@@ -135,7 +138,8 @@
       map: ["enum.WeldableLayers.BaseWelded"]
   - type: EntityStorage
     isCollidableWhenOpen: true
-    enteringOffset: 0, -0.75
+    enteringOffset: 0, -0.6
+    enteringRange: 0.03
     closeSound:
       path: /Audio/Items/deconstruct.ogg
     openSound:
@@ -145,7 +149,7 @@
       entity_storage: !type:Container
         ents: []
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
@@ -259,7 +263,7 @@
     placeCentered: true
     isPlaceable: false
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:

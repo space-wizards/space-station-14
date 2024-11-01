@@ -91,5 +91,12 @@
 
 - type: latheRecipe
   parent: FoodPlateTin
+  id: FoodPlateMuffinTin
+  result: FoodPlateMuffinTin
+  materials:
+    Steel: 50
+
+- type: latheRecipe
+  parent: FoodPlateTin
   id: FoodKebabSkewer
   result: FoodKebabSkewer
