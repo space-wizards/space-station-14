@@ -82,36 +82,28 @@
     tags:
       - HideContextMenu
   - type: AnimationPlayer
-  - type: RandomSpawner
+  - type: EntityTableSpawner
     deleteSpawnerAfterSpawn: false
-    rareChance: 0.1
-    offset: 0.3
-    chance: 1
-    prototypes:
-    - FoodAmbrosiaVulgaris
-    - FoodAloe
-    - FoodCabbage
-    - FoodCarrot
-    - FoodGalaxythistle
-    - FoodLemon
-    - FoodLime
-    - FoodPeaPod
-    - FoodPineapple
-    - FoodOnionRed
-    - FoodWatermelon
-    - FoodAmbrosiaVulgaris
-    - FoodAloe
-    - FoodCabbage
-    - FoodCarrot
-    - FoodGalaxythistle
-    - FoodLemon
-    - FoodLime
-    - FoodPeaPod
-    - FoodPineapple
-    - FoodOnionRed
-    - FoodWatermelon
-    - FoodGatfruit
-    - MobTomatoKiller
-    rarePrototypes:
-    - MobLuminousEntity
-    - MobLuminousObject
+    table: !type:NestedSelector
+      tableId: AnomalyFloraLootTable
+
+- type: entityTable
+  id: AnomalyFloraLootTable
+  table: !type:GroupSelector
+    children:
+    - id: FoodAmbrosiaVulgaris
+    - id: FoodAloe
+    - id: FoodCabbage
+    - id: FoodGalaxythistle
+    - id: FoodLemon
+    - id: FoodLime
+    - id: FoodPeaPod
+    - id: FoodPineapple
+    - id: FoodOnionRed
+    - id: FoodWatermelon
+    - id: FoodCherry
+    - id: MobTomatoKiller
+    - id: MobLuminousEntity
+    - id: MobLuminousObject
+    - id: FoodGatfruit # 0.007% spawn chance. 1 / 141
+      weight: 0.10
