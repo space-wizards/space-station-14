@@ -575,5 +575,13 @@ Entries:
   id: 71
   time: '2024-10-31T14:53:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32601
+- author: metalgearsloth
+  changes:
+  - message: Added on-call functionality for discord relay to get notified on unanswered
+      ahelps.
+    type: Add
+  id: 72
+  time: '2024-11-02T09:29:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30443
 Name: Admin
 Order: 1
