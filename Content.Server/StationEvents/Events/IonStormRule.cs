@@ -238,7 +238,7 @@ public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
         var subjects = RobustRandom.Prob(0.5f) ? objectsThreats : Loc.GetString("ion-storm-people");
 
         // message logic!!!
-        return RobustRandom.Next(0, 34) switch
+        return RobustRandom.Next(0, 33) switch
         {
             0  => Loc.GetString("ion-storm-law-on-station", ("joined", joined), ("subjects", triple)),
             1  => Loc.GetString("ion-storm-law-crew-are", ("who", crewAll), ("joined", joined), ("subjects", objectsThreats)),
