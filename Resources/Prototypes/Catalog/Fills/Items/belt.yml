@@ -46,10 +46,10 @@
   table: !type:AllSelector
     children:
     - id: Stunbaton
-    - id: GrenadeFlashBang
-    - id: TearGasGrenade
     - id: Handcuffs
     - id: Handcuffs
+    - id: HoloprojectorSecurity
+    - id: RadioHandheldSecurity
 
 - type: entity
   id: ClothingBeltSecurityFilled
