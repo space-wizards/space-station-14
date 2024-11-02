@@ -5,6 +5,7 @@
   description: An impossible object. Should you be standing this close to it?
   components:
   - type: Anomaly
+    offset: 0, 0.15
     pulseSound:
       collection: RadiationPulse
       params:
@@ -875,3 +876,63 @@
     damage:
       types:
         Cold: 10
+
+- type: entity
+  id: AnomalyTech
+  parent: BaseAnomaly
+  suffix: Tech
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/tech_anom.rsi
+    layers:
+    - state: bg
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: bg_powered
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+      shader: unshaded
+    - state: part1
+    - state: part2
+    - state: part3
+    - state: part4
+  - type: PointLight
+    radius: 6.5
+    energy: 3.5
+    color: "#56c1e8"
+  - type: Anomaly
+    corePrototype: AnomalyCoreTech
+    coreInertPrototype: AnomalyCoreTechInert
+    minPulseLength: 60
+    maxPulseLength: 120
+  - type: TechAnomaly
+  - type: DeviceLinkSource
+    ports:
+      - Pulse
+      - Timer
+
+- type: entity
+  id: AnomalyTechBeam
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: /Textures/Effects/techanom_beam.rsi
+    drawdepth: Effects
+    layers:
+    - state: beam
+      shader: unshaded
+      color: "#21c4ff"
+  - type: Physics
+    canCollide: false
+  - type: PointLight
+    enabled: true
+    color: "#4080FF"
+    radius: 3.5
+    softness: 1
+    autoRot: true
+    castShadows: false
+  - type: Beam
+  - type: TimedDespawn
+    lifetime: 2.3
+  - type: Tag
+    tags:
+      - HideContextMenu

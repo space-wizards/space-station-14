@@ -1,7 +1,5 @@
 using Content.Shared.Anomaly;
-using Content.Shared.Gravity;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Anomaly.Ui;

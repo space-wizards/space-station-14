@@ -39,7 +39,10 @@
     - type: MobThresholds
       thresholds:
         0: Alive
-        50: Dead
+        40: Dead
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 2.5
+      baseSprintSpeed: 3.5
     - type: Stamina
       critThreshold: 100
     - type: DamageStateVisuals
@@ -65,8 +68,8 @@
         path: /Audio/Effects/bite.ogg
       damage:
         types:
-          Piercing: 5
-          Slash: 10
+          Blunt: 5
+          Slash: 7
     - type: TypingIndicator
       proto: alien
     - type: Tag
@@ -219,7 +222,7 @@
     - type: MobThresholds
       thresholds:
         0: Alive
-        180: Dead
+        150: Dead
     - type: Stamina
       critThreshold: 150
     - type: DamageStateVisuals
@@ -243,7 +246,7 @@
     - type: MeleeWeapon
       damage:
         types:
-          Slash: 12
+          Slash: 10
           Bloodloss: 5
 
 - type: entity

@@ -85,29 +85,30 @@
       seed: 1
       frequency: 1
     entities:
+    - SalvageSpawnerScrapValuable
+    - SalvageSpawnerScrapCommon
+    - SalvageSpawnerScrapCommon
     - SalvageSpawnerScrapCommon
     - SalvageSpawnerScrapCommon75
-    - SalvageSpawnerScrapCommon75
-    - SalvageSpawnerScrapValuable
-    - SalvageSpawnerScrapValuable75
   - !type:BiomeEntityLayer
     allowedTiles:
     - FloorSteel
+    - Plating
     threshold: 0.7
     noise:
       seed: 1
       frequency: 1
     entities:
+    - SalvageSpawnerTreasure
+    - SalvageSpawnerTreasure
+    - SalvageSpawnerEquipment
+    - SalvageSpawnerEquipment
     - SalvageSpawnerTreasureValuable
     - SalvageSpawnerEquipmentValuable
-    - SalvageSpawnerTreasure
-    - SalvageSpawnerTreasure
-    - SalvageSpawnerEquipment
-    - SalvageSpawnerEquipment
   - !type:BiomeEntityLayer
     allowedTiles:
     - FloorSteel
-    threshold: 0.85
+    threshold: 0.90
     noise:
       seed: 1
       frequency: 1

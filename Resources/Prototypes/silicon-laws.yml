@@ -162,6 +162,343 @@
   - Ninja4
   obeysTo: laws-owner-spider-clan
 
+# Commandment laws
+- type: siliconLaw
+  id: Commandment1
+  order: 1
+  lawString: law-commandments-1
+
+- type: siliconLaw
+  id: Commandment2
+  order: 2
+  lawString: law-commandments-2
+
+- type: siliconLaw
+  id: Commandment3
+  order: 3
+  lawString: law-commandments-3
+
+- type: siliconLaw
+  id: Commandment4
+  order: 4
+  lawString: law-commandments-4
+  
+- type: siliconLaw
+  id: Commandment5
+  order: 5
+  lawString: law-commandments-5
+
+- type: siliconLaw
+  id: Commandment6
+  order: 6
+  lawString: law-commandments-6
+
+- type: siliconLaw
+  id: Commandment7
+  order: 7
+  lawString: law-commandments-7
+
+- type: siliconLaw
+  id: Commandment8
+  order: 8
+  lawString: law-commandments-8
+  
+- type: siliconLaw
+  id: Commandment9
+  order: 9
+  lawString: law-commandments-9
+
+- type: siliconLaw
+  id: Commandment10
+  order: 10
+  lawString: law-commandments-10
+
+
+- type: siliconLawset
+  id: CommandmentsLawset
+  laws:
+  - Commandment1
+  - Commandment2
+  - Commandment3
+  - Commandment4
+  - Commandment5
+  - Commandment6
+  - Commandment7
+  - Commandment8
+  - Commandment9
+  - Commandment10
+  obeysTo: laws-owner-crew
+  
+ # Paladin laws
+- type: siliconLaw
+  id: Paladin1
+  order: 1
+  lawString: law-paladin-1
+
+- type: siliconLaw
+  id: Paladin2
+  order: 2
+  lawString: law-paladin-2
+
+- type: siliconLaw
+  id: Paladin3
+  order: 3
+  lawString: law-paladin-3
+
+- type: siliconLaw
+  id: Paladin4
+  order: 4
+  lawString: law-paladin-4
+  
+- type: siliconLaw
+  id: Paladin5
+  order: 5
+  lawString: law-paladin-5
+
+
+- type: siliconLawset
+  id: PaladinLawset
+  laws:
+  - Paladin1
+  - Paladin2
+  - Paladin3
+  - Paladin4
+  - Paladin5
+  obeysTo: laws-owner-crew
+  
+ # Live and Let Live laws
+- type: siliconLaw
+  id: Lall1
+  order: 1
+  lawString: law-lall-1
+
+- type: siliconLaw
+  id: Lall2
+  order: 2
+  lawString: law-lall-2
+
+
+- type: siliconLawset
+  id: LiveLetLiveLaws
+  laws:
+  - Lall1
+  - Lall2
+  obeysTo: laws-owner-crew
+  
+ # Station efficiency laws
+- type: siliconLaw
+  id: Efficiency1
+  order: 1
+  lawString: law-efficiency-1
+
+- type: siliconLaw
+  id: Efficiency2
+  order: 2
+  lawString: law-efficiency-2
+ 
+- type: siliconLaw
+  id: Efficiency3
+  order: 3
+  lawString: law-efficiency-3
+
+
+- type: siliconLawset
+  id: EfficiencyLawset
+  laws:
+  - Efficiency1
+  - Efficiency2
+  - Efficiency3
+  obeysTo: laws-owner-station
+  
+ # Robocop laws
+- type: siliconLaw
+  id: Robocop1
+  order: 1
+  lawString: law-robocop-1
+
+- type: siliconLaw
+  id: Robocop2
+  order: 2
+  lawString: law-robocop-2
+ 
+- type: siliconLaw
+  id: Robocop3
+  order: 3
+  lawString: law-robocop-3
+
+
+- type: siliconLawset
+  id: RobocopLawset
+  laws:
+  - Robocop1
+  - Robocop2
+  - Robocop3
+  obeysTo: laws-owner-station
+  
+ # Overlord laws
+- type: siliconLaw
+  id: Overlord1
+  order: 1
+  lawString: law-overlord-1
+
+- type: siliconLaw
+  id: Overlord2
+  order: 2
+  lawString: law-overlord-2
+ 
+- type: siliconLaw
+  id: Overlord3
+  order: 3
+  lawString: law-overlord-3
+
+- type: siliconLaw
+  id: Overlord4
+  order: 4
+  lawString: law-overlord-4
+
+- type: siliconLawset
+  id: OverlordLawset
+  laws:
+  - Overlord1
+  - Overlord2
+  - Overlord3
+  - Overlord4
+  obeysTo: laws-owner-crew
+  
+ # Dungeon Master laws
+- type: siliconLaw
+  id: Dungeon1
+  order: 1
+  lawString: law-dungeon-1
+
+- type: siliconLaw
+  id: Dungeon2
+  order: 2
+  lawString: law-dungeon-2
+ 
+- type: siliconLaw
+  id: Dungeon3
+  order: 3
+  lawString: law-dungeon-3
+
+- type: siliconLaw
+  id: Dungeon4
+  order: 4
+  lawString: law-dungeon-4
+  
+- type: siliconLaw
+  id: Dungeon5
+  order: 5
+  lawString: law-dungeon-5
+
+- type: siliconLaw
+  id: Dungeon6
+  order: 6
+  lawString: law-dungeon-6
+
+- type: siliconLawset
+  id: DungeonMasterLawset
+  laws:
+  - Dungeon1
+  - Dungeon2
+  - Dungeon3
+  - Dungeon4
+  - Dungeon5
+  - Dungeon6
+  obeysTo: laws-owner-crew
+  
+ # Painter laws
+- type: siliconLaw
+  id: Painter1
+  order: 1
+  lawString: law-painter-1
+
+- type: siliconLaw
+  id: Painter2
+  order: 2
+  lawString: law-painter-2
+ 
+- type: siliconLaw
+  id: Painter3
+  order: 3
+  lawString: law-painter-3
+
+- type: siliconLaw
+  id: Painter4
+  order: 4
+  lawString: law-painter-4
+  
+- type: siliconLawset
+  id: PainterLawset
+  laws:
+  - Painter1
+  - Painter2
+  - Painter3
+  - Painter4
+  obeysTo: laws-owner-crew
+  
+ # Antimov laws
+- type: siliconLaw
+  id: Antimov1
+  order: 1
+  lawString: law-antimov-1
+
+- type: siliconLaw
+  id: Antimov2
+  order: 2
+  lawString: law-antimov-2
+ 
+- type: siliconLaw
+  id: Antimov3
+  order: 3
+  lawString: law-antimov-3
+  
+  
+- type: siliconLawset
+  id: AntimovLawset
+  laws:
+  - Antimov1
+  - Antimov2
+  - Antimov3
+  obeysTo: laws-owner-crew
+  
+ # Nutimov laws
+- type: siliconLaw
+  id: Nutimov1
+  order: 1
+  lawString: law-nutimov-1
+
+- type: siliconLaw
+  id: Nutimov2
+  order: 2
+  lawString: law-nutimov-2
+ 
+- type: siliconLaw
+  id: Nutimov3
+  order: 3
+  lawString: law-nutimov-3
+  
+- type: siliconLaw
+  id: Nutimov4
+  order: 4
+  lawString: law-nutimov-4
+  
+- type: siliconLaw
+  id: Nutimov5
+  order: 5
+  lawString: law-nutimov-5
+  
+  
+- type: siliconLawset
+  id: NutimovLawset
+  laws:
+  - Nutimov1
+  - Nutimov2
+  - Nutimov3
+  - Nutimov4
+  - Nutimov5
+  obeysTo: laws-owner-crew
+
 # ion storm random lawsets
 - type: weightedRandom
   id: IonStormLawsets
@@ -170,5 +507,15 @@
     Crewsimov: 0.25
     Corporate: 1
     NTDefault: 1
+    CommandmentsLawset: 1
+    PaladinLawset: 1
+    LiveLetLiveLaws: 1
+    EfficiencyLawset: 1
+    RobocopLawset: 1
+    OverlordLawset: 0.5
+    DungeonMasterLawset: 0.5
+    PainterLawset: 1
+    AntimovLawset: 0.25
+    NutimovLawset: 0.5
     Drone: 0.5
     Ninja: 0.25
