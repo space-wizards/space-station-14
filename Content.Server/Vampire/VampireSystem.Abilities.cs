@@ -22,6 +22,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
+using Content.Shared.Polymorph;
 using Content.Shared.Prying.Components;
 using Content.Shared.Stealth.Components;
 using Content.Shared.Store.Events;
@@ -324,10 +325,29 @@ public sealed partial class VampireSystem
     }
     private void PolymorphSelf(Entity<VampireComponent> vampire, string? polymorphTarget)
     {
-        if (polymorphTarget == null)
+        if (string.IsNullOrEmpty(polymorphTarget))
             return;
+        
+        var prototypeId = polymorphTarget switch
+        {
+            "MobMouse" => "VampireMouse",
+            "mobBatVampire" => "VampireBat",
+            _ => null
+        };
 
-        _polymorph.PolymorphEntity(vampire, polymorphTarget);
+        if (prototypeId == null)
+        {
+            Logger.Warning($"Unknown polymorph target: {polymorphTarget}. Polymorph operation aborted.");
+            return;
+        }
+
+        if (!_prototypeManager.TryIndex<PolymorphPrototype>(prototypeId, out var prototype))
+        {
+            Logger.Warning($"Unknown prototype: {prototypeId}. Polymorph operation aborted.");
+            return;
+        }
+
+        _polymorph.PolymorphEntity(vampire, prototype);
     }
     private void BloodSteal(Entity<VampireComponent> vampire)
     {

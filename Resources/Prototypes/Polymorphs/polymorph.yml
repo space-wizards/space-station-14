@@ -189,6 +189,13 @@
 
 #Vampire
 - type: polymorph
+  id: VampireMouse
+  configuration:
+    entity: MobMouse
+    revertOnDeath: true
+    revertOnCrit: true
+
+- type: polymorph
   id: VampireBat
   configuration:
     entity: MobBat
