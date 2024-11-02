@@ -35,6 +35,7 @@
     damage:
       types:
         Blunt: 0
+    hidden: true
   - type: PhysicalComposition
     materialComposition:
       Cloth: 100
@@ -52,6 +53,24 @@
         reagents:
         - ReagentId: Fiber
           Quantity: 10
+  - type: ContainerContainer
+    containers:
+      stash: !type:ContainerSlot {}
+  - type: Speech
+    speechVerb: Default # for pais (In the secret stash)
+  - type: SecretStash
+    secretStashName: secret-stash-plushie
+    blacklist:
+      components:
+      - SecretStash # Prevents being able to insert plushies inside each other (infinite plush)!
+      - NukeDisk # Could confuse the nukies if they don't know that plushies have a stash.
+      tags:
+      - QuantumSpinInverter # It will cause issues with the grinder...
+      - FakeNukeDisk # So you can't tell if the nuke disk is real or fake depending on if it can be inserted or not.
+  - type: ToolOpenable
+    openToolQualityNeeded: Slicing
+    closeToolQualityNeeded: Slicing # Should probably be stitching or something if that gets added
+    name: secret-stash-plushie
 
 - type: entity
   parent: BasePlushie
@@ -323,6 +342,25 @@
     equippedPrefix: lizard
     slots:
     - HEAD
+  - type: Speech
+    speechVerb: Reptilian # for pais (In the secret stash)
+
+- type: entity
+  parent: PlushieLizard
+  id: PlushieRainbowLizard #Weh but gay
+  description: An adorable stuffed toy that resembles a lizardperson of every color. You just might trip while staring at it...
+  name: rainbow lizard plushie
+  components:
+  - type: PointLight
+    radius: 1.5
+    energy: 2
+  - type: RgbLightController
+    layers: [ 0 ]
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: lizard-equipped-HELMET
+        shader: unshaded
 
 - type: entity
   parent: PlushieLizard
@@ -561,6 +599,11 @@
       path: /Audio/Effects/bite.ogg
     angle: 0
     animation: WeaponArcBite # Rrrr!
+  - type: Tag
+    tags:
+      - Payload
+      - ClothMade
+      - PlushieCarp
 
 - type: entity
   parent: PlushieCarp
