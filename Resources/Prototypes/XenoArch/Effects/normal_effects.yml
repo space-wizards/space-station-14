@@ -702,7 +702,7 @@
   id: EffectFaunaSpawnDangerous
   targetDepth: 4
   effectHint: artifact-effect-hint-creation
-  effectProb: 1000
+  effectProb: 1
   components:
   - type: SpawnArtifact
     maxSpawns: 10
@@ -728,7 +728,7 @@
       maxAmount: 2
     - id: DuckDuckGooseSpawner
       orGroup: fauna
-      prob: 1000
+      prob: 1
     - id: MobPurpleSnake
       orGroup: fauna
     - id: MobSpiderSpace
@@ -742,7 +742,7 @@
       prob: 0.05
     - id: MobGoliath
       orGroup: fauna
-      prob: 1000
+      prob: 0.3
 
 - type: artifactEffect
   id: EffectBigIgnite
