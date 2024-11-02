@@ -674,7 +674,7 @@
   name: C.H.I.M.P. handcannon
   parent: WeaponPistolCHIMP
   id: WeaponPistolCHIMPUpgraded
-  suffix: Syndicate, DO NOT MAP
+  suffix: Syndicate
   components:
   - type: BatteryWeaponFireModes
     fireModes:
