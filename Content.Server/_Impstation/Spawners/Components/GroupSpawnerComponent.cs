@@ -1,5 +1,6 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Content.Shared.Storage;
 
 namespace Content.Server._Impstation.Spawners.Components
 {
@@ -10,6 +11,6 @@ namespace Content.Server._Impstation.Spawners.Components
         /// List of entities that can be spawned by this component. Each entity will be spawned once.
         /// </summary>
         [DataField]
-        public List<EntProtoId> Prototypes = [];
+        public List<EntitySpawnEntry?> Spawns = [];
     }
 }

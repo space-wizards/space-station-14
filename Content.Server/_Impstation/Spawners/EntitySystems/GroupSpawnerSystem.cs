@@ -1,8 +1,6 @@
 using Content.Server.GameTicking;
 using Content.Server._Impstation.Spawners.Components;
-using Content.Shared.EntityTable;
-using Content.Shared.GameTicking.Components;
-using Robust.Shared.Prototypes;
+using Content.Shared.Storage;
 
 namespace Content.Server.Spawners.EntitySystems
 {
@@ -20,14 +18,26 @@ namespace Content.Server.Spawners.EntitySystems
             TrySpawn(uid, component);
         }
 
-        private void TrySpawn(EntityUid uid, GroupSpawnerComponent component){
+        private void TrySpawn(EntityUid uid, GroupSpawnerComponent component)
+        {
 
             var coordinates = Transform(uid).Coordinates;
 
-            foreach (EntProtoId entity in component.Prototypes)
+            if (component.Spawns is not {} spawns)
+                return;
+
+            foreach (var spawn in spawns)
+            {
+                if (spawn == null)
                 {
+                    continue;
+                }
+                var amount = EntitySpawnCollection.GetAmount(spawn.Value);
+                var entity = spawn.Value.PrototypeId;
+                for (var i = 0; i < amount; i++) {
                     SpawnAtPosition(entity, coordinates);
                 }
+            }
         }
 
     }

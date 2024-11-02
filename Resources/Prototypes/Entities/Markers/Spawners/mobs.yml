@@ -1019,7 +1019,8 @@
         - state: blue
         - sprite: Mobs/Animals/goose.rsi
     - type: GroupSpawner
-      prototypes:
-        - MobDuckMallard
-        - MobDuckWhite
-        - MobGoose
+      spawns:
+      - id: MobDuckWhite
+        amount: 2
+        maxAmount: 2
+      - id: MobGoose
