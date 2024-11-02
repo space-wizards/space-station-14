@@ -91,7 +91,7 @@
   id: AdminHorn
   name: nightmare horn
   suffix: Admeme
-  description: A horn full of tider's worst nightmares.
+  description: A horn full of a tider's worst nightmares.
   components:
   - type: Sprite
     sprite: Objects/Fun/adminhorn.rsi
