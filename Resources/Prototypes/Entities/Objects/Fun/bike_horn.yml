@@ -91,18 +91,14 @@
   id: AdminHorn
   name: nightmare horn
   suffix: Admeme
-  description: A horn full of tider's worst nightmares.
+  description: A horn full of a tider's worst nightmares.
   components:
   - type: Sprite
     sprite: Objects/Fun/adminhorn.rsi
-    state: icon
   - type: Item
     sprite: Objects/Fun/adminhorn.rsi
-    size: Tiny
   - type: Clothing
     sprite: Objects/Fun/adminhorn.rsi
-    slots: [Belt]
-    quickEquip: false
   - type: EmitSoundOnTrigger
     sound:
       collection: AdminHorn
@@ -114,14 +110,10 @@
       params:
         variation: 0.08
   - type: MeleeWeapon
-    wideAnimationRotation: 135
     soundHit:
       collection: AdminHorn
       params:
         variation: 0.08
-    damage:
-      types:
-        Blunt: 0
 
 - type: entity
   parent: BikeHorn
