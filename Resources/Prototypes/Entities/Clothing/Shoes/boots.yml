@@ -188,7 +188,6 @@
         - ReagentId: Fiber
           Quantity: 10
   - type: Butcherable
-    butcheringType: Knife
     spawned:
     - id: MaterialWebSilk1
       amount: 2
