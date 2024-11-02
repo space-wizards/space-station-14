@@ -9,6 +9,11 @@
   - /Audio/Items/brokenbikehorn.ogg
 
 - type: soundCollection
+  id: AdminHorn
+  files:
+  - /Audio/Effects/adminhelp.ogg
+
+- type: soundCollection
   id: BananiumHorn
   files:
   - /Audio/Items/airhorn.ogg
