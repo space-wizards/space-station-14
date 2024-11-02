@@ -99,6 +99,13 @@
     Steel: 100
 
 - type: latheRecipe
+  id: FoodPlateMuffinTin
+  result: FoodPlateMuffinTin
+  completetime: 0.4
+  materials:
+    Steel: 50
+
+- type: latheRecipe
   id: FoodKebabSkewer
   result: FoodKebabSkewer
   completetime: 0.4
