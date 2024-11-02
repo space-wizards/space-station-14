@@ -21097,7 +21097,6 @@ entities:
           - 213
           - 206
           - 204
-          - 194
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
