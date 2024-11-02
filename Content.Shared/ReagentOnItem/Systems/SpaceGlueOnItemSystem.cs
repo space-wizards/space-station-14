@@ -13,7 +13,7 @@ using Content.Shared.NameModifier.EntitySystems;
 
 namespace Content.Shared.ReagentOnItem;
 
-public sealed class SpaceGlueOnItemSystem : EntitySystem
+public sealed class SpaceGlueOnItemSystem : ReagentOnItemSystem
 {
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _timing = default!;

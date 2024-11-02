@@ -137,11 +137,25 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("plantMetabolism", serverOnly: true)]
         public List<EntityEffect> PlantMetabolisms = new(0);
 
+        [DataField(serverOnly: true)]
+        public List<EntityEffect> ApplicationReactions = new(0);
+
         [DataField]
         public float PricePerUnit;
 
         [DataField]
         public SoundSpecifier FootstepSound = new SoundCollectionSpecifier("FootstepWater", AudioParams.Default.WithVolume(6));
+
+        public bool ReactionApply(EntityUid uid, ReagentQuantity reagentQuant, IEntityManager entityManager)
+        {
+            foreach (var reaction in ApplicationReactions)
+            {
+                var args = new EntityEffectApplyArgs(uid, entityManager, reagentQuant.Quantity, reagentQuant.Reagent.Prototype);
+                reaction.Effect(args);
+            }
+
+            return ApplicationReactions.Count > 0;
+        }
 
         public FixedPoint2 ReactionTile(TileRef tile, FixedPoint2 reactVolume, IEntityManager entityManager, List<ReagentData>? data)
         {

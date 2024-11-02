@@ -1,6 +1,10 @@
 using Content.Shared.Administration.Logs;
+using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
+using Content.Shared.Fluids;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
@@ -10,6 +14,7 @@ using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.ReagentOnItem;
 using Content.Shared.Timing;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.ApplyReagentToItem;
 
@@ -27,6 +32,9 @@ public sealed class ApplyReagentToItemSystem : EntitySystem
     [Dependency] private readonly OpenableSystem _openable = default!;
     [Dependency] private readonly ReagentOnItemSystem _reagentOnItem = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Dependency] private readonly ReactiveSystem _reactive = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly SharedPuddleSystem _puddle = default!;
 
     public override void Initialize()
     {
@@ -68,40 +76,51 @@ public sealed class ApplyReagentToItemSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Try to apply the reagent thats stored inside the squeeze bottle into an object.
+    ///     Try to apply the reagent that's stored inside the squeeze bottle into an object.
     ///     If there are multiple reagents, it will try to apply all of them.
     /// </summary>
     private bool TryToApplyReagent(Entity<ApplyReagentToItemComponent> entity, EntityUid target, EntityUid actor)
     {
-
         if (!TryComp(entity, out UseDelayComponent? useDelay) || _useDelay.IsDelayed((entity, useDelay)))
             return false;
 
         if (!HasComp<ItemComponent>(target))
-        {
             return false;
-        }
 
         _useDelay.TryResetDelay((entity, useDelay));
 
-        if (HasComp<ItemComponent>(target)
-            && _solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out var solComp, out var solution))
+        if (!_solutionContainer.TryGetSolution(entity.Owner, entity.Comp.Solution, out var solComp, out var solution))
+            return false;
+
+        var applicationMix = _solutionContainer.SplitSolution(solComp.Value, entity.Comp.AmountConsumedOnUse);
+
+        if (applicationMix.Contents.Count == 0)
         {
-            var reagent = _solutionContainer.SplitSolution(solComp.Value, entity.Comp.AmountConsumedOnUse);
-
-            if (_reagentOnItem.ApplyReagentEffectToItem(target, reagent))
-            {
-                _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} tried to apply reagent to {ToPrettyString(target):subject} with {ToPrettyString(entity.Owner):tool}");
-                _audio.PlayPredicted(entity.Comp.OnSqueezeNoise, entity, actor);
-            }
-            else
-            {
-                _popup.PopupPredicted(Loc.GetString("apply-reagent-is-empty-failure"), actor, actor, PopupType.Medium);
-            }
-
-            return true;
+            _popup.PopupPredicted(Loc.GetString("apply-reagent-is-empty-failure"), actor, actor, PopupType.Medium);
+            return false;
         }
 
-        return false;
+        ApplyReagents(target, applicationMix);
+        _audio.PlayPredicted(entity.Comp.OnSqueezeNoise, entity, actor);
+        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(actor):actor} tried to apply reagent to {ToPrettyString(target):subject} with {ToPrettyString(entity.Owner):tool}");
+
+        return true;
+    }
+
+    /// <summary>
+    ///     Actually apply all the reagents to the item. If the reagents don't have any application reactions,
+    ///     just dump em on the ground.
+    /// </summary>
+    private void ApplyReagents(EntityUid target, Solution solution)
+    {
+        Solution spillPool = new();
+        foreach (var reagent in solution.Contents)
+        {
+            var proto = _prototypeManager.Index<ReagentPrototype>(reagent.Reagent.Prototype);
+            if (!proto.ReactionApply(target, reagent, EntityManager))
+                spillPool.AddReagent(reagent);
+        }
+
+        _puddle.TrySpillAt(target, spillPool, out var _, false);
     }
 }

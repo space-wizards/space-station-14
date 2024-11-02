@@ -130,3 +130,16 @@ public record class EntityEffectReagentArgs : EntityEffectBaseArgs
         Scale = scale;
     }
 }
+
+public record class EntityEffectApplyArgs : EntityEffectBaseArgs
+{
+    public FixedPoint2 Quantity;
+
+    public string Reagent;
+
+    public EntityEffectApplyArgs(EntityUid targetEntity, IEntityManager entityManager,FixedPoint2 quantity, string reagent) : base(targetEntity, entityManager)
+    {
+        Quantity = quantity;
+        Reagent = reagent;
+    }
+}
