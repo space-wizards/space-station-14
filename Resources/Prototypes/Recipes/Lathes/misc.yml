@@ -228,3 +228,45 @@
   completetime: 3
   materials:
     Plastic: 200
+
+- type: latheRecipe
+  id: ToolboxEmergency
+  result: ToolboxEmergency
+  completetime: 3
+  materials:
+    Steel: 500
+
+- type: latheRecipe
+  id: ToolboxMechanical
+  result: ToolboxMechanical
+  completetime: 3
+  materials:
+    Steel: 500
+
+- type: latheRecipe
+  id: ToolboxElectrical
+  result: ToolboxElectrical
+  completetime: 3
+  materials:
+    Steel: 500
+
+- type: latheRecipe
+  id: ToolboxArtistic
+  result: ToolboxArtistic
+  completetime: 3
+  materials:
+    Steel: 500
+
+- type: latheRecipe
+  id: ToolboxGolden
+  result: ToolboxGolden
+  completetime: 3
+  materials:
+    Gold: 500
+
+- type: latheRecipe
+  id: ToolboxSyndicate
+  result: ToolboxSyndicate
+  completetime: 3
+  materials:
+    Steel: 500
