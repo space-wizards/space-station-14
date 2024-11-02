@@ -1,4 +1,5 @@
 using Robust.Shared.Noise;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -11,17 +12,17 @@ namespace Content.Shared.Parallax.Biomes.Layers;
 [Serializable, NetSerializable]
 public sealed partial class BiomeMetaLayer : IBiomeLayer
 {
-    [DataField("noise")]
+    [DataField]
     public FastNoiseLite Noise { get; private set; } = new(0);
 
     /// <inheritdoc/>
-    [DataField("threshold")]
+    [DataField]
     public float Threshold { get; private set; } = -1f;
 
     /// <inheritdoc/>
-    [DataField("invert")]
+    [DataField]
     public bool Invert { get; private set; }
 
-    [DataField("template", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<BiomeTemplatePrototype>))]
-    public string Template = string.Empty;
+    [DataField]
+    public ProtoId<BiomeTemplatePrototype> Template = string.Empty;
 }
