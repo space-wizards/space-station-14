@@ -1,7 +1,7 @@
 - type: gameMap
   id: Pact
   mapName: 'Pact'
-  mapPath: /Maps/Weaselstation/Pact.yml
+  mapPath: /Maps/Weaselstation/pact.yml
   minPlayers: 5
   maxPlayers: 35
   stations:
@@ -50,6 +50,9 @@
             SalvageSpecialist: [ 2, 2 ]
             CargoTechnician: [ 2, 2 ]
             #civilian
+            Musician: [ 1, 1 ]
+            Chaplain: [ 1, 1 ]
             Passenger: [ -1, -1 ]
             #silicon
-            Borg: [ 1, 1 ]
+            StationAi: [ 1, 1 ]
+            Borg: [ 2, 2 ]
