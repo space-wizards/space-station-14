@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: shampunj
-  changes:
-  - message: Rat king can now wideswing
-    type: Tweak
-  id: 7078
-  time: '2024-08-10T12:47:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30808
 - author: BackeTako
   changes:
   - message: Added a suitskirt for the psychologist
@@ -3951,3 +3944,10 @@
   id: 7577
   time: '2024-11-02T01:33:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/28856
+- author: K-Dynamic
+  changes:
+  - message: Pills are explosion resistant.
+    type: Tweak
+  id: 7578
+  time: '2024-11-02T09:51:45.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32458
