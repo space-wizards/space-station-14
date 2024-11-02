@@ -583,5 +583,12 @@ Entries:
   id: 72
   time: '2024-11-02T09:29:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30443
+- author: nikthechampiongr
+  changes:
+  - message: It is now possible to edit the AI's laws through its core and eye.
+    type: Fix
+  id: 73
+  time: '2024-11-02T13:21:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32461
 Name: Admin
 Order: 1
