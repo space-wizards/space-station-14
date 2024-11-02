@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Standartized some clothing recipes.
-    type: Tweak
-  id: 7082
-  time: '2024-08-10T18:16:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29315
 - author: TheShuEd
   changes:
   - message: You cat cut burger bun into two halfs, and make custom burgers now!
@@ -3952,3 +3945,10 @@
   id: 7581
   time: '2024-11-02T13:19:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33097
+- author: deltanedas
+  changes:
+  - message: Printing cables in an autolathe is now 20 times faster.
+    type: Tweak
+  id: 7582
+  time: '2024-11-02T13:24:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31521
