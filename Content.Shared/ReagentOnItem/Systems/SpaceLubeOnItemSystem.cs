@@ -72,8 +72,7 @@ public sealed class SpaceLubeOnItemSystem : EntitySystem
         var itemPosition = _xform.GetWorldPosition(Transform(uid));
         var vecFromObjectToEnt = worldPos - itemPosition;
 
-        // This calculates the spread of the crowbar so it won't go in a straight line
-        // to the entity picking it up!
+        // This calculates the spread of the crowbar so it won't go in a straight line to the entity picking it up!
         var randNegPosOne = 2 * _random.NextDouble() - 1;
         var spread = Math.PI / 5;
         var rotation = new Angle(spread * randNegPosOne);

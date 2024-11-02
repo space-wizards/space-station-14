@@ -79,7 +79,7 @@
     - !type:SpillTileReaction
       requiredSlipSpeed: 1
       superSlippery: true
-  appliedToItemReactions:
+  applicationReactions:
     - !type:ApplyLubeToItemEffect
 
 - type: reagent
@@ -94,7 +94,7 @@
   viscosity: 0.5
   tileReactions:
     - !type:SpillTileReaction
-  appliedToItemReactions:
+  applicationReactions:
     - !type:ApplyGlueToItemEffect
   reactiveEffects:
     Acidic:
@@ -103,10 +103,6 @@
       # pva glue? no, antibiotic glue for sealing wounds
       - !type:ModifyBleedAmount
         amount: -1.5
-    Squeezed:
-      methods: [ Touch ]
-      effects:
-      - !type:ApplyGlueToItemEffect
   metabolisms:
     Narcotic:
       effects:
