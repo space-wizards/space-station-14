@@ -1,0 +1,99 @@
+- type: entity
+  abstract: true
+  id: MobHonkmotherBase
+  name: Honkmother
+  description: Your mind froths and bubbles at what is percieved. The honkmother that can be named is not the eternal Honkmother. The nameless is what sets the stage.
+  components:
+  - type: Sprite
+    sprite: Mobs/Demons/honkmother.rsi
+    drawdepth: Ghosts
+    scale: 2.0,2.0
+    layers:
+    - state: honkmother
+      shader: unshaded
+
+# spawn animation, spawns actual honkmother when it ends
+- type: entity
+  parent: MobHonkmotherBase
+  id: MobHonkmotherSpawn
+  suffix: Spawn
+  components:
+  - type: Sprite
+    layers:
+    - state: spawn
+      shader: unshaded
+  # spawn animation lasts 3.5 seconds
+  - type: TimedDespawn
+    lifetime: 2.5
+  - type: SpawnOnDespawn
+    prototype: MobHonkmother
+
+- type: entity
+  parent: [MobHonkmotherBase, BaseMob]
+  id: MobHonkmother
+  components:
+  - type: AnnounceOnSpawn
+    message: honkmother-has-awoken
+    sender: honkmother-has-awoken-sender
+    sound:
+      path: /Audio/_Weaselstation/Misc/honkmother_spawn.ogg
+    color: red
+  - type: CargoSellBlacklist
+  # The honkmother is a true clairvoyant entity
+  - type: ContentEye
+    maxZoom: 2.0,2.0
+  - type: Fixtures
+    fixtures:
+      EventHorizonCollider:
+        shape:
+          !type:PhysShapeCircle
+            radius: 5
+        hard: false
+        restitution: 0.8
+        density: 99999
+        mask:
+        - SingularityLayer
+        layer:
+        - SingularityLayer
+      EventHorizonConsumer:
+        shape:
+          !type:PhysShapeCircle
+            radius: 5
+        hard: false
+        mask:
+        - SingularityLayer
+        layer:
+        - SingularityLayer
+  - type: Input
+    context: "ghost"
+  - type: MovementIgnoreGravity
+  # This powerful beings hearing spans all of space and time
+  - type: IntrinsicRadioReceiver
+  - type: ActiveRadio
+    channels:
+    - Binary
+    - Common
+    - Command
+    - CentCom
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+    - Syndicate
+    globalReceive: true
+  - type: Physics
+    bodyType: Dynamic
+    bodyStatus: InAir
+  - type: CanMoveInAir
+  # singulose components
+  - type: EventHorizon
+    radius: 5
+    canBreachContainment: true
+  - type: GravityWell
+    baseRadialAcceleration: 6
+    maxRange: 8
+  - type: WarpPoint
+    follow: true
+    location: Honkmother
