@@ -1,6 +1,6 @@
 - type: announcer
   id: TikTok
-  basePath: /Audio/Announcers/TikTok
+  basePath: /Audio/_Impstation/Announcers/TikTok
   baseAudioParams:
     volume: -14
   announcements:
