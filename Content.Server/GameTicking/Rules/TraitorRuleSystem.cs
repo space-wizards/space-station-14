@@ -117,11 +117,11 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
             }
 
             // Choose and generate an Uplink, and return the uplink code if applicable
-            Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Uplink request");
+            Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Uplink request start");
             var uplinkParams = RequestUplink(traitor, startingBalance, briefing);
             code = uplinkParams.Item1;
             briefing = uplinkParams.Item2;
-            Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Uplink done");
+            Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Uplink request completed");
         }
 
         string[]? codewords = null;
@@ -176,10 +176,12 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         var pda = _uplink.FindUplinkTarget(traitor);
         Note[]? code = null;
 
+        Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Uplink add");
         var uplinked = _uplink.AddUplink(traitor, startingBalance, pda, true);
 
         if (pda is not null && uplinked)
         {
+            Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Uplink is PDA");
             // Codes are only generated if the uplink is a PDA
             code = EnsureComp<RingerUplinkComponent>(pda.Value).Code;
 
@@ -191,6 +193,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         }
         else if (pda is null && uplinked)
         {
+            Log.Debug($"MakeTraitor {ToPrettyString(traitor)} - Uplink is implant");
             briefing += "\n" + Loc.GetString("traitor-role-uplink-implant-short");
         }
 
