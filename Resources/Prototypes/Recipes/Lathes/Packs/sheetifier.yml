@@ -1,7 +1,7 @@
 ## Static
 
 - type: latheRecipePack
-  id: Sheetifier
+  id: SheetifierStatic
   recipes:
   - MaterialSheetMeat
   - SheetPaper

@@ -388,12 +388,12 @@
   - type: Lathe
     idleState: icon
     runningState: icon
-    staticRecipePacks:
+    staticPacks:
     - SecurityEquipmentStatic
     - SecurityPracticeStatic
     - SecurityAmmoStatic
     - SecurityWeaponsStatic
-    dynamicRecipePacks:
+    dynamicPacks:
     - SecurityEquipment
     - SecurityBoards
     - SecurityExplosives
