@@ -95,7 +95,6 @@ public sealed class IlleismAccentSystem : EntitySystem
 
         // I/myself -> NAME
         message = RegexMyselfUpper.Replace(message, upperName);
-        Log.Debug(RegexMyselfUpper.Match(message).ToString());
         if (MostlyUppercase(message))
         {
             message = RegexI.Replace(message, upperName);
