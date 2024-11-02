@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Content.Server.Parallax;
+using Content.Shared.Maps;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
