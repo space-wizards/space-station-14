@@ -22,9 +22,9 @@ public abstract class ReagentOnItemSystem : EntitySystem
     ///     that cannot stick to the floor.
     /// </summary>
     /// <returns> False if there is no solution or if entity isn't an item and true otherwise. </returns>
-    public bool ApplyReagentEffectToItem(EntityUid item, string reagent, FixedPoint2 quantity, ReagentOnItemComponent comp)
+    public bool ApplyReagentEffectToItem(Entity<ItemComponent> item, string reagent, FixedPoint2 quantity, ReagentOnItemComponent comp)
     {
-        if (quantity <= 0 || !HasComp<ItemComponent>(item))
+        if (quantity <= 0)
             return false;
 
         // This is very specific, so I don't think it needs to use an event.

@@ -19,11 +19,11 @@ public sealed partial class ApplyLubeToItemEffect : EntityEffect
 
         if (args is not EntityEffectApplyArgs reagentArgs ||
             reagentArgs.Quantity <= 0 ||
-            !args.EntityManager.HasComponent<ItemComponent>(args.TargetEntity))
+            !args.EntityManager.TryGetComponent<ItemComponent>(args.TargetEntity, out var itemComp))
             return;
 
         args.EntityManager.EnsureComponent<SpaceLubeOnItemComponent>(args.TargetEntity, out var comp);
 
-        reagentOnItemSys.ApplyReagentEffectToItem(args.TargetEntity, reagentArgs.Reagent, reagentArgs.Quantity, comp);
+        reagentOnItemSys.ApplyReagentEffectToItem((args.TargetEntity, itemComp), reagentArgs.Reagent, reagentArgs.Quantity, comp);
     }
 }

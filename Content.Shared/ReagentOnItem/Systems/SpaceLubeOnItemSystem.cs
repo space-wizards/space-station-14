@@ -68,14 +68,11 @@ public sealed class SpaceLubeOnItemSystem : EntitySystem
             component.EffectStacks -= 1;
         }
 
-        Dirty(uid, component);
+        var worldPos = _xform.GetWorldPosition(Transform(entityWhoPickedUp));
+        var itemPosition = _xform.GetWorldPosition(Transform(uid));
+        var vecFromObjectToEnt = worldPos - itemPosition;
 
-        var entTransform = Transform(entityWhoPickedUp);
-        var xformQuery = GetEntityQuery<TransformComponent>();
-        var worldPos = _xform.GetWorldPosition(entTransform, xformQuery);
-        var vecFromObjectToEnt = worldPos - _xform.GetWorldPosition(uid, xformQuery);
-
-        // This calculates the spread of the crowbar so it wont go in a straight line
+        // This calculates the spread of the crowbar so it won't go in a straight line
         // to the entity picking it up!
         var randNegPosOne = 2 * _random.NextDouble() - 1;
         var spread = Math.PI / 5;
