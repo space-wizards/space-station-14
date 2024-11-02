@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: BackeTako
-  changes:
-  - message: Added a suitskirt for the psychologist
-    type: Add
-  id: 7079
-  time: '2024-08-10T12:51:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30709
 - author: Unkn0wnGh0st333
   changes:
   - message: ERT Chaplain starting gear was fixed and will no longer give the ERT
@@ -3951,3 +3944,12 @@
   id: 7578
   time: '2024-11-02T09:51:45.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32458
+- author: K-Dynamic
+  changes:
+  - message: Handcrafted gauze now takes 3 seconds instead of 10 seconds of crafting
+    type: Tweak
+  - message: Medical techfab gauze recipe now takes 1 cloth instead of 2
+    type: Tweak
+  id: 7579
+  time: '2024-11-02T09:53:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32744
