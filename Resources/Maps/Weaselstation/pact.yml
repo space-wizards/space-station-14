@@ -1698,7 +1698,7 @@ entities:
           -7,1:
             0: 61917
           -7,2:
-            0: 30576
+            0: 30578
           -7,3:
             0: 58098
           -7,4:
@@ -4065,7 +4065,7 @@ entities:
       devices:
       - 2930
       - 4033
-      - 5915
+      - 198
       - 7877
       - 7878
       - 7881
@@ -4079,7 +4079,6 @@ entities:
       parent: 1
     - type: DeviceList
       devices:
-      - 5915
       - 5914
   - uid: 6457
     components:
@@ -4171,19 +4170,17 @@ entities:
       - 3767
       - 3638
       - 3769
-      - 3326
       - 3309
-      - 3000
       - 3336
       - 3768
       - 6342
       - 6343
       - 6344
-      - 7802
+      - 7815
       - 7811
       - 7835
-      - 7815
-      - 7836
+      - 6871
+      - 199
   - uid: 7145
     components:
     - type: Transform
@@ -4290,7 +4287,6 @@ entities:
       - 6341
       - 3768
       - 3336
-      - 3000
       - 3309
       - 3326
       - 3769
@@ -4300,14 +4296,10 @@ entities:
       - 3327
       - 3011
       - 7831
-      - 7832
-      - 7792
       - 7833
-      - 7785
-      - 7834
       - 7854
-      - 7853
-      - 7810
+      - 2178
+      - 199
   - uid: 7184
     components:
     - type: Transform
@@ -4476,17 +4468,11 @@ entities:
       parent: 1
 - proto: AirlockCaptainLocked
   entities:
-  - uid: 768
+  - uid: 194
     components:
     - type: Transform
       pos: 9.5,12.5
       parent: 1
-    - type: Door
-      secondsUntilStateChange: -87514.87
-      state: Opening
-    - type: DeviceLinkSource
-      lastSignals:
-        DoorStatus: True
   - uid: 1106
     components:
     - type: Transform
@@ -5168,7 +5154,7 @@ entities:
       pos: 4.5,-10.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -90589.23
+      secondsUntilStateChange: -90895.99
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -5388,7 +5374,7 @@ entities:
       pos: 17.5,-26.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -43688.047
+      secondsUntilStateChange: -43994.816
       state: Opening
     - type: AccessReader
       access:
@@ -5658,7 +5644,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -7268.2124
+      secondsUntilStateChange: -7574.982
       state: Opening
     - type: AccessReader
       accessLog:
@@ -5688,7 +5674,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -7268.2793
+      secondsUntilStateChange: -7575.049
       state: Opening
     - type: AccessReader
       accessLog:
@@ -19307,6 +19293,8 @@ entities:
       parent: 1
   - uid: 8730
     components:
+    - type: MetaData
+      desc: If you can carry six of these, you become the coolest kid at church. If.... there was a church.... This holy reception only has room for one..
     - type: Transform
       pos: -32.507618,-26.422512
       parent: 1
@@ -21249,7 +21237,7 @@ entities:
       pos: 12.5,16.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -83099.07
+      secondsUntilStateChange: -83405.836
       state: Closing
 - proto: DefaultStationBeaconAME
   entities:
@@ -21627,6 +21615,12 @@ entities:
       parent: 1
 - proto: DisposalBend
   entities:
+  - uid: 195
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 3.5,-29.5
+      parent: 1
   - uid: 447
     components:
     - type: Transform
@@ -23370,6 +23364,11 @@ entities:
       parent: 1
 - proto: DisposalTrunk
   entities:
+  - uid: 197
+    components:
+    - type: Transform
+      pos: 3.5,-28.5
+      parent: 1
   - uid: 764
     components:
     - type: Transform
@@ -23459,12 +23458,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -12.5,-24.5
       parent: 1
-  - uid: 5020
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 3.5,-29.5
-      parent: 1
   - uid: 5042
     components:
     - type: Transform
@@ -23489,6 +23482,11 @@ entities:
       parent: 1
 - proto: DisposalUnit
   entities:
+  - uid: 202
+    components:
+    - type: Transform
+      pos: 3.5,-28.5
+      parent: 1
   - uid: 851
     components:
     - type: Transform
@@ -23534,12 +23532,6 @@ entities:
     - type: Transform
       pos: -15.5,-9.5
       parent: 1
-  - uid: 3590
-    components:
-    - type: Transform
-      pos: 3.5,-29.5
-      parent: 1
-    - type: DisposalUnit
   - uid: 3591
     components:
     - type: Transform
@@ -24128,6 +24120,42 @@ entities:
       parent: 1
 - proto: FireAlarm
   entities:
+  - uid: 201
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -4.5,-17.5
+      parent: 1
+    - type: DeviceList
+      devices:
+      - 1333
+      - 3023
+      - 1692
+      - 1693
+      - 1694
+      - 1199
+      - 1198
+      - 7781
+      - 7759
+      - 7822
+      - 7821
+      - 7823
+      - 7824
+      - 7825
+      - 7826
+      - 7827
+      - 7784
+      - 7783
+      - 7782
+      - 7817
+      - 7829
+      - 7828
+      - 7902
+      - 7900
+      - 7901
+      - 7904
+      - 7905
+      - 7906
   - uid: 1359
     components:
     - type: Transform
@@ -24255,41 +24283,6 @@ entities:
       - 5827
       - 5830
       - 5831
-  - uid: 5879
-    components:
-    - type: Transform
-      pos: -5.5,-17.5
-      parent: 1
-    - type: DeviceList
-      devices:
-      - 1333
-      - 3023
-      - 1692
-      - 1693
-      - 1694
-      - 1199
-      - 1198
-      - 7781
-      - 7759
-      - 7822
-      - 7821
-      - 7823
-      - 7824
-      - 7825
-      - 7826
-      - 7827
-      - 7784
-      - 7783
-      - 7782
-      - 7817
-      - 7829
-      - 7828
-      - 7902
-      - 7900
-      - 7901
-      - 7904
-      - 7905
-      - 7906
   - uid: 5911
     components:
     - type: Transform
@@ -24321,7 +24314,7 @@ entities:
       parent: 1
     - type: DeviceList
       devices:
-      - 5915
+      - 198
       - 5914
       - 7876
       - 7879
@@ -24382,7 +24375,7 @@ entities:
       devices:
       - 2930
       - 4033
-      - 5915
+      - 198
       - 7877
       - 7878
       - 7881
@@ -24405,7 +24398,6 @@ entities:
       - 3769
       - 3326
       - 3309
-      - 3000
       - 3336
       - 3768
       - 6341
@@ -24416,14 +24408,10 @@ entities:
       - 6336
       - 6335
       - 7831
-      - 7832
-      - 7792
       - 7833
-      - 7785
-      - 7834
       - 7854
-      - 7853
-      - 7810
+      - 2178
+      - 199
   - uid: 7164
     components:
     - type: Transform
@@ -24432,25 +24420,23 @@ entities:
       parent: 1
     - type: DeviceList
       devices:
-      - 3327
-      - 3011
-      - 3463
-      - 3767
-      - 3638
-      - 3769
-      - 3326
-      - 3309
-      - 3000
-      - 3336
-      - 3768
-      - 6342
-      - 6343
-      - 6344
-      - 7802
+      - 7815
       - 7811
       - 7835
-      - 7815
-      - 7836
+      - 6871
+      - 3768
+      - 3336
+      - 199
+      - 3309
+      - 3769
+      - 3638
+      - 3767
+      - 3463
+      - 3011
+      - 3327
+      - 6344
+      - 6343
+      - 6342
   - uid: 7165
     components:
     - type: Transform
@@ -24508,6 +24494,16 @@ entities:
       parent: 1
 - proto: Firelock
   entities:
+  - uid: 198
+    components:
+    - type: Transform
+      pos: -14.5,10.5
+      parent: 1
+    - type: DeviceNetwork
+      deviceLists:
+      - 5918
+      - 3621
+      - 7159
   - uid: 2930
     components:
     - type: Transform
@@ -24541,20 +24537,6 @@ entities:
       deviceLists:
       - 5918
       - 4955
-  - uid: 5915
-    components:
-    - type: Transform
-      pos: -14.5,10.5
-      parent: 1
-    - type: DeviceNetwork
-      deviceLists:
-      - 3621
-      - 5918
-      - 7159
-      - 4955
-    - type: Door
-      secondsUntilStateChange: -870.166
-      state: Closing
   - uid: 7064
     components:
     - type: Transform
@@ -24749,8 +24731,8 @@ entities:
       parent: 1
     - type: DeviceNetwork
       deviceLists:
-      - 5879
       - 6457
+      - 201
   - uid: 7781
     components:
     - type: Transform
@@ -24758,8 +24740,8 @@ entities:
       parent: 1
     - type: DeviceNetwork
       deviceLists:
-      - 5879
       - 6457
+      - 201
   - uid: 7782
     components:
     - type: Transform
@@ -24767,8 +24749,8 @@ entities:
       parent: 1
     - type: DeviceNetwork
       deviceLists:
-      - 5879
       - 6457
+      - 201
   - uid: 7783
     components:
     - type: Transform
@@ -24776,8 +24758,8 @@ entities:
       parent: 1
     - type: DeviceNetwork
       deviceLists:
-      - 5879
       - 6457
+      - 201
   - uid: 7784
     components:
     - type: Transform
@@ -24785,17 +24767,13 @@ entities:
       parent: 1
     - type: DeviceNetwork
       deviceLists:
-      - 5879
       - 6457
+      - 201
   - uid: 7785
     components:
     - type: Transform
       pos: -0.5,-23.5
       parent: 1
-    - type: DeviceNetwork
-      deviceLists:
-      - 7163
-      - 7181
   - uid: 7787
     components:
     - type: Transform
@@ -24806,10 +24784,6 @@ entities:
     - type: Transform
       pos: -2.5,-27.5
       parent: 1
-    - type: DeviceNetwork
-      deviceLists:
-      - 7163
-      - 7181
   - uid: 7793
     components:
     - type: Transform
@@ -24849,10 +24823,6 @@ entities:
     - type: Transform
       pos: 9.5,-36.5
       parent: 1
-    - type: DeviceNetwork
-      deviceLists:
-      - 7164
-      - 7144
   - uid: 7803
     components:
     - type: Transform
@@ -24892,10 +24862,6 @@ entities:
     - type: Transform
       pos: 7.5,-23.5
       parent: 1
-    - type: DeviceNetwork
-      deviceLists:
-      - 7163
-      - 7181
   - uid: 7811
     components:
     - type: Transform
@@ -24903,8 +24869,8 @@ entities:
       parent: 1
     - type: DeviceNetwork
       deviceLists:
-      - 7164
       - 7144
+      - 7164
   - uid: 7871
     components:
     - type: Transform
@@ -24957,6 +24923,17 @@ entities:
       - 7131
 - proto: FirelockEdge
   entities:
+  - uid: 199
+    components:
+    - type: Transform
+      pos: 0.5,-29.5
+      parent: 1
+    - type: DeviceNetwork
+      deviceLists:
+      - 7164
+      - 7144
+      - 7181
+      - 7163
   - uid: 1917
     components:
     - type: Transform
@@ -24969,17 +24946,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -22.5,-17.5
       parent: 1
-  - uid: 3000
-    components:
-    - type: Transform
-      pos: 0.5,-29.5
-      parent: 1
-    - type: DeviceNetwork
-      deviceLists:
-      - 7163
-      - 7181
-      - 7164
-      - 7144
   - uid: 3011
     components:
     - type: Transform
@@ -25011,8 +24977,6 @@ entities:
       deviceLists:
       - 7163
       - 7181
-      - 7164
-      - 7144
   - uid: 3327
     components:
     - type: Transform
@@ -25279,8 +25243,8 @@ entities:
       parent: 1
     - type: DeviceNetwork
       deviceLists:
-      - 5879
       - 6457
+      - 201
   - uid: 7818
     components:
     - type: Transform
@@ -25319,8 +25283,8 @@ entities:
       parent: 1
     - type: DeviceNetwork
       deviceLists:
-      - 5879
       - 6457
+      - 201
   - uid: 7822
     components:
     - type: Transform
@@ -25329,8 +25293,8 @@ entities:
       parent: 1
     - type: DeviceNetwork
       deviceLists:
-      - 5879
       - 6457
+      - 201
   - uid: 7823
     components:
     - type: Transform
@@ -25339,8 +25303,8 @@ entities:
       parent: 1
     - type: DeviceNetwork
       deviceLists:
-      - 5879
       - 6457
+      - 201
   - uid: 7824
     components:
     - type: Transform
@@ -25349,8 +25313,8 @@ entities:
       parent: 1
     - type: DeviceNetwork
       deviceLists:
-      - 5879
       - 6457
+      - 201
   - uid: 7825
     components:
     - type: Transform
@@ -25359,8 +25323,8 @@ entities:
       parent: 1
     - type: DeviceNetwork
       deviceLists:
-      - 5879
       - 6457
+      - 201
   - uid: 7826
     components:
     - type: Transform
@@ -25369,8 +25333,8 @@ entities:
       parent: 1
     - type: DeviceNetwork
       deviceLists:
-      - 5879
       - 6457
+      - 201
   - uid: 7827
     components:
     - type: Transform
@@ -25379,8 +25343,8 @@ entities:
       parent: 1
     - type: DeviceNetwork
       deviceLists:
-      - 5879
       - 6457
+      - 201
   - uid: 7828
     components:
     - type: Transform
@@ -25389,8 +25353,8 @@ entities:
       parent: 1
     - type: DeviceNetwork
       deviceLists:
-      - 5879
       - 6457
+      - 201
   - uid: 7829
     components:
     - type: Transform
@@ -25399,8 +25363,8 @@ entities:
       parent: 1
     - type: DeviceNetwork
       deviceLists:
-      - 5879
       - 6457
+      - 201
   - uid: 7830
     components:
     - type: Transform
@@ -25427,10 +25391,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -3.5,-27.5
       parent: 1
-    - type: DeviceNetwork
-      deviceLists:
-      - 7163
-      - 7181
   - uid: 7833
     components:
     - type: Transform
@@ -25447,10 +25407,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -1.5,-23.5
       parent: 1
-    - type: DeviceNetwork
-      deviceLists:
-      - 7163
-      - 7181
   - uid: 7835
     components:
     - type: Transform
@@ -25459,18 +25415,14 @@ entities:
       parent: 1
     - type: DeviceNetwork
       deviceLists:
-      - 7164
       - 7144
+      - 7164
   - uid: 7836
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -3.5,-33.5
       parent: 1
-    - type: DeviceNetwork
-      deviceLists:
-      - 7164
-      - 7144
   - uid: 7837
     components:
     - type: Transform
@@ -25578,10 +25530,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 8.5,-23.5
       parent: 1
-    - type: DeviceNetwork
-      deviceLists:
-      - 7163
-      - 7181
   - uid: 7854
     components:
     - type: Transform
@@ -25758,8 +25706,8 @@ entities:
       parent: 1
     - type: DeviceNetwork
       deviceLists:
-      - 5879
       - 6457
+      - 201
   - uid: 7902
     components:
     - type: Transform
@@ -25768,8 +25716,8 @@ entities:
       parent: 1
     - type: DeviceNetwork
       deviceLists:
-      - 5879
       - 6457
+      - 201
   - uid: 7905
     components:
     - type: Transform
@@ -25778,8 +25726,8 @@ entities:
       parent: 1
     - type: DeviceNetwork
       deviceLists:
-      - 5879
       - 6457
+      - 201
   - uid: 7906
     components:
     - type: Transform
@@ -25788,8 +25736,8 @@ entities:
       parent: 1
     - type: DeviceNetwork
       deviceLists:
-      - 5879
       - 6457
+      - 201
   - uid: 7924
     components:
     - type: Transform
@@ -25839,10 +25787,10 @@ entities:
       parent: 1
     - type: DeviceNetwork
       deviceLists:
-      - 5879
       - 7156
       - 3402
       - 6457
+      - 201
   - uid: 1199
     components:
     - type: Transform
@@ -25850,10 +25798,10 @@ entities:
       parent: 1
     - type: DeviceNetwork
       deviceLists:
-      - 5879
       - 7156
       - 3402
       - 6457
+      - 201
   - uid: 1333
     components:
     - type: Transform
@@ -25861,10 +25809,10 @@ entities:
       parent: 1
     - type: DeviceNetwork
       deviceLists:
-      - 5879
       - 7156
       - 3402
       - 6457
+      - 201
   - uid: 1683
     components:
     - type: Transform
@@ -25939,8 +25887,8 @@ entities:
       parent: 1
     - type: DeviceNetwork
       deviceLists:
-      - 5879
       - 6457
+      - 201
   - uid: 1693
     components:
     - type: Transform
@@ -25948,8 +25896,8 @@ entities:
       parent: 1
     - type: DeviceNetwork
       deviceLists:
-      - 5879
       - 6457
+      - 201
   - uid: 1694
     components:
     - type: Transform
@@ -25957,8 +25905,8 @@ entities:
       parent: 1
     - type: DeviceNetwork
       deviceLists:
-      - 5879
       - 6457
+      - 201
   - uid: 2530
     components:
     - type: Transform
@@ -26167,8 +26115,8 @@ entities:
       parent: 1
     - type: DeviceNetwork
       deviceLists:
-      - 7164
       - 7144
+      - 7164
   - uid: 7889
     components:
     - type: Transform
@@ -26194,8 +26142,8 @@ entities:
       parent: 1
     - type: DeviceNetwork
       deviceLists:
-      - 5879
       - 6457
+      - 201
   - uid: 7904
     components:
     - type: Transform
@@ -26204,8 +26152,8 @@ entities:
       parent: 1
     - type: DeviceNetwork
       deviceLists:
-      - 5879
       - 6457
+      - 201
   - uid: 7923
     components:
     - type: Transform
@@ -26330,6 +26278,20 @@ entities:
       canCollide: False
 - proto: FloorDrain
   entities:
+  - uid: 196
+    components:
+    - type: Transform
+      pos: -10.5,-12.5
+      parent: 1
+    - type: Fixtures
+      fixtures: {}
+  - uid: 203
+    components:
+    - type: Transform
+      pos: -26.5,9.5
+      parent: 1
+    - type: Fixtures
+      fixtures: {}
   - uid: 969
     components:
     - type: Transform
@@ -26655,7 +26617,6 @@ entities:
     - type: GasMixer
       inletTwoConcentration: 0.26999998
       inletOneConcentration: 0.73
-      enabled: True
 - proto: GasOutletInjector
   entities:
   - uid: 1827
@@ -29536,16 +29497,12 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -22.5,-34.5
       parent: 1
-    - type: GasPressurePump
-      enabled: True
   - uid: 7963
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -22.5,-35.5
       parent: 1
-    - type: GasPressurePump
-      enabled: True
   - uid: 8923
     components:
     - type: Transform
@@ -29790,7 +29747,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -6.5,-6.5
       parent: 1
-    - type: DeviceNetwork
   - uid: 2501
     components:
     - type: Transform
@@ -29897,6 +29853,10 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 5.5,-29.5
       parent: 1
+    - type: DeviceNetwork
+      deviceLists:
+      - 7181
+      - 7163
   - uid: 2181
     components:
     - type: Transform
@@ -29935,8 +29895,8 @@ entities:
       parent: 1
     - type: DeviceNetwork
       deviceLists:
-      - 5879
       - 6457
+      - 201
   - uid: 3245
     components:
     - type: Transform
@@ -29978,6 +29938,10 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 3.5,-32.5
       parent: 1
+    - type: DeviceNetwork
+      deviceLists:
+      - 7164
+      - 7144
   - uid: 8005
     components:
     - type: Transform
@@ -47276,6 +47240,13 @@ entities:
     - type: Transform
       pos: 18.5,-18.5
       parent: 1
+- proto: SpawnPointHeadOfSecurity
+  entities:
+  - uid: 200
+    components:
+    - type: Transform
+      pos: 20.5,-13.5
+      parent: 1
 - proto: SpawnPointJanitor
   entities:
   - uid: 1995
@@ -49698,7 +49669,6 @@ entities:
         2414:
           position: 0,0
           _rotation: South
-    - type: UserInterface
     - type: ContainerContainer
       containers:
         storagebase: !type:Container
