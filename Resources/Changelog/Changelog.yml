@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Unkn0wnGh0st333
-  changes:
-  - message: ERT Chaplain starting gear was fixed and will no longer give the ERT
-      Engineer gear
-    type: Fix
-  id: 7080
-  time: '2024-08-10T12:55:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30855
 - author: Ubaser
   changes:
   - message: Light tube structures now have new sprites.
@@ -3953,3 +3945,10 @@
   id: 7579
   time: '2024-11-02T09:53:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32744
+- author: Ubaser
+  changes:
+  - message: Service workers can now be antagonists.
+    type: Fix
+  id: 7580
+  time: '2024-11-02T10:07:52.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31359
