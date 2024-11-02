@@ -45,7 +45,7 @@
     - to: boots
       steps:
       - material: WebSilk
-        amount: 4
+        amount: 2
         doAfter: 4
 
   # Deconstruction

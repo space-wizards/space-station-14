@@ -853,6 +853,11 @@
   - type: Construction
     graph: WebObjects
     node: coat
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialWebSilk1
+      amount: 5
   - type: FlavorProfile
     flavors:
       - cobwebs
