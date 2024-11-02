@@ -69,6 +69,10 @@
 - type: lobbyBackground
   id: Bloodgeo
   background: /Textures/LobbyScreens/TheBloodGeometer.webp
+
+- type: lobbyBackground
+  id: CQCm4
+  background: /Textures/LobbyScreens/cqcm4.webp
   
   
   
