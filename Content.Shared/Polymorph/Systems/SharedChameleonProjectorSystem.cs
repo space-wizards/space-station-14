@@ -1,12 +1,9 @@
 using Content.Shared.Actions;
-using Content.Shared.Construction.Components;
 using Content.Shared.Coordinates;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Systems;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
-using Content.Shared.Polymorph;
 using Content.Shared.Polymorph.Components;
 using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
@@ -14,7 +11,6 @@ using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 using System.Diagnostics.CodeAnalysis;
@@ -67,8 +63,7 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
 
     private void OnDisguiseDamaged(Entity<ChameleonDisguiseComponent> ent, ref DamageChangedEvent args)
     {
-        // anything that would damage both like an explosion gets doubled
-        // feature? projector makes your atoms weaker or some bs
+        // this mirrors damage 1:1
         if (args.DamageDelta is {} damage)
             _damageable.TryChangeDamage(ent.Comp.User, damage);
     }
@@ -118,17 +113,17 @@ public abstract class SharedChameleonProjectorSystem : EntitySystem
     {
         if (_container.IsEntityInContainer(target))
         {
-            _popup.PopupClient(Loc.GetString(ent.Comp.ContainerPopup), target, user);
+            _popup.PopupClient(Loc.GetString("chameleon-projector-inside-container"), target, user);
             return false;
         }
 
         if (IsInvalid(ent.Comp, target))
         {
-            _popup.PopupClient(Loc.GetString(ent.Comp.InvalidPopup), target, user);
+            _popup.PopupClient(Loc.GetString("chameleon-projector-invalid"), target, user);
             return false;
         }
 
-        _popup.PopupClient(Loc.GetString(ent.Comp.SuccessPopup), target, user);
+        _popup.PopupClient(Loc.GetString("chameleon-projector-success"), target, user);
         Disguise(ent, user, target);
         return true;
     }
