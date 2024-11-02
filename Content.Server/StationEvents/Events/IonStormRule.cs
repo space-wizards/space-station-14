@@ -273,7 +273,7 @@ public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
             30 => Loc.GetString("ion-storm-law-crew-must-eat", ("who", who), ("adjective", adjective), ("food", food), ("part", part)),
             31 => Loc.GetString("ion-storm-law-harm", ("who", harm)),
             32 => Loc.GetString("ion-storm-law-protect", ("who", harm)),
-            33 => Loc.GetString("ion-storm-law-concept-verb", ("concept", concept), ("verb", verb), ("subjects", triple))
+            _ => Loc.GetString("ion-storm-law-concept-verb", ("concept", concept), ("verb", verb), ("subjects", triple))
         };
     }
 
