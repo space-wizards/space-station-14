@@ -567,5 +567,13 @@ Entries:
   id: 70
   time: '2024-10-16T22:24:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32844
+- author: BramvanZijp
+  changes:
+  - message: CC, ERT, Admin, and Deathsquad PDA's now have all departmental programs
+      pre-installed.
+    type: Tweak
+  id: 71
+  time: '2024-10-31T14:53:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32601
 Name: Admin
 Order: 1
