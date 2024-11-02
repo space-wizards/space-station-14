@@ -30,6 +30,12 @@ public sealed partial class DungeonJob
 
             if (reservedTiles.Contains(node))
                 continue;
+            
+            if (dunGen.TileMask is not null)
+            {
+                if (dunGen.TileMask.Contains(((ContentTileDefinition) _tileDefManager[tileRef.Value.Tile.TypeId]).ID))
+                    continue;
+            }
 
             // Need to set per-tile to override data.
             if (biomeSystem.TryGetTile(node, indexedBiome.Layers, seed, _grid, out var tile))
