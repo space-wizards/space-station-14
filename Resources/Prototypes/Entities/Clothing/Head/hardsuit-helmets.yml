@@ -126,6 +126,8 @@
 #   - type: PointLight
 #     radius: 6
 #   - type: PressureProtection
+#     highPressureMultiplier: 0.72
+#     lowPressureMultiplier: 1000
 
 #Salvage Hardsuit
 - type: entity
