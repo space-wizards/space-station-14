@@ -27,8 +27,8 @@
   text: "/ServerInfo/Guidebook/Engineering/Atmospherics.xml"
   children:
   - GasManipulation
-  - Fires
   - AtmosphericsSystems
+  - AtmosphericUpsets
 
 - type: guideEntry
   id: GasManipulation
@@ -157,6 +157,24 @@
   id: FireAndGasControl
   name: guide-entry-fireandgascontrol
   text: "/ServerInfo/Guidebook/Engineering/FireAndGasControl.xml"
+
+- type: guideEntry
+  id: AtmosphericUpsets
+  name: guide-entry-atmosphericupsets
+  text: "/ServerInfo/Guidebook/Engineering/AtmosphericUpsets.xml"
+  children:
+  - Fires
+  - Spacing
+
+- type: guideEntry
+  id: Fires
+  name: guide-entry-fires
+  text: "/ServerInfo/Guidebook/Engineering/Fires.xml"
+
+- type: guideEntry
+  id: Spacing
+  name: guide-entry-spacing
+  text: "/ServerInfo/Guidebook/Engineering/Spacing.xml"
 
 - type: guideEntry
   id: ShuttleCraft
