@@ -1,4 +1,6 @@
+using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
+using Content.Shared.Popups;
 using Content.Shared.Strip;
 using Content.Shared.Strip.Components;
 
@@ -7,6 +9,7 @@ namespace Content.Shared.Strip;
 public sealed class ThievingSystem : EntitySystem
 {
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
@@ -18,8 +21,19 @@ public sealed class ThievingSystem : EntitySystem
 
     private void OnBeforeStrip(EntityUid uid, ThievingComponent component, BeforeStripEvent args)
     {
-        if (CanStealStealthily(uid, component, args.Target))
-            args.Stealth = true;
+        if (component.Stealthy)
+        {
+            if (CanStealStealthily(uid, component, args.Target))
+                args.Stealth = true;
+            else
+            {
+                _popupSystem.PopupClient(
+                    Loc.GetString("thieving-component-failed", ("owner", Identity.Name(args.Target, EntityManager, args.User))),
+                    args.User,
+                    args.User,
+                    PopupType.Medium);
+            }
+        }
 
         args.Additive -= component.StripTimeReduction;
     }

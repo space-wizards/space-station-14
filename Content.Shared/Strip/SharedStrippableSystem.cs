@@ -612,7 +612,7 @@ public abstract class SharedStrippableSystem : EntitySystem
         var itemEv = new BeforeItemStrippedEvent(targetPlayer, initialTime, false);
         if (targetItem != null)
             RaiseLocalEvent(targetItem.Value, ref itemEv);
-        var userEv = new BeforeStripEvent(targetPlayer, itemEv.Time, itemEv.Stealth);
+        var userEv = new BeforeStripEvent(user, targetPlayer, itemEv.Time, itemEv.Stealth);
         RaiseLocalEvent(user, ref userEv);
         var targetEv = new BeforeGettingStrippedEvent(targetPlayer, userEv.Time, userEv.Stealth);
         RaiseLocalEvent(targetPlayer, ref targetEv);

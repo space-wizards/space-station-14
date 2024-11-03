@@ -61,7 +61,11 @@ namespace Content.Shared.Strip.Components
     ///     This is also used by some stripping related interactions, i.e., interactions with items that are currently equipped by another player.
     /// </remarks>
     [ByRefEvent]
-    public sealed class BeforeStripEvent(EntityUid target, TimeSpan initialTime, bool stealth = false) : BaseBeforeStripEvent(target, initialTime, stealth);
+    public sealed class BeforeStripEvent(EntityUid user, EntityUid target, TimeSpan initialTime, bool stealth = false)
+        : BaseBeforeStripEvent(target, initialTime, stealth)
+    {
+        public readonly EntityUid User = user;
+    }
 
     /// <summary>
     ///     Used to modify strip times. Raised directed at the target.
