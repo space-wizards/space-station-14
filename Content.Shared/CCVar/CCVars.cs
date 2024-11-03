@@ -504,6 +504,70 @@ namespace Content.Shared.CCVar
             CVarDef.Create("discord.round_end_role", string.Empty, CVar.SERVERONLY);
 
         /*
+         * EMOTES
+         */
+
+        /// <summary>
+        ///     Global emote (number 1) available for all player characters.
+        /// </summary>
+        public static readonly CVarDef<string> GlobalCustomEmote1 =
+            CVarDef.Create("emotes.global_1", defaultValue:"", CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /// <summary>
+        ///     Global emote (number 2) available for all player characters.
+        /// </summary>
+        public static readonly CVarDef<string> GlobalCustomEmote2 =
+            CVarDef.Create("emotes.global_2", defaultValue:"", CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /// <summary>
+        ///     Global emote (number 3) available for all player characters.
+        /// </summary>
+        public static readonly CVarDef<string> GlobalCustomEmote3 =
+            CVarDef.Create("emotes.global_3", defaultValue:"", CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /// <summary>
+        ///     Global emote (number 4) available for all player characters.
+        /// </summary>
+        public static readonly CVarDef<string> GlobalCustomEmote4 =
+            CVarDef.Create("emotes.global_4", defaultValue:"", CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /// <summary>
+        ///     Global emote (number 5) available for all player characters.
+        /// </summary>
+        public static readonly CVarDef<string> GlobalCustomEmote5 =
+            CVarDef.Create("emotes.global_5", defaultValue:"", CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /// <summary>
+        ///     Global emote (number 6) available for all player characters.
+        /// </summary>
+        public static readonly CVarDef<string> GlobalCustomEmote6 =
+            CVarDef.Create("emotes.global_6", defaultValue:"", CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /// <summary>
+        ///     Global emote (number 7) available for all player characters.
+        /// </summary>
+        public static readonly CVarDef<string> GlobalCustomEmote7 =
+            CVarDef.Create("emotes.global_7", defaultValue:"", CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /// <summary>
+        ///     Global emote (number 8) available for all player characters.
+        /// </summary>
+        public static readonly CVarDef<string> GlobalCustomEmote8 =
+            CVarDef.Create("emotes.global_8", defaultValue:"", CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /// <summary>
+        ///     Global emote (number 9) available for all player characters.
+        /// </summary>
+        public static readonly CVarDef<string> GlobalCustomEmote9 =
+            CVarDef.Create("emotes.global_9", defaultValue:"", CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /// <summary>
+        ///     Global emote (number 10) available for all player characters.
+        /// </summary>
+        public static readonly CVarDef<string> GlobalCustomEmote10 =
+            CVarDef.Create("emotes.global_10", defaultValue:"", CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /*
          * Tips
          */
 
