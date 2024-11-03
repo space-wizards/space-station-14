@@ -3666,3 +3666,13 @@
   id: 452
   time: '2024-11-03T22:54:44.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/608
+- author: formlessnameless
+  changes:
+  - message: Legends tell of an infinite rainbow crayon, forged by the gods for the
+      truly dedicated...
+    type: Add
+  - message: Normal rainbow crayons now have 200 charges to match the crayon update
+    type: Tweak
+  id: 453
+  time: '2024-11-03T23:26:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/614
