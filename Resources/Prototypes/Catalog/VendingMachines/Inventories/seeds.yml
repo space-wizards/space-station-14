@@ -1,8 +1,6 @@
 - type: vendingMachineInventory
   id: MegaSeedServitorInventory
   startingInventory:
-    AloeSeeds: 3
-    AmbrosiaVulgarisSeeds: 3
     AppleSeeds: 5
     BananaSeeds: 5
     BerrySeeds: 5
@@ -16,19 +14,16 @@
     CottonSeeds: 5
     EggplantSeeds: 5
     EggySeeds: 5
-    GalaxythistleSeeds: 3
     GarlicSeeds: 3
     GrapeSeeds: 5
     LemonSeeds: 5
     LimeSeeds: 5
     PineappleSeeds: 5
-    LingzhiSeeds: 3
     OatSeeds: 5
     OnionSeeds: 5
     OnionRedSeeds: 5
     OrangeSeeds: 5
     PeaSeeds: 5
-    PoppySeeds: 3
     PotatoSeeds: 5
     PumpkinSeeds: 5
     RiceSeeds: 5
