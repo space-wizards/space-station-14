@@ -54,6 +54,12 @@
     },
     {
       "name": "fullpotential"
+    },
+    {
+      "name": "survive_icon"
+    },
+    {
+      "name": "blood_drain_icon"
     }
   ]
 }

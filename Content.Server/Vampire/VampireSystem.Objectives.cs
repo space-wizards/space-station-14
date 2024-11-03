@@ -18,15 +18,8 @@ public sealed partial class VampireSystem
     private void OnBloodDrainGetProgress(EntityUid uid, BloodDrainConditionComponent comp, ref ObjectiveGetProgressEvent args)
     {
         var target = _number.GetTarget(uid);
-
         if (target > 0)
-        {
-            args.Progress = Math.Clamp(comp.BloodDranked / target, 0f, 1f);
-        }
-        else
-        {
-            Logger.Warning($"Target for blood drain objective is 0 or invalid for entity {uid}. Setting progress to 1.");
-            args.Progress = 1f;
-        }
+            args.Progress = MathF.Min(comp.BloodDranked / target, 1f);
+        else args.Progress = 1f;
     }
 }

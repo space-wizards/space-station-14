@@ -124,7 +124,7 @@
   - type: Objective
     icon:
       sprite: Interface/Actions/actions_vampire.rsi
-      state: deathsembrace
+      state: survive_icon
       
 - type: entity
   parent: [BaseVampireObjective, BaseLivingObjective]
@@ -162,7 +162,7 @@
   - type: Objective
     icon:
       sprite: Interface/Actions/actions_vampire.rsi
-      state: fangs_extended
+      state: blood_drain_icon
   - type: NumberObjective
     min: 100
     max: 500
