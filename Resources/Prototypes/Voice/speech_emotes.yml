@@ -432,58 +432,58 @@
   id: emotes.global_1
   name: chat-emote-global-custom-1
   category: GlobalCustom
-  icon: Interface/Emotes/ping.png
+  icon: Interface/Emotes/grey_1.png
 
 - type: emote
   id: emotes.global_2
   name: chat-emote-global-custom-2
   category: GlobalCustom
-  icon: Interface/Emotes/ping.png
+  icon: Interface/Emotes/grey_2.png
 
 - type: emote
   id: emotes.global_3
   name: chat-emote-global-custom-3
   category: GlobalCustom
-  icon: Interface/Emotes/ping.png
+  icon: Interface/Emotes/grey_3.png
 
 - type: emote
   id: emotes.global_4
   name: chat-emote-global-custom-4
   category: GlobalCustom
-  icon: Interface/Emotes/ping.png
+  icon: Interface/Emotes/grey_4.png
 
 - type: emote
   id: emotes.global_5
   name: chat-emote-global-custom-5
   category: GlobalCustom
-  icon: Interface/Emotes/ping.png
+  icon: Interface/Emotes/grey_5.png
 
 - type: emote
   id: emotes.global_6
   name: chat-emote-global-custom-6
   category: GlobalCustom
-  icon: Interface/Emotes/ping.png
+  icon: Interface/Emotes/grey_6.png
 
 - type: emote
   id: emotes.global_7
   name: chat-emote-global-custom-7
   category: GlobalCustom
-  icon: Interface/Emotes/ping.png
+  icon: Interface/Emotes/grey_7.png
 
 - type: emote
   id: emotes.global_8
   name: chat-emote-global-custom-8
   category: GlobalCustom
-  icon: Interface/Emotes/ping.png
+  icon: Interface/Emotes/grey_8.png
 
 - type: emote
   id: emotes.global_9
   name: chat-emote-global-custom-9
   category: GlobalCustom
-  icon: Interface/Emotes/ping.png
+  icon: Interface/Emotes/grey_9.png
 
 - type: emote
   id: emotes.global_10
   name: chat-emote-global-custom-10
   category: GlobalCustom
-  icon: Interface/Emotes/ping.png
+  icon: Interface/Emotes/grey_10.png

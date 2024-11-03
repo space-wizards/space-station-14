@@ -56,6 +56,61 @@
   copyright: "Created by Sarahon"
   source: "https://github.com/Sarahon"
 
+- files: [ "global_custom_emote.png" ]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by Nettingman"
+  source: "https://github.com/Nettingman"
+
+- files: [ "grey_1.png" ]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by Nettingman"
+  source: "https://github.com/Nettingman"
+
+- files: [ "grey_2.png" ]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by Nettingman"
+  source: "https://github.com/Nettingman"
+
+- files: [ "grey_3.png" ]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by Nettingman"
+  source: "https://github.com/Nettingman"
+
+- files: [ "grey_4.png" ]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by Nettingman"
+  source: "https://github.com/Nettingman"
+
+- files: [ "grey_5.png" ]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by Nettingman"
+  source: "https://github.com/Nettingman"
+
+- files: [ "grey_6.png" ]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by Nettingman"
+  source: "https://github.com/Nettingman"
+
+- files: [ "grey_7.png" ]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by Nettingman"
+  source: "https://github.com/Nettingman"
+
+- files: [ "grey_8.png" ]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by Nettingman"
+  source: "https://github.com/Nettingman"
+
+- files: [ "grey_9.png" ]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by Nettingman"
+  source: "https://github.com/Nettingman"
+
+- files: [ "grey_10.png" ]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by Nettingman"
+  source: "https://github.com/Nettingman"
+
 - files: ["honk.png"]
   license: "CC-BY-SA-3.0"
   copyright: "Modified from existing bikehorn texture (icon.png) by TyAshley (AllenTheGreat) & Sarahon"
