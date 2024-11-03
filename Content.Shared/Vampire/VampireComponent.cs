@@ -248,6 +248,14 @@ public enum VampireMutationUiKey : byte
     Key
 }
 
+[NetSerializable, Serializable]
+public enum VampireVisualLayers : byte
+{
+    Digit1,
+    Digit2,
+    Digit3
+}
+
 /*[Serializable, NetSerializable]
 public enum VampirePowerKey : byte
 {

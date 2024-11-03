@@ -1,0 +1,22 @@
+- type: alert
+  id: VampireBlood
+  icons:
+  - sprite: /Textures/Interface/Alerts/blood_counter.rsi
+    state: background
+  alertViewEntity: AlertVampireBloodSpriteView
+  name: alerts-vampire-blood-name
+  description: alerts-vampire-blood-desc
+  
+- type: entity
+  id: AlertVampireBloodSpriteView
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: /Textures/Interface/Alerts/blood_counter.rsi
+    layers:
+    - map: [ "enum.AlertVisualLayers.Base" ]
+    - map: [ "enum.VampireVisualLayers.Digit1" ]
+      offset: -0.35, 0
+    - map: [ "enum.VampireVisualLayers.Digit2" ]
+      offset: -0.150, 0
+    - map: [ "enum.VampireVisualLayers.Digit3" ]

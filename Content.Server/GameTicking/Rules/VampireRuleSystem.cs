@@ -5,6 +5,7 @@ using Content.Server.Mind;
 using Content.Server.Objectives;
 using Content.Server.Roles;
 using Content.Server.Vampire;
+using Content.Shared.Alert;
 using Content.Shared.Vampire.Components;
 using Content.Shared.NPC.Prototypes;
 using Content.Shared.NPC.Systems;
@@ -25,6 +26,7 @@ public sealed partial class VampireRuleSystem : GameRuleSystem<VampireRuleCompon
 {
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
+    [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly SharedRoleSystem _role = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly ObjectivesSystem _objective = default!;
@@ -83,6 +85,7 @@ public sealed partial class VampireRuleSystem : GameRuleSystem<VampireRuleCompon
         // make sure it's initial chems are set to max
         var vampireComponent = EnsureComp<VampireComponent>(target);
         EnsureComp<VampireIconComponent>(target);
+        var vampireAlertComponent = EnsureComp<VampireAlertComponent>(target);
         var interfaceComponent = EnsureComp<UserInterfaceComponent>(target);
         
         if (HasComp<UserInterfaceComponent>(target))
@@ -100,6 +103,7 @@ public sealed partial class VampireRuleSystem : GameRuleSystem<VampireRuleCompon
         
         _vampire.AddStartingAbilities(vampire);
         _vampire.MakeVulnerableToHoly(vampire);
+        _alerts.ShowAlert(vampire, vampireAlertComponent.BloodAlert);
         
         Random random = new Random();
 
