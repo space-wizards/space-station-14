@@ -86,3 +86,21 @@
         Male: UnisexMoth
         Female: UnisexMoth
         Unsexed: UnisexMoth
+
+- type: trait
+  id: HarmonyRaisedByReptilians
+  name: trait-raisedbyreptilians-name
+  description: trait-raisedbyreptilians-desc
+  replaceComponents: true
+  cost: 2
+  category: SpeechTraits
+  components:
+    - type: LizardAccent
+    - type: Speech
+      speechSounds: Lizard
+      speechVerb: Reptilian
+    - type: Vocal
+      sounds:
+        Male: MaleReptilian
+        Female: FemaleReptilian
+        Unsexed: MaleReptilian
