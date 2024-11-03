@@ -3,7 +3,8 @@
   name: NT-Reclaimer
   description: A small mining vessel.
   price: 17000
-  path: /Maps/Shuttles/mining.yml
+  path:
+  - /Maps/Shuttles/mining.yml
   categories:
   - Small
   - Mining
@@ -12,7 +13,8 @@
   name: Cargo Ship
   description: A small shipping vessel.
   price: 20000
-  path: /Maps/Shuttles/cargo.yml
+  path:
+  - /Maps/Shuttles/cargo.yml
   categories:
   - Small
   - Shipping
