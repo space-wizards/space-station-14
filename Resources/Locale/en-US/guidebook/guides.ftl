@@ -23,6 +23,7 @@ guide-entry-thermomachines = Thermomachines
 guide-entry-atmosphericssystems = Atmospherics Systems
 guide-entry-pipenetworks = Pipe Networks
 guide-entry-devicemonitoringandcontrol = Device Monitoring and Control
+guide-entry-fireandgascontrol = Fire and Gas Control
 guide-entry-botany = Botany
 guide-entry-fires = Fires & Space
 guide-entry-shuttle-craft = Shuttle-craft

@@ -146,6 +146,7 @@
   children:
   - PipeNetworks
   - DeviceMonitoringAndControl
+  - FireAndGasControl
 
 - type: guideEntry
   id: PipeNetworks
@@ -156,6 +157,11 @@
   id: DeviceMonitoringAndControl
   name: guide-entry-devicemonitoringandcontrol
   text: "/ServerInfo/Guidebook/Engineering/DeviceMonitoringAndControl.xml"
+
+- type: guideEntry
+  id: FireAndGasControl
+  name: guide-entry-fireandgascontrol
+  text: "/ServerInfo/Guidebook/Engineering/FireAndGasControl.xml"
 
 - type: guideEntry
   id: ShuttleCraft
