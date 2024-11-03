@@ -56,9 +56,9 @@ public sealed class KillPersonConditionSystem : EntitySystem
 
         var allHumans = _mind.GetAliveHumansExcept(args.MindId);
         if (comp.RoleWhitelist is {} whitelist)
-        {
-            allHumans.RemoveAll(mindId => _role.MindHasMatchingRole(mindId, whitelist));
-        }
+            allHumans.RemoveAll(mindId => !_role.MindHasMatchingRole(mindId, whitelist));
+        if (comp.RoleBlacklist is {} blacklist)
+            allHumans.RemoveAll(mindId => _role.MindHasMatchingRole(mindId, blacklist));
 
         // no other humans to kill
         if (allHumans.Count == 0)
