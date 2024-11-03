@@ -559,5 +559,36 @@ Entries:
   id: 69
   time: '2024-10-09T11:55:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32531
+- author: IProduceWidgets
+  changes:
+  - message: invokeverb should work with smite names now. Find the names in the smite
+      tab on mouse hover.
+    type: Fix
+  id: 70
+  time: '2024-10-16T22:24:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32844
+- author: BramvanZijp
+  changes:
+  - message: CC, ERT, Admin, and Deathsquad PDA's now have all departmental programs
+      pre-installed.
+    type: Tweak
+  id: 71
+  time: '2024-10-31T14:53:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32601
+- author: metalgearsloth
+  changes:
+  - message: Added on-call functionality for discord relay to get notified on unanswered
+      ahelps.
+    type: Add
+  id: 72
+  time: '2024-11-02T09:29:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30443
+- author: nikthechampiongr
+  changes:
+  - message: It is now possible to edit the AI's laws through its core and eye.
+    type: Fix
+  id: 73
+  time: '2024-11-02T13:21:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32461
 Name: Admin
 Order: 1

@@ -285,7 +285,6 @@
   - type: AccessReader
     access: [["Command"], ["Research"]]
   - type: ShowJobIcons
-  - type: ShowMindShieldIcons
 
 - type: entity
   id: BaseBorgChassisSyndicate
