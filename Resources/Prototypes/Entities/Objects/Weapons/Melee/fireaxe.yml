@@ -31,6 +31,15 @@
       types:
         Slash: 10
         Structural: 40
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: LandAtCursor
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 5
+        Slash: 20
+        Structural: 50
   - type: Item
     size: Ginormous
   - type: Clothing
