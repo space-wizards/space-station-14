@@ -501,10 +501,10 @@
     spawnEntries:
       - id: PresentRandom
         orGroup: present
-      - id: PresentUnsafe
+      - id: PresentRandomUnsafe
         prob: 0.5
         orGroup: present
-      - id: PresentInsane
+      - id: PresentRandomInsane
         prob: 0.2
         orGroup: present
 
