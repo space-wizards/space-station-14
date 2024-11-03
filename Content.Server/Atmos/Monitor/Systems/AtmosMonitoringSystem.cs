@@ -4,6 +4,8 @@ using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
+using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos;
@@ -56,8 +58,15 @@ public sealed class AtmosMonitorSystem : EntitySystem
 
     private void OnAtmosDeviceEnterAtmosphere(EntityUid uid, AtmosMonitorComponent atmosMonitor, ref AtmosDeviceEnabledEvent args)
     {
+        if (atmosMonitor.MonitorsPipeNet)
+        {
+            atmosMonitor.TileGas = GetGasPipeAirMixture(uid);
+            return;
+        }
+
         atmosMonitor.TileGas = _atmosphereSystem.GetContainingMixture(uid, true);
     }
+
     private void OnMapInit(EntityUid uid, AtmosMonitorComponent component, MapInitEvent args)
     {
         if (component.TemperatureThresholdId != null)
@@ -206,7 +215,7 @@ public sealed class AtmosMonitorSystem : EntitySystem
         if (!this.IsPowered(uid, EntityManager))
             return;
 
-        if (args.Grid  == null)
+        if (args.Grid == null)
             return;
 
         // if we're not monitoring atmos, don't bother
@@ -215,7 +224,25 @@ public sealed class AtmosMonitorSystem : EntitySystem
             && component.GasThresholds == null)
             return;
 
+        // If monitoring a pipe network, get its most recent gas mixture
+        if (component.MonitorsPipeNet)
+            component.TileGas = GetGasPipeAirMixture(uid);
+
         UpdateState(uid, component.TileGas, component);
+    }
+
+    private GasMixture? GetGasPipeAirMixture(EntityUid uid)
+    {
+        if (!TryComp<NodeContainerComponent>(uid, out var nodeContainer))
+            return null;
+
+        foreach (var node in nodeContainer.Nodes.Values)
+        {
+            if (node is PipeNode { } pipeNode)
+                return pipeNode.Air;
+        }
+
+        return null;
     }
 
     // Update checks the current air if it exceeds thresholds of

@@ -1,0 +1,117 @@
+- type: entity
+  parent: GasPipeBase
+  id: GasPipeSensorAssembly
+  name: gas pipe sensor assembly
+  description: When assembled, this device will report on the characteristics of the gas in the attached pipe network. 
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Atmospherics/gas_pipe_sensor.rsi
+    drawdepth: BelowFloor
+    layers:
+    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+      state: pipeStraight
+    - map: ["base"]
+      state: base
+    - map: [ "enum.ConstructionVisuals.Layer" ]
+      state: cavity 
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ConstructionVisuals.Key:
+        enum.ConstructionVisuals.Layer:
+          assembly: { state: cavity }
+          wiredAssembly: { state: wires }
+  - type: Construction
+    graph: GasPipeSensor
+    node: assembly
+  - type: NodeContainer
+    nodes:
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: Longitudinal
+  - type: Tag
+    tags:
+      - Unstackable
+
+- type: entity
+  parent: [AirSensorBase, GasPipeSensorAssembly]
+  id: GasPipeSensor
+  name: gas pipe sensor
+  description: Reports on the status of the gas in the attached pipe network. 
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Atmospherics/gas_pipe_sensor.rsi
+    drawdepth: BelowFloor
+    layers:
+    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+      state: pipeStraight
+    - map: ["base"]
+      state: base
+    - map: [ "enum.ConstructionVisuals.Layer" ]
+      state: blank
+    - map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+      state: lights       
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ConstructionVisuals.Key:
+        enum.ConstructionVisuals.Layer:
+          wiredSensor: { state: wires_connected }
+          sensor: { state: blank }
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          False: { state: blank, shader: shaded }
+          True: { state: lights, shader: unshaded }
+  - type: GasPipeSensor
+  - type: AtmosMonitor
+    monitorsPipeNet: true
+  - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
+  - type: Construction
+    graph: GasPipeSensor
+    node: sensor  
+
+- type: entity
+  parent: GasPipeSensor 
+  id: GasPipeSensorDistribution 
+  suffix: Distribution
+  components:
+  - type: Label
+    currentLabel: Distribution loop
+
+- type: entity
+  parent: GasPipeSensor 
+  id: GasPipeSensorWaste  
+  suffix: Waste
+  components:
+  - type: Label
+    currentLabel: Waste loop
+
+- type: entity
+  parent: GasPipeSensor 
+  id: GasPipeSensorMixedAir 
+  suffix: Mixed air
+  components:
+  - type: Label
+    currentLabel: Mixed air
+
+- type: entity
+  parent: GasPipeSensor 
+  id: GasPipeSensorTEGHot
+  suffix: TEG hot
+  components:
+  - type: Label
+    currentLabel: TEG hot loop
+
+- type: entity
+  parent: GasPipeSensor  
+  id: GasPipeSensorTEGCold
+  suffix: TEG cold
+  components:
+  - type: Label
+    currentLabel: TEG cold loop
