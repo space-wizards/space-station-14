@@ -7,10 +7,10 @@ namespace Content.Shared._Goobstation.Standing;
 public sealed partial class LayingDownComponent : Component
 {
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
-    public float StandingUpTime { get; set; } = 3f;
+    public float StandingUpTime { get; set; } = 1.5f;
 
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
-    public float SpeedModify { get; set; } = .2f;
+    public float SpeedModify { get; set; } = .25f;
 
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public bool AutoGetUp;
