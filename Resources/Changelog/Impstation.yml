@@ -3548,3 +3548,38 @@
   id: 436
   time: '2024-11-02T00:50:10.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/602
+- author: KingMudkipIII
+  changes:
+  - message: Added a ticket book to security lockers. Watch out!
+    type: Add
+  id: 437
+  time: '2024-11-03T22:37:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/609
+- author: hivehum
+  changes:
+  - message: Thavens can now have prosthetic left arms.
+    type: Add
+  id: 438
+  time: '2024-11-03T22:39:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/603
+- author: DinnerCalzone
+  changes:
+  - message: Hummingbird Station updated to version 1.0, added to map rotation.
+    type: Add
+  id: 439
+  time: '2024-11-03T22:38:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/601
+- author: Darkmajia
+  changes:
+  - message: Derotated Atlas from the map pool for the time being.
+    type: Remove
+  id: 440
+  time: '2024-11-03T22:38:45.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/605
+- author: Sha-Seng
+  changes:
+  - message: Spationaut Hardsuit helmet now displays properly on vox
+    type: Fix
+  id: 441
+  time: '2024-11-03T22:36:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/613
