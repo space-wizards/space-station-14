@@ -15,3 +15,6 @@ trait-raisedbymoths-desc = You've lived with Moths for so long that you sound li
 
 trait-raisedbyreptilians-name = Raised by Reptilians
 trait-raisedbyreptilians-desc = You've lived with Reptilians for so long that you sound like them.
+
+trait-raisedbyslimes-name = Raised by Slimes
+trait-raisedbyslimes-desc = You've lived with Slimes for so long that you sound like them.

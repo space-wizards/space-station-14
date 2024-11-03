@@ -105,3 +105,20 @@
         Male: MaleReptilian
         Female: FemaleReptilian
         Unsexed: MaleReptilian
+
+- type: trait
+  id: HarmonyRaisedBySlimes
+  name: trait-raisedbyslimes-name
+  description: trait-raisedbyslimes-desc
+  replaceComponents: true
+  cost: 2
+  category: SpeechTraits
+  components:
+    - type: Speech
+      speechVerb: Slime
+      speechSounds: Slime
+    - type: Vocal
+      sounds:
+        Male: MaleSlime
+        Female: FemaleSlime
+        Unsexed: MaleSlime
