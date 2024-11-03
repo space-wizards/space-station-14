@@ -14,6 +14,13 @@
     damage:
       types:
         Slash: 12
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: LandAtCursor
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 12
   - type: Item
     size: Normal
   - type: Clothing
@@ -35,6 +42,13 @@
   - type: MeleeWeapon
     wideAnimationRotation: -135
     attackRate: 0.75
+    damage:
+      types:
+        Slash: 16
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: LandAtCursor
+  - type: DamageOtherOnHit
     damage:
       types:
         Slash: 16
@@ -76,6 +90,15 @@
         Blunt: 5
         Slash: 5
         Structural: 10
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: LandAtCursor
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 15
+        Slash: 15
+        Structural: 15
   - type: Item
     size: Ginormous
   - type: Clothing
