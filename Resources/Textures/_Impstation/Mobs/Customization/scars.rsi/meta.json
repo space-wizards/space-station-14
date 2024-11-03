@@ -90,30 +90,6 @@
       {
           "name": "torso_incision",
           "directions": 4
-      },
-      {
-          "name": "moth_body_claw",
-          "directions": 4
-      },
-      {
-          "name": "moth_burn_l",
-          "directions": 4
-      },
-      {
-          "name": "moth_burn_r",
-          "directions": 4
-      },
-      {
-          "name": "moth_face_claw",
-          "directions": 4
-      },
-      {
-          "name": "moth_slash_l",
-          "directions": 4
-      },
-      {
-          "name": "moth_slash_r",
-          "directions": 4
       }
     ]
   }
