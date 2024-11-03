@@ -3656,3 +3656,13 @@
   id: 451
   time: '2024-11-03T22:43:25.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/600
+- author: KingMudkipIII
+  changes:
+  - message: Drastically reduced the cost of cargo ordering shuttle parts.
+    type: Tweak
+  - message: The Shittle builders crate now contains a PACMAN-JR machine board and
+      a jug of welding fuel.
+    type: Tweak
+  id: 452
+  time: '2024-11-03T22:54:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/608
