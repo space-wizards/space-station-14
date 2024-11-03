@@ -1,4 +1,22 @@
 - type: trait
+  id: HarmonyRaisedByArachnids
+  name: trait-raisedbyarachnids-name
+  description: trait-raisedbyarachnids-desc
+  replaceComponents: true
+  cost: 2
+  category: SpeechTraits
+  components:
+    - type: Speech
+      speechVerb: Arachnid
+      speechSounds: Arachnid
+      allowedEmotes: ['Click', 'Chitter']
+    - type: Vocal
+      sounds:
+        Male: UnisexArachnid
+        Female: UnisexArachnid
+        Unsexed: UnisexArachnid
+
+- type: trait
   id: HarmonyRaisedByMoths
   name: trait-raisedbymoths-name
   description: trait-raisedbymoths-desc

@@ -1,2 +1,5 @@
-trait-raisedbymoths-name = Raised by moths
-trait-raisedbymoths-desc = You've lived with moths for so long that you sound like them.
+trait-raisedbyarachnids-name = Raised by Arachnids
+trait-raisedbyarachnids-desc = You've lived with Arachnids for so long that you sound like them.
+
+trait-raisedbymoths-name = Raised by Moths
+trait-raisedbymoths-desc = You've lived with Moths for so long that you sound like them.
