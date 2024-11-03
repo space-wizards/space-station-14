@@ -18,15 +18,21 @@ public sealed class ThievingSystem : EntitySystem
 
     private void OnBeforeStrip(EntityUid uid, ThievingComponent component, BeforeStripEvent args)
     {
-        if (component.Stealthy && CanStealStealthily(uid, component, args.Target))
+        if (CanStealStealthily(uid, component, args.Target))
             args.Stealth = true;
 
         args.Additive -= component.StripTimeReduction;
     }
 
+    /// <summary>
+    /// Checks if the <paramref name="user"/> is able to steal stealthily from the <paramref name="target"/>
+    /// </summary>
     public bool CanStealStealthily(EntityUid user, ThievingComponent? component, EntityUid target)
     {
         if (!Resolve(user, ref component))
+            return false;
+
+        if (!component.Stealthy)
             return false;
 
         var targetBackRotation = _transform.GetWorldRotation(target) - Angle.FromDegrees(180);
