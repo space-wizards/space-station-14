@@ -34,6 +34,25 @@
         Unsexed: UnisexDiona
 
 - type: trait
+  id: HarmonyRaisedByDwarfs
+  name: trait-raisedbydwarfs-name
+  description: trait-raisedbydwarfs-desc
+  replaceComponents: true
+  cost: 2
+  category: SpeechTraits
+  components:
+    - type: Speech
+      speechSounds: Bass
+      speechVerb: Default
+    - type: ReplacementAccent
+      accent: dwarf
+    - type: Vocal
+      sounds:
+        Male: UnisexDwarf
+        Female: FemaleDwarf
+        Unsexed: UnisexDwarf
+
+- type: trait
   id: HarmonyRaisedByMoths
   name: trait-raisedbymoths-name
   description: trait-raisedbymoths-desc
