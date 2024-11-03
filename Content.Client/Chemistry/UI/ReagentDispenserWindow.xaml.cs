@@ -42,7 +42,7 @@ namespace Content.Client.Chemistry.UI
 
             ReagentList.Children.Clear();
             //Sort inventory by reagentLabel
-            inventory.Sort((x, y) => x.ReagentLabel.CompareTo(y.ReagentLabel));
+            inventory.Sort((x, y) => x.DisplayName.CompareTo(y.DisplayName));
 
             foreach (var item in inventory)
             {
@@ -63,7 +63,7 @@ namespace Content.Client.Chemistry.UI
             UpdateContainerInfo(castState);
             UpdateReagentsList(castState.Inventory);
 
-            _entityManager.TryGetEntity(castState.OutputContainerEntity, out var outputContainerEnt);
+            _entityManager.TryGetEntity(castState.OutputContainer?.Entity, out var outputContainerEnt);
             View.SetEntity(outputContainerEnt);
 
             // Disable the Clear & Eject button if no beaker
@@ -93,7 +93,7 @@ namespace Content.Client.Chemistry.UI
 
             // Set Name of the container and its fill status (Ex: 44/100u)
             ContainerInfoName.Text = state.OutputContainer.DisplayName;
-            ContainerInfoFill.Text = state.OutputContainer.CurrentVolume + "/" + state.OutputContainer.MaxVolume;
+            ContainerInfoFill.Text = state.OutputContainer.Quantity + "/" + state.OutputContainer.Capacity;
 
             foreach (var (reagent, quantity) in state.OutputContainer.Reagents!)
             {
