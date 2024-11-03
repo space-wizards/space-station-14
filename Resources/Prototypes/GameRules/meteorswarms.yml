@@ -107,7 +107,7 @@
   - type: StationEvent
     weight: 44
     earliestStart: 2
-    minimumPlayers: 0
+    minimumPlayers: 5
   - type: MeteorSwarm
     announcement: null
     announcementSound: null
@@ -127,7 +127,7 @@
   components:
   - type: StationEvent
     weight: 22
-    minimumPlayers: 0
+    minimumPlayers: 10
   - type: MeteorSwarm
     announcement: station-event-space-dust-start-announcement
     announcementSound: /Audio/Announcements/attention.ogg
