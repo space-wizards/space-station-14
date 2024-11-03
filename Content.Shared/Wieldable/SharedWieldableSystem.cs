@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Camera;
 using Content.Shared.Examine;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
@@ -6,6 +7,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Item;
+using Content.Shared.Movement.Components;
 using Content.Shared.Popups;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
@@ -22,7 +24,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Wieldable;
 
-public sealed class WieldableSystem : EntitySystem
+public abstract class SharedWieldableSystem : EntitySystem
 {
     [Dependency] private readonly SharedVirtualItemSystem _virtualItemSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
@@ -125,7 +127,7 @@ public sealed class WieldableSystem : EntitySystem
 
     private void OnExamine(EntityUid uid, GunWieldBonusComponent component, ref ExaminedEvent args)
     {
-        if (HasComp<GunRequiresWieldComponent>(uid)) 
+        if (HasComp<GunRequiresWieldComponent>(uid))
             return;
 
         if (component.WieldBonusExamineMessage != null)
@@ -256,7 +258,7 @@ public sealed class WieldableSystem : EntitySystem
         var othersMessage = Loc.GetString("wieldable-component-successful-wield-other", ("user", user), ("item", used));
         _popupSystem.PopupPredicted(selfMessage, othersMessage, user, user);
 
-        var targEv = new ItemWieldedEvent();
+        var targEv = new ItemWieldedEvent(user);
         RaiseLocalEvent(used, ref targEv);
 
         Dirty(used, component);

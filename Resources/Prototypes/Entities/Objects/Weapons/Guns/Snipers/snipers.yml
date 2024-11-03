@@ -63,6 +63,10 @@
       - CartridgeAntiMateriel
     capacity: 5
     proto: CartridgeAntiMateriel
+  - type: CursorOffsetRequiresWield
+  - type: EyeCursorOffset
+    maxOffset: 3
+    pvsIncrease: 0.3
 
 - type: entity
   name: musket

@@ -4,4 +4,4 @@ namespace Content.Shared.Wieldable;
 /// Raised directed on an entity when it is wielded.
 /// </summary>
 [ByRefEvent]
-public readonly record struct ItemWieldedEvent;
+public readonly record struct ItemWieldedEvent(EntityUid? User);
