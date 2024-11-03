@@ -5,7 +5,7 @@
   description: Sends your eye back to the core.
   components:
   - type: InstantAction
-    priority: -10
+    priority: -9
     itemIconStyle: BigAction
     icon:
       sprite: Interface/Actions/actions_ai.rsi
@@ -13,27 +13,12 @@
     event: !type:JumpToCoreEvent
 
 - type: entity
-  id: ActionShowJobIcons
-  name: Show job icons
-  description: Shows job icons for crew members.
-  components:
-  - type: InstantAction
-    priority: -5
-    itemIconStyle: BigAction
-    icon:
-      sprite: Interface/Actions/actions_ai.rsi
-      state: job_view
-    event: !type:ActionComponentChangeEvent
-      components:
-      - type: ShowJobIcons
-
-- type: entity
   id: ActionSurvCameraLights
   name: Toggle camera lights
   description: Enable surveillance camera lights near wherever you're viewing.
   components:
   - type: InstantAction
-    priority: -6
+    priority: -5
     itemIconStyle: BigAction
     icon:
       sprite: Interface/Actions/actions_ai.rsi
