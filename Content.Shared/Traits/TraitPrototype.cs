@@ -60,4 +60,10 @@ public sealed partial class TraitPrototype : IPrototype
     /// </summary>
     [DataField]
     public ProtoId<TraitCategoryPrototype>? Category;
+
+    /// <summary>
+    /// Allows you to replace existing components. Harmony change.
+    /// </summary>
+    [DataField]
+    public bool ReplaceComponents = false;
 }
