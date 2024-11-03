@@ -14,7 +14,7 @@
     sprite: Clothing/Head/Helmets/eva_large.rsi
     state: icon
   product: CrateEngineeringShittle
-  cost: 2000
+  cost: 2500
   category: cargoproduct-category-name-shuttle
   group: market
 
