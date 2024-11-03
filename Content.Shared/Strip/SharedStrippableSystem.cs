@@ -609,12 +609,12 @@ public abstract class SharedStrippableSystem : EntitySystem
     /// </summary>
     public (TimeSpan Time, bool Stealth) GetStripTimeModifiers(EntityUid user, EntityUid targetPlayer, EntityUid? targetItem, TimeSpan initialTime)
     {
-        var itemEv = new BeforeItemStrippedEvent(initialTime, false);
+        var itemEv = new BeforeItemStrippedEvent(targetPlayer, initialTime, false);
         if (targetItem != null)
             RaiseLocalEvent(targetItem.Value, ref itemEv);
-        var userEv = new BeforeStripEvent(itemEv.Time, itemEv.Stealth);
+        var userEv = new BeforeStripEvent(targetPlayer, itemEv.Time, itemEv.Stealth);
         RaiseLocalEvent(user, ref userEv);
-        var targetEv = new BeforeGettingStrippedEvent(userEv.Time, userEv.Stealth);
+        var targetEv = new BeforeGettingStrippedEvent(targetPlayer, userEv.Time, userEv.Stealth);
         RaiseLocalEvent(targetPlayer, ref targetEv);
         return (targetEv.Time, targetEv.Stealth);
     }

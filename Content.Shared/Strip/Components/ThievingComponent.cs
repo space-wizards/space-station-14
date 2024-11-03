@@ -19,4 +19,10 @@ public sealed partial class ThievingComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("stealthy")]
     public bool Stealthy;
+
+    /// <summary>
+    /// How far away the user can be from behind the target for the stealing to be stealthy, in percents
+    /// </summary>
+    [DataField]
+    public double MaxStealthAngleTolerance = 0.25;
 }

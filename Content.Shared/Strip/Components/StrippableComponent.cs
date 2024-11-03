@@ -32,8 +32,9 @@ namespace Content.Shared.Strip.Components
     public sealed class StrippingEnsnareButtonPressed : BoundUserInterfaceMessage;
 
     [ByRefEvent]
-    public abstract class BaseBeforeStripEvent(TimeSpan initialTime, bool stealth = false) : EntityEventArgs, IInventoryRelayEvent
+    public abstract class BaseBeforeStripEvent(EntityUid target, TimeSpan initialTime, bool stealth = false) : EntityEventArgs, IInventoryRelayEvent
     {
+        public readonly EntityUid Target = target;
         public readonly TimeSpan InitialTime = initialTime;
         public float Multiplier = 1f;
         public TimeSpan Additive = TimeSpan.Zero;
@@ -51,7 +52,7 @@ namespace Content.Shared.Strip.Components
     ///     This is also used by some stripping related interactions, i.e., interactions with items that are currently equipped by another player.
     /// </remarks>
     [ByRefEvent]
-    public sealed class BeforeItemStrippedEvent(TimeSpan initialTime, bool stealth = false) : BaseBeforeStripEvent(initialTime, stealth);
+    public sealed class BeforeItemStrippedEvent(EntityUid target, TimeSpan initialTime, bool stealth = false) : BaseBeforeStripEvent(target, initialTime, stealth);
 
     /// <summary>
     ///     Used to modify strip times. Raised directed at the user.
@@ -60,7 +61,7 @@ namespace Content.Shared.Strip.Components
     ///     This is also used by some stripping related interactions, i.e., interactions with items that are currently equipped by another player.
     /// </remarks>
     [ByRefEvent]
-    public sealed class BeforeStripEvent(TimeSpan initialTime, bool stealth = false) : BaseBeforeStripEvent(initialTime, stealth);
+    public sealed class BeforeStripEvent(EntityUid target, TimeSpan initialTime, bool stealth = false) : BaseBeforeStripEvent(target, initialTime, stealth);
 
     /// <summary>
     ///     Used to modify strip times. Raised directed at the target.
@@ -69,7 +70,7 @@ namespace Content.Shared.Strip.Components
     ///     This is also used by some stripping related interactions, i.e., interactions with items that are currently equipped by another player.
     /// </remarks>
     [ByRefEvent]
-    public sealed class BeforeGettingStrippedEvent(TimeSpan initialTime, bool stealth = false) : BaseBeforeStripEvent(initialTime, stealth);
+    public sealed class BeforeGettingStrippedEvent(EntityUid target, TimeSpan initialTime, bool stealth = false) : BaseBeforeStripEvent(target, initialTime, stealth);
 
     /// <summary>
     ///     Organizes the behavior of DoAfters for <see cref="StrippableSystem">.
