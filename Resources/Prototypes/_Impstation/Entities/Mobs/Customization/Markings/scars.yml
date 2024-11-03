@@ -2,7 +2,7 @@
   id: ArmProstheticLeft
   bodyPart: LArm
   markingCategory: Arms
-  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, Arachnid]
+  speciesRestriction: [Human, Dwarf, Reptilian, SlimePerson, SpElf, Arachnid]
   followSkinColor: false
   coloring:
     default:
