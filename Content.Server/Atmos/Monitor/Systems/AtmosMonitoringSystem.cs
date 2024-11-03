@@ -4,8 +4,6 @@ using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos;
@@ -58,28 +56,8 @@ public sealed class AtmosMonitorSystem : EntitySystem
 
     private void OnAtmosDeviceEnterAtmosphere(EntityUid uid, AtmosMonitorComponent atmosMonitor, ref AtmosDeviceEnabledEvent args)
     {
-        if (atmosMonitor.MonitorsPipeNet)
-        {
-            if (!TryComp<NodeContainerComponent>(uid, out var nodeContainer))
-                return;
-
-            foreach (var node in nodeContainer.Nodes.Values)
-            {
-                if (node is PipeNode)
-                {
-                    var pipeNode = (PipeNode)node;
-                    atmosMonitor.TileGas = pipeNode.Air;
-
-                    return;
-                }
-            }
-
-            return;
-        }
-
         atmosMonitor.TileGas = _atmosphereSystem.GetContainingMixture(uid, true);
     }
-
     private void OnMapInit(EntityUid uid, AtmosMonitorComponent component, MapInitEvent args)
     {
         if (component.TemperatureThresholdId != null)

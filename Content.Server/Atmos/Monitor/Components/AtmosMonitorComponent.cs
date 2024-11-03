@@ -65,11 +65,4 @@ public sealed partial class AtmosMonitorComponent : Component
     /// </summary>
     [DataField("registeredDevices")]
     public HashSet<string> RegisteredDevices = new();
-
-    /// <summary>
-    /// Indicates whether this device monitors its own internal pipe network rather than the surrounding atmosphere.
-    /// If 'true', the entity will require a NodeContainerComponent with one or more PipeNodes to function.
-    /// </summary>
-    [DataField]
-    public bool MonitorsPipeNet = false;
 }
