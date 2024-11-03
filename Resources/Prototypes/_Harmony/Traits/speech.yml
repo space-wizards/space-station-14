@@ -122,3 +122,20 @@
         Male: MaleSlime
         Female: FemaleSlime
         Unsexed: MaleSlime
+
+- type: trait
+  id: HarmonyRaisedByVox
+  name: trait-raisedbyvox-name
+  description: trait-raisedbyvox-desc
+  replaceComponents: true
+  cost: 2
+  category: SpeechTraits
+  components:
+    - type: Speech
+      speechVerb: Vox
+      speechSounds: Vox
+    - type: Vocal
+      sounds:
+        Male: UnisexVox
+        Female: UnisexVox
+        Unsexed: UnisexVox

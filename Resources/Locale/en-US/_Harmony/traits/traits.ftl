@@ -18,3 +18,6 @@ trait-raisedbyreptilians-desc = You've lived with Reptilians for so long that yo
 
 trait-raisedbyslimes-name = Raised by Slimes
 trait-raisedbyslimes-desc = You've lived with Slimes for so long that you sound like them.
+
+trait-raisedbyvox-name = Raised by Vox
+trait-raisedbyvox-desc = You've lived with Vox for so long that you sound like them.
