@@ -84,7 +84,6 @@
   - type: Thieving
     stripTimeReduction: 9999
     stealthy: true
-    maxStealthAngleTolerance: 1
   - type: Stripping
   - type: SolutionScanner
   - type: IgnoreUIRange

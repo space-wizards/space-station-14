@@ -49,14 +49,35 @@ public sealed class ThievingSystem : EntitySystem
         if (!component.Stealthy)
             return false;
 
-        var targetBackRotation = _transform.GetWorldRotation(target) - Angle.FromDegrees(180);
+        if (component.MaxStealthAngle == null)
+            return true;
 
-        var userRelativeRotation =
-            (_transform.GetWorldPosition(user) - _transform.GetWorldPosition(target)).ToWorldAngle();
+        if (!TryComp(target, out TransformComponent? targetTransform))
+            return false;
 
-        var isWithinStealthRange =
-            userRelativeRotation.EqualsApprox(targetBackRotation, component.MaxStealthAngleTolerance);
+        var targetLocalCardinal = targetTransform.LocalRotation.GetCardinalDir().ToAngle(); // players can only look in 4 directions so it seems weird if we don't force it to be cardinal
+        var cardinalDifference = targetLocalCardinal - targetTransform.LocalRotation;
 
-        return isWithinStealthRange;
+        var targetRotation = _transform.GetWorldRotation(target);
+        var targetRotationCardinal = targetRotation + cardinalDifference;
+
+        var userRelativeRotation = (_transform.GetWorldPosition(user) - _transform.GetWorldPosition(target)).Normalized().ToWorldAngle().FlipPositive();
+
+        var targetRotationDegrees = targetRotationCardinal.Opposite().Reduced().FlipPositive().Degrees;
+        var userRotationDegrees = userRelativeRotation.Reduced().FlipPositive().Degrees;
+        var difference = 180 - Math.Abs(Math.Abs(targetRotationDegrees - userRotationDegrees) - 180);
+
+        // Log.Debug($"{cardinalDifference.Degrees}");
+        // Log.Debug($"{targetRotation.Degrees}");
+        // Log.Debug($"{targetRotationCardinal.Degrees}");
+        // Log.Debug($"{targetRotationCardinal.Opposite().Degrees}");
+        // Log.Debug($"{userRelativeRotation.Degrees}");
+        // Log.Debug($"{(userRelativeRotation - targetRotationCardinal.Opposite()).Degrees}");
+        // Log.Debug($"{difference}");
+        // Log.Debug($"{userRelativeRotation.EqualsApprox(targetRotationCardinal.Opposite(), 0.25)}");
+        // This can remain if I ever need to start debugging this cursed function again
+        // and to show the ways of testing the difference that did not work
+
+        return difference <= component.MaxStealthAngle.Value.Degrees;
     }
 }

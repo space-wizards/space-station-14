@@ -21,8 +21,8 @@ public sealed partial class ThievingComponent : Component
     public bool Stealthy;
 
     /// <summary>
-    /// How far away the user can be from behind the target for the stealing to be stealthy, in percents
+    /// How far away the user can be from behind the target for the stealing to be stealthy
     /// </summary>
     [DataField]
-    public double MaxStealthAngleTolerance = 0.25;
+    public Angle? MaxStealthAngle;
 }
