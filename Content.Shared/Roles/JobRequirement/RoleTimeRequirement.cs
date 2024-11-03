@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Localizations;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles.Jobs;
@@ -36,7 +37,7 @@ public sealed partial class RoleTimeRequirement : JobRequirement
         playTimes.TryGetValue(proto, out var roleTime);
         var roleDiffSpan = Time - roleTime;
         var roleDiff = roleDiffSpan.TotalMinutes;
-        var formattedRoleDiff = roleDiffSpan.ToString(Loc.GetString("role-timer-time-format"));
+        var formattedRoleDiff = ContentLocalizationManager.FormatPlaytime(roleDiffSpan);
         var departmentColor = Color.Yellow;
 
         if (entManager.EntitySysManager.TryGetEntitySystem(out SharedJobSystem? jobSystem))
