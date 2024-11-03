@@ -4,10 +4,6 @@
 
 [game]
 hostname = "[EN] Wizard's Den Leviathan [US East 1]"
-panic_bunker.enabled = false
-panic_bunker.disable_with_admins = false
-panic_bunker.enable_without_admins = false
-panic_bunker.custom_reason = ""
 
 [hub]
 tags = "lang:en,region:am_n_e,rp:low"
