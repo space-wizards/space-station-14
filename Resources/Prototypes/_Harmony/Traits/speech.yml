@@ -1,0 +1,17 @@
+- type: trait
+  id: HarmonyRaisedByMoths
+  name: trait-raisedbymoths-name
+  description: trait-raisedbymoths-desc
+  replaceComponents: true
+  cost: 2
+  category: SpeechTraits
+  components:
+    - type: Speech
+      speechSounds: Alto
+      speechVerb: Moth
+      allowedEmotes: ['Chitter', 'Squeak']
+    - type: Vocal
+      sounds:
+        Male: UnisexMoth
+        Female: UnisexMoth
+        Unsexed: UnisexMoth
