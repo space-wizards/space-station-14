@@ -53,6 +53,23 @@
         Unsexed: UnisexDwarf
 
 - type: trait
+  id: HarmonyRaisedByHumans
+  name: trait-raisedbyhumans-name
+  description: trait-raisedbyhumans-desc
+  replaceComponents: true
+  cost: 2
+  category: SpeechTraits
+  components:
+    - type: Speech
+      speechSounds: Alto
+      speechVerb: Default
+    - type: Vocal
+      sounds:
+        Male: MaleHuman
+        Female: FemaleHuman
+        Unsexed: MaleHuman
+
+- type: trait
   id: HarmonyRaisedByMoths
   name: trait-raisedbymoths-name
   description: trait-raisedbymoths-desc
