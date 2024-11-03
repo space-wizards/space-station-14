@@ -327,3 +327,17 @@
       amount: 1
   products:
     Raktaccino: 1
+
+- type: reaction
+  id: ThumperDrink
+  requiredMixerCategories:
+    - Shake
+  reactants:
+    JuiceBerry:
+      amount: 1
+    JuiceApple:
+      amount: 1
+    MelonLiquor:
+      amount: 1
+  products:
+    ThumperDrink: 3

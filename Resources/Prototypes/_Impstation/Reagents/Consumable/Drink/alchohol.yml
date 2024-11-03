@@ -479,3 +479,43 @@
           type: Local
           messages: [ "uap-effect-med" ]
           probability: 0.1
+
+- type: reagent
+  id: ThumperDrink
+  name: reagent-name-thumperdrink
+  parent: BaseAlcohol
+  desc: reagent-desc-thumperdrink
+  physicalDesc: reagent-physical-desc-vibrant
+  flavor: fruity
+  color: "#ff2160"
+  recognizable: true
+  metamorphicSprite:
+    sprite: _Impstation/Objects/Consumable/Drinks/thumperdrink.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 3
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 4
+      - !type:Emote
+        conditions:
+        - !type:OrganType
+          type: Reptilian
+          shouldHave: true         
+        emote: Thump
+        showInChat: false
+        force: true
+        probability: 0.6
+      - !type:Emote
+        conditions:
+        - !type:OrganType
+          type: Reptilian
+          shouldHave: true         
+        emote: Thump
+        showInChat: true
+        force: true
+        probability: 0.2
+  fizziness: .1
