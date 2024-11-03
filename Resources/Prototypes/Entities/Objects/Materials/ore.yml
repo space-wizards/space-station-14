@@ -334,6 +334,46 @@
     count: 1
 
 - type: entity
+  parent: Coal
+  id: Coal5
+  suffix: Five
+  components:
+  - type: Stack
+    count: 5
+
+- type: entity
+  parent: Coal
+  id: Coal10
+  suffix: Ten
+  components:
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: Coal
+  id: Coal15
+  suffix: Fifteen
+  components:
+  - type: Stack
+    count: 15
+
+- type: entity
+  parent: Coal
+  id: Coal20
+  suffix: Twenty
+  components:
+  - type: Stack
+    count: 20
+
+- type: entity
+  parent: Coal
+  id: Coal25
+  suffix: Twentyfive
+  components:
+  - type: Stack
+    count: 25
+
+- type: entity
   parent: OreBase
   id: SaltOre
   name: salt
