@@ -1,0 +1,10 @@
+- type: trait
+  id: HarmonyHypophonia
+  name: trait-hypophonia-name
+  description: trait-hypophonia-desc
+  category: Disabilities
+  blacklist:
+    components:
+      - BorgChassis
+  components:
+    - type: Hypophonia
