@@ -3583,3 +3583,76 @@
   id: 441
   time: '2024-11-03T22:36:43.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/613
+- author: Darkmajia
+  changes:
+  - message: Crusher dagger damage reduced from 15 to 10. (30 DPS -> 20 DPS)
+    type: Tweak
+  id: 442
+  time: '2024-11-03T22:40:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/592
+- author: DinnerCalzone
+  changes:
+  - message: Added metamorphic glasses of custom Impstation drinks to the entity spawner
+      menu for use in mapping and admin spawning.
+    type: Add
+  id: 443
+  time: '2024-11-03T22:42:14.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/598
+- author: TheGrimbeeper
+  changes:
+  - message: fixed too many things spawning from artifacts at one time
+    type: Fix
+  id: 444
+  time: '2024-11-03T22:40:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/595
+- author: hivehum, crocodilecarousel
+  changes:
+  - message: 30 new markings for our space station's moth infestation.
+    type: Add
+  - message: Fixed clipping issue with leg/foot prosthetics.
+    type: Fix
+  id: 445
+  time: '2024-11-03T22:43:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/591
+- author: Lazy Riverfolk, AirFryerBuyOneGetOneFree
+  changes:
+  - message: Added the Cargorilla!
+    type: Add
+  id: 446
+  time: '2024-11-03T22:44:57.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/571
+- author: hivehum
+  changes:
+  - message: You need 5 hours borg playtime to unlock Station AI again.
+    type: Tweak
+  id: 447
+  time: '2024-11-03T22:41:25.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/593
+- author: honeyed-lemons
+  changes:
+  - message: Ships bought from the shipyard can now be randomized
+    type: Tweak
+  id: 448
+  time: '2024-11-03T22:41:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/610
+- author: honeyed-lemons
+  changes:
+  - message: Rat Kings can now pull things, cannot be pulled under doors.
+    type: Tweak
+  id: 449
+  time: '2024-11-03T22:44:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/607
+- author: KingMudkipIII
+  changes:
+  - message: Added Thumper, a new drink thats fun for reptilians to drink!
+    type: Add
+  id: 450
+  time: '2024-11-03T22:45:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/611
+- author: AftrLite
+  changes:
+  - message: Unique sound effect for the AME's fuel injection!
+    type: Add
+  id: 451
+  time: '2024-11-03T22:43:25.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/600
