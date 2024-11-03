@@ -1,4 +1,3 @@
-using Content.Server.Abilities.Mime;
 using Content.Server.Chat.Systems;
 using Content.Server.Popups;
 using Content.Server.Speech.EntitySystems;
