@@ -430,7 +430,7 @@
     - type: Lathe
       idleState: icon
       runningState: icon
-      staticRecipePacks:
+      staticPacks:
       - SecurityAmmoStatic
     - type: MaterialStorage
       whitelist:
