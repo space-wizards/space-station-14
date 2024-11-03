@@ -74,7 +74,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
 
                 var body = new CollapsibleBody
                 {
-                    Margin = new Thickness(0, 10, 0, 0),
+                    Margin = new Thickness(0, 5, 0, 0),
                 };
 
                 // TODO: Add Requirements to this key when it'll be fixed and work as an equality key in GhostRolesEui

@@ -1,6 +1,5 @@
 <BoxContainer xmlns="https://spacestation14.io"
-              Orientation="Vertical"
-              Margin="0 8">
+              Orientation="Vertical">
     <Label Name="Title"
            StyleClasses="LabelKeyText"/>
     <PanelContainer StyleClasses="HighDivider" />
