@@ -4,6 +4,7 @@ using Content.Server.Shuttles.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
+using Content.Shared.Roles;
 using Robust.Shared.Configuration;
 using Robust.Shared.Random;
 
@@ -18,6 +19,7 @@ public sealed class KillPersonConditionSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly SharedRoleSystem _role = default!;
     [Dependency] private readonly TargetObjectiveSystem _target = default!;
 
     public override void Initialize()
@@ -52,8 +54,13 @@ public sealed class KillPersonConditionSystem : EntitySystem
         if (target.Target != null)
             return;
 
-        // no other humans to kill
         var allHumans = _mind.GetAliveHumansExcept(args.MindId);
+        if (comp.RoleWhitelist is {} whitelist)
+        {
+            allHumans.RemoveAll(mindId => _role.MindHasMatchingRole(mindId, whitelist));
+        }
+
+        // no other humans to kill
         if (allHumans.Count == 0)
         {
             args.Cancelled = true;
