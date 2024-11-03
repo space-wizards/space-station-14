@@ -18,8 +18,8 @@ public sealed partial class VampireSystem : EntitySystem
     }
     
     private void GetVampireIcon(Entity<VampireComponent> ent, ref GetStatusIconsEvent args)
-    {   
-        var iconPrototype = _prototype.Index(ent.Comp.StatusIcon);
-        args.StatusIcons.Add(iconPrototype);
+    {
+        if (HasComp<VampireComponent>(ent) &&  _prototype.TryIndex(ent.Comp.StatusIcon, out var iconPrototype))
+            args.StatusIcons.Add(iconPrototype);
     }
 }
