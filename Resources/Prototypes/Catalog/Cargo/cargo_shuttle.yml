@@ -14,7 +14,7 @@
     sprite: Structures/Shuttles/gyroscope.rsi
     state: base
   product: CrateEngineeringGyroscope
-  cost: 2000 #buffed on imp
+  cost: 4000
   category: cargoproduct-category-name-shuttle
   group: market
 

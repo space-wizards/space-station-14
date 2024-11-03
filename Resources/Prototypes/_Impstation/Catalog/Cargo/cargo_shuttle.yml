@@ -4,7 +4,7 @@
     sprite: _Impstation/Structures/Shuttles/minigyroscope.rsi
     state: base
   product: CrateEngineeringMiniGyroscope
-  cost: 500
+  cost: 1000
   category: cargoproduct-category-name-shuttle
   group: market
 
