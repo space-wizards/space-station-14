@@ -12,36 +12,22 @@
       "name": "icon"
     },
     {
-      "name": "icon-unshaded"
-    },
-    {
       "name": "icon-flash"
     },
     {
-      "name": "light-overlay"
-    },
-    {
-      "name": "equipped-head",
+      "name": "off-equipped-HELMET",
       "directions": 4
     },
     {
-      "name": "equipped-head-light",
+      "name": "on-equipped-HELMET",
       "directions": 4
     },
     {
-      "name": "equipped-head-unshaded",
+      "name": "off-equipped-HELMET-vox",
       "directions": 4
     },
     {
-      "name": "equipped-head-vox",
-      "directions": 4
-    },
-    {
-      "name": "equipped-head-light-vox",
-      "directions": 4
-    },
-    {
-      "name": "equipped-head-unshaded-vox",
+      "name": "on-equipped-HELMET-vox",
       "directions": 4
     }
   ]
