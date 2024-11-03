@@ -228,6 +228,7 @@
   - type: Thieving
     stripTimeReduction: 1
     stealthy: true
+    maxStealthAngleTolerance: 1 # I'm not even sure why ninja gloves have the thieving components but whatever
   - type: ToggleClothing
     action: ActionToggleNinjaGloves
   - type: NinjaGloves
