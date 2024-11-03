@@ -71,12 +71,12 @@
     damage:
       types:
         Slash: 15
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
   - type: DamageOtherOnHit
     damage:
       types:
         Slash: 15
-    soundHit:
-        path: /Audio/Weapons/bladeslice.ogg
   - type: Item
     sprite: Objects/Weapons/Melee/katana.rsi
   - type: DisarmMalus
@@ -97,7 +97,7 @@
   - type: DamageOtherOnHit
     damage:
       types:
-        Slash: 15 # would otherwise be stupidly strong with recall
+        Slash: 20 # would otherwise be stupidly strong with recall
   - type: Item
     sprite: Objects/Weapons/Melee/energykatana.rsi
   - type: EnergyKatana
