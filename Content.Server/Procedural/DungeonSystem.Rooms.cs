@@ -13,7 +13,6 @@ namespace Content.Server.Procedural;
 public sealed partial class DungeonSystem
 {
     // Temporary caches.
-    private readonly HashSet<EntityUid> _entitySet = new();
     private readonly List<DungeonRoomPrototype> _availableRooms = new();
 
     /// <summary>
@@ -99,6 +98,20 @@ public sealed partial class DungeonSystem
         return roomRotation;
     }
 
+    private static Box2 GetRotatedBox(Vector2 point1, Vector2 point2, double angle)
+    {
+        if (angle == 0)
+            return new Box2(point1, point2);
+        if (Math.Abs(angle - Math.PI / 2) < 1E-5)
+            return new Box2(point2.X, point1.Y, point1.X, point2.Y);
+        if (Math.Abs(angle - Math.PI) < 1E-5)
+            return new Box2(point2, point1);
+        if (Math.Abs(angle + Math.PI / 2) < 1E-5)
+            return new Box2(point1.X, point2.Y, point2.X, point1.Y);
+
+        throw new NotImplementedException();
+    }
+
     public void SpawnRoom(
         EntityUid gridUid,
         MapGridComponent grid,
@@ -113,18 +126,25 @@ public sealed partial class DungeonSystem
         var templateGrid = Comp<MapGridComponent>(templateMapUid);
         var roomDimensions = room.Size;
 
+        var entitySet = new HashSet<EntityUid>();
+        
         var finalRoomRotation = roomTransform.Rotation();
 
         // go BRRNNTTT on existing stuff
         if (clearExisting)
         {
-            var gridBounds = new Box2(Vector2.Transform(-room.Size/2, roomTransform), Vector2.Transform(room.Size/2, roomTransform));
-            _entitySet.Clear();
+            //The Box2 rotation completely breaks the entity calculation from lookup. and before that, there's a 75% chance the spawn room won't remove anything underneath it.
+            //Therefore, Box2 must be calculated separately for all 4 rotation options. 
+            var point1 = Vector2.Transform(-room.Size / 2, roomTransform);
+            var point2 = Vector2.Transform(room.Size / 2, roomTransform);
+            var gridBounds = GetRotatedBox(point1, point2, finalRoomRotation);
+            
+            entitySet.Clear();
             // Polygon skin moment
             gridBounds = gridBounds.Enlarged(-0.05f);
-            _lookup.GetLocalEntitiesIntersecting(gridUid, gridBounds, _entitySet, LookupFlags.Uncontained);
+            _lookup.GetLocalEntitiesIntersecting(gridUid, gridBounds, entitySet, LookupFlags.Uncontained);
 
-            foreach (var templateEnt in _entitySet)
+            foreach (var templateEnt in entitySet)
             {
                 Del(templateEnt);
             }
