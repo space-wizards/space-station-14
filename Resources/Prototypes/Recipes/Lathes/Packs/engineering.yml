@@ -50,7 +50,6 @@
   id: EngineeringBoardsStatic
   recipes:
   - SpaceHeaterMachineCircuitBoard
-  - ThermomachineFreezerMachineCircuitBoard
   - StationAnchorCircuitboard
 
 ## Dynamic
@@ -75,6 +74,7 @@
 - type: latheRecipePack
   id: EngineeringBoards
   recipes:
+  - ThermomachineFreezerMachineCircuitBoard
   - HellfireFreezerMachineCircuitBoard
   - PortableScrubberMachineCircuitBoard
   - SolarControlComputerCircuitboard
@@ -84,6 +84,5 @@
   - PortableGeneratorPacmanMachineCircuitboard
   - PortableGeneratorSuperPacmanMachineCircuitboard
   - PortableGeneratorJrPacmanMachineCircuitboard
-  - WallmountSubstationElectronics
   - EmitterCircuitboard
   - TelecomServerCircuitboard

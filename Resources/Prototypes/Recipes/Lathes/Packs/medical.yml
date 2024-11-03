@@ -92,11 +92,6 @@
 - type: latheRecipePack
   id: MedicalBoards
   recipes:
-  - CloningPodMachineCircuitboard
-  - MedicalScannerMachineCircuitboard
-  - CloningConsoleComputerCircuitboard
   - StasisBedMachineCircuitboard
   - CryoPodMachineCircuitboard
-  - VaccinatorMachineCircuitboard
-  - DiagnoserMachineCircuitboard
   - BiomassReclaimerMachineCircuitboard
