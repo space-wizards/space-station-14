@@ -135,11 +135,6 @@
   text: "/ServerInfo/Guidebook/Engineering/Thermomachines.xml"
 
 - type: guideEntry
-  id: Fires
-  name: guide-entry-fires
-  text: "/ServerInfo/Guidebook/Engineering/Fires.xml"
-
-- type: guideEntry
   id: AtmosphericsSystems
   name: guide-entry-atmosphericssystems
   text: "/ServerInfo/Guidebook/Engineering/AtmosphericsSystems.xml"
