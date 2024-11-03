@@ -883,7 +883,7 @@
 
 - type: entity
   name: xeno queen entity spawner
-  id: SpawnMobXenoQueen
+  id: SpawnMobXenoPraetorian
   parent: MarkerBase
   components:
   - type: Sprite

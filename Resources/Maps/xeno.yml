@@ -98989,7 +98989,7 @@ entities:
     - type: Transform
       pos: 19.5,-72.5
       parent: 2
-- proto: SpawnMobXenoQueen
+- proto: SpawnMobXenoPraetorian
   entities:
   - uid: 16770
     components:
