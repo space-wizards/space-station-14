@@ -32,7 +32,7 @@ public sealed class RoomFillSystem : EntitySystem
                 _dungeon.SpawnRoom(
                     xform.GridUid.Value,
                     mapGrid,
-                    _maps.LocalToTile(xform.GridUid.Value, mapGrid, xform.Coordinates),
+                    _maps.LocalToTile(xform.GridUid.Value, mapGrid, xform.Coordinates) - new Vector2i(room.Size.X/2,room.Size.Y/2),
                     room,
                     random,
                     null,
