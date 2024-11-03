@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Flareguy
-  changes:
-  - message: Added vox sprites for most of the remaining common mask items.
-    type: Add
-  id: 7085
-  time: '2024-08-10T21:06:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30838
 - author: Scribbles0, Plykiya, nikthechampiongr
   changes:
   - message: You can now execute incapacitated/cuffed entities or yourself with certain
@@ -3953,3 +3946,11 @@
   id: 7584
   time: '2024-11-02T15:12:26.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33067
+- author: Plykiya
+  changes:
+  - message: Wielding weapons no longer displays your character's real identity when
+      your identity is hidden.
+    type: Fix
+  id: 7585
+  time: '2024-11-03T11:25:30.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33134
