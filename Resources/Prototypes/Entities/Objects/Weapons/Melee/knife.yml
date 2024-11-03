@@ -19,6 +19,13 @@
         Slash: 10
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: LandAtCursor
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 10
   - type: Sprite
   - type: Item
     size: Small
@@ -67,6 +74,10 @@
     damage:
       types:
         Slash: 13
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 13
   - type: Item
     size: Normal
     sprite: Objects/Weapons/Melee/cleaver.rsi
@@ -94,13 +105,6 @@
     damage:
       types:
         Slash: 12
-  - type: EmbeddableProjectile
-    sound: /Audio/Weapons/star_hit.ogg
-  - type: LandAtCursor
-  - type: DamageOtherOnHit
-    damage:
-      types:
-        Slash: 10
   - type: Item
     sprite: Objects/Weapons/Melee/combat_knife.rsi
     storedSprite:
@@ -135,6 +139,10 @@
     state: icon
   - type: MeleeWeapon
     attackRate: 1.0
+    damage:
+      types:
+        Slash: 15
+  - type: DamageOtherOnHit
     damage:
       types:
         Slash: 15
@@ -202,6 +210,10 @@
     damage:
       types:
         Slash: 5.5
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 2 # a bit of cloth shouldn't increase throwing damage above existing glass shard value
   - type: Item
     sprite: Objects/Weapons/Melee/shiv.rsi
   - type: DisarmMalus
@@ -221,6 +233,10 @@
     damage:
       types:
         Slash: 7 #each "tier" grants an additional 2 damage
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 4.5
   - type: Item
     sprite: Objects/Weapons/Melee/reinforced_shiv.rsi
   - type: Sprite
@@ -240,6 +256,10 @@
     damage:
       types:
         Slash: 9
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 5.5
   - type: Item
     sprite: Objects/Weapons/Melee/plasma_shiv.rsi
   - type: Sprite
@@ -260,6 +280,11 @@
       types:
         Slash: 7
         Radiation: 4
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 4.5
+        Radiation: 2
   - type: Item
     sprite: Objects/Weapons/Melee/uranium_shiv.rsi
   - type: Sprite
@@ -284,9 +309,6 @@
     damage:
       types:
         Slash: 5
-  - type: EmbeddableProjectile
-    sound: /Audio/Weapons/star_hit.ogg
-  - type: LandAtCursor
   - type: DamageOtherOnHit
     ignoreResistances: true
     damage:

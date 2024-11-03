@@ -17,6 +17,9 @@
   - type: Sprite
     sprite: Objects/Consumable/TrashDrinks/broken_bottle.rsi
     state: icon
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: LandAtCursor
   - type: DamageOtherOnHit
     damage:
       types:

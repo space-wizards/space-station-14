@@ -169,6 +169,13 @@
     damage:
       types:
         Slash: 15
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: LandAtCursor
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 15
   - type: Tag
     tags:
     - Knife

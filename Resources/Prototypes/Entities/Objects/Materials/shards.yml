@@ -44,6 +44,9 @@
         density: 30
         mask:
         - ItemMask
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: LandAtCursor
   - type: DamageOtherOnHit
     damage:
       types:
@@ -126,6 +129,10 @@
     refineResult:
     - id: SheetGlass1
     - id: PartRodMetal1
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 4.5
   - type: DamageUserOnTrigger
     damage:
       types:
@@ -162,6 +169,10 @@
     refineResult:
     - id: SheetGlass1
     - id: SheetPlasma1
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 5.5
   - type: DamageUserOnTrigger
     damage:
       types:
@@ -201,6 +212,11 @@
     refineResult:
     - id: SheetGlass1
     - id: SheetUranium1
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 4.5
+        Radiation: 2
   - type: DamageUserOnTrigger
     damage:
       types:
@@ -236,6 +252,10 @@
     refineResult:
     - id: SheetGlass1
     - id: SheetBrass1
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 4.5
   - type: DamageUserOnTrigger
     damage:
       types:

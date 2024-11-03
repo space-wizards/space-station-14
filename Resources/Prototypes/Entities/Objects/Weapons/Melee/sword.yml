@@ -18,6 +18,9 @@
   - type: Tool
     qualities:
     - Slicing
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: LandAtCursor
 
 - type: entity
   name: captain's sabre
@@ -34,6 +37,10 @@
         Slash: 17 #cmon, it has to be at least BETTER than the rest.
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 17
   - type: Reflect
     reflectProb: .1
     spread: 90
@@ -64,6 +71,10 @@
     damage:
       types:
         Slash: 15
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 15
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
   - type: Item
@@ -83,6 +94,10 @@
     damage:
       types:
         Slash: 30
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 15 # would otherwise be stupidly strong with recall
   - type: Item
     sprite: Objects/Weapons/Melee/energykatana.rsi
   - type: EnergyKatana
@@ -116,6 +131,10 @@
         Slash: 15
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 15
   - type: Item
     sprite: Objects/Weapons/Melee/machete.rsi
   - type: DisarmMalus
@@ -135,6 +154,10 @@
         Slash: 20
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 20
   - type: Item
   - type: Clothing
     sprite: Objects/Weapons/Melee/claymore.rsi
@@ -159,6 +182,10 @@
         Slash: 16
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 16
   - type: Item
     sprite: Objects/Weapons/Melee/cutlass.rsi
   - type: DisarmMalus
@@ -183,6 +210,15 @@
           Radiation: 10
       soundHit:
         path: /Audio/Effects/explosion_small1.ogg
+    - type: DamageOtherOnHit
+      damage:
+        types:
+          Structural: 150
+          Slash: 20 #Horror
+          Blunt: 20
+          Heat: 20
+          Piercing: 20
+          Radiation: 10
     - type: Reflect
       reflectProb: .25
       spread: 90

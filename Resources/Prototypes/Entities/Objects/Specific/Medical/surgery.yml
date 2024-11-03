@@ -90,6 +90,13 @@
         Slash: 8
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: LandAtCursor
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 8
 
 - type: entity
   name: shiv
@@ -116,6 +123,11 @@
     damage:
       types:
         Slash: 12
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 12
+
 
 - type: entity
   name: laser scalpel
