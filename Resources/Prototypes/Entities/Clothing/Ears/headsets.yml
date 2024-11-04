@@ -26,6 +26,7 @@
   - type: GuideHelp
     guides:
     - Radio
+  - type: ActiveListener
 
 - type: entity
   parent: ClothingHeadset
