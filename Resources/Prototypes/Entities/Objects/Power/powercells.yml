@@ -53,7 +53,7 @@
     startingCharge: 4000
   - type: ProjectileBatteryAmmoProvider
     proto: NtBolt
-    fireCost: 400 // 10 shots
+    fireCost: 400  #10 shots
   - type: Tag
     tags:
       - MagCell
@@ -70,7 +70,7 @@
     startingCharge: 20000
   - type: ProjectileBatteryAmmoProvider
     proto: NtBolt
-    fireCost: 800 // 25 shots
+    fireCost: 800  #25 shots
 
 - type: entity
   name: NT experimental magcell
@@ -84,7 +84,7 @@
     startingCharge: 4000
   - type: ProjectileBatteryAmmoProvider
     proto: NtBolt
-    fireCost: 400 // 10 shots
+    fireCost: 400 #10 shots
   - type: BatterySelfRecharger
     autoRecharge: true
     autoRechargeRate: 40 # Takes 100 seconds to recharge itself.
