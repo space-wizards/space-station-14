@@ -1251,6 +1251,38 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+- type: listing
+  id: UplinkDarkGygax
+  name: uplink-mech-teleporter-assault-name
+  description: uplink-mech-teleporter-assault-desc
+  icon: { sprite: /Textures/Objects/Specific/Mech/mecha.rsi, state: darkgygax }
+  productEntity: CrateCybersunDarkGygaxBundle
+  cost:
+    Telecrystal: 100
+  categories:
+  - UplinkAllies
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
+- type: listing
+  id: UplinkMauler
+  name: uplink-mech-teleporter-heavy-name
+  description: uplink-mech-teleporter-heavy-desc
+  icon: { sprite: /Textures/Objects/Specific/Mech/mecha.rsi, state: mauler }
+  productEntity: CrateCybersunMaulerBundle
+  cost:
+    Telecrystal: 150
+  categories:
+  - UplinkAllies
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
+
 # Implants
 
 - type: listing

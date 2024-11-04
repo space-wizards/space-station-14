@@ -1,0 +1,117 @@
+{
+    "copyright" : "Taken from https://github.com/tgstation/tgstation at at https://github.com/tgstation/tgstation/commit/91af16bcbfd2dd363a89d846ae2acd6d655083c2",
+    "license" : "CC-BY-SA-3.0",
+    "version": 1,
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "gygax_chassis"
+      },
+      {
+        "name": "gygax_harness"
+      },
+      {
+        "name": "gygax_armor"
+      },
+      {
+        "name": "gygax_harness+o"
+      },
+      {
+        "name": "gygax_head"
+      },
+      {
+        "name": "gygax_head+o"
+      },
+      {
+        "name": "gygax_r_arm"
+      },
+      {
+        "name": "gygax_r_arm+o"
+      },
+      {
+        "name": "gygax_l_arm"
+      },
+      {
+        "name": "gygax_l_arm+o"
+      },
+      {
+        "name": "gygax_r_leg"
+      },
+      {
+        "name": "gygax_r_leg+o"
+      },
+      {
+        "name": "gygax_l_leg"
+      },
+      {
+        "name": "gygax_l_leg+o"
+      },
+      {
+        "name": "gygax0"
+      },
+      {
+        "name": "gygax1"
+      },
+      {
+        "name": "gygax2"
+      },
+      {
+        "name": "gygax3"
+      },
+      {
+        "name": "gygax4"
+      },
+      {
+        "name": "gygax5"
+      },
+      {
+        "name": "gygax6"
+      },
+      {
+        "name": "gygax7"
+      },
+      {
+        "name": "gygax8"
+      },
+      {
+        "name": "gygax9"
+      },
+      {
+        "name": "gygax10"
+      },
+      {
+        "name": "gygax11"
+      },
+      {
+        "name": "gygax12"
+      },
+      {
+        "name": "gygax13"
+      },
+      {
+        "name": "gygax14"
+      },
+      {
+        "name": "gygax15"
+      },
+      {
+        "name": "gygax16"
+      },
+      {
+        "name": "gygax17"
+      },
+      {
+        "name": "gygax18"
+      },
+      {
+        "name": "gygax19"
+      },
+      {
+        "name": "gygax20"
+      }
+    ]
+  }
+  

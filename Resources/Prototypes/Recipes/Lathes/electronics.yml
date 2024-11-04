@@ -354,6 +354,46 @@
   result: RipleyPeripheralsElectronics
 
 - type: latheRecipe
+  parent: BaseGoldCircuitboardRecipe
+  id: ClarkeCentralElectronics
+  result: ClarkeCentralElectronics
+
+- type: latheRecipe
+  parent: BaseGoldCircuitboardRecipe
+  id: ClarkePeripheralsElectronics
+  result: ClarkePeripheralsElectronics
+
+- type: latheRecipe
+  parent: BaseGoldCircuitboardRecipe
+  id: GygaxCentralElectronics
+  result: GygaxCentralElectronics
+
+- type: latheRecipe
+  parent: BaseGoldCircuitboardRecipe
+  id: GygaxPeripheralsElectronics
+  result: GygaxPeripheralsElectronics
+
+- type: latheRecipe
+  parent: BaseGoldCircuitboardRecipe
+  id: GygaxTargetingElectronics
+  result: GygaxTargetingElectronics
+
+- type: latheRecipe
+  parent: BaseSilverCircuitboardRecipe
+  id: DurandCentralElectronics
+  result: DurandCentralElectronics
+
+- type: latheRecipe
+  parent: BaseSilverCircuitboardRecipe
+  id: DurandPeripheralsElectronics
+  result: DurandPeripheralsElectronics
+
+- type: latheRecipe
+  parent: BaseSilverCircuitboardRecipe
+  id: DurandTargetingElectronics
+  result: DurandTargetingElectronics
+
+- type: latheRecipe
   parent: BaseBananiumCircuitboardRecipe
   id: HonkerCentralElectronics
   result: HonkerCentralElectronics
