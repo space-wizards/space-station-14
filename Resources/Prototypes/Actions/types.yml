@@ -328,3 +328,13 @@
       itemIconStyle: NoItem
       useDelay: 1 # emote spam
       event: !type:ToggleActionEvent
+
+- type: entity
+  id: ActionToggleHeadphones
+  name: Toggle Headphones
+  description: Toggles the headphones on and off.
+  components:
+    - type: InstantAction
+      itemIconStyle: BigItem
+      useDelay: 1
+      event: !type:ToggleActionEvent

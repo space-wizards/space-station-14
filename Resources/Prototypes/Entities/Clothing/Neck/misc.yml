@@ -9,7 +9,7 @@
     layers:
     - state: icon
     - state: icon-on
-      visible: false
+      visible: true
       shader: unshaded
       map: [ "light" ]
   - type: Appearance
@@ -33,6 +33,10 @@
     enabled: false
     radius: 0
     energy: 0
+  - type: ToggleClothing
+    action: ActionToggleHeadphones
+  - type: UseDelay
+    delay: 1.0
 
 - type: entity
   parent: ClothingNeckBase
