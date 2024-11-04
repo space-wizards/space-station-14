@@ -540,7 +540,7 @@
       - MobAdultSlimesYellowAngry
 
 - type: entity
-  name: Smile Spawner
+  name: Smile Brain Spawner
   id: SpawnMobSmile
   parent: MarkerBase
   components:
