@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: TokenStyle
-  changes:
-  - message: Pax reagent now refresh pacified.
-    type: Tweak
-  - message: Pax reagent pacified duration has been changed from 2 seconds to 4 seconds.
-    type: Tweak
-  id: 7090
-  time: '2024-08-11T09:19:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30778
 - author: osjarw
   changes:
   - message: You can once again pull and buckle pets.
@@ -3952,3 +3943,11 @@
   id: 7589
   time: '2024-11-04T03:33:51.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33121
+- author: Kickguy223
+  changes:
+  - message: Ion Storms now notify a Borg that their laws have changed via a sound
+      cue.
+    type: Add
+  id: 7590
+  time: '2024-11-04T11:23:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32887
