@@ -1,0 +1,152 @@
+- type: species
+  id: Felionoid
+  name: species-name-felionoid
+  roundStart: true
+  prototype: MobFelionoid
+  sprites: MobFelionoidSprites
+  markingLimits: MobFelionoidMarkingLimits
+  dollPrototype: MobFelionoidDummy
+  skinColoration: Hues
+  defaultSkinTone: "#666666"
+  maleFirstNames: names_felionoid
+  femaleFirstNames: names_felionoid
+  naming: First
+
+- type: speciesBaseSprites
+  id: MobFelionoidSprites
+  sprites:
+    Head: MobFelionoidHead
+    Snout: MobHumanoidAnyMarking
+    Hair: MobHumanoidAnyMarking
+    FacialHair: MobHumanoidAnyMarking
+    Chest: MobFelionoidTorso
+    Eyes: MobFelionoidEyes
+    LArm: MobFelionoidLArm
+    RArm: MobFelionoidRArm
+    LHand: MobFelionoidLHand
+    RHand: MobFelionoidRHand
+    LLeg: MobFelionoidLLeg
+    RLeg: MobFelionoidRLeg
+    LFoot: MobFelionoidLFoot
+    RFoot: MobFelionoidRFoot
+    Tail: MobHumanoidAnyMarking
+
+- type: markingPoints
+  id: MobFelionoidMarkingLimits
+  onlyWhitelisted: true
+  points:
+    Hair:
+      points: 1
+      required: false
+    FacialHair:
+      points: 1
+      required: false
+    Head:
+      points: 1
+      required: true
+    Snout:
+      points: 1
+      required: true
+    Arms:
+      points: 4
+      required: true
+    Legs:
+      points: 4
+      required: true
+    Chest:
+      points: 1
+      required: false
+    Tail:
+      points: 1
+      required: true
+      defaultMarkings: [ FelionoidTailAnimated ]
+
+- type: humanoidBaseSprite
+  id: MobFelionoidEyes
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+    state: eyes
+
+- type: humanoidBaseSprite
+  id: MobFelionoidHead
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+    state: head
+
+- type: humanoidBaseSprite
+  id: MobFelionoidHeadMale
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+    state: head
+
+- type: humanoidBaseSprite
+  id: MobFelionoidHeadFemale
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+    state: head
+
+- type: humanoidBaseSprite
+  id: MobFelionoidTorso
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+    state: torso
+
+- type: humanoidBaseSprite
+  id: MobFelionoidTorsoMale
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+    state: torso
+
+- type: humanoidBaseSprite
+  id: MobFelionoidTorsoFemale
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+    state: torso
+
+- type: humanoidBaseSprite
+  id: MobFelionoidLLeg
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+    state: l_leg
+
+- type: humanoidBaseSprite
+  id: MobFelionoidLArm
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+    state: l_arm
+
+- type: humanoidBaseSprite
+  id: MobFelionoidLHand
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+    state: l_hand
+
+- type: humanoidBaseSprite
+  id: MobFelionoidLFoot
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+    state: l_foot
+
+- type: humanoidBaseSprite
+  id: MobFelionoidRLeg
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+    state: r_leg
+
+- type: humanoidBaseSprite
+  id: MobFelionoidRArm
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+    state: r_arm
+
+- type: humanoidBaseSprite
+  id: MobFelionoidRHand
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+    state: r_hand
+
+- type: humanoidBaseSprite
+  id: MobFelionoidRFoot
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+    state: r_foot

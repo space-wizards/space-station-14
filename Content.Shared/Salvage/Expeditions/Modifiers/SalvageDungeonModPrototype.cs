@@ -20,6 +20,10 @@ public sealed partial class SalvageDungeonModPrototype : IPrototype, IBiomeSpeci
     [DataField("biomes", customTypeSerializer: typeof(PrototypeIdListSerializer<SalvageBiomeModPrototype>))]
     public List<string>? Biomes { get; private set; } = null;
 
+    // 🌟Starlight🌟
+    [DataField("difficulties", customTypeSerializer: typeof(PrototypeIdListSerializer<SalvageDifficultyPrototype>))]
+    public List<string>? Difficulties { get; private set; } = null;
+
     /// <summary>
     /// The config to use for spawning the dungeon.
     /// </summary>

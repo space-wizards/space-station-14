@@ -1,3 +1,4 @@
+using Content.Server._Starlight;
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
@@ -21,8 +22,10 @@ using Content.Server.Players.RateLimiting;
 using Content.Server.Preferences.Managers;
 using Content.Server.ServerInfo;
 using Content.Server.ServerUpdates;
+using Content.Server.Starlight.TextToSpeech;
 using Content.Server.Voting.Managers;
 using Content.Server.Worldgen.Tools;
+using Content.Shared._Starlight;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Administration.Managers;
 using Content.Shared.Chat;
@@ -73,6 +76,10 @@ namespace Content.Server.IoC
             IoCManager.Register<PlayerRateLimitManager>();
             IoCManager.Register<SharedPlayerRateLimitManager, PlayerRateLimitManager>();
             IoCManager.Register<MappingManager>();
+            // 🌟Starlight🌟
+            IoCManager.Register<ISharedPlayersRoleManager, PlayerRolesManager>(); 
+            IoCManager.Register<IPlayerRolesManager, PlayerRolesManager>();     
+            IoCManager.Register<ITTSManager, TTSManager>();
         }
     }
 }

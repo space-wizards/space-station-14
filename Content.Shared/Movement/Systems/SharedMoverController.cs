@@ -124,28 +124,40 @@ public abstract partial class SharedMoverController : VirtualController
         {
             if (_mobState.IsIncapacitated(relayTarget.Source) ||
                 TryComp<SleepingComponent>(relayTarget.Source, out _) ||
-                !MoverQuery.TryGetComponent(relayTarget.Source, out var relayedMover))
+                !MoverQuery.TryGetComponent(relayTarget.Source, out var relayedMover)||
+                !XformQuery.TryGetComponent(relayTarget.Source, out var relayedXform))
             {
                 canMove = false;
             }
             else
             {
+                mover.LerpTarget = relayedMover.LerpTarget;
                 mover.RelativeEntity = relayedMover.RelativeEntity;
                 mover.RelativeRotation = relayedMover.RelativeRotation;
                 mover.TargetRelativeRotation = relayedMover.TargetRelativeRotation;
+                HandleMobMovement(relayTarget.Source, relayedMover, physicsUid, physicsComponent, relayedXform, frameTime);
             }
         }
-
         // Update relative movement
-        if (mover.LerpTarget < Timing.CurTime)
+        else
         {
-            if (TryUpdateRelative(mover, xform))
+            if (mover.LerpTarget < Timing.CurTime)
             {
-                Dirty(uid, mover);
+                if (TryComp(uid, out RelayInputMoverComponent? relay)
+                    && TryComp(relay.RelayEntity, out TransformComponent? relayXform))
+                {
+                    if (TryUpdateRelative(mover, relayXform))
+                        Dirty(uid, mover);
+                }
+                else
+                {
+                    if (TryUpdateRelative(mover, xform))
+                        Dirty(uid, mover);
+                }
             }
-        }
 
-        LerpRotation(uid, mover, frameTime);
+            LerpRotation(uid, mover, frameTime);
+        }
 
         if (!canMove
             || physicsComponent.BodyStatus != BodyStatus.OnGround && !CanMoveInAirQuery.HasComponent(uid)
@@ -154,7 +166,6 @@ public abstract partial class SharedMoverController : VirtualController
             UsedMobMovement[uid] = false;
             return;
         }
-
 
         UsedMobMovement[uid] = true;
         // Specifically don't use mover.Owner because that may be different to the actual physics body being moved.

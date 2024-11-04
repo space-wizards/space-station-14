@@ -11,7 +11,7 @@
   - type: Tag
     tags:
     - SurgeryTool
-
+  - type: SurgeryTool
 # Cautery
 
 - type: entity
@@ -32,7 +32,12 @@
         Heat: 5
     soundHit:
       path: /Audio/Effects/lightburn.ogg
-
+  - type: SurgeryTool
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/cautery1.ogg
+    endSound:
+      path: /Audio/_Starlight/Medical/Surgery/cautery2.ogg
+  - type: Cautery
 # Drill
 
 - type: entity
@@ -57,6 +62,10 @@
       path: /Audio/Items/drill_hit.ogg
   - type: StaticPrice
     price: 40
+  - type: SurgeryTool
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/saw.ogg
+  - type: SurgicalDrill
 
 # Scalpel
 
@@ -90,6 +99,12 @@
         Slash: 8
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
+  - type: Scalpel
+  - type: SurgeryTool
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/scalpel1.ogg
+    endSound:
+      path: /Audio/_Starlight/Medical/Surgery/scalpel2.ogg
 
 - type: entity
   name: shiv
@@ -101,6 +116,12 @@
     state: shiv
   - type: Item
     heldPrefix: shiv
+  - type: SurgeryTool
+    speed: 1.4
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/scalpel1.ogg
+    endSound:
+      path: /Audio/_Starlight/Medical/Surgery/scalpel2.ogg
 
 - type: entity
   name: advanced scalpel
@@ -116,6 +137,12 @@
     damage:
       types:
         Slash: 12
+  - type: SurgeryTool
+    speed: 0.6
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/scalpel1.ogg
+    endSound:
+      path: /Audio/_Starlight/Medical/Surgery/scalpel2.ogg
 
 - type: entity
   name: laser scalpel
@@ -127,14 +154,19 @@
     state: laser
   - type: Item
     heldPrefix: laser
+  - type: Hemostat
+  - type: Cautery
+  - type: SurgeryTool
+    speed: 0.3
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/scalpel1.ogg
+    endSound:
+      path: /Audio/_Starlight/Medical/Surgery/scalpel2.ogg
 
 # Scissors
-
 - type: entity
-  name: retractor
-  id: Retractor
+  id: BaseScissors
   parent: BaseToolSurgery
-  description: A surgical tool used to hold open incisions.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/Surgery/scissors.rsi
@@ -142,11 +174,42 @@
   - type: Item
     sprite: Objects/Specific/Medical/Surgery/scissors.rsi
     storedRotation: 90
+  
+- type: entity
+  name: retractor
+  id: Retractor
+  parent: BaseScissors
+  description: A surgical tool used to hold open incisions.
+  components:
+  - type: Retractor
+  - type: SurgeryTool
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/retractor1.ogg
+    endSound:
+      path: /Audio/_Starlight/Medical/Surgery/retractor2.ogg
+
+- type: entity
+  name: advanced retractor
+  id: RetractorAdvanced
+  parent: Retractor
+  description: A surgical tool used to hold open incisions.
+  components:
+  - type: Sprite
+    state: advanced-retractor
+  - type: Item
+    sprite: Objects/Specific/Medical/Surgery/scissors.rsi
+    storedRotation: 45
+  - type: SurgeryTool
+    speed: 0.6
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/retractor1.ogg
+    endSound:
+      path: /Audio/_Starlight/Medical/Surgery/retractor2.ogg
 
 - type: entity
   name: hemostat
   id: Hemostat
-  parent: Retractor
+  parent: BaseScissors
   description: A surgical tool used to compress blood vessels to prevent bleeding.
   components:
   - type: Sprite
@@ -154,13 +217,60 @@
   - type: Item
     heldPrefix: hemostat
     storedRotation: 90
+  - type: SurgeryTool
+    endSound:
+      path: /Audio/_Starlight/Medical/Surgery/hemostat1.ogg
+  - type: Hemostat
 
-  # - type: entity
-  #   name: bone setter
-  #   id: BoneSetter
-  #   parent: Retractor
-  #   description: A surgical tool used for setting bones.
-  #   components:
+- type: entity
+  name: advanced hemostat
+  id: HemostatAdvanced
+  parent: Hemostat
+  description: A surgical tool used to compress blood vessels to prevent bleeding.
+  components:
+  - type: Sprite
+    state: advanced-hemostat
+  - type: SurgeryTool
+    speed: 0.6
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/hemostat1.ogg
+
+- type: entity
+  name: bone setter
+  id: BoneSetter
+  parent: BaseScissors
+  description: A surgical tool used for setting bones.
+  components:
+  - type: Sprite
+    state: setter
+  - type: Item
+    heldPrefix: setter
+    storedRotation: 90
+  - type: BoneSetter
+  - type: SurgeryTool
+    startSound:
+      path: /Audio/Effects/hit_kick.ogg
+
+- type: entity
+  name: advanced bone setter
+  id: BoneSetterAdvanced
+  parent: BoneSetter
+  description: A surgical tool used for setting bones. It also breaks them quite well.
+  components:
+  - type: MeleeWeapon
+    damage:
+      groups:
+        Brute: 15
+  - type: Sprite
+    state: advanced-setter
+  - type: Item
+    heldPrefix: setter
+    storedRotation: 45  
+  - type: SurgeryTool
+    speed: 0.6
+    startSound:
+      path: /Audio/Effects/hit_kick.ogg
+
 # Saws
 
 - type: entity
@@ -183,6 +293,11 @@
   - type: Tool
     qualities:
       - Sawing
+  - type: SurgeryTool
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/saw.ogg
+  - type: BoneSaw
+
 # No melee for regular saw because have you ever seen someone use a band saw as a weapon? It's dumb.
 
 - type: entity
@@ -204,7 +319,12 @@
       path: /Audio/Weapons/bladeslice.ogg
   - type: Tool
     speedModifier: 0.5
-
+  - type: SurgeryTool
+    speed: 0.8
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/saw.ogg
+  - type: BoneSaw
+  
 - type: entity
   name: circular saw
   id: SawElectric
@@ -223,6 +343,12 @@
       path: /Audio/Items/drill_hit.ogg
   - type: Tool
     speedModifier: 1.5
+  - type: SurgeryTool
+    speed: 0.5
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/saw.ogg
+    endSound:
+      path: /Audio/Items/drill_hit.ogg
 
 - type: entity
   name: advanced circular saw
@@ -238,3 +364,21 @@
     attackRate: 1.5
   - type: Tool
     speedModifier: 2.0
+  - type: SurgeryTool
+    speed: 0.2
+    startSound:
+      path: /Audio/_Starlight/Medical/Surgery/saw.ogg
+    endSound:
+      path: /Audio/Items/drill_hit.ogg
+# BoneGel
+
+- type: entity
+  name: bottle of bone gel
+  id: BoneGel
+  parent: BaseToolSurgery
+  description: A container for bone gel that often needs to be refilled from a specialized machine.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/bone_gel.rsi
+    state: bone-gel
+  - type: BoneGel

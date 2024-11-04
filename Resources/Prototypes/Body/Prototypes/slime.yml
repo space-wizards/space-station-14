@@ -7,6 +7,9 @@
       part: HeadSlime
       connections:
       - torso
+      organs:
+        eyes: OrganHumanEyes
+        tongue: OrganHumanTongue
     torso:
       part: TorsoSlime
       connections:

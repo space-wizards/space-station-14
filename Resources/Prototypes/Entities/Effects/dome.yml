@@ -1,6 +1,7 @@
 - type: entity
   id: EnergyDomeBase
   abstract: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     drawdepth: Effects
@@ -31,10 +32,12 @@
   - type: Tag
     tags:
       - HideContextMenu
+      - IgnoreMelee
 
 - type: entity
   id: EnergyDomeSmallPink
   noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: EnergyDomeBase
   components:
   - type: Sprite
@@ -49,8 +52,21 @@
     color: "#f5166b"
 
 - type: entity
+  id: EnergyDomeSmallCap
+  noSpawn: true
+  categories: [ HideSpawnMenu ]
+  parent: EnergyDomeBase
+  components:
+  - type: Sprite
+    sprite: Effects/EnergyDome/energydome_small.rsi
+    layers:
+    - state: small
+      color: "#FFFF1E"
+
+- type: entity
   id: EnergyDomeSmallRed
   noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: EnergyDomeBase
   components:
   - type: Sprite
@@ -69,6 +85,7 @@
 - type: entity
   id: EnergyDomeMediumBlue
   noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: EnergyDomeBase
   components:
   - type: Fixtures
@@ -97,6 +114,7 @@
 - type: entity
   id: EnergyDomeSlowing
   noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: EnergyDomeBase
   components:
   - type: Fixtures

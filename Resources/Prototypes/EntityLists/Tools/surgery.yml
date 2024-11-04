@@ -3,8 +3,16 @@
   entities:
   - Cautery
   - Drill
+  - Scalpel
+  - ScalpelAdvanced
   - ScalpelLaser
   - Retractor
+  - RetractorAdvanced
   - Hemostat
+  - HemostatAdvanced
+  - BoneSetter
+  - BoneSetterAdvanced
+  - Saw
   - SawAdvanced
+  - BoneGel
 # - Drapes

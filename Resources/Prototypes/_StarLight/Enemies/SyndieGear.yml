@@ -1,0 +1,89 @@
+#melee
+- type: startingGear
+  id: SyndicateFootsoldierGearKnife
+  parent: SyndicateFootsoldierGearRuin
+  inhand:
+  - CombatKnife
+- type: startingGear
+  id: SyndicateFootsoldierGearFireAxe
+  parent: SyndicateFootsoldierGearRuin
+  inhand:
+  - FireAxe
+#shotgun
+- type: startingGear
+  id: SyndicateFootsoldierGearSawn
+  parent: SyndicateFootsoldierGearRuin
+  inhand:
+  - WeaponShotgunSawn
+#pistol
+- type: startingGear
+  id: SyndicateFootsoldierGearViper
+  parent: SyndicateFootsoldierGearRuin
+  inhand:
+  - WeaponPistolViper
+  - RiotLaserShield
+- type: startingGear
+  id: SyndicateFootsoldierGearCobra
+  parent: SyndicateFootsoldierGearRuin
+  equipment:
+    pocket1: MagazineCaselessRifle10x24
+    pocket2: MagazineCaselessRifle10x24
+    outerClothing: ClothingOuterCoatSyndieCapArmored
+  inhand:
+  - WeaponPistolCobra
+  - RiotBulletShield
+#rifle
+- type: startingGear
+  id: SyndicateFootsoldierGearAk
+  parent: SyndicateFootsoldierGearRuin
+  equipment:
+    pocket1: MaterialDiamond1
+    pocket2: MaterialDiamond1
+    mask: ClothingMaskGasSyndicate
+    outerClothing: ClothingOuterCoatSyndieCapArmored
+  inhand:
+  - WeaponRifleAk
+#grenade
+- type: startingGear
+  id: SyndicateFootsoldierGearChina
+  parent: SyndicateFootsoldierGearRuin
+  equipment:
+    pocket1: MaterialDiamond1
+    pocket2: Stimpack
+    mask: ClothingMaskGasSyndicate
+    outerClothing: ClothingOuterHardsuitSyndieElite
+  inhand:
+  - WeaponLauncherChinaLake
+#laser
+- type: startingGear
+  id: SyndicateFootsoldierGearLaserCarbine
+  parent: SyndicateFootsoldierGearRuin
+  equipment:
+    pocket1: MaterialDiamond1
+    pocket2: BruteAutoInjector
+  inhand:
+  - WeaponLaserCarbine
+- type: startingGear
+  id: SyndicateFootsoldierGearMakeshiftLaser
+  parent: SyndicateFootsoldierGearRuin
+  equipment:
+    pocket1: MaterialDiamond1
+    pocket2: BruteAutoInjector
+  inhand:
+  - WeaponMakeshiftLaser
+  - RiotLaserShield
+#boss
+- type: startingGear
+  id: SyndicateFootsoldierGearBoss
+  parent: SyndicateFootsoldierGearRuin
+  equipment:
+    pocket1: WeaponPistolN1984
+    pocket2: BruteAutoInjector
+    mask: ClothingMaskGasSyndicate
+    outerClothing: ClothingOuterHardsuitJuggernaut
+  inhand:
+  - WeaponLightMachineGunL6
+  storage:
+    back:
+    - MedkitCombatFilled
+    - StorageImplanter

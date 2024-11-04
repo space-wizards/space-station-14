@@ -1,4 +1,4 @@
-﻿using Content.Shared.Actions;
+using Content.Shared.Actions;
 
 namespace Content.Shared.Magic.Events;
 
@@ -16,4 +16,7 @@ public sealed partial class TeleportSpellEvent : WorldTargetActionEvent, ISpeakS
     /// </summary>
     [DataField]
     public float BlinkVolume = 5f;
+
+    [DataField] // 🌟Starlight🌟
+    public bool IgnoreWalls = false;
 }

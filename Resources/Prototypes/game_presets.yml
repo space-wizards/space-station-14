@@ -4,6 +4,7 @@
     - survival
   name: survival-title
   showInVote: false # secret
+  minPlayers: 10
   description: survival-description
   rules:
     - MeteorSwarmScheduler
@@ -20,6 +21,7 @@
     - meteorhell
   name: kessler-syndrome-title
   showInVote: false # secret
+  minPlayers: 10
   description: kessler-syndrome-description
   rules:
     - KesslerSyndromeScheduler
@@ -32,6 +34,7 @@
   alias:
   - all
   name: all-at-once-title
+  minPlayers: 40
   description: all-at-once-description
   showInVote: false
   rules:
@@ -54,6 +57,7 @@
   name: aller-at-once-title
   description: aller-at-once-description
   showInVote: false #Please god dont do this
+  minPlayers: 40
   rules:
     - Nukeops
     - Traitor
@@ -76,6 +80,7 @@
   name: extended-title
   showInVote: false #2boring2vote
   description: extended-description
+  minPlayers: 4
   rules:
   - BasicStationEventScheduler
   - MeteorSwarmScheduler
@@ -88,7 +93,7 @@
   - greenshift
   - shittersafarideluxeedition
   name: greenshift-title
-  showInVote: false #4boring4vote
+  showInVote: true #4boring4vote
   description: greenshift-description
   rules:
   - SpaceTrafficControlFriendlyEventScheduler 
@@ -101,6 +106,7 @@
     - sekrit
   name: secret-title
   showInVote: true
+  minPlayers: 4
   description: secret-description
   rules:
     - Secret
@@ -147,6 +153,7 @@
     - tator
   name: traitor-title
   description: traitor-description
+  minPlayers: 4
   showInVote: false
   rules:
     - Traitor
@@ -163,6 +170,7 @@
     - dm
   name: death-match-title
   description: death-match-description
+  minPlayers: 4
   maxPlayers: 15
   showInVote: true
   supportedMaps: DeathMatchMapPool
@@ -175,6 +183,7 @@
     - nukeops
   name: nukeops-title
   description: nukeops-description
+  minPlayers: 40
   showInVote: false
   rules:
     - Nukeops
@@ -192,6 +201,7 @@
     - revolutionaries
   name: rev-title
   description: rev-description
+  minPlayers: 30
   showInVote: false
   rules:
     - Revolutionary
@@ -211,6 +221,7 @@
   - zomber
   name: zombie-title
   description: zombie-description
+  minPlayers: 20
   showInVote: false
   rules:
   - Zombie
@@ -227,6 +238,7 @@
   - meteombies
   name: zombieteors-title
   description: zombieteors-description
+  minPlayers: 15
   showInVote: false
   rules:
   - Zombie

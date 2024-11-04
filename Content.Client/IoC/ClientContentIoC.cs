@@ -24,6 +24,8 @@ using Content.Shared.Administration.Managers;
 using Content.Shared.Chat;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Players.RateLimiting;
+using Content.Shared._Starlight;
+using Content.Client._Starlight.Managers;
 
 namespace Content.Client.IoC
 {
@@ -43,6 +45,8 @@ namespace Content.Client.IoC
             collection.Register<IClickMapManager, ClickMapManager>();
             collection.Register<IClientAdminManager, ClientAdminManager>();
             collection.Register<ISharedAdminManager, ClientAdminManager>();
+            collection.Register<IClientPlayerRolesManager, ClientPlayerManager>();  // 🌟Starlight🌟
+            collection.Register<ISharedPlayersRoleManager, ClientPlayerManager>(); //🌟Starlight🌟
             collection.Register<EuiManager, EuiManager>();
             collection.Register<IVoteManager, VoteManager>();
             collection.Register<ChangelogManager, ChangelogManager>();

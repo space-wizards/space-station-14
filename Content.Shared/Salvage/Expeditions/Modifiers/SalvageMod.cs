@@ -1,4 +1,6 @@
+using Content.Shared.Procedural;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Salvage.Expeditions.Modifiers;
 
@@ -17,4 +19,9 @@ public sealed partial class SalvageMod : IPrototype, ISalvageMod
     /// </summary>
     [DataField("cost")]
     public float Cost { get; private set; } = 0f;
+
+    // 🌟Starlight🌟
+    [DataField("difficulties", customTypeSerializer: typeof(PrototypeIdListSerializer<SalvageDifficultyPrototype>))]
+    public List<string>? Difficulties { get; private set; } = null;
+
 }

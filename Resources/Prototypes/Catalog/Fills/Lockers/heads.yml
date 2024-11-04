@@ -2,6 +2,7 @@
   id: LockerFillQuarterMaster
   table: !type:AllSelector
     children:
+    - id: ClothingNeckCloakQmElite
     - id: BoxEncryptionKeyCargo
     - id: BoxFolderQmClipboard
     - id: CargoBountyComputerCircuitboard
@@ -34,6 +35,7 @@
   id: LockerFillCaptainNoLaser
   table: !type:AllSelector
     children:
+    - id: ClothingNeckCloakCapElite
     - id: CaptainIDCard
     - id: CigarGoldCase
       prob: 0.25
@@ -112,6 +114,7 @@
   id: LockerFillHeadOfPersonnel
   table: !type:AllSelector
     children:
+    - id: ClothingNeckCloakHopElite
     - id: AccessConfigurator
     - id: BoxEncryptionKeyPassenger
     - id: BoxEncryptionKeyService
@@ -150,6 +153,7 @@
   id: LockerFillChiefEngineerNoHardsuit
   table: !type:AllSelector
     children:
+    - id: ClothingNeckCloakCeElite
     - id: AccessConfigurator
     - id: BoxEncryptionKeyEngineering
     - id: CigarCase
@@ -205,6 +209,7 @@
   id: LockerFillChiefMedicalOfficerNoHardsuit
   table: !type:AllSelector
     children:
+    - id: ClothingCloakCmoElite
     - id: BoxEncryptionKeyMedical
     - id: ClothingBackpackDuffelSurgeryFilled
     - id: ClothingCloakCmo
@@ -261,6 +266,7 @@
   id: LockerFillResearchDirectorNoHardsuit
   table: !type:AllSelector
     children:
+    - id: ClothingNeckCloakRdElite
     - id: Intellicard
     - id: BoxEncryptionKeyScience
     - id: CircuitImprinterMachineCircuitboard
@@ -312,7 +318,8 @@
   id: LockerFillHeadOfSecurityNoHardsuit
   table: !type:AllSelector
     children:
-    - id: WeaponEnergyShotgun
+    - id: ClothingNeckCloakHosElite
+    - id: WeaponEnergyShotgun    
     - id: BookSpaceLaw
     - id: BoxEncryptionKeySecurity
     - id: CigarGoldCase

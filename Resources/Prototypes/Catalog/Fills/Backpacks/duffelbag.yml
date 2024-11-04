@@ -12,7 +12,9 @@
       - id: Cautery
       - id: Retractor
       - id: Scalpel
-
+      - id: BoneGel
+      - id: BoneSetter
+      
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedicalBundle
   id: ClothingBackpackDuffelSyndicateFilledMedical
@@ -21,14 +23,16 @@
   components:
   - type: StorageFill
     contents:
-      - id: Hemostat
+      - id: HemostatAdvanced
       - id: SawAdvanced
       - id: Drill
       - id: Cautery
-      - id: Retractor
+      - id: RetractorAdvanced
       - id: ScalpelAdvanced
       - id: ClothingHandsGlovesNitrile
       - id: EmergencyRollerBedSpawnFolded
+      - id: BoneGel
+      - id: BoneSetterAdvanced
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle

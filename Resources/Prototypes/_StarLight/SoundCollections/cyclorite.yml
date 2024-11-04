@@ -1,0 +1,26 @@
+- type: soundCollection
+  id: CycloriteScreams
+  files:
+  - /Audio/_Starlight/Voice/Cyclorite/scream_1.ogg
+  - /Audio/_Starlight/Voice/Cyclorite/scream_2.ogg
+
+- type: soundCollection
+  id: CycloriteCough
+  files:
+  - /Audio/_Starlight/Voice/Cyclorite/cough_1.ogg
+  - /Audio/_Starlight/Voice/Cyclorite/cough_2.ogg
+
+- type: soundCollection
+  id: CycloriteYawn
+  files:
+  - /Audio/_Starlight/Voice/Cyclorite/yawn.ogg
+
+- type: soundCollection
+  id: CycloriteLaugh
+  files:
+  - /Audio/_Starlight/Voice/Cyclorite/laugh.ogg
+  
+- type: soundCollection
+  id: CycloriteWhistle
+  files:
+  - /Audio/_Starlight/Voice/Cyclorite/whistle.ogg

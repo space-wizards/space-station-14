@@ -1,0 +1,1 @@
+ui-verb-roll-up = Roll up sleeves

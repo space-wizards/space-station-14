@@ -219,7 +219,7 @@
   - ClarkeCentralElectronics
   - ClarkePeripheralsElectronics
   technologyPrerequisites:
-  - Ripley2
+  - RipleyAPLU
 
 # Tier 3
 

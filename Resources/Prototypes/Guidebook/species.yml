@@ -11,6 +11,8 @@
     - Reptilian
     - SlimePerson
     - Vox
+    - Felionoid
+    - Cyclorite
 
 - type: guideEntry
   id: Arachnid
@@ -51,3 +53,13 @@
   id: Vox
   name: species-name-vox
   text: "/ServerInfo/Guidebook/Mobs/Vox.xml"
+
+- type: guideEntry
+  id: Felionoid
+  name: species-name-felionoid
+  text: "/ServerInfo/Guidebook/Mobs/Felionoid.xml"
+
+- type: guideEntry
+  id: Cyclorite
+  name: species-name-cyclorite
+  text: "/ServerInfo/Guidebook/Mobs/Cyclorite.xml"

@@ -1,0 +1,30 @@
+- type: entity
+  parent: BaseItem
+  id: AbyssCore
+  name: abyssium core
+  description: Bright crystal, oozing with energy.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Materials/materials.rsi
+    state: abyss_core
+    scale: 0.5, 0.5
+  - type: Item
+    sprite: _Starlight/Objects/Materials/materials.rsi
+    size: Normal
+    scale: 0.5, 0.5
+  - type: PointLight
+    radius: 3.2
+    energy: 1.4
+    castShadows: false
+    color: "#41EEF1"
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 20
+        mask:
+          - ItemMask
+        restitution: 0.3
+        friction: 0.2

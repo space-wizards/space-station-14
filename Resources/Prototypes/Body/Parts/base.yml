@@ -6,6 +6,7 @@
   name: "body part"
   abstract: true
   components:
+  - type: BaseLayerId
   - type: Damageable
     damageContainer: Biological
   - type: BodyPart

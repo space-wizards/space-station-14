@@ -1,0 +1,83 @@
+- type: emoteSounds
+  id: MaleFelionoid
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      collection: FelionoidScreams
+    Laugh:
+      collection: MaleLaugh
+    Sneeze:
+      collection: MaleSneezes
+    Cough:
+      collection: MaleCoughs
+    Crying:
+      collection: MaleCry
+    Whistle:
+      collection: Whistles
+    Mew:
+      collection: FelionoidMews
+    Hisses:
+      collection: FelionoidHisses
+
+- type: emoteSounds
+  id: FemaleFelionoid
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      collection: FelionoidScreams
+    Laugh:
+      collection: FemaleLaugh
+    Sneeze:
+      collection: FemaleSneezes
+    Cough:
+      collection: FemaleCoughs
+    Crying:
+      collection: FemaleCry
+    Whistle:
+      collection: Whistles
+    Mew:
+      collection: FelionoidMews
+    Hisses:
+      collection: FelionoidHisses
+
+- type: emoteSounds
+  id: MaleCyclorite
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      collection: CycloriteScreams
+    Laugh:
+      collection: CycloriteLaugh
+    Sneeze:
+      collection: CycloriteCough
+    Cough:
+      collection: CycloriteCough
+    Crying:
+      collection: CycloriteScreams
+    Whistle:
+      collection: CycloriteWhistle
+    Yawn:
+      collection: CycloriteYawn
+
+- type: emoteSounds
+  id: FemaleCyclorite
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      collection: CycloriteScreams
+    Laugh:
+      collection: CycloriteLaugh
+    Sneeze:
+      collection: CycloriteCough
+    Cough:
+      collection: CycloriteCough
+    Crying:
+      collection: CycloriteScreams
+    Whistle:
+      collection: CycloriteWhistle
+    Yawn:
+      collection: CycloriteYawn

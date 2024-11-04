@@ -65,6 +65,9 @@ namespace Content.Shared.Preferences
         [DataField]
         public string Name { get; set; } = "John Doe";
 
+        [DataField]
+        public string Voice { get; set; } = "";
+
         /// <summary>
         /// Detailed text that can appear for the character if <see cref="CCVars.FlavorText"/> is enabled.
         /// </summary>
@@ -127,6 +130,7 @@ namespace Content.Shared.Preferences
 
         public HumanoidCharacterProfile(
             string name,
+            string voice,
             string flavortext,
             string species,
             int age,
@@ -141,6 +145,7 @@ namespace Content.Shared.Preferences
             Dictionary<string, RoleLoadout> loadouts)
         {
             Name = name;
+            Voice = voice;
             FlavorText = flavortext;
             Species = species;
             Age = age;
@@ -172,6 +177,7 @@ namespace Content.Shared.Preferences
         /// <summary>Copy constructor</summary>
         public HumanoidCharacterProfile(HumanoidCharacterProfile other)
             : this(other.Name,
+                other.Voice,
                 other.FlavorText,
                 other.Species,
                 other.Age,
@@ -287,12 +293,14 @@ namespace Content.Shared.Preferences
             return new(this) { Gender = gender };
         }
 
+        public HumanoidCharacterProfile WithVoice(string id)
+        {
+            return new(this) { Voice = id };
+        }
         public HumanoidCharacterProfile WithSpecies(string species)
         {
             return new(this) { Species = species };
         }
-
-
         public HumanoidCharacterProfile WithCharacterAppearance(HumanoidCharacterAppearance appearance)
         {
             return new(this) { Appearance = appearance };

@@ -1,4 +1,4 @@
-﻿<Control xmlns="https://spacestation14.io"
+<Control xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:ui="clr-namespace:Content.Client.Options.UI">
     <BoxContainer Orientation="Vertical">
@@ -19,6 +19,16 @@
                 <CheckBox Name="RestartSoundsCheckBox" Text="{Loc 'ui-options-restart-sounds'}" />
                 <CheckBox Name="EventMusicCheckBox" Text="{Loc 'ui-options-event-music'}" />
                 <CheckBox Name="AdminSoundsCheckBox" Text="{Loc 'ui-options-admin-sounds'}" />
+
+                
+                <Label Text="{Loc 'ui-options-tts-label'}"
+                    StyleClasses="LabelKeyText"/>
+                <!--🌟Starlight🌟-->
+                <CheckBox Name="TtsClientCheckBox" Text="{Loc 'ui-options-tts-enabled'}" />
+                
+                <ui:OptionSlider Name="SliderTts" Title="{Loc 'ui-options-tts-volume'}" />
+                <ui:OptionSlider Name="SliderTtsRadio" Title="{Loc 'ui-options-tts-radio-volume'}" />
+                <ui:OptionSlider Name="SliderTtsAnnounce" Title="{Loc 'ui-options-tts-announce-volume'}"/>
             </BoxContainer>
         </BoxContainer>
         <ui:OptionsTabControlRow Name="Control" Access="Public" />

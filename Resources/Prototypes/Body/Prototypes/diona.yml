@@ -9,6 +9,8 @@
       - torso
       organs:
         brain: OrganDionaBrainNymph
+        eyes: OrganHumanEyes
+        tongue: OrganHumanTongue
     torso:
       part: TorsoDiona
       connections:

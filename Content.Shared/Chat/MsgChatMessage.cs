@@ -32,6 +32,7 @@ namespace Content.Shared.Chat
         ///     This is unique per sender.
         /// </summary>
         public int? SenderKey;
+        public string? Icon;
 
         public bool HideChat;
         public Color? MessageColorOverride;

@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Movement.Components;
 using Content.Shared.Silicons.StationAi;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -48,15 +49,20 @@ public sealed class StationAiOverlay : Overlay
         var worldHandle = args.WorldHandle;
 
         var worldBounds = args.WorldBounds;
-
         var playerEnt = _player.LocalEntity;
+
+        if (_entManager.TryGetComponent(playerEnt, out StationAiOverlayComponent? stationAiOverlay) 
+            && stationAiOverlay.AllowCrossGrid 
+            && _entManager.TryGetComponent(playerEnt, out RelayInputMoverComponent? relay))
+            playerEnt = relay.RelayEntity;
+
         _entManager.TryGetComponent(playerEnt, out TransformComponent? playerXform);
         var gridUid = playerXform?.GridUid ?? EntityUid.Invalid;
         _entManager.TryGetComponent(gridUid, out MapGridComponent? grid);
         _entManager.TryGetComponent(gridUid, out BroadphaseComponent? broadphase);
 
         var invMatrix = args.Viewport.GetWorldToLocalMatrix();
-        _accumulator -= (float) _timing.FrameTime.TotalSeconds;
+        _accumulator -= (float)_timing.FrameTime.TotalSeconds;
 
         if (grid != null && broadphase != null)
         {
@@ -71,7 +77,7 @@ public sealed class StationAiOverlay : Overlay
             }
 
             var gridMatrix = xforms.GetWorldMatrix(gridUid);
-            var matty =  Matrix3x2.Multiply(gridMatrix, invMatrix);
+            var matty = Matrix3x2.Multiply(gridMatrix, invMatrix);
 
             // Draw visible tiles to stencil
             worldHandle.RenderInRenderTarget(_stencilTexture!, () =>

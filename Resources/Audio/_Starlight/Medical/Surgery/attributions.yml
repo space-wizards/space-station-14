@@ -1,0 +1,49 @@
+- files: ["cautery1.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from cmss13"
+  source: "https://github.com/cmss13-devs/cmss13/blob/fae73dfa5aedb0a253de04b60085ed8a178d3bf7/sound/surgery/cautery1.ogg"
+
+- files: ["cautery2.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from cmss13"
+  source: "https://github.com/cmss13-devs/cmss13/blob/fae73dfa5aedb0a253de04b60085ed8a178d3bf7/sound/surgery/cautery2.ogg"
+
+- files: ["hemostat.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from cmss13"
+  source: "https://github.com/cmss13-devs/cmss13/blob/fae73dfa5aedb0a253de04b60085ed8a178d3bf7/sound/surgery/hemostat.ogg"
+
+- files: ["organ1.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from cmss13"
+  source: "https://github.com/cmss13-devs/cmss13/blob/fae73dfa5aedb0a253de04b60085ed8a178d3bf7/sound/surgery/organ1.ogg"
+
+- files: ["organ2.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from cmss13"
+  source: "https://github.com/cmss13-devs/cmss13/blob/fae73dfa5aedb0a253de04b60085ed8a178d3bf7/sound/surgery/organ2.ogg"
+
+- files: ["retractor1.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from cmss13"
+  source: "https://github.com/cmss13-devs/cmss13/blob/fae73dfa5aedb0a253de04b60085ed8a178d3bf7/sound/surgery/retractor1.ogg"
+
+- files: ["retractor2.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from cmss13"
+  source: "https://github.com/cmss13-devs/cmss13/blob/fae73dfa5aedb0a253de04b60085ed8a178d3bf7/sound/surgery/retractor2.ogg"
+
+- files: ["saw.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from cmss13"
+  source: "https://github.com/cmss13-devs/cmss13/blob/fae73dfa5aedb0a253de04b60085ed8a178d3bf7/sound/surgery/saw.ogg"
+
+- files: ["scalpel1.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from cmss13"
+  source: "https://github.com/cmss13-devs/cmss13/blob/fae73dfa5aedb0a253de04b60085ed8a178d3bf7/sound/surgery/scalpel1.ogg"
+
+- files: ["scalpel2.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from cmss13"
+  source: "https://github.com/cmss13-devs/cmss13/blob/fae73dfa5aedb0a253de04b60085ed8a178d3bf7/sound/surgery/scalpel2.ogg"

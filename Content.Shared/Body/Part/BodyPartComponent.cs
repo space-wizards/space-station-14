@@ -88,9 +88,12 @@ public sealed partial class BodyPartComponent : Component
 [DataRecord]
 public partial struct BodyPartSlot
 {
-    public string Id;
+    [DataField("id")]
+    public string Id = "";
+    [DataField("type")]
     public BodyPartType Type;
 
+    public BodyPartSlot() { }
     public BodyPartSlot(string id, BodyPartType type)
     {
         Id = id;

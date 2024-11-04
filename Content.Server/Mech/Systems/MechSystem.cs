@@ -23,6 +23,10 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Content.Shared.Whitelist;
+using Content.Shared.Hands.Components;
+using Content.Server.Hands.Systems;
+using Content.Shared.NPC.Components;
+using Content.Shared.NPC.Systems;
 
 namespace Content.Server.Mech.Systems;
 
@@ -39,7 +43,9 @@ public sealed partial class MechSystem : SharedMechSystem
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly SharedToolSystem _toolSystem = default!;
-
+    [Dependency] private readonly HandsSystem _hands = default!;
+    [Dependency] private readonly NpcFactionSystem _factionSystem = default!;
+    
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -235,8 +241,14 @@ public sealed partial class MechSystem : SharedMechSystem
             return;
         }
 
+        if (TryComp<HandsComponent>(args.Args.User, out var handsComponent))
+            foreach (var hand in _hands.EnumerateHands(args.Args.User, handsComponent))
+                _hands.DoDrop(args.Args.User, hand, true, handsComponent);
+
         TryInsert(uid, args.Args.User, component);
         _actionBlocker.UpdateCanMove(uid);
+
+        _factionSystem.Up(args.Args.User, uid);
 
         args.Handled = true;
     }
@@ -247,7 +259,7 @@ public sealed partial class MechSystem : SharedMechSystem
             return;
 
         TryEject(uid, component);
-
+        RemComp<NpcFactionMemberComponent>(uid); 
         args.Handled = true;
     }
 
@@ -420,7 +432,7 @@ public sealed partial class MechSystem : SharedMechSystem
             return;
         }
 
-        args.Gas =  _atmosphere.GetContainingMixture(component.Mech, excite: args.Excite);
+        args.Gas = _atmosphere.GetContainingMixture(component.Mech, excite: args.Excite);
         args.Handled = true;
     }
 

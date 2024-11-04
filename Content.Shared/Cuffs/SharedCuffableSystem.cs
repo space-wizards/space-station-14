@@ -338,7 +338,6 @@ namespace Content.Shared.Cuffs
 
             if (!args.Cancelled && TryAddNewCuffs(target, user, uid, cuffable))
             {
-                component.Used = true;
                 _audio.PlayPredicted(component.EndCuffSound, uid, user);
 
                 _popup.PopupEntity(Loc.GetString("handcuff-component-cuff-observer-success-message",
@@ -461,12 +460,15 @@ namespace Content.Shared.Cuffs
             if (!_interaction.InRangeUnobstructed(handcuff, target))
                 return false;
 
+            EnsureComp<HandcuffComponent>(handcuff, out var handcuffsComp);
+            handcuffsComp.Used = true;
+            Dirty(handcuff, handcuffsComp);
             // Success!
             _hands.TryDrop(user, handcuff);
 
-            _container.Insert(handcuff, component.Container);
+            var result = _container.Insert(handcuff, component.Container);
             UpdateHeldItems(target, handcuff, component);
-            return true;
+            return result;
         }
 
         /// <returns>False if the target entity isn't cuffable.</returns>

@@ -145,6 +145,10 @@
         node: start
       - !type:DoActsBehavior
         acts: ["Destruction"]
+  - type: PointLight
+    enabled: false
+    radius: 8
+    energy: 5
 
 # Ripley MK-I
 - type: entity

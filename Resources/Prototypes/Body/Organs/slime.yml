@@ -40,7 +40,7 @@
       
 - type: entity
   id: OrganSlimeLungs
-  parent: BaseHumanOrgan
+  parent: [BaseHumanOrgan, BaseOrganLungs]
   name: slime gas sacs
   description: "Collects nitrogen, which slime cells use for maintenance."
   components:

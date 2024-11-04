@@ -1,0 +1,105 @@
+- type: species
+  id: Abductor
+  name: species-name-abductor
+  roundStart: false
+  prototype: MobAbductor
+  sprites: MobAbductorSprites
+  markingLimits: MobHumanMarkingLimits
+  dollPrototype: MobAbductorDummy
+  skinColoration: HumanToned
+  defaultSkinTone: "#BFC2C7"
+
+- type: speciesBaseSprites
+  id: MobAbductorSprites
+  sprites:
+    Head: MobAbductorHead
+    HeadTop: MobHumanoidAnyMarking
+    HeadSide: MobHumanoidAnyMarking
+    Chest: MobAbductorTorso
+    Eyes: MobAbductorEyes
+    LArm: MobAbductorLArm
+    RArm: MobAbductorRArm
+    LHand: MobAbductorLHand
+    RHand: MobAbductorRHand
+    LLeg: MobAbductorLLeg
+    RLeg: MobAbductorRLeg
+    LFoot: MobAbductorLFoot
+    RFoot: MobAbductorRFoot
+
+- type: humanoidBaseSprite
+  id: MobAbductorEyes
+  baseSprite:
+    sprite: Mobs/Customization/eyes.rsi
+    state: no_eyes
+
+- type: humanoidBaseSprite
+  id: MobAbductorHeadMale
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Abductor/parts.rsi
+    state: head
+
+- type: humanoidBaseSprite
+  id: MobAbductorHead
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Abductor/parts.rsi
+    state: head
+
+- type: humanoidBaseSprite
+  id: MobAbductorTorsoMale
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Abductor/parts.rsi
+    state: torso
+
+- type: humanoidBaseSprite
+  id: MobAbductorTorso
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Abductor/parts.rsi
+    state: torso
+
+- type: humanoidBaseSprite
+  id: MobAbductorLLeg
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Abductor/parts.rsi
+    state: l_leg
+
+- type: humanoidBaseSprite
+  id: MobAbductorLHand
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Abductor/parts.rsi
+    state: l_hand
+
+- type: humanoidBaseSprite
+  id: MobAbductorLArm
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Abductor/parts.rsi
+    state: l_arm
+
+- type: humanoidBaseSprite
+  id: MobAbductorLFoot
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Abductor/parts.rsi
+    state: l_foot
+
+- type: humanoidBaseSprite
+  id: MobAbductorRLeg
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Abductor/parts.rsi
+    state: r_leg
+
+- type: humanoidBaseSprite
+  id: MobAbductorRHand
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Abductor/parts.rsi
+    state: r_hand
+
+- type: humanoidBaseSprite
+  id: MobAbductorRArm
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Abductor/parts.rsi
+    state: r_arm
+
+- type: humanoidBaseSprite
+  id: MobAbductorRFoot
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Abductor/parts.rsi
+    state: r_foot

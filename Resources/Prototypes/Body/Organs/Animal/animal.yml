@@ -109,7 +109,7 @@
 
 - type: entity
   id: OrganAnimalLiver
-  parent: BaseAnimalOrgan
+  parent: [ BaseAnimalOrgan, BaseOrganLiver]
   name: liver
   categories: [ HideSpawnMenu ]
   components:
@@ -128,7 +128,7 @@
 
 - type: entity
   id: OrganAnimalHeart
-  parent: BaseAnimalOrgan
+  parent: [ BaseAnimalOrgan, BaseOrganHeart]
   name: heart
   categories: [ HideSpawnMenu ]
   components:

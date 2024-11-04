@@ -1,0 +1,20 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Darkrell",
+    "size": {
+        "x": 96,
+        "y": 96
+    },
+    "states": [
+        {
+            "name": "obelisk01"
+        },
+        {
+            "name": "obelisk02"
+        },
+        {
+            "name": "obelisk03"
+        }
+    ]
+}

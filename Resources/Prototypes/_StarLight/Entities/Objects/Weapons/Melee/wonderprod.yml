@@ -1,0 +1,115 @@
+- type: entity
+  name: wonderprod
+  parent: BaseItem
+  id: wonderprod
+  description: Universal tool of the abductor agent.
+  components:
+  - type: Item
+    sprite: _Starlight/Objects/Weapons/Melee/wonderprod.rsi
+    size: Normal
+  - type: Sprite 
+    sprite: _Starlight/Objects/Weapons/Melee/wonderprod.rsi
+    state: icon
+  - type: ItemSwitch
+    state: stun
+    states:
+      stun: !type:ItemSwitchState
+        verb: stun
+        sprite:
+          sprite: _Starlight/Objects/Weapons/Melee/wonderprod.rsi
+          state: stun-icon
+        addComponents:
+        - type: MeleeWeapon
+          wideAnimationRotation: -135
+          attackRate: 0.5
+          damage:
+            types:
+              Shock: 0
+          angle: 60
+          animation: WeaponArcThrust
+        - type: StaminaDamageOnHit
+          damage: 225
+          sound: /Audio/Weapons/Guns/Hits/taser_hit.ogg
+        removeComponents:
+        - type: MeleeWeapon
+          damage:
+            types:
+              Shock: 0
+        - type: StaminaDamageOnHit
+          damage: 225
+          sound: /Audio/Weapons/Guns/Hits/taser_hit.ogg
+        soundStateActivate:
+          collection: sparks
+          params:
+            variation: 0.250
+
+      cuffs: !type:ItemSwitchState
+        verb: cuffs
+        sprite:
+          sprite: _Starlight/Objects/Weapons/Melee/wonderprod.rsi
+          state: cuffs-icon
+        addComponents:
+        - type: MeleeWeapon
+          wideAnimationRotation: -135
+          attackRate: 0.5
+          damage:
+            types:
+              Shock: 0
+          angle: 60
+          animation: WeaponArcThrust
+        - type: CuffsOnHit
+          proto: Cablecuffs
+        removeComponents:
+        - type: MeleeWeapon
+          damage:
+            types:
+              Shock: 0
+        - type: CuffsOnHit
+
+      sleep: !type:ItemSwitchState
+        verb: sleep
+        sprite:
+          sprite: _Starlight/Objects/Weapons/Melee/wonderprod.rsi
+          state: sleep-icon
+        addComponents:
+        - type: MeleeWeapon
+          wideAnimationRotation: -135
+          attackRate: 0.5
+          damage:
+            types:
+              Shock: 0
+          angle: 60
+          animation: WeaponArcThrust
+        - type: InjectOnHit
+          reagents:
+          - ReagentId: Nocturine
+            Quantity: 5
+        removeComponents:
+        - type: MeleeWeapon
+          damage:
+            types:
+              Shock: 0
+        - type: InjectOnHit
+          reagents:
+          - ReagentId: Nocturine
+            Quantity: 10
+
+      damage: !type:ItemSwitchState
+        verb: damage
+        addComponents:
+        - type: MeleeWeapon
+          wideAnimationRotation: -135
+          attackRate: 0.75
+          angle: 60
+          animation: WeaponArcThrust
+          damage:
+            types:
+              Heat: 30
+        removeComponents:
+        - type: MeleeWeapon
+          damage:
+            types:
+              Shock: 0
+        sprite:
+          sprite: _Starlight/Objects/Weapons/Melee/wonderprod.rsi
+          state: damage-icon

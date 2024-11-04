@@ -46,6 +46,9 @@ public sealed partial class DoAfterArgs
     [DataField]
     public bool Hidden;
 
+    [DataField]
+    public bool ForceNet;
+
     #region Event options
     /// <summary>
     ///     The event that will get raised when the DoAfter has finished. If null, this will simply raise a <see cref="SimpleDoAfterEvent"/>

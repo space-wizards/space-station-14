@@ -2,6 +2,7 @@
   id: BorgChassisGeneric
   parent: BaseBorgChassisNT
   components:
+  - type: TextToSpeech
   - type: Sprite
     layers:
     - state: robot
@@ -40,6 +41,7 @@
   parent: BaseBorgChassisNT
   name: salvage cyborg
   components:
+  - type: TextToSpeech
   - type: Sprite
     layers:
     - state: miner
@@ -101,6 +103,7 @@
   parent: BaseBorgChassisNT
   name: engineer cyborg
   components:
+  - type: TextToSpeech
   - type: Sprite
     layers:
     - state: engineer
@@ -154,6 +157,7 @@
   parent: BaseBorgChassisNT
   name: janitor cyborg
   components:
+  - type: TextToSpeech
   - type: Sprite
     layers:
     - state: janitor
@@ -215,6 +219,7 @@
   parent: [BaseBorgChassisNT, ShowMedicalIcons]
   name: medical cyborg
   components:
+  - type: TextToSpeech
   - type: Sprite
     layers:
     - state: medical
@@ -280,6 +285,7 @@
   parent: BaseBorgChassisNT
   name: service cyborg
   components:
+  - type: TextToSpeech
   - type: Sprite
     layers:
     - state: service
@@ -334,6 +340,7 @@
   name: syndicate assault cyborg
   description: A lean, mean killing machine with access to a variety of deadly modules.
   components:
+    - type: TextToSpeech
     - type: Sprite
       layers:
         - state: synd_sec
@@ -368,6 +375,7 @@
   name: syndicate medical cyborg
   description: A combat medical cyborg. Has limited offensive potential, but makes more than up for it with its support capabilities.
   components:
+    - type: TextToSpeech
     - type: Sprite
       layers:
         - state: synd_medical
@@ -409,6 +417,7 @@
   name: syndicate saboteur cyborg
   description: A streamlined engineering cyborg, equipped with covert modules. Its chameleon projector lets it disguise itself as a Nanotrasen cyborg.
   components:
+    - type: TextToSpeech
     - type: Sprite
       layers:
         - state: synd_engi

@@ -1,0 +1,302 @@
+- type: salvageBiomeMod
+  id: Abyss
+  desc: salvage-biome-mod-abyss
+  biome: Abyss
+  difficulties: 
+    - Challenging   
+ #   - Difficult
+
+- type: salvageDungeonMod
+  id: SyndieStronghold
+  desc: salvage-dungeon-mod-syndie-stronghold
+  proto: SyndieDungeon
+  biomes:
+    - Lava
+    - Grasslands
+    - Caves
+    - Snow
+  difficulties: 
+    - Impossible
+  
+- type: salvageDungeonMod
+  id: ShipWreck
+  desc: salvage-dungeon-mod-soviet-stronghold
+  proto: ShipWreckDungeon
+  biomes:
+    - Grasslands
+  difficulties: 
+    - Challenging
+    - Moderate
+    - Easy
+    - Difficult
+
+- type: salvageDungeonMod
+  id: SovietStronghold
+  desc: salvage-dungeon-mod-soviet-stronghold
+  proto: SovietDungeon
+  biomes:
+    - Lava
+    - Grasslands
+    - Caves
+    - Snow
+  difficulties: 
+    - Difficult
+    
+- type: salvageDungeonMod
+  id: ElderArenaMod
+  desc: salvage-dungeon-mod-soviet-stronghold
+  proto: ElderArenaDungeon
+  biomes:
+    - Abyss
+  difficulties: 
+    - Difficult
+
+- type: salvageDungeonMod
+  id: Experiment
+  desc: salvage-dungeon-mod-experiment
+  proto: Experiment
+  biomes:
+    #- LowDesert
+    - Abyss
+    - Grasslands
+  difficulties: 
+    - Challenging
+    - Moderate
+    - Easy
+
+- type: salvageDungeonMod
+  id: LavaBrig
+  desc: salvage-dungeon-mod-lava-brig
+  proto: LavaBrig
+  biomes:
+    - Lava
+  difficulties: 
+    - Challenging
+    - Moderate
+    - Easy
+
+- type: salvageDungeonMod
+  id: Mineshaft
+  desc: salvage-dungeon-mod-mineshaft
+  proto: Mineshaft
+  biomes:
+    - Caves
+  difficulties: 
+    - Challenging
+    - Moderate
+    - Easy
+
+- type: salvageDungeonMod
+  id: SnowyLabs
+  desc: salvage-dungeon-mod-snowy-labs
+  proto: SnowyLabs
+  biomes:
+    - Snow
+  difficulties: 
+    - Challenging
+    - Moderate
+    - Easy
+
+- type: salvageDungeonMod
+  id: Haunted
+  desc: salvage-dungeon-mod-haunted
+  proto: Haunted
+  biomes:
+    - Caves
+  difficulties: 
+    - Challenging
+    - Moderate
+    - Easy
+
+
+
+# Temperatures
+- type: salvageTemperatureMod
+  id: RoomTemp
+  desc: salvage-temperature-mod-room-temperature
+  cost: 0
+
+- type: salvageTemperatureMod
+  id: Hot
+  desc: salvage-temperature-mod-hot
+  cost: 1
+  temperature: 323.15 # 50C
+  biomes:
+    - Caves
+    #- LowDesert
+    - Grasslands
+    - Lava
+  difficulties: 
+    - Challenging
+    - Moderate
+    - Easy
+
+- type: salvageTemperatureMod
+  id: Burning
+  desc: salvage-temperature-mod-high-temperature
+  cost: 2
+  temperature: 423.15 # 200C
+  biomes:
+    - Caves
+    #- LowDesert
+    - Lava
+  difficulties: 
+    - Challenging
+    - Moderate
+    
+- type: salvageTemperatureMod
+  id: Melting
+  desc: salvage-temperature-mod-extreme-heat
+  cost: 4
+  temperature: 1273.15 # 1000C hot hot hot
+  biomes:
+    - Lava
+  difficulties: 
+    - Challenging
+  
+- type: salvageTemperatureMod
+  id: Cold
+  desc: salvage-temperature-mod-cold
+  cost: 1
+  temperature: 275.15 # 2C
+  biomes:
+    - Caves
+    #- LowDesert
+    - Grasslands
+    - Snow
+  difficulties: 
+    - Challenging
+    - Moderate
+    - Easy
+
+- type: salvageTemperatureMod
+  id: Tundra
+  desc: salvage-temperature-mod-low-temperature
+  cost: 2
+  temperature: 263.15 # -40C
+  biomes:
+    - Caves
+    - Snow
+  difficulties: 
+    - Challenging
+    - Moderate
+
+- type: salvageTemperatureMod
+  id: Frozen
+  desc: salvage-temperature-mod-extreme-cold
+  cost: 4
+  temperature: 123.15 # -150C
+  biomes:
+    - Snow
+  difficulties: 
+    - Challenging
+
+# Air mixtures
+- type: salvageAirMod
+  id: Space
+  desc: salvage-air-mod-no-atmosphere
+  space: true
+  cost: 2
+  biomes:
+    - Caves
+    - Lava
+  difficulties: 
+    - Challenging
+    - Moderate
+    - Easy
+
+- type: salvageAirMod
+  id: Breathable
+  cost: 0
+  desc: salvage-air-mod-breathable-atmosphere
+  gases:
+    - 21.824779 # oxygen
+    - 82.10312 # nitrogen
+
+- type: salvageAirMod
+  id: Sleepy
+  cost: 1
+  desc: salvage-air-mod-dangerous-atmosphere
+  gases:
+    - 21.824779 # oxygen
+    - 72.10312 # nitrogen
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 10 # nitrous oxide
+  biomes:
+    - Caves
+    #- LowDesert
+    - Snow
+    - Grasslands
+    - Lava
+  difficulties: 
+    - Challenging
+    - Moderate
+ 
+- type: salvageAirMod
+  id: Poisoned
+  cost: 2
+  desc: salvage-air-mod-dangerous-atmosphere
+  gases:
+    - 21.824779 # oxygen
+    - 77.10312 # nitrogen
+    - 10 # carbon dioxide
+  biomes:
+    - Caves
+    #- LowDesert
+    - Snow
+    - Grasslands
+    - Lava
+  difficulties: 
+    - Challenging
+    - Moderate
+ 
+- type: salvageAirMod
+  id: Poison
+  cost: 3
+  desc: salvage-air-mod-toxic-atmosphere
+  gases:
+    - 21.824779 # oxygen
+    - 0
+    - 82.10312 # carbon dioxide
+  biomes:
+    - Caves
+    - Snow
+    - Lava
+  difficulties: 
+    - Challenging
+    - Moderate
+ 
+- type: salvageAirMod
+  id: Plasma
+  cost: 4
+  desc: salvage-air-mod-toxic-atmosphere
+  gases:
+    - 0
+    - 0
+    - 0
+    - 103.927899 # plasma
+  biomes:
+    - Caves
+    - Lava
+  difficulties: 
+    - Challenging
+ 
+- type: salvageAirMod
+  id: Burnable
+  cost: 5
+  desc: salvage-air-mod-volatile-atmosphere
+  gases:
+    - 21.824779 # oxygen
+    - 0
+    - 0
+    - 82.10312 # plasma
+  biomes:
+    - Caves
+    - Lava
+  difficulties: 
+    - Challenging
+ 

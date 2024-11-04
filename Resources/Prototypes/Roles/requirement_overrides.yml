@@ -4,13 +4,117 @@
     Captain:
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 3600 # 1 hours
+      time: 720 # 12 mins
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 3600 # 1 hours
+      time: 720 # 12 mins
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 3600 # 1 hours
+      time: 720 # 12 mins
     - !type:DepartmentTimeRequirement
       department: Command
-      time: 3600 # 1 hour
+      time: 720 # 12 min
+    HeadOfSecurity:
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 720 # 12 mins
+    ChiefEngineer:
+    - !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 720 # 12 mins
+    ResearchDirector:
+    - !type:DepartmentTimeRequirement
+      department: Science
+      time: 720 # 12 mins
+    ChiefMedicalOfficer:
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 720 # 12 mins
+    HeadOfPersonnel:
+    - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 720 # 12 mins
+    Quartermaster:
+    - !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 720 # 12 mins
+
+    SalvageSpecialist:
+    - !type:OverallPlaytimeRequirement
+      time: 0
+    CargoTechnician:
+    - !type:OverallPlaytimeRequirement
+      time: 0 
+
+    Bartender:
+    - !type:OverallPlaytimeRequirement
+      time: 0     
+    Botanist:
+    - !type:OverallPlaytimeRequirement
+      time: 0    
+    Chaplain:
+    - !type:OverallPlaytimeRequirement
+      time: 0    
+    Chef:
+    - !type:OverallPlaytimeRequirement
+      time: 0    
+    Clown:
+    - !type:OverallPlaytimeRequirement
+      time: 0    
+    Janitor:
+    - !type:OverallPlaytimeRequirement
+      time: 0    
+    Lawyer:
+    - !type:OverallPlaytimeRequirement
+      time: 0    
+    Librarian:
+    - !type:OverallPlaytimeRequirement
+      time: 0    
+    Mime:
+    - !type:OverallPlaytimeRequirement
+      time: 0    
+    Musician:
+    - !type:OverallPlaytimeRequirement
+      time: 0    
+    ServiceWorker:
+    - !type:OverallPlaytimeRequirement
+      time: 0    
+    Visitor:
+    - !type:OverallPlaytimeRequirement
+      time: 0    
+
+    AtmosphericTechnician:
+    - !type:OverallPlaytimeRequirement
+      time: 0    
+    StationEngineer:
+    - !type:OverallPlaytimeRequirement
+      time: 0    
+
+    Chemist:
+    - !type:OverallPlaytimeRequirement
+      time: 0    
+    MedicalDoctor:
+    - !type:OverallPlaytimeRequirement
+      time: 0    
+    Paramedic:
+    - !type:OverallPlaytimeRequirement
+      time: 0  
+
+    Borg:
+    - !type:OverallPlaytimeRequirement
+      time: 0    
+    Scientist:
+    - !type:OverallPlaytimeRequirement
+      time: 0   
+
+    Detective:
+    - !type:OverallPlaytimeRequirement
+      time: 720    
+    SecurityOfficer:
+    - !type:OverallPlaytimeRequirement
+      time: 720    
+    Warden:
+    - !type:OverallPlaytimeRequirement
+      time: 720
+
+        

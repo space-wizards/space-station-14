@@ -1,0 +1,21 @@
+﻿- type: entity
+  name: abductor scientist
+  parent: BaseMobAbductor
+  id: MobAbductorLone
+  components:
+  - type: AbductorScientist
+  - type: ActionGrant
+    actions:
+    - ActionReturnToShip
+  - type: Loadout
+    prototypes:
+      - AbductorScientistGear
+
+- type: startingGear
+  id: AbductorScientistGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitAbductor
+    gloves: ClothingHandsGlovesCombat
+    shoes: ClothingShoesBootsCombat
+  inhand:
+  - BriefcaseBrownFilled

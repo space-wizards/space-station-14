@@ -120,7 +120,7 @@ public sealed partial class MoveToOperator : HTNOperator, IHtnConditionalShutdow
 
         if (path.Result != PathResult.Path)
         {
-            return (false, null);
+            return (true, null);
         }
 
         return (true, new Dictionary<string, object>()

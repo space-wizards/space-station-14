@@ -1,0 +1,526 @@
+﻿- type: entity
+  id: SurgeryBase
+  categories:
+  - HideSpawnMenu
+
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryOpenIncision
+  name: Open Incision
+  components:
+  - type: Surgery
+    priority: -100
+    steps:
+    - SurgeryStepOpenIncisionScalpel
+    - SurgeryStepClampBleeders
+    - SurgeryStepRetractSkin
+
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryCloseIncision
+  name: Close Incision
+  components:
+  - type: Surgery
+    requirement: SurgeryOpenIncision
+    priority: 100
+    steps:
+    - SurgeryStepCloseBones
+    - SurgeryStepMendRibcage
+    - SurgeryStepCloseIncision
+
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryOpenRibcage
+  name: Open Ribcage
+  components:
+  - type: Surgery
+    requirement: SurgeryOpenIncision
+    priority: -50
+    steps:
+    - SurgeryStepSawBones
+    - SurgeryStepPriseOpenBones
+  - type: SurgeryPartCondition
+    parts: 
+    - Torso
+  - type: Sprite
+    sprite: Mobs/Species/Human/parts.rsi
+    state: torso_m
+    
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryOpenAbdomen
+  name: Open Abdomen
+  components:
+  - type: Surgery
+    requirement: SurgeryOpenIncision
+    priority: -50
+    steps:
+    - SurgeryStepCutAbdominalMuscles
+    - SurgeryStepRetractAbdominalWalls
+  - type: SurgeryPartCondition
+    parts:
+    - Torso
+  - type: Sprite
+    sprite: Mobs/Species/Skeleton/parts.rsi
+    state: torso_m
+
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryEliminateVocalCordDefects.
+  name: Eliminate vocal cord defects.
+  description: Remove speech defects, accents.
+  components:
+  - type: Surgery
+    requirement: SurgeryOpenIncision
+    steps:
+    - SurgeryStepExposeVocalCords
+    - SurgeryStepAdjustVocalCords
+    - SurgeryStepSutureIncision
+  - type: SurgeryAnyAccentCondition
+  - type: SurgeryPartCondition
+    parts: 
+    - Head
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/microphone.rsi
+    state: icon
+
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryAmputation
+  name: Amputation
+  description: Surgical removal of a limb.
+  components:
+  - type: Surgery
+    requirement: SurgeryOpenIncision
+    steps:
+    - SurgeryStepExposeNerves
+    - SurgeryStepExposeBloodVessels
+    - SurgeryAmputationStep
+  - type: SurgeryPartCondition
+    parts: 
+    - Arm
+    - Hand
+    - Leg
+    - Foot
+    - Tail
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/saw.rsi
+    state: saw
+
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryLimbAttachment 
+  name: Limb Attachment
+  description: Surgical attachment of a limb.
+  components:
+  - type: Surgery
+    requirement: SurgeryOpenIncision
+    steps:
+    - SurgeryStepExposeNerves
+    - SurgeryStepExposeBloodVessels
+    - SurgeryLimbAttachmentStep
+    - SurgeryStepRejoinNerves
+    - SurgeryStepRejoinBloodVessels
+    - SurgeryStepRestoreCartilage
+  - type: SurgeryAnyLimbSlotCondition
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medical.rsi
+    state: medicated-suture
+#organs
+
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryExtractLiver
+  name: Extract Liver
+  components:
+  - type: Surgery
+    requirement: SurgeryOpenAbdomen
+    steps:
+    - SurgeryStepLocateLiver
+    - SurgeryStepClampLiverVessels
+    - SurgeryStepRemoveLiver
+  - type: SurgeryPartCondition
+    parts:
+    - Torso
+  - type: SurgeryOrganExistCondition
+    organ:
+    - type: OrganLiver
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+    state: liver
+    
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryImplantLiver
+  name: Implant Liver
+  components:
+  - type: Surgery
+    requirement: SurgeryOpenAbdomen
+    steps:
+    - SurgeryStepPrepareImplantSiteLiver
+    - SurgeryStepInsertLiver
+    - SurgeryStepConnectLiverVessels
+    - SurgeryStepRestoreAbdominalWalls
+    - SurgeryStepSutureMuscles
+  - type: SurgeryPartCondition
+    parts:
+    - Torso
+  - type: SurgeryOrganDontExistCondition
+    organ:
+    - type: OrganLiver
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+    state: liver
+#
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryExtractAppendix
+  name: Extract Appendix
+  components:
+  - type: Surgery
+    requirement: SurgeryOpenAbdomen
+    steps:
+    - SurgeryStepLocateAppendix
+    - SurgeryStepClampAppendix
+    - SurgeryStepRemoveAppendix
+  - type: SurgeryPartCondition
+    parts:
+    - Torso
+  - type: SurgeryOrganExistCondition
+    organ:
+    - type: OrganAppendix
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+    state: appendix
+#
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryExtractKidneys
+  name: Extract Kidneys
+  components:
+  - type: Surgery
+    requirement: SurgeryOpenAbdomen
+    steps:
+    - SurgeryStepLocateKidneys
+    - SurgeryStepClampKidneysVessels
+    - SurgeryStepRemoveKidneys
+  - type: SurgeryPartCondition
+    parts:
+    - Torso
+  - type: SurgeryOrganExistCondition
+    organ:
+    - type: OrganKidneys
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+    layers:
+      - state: kidney-l
+      - state: kidney-r
+
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryImplantKidneys
+  name: Implant Kidneys
+  components:
+  - type: Surgery
+    requirement: SurgeryOpenAbdomen
+    steps:
+    - SurgeryStepPrepareImplantSiteKidneys
+    - SurgeryStepInsertKidneys
+    - SurgeryStepConnectKidneysVessels
+    - SurgeryStepRestoreAbdominalWalls
+    - SurgeryStepSutureMuscles
+  - type: SurgeryPartCondition
+    parts:
+    - Torso
+  - type: SurgeryOrganDontExistCondition
+    organ:
+    - type: OrganKidneys
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+    layers:
+      - state: kidney-l
+      - state: kidney-r
+#
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryExtractStomach
+  name: Extract Stomach
+  components:
+  - type: Surgery
+    requirement: SurgeryOpenAbdomen
+    steps:
+    - SurgeryStepLocateStomach
+    - SurgeryStepClampStomachVessels
+    - SurgeryStepRemoveStomach
+  - type: SurgeryPartCondition
+    parts:
+    - Torso
+  - type: SurgeryOrganExistCondition
+    organ:
+    - type: OrganStomach
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+    state: stomach
+
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryImplantStomach
+  name: Implant Stomach
+  components:
+  - type: Surgery
+    requirement: SurgeryOpenAbdomen
+    steps:
+    - SurgeryStepPrepareImplantSiteStomach
+    - SurgeryStepInsertStomach
+    - SurgeryStepConnectStomachVessels
+    - SurgeryStepRestoreAbdominalWalls
+    - SurgeryStepSutureMuscles
+  - type: SurgeryPartCondition
+    parts:
+    - Torso
+  - type: SurgeryOrganDontExistCondition
+    organ:
+    - type: OrganStomach
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+    state: stomach
+#
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryExtractLungs
+  name: Extract Lungs
+  components:
+  - type: Surgery
+    requirement: SurgeryOpenRibcage
+    steps:
+    - SurgeryStepLocateLungs
+    - SurgeryStepClampLungVessels
+    - SurgeryStepRemoveLungs
+  - type: SurgeryPartCondition
+    parts:
+    - Torso
+  - type: SurgeryOrganExistCondition
+    organ:
+    - type: OrganLungs
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+    layers:
+      - state: lung-l
+      - state: lung-r
+
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryImplantLungs
+  name: Implant Lungs
+  components:
+  - type: Surgery
+    requirement: SurgeryOpenRibcage
+    steps:
+    - SurgeryStepPrepareImplantSiteLungs
+    - SurgeryStepInsertLungs
+    - SurgeryStepConnectLungVessels
+  - type: SurgeryPartCondition
+    parts:
+    - Torso
+  - type: SurgeryOrganDontExistCondition
+    organ:
+    - type: OrganLungs
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+    layers:
+      - state: lung-l
+      - state: lung-r
+#
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryExtractHeart
+  name: Extract Heart
+  components:
+  - type: Surgery
+    requirement: SurgeryOpenRibcage
+    steps:
+    - SurgeryStepLocateHeart
+    - SurgeryStepClampHeartVessels
+    - SurgeryStepRemoveHeart
+  - type: SurgeryPartCondition
+    parts:
+    - Torso
+  - type: SurgeryOrganExistCondition
+    organ:
+    - type: OrganHeart
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+    state: heart-on
+
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryImplantHeart
+  name: Implant Heart
+  components:
+  - type: Surgery
+    requirement: SurgeryOpenRibcage
+    steps:
+    - SurgeryStepPrepareImplantSiteHeart
+    - SurgeryStepInsertHeart
+    - SurgeryStepConnectHeartVessels
+  - type: SurgeryPartCondition
+    parts:
+    - Torso
+  - type: SurgeryOrganDontExistCondition
+    organ:
+    - type: OrganHeart
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+    state: heart-on
+#
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryExtractEyes
+  name: Extract Eyes
+  components:
+  - type: Surgery
+    requirement: SurgeryOpenIncision
+    steps:
+    - SurgeryStepLocateEyes
+    - SurgeryStepClampOpticNerve
+    - SurgeryStepRemoveEyes
+  - type: SurgeryPartCondition
+    parts:
+    - Head
+  - type: SurgeryOrganExistCondition
+    organ:
+    - type: OrganEyes
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+    layers:
+      - state: eyeball-l
+      - state: eyeball-r
+
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryImplantEyes
+  name: Implant Eyes
+  components:
+  - type: Surgery
+    requirement: SurgeryOpenIncision
+    steps:
+    - SurgeryStepPrepareImplantSiteEyes
+    - SurgeryStepInsertEyes
+    - SurgeryStepConnectOpticNerve
+  - type: SurgeryPartCondition
+    parts:
+    - Head
+  - type: SurgeryOrganDontExistCondition
+    organ:
+    - type: OrganEyes
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+    layers:
+      - state: eyeball-l
+      - state: eyeball-r
+#
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryExtractTongue
+  name: Extract Tongue
+  components:
+  - type: Surgery
+    steps:
+    - SurgeryStepGrabTongue
+    - SurgeryStepCutTongue
+  - type: SurgeryPartCondition
+    parts:
+    - Head
+  - type: SurgeryOrganExistCondition
+    organ:
+    - type: OrganTongue
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+    state: tongue
+
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryImplantTongue
+  name: Implant Tongue
+  components:
+  - type: Surgery
+    steps:
+    - SurgeryStepPrepareImplantSiteTongue
+    - SurgeryStepPositionTongue
+    - SurgeryStepAttachTongue
+  - type: SurgeryPartCondition
+    parts:
+    - Head
+  - type: SurgeryOrganDontExistCondition
+    organ:
+    - type: OrganTongue
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+    state: tongue
+#
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryExtractBrain
+  name: Extract Brain
+  components:
+  - type: Surgery
+    requirement: SurgeryOpenIncision
+    steps:
+    - SurgeryStepPreparePatient
+    - SurgeryStepShaveHead
+    - SurgeryStepDisinfectScalp
+    - SurgeryStepMakeIncisionScalp
+    - SurgeryStepRetractScalp
+    - SurgeryStepDrillBurrHoles
+    - SurgeryStepCutSkull
+    - SurgeryStepRemoveBoneFlap
+    - SurgeryStepClampDuraMater
+    - SurgeryStepInciseDuraMater
+    - SurgeryStepRetractDuraMater
+    - SurgeryStepSeverCranialNerves
+    - SurgeryStepExtractBrain
+  - type: SurgeryPartCondition
+    parts:
+    - Head
+  - type: SurgeryOrganExistCondition
+    organ:
+    - type: OrganBrain
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+    state: brain
+
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryImplantBrain
+  name: Implant Brain
+  components:
+  - type: Surgery
+    requirement: SurgeryOpenIncision
+    steps:
+    - SurgeryStepCleanImplantSite
+    - SurgeryStepPrepareScalp
+    - SurgeryStepMakeIncisionScalp
+    - SurgeryStepRetractScalp
+    - SurgeryStepDrillBurrHoles
+    - SurgeryStepCutSkull
+    - SurgeryStepRemoveBoneFlap
+    - SurgeryStepPrepareDuraMater
+    - SurgeryStepInciseDuraMater
+    - SurgeryStepRetractDuraMater
+    - SurgeryStepInsertBrain
+    - SurgeryStepReconnectCranialNerves
+    - SurgeryStepReplaceDuraMater
+    - SurgeryStepSealDuraMater
+    - SurgeryStepReplaceBoneFlap
+    - SurgeryStepSecureBoneFlap
+    - SurgeryStepReplaceScalp
+    - SurgeryStepSutureScalp
+  - type: SurgeryPartCondition
+    parts:
+    - Head
+  - type: SurgeryOrganDontExistCondition
+    organ:
+    - type: OrganBrain
+  - type: Sprite
+    sprite: Mobs/Species/Human/organs.rsi
+    state: brain

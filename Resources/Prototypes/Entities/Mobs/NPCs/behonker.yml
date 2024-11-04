@@ -100,7 +100,7 @@
           amount: 1
     - type: MeleeWeapon
       soundHit:
-        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg     
       damage:
         types:
           Piercing: 10

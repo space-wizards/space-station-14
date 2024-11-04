@@ -1,0 +1,69 @@
+# Loot table
+# Main loot table for random spawns
+- type: salvageLoot
+  id: SalvageLootImpossible
+  loots:
+    - !type:RandomSpawnsLoot
+      entries:
+        - proto: SecurityTechFabCircuitboard
+          cost: 50
+          prob: 0.1
+        - proto: TechnologyDiskRare
+          cost: 21
+          prob: 0.2
+        - proto: TechnologyDisk
+          cost: 7
+          prob: 0.6
+
+        - proto: CrateSyndicateSurplusBundle
+          prob: 0.08
+          cost: 30
+        - proto: ClothingBackpackDuffelSyndicateAmmoFilled
+          prob: 0.1
+          cost: 20
+        - proto: ClothingBackpackDuffelSyndicateFilledLMG
+          prob: 0.05
+          cost: 64
+        - proto: ClothingBackpackDuffelSyndicateFilledRevolver
+          prob: 0.2
+          cost: 20
+        - proto: ClothingBackpackDuffelSyndicateFilledCarbine
+          prob: 0.1
+          cost: 32
+        - proto: SyndicateJawsOfLife
+          prob: 0.2
+          cost: 6
+        - proto: SyndieMiniBomb
+          prob: 0.2
+          cost: 8
+        - proto: BaseUplinkRadio
+          prob: 0.2
+          cost: 20
+
+        - proto: Telecrystal1
+          prob: 0.5
+          cost: 12
+        - proto: Telecrystal5
+          prob: 0.1
+          cost: 60
+        - proto: Telecrystal10
+          prob: 0.05
+          cost: 120
+        - proto: Telecrystal
+          prob: 0.025
+          cost: 240
+        - proto: BaseUplinkRadio
+          prob: 0.2
+          cost: 20
+
+        - proto: MedkitAdvancedFilled
+          prob: 0.8
+          cost: 21                    
+        - proto: MedkitCombatFilled
+          prob: 0.4
+          cost: 36
+        - proto: OmnizineChemistryBottle
+          cost: 3
+        - proto: ClothingEyesHudMedSec
+          prob: 0.3
+          cost: 21

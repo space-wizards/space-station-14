@@ -130,6 +130,7 @@ public sealed partial class ShuttleConsoleSystem
         // Check shuttle can even FTL
         if (!_shuttle.CanFTL(shuttleUid.Value, out var reason))
         {
+            _sawmill.Error($"FTL attempt cancelled: {reason}");
             // TODO: Session popup
             return;
         }
@@ -137,6 +138,7 @@ public sealed partial class ShuttleConsoleSystem
         // Check shuttle can FTL to this target.
         if (!_shuttle.CanFTLTo(shuttleUid.Value, targetMap, ent))
         {
+            _sawmill.Error($"Cant FTLTo");
             return;
         }
 
@@ -145,6 +147,7 @@ public sealed partial class ShuttleConsoleSystem
 
         if (!_shuttle.FTLFree(shuttleUid.Value, targetCoordinates, targetAngle, exclusions))
         {
+            _sawmill.Error($"FTL !Free");
             return;
         }
 

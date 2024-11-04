@@ -36,7 +36,7 @@
 
 - type: entity
   id: OrganHumanBrain
-  parent: BaseHumanOrganUnGibbable
+  parent: [BaseHumanOrganUnGibbable, BaseOrganBrain]
   name: brain
   description: "The source of incredible, unending intelligence. Honk."
   components:
@@ -77,7 +77,7 @@
   
 - type: entity
   id: OrganHumanEyes
-  parent: BaseHumanOrgan
+  parent: [BaseHumanOrgan, BaseOrganEyes]
   name: eyes
   description: "I see you!"
   components:
@@ -91,7 +91,7 @@
 
 - type: entity
   id: OrganHumanTongue
-  parent: BaseHumanOrgan
+  parent: [BaseHumanOrgan, BaseOrganTongue]
   name: tongue
   description: "A fleshy muscle mostly used for lying."
   components:
@@ -100,7 +100,7 @@
 
 - type: entity
   id: OrganHumanAppendix
-  parent: BaseHumanOrgan
+  parent: [BaseHumanOrgan, BaseOrganAppendix]
   name: appendix
   components:
   - type: Sprite
@@ -111,7 +111,7 @@
 
 - type: entity
   id: OrganHumanEars
-  parent: BaseHumanOrgan
+  parent: [BaseHumanOrgan, BaseOrganEars]
   name: ears
   description: "There are three parts to the ear. Inner, middle and outer. Only one of these parts should normally be visible."
   components:
@@ -120,7 +120,7 @@
 
 - type: entity
   id: OrganHumanLungs
-  parent: BaseHumanOrgan
+  parent: [BaseHumanOrgan, BaseOrganLungs]
   name: lungs
   description: "Filters oxygen from an atmosphere, which is then sent into the bloodstream to be used as an electron carrier."
   components:
@@ -157,7 +157,7 @@
 
 - type: entity
   id: OrganHumanHeart
-  parent: BaseHumanOrgan
+  parent: [BaseHumanOrgan, BaseOrganHeart]
   name: heart
   description: "I feel bad for the heartless bastard who lost this."
   components:
@@ -179,7 +179,7 @@
 
 - type: entity
   id: OrganHumanStomach
-  parent: BaseHumanOrgan
+  parent: [BaseHumanOrgan, BaseOrganStomach]
   name: stomach
   description: "Gross. This is hard to stomach."
   components:
@@ -211,7 +211,7 @@
 
 - type: entity
   id: OrganHumanLiver
-  parent: BaseHumanOrgan
+  parent: [BaseHumanOrgan, BaseOrganLiver]
   name: liver
   description: "Pairing suggestion: chianti and fava beans."
   components:
@@ -229,7 +229,7 @@
 
 - type: entity
   id: OrganHumanKidneys
-  parent: BaseHumanOrgan
+  parent: [BaseHumanOrgan, BaseOrganKidneys]
   name: kidneys
   description: "Filters toxins from the bloodstream."
   components:

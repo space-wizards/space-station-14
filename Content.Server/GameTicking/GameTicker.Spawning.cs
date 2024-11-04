@@ -3,6 +3,9 @@ using System.Linq;
 using System.Numerics;
 using Content.Server.Administration.Managers;
 using Content.Server.GameTicking.Events;
+using Content.Server.Ghost;
+using Content.Server.Ghost.Roles;
+using Content.Server.Shuttles.Components;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
 using Content.Server.Station.Components;
@@ -27,6 +30,7 @@ namespace Content.Server.GameTicking
     {
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly SharedJobSystem _jobs = default!;
+        [Dependency] private readonly NewLifeSystem _newLifeSystem = default!; //🌟Starlight🌟
 
         [ValidatePrototypeId<EntityPrototype>]
         public const string ObserverPrototypeName = "MobObserver";
@@ -211,7 +215,8 @@ namespace Content.Server.GameTicking
                     Loc.GetString("game-ticker-player-no-jobs-available-when-joining"));
                 return;
             }
-
+            var slot = _prefsManager.GetPreferences(player.UserId).SelectedCharacterIndex; //🌟Starlight🌟
+            _newLifeSystem.SaveCharacterToUsed(player.UserId, slot);     //🌟Starlight🌟
             PlayerJoinGame(player, silent);
 
             var data = player.ContentData();
@@ -222,7 +227,7 @@ namespace Content.Server.GameTicking
             _mind.SetUserId(newMind, data.UserId);
 
             var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
-            _roles.MindAddJobRole(newMind, silent: silent, jobPrototype:jobId);
+            _roles.MindAddJobRole(newMind, silent: silent, jobPrototype: jobId);
             var jobName = _jobs.MindTryGetJobName(newMind);
 
             _playTimeTrackings.PlayerRolesChanged(player);

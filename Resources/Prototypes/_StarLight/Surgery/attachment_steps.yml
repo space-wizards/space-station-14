@@ -1,0 +1,81 @@
+﻿- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepExposeNerves
+  name: Expose Nerves
+  components:
+  - type: SurgeryStep
+    duration: 4
+    tools:
+    - type: Scalpel
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
+    state: scalpel
+  - type: SurgeryStepEmoteEffect
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepExposeBloodVessels
+  name: Expose Blood Vessels
+  components:
+  - type: SurgeryStep
+    duration: 4
+    tools:
+    - type: Scalpel
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
+    state: scalpel
+  - type: SurgeryStepEmoteEffect
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryLimbAttachmentStep
+  name: attach a limb
+  components:
+  - type: SurgeryStep
+    duration: 4 
+    tools:
+    - type: BodyPart
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/pizza.rsi
+    state: meat-slice
+  - type: SurgeryStepAttachLimbEffect
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepRejoinNerves
+  name: Rejoin Nerves
+  components:
+  - type: SurgeryStep
+    duration: 5
+    tools:
+    - type: Hemostat
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/scissors.rsi
+    state: hemostat
+  - type: SurgeryStepEmoteEffect
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepRejoinBloodVessels
+  name: Rejoin Blood Vessels
+  components:
+  - type: SurgeryStep
+    duration: 5
+    tools:
+    - type: Hemostat
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/scissors.rsi
+    state: hemostat
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepRestoreCartilage
+  name: Restore Cartilage
+  components:
+  - type: SurgeryStep
+    duration: 4
+    tools:
+    - type: BoneGel
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/bone_gel.rsi
+    state: bone-gel

@@ -1,0 +1,53 @@
+- type: entity
+  parent: OreBase
+  id: AbyssiumOre
+  name: abyssium ore
+  suffix: Full
+  components:
+  - type: Stack
+    stackType: AbyssiumOre
+    count: 10
+  - type: Sprite
+    sprite: _Starlight/Objects/Materials/ore.rsi
+    state: abyssium
+    scale: 0.5, 0.5
+  - type: Item
+    sprite: _Starlight/Objects/Materials/ore.rsi
+    size: Normal
+    scale: 0.5, 0.5
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      RawAbyssium: 100
+  - type: Extractable
+    grindableSolutionName: abyssiumore
+  - type: SolutionContainerManager
+    solutions:
+      abyssiumore:
+        reagents:
+        - ReagentId: Iron
+          Quantity: 10
+  - type: PointLight
+    radius: 1.2
+    energy: 0.8
+    castShadows: false
+    color: "#DDFFFF"
+  - type: Tag
+    tags:
+    - Ore
+
+#stack
+- type: stack
+  id: AbyssiumOre
+  name: abyssium ore
+  icon: { sprite: _Starlight/Objects/Materials/ore.rsi, state: abyssium }
+  spawn: AbyssiumOre1
+  maxCount: 10
+  
+- type: entity
+  parent: AbyssiumOre
+  id: AbyssiumOre1
+  suffix: Single
+  components:
+  - type: Stack
+    count: 1

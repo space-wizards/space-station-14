@@ -4,6 +4,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Shared.Mech.Components;
 using Content.Shared.Mech.Equipment.Components;
 using Content.Shared.Throwing;
+using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Random;
 
@@ -18,22 +19,16 @@ public sealed class MechGunSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<MechEquipmentComponent, GunShotEvent>(MechGunShot);
+        SubscribeLocalEvent<MechEquipmentComponent, GunShotEvent>((id, cmp, _) => TryChargeGunBattery(id, cmp));
+        SubscribeLocalEvent<MechEquipmentComponent, OnEmptyGunShotEvent>((id, cmp, _) => TryChargeGunBattery(id, cmp));
     }
 
-    private void MechGunShot(EntityUid uid, MechEquipmentComponent component, ref GunShotEvent args)
+    private void TryChargeGunBattery(EntityUid uid, MechEquipmentComponent component)
     {
-        if (!component.EquipmentOwner.HasValue)
-            return;
-
-        if (!TryComp<MechComponent>(component.EquipmentOwner.Value, out var mech))
-            return;
-
-        if (TryComp<BatteryComponent>(uid, out var battery))
-        {
+        if (component.EquipmentOwner.HasValue
+            && HasComp<MechComponent>(component.EquipmentOwner.Value)
+            && TryComp<BatteryComponent>(uid, out var battery))
             ChargeGunBattery(uid, battery);
-            return;
-        }
     }
 
     private void ChargeGunBattery(EntityUid uid, BatteryComponent component)

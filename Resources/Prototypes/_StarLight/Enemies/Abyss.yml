@@ -1,0 +1,202 @@
+- type: entity
+  name: elder
+  parent: [ SimpleSpaceMobBase, FlyingMobBase, MobCombat ]
+  id: MobElder
+  components:
+    - type: Sprite
+      sprite: _Starlight/Mobs/Abyss/elder.rsi
+      layers:
+        - map: [ "enum.DamageStateVisualLayers.Base" ]
+          state: elder
+    - type: InputMover
+    - type: MobMover
+    - type: HTN
+      rootTask:
+        task: ElderCompound
+      blackboard:
+        VisionRadius: !type:Single
+          18
+        AggroVisionRadius: !type:Single
+          30
+    - type: NpcFactionMember
+      factions:
+      - Abyss
+    - type: CombatMode
+    - type: Physics
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 1.80
+          density: 80
+          mask:
+            - FlyingMobMask
+          layer:
+            - FlyingMobLayer
+    - type: MobState
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        1500: Dead
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 2.5
+      baseSprintSpeed: 3.5
+    - type: Stamina
+      critThreshold: 500
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: elder
+        Dead:
+          Base: dead
+    - type: MeleeWeapon
+      altDisarm: false
+      attackRate: 3.0
+      angle: 90
+      range: 3
+      animation: WeaponElderSlash
+      soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+      damage:
+        types:
+          Slash: 10
+          Structural: 60
+    - type: TypingIndicator
+      proto: alien
+    - type: Tag
+      tags:
+        - DoorBumpOpener
+    - type: ReplacementAccent
+      accent: genericAggressive
+    - type: Speech
+      speechVerb: LargeMob
+    - type: NoSlip
+    - type: NPCUseActionOnTarget
+      actionId: ActionMobBlink
+    - type: StatusEffects # Overwriting basesimplemob to remove flash, getting flashed as dragon just feelsbad
+      allowed:
+      - SlowedDown
+      - Stutter
+      - Electrocution
+      - ForcedSleep
+      - TemporaryBlindness
+      - Pacified
+      - RadiationProtection
+      - Drowsiness
+    - type: Butcherable
+      spawned:
+      - id: AbyssCore
+        amount: 1
+
+- type: entity
+  name: worm
+  parent: [ SimpleSpaceMobBase, MobCombat ]
+  id: MobWorm
+  components:
+    - type: Sprite
+      sprite: _Starlight/Mobs/Abyss/worm.rsi
+      layers:
+        - map: [ "enum.DamageStateVisualLayers.Base" ]
+          state: worm
+    - type: InputMover
+    - type: MobMover
+    - type: HTN
+      rootTask:
+        task: ElderCompound
+      blackboard:
+        VisionRadius: !type:Single
+          9
+        AggroVisionRadius: !type:Single
+          15
+    - type: NpcFactionMember
+      factions:
+      - Abyss
+    - type: CombatMode
+    - type: Physics
+    - type: MobState
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        40: Dead
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 2.5
+      baseSprintSpeed: 5.5
+    - type: Stamina
+      critThreshold: 40
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: worm
+        Dead:
+          Base: dead
+    - type: MeleeWeapon
+      altDisarm: false
+      animation: WeaponArcBite
+      soundHit:
+        path: /Audio/Effects/bite.ogg
+      damage:
+        types:
+          Blunt: 4
+          Structural: 3
+          Caustic: 2
+          Cellular: 1
+    - type: TypingIndicator
+      proto: alien
+    - type: Tag
+      tags:
+        - DoorBumpOpener
+    - type: NoSlip
+    - type: NPCUseActionOnTarget
+      actionId: ActionMobBlink
+    - type: StatusEffects # Overwriting basesimplemob to remove flash, getting flashed as dragon just feelsbad
+      allowed:
+      - SlowedDown
+      - Stutter
+      - Electrocution
+      - ForcedSleep
+      - TemporaryBlindness
+      - Pacified
+      - RadiationProtection
+      - Drowsiness
+
+- type: entity
+  id: ActionMobBlink
+  name: Blink
+  description: Teleport to the clicked location.
+  components:
+  - type: WorldTargetAction
+    useDelay: 10
+    range: 16
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/blink.ogg
+    itemIconStyle: BigAction
+    checkCanAccess: false
+    repeat: false
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: blink
+    event: !type:TeleportSpellEvent
+      ignoreWalls: true
+
+- type: entity
+  id: WeaponElderSlash
+  parent: WeaponArcSlash
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: WeaponArcVisuals
+      animation: Slash
+    - type: Sprite
+      sprite: _Starlight/Mobs/Abyss/elder.rsi
+      state: claw
+      drawdepth: Effects
+
+- type: htnCompound
+  id: ElderCompound
+  branches:
+    - tasks:
+        - !type:HTNCompoundTask
+          task: MeleeCombatCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: IdleCompound

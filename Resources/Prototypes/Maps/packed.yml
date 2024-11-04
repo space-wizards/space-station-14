@@ -2,7 +2,7 @@
   id: Packed
   mapName: 'Packed'
   mapPath: /Maps/packed.yml
-  minPlayers: 7
+  minPlayers: 0
   maxPlayers: 35
   stations:
     Packed:
@@ -49,7 +49,7 @@
             Lawyer: [ 1, 1 ]
             #supply
             Quartermaster: [ 1, 1 ]
-            SalvageSpecialist: [ 2, 2 ]
+            SalvageSpecialist: [ 5, 5 ]
             CargoTechnician: [ 2, 2 ]
             #civilian
             Passenger: [ -1, -1 ]
