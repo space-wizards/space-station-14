@@ -23,7 +23,7 @@ uplink-combat-gloves-name = Combat gloves
 uplink-combat-gloves-desc = Heat, electricity, doorframes; all are now things of the past. These are the epitome of finger protection.
 
 uplink-cburn-name = CBURN equipment bundle
-uplink-cburn-desc = Spare CBURN equipment from a fallen team. Contains a sawn-off shotgun, incendiary shells and a medipen.
+uplink-cburn-desc = Spare CBURN equipment from a fallen team. Contains a double-barrel shotgun, incendiary shells and a medipen.
 
 uplink-magcell-name = Spare magcell
 uplink-magcell-desc = A spare magcell for use with NT energy weaponry.
