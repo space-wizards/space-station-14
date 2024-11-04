@@ -3,9 +3,8 @@ using Robust.Shared.GameObjects;
 namespace Content.Shared.Components
 {
     [RegisterComponent]
-    public sealed class ActiveListenerComponent : Component
+    public sealed class ListenerComponent : Component
     {
-        public override string Name => "ActiveListener";
 
         /// <summary>
         /// The range within which this component can listen for audio.
