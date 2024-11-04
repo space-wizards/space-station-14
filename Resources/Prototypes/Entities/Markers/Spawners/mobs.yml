@@ -882,7 +882,7 @@
     - MobHonkBot
 
 - type: entity
-  name: xeno queen entity spawner
+  name: xeno lone praetorian spawner
   id: SpawnMobXenoPraetorian
   parent: MarkerBase
   components:
