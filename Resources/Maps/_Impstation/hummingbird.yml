@@ -4716,7 +4716,8 @@ entities:
           23,7:
             1: 8189
           24,8:
-            7: 65535
+            7: 65407
+            8: 128
           25,5:
             0: 17
             1: 61440
@@ -5805,6 +5806,21 @@ entities:
           moles:
           - 0
           - 103.92799
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
+          - 103.262856
           - 0
           - 0
           - 0
@@ -64589,6 +64605,27 @@ entities:
     - type: Transform
       pos: 119.716354,-1.1782044
       parent: 2
+- proto: DrinkHummingBirdGlass
+  entities:
+  - uid: 78
+    components:
+    - type: Transform
+      parent: 9403
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 9093
+    components:
+    - type: Transform
+      parent: 9403
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 14387
+    components:
+    - type: Transform
+      pos: 79.50336,27.601646
+      parent: 2
 - proto: DrinkIcedCoffeeGlass
   entities:
   - uid: 12632
@@ -64717,7 +64754,7 @@ entities:
   - uid: 8248
     components:
     - type: Transform
-      pos: 67.53051,-51.866436
+      pos: 67.68451,-51.808483
       parent: 2
   - uid: 18663
     components:
@@ -64755,6 +64792,43 @@ entities:
     - type: Transform
       pos: 85.530235,17.728523
       parent: 2
+- proto: DrinkRaktaccinoGlass
+  entities:
+  - uid: 23562
+    components:
+    - type: Transform
+      pos: 13.654047,-7.279956
+      parent: 2
+  - uid: 23563
+    components:
+    - type: Transform
+      pos: 72.25529,39.140186
+      parent: 2
+  - uid: 23564
+    components:
+    - type: Transform
+      pos: 142.48071,3.7393813
+      parent: 2
+  - uid: 23565
+    components:
+    - type: Transform
+      pos: 125.065834,-5.2136006
+      parent: 2
+  - uid: 23566
+    components:
+    - type: Transform
+      pos: 80.61204,-10.329674
+      parent: 2
+  - uid: 23567
+    components:
+    - type: Transform
+      pos: 52.915688,9.658
+      parent: 2
+  - uid: 23568
+    components:
+    - type: Transform
+      pos: 67.418884,-51.94911
+      parent: 2
 - proto: DrinkRootBeerCan
   entities:
   - uid: 1979
@@ -64788,6 +64862,13 @@ entities:
     - type: Transform
       pos: 81.67683,22.31661
       parent: 2
+- proto: DrinkThavenBadGlass
+  entities:
+  - uid: 23494
+    components:
+    - type: Transform
+      pos: 79.48784,26.023521
+      parent: 2
 - proto: DrinkTonicWaterBottleFull
   entities:
   - uid: 18473
@@ -64801,6 +64882,13 @@ entities:
     components:
     - type: Transform
       pos: 71.355354,44.916115
+      parent: 2
+- proto: DrinkVoxRocksGlass
+  entities:
+  - uid: 23569
+    components:
+    - type: Transform
+      pos: 97.576485,35.648083
       parent: 2
 - proto: DrinkWaterBottleFull
   entities:
@@ -73301,8 +73389,10 @@ entities:
   - uid: 11518
     components:
     - type: Transform
-      pos: 98.54236,32.661613
-      parent: 2
+      parent: 9403
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
 - proto: FoodBoxDonkpocketStonk
   entities:
   - uid: 14031
@@ -73741,7 +73831,7 @@ entities:
   - uid: 21622
     components:
     - type: Transform
-      pos: 97.49941,35.580353
+      pos: 98.545235,32.694958
       parent: 2
 - proto: GasFilter
   entities:
@@ -107565,7 +107655,7 @@ entities:
   - uid: 23229
     components:
     - type: Transform
-      pos: 142.5605,3.685073
+      pos: 144.49634,8.645631
       parent: 2
   - uid: 23230
     components:
@@ -109071,7 +109161,7 @@ entities:
         temperature: 293.147
         moles:
         - 0
-        - 8.3142395
+        - 8.979379
         - 0
         - 0
         - 0
@@ -109082,6 +109172,19 @@ entities:
         - 0
         - 0
         - 0
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 11518
+          - 78
+          - 9093
+        paper_label: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
   - uid: 18484
     components:
     - type: Transform
@@ -109969,7 +110072,7 @@ entities:
   - uid: 19679
     components:
     - type: Transform
-      pos: 80.51876,-10.38301
+      pos: 81.39329,-8.345299
       parent: 2
 - proto: MedkitFilled
   entities:
@@ -110438,7 +110541,7 @@ entities:
   - uid: 19618
     components:
     - type: Transform
-      pos: 144.49332,8.624742
+      pos: 142.71509,3.3800063
       parent: 2
 - proto: NitrogenCanister
   entities:
@@ -116222,18 +116325,6 @@ entities:
     - type: RandomSpawner
       chance: 1
       rareChance: 0
-- proto: RandomDrinkGlass
-  entities:
-  - uid: 78
-    components:
-    - type: Transform
-      pos: 79.5,27.5
-      parent: 2
-  - uid: 9093
-    components:
-    - type: Transform
-      pos: 79.5,26.5
-      parent: 2
 - proto: RandomDrinkSoda
   entities:
   - uid: 14367
@@ -133521,7 +133612,7 @@ entities:
   - uid: 5958
     components:
     - type: Transform
-      pos: 81.53828,-8.354212
+      pos: 81.70579,-8.376549
       parent: 2
 - proto: WallmountGeneratorAPUElectronics
   entities:
@@ -150296,7 +150387,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -82723.87
+      secondsUntilStateChange: -83154.53
       state: Opening
     - type: Airlock
       autoClose: False
