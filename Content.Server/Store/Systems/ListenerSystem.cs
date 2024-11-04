@@ -1,3 +1,4 @@
+using System.Linq; // Add this to use LINQ
 using Content.Shared.Components;
 using Content.Server.Popups;
 using Robust.Shared.GameObjects;
@@ -18,13 +19,10 @@ namespace Content.Server.Systems
         {
             var message = args.Message.Trim();
 
-            foreach (var codeword in component.Codewords)
+            if (component.Codewords.Any(codeword => message.Contains(codeword, StringComparison.InvariantCultureIgnoreCase)))
             {
-                if (message.Contains(codeword, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    TriggerAction(uid, args.Source, codeword);
-                    break;
-                }
+                var codeword = component.Codewords.First(codeword => message.Contains(codeword, StringComparison.InvariantCultureIgnoreCase));
+                TriggerAction(uid, args.Source, codeword);
             }
         }
 
