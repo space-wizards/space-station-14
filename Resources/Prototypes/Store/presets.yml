@@ -30,6 +30,7 @@
     categories:
     - UplinkNtWeaponry
     - UplinkNtArmor
+    - UplinkNtAmmo
     currencyWhitelist:
     - BluespaceCrystal
     balance:
