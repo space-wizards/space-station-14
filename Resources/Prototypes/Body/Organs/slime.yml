@@ -37,6 +37,7 @@
       size: Small
       heldPrefix: brain
 
+
 - type: entity
   id: OrganSlimeLungs
   parent: BaseHumanOrgan
@@ -73,5 +74,5 @@
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
   - type: Item
-      size: Small
-      heldPrefix: brain
+    size: Small
+    heldPrefix: brain
