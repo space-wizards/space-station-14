@@ -45,18 +45,33 @@
   parent: BasePowerCell
   components:
   - type: Sprite
+    sprite: Objects/Power/Weapons/Guns/Ammunition/Magazine/Magcell.rsi
     layers:
-    - map: [ "enum.PowerCellVisualLayers.Base" ]
-      state: medium
-    - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
-      state: o2
-      shader: unshaded
+    - state: icon
   - type: Battery
-    maxCharge: 720
-    startingCharge: 720
+    maxCharge: 800
+    startingCharge: 800
   - type: ProjectileBatteryAmmoProvider
     proto: NtBolt
-    fireCost: 70
+    fireCost: 80
+  - type: Tag
+    tags:
+      - MagCell
+
+      
+- type: entity
+  name: NT advanced magcell
+  description: A rechargeable energy magazine for use with compatible NT energy weaponry. This one has an expanded capacity.
+  id: MagCellAdvanced
+  suffix: Full
+  parent: BaseMagCell
+  components:
+  - type: Battery
+    maxCharge: 1300
+    startingCharge: 1300
+  - type: ProjectileBatteryAmmoProvider
+    proto: NtBolt
+    fireCost: 80
   - type: Tag
     tags:
       - MagCell
