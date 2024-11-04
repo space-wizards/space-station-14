@@ -4,6 +4,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.IoC;
+using Content.Shared.CrewManifest;
 
 namespace Content.Client.Cargo.UI
 {
@@ -17,6 +18,43 @@ namespace Content.Client.Cargo.UI
 
             Amount.SetButtons(new List<int> { -3, -2, -1 }, new List<int> { 1, 2, 3 });
             Amount.IsValid = n => n > 0;
+            CrewList.OnItemSelected += OnCrewMemberSelected; // Harmony change for cargo orders QoL (Crew list)
+        }
+
+        /// <summary>
+        ///     Harmony change.
+        ///     Sets requester field to the name of a crewmember from OptionButton metadata.
+        /// </summary>
+        private void OnCrewMemberSelected(OptionButton.ItemSelectedEventArgs args)
+        {
+            if (args.Id == -1 || args.Id == -2)
+                return;
+
+            if (CrewList.GetItemMetadata(args.Id) is string name)
+                Requester.Text = name;
+        }
+
+        /// <summary>
+        ///     Harmony change.
+        ///     Populates the list of crew members in the requester dropdown menu.
+        /// </summary>
+        public void PopulateCrewList(CrewManifestEntries? crewManifest)
+        {
+            CrewList.Clear();
+            // Hacky negative IDs to have iterator aligned with crew manifest entries
+            CrewList.AddItem(Loc.GetString("cargo-console-order-menu-crewlist-label"), -1);
+            if (crewManifest == null)
+            {
+                CrewList.AddItem(Loc.GetString("cargo-console-order-menu-crewlist-nodata-label"), -2);
+                return;
+            }
+            for (var i = 0; i < crewManifest.Entries.Length; i++)
+            {
+                var crewMember = crewManifest.Entries[i];
+                CrewList.AddItem($"{crewMember.Name} ({crewMember.JobTitle})", i);
+                CrewList.SetItemMetadata(i, crewMember.Name);
+            }
+            CrewList.SelectId(-1);
         }
     }
 }

@@ -122,6 +122,7 @@ namespace Content.Client.Cargo.BUI
             AccountName = cState.Name;
 
             Populate(cState.Orders);
+            _orderMenu?.PopulateCrewList(cState.CrewManifest); // Harmony change for cargo orders QoL (Crew list)
             _menu?.UpdateCargoCapacity(OrderCount, OrderCapacity);
             _menu?.UpdateBankData(AccountName, BankBalance);
         }
