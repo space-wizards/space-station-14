@@ -1286,7 +1286,7 @@
     sprite: Mobs/Effects/onfire.rsi
     normalState: Monkey_burning
   - type: InteractionPopup
-    successChance: 0.9
+    successChance: 0.7
     interactSuccessString: petting-success-monkey
     interactFailureString: petting-failure-monkey
     interactSuccessSpawn: EffectHearts

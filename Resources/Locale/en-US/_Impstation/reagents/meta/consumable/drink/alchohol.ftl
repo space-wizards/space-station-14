@@ -46,5 +46,8 @@ reagent-desc-cottonbool = A modern take on a Mothrine classic that's sure to cau
 reagent-name-thavenbad = bad
 reagent-desc-thavenbad = A traditional Thaven delicacy. It's considered a great honour to share one with a new friend.
 
-reagent-name-starrynight = Starry Night
+reagent-name-starrynight = starry night
 reagent-desc-starrynight = A beautiful drink fashioned in memoriam of a great terran artist, proof that your works will be loved in ways you cannot imagine.
+
+reagent-name-thumperdrink = thumper
+reagent-desc-thumperdrink = A delicious blend of fruit juice and liquor, from the shelves of the Reptilian homeworld to a bar counter near you.
