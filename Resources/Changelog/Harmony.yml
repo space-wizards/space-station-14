@@ -447,3 +447,17 @@ Entries:
     - type: Tweak
       message: Barotrauma damage has been quadrupled (to be in line with values before
         upstream nerf).
+  - id: 150
+    author: SlamBamActionman
+    time: '2024-11-03T19:12:49.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/150
+    changes:
+    - type: Fix
+      message: Xeno map has been updated with correct jobs, Pun Pun and minor additions/changes
+  - id: 154
+    author: spanky-spanky
+    time: '2024-11-04T07:17:55.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/154
+    changes:
+    - type: Tweak
+      message: Barratry added into rotation.
