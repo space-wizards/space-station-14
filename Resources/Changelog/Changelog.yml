@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: RCD UI can be activated only in hand.
-    type: Tweak
-  id: 7089
-  time: '2024-08-11T09:15:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30861
 - author: TokenStyle
   changes:
   - message: Pax reagent now refresh pacified.
@@ -3952,3 +3945,10 @@
   id: 7588
   time: '2024-11-04T03:24:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32945
+- author: thetolbean
+  changes:
+  - message: The web coat and boots can now be broken down into silk.
+    type: Fix
+  id: 7589
+  time: '2024-11-04T03:33:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33121
