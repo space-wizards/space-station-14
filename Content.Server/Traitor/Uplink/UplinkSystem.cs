@@ -29,29 +29,54 @@ namespace Content.Server.Traitor.Uplink
         /// <param name="uplinkPresetId">The id of the storepreset</param>
         /// <param name="uplinkEntity">The entity that will actually have the uplink functionality. Defaults to the PDA if null.</param>
         /// <returns>Whether or not the uplink was added successfully</returns>
-       public bool AddUplink(EntityUid user, FixedPoint2? balance, EntityUid? uplinkEntity = null, string presetId = "StorePresetUplink")
-{
-    // Try to find target item
-    if (uplinkEntity == null)
-    {
-        uplinkEntity = FindUplinkTarget(user);
-        if (uplinkEntity == null)
-            return false;
-    }
+        public bool AddUplink(EntityUid user, FixedPoint2? balance, EntityUid? uplinkEntity = null)
+        {
+            // Try to find target item
+            if (uplinkEntity == null)
+            {
+                uplinkEntity = FindUplinkTarget(user);
+                if (uplinkEntity == null)
+                    return false;
+            }
 
-    EnsureComp<UplinkComponent>(uplinkEntity.Value);
-    var store = EnsureComp<StoreComponent>(uplinkEntity.Value);
-    store.AccountOwner = user;
-    store.StorePresetId = presetId; // Set the correct store preset
-    store.Balance.Clear();
-    if (balance != null)
-    {
-        store.Balance.Clear();
-        _store.TryAddCurrency(new Dictionary<string, FixedPoint2> { { presetId == "StorePresetUplinkNT" ? BluespaceCrystalCurrencyPrototype : TelecrystalCurrencyPrototype, balance.Value } }, uplinkEntity.Value, store);
-    }
+            EnsureComp<UplinkComponent>(uplinkEntity.Value);
+            var store = EnsureComp<StoreComponent>(uplinkEntity.Value);
+            store.AccountOwner = user;
+            store.Balance.Clear();
+            if (balance != null)
+            {
+                store.Balance.Clear();
+                _store.TryAddCurrency(new Dictionary<string, FixedPoint2> { { TelecrystalCurrencyPrototype, balance.Value } }, uplinkEntity.Value, store);
+            }
 
-    return true;
-}
+            // TODO add BUI. Currently can't be done outside of yaml -_-
+
+            return true;
+        }
+
+        public bool AddUplinkNT(EntityUid user, FixedPoint2? balance, EntityUid? uplinkEntity = null)
+        {
+            // Try to find target item
+            if (uplinkEntity == null)
+            {
+                uplinkEntity = FindUplinkTargetNT(user);
+                if (uplinkEntity == null)
+                    return false;
+            }
+
+            EnsureComp<UplinkComponent>(uplinkEntity.Value);
+            var store = EnsureComp<StoreComponent>(uplinkEntity.Value);
+            store.AccountOwner = user;
+            store.Balance.Clear();
+            if (balance != null)
+            {
+                store.Balance.Clear();
+                _store.TryAddCurrency(new Dictionary<string, FixedPoint2> { { BluespaceCrystalCurrencyPrototype, balance.Value } }, uplinkEntity.Value, store);
+            }
+
+            return true;
+        }
+
 
 
         /// <summary>
@@ -76,6 +101,35 @@ namespace Content.Server.Traitor.Uplink
             foreach (var item in _handsSystem.EnumerateHeld(user))
             {
                 if (HasComp<PdaComponent>(item) || HasComp<StoreComponent>(item))
+                    return item;
+            }
+
+            return null;
+        }
+
+
+        /// <summary>
+        /// Finds the entity that can hold an uplink for an NT agent
+        /// This checks the user's inventory slots for a headset that can hold an uplink. It also checks the user's hands.
+        /// </summary>
+         public EntityUid? FindUplinkTargetNT(EntityUid user)
+        {
+            // Try to find Headset in inventory
+            if (_inventorySystem.TryGetContainerSlotEnumerator(user, out var containerSlotEnumerator))
+            {
+                while (containerSlotEnumerator.MoveNext(out var headsetUid))
+                {
+                    if (!headsetUid.ContainedEntity.HasValue) continue;
+
+                    if (HasComp<RadioComponent>(headsetUid.ContainedEntity.Value) || HasComp<StoreComponent>(headsetUid.ContainedEntity.Value))
+                        return headsetUid.ContainedEntity.Value;
+                }
+            }
+
+            // Also check hands
+            foreach (var item in _handsSystem.EnumerateHeld(user))
+            {
+                if (HasComp<RadioComponent>(item)
                     return item;
             }
 
