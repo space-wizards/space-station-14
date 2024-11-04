@@ -136,7 +136,7 @@
 - type: entity
   abstract: true
   id: BaseDiceLoaded
-  suffix: loaded
+  suffix: Loaded
   components:
   - type: LoadedDice
   - type: UserInterface

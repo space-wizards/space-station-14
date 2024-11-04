@@ -40,7 +40,7 @@
 - type: entity
   parent: DiceBag
   id: LoadedDiceBag
-  suffix: loaded
+  suffix: Loaded
   components:
   - type: StorageFill
     contents:
