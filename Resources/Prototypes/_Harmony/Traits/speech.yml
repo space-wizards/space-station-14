@@ -1,0 +1,240 @@
+# Basic speech-only replacement traits
+- type: trait
+  id: HarmonyRaisedByArachnids
+  name: trait-raisedbyarachnids-name
+  description: trait-raisedbyarachnids-desc
+  replaceComponents: true
+  cost: 1
+  category: SpeechTraits
+  components:
+    - type: Speech
+      speechVerb: Arachnid
+      speechSounds: Arachnid
+
+- type: trait
+  id: HarmonyRaisedByDiona
+  name: trait-raisedbydiona-name
+  description: trait-raisedbydiona-desc
+  replaceComponents: true
+  cost: 1
+  category: SpeechTraits
+  components:
+    - type: Speech
+      speechSounds: Alto
+      speechVerb: Plant
+
+- type: trait
+  id: HarmonyRaisedByDwarfs
+  name: trait-raisedbydwarfs-name
+  description: trait-raisedbydwarfs-desc
+  replaceComponents: true
+  cost: 1
+  category: SpeechTraits
+  components:
+    - type: Speech
+      speechSounds: Bass
+      speechVerb: Default
+
+- type: trait
+  id: HarmonyRaisedByHumans
+  name: trait-raisedbyhumans-name
+  description: trait-raisedbyhumans-desc
+  replaceComponents: true
+  cost: 1
+  category: SpeechTraits
+  components:
+    - type: Speech
+      speechSounds: Alto
+      speechVerb: Default
+
+- type: trait
+  id: HarmonyRaisedByMoths
+  name: trait-raisedbymoths-name
+  description: trait-raisedbymoths-desc
+  replaceComponents: true
+  cost: 1
+  category: SpeechTraits
+  components:
+    - type: Speech
+      speechSounds: Alto
+      speechVerb: Moth
+
+- type: trait
+  id: HarmonyRaisedByReptilians
+  name: trait-raisedbyreptilians-name
+  description: trait-raisedbyreptilians-desc
+  replaceComponents: true
+  cost: 1
+  category: SpeechTraits
+  components:
+    - type: Speech
+      speechSounds: Lizard
+      speechVerb: Reptilian
+
+- type: trait
+  id: HarmonyRaisedBySlimes
+  name: trait-raisedbyslimes-name
+  description: trait-raisedbyslimes-desc
+  replaceComponents: true
+  cost: 1
+  category: SpeechTraits
+  components:
+    - type: Speech
+      speechVerb: Slime
+      speechSounds: Slime
+
+- type: trait
+  id: HarmonyRaisedByVox
+  name: trait-raisedbyvox-name
+  description: trait-raisedbyvox-desc
+  replaceComponents: true
+  cost: 1
+  category: SpeechTraits
+  components:
+    - type: Speech
+      speechVerb: Vox
+      speechSounds: Vox
+
+# Full speech and vocal replacement traits
+- type: trait
+  id: HarmonyArachnidVocals
+  name: trait-arachnidvocals-name
+  description: trait-arachnidvocals-desc
+  replaceComponents: true
+  cost: 2
+  category: SpeechTraits
+  components:
+    - type: Speech
+      speechVerb: Arachnid
+      speechSounds: Arachnid
+      allowedEmotes: ['Click', 'Chitter']
+    - type: Vocal
+      sounds:
+        Male: UnisexArachnid
+        Female: UnisexArachnid
+        Unsexed: UnisexArachnid
+
+- type: trait
+  id: HarmonyDionaVocals
+  name: trait-dionavocals-name
+  description: trait-dionavocals-desc
+  replaceComponents: true
+  cost: 2
+  category: SpeechTraits
+  components:
+    - type: Speech
+      speechSounds: Alto
+      speechVerb: Plant
+    - type: Vocal
+      sounds:
+        Male: UnisexDiona
+        Female: UnisexDiona
+        Unsexed: UnisexDiona
+
+- type: trait
+  id: HarmonyDwarfVocals
+  name: trait-dwarfvocals-name
+  description: trait-dwarfvocals-desc
+  replaceComponents: true
+  cost: 2
+  category: SpeechTraits
+  components:
+    - type: Speech
+      speechSounds: Bass
+      speechVerb: Default
+    - type: ReplacementAccent
+      accent: dwarf
+    - type: Vocal
+      sounds:
+        Male: UnisexDwarf
+        Female: FemaleDwarf
+        Unsexed: UnisexDwarf
+
+- type: trait
+  id: HarmonyHumanVocals
+  name: trait-humanvocals-name
+  description: trait-humanvocals-desc
+  replaceComponents: true
+  cost: 2
+  category: SpeechTraits
+  components:
+    - type: Speech
+      speechSounds: Alto
+      speechVerb: Default
+    - type: Vocal
+      sounds:
+        Male: MaleHuman
+        Female: FemaleHuman
+        Unsexed: MaleHuman
+
+- type: trait
+  id: HarmonyMothsVocals
+  name: trait-mothvocals-name
+  description: trait-mothvocals-desc
+  replaceComponents: true
+  cost: 2
+  category: SpeechTraits
+  components:
+    - type: MothAccent
+    - type: Speech
+      speechSounds: Alto
+      speechVerb: Moth
+      allowedEmotes: ['Chitter', 'Squeak']
+    - type: Vocal
+      sounds:
+        Male: UnisexMoth
+        Female: UnisexMoth
+        Unsexed: UnisexMoth
+
+- type: trait
+  id: HarmonyReptilianVocals
+  name: trait-reptilianvocals-name
+  description: trait-reptilianvocals-desc
+  replaceComponents: true
+  cost: 2
+  category: SpeechTraits
+  components:
+    - type: LizardAccent
+    - type: Speech
+      speechSounds: Lizard
+      speechVerb: Reptilian
+    - type: Vocal
+      sounds:
+        Male: MaleReptilian
+        Female: FemaleReptilian
+        Unsexed: MaleReptilian
+
+- type: trait
+  id: HarmonySlimeVocals
+  name: trait-slimevocals-name
+  description: trait-slimevocals-desc
+  replaceComponents: true
+  cost: 2
+  category: SpeechTraits
+  components:
+    - type: Speech
+      speechVerb: Slime
+      speechSounds: Slime
+      allowedEmotes: ['Squish']
+    - type: Vocal
+      sounds:
+        Male: MaleSlime
+        Female: FemaleSlime
+        Unsexed: MaleSlime
+
+- type: trait
+  id: HarmonyVoxVocals
+  name: trait-voxvocals-name
+  description: trait-voxvocals-desc
+  replaceComponents: true
+  cost: 2
+  category: SpeechTraits
+  components:
+    - type: Speech
+      speechVerb: Vox
+      speechSounds: Vox
+    - type: Vocal
+      sounds:
+        Male: UnisexVox
+        Female: UnisexVox
+        Unsexed: UnisexVox
