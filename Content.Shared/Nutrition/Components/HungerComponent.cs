@@ -16,21 +16,21 @@ public sealed partial class HungerComponent : Component
     /// <summary>
     /// The current hunger amount of the entity
     /// </summary>
-    [DataField]
+    [DataField("currentHunger"), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public float CurrentHunger;
 
     /// <summary>
     /// The base amount at which <see cref="CurrentHunger"/> decays.
     /// </summary>
-    [DataField]
+    [DataField("baseDecayRate"), ViewVariables(VVAccess.ReadWrite)]
     public float BaseDecayRate = 0.01666666666f;
 
     /// <summary>
     /// The actual amount at which <see cref="CurrentHunger"/> decays.
     /// Affected by <seealso cref="CurrentThreshold"/>
     /// </summary>
-    [DataField]
+    [DataField("actualDecayRate"), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public float ActualDecayRate;
 
@@ -38,14 +38,14 @@ public sealed partial class HungerComponent : Component
     /// The last threshold this entity was at.
     /// Stored in order to prevent recalculating
     /// </summary>
-    [DataField]
+    [DataField("lastThreshold"), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public HungerThreshold LastThreshold;
 
     /// <summary>
     /// The current hunger threshold the entity is at
     /// </summary>
-    [DataField]
+    [DataField("currentThreshold"), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public HungerThreshold CurrentThreshold;
 
@@ -66,7 +66,7 @@ public sealed partial class HungerComponent : Component
     /// <summary>
     /// A dictionary relating hunger thresholds to corresponding alerts.
     /// </summary>
-    [DataField]
+    [DataField("hungerThresholdAlerts")]
     [AutoNetworkedField]
     public Dictionary<HungerThreshold, ProtoId<AlertPrototype>> HungerThresholdAlerts = new()
     {
@@ -95,14 +95,14 @@ public sealed partial class HungerComponent : Component
     /// <summary>
     /// The amount of slowdown applied when an entity is starving
     /// </summary>
-    [DataField]
+    [DataField("starvingSlowdownModifier"), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public float StarvingSlowdownModifier = 0.75f;
 
     /// <summary>
     /// Damage dealt when your current threshold is at HungerThreshold.Dead
     /// </summary>
-    [DataField]
+    [DataField("starvationDamage")]
     public DamageSpecifier? StarvationDamage;
 
     /// <summary>
