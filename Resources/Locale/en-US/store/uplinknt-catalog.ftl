@@ -27,3 +27,9 @@ uplink-cburn-desc = Spare CBURN equipment from a fallen team. Contains a sawn-of
 
 uplink-magcell-name = Spare magcell
 uplink-magcell-desc = A spare magcell for use with NT energy weaponry.
+
+uplink-magcelladv-name = Advanced magcell
+uplink-magcelladv-desc = An advanced variant of the standard magcell with increased capacity. Contains energy for 25 shots.
+
+uplink-magcellexp-name = Experimental magcell
+uplink-magcellexp-desc = An experimental variant of the standard magcell that gradually siphons from bluespace to self-recharge. Takes 100 seconds to fully recharge.
