@@ -159,7 +159,7 @@ public bool MakeNanoTrasenTraitor(EntityUid traitor, TraitorRuleComponent compon
         listener.Codewords = randomCodewords;
     }
 
-    _antag.SendBriefing(traitor, GenerateBriefing(component.NanoTrasenCodewords, code, issuer), null, component.GreetSoundNotification);
+    _antag.SendBriefing(traitor, GenerateBriefingNT(component.NanoTrasenCodewords, code, issuer), null, component.GreetSoundNotification);
     component.TraitorMinds.Add(mindId);
 
     _roleSystem.MindAddRole(mindId, new RoleBriefingComponent
@@ -182,6 +182,16 @@ public bool MakeNanoTrasenTraitor(EntityUid traitor, TraitorRuleComponent compon
     }
 
     private string GenerateBriefing(string[] codewords, Note[]? uplinkCode, string? objectiveIssuer = null)
+    {
+        var sb = new StringBuilder();
+        sb.AppendLine(Loc.GetString("traitor-role-greeting", ("corporation", objectiveIssuer ?? Loc.GetString("objective-issuer-unknown"))));
+        sb.AppendLine(Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", codewords))));
+        if (uplinkCode != null)
+            sb.AppendLine(Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", uplinkCode).Replace("sharp", "#"))));
+
+        return sb.ToString();
+    }
+    private string GenerateBriefingNT(string[] codewords, Note[]? uplinkCode, string? objectiveIssuer = null)
     {
         var sb = new StringBuilder();
         sb.AppendLine(Loc.GetString("traitor-role-greeting", ("corporation", objectiveIssuer ?? Loc.GetString("objective-issuer-unknown"))));
