@@ -223,11 +223,6 @@
             - material: Uranium
               amount: 2
               doAfter: 1
-        - to: shuttleWindow
-          steps:
-            - material: Plasteel
-              amount: 2
-              doAfter: 3
 
     - node: reinforcedPlasmaWindow
       entity: ReinforcedPlasmaWindow
