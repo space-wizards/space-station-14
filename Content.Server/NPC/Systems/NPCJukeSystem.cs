@@ -20,6 +20,7 @@ public sealed class NPCJukeSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly MeleeWeaponSystem _melee = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private EntityQuery<NPCMeleeCombatComponent> _npcMeleeQuery;
@@ -59,7 +60,7 @@ public sealed class NPCJukeSystem : EntitySystem
                 return;
             }
 
-            var currentTile = grid.CoordinatesToTile(args.Transform.Coordinates);
+            var currentTile = _mapSystem.CoordinatesToTile(args.Transform.GridUid.Value, grid, args.Transform.Coordinates);
 
             if (component.TargetTile == null)
             {
@@ -72,7 +73,7 @@ public sealed class NPCJukeSystem : EntitySystem
                 for (var i = 0; i < 8; i++)
                 {
                     var index = (startIndex + i) % 8;
-                    var neighbor = ((Direction) index).ToIntVec() + currentTile;
+                    var neighbor = ((Direction)index).ToIntVec() + currentTile;
                     var valid = true;
 
                     // TODO: Probably make this a helper on engine maybe
@@ -116,7 +117,7 @@ public sealed class NPCJukeSystem : EntitySystem
                 return;
             }
 
-            var targetCoords = grid.GridTileToWorld(component.TargetTile.Value);
+            var targetCoords = _mapSystem.GridTileToWorld(args.Transform.GridUid.Value, grid, component.TargetTile.Value);
             var targetDir = (targetCoords.Position - args.WorldPosition);
             targetDir = args.OffsetRotation.RotateVec(targetDir);
             const float weight = 1f;
