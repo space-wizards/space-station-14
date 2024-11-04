@@ -2178,19 +2178,6 @@ entities:
             2130: -25,-22
             2131: -25,-51
         - node:
-            zIndex: 1
-            color: '#5283FF37'
-            id: MarkupSquare
-          decals:
-            992: 1,-48
-            993: 2,-48
-            994: 2,-47
-            995: 1,-47
-            998: 1,-50
-            999: 1,-51
-            1000: 0,-51
-            1001: 0,-50
-        - node:
             color: '#A4610696'
             id: FullTileOverlayGreyscale
           decals:
@@ -2432,6 +2419,19 @@ entities:
             id: LoadingAreaGreyscale
           decals:
             2202: -32,-74
+        - node:
+            zIndex: 1
+            color: '#5283FF37'
+            id: MarkupSquare
+          decals:
+            992: 1,-48
+            993: 2,-48
+            994: 2,-47
+            995: 1,-47
+            998: 1,-50
+            999: 1,-51
+            1000: 0,-51
+            1001: 0,-50
         - node:
             color: '#FF800066'
             id: MiniTileBoxOverlay
@@ -4730,10 +4730,10 @@ entities:
           8,-16:
             0: 15
             1: 256
-            5: 17408
+            3: 17408
           8,-15:
             1: 4096
-            5: 4
+            3: 4
           8,-14:
             0: 32752
           8,-13:
@@ -5392,8 +5392,8 @@ entities:
             0: 65535
           9,-16:
             0: 15
-            6: 4352
-            3: 17408
+            4: 4352
+            5: 17408
           10,-20:
             0: 64512
           10,-19:
@@ -5404,8 +5404,8 @@ entities:
             0: 65535
           10,-16:
             0: 15
-            3: 4352
-            7: 17408
+            5: 4352
+            6: 17408
           11,-20:
             0: 16128
           11,-19:
@@ -5416,7 +5416,7 @@ entities:
             0: 65535
           11,-16:
             0: 15
-            3: 4352
+            5: 4352
             1: 1024
           12,-20:
             0: 7936
@@ -5449,7 +5449,7 @@ entities:
           12,-25:
             0: 61183
           12,-16:
-            3: 3822
+            5: 3822
           13,-20:
             0: 36608
           13,-19:
@@ -5659,7 +5659,7 @@ entities:
             0: 60928
           11,-15:
             1: 32768
-            3: 1
+            5: 1
           12,-14:
             0: 65518
           11,-14:
@@ -5671,7 +5671,7 @@ entities:
             0: 4068
           12,-12:
             0: 43207
-            4: 4352
+            7: 4352
           13,-15:
             0: 47786
           13,-14:
@@ -5768,12 +5768,12 @@ entities:
             1: 63624
           11,-12:
             0: 4508
-            4: 52224
+            7: 52224
           12,-11:
-            4: 4369
+            7: 4369
             0: 52424
           11,-11:
-            4: 52428
+            7: 52428
             0: 4371
           12,-10:
             0: 17748
@@ -5994,14 +5994,14 @@ entities:
           11,-3:
             1: 12288
           9,-15:
-            6: 1
-            3: 4
+            4: 1
+            5: 4
             1: 32768
           9,-14:
             0: 36848
           10,-15:
-            3: 1
-            7: 4
+            5: 1
+            6: 4
           10,-14:
             0: 65520
           -8,-24:
@@ -6112,10 +6112,55 @@ entities:
         - volume: 2500
           temperature: 293.15
           moles:
+          - 6666.982
           - 0
           - 0
           - 0
           - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
+          - 6666.982
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
+          - 0
+          - 0
+          - 6666.982
           - 0
           - 0
           - 0
@@ -6131,51 +6176,6 @@ entities:
           - 82.10312
           - 0
           - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 6666.982
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 0
-          - 6666.982
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 0
-          - 0
-          - 0
-          - 6666.982
           - 0
           - 0
           - 0
@@ -44595,6 +44595,7 @@ entities:
     - type: Transform
       pos: -20.5,-25.5
       parent: 2
+    - type: BombingTarget
 - proto: DefaultStationBeaconAtmospherics
   entities:
   - uid: 16227
@@ -44623,6 +44624,7 @@ entities:
     - type: Transform
       pos: -48.5,-45.5
       parent: 2
+    - type: BombingTarget
 - proto: DefaultStationBeaconBrig
   entities:
   - uid: 16239
@@ -44637,6 +44639,7 @@ entities:
     - type: Transform
       pos: -42.5,-54.5
       parent: 2
+    - type: BombingTarget
 - proto: DefaultStationBeaconCargoBay
   entities:
   - uid: 16244
@@ -44644,6 +44647,7 @@ entities:
     - type: Transform
       pos: 24.5,-97.5
       parent: 2
+    - type: BombingTarget
 - proto: DefaultStationBeaconCargoReception
   entities:
   - uid: 16243
@@ -44658,6 +44662,7 @@ entities:
     - type: Transform
       pos: -30.5,-61.5
       parent: 2
+    - type: BombingTarget
 - proto: DefaultStationBeaconChapel
   entities:
   - uid: 16214
@@ -44672,6 +44677,7 @@ entities:
     - type: Transform
       pos: 19.5,-72.5
       parent: 2
+    - type: BombingTarget
 - proto: DefaultStationBeaconCMORoom
   entities:
   - uid: 16267
@@ -44679,6 +44685,7 @@ entities:
     - type: Transform
       pos: 11.5,-16.5
       parent: 2
+    - type: BombingTarget
 - proto: DefaultStationBeaconCryosleep
   entities:
   - uid: 16223
@@ -44693,6 +44700,7 @@ entities:
     - type: Transform
       pos: 61.5,-70.5
       parent: 2
+    - type: BombingTarget
 - proto: DefaultStationBeaconDisposals
   entities:
   - uid: 16259
@@ -44765,6 +44773,7 @@ entities:
     - type: Transform
       pos: 14.5,-59.5
       parent: 2
+    - type: BombingTarget
 - proto: DefaultStationBeaconHOSRoom
   entities:
   - uid: 16238
@@ -44772,6 +44781,7 @@ entities:
     - type: Transform
       pos: 67.5,-31.5
       parent: 2
+    - type: BombingTarget
 - proto: DefaultStationBeaconJanitorsCloset
   entities:
   - uid: 16253
@@ -44779,6 +44789,7 @@ entities:
     - type: Transform
       pos: -8.5,-51.5
       parent: 2
+    - type: BombingTarget
 - proto: DefaultStationBeaconKitchen
   entities:
   - uid: 16230
@@ -44786,6 +44797,7 @@ entities:
     - type: Transform
       pos: 40.5,-43.5
       parent: 2
+    - type: BombingTarget
 - proto: DefaultStationBeaconLawOffice
   entities:
   - uid: 16252
@@ -44807,6 +44819,7 @@ entities:
     - type: Transform
       pos: 14.5,-29.5
       parent: 2
+    - type: BombingTarget
 - proto: DefaultStationBeaconMedical
   entities:
   - uid: 7768
@@ -44816,6 +44829,7 @@ entities:
       parent: 2
     - type: NavMapBeacon
       text: Virology
+    - type: BombingTarget
 - proto: DefaultStationBeaconMorgue
   entities:
   - uid: 16250
@@ -44830,6 +44844,7 @@ entities:
     - type: Transform
       pos: 46.5,-17.5
       parent: 2
+    - type: BombingTarget
 - proto: DefaultStationBeaconPowerBank
   entities:
   - uid: 16248
@@ -44844,6 +44859,7 @@ entities:
     - type: Transform
       pos: 9.5,-88.5
       parent: 2
+    - type: BombingTarget
 - proto: DefaultStationBeaconRDRoom
   entities:
   - uid: 16242
@@ -44851,6 +44867,7 @@ entities:
     - type: Transform
       pos: -21.5,-19.5
       parent: 2
+    - type: BombingTarget
 - proto: DefaultStationBeaconRobotics
   entities:
   - uid: 16249
@@ -44865,6 +44882,7 @@ entities:
     - type: Transform
       pos: 50.5,-99.5
       parent: 2
+    - type: BombingTarget
 - proto: DefaultStationBeaconScience
   entities:
   - uid: 16215
@@ -44872,6 +44890,7 @@ entities:
     - type: Transform
       pos: -6.5,-21.5
       parent: 2
+    - type: BombingTarget
 - proto: DefaultStationBeaconSecurity
   entities:
   - uid: 16247
@@ -44900,6 +44919,7 @@ entities:
     - type: Transform
       pos: -23.5,-71.5
       parent: 2
+    - type: BombingTarget
 - proto: DefaultStationBeaconSolars
   entities:
   - uid: 16263
@@ -44930,6 +44950,7 @@ entities:
     - type: Transform
       pos: 28.5,-62.5
       parent: 2
+    - type: BombingTarget
 - proto: DefaultStationBeaconTEG
   entities:
   - uid: 16216
@@ -44937,6 +44958,7 @@ entities:
     - type: Transform
       pos: 38.5,-70.5
       parent: 2
+    - type: BombingTarget
 - proto: DefaultStationBeaconTheater
   entities:
   - uid: 16236
@@ -44969,6 +44991,7 @@ entities:
     - type: Transform
       pos: 10.5,-41.5
       parent: 2
+    - type: BombingTarget
 - proto: DefaultStationBeaconWardensOffice
   entities:
   - uid: 16240
@@ -62736,6 +62759,7 @@ entities:
       parent: 2
     - type: AtmosPipeColor
       color: '#0055CCFF'
+    - type: BombingTarget
   - uid: 9372
     components:
     - type: Transform
