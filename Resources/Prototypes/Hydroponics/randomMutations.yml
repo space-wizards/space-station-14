@@ -17,7 +17,6 @@
       effect: !type:Slipify
     - name: ChangeSpecies
       baseOdds: 0.036
-      persists: false
       effect: !type:PlantSpeciesChange
       persists: false
     - name: Unviable
