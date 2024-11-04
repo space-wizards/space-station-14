@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Shared.Actions;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
@@ -385,12 +385,12 @@ public abstract class SharedMagicSystem : EntitySystem
     /// <param name="args"></param>
     private void OnTeleportSpell(TeleportSpellEvent args)
     {
-        if (args.Handled || !PassesSpellPrerequisites(args.Action, args.Performer))
+        if ( args.Handled || !PassesSpellPrerequisites(args.Action, args.Performer))
             return;
 
         var transform = Transform(args.Performer);
 
-        if (transform.MapID != args.Target.GetMapId(EntityManager) || !_interaction.InRangeUnobstructed(args.Performer, args.Target, range: 1000F, collisionMask: CollisionGroup.Opaque, popup: true))
+        if (transform.MapID != args.Target.GetMapId(EntityManager) || (!args.IgnoreWalls && !_interaction.InRangeUnobstructed(args.Performer, args.Target, range: 1000F, collisionMask: CollisionGroup.Opaque, popup: true)))
             return;
 
         _transform.SetCoordinates(args.Performer, args.Target);

@@ -19,6 +19,10 @@
   background: /Textures/LobbyScreens/skellyvstherev.webp
 
 - type: lobbyBackground
+  id: mime
+  background: /Textures/LobbyScreens/mime.webp
+
+- type: lobbyBackground
   id: Doomed
   background: /Textures/LobbyScreens/doomed.webp
 

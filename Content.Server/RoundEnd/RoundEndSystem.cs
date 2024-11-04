@@ -188,7 +188,7 @@ namespace Content.Server.RoundEnd
                 null,
                 Color.Gold);
 
-            _audio.PlayGlobal("/Audio/Announcements/shuttlecalled.ogg", Filter.Broadcast(), true);
+            _audio.PlayGlobal("/Audio/_Starlight/Announcements/callEvac.ogg", Filter.Broadcast(), true);  //🌟Starlight🌟
 
             LastCountdownStart = _gameTiming.CurTime;
             ExpectedCountdownEnd = _gameTiming.CurTime + countdownTime;
@@ -236,7 +236,7 @@ namespace Content.Server.RoundEnd
             _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("round-end-system-shuttle-recalled-announcement"),
                 Loc.GetString("Station"), false, colorOverride: Color.Gold);
 
-            _audio.PlayGlobal("/Audio/Announcements/shuttlerecalled.ogg", Filter.Broadcast(), true);
+            _audio.PlayGlobal("/Audio/_Starlight/Announcements/recallEvac.ogg", Filter.Broadcast(), true); //🌟Starlight🌟
 
             LastCountdownStart = null;
             ExpectedCountdownEnd = null;

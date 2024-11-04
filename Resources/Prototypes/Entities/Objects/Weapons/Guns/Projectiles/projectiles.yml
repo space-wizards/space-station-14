@@ -315,6 +315,9 @@
     - EmitterBolt
   - type: TimedDespawn
     lifetime: 3
+  - type: Reflective
+    reflective:
+    - Energy
 
 - type: entity
   name: watcher bolt

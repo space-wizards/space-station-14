@@ -1,12 +1,20 @@
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Radio.Components;
+using Content.Server.Starlight.TTS;
+using Content.Server.VoiceMask;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.Chat;
 using Content.Shared.Database;
+using Content.Shared.PDA;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
+using Content.Shared.Roles;
 using Content.Shared.Speech;
+using Content.Shared.StatusIcon;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -28,6 +36,7 @@ public sealed class RadioSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
 
     // set used to prevent radio feedback loops.
     private readonly HashSet<string> _messages = new();
@@ -93,13 +102,43 @@ public sealed class RadioSystem : EntitySystem
             ? FormattedMessage.EscapeText(message)
             : message;
 
+        // start 🌟Starlight🌟
+
+        var iconId = "JobIconNoId";
+        var jobName = "";
+
+        if (_accessReader.FindAccessItemsInventory(messageSource, out var items))
+        {
+            foreach (var item in items)
+            {
+                // ID Card
+                if (TryComp<IdCardComponent>(item, out var id))
+                {
+                    iconId = id.JobIcon;
+                    jobName = id.JobTitle;
+                    break;
+                }
+
+                // PDA
+                if (TryComp<PdaComponent>(item, out var pda)
+                    && pda.ContainedId != null
+                    && TryComp(pda.ContainedId, out id))
+                {
+                    iconId = id.JobIcon;
+                    jobName = id.JobTitle;
+                    break;
+                }
+            }
+        }
+        // end 🌟Starlight🌟
+
         var wrappedMessage = Loc.GetString(speech.Bold ? "chat-radio-message-wrap-bold" : "chat-radio-message-wrap",
             ("color", channel.Color),
             ("fontType", speech.FontId),
             ("fontSize", speech.FontSize),
             ("verb", Loc.GetString(_random.Pick(speech.SpeechVerbStrings))),
             ("channel", $"\\[{channel.LocalizedName}\\]"),
-            ("name", name),
+            ("name", $"[icon src=\"{iconId}\" tooltip=\"{jobName}\"]{name}"),  // 🌟Starlight🌟
             ("message", content));
 
         // most radios are relayed to chat, so lets parse the chat message beforehand
@@ -110,7 +149,7 @@ public sealed class RadioSystem : EntitySystem
             NetEntity.Invalid,
             null);
         var chatMsg = new MsgChatMessage { Message = chat };
-        var ev = new RadioReceiveEvent(message, messageSource, channel, radioSource, chatMsg);
+        var ev = new RadioReceiveEvent(message, messageSource, channel, radioSource, chatMsg, []);
 
         var sendAttemptEv = new RadioSendAttemptEvent(channel, radioSource);
         RaiseLocalEvent(ref sendAttemptEv);
@@ -149,6 +188,12 @@ public sealed class RadioSystem : EntitySystem
             // send the message
             RaiseLocalEvent(receiver, ref ev);
         }
+        RaiseLocalEvent(new RadioSpokeEvent
+        {
+            Source = messageSource,
+            Message = message,
+            Receivers = [.. ev.Receivers]
+        });
 
         if (name != Name(messageSource))
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio message from {ToPrettyString(messageSource):user} as {name} on {channel.LocalizedName}: {message}");

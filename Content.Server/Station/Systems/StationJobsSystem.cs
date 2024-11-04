@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.GameTicking;
 using Content.Server.Station.Components;
+using Content.Shared._Starlight.NewLife;
 using Content.Shared.CCVar;
 using Content.Shared.FixedPoint;
 using Content.Shared.GameTicking;
@@ -36,6 +37,7 @@ public sealed partial class StationJobsSystem : EntitySystem
         SubscribeLocalEvent<StationJobsComponent, StationRenamedEvent>(OnStationRenamed);
         SubscribeLocalEvent<StationJobsComponent, ComponentShutdown>(OnStationDeletion);
         SubscribeLocalEvent<PlayerJoinedLobbyEvent>(OnPlayerJoinedLobby);
+        SubscribeLocalEvent<NewLifeOpenedEvent>(OnPlayerNewLifeOpen); //  🌟Starlight🌟
         Subs.CVar(_configurationManager, CCVars.GameDisallowLateJoins, _ => UpdateJobsAvailable(), true);
     }
 
@@ -516,6 +518,11 @@ public sealed partial class StationJobsSystem : EntitySystem
     private void OnPlayerJoinedLobby(PlayerJoinedLobbyEvent ev)
     {
         RaiseNetworkEvent(_cachedAvailableJobs, ev.PlayerSession.Channel);
+    }
+    //  🌟Starlight🌟
+    private void OnPlayerNewLifeOpen(NewLifeOpenedEvent ev, EntitySessionEventArgs args)
+    {
+        RaiseNetworkEvent(_cachedAvailableJobs, args.SenderSession.Channel);
     }
 
     private void OnStationRenamed(EntityUid uid, StationJobsComponent component, StationRenamedEvent args)

@@ -1311,6 +1311,9 @@
 
 - type: Tag
   id: IndustrialMech
+  
+- type: Tag
+  id: IgnoreMelee
 
 - type: Tag
   id: CombatMech

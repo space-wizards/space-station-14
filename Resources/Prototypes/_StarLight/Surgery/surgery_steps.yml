@@ -1,0 +1,174 @@
+﻿- type: entity
+  id: SurgeryStepBase
+  categories:
+  - HideSpawnMenu
+  components:
+  - type: SurgeryStep
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepOpenIncisionScalpel
+  name: Cut with a scalpel
+  components:
+  - type: SurgeryStep
+    tools:
+    - type: Scalpel
+    add:
+    - type: IncisionOpen
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
+    state: scalpel
+  - type: SurgeryStepBleedEffect
+    damage:
+      types:
+        Slash: 10
+  - type: SurgeryStepEmoteEffect
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepClampBleeders
+  name: Clamp the bleeders
+  components:
+  - type: SurgeryStep
+    tools:
+    - type: Hemostat
+    add:
+    - type: BleedersClamped
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/scissors.rsi
+    state: hemostat
+  - type: SurgeryClampBleedEffect
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepRetractSkin
+  name: Retract the skin
+  components:
+  - type: SurgeryStep
+    tools:
+    - type: Retractor
+    add:
+    - type: SkinRetracted
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/scissors.rsi
+    state: retractor
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepSawBones
+  name: Saw through bones
+  components:
+  - type: SurgeryStep
+    duration: 5
+    tools:
+    - type: BoneSaw
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/saw.rsi
+    state: saw
+  - type: SurgeryStepEmoteEffect
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepPriseOpenBones
+  name: Prise the bones open
+  components:
+  - type: SurgeryStep
+    tools:
+    - type: BoneSetter
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/scissors.rsi
+    state: setter
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepCloseBones
+  name: Close bones
+  components:
+  - type: SurgeryStep
+    tools:
+    - type: BoneSetter
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/scissors.rsi
+    state: setter
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepMendRibcage
+  name: Mend ribcage
+  components:
+  - type: SurgeryStep
+    tools:
+    - type: BoneGel
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/bone_gel.rsi
+    state: bone-gel
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepCloseIncision
+  name: Close incision
+  components:
+  - type: SurgeryStep
+    tools:
+    - type: Cautery
+    remove:
+    - type: SkinRetracted
+    - type: BleedersClamped
+    - type: IncisionOpen
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/cautery.rsi
+    state: cautery
+  - type: SurgeryStepEmoteEffect
+  - type: SurgeryClearProgress
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepCutAbdominalMuscles
+  name: Cut through abdominal muscles
+  components:
+  - type: SurgeryStep
+    tools:
+    - type: Scalpel
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
+    state: scalpel
+  - type: SurgeryStepEmoteEffect
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepRetractAbdominalWalls
+  name: Retract abdominal walls
+  components:
+  - type: SurgeryStep
+    tools:
+    - type: Retractor
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/scissors.rsi
+    state: retractor
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepSutureMuscles
+  name: Suture Abdominal Muscles
+  components:
+  - type: SurgeryStep
+    duration: 4
+    tools:
+    - type: Cautery
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/cautery.rsi
+    state: cautery
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepRestoreAbdominalWalls
+  name: Restore Abdominal Walls
+  components:
+  - type: SurgeryStep
+    duration: 3
+    tools:
+    - type: Retractor
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/scissors.rsi
+    state: retractor
+  - type: SurgeryStepEmoteEffect

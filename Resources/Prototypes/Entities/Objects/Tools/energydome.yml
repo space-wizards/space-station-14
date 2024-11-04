@@ -29,7 +29,7 @@
             - PowerCell
             - PowerCellSmall
   - type: EnergyDomeGenerator
-    damageEnergyDraw: 5
+    damageEnergyDraw: 4
     domePrototype: EnergyDomeSmallRed
   - type: PowerCellDraw
     drawRate: 10
@@ -80,7 +80,7 @@
             - PowerCell
             - PowerCellSmall
   - type: EnergyDomeGenerator
-    damageEnergyDraw: 7
+    damageEnergyDraw: 5
     domePrototype: EnergyDomeMediumBlue
     canDeviceNetworkUse: true
   - type: PowerCellDraw

@@ -8,6 +8,7 @@ using Content.Server.GameTicking;
 using Content.Server.Players.RateLimiting;
 using Content.Server.Speech.Components;
 using Content.Server.Speech.EntitySystems;
+using Content.Server.Starlight.TTS;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.ActionBlocker;
@@ -330,6 +331,12 @@ public sealed partial class ChatSystem : SharedChatSystem
         {
             _audio.PlayGlobal(announcementSound == null ? DefaultAnnouncementSound : _audio.GetSound(announcementSound), Filter.Broadcast(), true, AudioParams.Default.WithVolume(-2f));
         }
+        RaiseLocalEvent(new AnnouncementSpokeEvent
+        {
+            Message = message,
+            Source = Filter.Broadcast(),
+            AnnouncementSound = announcementSound,
+        });
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Global station announcement from {sender}: {message}");
     }
 
@@ -360,6 +367,12 @@ public sealed partial class ChatSystem : SharedChatSystem
         {
             _audio.PlayGlobal(announcementSound?.ToString() ?? DefaultAnnouncementSound, filter, true, AudioParams.Default.WithVolume(-2f));
         }
+        RaiseLocalEvent(new AnnouncementSpokeEvent
+        {
+            AnnouncementSound = announcementSound,
+            Message = message,
+            Source = filter
+        });
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement from {sender}: {message}");
     }
 
@@ -400,6 +413,13 @@ public sealed partial class ChatSystem : SharedChatSystem
         {
             _audio.PlayGlobal(announcementSound?.ToString() ?? DefaultAnnouncementSound, filter, true, AudioParams.Default.WithVolume(-2f));
         }
+
+        RaiseLocalEvent(new AnnouncementSpokeEvent
+        {
+            AnnouncementSound = announcementSound,
+            Message = message,
+            Source = filter
+        });
 
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement on {station} from {sender}: {message}");
     }

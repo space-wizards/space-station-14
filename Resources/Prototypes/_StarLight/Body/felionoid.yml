@@ -1,0 +1,50 @@
+- type: body
+  id: Felionoid
+  name: "felionoid"
+  root: torso
+  slots:
+    head:
+      part: HeadFelionoid
+      connections:
+      - torso
+      organs:
+        brain: OrganHumanBrain
+        eyes: OrganHumanEyes
+        tongue: OrganHumanTongue
+    torso:
+      part: TorsoFelionoid
+      connections:
+      - right arm
+      - left arm
+      - right leg
+      - left leg
+      organs:
+        heart: OrganAnimalHeart
+        lungs: OrganHumanLungs
+        stomach: OrganReptilianStomach
+        liver:  OrganHumanLiver
+        kidneys: OrganHumanKidneys
+    right arm:
+      part: RightArmFelionoid
+      connections:
+      - right hand
+    left arm:
+      part: LeftArmFelionoid
+      connections:
+      - left hand
+    right hand:
+      part: RightHandFelionoid
+    left hand:
+      part: LeftHandFelionoid
+    right leg:
+      part: RightLegFelionoid
+      connections:
+      - right foot
+    left leg:
+      part: LeftLegFelionoid
+      connections:
+      - left foot
+    right foot:
+      part: RightFootFelionoid
+    left foot:
+      part: LeftFootFelionoid

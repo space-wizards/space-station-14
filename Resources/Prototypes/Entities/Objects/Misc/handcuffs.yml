@@ -31,6 +31,29 @@
     delay: 3
 
 - type: entity
+  name: handcuffs
+  description: Used to detain criminals and other assholes.
+  id: AbductorHandcuffs
+  parent: Handcuffs
+  components:
+  - type: Handcuff
+    cuffTime: 1.5
+    uncuffTime: 4.5
+    breakoutTime: 30
+    stunBonus: 1.0
+    cuffedRSI: _Starlight/Objects/Misc/handcuffs.rsi
+    bodyIconState: body-overlay
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/handcuffs.rsi
+    state: handcuff
+  - type: GuideHelp
+    guides:
+    - Security
+    - Antagonists
+  - type: UseDelay
+    delay: 1.5
+
+- type: entity
   name: makeshift handcuffs
   description: Homemade handcuffs crafted from spare cables.
   id: Cablecuffs

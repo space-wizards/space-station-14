@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using System.Numerics;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Examine;
@@ -194,6 +194,16 @@ namespace Content.Client.Stylesheets
                 ExpandMarginBottom = 3,
                 ContentMarginBottomOverride = 0
             };
+            // 🌟Starlight🌟 start
+            var windowHeaderMentorAlertTex = resCache.GetTexture("/Textures/_Starlight/Interface/Nano/window_header_mentor_alert.png");
+            var windowHeaderMentorAlert = new StyleBoxTexture
+            {
+                Texture = windowHeaderMentorAlertTex,
+                PatchMarginBottom = 3,
+                ExpandMarginBottom = 3,
+                ContentMarginBottomOverride = 0
+            };            
+            // 🌟Starlight🌟 end
             var windowBackgroundTex = resCache.GetTexture("/Textures/Interface/Nano/window_background.png");
             var windowBackground = new StyleBoxTexture
             {
@@ -610,6 +620,15 @@ namespace Content.Client.Stylesheets
                     {
                         new StyleProperty(PanelContainer.StylePropertyPanel, windowHeaderAlert),
                     }),
+
+                // 🌟Starlight🌟 start
+                // Alert (cyan)(mentor) window header.
+                new StyleRule(
+                    new SelectorElement(typeof(PanelContainer), ["windowHeaderCyanAlert"], null, null),
+                    [
+                        new StyleProperty(PanelContainer.StylePropertyPanel, windowHeaderMentorAlert),
+                    ]),
+                // 🌟Starlight🌟 end
 
                 // Shapes for the buttons.
                 Element<ContainerButton>().Class(ContainerButton.StyleClassButton)

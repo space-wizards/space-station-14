@@ -1,6 +1,7 @@
 using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Prototypes;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.Manager;
 using System.Collections.Frozen;
 using System.Linq;
 
@@ -13,6 +14,7 @@ public sealed partial class NpcFactionSystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly ISerializationManager _serialization = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
 
     /// <summary>
@@ -79,6 +81,23 @@ public sealed partial class NpcFactionSystem : EntitySystem
             return false;
 
         return ent.Comp.Factions.Contains(faction);
+    }
+
+    public void Up(EntityUid from, EntityUid to)
+    {
+        if (TryComp<NpcFactionMemberComponent>(from, out var fromFaction))
+        {
+            if (TryComp<NpcFactionMemberComponent>(to, out var toFaction))
+            {
+                _serialization.CopyTo(fromFaction, ref toFaction, notNullableOverride: true);
+            }
+            else
+            {
+                var newComp = new NpcFactionMemberComponent();
+                _serialization.CopyTo(fromFaction, ref newComp, notNullableOverride: true);
+                AddComp<NpcFactionMemberComponent>(to, newComp);
+            }
+        }
     }
 
     /// <summary>

@@ -22,7 +22,31 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
     {
         ent.Comp.ActionEnt = _actions.AddAction(ent, ent.Comp.ActionId);
     }
+    public bool TryUseWorldTargetAction(Entity<NPCUseActionOnTargetComponent?> user, EntityUid target)
+    {
+        if (!Resolve(user, ref user.Comp, false))
+            return false;
 
+        if (!TryComp<WorldTargetActionComponent>(user.Comp.ActionEnt, out var action))
+            return false;
+
+        if (!_actions.ValidAction(action))
+            return false;
+
+        if (action.Event != null)
+        {
+            action.Event.Target = Transform(target).Coordinates;
+        }
+
+        _actions.PerformAction(user,
+            null,
+            user.Comp.ActionEnt.Value,
+            action,
+            action.BaseEvent,
+            _timing.CurTime,
+            false);
+        return true;
+    }
     public bool TryUseTentacleAttack(Entity<NPCUseActionOnTargetComponent?> user, EntityUid target)
     {
         if (!Resolve(user, ref user.Comp, false))
@@ -61,6 +85,7 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
                 continue;
 
             TryUseTentacleAttack((uid, comp), target);
+            TryUseWorldTargetAction((uid, comp), target);
         }
     }
 }

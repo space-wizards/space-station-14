@@ -1,5 +1,6 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Mech.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Standing;
 using Robust.Shared.Physics.Systems;
@@ -38,6 +39,9 @@ public partial class MobStateSystem : EntitySystem
     /// <returns>If the entity is alive</returns>
     public bool IsAlive(EntityUid target, MobStateComponent? component = null)
     {
+        if (TryComp<MechComponent>(target, out var mech))
+            return !mech.Broken;
+
         if (!_mobStateQuery.Resolve(target, ref component, false))
             return false;
         return component.CurrentState == MobState.Alive;

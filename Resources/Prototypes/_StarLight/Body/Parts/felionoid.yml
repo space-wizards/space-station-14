@@ -1,0 +1,195 @@
+﻿- type: entity
+  id: PartFelionoid
+  parent: [BaseItem, BasePart]
+  name: "felionoid body part"
+  abstract: true
+  components:
+  - type: Damageable
+    damageContainer: Biological
+  - type: BodyPart
+  - type: ContainerContainer
+    containers:
+      bodypart: !type:Container
+        ents: []
+  - type: StaticPrice
+    price: 100
+  - type: Tag
+    tags:
+      - Trash
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 1
+      - ReagentId: Blood
+        Quantity: 5
+
+- type: entity
+  id: TorsoFelionoid
+  name: "felionoid torso"
+  parent: [PartFelionoid, BaseTorso]
+  components:
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+      state: "torso"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+      state: "torso"
+    - type: BodyPart
+      partType: Torso
+    - type: Extractable
+      juiceSolution:
+        reagents:
+        - ReagentId: Fat
+          Quantity: 1
+        - ReagentId: Blood
+          Quantity: 5
+
+- type: entity
+  id: HeadFelionoid
+  name: "felionoid head"
+  parent: [PartFelionoid, BaseHead]
+  components:
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+      state: "head"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+      state: "head"
+    - type: BodyPart
+      partType: Head
+      vital: true
+    - type: Input
+      context: "ghost"
+    - type: Tag
+      tags:
+        - Head
+    - type: Extractable
+      juiceSolution:
+        reagents:
+        - ReagentId: Fat
+          Quantity: 1
+        - ReagentId: Blood
+          Quantity: 5
+
+- type: entity
+  id: LeftArmFelionoid
+  name: "left felionoid arm"
+  parent: [PartFelionoid, BaseLeftArm]
+  components:
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+      state: "l_arm"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+      state: "l_arm"
+    - type: BodyPart
+      partType: Arm
+      symmetry: Left
+
+- type: entity
+  id: RightArmFelionoid
+  name: "right felionoid arm"
+  parent: [PartFelionoid, BaseRightArm]
+  components:
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+      state: "r_arm"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+      state: "r_arm"
+    - type: BodyPart
+      partType: Arm
+      symmetry: Right
+
+- type: entity
+  id: LeftHandFelionoid
+  name: "left felionoid hand"
+  parent: [PartFelionoid, BaseLeftHand]
+  components:
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+      state: "l_hand"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+      state: "l_hand"
+    - type: BodyPart
+      partType: Hand
+      symmetry: Left
+
+- type: entity
+  id: RightHandFelionoid
+  name: "right felionoid hand"
+  parent: [PartFelionoid, BaseRightHand]
+  components:
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+      state: "r_hand"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+      state: "r_hand"
+    - type: BodyPart
+      partType: Hand
+      symmetry: Right
+
+- type: entity
+  id: LeftLegFelionoid
+  name: "left felionoid leg"
+  parent: [PartFelionoid, BaseLeftLeg]
+  components:
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+      state: "l_leg"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+      state: "l_leg"
+    - type: BodyPart
+      partType: Leg
+      symmetry: Left
+    - type: MovementBodyPart
+
+- type: entity
+  id: RightLegFelionoid
+  name: "right felionoid leg"
+  parent: [PartFelionoid, BaseRightLeg]
+  components:
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+      state: "r_leg"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+      state: "r_leg"
+    - type: BodyPart
+      partType: Leg
+      symmetry: Right
+    - type: MovementBodyPart
+
+- type: entity
+  id: LeftFootFelionoid
+  name: "left felionoid foot"
+  parent: [PartFelionoid, BaseLeftFoot]
+  components:
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+      state: "l_foot"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+      state: "l_foot"
+    - type: BodyPart
+      partType: Foot
+      symmetry: Left
+
+- type: entity
+  id: RightFootFelionoid
+  name: "right felionoid foot"
+  parent: [PartFelionoid, BaseRightFoot]
+  components:
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+      state: "r_foot"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Felionoid/parts.rsi
+      state: "r_foot"
+    - type: BodyPart
+      partType: Foot
+      symmetry: Right

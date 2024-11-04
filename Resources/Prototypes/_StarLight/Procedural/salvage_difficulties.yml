@@ -1,0 +1,45 @@
+
+- type: salvageDifficulty
+  id: Easy
+  lootPrototype: "SalvageLootEasy"
+  lootBudget: 15
+  mobBudget: 15
+  modifierBudget: 1
+  color: "#9FED5896"
+  recommendedPlayers: 1
+
+- type: salvageDifficulty
+  id: Moderate
+  lootPrototype: "SalvageLootModerate"
+  lootBudget: 30
+  mobBudget: 25
+  modifierBudget: 2
+  color: "#52B4E996"
+  recommendedPlayers: 2
+
+- type: salvageDifficulty
+  id: Challenging
+  lootPrototype: "SalvageLootChallenging"
+  lootBudget: 90
+  mobBudget: 75
+  modifierBudget: 3
+  color: "#9FED5896"
+  recommendedPlayers: 3
+
+- type: salvageDifficulty
+  id: Difficult
+  lootPrototype: "SalvageLootDifficult"
+  lootBudget: 270
+  mobBudget: 225
+  modifierBudget: 1
+  color: "#EFB34196"
+  recommendedPlayers: 4
+
+- type: salvageDifficulty
+  id: Impossible
+  lootPrototype: "SalvageLootImpossible"
+  lootBudget: 675
+  mobBudget: 463
+  modifierBudget: 1
+  color: "#DE3A3A96"
+  recommendedPlayers: 6

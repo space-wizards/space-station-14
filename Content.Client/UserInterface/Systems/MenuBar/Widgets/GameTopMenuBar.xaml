@@ -1,4 +1,4 @@
-﻿<widgets:GameTopMenuBar xmlns="https://spacestation14.io"
+<widgets:GameTopMenuBar xmlns="https://spacestation14.io"
            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
            xmlns:style="clr-namespace:Content.Client.Stylesheets"
            xmlns:ic="clr-namespace:Robust.Shared.Input;assembly=Robust.Shared"
@@ -92,6 +92,16 @@
         MinSize="42 64"
         HorizontalExpand="True"
         AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
+        />
+    <ui:MenuButton
+        Name="MHelpButton"
+        Access="Internal"
+        Icon="{xe:Tex '/Textures/Interface/mhelp.svg.192dpi.png'}"
+        BoundKey = "{x:Static is:ContentKeyFunctions.OpenMHelp}"
+        ToolTip="{Loc 'ui-options-function-open-m-help'}"
+        MinSize="42 64"
+        HorizontalExpand="True"
+        AppendStyleClass="{x:Static style:StyleBase.ButtonOpenLeft}"
         />
     <ui:MenuButton
         Name="AHelpButton"

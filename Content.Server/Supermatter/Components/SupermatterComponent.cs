@@ -7,6 +7,36 @@ namespace Content.Server.Supermatter.Components;
 public sealed partial class SupermatterComponent : Component
 {
     /// <summary>
+    ///     The damage taken from direct hits, e.g. laser weapons
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public float AVExternalDamage = 0f;
+
+    //
+    [ViewVariables(VVAccess.ReadOnly)]
+    public float HeatAccumulatorRate = 0.820f;
+
+    [ViewVariables(VVAccess.ReadOnly)]
+    public float AVHeatAccumulator = 0f;
+
+    [ViewVariables(VVAccess.ReadOnly)]
+    public float RadiationAccumulatorRate = 0.11f;
+
+    [ViewVariables(VVAccess.ReadOnly)]
+    public float AVRadiationAccumulator = 0f;
+
+    [ViewVariables(VVAccess.ReadOnly)]
+    public float LightingAccumulatorThreshold = 1.5f;
+
+    [ViewVariables(VVAccess.ReadOnly)]
+    public float LightingAccumulatorRate = 0.035f;
+
+    [ViewVariables(VVAccess.ReadOnly)]
+    public float AVLightingAccumulator = 0f;
+
+    [ViewVariables(VVAccess.ReadOnly)]
+    public float InternalEnergyAccumulatorRate = 0.035f;
+    /// <summary>
     ///     Lightning prototype IDs that the supermatter should spit out.
     /// </summary>
     public readonly string[] LightningPrototypeIDs =
@@ -64,8 +94,6 @@ public sealed partial class SupermatterComponent : Component
 
     public float UpdateTimerAccumulator = 0f;
 
-    public float ZapTimerAccumulator = 0f;
-
     public float AnnouncementTimerAccumulator = 0f;
 
     /// <summary>
@@ -73,12 +101,6 @@ public sealed partial class SupermatterComponent : Component
     /// </summary>
     [DataField("updateTimer")]
     public float UpdateTimer = 1f;
-
-    /// <summary>
-    ///     Amount of seconds to pass before SM does it's zap.
-    /// </summary>
-    [DataField("zapTimer")]
-    public float ZapTimer = 10f;
 
     /// <summary>
     ///     Amount of seconds to pass before makes an announcement.
@@ -124,12 +146,6 @@ public sealed partial class SupermatterComponent : Component
     public float DamageArchive = 0f;
 
     /// <summary>
-    ///     The damage taken from direct hits, e.g. laser weapons
-    /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
-    public float ExternalDamage = 0f;
-
-    /// <summary>
     ///     The temperature at which the supermatter crystal will begin to take damage.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
@@ -168,11 +184,8 @@ public sealed partial class SupermatterComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     public float GasPowerlossInhibition = 0f;
-    /// <summary>
-    ///     Affects the amount of power the main SM zap makes.
-    /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    public float PowerTransmissionRate = 0f;
+    public float ThermalСonductivity = 0f;
     /// <summary>
     ///     Affects the power gain the SM experiences from heat.
     /// </summary>
@@ -184,12 +197,15 @@ public sealed partial class SupermatterComponent : Component
     /// </summary>
     public const float MinimumMoleCount = .01f;
 
-    public const float HeatPenaltyThreshold = 40f;
+    public const float HeatPenaltyThreshold = 100f;
     public const float PowerPenaltyThreshold = 3f;
-    public const float MolePenaltyThreshold = 900f;
+    public const float MolePenaltyMinThreshold = 15f;
+    public const float MolePenaltyMaxThreshold = 900f;
+    public const float PresureMinPenaltyThreshold = 10;
+    public const float PresureMaxPenaltyThreshold = 100;
     public const float ThermalReleaseModifier = 4f;
     public const float PlasmaReleaseModifier = 1.5f;
-    public const float OxygenReleaseModifier = 2.5f;
+    public const float OxygenReleaseModifier = 6.5f;
     public const float GasHeatPowerScaling = 1f / 6f;
 
     /// <summary>
@@ -199,15 +215,15 @@ public sealed partial class SupermatterComponent : Component
     [ViewVariables(VVAccess.ReadOnly)]
     public GasFact[] GasFacts =
     {
-        new (transmissionRate: .15f, heatPowerGeneration: 1f), // o2
-        new (heatModifier: -2.5f, heatPowerGeneration: -1), // n2
-        new (heatModifier: 1f, heatPowerGeneration: 1f, powerlossInhibition: 1f), // co2
-        new (transmissionRate: .4f, heatModifier: 14f, heatPowerGeneration: 1f), // plasma
-        new (transmissionRate: 3f, heatModifier: 9f, heatPowerGeneration: 1f), // tritium
-        new (transmissionRate: -.25f, heatModifier: 11f, heatPowerGeneration: 1f), // vapor
-        new (heatPowerGeneration: .5f), // ommonium
-        new (heatResistance: 5f), // n2o
-        new (transmissionRate: -3f, heatModifier: 9f, heatResistance: 1f, heatPowerGeneration: 1f), // frezon
+        new (thermalConductivity: 2.4f, heatPowerGeneration: 1f), // o2
+        new (thermalConductivity: 2.0f, heatModifier: -2.5f, heatPowerGeneration: -1), // n2
+        new (thermalConductivity: 1.2f, heatModifier: 1f, heatPowerGeneration: 1f, powerlossInhibition: 1f), // co2
+        new (thermalConductivity: 6.0f, heatModifier: 14f, heatPowerGeneration: 1f), // plasma
+        new (thermalConductivity: 3.0f, heatModifier: 9f, heatPowerGeneration: 1f), // tritium
+        new (thermalConductivity: 1.4f, heatModifier: 11f, heatPowerGeneration: 1f), // vapor
+        new (thermalConductivity: 1.6f, heatPowerGeneration: .5f), // ommonium
+        new (thermalConductivity: 1.3f, heatResistance: 5f), // n2o
+        new (thermalConductivity: 9.9f, heatModifier: 9f, heatResistance: 1f, heatPowerGeneration: 1f), // frezon
     };
 }
 
@@ -222,7 +238,7 @@ public sealed partial class GasFact
     ///     Affects the amount of power the main SM zap makes.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public float PowerTransmissionRate;
+    public float ThermalСonductivity;
     /// <summary>
     ///     Affects the heat SM makes.
     /// </summary>
@@ -244,9 +260,9 @@ public sealed partial class GasFact
     [ViewVariables(VVAccess.ReadWrite)]
     public float PowerlossInhibition;
 
-    public GasFact(float? transmissionRate = null, float? heatModifier = null, float? heatResistance = null, float? heatPowerGeneration = null, float? powerlossInhibition = null)
+    public GasFact(float? thermalConductivity = null, float? heatModifier = null, float? heatResistance = null, float? heatPowerGeneration = null, float? powerlossInhibition = null)
     {
-        PowerTransmissionRate = transmissionRate ?? 1;
+        ThermalСonductivity = thermalConductivity ?? 1;
         HeatModifier = heatModifier ?? 1;
         HeatResistance = heatResistance ?? 0;
         HeatPowerGeneration = heatPowerGeneration ?? 0;

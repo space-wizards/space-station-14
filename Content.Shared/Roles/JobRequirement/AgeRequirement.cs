@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Preferences;
 using JetBrains.Annotations;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -18,6 +19,7 @@ public sealed partial class AgeRequirement : JobRequirement
     public int RequiredAge;
 
     public override bool Check(IEntityManager entManager,
+        ICommonSession? player,
         IPrototypeManager protoManager,
         HumanoidCharacterProfile? profile,
         IReadOnlyDictionary<string, TimeSpan> playTimes,

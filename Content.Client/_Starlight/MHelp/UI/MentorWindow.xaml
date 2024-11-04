@@ -1,0 +1,8 @@
+﻿<DefaultWindow xmlns="https://spacestation14.io"
+            xmlns:cc="clr-namespace:Content.Client._Starlight.MHelp.UI"
+            SetSize="900 500"
+            HeaderClass="windowHeaderCyanAlert"
+            TitleClass="windowTitleAlert"
+            Title="{Loc 'mentor-user-title'}" >
+    <cc:MhelpControl Name="MHelpControl" Access="Public"/>
+</DefaultWindow>

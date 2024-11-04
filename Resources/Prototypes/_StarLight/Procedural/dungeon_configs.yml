@@ -1,0 +1,262 @@
+# Base configs
+- type: dungeonConfig
+  id: SyndiePlanetBase
+  layers:
+  - !type:PrefabDunGen
+    presets:
+    - Bucket
+    - Wow
+    - SpaceShip
+    - Tall
+
+  - !type:CorridorDunGen
+    width: 5
+
+  - !type:DungeonEntranceDunGen
+    count: 3
+
+  - !type:RoomEntranceDunGen
+
+  - !type:EntranceFlankDunGen
+
+  - !type:WallMountDunGen
+
+  - !type:BoundaryWallDunGen
+
+  - !type:JunctionDunGen
+    width: 1
+
+  - !type:JunctionDunGen
+
+  - !type:AutoCablingDunGen
+
+  - !type:CornerClutterDunGen
+
+  - !type:CorridorDecalSkirtingDunGen
+    cardinalDecals:
+      South: BrickTileWhiteLineS
+      East: BrickTileWhiteLineE
+      North: BrickTileWhiteLineN
+      West: BrickTileWhiteLineW
+    cornerDecals:
+      SouthEast: BrickTileWhiteCornerSe
+      SouthWest: BrickTileWhiteCornerSw
+      NorthEast: BrickTileWhiteCornerNe
+      NorthWest: BrickTileWhiteCornerNw
+    pocketDecals:
+      SouthWest: BrickTileWhiteInnerSw
+      SouthEast: BrickTileWhiteInnerSe
+      NorthWest: BrickTileWhiteInnerNw
+      NorthEast: BrickTileWhiteInnerNe
+      
+- type: dungeonConfig
+  id: NoWallPlanetBase
+  layers:
+  - !type:PrefabDunGen
+    presets:
+    - Bucket
+    - Wow
+    - SpaceShip
+    - Tall
+
+  - !type:CorridorDunGen
+    width: 1
+
+  - !type:DungeonEntranceDunGen
+    count: 1
+
+  - !type:RoomEntranceDunGen
+
+  - !type:EntranceFlankDunGen
+
+  - !type:BoundaryWallDunGen
+
+  - !type:JunctionDunGen
+    width: 1
+
+  - !type:JunctionDunGen
+
+  - !type:CornerClutterDunGen
+
+# type: dungeonConfig
+# id: NoWallArenaPlanetBase
+# layers:
+# - !type:PrefabDunGen
+#   presets:
+#   - Arena
+#   
+# - !type:CorridorDunGen
+#   width: 1
+#
+# - !type:DungeonEntranceDunGen
+#   count: 1
+#
+# - !type:RoomEntranceDunGen
+#
+# - !type:EntranceFlankDunGen
+#
+# - !type:BoundaryWallDunGen
+#
+# - !type:JunctionDunGen
+#   width: 1
+#
+# - !type:JunctionDunGen
+#
+# - !type:CornerClutterDunGen
+
+# Setups
+- type: dungeonConfig
+  id: ShipWreckDungeon
+  data:
+    entities:
+      Cabling: Catwalk
+    tiles:
+      FallbackTile: FloorGrass
+    spawnGroups:
+      CornerClutter: Nothing
+      Entrance: Nothing
+      EntranceFlank: Nothing
+      Junction: Nothing
+      Window: Nothing
+    whitelists:
+      Rooms:
+        tags:
+        - ShipWreck
+  layers:
+  - !type:PrototypeDunGen
+    proto: NoWallPlanetBase
+
+# Setups
+#- type: dungeonConfig
+#  id: ElderArenaDungeon
+#  data:
+#    tiles:
+#      FallbackTile: FloorAbyss
+#    spawnGroups:
+#      Window: Nothing
+#    whitelists:
+#      Rooms:
+#        tags:
+#        - ElderArena
+#  layers:
+#  - !type:PrototypeDunGen
+#    proto: NoWallArenaPlanetBase
+#
+- type: dungeonConfig
+  id: SyndieDungeon
+  data:
+    colors:
+      Decals: "#03030396"
+    entities:
+      Cabling: CableApcExtension
+      CornerWalls: WallReinforced
+      Walls: WallReinforced
+    spawnGroups:
+      CornerClutter: BaseClutter
+      Entrance: SyndieDungeonEntrance
+      EntranceFlank: SyndieDungeonWindow
+      Junction: BaseAirlock
+      WallMounts: SyndieDungeonWalls
+      Window: WallReinforced
+    tiles:
+      FallbackTile: FloorShuttleRed
+    whitelists:
+      Rooms:
+        tags:
+        - SyndieDungeon
+  layers:
+  - !type:PrototypeDunGen
+    proto: SyndiePlanetBase
+- type: dungeonConfig
+  id: SovietDungeon
+  data:
+    colors:
+      Decals: "#93030396"
+    entities:
+      Cabling: CableApcExtension
+      CornerWalls: WallBrick
+      Walls: WallBrick
+    spawnGroups:
+      CornerClutter: BaseClutter
+      Entrance: SovietDungeonEntrance
+      EntranceFlank: SovietDungeonWindow
+      Junction: BaseAirlock
+      WallMounts: SovietDungeonWalls
+      Window: WallBrick
+    tiles:
+      FallbackTile: FloorConcreteMono
+    whitelists:
+      Rooms:
+        tags:
+        - SovietDungeon
+  layers:
+  - !type:PrototypeDunGen
+    proto: SyndiePlanetBase
+
+# Syndie
+- type: entitySpawnEntry
+  id: SyndieDungeonEntrance
+  entries:
+  - id: CableApcExtension
+  - id: AirlockSyndicateLocked
+  
+- type: entitySpawnEntry
+  id: SyndieDungeonWindow
+  entries:
+  - id: CableApcExtension
+  - id: WallBrick
+  - id: LandMineExplosive
+  - id: PoweredSmallLight
+
+- type: entitySpawnEntry
+  id: SyndieDungeonWalls
+  entries:
+  # Posters
+  - id: PosterContrabandEnlistGorlex
+    orGroup: content
+  - id: PosterLegitEnlist
+    orGroup: content
+  - id: PosterContrabandFreeDrone
+    prob: 0.2
+    orGroup: content
+  - id: PosterContrabandFreeSyndicateEncryptionKey
+    prob: 0.05
+    orGroup: content
+  - id: PosterContrabandSyndicatePistol
+    orGroup: content
+  - id: PosterContrabandSyndicatePistol
+    orGroup: content
+# Soviet
+- type: entitySpawnEntry
+  id: SovietDungeonEntrance
+  entries:
+  - id: CableApcExtension
+  - id: MetalDoor
+  
+- type: entitySpawnEntry
+  id: SovietDungeonWindow
+  entries:
+  - id: CableApcExtension
+  - id: WallBrick
+  - id: PoweredSmallLight
+
+- type: entitySpawnEntry
+  id: SovietDungeonWalls
+  entries:
+  # Posters
+  - id: PosterContrabandCommunistState
+    orGroup: content
+  - id: PosterContrabandPunchShit
+    orGroup: content
+  - id: PosterContrabandRevolt
+    orGroup: content
+  - id: PosterContrabandRise
+    orGroup: content
+  - id: PosterLegitWorkForAFuture
+    orGroup: content
+
+- type: entitySpawnEntry
+  id: Nothing
+  entries:
+  - id: RandomStalagmiteOrCrystal
+    amount: 0

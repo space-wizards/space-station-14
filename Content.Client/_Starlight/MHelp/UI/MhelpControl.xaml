@@ -1,0 +1,16 @@
+﻿<Control
+    xmlns="https://spacestation14.io"
+    xmlns:cc="clr-namespace:Content.Client._Starlight.MHelp.UI">
+    <PanelContainer StyleClasses="BackgroundDark">
+        <SplitContainer Orientation="Horizontal" VerticalExpand="True">
+            <cc:TicketListControl Access="Public" Name="TicketSelector" HorizontalExpand="True" SizeFlagsStretchRatio="1" />
+            <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="2">
+                <BoxContainer Access="Public" Name="MhelpArea" VerticalExpand="True" />
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <CheckBox Visible="True" Name="PlaySound" Access="Public" Text="{Loc 'mentor-play-sound'}" Pressed="True" />
+                    <Control HorizontalExpand="True" MinWidth="5" />
+                </BoxContainer>
+            </BoxContainer>
+        </SplitContainer>
+    </PanelContainer>
+</Control>

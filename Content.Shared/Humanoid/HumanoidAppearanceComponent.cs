@@ -1,5 +1,6 @@
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
+using Content.Shared.Starlight.TextToSpeech;
 using Robust.Shared.Enums;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -88,6 +89,14 @@ public sealed partial class HumanoidAppearanceComponent : Component
     /// </summary>
     [DataField]
     public HashSet<HumanoidVisualLayers> HideLayersOnEquip = [HumanoidVisualLayers.Hair];
+    public static readonly Dictionary<Sex, string> DefaultSexVoice = new()
+    {
+        {Sex.Male, "Voljin"},
+        {Sex.Female, "Amina"},
+        {Sex.Unsexed, "Charlotte"}
+    };
+    [DataField]
+    public ProtoId<VoicePrototype> Voice { get; set; } = "";
 }
 
 [DataDefinition]

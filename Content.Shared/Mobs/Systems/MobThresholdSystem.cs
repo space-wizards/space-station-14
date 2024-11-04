@@ -168,7 +168,7 @@ public sealed class MobThresholdSystem : EntitySystem
         MobThresholdsComponent? thresholdComponent = null)
     {
         threshold = null;
-        if (!Resolve(target, ref thresholdComponent))
+        if (!Resolve(target, ref thresholdComponent, false))
             return false;
 
         return TryGetThresholdForState(target, MobState.Critical, out threshold, thresholdComponent)

@@ -1,0 +1,55 @@
+# Tier 1
+
+- type: technology
+  id: SurgeryTech
+  name: research-technology-basic-surgery
+  icon:
+    sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
+    state: scalpel
+  discipline: Biochemical
+  tier: 1
+  cost: 4000
+  recipeUnlocks:
+    - BoneSetter
+    - BoneGel
+    - Scalpel
+    - Retractor
+    - Cautery
+    - Saw
+    - Hemostat
+
+- type: technology
+  id: CyberLimbsTechAdvanced
+  name: research-technology-basic-cyberlimbs
+  icon:
+    sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+    state: icon
+  discipline: Biochemical
+  tier: 1
+  cost: 4000
+  recipeUnlocks:
+    - LeftArmCyber
+    - RightArmCyber
+    - LeftHandCyber
+    - RightHandCyber
+    - LeftLegCyber
+    - RightLegCyber
+    - LeftFootCyber
+    - RightFootCyber
+
+- type: technology
+  id: SurgeryTechAdvanced
+  name: research-technology-advanced-surgery
+  icon:
+    sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
+    state: advanced
+  discipline: Biochemical
+  tier: 2
+  cost: 7000
+  recipeUnlocks:
+    - Drill
+    - SawAdvanced
+    - ScalpelAdvanced
+    - BoneSetterAdvanced
+    - RetractorAdvanced
+    - HemostatAdvanced

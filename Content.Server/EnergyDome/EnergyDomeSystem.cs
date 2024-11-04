@@ -51,13 +51,10 @@ public sealed partial class EnergyDomeSystem : EntitySystem
         SubscribeLocalEvent<EnergyDomeGeneratorComponent, GetVerbsEvent<ActivationVerb>>(AddToggleDomeVerb);
         SubscribeLocalEvent<EnergyDomeGeneratorComponent, ExaminedEvent>(OnExamine);
 
-
         SubscribeLocalEvent<EnergyDomeGeneratorComponent, ComponentRemove>(OnComponentRemove);
-
         //Dome events
         SubscribeLocalEvent<EnergyDomeComponent, DamageChangedEvent>(OnDomeDamaged);
     }
-
 
     private void OnInit(Entity<EnergyDomeGeneratorComponent> generator, ref MapInitEvent args)
     {
@@ -180,7 +177,7 @@ public sealed partial class EnergyDomeSystem : EntitySystem
             {
                 _battery.UseCharge(cell.Owner, energyLeak);
 
-                if (cell.Charge == 0)
+                if (cell.CurrentCharge == 0)
                     TurnOff((generatorUid, generatorComp), true);
             }
         }
@@ -189,7 +186,7 @@ public sealed partial class EnergyDomeSystem : EntitySystem
         if (TryComp<BatteryComponent>(generatorUid, out var battery)) {
             _battery.UseCharge(generatorUid, energyLeak);
 
-            if (battery.Charge == 0)
+            if (battery.CurrentCharge == 0)
                 TurnOff((generatorUid, generatorComp), true);
         }
     }
@@ -245,7 +242,7 @@ public sealed partial class EnergyDomeSystem : EntitySystem
 
         if (TryComp<BatteryComponent>(generator, out var battery))
         {
-            if (battery.Charge == 0)
+            if (battery.CurrentCharge == 0)
             {
                 _audio.PlayPvs(generator.Comp.TurnOffSound, generator);
                 _popup.PopupEntity(
@@ -283,7 +280,11 @@ public sealed partial class EnergyDomeSystem : EntitySystem
             domeComp.Generator = generator;
         }
 
-        _powerCell.SetPowerCellDrawEnabled(generator, true);
+        if (TryComp<PowerCellDrawComponent>(generator.Owner, out var powerCellDrawComponent))
+        {
+            _powerCell.SetDrawEnabled(generator.Owner, true);
+        }
+
         if (TryComp<BatterySelfRechargerComponent>(generator, out var recharger)) {
             recharger.AutoRecharge = true;
         }
@@ -301,7 +302,10 @@ public sealed partial class EnergyDomeSystem : EntitySystem
         generator.Comp.Enabled = false;
         QueueDel(generator.Comp.SpawnedDome);
 
-        _powerCell.SetPowerCellDrawEnabled(generator, false);
+        if (TryComp<PowerCellDrawComponent>(generator.Owner, out var powerCellDrawComponent))
+        {
+            _powerCell.SetDrawEnabled(generator.Owner, false);
+        }
         if (TryComp<BatterySelfRechargerComponent>(generator, out var recharger))
         {
             recharger.AutoRecharge = false;

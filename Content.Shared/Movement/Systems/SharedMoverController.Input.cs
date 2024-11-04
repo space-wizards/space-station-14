@@ -164,8 +164,15 @@ namespace Content.Shared.Movement.Systems
                 return;
             }
 
+            var xform = XformQuery.GetComponent(uid);
+            if (TryComp(uid, out RelayInputMoverComponent? relay)
+                 && TryComp(relay.RelayEntity, out TransformComponent? relayXform)
+                 && MoverQuery.TryGetComponent(relay.RelayEntity, out var relayMover))
+            {
+                xform = relayXform;
+            }
             // If we updated parent then cancel the accumulator and force it now.
-            if (!TryUpdateRelative(mover, XformQuery.GetComponent(uid)) && mover.TargetRelativeRotation.Equals(Angle.Zero))
+            if (!TryUpdateRelative(mover, xform) && mover.TargetRelativeRotation.Equals(Angle.Zero))
                 return;
 
             mover.LerpTarget = TimeSpan.Zero;

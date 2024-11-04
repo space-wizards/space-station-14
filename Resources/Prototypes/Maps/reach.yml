@@ -3,7 +3,7 @@
   mapName: 'Reach'
   mapPath: /Maps/reach.yml
   minPlayers: 0
-  maxPlayers: 7
+  maxPlayers: 0
   stations:
     Reach:
       stationProto: StandardNanotrasenStation
@@ -21,7 +21,6 @@
             HeadOfSecurity: [ 1, 1 ]
             SecurityOfficer: [ 1, 3 ]
             CargoTechnician: [ 1, 1 ]
-            SalvageSpecialist: [ 1, 1 ]
             Bartender: [ 1, 1 ]
             Botanist: [ 1, 1 ]
             Chef: [ 1, 1 ]
@@ -33,4 +32,4 @@
             StationEngineer: [ 1, 2 ]
             Scientist: [ 1, 1 ]
             Passenger: [ -1, -1 ]
-
+            SalvageSpecialist: [ 2, 4 ]

@@ -1,0 +1,50 @@
+﻿- type: body
+  id: Abductor
+  name: Abductor
+  root: torso
+  slots:
+    head:
+      part: HeadAbductor
+      connections:
+      - torso
+      organs:
+        brain: OrganHumanBrain
+        eyes: OrganHumanEyes
+        tongue: OrganHumanTongue
+    torso:
+      part: TorsoAbductor
+      connections:
+      - right arm
+      - left arm
+      - right leg
+      - left leg
+      organs:
+        heart: OrganHumanHeart
+        lungs: OrganHumanLungs
+        stomach: OrganHumanStomach
+        liver: OrganHumanLiver
+        kidneys: OrganHumanKidneys
+    right arm:
+      part: RightArmAbductor
+      connections:
+      - right hand
+    left arm:
+      part: LeftArmAbductor
+      connections:
+      - left hand
+    right hand:
+      part: RightHandAbductor
+    left hand:
+      part: LeftHandAbductor
+    right leg:
+      part: RightLegAbductor
+      connections:
+      - right foot
+    left leg:
+      part: LeftLegAbductor
+      connections:
+      - left foot
+    right foot:
+      part: RightFootAbductor
+    left foot:
+      part: LeftFootAbductor

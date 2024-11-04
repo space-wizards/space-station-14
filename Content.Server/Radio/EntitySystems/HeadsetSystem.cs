@@ -5,6 +5,7 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
 using Content.Shared.Radio.EntitySystems;
+using Content.Shared.Starlight.TextToSpeech;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 
@@ -99,8 +100,11 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
 
     private void OnHeadsetReceive(EntityUid uid, HeadsetComponent component, ref RadioReceiveEvent args)
     {
-        if (TryComp(Transform(uid).ParentUid, out ActorComponent? actor))
-            _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.Channel);
+        var actorUid = Transform(uid).ParentUid;
+        if (!TryComp(Transform(uid).ParentUid, out ActorComponent? actor)) return;
+        _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.Channel);
+        if (actorUid != args.MessageSource && TryComp(args.MessageSource, out TextToSpeechComponent? _))
+            args.Receivers.Add(actorUid);
     }
 
     private void OnEmpPulse(EntityUid uid, HeadsetComponent component, ref EmpPulseEvent args)

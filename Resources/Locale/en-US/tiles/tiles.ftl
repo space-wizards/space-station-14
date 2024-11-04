@@ -129,3 +129,6 @@ tiles-jungle-astro-grass = jungle astro-grass
 tiles-astro-ice = astro-ice
 tiles-astro-snow = astro-snow
 tiles-wood-large = large wood
+
+tiles-abyss-floor = abyss floor
+tiles-abductor-floor = abductor floor

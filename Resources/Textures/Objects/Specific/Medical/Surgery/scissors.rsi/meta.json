@@ -1,7 +1,7 @@
 {
 	"version": 1,
 	"license": "CC-BY-SA-3.0",
-  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/commit/476e374cea95ff5e8b1603c48342bf700e2cd7af",
+  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/commit/476e374cea95ff5e8b1603c48342bf700e2cd7af and advanced from Paradise station",
 	"size": {
 		"x": 32,
 		"y": 32
@@ -11,10 +11,19 @@
 			"name": "retractor"
 		},
 		{
+			"name": "advanced-retractor"
+		},
+		{
 			"name": "hemostat"
 		},
 		{
+			"name": "advanced-hemostat"
+		},
+		{
 			"name": "setter"
+		},
+		{
+			"name": "advanced-setter"
 		},
 		{
 			"name": "inhand-left",

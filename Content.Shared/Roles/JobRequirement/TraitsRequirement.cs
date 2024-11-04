@@ -4,6 +4,7 @@ using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Preferences;
 using Content.Shared.Traits;
 using JetBrains.Annotations;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -21,6 +22,7 @@ public sealed partial class TraitsRequirement : JobRequirement
     public HashSet<ProtoId<TraitPrototype>> Traits = new();
 
     public override bool Check(IEntityManager entManager,
+        ICommonSession? player,
         IPrototypeManager protoManager,
         HumanoidCharacterProfile? profile,
         IReadOnlyDictionary<string, TimeSpan> playTimes,

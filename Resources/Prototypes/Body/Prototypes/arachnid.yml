@@ -10,6 +10,7 @@
       organs:
         brain: OrganHumanBrain
         eyes: OrganArachnidEyes
+        tongue: OrganHumanTongue
     torso:
       part: TorsoArachnid
       organs:

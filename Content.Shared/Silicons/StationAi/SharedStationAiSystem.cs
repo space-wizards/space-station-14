@@ -1,3 +1,4 @@
+using Content.Shared._Starlight;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Managers;
@@ -177,10 +178,16 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     private void OnAiInRange(Entity<StationAiOverlayComponent> ent, ref InRangeOverrideEvent args)
     {
         args.Handled = true;
-        var targetXform = Transform(args.Target);
+        var target = args.Target;
+        if (ent.Comp.AllowCrossGrid && TryComp(ent, out RelayInputMoverComponent? relay))
+        {
+            target = relay.RelayEntity;
+        }
+
+        var targetXform = Transform(target);
 
         // No cross-grid
-        if (targetXform.GridUid != Transform(args.User).GridUid)
+        if (targetXform.GridUid != Transform(args.User).GridUid && !ent.Comp.AllowCrossGrid)
         {
             return;
         }

@@ -245,7 +245,7 @@ public sealed partial class GunSystem : SharedGunSystem
                                 }
 
                                 // TODO get fallback position for playing hit sound.
-                                PlayImpactSound(hitEntity, dmg, hitscan.Sound, hitscan.ForceSound);
+                                PlayImpactSound(hitEntity, dmg, hitscan.Sound, hitscan.ForceSound);    
                             }
 
                             if (user != null)

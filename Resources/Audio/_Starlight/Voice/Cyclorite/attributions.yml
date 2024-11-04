@@ -1,0 +1,14 @@
+- files: 
+  [
+    "scream_1.ogg",
+    "scream_2.ogg",
+    "cough_1.ogg", 
+    "cough_2.ogg", 
+    "yawn.ogg", 
+    "scream4.ogg",
+    "laugh.ogg",
+    "whistle.ogg",
+  ]
+  license: "Creative Commons NonCommercial"
+  copyright: "Darkrell"
+  source: "Darkrell"

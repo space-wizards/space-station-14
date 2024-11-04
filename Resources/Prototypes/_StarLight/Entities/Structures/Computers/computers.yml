@@ -1,0 +1,75 @@
+- type: entity
+  parent: BaseComputer
+  id: AbductorConsole
+  name: abductor console
+  description: A computer that is used for spying on the station.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Machines/abductor_console.rsi
+    layers:
+    - map: ["console"]
+      state: console
+#  - type: CommunicationsConsole
+#    title: comms-console-announcement-title-station
+#  - type: DeviceNetwork
+#    transmitFrequencyId: ShuttleTimer
+#  - type: ActivatableUI
+#    key: enum.CommunicationsConsoleUiKey.Key
+#  - type: UserInterface
+#    interfaces:
+#     enum.AbductorConsoleUIKey.Key:
+#        type: CommunicationsConsoleBoundUserInterface
+#  - type: Computer
+#    board: CommsComputerCircuitboard
+  - type: PointLight
+    enabled: true
+    radius: 1.5
+    energy: 1.6
+    color: "#FC0097"
+
+- type: entity
+  parent: BaseComputer
+  id: AbductorHumanObservationConsole
+  name: human observation console
+  description: Use this to set teleporter destination or retrieve people marked by scientist tools. Also used for buying replacement gear and linking the agent's vest.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Machines/abductor_camera_console.rsi
+    layers:
+    - map: ["console"]
+      state: console
+  - type: AbductorHumanObservationConsole
+  - type: ActivatableUI
+    key: enum.AbductorCameraConsoleUIKey.Key
+  - type: UserInterface
+    interfaces:
+     enum.AbductorCameraConsoleUIKey.Key:
+        type: AbductorCameraConsoleBui
+  - type: PointLight
+    enabled: true
+    radius: 1.5
+    energy: 1.6
+    color: "#FC0097"
+
+- type: entity
+  parent:
+  - Incorporeal
+  - BaseMob
+  id: AbductorHumanObservationConsoleEye
+  name: abductor eye
+  description: The abductor's viewer.
+  categories: [ HideSpawnMenu ]
+  suffix: DO NOT MAP
+  components:
+  - type: NoFTL
+  - type: WarpPoint
+    follow: true
+  - type: Eye
+    pvsScale: 1.5
+  - type: Visibility
+    layer: 4
+  - type: Sprite
+    sprite: _Starlight/Structures/Machines/abductor_camera_console.rsi
+    layers:
+    - state: eye
+      shader: unshaded

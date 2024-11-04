@@ -14,6 +14,7 @@
       damageModifierSet: Glass
     - type: RadiationSource
       intensity: 0 # will be set somewhere else
+      slope: 0.5
     - type: Physics
       bodyType: Static
     - type: Fixtures

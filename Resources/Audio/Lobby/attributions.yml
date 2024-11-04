@@ -1,4 +1,9 @@
-﻿- files: ["thunderdome.ogg"]
+﻿- files: ["Chasing-Cosmic-Dreams.ogg.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Darkrell"
+  source: "Starlight"
+
+- files: ["thunderdome.ogg"]
   license: "CC-BY-NC-SA-3.0"
   copyright: "-Sector11 by MashedByMachines. Converted from MP3 to OGG."
   source: "https://www.newgrounds.com/audio/listen/312622"
@@ -13,11 +18,6 @@
   copyright: "Space Asshole by Chris Remo is used with special permission from the author, under the condition that the project remains non-commercial and open source. The author also requested that a link to his bandcamp be included: https://chrisremo.bandcamp.com/"
   source: "https://idlethumbs.bandcamp.com/track/space-asshole"
   # The source is a direct link the the track, but not the "main" bandcamp of the author. Hence the link is also included separately in the copyright.
-
-- files: ["absconditus.ogg"]
-  license: "CC-BY-NC-SA-3.0"
-  copyright: "Absconditus by ZhayTee. Converted from MP3 to OGG."
-  source: "https://bandcamp.zhaytee.net/track/absconditus"
 
 - files: ["atomicamnesiammx.ogg"]
   license: "CC-BY-NC-SA-3.0"

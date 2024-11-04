@@ -119,6 +119,10 @@ public sealed partial class DungeonJob
                     tileCost *= 20f;
                 }
 
+                //duct tape
+                if (!costSoFar.ContainsKey(node))
+                    continue;
+
                 var gScore = costSoFar[node] + tileCost;
 
                 if (costSoFar.TryGetValue(neighbor, out var nextValue) && gScore >= nextValue)

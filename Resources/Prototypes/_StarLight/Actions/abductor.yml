@@ -1,0 +1,81 @@
+﻿# Actions
+- type: entity
+  id: ActionExitConsole
+  name: Exit console
+  description: Exit console.
+  components:
+  - type: InstantAction
+    priority: -10
+    itemIconStyle: BigAction
+    icon:
+      sprite: Interface/Actions/actions_abductor.rsi
+      state: exit
+    event: !type:ExitConsoleEvent
+
+- type: entity
+  id: ActionReturnToShip
+  name: return
+  description: return to the ship.
+  components:
+  - type: InstantAction
+    useDelay: 30
+    icon:
+      sprite: Interface/Actions/actions_abductor.rsi
+      state: implant
+    priority: -100
+    event: !type:AbductorReturnToShipEvent
+
+#- type: entity
+#  id: ActionShowJobIcons
+#  name: Show job icons
+#  description: Shows job icons for crew members.
+#  components:
+#  - type: InstantAction
+#    priority: -5
+#    itemIconStyle: BigAction
+#    icon:
+#      sprite: Interface/Actions/actions_ai.rsi
+#      state: job_view
+#    event: !type:ActionComponentChangeEvent
+#      components:
+#      - type: ShowJobIcons
+#
+#- type: entity
+#  id: ActionSurvCameraLights
+#  name: Toggle camera lights
+#  description: Enable surveillance camera lights near wherever you're viewing.
+#  components:
+#  - type: InstantAction
+#    priority: -6
+#    itemIconStyle: BigAction
+#    icon:
+#      sprite: Interface/Actions/actions_ai.rsi
+#      state: camera_light
+#    event: !type:RelayedActionComponentChangeEvent
+#      components:
+#      - type: LightOnCollideCollider
+#      - type: FixturesChange
+#        fixtures:
+#          lightTrigger:
+#            shape:
+#              !type:PhysShapeCircle
+#              radius: 0.35
+#            density: 80
+#            hard: false
+#            layer:
+#            - GhostImpassable
+#
+#
+#- type: entity
+#  id: ActionAIViewLaws
+#  name: View Laws
+#  description: View the laws that you must follow.
+#  components:
+#  - type: InstantAction
+#    priority: -3
+#    itemIconStyle: NoItem
+#    icon:
+#      sprite: Interface/Actions/actions_ai.rsi
+#      state: state_laws
+#    event: !type:ToggleLawsScreenEvent
+#    useDelay: 0.5

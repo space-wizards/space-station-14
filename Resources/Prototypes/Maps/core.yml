@@ -54,7 +54,7 @@
             #supply
             CargoTechnician: [ 3, 3 ]
             Quartermaster: [ 1, 1 ]
-            SalvageSpecialist: [ 2, 2 ]
+            SalvageSpecialist: [ 5, 5 ]
             #civilian
             Passenger: [ -1, -1 ]
             Clown: [ 1, 1 ]

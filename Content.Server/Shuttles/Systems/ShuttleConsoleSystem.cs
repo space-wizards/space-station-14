@@ -21,6 +21,9 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
 using Content.Shared.UserInterface;
+using Serilog;
+using Robust.Shared.Localization;
+using Content.Server.Botany.Systems;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -37,14 +40,16 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     [Dependency] private readonly TagSystem _tags = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly SharedContentEyeSystem _eyeSystem = default!;
+    [Dependency] private readonly ILogManager _log = default!;
 
     private EntityQuery<MetaDataComponent> _metaQuery;
     private EntityQuery<TransformComponent> _xformQuery;
 
     private readonly HashSet<Entity<ShuttleConsoleComponent>> _consoles = new();
-
+    private ISawmill _sawmill = default!;
     public override void Initialize()
     {
+        _sawmill = _log.GetSawmill("ftl");
         base.Initialize();
 
         _metaQuery = GetEntityQuery<MetaDataComponent>();

@@ -23,6 +23,19 @@
       <Private>false</Private>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="_Starlight\Movement\" />
+    <Folder Include="Power\Components\" />
+    <Folder Include="_Starlight\Spells\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="_Starlight\OnHit\CuffsOnHitComponent.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="_Starlight\OnHit\InjectOnHitComponent.cs">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
   <Import Project="..\RobustToolbox\MSBuild\Robust.CompNetworkGenerator.targets" />
 </Project>

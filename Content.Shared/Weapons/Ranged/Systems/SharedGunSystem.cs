@@ -173,6 +173,9 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         return true;
     }
+    //🌟Starlight🌟
+    public bool IsChamberClosed(EntityUid gunEntity)
+        => Appearance.TryGetData(gunEntity, AmmoVisuals.BoltClosed, out bool boltClosed) && boltClosed;
 
     public bool TryGetGun(EntityUid entity, out EntityUid gunEntity, [NotNullWhen(true)] out GunComponent? gunComp)
     {

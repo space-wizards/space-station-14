@@ -1,4 +1,6 @@
-﻿using Content.Client.Changelog;
+﻿using Content.Client._Starlight.Managers;
+using Content.Client.Administration.Managers;
+using Content.Client.Changelog;
 using Content.Client.UserInterface.Systems.EscapeMenu;
 using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Shared.CCVar;
@@ -6,12 +8,14 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
+using Robust.Shared.Localization;
 
 namespace Content.Client.Info
 {
     public sealed class LinkBanner : BoxContainer
     {
         private readonly IConfigurationManager _cfg;
+        private readonly IClientPlayerRolesManager _clientPlayerManager;
 
         private ValueList<(CVarDef<string> cVar, Button button)> _infoLinks;
 
@@ -25,7 +29,7 @@ namespace Content.Client.Info
 
             var uriOpener = IoCManager.Resolve<IUriOpener>();
             _cfg = IoCManager.Resolve<IConfigurationManager>();
-
+            _clientPlayerManager = IoCManager.Resolve<IClientPlayerRolesManager>();
             var rulesButton = new Button() {Text = Loc.GetString("server-info-rules-button")};
             rulesButton.OnPressed += args => new RulesAndInfoWindow().Open();
             buttons.AddChild(rulesButton);
@@ -34,6 +38,14 @@ namespace Content.Client.Info
             AddInfoButton("server-info-website-button", CCVars.InfoLinksWebsite);
             AddInfoButton("server-info-wiki-button", CCVars.InfoLinksWiki);
             AddInfoButton("server-info-forum-button", CCVars.InfoLinksForum);
+
+            var button = new Button { Text = Loc.GetString("server-info-connect-discord-button") };
+            button.OnPressed += _ => {
+                var link = _clientPlayerManager.GetDiscordLink();
+                if(link != null) 
+                    uriOpener.OpenUri(link);
+            };
+            buttons.AddChild(button);
 
             var guidebookController = UserInterfaceManager.GetUIController<GuidebookUIController>();
             var guidebookButton = new Button() { Text = Loc.GetString("server-info-guidebook-button") };

@@ -1,0 +1,137 @@
+- type: entity
+  parent: [ClothingNeckBase, BaseCommandContraband]
+  id: ClothingNeckCloakCapElite
+  name: elite captain's cloak
+  description: An elite captain's cloak made from the latest composite glowing fabric, ensuring you stand out and are easier to target. Live bright, die young.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Cloaks/cap_elite.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
+  - type: PointLight
+    radius: 2
+    energy: 2
+    color: "#BAF9FF"
+  - type: StaticPrice
+    price: 2000
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellSmall
+        whitelist:
+          tags:
+            - PowerCell
+            - PowerCellSmall
+  - type: EnergyDomeGenerator
+    damageEnergyDraw: 8
+    domePrototype: EnergyDomeSmallCap
+  - type: PowerCellDraw
+    drawRate: 2
+    useRate: 0
+  - type: UseDelay
+    delay: 12.0
+
+- type: entity
+  parent: [ClothingNeckBase, BaseCommandContraband]
+  id: ClothingNeckCloakHopElite
+  name: elite hop's cloak
+  description: An elite hop's cloak made from the latest composite glowing fabric, ensuring you stand out and are easier to target. Live bright, hop hard, and pray your team knows how to catch!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Cloaks/hop_elite.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
+  - type: PointLight
+    radius: 2
+    energy: 2
+    color: "#BAF9FF"
+  - type: StaticPrice
+    price: 2000
+
+- type: entity
+  parent: [ClothingNeckBase, BaseCommandContraband]
+  id: ClothingCloakCmoElite
+  name: elite chief medical officer's cloak
+  description: An elite chief medical officer's cloak made from the latest composite glowing fabric. Not recommended for breaking cancer diagnoses to patients.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Cloaks/cmo_elite.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
+  - type: PointLight
+    radius: 2
+    energy: 2
+    color: "#52B4E9"
+  - type: StaticPrice
+    price: 2000
+
+- type: entity
+  parent: [ClothingNeckBase, BaseCommandContraband]
+  id: ClothingNeckCloakHosElite
+  name: elite head of security's cloak
+  description: An elite head of security's cloak crafted from the latest composite glowing fabric. Only for a true paladin.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Cloaks/hos_elite.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
+  - type: PointLight
+    radius: 2
+    energy: 4
+    color: "#DE3A3A"
+  - type: StaticPrice
+    price: 2000
+
+- type: entity
+  parent: [ClothingNeckBase, BaseCommandContraband]
+  id: ClothingNeckCloakCeElite
+  name: elite chief engineer's cloak
+  description: Chief engineer's cloak made from the latest composite glowing fabric, ensuring you stand out. The brightest cloak—so everyone knows where all the station's light went.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Cloaks/ce_elite.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
+  - type: PointLight
+    radius: 4
+    energy: 2
+    color: "#FaFaFa"
+  - type: StaticPrice
+    price: 2000
+
+- type: entity
+  parent: [ClothingNeckBase, BaseCommandContraband]
+  id: ClothingNeckCloakRdElite
+  name: elite research director's cloak
+  description: Research Director's cloak made from the latest composite glowing fabric, ensuring you stand out. Make sure to tell everyone you invented it.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Cloaks/rd_elite.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
+  - type: PointLight
+    radius: 2
+    energy: 4
+    color: "#D381C9"
+  - type: StaticPrice
+    price: 2000
+
+- type: entity
+  parent: [ClothingNeckBase, BaseCommandContraband]
+  id: ClothingNeckCloakQmElite
+  name: elite quartermaster's cloak
+  description: Quartermaster's cloak made from the latest composite glowing fabric, of course, you doesn't want to sell it.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Neck/Cloaks/qm_elite.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak
+  - type: PointLight
+    radius: 2
+    energy: 5
+    color: "#A46106"
+  - type: StaticPrice
+    price: 2000

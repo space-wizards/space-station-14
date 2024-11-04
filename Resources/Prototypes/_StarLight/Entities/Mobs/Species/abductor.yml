@@ -1,0 +1,34 @@
+- type: entity
+  save: false
+  name: Urist McAbductor
+  parent: BaseMobHuman
+  id: BaseMobAbductor
+  abstract: true
+  components:
+  - type: Muted
+  - type: HumanoidAppearance
+    species: Abductor
+  - type: Icon
+    sprite: _Starlight/Mobs/Species/Abductor/parts.rsi
+    state: full
+  - type: Body
+    prototype: Abductor
+    requiredLegs: 2
+  - type: Damageable
+    damageContainer: Biological
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#896e55"
+      Burn:
+        sprite: Mobs/Effects/burn_damage.rsi
+
+
+- type: entity
+  parent: BaseSpeciesDummy
+  id: MobAbductorDummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HumanoidAppearance
+    species: Abductor
