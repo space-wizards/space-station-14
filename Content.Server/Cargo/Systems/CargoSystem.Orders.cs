@@ -15,12 +15,14 @@ using Content.Shared.Paper;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Content.Server.CrewManifest;
 
 namespace Content.Server.Cargo.Systems
 {
     public sealed partial class CargoSystem
     {
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+        [Dependency] private readonly CrewManifestSystem _crewManifest = default!;
 
         /// <summary>
         /// How much time to wait (in seconds) before increasing bank accounts balance.
@@ -336,12 +338,15 @@ namespace Content.Server.Cargo.Systems
 
             if (_uiSystem.HasUi(consoleUid, CargoConsoleUiKey.Orders))
             {
+                // Harmony change -- crewManifest added for cargo orders QoL (Crew list)
+                var (_, crewManifest) = _crewManifest.GetCrewManifest(station.Value);
                 _uiSystem.SetUiState(consoleUid, CargoConsoleUiKey.Orders, new CargoConsoleInterfaceState(
                     MetaData(station.Value).EntityName,
                     GetOutstandingOrderCount(orderDatabase),
                     orderDatabase.Capacity,
                     bankAccount.Balance,
-                    orderDatabase.Orders
+                    orderDatabase.Orders,
+                    crewManifest
                 ));
             }
         }

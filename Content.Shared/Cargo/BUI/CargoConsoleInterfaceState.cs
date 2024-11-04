@@ -1,4 +1,5 @@
 using Robust.Shared.Serialization;
+using Content.Shared.CrewManifest;
 
 namespace Content.Shared.Cargo.BUI;
 
@@ -10,13 +11,16 @@ public sealed class CargoConsoleInterfaceState : BoundUserInterfaceState
     public int Capacity;
     public int Balance;
     public List<CargoOrderData> Orders;
+    public CrewManifestEntries? CrewManifest;
 
-    public CargoConsoleInterfaceState(string name, int count, int capacity, int balance, List<CargoOrderData> orders)
+    // Harmony change -- crewManifest added for cargo orders QoL (Crew list)
+    public CargoConsoleInterfaceState(string name, int count, int capacity, int balance, List<CargoOrderData> orders, CrewManifestEntries? crewManifest)
     {
         Name = name;
         Count = count;
         Capacity = capacity;
         Balance = balance;
         Orders = orders;
+        CrewManifest = crewManifest;
     }
 }
