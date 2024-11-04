@@ -53509,6 +53509,11 @@ entities:
     - type: Transform
       pos: -49.5,9.5
       parent: 30
+  - uid: 9839
+    components:
+    - type: Transform
+      pos: -56.5,9.5
+      parent: 30
 - proto: SignEngineering
   entities:
   - uid: 6735
