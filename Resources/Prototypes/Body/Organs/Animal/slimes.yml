@@ -32,7 +32,7 @@
   suffix: Do Not Map
   components:
     - type: Sprite
-      sprite: Mobs/Species/Smile/organs.rsi
+      sprite: Mobs/Pets/Smile/organs.rsi
       state: brain-smile
     - type: Extractable
       grindableSolutionName: organ
