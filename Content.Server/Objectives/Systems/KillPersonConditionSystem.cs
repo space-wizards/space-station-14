@@ -69,7 +69,7 @@ public sealed class KillPersonConditionSystem : EntitySystem
             allHumans.RemoveAll(mindId => !(
                 _role.MindHasRole<JobRoleComponent>(mindId, out var role) &&
                 role?.Comp1.JobPrototype is {} jobId &&
-                _proto.Index(jobId).SetPreference)0;
+                _proto.Index(jobId).SetPreference));
         }
 
         // no other humans to kill
