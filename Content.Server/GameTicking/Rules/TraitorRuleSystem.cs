@@ -148,6 +148,10 @@ public bool MakeNanoTrasenTraitor(EntityUid traitor, TraitorRuleComponent compon
         code = EnsureComp<RingerUplinkComponent>(headset.Value).Code;
         briefing = string.Format("{0}\n{1}", briefing,
             Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", code).Replace("sharp", "#"))));
+
+        // Ensure the listener component and assign codewords
+        var listener = EnsureComp<ActiveListenerComponent>(headset.Value);
+        listener.Codewords = component.NanoTrasenCodewords.ToList();
     }
 
     _antag.SendBriefing(traitor, GenerateBriefing(component.NanoTrasenCodewords, code, issuer), null, component.GreetSoundNotification);
@@ -163,6 +167,7 @@ public bool MakeNanoTrasenTraitor(EntityUid traitor, TraitorRuleComponent compon
 
     return true;
 }
+
 
 
     private void OnObjectivesTextPrepend(EntityUid uid, TraitorRuleComponent comp, ref ObjectivesTextPrependEvent args)
