@@ -3,7 +3,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Shared.Components
 {
     [RegisterComponent]
-    public sealed class ListenerComponent : Component
+    public sealed class ActiveListenerComponent : Component
     {
 
         /// <summary>
