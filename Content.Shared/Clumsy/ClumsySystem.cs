@@ -86,7 +86,7 @@ public sealed class ClumsySystem : EntitySystem
         if (!_cfg.GetCVar(CCVars.GameTableBonk) && args.PuttingOnTable == ent.Owner && !rand.Prob(ent.Comp.ClumsyDefaultCheck))
             return;
 
-        HitHeadOnTableClumsy(ent, args.BeingClimbedOn);
+        HitHeadClumsy(ent, args.BeingClimbedOn);
 
         _audio.PlayPredicted(ent.Comp.ClumsySound, ent, ent);
 
@@ -108,7 +108,7 @@ public sealed class ClumsySystem : EntitySystem
     ///     "Hits" an entites head against the given table.
     /// </summary>
     // Oh this fucntion is public le- NO!! This is only public for the one admin command if you use this anywhere else I will cry.
-    public void HitHeadOnTableClumsy(Entity<ClumsyComponent> target, EntityUid table)
+    public void HitHeadClumsy(Entity<ClumsyComponent> target, EntityUid table)
     {
         var stunTime = target.Comp.ClumsyDefaultStunTime;
 

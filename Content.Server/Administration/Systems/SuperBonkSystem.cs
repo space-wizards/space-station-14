@@ -86,7 +86,7 @@ public sealed class SuperBonkSystem : EntitySystem
 
         _transformSystem.SetCoordinates(comp.Target, Transform(uid).Coordinates);
 
-        _clumsySystem.HitHeadOnTableClumsy((comp.Target, clumsyComp), uid);
+        _clumsySystem.HitHeadClumsy((comp.Target, clumsyComp), uid);
 
         _audioSystem.PlayPvs(clumsyComp.ClumsySound, comp.Target);
     }
