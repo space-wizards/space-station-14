@@ -96,14 +96,14 @@
   priority: 0
 
 - type: storeCategory
-  id: UplinkNtArmor
-  name: store-category-wearables
-  priority: 2
-
-  - type: storeCategory
   id: UplinkNtAmmo
   name: store-category-ammo
   priority: 1
+
+- type: storeCategory
+  id: UplinkNtArmor
+  name: store-category-wearables
+  priority: 2
 
 #revenant
 - type: storeCategory
