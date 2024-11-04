@@ -1,5 +1,6 @@
 using Content.Server.Administration.Managers;
 using Content.Server.Database;
+using Content.Server.GameTicking;
 using Content.Server.Ghost;
 using Content.Server.Roles.Jobs;
 using Content.Shared.CCVar;
@@ -24,6 +25,7 @@ public sealed class VotingSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly JobSystem _jobs = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
 
     public override void Initialize()
     {
@@ -34,8 +36,7 @@ public sealed class VotingSystem : EntitySystem
 
     private async void OnVotePlayerListRequestEvent(VotePlayerListRequestEvent msg, EntitySessionEventArgs args)
     {
-        if (args.SenderSession.AttachedEntity is not { Valid: true } entity
-            || !await CheckVotekickInitEligibility(args.SenderSession))
+        if (!await CheckVotekickInitEligibility(args.SenderSession))
         {
             var deniedResponse = new VotePlayerListResponseEvent(new (NetUserId, NetEntity, string)[0], true);
             RaiseNetworkEvent(deniedResponse, args.SenderSession.Channel);
@@ -46,17 +47,23 @@ public sealed class VotingSystem : EntitySystem
 
         foreach (var player in _playerManager.Sessions)
         {
-            if (player.AttachedEntity is not { Valid: true } attached)
-                continue;
-
-            if (attached == entity) continue;
+            if (args.SenderSession == player) continue;
 
             if (_adminManager.IsAdmin(player, false)) continue;
 
-            var playerName = GetPlayerVoteListName(attached);
-            var netEntity = GetNetEntity(attached);
+            if (player.AttachedEntity is not { Valid: true } attached)
+            {
+                var playerName = player.Name;
+                var netEntity = NetEntity.Invalid;
+                players.Add((player.UserId, netEntity, playerName));
+            }
+            else
+            {
+                var playerName = GetPlayerVoteListName(attached);
+                var netEntity = GetNetEntity(attached);
 
-            players.Add((player.UserId, netEntity, playerName));
+                players.Add((player.UserId, netEntity, playerName));
+            }
         }
 
         var response = new VotePlayerListResponseEvent(players.ToArray(), false);
@@ -86,15 +93,19 @@ public sealed class VotingSystem : EntitySystem
         if (initiator.AttachedEntity != null && _adminManager.IsAdmin(initiator.AttachedEntity.Value, false))
             return true;
 
-        if (_cfg.GetCVar(CCVars.VotekickInitiatorGhostRequirement))
+        // If cvar enabled, skip the ghost requirement in the preround lobby
+        if (!_cfg.GetCVar(CCVars.VotekickIgnoreGhostReqInLobby) || (_cfg.GetCVar(CCVars.VotekickIgnoreGhostReqInLobby) && _gameTicker.RunLevel != GameRunLevel.PreRoundLobby))
         {
-            // Must be ghost
-            if (!TryComp(initiator.AttachedEntity, out GhostComponent? ghostComp))
-                return false;
+            if (_cfg.GetCVar(CCVars.VotekickInitiatorGhostRequirement))
+            {
+                // Must be ghost
+                if (!TryComp(initiator.AttachedEntity, out GhostComponent? ghostComp))
+                    return false;
 
-            // Must have been dead for x seconds
-            if ((int)_gameTiming.RealTime.Subtract(ghostComp.TimeOfDeath).TotalSeconds < _cfg.GetCVar(CCVars.VotekickEligibleVoterDeathtime))
-                return false;
+                // Must have been dead for x seconds
+                if ((int)_gameTiming.RealTime.Subtract(ghostComp.TimeOfDeath).TotalSeconds < _cfg.GetCVar(CCVars.VotekickEligibleVoterDeathtime))
+                    return false;
+            }
         }
 
         // Must be whitelisted

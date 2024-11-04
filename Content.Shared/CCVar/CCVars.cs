@@ -32,6 +32,21 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> DefaultGuide =
             CVarDef.Create("server.default_guide", "NewPlayer", CVar.REPLICATED | CVar.SERVER);
 
+        /// <summary>
+        /// If greater than 0, automatically restart the server after this many minutes of uptime.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This is intended to work around various bugs and performance issues caused by long continuous server uptime.
+        /// </para>
+        /// <para>
+        /// This uses the same non-disruptive logic as update restarts,
+        /// i.e. the game will only restart at round end or when there is nobody connected.
+        /// </para>
+        /// </remarks>
+        public static readonly CVarDef<int> ServerUptimeRestartMinutes =
+            CVarDef.Create("server.uptime_restart_minutes", 0, CVar.SERVERONLY);
+
         /*
          * Ambience
          */
@@ -435,6 +450,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> GameEntityMenuLookup =
             CVarDef.Create("game.entity_menu_lookup", 0.25f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /// <summary>
+        /// Should the clients window show the server hostname in the title?
+        /// </summary>
+        public static readonly CVarDef<bool> GameHostnameInTitlebar =
+            CVarDef.Create("game.hostname_in_titlebar", true, CVar.SERVER | CVar.REPLICATED);
 
         /*
          * Discord
@@ -1448,7 +1469,7 @@ namespace Content.Shared.CCVar
         ///     Config for when the votekick should be allowed to be called based on number of eligible voters.
         /// </summary>
         public static readonly CVarDef<int> VotekickEligibleNumberRequirement =
-            CVarDef.Create("votekick.eligible_number", 10, CVar.SERVERONLY);
+            CVarDef.Create("votekick.eligible_number", 5, CVar.SERVERONLY);
 
         /// <summary>
         ///     Whether a votekick initiator must be a ghost or not.
@@ -1472,7 +1493,7 @@ namespace Content.Shared.CCVar
         ///     Config for how many seconds a player must have been dead to initiate a votekick / be able to vote on a votekick.
         /// </summary>
         public static readonly CVarDef<int> VotekickEligibleVoterDeathtime =
-            CVarDef.Create("votekick.voter_deathtime", 180, CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("votekick.voter_deathtime", 30, CVar.REPLICATED | CVar.SERVER);
 
         /// <summary>
         ///     The required ratio of eligible voters that must agree for a votekick to go through.
@@ -1515,6 +1536,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<int> VotekickBanDuration =
             CVarDef.Create("votekick.ban_duration", 180, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Whether the ghost requirement settings for votekicks should be ignored for the lobby. 
+        /// </summary>
+        public static readonly CVarDef<bool> VotekickIgnoreGhostReqInLobby =
+            CVarDef.Create("votekick.ignore_ghost_req_in_lobby", true, CVar.SERVERONLY);
 
         /*
          * BAN
