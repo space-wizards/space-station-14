@@ -846,6 +846,9 @@
   id: Knife
 
 - type: Tag
+  id: Laser
+
+- type: Tag
   id: LavaBrig
 
 - type: Tag

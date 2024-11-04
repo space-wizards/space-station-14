@@ -1,0 +1,62 @@
+- type: entity
+  id: SupermatterCrystal
+  name: supermatter crystal
+  description: A strangely translucent and iridescent crystal.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Supermatter
+    - type: Transform
+      anchored: true
+      noRot: true
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Glass
+    - type: RadiationSource
+      intensity: 0 # will be set somewhere else
+    - type: Physics
+      bodyType: Static
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.45,-0.45,0.45,0.45"
+          density: 250
+          mask:
+          - FullTileMask
+          layer:
+          - WallLayer
+    - type: CollisionWake
+      enabled: false
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Anchorable
+    - type: Pullable
+    - type: Sprite
+      drawdepth: 2
+      sprite: Structures/Power/Generation/supermatter.rsi
+      state: supermatter
+    - type: Icon
+      sprite: Structures/Power/Generation/supermatter.rsi
+      state: supermatter
+    - type: PointLight
+      enabled: true
+      radius: 10
+      energy: 5
+      color: "#fff633"
+    - type: AmbientSound
+      range: 4
+      volume: -2
+      sound:
+        path: /Audio/Ambience/Objects/supermatter_calm.ogg
+    - type: SinguloFood
+      energy: 7500
+    - type: WarpPoint
+      follow: true
+      location: supermatter
+    - type: Explosive
+      explosionType: HardBomb
+      totalIntensity: 10000.0
+      intensitySlope: 4
+      maxIntensity: 1000

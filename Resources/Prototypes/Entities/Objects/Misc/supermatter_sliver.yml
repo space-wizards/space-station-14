@@ -1,0 +1,24 @@
+- type: entity
+  parent: BaseItem
+  id: SupermatterSliver
+  name: supermatter sliver
+  description: A shard from the station's supermatter engine. Highly radioactive.
+  components:
+    - type: PointLight
+      enabled: true
+      radius: 3
+      energy: 2
+      color: "#fff633"
+    - type: RadiationSource
+      intensity: 2.5
+    - type: Icon
+      sprite: Objects/Misc/supermatter_sliver.rsi
+      state: icon
+    - type: Sprite
+      sprite: Objects/Misc/supermatter_sliver.rsi
+      state: icon
+    - type: StealTarget
+      stealGroup: SupermatterSliver
+    - type: Tag
+      tags:
+        - HighRiskItem
