@@ -60,7 +60,7 @@ public sealed class AtmosMonitorSystem : EntitySystem
     {
         if (atmosMonitor.MonitorsPipeNet)
         {
-            atmosMonitor.TileGas = GetGasPipeAirMixture(uid);
+            atmosMonitor.TileGas = GetGasPipeAirMixture(uid, atmosMonitor);
             return;
         }
 
@@ -226,20 +226,20 @@ public sealed class AtmosMonitorSystem : EntitySystem
 
         // If monitoring a pipe network, get its most recent gas mixture
         if (component.MonitorsPipeNet)
-            component.TileGas = GetGasPipeAirMixture(uid);
+            component.TileGas = GetGasPipeAirMixture(uid, component);
 
         UpdateState(uid, component.TileGas, component);
     }
 
-    private GasMixture? GetGasPipeAirMixture(EntityUid uid)
+    private GasMixture? GetGasPipeAirMixture(EntityUid uid, AtmosMonitorComponent component)
     {
         if (!TryComp<NodeContainerComponent>(uid, out var nodeContainer))
             return null;
 
-        foreach (var node in nodeContainer.Nodes.Values)
+        if (nodeContainer.Nodes.TryGetValue(component.NodeNameMonitoredPipe, out var node) &&
+            node is PipeNode { } pipeNode)
         {
-            if (node is PipeNode { } pipeNode)
-                return pipeNode.Air;
+            return pipeNode.Air;
         }
 
         return null;

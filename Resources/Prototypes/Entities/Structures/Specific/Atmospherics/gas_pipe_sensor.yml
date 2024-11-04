@@ -27,7 +27,7 @@
     node: assembly
   - type: NodeContainer
     nodes:
-      pipe:
+      monitored:
         !type:PipeNode
         nodeGroupID: Pipe
         pipeDirection: Longitudinal

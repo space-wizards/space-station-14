@@ -73,8 +73,13 @@ public sealed partial class AtmosMonitorComponent : Component
     /// </summary>
     /// <remarks>
     /// If 'true', the entity will require a NodeContainerComponent with one or more PipeNodes to function.
-    /// Note that only the first PipeNode is monitored. 
     /// </remarks>
     [DataField]
     public bool MonitorsPipeNet = false;
+
+    /// <summary>
+    /// Specifies the name of the pipe node that this device is monitoring.
+    /// </summary>
+    [DataField]
+    public string NodeNameMonitoredPipe = "monitored";
 }
