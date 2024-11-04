@@ -11,6 +11,7 @@
   cost: 7500
   recipeUnlocks:
   - MiningDrill
+  - MechEquipmentDrill
   - MineralScannerEmpty
   - BorgModuleMining
   - BorgModuleGrapplingGun
@@ -183,6 +184,42 @@
     - OreBagOfHolding
     - MiningDrillDiamond
     - AdvancedMineralScannerEmpty
+    - MechEquipmentDrillDiamond
+
+- type: technology
+  id: Ripley2
+  name: research-technology-ripley-mkii
+  icon:
+    sprite: Objects/Specific/Mech/mecha.rsi
+    state: ripleymkii
+  discipline: Industrial
+  tier: 2
+  cost: 8000
+  recipeUnlocks:
+  - RipleyMKIIHarness
+  - RipleyUpgradeKit
+  technologyPrerequisites:
+  - RipleyAPLU
+
+- type: technology
+  id: Clarke
+  name: research-technology-clarke
+  icon:
+    sprite: Objects/Specific/Mech/mecha.rsi
+    state: clarke
+  discipline: Industrial
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+  - ClarkeHarness
+  - ClarkeHead
+  - ClarkeLArm
+  - ClarkeRArm
+  - ClarkeTreads
+  - ClarkeCentralElectronics
+  - ClarkePeripheralsElectronics
+  technologyPrerequisites:
+  - Ripley2
 
 # Tier 3
 

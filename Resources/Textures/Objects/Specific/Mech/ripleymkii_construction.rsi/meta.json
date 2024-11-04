@@ -1,0 +1,113 @@
+{
+  "copyright" : "Taken from https://github.com/tgstation/tgstation at at https://github.com/tgstation/tgstation/commit/91af16bcbfd2dd363a89d846ae2acd6d655083c2",
+  "license" : "CC-BY-SA-3.0",
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "ripleymkii_chassis"
+    },
+    {
+      "name": "ripleymkii_upgrade_kit"
+    },
+    {
+      "name": "ripleymkii_upgrade_kit+o"
+    },
+    {
+      "name": "ripleymkii_harness"
+    },
+    {
+      "name": "ripleymkii_harness+o"
+    },
+    {
+      "name": "ripleymkii_r_arm"
+    },
+    {
+      "name": "ripleymkii_r_arm+o"
+    },
+    {
+      "name": "ripleymkii_l_arm"
+    },
+    {
+      "name": "ripleymkii_l_arm+o"
+    },
+    {
+      "name": "ripleymkii_r_leg"
+    },
+    {
+      "name": "ripleymkii_r_leg+o"
+    },
+    {
+      "name": "ripleymkii_l_leg"
+    },
+    {
+      "name": "ripleymkii_l_leg+o"
+    },
+    {
+      "name": "ripleymkii0"
+    },
+    {
+      "name": "ripleymkii1"
+    },
+    {
+      "name": "ripleymkii2"
+    },
+    {
+      "name": "ripleymkii3"
+    },
+    {
+      "name": "ripleymkii4"
+    },
+    {
+      "name": "ripleymkii5"
+    },
+    {
+      "name": "ripleymkii6"
+    },
+    {
+      "name": "ripleymkii7"
+    },
+    {
+      "name": "ripleymkii8"
+    },
+    {
+      "name": "ripleymkii9"
+    },
+    {
+      "name": "ripleymkii10"
+    },
+    {
+      "name": "ripleymkii11"
+    },
+    {
+      "name": "ripleymkii12"
+    },
+    {
+      "name": "ripleymkii13"
+    },
+    {
+      "name": "ripleymkii14"
+    },
+    {
+      "name": "ripleymkii15"
+    },
+    {
+      "name": "ripleymkii16"
+    },
+    {
+      "name": "ripleymkii17"
+    },
+    {
+      "name": "ripleymkii18"
+    },
+    {
+      "name": "ripleymkii19"
+    },
+    {
+      "name": "ripleymkii20"
+    }
+  ]
+}

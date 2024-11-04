@@ -26,6 +26,424 @@
     guides:
     - Robotics
 
+# Clarke
+
+- type: entity
+  id: BaseClarkePart
+  parent: BaseMechPart
+  abstract: true
+  components:
+  - type: Sprite
+    drawdepth: Items
+    noRot: false
+    sprite: Objects/Specific/Mech/clarke_construction.rsi
+
+- type: entity
+  id: BaseClarkePartItem
+  parent: BaseClarkePart
+  abstract: true
+  components:
+  - type: Item
+    size: Ginormous
+
+- type: entity
+  parent: BaseClarkePart
+  id: ClarkeHarness
+  name: clarke harness
+  description: The core of the Clarke.
+  components:
+  - type: Appearance
+  - type: ItemMapper
+    mapLayers:
+      clarke_head+o:
+        whitelist:
+          tags:
+          - ClarkeHead
+      clarke_r_arm+o:
+        whitelist:
+          tags:
+          - ClarkeLArm
+      clarke_l_arm+o:
+        whitelist:
+          tags:
+          - ClarkeRArm
+      clarke_treads+o:
+        whitelist:
+          tags:
+          - ClarkeTreads
+    sprite: Objects/Specific/Mech/clarke_construction.rsi
+  - type: ContainerContainer
+    containers:
+      mech-assembly-container: !type:Container
+  - type: MechAssembly
+    finishedPrototype: ClarkeChassis
+    requiredParts:
+      ClarkeHead: false
+      ClarkeLArm: false
+      ClarkeRArm: false
+      ClarkeTreads: false
+  - type: Sprite
+    state: clarke_harness+o
+    noRot: true
+
+- type: entity
+  parent: BaseClarkePartItem
+  id: ClarkeHead
+  name: clarke head
+  description: The head of the Clarke. It belongs on the chassis of the mech.
+  components:
+  - type: Sprite
+    state: clarke_head
+  - type: Tag
+    tags:
+    - ClarkeHead
+
+- type: entity
+  parent: BaseClarkePartItem
+  id: ClarkeRArm
+  name: clarke right arm
+  description: The right arm of the Clarke. It belongs on the chassis of the mech.
+  components:
+  - type: Sprite
+    state: clarke_l_arm
+  - type: Tag
+    tags:
+    - ClarkeRArm
+
+- type: entity
+  parent: BaseClarkePartItem
+  id: ClarkeLArm
+  name: clarke left arm
+  description: The left arm of the Clarke. It belongs on the chassis of the mech.
+  components:
+  - type: Sprite
+    state: clarke_r_arm
+  - type: Tag
+    tags:
+    - ClarkeLArm
+
+- type: entity
+  parent: BaseClarkePartItem
+  id: ClarkeTreads
+  name: clarke treads
+  description: The treads of the Clarke. It belongs on the chassis of the mech.
+  components:
+  - type: Sprite
+    state: clarke_treads
+  - type: Tag
+    tags:
+    - ClarkeTreads
+
+- type: entity
+  id: ClarkeChassis
+  parent: BaseClarkePart
+  name: calrke chassis
+  description: An in-progress construction of the Clarke mech.
+  components:
+  - type: Appearance
+  - type: ContainerContainer
+    containers:
+      battery-container: !type:Container
+  - type: MechAssemblyVisuals
+    statePrefix: clarke
+  - type: Sprite
+    noRot: true
+    state: clarke0
+  - type: Construction
+    graph: Clarke
+    node: start
+    defaultTarget: clarke
+
+# Durand
+
+- type: entity
+  id: BaseDurandPart
+  parent: BaseMechPart
+  abstract: true
+  components:
+  - type: Sprite
+    drawdepth: Items
+    noRot: false
+    sprite: Objects/Specific/Mech/durand_construction.rsi
+
+- type: entity
+  id: BaseDurandPartItem
+  parent: BaseDurandPart
+  abstract: true
+  components:
+  - type: Item
+    size: Ginormous
+
+- type: entity
+  parent: BaseDurandPart
+  id: DurandHarness
+  name: durand harness
+  description: The core of the Durand.
+  components:
+  - type: Appearance
+  - type: ItemMapper
+    mapLayers:
+      durand_head+o:
+        whitelist:
+          tags:
+          - DurandHead
+      durand_l_arm+o:
+        whitelist:
+          tags:
+          - DurandLArm
+      durand_r_arm+o:
+        whitelist:
+          tags:
+          - DurandRArm
+      durand_l_leg+o:
+        whitelist:
+          tags:
+          - DurandLLeg
+      durand_r_leg+o:
+        whitelist:
+          tags:
+          - DurandRLeg
+    sprite: Objects/Specific/Mech/durand_construction.rsi
+  - type: ContainerContainer
+    containers:
+      mech-assembly-container: !type:Container
+  - type: MechAssembly
+    finishedPrototype: DurandChassis
+    requiredParts:
+      DurandHead: false
+      DurandLArm: false
+      DurandRArm: false
+      DurandLLeg: false
+      DurandRLeg: false
+  - type: Sprite
+    state: durand_harness+o
+    noRot: true
+
+- type: entity
+  parent: BaseDurandPartItem
+  id: DurandHead
+  name: durand head
+  description: The head of the Durand. It belongs on the chassis of the mech.
+  components:
+  - type: Sprite
+    state: durand_head
+  - type: Tag
+    tags:
+    - DurandHead
+
+- type: entity
+  parent: BaseDurandPartItem
+  id: DurandLArm
+  name: durand left arm
+  description: The left arm of the Durand. It belongs on the chassis of the mech.
+  components:
+  - type: Sprite
+    state: durand_l_arm
+  - type: Tag
+    tags:
+    - DurandLArm
+
+- type: entity
+  parent: BaseDurandPartItem
+  id: DurandLLeg
+  name: durand left leg
+  description: The left leg of the Durand. It belongs on the chassis of the mech.
+  components:
+  - type: Sprite
+    state: durand_l_leg
+  - type: Tag
+    tags:
+    - DurandLLeg
+
+- type: entity
+  parent: BaseDurandPartItem
+  id: DurandRLeg
+  name: durand right leg
+  description: The right leg of the Durand. It belongs on the chassis of the mech.
+  components:
+  - type: Sprite
+    state: durand_r_leg
+  - type: Tag
+    tags:
+    - DurandRLeg
+
+- type: entity
+  parent: BaseDurandPartItem
+  id: DurandRArm
+  name: durand right arm
+  description: The right arm of the Durand. It belongs on the chassis of the mech.
+  components:
+  - type: Sprite
+    state: durand_r_arm
+  - type: Tag
+    tags:
+    - DurandRArm
+
+- type: entity
+  id: DurandChassis
+  parent: BaseDurandPart
+  name: durand chassis
+  description: An in-progress construction of the Durand mech.
+  components:
+  - type: Appearance
+  - type: ContainerContainer
+    containers:
+      battery-container: !type:Container
+  - type: MechAssemblyVisuals
+    statePrefix: durand
+  - type: Sprite
+    noRot: true
+    state: durand0
+  - type: Construction
+    graph: Durand
+    node: start
+    defaultTarget: durand
+
+# Gygax
+
+- type: entity
+  id: BaseGygaxPart
+  parent: BaseMechPart
+  abstract: true
+  components:
+  - type: Sprite
+    drawdepth: Items
+    noRot: false
+    sprite: Objects/Specific/Mech/gygax_construction.rsi
+
+- type: entity
+  id: BaseGygaxPartItem
+  parent: BaseGygaxPart
+  abstract: true
+  components:
+  - type: Item
+    size: Ginormous
+
+- type: entity
+  parent: BaseGygaxPart
+  id: GygaxHarness
+  name: gygax harness
+  description: The core of the Gygax.
+  components:
+  - type: Appearance
+  - type: ItemMapper
+    mapLayers:
+      gygax_head+o:
+        whitelist:
+          tags:
+          - GygaxHead
+      gygax_l_arm+o:
+        whitelist:
+          tags:
+          - GygaxLArm
+      gygax_r_arm+o:
+        whitelist:
+          tags:
+          - GygaxRArm
+      gygax_l_leg+o:
+        whitelist:
+          tags:
+          - GygaxLLeg
+      gygax_r_leg+o:
+        whitelist:
+          tags:
+          - GygaxRLeg
+    sprite: Objects/Specific/Mech/gygax_construction.rsi
+  - type: ContainerContainer
+    containers:
+      mech-assembly-container: !type:Container
+  - type: MechAssembly
+    finishedPrototype: GygaxChassis
+    requiredParts:
+      GygaxHead: false
+      GygaxLArm: false
+      GygaxRArm: false
+      GygaxLLeg: false
+      GygaxRLeg: false
+  - type: Sprite
+    state: gygax_harness+o
+    noRot: true
+
+- type: entity
+  parent: BaseGygaxPartItem
+  id: GygaxHead
+  name: gygax head
+  description: The head of the Gygax. It belongs on the chassis of the mech.
+  components:
+  - type: Sprite
+    state: gygax_head
+  - type: Tag
+    tags:
+    - GygaxHead
+
+- type: entity
+  parent: BaseGygaxPartItem
+  id: GygaxLArm
+  name: gygax left arm
+  description: The left arm of the Gygax. It belongs on the chassis of the mech.
+  components:
+  - type: Sprite
+    state: gygax_l_arm
+  - type: Tag
+    tags:
+    - GygaxLArm
+
+- type: entity
+  parent: BaseGygaxPartItem
+  id: GygaxLLeg
+  name: gygax left leg
+  description: The left leg of the Gygax. It belongs on the chassis of the mech.
+  components:
+  - type: Sprite
+    state: gygax_l_leg
+  - type: Tag
+    tags:
+    - GygaxLLeg
+
+- type: entity
+  parent: BaseGygaxPartItem
+  id: GygaxRLeg
+  name: gygax right leg
+  description: The right leg of the Gygax. It belongs on the chassis of the mech.
+  components:
+  - type: Sprite
+    state: gygax_r_leg
+  - type: Tag
+    tags:
+    - GygaxRLeg
+
+- type: entity
+  parent: BaseGygaxPartItem
+  id: GygaxRArm
+  name: gygax right arm
+  description: The right arm of the Gygax. It belongs on the chassis of the mech.
+  components:
+  - type: Sprite
+    state: gygax_r_arm
+  - type: Tag
+    tags:
+    - GygaxRArm
+
+- type: entity
+  id: GygaxChassis
+  parent: BaseGygaxPart
+  name: gygax chassis
+  description: An in-progress construction of the Gygax mech.
+  components:
+  - type: Appearance
+  - type: ContainerContainer
+    containers:
+      battery-container: !type:Container
+  - type: MechAssemblyVisuals
+    statePrefix: gygax
+  - type: Sprite
+    noRot: true
+    state: gygax0
+  - type: Construction
+    graph: Gygax
+    node: start
+    defaultTarget: gygax
+
 # Ripley APLU
 
 - type: entity
@@ -153,6 +571,83 @@
     graph: Ripley
     node: start
     defaultTarget: ripley
+
+# Ripley MK-II
+
+- type: entity
+  id: BaseRipleyMKIIPart
+  parent: BaseMechPart
+  abstract: true
+  components:
+  - type: Sprite
+    drawdepth: Items
+    noRot: false
+    sprite: Objects/Specific/Mech/ripleymkii_construction.rsi
+
+- type: entity
+  parent: BaseRipleyMKIIPart
+  id: RipleyMKIIHarness
+  name: ripley MK-II harness
+  description: The core of the Ripley MK-II.
+  components:
+  - type: Appearance
+  - type: ItemMapper
+    mapLayers:
+      ripleymkii_upgrade_kit+o:
+        whitelist:
+          tags:
+          - RipleyMKIIUpgradeKit
+      ripleymkii_l_arm+o:
+        whitelist:
+          tags:
+          - RipleyLArm
+      ripleymkii_r_arm+o:
+        whitelist:
+          tags:
+          - RipleyRArm
+      ripleymkii_l_leg+o:
+        whitelist:
+          tags:
+          - RipleyLLeg
+      ripleymkii_r_leg+o:
+        whitelist:
+          tags:
+          - RipleyRLeg
+    sprite: Objects/Specific/Mech/ripleymkii_construction.rsi
+  - type: ContainerContainer
+    containers:
+      mech-assembly-container: !type:Container
+  - type: MechAssembly
+    finishedPrototype: RipleyMKIIChassis
+    requiredParts:
+      RipleyMKIIUpgradeKit: false
+      RipleyLArm: false
+      RipleyRArm: false
+      RipleyLLeg: false
+      RipleyRLeg: false
+  - type: Sprite
+    state: ripleymkii_harness+o
+    noRot: true
+
+- type: entity
+  id: RipleyMKIIChassis
+  parent: BaseRipleyMKIIPart
+  name: ripley MK-II chassis
+  description: An in-progress construction of the Ripley MK-II mech.
+  components:
+  - type: Appearance
+  - type: ContainerContainer
+    containers:
+      battery-container: !type:Container
+  - type: MechAssemblyVisuals
+    statePrefix: ripleymkii
+  - type: Sprite
+    noRot: true
+    state: ripleymkii0
+  - type: Construction
+    graph: RipleyMKII
+    node: start
+    defaultTarget: ripleymkii
 
 # H.O.N.K.
 

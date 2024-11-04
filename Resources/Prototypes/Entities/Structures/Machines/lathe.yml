@@ -494,6 +494,14 @@
       - HonkerCentralElectronics
       - HonkerPeripheralsElectronics
       - HonkerTargetingElectronics
+      - GygaxCentralElectronics
+      - GygaxPeripheralsElectronics
+      - GygaxTargetingElectronics
+      - DurandCentralElectronics
+      - DurandPeripheralsElectronics
+      - DurandTargetingElectronics
+      - ClarkeCentralElectronics
+      - ClarkePeripheralsElectronics
       - HamtrCentralElectronics
       - HamtrPeripheralsElectronics
       - PortableGeneratorPacmanMachineCircuitboard
@@ -613,6 +621,8 @@
     - RightLegBorgService
     - HeadBorgService
     - TorsoBorgService
+    - MechAirTank
+    - MechThruster
     dynamicRecipes:
     - ProximitySensor
     - BorgModuleLightReplacer
@@ -636,6 +646,8 @@
     - RipleyRArm
     - RipleyLLeg
     - RipleyRLeg
+    - RipleyMKIIHarness
+    - RipleyUpgradeKit
     - MechEquipmentGrabber
     - HonkerHarness
     - HonkerLArm
@@ -650,6 +662,41 @@
     - HamtrLLeg
     - HamtrRLeg
     - VimHarness
+    - ClarkeHarness
+    - ClarkeHead
+    - ClarkeLArm
+    - ClarkeRArm
+    - ClarkeTreads
+    - DurandHarness
+    - DurandArmor
+    - DurandHead
+    - DurandLArm
+    - DurandLLeg
+    - DurandRArm
+    - DurandRLeg
+    - GygaxHarness
+    - GygaxArmor
+    - GygaxHead
+    - GygaxLArm
+    - GygaxLLeg
+    - GygaxRArm
+    - GygaxRLeg
+    - MechEquipmentDrill
+    - MechEquipmentDrillDiamond
+    - MechEquipmentKineticAccelerator
+    - MechEquipmentHonkerBananaMortar
+    - MechEquipmentHonkerMousetrapMortar
+  - type: EmagLatheRecipes
+    emagDynamicRecipes:
+    - WeaponMechCombatImmolationGun
+    - WeaponMechCombatSolarisLaser
+    - WeaponMechCombatFiredartLaser
+    - WeaponMechCombatUltraRifle
+    - WeaponMechCombatShotgun
+    - WeaponMechCombatShotgunIncendiary
+    - WeaponMechCombatDisabler
+    - WeaponMechCombatFlashbangLauncher
+    - WeaponMechCombatMissileRack8
   - type: MaterialStorage
     whitelist:
       tags:
@@ -822,6 +869,15 @@
       - WeaponLaserCannon
       - WeaponLaserCarbine
       - WeaponXrayCannon
+      - WeaponMechCombatImmolationGun
+      - WeaponMechCombatSolarisLaser
+      - WeaponMechCombatFiredartLaser
+      - WeaponMechCombatUltraRifle
+      - WeaponMechCombatShotgun
+      - WeaponMechCombatShotgunIncendiary
+      - WeaponMechCombatDisabler
+      - WeaponMechCombatFlashbangLauncher
+      - WeaponMechCombatMissileRack8
   - type: MaterialStorage
     whitelist:
       tags:

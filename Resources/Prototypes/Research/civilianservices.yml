@@ -179,6 +179,19 @@
   - MechEquipmentHorn
 
 - type: technology
+  id: HONKWeapons
+  name: research-technology-honk-weapons
+  icon:
+    sprite: Objects/Specific/Mech/mecha_equipment.rsi
+    state: mecha_bananamrtr
+  discipline: CivilianServices
+  tier: 2
+  cost: 6000
+  recipeUnlocks:
+  - MechEquipmentHonkerBananaMortar
+  - MechEquipmentHonkerMousetrapMortar
+
+- type: technology
   id: AdvancedSpray
   name: research-technology-advanced-spray
   icon:
