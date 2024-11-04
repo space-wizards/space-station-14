@@ -120,7 +120,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         return true;
     }
 
-public bool MakeNanoTrasenTraitor(EntityUid traitor, TraitorRuleComponent component, bool giveUplink = true)
+public bool MakeNanoTrasenTraitor(EntityUid traitor, TraitorRuleComponent component, bool giveUplinkNT = true)
 {
     MakeCodewords(component, "NanoTrasen");
 
@@ -131,21 +131,21 @@ public bool MakeNanoTrasenTraitor(EntityUid traitor, TraitorRuleComponent compon
     var issuer = _random.Pick(_prototypeManager.Index(component.ObjectiveIssuers).Values);
 
     Note[]? code = null;
-    if (giveUplink)
+    if (giveUplinkNT)
     {
         var startingBalance = component.StartingBalance;
         if (_jobs.MindTryGetJob(mindId, out _, out var prototype))
             startingBalance = Math.Max(startingBalance - prototype.AntagAdvantage, 0);
 
-        var pda = _uplink.FindUplinkTarget(traitor);
-        if (pda == null)
+        var headset = _uplink.FindUplinkTargetNT(traitor);
+        if (headset == null)
             return false;
 
         // Add NanoTrasen uplink with Bluespace Crystals
-        if (!_uplink.AddUplink(traitor, startingBalance, pda, "StorePresetUplinkNT"))
+        if (!_uplink.AddUplinkNT(traitor, startingBalance, headset))
             return false;
 
-        code = EnsureComp<RingerUplinkComponent>(pda.Value).Code;
+        code = EnsureComp<RingerUplinkComponent>(headset.Value).Code;
         briefing = string.Format("{0}\n{1}", briefing,
             Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", code).Replace("sharp", "#"))));
     }
@@ -158,7 +158,7 @@ public bool MakeNanoTrasenTraitor(EntityUid traitor, TraitorRuleComponent compon
         Briefing = briefing
     }, mind, true);
 
-    _npcFaction.RemoveFaction(traitor, component.NanotrasenFaction, false);
+    _npcFaction.RemoveFaction(traitor, component.NanoTrasenFaction, false);
     _npcFaction.AddFaction(traitor, component.NanoTrasenTraitorFaction);
 
     return true;
