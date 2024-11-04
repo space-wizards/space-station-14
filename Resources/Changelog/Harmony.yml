@@ -487,3 +487,11 @@ Entries:
     changes:
     - type: Add
       message: Added "Maints Slasher" lobby art by thesaladmancer.
+  - id: 152
+    author: FluffMe
+    time: '2024-11-04T16:55:48.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/152
+    changes:
+    - type: Add
+      message: Added Hypophonia trait. With this trait you have a very soft voice and
+        can only whisper.
