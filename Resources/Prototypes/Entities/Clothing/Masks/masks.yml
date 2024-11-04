@@ -39,6 +39,7 @@
     tags:
     - PetWearable
     - WhitelistChameleon
+    - BreathMask # goob edit
   - type: PhysicalComposition
     materialComposition:
       Steel: 50
@@ -67,6 +68,9 @@
         Slash: 0.95
         Piercing: 0.95
         Heat: 0.95
+  - type: Tag # goob edit
+    tags:
+      - SecurityBreathMask
 
 - type: entity
   parent: [ClothingMaskGas, BaseSyndicateContraband]
@@ -165,6 +169,7 @@
     tags:
     - PetWearable
     - WhitelistChameleon
+    - BreathMask # goob edit
 
 - type: entity
   parent: ClothingMaskBreathMedical
@@ -185,6 +190,10 @@
         Slash: 0.95
         Piercing: 0.95
         Heat: 0.95
+  - type: Tag # goob edit
+    tags:
+      - SecurityBreathMask
+
 
 - type: entity
   parent: ClothingMaskPullableBase
@@ -204,6 +213,7 @@
     tags:
     - PetWearable
     - WhitelistChameleon
+    - BreathMask # goob edit
   - type: PhysicalComposition
     materialComposition:
       Steel: 50

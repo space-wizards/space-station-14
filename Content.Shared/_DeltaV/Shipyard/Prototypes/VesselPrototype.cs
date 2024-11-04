@@ -32,7 +32,7 @@ public sealed class VesselPrototype : IPrototype
     /// Path to the shuttle yml to load, e.g. `/Maps/Shuttles/yourshittle.yml`
     /// </summary>
     [DataField(required: true)]
-    public ResPath Path = default!;
+    public List<ResPath> Path = default!;
 
     /// <summary>
     /// Categories that can be filtered in the UI.

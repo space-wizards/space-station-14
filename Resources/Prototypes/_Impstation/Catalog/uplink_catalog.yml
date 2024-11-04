@@ -1,0 +1,20 @@
+- type: listing
+  id: uplinkCleanerLakeUpgrade
+  name: uplink-cleaner-lake-upgrade-name
+  description: uplink-cleaner-lake-upgrade-desc
+  productEntity: WeaponCleanerLakeUpgradeKit
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 10
+  cost:
+    Telecrystal: 12 # was 14, didn't realise that the real CL came w/ that many grenades so this probably deserves a buff
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Janitor
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+      - SurplusBundle

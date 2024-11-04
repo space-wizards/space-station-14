@@ -52,6 +52,7 @@
     - id: SpaceCash1000
     - id: WeaponDisabler
     - id: ClothingEyesGlassesCommand
+    - id: TicketPad #imp special
 
 # No laser table + Laser table
 - type: entityTable
@@ -262,6 +263,7 @@
   id: LockerFillResearchDirectorNoHardsuit
   table: !type:AllSelector
     children:
+    - id: Intellicard
     - id: BoxEncryptionKeyScience
     - id: CircuitImprinterMachineCircuitboard
     - id: ClothingBeltUtilityFilled
@@ -330,6 +332,7 @@
     - id: WeaponDisabler
     - id: WantedListCartridge
     - id: ClothingNeckBronzeheart
+    - id: TicketPad #imp special
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable

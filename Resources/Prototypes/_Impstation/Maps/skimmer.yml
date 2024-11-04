@@ -1,0 +1,36 @@
+- type: gameMap
+  id: Skimmer
+  mapName: 'Skimmer'
+  mapPath: /Maps/_Impstation/skimmer.yml
+  minPlayers: 0
+  maxPlayers: 12
+  randomRotation: false
+  stations:
+    Skimmer:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Skimmer {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: 'RS'
+        - type: StationEmergencyShuttle
+          emergencyShuttlePath: /Maps/Shuttles/emergency_cluster.yml
+        - type: StationJobs
+          availableJobs:
+            Captain: [ 1, 1 ]
+            SecurityOfficer: [ 1, 1 ]
+            CargoTechnician: [ 1, 1 ]
+            SalvageSpecialist: [ 2, 3 ]
+            Bartender: [ 1, 1 ]
+            Botanist: [ 1, 1 ]
+            Chef: [ 1, 1 ]
+            MedicalDoctor: [ 1, 1 ]
+            Chemist: [ 1, 1 ]
+            Janitor: [ 1, 1 ]
+            AtmosphericTechnician: [ 1, 1 ]
+            StationEngineer: [ 1, 1 ]
+            Scientist: [ 1, 1 ]
+            Passenger: [ -1, -1 ]
+            Borg: [ 1, 1 ]
+

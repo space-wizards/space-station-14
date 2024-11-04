@@ -8,6 +8,7 @@ chat-emote-name-crying = Crying
 chat-emote-name-squish = Squish
 chat-emote-name-chitter = Chitter
 chat-emote-name-squeak = Squeak
+chat-emote-name-thump = Thump Tail
 chat-emote-name-click = Click
 chat-emote-name-clap = Clap
 chat-emote-name-snap = Snap
@@ -29,7 +30,6 @@ chat-emote-name-monkeyscreeches = Monkey Screeches
 chat-emote-name-robotbeep = Robot
 chat-emote-name-yawn = Yawn
 chat-emote-name-snore = Snore
-chat-emote-name-ungh = Ungh
 
 # Message
 chat-emote-msg-scream = screams!
@@ -41,6 +41,7 @@ chat-emote-msg-crying = cries.
 chat-emote-msg-squish = squishes.
 chat-emote-msg-chitter = chitters.
 chat-emote-msg-squeak = squeaks.
+chat-emote-msg-thump = thumps {POSS-ADJ($entity)} tail.
 chat-emote-msg-click = clicks.
 chat-emote-msg-clap = claps!
 chat-emote-msg-snap = snaps {POSS-ADJ($entity)} fingers.

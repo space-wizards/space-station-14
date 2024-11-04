@@ -1,0 +1,12 @@
+- type: dataset
+  id: names_cargorilla
+  values:
+  - Forklift
+  - Conveyor
+  - Pallet
+  - Pallet Jack
+  - Golira
+  - Business Logic
+  - Trolley
+  - Freight
+  - Long-Haul

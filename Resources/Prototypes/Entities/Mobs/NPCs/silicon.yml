@@ -123,8 +123,6 @@
   - type: Construction
     graph: FireBot
     node: bot
-  - type: SentienceTarget
-    flavorKind: station-event-random-sentience-flavor-mechanical
   - type: HTN
     rootTask:
       task: FirebotCompound
@@ -151,12 +149,14 @@
     vaporSpread: 90
     sprayVelocity: 3.0
   - type: UseDelay
-    delay: 4
+    delay: 2
   - type: InteractionPopup
     interactSuccessString: petting-success-firebot
     interactFailureString: petting-failure-firebot
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: Advertise
+    pack: FirebotAd
 
 - type: entity
   parent: MobSiliconBase
@@ -169,6 +169,8 @@
     maxInterval: 12
     sound:
       collection: BikeHorn
+      params:
+        variation: 0.0625 #making a note so this is in the commit if we want to change this later - ruddygreat
   - type: Sprite
     sprite: Mobs/Silicon/Bots/honkbot.rsi
     state: honkbot
@@ -213,6 +215,8 @@
     interactFailureString: petting-failure-honkbot
     interactSuccessSound:
       path: /Audio/Items/bikehorn.ogg
+      params:
+        variation: 0.125
 
 - type: entity
   parent: MobHonkBot
@@ -223,6 +227,8 @@
   - type: SpamEmitSound
     sound:
       collection: CluwneHorn
+      params:
+        variation: 0.0625 #making a note so this is in the commit if we want to change this later - ruddygreat
   - type: Sprite
     state: jonkbot
   - type: Construction
@@ -238,6 +244,8 @@
   - type: InteractionPopup
     interactSuccessSound:
       path: /Audio/Items/brokenbikehorn.ogg
+      params:
+        variation: 0.0625 #making a note so this is in the commit if we want to change this later - ruddygreat
   - type: Vocal
     sounds:
       Unsexed: Cluwne
