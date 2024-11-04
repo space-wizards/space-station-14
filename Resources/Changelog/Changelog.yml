@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Scribbles0, Plykiya, nikthechampiongr
-  changes:
-  - message: You can now execute incapacitated/cuffed entities or yourself with certain
-      sharp weapons. Executions require a do-after, deal 9x the damage of a normal
-      attack, and ignore damage resistances.
-    type: Add
-  id: 7086
-  time: '2024-08-11T03:05:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30104
 - author: Plykiya
   changes:
   - message: Cooking shelves have been renamed to Kitchen shelves, you can now put
@@ -3954,3 +3945,11 @@
   id: 7585
   time: '2024-11-03T11:25:30.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33134
+- author: MilenVolf
+  changes:
+  - message: Ghost roles menu is now collapsible! This makes it much easier to find
+      a specific role that you want.
+    type: Tweak
+  id: 7586
+  time: '2024-11-04T00:49:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32717
