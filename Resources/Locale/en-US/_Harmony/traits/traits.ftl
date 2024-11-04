@@ -45,3 +45,6 @@ trait-slimevocals-desc = You are somehow able to fully mimic Slime speech. (Repl
 
 trait-voxvocals-name = Voice of Vox
 trait-voxvocals-desc = You are somehow able to fully mimic Vox speech. (Replace speech sounds, verbs, and emote sounds)
+
+trait-hypophonia-name = Hypophonia
+trait-hypophonia-desc = You can only whisper.
