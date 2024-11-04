@@ -1,12 +1,12 @@
 using Content.Shared.Components;
+using Content.Server.Popups;
 using Robust.Shared.GameObjects;
-using System.Linq;
 
 namespace Content.Server.Systems
 {
     public sealed class ListenerSystem : EntitySystem
     {
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {
