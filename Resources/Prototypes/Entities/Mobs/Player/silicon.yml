@@ -33,7 +33,6 @@
   - type: ActionGrant
     actions:
     - ActionJumpToCore
-    - ActionShowJobIcons
     - ActionSurvCameraLights
     - ActionAIViewLaws
   - type: UserInterface
@@ -70,6 +69,9 @@
     canShuttle: false
     title: comms-console-announcement-title-station-ai
     color: "#2ed2fd"
+  - type: Speech
+    speechVerb: Robotic
+  - type: ShowJobIcons
 
 - type: entity
   id: AiHeldIntellicard

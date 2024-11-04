@@ -462,6 +462,18 @@ namespace Content.Shared.CCVar
          */
 
         /// <summary>
+        /// The role that will get mentioned if a new SOS ahelp comes in.
+        /// </summary>
+        public static readonly CVarDef<string> DiscordAhelpMention =
+        CVarDef.Create("discord.on_call_ping", string.Empty, CVar.SERVERONLY | CVar.CONFIDENTIAL);
+
+        /// <summary>
+        /// URL of the discord webhook to relay unanswered ahelp messages.
+        /// </summary>
+        public static readonly CVarDef<string> DiscordOnCallWebhook =
+            CVarDef.Create("discord.on_call_webhook", string.Empty, CVar.SERVERONLY | CVar.CONFIDENTIAL);
+
+        /// <summary>
         /// URL of the Discord webhook which will relay all ahelp messages.
         /// </summary>
         public static readonly CVarDef<string> DiscordAHelpWebhook =
@@ -1469,13 +1481,25 @@ namespace Content.Shared.CCVar
         ///     Config for when the votekick should be allowed to be called based on number of eligible voters.
         /// </summary>
         public static readonly CVarDef<int> VotekickEligibleNumberRequirement =
-            CVarDef.Create("votekick.eligible_number", 10, CVar.SERVERONLY);
+            CVarDef.Create("votekick.eligible_number", 5, CVar.SERVERONLY);
 
         /// <summary>
         ///     Whether a votekick initiator must be a ghost or not.
         /// </summary>
         public static readonly CVarDef<bool> VotekickInitiatorGhostRequirement =
             CVarDef.Create("votekick.initiator_ghost_requirement", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Should the initiator be whitelisted to initiate a votekick?
+        /// </summary>
+        public static readonly CVarDef<bool> VotekickInitiatorWhitelistedRequirement =
+            CVarDef.Create("votekick.initiator_whitelist_requirement", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Should the initiator be able to start a votekick if they are bellow the votekick.voter_playtime requirement?
+        /// </summary>
+        public static readonly CVarDef<bool> VotekickInitiatorTimeRequirement =
+            CVarDef.Create("votekick.initiator_time_requirement", false, CVar.SERVERONLY);
 
         /// <summary>
         ///     Whether a votekick voter must be a ghost or not.
@@ -1493,7 +1517,7 @@ namespace Content.Shared.CCVar
         ///     Config for how many seconds a player must have been dead to initiate a votekick / be able to vote on a votekick.
         /// </summary>
         public static readonly CVarDef<int> VotekickEligibleVoterDeathtime =
-            CVarDef.Create("votekick.voter_deathtime", 180, CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("votekick.voter_deathtime", 30, CVar.REPLICATED | CVar.SERVER);
 
         /// <summary>
         ///     The required ratio of eligible voters that must agree for a votekick to go through.
@@ -1536,6 +1560,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<int> VotekickBanDuration =
             CVarDef.Create("votekick.ban_duration", 180, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Whether the ghost requirement settings for votekicks should be ignored for the lobby. 
+        /// </summary>
+        public static readonly CVarDef<bool> VotekickIgnoreGhostReqInLobby =
+            CVarDef.Create("votekick.ignore_ghost_req_in_lobby", true, CVar.SERVERONLY);
 
         /*
          * BAN
