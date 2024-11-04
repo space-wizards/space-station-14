@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Cooking shelves have been renamed to Kitchen shelves, you can now put
-      more drinks and cutlery in them.
-    type: Tweak
-  id: 7087
-  time: '2024-08-11T06:21:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30858
 - author: BombasterDS
   changes:
   - message: You can now change the suit's sensors on incapacitated people without
@@ -3953,3 +3945,11 @@
   id: 7586
   time: '2024-11-04T00:49:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32717
+- author: Tr1bute
+  changes:
+  - message: A popup now appears when attempting to harvest mutated plants that require
+      sharp tools.
+    type: Add
+  id: 7587
+  time: '2024-11-04T00:56:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33136
