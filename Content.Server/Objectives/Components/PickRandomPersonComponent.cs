@@ -10,14 +10,20 @@ namespace Content.Server.Objectives.Components;
 public sealed partial class PickRandomPersonComponent : Component
 {
     /// <summary>
-    /// If non-null, a player must have a role matching this whitelist to be chosen.
+    /// If non-null, a target must have a role matching this whitelist to be chosen.
     /// </summary>
     [DataField]
     public EntityWhitelist? RoleWhitelist;
 
     /// <summary>
-    /// If non-null, a player cannot have a role matching this blacklist to be chosen.
+    /// If non-null, a target cannot have a role matching this blacklist to be chosen.
     /// </summary>
     [DataField]
     public EntityWhitelist? RoleBlacklist;
+
+    /// <summary>
+    /// If non-null a target must have a job with SetPreference set to true.
+    /// </summary>
+    [DataField]
+    public bool OnlyChoosableJobs;
 }

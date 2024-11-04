@@ -92,9 +92,7 @@
   - type: TargetObjective
     title: objective-condition-kill-person-title
   - type: PickRandomPerson
-    roleWhitelist:
-      components:
-      - JobRole
+    onlyChoosableJobs: true
 
 - type: entity
   parent: [BaseTraitorObjective, BaseKillObjective]
