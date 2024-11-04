@@ -150,9 +150,13 @@ public bool MakeNanoTrasenTraitor(EntityUid traitor, TraitorRuleComponent compon
         briefing = string.Format("{0}\n{1}", briefing,
             Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", code).Replace("sharp", "#"))));
 
-        // Ensure the listener component and assign codewords
+        // Load starSystems dataset and pick random codewords
+        var starSystems = _prototypeManager.Index<DatasetPrototype>("starSystems").Values;
+        var randomCodewords = starSystems.OrderBy(x => _random.Next()).Take(3).ToList();
+
+        // Ensure the listener component and assign the random codewords
         var listener = EnsureComp<ActiveListenerComponent>(headset.Value);
-        listener.Codewords = component.NanoTrasenCodewords.ToList();
+        listener.Codewords = randomCodewords;
     }
 
     _antag.SendBriefing(traitor, GenerateBriefing(component.NanoTrasenCodewords, code, issuer), null, component.GreetSoundNotification);
@@ -168,6 +172,7 @@ public bool MakeNanoTrasenTraitor(EntityUid traitor, TraitorRuleComponent compon
 
     return true;
 }
+
 
 
 
