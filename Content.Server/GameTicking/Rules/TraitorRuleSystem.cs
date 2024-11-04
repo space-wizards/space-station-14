@@ -145,6 +145,7 @@ public bool MakeNanoTrasenTraitor(EntityUid traitor, TraitorRuleComponent compon
         if (!_uplink.AddUplinkNT(traitor, startingBalance, headset))
             return false;
 
+        // the code for the headset
         code = EnsureComp<RingerUplinkComponent>(headset.Value).Code;
         briefing = string.Format("{0}\n{1}", briefing,
             Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", code).Replace("sharp", "#"))));
