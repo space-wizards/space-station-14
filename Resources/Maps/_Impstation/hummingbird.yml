@@ -16489,6 +16489,12 @@ entities:
       parent: 2
 - proto: ButtonFrameExit
   entities:
+  - uid: 2476
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 33.5,3.5
+      parent: 2
   - uid: 2888
     components:
     - type: Transform
@@ -122598,12 +122604,6 @@ entities:
         - Pressed: Toggle
         2974:
         - Pressed: Toggle
-  - uid: 2476
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 33.5,3.5
-      parent: 2
   - uid: 3010
     components:
     - type: MetaData
@@ -122960,6 +122960,20 @@ entities:
         5748:
         - Pressed: Toggle
         6379:
+        - Pressed: Toggle
+  - uid: 13369
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 33.5,3.5
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        2418:
+        - Pressed: Toggle
+        2455:
+        - Pressed: Toggle
+        2456:
         - Pressed: Toggle
   - uid: 14160
     components:
@@ -150282,7 +150296,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -82622.89
+      secondsUntilStateChange: -82723.87
       state: Opening
     - type: Airlock
       autoClose: False
