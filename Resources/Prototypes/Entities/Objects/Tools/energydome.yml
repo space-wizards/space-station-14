@@ -1,0 +1,179 @@
+- type: entity
+  name: blood red personal shield generator
+  description: A personal shield generator that protects the wearer from lasers and bullets but prevents from using ranged weapons himself. Uses a power cell.
+  id: EnergyDomeGeneratorPersonalSyndie
+  parent: BaseItem
+  components:
+  - type: Item
+    size: Ginormous
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - Belt
+  - type: Sprite
+    sprite: Objects/Tools/EnergyDome/syndie.rsi
+    layers:
+      - state: icon
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellSmall
+        whitelist:
+          tags:
+            - PowerCell
+            - PowerCellSmall
+  - type: EnergyDomeGenerator
+    damageEnergyDraw: 5
+    domePrototype: EnergyDomeSmallRed
+  - type: PowerCellDraw
+    drawRate: 10
+    useRate: 0
+  - type: UseDelay
+    delay: 10.0
+
+- type: entity
+  name: BR-40c "Turtle"
+  description: A two-handed and heavy energy barrier with extremely low passive energy consumption. Can be tethered with a multitool.
+  id: EnergyDomeDirectionalTurtle
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/EnergyDome/reinhardt.rsi
+    layers:
+    - state: icon
+  - type: InteractionOutline
+  - type: MultiHandedItem
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+  - type: Item
+    size: Ginormous
+  - type: HeldSpeedModifier
+    walkModifier: 0.7
+    sprintModifier: 0.7
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellSmall
+        whitelist:
+          tags:
+            - PowerCell
+            - PowerCellSmall
+  - type: EnergyDomeGenerator
+    damageEnergyDraw: 7
+    domePrototype: EnergyDomeMediumBlue
+    canDeviceNetworkUse: true
+  - type: PowerCellDraw
+    drawRate: 2
+    useRate: 0
+  - type: UseDelay
+    delay: 10.0
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+    - Toggle
+    - On
+    - Off
+
+- type: entity
+  id: EnergyDomeWiredTest
+  name: Static Dome
+  description: Test energy barrier powered by station wiring. I don't know how the hell to balance it.....
+  parent: BaseMachine
+  suffix: DO NOT MERGE
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Sprite
+    sprite: Structures/Power/Generation/Tesla/coil.rsi
+    snapCardinals: true
+    noRot: true
+    layers:
+      - state: coil
+  - type: ExaminableBattery
+  - type: Battery
+    maxCharge: 30000          #<- max supply
+    startingCharge: 10000
+  - type: PowerNetworkBattery
+    maxSupply: 30000
+    maxChargeRate: 1000       #<- passive charging frow power net
+    supplyRampTolerance: 500
+    supplyRampRate: 50
+  - type: BatteryCharger
+    voltage: Medium
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      input:
+        !type:CableDeviceNode
+        nodeGroupID: MVPower
+  - type: BatterySelfRecharger
+    autoRecharge: false # true only when active
+    autoRechargeRate: -800   #<- discharge per second while active
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+  - type: UseDelay
+    delay: 30.0
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+    - Toggle
+    - On
+    - Off
+  - type: EnergyDomeGenerator
+    enabled: true
+    damageEnergyDraw: 100
+    domePrototype: EnergyDomeSlowing
+    canDeviceNetworkUse: true
