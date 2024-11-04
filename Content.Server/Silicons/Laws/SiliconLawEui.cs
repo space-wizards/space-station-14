@@ -52,10 +52,8 @@ public sealed class SiliconLawEui : BaseEui
             return;
 
         var player = _entityManager.GetEntity(message.Target);
-        _siliconLawSystem.SetLaws(message.Laws, player);
-
         if (_entityManager.TryGetComponent<SiliconLawProviderComponent>(player, out var playerProviderComp))
-            _siliconLawSystem.CueEntityMind(player, playerProviderComp.LawUploadSound);
+            _siliconLawSystem.SetLaws(message.Laws, player, playerProviderComp.LawUploadSound);
     }
 
     private bool IsAllowed()
