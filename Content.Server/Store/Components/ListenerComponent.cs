@@ -5,6 +5,7 @@ namespace Content.Shared.Components
     [RegisterComponent]
     public sealed class ActiveListenerComponent : Component
     {
+        public override string Name => "ActiveListener";
 
         /// <summary>
         /// The range within which this component can listen for audio.
