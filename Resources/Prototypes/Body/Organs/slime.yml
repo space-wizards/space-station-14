@@ -75,4 +75,4 @@
           Quantity: 5
   - type: Item
     size: Small
-    heldPrefix: brain
+    heldPrefix: lungs
