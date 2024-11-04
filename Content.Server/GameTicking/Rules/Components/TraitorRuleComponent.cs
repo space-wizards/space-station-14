@@ -20,6 +20,9 @@ public sealed partial class TraitorRuleComponent : Component
     public ProtoId<NpcFactionPrototype> NanoTrasenFaction = "NanoTrasen";
 
     [DataField]
+    public ProtoId<DatasetPrototype> CodewordstarSystems = "starSystems";
+
+    [DataField]
     public ProtoId<NpcFactionPrototype> NanoTrasenTraitorFaction = "NanoTrasenTraitor";
 
     [DataField]
