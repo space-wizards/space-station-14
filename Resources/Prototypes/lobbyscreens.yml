@@ -45,7 +45,11 @@
 - type: lobbyBackground
   id: ReclaimerNuke
   background: /Textures/LobbyScreens/reclaimer-nuke.webp
-  
+
 - type: lobbyBackground
   id: StationCafe
   background: /Textures/LobbyScreens/stationcafe.webp
+
+- type: lobbyBackground
+  id: MaintsSlasher
+  background: /Textures/LobbyScreens/maints-slasher.webp

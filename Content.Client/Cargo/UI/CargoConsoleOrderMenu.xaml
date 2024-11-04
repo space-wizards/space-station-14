@@ -14,8 +14,16 @@
             <Label Name="PointCost"
                       Access="Public" />
             <Label Text="{Loc 'cargo-console-order-menu-requester-label'}" />
-            <LineEdit Name="Requester"
-                      Access="Public" />
+            <!--  Harmony change for cargo orders QoL (Crew list) -->
+            <BoxContainer Orientation="Horizontal">
+                <LineEdit Name="Requester"
+                        Access="Public"
+                        HorizontalExpand="True" />
+                <OptionButton Name="CrewList"
+                            Access="Public"
+                            HorizontalExpand="False" />
+            </BoxContainer>
+            <!--  End of Harmony code -->
             <Label Text="{Loc 'cargo-console-order-menu-reason-label'}" />
             <LineEdit Name="Reason"
                       Access="Public" />

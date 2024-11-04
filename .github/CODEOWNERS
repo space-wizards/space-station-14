@@ -20,4 +20,5 @@
 # Maps
 /Resources/Maps/                                    @spanky-spanky
 /Resources/Prototypes/Maps/                         @spanky-spanky
+/Resources/Prototypes/_Harmony/Maps/                @spanky-spanky
 /Content.IntegrationTests/Tests/PostMapInitTest.cs  @spanky-spanky

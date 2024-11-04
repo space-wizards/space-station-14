@@ -1,7 +1,7 @@
 - type: gameMap
   id: Barratry
   mapName: 'Barratry'
-  mapPath: /Maps/barratry.yml
+  mapPath: /Maps/_Harmony/barratry.yml
   minPlayers: 30
   maxPlayers: 60
   stations:
@@ -58,5 +58,7 @@
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
+            Reporter: [ 1, 1 ]
             #silicon
             StationAi: [ 1, 1 ]
+            Borg: [ 1, 1 ]
