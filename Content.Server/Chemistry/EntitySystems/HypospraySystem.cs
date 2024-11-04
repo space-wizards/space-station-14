@@ -102,7 +102,7 @@ public sealed class HypospraySystem : SharedHypospraySystem
             return false;
 
         // Target event
-        var targetEvent = new TargetEventBeforeHyposprayInjectsEvent(user, entity.Owner, target);
+        var targetEvent = new TargetBeforeHyposprayInjectsEvent(user, entity.Owner, target);
         RaiseLocalEvent(target, targetEvent);
 
         if (targetEvent.Cancelled)
