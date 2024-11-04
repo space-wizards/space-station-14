@@ -461,3 +461,29 @@ Entries:
     changes:
     - type: Tweak
       message: Barratry added into rotation.
+  - id: 157
+    author: FluffMe
+    time: '2024-11-04T16:21:57.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/157
+    changes:
+    - type: Add
+      message: Added a crew manifest dropdown to the Cargo console Order menu. Paperwork
+        mains sould have an easier time having their shipments in order.
+  - id: 149
+    author: FluffMe
+    time: '2024-11-04T16:23:01.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/149
+    changes:
+    - type: Add
+      message: Added Raised by [species name] character traits. These traits allow you
+        to change speech sounds and verbs.
+    - type: Add
+      message: Added Voice of [species name] character traits. These traits allow you
+        to fully change your voice. Chittering humans are a thing now...
+  - id: 153
+    author: thesaladmancer
+    time: '2024-11-04T16:24:28.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/153
+    changes:
+    - type: Add
+      message: Added "Maints Slasher" lobby art by thesaladmancer.
