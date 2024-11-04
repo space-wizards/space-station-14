@@ -16,3 +16,23 @@
       - feet
     feet:
       part: FeetAnimal
+
+- type: body
+  id: Smiles
+  name: "Smiles"
+  parent: Slimes
+  root: torso
+  slots:
+    torso:
+      part: TorsoSlime
+      connections:
+      - legs
+      organs:
+        core: SentientSmileCore
+        lungs: OrganSlimesLungs
+    legs:
+      part: LegsAnimal
+      connections:
+      - feet
+    feet:
+      part: FeetAnimal

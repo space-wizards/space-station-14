@@ -26,6 +26,25 @@
           maxVol: 30.0
 
 - type: entity
+  id: SentientSmileCore
+  parent: SentientSlimesCore
+  name: sentient smile core
+  suffix: Do Not Map
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/Smile/organs.rsi
+      state: brain-smile
+    - type: Extractable
+      grindableSolutionName: organ
+    - type: SolutionContainerManager
+      solutions:
+        organ:
+          maxVol: 5
+          reagents:
+          - ReagentId: SentientGreyMatter
+            Quantity: 5
+
+- type: entity
   id: OrganSlimesLungs
   parent: BaseHumanOrgan
   name: slimes gas sacs

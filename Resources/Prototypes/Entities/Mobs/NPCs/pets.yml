@@ -744,6 +744,9 @@
         BaseUnshaded: aslime-_3
       Dead:
         Base: rainbow_baby_slime_dead
+  - type: Body
+    prototype: Smiles
+    requiredLegs: 1
   - type: Butcherable
     spawned:
     - id: FoodMeatSlime

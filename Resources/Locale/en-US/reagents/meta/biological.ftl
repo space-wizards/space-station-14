@@ -30,3 +30,6 @@ reagent-desc-vomit = You can see a few chunks of someone's last meal in it.
 
 reagent-name-grey-matter = grey matter
 reagent-desc-grey-matter = Thought juice, the stuff that leaks out of your ears.
+
+reagent-name-sentient-grey-matter = sentient grey matter
+reagent-desc-sentient-grey-matter = Thought juice, the stuff that leaks out of your ears. It seems to be sparkling when you look at it in the right light. That's odd...
