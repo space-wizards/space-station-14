@@ -387,3 +387,9 @@
   name: Dabu & Simon Swerwer - ilun Kinem
   path:
     path: /Audio/_Impstation/Jukebox/ilun_kinem.ogg
+
+- type: jukebox
+  id: Tricktrack
+  name: Hideaki Kobayashi & Fumie Kumatani - Tricktrack PART 2 
+  path:
+    path: /Audio/_Impstation/Jukebox/tricktrack.ogg
