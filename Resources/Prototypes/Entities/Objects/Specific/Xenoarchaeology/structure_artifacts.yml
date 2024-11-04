@@ -59,6 +59,10 @@
       - Xenoarchaeology
     - type: StealTarget
       stealGroup: XenoArtifact
+    - type: ContainerContainer # needed for the EffectStorage artifactEffect
+      containers:
+        storagebase: !type:Container
+          ents: [ ]
 
 - type: entity
   parent: BaseXenoArtifact
