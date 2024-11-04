@@ -176,6 +176,16 @@
     Heat: 3
 
 - type: damageModifierSet
+  id: HardLightBarrier
+  coefficients:
+    Heat: 0.8
+    Blunt: 0.8
+    Slash: 0.8
+    Piercing: 0.8
+    Cold: 0.8
+    Shock: 1.6
+
+- type: damageModifierSet
   id: Scale # Skin tougher, bones weaker, strong stomachs, cold-blooded (kindof)
   coefficients:
     Cold: 1.3
