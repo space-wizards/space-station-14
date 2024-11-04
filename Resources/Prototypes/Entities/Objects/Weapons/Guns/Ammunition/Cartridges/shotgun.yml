@@ -32,6 +32,16 @@
     proto: PelletShotgunBeanbag
   - type: SpentAmmoVisuals
     state: "beanbag"
+  - type: SolutionContainerManager
+    solutions:
+      shell:
+        reagents:
+        - ReagentId: Cellulose
+          Quantity: 2
+        - ReagentId: Lead
+          Quantity: 2
+        - ReagentId: Fiber
+          Quantity: 2
 
 - type: entity
   id: ShellShotgunSlug
@@ -46,6 +56,14 @@
     proto: PelletShotgunSlug
   - type: SpentAmmoVisuals
     state: "slug"
+  - type: SolutionContainerManager
+    solutions:
+      slug:
+        reagents:
+        - ReagentId: Cellulose
+          Quantity: 2
+        - ReagentId: Lead
+          Quantity: 3
 
 - type: entity
   id: ShellShotgunFlare
@@ -60,6 +78,24 @@
     proto: PelletShotgunFlare
   - type: SpentAmmoVisuals
     state: "flare"
+  - type: SolutionContainerManager
+    solutions:
+      flare:
+        reagents:
+        - ReagentId: Cellulose
+          Quantity: 2
+          # the actual flare part
+        - ReagentId: Phosphorus
+          Quantity: 3
+        - ReagentId: Carbon
+          Quantity: 1
+        - ReagentId: Oxygen
+          Quantity: 2
+          # from flare.yml: "fuel or something"
+        - ReagentId: Sulfur
+          Quantity: 1
+        - ReagentId: Charcoal
+          Quantity: 1
 
 - type: entity
   id: ShellShotgun
@@ -72,6 +108,16 @@
         map: [ "enum.AmmoVisualLayers.Base" ]
   - type: CartridgeAmmo
     proto: PelletShotgunSpread
+  - type: Extractable
+    grindableSolutionName: shell
+  - type: SolutionContainerManager # shotgun shells have plastic casing, and therefore need their own reagent entries
+    solutions:
+      shell:
+        reagents:
+        - ReagentId: Cellulose
+          Quantity: 2
+        - ReagentId: Lead
+          Quantity: 2
 
 - type: entity
   id: ShellShotgunIncendiary
@@ -86,6 +132,18 @@
     proto: PelletShotgunIncendiarySpread
   - type: SpentAmmoVisuals
     state: "incendiary"
+  - type: Extractable
+    grindableSolutionName: incendiary
+  - type: SolutionContainerManager # shotgun shells have more shot in them + have plastic casing, and therefore need their own reagent entries
+    solutions:
+      incendiary:
+        reagents:
+        - ReagentId: Cellulose
+          Quantity: 2
+        - ReagentId: Lead
+          Quantity: 2
+        - ReagentId: ChlorineTrifluoride
+          Quantity: 2
 
 - type: entity
   id: ShellShotgunPractice
@@ -100,6 +158,14 @@
     proto: PelletShotgunPracticeSpread
   - type: SpentAmmoVisuals
     state: "practice"
+  - type: Extractable
+    grindableSolutionName: practice
+  - type: SolutionContainerManager # shotgun shells have more shot in them + have plastic casing, and therefore need their own reagent entries
+    solutions:
+      practice:
+        reagents:
+        - ReagentId: Cellulose
+          Quantity: 6
 
 - type: entity
   id: ShellTranquilizer
@@ -113,12 +179,20 @@
   - type: CartridgeAmmo
     proto: PelletShotgunTranquilizer
   - type: ChemicalAmmo
+  - type: Extractable
+    grindableSolutionName: grinded
   - type: SolutionContainerManager
     solutions:
       ammo:
         reagents:
         - ReagentId: ChloralHydrate
           Quantity: 7
+      grinded:
+        reagents:
+        - ReagentId: ChloralHydrate
+          Quantity: 7
+        - ReagentId: Cellulose
+          Quantity: 2
   - type: SolutionTransfer
     maxTransferAmount: 7
   - type: SpentAmmoVisuals
@@ -141,10 +215,24 @@
     proto: PelletShotgunImprovisedSpread
   - type: SpentAmmoVisuals
     state: "improvised"
+  - type: Extractable
+    grindableSolutionName: improvised
+  - type: SolutionContainerManager
+    solutions:
+      improvised:
+        reagents:
+        - ReagentId: Cellulose
+          Quantity: 2
+        - ReagentId: Iron
+          Quantity: 2
+        - ReagentId: Carbon
+          Quantity: 0.2
+        - ReagentId: Silicon
+          Quantity: 6
 
 - type: entity
   id: ShellShotgunUranium
-  name: uranium shotgun shell
+  name: shell (.50 uranium)
   parent: BaseShellShotgun
   components:
     - type: Sprite
@@ -155,3 +243,13 @@
       proto: PelletShotgunUraniumSpread
     - type: SpentAmmoVisuals
       state: "depleted-uranium"
+    - type: Extractable
+      grindableSolutionName: uranium
+    - type: SolutionContainerManager
+      solutions:
+        uranium:
+          reagents:
+          - ReagentId: Cellulose
+            Quantity: 2
+          - ReagentId: Uranium
+            Quantity: 4

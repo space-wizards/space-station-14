@@ -40,3 +40,107 @@
         volume: -1
   - type: StaticPrice
     price: 1
+  - type: Extractable
+    grindableSolutionName: cartridge
+  - type: SolutionContainerManager #there are no reagents that work as the "primer" as far as i'm aware, so it is simply omitted
+    solutions:
+      cartridge:
+        reagents:
+        - ReagentId: Lead
+          Quantity: 2
+        - ReagentId: Copper
+          Quantity: 1
+
+- type: entity
+  id: BaseCartridgePractice
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Extractable
+    grindableSolutionName: practice
+  - type: SolutionContainerManager
+    solutions:
+      practice:
+        reagents:
+        - ReagentId: Cellulose
+          Quantity: 3
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#dbdbdb"
+
+- type: entity
+  id: BaseCartridgeIncendiary
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Extractable
+    grindableSolutionName: incendiary
+  - type: SolutionContainerManager
+    solutions:
+      incendiary:
+        reagents:
+        - ReagentId: Lead
+          Quantity: 2
+        - ReagentId: Copper
+          Quantity: 1
+        - ReagentId: ChlorineTrifluoride
+          Quantity: 1
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#ff6e52"
+
+- type: entity
+  id: BaseCartridgeArmorPiercing
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Extractable
+    grindableSolutionName: ap
+  - type: SolutionContainerManager
+    solutions:
+      ap:
+        reagents:
+        - ReagentId: Iron
+          Quantity: 2
+        - ReagentId: Carbon
+          quantity: 0.2
+        - ReagentId: Copper
+          Quantity: 1
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#0a0a0a"
+
+- type: entity
+  id: BaseCartridgeUranium
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Extractable
+    grindableSolutionName: uranium
+  - type: SolutionContainerManager
+    solutions:
+      uranium:
+        reagents:
+        - ReagentId: Uranium
+          Quantity: 2
+        - ReagentId: Copper
+          Quantity: 1
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#65fe08"
