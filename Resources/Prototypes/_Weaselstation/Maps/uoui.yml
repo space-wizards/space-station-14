@@ -1,39 +1,40 @@
 - type: gameMap
-  id: Pact
-  mapName: 'Pact'
-  mapPath: /Maps/Weaselstation/pact.yml
-  minPlayers: 5
+  id: Uoui
+  mapName: 'Uoui'
+  mapPath: /Maps/_Weaselstation/uoui.yml
+  minPlayers: 2
   maxPlayers: 35
   stations:
-    Pact:
+    Uoui:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: '{0} Pact {1}'
+          mapNameTemplate: '{0} Uoui {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: '-UNIONJ'
+            prefixCreator: '14'
         - type: StationJobs
           availableJobs:
             #service
             Captain: [ 1, 1 ]
             HeadOfPersonnel: [ 1, 1 ]
             Bartender: [ 1, 1 ]
-            Botanist: [ 1, 2 ]
-            Chef: [ 1, 1 ]
-            Janitor: [ 1, 1 ]
+            Botanist: [ 2, 2 ]
+            Chef: [ 2, 2 ]
+            Janitor: [ 2, 2 ]
+            Chaplain: [ 1, 1 ]
             Librarian: [ 1, 1 ]
+            ServiceWorker: [ 2, 2 ]
             #engineering
             ChiefEngineer: [ 1, 1 ]
             AtmosphericTechnician: [ 2, 2 ]
-            StationEngineer: [ 4, 4 ]
+            StationEngineer: [ 3, 3 ]
             TechnicalAssistant: [ 3, 3 ]
             #medical
             ChiefMedicalOfficer: [ 1, 1 ]
             Chemist: [ 2, 2 ]
             MedicalDoctor: [ 3, 3 ]
-            MedicalIntern: [ 2, 2 ]
-            Paramedic: [ 1, 1 ]
+            MedicalIntern: [ 3, 3 ]
             #science
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 3, 3 ]
@@ -41,18 +42,19 @@
             #security
             HeadOfSecurity: [ 1, 1 ]
             Warden: [ 1, 1 ]
-            SecurityOfficer: [ 4, 4 ]
             Detective: [ 1, 1 ]
-            SecurityCadet: [ 2, 2 ]
-            Lawyer: [ 1, 1 ]
-            #supply
+            SecurityOfficer: [ 4, 4 ]
+            SecurityCadet: [ 4, 4 ]
+            #cargonia
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 2, 2 ]
-            CargoTechnician: [ 2, 2 ]
+            CargoTechnician: [ 3, 3 ]
             #civilian
-            Musician: [ 1, 1 ]
-            Chaplain: [ 1, 1 ]
             Passenger: [ -1, -1 ]
+            Clown: [ 1, 1 ]
+            Mime: [ 1, 1 ]
+            Musician: [ 1, 1 ]
             #silicon
             StationAi: [ 1, 1 ]
             Borg: [ 2, 2 ]
+
