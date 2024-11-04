@@ -21,7 +21,7 @@ public abstract class BeforeDefibrillatorZapsEvent : CancellableEntityEventArgs,
 }
 
 /// <summary>
-///     This event is raised on the user using the hypospray before the hypospray is injected.
+///     This event is raised on the user using the defibrillator before is actually zaps someone.
 ///     The event is triggered on the user and all their clothing.
 /// </summary>
 public sealed class SelfBeforeDefibrillatorZapsEvent : BeforeDefibrillatorZapsEvent
@@ -30,7 +30,7 @@ public sealed class SelfBeforeDefibrillatorZapsEvent : BeforeDefibrillatorZapsEv
 }
 
 /// <summary>
-///     This event is raised on the target before the hypospray is injected.
+///     This event is raised on the target before it gets zapped with the defibrillator.
 ///     The event is triggered on the target itself and all its clothing.
 /// </summary>
 public sealed class TargetBeforeDefibrillatorZapsEvent : BeforeDefibrillatorZapsEvent
