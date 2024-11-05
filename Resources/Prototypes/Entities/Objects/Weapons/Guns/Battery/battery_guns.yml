@@ -220,7 +220,7 @@
     - SemiAuto
   - type: HitscanBatteryAmmoProvider
     proto: RedLaserPractice
-    fireCost: 62.5
+    fireCost: 50 # little buff on imp
   - type: StaticPrice
     price: 300
 

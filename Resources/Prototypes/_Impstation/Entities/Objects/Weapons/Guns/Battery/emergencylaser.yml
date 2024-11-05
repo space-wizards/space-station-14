@@ -21,7 +21,7 @@
     size: Ginormous
   - type: PointLight
     radius: 1.5
-    energy: 12
+    energy: 14
     color: "#ff0043"
     mask: /Textures/Effects/LightMasks/double_cone.png
   - type: RotatingLight
