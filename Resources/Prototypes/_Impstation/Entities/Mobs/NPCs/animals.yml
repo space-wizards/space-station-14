@@ -39,8 +39,6 @@
       states:
         Alive:
           Base: bros
-        Critical:
-          Base: bros-dead
         Dead:
           Base: bros-dead
     - type: MobThresholds
