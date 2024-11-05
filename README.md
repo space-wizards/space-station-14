@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="Space Station 14" width="600" src="https://imgur.com/a/JQCVujK" />
+  <img alt="Space Station 14" width="600" src="https://i.imgur.com/1NDJY62.png" />
 </p>
 
 <div class="header" align="center">
@@ -10,7 +10,6 @@
 [![GitHub](https://img.shields.io/github/stars/ss14Starlight/space-station-14?style=social)](https://github.com/space-sunrise/space-station-14)
 
 # STARLIGHT
-
 ## Space-Station 14
 
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/y/ss14Starlight/space-station-14)
