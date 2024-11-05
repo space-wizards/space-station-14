@@ -52,3 +52,14 @@
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Syndicate
+
+- type: factionIcon
+  id: VampireFaction
+  priority: 11
+  showTo:
+    components:
+      - ShowAntagIcons
+      - Vampire
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Vampire

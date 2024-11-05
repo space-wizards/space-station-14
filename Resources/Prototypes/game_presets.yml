@@ -246,3 +246,21 @@
   - KesslerSyndromeScheduler
   - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
+  
+- type: gamePreset
+  id: Vampire
+  alias:
+  - vamp
+  - vamps
+  - vampire
+  - vampires
+  name: vampire-gamemode-title
+  description: vampire-gamemode-description
+  showInVote: true
+  minPlayers: 50 # Sunrise-Edit: 50 players for VAMPIRES
+  rules:
+  - Vampire
+  - SubGamemodesRule
+  - BasicStationEventScheduler
+  - MeteorSwarmScheduler
+  - BasicRoundstartVariation
