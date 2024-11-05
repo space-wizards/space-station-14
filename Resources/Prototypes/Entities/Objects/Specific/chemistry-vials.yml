@@ -116,3 +116,18 @@
               Quantity: 30
     - type: Tag
       tags: []
+
+- type: entity
+  id: LubeChemistryVial
+  name: space lube vial
+  parent: BaseChemistryEmptyVial
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 30
+          reagents:
+            - ReagentId: SpaceLube
+              Quantity: 30
+    - type: Tag
+      tags: []
