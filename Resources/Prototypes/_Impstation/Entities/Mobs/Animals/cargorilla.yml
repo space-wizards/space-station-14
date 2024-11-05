@@ -1,6 +1,6 @@
 - type: entity
   name: cargorilla
-  parent: [ SimpleMobBase, MobCombat ]
+  parent: [ SimpleMobBase, MobCombat, StripableInventoryBase ]
   id: MobCargorilla
   description: A well trained gorilla working in Cargo, try not to piss it off.
   components:
@@ -21,8 +21,21 @@
       state: crawling
       sprite: _Impstation/Mobs/Animals/cargorilla.rsi
   - type: Physics
+  - type: InventorySlots
+  - type: Strippable
+  - type: UserInterface
+  - type: IdExaminable
+  - type: Inventory
+    speciesId: cargorilla
+    templateId: cargorilla
+  - type: Loadout
+    prototypes: [ MobCargorillaGear ]
   - type: RandomMetadata
     nameSegments: [names_cargorilla]
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
   - type: BodyEmotes
     soundsId: Gorilla
   - type: InteractionPopup
