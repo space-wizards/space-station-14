@@ -3548,3 +3548,131 @@
   id: 436
   time: '2024-11-02T00:50:10.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/602
+- author: KingMudkipIII
+  changes:
+  - message: Added a ticket book to security lockers. Watch out!
+    type: Add
+  id: 437
+  time: '2024-11-03T22:37:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/609
+- author: hivehum
+  changes:
+  - message: Thavens can now have prosthetic left arms.
+    type: Add
+  id: 438
+  time: '2024-11-03T22:39:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/603
+- author: DinnerCalzone
+  changes:
+  - message: Hummingbird Station updated to version 1.0, added to map rotation.
+    type: Add
+  id: 439
+  time: '2024-11-03T22:38:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/601
+- author: Darkmajia
+  changes:
+  - message: Derotated Atlas from the map pool for the time being.
+    type: Remove
+  id: 440
+  time: '2024-11-03T22:38:45.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/605
+- author: Sha-Seng
+  changes:
+  - message: Spationaut Hardsuit helmet now displays properly on vox
+    type: Fix
+  id: 441
+  time: '2024-11-03T22:36:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/613
+- author: Darkmajia
+  changes:
+  - message: Crusher dagger damage reduced from 15 to 10. (30 DPS -> 20 DPS)
+    type: Tweak
+  id: 442
+  time: '2024-11-03T22:40:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/592
+- author: DinnerCalzone
+  changes:
+  - message: Added metamorphic glasses of custom Impstation drinks to the entity spawner
+      menu for use in mapping and admin spawning.
+    type: Add
+  id: 443
+  time: '2024-11-03T22:42:14.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/598
+- author: TheGrimbeeper
+  changes:
+  - message: fixed too many things spawning from artifacts at one time
+    type: Fix
+  id: 444
+  time: '2024-11-03T22:40:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/595
+- author: hivehum, crocodilecarousel
+  changes:
+  - message: 30 new markings for our space station's moth infestation.
+    type: Add
+  - message: Fixed clipping issue with leg/foot prosthetics.
+    type: Fix
+  id: 445
+  time: '2024-11-03T22:43:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/591
+- author: Lazy Riverfolk, AirFryerBuyOneGetOneFree
+  changes:
+  - message: Added the Cargorilla!
+    type: Add
+  id: 446
+  time: '2024-11-03T22:44:57.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/571
+- author: hivehum
+  changes:
+  - message: You need 5 hours borg playtime to unlock Station AI again.
+    type: Tweak
+  id: 447
+  time: '2024-11-03T22:41:25.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/593
+- author: honeyed-lemons
+  changes:
+  - message: Ships bought from the shipyard can now be randomized
+    type: Tweak
+  id: 448
+  time: '2024-11-03T22:41:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/610
+- author: honeyed-lemons
+  changes:
+  - message: Rat Kings can now pull things, cannot be pulled under doors.
+    type: Tweak
+  id: 449
+  time: '2024-11-03T22:44:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/607
+- author: KingMudkipIII
+  changes:
+  - message: Added Thumper, a new drink thats fun for reptilians to drink!
+    type: Add
+  id: 450
+  time: '2024-11-03T22:45:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/611
+- author: AftrLite
+  changes:
+  - message: Unique sound effect for the AME's fuel injection!
+    type: Add
+  id: 451
+  time: '2024-11-03T22:43:25.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/600
+- author: KingMudkipIII
+  changes:
+  - message: Drastically reduced the cost of cargo ordering shuttle parts.
+    type: Tweak
+  - message: The Shittle builders crate now contains a PACMAN-JR machine board and
+      a jug of welding fuel.
+    type: Tweak
+  id: 452
+  time: '2024-11-03T22:54:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/608
+- author: formlessnameless
+  changes:
+  - message: Legends tell of an infinite rainbow crayon, forged by the gods for the
+      truly dedicated...
+    type: Add
+  - message: Normal rainbow crayons now have 200 charges to match the crayon update
+    type: Tweak
+  id: 453
+  time: '2024-11-03T23:26:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/614

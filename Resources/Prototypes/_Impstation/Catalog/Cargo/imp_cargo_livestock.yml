@@ -7,3 +7,13 @@
   cost: 10000
   category: cargoproduct-category-name-livestock
   group: market
+
+- type: cargoProduct
+  id: LivestockCargorilla
+  icon:
+    sprite: _Impstation/Mobs/Animals/cargorilla.rsi
+    state: icon
+  product: CrateNPCCargorilla
+  cost: 1000000
+  category: cargoproduct-category-name-livestock
+  group: market

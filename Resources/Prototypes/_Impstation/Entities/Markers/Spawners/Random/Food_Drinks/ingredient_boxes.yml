@@ -1,0 +1,13 @@
+- type: entity
+  id: RandomIngredientBox
+  name: random ingredient box
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - sprite: Objects/Storage/boxes.rsi
+      state: box
+  - type: RandomSpawner
+    prototypes:
+      - BoxIngredientFiesta
+      - BoxIngredientItalian
