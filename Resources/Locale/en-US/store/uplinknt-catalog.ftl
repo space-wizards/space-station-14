@@ -39,3 +39,14 @@ uplink-lube-desc = This box contains three vials of space lube. Send your enemie
 
 uplink-cleaner-name = Crime cleaner kit
 uplink-cleaner-desc = This kit contains everything needed to cover up a crime. Contains a special residueless soap, a cleanade, space cleaner and nitrile gloves. Prevent lawsuits!
+
+uplink-pai-name = Personal AI
+uplink-pai-desc = Creates a personal AI pal just for you! Note: NT is not liable for anything offensive that your pAI may say.
+
+uplink-pai-name = Binary translation key
+uplink-pai-desc = A encryption key that actively translates binary used by cyborgs real-time. Potentially useful for gathering extra information.
+
+uplink-lobbying-name = NT lobbying bundle
+uplink-lobbying-desc = A briefcase containing everything needed to bribe the feeble minded. Contains 20K spesos in cash, and some cool dealer clothing.
+
+
