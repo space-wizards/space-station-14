@@ -228,6 +228,7 @@
       - MobFleshGolem
       - MobFleshClamp
       - MobFleshLover
+      - MobCow
     - settings:
         spawnOnSuperCritical: true
         minAmount: 10

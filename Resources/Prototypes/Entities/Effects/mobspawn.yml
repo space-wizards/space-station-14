@@ -102,8 +102,33 @@
     - id: FoodOnionRed
     - id: FoodWatermelon
     - id: FoodCherry
+    - id: FoodBanana
     - id: MobTomatoKiller
     - id: MobLuminousEntity
     - id: MobLuminousObject
+    - id: FoodFlyAmanita #exotic seed stuffs
+      weight: 0.60
+    - id: LeavesCannabis
+      weight: 0.60
+    - id: Nettle
+      weight: 0.60
+    - id: FoodHolymelon #mutated plant stuffs
+      weight: 0.30
+    - id: FoodAmbrosiaVulgaris
+      weight: 0.30
+    - id: FoodKoibean
+      weight: 0.30
+    - id: FoodLily
+      weight: 0.30
+    - id: LeavesCannabisRainbow
+      weight: 0.30
+    - id: FoodMimana
+      weight: 0.30
+    - id: MeatwheatBushel
+      weight: 0.30
     - id: FoodGatfruit # 0.007% spawn chance. 1 / 141
       weight: 0.10
+    - id: FoodFakeCapfruit #hehe
+      weight: 0.01
+    - id: FoodRealCapfruit
+      weight: 0.01
