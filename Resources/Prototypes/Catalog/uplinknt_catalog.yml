@@ -9,6 +9,26 @@
   - UplinkNtWeaponry
 
 - type: listing
+  id: UplinkMagnumMag
+  name: uplink-magnum-name
+  description: uplink-magnum-desc
+  productEntity: MagazineMagnum
+  cost:
+    BluespaceCrystal: 4
+  categories:
+  - UplinkNtAmmo
+
+- type: listing
+  id: UplinkAutoMagazine
+  name: uplink-pistolmag-name
+  description: uplink-pistolmag-desc
+  productEntity: MagazinePistol
+  cost:
+    BluespaceCrystal: 2
+  categories:
+  - UplinkNtAmmo
+
+- type: listing
   id: UplinkMagCell
   name: uplink-magcell-name
   description: uplink-magcell-desc
@@ -138,4 +158,35 @@
     BluespaceCrystal: 4
   categories:
   - UplinkNtDeception
+
+- type: listing
+  id: UplinkBinaryKey
+  name: uplink-binary-name
+  description: uplink-binary-desc
+  productEntity: EncryptionKeyBinary
+  cost:
+    BluespaceCrystal: 1
+  categories:
+  - UplinkNtDeception
+
+- type: listing
+  id: UplinkLobbyingBundleNT
+  name: uplink-lobbying-name
+  description: uplink-lobbying-desc
+  productEntity: BriefcaseNTBribingBundleFilled
+  cost:
+    BluespaceCrystal: 5
+  categories:
+  - UplinkNtDeception
+
+- type: listing
+  id: UplinkPai
+  name: uplink-pai-name
+  description: uplink-pai-desc
+  productEntity: PersonalAI
+  cost:
+    BluespaceCrystal: 1
+  categories:
+  - UplinkNtPointless
+
 
