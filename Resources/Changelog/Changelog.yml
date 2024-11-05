@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Moomoobeef
-  changes:
-  - message: Added The Throngler (Plushie) to the grand lottery!!
-    type: Add
-  id: 7093
-  time: '2024-08-11T10:26:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29978
 - author: Plykiya
   changes:
   - message: Energy sword weapons are now execution-capable.
@@ -3952,3 +3945,11 @@
   id: 7592
   time: '2024-11-05T16:58:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32832
+- author: Errant
+  changes:
+  - message: Syndicate Reinforcements no longer list their (hidden and unused) codewords
+      on the Round End window.
+    type: Fix
+  id: 7593
+  time: '2024-11-05T18:18:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33181
