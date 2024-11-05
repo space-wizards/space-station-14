@@ -33,3 +33,9 @@ uplink-magcelladv-desc = An advanced variant of the standard magcell with increa
 
 uplink-magcellexp-name = Experimental magcell
 uplink-magcellexp-desc = An experimental variant of the standard magcell that gradually siphons from bluespace to self-recharge. Takes 100 seconds to fully recharge.
+
+uplink-lube-name = Space lube box
+uplink-lube-desc = This box contains three vials of space lube. Send your enemies to hell crying.
+
+uplink-cleaner-name = Crime cleaner kit
+uplink-cleaner-desc = This kit contains everything needed to cover up a crime. Contains a special residueless soap, a cleanade, space cleaner and nitrile gloves. Prevent lawsuits!
