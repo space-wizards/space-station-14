@@ -9,8 +9,8 @@
 [![Client](https://img.shields.io/badge/Client-Download-blue)](https://spacestation14.io/about/nightlies/)
 [![GitHub](https://img.shields.io/github/stars/ss14Starlight/space-station-14?style=social)](https://github.com/space-sunrise/space-station-14)
 
-# STARLIGHT
-## Space-Station 14
+**STARLIGHT**  
+<sub>Space-Station 14</sub>
 
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/y/ss14Starlight/space-station-14)
 ![GitHub Issues](https://img.shields.io/github/issues/ss14Starlight/space-station-14)
