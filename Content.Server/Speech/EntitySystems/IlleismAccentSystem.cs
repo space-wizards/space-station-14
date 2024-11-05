@@ -11,8 +11,8 @@ public sealed class IlleismAccentSystem : EntitySystem
     private static readonly Regex RegexIAmLower = new(@"\bi\s*am\b|\bI'?m\b", RegexOptions.IgnoreCase);
 
     // I have it -> NAME has it
-    private static readonly Regex RegexIHaveUpper = new(@"\bI\s*HAVE\b");
-    private static readonly Regex RegexIHaveLower = new(@"\bi\s*have\b", RegexOptions.IgnoreCase);
+    private static readonly Regex RegexIHaveUpper = new(@"\bI\s*HAVE\b|\bI'?VE\b");
+    private static readonly Regex RegexIHaveLower = new(@"\bi\s*have\b|\bI'?ve\b", RegexOptions.IgnoreCase);
 
     // I do! -> NAME does!
     private static readonly Regex RegexIDoUpper = new(@"\bI\s*DO\b");
