@@ -52,7 +52,7 @@
           BaseUnshaded: dead_mouth
     - type: Butcherable
       spawned:
-        - id: FoodMeatFish
+        - id: FoodMeatFishCarp
           amount: 2
     - type: MeleeWeapon
       altDisarm: false
@@ -232,7 +232,7 @@
       requiredLegs: 1
     - type: Butcherable
       spawned:
-        - id: FoodMeatFish
+        - id: FoodMeatFishCarp
           amount: 4
     - type: MeleeWeapon
       damage:

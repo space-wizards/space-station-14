@@ -9,6 +9,16 @@
     Ammonia: 4
 
 - type: reaction
+  id: FishWelding
+  reactants:
+    FishOil:
+      amount: 1
+    Hydroxide:
+      amount: 1
+  products:
+     WeldingFuel: 1
+
+- type: reaction
   id: CelluloseBreakdown
   source: true
   requiredMixerCategories:
