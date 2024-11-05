@@ -9,24 +9,26 @@
   - type: Item
     size: Normal
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Ammunition/Boxes/shotgun.rsi
-  - type: MagazineVisuals
-    magState: mag
-    steps: 5
-    zeroVisible: false
-  - type: Appearance
+    sprite: Objects/Storage/boxes.rsi
 
 - type: entity
   parent: BaseAmmoProvider
   id: AmmoProviderShotgunShell
   abstract: true
   components:
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Ammunition/Boxes/shotgun.rsi
     - type: BallisticAmmoProvider
       mayTransfer: true
       whitelist:
         tags:
         - ShellShotgun
       capacity: 16
+    - type: MagazineVisuals
+      magState: mag
+      steps: 5
+      zeroVisible: false
+    - type: Appearance
 
 # Shotgun Shells
 - type: entity
