@@ -38,7 +38,9 @@ namespace Content.Server.Nuke
         ///     otherwise a blank bit of paper will work as a "disk".
         /// </summary>
         [DataField("diskSlot")]
+        [DataField("resonanceSlot")]
         public ItemSlot DiskSlot = new();
+        public ItemSlot ResonanceSlot = new();
 
         /// <summary>
         ///     When this time is left, nuke will play last alert sound
