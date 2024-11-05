@@ -9,6 +9,16 @@
     Ammonia: 4
 
 - type: reaction
+  id: FishWelding
+  reactants:
+    FishOil:
+      amount: 1
+    Hydroxide:
+      amount: 1
+  products:
+     WeldingFuel: 1
+
+- type: reaction
   id: CelluloseBreakdown
   source: true
   requiredMixerCategories:
@@ -29,8 +39,6 @@
     SeaWater:
       amount: 1
   products:
-    Hydrogen: 1
-    Oxygen: 2
     TableSalt: 1
 
 - type: reaction
@@ -94,7 +102,7 @@
       amount: 1
     Sulfur:
       amount: 1
-    Oxygen: 
+    Oxygen:
       amount: 2
   products:
     SulfuricAcid: 3

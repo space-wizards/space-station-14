@@ -129,10 +129,31 @@
     slice: FoodMeatCutlet
 
 - type: entity
+  name: raw fish fillet
+  parent: FoodMeatBase
+  id: FoodMeatFish
+  description: A delicious, raw fillet.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - fishy
+  - type: Tag
+    tags:
+    - Raw
+    - Meat
+  - type: Sprite
+    state: fish
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: FishOil
+        Quantity: 5
+
+- type: entity
   name: raw carp fillet
   parent: FoodMeatBase
   # MeatFish?...
-  id: FoodMeatFish
+  id: FoodMeatFishCarp
   description: Your last words being "Wow, exotic!" are not worth it. The taste itself though? Maybe.
   components:
   - type: FlavorProfile
