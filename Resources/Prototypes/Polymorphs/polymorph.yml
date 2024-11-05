@@ -186,3 +186,11 @@
     forced: true
     revertOnCrit: false
     revertOnDeath: false
+
+#Vampire
+- type: polymorph
+  id: VampireBat
+  configuration:
+    entity: MobBat
+    revertOnDeath: true
+    revertOnCrit: true
