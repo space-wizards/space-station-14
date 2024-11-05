@@ -257,6 +257,8 @@ public sealed partial class VampireSystem
     {
         var damage = new DamageSpecifier();
         damage.DamageDict.Add("Slash", 15);
+        
+        _popup.PopupEntity(Loc.GetString("vampire-unnaturalstrength", ("user", vampire)), vampire, vampire, Shared.Popups.PopupType.SmallCaution);
 
         var meleeComp = EnsureComp<MeleeWeaponComponent>(vampire);
         meleeComp.Damage += damage;
@@ -266,7 +268,9 @@ public sealed partial class VampireSystem
         var pryComp = EnsureComp<PryingComponent>(vampire);
         pryComp.Force = true;
         pryComp.PryPowered = true;
-
+        
+        _popup.PopupEntity(Loc.GetString("vampire-supernaturalstrength", ("user", vampire)), vampire, vampire, Shared.Popups.PopupType.SmallCaution);
+        
         var damage = new DamageSpecifier();
         damage.DamageDict.Add("Slash", 15);
 
@@ -427,7 +431,7 @@ public sealed partial class VampireSystem
 
         if (_doAfter.TryStartDoAfter(doAfterEventArgs))
         {
-            _popup.PopupEntity(Loc.GetString("vampire-hypnotise-other"), target.Value, Shared.Popups.PopupType.SmallCaution);
+            _popup.PopupEntity(Loc.GetString("vampire-hypnotise-other", ("user", vampire.Owner), ("target", target.Value)), target.Value, Shared.Popups.PopupType.SmallCaution);
         }
         else
         {
