@@ -49,4 +49,9 @@ uplink-pai-desc = A encryption key that actively translates binary used by cybor
 uplink-lobbying-name = NT lobbying bundle
 uplink-lobbying-desc = A briefcase containing everything needed to bribe the feeble minded. Contains 20K spesos in cash, and some cool dealer clothing.
 
+uplink-pistolmag-name = .35 auto magazine
+uplink-pistolmag-desc = For use with the MK58 pistol. Contains standard rounds.
+
+uplink-magnum-name = .45 magnum magazine
+uplink-magnum-desc = For use with the N1984. Contains the lord's caliber.
 
