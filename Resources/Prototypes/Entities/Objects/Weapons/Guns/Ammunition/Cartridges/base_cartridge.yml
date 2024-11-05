@@ -42,11 +42,11 @@
     price: 1
   - type: Extractable
     grindableSolutionName: cartridge
-  - type: SolutionContainerManager #there are no reagents that work as the "primer" as far as i'm aware, so it is simply omitted
+  - type: SolutionContainerManager # There are no reagents that work as the "primer" as far as i'm aware, so it is simply omitted
     solutions:
       cartridge:
         reagents:
-        - ReagentId: Lead
+        - ReagentId: Iron # Lead is too powerful of a reagent to be used for this currently
           Quantity: 2
         - ReagentId: Copper
           Quantity: 1
@@ -83,7 +83,7 @@
     solutions:
       incendiary:
         reagents:
-        - ReagentId: Lead
+        - ReagentId: Iron
           Quantity: 2
         - ReagentId: Copper
           Quantity: 1

@@ -38,7 +38,7 @@
         reagents:
         - ReagentId: Cellulose
           Quantity: 2
-        - ReagentId: Lead
+        - ReagentId: Iron
           Quantity: 2
         - ReagentId: Fiber
           Quantity: 2
@@ -62,7 +62,7 @@
         reagents:
         - ReagentId: Cellulose
           Quantity: 2
-        - ReagentId: Lead
+        - ReagentId: Iron
           Quantity: 3
 
 - type: entity
@@ -116,7 +116,7 @@
         reagents:
         - ReagentId: Cellulose
           Quantity: 2
-        - ReagentId: Lead
+        - ReagentId: Iron
           Quantity: 2
 
 - type: entity
@@ -140,7 +140,7 @@
         reagents:
         - ReagentId: Cellulose
           Quantity: 2
-        - ReagentId: Lead
+        - ReagentId: Iron
           Quantity: 2
         - ReagentId: ChlorineTrifluoride
           Quantity: 2
