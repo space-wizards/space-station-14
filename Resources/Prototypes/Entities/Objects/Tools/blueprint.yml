@@ -37,13 +37,3 @@
   - type: Blueprint
     providedRecipes:
     - SeismicCharge
-
-- type: entity
-  parent: BaseBlueprint
-  id: BlueprintFlare
-  name: flare blueprint
-  description: A blueprint with a schematic of a flare. It can be inserted into an autolathe.
-  components:
-  - type: Blueprint
-    providedRecipes:
-    - Flare

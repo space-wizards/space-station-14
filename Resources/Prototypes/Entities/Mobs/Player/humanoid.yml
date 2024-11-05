@@ -79,6 +79,7 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      job: ERTLeader
     - type: Loadout
       prototypes: [ ERTLeaderGear ]
       roleLoadout: [ RoleSurvivalExtended ]
@@ -109,6 +110,7 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      job: ERTLeader
     - type: Loadout
       prototypes: [ ERTLeaderGearEVA ]
       roleLoadout: [ RoleSurvivalEVA ]
@@ -131,6 +133,7 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      job: ERTLeader
     - type: Loadout
       prototypes: [ ERTLeaderGearEVALecter ]
       roleLoadout: [ RoleSurvivalEVA ]
@@ -157,12 +160,14 @@
   id: ERTChaplain
   parent: ERTLeader
   components:
+    - type: BibleUser
     - type: GhostRole
       name: ghost-role-information-ert-chaplain-name
       description: ghost-role-information-ert-chaplain-description
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      job: ERTChaplain
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
@@ -170,7 +175,6 @@
     - type: Loadout
       prototypes: [ ERTChaplainGear ]
       roleLoadout: [ RoleSurvivalExtended ]
-    - type: BibleUser
 
 - type: entity
   id: RandomHumanoidSpawnerERTChaplainEVA
@@ -194,6 +198,7 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      job: ERTChaplain
     - type: Loadout
       prototypes: [ ERTChaplainGearEVA ]
       roleLoadout: [ RoleSurvivalEVA ]
@@ -227,6 +232,7 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      job: ERTJanitor
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
@@ -257,6 +263,7 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      job: ERTJanitor
     - type: Loadout
       prototypes: [ ERTJanitorGearEVA ]
       roleLoadout: [ RoleSurvivalEVA ]
@@ -289,6 +296,7 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      job: ERTEngineer
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
@@ -319,6 +327,7 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      job: ERTEngineer
     - type: Loadout
       prototypes: [ ERTEngineerGearEVA ]
       roleLoadout: [ RoleSurvivalEVA ]
@@ -351,6 +360,7 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      job: ERTSecurity
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
@@ -381,6 +391,7 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      job: ERTSecurity
     - type: Loadout
       prototypes: [ ERTSecurityGearEVA ]
       roleLoadout: [ RoleSurvivalEVA ]
@@ -403,6 +414,7 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      job: ERTSecurity
     - type: Loadout
       prototypes: [ ERTSecurityGearEVALecter ]
       roleLoadout: [ RoleSurvivalEVA ]
@@ -435,6 +447,7 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      job: ERTMedical
     - type: RandomMetadata
       nameSegments:
       - NamesFirstMilitary
@@ -465,6 +478,7 @@
       rules: ghost-role-information-nonantagonist-rules
       raffle:
         settings: short
+      job: ERTMedical
     - type: Loadout
       prototypes: [ ERTMedicalGearEVA ]
       roleLoadout: [ RoleSurvivalEVA ]
@@ -593,277 +607,3 @@
       raffle:
         settings: default
     - type: Cluwne
-
-
-## Shuttle roles
-
-## Lost Cargo technician
-
-- type: entity
-  name: lost cargo technician spawner
-  id: LostCargoTechnicianSpawner
-  parent: MarkerBase
-  components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Tools/appraisal-tool.rsi
-          state: icon
-    - type: RandomSpawner
-      prototypes:
-      - RandomHumanoidLostCargoTechnician
-      chance: 1
-
-- type: entity
-  id: RandomHumanoidLostCargoTechnician
-  name: lost cargo technician ghost role
-  components:
-    - type: Sprite
-      sprite: Objects/Tools/appraisal-tool.rsi
-      state: icon
-    - type: RandomHumanoidSpawner
-      settings: LostCargoTechnician
-
-- type: randomHumanoidSettings
-  id: LostCargoTechnician
-  parent: EventHumanoid
-  components:
-    - type: GhostRole
-      name: ghost-role-information-lost-cargo-technical-name
-      description: ghost-role-information-lost-cargo-technical-description
-      rules: ghost-role-information-nonantagonist-rules
-      raffle:
-        settings: short
-    - type: Loadout
-      prototypes: [ LostCargoTechGearSuit, LostCargoTechGearCoat ]
-      roleLoadout: [ RoleSurvivalStandard ]
-
-
-# Clown troupe
-
-- type: entity
-  name: clown troupe spawner
-  id: ClownTroupeSpawner
-  parent: MarkerBase
-  components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Fun/bikehorn.rsi
-          state: icon
-    - type: RandomSpawner
-      prototypes:
-      - RandomHumanoidClownTroupe
-      rarePrototypes:
-      - RandomHumanoidClownTroupeBanana
-      rareChance: 0.3
-
-- type: entity
-  id: RandomHumanoidClownTroupe
-  name: clown troupe ghost role
-  components:
-    - type: Sprite
-      sprite: Objects/Tools/appraisal-tool.rsi
-      state: icon
-    - type: RandomHumanoidSpawner
-      settings: ClownTroupe
-
-- type: entity
-  id: RandomHumanoidClownTroupeBanana
-  name: banana clown troupe
-  parent: RandomHumanoidClownTroupe
-  components:
-    - type: RandomHumanoidSpawner
-      settings: ClownTroupeBanana
-
-- type: randomHumanoidSettings
-  id: ClownTroupe
-  parent: EventHumanoid
-  randomizeName: false
-  components:
-    - type: GhostRole
-      name: ghost-role-information-clown-troupe-name
-      description: ghost-role-information-clown-troupe-description
-      rules: ghost-role-information-nonantagonist-rules
-      raffle:
-        settings: short
-    - type: Loadout
-      prototypes: [ ClownTroupe ]
-      roleLoadout: [ RoleSurvivalStandard ]
-    - type: RandomMetadata
-      nameSegments:
-      - names_clown
-
-- type: randomHumanoidSettings
-  id: ClownTroupeBanana
-  parent: ClownTroupe
-  randomizeName: false
-  components:
-    - type: Loadout
-      prototypes: [ BananaClown ]
-      roleLoadout: [ RoleSurvivalStandard ]
-
-# Traveling exotic chef
-
-- type: entity
-  name: traveling chef spawner
-  id: TravelingChefSpawner
-  parent: MarkerBase
-  components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Weapons/Melee/kitchen_knife.rsi
-          state: icon
-    - type: RandomSpawner
-      prototypes:
-      - RandomHumanoidTravelingChef
-
-- type: entity
-  id: RandomHumanoidTravelingChef
-  name: traveling chef ghost role
-  components:
-    - type: Sprite
-      sprite: Objects/Tools/appraisal-tool.rsi
-      state: icon
-    - type: RandomHumanoidSpawner
-      settings: TravelingChef
-
-- type: randomHumanoidSettings
-  id: TravelingChef
-  parent: EventHumanoid
-  components:
-    - type: GhostRole
-      name: ghost-role-information-traveling-chef-name
-      description: ghost-role-information-traveling-chef-description
-      rules: ghost-role-information-nonantagonist-rules
-      raffle:
-        settings: short
-    - type: Loadout
-      prototypes: [ TravelingChef ]
-      roleLoadout: [ RoleSurvivalStandard ]
-
-# Disaster victim
-
-- type: entity
-  name: disaster victim spawner
-  id: DisasterVictimSpawner
-  parent: MarkerBase
-  components:
-  - type: Sprite
-    layers:
-      - state: red
-      - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-        state: icon
-  - type: RandomSpawner
-    prototypes:
-    - RandomHumanoidDisasterVictimRD
-    - RandomHumanoidDisasterVictimCMO
-    - RandomHumanoidDisasterVictimCaptain
-    - MobSkeletonCloset
-
-- type: entity
-  id: RandomHumanoidDisasterVictimRD
-  name: disaster victim RD ghost role
-  components:
-    - type: Sprite
-      sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
-      state: icon
-    - type: RandomHumanoidSpawner
-      settings: DisasterVictimResearchDirector
-
-- type: entity
-  id: RandomHumanoidDisasterVictimCMO
-  parent: RandomHumanoidDisasterVictimRD
-  name: disaster victim CMO ghost role
-  components:
-    - type: RandomHumanoidSpawner
-      settings: DisasterVictimCMO
-
-- type: entity
-  id: RandomHumanoidDisasterVictimCaptain
-  parent: RandomHumanoidDisasterVictimRD
-  name: disaster victim Captain ghost role
-  components:
-    - type: RandomHumanoidSpawner
-      settings: DisasterVictimCaptain
-
-## Following use EventHumanoidMindShielded since they are heads and probably should have mindshields
-
-- type: randomHumanoidSettings
-  id: DisasterVictimHead
-  parent: EventHumanoidMindShielded
-  components:
-    - type: GhostRole
-      name: ghost-role-information-disaster-victim-name
-      description: ghost-role-information-disaster-victim-description
-      rules: ghost-role-information-nonantagonist-rules
-      raffle:
-        settings: default
-
-- type: randomHumanoidSettings
-  id: DisasterVictimResearchDirector
-  parent: DisasterVictimHead
-  components:
-    - type: Loadout
-      prototypes: [ DisasterVictimRD, DisasterVictimRDAlt ]
-      roleLoadout: [ RoleSurvivalStandard ]
-
-- type: randomHumanoidSettings
-  id: DisasterVictimCMO
-  parent: DisasterVictimHead
-  components:
-    - type: Loadout
-      prototypes: [ DisasterVictimCMO, DisasterVictimCMOAlt ]
-      roleLoadout: [ RoleSurvivalMedical ]
-
-- type: randomHumanoidSettings
-  id: DisasterVictimCaptain
-  parent: DisasterVictimHead
-  components:
-    - type: Loadout
-      prototypes: [ DisasterVictimCaptain, DisasterVictimCaptainAlt ]
-      roleLoadout: [ RoleSurvivalStandard ]
-
-# Syndie Disaster Victim
-
-- type: entity
-  name: syndie disaster victim spawner
-  id: SyndieDisasterVictimSpawner
-  parent: MarkerBase
-  components:
-  - type: Sprite
-    layers:
-      - state: red
-      - sprite: Structures/Decoration/banner.rsi
-        state: banner_syndicate
-  - type: RandomSpawner
-    prototypes:
-    - RandomHumanoidSyndieDisasterVictim
-
-- type: entity
-  id: RandomHumanoidSyndieDisasterVictim
-  name: syndie disaster victim ghost role
-  components:
-    - type: Sprite
-      sprite: Structures/Decoration/banner.rsi
-      state: banner_syndicate
-    - type: RandomHumanoidSpawner
-      settings: SyndieDisasterVictim
-
-- type: randomHumanoidSettings
-  id: SyndieDisasterVictim
-  parent: EventHumanoid
-  components:
-    - type: NpcFactionMember
-      factions:
-      - Syndicate
-    - type: GhostRole
-      name: ghost-role-information-syndie-disaster-victim-name
-      description: ghost-role-information-syndie-disaster-victim-description
-      rules: ghost-role-information-nonantagonist-rules
-      raffle:
-        settings: short
-    - type: Loadout
-      prototypes: [ SyndicateOperativeGearCivilian ]
-      roleLoadout: [ RoleSurvivalStandard ]

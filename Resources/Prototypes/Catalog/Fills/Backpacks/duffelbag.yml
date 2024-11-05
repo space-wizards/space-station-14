@@ -128,28 +128,6 @@
         amount: 2
 
 - type: entity
-  parent: ClothingBackpackDuffel
-  id: ClothingBackpackDuffelSyndicateCostumeCentcom
-  name: CentComm official costume duffel bag
-  description: "Contains a full CentComm Official uniform set, headset and clipboard included. Encryption keys and ID access are not included."
-  suffix: DO NOT MAP
-  components:
-  - type: Tag
-    tags: [] # ignore "WhitelistChameleon" tag
-  - type: StorageFill
-    contents:
-      - id: ClothingOuterArmorBasic
-      - id: ClothingHeadHatCentcom
-      - id: ClothingEyesGlassesSunglasses
-      - id: ClothingUniformJumpsuitCentcomOfficial
-      - id: ClothingShoesBootsJack
-      - id: ClothingHandsGlovesColorBlack
-      - id: ClothingHeadsetAltCentComFake
-      - id: Paper
-      - id: Pen
-      - id: CentcomPDAFake
-
-- type: entity
   parent: ClothingBackpackDuffelClown
   id: ClothingBackpackDuffelSyndicateCostumeClown
   suffix: syndicate
@@ -324,13 +302,19 @@
   components:
   - type: StorageFill
     contents:
+      - id: DefibrillatorSyndicate
       - id: MedkitCombatFilled
-      - id: Defibrillator
+        amount: 4
+      - id: Tourniquet
+        amount: 4
       - id: CombatMedipen
-        amount: 3
-      - id: ClothingHandsGlovesNitrile
-      - id: SyringeTranexamicAcid
-      - id: SyringeHyronalin
+        amount: 4
+      - id: PunctAutoInjector
+        amount: 4
+      - id: PyraAutoInjector
+        amount: 4
+      - id: AirlossAutoInjector
+        amount: 4
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle

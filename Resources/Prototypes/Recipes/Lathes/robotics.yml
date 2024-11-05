@@ -1,340 +1,260 @@
+# Base prototypes
+
 - type: latheRecipe
-  id: ProximitySensor
-  result: ProximitySensor
+  abstract: true
+  id: BaseRoboticsRecipe
   category: Robotics
   completetime: 2
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseRoboticsRecipe
+  id: BaseBorgLimbRecipe
+  materials:
+    Steel: 250
+    Glass: 100
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseRoboticsRecipe
+  id: BaseBorgModuleRecipe
+  completetime: 3
+  materials:
+    Steel: 250
+    Glass: 250
+    Plastic: 250
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseBorgModuleRecipe
+  id: BaseGoldBorgModuleRecipe
+  materials:
+    Steel: 500
+    Glass: 500
+    Plastic: 250
+    Gold: 50
+
+# Recipes
+
+- type: latheRecipe
+  parent: BaseRoboticsRecipe
+  id: ProximitySensor
+  result: ProximitySensor
   materials:
     Steel: 200
     Glass: 300
 
 - type: latheRecipe
+  parent: BaseRoboticsRecipe
   id: SciFlash
   result: SciFlash
-  category: Robotics
-  completetime: 2
   materials:
     Glass: 100
     Plastic: 200
     Steel: 100
 
 - type: latheRecipe
+  parent: BaseRoboticsRecipe
   id: CyborgEndoskeleton
   result: CyborgEndoskeleton
-  category: Robotics
   completetime: 3
   materials:
     Steel: 1500
 
+# Generic
+
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: LeftArmBorg
   result: LeftArmBorg
-  category: Robotics
-  completetime: 2
-  materials:
-    Steel: 250
-    Glass: 100
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: RightArmBorg
   result: RightArmBorg
-  category: Robotics
-  completetime: 2
-  materials:
-    Steel: 250
-    Glass: 100
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: LeftLegBorg
   result: LeftLegBorg
-  category: Robotics
-  completetime: 2
-  materials:
-    Steel: 250
-    Glass: 100
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: RightLegBorg
   result: RightLegBorg
-  category: Robotics
-  completetime: 2
-  materials:
-    Steel: 250
-    Glass: 100
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: LightHeadBorg
   result: LightHeadBorg
-  category: Robotics
-  completetime: 2
-  materials:
-    Steel: 250
-    Glass: 100
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: TorsoBorg
   result: TorsoBorg
-  category: Robotics
-  completetime: 2
-  materials:
-    Steel: 250
-    Glass: 100
+
+# Engineer
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: LeftArmBorgEngineer
   result: LeftArmBorgEngineer
-  category: Robotics
-  completetime: 2
-  materials:
-    Steel: 250
-    Glass: 100
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: RightArmBorgEngineer
   result: RightArmBorgEngineer
-  category: Robotics
-  completetime: 2
-  materials:
-    Steel: 250
-    Glass: 100
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: LeftLegBorgEngineer
   result: LeftLegBorgEngineer
-  category: Robotics
-  completetime: 2
-  materials:
-    Steel: 250
-    Glass: 100
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: RightLegBorgEngineer
   result: RightLegBorgEngineer
-  category: Robotics
-  completetime: 2
-  materials:
-    Steel: 250
-    Glass: 100
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: HeadBorgEngineer
   result: HeadBorgEngineer
-  category: Robotics
-  completetime: 2
-  materials:
-    Steel: 250
-    Glass: 100
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: TorsoBorgEngineer
   result: TorsoBorgEngineer
-  category: Robotics
-  completetime: 2
-  materials:
-    Steel: 250
-    Glass: 100
+
+# Medical
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: LeftArmBorgMedical
   result: LeftArmBorgMedical
-  category: Robotics
-  completetime: 2
-  materials:
-    Steel: 250
-    Glass: 100
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: RightArmBorgMedical
   result: RightArmBorgMedical
-  category: Robotics
-  completetime: 2
-  materials:
-    Steel: 250
-    Glass: 100
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: LeftLegBorgMedical
   result: LeftLegBorgMedical
-  category: Robotics
-  completetime: 2
-  materials:
-    Steel: 250
-    Glass: 100
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: RightLegBorgMedical
   result: RightLegBorgMedical
-  category: Robotics
-  completetime: 2
-  materials:
-    Steel: 250
-    Glass: 100
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: HeadBorgMedical
   result: HeadBorgMedical
-  category: Robotics
-  completetime: 2
-  materials:
-    Steel: 250
-    Glass: 100
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: TorsoBorgMedical
   result: TorsoBorgMedical
-  category: Robotics
-  completetime: 2
-  materials:
-    Steel: 250
-    Glass: 100
+
+# Mining
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: LeftArmBorgMining
   result: LeftArmBorgMining
-  category: Robotics
-  completetime: 2
-  materials:
-    Steel: 250
-    Glass: 100
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: RightArmBorgMining
   result: RightArmBorgMining
-  category: Robotics
-  completetime: 2
-  materials:
-    Steel: 250
-    Glass: 100
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: LeftLegBorgMining
   result: LeftLegBorgMining
-  category: Robotics
-  completetime: 2
-  materials:
-    Steel: 250
-    Glass: 100
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: RightLegBorgMining
   result: RightLegBorgMining
-  category: Robotics
-  completetime: 2
-  materials:
-    Steel: 250
-    Glass: 100
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: HeadBorgMining
   result: HeadBorgMining
-  category: Robotics
-  completetime: 2
-  materials:
-    Steel: 250
-    Glass: 100
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: TorsoBorgMining
   result: TorsoBorgMining
-  category: Robotics
-  completetime: 2
-  materials:
-    Steel: 250
-    Glass: 100
+
+# Service
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: LeftArmBorgService
   result: LeftArmBorgService
-  category: Robotics
-  completetime: 2
-  materials:
-    Steel: 250
-    Glass: 100
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: RightArmBorgService
   result: RightArmBorgService
-  category: Robotics
-  completetime: 2
-  materials:
-    Steel: 250
-    Glass: 100
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: LeftLegBorgService
   result: LeftLegBorgService
-  category: Robotics
-  completetime: 2
-  materials:
-    Steel: 250
-    Glass: 100
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: RightLegBorgService
   result: RightLegBorgService
-  category: Robotics
-  completetime: 2
-  materials:
-    Steel: 250
-    Glass: 100
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: HeadBorgService
   result: HeadBorgService
-  category: Robotics
-  completetime: 2
-  materials:
-    Steel: 250
-    Glass: 100
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: TorsoBorgService
   result: TorsoBorgService
-  category: Robotics
-  completetime: 2
-  materials:
-    Steel: 250
-    Glass: 100
+
+# Janitor
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: LeftLegBorgJanitor
   result: LeftLegBorgJanitor
-  category: Robotics
-  completetime: 2
-  materials:
-    Steel: 250
-    Glass: 100
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: RightLegBorgJanitor
   result: RightLegBorgJanitor
-  category: Robotics
-  completetime: 2
-  materials:
-    Steel: 250
-    Glass: 100
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: HeadBorgJanitor
   result: HeadBorgJanitor
-  category: Robotics
-  completetime: 4
   materials:
     Steel: 500
     Glass: 200
 
 - type: latheRecipe
+  parent: BaseBorgLimbRecipe
   id: TorsoBorgJanitor
   result: TorsoBorgJanitor
-  category: Robotics
-  completetime: 4
   materials:
     Steel: 500
     Glass: 200
 
+# Parts
+
 - type: latheRecipe
+  parent: BaseRoboticsRecipe
   id: MMI
   result: MMI
-  category: Robotics
   completetime: 3
   icon:
     sprite: Objects/Specific/Robotics/mmi.rsi
@@ -346,9 +266,9 @@
     Gold: 200
 
 - type: latheRecipe
+  parent: BaseRoboticsRecipe
   id: PositronicBrain
   result: PositronicBrain
-  category: Robotics
   completetime: 3
   materials:
     Steel: 500
@@ -357,258 +277,141 @@
     Silver: 100
     Plasma: 1000
 
+# Modules
+
 - type: latheRecipe
+  parent: BaseBorgModuleRecipe
   id: BorgModuleCable
   result: BorgModuleCable
-  category: Robotics
-  completetime: 3
-  materials:
-    Steel: 250
-    Glass: 250
-    Plastic: 250
 
 - type: latheRecipe
+  parent: BaseBorgModuleRecipe
   id: BorgModuleFireExtinguisher
   result: BorgModuleFireExtinguisher
-  category: Robotics
-  completetime: 3
-  materials:
-    Steel: 250
-    Glass: 250
-    Plastic: 250
 
 - type: latheRecipe
+  parent: BaseBorgModuleRecipe
   id: BorgModuleGPS
   result: BorgModuleGPS
-  category: Robotics
-  completetime: 3
-  materials:
-    Steel: 250
-    Glass: 250
-    Plastic: 250
 
 - type: latheRecipe
+  parent: BaseBorgModuleRecipe
   id: BorgModuleRadiationDetection
   result: BorgModuleRadiationDetection
-  category: Robotics
-  completetime: 3
-  materials:
-    Steel: 250
-    Glass: 250
-    Plastic: 250
 
 - type: latheRecipe
+  parent: BaseBorgModuleRecipe
   id: BorgModuleTool
   result: BorgModuleTool
-  category: Robotics
-  completetime: 3
-  materials:
-    Steel: 250
-    Glass: 250
-    Plastic: 250
+
+# Mining Modules
 
 - type: latheRecipe
+  parent: BaseBorgModuleRecipe
   id: BorgModuleAppraisal
   result: BorgModuleAppraisal
-  category: Robotics
-  completetime: 3
-  materials:
-    Steel: 250
-    Glass: 250
-    Plastic: 250
 
 - type: latheRecipe
+  parent: BaseBorgModuleRecipe
   id: BorgModuleMining
   result: BorgModuleMining
-  category: Robotics
-  completetime: 3
-  materials:
-    Steel: 250
-    Glass: 250
-    Plastic: 250
 
 - type: latheRecipe
+  parent: BaseGoldBorgModuleRecipe
   id: BorgModuleGrapplingGun
   result: BorgModuleGrapplingGun
-  category: Robotics
-  completetime: 3
-  materials:
-    Steel: 500
-    Glass: 500
-    Plastic: 250
-    Gold: 50
+
+# Engineering Modules
 
 - type: latheRecipe
+  parent: BaseGoldBorgModuleRecipe
   id: BorgModuleAdvancedTool
   result: BorgModuleAdvancedTool
-  category: Robotics
-  completetime: 3
-  materials:
-    Steel: 500
-    Glass: 500
-    Plastic: 250
-    Gold: 50
 
 - type: latheRecipe
+  parent: BaseBorgModuleRecipe
   id: BorgModuleConstruction
   result: BorgModuleConstruction
-  category: Robotics
-  completetime: 3
-  materials:
-    Steel: 500
-    Glass: 500
-    Plastic: 250
 
 - type: latheRecipe
+  parent: BaseGoldBorgModuleRecipe
   id: BorgModuleRCD
   result: BorgModuleRCD
-  category: Robotics
-  completetime: 3
-  materials:
-    Steel: 500
-    Glass: 500
-    Plastic: 250
-    Gold: 50
+
+# Janitor Modules
 
 - type: latheRecipe
+  parent: BaseBorgModuleRecipe
   id: BorgModuleLightReplacer
   result: BorgModuleLightReplacer
-  category: Robotics
-  completetime: 3
-  materials:
-    Steel: 250
-    Glass: 250
-    Plastic: 250
 
 - type: latheRecipe
+  parent: BaseBorgModuleRecipe
   id: BorgModuleCleaning
   result: BorgModuleCleaning
-  category: Robotics
-  completetime: 3
-  materials:
-    Steel: 250
-    Glass: 250
-    Plastic: 250
 
 - type: latheRecipe
+  parent: BaseGoldBorgModuleRecipe
   id: BorgModuleAdvancedCleaning
   result: BorgModuleAdvancedCleaning
-  category: Robotics
-  completetime: 3
-  materials:
-    Steel: 250
-    Glass: 250
-    Plastic: 250
-    Gold: 50
+
+# Medical Modules
 
 - type: latheRecipe
+  parent: BaseBorgModuleRecipe
   id: BorgModuleDiagnosis
   result: BorgModuleDiagnosis
-  category: Robotics
-  completetime: 3
-  materials:
-    Steel: 250
-    Glass: 250
-    Plastic: 250
 
 - type: latheRecipe
+  parent: BaseBorgModuleRecipe
   id: BorgModuleTreatment
   result: BorgModuleTreatment
-  category: Robotics
-  completetime: 3
-  materials:
-    Steel: 250
-    Glass: 250
-    Plastic: 250
 
 - type: latheRecipe
+  parent: BaseGoldBorgModuleRecipe
   id: BorgModuleAdvancedTreatment
   result: BorgModuleAdvancedTreatment
-  category: Robotics
-  completetime: 3
-  materials:
-    Steel: 500
-    Glass: 500
-    Plastic: 250
-    Gold: 50
 
 - type: latheRecipe
+  parent: BaseGoldBorgModuleRecipe
   id: BorgModuleDefibrillator
   result: BorgModuleDefibrillator
-  category: Robotics
-  completetime: 3
-  materials:
-    Steel: 500
-    Glass: 500
-    Plastic: 250
-    Gold: 50
+
+# Science Modules
 
 - type: latheRecipe
+  parent: BaseBorgModuleRecipe
   id: BorgModuleArtifact
   result: BorgModuleArtifact
-  category: Robotics
-  completetime: 3
-  materials:
-    Steel: 250
-    Glass: 250
-    Plastic: 250
 
 - type: latheRecipe
+  parent: BaseBorgModuleRecipe
   id: BorgModuleAnomaly
   result: BorgModuleAnomaly
-  category: Robotics
-  completetime: 3
-  materials:
-    Steel: 250
-    Glass: 250
-    Plastic: 250
+
+# Service Modules
 
 - type: latheRecipe
+  parent: BaseBorgModuleRecipe
   id: BorgModuleService
   result: BorgModuleService
-  category: Robotics
-  completetime: 3
-  materials:
-    Steel: 250
-    Glass: 250
-    Plastic: 250
 
 - type: latheRecipe
+  parent: BaseBorgModuleRecipe
   id: BorgModuleMusique
   result: BorgModuleMusique
-  category: Robotics
-  completetime: 3
-  materials:
-    Steel: 250
-    Glass: 250
-    Plastic: 250
 
 - type: latheRecipe
+  parent: BaseBorgModuleRecipe
   id: BorgModuleGardening
   result: BorgModuleGardening
-  category: Robotics
-  completetime: 3
-  materials:
-    Steel: 250
-    Glass: 250
-    Plastic: 250
 
 - type: latheRecipe
+  parent: BaseBorgModuleRecipe
   id: BorgModuleHarvesting
   result: BorgModuleHarvesting
-  category: Robotics
-  completetime: 3
-  materials:
-    Steel: 250
-    Glass: 250
-    Plastic: 250
 
 - type: latheRecipe
+  parent: BaseBorgModuleRecipe
   id: BorgModuleClowning
   result: BorgModuleClowning
-  category: Robotics
-  completetime: 3
-  materials:
-    Steel: 250
-    Glass: 250
-    Plastic: 250

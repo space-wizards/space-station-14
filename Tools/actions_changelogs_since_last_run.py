@@ -146,7 +146,7 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
                 message = change['message']
                 url = entry.get("url")
                 if url and url.strip():
-                    group_content.write(f"{emoji} [-]({url}) {message}\n")
+                    group_content.write(f"{emoji} - {message} [PR]({url}) \n")
                 else:
                     group_content.write(f"{emoji} - {message}\n")
 

@@ -33,6 +33,16 @@ public sealed class ContrabandSystem : EntitySystem
         _contrabandExamineEnabled = val;
     }
 
+    public void CopyDetails(EntityUid uid, ContrabandComponent other, ContrabandComponent? contraband = null)
+    {
+        if (!Resolve(uid, ref contraband))
+            return;
+
+        contraband.Severity = other.Severity;
+        contraband.AllowedDepartments = other.AllowedDepartments;
+        Dirty(uid, contraband);
+    }
+
     private void OnExamined(Entity<ContrabandComponent> ent, ref ExaminedEvent args)
     {
         if (!_contrabandExamineEnabled)
@@ -45,7 +55,7 @@ public sealed class ContrabandSystem : EntitySystem
         using (args.PushGroup(nameof(ContrabandComponent)))
         {
             var severity = _proto.Index(ent.Comp.Severity);
-            if (severity.ShowDepartments && ent.Comp is {  AllowedDepartments: not null })
+            if (severity.ShowDepartments && ent.Comp is { AllowedDepartments: not null })
             {
                 // TODO shouldn't department prototypes have a localized name instead of just using the ID for this?
                 var list = ContentLocalizationManager.FormatList(ent.Comp.AllowedDepartments.Select(p => Loc.GetString($"department-{p.Id}")).ToList());

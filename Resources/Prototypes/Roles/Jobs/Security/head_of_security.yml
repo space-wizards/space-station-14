@@ -15,8 +15,6 @@
       time: 108000 # 30 hrs
     - !type:OverallPlaytimeRequirement
       time: 144000 #40 hrs
-    - !type:AgeRequirement
-      requiredAge: 21
   weight: 10
   startingGear: HoSGear
   icon: "JobIconHeadOfSecurity"
