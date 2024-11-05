@@ -5159,7 +5159,7 @@ entities:
       pos: 4.5,-10.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -92267.26
+      secondsUntilStateChange: -92401.78
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -5379,7 +5379,7 @@ entities:
       pos: 17.5,-26.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -45366.08
+      secondsUntilStateChange: -45500.598
       state: Opening
     - type: AccessReader
       access:
@@ -5643,7 +5643,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -8946.245
+      secondsUntilStateChange: -9080.766
       state: Opening
     - type: AccessReader
       accessLog:
@@ -5673,7 +5673,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -8946.3125
+      secondsUntilStateChange: -9080.833
       state: Opening
     - type: AccessReader
       accessLog:
@@ -20385,15 +20385,15 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: ClothingMaskGasDeathSquad
+- proto: ClothingMaskGasSwat
   entities:
   - uid: 6193
     components:
     - type: MetaData
-      desc: It appears to have a .45 Callibre sized hole that's been patched.
+      desc: Possesses a shoddily-patched .45 Callibre hole.
       name: intimidating gas mask
     - type: Transform
-      pos: 16.731468,-43.322254
+      pos: 16.647276,-43.300465
       parent: 1
     missingComponents:
     - Armor
@@ -21432,7 +21432,7 @@ entities:
       pos: 12.5,16.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -84777.1
+      secondsUntilStateChange: -84911.625
       state: Closing
 - proto: DefaultStationBeaconAME
   entities:
@@ -29725,8 +29725,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -25.5,15.5
       parent: 1
-    - type: GasPressurePump
-      enabled: True
   - uid: 8929
     components:
     - type: Transform
