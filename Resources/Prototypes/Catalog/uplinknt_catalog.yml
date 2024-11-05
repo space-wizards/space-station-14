@@ -117,3 +117,25 @@
     BluespaceCrystal: 3
   categories:
   - UplinkNtWeaponry
+
+
+- type: listing
+  id: UplinkLubeBoxNT
+  name: uplink-lube-name
+  description: uplink-lube-desc
+  productEntity: LubeBoxNT
+  cost:
+    BluespaceCrystal: 2
+  categories:
+  - UplinkNtDisruption
+
+- type: listing
+  id: UplinkCrimeCleanerKit
+  name: uplink-cleaner-name
+  description: uplink-cleaner-desc
+  productEntity: CrimeCleanerKit
+  cost:
+    BluespaceCrystal: 4
+  categories:
+  - UplinkNtDeception
+
