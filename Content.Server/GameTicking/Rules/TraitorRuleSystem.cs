@@ -16,6 +16,11 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
 using System.Text;
+using Content.Server.Store.Components;  // Added for ListenerComponent
+using Content.Shared.Radio.Components;
+using Content.Shared.Dataset;
+using Content.Shared.Implants;
+
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -30,6 +35,9 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
     [Dependency] private readonly SharedJobSystem _jobs = default!;
     [Dependency] private readonly ObjectivesSystem _objectives = default!;
+
+    private readonly IEntityManager _entityManager = IoCManager.Resolve<IEntityManager>();
+
 
     public override void Initialize()
     {
@@ -120,8 +128,9 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         return true;
     }
 
-public bool MakeNanoTrasenTraitor(EntityUid traitor, TraitorRuleComponent component, bool giveUplinkNT = true)
+   public bool MakeNanoTrasenTraitor(EntityUid traitor, TraitorRuleComponent component, bool giveUplinkNT = true)
 {
+    Log.Error("$NT tator made");
     MakeCodewords(component, "NanoTrasen");
 
     if (!_mindSystem.TryGetMind(traitor, out var mindId, out var mind))
@@ -133,33 +142,13 @@ public bool MakeNanoTrasenTraitor(EntityUid traitor, TraitorRuleComponent compon
     Note[]? code = null;
     if (giveUplinkNT)
     {
-        var startingBalance = component.StartingBalance;
-        if (_jobs.MindTryGetJob(mindId, out _, out var prototype))
-            startingBalance = Math.Max(startingBalance - prototype.AntagAdvantage, 0);
+        var implantPrototypeId = "UplinkImplantNT";
+        var implantSystem = _entityManager.System<SharedSubdermalImplantSystem>();
+        implantSystem.AddImplants(traitor, new HashSet<string> { implantPrototypeId });
 
-        var headset = _uplink.FindUplinkTargetNT(traitor);
-        if (headset == null)
-            return false;
-
-        // Add NanoTrasen uplink with Bluespace Crystals
-        if (!_uplink.AddUplinkNT(traitor, startingBalance, headset))
-            return false;
-
-        // the code for the headset
-        code = EnsureComp<RingerUplinkComponent>(headset.Value).Code;
-        briefing = string.Format("{0}\n{1}", briefing,
-            Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", code).Replace("sharp", "#"))));
-
-        // Load starSystems dataset and pick random codewords
-        var starSystems = _prototypeManager.Index<DatasetPrototype>("starSystems").Values;
-        var randomCodewords = starSystems.OrderBy(x => _random.Next()).Take(3).ToList();
-
-        // Ensure the listener component and assign the random codewords
-        var listener = EnsureComp<ActiveListenerComponent>(headset.Value);
-        listener.Codewords = randomCodewords;
     }
 
-    _antag.SendBriefing(traitor, GenerateBriefingNT(component.NanoTrasenCodewords, code, issuer), null, component.GreetSoundNotification);
+    _antag.SendBriefing(traitor, GenerateBriefingNT(component.NanoTrasenCodewords, code, issuer), null, component. GreetSoundNotificationNT);
     component.TraitorMinds.Add(mindId);
 
     _roleSystem.MindAddRole(mindId, new RoleBriefingComponent
@@ -172,10 +161,6 @@ public bool MakeNanoTrasenTraitor(EntityUid traitor, TraitorRuleComponent compon
 
     return true;
 }
-
-
-
-
     private void OnObjectivesTextPrepend(EntityUid uid, TraitorRuleComponent comp, ref ObjectivesTextPrependEvent args)
     {
         args.Text += "\n" + Loc.GetString("traitor-round-end-codewords", ("codewords", string.Join(", ", comp.Codewords)));
@@ -191,13 +176,14 @@ public bool MakeNanoTrasenTraitor(EntityUid traitor, TraitorRuleComponent compon
 
         return sb.ToString();
     }
+
     private string GenerateBriefingNT(string[] codewords, Note[]? uplinkCode, string? objectiveIssuer = null)
     {
         var sb = new StringBuilder();
-        sb.AppendLine(Loc.GetString("traitor-role-greeting", ("corporation", objectiveIssuer ?? Loc.GetString("objective-issuer-unknown"))));
-        sb.AppendLine(Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", codewords))));
+        sb.AppendLine(Loc.GetString("traitor-role-greeting-nt", ("corporation", objectiveIssuer ?? Loc.GetString("objective-issuer-NT"))));
+        sb.AppendLine(Loc.GetString("traitor-role-codewords-short-nt", ("codewords", string.Join(", ", codewords))));
         if (uplinkCode != null)
-            sb.AppendLine(Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", uplinkCode).Replace("sharp", "#"))));
+            sb.AppendLine(Loc.GetString("traitor-role-uplink-code-short-nt", ("code", string.Join("-", uplinkCode).Replace("sharp", "#"))));
 
         return sb.ToString();
     }
@@ -233,3 +219,4 @@ public bool MakeNanoTrasenTraitor(EntityUid traitor, TraitorRuleComponent compon
         return traitors;
     }
 }
+

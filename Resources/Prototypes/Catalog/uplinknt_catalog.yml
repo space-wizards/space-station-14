@@ -4,11 +4,11 @@
   description: uplink-CaptainSabre-desc
   productEntity: CaptainSabre
   cost:
-    BluespaceCrystal: 13
+    BluespaceCrystal: 12
   categories:
   - UplinkNtWeaponry
 
- - type: listing
+- type: listing
   id: UplinkMagCell
   name: uplink-magcell-name
   description: uplink-magcell-desc
@@ -44,7 +44,7 @@
   description: uplink-combat-gloves-desc
   productEntity: ClothingHandsGlovesCombat
   cost:
-    BluespaceCrystal: 4
+    BluespaceCrystal: 1
   categories:
   - UplinkNtArmor
 
@@ -54,17 +54,17 @@
   description: uplink-cburn-desc
   productEntity: ClothingBackpackDuffelNtCburnFilled
   cost:
-    BluespaceCrystal: 14
+    BluespaceCrystal: 8
   categories:
   - UplinkNtWeaponry
-  
+
 - type: listing
   id: UplinkClothingBulletproof
   name: uplink-bulletproof-name
   description: uplink-bulletproof-desc
   productEntity: ClothingOuterArmorBulletproof
   cost:
-    BluespaceCrystal: 5
+    BluespaceCrystal: 3
   categories:
   - UplinkNtArmor
 
