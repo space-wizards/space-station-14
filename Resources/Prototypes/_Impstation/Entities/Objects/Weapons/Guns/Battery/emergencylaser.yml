@@ -2,7 +2,7 @@
   name: emergency laser rifle
   parent: [WeaponLaserCarbinePractice, BaseGunWieldable, BaseRestrictedContraband]
   id: EmergencyWeaponLaserCarbine
-  description: An emergency laser rifle, for use when getting timely clearance isnt an option. Hand this in to security once the coast is clear.
+  description: An emergency laser rifle, for use when getting timely clearance isn't an option. Hand this in to security once the coast is clear.
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Weapons/Guns/Battery/emergency_laser_gun.rsi
@@ -21,7 +21,7 @@
     size: Ginormous
   - type: PointLight
     radius: 1.5
-    energy: 10
+    energy: 12
     color: "#ff0043"
     mask: /Textures/Effects/LightMasks/double_cone.png
   - type: RotatingLight

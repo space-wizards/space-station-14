@@ -2,7 +2,7 @@
   id: EmergencyLaserCrate
   parent: CrateCommandSecure
   name: emergency lasers crate
-  description: A crate of four emergency laser rifles, for situations where getting clearance isnt an option.
+  description: A crate of four emergency laser rifles, for situations where getting clearance isn't an option.
   components:
   - type: StorageFill
     contents:
