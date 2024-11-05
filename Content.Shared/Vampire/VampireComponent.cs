@@ -75,9 +75,6 @@ public sealed partial class VampireComponent : Component
     
     [ValidatePrototypeId<VampirePowerProtype>]
     public static readonly string DrinkBloodPrototype = "DrinkBlood";
-    
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public ProtoId<StatusIconPrototype> StatusIcon { get; set; } = "VampireFaction";
 
     /// <summary>
     /// Total blood drank, counter for end of round screen

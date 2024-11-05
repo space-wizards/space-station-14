@@ -55,11 +55,13 @@
 
 - type: factionIcon
   id: VampireFaction
+  isShaded: true
   priority: 11
+  locationPreference: Left
   showTo:
     components:
       - ShowAntagIcons
-      - Vampire
+      - VampireIcon
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Vampire

@@ -82,6 +82,7 @@ public sealed partial class VampireRuleSystem : GameRuleSystem<VampireRuleCompon
 
         // make sure it's initial chems are set to max
         var vampireComponent = EnsureComp<VampireComponent>(target);
+        EnsureComp<VampireIconComponent>(target);
         var interfaceComponent = EnsureComp<UserInterfaceComponent>(target);
         
         if (HasComp<UserInterfaceComponent>(target))
