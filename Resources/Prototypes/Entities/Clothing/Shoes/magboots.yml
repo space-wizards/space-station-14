@@ -12,7 +12,7 @@
       map: [ "enum.ToggleVisuals.Layer" ]
   - type: Clothing
     sprite: Clothing/Shoes/Boots/magboots.rsi
-    - type: ToggleClothing
+  - type: ToggleClothing
     action: ActionToggleMagboots
   - type: ToggleVerb
     text: toggle-magboots-verb-get-data-text

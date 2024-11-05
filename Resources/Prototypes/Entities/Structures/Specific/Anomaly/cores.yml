@@ -284,12 +284,22 @@
 
 - type: entity
   parent: BaseAnomalyInertCore
-  id: AnomalyCoreGravityInert # TODO: ADD NEW EFFECT
+  id: AnomalyCoreGravityInert # Acts like diff slot magboots
   description: The inert core of a gravitational anomaly. Looks impossibly dense, but feels impossibly light.
   suffix: Gravity, Inert
   components:
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/gravity_core.rsi
+  - type: Clothing
+    sprite: Structures/Specific/Anomalies/Cores/gravity_core.rsi
+    slots:
+    - belt
+    - neck
+  - type: NoSlip
+  - type: Magboots 
+  - type: ClothingSpeedModifier
+    walkModifier: 0.85
+    sprintModifier: 0.8
   - type: PointLight
     radius: 1.5
     energy: 10
@@ -346,7 +356,7 @@
 - type: entity
   parent: BaseAnomalyInertCore
   id: AnomalyCoreRockInert # Acts as a tiny 1x1 pickaxe
-  description: The inert core of a rock anomaly. Looks like solid stone, but at the same time, growing...?
+  description: The inert core of a rock anomaly. Looks like solid stone, but at the same time, shifting...?
   suffix: Rock, Inert
   components:
   - type: Sprite
@@ -371,7 +381,7 @@
 
 - type: entity
   parent: BaseAnomalyInertCore
-  id: AnomalyCoreLiquidInert # Contains a lot of solution, equivalent to a jug; cannot spill when thrown, must have other containers transfer solution into it, due to item size
+  id: AnomalyCoreLiquidInert # Contains a lot of solution, equivalent to a jug; cannot spill when thrown
   description: The inert core of a liquid anomaly. Tiny, but makes a sloshing sound if you listen closely while it moves.
   suffix: Liquid, Inert
   components:
