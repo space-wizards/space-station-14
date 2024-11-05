@@ -25,41 +25,14 @@ vampire-cloak-disable = You release your grip on the shadows
 
 vampire-bloodsteal-other = You feel blood being ripped from your body!
 vampire-hypnotise-other = {CAPITALIZE(THE($user))} stares deeply into {MAKEPLURAL(THE($target))} eyes!
+vampire-unnaturalstrength = The upper muscles {CAPITALIZE(THE($user))} increase making him stronger!
+vampire-supernaturalstrength = The upper muscles of {CAPITALIZE(THE($user))} swell with power making him super strong!
 
 store-currency-display-blood-essence = Blood Essence
 store-category-vampirepowers = Powers
 store-category-vampirepassives = Passives
 
 #Powers
-vampire-power-summonheirloom = Summon Heirloom
-vampire-power-summonheirloom-description = Summon a family heirloom, gifted by lilith herself.
-
-vampire-power-blessing = Blessing of Lilith
-vampire-power-blessing-description = Swear your soul to Lilith, receive her blessing, and feast upon the bounty around you.
-
-vampire-power-togglefangs = Toggle Fangs
-vampire-power-togglefangs-description = Extend or retract your fangs. Walking around with your fangs out might reveal your true nature.
-
-vampire-power-glare = Glare
-vampire-power-glare-description = Release a blinding flash from your eyes, stunning a unprotected mortal for 10 seconds. Activation Cost: 20 Essence. Cooldown: 60 Seconds
-
-vampire-power-hypnotise = Hypnotise
-vampire-power-hypnotise-description = Stare deeply into a mortals eyes, forcing them to sleep for 60 seconds. Activation Cost: 20 Essence. Activation Delay: 5 Seconds. Cooldown: 5 Minutes
-
-vampire-power-screech = Screech
-vampire-power-screech-description = Release a piercing scream, stunning unprotected mortals and shattering fragile objects nearby. Activation Cost: 20 Essence. Activation Delay: 5 Seconds. Cooldown: 5 Minutes
-
-vampire-power-bloodsteal = Blood Steal
-vampire-power-bloodsteal-description = Wrench the blood from all bodies nearby - living or dead. Activation Cost: 20 Essence. Cooldown: 60 Seconds
-
-vampire-power-batform = Bat Form
-vampire-power-batform-description = Assume for form of a bat. Fast, Hard to Hit, Likes fruit. Activation Cost: 20 Essence. Cooldown: 30 Seconds
-
-vampire-power-mouseform = Mouse Form
-vampire-power-mouseform-description = Assume for form of a mouse. Fast, Small, Immune to doors. Activation Cost: 20 Essence. Cooldown: 30 Seconds
-
-vampire-power-cloakofdarkness = Cloak of Darkness
-vampire-power-cloakofdarkness-description = Cloak yourself from mortal eyes, rendering you invisible while stationary. Activation Cost: 30 Essence. Upkeep: 1 Essence/Second Cooldown: 10 Seconds
 
 #Passives
 vampire-passive-unholystrength = Unholy Strength
@@ -70,3 +43,95 @@ vampire-passive-supernaturalstrength-description = Increase your upper body musc
 
 vampire-passive-deathsembrace = Deaths Embrace
 vampire-passive-deathsembrace-description = Embrace death and it shall pass you over. Effect: Heal when in a coffin, automatically return to your coffin upon death for 100 blood essence.
+
+#Mutation menu
+
+vampire-mutation-menu-ui-window-name = Mutation menu
+
+vampire-mutation-none-info = Nothing selected
+
+vampire-mutation-hemomancer-info = 
+    Hemomancer
+    
+    Focuses on blood magic and manipulating the blood around him.
+    
+    Abilities:
+    
+    - Screech
+    - Blood Steal
+
+vampire-mutation-umbrae-info = 
+    Shadow
+    
+    Focuses on darkness, stealth, mobility.
+    
+    Abilities:
+    
+    - Glare
+    - Cloak of Darkness
+    
+vampire-mutation-gargantua-info = 
+    Gargantua
+    
+    Фокусируется на ближнем уроне и стойкости.
+    
+    Abilities:
+    
+    - Unholy Strength
+    - Supernatural Strength
+
+vampire-mutation-bestia-info = 
+    Bestia
+    
+    Фокусируется на превращении и собирании трофеев
+    
+    Abilities:
+    
+    - Bat Form
+    - Mouse Form
+    
+## Objectives
+
+objective-condition-drain-title = Drain { $count } blood.
+objective-condition-drain-description = I must drink { $count } of blood. It is necessary for my survival and further evolution.
+ent-VampireSurviveObjective = Survive
+    .desc = I have to survive, whatever it takes.
+ent-VampireEscapeObjective = Fly off the station alive and free.
+    .desc = I'm supposed to leave on an escape shuttle. Free.
+
+
+## Preset
+
+vampire-roundend-name = Vampire
+objective-issuer-vampire = [color=red]Bloodlust[/color]
+roundend-prepend-vampire-drained-named = [color=white]{ $name }[/color] drank a total of [color=red]{ $number }[/color] blood.
+roundend-prepend-vampire-drained = Someone drank a total of [color=red]{ $number }[/color] blood.
+vampire-gamemode-title = Vampires
+vampire-gamemode-description = Bloodthirsty vampires have infiltrated the station to drink blood!
+vampire-role-greeting =
+    You are a vampire who sneaked into the station disguised as an employee!
+        Your tasks are listed in the character menu.
+        Drink blood and evolve to accomplish them!
+vampire-role-greeting-short = You are a vampire who sneaked into the station disguised as an employee!
+roles-antag-vamire-name = Vampire
+
+## Actions
+
+ent-ActionVampireOpenMutationsMenu = Mutation menu
+    .desc = Opens a menu with vampire mutations.
+ent-ActionVampireToggleFangs = Toggle Fangs
+    .desc = Extend or retract your fangs. Walking around with your fangs out might reveal your true nature.
+ent-ActionVampireGlare = Glare
+    .desc = Release a blinding flash from your eyes, stunning a unprotected mortal for 10 seconds. Activation Cost: 20 Essence. Cooldown: 60 Seconds
+ent-ActionVampireHypnotise = Hypnotise
+    .desc = Stare deeply into a mortals eyes, forcing them to sleep for 60 seconds. Activation Cost: 20 Essence. Activation Delay: 5 Seconds. Cooldown: 5 Minutes
+ent-ActionVampireScreech = Screech
+    .desc = Release a piercing scream, stunning unprotected mortals and shattering fragile objects nearby. Activation Cost: 20 Essence. Activation Delay: 5 Seconds. Cooldown: 5 Minutes
+ent-ActionVampireBloodSteal = Blood Steal
+    .desc = Wrench the blood from all bodies nearby - living or dead. Activation Cost: 20 Essence. Cooldown: 60 Seconds
+ent-ActionVampireBatform = Bat Form
+    .desc = Assume for form of a bat. Fast, Hard to Hit, Likes fruit. Activation Cost: 20 Essence. Cooldown: 30 Seconds
+ent-ActionVampireMouseform = Mouse Form
+    .desc = Assume for form of a mouse. Fast, Small, Immune to doors. Activation Cost: 20 Essence. Cooldown: 30 Seconds
+ent-ActionVampireCloakOfDarkness = Cloak of Darkness
+    .desc = Cloak yourself from mortal eyes, rendering you invisible while stationary. Activation Cost: 30 Essence. Upkeep: 1 Essence/Second Cooldown: 10 Seconds
