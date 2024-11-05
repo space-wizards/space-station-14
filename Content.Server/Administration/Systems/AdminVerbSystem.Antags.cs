@@ -168,7 +168,5 @@ public sealed partial class AdminVerbSystem
             Message = Loc.GetString("admin-verb-make-vampire"),
         };
         args.Verbs.Add(vampire);
-     }
- }
     }
 }
