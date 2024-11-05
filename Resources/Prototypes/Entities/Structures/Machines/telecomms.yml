@@ -160,3 +160,11 @@
     containers:
       key_slots:
       - EncryptionKeyCommand
+
+- type: entity
+  parent: TelecomServer
+  id: TelecomRelay
+  suffix: Tcomms Booster
+  components:
+  - type: Relay
+
