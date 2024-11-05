@@ -35,9 +35,9 @@ public sealed partial class VampireRuleSystem : GameRuleSystem<VampireRuleCompon
 
     public readonly ProtoId<AntagPrototype> VampirePrototypeId = "Vampire";
 
-//    public readonly ProtoId<NpcFactionPrototype> ChangelingFactionId = "Changeling";
+    public readonly ProtoId<NpcFactionPrototype> ChangelingFactionId = "Vampire";
 
-//    public readonly ProtoId<NpcFactionPrototype> NanotrasenFactionId = "NanoTrasen";
+    public readonly ProtoId<NpcFactionPrototype> NanotrasenFactionId = "NanoTrasen";
 
     public readonly ProtoId<CurrencyPrototype> Currency = "BloodEssence";
 
@@ -48,7 +48,7 @@ public sealed partial class VampireRuleSystem : GameRuleSystem<VampireRuleCompon
         SubscribeLocalEvent<VampireRuleComponent, GetBriefingEvent>(OnGetBriefing);
 
         SubscribeLocalEvent<VampireRuleComponent, AfterAntagEntitySelectedEvent>(OnSelectAntag);
-        //SubscribeLocalEvent<VampireRuleComponent, ObjectivesTextPrependEvent>(OnTextPrepend);
+        SubscribeLocalEvent<VampireRuleComponent, ObjectivesTextPrependEvent>(OnTextPrepend);
     }
 
     private void OnSelectAntag(EntityUid mindId, VampireRuleComponent comp, ref AfterAntagEntitySelectedEvent args)
@@ -77,8 +77,8 @@ public sealed partial class VampireRuleSystem : GameRuleSystem<VampireRuleCompon
             }
         }
         // vampire stuff
-//        _npcFaction.RemoveFaction(target, NanotrasenFactionId, false);
-//        _npcFaction.AddFaction(target, ChangelingFactionId);
+        _npcFaction.RemoveFaction(target, NanotrasenFactionId, false);
+        _npcFaction.AddFaction(target, ChangelingFactionId);
 
         // make sure it's initial chems are set to max
         var vampireComponent = EnsureComp<VampireComponent>(target);
