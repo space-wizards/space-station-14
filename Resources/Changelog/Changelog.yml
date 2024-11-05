@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: osjarw
-  changes:
-  - message: You can once again pull and buckle pets.
-    type: Fix
-  id: 7091
-  time: '2024-08-11T09:22:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30066
 - author: slarticodefast
   changes:
   - message: The sentient plant mutation can no longer be propagated to other trays
@@ -3951,3 +3944,10 @@
   id: 7590
   time: '2024-11-04T11:23:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32887
+- author: DrSmugleaf
+  changes:
+  - message: Fixed not being able to see vote counts for non-votekick votes.
+    type: Fix
+  id: 7591
+  time: '2024-11-05T00:12:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33170
