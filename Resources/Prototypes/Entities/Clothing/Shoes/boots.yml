@@ -187,6 +187,10 @@
         reagents:
         - ReagentId: Fiber
           Quantity: 10
+  - type: Butcherable
+    spawned:
+    - id: MaterialWebSilk1
+      amount: 2
   - type: Construction
     graph: WebObjects
     node: boots

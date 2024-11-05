@@ -48,6 +48,13 @@
     back:
     - ClothingHeadHatHairflower
 
+# Headphones
+- type: loadout
+  id: Headphones
+  storage:
+    back:
+    - ClothingNeckHeadphones
+
 # Plushies
 - type: loadout
   id: PlushieLizard
@@ -204,7 +211,7 @@
       !type:OverallPlaytimeRequirement
       time: 36000 # 10hr
   storage:
-    back: 
+    back:
     - TowelColorWhite
 
 - type: loadout
@@ -215,9 +222,9 @@
       !type:OverallPlaytimeRequirement
       time: 1800000 # 500hr
   storage:
-    back: 
+    back:
     - TowelColorSilver
-    
+
 - type: loadout
   id: TowelColorGold
   effects:
@@ -226,7 +233,7 @@
       !type:OverallPlaytimeRequirement
       time: 3600000 # 1000hr
   storage:
-    back: 
+    back:
     - TowelColorGold
 
 - type: loadout
@@ -238,7 +245,7 @@
       department: Cargo
       time: 360000 # 100hr
   storage:
-    back: 
+    back:
     - TowelColorLightBrown
 
 - type: loadout
@@ -250,7 +257,7 @@
       department: Civilian
       time: 360000 # 100hr
   storage:
-    back: 
+    back:
     - TowelColorGreen
 
 - type: loadout
@@ -262,7 +269,7 @@
       department: Command
       time: 360000 # 100hr
   storage:
-    back: 
+    back:
     - TowelColorDarkBlue
 
 - type: loadout
@@ -274,9 +281,9 @@
       department: Engineering
       time: 360000 # 100hr
   storage:
-    back: 
+    back:
     - TowelColorOrange
-    
+
 - type: loadout
   id: TowelColorLightBlue
   effects:
@@ -286,7 +293,7 @@
       department: Medical
       time: 360000 # 100hr
   storage:
-    back: 
+    back:
     - TowelColorLightBlue
 
 - type: loadout
@@ -298,7 +305,7 @@
       department: Science
       time: 360000 # 100hr
   storage:
-    back: 
+    back:
     - TowelColorPurple
 
 - type: loadout
@@ -310,7 +317,7 @@
       department: Security
       time: 360000 # 100hr
   storage:
-    back: 
+    back:
     - TowelColorRed
 
 - type: loadout
@@ -322,7 +329,7 @@
       role: JobPassenger
       time: 360000 # 100hr
   storage:
-    back: 
+    back:
     - TowelColorGray
 
 - type: loadout
@@ -334,7 +341,7 @@
       role: JobChaplain
       time: 360000 # 100hr
   storage:
-    back: 
+    back:
     - TowelColorBlack
 
 - type: loadout
@@ -346,7 +353,7 @@
       role: JobLibrarian
       time: 360000 # 100hr
   storage:
-    back: 
+    back:
     - TowelColorDarkGreen
 
 - type: loadout
@@ -358,7 +365,7 @@
       role: JobLawyer
       time: 360000 # 100hr
   storage:
-    back: 
+    back:
     - TowelColorMaroon
 
 - type: loadout
@@ -370,7 +377,7 @@
       role: JobClown
       time: 360000 # 100hr
   storage:
-    back: 
+    back:
     - TowelColorYellow
 
 - type: loadout
@@ -382,5 +389,5 @@
       role: JobMime
       time: 360000 # 100hr
   storage:
-    back: 
+    back:
     - TowelColorMime
