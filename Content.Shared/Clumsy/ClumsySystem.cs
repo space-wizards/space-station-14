@@ -61,11 +61,14 @@ public sealed class ClumsySystem : EntitySystem
     {
         // Clumsy people sometimes can't shoot :(
 
-        if (args.Gun.Comp.ClumsyProof == true)
+        if (args.Gun.Comp.ClumsyProof)
             return;
 
         if (!_random.Prob(ent.Comp.ClumsyDefaultCheck))
             return;
+
+        if (ent.Comp.GunShootFailDamage != null)
+            _damageable.TryChangeDamage(ent, ent.Comp.GunShootFailDamage, origin: ent);
 
         _stun.TryParalyze(ent, ent.Comp.GunShootFailStunTime, true);
 

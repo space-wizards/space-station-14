@@ -48,6 +48,12 @@ public sealed partial class ClumsyComponent : Component
     public TimeSpan GunShootFailStunTime = TimeSpan.FromSeconds(3);
 
     /// <summary>
+    ///     Stun time after failing to shoot a gun.
+    /// </summary>
+    [DataField]
+    public DamageSpecifier? GunShootFailDamage;
+
+    /// <summary>
     ///     Noise to play after failing to shoot a gun. Boom!
     /// </summary>
     [DataField]

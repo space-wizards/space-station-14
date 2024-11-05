@@ -231,6 +231,12 @@
     - type: Hands
     - type: ComplexInteraction
     - type: Clumsy
+      gunShootFailDamage:
+        types:
+          Blunt: 5
+          Piercing: 4
+        groups:
+          Burn: 3
     - type: MeleeWeapon
       angle: 30
       animation: WeaponArcFist
