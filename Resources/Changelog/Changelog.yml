@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: The sentient plant mutation can no longer be propagated to other trays
-      via seeds or swabs. It has also been made more rare.
-    type: Tweak
-  id: 7092
-  time: '2024-08-11T09:23:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29133
 - author: Moomoobeef
   changes:
   - message: Added The Throngler (Plushie) to the grand lottery!!
@@ -3951,3 +3943,12 @@
   id: 7591
   time: '2024-11-05T00:12:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33170
+- author: kirus59
+  changes:
+  - message: Fixed display of icons when using hunger or thirst huds
+    type: Fix
+  - message: Fixed errors spam when using beer goggles
+    type: Fix
+  id: 7592
+  time: '2024-11-05T16:58:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32832
