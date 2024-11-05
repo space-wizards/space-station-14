@@ -105,6 +105,21 @@
   name: store-category-wearables
   priority: 2
 
+- type: storeCategory
+  id: UplinkNtDeception
+  name: store-category-deception
+  priority: 5
+
+- type: storeCategory
+  id: UplinkNtDisruption
+  name: store-category-disruption
+  priority: 6
+
+- type: storeCategory
+  id: UplinkNtPointless
+  name: store-category-pointless
+  priority: 10
+
 #revenant
 - type: storeCategory
   id: RevenantAbilities
