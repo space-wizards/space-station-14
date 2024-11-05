@@ -103,6 +103,10 @@
     - id: FoodWatermelon
     - id: FoodCherry
     - id: FoodBanana
+    - id: WheatBushel #maybe if you put so many things sci can't eat, they'll go to botany...
+    - id: FoodSoybeans
+    - id: FoodLingzhi
+    - id: Log
     - id: MobTomatoKiller
     - id: MobLuminousEntity
     - id: MobLuminousObject
@@ -112,6 +116,10 @@
       weight: 0.60
     - id: Nettle
       weight: 0.60
+    - id: LeavesTobacco
+      weight: 0.60
+    - id: FoodBungo
+      weight: 0.60
     - id: FoodHolymelon #mutated plant stuffs
       weight: 0.30
     - id: FoodAmbrosiaVulgaris
@@ -120,13 +128,23 @@
       weight: 0.30
     - id: FoodLily
       weight: 0.30
+    - id: Bluetomato
+      weight: 0.30
     - id: LeavesCannabisRainbow
       weight: 0.30
     - id: FoodMimana
       weight: 0.30
+    - id: SteelLog
+      weight: 0.30
     - id: MeatwheatBushel
       weight: 0.30
-    - id: FoodGatfruit # 0.007% spawn chance. 1 / 141
+    - id: FoodLaughinPeaPod
+      weight: 0.30
+    - id: FoodLemoon
+      weight: 0.30
+    - id: DeathNettle
+      weight: 0.10
+    - id: FoodGatfruit
       weight: 0.10
     - id: FoodFakeCapfruit #hehe
       weight: 0.01

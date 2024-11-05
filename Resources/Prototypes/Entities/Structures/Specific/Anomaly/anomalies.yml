@@ -225,10 +225,19 @@
         maxRange: 4.5
       spawns:
       - MobFleshJared
+      - MobFleshJared
+      - MobFleshGolem
       - MobFleshGolem
       - MobFleshClamp
+      - MobFleshClamp
+      - MobFleshLover
       - MobFleshLover
       - MobCow
+      - MobGorilla
+      - MobBaseKobold
+      - MobMonkey
+      - MobCorgi
+      - MobPig
     - settings:
         spawnOnSuperCritical: true
         minAmount: 10
