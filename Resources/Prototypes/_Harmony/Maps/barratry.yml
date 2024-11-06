@@ -9,12 +9,14 @@
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: '{0} Barratry {1}'
+          mapNameTemplate: '{0} Pioneer {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
         - type: StationEmergencyShuttle
           emergencyShuttlePath: /Maps/Shuttles/emergency_raven.yml
+        - type: StationCargoShuttle
+          path: /Maps/_Harmony/Shuttles/cargo_barratry.yml
         - type: StationJobs
           availableJobs:
             #service
