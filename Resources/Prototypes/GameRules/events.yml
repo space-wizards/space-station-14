@@ -20,6 +20,7 @@
     - id: SlimesSpawn
     - id: SolarFlare
     - id: SnakeSpawn
+    - id: TickSpawn
     - id: SpiderClownSpawn
     - id: SpiderSpawn
     - id: VentClog
@@ -390,6 +391,23 @@
     entries:
     - id: MobGiantSpiderAngry
       prob: 0.05
+
+- type: entity
+  id: TickSpawn
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-vent-creatures-start-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    earliestStart: 20
+    minimumPlayers: 15
+    weight: 5
+    duration: 60
+  - type: VentCrittersRule
+    entries:
+    - id: MobTick
+      prob: 0.10
 
 - type: entity
   id: SpiderClownSpawn
