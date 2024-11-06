@@ -28,7 +28,7 @@
     back:
     - ClothingNeckHeadphones
 
-# Plushies
+# Toys
 - type: loadout
   id: PlushieLizard
   storage:
@@ -40,6 +40,15 @@
   storage:
     back:
     - PlushieSpaceLizard
+
+- type: loadout
+  id: ThreeDarts
+  dummyEntity: LoadoutDummyDarts
+  storage:
+    back:
+    - Dart
+    - DartBlue
+    - DartYellow
 
 # Smokeables
 - type: loadout
