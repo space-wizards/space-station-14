@@ -8,10 +8,10 @@ uplink-CaptainSabre-name = Corporate saber
 uplink-CaptainSabre-desc = A blade normally bestowed to NT captains, however this one's owner was underperforming. High-quality guaranteed!
 
 uplink-blaster-name = BM-138 power blaster
-uplink-blaster-desc = A robust energy weapon that utilizes power cells to accelerate charged particles. Comes with a power cell slot and a free power cell.
+uplink-blaster-desc = A robust energy weapon that utilizes MagCells to accelerate charged particles. Comes with a MagCell slot and a free MagCell.
 
 uplink-carbine-name = NT-331 energy carbine
-uplink-carbine-desc = The follower of the BM-138, capable of energizing particles at a faster rate. Comes with a power cell slot.
+uplink-carbine-desc = The follower of the BM-138, capable of energizing particles at a faster rate. Comes with a MagCell slot.
 
 uplink-bluehardsuit-name = Storm-blue pressure suit
 uplink-bluehardsuit-desc = A NT-Certified pressure suit graded for 11 kilometers of ocean pressure. Painted in NT Storm Blue.
@@ -47,7 +47,7 @@ uplink-pai-name = Binary translation key
 uplink-pai-desc = A encryption key that actively translates binary used by cyborgs real-time. Potentially useful for gathering extra information.
 
 uplink-lobbying-name = NT lobbying bundle
-uplink-lobbying-desc = A briefcase containing everything needed to bribe the feeble minded. Contains 20K spesos in cash, and some cool dealer clothing.
+uplink-lobbying-desc = A briefcase containing everything needed to make an offer they can't refuse. Contains 20K spesos in cash, and some cool dealer clothing.
 
 uplink-pistolmag-name = .35 auto magazine
 uplink-pistolmag-desc = For use with the MK58 pistol. Contains standard rounds.
