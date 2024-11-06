@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DieselMohawk
-  changes:
-  - message: Resprited Security vest and helmet
-    type: Tweak
-  id: 7097
-  time: '2024-08-12T06:20:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30291
 - author: Ubaser
   changes:
   - message: Mantles are now available in loadouts, requiring 20 hours of that head
@@ -3951,3 +3944,12 @@
   id: 7596
   time: '2024-11-06T14:27:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32829
+- author: SlamBamActionman
+  changes:
+  - message: WT550 and C20-r's "burst" firemodes are now actual bursts.
+    type: Tweak
+  - message: Drozd is now a burst-only weapon (DPS remains unchanged!).
+    type: Tweak
+  id: 7597
+  time: '2024-11-06T14:39:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31292
