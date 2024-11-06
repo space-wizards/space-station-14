@@ -1,14 +1,88 @@
+## WEAPONS
+
 - type: listing
   id: UplinkCaptainSabre
   name: uplink-CaptainSabre-name
   description: uplink-CaptainSabre-desc
   productEntity: CaptainSabre
   cost:
-    BluespaceCrystal: 13
+    BluespaceCrystal: 10
   categories:
   - UplinkNtWeaponry
 
- - type: listing
+- type: listing
+  id: UplinkEnergyCarbine
+  name: uplink-carbine-name
+  description: uplink-carbine-desc
+  productEntity: WeaponEnergyCarbine
+  cost:
+    BluespaceCrystal: 17 # this shit is STRONG-strong. TODO: Cascade Ops DO NOT get this
+  categories:
+  - UplinkNtWeaponry
+
+- type: listing
+  id: UplinkNtBlaster
+  name: uplink-blaster-name
+  description: uplink-blaster-desc
+  productEntity: WeaponNtBlaster
+  cost:
+    BluespaceCrystal: 5 # cheap, but modules cost more so it evens out
+  categories:
+  - UplinkNtWeaponry
+
+- type: listing
+  id: UplinkDuffelNtCburnFilled
+  name: uplink-cburn-name
+  description: uplink-cburn-desc
+  productEntity: ClothingBackpackDuffelNtCburnFilled
+  cost:
+    BluespaceCrystal: 8
+  categories:
+  - UplinkNtWeaponry
+
+- type: listing
+  id: UplinkPistolN1984
+  name: uplink-pistol-N1984-name
+  description: uplink-pistol-N1984-desc
+  productEntity: WeaponPistolN1984
+  cost:
+    BluespaceCrystal: 10
+  categories:
+  - UplinkNtWeaponry
+
+- type: listing
+  id: UplinkPistolMk58
+  name: uplink-pistol-Mk58-name
+  description: uplink-pistol-Mk58-desc
+  productEntity: WeaponPistolMk58
+  cost:
+    BluespaceCrystal: 3
+  categories:
+  - UplinkNtWeaponry
+
+## AMMO
+
+- type: listing
+  id: UplinkMagnumMag
+  name: uplink-magnum-name
+  description: uplink-magnum-desc
+  productEntity: MagazineMagnum
+  cost:
+    BluespaceCrystal: 4
+  categories:
+  - UplinkNtAmmo
+
+- type: listing
+  id: UplinkAutoMagazine
+  name: uplink-pistolmag-name
+  description: uplink-pistolmag-desc
+  productEntity: MagazinePistol
+  cost:
+    BluespaceCrystal: 2
+  categories:
+  - UplinkNtAmmo
+
+- type: listing
   id: UplinkMagCell
   name: uplink-magcell-name
   description: uplink-magcell-desc
@@ -38,33 +112,25 @@
   categories:
   - UplinkNtAmmo
 
+## ARMOR
+
 - type: listing
   id: UplinkClothingGlovesCombat
   name: uplink-combat-gloves-name
   description: uplink-combat-gloves-desc
   productEntity: ClothingHandsGlovesCombat
   cost:
-    BluespaceCrystal: 4
+    BluespaceCrystal: 1 # at some point we'll roll this into a proper toolbox with gear
   categories:
   - UplinkNtArmor
 
-- type: listing
-  id: UplinkDuffelNtCburnFilled
-  name: uplink-cburn-name
-  description: uplink-cburn-desc
-  productEntity: ClothingBackpackDuffelNtCburnFilled
-  cost:
-    BluespaceCrystal: 14
-  categories:
-  - UplinkNtWeaponry
-  
 - type: listing
   id: UplinkClothingBulletproof
   name: uplink-bulletproof-name
   description: uplink-bulletproof-desc
   productEntity: ClothingOuterArmorBulletproof
   cost:
-    BluespaceCrystal: 5
+    BluespaceCrystal: 3
   categories:
   - UplinkNtArmor
 
@@ -72,48 +138,66 @@
   id: UplinkHardsuitERTLeader
   name: uplink-bluehardsuit-name
   description: uplink-bluehardsuit-desc
-  productEntity: ClothingOuterHardsuitERTLeader
+  productEntity: ClothingOuterHardsuitERTLeader # stats are equal to a bloodred
   cost:
     BluespaceCrystal: 8
   categories:
   - UplinkNtArmor
 
-- type: listing
-  id: UplinkEnergyCarbine
-  name: uplink-carbine-name
-  description: uplink-carbine-desc
-  productEntity: WeaponEnergyCarbine
-  cost:
-    BluespaceCrystal: 17
-  categories:
-  - UplinkNtWeaponry
+##DISRUPTION
 
 - type: listing
-  id: UplinkNtBlaster
-  name: uplink-blaster-name
-  description: uplink-blaster-desc
-  productEntity: WeaponNtBlaster
+  id: UplinkLubeBoxNT # heheheheheh
+  name: uplink-lube-name
+  description: uplink-lube-desc
+  productEntity: LubeBoxNT
   cost:
-    BluespaceCrystal: 6
+    BluespaceCrystal: 2
   categories:
-  - UplinkNtWeaponry
+  - UplinkNtDisruption
+
+##DECEPTION
 
 - type: listing
-  id: UplinkPistolN1984
-  name: uplink-pistol-N1984-name
-  description: uplink-pistol-N1984-desc
-  productEntity: WeaponPistolN1984
+  id: UplinkCrimeCleanerKit
+  name: uplink-cleaner-name
+  description: uplink-cleaner-desc
+  productEntity: CrimeCleanerKit
   cost:
-    BluespaceCrystal: 10
+    BluespaceCrystal: 4
   categories:
-  - UplinkNtWeaponry
+  - UplinkNtDeception
 
 - type: listing
-  id: UplinkPistolMk58
-  name: uplink-pistol-Mk58-name
-  description: uplink-pistol-Mk58-desc
-  productEntity: WeaponPistolMk58
+  id: UplinkBinaryKey
+  name: uplink-binary-name
+  description: uplink-binary-desc
+  productEntity: EncryptionKeyBinary
   cost:
-    BluespaceCrystal: 3
+    BluespaceCrystal: 1
   categories:
-  - UplinkNtWeaponry
+  - UplinkNtDeception
+
+- type: listing
+  id: UplinkLobbyingBundleNT
+  name: uplink-lobbying-name
+  description: uplink-lobbying-desc
+  productEntity: BriefcaseNTBribingBundleFilled
+  cost:
+    BluespaceCrystal: 5
+  categories:
+  - UplinkNtDeception
+
+##POINTLESS
+
+- type: listing
+  id: UplinkPai
+  name: uplink-pai-name
+  description: uplink-pai-desc
+  productEntity: PersonalAI
+  cost:
+    BluespaceCrystal: 1
+  categories:
+  - UplinkNtPointless
+
+

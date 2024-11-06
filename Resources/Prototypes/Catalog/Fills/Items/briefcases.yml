@@ -59,3 +59,16 @@
         amount: 1
       - id: ClothingOuterCoatJensen
       - id: ClothingHandsGlovesColorBlack
+
+- type: entity
+  id: BriefcaseNTBribingBundleFilled
+  parent: BriefcaseSyndie
+  suffix: NT, Spesos
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingEyesGlassesSunglasses
+      - id: SpaceCash20000
+        amount: 1
+      - id: ClothingOuterCoatJensen
+      - id: ClothingHandsGlovesColorBlack

@@ -31,6 +31,9 @@
     - UplinkNtWeaponry
     - UplinkNtArmor
     - UplinkNtAmmo
+    - UplinkNtDeception
+    - UplinkNtDisruption
+    - UplinkNtPointless
     currencyWhitelist:
     - BluespaceCrystal
     balance:

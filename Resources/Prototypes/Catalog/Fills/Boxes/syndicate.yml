@@ -33,6 +33,40 @@
       - id: SyringeStimulants
 
 - type: entity
+  parent: BoxVial
+  id: LubeBoxNT
+  name: space lube box
+  description: A box containing three vials of space lube.
+  components:
+  - type: Storage
+    grid:
+    - 0,0,3,2
+  - type: StorageFill
+    contents:
+      - id: LubeChemistryVial
+        amount: 3
+
+- type: entity
+  parent: BoxCardboard
+  id: CrimeCleanerKit
+  name: evidence cleaning kit
+  description: A kit designed to clean any evidence of a crime. Contains soap, space cleaner, nitrile gloves and a cleanade.
+  components:
+  - type: Storage
+    grid:
+    - 0,0,3,1
+  - type: StorageFill
+    contents:
+      - id: SoapNTTraitor
+        amount: 1
+      - id: SprayBottleSpaceCleaner
+        amount: 1
+      - id: CleanerGrenade
+        amount: 1
+      - id: ClothingHandsGlovesNitrile
+        amount: 1
+
+- type: entity
   parent: BoxCardboard
   id: ThrowingKnivesKit
   name: throwing knives kit

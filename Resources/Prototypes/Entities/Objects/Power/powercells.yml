@@ -45,7 +45,7 @@
   parent: BasePowerCell
   components:
   - type: Sprite
-    sprite: Objects/Power/Weapons/Guns/Ammunition/Magazine/Magcell.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/MagCell.rsi
     layers:
     - state: icon
   - type: Battery
@@ -57,7 +57,7 @@
   - type: Tag
     tags:
       - MagCell
-      
+
 - type: entity
   name: NT advanced magcell
   description: A rechargeable energy magazine for use with compatible NT energy weaponry. This one has an expanded capacity.
