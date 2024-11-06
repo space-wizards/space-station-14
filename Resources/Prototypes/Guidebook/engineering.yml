@@ -29,6 +29,7 @@
   - GasManipulation
   - AtmosphericsSystems
   - AtmosphericUpsets
+  - AtmosTools
 
 - type: guideEntry
   id: GasManipulation
@@ -175,6 +176,11 @@
   id: Spacing
   name: guide-entry-spacing
   text: "/ServerInfo/Guidebook/Engineering/Spacing.xml"
+
+- type: guideEntry
+  id: AtmosTools
+  name: guide-entry-atmostools
+  text: "/ServerInfo/Guidebook/Engineering/AtmosTools.xml"
 
 - type: guideEntry
   id: ShuttleCraft
