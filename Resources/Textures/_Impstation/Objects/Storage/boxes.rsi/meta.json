@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Chef boxes modified from tgstation, overlay sprites by Darkmajia",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+    "states": [
+        {
+            "name": "box_chef"
+        },
+        {
+            "name": "america"
+        },
+        {
+            "name": "carnivore"
+        },
+        {
+            "name": "fiesta"
+        },
+        {
+            "name": "fruity"
+        },
+        {
+            "name": "grains"
+        },
+        {
+            "name": "italy"
+        },
+        {
+            "name": "sweets"
+        },
+        {
+            "name": "vegetarian"
+        }
+    ]
+}
