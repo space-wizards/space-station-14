@@ -48,10 +48,12 @@ public sealed class SharedDisassembleOnAltVerbSystem : EntitySystem
 
     private void OnDisassembleDoAfter(Entity<DisassembleOnAltVerbComponent> entity, ref DisassembleDoAfterEvent args)
     {
-        if (EntityManager.TrySpawnNextTo(entity.Comp.PrototypeToSpawn, entity.Owner, out var spawnedEnt))
+        if (!_net.IsServer) // This is odd but it works :)
+            return;
+
+        if (TrySpawnNextTo(entity.Comp.PrototypeToSpawn, entity.Owner, out var spawnedEnt))
             _handsSystem.TryPickup(args.User, spawnedEnt.Value);
 
-        if (_net.IsServer) // Will error if you try to delete in client!
-            EntityManager.QueueDeleteEntity(entity.Owner);
+        EntityManager.QueueDeleteEntity(entity.Owner);
     }
 }
