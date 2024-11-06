@@ -131,6 +131,25 @@
       "name": "mecha_analyzer"
     },
     {
+      "name": "mecha_analyzer_anim",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.5
+        ]
+      ]
+    },
+    {
       "name": "mecha_medigun"
     },
     {
@@ -179,6 +198,74 @@
       "name": "mecha_chainsword",
       "delays": [
         [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "mecha_immolator",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "mecha_solaris",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "mecha_firedart"
+    },
+    {
+      "name": "mecha_xray"
+    },
+    {
+      "name": "mecha_amlg90"
+    },
+    {
+      "name": "triphasic_scan_module",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
           0.1,
           0.1
         ]
