@@ -56,13 +56,6 @@ public sealed partial class VampireComponent : Component
     {
         DamageDict = new Dictionary<string, FixedPoint2>() { { "Burn", 10 } }
     };
-    public static readonly DamageSpecifier SpaceDamage = new()
-    {
-        DamageDict = new ()
-        { 
-            { "Burn", 2.5 },
-        }
-    };
 
     [ValidatePrototypeId<EntityPrototype>]
     public static readonly string MutationsActionPrototype = "ActionVampireOpenMutationsMenu";

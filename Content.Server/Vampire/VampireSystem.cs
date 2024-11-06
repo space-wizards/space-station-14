@@ -15,6 +15,7 @@ using Content.Shared.Bed.Sleep;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Construction.Components;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
@@ -138,20 +139,19 @@ public sealed partial class VampireSystem : EntitySystem
             healing.NextHealTick -= frameTime;
         }
 
-        var spaceQuery = EntityQueryEnumerator<VampireComponent, VampireSpaceDamageComponent>();
-        while (spaceQuery.MoveNext(out var uid, out var vampire, out var spacedamage))
+        var spaceQuery = EntityQueryEnumerator<VampireComponent, VampireSpaceDamageComponent, DamageableComponent>();
+        while (spaceQuery.MoveNext(out var uid, out var vampire, out var spacedamage, out var damage))
         {
             if (vampire == null || spacedamage == null)
                 continue;
-            
-            var vampireUid = new Entity<VampireComponent>(uid, vampire);
 
             if (IsInSpace(uid))
             {
-                if (spacedamage.NextSpaceDamageTick <= 0 && !SubtractBloodEssence((uid, vampire), FixedPoint2.New(1)))
+                if (spacedamage.NextSpaceDamageTick <= 0)
                 {
                     spacedamage.NextSpaceDamageTick = 1;
-                    DoSpaceDamage(vampireUid);
+                    if (!SubtractBloodEssence((uid, vampire), FixedPoint2.New(1)))
+                        DoSpaceDamage(uid, vampire, damage);
                 }
                 spacedamage.NextSpaceDamageTick -= frameTime;
             }
@@ -160,6 +160,8 @@ public sealed partial class VampireSystem : EntitySystem
     
     private void OnStealthComponentRemove(EntityUid uid, VampireSealthComponent component, ComponentRemove args)
     {
+        EntityUid entity = default;
+        
         if (_vampire.GetBloodEssence(uid) < FixedPoint2.New(300) && !TryComp(uid, out ActionsComponent? comp) && _actionEntities.TryGetValue("ActionVampireCloakOfDarkness", out entity))
         {
             _action.RemoveAction(uid, entity, comp);
@@ -414,10 +416,11 @@ public sealed partial class VampireSystem : EntitySystem
         }
     }
 
-    private void DoSpaceDamage(Entity<VampireComponent> vampire)
+    private void DoSpaceDamage(EntityUid uid, VampireComponent comp, DamageableComponent damage)
     {
-        _damageableSystem.TryChangeDamage(vampire, VampireComponent.SpaceDamage, true, origin: vampire);
-        _popup.PopupEntity(Loc.GetString("vampire-startlight-burning"), vampire, vampire, PopupType.LargeCaution);
+        var damageSpec = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Heat"), 2.5);
+        _damageableSystem.TryChangeDamage(uid, damageSpec, true, false, damage, uid);
+        _popup.PopupEntity(Loc.GetString("vampire-startlight-burning"), uid, uid, PopupType.LargeCaution);
     }
     private bool IsInSpace(EntityUid vampireUid)
     {

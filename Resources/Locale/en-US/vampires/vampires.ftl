@@ -103,6 +103,8 @@ ent-VampireEscapeObjective = Fly off the station alive and free.
 
 alerts-vampire-blood-name = Blood Essence Amount
 alerts-vampire-blood-desc = Amount of vampire blood essence.
+alerts-vampire-stellar-weakness-name = Stellar Weakness
+alerts-vampire-stellar-weakness-desc = You are burnt by the light of the sun, or to be specific - the few billion stars you are exposed to outside the station.
 
 
 ## Preset
