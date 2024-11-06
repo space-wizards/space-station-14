@@ -285,7 +285,7 @@
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/empty.ogg
   - type: ProjectileBatteryAmmoProvider
-    proto: BulletSyndiPlasma
+    proto: BulletLaser
     fireCost: 20
   - type: Appearance
   - type: AmmoCounter
