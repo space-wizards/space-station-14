@@ -174,6 +174,12 @@ public sealed partial class VampireSystem
             return;
 
         var vampire = new Entity<VampireComponent>(entity, component);
+        
+        if (_vampire.GetBloodEssence(vampire) < FixedPoint2.New(330))
+        {
+            _popup.PopupEntity(Loc.GetString("vampire-cloak-disable"), vampire, vampire);
+            return;
+        }
 
         if (!IsAbilityUsable(vampire, def))
             return;

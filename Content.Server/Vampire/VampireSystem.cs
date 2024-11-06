@@ -90,8 +90,6 @@ public sealed partial class VampireSystem : EntitySystem
         SubscribeLocalEvent<VampireComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<VampireComponent, VampireBloodChangedEvent>(OnVampireBloodChangedEvent);
         
-        SubscribeLocalEvent<VampireSealthComponent, ComponentRemove>(OnStealthComponentRemove);
-        
         SubscribeLocalEvent<VampireComponent, ComponentGetState>(GetState);
         SubscribeLocalEvent<VampireComponent, VampireMutationPrototypeSelectedMessage>(OnMutationSelected);
 
@@ -120,6 +118,13 @@ public sealed partial class VampireSystem : EntitySystem
                     RemCompDeferred<StealthOnMoveComponent>(uid);
                     RemCompDeferred<StealthComponent>(uid);
                     RemCompDeferred<VampireSealthComponent>(uid);
+                    _popup.PopupEntity(Loc.GetString("vampire-cloak-disable"), uid, uid);
+                    if (_vampire.GetBloodEssence(uid) < FixedPoint2.New(300))
+                    {
+                        var vampireUid = new Entity<VampireComponent>(uid, vampire);
+                        var ev = new VampireBloodChangedEvent();
+                        RaiseLocalEvent(vampireUid, ev);
+                    }
                 }
             }
             stealth.NextStealthTick -= frameTime;
@@ -156,19 +161,6 @@ public sealed partial class VampireSystem : EntitySystem
                 spacedamage.NextSpaceDamageTick -= frameTime;
             }
         }
-    }
-    
-    private void OnStealthComponentRemove(EntityUid uid, VampireSealthComponent component, ComponentRemove args)
-    {
-        EntityUid entity = default;
-        
-        if (_vampire.GetBloodEssence(uid) < FixedPoint2.New(300) && !TryComp(uid, out ActionsComponent? comp) && _actionEntities.TryGetValue("ActionVampireCloakOfDarkness", out entity))
-        {
-            _action.RemoveAction(uid, entity, comp);
-            _actionContainer.RemoveAction(entity);
-            _actionEntities.Remove("ActionVampireCloakOfDarkness");
-        }
-        _popup.PopupEntity(Loc.GetString("vampire-cloak-disable"), uid, uid);
     }
 
     private void OnExamined(EntityUid uid, VampireComponent component, ExaminedEvent args)
@@ -433,7 +425,7 @@ public sealed partial class VampireSystem : EntitySystem
         if (!_mapSystem.TryGetTileRef(vampireUid, grid, vampireTransform.Coordinates, out var tileRef))
             return true;
 
-        return tileRef.Tile.IsEmpty || tileRef.IsSpace();
+        return tileRef.Tile.IsEmpty || tileRef.IsSpace() || tileRef.Tile.GetContentTileDefinition().ID == "Lattice";
     }
 
     private bool IsNearPrayable(EntityUid vampireUid)
