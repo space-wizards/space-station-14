@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Plykiya
-  changes:
-  - message: Energy sword weapons are now execution-capable.
-    type: Add
-  id: 7094
-  time: '2024-08-11T22:12:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30909
 - author: Blackern5000
   changes:
   - message: Added diamond-tipped mining drills, a science printed item found under
@@ -3953,3 +3946,10 @@
   id: 7593
   time: '2024-11-05T18:18:28.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33181
+- author: Baptr0b0t
+  changes:
+  - message: Fixed Intelicard can see through walls.
+    type: Fix
+  id: 7594
+  time: '2024-11-06T03:28:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33177
