@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: mirrorcult
-  changes:
-  - message: With space law being overhauled, you can now examine items to see their
-      contraband status, and whether with your current access you'd be accosted by
-      Security for owning it. This will also clearly show non-stealth syndicate items.
-    type: Add
-  id: 7096
-  time: '2024-08-12T03:57:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28688
 - author: DieselMohawk
   changes:
   - message: Resprited Security vest and helmet
@@ -3944,3 +3935,19 @@
   id: 7595
   time: '2024-11-06T13:20:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33084
+- author: BramvanZijp
+  changes:
+  - message: Flare guns have been reworked to no longer automatically eject shells
+      after firing, and must now be opened manually to insert or eject shells. A safety
+      feature has also been added to prevent loading lethal shells into them.
+    type: Tweak
+  - message: Flare guns are twice as likely to appear in emergency closets, with the
+      same rarity as MRE's.
+    type: Tweak
+  - message: Added the security shell gun, a modified flare gun which is capable of
+      handling both nonlethal and lethal shotgun shells. It is able to be crafted
+      in the security techfab without needing any research.
+    type: Add
+  id: 7596
+  time: '2024-11-06T14:27:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32829
