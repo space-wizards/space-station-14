@@ -125,7 +125,7 @@ public abstract partial class SharedMoverController : VirtualController
             if (_mobState.IsIncapacitated(relayTarget.Source) ||
                 TryComp<SleepingComponent>(relayTarget.Source, out _) ||
                 !MoverQuery.TryGetComponent(relayTarget.Source, out var relayedMover)||
-                !XformQuery.TryGetComponent(relayTarget.Source, out var relayedXform))
+                !XformQuery.TryGetComponent(uid, out var relayedXform))
             {
                 canMove = false;
             }
