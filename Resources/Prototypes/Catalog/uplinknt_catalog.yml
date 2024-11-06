@@ -60,7 +60,7 @@
   categories:
   - UplinkNtWeaponry
 
-## AMMO  
+## AMMO
 
 - type: listing
   id: UplinkMagnumMag
@@ -194,7 +194,7 @@
   id: UplinkPai
   name: uplink-pai-name
   description: uplink-pai-desc
-  productEntity: PersonalAI #literally just a pAI. No specialness. 
+  productEntity: PersonalAI
   cost:
     BluespaceCrystal: 1
   categories:
