@@ -117,7 +117,7 @@
     solutions:
       ammo:
         reagents:
-        - ReagentId: ChloralHydrate
+        - ReagentId: Nocturine
           Quantity: 7
   - type: SolutionTransfer
     maxTransferAmount: 7
