@@ -73,7 +73,7 @@ vampire-mutation-umbrae-info =
 vampire-mutation-gargantua-info = 
     Gargantua
     
-    Фокусируется на ближнем уроне и стойкости.
+    Focuses on melee damage and resilience.
     
     Abilities:
     
@@ -98,6 +98,11 @@ ent-VampireSurviveObjective = Survive
     .desc = I have to survive, whatever it takes.
 ent-VampireEscapeObjective = Fly off the station alive and free.
     .desc = I'm supposed to leave on an escape shuttle. Free.
+    
+## Alert
+
+alerts-vampire-blood-name = Blood Essence Amount
+alerts-vampire-blood-desc = Amount of vampire blood essence.
 
 
 ## Preset
