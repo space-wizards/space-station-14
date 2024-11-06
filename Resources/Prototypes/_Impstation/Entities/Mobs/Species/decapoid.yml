@@ -20,6 +20,12 @@
   - type: Loadout
     prototypes:
       - StartingGearDecapoidClaw
+  - type: SpeechRequiresEquipment
+    equipment:
+      mask:
+        tags:
+          - Vaporizer
+    failMessage: decapoid-cant-speak
   - type: Respirator # todo: give the ability to generate their own vapor
     damage:
       types:
@@ -48,7 +54,7 @@
     - map: [ "id" ]
     - map: [ "back" ]
     - map: [ "enum.HumanoidVisualLayers.LLeg" ] # this is the front legs
-    - map: [ "enum.HumanoidVisualLayers.LFoot" ] # this is the front feet 
+    - map: [ "enum.HumanoidVisualLayers.LFoot" ] # this is the front feet
     - map: [ "enum.HumanoidVisualLayers.LHand" ] # this is the crab claw. has to render in front of the whole body
     - map: [ "neck" ]
     - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
@@ -93,13 +99,13 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Damageable 
+  - type: Damageable
     damageContainer: Biological
     damageModifierSet: Decapoid
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:
-        sprite: _Impstation/Mobs/Effects/decapoid_brute_damage.rsi 
+        sprite: _Impstation/Mobs/Effects/decapoid_brute_damage.rsi
         color: "#162581"
   - type: Reactive
     groups:
@@ -111,10 +117,10 @@
       Unsexed: UnisexSilicon
   - type: MovementSpeedModifier
     baseSprintSpeed: 3.5
-    baseWalkSpeed: 1.5 
+    baseWalkSpeed: 1.5
     weightlessAcceleration: 1.5 # move more easily in space
     weightlessFriction: 1 # more control over movement in space?
-    weightlessModifier: 1 
+    weightlessModifier: 1
   - type: Temperature
     heatDamageThreshold: 380 # slightly more vulnerable to heat
     coldDamageThreshold: 0 # immune to space
@@ -137,7 +143,7 @@
         Blunt: 5
     clumsySound:
       path: /Audio/_Impstation/Effects/Clumsy/crab_snap.ogg # the game gets really touchy about having that initial forward slash.
-    
+
   - type: Bloodstream
     bloodReagent: CopperBlood # real life crustaceans are in the same clade as spiders and share a blood type
   - type: Puller
@@ -159,7 +165,7 @@
         sizeMaps:
           32:
             sprite: _Impstation/Mobs/Species/Decapoid/displacement.rsi
-            state: jumpsuit # todo: custom? (accomodate gills?) 
+            state: jumpsuit # todo: custom? (accomodate gills?)
       gloves:
         sizeMaps:
           32:
@@ -170,7 +176,7 @@
           32:
             sprite: _Impstation/Mobs/Species/Decapoid/displacement.rsi
             state: neck
-            
+
 
   - type: Speech
     speechSounds: Borg
@@ -212,7 +218,7 @@
     - map: [ "id" ]
     - map: [ "back" ]
     - map: [ "enum.HumanoidVisualLayers.LLeg" ] # this is the front legs
-    - map: [ "enum.HumanoidVisualLayers.LFoot" ] # this is the front feet 
+    - map: [ "enum.HumanoidVisualLayers.LFoot" ] # this is the front feet
     - map: [ "enum.HumanoidVisualLayers.LHand" ] # this is the crab claw. has to render in front of the whole body
     - map: [ "neck" ]
     - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
@@ -251,7 +257,7 @@
         sizeMaps:
           32:
             sprite: _Impstation/Mobs/Species/Decapoid/displacement.rsi
-            state: jumpsuit # todo: custom? (accomodate gills?) 
+            state: jumpsuit # todo: custom? (accomodate gills?)
       gloves:
         sizeMaps:
           32:
