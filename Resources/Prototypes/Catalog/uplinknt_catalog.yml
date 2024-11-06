@@ -1,3 +1,5 @@
+## WEAPONS
+
 - type: listing
   id: UplinkCaptainSabre
   name: uplink-CaptainSabre-name
@@ -7,6 +9,58 @@
     BluespaceCrystal: 10
   categories:
   - UplinkNtWeaponry
+
+- type: listing
+  id: UplinkEnergyCarbine
+  name: uplink-carbine-name
+  description: uplink-carbine-desc
+  productEntity: WeaponEnergyCarbine
+  cost:
+    BluespaceCrystal: 17 # this shit is STRONG-strong. TODO: Cascade Ops DO NOT get this
+  categories:
+  - UplinkNtWeaponry
+
+- type: listing
+  id: UplinkNtBlaster
+  name: uplink-blaster-name
+  description: uplink-blaster-desc
+  productEntity: WeaponNtBlaster
+  cost:
+    BluespaceCrystal: 5 # cheap, but modules cost more so it evens out
+  categories:
+  - UplinkNtWeaponry
+
+- type: listing
+  id: UplinkDuffelNtCburnFilled
+  name: uplink-cburn-name
+  description: uplink-cburn-desc
+  productEntity: ClothingBackpackDuffelNtCburnFilled
+  cost:
+    BluespaceCrystal: 8
+  categories:
+  - UplinkNtWeaponry
+
+- type: listing
+  id: UplinkPistolN1984
+  name: uplink-pistol-N1984-name
+  description: uplink-pistol-N1984-desc
+  productEntity: WeaponPistolN1984
+  cost:
+    BluespaceCrystal: 10
+  categories:
+  - UplinkNtWeaponry
+
+- type: listing
+  id: UplinkPistolMk58
+  name: uplink-pistol-Mk58-name
+  description: uplink-pistol-Mk58-desc
+  productEntity: WeaponPistolMk58
+  cost:
+    BluespaceCrystal: 3
+  categories:
+  - UplinkNtWeaponry
+
+## AMMO  
 
 - type: listing
   id: UplinkMagnumMag
@@ -58,6 +112,8 @@
   categories:
   - UplinkNtAmmo
 
+## ARMOR
+
 - type: listing
   id: UplinkClothingGlovesCombat
   name: uplink-combat-gloves-name
@@ -67,16 +123,6 @@
     BluespaceCrystal: 1 # at some point we'll roll this into a proper toolbox with gear
   categories:
   - UplinkNtArmor
-
-- type: listing
-  id: UplinkDuffelNtCburnFilled
-  name: uplink-cburn-name
-  description: uplink-cburn-desc
-  productEntity: ClothingBackpackDuffelNtCburnFilled
-  cost:
-    BluespaceCrystal: 8
-  categories:
-  - UplinkNtWeaponry
 
 - type: listing
   id: UplinkClothingBulletproof
@@ -98,46 +144,7 @@
   categories:
   - UplinkNtArmor
 
-- type: listing
-  id: UplinkEnergyCarbine
-  name: uplink-carbine-name
-  description: uplink-carbine-desc
-  productEntity: WeaponEnergyCarbine
-  cost:
-    BluespaceCrystal: 17 # this shit is STRONG-strong. TODO: Cascade Ops DO NOT get this
-  categories:
-  - UplinkNtWeaponry
-
-- type: listing
-  id: UplinkNtBlaster
-  name: uplink-blaster-name
-  description: uplink-blaster-desc
-  productEntity: WeaponNtBlaster
-  cost:
-    BluespaceCrystal: 5 # cheap, but modules cost more so it evens out
-  categories:
-  - UplinkNtWeaponry
-
-- type: listing
-  id: UplinkPistolN1984
-  name: uplink-pistol-N1984-name
-  description: uplink-pistol-N1984-desc
-  productEntity: WeaponPistolN1984
-  cost:
-    BluespaceCrystal: 10
-  categories:
-  - UplinkNtWeaponry
-
-- type: listing
-  id: UplinkPistolMk58
-  name: uplink-pistol-Mk58-name
-  description: uplink-pistol-Mk58-desc
-  productEntity: WeaponPistolMk58
-  cost:
-    BluespaceCrystal: 3
-  categories:
-  - UplinkNtWeaponry
-
+##DISRUPTION
 
 - type: listing
   id: UplinkLubeBoxNT # heheheheheh
@@ -148,6 +155,8 @@
     BluespaceCrystal: 2
   categories:
   - UplinkNtDisruption
+
+##DECEPTION
 
 - type: listing
   id: UplinkCrimeCleanerKit
@@ -178,6 +187,8 @@
     BluespaceCrystal: 5
   categories:
   - UplinkNtDeception
+
+##POINTLESS
 
 - type: listing
   id: UplinkPai
