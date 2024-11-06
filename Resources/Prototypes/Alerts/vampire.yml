@@ -20,3 +20,21 @@
     - map: [ "enum.VampireVisualLayers.Digit2" ]
       offset: -0.150, 0
     - map: [ "enum.VampireVisualLayers.Digit3" ]
+
+- type: alert
+  id: VampireStellarWeakness
+  icons:
+  - sprite: /Textures/Interface/Actions/actions_vampire.rsi
+    state: stellarweakness
+  alertViewEntity: AlertVampireStellarWeaknessSpriteView
+  name: alerts-vampire-stellar-weakness-name
+  description: alerts-vampire-stellar-weakness-desc
+  
+- type: entity
+  id: AlertVampireStellarWeaknessSpriteView
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: /Textures/Interface/Actions/actions_vampire.rsi
+    layers:
+    - map: [ "enum.AlertVisualLayers.Base" ]

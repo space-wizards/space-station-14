@@ -58,7 +58,10 @@ public sealed partial class VampireComponent : Component
     };
     public static readonly DamageSpecifier SpaceDamage = new()
     {
-        DamageDict = new Dictionary<string, FixedPoint2>() { { "Burn", 2.5 } }
+        DamageDict = new ()
+        { 
+            { "Burn", 2.5 },
+        }
     };
 
     [ValidatePrototypeId<EntityPrototype>]
@@ -166,6 +169,15 @@ public sealed partial class CoffinComponent : Component { }
 
 [RegisterComponent]
 public sealed partial class VampireFangsExtendedComponent : Component { }
+
+/// <summary>
+/// When added, damage the entity if its on the space
+/// </summary>
+[RegisterComponent]
+public sealed partial class VampireSpaceDamageComponent : Component
+{
+    public double NextSpaceDamageTick = 0;
+}
 
 /// <summary>
 /// When added, heals the entity by the specified amount

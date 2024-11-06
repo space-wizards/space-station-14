@@ -83,12 +83,13 @@ public sealed partial class VampireSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<VampireComponent, ComponentStartup>(OnComponentStartup);
 
         //SubscribeLocalEvent<VampireComponent, VampireSelfPowerEvent>(OnUseSelfPower);
         //SubscribeLocalEvent<VampireComponent, VampireTargetedPowerEvent>(OnUseTargetedPower);
         SubscribeLocalEvent<VampireComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<VampireComponent, VampireBloodChangedEvent>(OnVampireBloodChangedEvent);
+        
+        SubscribeLocalEvent<VampireSealthComponent, ComponentRemove>(OnStealthComponentRemove);
         
         SubscribeLocalEvent<VampireComponent, ComponentGetState>(GetState);
         SubscribeLocalEvent<VampireComponent, VampireMutationPrototypeSelectedMessage>(OnMutationSelected);
@@ -98,7 +99,7 @@ public sealed partial class VampireSystem : EntitySystem
     }
 
     /// <summary>
-    /// Handles healing and damaging in space
+    /// Handles healing, stealth and damaging in space
     /// </summary>
     public override void Update(float frameTime)
     {
@@ -118,8 +119,6 @@ public sealed partial class VampireSystem : EntitySystem
                     RemCompDeferred<StealthOnMoveComponent>(uid);
                     RemCompDeferred<StealthComponent>(uid);
                     RemCompDeferred<VampireSealthComponent>(uid);
-                    _popup.PopupEntity(Loc.GetString("vampire-cloak-disable"), uid, uid);
-                    _actionEntities.Remove("ActionVampireCloakOfDarkness");
                 }
             }
             stealth.NextStealthTick -= frameTime;
@@ -139,26 +138,35 @@ public sealed partial class VampireSystem : EntitySystem
             healing.NextHealTick -= frameTime;
         }
 
-        /*var query = EntityQueryEnumerator<VampireComponent>();
-        while (query.MoveNext(out var uid, out var vampireComponent))
+        var spaceQuery = EntityQueryEnumerator<VampireComponent, VampireSpaceDamageComponent>();
+        while (spaceQuery.MoveNext(out var uid, out var vampire, out var spacedamage))
         {
-            var vampire = (uid, vampireComponent);
+            if (vampire == null || spacedamage == null)
+                continue;
+            
+            var vampireUid = new Entity<VampireComponent>(uid, vampire);
 
             if (IsInSpace(uid))
             {
-                if (vampireComponent.NextSpaceDamageTick <= 0)
+                if (spacedamage.NextSpaceDamageTick <= 0 && !SubtractBloodEssence((uid, vampire), FixedPoint2.New(1)))
                 {
-                    vampireComponent.NextSpaceDamageTick = 1;
-                    DoSpaceDamage(vampire);
+                    spacedamage.NextSpaceDamageTick = 1;
+                    DoSpaceDamage(vampireUid);
                 }
-                vampireComponent.NextSpaceDamageTick -= frameTime;
+                spacedamage.NextSpaceDamageTick -= frameTime;
             }
-        }*/
+        }
     }
-
-    private void OnComponentStartup(EntityUid uid, VampireComponent component, ComponentStartup args)
+    
+    private void OnStealthComponentRemove(EntityUid uid, VampireSealthComponent component, ComponentRemove args)
     {
-        //MakeVampire(uid);
+        if (_vampire.GetBloodEssence(uid) < FixedPoint2.New(300) && !TryComp(uid, out ActionsComponent? comp) && _actionEntities.TryGetValue("ActionVampireCloakOfDarkness", out entity))
+        {
+            _action.RemoveAction(uid, entity, comp);
+            _actionContainer.RemoveAction(entity);
+            _actionEntities.Remove("ActionVampireCloakOfDarkness");
+        }
+        _popup.PopupEntity(Loc.GetString("vampire-cloak-disable"), uid, uid);
     }
 
     private void OnExamined(EntityUid uid, VampireComponent component, ExaminedEvent args)
@@ -291,6 +299,9 @@ public sealed partial class VampireSystem : EntitySystem
         }
         
         //Umbrae
+        
+        if (_actionEntities.TryGetValue("ActionVampireCloakOfDarkness", out entity) && !HasComp<VampireSealthComponent>(uid) && _vampire.GetBloodEssence(uid) < FixedPoint2.New(300))
+            _actionEntities.Remove("ActionVampireCloakOfDarkness");
         
         if (_vampire.GetBloodEssence(uid) >= FixedPoint2.New(200) && !_actionEntities.TryGetValue("ActionVampireGlare", out entity) && component.CurrentMutation == VampireMutationsType.Umbrae)
         {

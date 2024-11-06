@@ -10,6 +10,9 @@ public sealed partial class VampireAlertComponent : Component
     [DataField("vampireBloodAlert")]
     public ProtoId<AlertPrototype> BloodAlert { get; set; } = "VampireBlood";
     
+    [DataField("vampireStellarWeaknessAlert")]
+    public ProtoId<AlertPrototype> StellarWeaknessAlert { get; set; } = "VampireStellarWeakness";
+    
     [DataField, AutoNetworkedField]
     public int BloodAmount = 0;
 }

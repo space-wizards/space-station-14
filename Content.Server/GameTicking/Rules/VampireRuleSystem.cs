@@ -85,6 +85,7 @@ public sealed partial class VampireRuleSystem : GameRuleSystem<VampireRuleCompon
         // make sure it's initial chems are set to max
         var vampireComponent = EnsureComp<VampireComponent>(target);
         EnsureComp<VampireIconComponent>(target);
+        EnsureComp<VampireSpaceDamageComponent>(target);
         var vampireAlertComponent = EnsureComp<VampireAlertComponent>(target);
         var interfaceComponent = EnsureComp<UserInterfaceComponent>(target);
         
@@ -104,6 +105,7 @@ public sealed partial class VampireRuleSystem : GameRuleSystem<VampireRuleCompon
         _vampire.AddStartingAbilities(vampire);
         _vampire.MakeVulnerableToHoly(vampire);
         _alerts.ShowAlert(vampire, vampireAlertComponent.BloodAlert);
+        _alerts.ShowAlert(vampire, vampireAlertComponent.StellarWeaknessAlert);
         
         Random random = new Random();
 
