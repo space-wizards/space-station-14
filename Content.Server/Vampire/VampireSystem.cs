@@ -28,6 +28,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Prayer;
 using Content.Shared.StatusEffect;
+using Content.Shared.Stealth.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Vampire;
 using Content.Shared.Vampire.Components;
@@ -112,8 +113,14 @@ public sealed partial class VampireSystem : EntitySystem
             if (stealth.NextStealthTick <= 0)
             {
                 stealth.NextStealthTick = 1;
-                if (!SubtractBloodEssence((uid, vampire), stealth.Upkeep))
+                if (!SubtractBloodEssence((uid, vampire), stealth.Upkeep) || _vampire.GetBloodEssence(uid) < FixedPoint2.New(300))
+                {
+                    RemCompDeferred<StealthOnMoveComponent>(uid);
+                    RemCompDeferred<StealthComponent>(uid);
                     RemCompDeferred<VampireSealthComponent>(uid);
+                    _popup.PopupEntity(Loc.GetString("vampire-cloak-disable"), uid, uid);
+                    _actionEntities.Remove("ActionVampireCloakOfDarkness");
+                }
             }
             stealth.NextStealthTick -= frameTime;
         }
@@ -221,13 +228,13 @@ public sealed partial class VampireSystem : EntitySystem
         EntityUid? newEntity = null;
         EntityUid entity = default;
         // Mutations
-        if (_vampire.GetBloodEssence(uid) >= FixedPoint2.New(50) && !_actionEntities.TryGetValue(VampireComponent.MutationsActionPrototype, out entity))
+        if (_vampire.GetBloodEssence(uid) >= FixedPoint2.New(50) && !_actionEntities.TryGetValue(VampireComponent.MutationsActionPrototype, out entity) && !HasComp<VampireSealthComponent>(uid))
         {
             _action.AddAction(uid, ref newEntity, VampireComponent.MutationsActionPrototype);
             if (newEntity != null)
                 _actionEntities[VampireComponent.MutationsActionPrototype] = newEntity.Value;
         }
-        else if (_vampire.GetBloodEssence(uid) < FixedPoint2.New(50) && _actionEntities.TryGetValue(VampireComponent.MutationsActionPrototype, out entity))
+        else if (_vampire.GetBloodEssence(uid) < FixedPoint2.New(50) && _actionEntities.TryGetValue(VampireComponent.MutationsActionPrototype, out entity) || HasComp<VampireSealthComponent>(uid))
         {
             if (!TryComp(uid, out ActionsComponent? comp))
                 return;
@@ -251,7 +258,7 @@ public sealed partial class VampireSystem : EntitySystem
                 }
             }
         }
-        else if (_vampire.GetBloodEssence(uid) < FixedPoint2.New(200) && _actionEntities.TryGetValue("ActionVampireBloodSteal", out entity))
+        else if (_vampire.GetBloodEssence(uid) < FixedPoint2.New(200) && _actionEntities.TryGetValue("ActionVampireBloodSteal", out entity) || component.CurrentMutation != VampireMutationsType.Hemomancer)
         {
             if (!TryComp(uid, out ActionsComponent? comp))
                 return;
@@ -273,7 +280,7 @@ public sealed partial class VampireSystem : EntitySystem
                 }
             }
         }
-        else if (_vampire.GetBloodEssence(uid) < FixedPoint2.New(300) && _actionEntities.TryGetValue("ActionVampireScreech", out entity))
+        else if (_vampire.GetBloodEssence(uid) < FixedPoint2.New(300) && _actionEntities.TryGetValue("ActionVampireScreech", out entity) || component.CurrentMutation != VampireMutationsType.Hemomancer)
         {
             if (!TryComp(uid, out ActionsComponent? comp))
                 return;
@@ -297,7 +304,7 @@ public sealed partial class VampireSystem : EntitySystem
                 }
             }
         }
-        else if (_vampire.GetBloodEssence(uid) < FixedPoint2.New(200) && _actionEntities.TryGetValue("ActionVampireGlare", out entity))
+        else if (_vampire.GetBloodEssence(uid) < FixedPoint2.New(200) && _actionEntities.TryGetValue("ActionVampireGlare", out entity) || component.CurrentMutation != VampireMutationsType.Umbrae)
         {
             if (!TryComp(uid, out ActionsComponent? comp))
                 return;
@@ -319,7 +326,7 @@ public sealed partial class VampireSystem : EntitySystem
                 }
             }
         }
-        else if (_vampire.GetBloodEssence(uid) < FixedPoint2.New(300) && _actionEntities.TryGetValue("ActionVampireCloakOfDarkness", out entity))
+        else if (_vampire.GetBloodEssence(uid) < FixedPoint2.New(300) && _actionEntities.TryGetValue("ActionVampireCloakOfDarkness", out entity) || component.CurrentMutation != VampireMutationsType.Umbrae)
         {
             if (!TryComp(uid, out ActionsComponent? comp))
                 return;
@@ -363,7 +370,7 @@ public sealed partial class VampireSystem : EntitySystem
                 }
             }
         }
-        else if (_vampire.GetBloodEssence(uid) < FixedPoint2.New(200) && _actionEntities.TryGetValue("ActionVampireBatform", out entity))
+        else if (_vampire.GetBloodEssence(uid) < FixedPoint2.New(200) && _actionEntities.TryGetValue("ActionVampireBatform", out entity) || component.CurrentMutation != VampireMutationsType.Bestia)
         {
             if (!TryComp(uid, out ActionsComponent? comp))
                 return;
@@ -385,7 +392,7 @@ public sealed partial class VampireSystem : EntitySystem
                 }
             }
         }
-        else if (_vampire.GetBloodEssence(uid) < FixedPoint2.New(300) && _actionEntities.TryGetValue("ActionVampireMouseform", out entity))
+        else if (_vampire.GetBloodEssence(uid) < FixedPoint2.New(300) && _actionEntities.TryGetValue("ActionVampireMouseform", out entity) || component.CurrentMutation != VampireMutationsType.Bestia)
         {
             if (!TryComp(uid, out ActionsComponent? comp))
                 return;
