@@ -6,6 +6,7 @@ using Content.Server.Store.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
+using Content.Shared.Radio.Components;
 
 namespace Content.Server.Traitor.Uplink
 {
@@ -17,7 +18,7 @@ namespace Content.Server.Traitor.Uplink
 
         [ValidatePrototypeId<CurrencyPrototype>]
         public const string TelecrystalCurrencyPrototype = "Telecrystal";
-        
+
         [ValidatePrototypeId<CurrencyPrototype>]
         public const string BluespaceCrystalCurrencyPrototype = "BluespaceCrystal";
 
@@ -121,7 +122,7 @@ namespace Content.Server.Traitor.Uplink
                 {
                     if (!headsetUid.ContainedEntity.HasValue) continue;
 
-                    if (HasComp<RadioComponent>(headsetUid.ContainedEntity.Value) || HasComp<StoreComponent>(headsetUid.ContainedEntity.Value))
+                    if (HasComp<HeadsetComponent>(headsetUid.ContainedEntity.Value) || HasComp<StoreComponent>(headsetUid.ContainedEntity.Value))
                         return headsetUid.ContainedEntity.Value;
                 }
             }
@@ -129,7 +130,7 @@ namespace Content.Server.Traitor.Uplink
             // Also check hands
             foreach (var item in _handsSystem.EnumerateHeld(user))
             {
-                if (HasComp<RadioComponent>(item)
+                if (HasComp<HeadsetComponent>(item))
                     return item;
             }
 
