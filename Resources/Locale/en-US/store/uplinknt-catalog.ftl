@@ -43,8 +43,8 @@ uplink-cleaner-desc = This kit contains everything needed to cover up a crime. C
 uplink-pai-name = Personal AI
 uplink-pai-desc = Creates a personal AI pal just for you! Note: NT is not liable for anything offensive that your pAI may say.
 
-uplink-pai-name = Binary translation key
-uplink-pai-desc = A encryption key that actively translates binary used by cyborgs real-time. Potentially useful for gathering extra information.
+uplink-binary-name = Binary translation key
+uplink-binary-desc = A encryption key that actively translates binary used by cyborgs real-time. Potentially useful for gathering extra information.
 
 uplink-lobbying-name = NT lobbying bundle
 uplink-lobbying-desc = A briefcase containing everything needed to make an offer they can't refuse. Contains 20K spesos in cash, and some cool dealer clothing.

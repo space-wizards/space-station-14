@@ -43,9 +43,9 @@
     - 0,0,3,2
   - type: StorageFill
     contents:
-      - id: lubeChemistryVial
+      - id: LubeChemistryVial
         amount: 3
-        
+
 - type: entity
   parent: BoxCardboard
   id: CrimeCleanerKit
