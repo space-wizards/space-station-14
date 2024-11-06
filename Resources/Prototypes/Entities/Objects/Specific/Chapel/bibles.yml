@@ -18,6 +18,12 @@
     damageOnUntrainedUse: ## What a non-chaplain takes when attempting to heal someone
       groups:
         Burn: 10
+    damageOnUnholyUse: ## What an unholy creature takes when picking up the bible
+      groups:
+        Burn: 30
+    damageUnholy: ## What damage is dealt when a chaplain hits an unholy creature
+      groups:
+        Burn: 20
   - type: Prayable
     bibleUserOnly: true
   - type: Summonable
@@ -65,6 +71,12 @@
     damageOnUntrainedUse:
       types:
         Caustic: 50
+    damageOnUnholyUse: ## What an unholy creature takes when picking up the bible
+      types:
+        Caustic: 50
+    damageUnholy: ## What damage is dealt when a chaplain hits an unholy creature
+      types:
+        types: 20
     failChance: 0
     locPrefix: "necro"
     healSound: "/Audio/Effects/lightburn.ogg"

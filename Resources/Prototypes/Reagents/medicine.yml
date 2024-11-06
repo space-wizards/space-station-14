@@ -1059,10 +1059,28 @@
         factor: 3
     Medicine:
       effects:
+      #If vampire
+      - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Vampire
+        damage:
+          types:
+            Heat: 2
+      - !type:Emote
+        conditions:
+        - !type:OrganType
+          type: Vampire
+        emote: Scream
+        probability: 0.3
+      #If not vampire
       - !type:HealthChange
         conditions:
         - !type:TotalDamage
           max: 50
+        - !type:OrganType
+          type: Vampire
+          shouldHave: false
         damage:
           types:
             Blunt: -0.2
@@ -1071,6 +1089,15 @@
             Shock: -0.2
             Cold: -0.2
   reactiveEffects:
+    Unholy:
+      methods: [ Touch ]
+      effects:
+        - !type:HealthChange
+          damage:
+            types:
+              Heat: 5
+        - !type:Emote
+          emote: Scream
     Extinguish:
       methods: [ Touch ]
       effects:

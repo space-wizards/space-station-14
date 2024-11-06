@@ -508,6 +508,7 @@
             max: 4
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Coffin
   - type: Construction
     graph: CrateCoffin
     node: cratecoffin

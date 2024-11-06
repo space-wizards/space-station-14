@@ -1,0 +1,171 @@
+# Base
+
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseVampireObjective
+  components:
+  - type: Objective
+    difficulty: 1.5
+    issuer: objective-issuer-vampire
+  - type: RoleRequirement
+    roles:
+      mindRoles:
+      - VampireRole
+      
+- type: entity
+  abstract: true
+  parent: [BaseVampireObjective, BaseStealObjective]
+  id: BaseVampireStealObjective
+  components:
+  - type: StealCondition
+    verifyMapExistence: false
+  - type: Objective
+    difficulty: 1.5
+  - type: ObjectiveLimit
+    limit: 2
+    
+# Steal
+
+- type: entity
+  parent: BaseVampireStealObjective
+  id: CMOHyposprayVampireStealObjective
+  components:
+  - type: NotJobRequirement
+    job: ChiefMedicalOfficer
+  - type: StealCondition
+    owner: job-name-cmo
+    stealGroup: Hypospray
+
+- type: entity
+  parent: BaseVampireStealObjective
+  id: RDHardsuitVampireStealObjective
+  components:
+  - type: NotJobRequirement
+    job: ResearchDirector
+  - type: StealCondition
+    owner: job-name-rd
+    stealGroup: ClothingOuterHardsuitRd
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  parent: BaseVampireStealObjective
+  id: EnergyShotgunVampireStealObjective
+  components:
+  - type: Objective
+    difficulty: 2
+  - type: NotJobRequirement
+    job: HeadOfSecurity
+  - type: StealCondition
+    stealGroup: WeaponEnergyShotgun
+    owner: job-name-hos
+
+- type: entity
+  parent: BaseVampireStealObjective
+  id: MagbootsVampireStealObjective
+  components:
+  - type: NotJobRequirement
+    job: ChiefEngineer
+  - type: StealCondition
+    stealGroup: ClothingShoesBootsMagAdv
+    owner: job-name-ce
+
+- type: entity
+  parent: BaseVampireStealObjective
+  id: ClipboardVampireStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Quartermaster
+  - type: StealCondition
+    stealGroup: BoxFolderQmClipboard
+    owner: job-name-qm
+
+- type: entity
+  abstract: true
+  parent: BaseVampireStealObjective
+  id: BaseCaptainVampireObjective
+  components:
+  - type: Objective
+    difficulty: 2.5
+  - type: NotJobRequirement
+    job: Captain
+
+- type: entity
+  parent: BaseCaptainVampireObjective
+  id: CaptainIDVampireStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: CaptainIDCard
+
+- type: entity
+  parent: BaseCaptainVampireObjective
+  id: CaptainJetpackVampireStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: JetpackCaptainFilled
+
+- type: entity
+  parent: BaseCaptainVampireObjective
+  id: CaptainGunVampireStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: WeaponAntiqueLaser
+    owner: job-name-captain
+
+# States
+
+- type: entity
+  parent: [BaseVampireObjective, BaseSurviveObjective]
+  id: VampireSurviveObjective
+  name: Survive
+  description: I must survive no matter what.
+  components:
+  - type: Objective
+    icon:
+      sprite: Interface/Actions/actions_vampire.rsi
+      state: survive_icon
+      
+- type: entity
+  parent: [BaseVampireObjective, BaseLivingObjective]
+  id: VampireEscapeObjective
+  name: Escape to centcomm alive and unrestrained.
+  description: I need to escape on the evacuation shuttle. Undercover.
+  components:
+  - type: Objective
+    difficulty: 1.3
+    icon:
+      sprite: Structures/Furniture/chairs.rsi
+      state: shuttle
+  - type: EscapeShuttleCondition
+  
+# Kill
+  
+- type: entity
+  parent: [BaseVampireObjective, BaseKillObjective]
+  id: VampireKillRandomPersonObjective
+  description: Do it however you like, just make sure they don't make it to centcomm.
+  components:
+  - type: Objective
+    difficulty: 1.75
+    unique: false
+  - type: TargetObjective
+    title: objective-condition-kill-person-title
+  - type: PickRandomPerson
+  
+# Drain
+
+- type: entity
+  parent: BaseVampireObjective
+  id: VampireDrainObjective
+  components:
+  - type: Objective
+    icon:
+      sprite: Interface/Actions/actions_vampire.rsi
+      state: blood_drain_icon
+  - type: NumberObjective
+    min: 100
+    max: 500
+    title: objective-condition-drain-title
+    description: objective-condition-drain-description
+  - type: BloodDrainCondition

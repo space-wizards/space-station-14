@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.FixedPoint;
+using Content.Shared.Store.Events;
 using Content.Shared.Store.Components;
 using Content.Shared.StoreDiscount.Components;
 using Robust.Shared.Prototypes;
