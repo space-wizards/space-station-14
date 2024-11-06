@@ -418,7 +418,7 @@
       color: blue
     - type: ItemTogglePointLight
     - type: Reflect
-      reflectProb: 0.95
+      reflectProb: 0.8
       reflects:
         - Energy
     - type: Blocking
@@ -426,13 +426,13 @@
         coefficients:
           Blunt: 1.0
           Slash: 0.9
-          Piercing: 0.85
+          Piercing: 0.7
           Heat: 0.6
       activeBlockModifier:
         coefficients:
           Blunt: 1.2
           Slash: 0.85
-          Piercing: 0.5
+          Piercing: 0.4
           Heat: 0.4
         flatReductions:
           Heat: 1
