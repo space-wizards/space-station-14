@@ -3690,3 +3690,10 @@
   id: 455
   time: '2024-11-06T01:17:47.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/626
+- author: Drags-His-Tail
+  changes:
+  - message: Lizards can eat rats and drink blood again. Yay.
+    type: Fix
+  id: 456
+  time: '2024-11-06T02:03:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/630
