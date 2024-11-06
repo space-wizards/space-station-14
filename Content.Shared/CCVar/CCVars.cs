@@ -3,7 +3,6 @@ using Content.Shared.Roles;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Components;
-
 namespace Content.Shared.CCVar
 {
     // ReSharper disable once InconsistentNaming
@@ -1470,6 +1469,9 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<string> ArrivalsMap =
             CVarDef.Create("shuttle.arrivals_map", "/Maps/Misc/terminal.yml", CVar.SERVERONLY);
+
+        public static readonly CVarDef<string> Arrivals2Map =
+            CVarDef.Create("shuttle.arrivals2_map", "/Maps/Misc/terminal.yml", CVar.SERVERONLY);
 
         /// <summary>
         /// Cooldown between arrivals departures. This should be longer than the FTL time or it will double cycle.
