@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: Blackern5000
-  changes:
-  - message: Added diamond-tipped mining drills, a science printed item found under
-      T2 industrial.
-    type: Add
-  - message: Standard mining drills now attack faster and break rocks in two hits.
-    type: Tweak
-  - message: Moved ore bags of holding to T2 industrial tech.
-    type: Tweak
-  - message: Grappling guns are now researched with Salvage Equipment.
-    type: Tweak
-  - message: Diamonds are now worth 2,000 spesos each.
-    type: Tweak
-  id: 7095
-  time: '2024-08-12T01:49:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30814
 - author: mirrorcult
   changes:
   - message: With space law being overhauled, you can now examine items to see their
@@ -3953,3 +3937,10 @@
   id: 7594
   time: '2024-11-06T03:28:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33177
+- author: slarticodefast
+  changes:
+  - message: Removed the wanted list cartridge from the captain's PDA.
+    type: Remove
+  id: 7595
+  time: '2024-11-06T13:20:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33084
