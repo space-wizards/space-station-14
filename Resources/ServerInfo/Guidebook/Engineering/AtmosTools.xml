@@ -3,8 +3,8 @@
   Atmospheric Technicians have the same core toolset as Engineers, but they also have access to two new tools, the Holofan Projector and the Gas Analyzer.
 
   <Box>
-    <GuideEntityEmbed Entity="HolofanProjector" Caption=""/>
-    <GuideEntityEmbed Entity="GasAnalyzer" Caption=""/>
+    <GuideEntityEmbed Entity="HolofanProjector"/>
+    <GuideEntityEmbed Entity="GasAnalyzer"/>
   </Box>
 
   ## Holofan Projector
@@ -38,10 +38,10 @@
   You can use the Gas Analyzer by clicking on a gas-containing device, or by clicking on the air in the room.
 
   When used, the gas analyzer will report on:
+  - The volume of the device measured (not the volume of the gas!)
   - The total pressure of the gas, in kPa
   - The temperature of the gas, in Kelvin (K) and Celsius (C)
-  - The precise composition of the gas, in molar amounts
-  - The volume of the device measured (not the volume of the gas!)
+  - The precise composition of the gas in molar amounts, and as a percentage of the total gas volume
 
   At the bottom of the UI, the gas analyzer will display a visual indication of the different gases present in the composition, as well as their relative concentrations.
 

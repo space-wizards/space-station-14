@@ -27,6 +27,7 @@ guide-entry-fireandgascontrol = Fire and Gas Control
 guide-entry-atmosphericupsets = Atmospheric Upsets
 guide-entry-fires = Fires
 guide-entry-spacing = Spacing
+guide-entry-atmostools = Atmos Tools
 guide-entry-botany = Botany
 guide-entry-shuttle-craft = Shuttle-craft
 guide-entry-networking = Networking

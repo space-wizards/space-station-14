@@ -11,4 +11,9 @@
 
   Opening firelocks to the exposed area will often lead to you having to fix [italic]two[/italic] problems instead of one. Be sure to use your holofan projector to prevent the spread of dangerous conditions between firelock buffers.
 
+  <Box>
+    <GuideEntityEmbed Entity="HolofanProjector"/>
+    <GuideEntityEmbed Entity="HoloFan"/>
+  </Box>
+
 </Document>
