@@ -24,6 +24,7 @@ vampire-cloak-enable = You wrap shadows around your form
 vampire-cloak-disable = You release your grip on the shadows
 
 vampire-bloodsteal-other = You feel blood being ripped from your body!
+vampire-bloodsteal-no-victims = You're trying to steal blood, but there are no victims around, your powers are dissipating into thin air!
 vampire-hypnotise-other = {CAPITALIZE(THE($user))} stares deeply into {MAKEPLURAL(THE($target))} eyes!
 vampire-unnaturalstrength = The upper muscles {CAPITALIZE(THE($user))} increase making him stronger!
 vampire-supernaturalstrength = The upper muscles of {CAPITALIZE(THE($user))} swell with power making him super strong!

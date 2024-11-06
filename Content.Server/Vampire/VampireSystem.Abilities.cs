@@ -356,10 +356,10 @@ public sealed partial class VampireSystem
         _polymorph.PolymorphEntity(vampire, prototype);
     }
     private void BloodSteal(Entity<VampireComponent> vampire)
-    {
+    { 
         var transform = Transform(vampire.Owner);
 
-        var targets = new HashSet<EntityUid>();
+        var targets = new HashSet<(EntityUid, FixedPoint2)>();
 
         foreach (var entity in _entityLookup.GetEntitiesInRange(transform.Coordinates, 3, LookupFlags.Approximate | LookupFlags.Dynamic))
         {
@@ -381,25 +381,36 @@ public sealed partial class VampireSystem
             var victimBloodRemaining = bloodstream.BloodSolution.Value.Comp.Solution.Volume;
             if (victimBloodRemaining <= 0)
                 continue;
+            
+            var volumeToConsume = (FixedPoint2) Math.Min((float) victimBloodRemaining.Value, 20);
 
-            var volumeToConsume = (FixedPoint2) Math.Min((float) victimBloodRemaining.Value, 20); //HARDCODE, 20u of blood per person per use
-
-            targets.Add(entity);
-
-            //Transfer 80% to the vampire
-            var bloodSolution = _solution.SplitSolution(bloodstream.BloodSolution.Value, volumeToConsume * 0.80);
-            //And spill 20% on the floor
-            _blood.TryModifyBloodLevel(entity, -(volumeToConsume * 0.2));
-
-            //Dont check this time, if we are full - just continue anyway
-            TryIngestBlood(vampire, bloodSolution);
-
-            AddBloodEssence(vampire, volumeToConsume * 0.80);
-
-            _beam.TryCreateBeam(vampire, entity, "Lightning");
-
-            _popup.PopupEntity(Loc.GetString("vampire-bloodsteal-other"), entity, entity, Shared.Popups.PopupType.LargeCaution);
+            targets.Add((entity, volumeToConsume));
         }
+        
+        if (targets.Count != 0)
+        {
+            foreach (var (entity, volumeToConsume) in targets)
+            {
+                if (!TryComp<BloodstreamComponent>(entity, out var bloodstream) || bloodstream.BloodSolution == null)
+                    continue;
+                
+                //Transfer 80% to the vampire
+                var bloodSolution = _solution.SplitSolution(bloodstream.BloodSolution.Value, volumeToConsume * 0.80);
+                //And spill 20% on the floor
+                _blood.TryModifyBloodLevel(entity, -(volumeToConsume * 0.2));
+
+                //Dont check this time, if we are full - just continue anyway
+                TryIngestBlood(vampire, bloodSolution);
+
+                AddBloodEssence(vampire, volumeToConsume * 0.80);
+
+                _beam.TryCreateBeam(vampire, entity, "Lightning");
+
+                _popup.PopupEntity(Loc.GetString("vampire-bloodsteal-other"), entity, entity, Shared.Popups.PopupType.LargeCaution);
+            }
+        }
+        else
+            _popup.PopupEntity(Loc.GetString("vampire-bloodsteal-no-victims"), vampire, vampire);
 
 
 
