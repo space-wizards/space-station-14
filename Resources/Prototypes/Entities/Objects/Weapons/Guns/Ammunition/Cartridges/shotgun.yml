@@ -8,7 +8,6 @@
     tags:
     - Cartridge
     - ShellShotgun
-    - ShellShotgunLight
   - type: CartridgeAmmo
     soundEject:
       collection: ShellEject
