@@ -1,0 +1,14 @@
+- type: entity
+  parent: BaseFlatpack
+  id: MiniGyroscopeFlatpack
+  name: mini gyroscope flatpack
+  description: A flatpack used for constructing a gyroscope.
+  components:
+  - type: Flatpack
+    entity: MiniGyroscope
+  - type: Sprite
+    layers:
+    - state: base
+    - state: overlay
+      color: "#cec8ac"
+    - state: icon-default

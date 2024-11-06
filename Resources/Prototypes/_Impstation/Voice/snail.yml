@@ -1,0 +1,36 @@
+- type: speechSounds
+  id: Snail
+  saySound:
+    path: /Audio/_Impstation/Voice/Talk/snail.ogg
+  askSound:
+    path: /Audio/_Impstation/Voice/Talk/snail_ask.ogg
+  exclaimSound:
+    path: /Audio/_Impstation/Voice/Talk/snail_exclaim.ogg
+
+- type: emoteSounds
+  id: UnisexSnail
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      path: /Audio/_Impstation/Voice/Snail/snail_scream.ogg
+    Laugh:
+      path: /Audio/_Impstation/Voice/Snail/snail_laugh.ogg
+    Honk:
+      collection: BikeHorn
+    Yawn:
+      path: /Audio/_Impstation/Voice/Snail/snail_yawn.ogg
+    Whistle:
+      collection: Whistles
+    Crying:
+      path: /Audio/_Impstation/Voice/Snail/snail_cry.ogg
+    Sigh:
+      path: /Audio/_Impstation/Voice/Snail/snail_sigh.ogg
+    Gasp:
+      path: /Audio/_Impstation/Voice/Snail/snail_gasp.ogg
+    Cough:
+      path: /Audio/_Impstation/Voice/Snail/snail_cough.ogg
+    DefaultDeathgasp:
+      path: /Audio/_Impstation/Voice/Snail/snail_deathgasp.ogg
+    Ungh:
+      collection: Ungh

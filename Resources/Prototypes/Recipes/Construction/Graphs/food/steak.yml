@@ -52,24 +52,6 @@
   - node: cooked chicken
     entity: FoodMeatChickenCooked
 
-# finfin steak
-- type: constructionGraph
-  id: FinfinSteak
-  start: start
-  graph:
-
-  - node: start
-    edges:
-    - to: cooked finfin
-      completed:
-      - !type:PlaySound
-        sound: /Audio/Effects/sizzle_ghostlywail.ogg
-      steps:
-      - minTemperature: 345
-
-  - node: cooked finfin
-    entity: FoodMeatFinfinCooked
-
 # duck steak
 - type: constructionGraph
   id: DuckSteak

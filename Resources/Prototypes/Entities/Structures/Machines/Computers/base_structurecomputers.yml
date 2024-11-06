@@ -60,6 +60,11 @@
       collection: Keyboard
       params:
         volume: -1
+        variation: 0.05 #making a note so this is in the commit if we want to change this later - ruddygreat
+        pitch: 1.05  # low pitch keyboard sounds feel kinda weird
+    blacklist:
+      tags:
+      - NoConsoleSound
   - type: ContainerContainer
     containers:
       board: !type:Container

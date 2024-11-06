@@ -1,0 +1,26 @@
+- type: entity
+  parent: BoxCardboard
+  id: BoxIngredientFiesta
+  name: ingredients box (fiesta)
+  description: A box containing supplementary ingredients for the aspiring chef. The box's theme is 'fiesta'.
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodDoughTortilla
+    - id: FoodCorn
+    - id: FoodSoybeans
+    - id: FoodChiliPepper
+
+- type: entity
+  parent: BoxCardboard
+  id: BoxIngredientItalian
+  name: ingredients box (italian)
+  description: A box containing supplementary ingredients for the aspiring chef. The box's theme is 'italian'.
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodTomato
+    - id: FoodTomato
+    - id: DrinkWineCan
+    - id: FoodMeatMeatball
+    - id: FoodMeatMeatball

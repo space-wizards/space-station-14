@@ -1,0 +1,105 @@
+- type: entity
+  name: cargorilla
+  parent: [ SimpleMobBase, MobCombat, StripableInventoryBase ]
+  id: MobCargorilla
+  description: A well trained gorilla working in Cargo, try not to piss it off.
+  components:
+  - type: Puller
+    needsHands: false
+  - type: GhostTakeoverAvailable
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-cargorilla-name
+    description: ghost-role-information-cargorilla-description
+    rules: ghost-role-information-nonantagonist-rules
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: crawling
+      sprite: _Impstation/Mobs/Animals/cargorilla.rsi
+  - type: Physics
+  - type: InventorySlots
+  - type: Strippable
+  - type: UserInterface
+  - type: IdExaminable
+  - type: Inventory
+    speciesId: cargorilla
+    templateId: cargorilla
+  - type: Loadout
+    prototypes: [ MobCargorillaGear ]
+  - type: RandomMetadata
+    nameSegments: [names_cargorilla]
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+  - type: BodyEmotes
+    soundsId: Gorilla
+  - type: InteractionPopup
+    successChance: 0.7
+    interactSuccessString: petting-success-cargorilla
+    interactFailureString: petting-failure-cargorilla
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/_Impstation/Animals/Gorilla_Laugh.ogg
+    interactFailureSound:
+      path: /Audio/_Impstation/Animals/Gorilla_Chuff.ogg
+  - type: Speech
+    speechSounds: Gorilla
+    speechVerb: Monkey
+    allowedEmotes: ['Scream', 'Laugh']
+  - type: MonkeyAccent
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+  - type: Emoting
+  - type: Vocal
+    sounds:
+      Male: Gorilla
+      Female: Gorilla
+      Unsexed: Gorilla
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.48
+        density: 200
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: crawling
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 4
+  - type: Bloodstream
+    bloodMaxVolume: 300
+    # modified punch damage
+  - type: MeleeWeapon
+    soundHit:
+      collection: Punch
+    damage:
+      types:
+        Blunt: 12
+        Structural: 8
+    animation: WeaponArcFist
+  - type: NPCRetaliation
+  - type: FactionException
+  - type: NpcFactionMember
+    factions:
+    - Passive
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound

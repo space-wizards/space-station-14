@@ -21,7 +21,7 @@
       enum.CrayonUiKey.Key:
         type: CrayonBoundUserInterface
   - type: Crayon
-    capacity: 25
+    capacity: 100
   - type: Food
   - type: FlavorProfile
     flavors:
@@ -91,7 +91,7 @@
   - type: Crayon
     color: Red
     selectableColor: true
-    capacity: 30
+    capacity: 200
   - type: Tag
     tags:
     - Write

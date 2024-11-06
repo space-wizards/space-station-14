@@ -122,6 +122,8 @@
     attributes:
       gender: male
   - type: Sharp
+  - type: Puller
+    needsHands: false
 
 - type: entity
   id: MobRatKingBuff

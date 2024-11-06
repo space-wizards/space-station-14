@@ -8,6 +8,7 @@ using Content.Shared.Whitelist;
 using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 using System.Diagnostics.CodeAnalysis;
+using Robust.Shared.Utility;
 
 namespace Content.Server._DeltaV.Shipyard;
 
@@ -21,11 +22,9 @@ public sealed class ShipyardConsoleSystem : SharedShipyardConsoleSystem
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] private readonly ShipyardSystem _shipyard = default!;
     [Dependency] private readonly StationSystem _station = default!;
-
     public override void Initialize()
     {
         base.Initialize();
-
         Subs.BuiEvents<ShipyardConsoleComponent>(ShipyardConsoleUiKey.Key, subs =>
         {
             subs.Event<BoundUIOpenedEvent>(OnOpened);
@@ -49,7 +48,7 @@ public sealed class ShipyardConsoleSystem : SharedShipyardConsoleSystem
             return;
         }
 
-        if (_shipyard.TrySendShuttle(bank.Owner, vessel.Path.ToString()) is not {} shuttle)
+        if (_shipyard.TrySendShuttle(bank.Owner, GetResPath(vessel).ToString()) is not {} shuttle)
         {
             var popup = Loc.GetString("shipyard-console-error");
             Popup.PopupEntity(popup, ent, user);
@@ -96,5 +95,11 @@ public sealed class ShipyardConsoleSystem : SharedShipyardConsoleSystem
             return null;
 
         return (station, bank);
+    }
+
+    private ResPath GetResPath(VesselPrototype vessel)
+    {
+        int randomPath = _random.Next(vessel.Path.Count);
+        return vessel.Path[randomPath];
     }
 }

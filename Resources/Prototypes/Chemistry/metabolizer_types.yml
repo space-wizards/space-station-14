@@ -48,3 +48,7 @@
 - type: metabolizerType
   id: Snail
   name: metabolizer-type-snail
+  
+- type: metabolizerType #added this here since reptillian stomachs arent actually unique? imp special
+  id: Reptilian
+  name: metabolizer-type-reptilian

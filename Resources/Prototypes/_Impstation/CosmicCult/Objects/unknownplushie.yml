@@ -1,0 +1,13 @@
+## Cosmic Cult Plushie
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieCosmicCult
+  name: "unknown plushie"
+  description: A small stuffed doll resembling the indistinct likeness of an unknown cosmic force. That doesn't really make sense, but the marketing department was really insistent about it.
+  components:
+  - type: Item
+    size: Normal
+  - type: Sprite
+    sprite: _Impstation/CosmicCult/Objects/unknownplushie.rsi
+    state: plushie_cosmic

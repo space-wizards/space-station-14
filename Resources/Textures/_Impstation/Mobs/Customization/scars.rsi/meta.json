@@ -1,0 +1,95 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Drawn by Carousel for Impstation; Moth scars drawn by Snavian for Impstation",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "arm_l_prosthetic",
+        "directions": 4
+      },
+      {
+          "name": "arm_l_twisting",
+          "directions": 4
+      },
+      {
+          "name": "arm_r_prosthetic",
+          "directions": 4
+      },
+      {
+          "name": "arm_r_twisting",
+          "directions": 4
+      },
+      {
+          "name": "chest_backstabbed",
+          "directions": 4
+      },
+      {
+          "name": "chest_l_twisting",
+          "directions": 4
+      },
+      {
+          "name": "chest_r_twisting",
+          "directions": 4
+      },
+      {
+          "name": "chest_star",
+          "directions": 4
+      },
+      {
+          "name": "foot_l_prosthetic",
+          "directions": 4
+      },
+      {
+          "name": "foot_r_prosthetic",
+          "directions": 4
+      },
+      {
+          "name": "hand_l_prosthetic",
+          "directions": 4
+      },
+      {
+          "name": "hand_l_twisting",
+          "directions": 4
+      },
+      {
+          "name": "hand_r_prosthetic",
+          "directions": 4
+      },
+      {
+          "name": "hand_r_twisting",
+          "directions": 4
+      },
+      {
+          "name": "head_smile",
+          "directions": 4
+      },
+      {
+          "name": "head_twisting",
+          "directions": 4
+      },
+      {
+          "name": "leg_l_prosthetic",
+          "directions": 4
+      },
+      {
+          "name": "leg_l_twisting",
+          "directions": 4
+      },
+      {
+          "name": "leg_r_prosthetic",
+          "directions": 4
+      },
+      {
+          "name": "leg_r_twisting",
+          "directions": 4
+      },
+      {
+          "name": "torso_incision",
+          "directions": 4
+      }
+    ]
+  }

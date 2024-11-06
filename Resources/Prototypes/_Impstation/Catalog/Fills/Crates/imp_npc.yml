@@ -7,3 +7,13 @@
   - type: StorageFill
     contents:
       - id: MobDiscworldLuggage
+
+- type: entity
+  id: CrateNPCCargorilla
+  parent: CrateLivestock
+  name: Cargorilla
+  description: A crate containing a Very strong cargo technician.
+  components:
+  - type: StorageFill
+    contents:
+      - id: MobCargorilla
