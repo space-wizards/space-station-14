@@ -255,7 +255,7 @@
   group: Biological
   desc: reagent-desc-fishoil
   flavor: slimy
-  color: "#ffc00"
+  color: "#ffc000"
   physicalDesc: reagent-physical-desc-exotic-smelling
   slippery: true
   footstepSound:
