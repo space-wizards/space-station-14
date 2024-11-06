@@ -47,14 +47,6 @@
   equipment:
     outerClothing: ClothingOuterWinterChef
 
-- type: loadout
-  id: ChefCuteApron
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorChef
-  equipment:
-    outerClothing: ClothingOuterApronCuteChef
-
 # Shoes
 - type: loadout
   id: ChefShoes

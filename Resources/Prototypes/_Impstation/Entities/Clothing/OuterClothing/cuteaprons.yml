@@ -6,9 +6,9 @@
   description: A cute frilly apron.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Misc/aproncutechef.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Misc/aproncutechef.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Misc/aproncutechef.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Misc/aproncutechef.rsi
 
 - type: entity
   parent: ClothingOuterStorageBase
@@ -18,6 +18,6 @@
   description: A cute frilly apron.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Misc/aproncutebar.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Misc/aproncutebar.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Misc/aproncutebar.rsi
+    sprite: _Impstation/Clothing/OuterClothing/Misc/aproncutebar.rsi

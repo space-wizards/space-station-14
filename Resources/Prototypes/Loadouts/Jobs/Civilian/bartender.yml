@@ -70,14 +70,6 @@
   equipment:
     outerClothing: ClothingOuterWinterBar
 
-- type: loadout
-  id: BartenderCuteApron
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorBartender
-  equipment:
-    outerClothing: ClothingOuterApronCuteBar
-
 # id
 - type: loadout
   id: BartenderPDA
