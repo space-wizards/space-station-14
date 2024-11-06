@@ -1,0 +1,17 @@
+- type: entity
+  parent: Emag
+  id: Doorjack
+  name: airlock access override
+  description: A specialized cryptographic sequencer with a distinctive battery tray, specifically designed to override station airlock access codes.
+  components:
+  - type: Emag
+    blacklist:
+    whitelist:
+      components:
+      - Airlock
+  - type: Sprite
+    sprite: DeltaV/Objects/Tools/doorjack.rsi
+    state: icon
+  - type: Item
+    sprite: DeltaV/Objects/Tools/doorjack.rsi
+    storedRotation: -90

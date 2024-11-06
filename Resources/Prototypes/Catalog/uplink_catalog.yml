@@ -897,9 +897,9 @@
   productEntity: Emag
   discountCategory: veryRareDiscounts
   discountDownTo:
-    Telecrystal: 5
+    Telecrystal: 2 # 5 is um. not a discount when it's normally 4
   cost:
-    Telecrystal: 8
+    Telecrystal: 4 # DV was 8, can no longer emag doors
   categories:
   - UplinkDisruption
 
