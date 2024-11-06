@@ -124,6 +124,7 @@ public abstract partial class SharedMoverController : VirtualController
         {
             if (_mobState.IsIncapacitated(relayTarget.Source) ||
                 TryComp<SleepingComponent>(relayTarget.Source, out _) ||
+                !PhysicsQuery.TryGetComponent(relayTarget.Source, out var relayedPhysicsComponent) || 
                 !MoverQuery.TryGetComponent(relayTarget.Source, out var relayedMover)||
                 !XformQuery.TryGetComponent(relayTarget.Source, out var relayedXform))
             {
@@ -135,7 +136,7 @@ public abstract partial class SharedMoverController : VirtualController
                 mover.RelativeEntity = relayedMover.RelativeEntity;
                 mover.RelativeRotation = relayedMover.RelativeRotation;
                 mover.TargetRelativeRotation = relayedMover.TargetRelativeRotation;
-                HandleMobMovement(relayTarget.Source, relayedMover, physicsUid, physicsComponent, relayedXform, frameTime);
+                HandleMobMovement(relayTarget.Source, relayedMover, relayTarget.Source, relayedPhysicsComponent, relayedXform, frameTime);
             }
         }
         // Update relative movement
