@@ -3368,14 +3368,14 @@
           Quantity: 3
   - type: Butcherable
     spawned:
-    - id: FoodMeatRat
-      amount: 1
+    - id: FoodMeatFish
+      amount: 2
   - type: CombatMode
     combatToggleAction: ActionCombatModeToggleOff
   - type: Bloodstream
-    bloodMaxVolume: 50
+    bloodMaxVolume: 30
   - type: MobPrice
-    price: 50
+    price: 400
   - type: BadFood
   - type: NonSpreaderZombie
   - type: PreventSpiller

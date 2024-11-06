@@ -548,7 +548,7 @@
 - type: Tag
   id: DrinkSpaceGlue
 
-- type: Tag 
+- type: Tag
   id: Dropper
 
 - type: Tag
@@ -896,6 +896,12 @@
 
 - type: Tag
   id: MicrowaveMachineBoard
+
+- type: Tag
+  id: Drifter
+
+- type: Tag
+  id: Fish
 
 - type: Tag
   id: MimeBelt

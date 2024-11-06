@@ -386,4 +386,12 @@
         conditions:
         - !type:ReagentThreshold
           reagent: SeaWater
-          min: 0.5
+          min: 1
+      - !type:AdjustAlert
+        alertType: Drowning
+        conditions:
+        - !type:ReagentThreshold
+          reagent: SeaWater
+          min: 1
+        clear: True
+        time: 5

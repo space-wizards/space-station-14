@@ -72,10 +72,11 @@
   components:
     - type: Sprite
       drawdepth: FloorObjects
-      sprite: Objects/Specific/Janitorial/drainplatform.rsi
+      sprite: Objects/Specific/Janitorial/drain.rsi
       layers:
+      - state: icon
       - map: [ "enum.SolutionContainerLayers.Fill" ]
-        state: drainplatform
+        state: fill-1
         visible: false
     - type: Transform
       anchored: true

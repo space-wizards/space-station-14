@@ -84,6 +84,7 @@ public sealed class NukeSystem : EntitySystem
     {
         component.RemainingTime = component.Timer;
         _itemSlots.AddItemSlot(uid, SharedNukeComponent.NukeDiskSlotId, component.DiskSlot);
+        _itemSlots.AddItemSlot(uid, SharedNukeComponent.NukeResonanceSlotId, component.ResonanceSlot);
 
         UpdateStatus(uid, component);
         UpdateUserInterface(uid, component);
@@ -324,11 +325,13 @@ public sealed class NukeSystem : EntitySystem
         switch (component.Status)
         {
             case NukeStatus.AWAIT_DISK:
-                if (component.DiskSlot.HasItem)
-                    component.Status = NukeStatus.AWAIT_CODE;
+                if (component.DiskSlot.HasItem && component.ResonanceSlot.HasItem)
+                    {
+                        ArmBomb(uid, component); //Make it so it needs the transmission disk and the Resonance Delaminator to "arm" the artifact.
+                    }
                 break;
             case NukeStatus.AWAIT_CODE:
-                if (!component.DiskSlot.HasItem)
+                if (!component.DiskSlot.HasItem || !component.ResonanceSlot.HasItem)
                 {
                     component.Status = NukeStatus.AWAIT_DISK;
                     component.EnteredCode = "";

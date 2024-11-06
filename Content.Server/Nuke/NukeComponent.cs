@@ -40,6 +40,9 @@ namespace Content.Server.Nuke
         [DataField("diskSlot")]
         public ItemSlot DiskSlot = new();
 
+        [DataField("resonanceSlot")]
+        public ItemSlot ResonanceSlot = new();
+
         /// <summary>
         ///     When this time is left, nuke will play last alert sound
         /// </summary>
