@@ -38,8 +38,9 @@ namespace Content.Server.Nuke
         ///     otherwise a blank bit of paper will work as a "disk".
         /// </summary>
         [DataField("diskSlot")]
-        [DataField("resonanceSlot")]
         public ItemSlot DiskSlot = new();
+
+        [DataField("resonanceSlot")]
         public ItemSlot ResonanceSlot = new();
 
         /// <summary>
