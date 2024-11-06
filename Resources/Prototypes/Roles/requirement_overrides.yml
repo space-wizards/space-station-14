@@ -4,41 +4,52 @@
     Captain:
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 720 # 12 mins
+      time: 10800 # 3 hours
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 720 # 12 mins
+      time: 10800 # 3 hours
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 720 # 12 mins
+      time: 10800 # 3 hours
     - !type:DepartmentTimeRequirement
       department: Command
-      time: 720 # 12 min
+      time: 18000 # 5 hours
+    - !type:OverallPlaytimeRequirement
+      time: 36000 # 10 hours
     HeadOfSecurity:
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 720 # 12 mins
+      time: 10800 # 3 hours
+    - !type:OverallPlaytimeRequirement
+      time: 18000 # 5 hours
     ChiefEngineer:
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 720 # 12 mins
+      time: 10800 # 3 hours
     ResearchDirector:
     - !type:DepartmentTimeRequirement
       department: Science
-      time: 720 # 12 mins
+      time: 10800 # 3 hours
     ChiefMedicalOfficer:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 720 # 12 mins
+      time: 10800 # 3 hours
     HeadOfPersonnel:
     - !type:DepartmentTimeRequirement
       department: Civilian
-      time: 720 # 12 mins
+      time: 10800 # 3 hours
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 10800 # 3 hours
+    - !type:DepartmentTimeRequirement
+      department: Command
+      time: 18000 # 5 hours
+    - !type:OverallPlaytimeRequirement
+      time: 25200 # 7 hours
     Quartermaster:
     - !type:DepartmentTimeRequirement
       department: Cargo
-      time: 720 # 12 mins
-
+      time: 10800 # 3 hours
     SalvageSpecialist:
     - !type:OverallPlaytimeRequirement
       time: 0
@@ -109,12 +120,10 @@
 
     Detective:
     - !type:OverallPlaytimeRequirement
-      time: 720    
+      time: 3600    
     SecurityOfficer:
     - !type:OverallPlaytimeRequirement
-      time: 720    
+      time: 3600    
     Warden:
     - !type:OverallPlaytimeRequirement
-      time: 720
-
-        
+      time: 3600
