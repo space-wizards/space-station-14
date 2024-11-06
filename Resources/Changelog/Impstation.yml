@@ -3729,3 +3729,20 @@
   id: 459
   time: '2024-11-06T02:18:25.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/628
+- author: DinnerCalzone
+  changes:
+  - message: Added human vocal sounds as placeholders to species that are missing
+      vocal emotes. Vox will no longer suffocate in silence.
+    type: Add
+  - message: Grays now weh when under the effect of juice that makes you weh.
+    type: Fix
+  id: 460
+  time: '2024-11-06T03:56:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/629
+- author: AftrLite
+  changes:
+  - message: A completely unremarkable new plushie. Feel free to ignore it.
+    type: Add
+  id: 461
+  time: '2024-11-06T03:56:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/621
