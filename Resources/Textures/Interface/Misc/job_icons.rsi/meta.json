@@ -191,6 +191,9 @@
         },
         {
             "name": "Admin"
+        },
+        {
+            "name": "Vampire"
         }
     ]
 }

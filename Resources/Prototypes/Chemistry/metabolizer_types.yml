@@ -48,3 +48,7 @@
 - type: metabolizerType
   id: Arachnid
   name: metabolizer-type-arachnid
+
+- type: metabolizerType
+  id: Vampire
+  name: metabolizer-type-vampire
