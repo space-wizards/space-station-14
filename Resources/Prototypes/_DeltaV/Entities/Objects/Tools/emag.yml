@@ -10,8 +10,8 @@
       components:
       - Airlock
   - type: Sprite
-    sprite: DeltaV/Objects/Tools/doorjack.rsi
+    sprite: _DeltaV/Objects/Tools/doorjack.rsi
     state: icon
   - type: Item
-    sprite: DeltaV/Objects/Tools/doorjack.rsi
+    sprite: _DeltaV/Objects/Tools/doorjack.rsi
     storedRotation: -90
