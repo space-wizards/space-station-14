@@ -71,6 +71,21 @@ public abstract partial class SharedStationAiSystem
         return true;
     }
 
+    private bool TryGetHeldFromHolder(Entity<StationAiHolderComponent?> entity, out EntityUid held)
+    {
+        held = EntityUid.Invalid;
+
+        if (!Resolve(entity.Owner, ref entity.Comp))
+            return false;
+
+        if (!_containers.TryGetContainer(entity.Owner, StationAiHolderComponent.Container, out var container) ||
+            container.ContainedEntities.Count == 0)
+            return false;
+
+        held = container.ContainedEntities[0];
+        return true;
+    }
+
     private bool TryGetCore(EntityUid ent, out Entity<StationAiCoreComponent?> core)
     {
         if (!_containers.TryGetContainingContainer(ent, out var container) ||
