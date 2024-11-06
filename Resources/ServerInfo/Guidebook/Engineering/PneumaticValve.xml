@@ -12,7 +12,7 @@
   </Box>
   <Box>
     <GuideEntityEmbed Entity="GasPipeStraight" Caption="Control" Rotation="90"/>
-    <GuideEntityEmbed Entity="PressureControlledValve"/>
+    <GuideEntityEmbed Entity="PressureControlledValve" Caption=""/>
     <GuideEntityEmbed Entity="FloorTileItemSteel" Caption=""/>
   </Box>
   <Box>
