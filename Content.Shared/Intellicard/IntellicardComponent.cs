@@ -34,7 +34,7 @@ public sealed partial class IntellicardComponent : Component
     /// The delay before allowing the warning to play again in seconds.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public TimeSpan WarningDelay = TimeSpan.FromSeconds(5);
+    public TimeSpan WarningDelay = TimeSpan.FromSeconds(8);
 
     public TimeSpan NextWarningAllowed = TimeSpan.Zero;
 

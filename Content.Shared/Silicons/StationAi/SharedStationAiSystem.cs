@@ -243,13 +243,13 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
     private void OnHolderInteract(Entity<StationAiHolderComponent> ent, ref AfterInteractEvent args)
     {
-		if(!args.CanReach)
-			return;
-		
+        if(!args.CanReach)
+            return;
+        
         if (!TryComp(args.Target, out StationAiHolderComponent? targetHolder))
             return;
         
-        if (!TryComp(args.Used, out IntellicardComponent? intellicard))
+        if (!TryComp(args.Used, out IntellicardComponent? intelliComp))
             return;
         
         bool isUploading = _slots.CanEject(ent.Owner, args.User, ent.Comp.Slot);
@@ -258,17 +258,17 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         
         if(isUploading == isDownloading)
             return;
-		
-		if(TryGetHeldFromHolder((targetHolder.Owner, targetHolder), out var held) && _timing.CurTime > intellicard.NextWarningAllowed) {
-			
-			intellicard.NextWarningAllowed = _timing.CurTime + intellicard.WarningDelay;
-			
-			AnnounceIntellicardUsage(held, intellicard.WarningSound);
-		}
+        
+        if(TryGetHeldFromHolder((targetHolder.Owner, targetHolder), out var held) && _timing.CurTime > intelliComp.NextWarningAllowed) {
+            
+            intelliComp.NextWarningAllowed = _timing.CurTime + intelliComp.WarningDelay;
+            
+            AnnounceIntellicardUsage(held, intelliComp.WarningSound);
+        }
 
         //TODO: Add a warning so the AI knows when they are being uploaded/downloaded.
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, isUploading ? intellicard.uploadTime : intellicard.downloadTime, new IntellicardDoAfterEvent(), args.Target, ent.Owner)
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, isUploading ? intelliComp.uploadTime : intelliComp.downloadTime, new IntellicardDoAfterEvent(), args.Target, ent.Owner)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
@@ -430,11 +430,11 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
         _appearance.SetData(entity.Owner, StationAiVisualState.Key, StationAiState.Occupied);
     }
-	
-	public virtual void AnnounceIntellicardUsage(EntityUid uid, SoundSpecifier? cue = null) 
-	{
-		
-	}
+    
+    public virtual void AnnounceIntellicardUsage(EntityUid uid, SoundSpecifier? cue = null) 
+    {
+        
+    }
 
     public virtual bool SetVisionEnabled(Entity<StationAiVisionComponent> entity, bool enabled, bool announce = false)
     {
