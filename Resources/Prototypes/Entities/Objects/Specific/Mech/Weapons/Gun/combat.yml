@@ -17,7 +17,7 @@
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
   - type: HitscanBatteryAmmoProvider
     proto: Pulse
-    fireCost: 40
+    fireCost: 80
   - type: Appearance
   - type: AmmoCounter
 
@@ -30,9 +30,9 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
-    state: mecha_laser
+    state: mecha_immolator
   - type: Gun
-    fireRate: 0.6
+    fireRate: 0.8
     selectedMode: SemiAuto
     availableModes:
       - SemiAuto
@@ -40,7 +40,7 @@
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: HitscanBatteryAmmoProvider
     proto: RedHeavyLaser
-    fireCost: 99
+    fireCost: 80
   - type: Appearance
   - type: AmmoCounter
 
@@ -53,7 +53,7 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
-    state: mecha_laser
+    state: mecha_solaris
   - type: Gun
     fireRate: 1
     selectedMode: SemiAuto
@@ -63,7 +63,7 @@
       path: /Audio/Weapons/Guns/Gunshots/laser.ogg
   - type: HitscanBatteryAmmoProvider
     proto: RedMediumLaser
-    fireCost: 59
+    fireCost: 120
   - type: Appearance
   - type: AmmoCounter
 
@@ -76,7 +76,7 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
-    state: mecha_laser
+    state: mecha_firedart
   - type: Gun
     fireRate: 0.8
     selectedMode: SemiAuto
@@ -86,7 +86,7 @@
       path: /Audio/Weapons/Guns/Gunshots/laser.ogg
   - type: HitscanBatteryAmmoProvider
     proto: RedLaser
-    fireCost: 39
+    fireCost: 80
   - type: Appearance
   - type: AmmoCounter
 
@@ -101,9 +101,9 @@
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
     state: mecha_wholegen
   - type: Gun
-    projectileSpeed: 1
-    projectileSpeedModified: 5
-    fireRate: 0.4
+    projectileSpeed: 3
+    projectileSpeedModified: 6
+    fireRate: 0.8
     selectedMode: SemiAuto
     availableModes:
       - SemiAuto
@@ -113,7 +113,7 @@
         variation: 0.2
   - type: ProjectileBatteryAmmoProvider
     proto: TeslaGunBullet
-    fireCost: 99
+    fireCost: 100
   - type: Appearance
   - type: AmmoCounter
 
@@ -135,8 +135,8 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
   - type: ProjectileBatteryAmmoProvider
-    proto: BulletDisabler
-    fireCost: 29
+    proto: BulletDisablerSmgSpread
+    fireCost: 60
   - type: Appearance
   - type: AmmoCounter
 
@@ -159,7 +159,7 @@
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
   - type: ProjectileBatteryAmmoProvider
     proto: BulletTaser
-    fireCost: 19
+    fireCost: 40
   - type: Appearance
   - type: AmmoCounter
 
@@ -174,7 +174,7 @@
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
     state: mecha_scatter
   - type: Gun
-    fireRate: 0.5
+    fireRate: 1
     selectedMode: SemiAuto
     availableModes:
       - SemiAuto
@@ -182,7 +182,7 @@
       path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
   - type: ProjectileBatteryAmmoProvider
     proto: ShellShotgun
-    fireCost: 99
+    fireCost: 100
   - type: Appearance
   - type: AmmoCounter
 
@@ -205,7 +205,7 @@
       path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
   - type: ProjectileBatteryAmmoProvider
     proto: ShellShotgunIncendiary
-    fireCost: 99
+    fireCost: 90
   - type: Appearance
   - type: AmmoCounter
 
@@ -220,15 +220,96 @@
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
     state: mecha_uac2
   - type: Gun
-    fireRate: 3
-    selectedMode: FullAuto
+    fireRate: 5
+    shotsPerBurst: 3
+    burstCooldown: 1.2
+    selectedMode: Burst
     availableModes:
-      - FullAuto
+      - Burst
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
   - type: ProjectileBatteryAmmoProvider
     proto: CartridgeLightRifle
-    fireCost: 15
+    fireCost: 20
+  - type: Appearance
+  - type: AmmoCounter
+  
+- type: entity
+  id: WeaponMechCombatIon
+  name: Mk.IV Ion Heavy Cannon
+  description: A mounted ion weapon that operates on the same principle as a handheld ion carbine. Extremely effective against synthetics, robots and other mechs.
+  suffix: Mech Weapon, Gun, Combat, Ion
+  parent: [ BaseMechWeaponRange, CombatMechEquipment ]
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/mecha_equipment.rsi
+    state: mecha_ion
+  - type: Gun
+    projectileSpeed: 20
+    fireRate: 0.6
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletEMP
+    fireCost: 400
+  - type: Appearance
+  - type: AmmoCounter
+  - type: Battery
+    maxCharge: 400
+    startingCharge: 400
+    
+- type: entity
+  id: WeaponMechCombatAMLG90
+  name: AMLG90
+  description: Laser mounted machine gun.
+  suffix: Mech Weapon, Gun, Combat, Laser
+  parent: [ BaseMechWeaponRange, CombatMechEquipment ]
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/mecha_equipment.rsi
+    state: mecha_amlg90
+  - type: Gun
+    fireRate: 4
+    shotsPerBurst: 3
+    burstCooldown: 1.2
+    selectedMode: Burst
+    availableModes:
+      - Burst
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletSyndiPlasma
+    fireCost: 20
+  - type: Appearance
+  - type: AmmoCounter
+  
+- type: entity
+  id: WeaponMechCombatXray
+  name: S-1 X-Ray Projector
+  description: Experimental mech weapon that fires X-rays that pass through obstacles.
+  suffix: Mech Weapon, Gun, Combat, X-Ray
+  parent: [ BaseMechWeaponRange, CombatMechEquipment ]
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/mecha_equipment.rsi
+    state: mecha_xray
+  - type: Gun
+    fireRate: 1
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
+  - type: HitscanBatteryAmmoProvider
+    proto: XrayLaser
+    fireCost: 200
   - type: Appearance
   - type: AmmoCounter
 
@@ -243,7 +324,7 @@
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
     state: mecha_missilerack
   - type: Gun
-    fireRate: 1
+    fireRate: 1.2
     selectedMode: SemiAuto
     availableModes:
       - SemiAuto
@@ -251,7 +332,7 @@
       path: /Audio/Weapons/Guns/Gunshots/rpgfire.ogg
   - type: ProjectileBatteryAmmoProvider
     proto: BulletWeakRocket
-    fireCost: 25
+    fireCost: 50
   - type: Appearance
   - type: AmmoCounter
 
@@ -266,7 +347,7 @@
     sprite: Objects/Specific/Mech/mecha_equipment.rsi
     state: mecha_missilerack_six
   - type: Gun
-    fireRate: 1
+    fireRate: 0.8
     selectedMode: SemiAuto
     availableModes:
       - SemiAuto
@@ -274,9 +355,12 @@
       path: /Audio/Weapons/Guns/Gunshots/rpgfire.ogg
   - type: ProjectileBatteryAmmoProvider
     proto: GrenadeBlast
-    fireCost: 100
+    fireCost: 220
   - type: Appearance
   - type: AmmoCounter
+  - type: Battery
+    maxCharge: 220
+    startingCharge: 220
 
 - type: entity
   id: WeaponMechCombatFlashbangLauncher
@@ -299,6 +383,6 @@
       path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
   - type: ProjectileBatteryAmmoProvider
     proto: GrenadeFlash
-    fireCost: 30
+    fireCost: 60
   - type: Appearance
   - type: AmmoCounter
