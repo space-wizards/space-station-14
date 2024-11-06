@@ -478,6 +478,9 @@
           - !type:OrganType
             type: Animal
             shouldHave: false
+          - !type:OrganType
+            type: Vampire
+            shouldHave: false
         type: Local
         visualType: MediumCaution
         messages: [ "generic-reagent-effect-sick" ]
@@ -488,10 +491,16 @@
           - !type:OrganType
             type: Animal
             shouldHave: false
+          - !type:OrganType
+            type: Vampire
+            shouldHave: false
       - !type:HealthChange
         conditions:
         - !type:OrganType
           type: Animal
+          shouldHave: false
+        - !type:OrganType
+          type: Vampire
           shouldHave: false
         damage:
           types:
@@ -500,6 +509,9 @@
         conditions:
         - !type:OrganType
           type: Animal
+          shouldHave: true
+        - !type:OrganType
+          type: Vampire
           shouldHave: true
         reagent: Protein
         amount: 0.5

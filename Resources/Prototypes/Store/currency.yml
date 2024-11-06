@@ -11,6 +11,11 @@
   canWithdraw: false
 
 - type: currency
+  id: BloodEssence
+  displayName: store-currency-display-blood-essence
+  canWithdraw: false
+
+- type: currency
   id: WizCoin
   displayName: store-currency-display-wizcoin
   canWithdraw: false
