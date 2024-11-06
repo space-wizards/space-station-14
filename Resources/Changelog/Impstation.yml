@@ -3697,3 +3697,18 @@
   id: 456
   time: '2024-11-06T02:03:43.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/630
+- author: DinnerCalzone
+  changes:
+  - message: BROS now play their death sound when they die.
+    type: Add
+  - message: BROS now audibly gasp when suffocating.
+    type: Add
+  - message: Player-controlled BROS will now audibly UNGH when performing a vocal
+      emote.
+    type: Add
+  - message: Edited BROS sound files to remove harsh popping at the end of their audio
+      tracks. Don't worry, they still sound like shit.
+    type: Tweak
+  id: 457
+  time: '2024-11-06T02:05:40.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/627
