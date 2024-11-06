@@ -1,0 +1,5 @@
+- type: startingGear
+  id: MobCargorillaGear
+  equipment:
+    ears: ClothingHeadsetCargo
+    id: CargorillaIDCard
