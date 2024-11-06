@@ -15,15 +15,14 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly MarkingManager _markingManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-    [Dependency] private readonly IEntityManager _entManager = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<HumanoidAppearanceComponent, AfterAutoHandleStateEvent>(OnHandleState);
-        Subs.CVar(_configurationManager, CCVars.ClientCensorNudity, OnCvarChanged, true);
-        Subs.CVar(_configurationManager, CCVars.ServerCensorNudity, OnCvarChanged, true);
+        Subs.CVar(_configurationManager, CCVars.AccessibilityClientCensorNudity, OnCvarChanged, true);
+        Subs.CVar(_configurationManager, CCVars.AccessibilityServerCensorNudity, OnCvarChanged, true);
     }
 
     private void OnHandleState(EntityUid uid, HumanoidAppearanceComponent component, ref AfterAutoHandleStateEvent args)
@@ -33,7 +32,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
 
     private void OnCvarChanged(bool value)
     {
-        var humanoidQuery = _entManager.AllEntityQueryEnumerator<HumanoidAppearanceComponent, SpriteComponent>();
+        var humanoidQuery = EntityManager.AllEntityQueryEnumerator<HumanoidAppearanceComponent, SpriteComponent>();
         while (humanoidQuery.MoveNext(out var _, out var humanoidComp, out var spriteComp))
         {
             UpdateSprite(humanoidComp, spriteComp);
@@ -222,8 +221,8 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         // Really, markings should probably be a separate component altogether.
         ClearAllMarkings(humanoid, sprite);
 
-        var censorNudity = _configurationManager.GetCVar(CCVars.ClientCensorNudity) ||
-                           _configurationManager.GetCVar(CCVars.ClientCensorNudity);
+        var censorNudity = _configurationManager.GetCVar(CCVars.AccessibilityClientCensorNudity) ||
+                           _configurationManager.GetCVar(CCVars.AccessibilityServerCensorNudity);
         // The reason we're splitting this up is in case the character already has undergarment equipped in that slot.
         var applyUndergarmentTop = censorNudity;
         var applyUndergarmentBottom = censorNudity;
@@ -299,8 +298,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         if (undergarmentTop && humanoid.UndergarmentTop != null)
         {
             var marking = new Marking(humanoid.UndergarmentTop, new List<Color> { new Color() });
-            _markingManager.TryGetMarking(marking, out var prototype);
-            if (prototype != null)
+            if (_markingManager.TryGetMarking(marking, out var prototype))
             {
                 // Markings are added to ClientOldMarkings because otherwise it causes issues when toggling the feature on/off.
                 humanoid.ClientOldMarkings.Markings.Add(MarkingCategories.UndergarmentTop, new List<Marking>{ marking });
@@ -311,8 +309,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         if (undergarmentBottom && humanoid.UndergarmentBottom != null)
         {
             var marking = new Marking(humanoid.UndergarmentBottom, new List<Color> { new Color() });
-            _markingManager.TryGetMarking(marking, out var prototype);
-            if (prototype != null)
+            if (_markingManager.TryGetMarking(marking, out var prototype))
             {
                 humanoid.ClientOldMarkings.Markings.Add(MarkingCategories.UndergarmentBottom, new List<Marking>{ marking });
                 ApplyMarking(prototype, null, true, humanoid, sprite);
