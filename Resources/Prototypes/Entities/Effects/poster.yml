@@ -1,6 +1,6 @@
 - type: entity
   id: EffectPosterPlacing
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Transform
     anchored: True
