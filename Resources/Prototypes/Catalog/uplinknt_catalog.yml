@@ -4,7 +4,7 @@
   description: uplink-CaptainSabre-desc
   productEntity: CaptainSabre
   cost:
-    BluespaceCrystal: 12
+    BluespaceCrystal: 10
   categories:
   - UplinkNtWeaponry
 
@@ -64,7 +64,7 @@
   description: uplink-combat-gloves-desc
   productEntity: ClothingHandsGlovesCombat
   cost:
-    BluespaceCrystal: 1
+    BluespaceCrystal: 1 # at some point we'll roll this into a proper toolbox with gear
   categories:
   - UplinkNtArmor
 
@@ -92,7 +92,7 @@
   id: UplinkHardsuitERTLeader
   name: uplink-bluehardsuit-name
   description: uplink-bluehardsuit-desc
-  productEntity: ClothingOuterHardsuitERTLeader
+  productEntity: ClothingOuterHardsuitERTLeader # stats are equal to a bloodred
   cost:
     BluespaceCrystal: 8
   categories:
@@ -104,7 +104,7 @@
   description: uplink-carbine-desc
   productEntity: WeaponEnergyCarbine
   cost:
-    BluespaceCrystal: 17
+    BluespaceCrystal: 17 # this shit is STRONG-strong. TODO: Cascade Ops DO NOT get this
   categories:
   - UplinkNtWeaponry
 
@@ -114,7 +114,7 @@
   description: uplink-blaster-desc
   productEntity: WeaponNtBlaster
   cost:
-    BluespaceCrystal: 6
+    BluespaceCrystal: 5 # cheap, but modules cost more so it evens out
   categories:
   - UplinkNtWeaponry
 
@@ -140,7 +140,7 @@
 
 
 - type: listing
-  id: UplinkLubeBoxNT
+  id: UplinkLubeBoxNT # heheheheheh
   name: uplink-lube-name
   description: uplink-lube-desc
   productEntity: LubeBoxNT
@@ -183,7 +183,7 @@
   id: UplinkPai
   name: uplink-pai-name
   description: uplink-pai-desc
-  productEntity: PersonalAI
+  productEntity: PersonalAI #literally just a pAI. No specialness. 
   cost:
     BluespaceCrystal: 1
   categories:
