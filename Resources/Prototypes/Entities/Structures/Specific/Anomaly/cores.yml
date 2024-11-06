@@ -284,7 +284,7 @@
 
 - type: entity
   parent: BaseAnomalyInertCore
-  id: AnomalyCoreGravityInert # Acts like diff slot magboots
+  id: AnomalyCoreGravityInert # Acts like neck or belt slot slot magboots
   description: The inert core of a gravitational anomaly. Looks impossibly dense, but feels impossibly light.
   suffix: Gravity, Inert
   components:
@@ -430,7 +430,9 @@
   suffix: Bluespace, Inert
   components:
   - type: Item
-    size: Tiny
+    size: Normal
+    shape:
+    - 0,0,0,0
   - type: Storage
     maxItemSize: Normal
     grid:
