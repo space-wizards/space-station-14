@@ -164,10 +164,10 @@ public sealed partial class GunComponent : Component
     public float BurstCooldown = 0.25f;
 
     /// <summary>
-    /// How much faster the gun will fire when in burst mode. Multiplicative.
+    /// The fire rate of the weapon in burst fire mode.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float BurstFireRateModifier = 1f;
+    public float BurstFireRate = 8f;
 
     /// <summary>
     /// Whether the burst fire mode has been activated.

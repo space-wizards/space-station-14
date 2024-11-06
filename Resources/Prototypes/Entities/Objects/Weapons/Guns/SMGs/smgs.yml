@@ -19,6 +19,7 @@
     minAngle: 2
     maxAngle: 16
     fireRate: 8
+    burstFireRate: 8
     angleIncrease: 3
     angleDecay: 16
     selectedMode: FullAuto
@@ -142,6 +143,7 @@
       minAngle: 21
       maxAngle: 32
       fireRate: 12
+      burstFireRate: 12
       selectedMode: Burst
       soundGunshot:
         path: /Audio/Weapons/Guns/Gunshots/atreides.ogg
@@ -254,7 +256,7 @@
     selectedMode: FullAuto
     shotsPerBurst: 5
     burstCooldown: 0.2
-    burstFireRateModifier: 1.273
+    burstFireRate: 7
     availableModes:
     - SemiAuto
     - Burst
