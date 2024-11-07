@@ -69,8 +69,6 @@
     canShuttle: false
     title: comms-console-announcement-title-station-ai
     color: "#2ed2fd"
-  - type: Speech
-    speechVerb: Robotic
   - type: ShowJobIcons
 
 - type: entity
@@ -395,6 +393,9 @@
     drawFov: false
   - type: Examiner
   - type: InputMover
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Borg
   - type: Tag
     tags:
     - HideContextMenu
