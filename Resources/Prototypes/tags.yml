@@ -1268,6 +1268,9 @@
   id: ShellShotgun
 
 - type: Tag
+  id: ShellShotgunBeanbag
+
+- type: Tag
   id: Shiv
 
 - type: Tag
