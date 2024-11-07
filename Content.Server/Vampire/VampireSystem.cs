@@ -64,6 +64,7 @@ public sealed partial class VampireSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapMan = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly SharedActionsSystem _action = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly SharedBodySystem _body = default!;
@@ -289,7 +290,7 @@ public sealed partial class VampireSystem : EntitySystem
                 _action.AddAction(uid, ref actionEntity, actionId);
                 if (actionEntity != null)
                 {
-                    component.actionEntities[actionId] = new AbilityInfo(uid, actionEntity.Value);
+                    component.actionEntities[actionId] = new AbilityInfo(_entityManager.GetNetEntity(uid), _entityManager.GetNetEntity(actionEntity.Value));
                     if (powerId != null && !component.UnlockedPowers.ContainsKey(powerId))
                         component.UnlockedPowers.Add(powerId, actionEntity.Value);
                 }
@@ -297,11 +298,11 @@ public sealed partial class VampireSystem : EntitySystem
         }
         else
         {
-            if (component.actionEntities.TryGetValue(actionId, out var abilityInfo) && abilityInfo.Owner == uid)
+            if (component.actionEntities.TryGetValue(actionId, out var abilityInfo) && _entityManager.GetEntity(abilityInfo.Owner) == uid)
             {
                 if (TryComp(uid, out ActionsComponent? comp))
                 {
-                    _action.RemoveAction(uid, abilityInfo.Action, comp);
+                    _action.RemoveAction(uid, _entityManager.GetEntity(abilityInfo.Action), comp);
                     component.actionEntities.Remove(actionId);
                     if (powerId != null && component.UnlockedPowers.ContainsKey(powerId))
                         component.UnlockedPowers.Remove(powerId);

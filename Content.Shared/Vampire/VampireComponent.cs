@@ -114,10 +114,10 @@ public sealed partial class VampireComponent : Component
 [Serializable, NetSerializable]
 public struct AbilityInfo
 {
-    public EntityUid Owner;
-    public EntityUid Action;
+    public NetEntity Owner;
+    public NetEntity Action;
 
-    public AbilityInfo(EntityUid owner, EntityUid action)
+    public AbilityInfo(NetEntity owner, NetEntity action)
     {
         Owner = owner;
         Action = action;
