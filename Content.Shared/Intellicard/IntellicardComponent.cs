@@ -1,9 +1,7 @@
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Silicons.StationAi;
+namespace Content.Shared.Intellicard;
 
 /// <summary>
 /// Allows this entity to download the station AI onto an AiHolderComponent.
@@ -15,13 +13,13 @@ public sealed partial class IntellicardComponent : Component
     /// The duration it takes to download the AI from an AiHolder.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public int downloadTime = 15;
+    public int DownloadTime = 15;
 
     /// <summary>
     /// The duration it takes to upload the AI to an AiHolder.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public int uploadTime = 3;
+    public int UploadTime = 3;
 
     /// <summary>
     /// The sound that plays for the AI
@@ -36,7 +34,6 @@ public sealed partial class IntellicardComponent : Component
     [DataField, AutoNetworkedField]
     public TimeSpan WarningDelay = TimeSpan.FromSeconds(8);
 
+    [ViewVariables]
     public TimeSpan NextWarningAllowed = TimeSpan.Zero;
-
-    public const string HolderContainer = "station_ai_mind_slot";
 }

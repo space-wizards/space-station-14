@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Server.Chat.Managers;
-using Content.Server.Chat.Systems;
 using Content.Shared.Chat;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
@@ -17,8 +16,8 @@ public sealed class StationAiSystem : SharedStationAiSystem
 {
     [Dependency] private readonly IChatManager _chats = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-	[Dependency] private readonly SharedMindSystem _mind = default!;
-	[Dependency] private readonly SharedRoleSystem _roles = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly SharedRoleSystem _roles = default!;
 
     private readonly HashSet<Entity<StationAiCoreComponent>> _ais = new();
 
@@ -47,10 +46,10 @@ public sealed class StationAiSystem : SharedStationAiSystem
 
         return true;
     }
-	
-	public override void AnnounceIntellicardUsage(EntityUid uid, SoundSpecifier? cue = null) 
-	{
-		if (!TryComp<ActorComponent>(uid, out var actor))
+
+    public override void AnnounceIntellicardUsage(EntityUid uid, SoundSpecifier? cue = null) 
+    {
+        if (!TryComp<ActorComponent>(uid, out var actor))
             return;
 
         var msg = Loc.GetString("ai-intellicard-download-warning");
@@ -59,7 +58,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
 
         if (cue != null && _mind.TryGetMind(uid, out var mindId, out _))
             _roles.MindPlaySound(mindId, cue);
-	}
+    }
 
     private void AnnounceSnip(EntityUid entity)
     {

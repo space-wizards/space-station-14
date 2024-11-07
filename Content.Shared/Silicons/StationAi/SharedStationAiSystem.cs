@@ -6,6 +6,7 @@ using Content.Shared.Database;
 using Content.Shared.Doors.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Electrocution;
+using Content.Shared.Intellicard;
 using Content.Shared.Interaction;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Mind;
@@ -243,7 +244,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
     private void OnHolderInteract(Entity<StationAiHolderComponent> ent, ref AfterInteractEvent args)
     {
-        if(!args.CanReach)
+        if (args.Handled || !args.CanReach || args.Target == null)
             return;
         
         if (!TryComp(args.Target, out StationAiHolderComponent? targetHolder))
@@ -252,23 +253,21 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         if (!TryComp(args.Used, out IntellicardComponent? intelliComp))
             return;
         
-        bool isUploading = _slots.CanEject(ent.Owner, args.User, ent.Comp.Slot);
+        var isUploading = _slots.CanEject(ent.Owner, args.User, ent.Comp.Slot);
         
-        bool isDownloading = _slots.CanEject(args.Target.Value, args.User, targetHolder.Slot);
+        var isDownloading = _slots.CanEject(args.Target.Value, args.User, targetHolder.Slot);
         
-        if(isUploading == isDownloading)
+        if (isUploading == isDownloading)
             return;
         
-        if(TryGetHeldFromHolder((targetHolder.Owner, targetHolder), out var held) && _timing.CurTime > intelliComp.NextWarningAllowed) {
+        if (TryGetHeldFromHolder((args.Target.Value, targetHolder), out var held) && _timing.CurTime > intelliComp.NextWarningAllowed) {
             
             intelliComp.NextWarningAllowed = _timing.CurTime + intelliComp.WarningDelay;
             
             AnnounceIntellicardUsage(held, intelliComp.WarningSound);
         }
 
-        //TODO: Add a warning so the AI knows when they are being uploaded/downloaded.
-
-        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, isUploading ? intelliComp.uploadTime : intelliComp.downloadTime, new IntellicardDoAfterEvent(), args.Target, ent.Owner)
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, isUploading ? intelliComp.UploadTime : intelliComp.DownloadTime, new IntellicardDoAfterEvent(), args.Target, ent.Owner)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
