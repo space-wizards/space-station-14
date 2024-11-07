@@ -64,5 +64,8 @@ uplink-slashbang-desc = Releases a horde of razor sharp knives upon detonation. 
 uplink-announcer-name = Handheld announcement pad
 uplink-announcer-desc = Hacks into the Platform's announcement system. Removal of ID before use is suggested.
 
+uplink-key-name = Encryption key set
+uplink-key-desc = Contains two encryption keys on a classified frequency for the price of just one. Quite the deal, Agent!
+
 uplink-beachball-name = High-pressure beachball
 uplink-beachball-desc = The beloved NT-brand beachball, complete with a fragile lining and much higher pressure. Simply throw it and send everyony flying back, or propel yourself forwards!
