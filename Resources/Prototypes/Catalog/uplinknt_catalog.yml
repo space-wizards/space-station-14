@@ -178,6 +178,16 @@
   categories:
   - UplinkNtDisruption
 
+- type: listing
+  id: UplinkAnnouncementPad
+  name: uplink-announcer-name
+  description: uplink-announcer-desc
+  productEntity: HandHeldAnnouncementPad
+  cost:
+    BluespaceCrystal: 8
+  categories:
+  - UplinkNtDisruption
+
 ##DECEPTION
 
 - type: listing
