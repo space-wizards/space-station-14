@@ -10019,6 +10019,11 @@ entities:
     - type: Transform
       pos: -14.5,-67.5
       parent: 8364
+    - type: DeviceList
+      devices:
+      - 5463
+      - 5462
+      - 1860
   - uid: 26908
     components:
     - type: Transform
@@ -11579,7 +11584,7 @@ entities:
       pos: 24.5,16.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -16708.217
+      secondsUntilStateChange: -18318.04
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -13271,6 +13276,9 @@ entities:
     - type: Transform
       pos: -11.5,-68.5
       parent: 8364
+    - type: DeviceNetwork
+      deviceLists:
+      - 26707
   - uid: 14486
     components:
     - type: Transform
@@ -19613,6 +19621,11 @@ entities:
     components:
     - type: Transform
       pos: 2.5,-13.5
+      parent: 8364
+  - uid: 8185
+    components:
+    - type: Transform
+      pos: 3.5,-35.5
       parent: 8364
   - uid: 8383
     components:
@@ -72429,6 +72442,13 @@ entities:
     - type: Transform
       pos: -31.5,4.5
       parent: 8364
+- proto: DefaultStationBeaconVox
+  entities:
+  - uid: 27921
+    components:
+    - type: Transform
+      pos: -42.5,-11.5
+      parent: 8364
 - proto: DefaultStationBeaconWardensOffice
   entities:
   - uid: 27736
@@ -81253,11 +81273,6 @@ entities:
     - type: Transform
       pos: 70.5,-43.5
       parent: 8364
-  - uid: 21936
-    components:
-    - type: Transform
-      pos: 2.5,-36.5
-      parent: 8364
   - uid: 25921
     components:
     - type: Transform
@@ -81279,6 +81294,11 @@ entities:
       name: AI Core Chube
     - type: Transform
       pos: 11.5,-68.5
+      parent: 8364
+  - uid: 27920
+    components:
+    - type: Transform
+      pos: 2.5,-36.5
       parent: 8364
 - proto: DisposalYJunction
   entities:
@@ -84418,7 +84438,7 @@ entities:
       pos: -34.5,-14.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -10896.755
+      secondsUntilStateChange: -12506.576
       state: Closing
   - uid: 15010
     components:
@@ -84911,7 +84931,7 @@ entities:
       pos: -4.5,-71.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -2644.4858
+      secondsUntilStateChange: -4254.308
       state: Closing
 - proto: Fireplace
   entities:
@@ -110589,6 +110609,9 @@ entities:
     - type: Transform
       pos: -15.5,-68.5
       parent: 8364
+    - type: DeviceNetwork
+      deviceLists:
+      - 26707
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 7282
@@ -112049,6 +112072,9 @@ entities:
       rot: 3.141592653589793 rad
       pos: -13.5,-69.5
       parent: 8364
+    - type: DeviceNetwork
+      deviceLists:
+      - 26707
   - uid: 7284
     components:
     - type: Transform
@@ -133757,6 +133783,11 @@ entities:
     - type: Transform
       pos: 17.5,-51.5
       parent: 8364
+  - uid: 17697
+    components:
+    - type: Transform
+      pos: 10.5,-81.5
+      parent: 8364
   - uid: 17718
     components:
     - type: Transform
@@ -133776,6 +133807,11 @@ entities:
     components:
     - type: Transform
       pos: 17.5,-50.5
+      parent: 8364
+  - uid: 21936
+    components:
+    - type: Transform
+      pos: 10.5,-80.5
       parent: 8364
   - uid: 22830
     components:
@@ -137215,12 +137251,6 @@ entities:
     - type: Transform
       pos: -3.5,-20.5
       parent: 8364
-  - uid: 8185
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 10.5,-81.5
-      parent: 8364
   - uid: 8207
     components:
     - type: Transform
@@ -138044,12 +138074,6 @@ entities:
     components:
     - type: Transform
       pos: 25.5,-75.5
-      parent: 8364
-  - uid: 17697
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 10.5,-80.5
       parent: 8364
   - uid: 17787
     components:
