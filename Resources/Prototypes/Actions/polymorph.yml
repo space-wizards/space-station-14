@@ -52,6 +52,6 @@
       protoId: Jaunt
     itemIconStyle: NoItem
     icon:
-      sprite: Mobs/Animals/spider.rsi
-      state: tarantula
+      sprite: Objects/Magic/magicactions.rsi
+      state: jaunt
     # TODO: Effect ECS (from cardboard box)
