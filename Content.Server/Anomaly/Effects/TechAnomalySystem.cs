@@ -22,9 +22,15 @@ public sealed class TechAnomalySystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<TechAnomalyComponent, MapInitEvent>(OnTechMapInit);
         SubscribeLocalEvent<TechAnomalyComponent, AnomalyPulseEvent>(OnPulse);
         SubscribeLocalEvent<TechAnomalyComponent, AnomalySupercriticalEvent>(OnSupercritical);
         SubscribeLocalEvent<TechAnomalyComponent, AnomalyStabilityChangedEvent>(OnStabilityChanged);
+    }
+
+    private void OnTechMapInit(Entity<TechAnomalyComponent> ent, ref MapInitEvent args)
+    {
+        ent.Comp.NextTimer = _timing.CurTime;
     }
 
     public override void Update(float frameTime)
