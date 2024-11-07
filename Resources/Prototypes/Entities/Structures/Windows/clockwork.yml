@@ -86,6 +86,7 @@
     - trigger:
         !type:DamageTrigger
         damage: 150
+      behaviors:
       - !type:PlaySoundBehavior
         sound:
           collection: WindowShatter
