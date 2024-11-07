@@ -111,18 +111,18 @@ public sealed partial class GameTicker //🌟Starlight🌟
     };
     private void StarlightSubs()
     {
-        Subs.CVar(_cfg, StarlightCVar.StatusWebhook, value =>
+        Subs.CVar(_cfg, StarlightCCVars.StatusWebhook, value =>
         {
             if (!string.IsNullOrWhiteSpace(value))
                 _discord.GetWebhook(value, data => _statusWebhookIdentifier = data.ToIdentifier());
         }, true);
-        Subs.CVar(_cfg, StarlightCVar.StatusStaffWebhook, value =>
+        Subs.CVar(_cfg, StarlightCCVars.StatusStaffWebhook, value =>
         {
             if (!string.IsNullOrWhiteSpace(value))
                 _discord.GetWebhook(value, data => _statusWebhookStaffIdentifier = data.ToIdentifier());
         }, true);
-        Subs.CVar(_cfg, StarlightCVar.StatusMessageId, v => _statusMessageId = v, true);
-        Subs.CVar(_cfg, StarlightCVar.StatusMessageStaffId, v => _statusStaffMessageId = v, true);
+        Subs.CVar(_cfg, StarlightCCVars.StatusMessageId, v => _statusMessageId = v, true);
+        Subs.CVar(_cfg, StarlightCCVars.StatusMessageStaffId, v => _statusStaffMessageId = v, true);
         Subs.CVar(_cfg, CVars.GameHostName, v => _serverName = v[..Math.Min(v.Length, 1500)], true);
 
         _timer = new(StarlightStatus, null, TimeSpan.Zero, TimeSpan.FromSeconds(1));

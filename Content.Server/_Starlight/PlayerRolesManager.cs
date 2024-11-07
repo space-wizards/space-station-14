@@ -46,9 +46,9 @@ public sealed partial class PlayerRolesManager : IPlayerRolesManager, IPostInjec
     {
         _netMgr.RegisterNetMessage<MsgUpdatePlayerStatus>();
         _sawmill = _logManager.GetSawmill("player roles");
-        _discordKey = _cfg.GetCVar(StarlightCVar.DiscordKey);
-        _discordCallback = _cfg.GetCVar(StarlightCVar.DiscordCallback);
-        _secret = _cfg.GetCVar(StarlightCVar.Secret);
+        _discordKey = _cfg.GetCVar(StarlightCCVars.DiscordKey);
+        _discordCallback = _cfg.GetCVar(StarlightCCVars.DiscordCallback);
+        _secret = _cfg.GetCVar(StarlightCCVars.Secret);
     }
 
     void IPostInjectInit.PostInject()

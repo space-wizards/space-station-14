@@ -68,8 +68,8 @@ public sealed partial class MentorSystem : SharedMentorSystem
 
         _rateLimit.Register(
             RateLimitKey,
-            new RateLimitRegistration(StarlightCVar.MhelpRateLimitPeriod,
-                StarlightCVar.MhelpRateLimitCount,
+            new RateLimitRegistration(StarlightCCVars.MhelpRateLimitPeriod,
+                StarlightCCVars.MhelpRateLimitCount,
                 PlayerRateLimitedAction)
             );
     }

@@ -41,7 +41,7 @@ public sealed partial class TTSSystem : EntitySystem
 
     public override void Initialize()
     {
-        _cfg.OnValueChanged(StarlightCVar.TTSEnabled, v => _isEnabled = v, true);
+        _cfg.OnValueChanged(StarlightCCVars.TTSEnabled, v => _isEnabled = v, true);
 
         SubscribeNetworkEvent<PreviewTTSRequestEvent>(OnRequestPreviewTTS);
         SubscribeNetworkEvent<ClientOptionTTSEvent>(OnClientOptionTTS);
