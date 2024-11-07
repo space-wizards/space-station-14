@@ -3,7 +3,6 @@ using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
-using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Content.Shared.Roles.Jobs;
 using Robust.Shared.Audio;
@@ -22,7 +21,6 @@ public abstract class SharedRoleSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly SharedGameTicker _gameTicker = default!;
     [Dependency] private readonly SharedMindSystem _minds = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
@@ -127,7 +125,7 @@ public abstract class SharedRoleSystem : EntitySystem
     {
         if (!Resolve(mindId, ref mind))
         {
-            Log.Error($"Failed to add role {protoId} to mind {mindId} : Mind does not match provided mind component");
+            Log.Error($"Failed to add role {protoId} to {ToPrettyString(mindId)} : Mind does not match provided mind component");
             return;
         }
 
@@ -135,7 +133,7 @@ public abstract class SharedRoleSystem : EntitySystem
 
         if (!_prototypes.TryIndex(protoId, out var protoEnt))
         {
-            Log.Error($"Failed to add role {protoId} to mind {mindId} : Role prototype does not exist");
+            Log.Error($"Failed to add role {protoId} to {ToPrettyString(mindId)} : Role prototype does not exist");
             return;
         }
 
@@ -182,6 +180,7 @@ public abstract class SharedRoleSystem : EntitySystem
         {
             //TODO: This is not tied to the player on the Admin Log filters.
             //Probably only happens when Job Role is added on initial spawn, before the mind entity is put in a mob
+            Log.Error($"{ToPrettyString(mindId)} does not have an OwnedEntity!");
             _adminLogger.Add(LogType.Mind,
                 LogImpact.Low,
                 $"{name} added to {ToPrettyString(mindId)}");
@@ -195,8 +194,6 @@ public abstract class SharedRoleSystem : EntitySystem
 
     private void MindRolesChanged(EntityUid mindId)
     {
-
-        // var roleType = RoleTypeByPriority(mindId);
         var roleType = GetRoleTypeByTime(mindId);
 
         if (Comp<MindComponent>(mindId).RoleType != roleType)
@@ -224,21 +221,13 @@ public abstract class SharedRoleSystem : EntitySystem
     {
         if (!TryComp<MindComponent>(mind, out var comp))
         {
-            // TODO:ERRANT review
-            // should this be adminlog or errorlog
-            _adminLogger.Add(LogType.Mind,
-                LogImpact.High,
-             $"Failed to update Role Type of mind entity {mind.ToString()} to {roleTypeId}. MindComponent not found.");
+            Log.Error($"Failed to update Role Type of mind entity {ToPrettyString(mind)} to {roleTypeId}. MindComponent not found.");
             return;
         }
 
         if (!_prototypes.HasIndex(roleTypeId))
         {
-            // TODO:ERRANT review
-            // should this be adminlog or errorlog
-            _adminLogger.Add(LogType.Mind,
-                LogImpact.High,
-                $"Failed to change Role Type of {_minds.MindOwnerLoggingString(comp)} to {roleTypeId}. Invalid role");
+            Log.Error($"Failed to change Role Type of {_minds.MindOwnerLoggingString(comp)} to {roleTypeId}. Invalid role");
             return;
         }
 
@@ -248,23 +237,29 @@ public abstract class SharedRoleSystem : EntitySystem
         comp.RoleType = roleTypeId;
         Dirty(mind, comp);
 
-        // TODO:ERRANT review
-        // should this be adminlog or errorlog
-        _adminLogger.Add(LogType.Mind,
-            LogImpact.High,
-            $"Role Type of {_minds.MindOwnerLoggingString(comp)} changed to {roleTypeId}");
-
         if (_minds.TryGetSession(mind, out var session))
             // Update player character window
             RaiseNetworkEvent(new MindRoleTypeChangedEvent(), session.Channel);
         else
         {
-            // TODO:ERRANT review
-            // should this be adminlog or errorlog
+            var error = $"The Character Window of {_minds.MindOwnerLoggingString(comp)} potentially did not update immediately : session error";
+            _adminLogger.Add(LogType.Mind, LogImpact.High, $"{error}");
+            Log.Error(error);
+        }
+
+        if (comp.OwnedEntity is null)
+        {
+            Log.Error($"{ToPrettyString(mind)} does not have an OwnedEntity!");
             _adminLogger.Add(LogType.Mind,
                 LogImpact.High,
-                $"The Character Window of {_minds.MindOwnerLoggingString(comp)} potentially did not update immediately : session error");
+                $"Role Type of {ToPrettyString(mind)} changed to {roleTypeId}");
+            return;
         }
+
+        _adminLogger.Add(LogType.Mind,
+            LogImpact.High,
+            $"Role Type of {ToPrettyString(comp.OwnedEntity)} changed to {roleTypeId}");
+
     }
 
     /// <summary>
