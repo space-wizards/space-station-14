@@ -52,8 +52,8 @@ uplink-lobbying-desc = A briefcase containing everything needed to make an offer
 uplink-pistolmag-name = .35 auto magazine
 uplink-pistolmag-desc = For use with the MK58 pistol. Contains standard rounds.
 
-uplink-pistolmag-name = .35 auto magazine
-uplink-pistolmag-desc = For use with the MK58 pistol. Contains standard rounds.
+uplink-magnummag-name = .45 magnum magazine
+uplink-magnummag-desc = For use with the N1984. Contains the lord's caliber.
 
 uplink-firebomb-name = Incendiary grenade
 uplink-firebomb-desc = A highly volatile grenade that contains microparticles of superheated plasma. Ignites nearby targets.
@@ -68,4 +68,4 @@ uplink-key-name = Encryption key set
 uplink-key-desc = Contains two encryption keys on a classified frequency for the price of just one. Quite the deal, Agent!
 
 uplink-beachball-name = High-pressure beachball
-uplink-beachball-desc = The beloved NT-brand beachball, complete with a fragile lining and much higher pressure. Simply throw it and send everyony flying back, or propel yourself forwards!
+uplink-beachball-desc = The beloved NT-brand beachball, complete with a fragile lining and much higher pressure. Simply throw it and send targets flying back, or propel yourself forwards!
