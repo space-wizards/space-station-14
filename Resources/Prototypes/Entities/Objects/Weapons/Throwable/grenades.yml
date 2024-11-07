@@ -475,3 +475,24 @@
       path: /Audio/Effects/minibombcountdown.ogg
       params:
         volume: 12
+
+- type: entity
+  name: incendiary grenade
+  description: Grenade that releases super-heated plasma microparticles. Ignites nearby victims.
+  parent: GrenadeBase
+  id: IncendiaryGrenade
+  components:
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: FireBomb
+    maxIntensity: 10
+    intensitySlope: 3
+    totalIntensity: 150 # about a ~4 tile radius
+    canCreateVacuum: false
+  - type: OnUseTimerTrigger
+    beepSound:
+      path: "/Audio/Effects/beep1.ogg"
+      params:
+        volume: 5
+    initialBeepDelay: 0
+    beepInterval: 2 # 2 beeps total (at 0 and 2)
