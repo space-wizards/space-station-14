@@ -23,14 +23,22 @@ namespace Content.Server.Research.Disk
         private void OnAfterInteract(EntityUid uid, ResearchDiskComponent component, AfterInteractEvent args)
         {
             if (!args.CanReach)
+            {
+                args.Handled = true;
                 return;
+            }
 
             if (!TryComp<ResearchServerComponent>(args.Target, out var server))
+            {
+                args.Handled = true;
                 return;
+            }
+
 
             _research.ModifyServerPoints(args.Target.Value, component.Points, server);
             _popupSystem.PopupEntity(Loc.GetString("research-disk-inserted", ("points", component.Points)), args.Target.Value, args.User);
             EntityManager.QueueDeleteEntity(uid);
+            args.Handled = true;
         }
 
         private void OnMapInit(EntityUid uid, ResearchDiskComponent component, MapInitEvent args)
