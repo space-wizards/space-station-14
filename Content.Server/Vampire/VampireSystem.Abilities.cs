@@ -412,10 +412,10 @@ public sealed partial class VampireSystem
         else
             _popup.PopupEntity(Loc.GetString("vampire-bloodsteal-no-victims"), vampire, vampire);
 
-
+        var bloodEssence = _vampire.GetBloodEssence(vampire);
 
         //Update abilities, add new unlocks
-        //UpdateAbilities(vampire);
+        UpdateAbilities(vampire, vampire.Comp, "ActionVampireBloodSteal", "BloodSteal" , bloodEssence >= FixedPoint2.New(200) && vampire.Comp.CurrentMutation == VampireMutationsType.Hemomancer);
     }
     private bool CloakOfDarkness(Entity<VampireComponent> vampire, float upkeep, float passiveVisibilityRate, float movementVisibilityRate)
     {

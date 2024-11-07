@@ -14,7 +14,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Vampire.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 public sealed partial class VampireComponent : Component
 {
     //Static prototype references
@@ -88,7 +88,16 @@ public sealed partial class VampireComponent : Component
     /// <summary>
     /// All unlocked abilities
     /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    [AutoNetworkedField]
     public Dictionary<string, EntityUid?> UnlockedPowers = new();
+    
+    /// <summary>
+    /// All abilities
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    [AutoNetworkedField]
+    public Dictionary<string, AbilityInfo> actionEntities = new();
 
     /// <summary>
     /// Current available balance, used to sync currency across heirlooms and add essence as we feed

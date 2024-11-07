@@ -78,8 +78,6 @@ public sealed partial class VampireSystem : EntitySystem
     [Dependency] private readonly MetabolizerSystem _metabolism = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly SharedVampireSystem _vampire = default!;
-    
-    private Dictionary<string, AbilityInfo> _actionEntities = new();
 
     public override void Initialize()
     {
@@ -90,7 +88,7 @@ public sealed partial class VampireSystem : EntitySystem
         SubscribeLocalEvent<VampireComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<VampireComponent, VampireBloodChangedEvent>(OnVampireBloodChangedEvent);
         
-        SubscribeLocalEvent<VampireComponent, ComponentGetState>(GetState);
+        SubscribeLocalEvent<VampireComponent, AfterAutoHandleStateEvent>(GetState);
         SubscribeLocalEvent<VampireComponent, VampireMutationPrototypeSelectedMessage>(OnMutationSelected);
 
         InitializePowers();
@@ -224,16 +222,15 @@ public sealed partial class VampireSystem : EntitySystem
     
     private void OnVampireBloodChangedEvent(EntityUid uid, VampireComponent component, VampireBloodChangedEvent args)
     {
+        var bloodEssence = _vampire.GetBloodEssence(uid);
+        
+        AbilityInfo entity = default;
+        
         if (TryComp<VampireAlertComponent>(uid, out var alertComp))
             _vampire.SetAlertBloodAmount(alertComp,_vampire.GetBloodEssence(uid).Int());
         
-        if (_actionEntities.TryGetValue("ActionVampireCloakOfDarkness", out entity) && !HasComp<VampireSealthComponent>(uid) && _vampire.GetBloodEssence(uid) < FixedPoint2.New(300))
-            _actionEntities.Remove("ActionVampireCloakOfDarkness");
-        
-        var bloodEssence = _vampire.GetBloodEssence(uid);
-        
-        EntityUid? newEntity = null;
-        AbilityInfo entity = default;
+        if (component.actionEntities.TryGetValue("ActionVampireCloakOfDarkness", out entity) && !HasComp<VampireSealthComponent>(uid) && _vampire.GetBloodEssence(uid) < FixedPoint2.New(300))
+            component.actionEntities.Remove("ActionVampireCloakOfDarkness");
         
         UpdateAbilities(uid, component , VampireComponent.MutationsActionPrototype, null , bloodEssence >= FixedPoint2.New(50) && !HasComp<VampireSealthComponent>(uid));
         
@@ -287,12 +284,12 @@ public sealed partial class VampireSystem : EntitySystem
         EntityUid? actionEntity = null;
         if (addAction)
         {
-            if (!_actionEntities.ContainsKey(actionId))
+            if (!component.actionEntities.ContainsKey(actionId))
             {
                 _action.AddAction(uid, ref actionEntity, actionId);
                 if (actionEntity != null)
                 {
-                    _actionEntities[actionId] = new AbilityInfo(uid, actionEntity.Value);
+                    component.actionEntities[actionId] = new AbilityInfo(uid, actionEntity.Value);
                     if (powerId != null && !component.UnlockedPowers.ContainsKey(powerId))
                         component.UnlockedPowers.Add(powerId, actionEntity.Value);
                 }
@@ -300,12 +297,12 @@ public sealed partial class VampireSystem : EntitySystem
         }
         else
         {
-            if (_actionEntities.TryGetValue(actionId, out var abilityInfo) && abilityInfo.Owner == uid)
+            if (component.actionEntities.TryGetValue(actionId, out var abilityInfo) && abilityInfo.Owner == uid)
             {
                 if (TryComp(uid, out ActionsComponent? comp))
                 {
                     _action.RemoveAction(uid, abilityInfo.Action, comp);
-                    _actionEntities.Remove(actionId);
+                    component.actionEntities.Remove(actionId);
                     if (powerId != null && component.UnlockedPowers.ContainsKey(powerId))
                         component.UnlockedPowers.Remove(powerId);
                 }
@@ -367,7 +364,7 @@ public sealed partial class VampireSystem : EntitySystem
         }
     }
     
-    private void GetState(EntityUid uid, VampireComponent component, ref ComponentGetState args)
+    private void GetState(EntityUid uid, VampireComponent component, ref AfterAutoHandleStateEvent args)
     {
         args.State = new VampireMutationComponentState
         {
