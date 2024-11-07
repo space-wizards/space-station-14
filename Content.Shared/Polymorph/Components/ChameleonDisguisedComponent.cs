@@ -8,12 +8,13 @@ namespace Content.Shared.Polymorph.Components;
 /// Handles making them invisible and revealing when damaged enough or switching hands.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedChameleonProjectorSystem))]
+[AutoGenerateComponentState]
 public sealed partial class ChameleonDisguisedComponent : Component
 {
     /// <summary>
     /// The disguise entity parented to the player.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityUid Disguise;
 
     /// <summary>
