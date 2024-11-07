@@ -24,8 +24,8 @@ public sealed partial class IntellicardComponent : Component
     public int uploadTime = 3;
 
     /// <summary>
-    /// The sound that plays for the Silicon player
-    /// when the law change is processed for the provider.
+    /// The sound that plays for the AI
+    /// when they are being downloaded
     /// </summary>
     [DataField, AutoNetworkedField]
     public SoundSpecifier? WarningSound = new SoundPathSpecifier("/Audio/Misc/notice2.ogg");
