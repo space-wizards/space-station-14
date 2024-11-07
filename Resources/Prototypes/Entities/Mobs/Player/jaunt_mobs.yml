@@ -1,0 +1,47 @@
+﻿- type: entity
+  name: jaunt
+  parent: BaseMob
+  id: BaseMobJaunt
+  description: You shouldn't see this!
+  suffix: Ethereal
+  components:
+  - type: CargoSellBlacklist
+  - type: ContentEye
+    maxZoom: 1.44,1.44
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 15
+        mask:
+        - GhostImpassable
+  - type: Eye
+    drawFov: false
+  - type: Input
+    context: "ghost"
+  - type: InputMover
+  - type: MovementSpeedModifier
+    baseSprintSpeed: 12
+    baseWalkSpeed: 8
+  - type: MovementIgnoreGravity
+  - type: Physics
+    bodyType: KinematicController
+    bodyStatus: InAir
+  - type: CanMoveInAir
+  - type: NoSlip
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+# Should be slow, for balance
+- type: entity
+  name: jaunt
+  parent: BaseMobJaunt
+  id: EtherealJaunt
+  suffix: Wizard
+  components:
+  - type: MovementSpeedModifier
+    baseSprintSpeed: 6
+    baseWalkSpeed: 4

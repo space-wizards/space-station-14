@@ -40,3 +40,18 @@
     icon:
       sprite: Objects/Fun/immovable_rod.rsi
       state: icon
+
+- type: entity
+  id: ActionPolymorphJaunt
+  name: Jaunt
+  description: Jaunt into the unknown
+  components:
+  - type: InstantAction
+    useDelay: 30
+    event: !type:PolymorphActionEvent
+      protoId: Jaunt
+    itemIconStyle: NoItem
+    icon:
+      sprite: Mobs/Animals/spider.rsi
+      state: tarantula
+    # TODO: Effect ECS (from cardboard box)
