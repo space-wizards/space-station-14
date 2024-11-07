@@ -1174,6 +1174,7 @@
       - ClothingOuterWinterCentcom
       - ClothingOuterWinterSyndie
       - ClothingOuterWinterSyndieCap
+      - ClothingNeckCloakStraight
   - type: MaterialStorage
     whitelist:
       tags:
