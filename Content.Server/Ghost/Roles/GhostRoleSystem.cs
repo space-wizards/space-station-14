@@ -520,11 +520,13 @@ public sealed class GhostRoleSystem : EntitySystem
             markerRole.Value.Comp2.Name = role.RoleName;
 
             //TODO:ERRANT ugly ugly UGLY
-            if(role.RoleType != "Neutral" && role.RoleType is not null)
+            if (role.RoleType != "Neutral" && role.RoleType is not null)
+            {
                 markerRole.Value.Comp1.RoleType = role.RoleType;
+                //TODO:ERRANT probably should be an event instead so the function can remain Private
+                _roleSystem.MindRolesChanged(newMind);
+            }
 
-            //TODO:ERRANT probably should be an event instead so the function can remain Private
-            _roleSystem.MindRolesChanged(newMind);
         }
 
         _mindSystem.SetUserId(newMind, player.UserId);
