@@ -194,7 +194,7 @@
   description: uplink-announcer-desc
   productEntity: HandHeldAnnouncementPad
   cost:
-    BluespaceCrystal: 8
+    BluespaceCrystal: 7
   categories:
   - UplinkNtDisruption
 
