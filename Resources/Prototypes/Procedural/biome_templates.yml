@@ -73,68 +73,81 @@
       tile: FloorAsteroidSand
 
 # Grass
-- type: biomeTemplate
-  id: Grasslands
-  layers:
-    # Sparse vegetation
-    - !type:BiomeDecalLayer
-      allowedTiles:
+- type: entity
+  id: BiomeGrasslands
+  components:
+  - type: BiomeMetaLayer
+    layers:
+    - id: Decals
+      dependsOn:
+      - Tile
+      subLayers:
+      # Sparse vegetation
+      - !type:BiomeDecalLayer
+        allowedTiles:
         - FloorPlanetGrass
-      divisions: 2
-      threshold: -0.50
-      noise:
-        seed: 0
-        noiseType: Cellular
-        frequency: 1
-      decals:
+        divisions: 2
+        threshold: -0.50
+        noise:
+          seed: 0
+          noiseType: Cellular
+          frequency: 1
+        decals:
         - BushDOne
         - BushDTwo
         - BushDThree
-    - !type:BiomeDecalLayer
-      allowedTiles:
+
+      - !type:BiomeDecalLayer
+        allowedTiles:
         - FloorPlanetGrass
-      noise:
-        seed: 0
-        noiseType: OpenSimplex2
-        frequency: 1
-      divisions: 1
-      threshold: 0.8
-      decals:
+        noise:
+          seed: 0
+          noiseType: OpenSimplex2
+          frequency: 1
+        divisions: 1
+        threshold: 0.8
+        decals:
         - FlowersBROne
         - FlowersBRTwo
         - FlowersBRThree
-    # Dense vegetation
-    - !type:BiomeDecalLayer
-      allowedTiles:
-      - FloorPlanetGrass
-      divisions: 1
-      threshold: -0.35
-      noise:
-        seed: 0
-        noiseType: Cellular
-        frequency: 0.2
-        fractalType: FBm
-        octaves: 5
-        lacunarity: 2
-        cellularDistanceFunction: Euclidean
-        cellularReturnType: Distance2
-      decals:
+
+      # Dense vegetation
+      - !type:BiomeDecalLayer
+        allowedTiles:
+        - FloorPlanetGrass
+        divisions: 1
+        threshold: -0.35
+        noise:
+          seed: 0
+          noiseType: Cellular
+          frequency: 0.2
+          fractalType: FBm
+          octaves: 5
+          lacunarity: 2
+          cellularDistanceFunction: Euclidean
+          cellularReturnType: Distance2
+        decals:
         - BushAOne
         - BushATwo
         - BushAThree
         - BushCOne
         - BushCTwo
         - BushCThree
-    - !type:BiomeEntityLayer
-      threshold: 0.5
-      noise:
-        seed: 0
-        noiseType: OpenSimplex2
-        fractalType: FBm
-        frequency: 2
-      allowedTiles:
+
+    - id: Trees
+      dependsOn:
+      - Tile
+      subLayers:
+      - !type:BiomeEntityLayer
+        threshold: 0.5
+        noise:
+          seed: 0
+          noiseType: OpenSimplex2
+          fractalType: FBm
+          frequency: 2
+        allowedTiles:
         - FloorPlanetGrass
-      entities:
+        entities:
         - FloraTree01
         - FloraTree02
         - FloraTree03
@@ -147,75 +160,87 @@
         - FloraTreeLarge04
         - FloraTreeLarge05
         - FloraTreeLarge06
-    # Rock formations
-    - !type:BiomeEntityLayer
-      allowedTiles:
+
+    - id: Rocks
+      dependsOn:
+      - Tile
+      subLayers:
+      - !type:BiomeEntityLayer
+        allowedTiles:
         - FloorPlanetGrass
         - FloorPlanetDirt
-      threshold: -0.30
-      noise:
-        seed: 0
-        noiseType: Cellular
-        frequency: 0.05
-        lacunarity: 2
-        fractalType: FBm
-        octaves: 5
-        cellularDistanceFunction: Euclidean
-        cellularReturnType: Distance2
-      entities:
+        threshold: -0.30
+        noise:
+          seed: 0
+          noiseType: Cellular
+          frequency: 0.05
+          lacunarity: 2
+          fractalType: FBm
+          octaves: 5
+          cellularDistanceFunction: Euclidean
+          cellularReturnType: Distance2
+        entities:
         - WallRock
-    - !type:BiomeDummyLayer
-      id: Loot
-    # Water
-    - !type:BiomeEntityLayer
-      allowedTiles:
+
+    - id: Water
+      dependsOn:
+      - Tile
+      subLayers:
+      - !type:BiomeEntityLayer
+        allowedTiles:
         - FloorPlanetGrass
         - FloorPlanetDirt
-      threshold: 0.95
-      noise:
-        seed: 3
-        noiseType: OpenSimplex2
-        frequency: 0.003
-        lacunarity: 1.50
-        fractalType: Ridged
-        octaves: 1
-      entities:
+        threshold: 0.95
+        noise:
+          seed: 3
+          noiseType: OpenSimplex2
+          frequency: 0.003
+          lacunarity: 1.50
+          fractalType: Ridged
+          octaves: 1
+        entities:
         - FloorWaterEntity
-    # Fill remainder with dirt.
-    - !type:BiomeTileLayer
-      threshold: -1.0
-      tile: FloorPlanetDirt
-    - !type:BiomeTileLayer
-      threshold: -0.90
-      tile: FloorPlanetGrass
-      noise:
-        seed: 0
-        frequency: 0.02
-        fractalType: None
-    # Water sand
-    - !type:BiomeTileLayer
-      tile: FloorPlanetDirt
-      threshold: 0.95
-      noise:
-        seed: 3
-        noiseType: OpenSimplex2
-        frequency: 0.003
-        lacunarity: 1.50
-        fractalType: Ridged
-        octaves: 1
-    # Rock formation sand
-    - !type:BiomeTileLayer
-      tile: FloorPlanetDirt
-      threshold: -0.30
-      noise:
-        seed: 0
-        noiseType: Cellular
-        frequency: 0.05
-        lacunarity: 2
-        fractalType: FBm
-        octaves: 5
-        cellularDistanceFunction: Euclidean
-        cellularReturnType: Distance2
+
+      # Water sand
+      - !type:BiomeTileLayer
+        tile: FloorPlanetDirt
+        threshold: 0.95
+        noise:
+          seed: 3
+          noiseType: OpenSimplex2
+          frequency: 0.003
+          lacunarity: 1.50
+          fractalType: Ridged
+          octaves: 1
+
+    - id: Tile
+      subLayers:
+      # Fill remainder with dirt.
+      - !type:BiomeTileLayer
+        threshold: -1.0
+        tile: FloorPlanetDirt
+
+      - !type:BiomeTileLayer
+        threshold: -0.90
+        tile: FloorPlanetGrass
+        noise:
+          seed: 0
+          frequency: 0.02
+          fractalType: None
+
+      # Rock formation sand
+      - !type:BiomeTileLayer
+        tile: FloorPlanetDirt
+        threshold: -0.30
+        noise:
+          seed: 0
+          noiseType: Cellular
+          frequency: 0.05
+          lacunarity: 2
+          fractalType: FBm
+          octaves: 5
+          cellularDistanceFunction: Euclidean
+          cellularReturnType: Distance2
 
 # Lava
 - type: biomeTemplate

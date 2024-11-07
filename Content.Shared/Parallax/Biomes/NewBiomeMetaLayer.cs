@@ -13,19 +13,20 @@ public sealed record NewBiomeMetaLayer
     public string Id = string.Empty;
 
     /// <summary>
-    /// Chunks for this meta layer.
+    /// Chunk dimensions for this meta layer.
     /// </summary>
     [DataField]
-    public Vector2i Size = new(32, 32);
+    public Vector2i Size = new(8, 8);
 
     /// <summary>
     /// Meta layers that this one requires to be loaded first.
+    /// Will ensure all of the chunks for our corresponding area are loaded.
     /// </summary>
     [DataField]
-    public string? DependsOn;
+    public List<string>? DependsOn;
 
     [DataField(required: true)]
-    public List<INewBiomeMetaLayer> Layers = new();
+    public List<INewBiomeMetaLayer> SubLayers = new();
 }
 
 [RegisterComponent]
@@ -33,6 +34,7 @@ public sealed partial class NewBiomeComponent : Component
 {
     // TODO: Template prototype.
 
+    [DataField(required: true)]
     public List<INewBiomeMetaLayer> Layers = new();
 
     public Dictionary<string, Dictionary<Vector2i, IBiomeLoadedData>> LoadedData = new();
@@ -50,3 +52,5 @@ public interface IBiomeLoadedData
     /// </summary>
     bool Unloadable { get; set; }
 }
+
+public sealed record 
