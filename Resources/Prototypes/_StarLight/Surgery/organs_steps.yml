@@ -297,6 +297,36 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
     state: scalpel
+    
+# eye implants
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepLocateImplant
+  name: Locate Eye Implant
+  components:
+  - type: SurgeryStep
+    duration: 2
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/implants.rsi
+    layers:
+      - state: welding_implant
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepRemoveEyeImplant
+  name: Remove Eye Implant
+  components:
+  - type: SurgeryStep
+    duration: 3
+    tools:
+    - type: Scalpel
+  - type: SurgeryStepEmoteEffect
+  - type: SurgeryStepOrganExtract
+    organ:
+    - type: Implant
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
+    state: scalpel
 
 # tongue
 - type: entity
@@ -791,6 +821,24 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/Surgery/scissors.rsi
     state: hemostat
+    
+# eye implants
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepInsertEyeImplant
+  name: Insert Eye Implant
+  components:
+  - type: SurgeryStep
+    duration: 2
+    tools:
+    - type: Implant
+  - type: SurgeryStepOrganInsert
+    slot: eye_implant
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/implants.rsi
+    layers:
+      - state: welding_implant
 
 # tongue
 
