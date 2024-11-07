@@ -230,6 +230,18 @@
   categories:
   - UplinkNtDeception
 
+##ALLIES
+
+- type: listing
+  id: UplinkEncryptionKeyNanotrasen
+  name: uplink-key-name
+  description: uplink-key-desc
+  productEntity: BoxEncryptionKeyNanotrasen
+  cost:
+    BluespaceCrystal: 2
+  categories:
+  - UplinkNtAllies
+
 ##POINTLESS
 
 - type: listing
