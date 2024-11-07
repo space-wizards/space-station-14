@@ -63,6 +63,16 @@
 ##EXPLOSIVES
 
 - type: listing
+  id: UplinkBeachballGrenade
+  name: uplink-beachball-name
+  description: uplink-beachball-desc
+  productEntity: BeachballGrenade
+  cost:
+    BluespaceCrystal: 4
+  categories:
+  - UplinkNtExplosives
+
+- type: listing
   id: UplinkIncendiaryGrenade
   name: uplink-firebomb-name
   description: uplink-firebomb-desc
