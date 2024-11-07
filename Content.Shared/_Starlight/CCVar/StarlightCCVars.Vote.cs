@@ -6,6 +6,9 @@ public sealed partial class StarlightCCVars
     /// <summary>
     /// RoundEnd Vote
     /// </summary>
+    public static readonly CVarDef<int> MinPlayerToVote = 
+        CVarDef.Create("game.min_player_to_vote", 2);
+    
     public static readonly CVarDef<bool> ShowRestartVotes = 
         CVarDef.Create("vote.show_restart_votes", true);
 
@@ -34,5 +37,8 @@ public sealed partial class StarlightCCVars
         CVarDef.Create("vote.map_voting_chances_prototype", "");
     
     public static readonly CVarDef<string> RoundVotingChancesPrototype = 
-        CVarDef.Create("vote.round_voting_chances_prototype", "");
+        CVarDef.Create("vote.round_voting_chances_prototype", "Basic");
+        
+    public static readonly CVarDef<bool> ResetPresetAfterRestart = 
+        CVarDef.Create("game.reset_preset_after_restart", false);
 }

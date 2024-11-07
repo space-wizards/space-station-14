@@ -1,0 +1,13 @@
+- type: roundvotingchances
+  id: Basic
+  chances:
+    Secret: 1.0 # XD Secret
+    Survival: 0.1
+    KesslerSyndrome: 0.1
+    Greenshift: 0.6
+    Traitor: 0.3
+    Nukeops: 0.3
+    Zombie: 0.2
+    Zombieteors: 0.1
+    Changeling: 0.2
+    Vampire: 0.2

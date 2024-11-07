@@ -5,6 +5,7 @@ using Content.Server.Chat.Systems;
 using Content.Server.Starlight.TextToSpeech;
 using Content.Shared.Humanoid;
 using Content.Shared.Starlight;
+using Content.Shared.Starlight.CCVar;
 using Content.Shared.Starlight.TextToSpeech;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;

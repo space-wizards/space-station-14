@@ -3,6 +3,7 @@ using Content.Server.RoundEnd;
 using Content.Server.Voting.Managers;
 using Content.Shared.Starlight.CCVar;
 using Content.Shared.Voting;
+using Robust.Server.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Configuration;
 
@@ -14,6 +15,7 @@ public sealed class RoundEndVoteSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IVoteManager _voteManager = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
 
     private TimeSpan? _voteStartTime;
 
@@ -26,6 +28,12 @@ public sealed class RoundEndVoteSystem : EntitySystem
 
     public void OnRoundEndSystemChange(RoundEndSystemChangedEvent args)
     {
+        if (_playerManager.PlayerCount < _cfg.GetCVar(StarlightCCVars.MinPlayerToVote))
+        {
+            Logger.Warning($"Not enought players, player count: {_playerManager.PlayerCount}");
+            return;
+        }
+        
         _voteStartTime = _gameTiming.CurTime + _gameTicker.LobbyDuration - TimeSpan.FromSeconds(_cfg.GetCVar(StarlightCCVars.VotingsDelay));
         Log.Warning($"Vote will start at {_voteStartTime}");
 

@@ -3,7 +3,7 @@
   alias:
     - survival
   name: survival-title
-  showInVote: false # secret
+  showInVote: true # 🌟Starlight🌟
   minPlayers: 10
   description: survival-description
   rules:
@@ -20,7 +20,7 @@
     - junk
     - meteorhell
   name: kessler-syndrome-title
-  showInVote: false # secret
+  showInVote: true # 🌟Starlight🌟
   minPlayers: 10
   description: kessler-syndrome-description
   rules:
@@ -78,7 +78,7 @@
   - extended
   - shittersafari
   name: extended-title
-  showInVote: false #2boring2vote
+  showInVote: true # 🌟Starlight🌟
   description: extended-description
   minPlayers: 4
   rules:
@@ -93,7 +93,7 @@
   - greenshift
   - shittersafarideluxeedition
   name: greenshift-title
-  showInVote: true #4boring4vote
+  showInVote: true # 🌟Starlight🌟
   description: greenshift-description
   rules:
   - SpaceTrafficControlFriendlyEventScheduler 
@@ -154,7 +154,7 @@
   name: traitor-title
   description: traitor-description
   minPlayers: 4
-  showInVote: false
+  showInVote: true # 🌟Starlight🌟
   rules:
     - Traitor
     - SubGamemodesRule
@@ -184,7 +184,7 @@
   name: nukeops-title
   description: nukeops-description
   minPlayers: 40
-  showInVote: false
+  showInVote: true # 🌟Starlight🌟
   rules:
     - Nukeops
     - SubGamemodesRule
@@ -202,7 +202,7 @@
   name: rev-title
   description: rev-description
   minPlayers: 30
-  showInVote: false
+  showInVote: true # 🌟Starlight🌟
   rules:
     - Revolutionary
     - SubGamemodesRule
@@ -221,8 +221,8 @@
   - zomber
   name: zombie-title
   description: zombie-description
-  minPlayers: 20
-  showInVote: false
+  minPlayers: 50 # 🌟Starlight🌟
+  showInVote: true # 🌟Starlight🌟
   rules:
   - Zombie
   - BasicStationEventScheduler
@@ -238,8 +238,8 @@
   - meteombies
   name: zombieteors-title
   description: zombieteors-description
-  minPlayers: 15
-  showInVote: false
+  minPlayers: 50 # 🌟Starlight🌟
+  showInVote: true # 🌟Starlight🌟
   rules:
   - Zombie
   - BasicStationEventScheduler
@@ -256,8 +256,8 @@
   - vampires
   name: vampire-gamemode-title
   description: vampire-gamemode-description
-  showInVote: true
-  minPlayers: 50 # Sunrise-Edit: 50 players for VAMPIRES
+  showInVote: true # 🌟Starlight🌟
+  minPlayers: 50 # 🌟Starlight🌟
   rules:
   - Vampire
   - SubGamemodesRule

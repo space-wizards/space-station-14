@@ -15,6 +15,7 @@ using Content.Server.Discord;
 using Content.Server.GameTicking;
 using Content.Server.Players.RateLimiting;
 using Content.Shared.Starlight;
+using Content.Shared.Starlight.CCVar;
 using Content.Shared.Starlight.MHelp;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;

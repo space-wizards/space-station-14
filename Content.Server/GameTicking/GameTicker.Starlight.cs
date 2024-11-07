@@ -4,6 +4,7 @@ using System.Threading;
 using Content.Server.Database;
 using Content.Server.Discord;
 using Content.Shared.Starlight;
+using Content.Shared.Starlight.CCVar;
 using Robust.Shared;
 using Robust.Shared.Localization;
 using static Content.Shared.Administration.Notes.AdminMessageEuiState;
