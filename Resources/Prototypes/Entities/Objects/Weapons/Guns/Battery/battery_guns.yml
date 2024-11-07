@@ -3,6 +3,11 @@
   parent: BaseItem
   abstract: true
   components:
+  - type: RestrictByUserTag
+    doestContain:
+    - Abductor
+    messages:
+    - abductor-gun-restricted-1
   - type: Sprite
   - type: Item
     size: Huge

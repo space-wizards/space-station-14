@@ -10,6 +10,14 @@
   - type: Sprite 
     sprite: _Starlight/Objects/Weapons/Melee/wonderprod.rsi
     state: icon
+  - type: RestrictByUserTag
+    contains:
+    - Abductor
+    messages:
+    - abductors-weapon-restricted-1
+    - abductors-weapon-restricted-2
+    - abductors-weapon-restricted-3
+    - abductors-weapon-restricted-4
   - type: ItemSwitch
     state: stun
     states:

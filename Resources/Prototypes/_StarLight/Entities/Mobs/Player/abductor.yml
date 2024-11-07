@@ -10,6 +10,9 @@
   - type: Loadout
     prototypes:
       - AbductorScientistGear
+  - type: Tag
+    tags:
+      - Abductor
 
 - type: startingGear
   id: AbductorScientistGear
