@@ -404,7 +404,7 @@ public sealed partial class VampireSystem
 
                 AddBloodEssence(vampire, volumeToConsume * 0.80);
 
-                _beam.TryCreateBeam(vampire, entity, "SuperchargedLightning");
+                _beam.TryCreateBeam(vampire, entity, "VampireLightning");
 
                 _popup.PopupEntity(Loc.GetString("vampire-bloodsteal-other"), entity, entity, Shared.Popups.PopupType.LargeCaution);
             }
