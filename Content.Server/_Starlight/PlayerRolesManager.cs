@@ -84,7 +84,7 @@ public sealed partial class PlayerRolesManager : IPlayerRolesManager, IPostInjec
     private string GetDiscordAuthUrl(string customState)
     {
         if (string.IsNullOrEmpty(_discordCallback) || string.IsNullOrEmpty(_discordKey) || string.IsNullOrEmpty(_secret)) return "";
-        var scope = "identify%20guilds.members.read";
+        var scope = "identify%20guilds%20guilds.members.read";
         var secretKeyBytes = Encoding.UTF8.GetBytes(_secret);
         using var hmac = new HMACSHA256(secretKeyBytes);
 
@@ -144,6 +144,9 @@ public sealed partial class PlayerRolesManager : IPlayerRolesManager, IPostInjec
     }
 
     public PlayerData? GetPlayerData(ICommonSession session) => _players.TryGetValue(session, out var data) ? data.Data : null;
+
+    private const int ALL_ROLES = (int)PlayerFlags.Staff | (int)PlayerFlags.Retiree | (int)PlayerFlags.AlfaTester | (int)PlayerFlags.Mentor | (int)PlayerFlags.AllRoles;
+    public bool IsAllRolesAvailable(ICommonSession session) => _players.TryGetValue(session, out var data) && ((int)data.Data.Flags & ALL_ROLES) != 0;
 
     private sealed class PlayerReg(ICommonSession session, PlayerData data)
     {

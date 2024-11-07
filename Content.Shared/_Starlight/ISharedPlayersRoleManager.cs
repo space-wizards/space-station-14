@@ -8,6 +8,7 @@ public interface ISharedPlayersRoleManager
 
     PlayerData? GetPlayerData(EntityUid uid);
     PlayerData? GetPlayerData(ICommonSession session);
+    bool IsAllRolesAvailable(ICommonSession session);
 
     bool HasPlayerFlag(EntityUid player, PlayerFlags flag)
     {

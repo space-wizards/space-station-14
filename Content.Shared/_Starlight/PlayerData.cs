@@ -39,7 +39,7 @@ public enum PlayerFlags : uint
 
     Staff = 1 << 2,
     Mentor = 1 << 3,
-    Retired = 1 << 4,
+    Retiree = 1 << 4,
 
     Patron1 = 1 << 5,
     Patron2 = 1 << 6,
@@ -51,4 +51,6 @@ public enum PlayerFlags : uint
     GoldEventWinner = 1 << 11,
     SilverEventWinner = 1 << 12,
     CopperEventWinner = 1 << 13,
+
+    AllRoles = 1 << 14,
 }

@@ -29,12 +29,8 @@ public sealed partial class OverallPlaytimeRequirement : JobRequirement
         reason = new FormattedMessage();
 
         //🌟Starlight🌟 start
-        if (player is not null)
-        {
-            var roles = IoCManager.Resolve<ISharedPlayersRoleManager>().GetPlayerData(player);
-            if (roles is not null && (roles.HasFlag(PlayerFlags.Staff) || roles.HasFlag(PlayerFlags.Retired) || roles.HasFlag(PlayerFlags.AlfaTester) || roles.HasFlag(PlayerFlags.Mentor)))
-                return true;
-        }
+        if (player is not null && IoCManager.Resolve<ISharedPlayersRoleManager>().IsAllRolesAvailable(player))
+            return true;
         //🌟Starlight🌟 end
 
         var overallTime = playTimes.GetValueOrDefault(PlayTimeTrackingShared.TrackerOverall);

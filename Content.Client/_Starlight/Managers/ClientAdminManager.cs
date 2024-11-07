@@ -53,6 +53,8 @@ public sealed class ClientPlayerManager : IClientPlayerRolesManager, IPostInject
     public PlayerData? GetPlayerData(EntityUid uid)
         => _player.LocalEntity == uid ? _playerData : null;
 
+    private const int ALL_ROLES = (int)PlayerFlags.Staff | (int)PlayerFlags.Retiree | (int)PlayerFlags.AlfaTester | (int)PlayerFlags.Mentor | (int)PlayerFlags.AllRoles;
+    public bool IsAllRolesAvailable(ICommonSession session) => _player.LocalUser == session.UserId && _playerData is not null && ((int)_playerData.Flags & ALL_ROLES) != 0;
     public PlayerData? GetPlayerData(ICommonSession session)
         => _player.LocalUser == session.UserId ? _playerData : null;
     public string? GetDiscordLink() 

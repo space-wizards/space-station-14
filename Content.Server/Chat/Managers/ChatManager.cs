@@ -263,7 +263,7 @@ internal sealed partial class ChatManager : IChatManager
                 : "";
             var title = playerData.HasFlag(PlayerFlags.Staff) ? "Staff "
                 : playerData.HasFlag(PlayerFlags.Mentor) ? "Mentor "
-                : playerData.HasFlag(PlayerFlags.Retired) ? "Retiree "
+                : playerData.HasFlag(PlayerFlags.Retiree) ? "Retiree "
                 : "";
             playerTitle = string.Join("-", ((string[])[prefix, title]).Where(x => !string.IsNullOrEmpty(x)));
             titleColor = playerData.HasFlag(PlayerFlags.AlfaTester) ? Color.FromHex("#35e500")
@@ -272,7 +272,7 @@ internal sealed partial class ChatManager : IChatManager
 
             playerName = $"{player.Name}";
             nameColor = playerData.HasFlag(PlayerFlags.Staff) ? Color.FromHex("#E67E22")
-                : playerData.HasFlag(PlayerFlags.Retired) ? Color.FromHex("#A84300")
+                : playerData.HasFlag(PlayerFlags.Retiree) ? Color.FromHex("#A84300")
                 : playerData.HasFlag(PlayerFlags.Mentor) ? Color.FromHex("#00ffff")
                 : Color.LightSkyBlue; ;
 
