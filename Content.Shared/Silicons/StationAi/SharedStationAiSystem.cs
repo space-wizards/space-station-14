@@ -207,13 +207,13 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     {
         if(args.Cancelled)
             return;
-        
+
         if(args.Handled)
             return;
-        
+
         if (!TryComp(args.Args.Target, out StationAiHolderComponent? targetHolder))
             return;
-        
+
         // Try to insert our thing into them
         if (_slots.CanEject(ent.Owner, args.User, ent.Comp.Slot))
         {
