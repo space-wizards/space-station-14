@@ -271,6 +271,7 @@
     - id: ProtolatheMachineCircuitboard
     - id: ResearchComputerCircuitboard
     - id: RubberStampRd
+    - id: BookAILaws
 
 # Hardsuit table, used for suit storage as well
 - type: entityTable

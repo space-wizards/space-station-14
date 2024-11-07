@@ -493,3 +493,18 @@
       color: gold
   - type: Paper
     content: book-text-atmos-vents
+
+- type: entity
+  parent: BookBase
+  id: BookAILaws
+  name: AI Lawpendium
+  description: A guide to the AI laws used by NanoTrasen.
+  components:
+  - type: Sprite
+    layers:
+    - state: paper
+    - state: cover_strong
+      color: "#3d8fb8"
+    - state: icon_ai
+  - type: Paper
+    content: book-text-ai-laws

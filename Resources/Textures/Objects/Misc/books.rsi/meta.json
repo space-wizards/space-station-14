@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Base sprite taken at: https://github.com/tgstation/tgstation/commit/37fb6bc6dd20005775dde8d886f48f7722606b77 , splitted on layers by TheShuEd (github)",
+  "copyright": "Base sprite taken at: https://github.com/tgstation/tgstation/commit/37fb6bc6dd20005775dde8d886f48f7722606b77 , splitted on layers by TheShuEd (github), icon_ai by lunarcomets",
   "size": {
     "x": 32,
     "y": 32
@@ -48,6 +48,9 @@
     },
     {
       "name": "detail_rivets"
+    },
+    {
+      "name": "icon_ai"
     },
     {
       "name": "icon_apple"
