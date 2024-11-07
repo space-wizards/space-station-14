@@ -1,9 +1,10 @@
+using Content.Client.Effects;
 using Content.Client.Smoking;
-using Content.Shared.Effects;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Polymorph.Components;
 using Content.Shared.Polymorph.Systems;
 using Robust.Client.GameObjects;
+using Robust.Shared.Player;
 
 namespace Content.Client.Polymorph.Systems;
 
@@ -12,10 +13,7 @@ public sealed class ChameleonProjectorSystem : SharedChameleonProjectorSystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     private EntityQuery<AppearanceComponent> _appearanceQuery;
-    private EntityQuery<ChameleonDisguisedComponent> _disguisedQuery;
     private EntityQuery<SpriteComponent> _spriteQuery;
-
-    private List<NetEntity> _toFlash = new();
 
     public override void Initialize()
     {
@@ -29,8 +27,7 @@ public sealed class ChameleonProjectorSystem : SharedChameleonProjectorSystem
 
         SubscribeLocalEvent<ChameleonDisguisedComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<ChameleonDisguisedComponent, ComponentShutdown>(OnShutdown);
-
-        SubscribeAllEvent<ColorFlashEffectEvent>(OnColorFlashEffect);
+        SubscribeLocalEvent<ChameleonDisguisedComponent, GetFlashEffectTargetEvent>(OnGetFlashEffectTargetEvent);
     }
 
     private void OnHandleState(Entity<ChameleonDisguiseComponent> ent, ref AfterAutoHandleStateEvent args)
@@ -60,28 +57,8 @@ public sealed class ChameleonProjectorSystem : SharedChameleonProjectorSystem
             sprite.Visible = ent.Comp.WasVisible;
     }
 
-    private void OnColorFlashEffect(ColorFlashEffectEvent args)
+    private void OnGetFlashEffectTargetEvent(Entity<ChameleonDisguisedComponent> ent, ref GetFlashEffectTargetEvent args)
     {
-        _toFlash.Clear();
-        foreach (var nent in args.Entities)
-        {
-            var ent = GetEntity(nent);
-            if (!_disguisedQuery.TryComp(ent, out var disguised))
-                continue;
-
-            // prevent recursion
-            var disguise = disguised.Disguise;
-            if (_disguisedQuery.HasComp(disguise))
-                continue;
-
-            _toFlash.Add(GetNetEntity(disguise));
-        }
-
-        if (_toFlash.Count == 0)
-            return;
-
-        // relay the flash effect to the disguise when you get hit
-        args.Entities = _toFlash;
-        RaiseLocalEvent(args);
+        args.Target = ent.Comp.Disguise;
     }
 }
