@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Mantles are now available in loadouts, requiring 20 hours of that head
-      of department's time.
-    type: Add
-  - message: Mantles are no longer spawned in dressers or able to be printed at uniform
-      lathes.
-    type: Remove
-  id: 7098
-  time: '2024-08-12T07:14:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30929
 - author: LeoSantich
   changes:
   - message: Updated 'narsie' and 'ratvar' to 'Nar'Sie' and 'Ratvar' in randomly generated
@@ -3953,3 +3942,10 @@
   id: 7597
   time: '2024-11-06T14:39:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31292
+- author: PopGamer46
+  changes:
+  - message: Fixed Lambordeere (botany shuttle) bolt buttons not being connected
+    type: Fix
+  id: 7598
+  time: '2024-11-07T22:02:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33065
