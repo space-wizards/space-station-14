@@ -19,6 +19,46 @@
 
 - type: entity
   parent: GrenadeBase
+  id: SlashBang
+  name: Slashbang
+  description: Releases razor-sharp knives in every direction.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/flashbang.rsi
+  - type: Appearance
+  - type: ClusterGrenade
+    fillPrototype: SurvivalKnife
+    maxGrenadesCount: 15
+    grenadeTriggerIntervalMax: 0
+    grenadeTriggerIntervalMin: 0
+    baseTriggerDelay: 60
+    randomSpread: true
+    velocity: 5
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 10
+  - type: LandAtCursor
+  - type: EmitSoundOnTrigger
+    sound:
+      path: "/Audio/Effects/flash_bang.ogg"
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:TriggerBehavior
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: ContainerContainer
+    containers:
+      cluster-payload: !type:Container
+
+- type: entity
+  parent: GrenadeBase
   id: ClusterBangFull
   name: ClusterBang
   description: Launches three flashbangs after the timer runs out.
