@@ -111,6 +111,7 @@ public sealed partial class VampireComponent : Component
 /// <summary>
 /// Struct contains Action and Owner
 /// </summary>
+[Serializable, NetSerializable]
 public struct AbilityInfo
 {
     public EntityUid Owner;
