@@ -45,6 +45,7 @@
   components:
   - type: InstantAction
     icon: Interface/VerbIcons/refresh.svg.192dpi.png
+    itemIconStyle: BigAction
     event: !type:DisguiseToggleNoRotEvent
 
 - type: entity
@@ -56,4 +57,5 @@
     icon:
       sprite: Objects/Tools/wrench.rsi
       state: icon
+    itemIconStyle: BigAction
     event: !type:DisguiseToggleAnchoredEvent
