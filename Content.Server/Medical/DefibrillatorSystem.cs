@@ -188,6 +188,10 @@ public sealed class DefibrillatorSystem : EntitySystem
                 Comp<RandomUnrevivableComponent>(target).Chance = 0.0f;
                 revive = false;
             }
+            else
+            {
+                Comp<RandomUnrevivableComponent>(target).Chance =- 0.1f;
+            }
         }
 
         if (!revive)
