@@ -25,4 +25,5 @@
       tags:
         - ArtifactFragment
         - Ore
+        - Salt
   - type: Dumpable
