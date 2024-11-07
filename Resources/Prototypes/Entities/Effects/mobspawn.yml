@@ -128,7 +128,7 @@
       weight: 0.30
     - id: FoodLily
       weight: 0.30
-    - id: Bluetomato
+    - id: FoodBlueTomato
       weight: 0.30
     - id: LeavesCannabisRainbow
       weight: 0.30
