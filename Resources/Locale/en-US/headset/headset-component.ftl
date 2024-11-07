@@ -14,6 +14,7 @@ chat-radio-security = Security
 chat-radio-service = Service
 chat-radio-supply = Supply
 chat-radio-syndicate = Syndicate
+chat-radio-nanotrasen  = Nanotrasen
 chat-radio-freelance = Freelance
 
 # not headset but whatever
