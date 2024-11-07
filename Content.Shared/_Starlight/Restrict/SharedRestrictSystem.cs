@@ -16,7 +16,7 @@ public abstract partial class SharedRestrictSystem : EntitySystem
 
     private void OnAttemptMelee(Entity<RestrictByUserTagComponent> ent, ref AttemptMeleeEvent args)
     {
-        if(!_tagSystem.HasAllTags(args.User, ent.Comp.Contains) || _tagSystem.HasAnyTag(args.User, ent.Comp.DoestСontain))
+        if(!_tagSystem.HasAllTags(args.User, ent.Comp.Contains) || _tagSystem.HasAnyTag(args.User, ent.Comp.DoestContain))
         {
             args.Cancelled = true;
             if(ent.Comp.Messages.Count != 0)
