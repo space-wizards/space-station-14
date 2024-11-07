@@ -7,7 +7,7 @@ using Content.Server.Chat.Managers;
 using Content.Server.Database;
 using Content.Shared.Starlight;
 using Content.Shared.Starlight;
-using Content.Shared.Starlight.CVar;
+using Content.Shared.Starlight.CCVar;
 using Robust.Server.Console;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
