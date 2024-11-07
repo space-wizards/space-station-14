@@ -496,3 +496,42 @@
         volume: 5
     initialBeepDelay: 0
     beepInterval: 2 # 2 beeps total (at 0 and 2)
+
+- type: entity
+  name: beachball
+  description: A NT-brand beachball. This one is strangely firm.
+  parent: BaseGrenade
+  id: BeachballGrenade
+  components:
+  - type: Item
+    size: Normal
+    sprite: Objects/Fun/toys.rsi
+    heldPrefix: beachb
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:TriggerBehavior
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 3
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    state: beachball
+  - type: TwoStageTrigger
+    triggerDelay: 2.14
+    components:
+      - type: GravityWell
+        maxRange: 10
+        baseRadialAcceleration: -200
+        baseTangentialAcceleration: -7
+        gravPulsePeriod: 0.01
+      - type: SoundOnTrigger
+        sound:
+          path: /Audio/Effects/pop_high.ogg
+          params:
+            volume: 15
+      - type: DeleteOnTrigger
