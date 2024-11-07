@@ -52,6 +52,14 @@ uplink-lobbying-desc = A briefcase containing everything needed to make an offer
 uplink-pistolmag-name = .35 auto magazine
 uplink-pistolmag-desc = For use with the MK58 pistol. Contains standard rounds.
 
-uplink-magnum-name = .45 magnum magazine
-uplink-magnum-desc = For use with the N1984. Contains the lord's caliber.
+uplink-pistolmag-name = .35 auto magazine
+uplink-pistolmag-desc = For use with the MK58 pistol. Contains standard rounds.
+
+uplink-firebomb-name = Incendiary grenade
+uplink-firebomb-desc = A highly volatile grenade that contains microparticles of superheated plasma. Ignites nearby targets.
+
+uplink-slashbang-name = Slashbang
+uplink-slashbang-desc = Releases a horde of razor sharp knives upon detonation. Devastating at close range.
+
+
 
