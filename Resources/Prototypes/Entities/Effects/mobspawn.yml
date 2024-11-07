@@ -122,7 +122,7 @@
       weight: 0.60
     - id: FoodHolymelon #mutated plant stuffs
       weight: 0.30
-    - id: FoodAmbrosiaVulgaris
+    - id: FoodAmbrosiaDeus
       weight: 0.30
     - id: FoodKoibean
       weight: 0.30
@@ -144,7 +144,7 @@
       weight: 0.30
     - id: DeathNettle
       weight: 0.10
-    - id: FoodGatfruit
+    - id: FoodGatfruit #about 1 in 250 now
       weight: 0.10
     - id: FoodFakeCapfruit #hehe
       weight: 0.01
