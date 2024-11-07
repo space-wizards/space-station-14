@@ -125,7 +125,7 @@ public sealed class ColorFlashEffectSystem : SharedColorFlashEffectSystem
             }
 
             var targetEv = new GetFlashEffectTargetEvent(ent);
-            RaiseLocalEvent(ent, ref ev);
+            RaiseLocalEvent(ent, ref targetEv);
             ent = targetEv.Target;
 
             EnsureComp<ColorFlashEffectComponent>(ent, out comp);

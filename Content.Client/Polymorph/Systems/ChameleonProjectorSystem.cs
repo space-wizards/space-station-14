@@ -20,7 +20,6 @@ public sealed class ChameleonProjectorSystem : SharedChameleonProjectorSystem
         base.Initialize();
 
         _appearanceQuery = GetEntityQuery<AppearanceComponent>();
-        _disguisedQuery = GetEntityQuery<ChameleonDisguisedComponent>();
         _spriteQuery = GetEntityQuery<SpriteComponent>();
 
         SubscribeLocalEvent<ChameleonDisguiseComponent, AfterAutoHandleStateEvent>(OnHandleState);
