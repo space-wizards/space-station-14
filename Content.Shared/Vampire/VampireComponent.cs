@@ -10,10 +10,11 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Vampire.Components;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class VampireComponent : Component
 {
     //Static prototype references
@@ -96,6 +97,21 @@ public sealed partial class VampireComponent : Component
 
     public readonly SoundSpecifier BloodDrainSound = new SoundPathSpecifier("/Audio/Items/drink.ogg", new AudioParams() { Volume = -3f, MaxDistance = 3f });
     public readonly SoundSpecifier AbilityPurchaseSound = new SoundPathSpecifier("/Audio/Items/drink.ogg");
+}
+
+/// <summary>
+/// Struct contains Action and Owner
+/// </summary>
+public struct AbilityInfo
+{
+    public EntityUid Owner;
+    public EntityUid Action;
+
+    public AbilityInfo(EntityUid owner, EntityUid action)
+    {
+        Owner = owner;
+        Action = action;
+    }
 }
 
 
