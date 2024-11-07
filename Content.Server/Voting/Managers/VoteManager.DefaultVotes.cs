@@ -229,7 +229,7 @@ namespace Content.Server.Voting.Managers
                 Duration = alone
                     ? TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerAlone))
                     : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerPreset)),
-                DisplayVotes = _cfg.GetCVar(StarlightCCVars.ShowPresetVotes), // Sunrise-Edit
+                DisplayVotes = _cfg.GetCVar(StarlightCCVars.ShowPresetVotes), // 🌟Starlight🌟
             };
 
             if (alone)
@@ -283,7 +283,7 @@ namespace Content.Server.Voting.Managers
                 Duration = alone
                     ? TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerAlone))
                     : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerMap)),
-                DisplayVotes = _cfg.GetCVar(StarlightCCVars.ShowMapVotes), // Sunrise-Edit
+                DisplayVotes = _cfg.GetCVar(StarlightCCVars.ShowMapVotes), // 🌟Starlight🌟
             };
 
             if (alone)
