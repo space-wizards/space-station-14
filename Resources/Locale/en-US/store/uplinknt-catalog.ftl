@@ -61,5 +61,5 @@ uplink-firebomb-desc = A highly volatile grenade that contains microparticles of
 uplink-slashbang-name = Slashbang
 uplink-slashbang-desc = Releases a horde of razor sharp knives upon detonation. Devastating at close range.
 
-
-
+uplink-announcer-name = Handheld announcement pad
+uplink-announcer-desc = Hacks into the Platform's announcement system. Removal of ID before use is suggested.
