@@ -192,7 +192,7 @@ public abstract class SharedRoleSystem : EntitySystem
         MindRolesChanged(args.MindId);
     }
 
-    private void MindRolesChanged(EntityUid mindId)
+    public void MindRolesChanged(EntityUid mindId)
     {
         var roleType = GetRoleTypeByTime(mindId);
 

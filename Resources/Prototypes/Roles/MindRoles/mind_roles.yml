@@ -165,6 +165,16 @@
   - type: MindRole
     antagPrototype: TraitorSleeper
 
+#TODO:ERRANT is this maybe overcomplicated? The monkeys at least are Team Antag to begin with and perhaps don't need any Activation
+- type: entity
+  parent: MindRoleTraitor
+  id: MindRoleTraitorReinforcement
+  name: Syndicate Reinforcement Role
+  #  description: mind-role-syndicate-reinforcement-description
+  components:
+    - type: MindRole
+      roleType: TeamAntagonist
+
 # Zombie Squad
 - type: entity
   parent: BaseMindRoleAntag
