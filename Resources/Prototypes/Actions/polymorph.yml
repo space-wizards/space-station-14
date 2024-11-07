@@ -44,7 +44,7 @@
 - type: entity
   id: ActionPolymorphJaunt
   name: Jaunt
-  description: Jaunt into the unknown
+  description: Melt into the Ethereal Plane for a quick getaway!
   components:
   - type: InstantAction
     useDelay: 30
