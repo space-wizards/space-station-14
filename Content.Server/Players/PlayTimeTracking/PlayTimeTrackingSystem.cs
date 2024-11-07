@@ -8,7 +8,7 @@ using Content.Server.GameTicking.Events;
 using Content.Server.Mind;
 using Content.Server.Preferences.Managers;
 using Content.Server.Station.Events;
-using Content.Shared._Starlight;
+using Content.Shared.Starlight;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Mobs;

@@ -7,6 +7,7 @@ using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Shared.Starlight;
+using Content.Shared.Starlight.CCVar;
 using Prometheus;
 using Robust.Shared.Configuration;
 using System.IO;
@@ -57,9 +58,9 @@ public sealed class TTSManager : ITTSManager
     public void Initialize()
     {
         _sawmill = Logger.GetSawmill("tts");
-        _cfg.OnValueChanged(StarlightCVar.TTSApiUrl, x => _apiUrl = x, true);
-        _cfg.OnValueChanged(StarlightCVar.TTSApiToken, x => _apiToken = x, true);
-        _cfg.OnValueChanged(StarlightCVar.TTSApiTimeout, x => _timeout = x, true);
+        _cfg.OnValueChanged(StarlightCCVars.TTSApiUrl, x => _apiUrl = x, true);
+        _cfg.OnValueChanged(StarlightCCVars.TTSApiToken, x => _apiToken = x, true);
+        _cfg.OnValueChanged(StarlightCCVars.TTSApiTimeout, x => _timeout = x, true);
     }
 
     public async Task<byte[]?> ConvertTextToSpeechStandard(int voice, string text)

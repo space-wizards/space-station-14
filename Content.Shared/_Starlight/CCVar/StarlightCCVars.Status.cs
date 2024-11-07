@@ -1,7 +1,7 @@
 using Robust.Shared.Configuration;
 
-namespace Content.Shared.Starlight;
-public sealed partial class StarlightCVar
+namespace Content.Shared.Starlight.CCVar;
+public sealed partial class StarlightCCVars
 {
     /// <summary>
     /// Status webhook

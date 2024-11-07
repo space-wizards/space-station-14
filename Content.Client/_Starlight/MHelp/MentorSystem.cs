@@ -1,12 +1,12 @@
 #nullable enable
 using Content;
-using Content.Shared._Starlight.MHelp;
+using Content.Shared.Starlight.MHelp;
 using Content.Shared.Administration;
 using JetBrains.Annotations;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
-namespace Content.Client._Starlight.MHelp;
+namespace Content.Client.Starlight.MHelp;
 
 [UsedImplicitly]
 public sealed class MentorSystem : SharedMentorSystem

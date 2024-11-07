@@ -3,9 +3,9 @@ using Content.Server.Chat.Systems;
 using Content.Server.Hands.Systems;
 using Content.Server.Humanoid;
 using Content.Server.Popups;
-using Content.Shared._Starlight.Medical.Surgery;
-using Content.Shared._Starlight.Medical.Surgery.Effects.Step;
-using Content.Shared._Starlight.Medical.Surgery.Events;
+using Content.Shared.Starlight.Medical.Surgery;
+using Content.Shared.Starlight.Medical.Surgery.Effects.Step;
+using Content.Shared.Starlight.Medical.Surgery.Events;
 using Content.Shared.Damage;
 using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.HealthExaminable;
@@ -16,7 +16,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-namespace Content.Server._Starlight.Medical.Surgery;
+namespace Content.Server.Starlight.Medical.Surgery;
 // Based on the RMC14.
 // https://github.com/RMC-14/RMC-14
 public sealed partial class SurgerySystem : SharedSurgerySystem

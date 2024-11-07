@@ -3,7 +3,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 // Based on the RMC14.
 // https://github.com/RMC-14/RMC-14
-namespace Content.Shared._Starlight.Medical.Surgery.Effects.Step;
+namespace Content.Shared.Starlight.Medical.Surgery.Effects.Step;
 
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedSurgerySystem))] public sealed partial class SurgeryAnyAccentConditionComponent : Component;
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedSurgerySystem))] public sealed partial class SurgeryAnyLimbSlotConditionComponent : Component;

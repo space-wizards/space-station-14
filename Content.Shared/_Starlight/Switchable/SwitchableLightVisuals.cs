@@ -1,6 +1,6 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Shared._Starlight.Switchable;
+namespace Content.Shared.Starlight.Switchable;
 
 // Appearance Data key
 [Serializable, NetSerializable]

@@ -1,9 +1,9 @@
-﻿using Content.Shared._Starlight.Antags.Abductor;
+﻿using Content.Shared.Starlight.Antags.Abductor;
 using Content.Shared.Tag;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared._Starlight.Restrict;
+namespace Content.Shared.Starlight.Restrict;
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedAbductorSystem)), AutoGenerateComponentState]
 public sealed partial class RestrictByUserTagComponent : Component
 {

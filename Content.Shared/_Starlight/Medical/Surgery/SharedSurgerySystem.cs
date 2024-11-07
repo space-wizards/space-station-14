@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
-using Content.Shared._Starlight.Medical.Surgery.Effects.Step;
-using Content.Shared._Starlight.Medical.Surgery.Events;
-using Content.Shared._Starlight.Medical.Surgery.Steps.Parts;
+using Content.Shared.Starlight.Medical.Surgery.Effects.Step;
+using Content.Shared.Starlight.Medical.Surgery.Events;
+using Content.Shared.Starlight.Medical.Surgery.Steps.Parts;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems;
 using Content.Shared.Buckle.Components;
@@ -23,7 +23,7 @@ using Robust.Shared.Reflection;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Timing;
 
-namespace Content.Shared._Starlight.Medical.Surgery;
+namespace Content.Shared.Starlight.Medical.Surgery;
 // Based on the RMC14.
 // https://github.com/RMC-14/RMC-14
 public abstract partial class SharedSurgerySystem : EntitySystem

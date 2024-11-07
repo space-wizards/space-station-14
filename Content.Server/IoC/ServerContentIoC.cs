@@ -1,4 +1,4 @@
-using Content.Server._Starlight;
+using Content.Server.Starlight;
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
@@ -25,7 +25,7 @@ using Content.Server.ServerUpdates;
 using Content.Server.Starlight.TextToSpeech;
 using Content.Server.Voting.Managers;
 using Content.Server.Worldgen.Tools;
-using Content.Shared._Starlight;
+using Content.Shared.Starlight;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Administration.Managers;
 using Content.Shared.Chat;

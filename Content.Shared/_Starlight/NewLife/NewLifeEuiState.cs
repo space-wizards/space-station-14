@@ -5,7 +5,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Shared._Starlight.NewLife;
+namespace Content.Shared.Starlight.NewLife;
 
 [NetSerializable, Serializable]
 public sealed class NewLifeEuiState : EuiStateBase

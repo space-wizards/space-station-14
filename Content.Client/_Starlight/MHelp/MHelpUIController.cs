@@ -1,6 +1,6 @@
 using System.Linq;
-using Content.Client._Starlight.Managers;
-using Content.Client._Starlight.MHelp;
+using Content.Client.Starlight.Managers;
+using Content.Client.Starlight.MHelp;
 using Content.Client.Administration.Managers;
 using Content.Client.Administration.Systems;
 using Content.Client.Gameplay;
@@ -9,7 +9,7 @@ using Content.Client.Lobby.UI;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.MenuBar.Widgets;
-using Content.Shared._Starlight.MHelp;
+using Content.Shared.Starlight.MHelp;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Input;
@@ -152,7 +152,7 @@ public sealed class MHelpUIController : UIController, IOnSystemChanged<MentorSys
 
     public void EnsureUIHelper()
     {
-        var isMentor = _playerRolesManager.HasFlag(Shared._Starlight.PlayerFlags.Mentor);
+        var isMentor = _playerRolesManager.HasFlag(Shared.Starlight.PlayerFlags.Mentor);
         var isAdmin = _adminManager.HasFlag(AdminFlags.Adminhelp);
 
         if (UIHelper != null && UIHelper.IsMentor == (isMentor || isAdmin))

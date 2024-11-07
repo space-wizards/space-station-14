@@ -2,7 +2,7 @@ using Content.Server.Actions;
 using Content.Server.DoAfter;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
-using Content.Shared._Starlight.Antags.Abductor;
+using Content.Shared.Starlight.Antags.Abductor;
 using Content.Shared.Actions;
 using Content.Shared.Eye;
 using Content.Shared.Movement.Components;
@@ -12,7 +12,7 @@ using Content.Shared.Silicons.StationAi;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 
-namespace Content.Server._Starlight.Antags.Abductor;
+namespace Content.Server.Starlight.Antags.Abductor;
 
 public sealed partial class ConsoleSystem : SharedAbductorSystem
 {

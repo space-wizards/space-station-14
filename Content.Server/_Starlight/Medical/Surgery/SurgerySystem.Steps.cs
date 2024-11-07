@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using Content.Server.Body.Systems;
-using Content.Shared._Starlight.Medical.Surgery;
-using Content.Shared._Starlight.Medical.Surgery.Effects.Step;
-using Content.Shared._Starlight.Medical.Surgery.Events;
-using Content.Shared._Starlight.Medical.Surgery.Steps.Parts;
+using Content.Shared.Starlight.Medical.Surgery;
+using Content.Shared.Starlight.Medical.Surgery.Effects.Step;
+using Content.Shared.Starlight.Medical.Surgery.Events;
+using Content.Shared.Starlight.Medical.Surgery.Steps.Parts;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
@@ -15,10 +15,10 @@ using Content.Shared.Speech.Muting;
 using NAudio.CoreAudioApi;
 using Robust.Shared.Prototypes;
 using Content.Shared.Humanoid;
-using Content.Shared._Starlight;
+using Content.Shared.Starlight;
 using Content.Shared.Humanoid.Prototypes;
 
-namespace Content.Server._Starlight.Medical.Surgery;
+namespace Content.Server.Starlight.Medical.Surgery;
 // Based on the RMC14.
 // https://github.com/RMC-14/RMC-14
 public sealed partial class SurgerySystem : SharedSurgerySystem

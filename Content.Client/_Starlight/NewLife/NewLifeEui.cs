@@ -2,7 +2,7 @@ using System.Linq;
 using Content.Client.Eui;
 using Content.Client.Lobby;
 using Content.Client.Players.PlayTimeTracking;
-using Content.Shared._Starlight.NewLife;
+using Content.Shared.Starlight.NewLife;
 using Content.Shared.Eui;
 using Content.Shared.Ghost.Roles;
 using Content.Shared.Humanoid.Markings;
@@ -15,7 +15,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-namespace Content.Client._Starlight.NewLife;
+namespace Content.Client.Starlight.NewLife;
 
 [UsedImplicitly]
 public sealed class NewLifeEui : BaseEui

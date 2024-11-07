@@ -1,5 +1,5 @@
-using Content.Client._Starlight.Managers;
-using Content.Shared._Starlight;
+using Content.Client.Starlight.Managers;
+using Content.Shared.Starlight;
 using Robust.Client.Console;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;

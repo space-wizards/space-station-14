@@ -1,7 +1,7 @@
 using Robust.Shared.Configuration;
 
-namespace Content.Shared.Starlight;
-public sealed partial class StarlightCVar
+namespace Content.Shared.Starlight.CCVar;
+public sealed partial class StarlightCCVars
 {
     public static readonly CVarDef<float> MhelpRateLimitPeriod =
         CVarDef.Create("mhelp.rate_limit_period", 2f, CVar.SERVERONLY);

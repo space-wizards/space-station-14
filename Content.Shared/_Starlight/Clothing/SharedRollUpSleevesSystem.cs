@@ -5,7 +5,7 @@ using Content.Shared.Verbs;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
 
-namespace Content.Shared._Starlight.Clothing;
+namespace Content.Shared.Starlight.Clothing;
 
 public sealed partial class SharedRollUpSleevesSystem : EntitySystem
 {

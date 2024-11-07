@@ -1,15 +1,15 @@
-﻿using Content.Shared._Starlight.Medical.Surgery.Steps;
+﻿using Content.Shared.Starlight.Medical.Surgery.Steps;
 using Content.Shared.Body.Part;
 using Content.Shared.Buckle.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Robust.Shared.Prototypes;
-using Content.Shared._Starlight.Medical.Surgery.Events;
-using Content.Shared._Starlight.Medical.Surgery.Effects.Step;
+using Content.Shared.Starlight.Medical.Surgery.Events;
+using Content.Shared.Starlight.Medical.Surgery.Effects.Step;
 using System.Linq;
 
-namespace Content.Shared._Starlight.Medical.Surgery;
+namespace Content.Shared.Starlight.Medical.Surgery;
 // Based on the RMC14.
 // https://github.com/RMC-14/RMC-14
 public abstract partial class SharedSurgerySystem

@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using Content.Client._Starlight.Managers;
+using Content.Client.Starlight.Managers;
 using Content.Client.Lobby;
-using Content.Shared._Starlight;
+using Content.Shared.Starlight;
 using Content.Shared.CCVar;
 using Content.Shared.Players;
 using Content.Shared.Players.JobWhitelist;

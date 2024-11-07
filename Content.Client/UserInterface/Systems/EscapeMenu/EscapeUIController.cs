@@ -1,4 +1,4 @@
-﻿using Content.Client._Starlight.Managers;
+﻿using Content.Client.Starlight.Managers;
 using Content.Client.Administration.Managers;
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;

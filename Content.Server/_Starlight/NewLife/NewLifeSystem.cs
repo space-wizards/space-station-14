@@ -33,7 +33,7 @@ using Content.Server.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Collections;
 using Content.Shared.Ghost.Roles.Components;
-using Content.Shared._Starlight.NewLife;
+using Content.Shared.Starlight.NewLife;
 using Robust.Shared.Network;
 using Content.Server.RoundEnd;
 using Content.Server.GameTicking;

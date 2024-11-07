@@ -5,7 +5,7 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Events;
 using Content.Shared.Weapons.Melee.Events;
 
-namespace Content.Shared._Starlight.Antags.Abductor;
+namespace Content.Shared.Starlight.Antags.Abductor;
 
 public abstract class SharedAbductorSystem : EntitySystem
 {

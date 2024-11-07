@@ -2,6 +2,7 @@ using System.Collections.Concurrent;
 using System.IO;
 using System.Linq;
 using Content.Shared.Starlight;
+using Content.Shared.Starlight.CCVar;
 using Content.Shared.Starlight.TextToSpeech;
 using Robust.Client.Audio;
 using Robust.Client.ResourceManagement;
@@ -39,10 +40,10 @@ public sealed class TextToSpeechSystem : EntitySystem
     public override void Initialize()
     {
         _sawmill = Logger.GetSawmill("tts");
-        _cfg.OnValueChanged(StarlightCVar.TTSVolume, OnTtsVolumeChanged, true);
-        _cfg.OnValueChanged(StarlightCVar.TTSAnnounceVolume, OnTtsAnnounceVolumeChanged, true);
-        _cfg.OnValueChanged(StarlightCVar.TTSRadioVolume, OnTtsRadioVolumeChanged, true);
-        _cfg.OnValueChanged(StarlightCVar.TTSClientEnabled, OnTtsClientOptionChanged, true);
+        _cfg.OnValueChanged(StarlightCCVars.TTSVolume, OnTtsVolumeChanged, true);
+        _cfg.OnValueChanged(StarlightCCVars.TTSAnnounceVolume, OnTtsAnnounceVolumeChanged, true);
+        _cfg.OnValueChanged(StarlightCCVars.TTSRadioVolume, OnTtsRadioVolumeChanged, true);
+        _cfg.OnValueChanged(StarlightCCVars.TTSClientEnabled, OnTtsClientOptionChanged, true);
         SubscribeNetworkEvent<PlayTTSEvent>(OnPlayTTS);
         SubscribeNetworkEvent<AnnounceTtsEvent>(OnAnnounceTTSPlay);
     }
@@ -50,10 +51,10 @@ public sealed class TextToSpeechSystem : EntitySystem
     public override void Shutdown()
     {
         base.Shutdown();
-        _cfg.UnsubValueChanged(StarlightCVar.TTSVolume, OnTtsVolumeChanged);
-        _cfg.UnsubValueChanged(StarlightCVar.TTSAnnounceVolume, OnTtsAnnounceVolumeChanged);
-        _cfg.UnsubValueChanged(StarlightCVar.TTSRadioVolume, OnTtsRadioVolumeChanged);
-        _cfg.UnsubValueChanged(StarlightCVar.TTSClientEnabled, OnTtsClientOptionChanged);
+        _cfg.UnsubValueChanged(StarlightCCVars.TTSVolume, OnTtsVolumeChanged);
+        _cfg.UnsubValueChanged(StarlightCCVars.TTSAnnounceVolume, OnTtsAnnounceVolumeChanged);
+        _cfg.UnsubValueChanged(StarlightCCVars.TTSRadioVolume, OnTtsRadioVolumeChanged);
+        _cfg.UnsubValueChanged(StarlightCCVars.TTSClientEnabled, OnTtsClientOptionChanged);
         _contentRoot.Dispose();
     }
 

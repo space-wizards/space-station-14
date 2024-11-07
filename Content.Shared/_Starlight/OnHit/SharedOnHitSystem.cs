@@ -17,7 +17,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 
-namespace Content.Shared._Starlight.OnHit;
+namespace Content.Shared.Starlight.OnHit;
 
 public abstract class SharedOnHitSystem : EntitySystem
 {

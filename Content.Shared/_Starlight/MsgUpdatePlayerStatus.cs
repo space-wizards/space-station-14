@@ -3,7 +3,7 @@ using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared._Starlight;
+namespace Content.Shared.Starlight;
 
 public sealed class MsgUpdatePlayerStatus : NetMessage
 {

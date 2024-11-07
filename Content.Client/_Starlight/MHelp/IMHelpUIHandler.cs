@@ -1,4 +1,4 @@
-using Content.Shared._Starlight.MHelp;
+using Content.Shared.Starlight.MHelp;
 using Content.Shared.Administration;
 using Robust.Shared.Network;
 

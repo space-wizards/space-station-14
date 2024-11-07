@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.Database;
-using Content.Shared._Starlight;
 using Content.Shared.Starlight;
+using Content.Shared.Starlight;
+using Content.Shared.Starlight.CVar;
 using Robust.Server.Console;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -16,7 +17,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Toolshed;
 
-namespace Content.Server._Starlight;
+namespace Content.Server.Starlight;
 
 public sealed partial class PlayerRolesManager : IPlayerRolesManager, IPostInjectInit
 {

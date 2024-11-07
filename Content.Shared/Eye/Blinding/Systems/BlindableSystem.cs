@@ -1,5 +1,5 @@
 using System.Linq;
-using Content.Shared._Starlight.Medical.Surgery.Steps.Parts;
+using Content.Shared.Starlight.Medical.Surgery.Steps.Parts;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems;

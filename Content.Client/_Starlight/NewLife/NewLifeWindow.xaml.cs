@@ -5,7 +5,7 @@ using Content.Client.Lobby;
 using Content.Client.Lobby.UI;
 using Content.Client.Players.PlayTimeTracking;
 using Content.Client.UserInterface.Controls;
-using Content.Shared._Starlight.NewLife;
+using Content.Shared.Starlight.NewLife;
 using Content.Shared.CCVar;
 using Content.Shared.Ghost.Roles;
 using Content.Shared.Preferences;
@@ -25,7 +25,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 using Content.Client.GameTicking.Managers;
 using Content.Client.CrewManifest;
 
-namespace Content.Client._Starlight.NewLife;
+namespace Content.Client.Starlight.NewLife;
 
 [GenerateTypedNameReferences]
 public sealed partial class NewLifeWindow : DefaultWindow

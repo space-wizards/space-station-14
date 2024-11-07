@@ -1,4 +1,4 @@
 ﻿<controls:SurgeryStepButton
     xmlns="https://spacestation14.io"
-    xmlns:controls="clr-namespace:Content.Client._Starlight.Medical.Surgery">
+    xmlns:controls="clr-namespace:Content.Client.Starlight.Medical.Surgery">
 </controls:SurgeryStepButton>

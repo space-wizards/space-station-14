@@ -12,7 +12,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 
-namespace Content.Shared._Starlight.ItemSwitch;
+namespace Content.Shared.Starlight.ItemSwitch;
 public abstract class SharedItemSwitchSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _netManager = default!;

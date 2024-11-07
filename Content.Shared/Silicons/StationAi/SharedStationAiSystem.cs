@@ -1,4 +1,4 @@
-using Content.Shared._Starlight;
+using Content.Shared.Starlight;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Managers;

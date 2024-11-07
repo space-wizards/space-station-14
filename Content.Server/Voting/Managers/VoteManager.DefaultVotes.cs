@@ -1,3 +1,4 @@
+using System.Collections.Specialized;
 using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Administration.Managers;
@@ -8,6 +9,7 @@ using Content.Server.GameTicking.Presets;
 using Content.Server.Maps;
 using Content.Server.Roles;
 using Content.Server.RoundEnd;
+using Content.Shared.Starlight.CCVar;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Database;
@@ -15,6 +17,7 @@ using Content.Shared.Ghost;
 using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Voting;
+using Content.Shared.Voting.Prototypes;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Player;
@@ -225,7 +228,8 @@ namespace Content.Server.Voting.Managers
                 Title = Loc.GetString("ui-vote-gamemode-title"),
                 Duration = alone
                     ? TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerAlone))
-                    : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerPreset))
+                    : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerPreset)),
+                DisplayVotes = _cfg.GetCVar(StarlightCCVars.ShowPresetVotes), // Sunrise-Edit
             };
 
             if (alone)
@@ -263,7 +267,14 @@ namespace Content.Server.Voting.Managers
 
         private void CreateMapVote(ICommonSession? initiator)
         {
-            var maps = _gameMapManager.CurrentlyEligibleMaps().ToDictionary(map => map, map => map.MapName);
+            var maps = new Dictionary<string, GameMapPrototype>();
+            var eligibleMaps = _gameMapManager.CurrentlyEligibleMaps().ToList();
+            var selectedMaps = eligibleMaps.OrderBy(_ => _random.Next()).Take(_cfg.GetCVar(StarlightCCVars.MapVotingCount)).ToList();
+            maps.Add(Loc.GetString("ui-vote-secret-map"), _random.Pick(selectedMaps));
+            foreach (var map in selectedMaps)
+            {
+                maps.Add(map.MapName, map);
+            }
 
             var alone = _playerManager.PlayerCount == 1 && initiator != null;
             var options = new VoteOptions
@@ -271,7 +282,8 @@ namespace Content.Server.Voting.Managers
                 Title = Loc.GetString("ui-vote-map-title"),
                 Duration = alone
                     ? TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerAlone))
-                    : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerMap))
+                    : TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.VoteTimerMap)),
+                DisplayVotes = _cfg.GetCVar(StarlightCCVars.ShowMapVotes), // Sunrise-Edit
             };
 
             if (alone)
@@ -579,21 +591,74 @@ namespace Content.Server.Voting.Managers
         private Dictionary<string, string> GetGamePresets()
         {
             var presets = new Dictionary<string, string>();
+            
+            var prototypeId = _cfg.GetCVar(StarlightCCVars.RoundVotingChancesPrototype);
+
+            if (!_prototypeManager.TryIndex<RoundVotingChancesPrototype>(prototypeId, out var chancesPrototype))
+            {
+                Logger.Warning($"Не удалось найти прототип шансов с ID: {prototypeId}");
+                return presets;
+            }
+
+            var validPresets = new List<(GamePresetPrototype preset, float chance)>();
 
             foreach (var preset in _prototypeManager.EnumeratePrototypes<GamePresetPrototype>())
             {
-                if(!preset.ShowInVote)
+                if (!preset.ShowInVote)
                     continue;
 
-                if(_playerManager.PlayerCount < (preset.MinPlayers ?? int.MinValue))
+                if (_playerManager.PlayerCount < (preset.MinPlayers ?? int.MinValue))
                     continue;
 
-                if(_playerManager.PlayerCount > (preset.MaxPlayers ?? int.MaxValue))
+                if (_playerManager.PlayerCount > (preset.MaxPlayers ?? int.MaxValue))
                     continue;
 
-                presets[preset.ID] = preset.ModeTitle;
+                if (chancesPrototype.Chances.TryGetValue(preset.ID, out var chance))
+                {
+                    validPresets.Add((preset, chance));
+                }
             }
+
+            if (validPresets.Count == 0)
+            {
+                Logger.Warning("Нет подходящих игровых режимов для текущего количества игроков.");
+                return presets;
+            }
+
+            var selectedPresets = SelectPresetsByChance(validPresets, _cfg.GetCVar(StarlightCCVars.RoundVotingCount));
+            foreach (var preset in selectedPresets)
+            {
+                presets[preset.preset.ID] = preset.preset.ModeTitle;
+            }
+
             return presets;
+        }
+
+        private List<(GamePresetPrototype preset, float chance)> SelectPresetsByChance(List<(GamePresetPrototype preset, float chance)> validPresets, int count)
+        {
+            var selectedPresets = new List<(GamePresetPrototype preset, float chance)>();
+            var random = new Random();
+
+            while (selectedPresets.Count < count && validPresets.Count > 0)
+            {
+                var totalChance = validPresets.Sum(p => p.chance);
+
+                var roll = random.NextDouble() * totalChance;
+                float cumulativeChance = 0;
+
+                foreach (var preset in validPresets)
+                {
+                    cumulativeChance += preset.chance;
+                    if (roll < cumulativeChance)
+                    {
+                        selectedPresets.Add(preset);
+                        validPresets.Remove(preset);
+                        break;
+                    }
+                }
+            }
+
+            return selectedPresets;
         }
     }
 }

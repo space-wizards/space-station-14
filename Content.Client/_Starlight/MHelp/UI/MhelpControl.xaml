@@ -1,6 +1,6 @@
 ﻿<Control
     xmlns="https://spacestation14.io"
-    xmlns:cc="clr-namespace:Content.Client._Starlight.MHelp.UI">
+    xmlns:cc="clr-namespace:Content.Client.Starlight.MHelp.UI">
     <PanelContainer StyleClasses="BackgroundDark">
         <SplitContainer Orientation="Horizontal" VerticalExpand="True">
             <cc:TicketListControl Access="Public" Name="TicketSelector" HorizontalExpand="True" SizeFlagsStretchRatio="1" />

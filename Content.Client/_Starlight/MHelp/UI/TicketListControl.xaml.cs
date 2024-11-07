@@ -14,7 +14,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Input;
 using Robust.Shared.Utility;
 
-namespace Content.Client._Starlight.MHelp.UI;
+namespace Content.Client.Starlight.MHelp.UI;
 [GenerateTypedNameReferences]
 public sealed partial class TicketListControl : BoxContainer
 {

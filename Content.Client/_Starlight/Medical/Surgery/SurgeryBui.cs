@@ -1,6 +1,6 @@
 ﻿using Content.Client.Administration.UI.CustomControls;
 using Content.Client.Hands.Systems;
-using Content.Shared._Starlight.Medical.Surgery;
+using Content.Shared.Starlight.Medical.Surgery;
 using Content.Shared.Body.Part;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -10,7 +10,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Control;
 
-namespace Content.Client._Starlight.Medical.Surgery;
+namespace Content.Client.Starlight.Medical.Surgery;
 // Based on the RMC14 build.
 // https://github.com/RMC-14/RMC-14
 

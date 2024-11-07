@@ -4,7 +4,7 @@ using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Network;
 using Robust.Shared.Random;
 
-namespace Content.Shared._Starlight.Restrict;
+namespace Content.Shared.Starlight.Restrict;
 public abstract partial class SharedRestrictSystem : EntitySystem
 {
     [Dependency] private readonly TagSystem _tagSystem = default!;

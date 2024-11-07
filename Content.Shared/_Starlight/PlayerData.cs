@@ -1,6 +1,6 @@
 using Content.Shared.Administration;
 
-namespace Content.Shared._Starlight;
+namespace Content.Shared.Starlight;
 
 /// <summary>
 ///     Represents data for a single player.

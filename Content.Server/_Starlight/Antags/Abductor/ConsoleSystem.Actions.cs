@@ -1,12 +1,12 @@
-using Content.Shared._Starlight.Antags.Abductor;
-using Content.Shared._Starlight.Medical.Surgery;
+using Content.Shared.Starlight.Antags.Abductor;
+using Content.Shared.Starlight.Medical.Surgery;
 using Content.Shared.Actions;
 using Content.Shared.DoAfter;
 using Content.Shared.Effects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server._Starlight.Antags.Abductor;
+namespace Content.Server.Starlight.Antags.Abductor;
 
 public sealed partial class ConsoleSystem : SharedAbductorSystem
 {

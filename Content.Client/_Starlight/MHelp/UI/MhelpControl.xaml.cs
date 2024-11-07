@@ -15,7 +15,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Utility;
 using Content.Client.Administration.UI;
 
-namespace Content.Client._Starlight.MHelp.UI;
+namespace Content.Client.Starlight.MHelp.UI;
 
 [GenerateTypedNameReferences]
 public sealed partial class MhelpControl : Control

@@ -2,7 +2,7 @@
 using Robust.Shared.Serialization;
 using static Content.Shared.Pinpointer.SharedNavMapSystem;
 
-namespace Content.Shared._Starlight.Antags.Abductor;
+namespace Content.Shared.Starlight.Antags.Abductor;
 [Serializable, NetSerializable]
 public enum AbductorCameraConsoleUIKey
 {
