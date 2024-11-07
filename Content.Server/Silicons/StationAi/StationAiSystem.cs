@@ -6,7 +6,6 @@ using Content.Shared.Roles;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.StationAi;
 using Robust.Shared.Audio;
-using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 
@@ -47,7 +46,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
         return true;
     }
 
-    public override void AnnounceIntellicardUsage(EntityUid uid, SoundSpecifier? cue = null) 
+    public override void AnnounceIntellicardUsage(EntityUid uid, SoundSpecifier? cue = null)
     {
         if (!TryComp<ActorComponent>(uid, out var actor))
             return;

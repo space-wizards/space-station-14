@@ -203,12 +203,12 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     }
 
 
-    private void OnIntellicardDoAfter(Entity<StationAiHolderComponent> ent, ref IntellicardDoAfterEvent args) 
+    private void OnIntellicardDoAfter(Entity<StationAiHolderComponent> ent, ref IntellicardDoAfterEvent args)
     {
-        if(args.Cancelled)
+        if (args.Cancelled)
             return;
 
-        if(args.Handled)
+        if (args.Handled)
             return;
 
         if (!TryComp(args.Args.Target, out StationAiHolderComponent? targetHolder))
@@ -242,24 +242,22 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     {
         if (args.Handled || !args.CanReach || args.Target == null)
             return;
-        
+
         if (!TryComp(args.Target, out StationAiHolderComponent? targetHolder))
             return;
-        
+
         if (!TryComp(args.Used, out IntellicardComponent? intelliComp))
             return;
-        
+
         var isUploading = _slots.CanEject(ent.Owner, args.User, ent.Comp.Slot);
-        
         var isDownloading = _slots.CanEject(args.Target.Value, args.User, targetHolder.Slot);
-        
+
         if (isUploading == isDownloading)
             return;
-        
-        if (TryGetHeldFromHolder((args.Target.Value, targetHolder), out var held) && _timing.CurTime > intelliComp.NextWarningAllowed) {
-            
+
+        if (TryGetHeldFromHolder((args.Target.Value, targetHolder), out var held) && _timing.CurTime > intelliComp.NextWarningAllowed)
+        {
             intelliComp.NextWarningAllowed = _timing.CurTime + intelliComp.WarningDelay;
-            
             AnnounceIntellicardUsage(held, intelliComp.WarningSound);
         }
 
@@ -270,8 +268,9 @@ public abstract partial class SharedStationAiSystem : EntitySystem
             NeedHand = true,
             BreakOnDropItem = true
         };
-        
+
         _doAfter.TryStartDoAfter(doAfterArgs);
+        args.Handled = true;
     }
 
     private void OnHolderInit(Entity<StationAiHolderComponent> ent, ref ComponentInit args)
@@ -425,11 +424,8 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
         _appearance.SetData(entity.Owner, StationAiVisualState.Key, StationAiState.Occupied);
     }
-    
-    public virtual void AnnounceIntellicardUsage(EntityUid uid, SoundSpecifier? cue = null) 
-    {
-        
-    }
+
+    public virtual void AnnounceIntellicardUsage(EntityUid uid, SoundSpecifier? cue = null) { }
 
     public virtual bool SetVisionEnabled(Entity<StationAiVisionComponent> entity, bool enabled, bool announce = false)
     {
