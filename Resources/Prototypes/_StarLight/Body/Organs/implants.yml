@@ -1,0 +1,21 @@
+- type: entity
+  id: BaseEntityImplant
+  abstract: true
+  parent: [ BaseItem, BaseImplant ]
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/implants.rsi
+  - type: Organ
+  - type: Gibbable
+  - type: FlavorProfile
+    flavors:
+      - people
+
+- type: entity
+  id: WeldingImplant
+  parent: BaseEntityImplant
+  components:
+  - type: Sprite
+    state: welding_implant
+  - type: Implant
+    implantID: Welding

@@ -421,6 +421,50 @@
 #
 - type: entity
   parent: SurgeryBase
+  id: SurgeryExtractEyeImplant
+  name: Extract Eye Implant
+  components:
+  - type: Surgery
+    requirement: SurgeryOpenIncision
+    steps:
+    - SurgeryStepLocateImplant
+    - SurgeryStepClampOpticNerve
+    - SurgeryStepRemoveEyeImplant
+  - type: SurgeryPartCondition
+    parts:
+    - Head
+  - type: SurgeryOrganExistCondition
+    organ:
+    - type: Implant
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/implants.rsi
+    layers:
+      - state: welding_implant
+
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryImplantEyeImplant
+  name: Implant Eye Implant
+  components:
+  - type: Surgery
+    requirement: SurgeryOpenIncision
+    steps:
+    - SurgeryStepPrepareImplantSiteEyes
+    - SurgeryStepInsertEyeImplant
+    - SurgeryStepConnectOpticNerve
+  - type: SurgeryPartCondition
+    parts:
+    - Head
+  - type: SurgeryOrganDontExistCondition
+    organ:
+    - type: Implant
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/implants.rsi
+    layers:
+      - state: welding_implant
+#
+- type: entity
+  parent: SurgeryBase
   id: SurgeryExtractTongue
   name: Extract Tongue
   components:

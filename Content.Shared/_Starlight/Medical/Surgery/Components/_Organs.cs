@@ -27,6 +27,15 @@ public sealed partial class OrganEyesComponent : Component
     public int? MinDamage;
 }
 
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedSurgerySystem))] 
+public sealed partial class ImplantComponent : Component
+{
+    [DataField]
+    public string? Type;
+    [DataField]
+    public string? ImplantID;
+}
+
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedSurgerySystem))]
 public sealed partial class OrganDamageComponent : Component
 {

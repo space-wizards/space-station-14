@@ -74,6 +74,11 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
                     _blindable.SetMinDamage((body, blindable), organEyes.MinDamage ?? 0);
                     _blindable.AdjustEyeDamage((body, blindable), (organEyes.EyeDamage ?? 0) - blindable.MaxDamage);
                 }
+                if (TryComp<ImplantComponent>(organId, out var organImplant))
+                {
+                    if (organImplant.ImplantID == "Welding")
+                        EnsureComp<EyeProtectionComponent>(body);
+                }
                 if (TryComp<OrganTongueComponent>(organId, out var organTongue)
                     && !organTongue.IsMuted)
                     RemComp<MutedComponent>(body);
