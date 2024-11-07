@@ -10,12 +10,12 @@
     sprite: Structures/Windows/plasma_window.rsi
   - type: Damageable
     damageContainer: StructuralInorganic
-    damageModifierSet: Glass
+    damageModifierSet: RGlass
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 150
+        damage: 120
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -24,7 +24,7 @@
           collection: WindowShatter
     - trigger:
         !type:DamageTrigger
-        damage: 75
+        damage: 60
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -43,8 +43,8 @@
     node: plasmaWindow
   - type: Appearance
   - type: DamageVisuals
-    thresholds: [5, 10, 20]
-    damageDivisor: 3
+    thresholds: [4, 8, 12]
+    damageDivisor: 3.333
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks.rsi
@@ -74,8 +74,8 @@
     node: plasmaWindowDirectional
   - type: Appearance
   - type: DamageVisuals
-    thresholds: [5, 10, 20]
-    damageDivisor: 1.5
+    thresholds: [4, 8, 12]
+    damageDivisor: 3.333
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks_directional.rsi
@@ -83,16 +83,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 75
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: WindowShatter
-    - trigger:
-        !type:DamageTrigger
-        damage: 37
+        damage: 200
       behaviors:
       - !type:PlaySoundBehavior
         sound:
