@@ -31,6 +31,7 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly SharedJobSystem _jobs = default!;
         [Dependency] private readonly NewLifeSystem _newLifeSystem = default!; //🌟Starlight🌟
+        [Dependency] private readonly IPlayerRolesManager _playerRolesManager = default!; //🌟Starlight🌟
 
         [ValidatePrototypeId<EntityPrototype>]
         public const string ObserverPrototypeName = "MobObserver";
