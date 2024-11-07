@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using Content.Client.Starlight.Managers;
+using Content.Client._Starlight.Managers;
 using Content.Client.Lobby;
 using Content.Shared.Starlight;
 using Content.Shared.CCVar;

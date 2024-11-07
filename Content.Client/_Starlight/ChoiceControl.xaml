@@ -1,6 +1,6 @@
 ﻿<ui:ChoiceControl
     xmlns="https://spacestation14.io"
-    xmlns:ui="clr-namespace:Content.Client.Starlight">
+    xmlns:ui="clr-namespace:Content.Client._Starlight">
     <BoxContainer Orientation="Horizontal">
         <Button Name="Button" Access="Public"
                 HorizontalExpand="True" VerticalExpand="False"

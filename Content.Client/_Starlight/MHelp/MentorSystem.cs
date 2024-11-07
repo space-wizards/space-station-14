@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
-namespace Content.Client.Starlight.MHelp;
+namespace Content.Client._Starlight.MHelp;
 
 [UsedImplicitly]
 public sealed class MentorSystem : SharedMentorSystem

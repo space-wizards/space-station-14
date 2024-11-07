@@ -13,7 +13,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.Starlight.NewLife;
+namespace Content.Client._Starlight.NewLife;
 
 /// <summary>
 /// Holds character data on the side of the setup GUI.

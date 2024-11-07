@@ -2,7 +2,7 @@
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 
-namespace Content.Client.Starlight.Antags.Abductor;
+namespace Content.Client._Starlight.Antags.Abductor;
 [GenerateTypedNameReferences]
 public sealed partial class AbductorCameraConsoleWindow : DefaultWindow
 {

@@ -1,6 +1,6 @@
 using System.Linq;
-using Content.Client.Starlight.Managers;
-using Content.Client.Starlight.MHelp;
+using Content.Client._Starlight.Managers;
+using Content.Client._Starlight.MHelp;
 using Content.Client.Administration.Managers;
 using Content.Client.Administration.Systems;
 using Content.Client.Gameplay;

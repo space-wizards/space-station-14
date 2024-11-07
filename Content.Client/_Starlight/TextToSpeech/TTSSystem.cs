@@ -13,7 +13,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Utility;
 
-namespace Content.Client.Starlight.TTS;
+namespace Content.Client._Starlight.TTS;
 
 /// <summary>
 /// Plays TTS audio

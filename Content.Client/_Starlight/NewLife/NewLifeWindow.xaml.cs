@@ -25,7 +25,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 using Content.Client.GameTicking.Managers;
 using Content.Client.CrewManifest;
 
-namespace Content.Client.Starlight.NewLife;
+namespace Content.Client._Starlight.NewLife;
 
 [GenerateTypedNameReferences]
 public sealed partial class NewLifeWindow : DefaultWindow

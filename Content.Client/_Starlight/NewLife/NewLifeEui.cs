@@ -15,7 +15,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-namespace Content.Client.Starlight.NewLife;
+namespace Content.Client._Starlight.NewLife;
 
 [UsedImplicitly]
 public sealed class NewLifeEui : BaseEui

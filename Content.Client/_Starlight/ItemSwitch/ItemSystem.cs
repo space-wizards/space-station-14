@@ -7,7 +7,7 @@ using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 using Robust.Client.GameObjects;
 
-namespace Content.Client.Starlight.ItemSwitch;
+namespace Content.Client._Starlight.ItemSwitch;
 
 public sealed class ItemSwitchSystem : SharedItemSwitchSystem
 {

@@ -1,7 +1,7 @@
 using Content.Shared.Starlight;
 using Content.Shared.Administration;
 
-namespace Content.Client.Starlight.Managers;
+namespace Content.Client._Starlight.Managers;
 
 public interface IClientPlayerRolesManager
 {

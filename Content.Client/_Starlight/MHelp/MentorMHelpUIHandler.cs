@@ -1,12 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Client.Starlight.MHelp.UI;
+using Content.Client._Starlight.MHelp.UI;
 using Content.Client.UserInterface.Systems.Bwoink;
 using Content.Shared.Starlight.MHelp;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Network;
 
-namespace Content.Client.Starlight.MHelp;
+namespace Content.Client._Starlight.MHelp;
 
 public sealed class MentorMHelpUIHandler(NetUserId owner) : IMHelpUIHandler
 {

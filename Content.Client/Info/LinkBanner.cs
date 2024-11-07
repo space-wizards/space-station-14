@@ -1,4 +1,4 @@
-﻿using Content.Client.Starlight.Managers;
+﻿using Content.Client._Starlight.Managers;
 using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.UserInterface.Systems.EscapeMenu;

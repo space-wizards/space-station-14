@@ -5,7 +5,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Utility;
 // Taken from RMC14 build.
 // https://github.com/RMC-14/RMC-14
-namespace Content.Client.Starlight;
+namespace Content.Client._Starlight;
 
 [GenerateTypedNameReferences]
 [Virtual]
