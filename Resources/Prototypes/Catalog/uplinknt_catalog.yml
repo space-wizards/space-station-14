@@ -60,6 +60,28 @@
   categories:
   - UplinkNtWeaponry
 
+##EXPLOSIVES
+
+- type: listing
+  id: UplinkIncendiaryGrenade
+  name: uplink-firebomb-name
+  description: uplink-firebomb-desc
+  productEntity: IncendiaryGrenade
+  cost:
+    BluespaceCrystal: 5
+  categories:
+  - UplinkNtExplosives
+
+- type: listing
+  id: UplinkSlashBang
+  name: uplink-slashbang-name
+  description: uplink-slashbang-desc
+  productEntity: SlashBang
+  cost:
+    BluespaceCrystal: 7
+  categories:
+  - UplinkNtExplosives
+
 ## AMMO
 
 - type: listing
