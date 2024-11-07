@@ -205,10 +205,6 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
     private void OnIntellicardDoAfter(Entity<StationAiHolderComponent> ent, ref IntellicardDoAfterEvent args) 
     {
-        
-        if(args.Args.Target == null)
-            return;
-        
         if(args.Cancelled)
             return;
         
