@@ -95,4 +95,4 @@
   noSpawn: true
   components:
     - type: HumanoidAppearance
-      species: SlimePerson
+      species: JellidPerson
