@@ -1,4 +1,4 @@
 - files: ["recallEvac.ogg","callEvac.ogg","attention.ogg"]
-  license: "Creative Commons NonCommercial"
+  license: "CC-BY-NC-SA-3.0"
   copyright: "darkrell"
-  source: "darkrell"
+  source: "https://github.com/ss14Starlight/space-station-14"
