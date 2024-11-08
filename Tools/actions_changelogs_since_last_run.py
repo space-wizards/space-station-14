@@ -12,14 +12,14 @@ import requests
 import yaml
 from typing import Any, Iterable
 
-GITHUB_API_URL    = os.environ.get("GITHUB_API_URL", "https://api.github.com")
-GITHUB_REPOSITORY = os.environ["GITHUB_REPOSITORY"]
-GITHUB_RUN        = os.environ["GITHUB_RUN_ID"]
-GITHUB_TOKEN      = os.environ["GITHUB_TOKEN"]
+GITHUB_API_URL    = os.getenv("GITHUB_API_URL", "https://api.github.com")
+GITHUB_REPOSITORY = os.getenv["GITHUB_REPOSITORY"]
+GITHUB_RUN        = os.getenv["GITHUB_RUN_ID"]
+GITHUB_TOKEN      = os.getenv["GITHUB_TOKEN"]
 
 # https://discord.com/developers/docs/resources/webhook
 DISCORD_SPLIT_LIMIT = 2000
-DISCORD_WEBHOOK_URL = os.environ.get("DISCORD_WEBHOOK_URL")
+DISCORD_WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL")
 
 CHANGELOG_FILE = "Resources/Changelog/ChangelogStarlight.yml"
 
