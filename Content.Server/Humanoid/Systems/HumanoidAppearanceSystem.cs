@@ -50,7 +50,8 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         {
             grammar.Gender = sourceHumanoid.Gender;
         }
-        SetTTSVoice(target, sourceHumanoid.Voice, targetHumanoid);
+        if (sourceHumanoid.Voice != null)
+            SetTTSVoice(target, sourceHumanoid.Voice, targetHumanoid);
         Dirty(target, targetHumanoid);
     }
 
