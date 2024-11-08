@@ -1,0 +1,11 @@
+- type: Tag
+  id: ElderArena
+
+- type: Tag
+  id: SovietDungeon
+
+- type: Tag
+  id: SyndieDungeon
+  
+- type: Tag
+  id: ShipWreck

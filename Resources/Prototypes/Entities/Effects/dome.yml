@@ -36,7 +36,7 @@
 
 - type: entity
   id: EnergyDomeSmallPink
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   categories: [ HideSpawnMenu ]
   parent: EnergyDomeBase
   components:
@@ -53,7 +53,7 @@
 
 - type: entity
   id: EnergyDomeSmallCap
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   categories: [ HideSpawnMenu ]
   parent: EnergyDomeBase
   components:
@@ -65,7 +65,7 @@
 
 - type: entity
   id: EnergyDomeSmallRed
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   categories: [ HideSpawnMenu ]
   parent: EnergyDomeBase
   components:
@@ -84,7 +84,7 @@
 
 - type: entity
   id: EnergyDomeMediumBlue
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   categories: [ HideSpawnMenu ]
   parent: EnergyDomeBase
   components:
@@ -113,7 +113,7 @@
 
 - type: entity
   id: EnergyDomeSlowing
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   categories: [ HideSpawnMenu ]
   parent: EnergyDomeBase
   components:
