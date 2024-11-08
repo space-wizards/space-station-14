@@ -156,6 +156,33 @@
     spread: 45
 
 - type: entity
+  id: PelletShotgunCoinshot
+  name: pellet (coinshot)
+  categories: [ HideSpawnMenu ]
+  parent: BaseBullet
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: coinstack
+    layers:
+    - state: coinstack
+      shader: unshaded
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 14
+
+- type: entity
+  id: PelletShotgunCoinshotSpread
+  categories: [ HideSpawnMenu ]
+  parent: PelletShotgunCoinshot
+  components:
+  - type: ProjectileSpread
+    proto: PelletShotgunCoinshot
+    count: 2
+    spread: 8
+
+- type: entity
   id: PelletShotgunTranquilizer
   name: pellet (.50 tranquilizer)
   categories: [ HideSpawnMenu ]

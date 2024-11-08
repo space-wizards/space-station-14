@@ -435,6 +435,9 @@
   id: CluwneHorn
 
 - type: Tag
+  id: Coin
+
+- type: Tag
   id: Cola
 
 - type: Tag

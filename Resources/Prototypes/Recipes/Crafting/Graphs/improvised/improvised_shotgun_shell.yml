@@ -155,3 +155,74 @@
               doAfter: 0.5
     - node: shell
       entity: ShellShotgunImprovisedUranium
+
+- type: constructionGraph
+  id: CoinshotShotgunShellGraph
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: shell
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 0.5 
+            - material: Plastic
+              amount: 1
+              doAfter: 0.5 
+            - tag: Coin
+              name: coin
+              icon:
+                sprite: Objects/Misc/coins.rsi
+                state: coin_iron
+              doAfter: 0.5 
+            - tag: Coin
+              name: coin
+              icon:
+                sprite: Objects/Misc/coins.rsi
+                state: coin_iron
+              doAfter: 0.5 
+            - tag: Coin
+              name: coin
+              icon:
+                sprite: Objects/Misc/coins.rsi
+                state: coin_iron
+              doAfter: 0.5 
+            - tag: Matchstick
+              name: match stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: match_unlit
+              doAfter: 0.5 
+            - tag: Matchstick
+              name: match stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: match_unlit
+              doAfter: 0.5 
+            - tag: Matchstick
+              name: match stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: match_unlit
+              doAfter: 0.5 
+            - tag: Matchstick
+              name: match stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: match_unlit
+              doAfter: 0.5 
+            - tag: Matchstick
+              name: match stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: match_unlit
+              doAfter: 0.5 
+            - tag: Matchstick
+              name: match stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: match_unlit
+              doAfter: 0.5
+    - node: shell
+      entity: ShellShotgunCoinshot

@@ -164,6 +164,19 @@
     state: improvised-uranium
 
 - type: construction
+  name: improvised coinshot shotgun slug
+  id: ShellShotgunCoinshot
+  graph: CoinshotShotgunShellGraph
+  startNode: start
+  targetNode: shell
+  category: construction-category-weapons
+  objectType: Item
+  description: A homemade shotgun slug that shoots a cylinder of coins. The stack has a tendency to break apart in the blast, limiting its effective range.
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: coinshot
+
+- type: construction
   name: rifle stock
   id: riflestock
   graph: RifleStockGraph

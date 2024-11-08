@@ -186,6 +186,29 @@
     state: "improvised-uranium"
 
 - type: entity
+  id: ShellShotgunCoinshot
+  name: improvised coinshot shotgun slug
+  description: A homemade shotgun slug that shoots a cylinder of coins. The stack has a tendency to break apart in the blast, limiting its effective range.
+  parent: BaseShellShotgun
+  components:
+  - type: Tag
+    tags:
+    - Cartridge
+    - ShellShotgun
+    - ShellShotgunLight
+  - type: Sprite
+    layers:
+      - state: coinshot
+        map: [ "enum.AmmoVisualLayers.Base" ]
+  - type: Construction
+    graph: CoinshotShotgunShellGraph
+    node: shell
+  - type: CartridgeAmmo
+    proto: PelletShotgunCoinshotSpread
+  - type: SpentAmmoVisuals
+    state: "coinshot"
+
+- type: entity
   id: ShellShotgunUranium
   name: uranium shotgun shell
   parent: BaseShellShotgun
