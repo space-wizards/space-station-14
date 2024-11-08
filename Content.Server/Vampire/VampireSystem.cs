@@ -160,6 +160,25 @@ public sealed partial class VampireSystem : EntitySystem
                 spacedamage.NextSpaceDamageTick -= frameTime;
             }
         }
+        
+        var strengthQuery = EntityQueryEnumerator<VampireComponent, VampireStrengthComponent>();
+        while (strengthQuery.MoveNext(out var uid, out var vampire, out var strength))
+        {
+            if (vampire == null || strength == null)
+                continue;
+            
+            if (strength.NextTick <= 0)
+            {
+                strength.NextTick = 1;
+                if (!SubtractBloodEssence((uid, vampire), strength.Upkeep) || _vampire.GetBloodEssence(uid) < FixedPoint2.New(200))
+                {
+                    var vampireUid = new Entity<VampireComponent>(uid, vampire);
+                    UnnaturalStrength(vampireUid);
+                    _popup.PopupEntity(Loc.GetString("vampire-cloak-disable"), uid, uid);
+                }
+            }
+            strength.NextTick -= frameTime;
+        }
     }
 
     private void OnExamined(EntityUid uid, VampireComponent component, ExaminedEvent args)
@@ -251,27 +270,12 @@ public sealed partial class VampireSystem : EntitySystem
         //CloakOfDarkness
         UpdateAbilities(uid, component , "ActionVampireCloakOfDarkness", "CloakOfDarkness" , bloodEssence >= FixedPoint2.New(300) && component.CurrentMutation == VampireMutationsType.Umbrae);
         
-        /*
+        
         //Gargantua
         
-        if (_vampire.GetBloodEssence(uid) >= FixedPoint2.New(200) && !_actionEntities.TryGetValue("ActionVampireUnnaturalStrength", out entity) && component.CurrentMutation == VampireMutationsType.Gargantua)
-        {
-            var vampire = new Entity<VampireComponent>(uid, component);
-            
-            UnnaturalStrength(vampire);
-            
-            _actionEntities["ActionVampireUnnaturalStrength"] = vampire;
-        }
+        UpdateAbilities(uid, component , "ActionVampireUnholyStrength", "UnholyStrength" , bloodEssence >= FixedPoint2.New(200) && component.CurrentMutation == VampireMutationsType.Gargantua);
         
-        if (_vampire.GetBloodEssence(uid) >= FixedPoint2.New(300) && !_actionEntities.TryGetValue("ActionVampireSupernaturalStrength", out entity) && component.CurrentMutation == VampireMutationsType.Gargantua)
-        {
-            var vampire = new Entity<VampireComponent>(uid, component);
-            
-            SupernaturalStrength(vampire);
-            
-            _actionEntities["ActionVampireSupernaturalStrength"] = vampire;
-        }
-        */
+        UpdateAbilities(uid, component , "ActionVampireSupernaturalStrength", "SupernaturalStrength" , bloodEssence >= FixedPoint2.New(300) && component.CurrentMutation == VampireMutationsType.Gargantua);
         
         //Bestia
         

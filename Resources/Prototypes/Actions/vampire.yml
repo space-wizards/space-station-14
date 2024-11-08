@@ -134,6 +134,24 @@
       !type:VampireUnholyStrengthEvent
       definitionName: UnholyStrength
     useDelay: 60
+    
+- type: entity
+  id: ActionVampireSupernaturalStrength
+  name: SuperNatural Strength
+  description: "Stare deeply into a mortals eyes, forcing them to sleep for 60 seconds. Activation Cost: 20 Essence. Activation Delay: 5 Seconds. Cooldown: 5 Minutes"
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    priority: 2
+    itemIconStyle: NoItem
+    icon:
+      sprite: Interface/Actions/actions_vampire.rsi
+      state: supernaturalstrength
+    event: 
+      !type:VampireUnholyStrengthEvent
+      definitionName: SupernaturalStrength
+    useDelay: 60
 
 - type: entity
   id: ActionVampireBatform

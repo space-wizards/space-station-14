@@ -55,30 +55,19 @@
   activationCost: 30
   upkeep: 1
 
-- type: vampirePassive
+- type: vampirePower
   id: UnholyStrength 
-  catalogEntry: VampireUnholyStrength # Must match the catalog id
-  compsToAdd:
-  - type: MeleeWeapon
-    damage:
-      types:
-        Slash: 10
-    animation: WeaponArcClaw
-    soundHit: /Audio/Weapons/slash.ogg
+  usableWhileStunned: false
+  usableWhileCuffed: false
+  activationCost: 30
+  upkeep: 1
 
-- type: vampirePassive
+- type: vampirePower
   id: SupernaturalStrength 
-  catalogEntry: VampireUnnaturalStrength # Must match the catalog id
-  compsToAdd:
-  - type: MeleeWeapon
-    damage:
-      types:
-        Slash: 15
-    animation: WeaponArcClaw
-    soundHit: /Audio/Weapons/slash.ogg 
-  - type: Prying
-    force: True
-    pryPowered: True
+  usableWhileStunned: false
+  usableWhileCuffed: false
+  activationCost: 30
+  upkeep: 1
 
 - type: vampirePassive
   id: DeathsEmbrace 

@@ -231,6 +231,18 @@ public sealed partial class VampireSealthComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public float Upkeep = 0;
 }
+[RegisterComponent]
+public sealed partial class VampireStrengthComponent : Component
+{
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float NextTick = 0;
+    
+    [ViewVariables(VVAccess.ReadOnly)]
+    public string Power = "";
+    
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float Upkeep = 0;
+}
 
 [Serializable, NetSerializable]
 public enum VampireMutationsType : byte
