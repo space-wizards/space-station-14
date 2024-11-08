@@ -17,7 +17,8 @@ pr = repo.get_pull(int(pr_number))
 
 def parse_changelog(pr_body):
     changelog_entries = []
-    pattern = r":cl: (.+?)\n((?:- (add|remove|tweak|fix): .+\n)+)"
+    # Убедимся, что регулярное выражение соответствует описанному формату
+    pattern = r":cl: ([^\n]+)\n((?:- (add|remove|tweak|fix): [^\n]+\n)+)"
     matches = re.finditer(pattern, pr_body, re.MULTILINE)
 
     for match in matches:
@@ -39,6 +40,9 @@ def get_last_id(changelog_data):
     return max(entry["id"] for entry in changelog_data["Entries"])
 
 def update_changelog():
+    # Выведем тело PR для отладки
+    print("PR Body:", pr.body)
+    
     if ":cl:" in pr.body:
         merge_time = pr.merged_at
         entries = parse_changelog(pr.body)
