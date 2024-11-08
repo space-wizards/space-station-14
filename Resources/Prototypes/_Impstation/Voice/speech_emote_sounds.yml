@@ -6,19 +6,12 @@
       params:
         variation: 0.125
         pitch: 0.75
-        volume: -9
     Laugh:
       path: /Audio/_Impstation/Animals/Gorilla_Laugh.ogg
-      params:
-        volume: -9
     Gasp:
       path: /Audio/_Impstation/Animals/Gorilla_Gasp.ogg
-      params:
-        volume: -9
     DefaultDeathgasp:
       path: /Audio/_Impstation/Animals/Gorilla_Scream.ogg
-      params:
-        volume: -9
         
 - type: emoteSounds
   id: Bros
