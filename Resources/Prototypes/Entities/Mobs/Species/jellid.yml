@@ -15,6 +15,10 @@
     onInteractUsing: false
     shockTime: 2
     Probability: 0.5
+  - type: IgnitionSource
+    temperature: 700
+  - type: SolutionHeater
+    heatPerSecond: 160
   # they like eat it idk lol
   - type: UserInterface
     interfaces:
