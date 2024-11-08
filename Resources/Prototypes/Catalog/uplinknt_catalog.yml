@@ -169,6 +169,16 @@
 ##CHEMICALS
 
 - type: listing
+  id: UplinkVestineChemistryVialHalf
+  name: uplink-vestinehalf-name
+  description: uplink-vestinehalf-desc
+  productEntity: VestineChemistryVialHalf
+  cost:
+    BluespaceCrystal: 3
+  categories:
+  - UplinkNtChemicals
+
+- type: listing
   id: UplinkCrateChemicalLabBundle
   name: uplink-lab-name
   description: uplink-lab-desc
