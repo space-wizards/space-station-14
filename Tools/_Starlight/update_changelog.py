@@ -17,21 +17,21 @@ pr = repo.get_pull(int(pr_number))
 
 def parse_changelog(pr_body):
     changelog_entries = []
-    # Убедимся, что регулярное выражение соответствует описанному формату
+    # Обновленное регулярное выражение с точной привязкой к типу и сообщению об изменении
     pattern = r":cl: ([^\n]+)\n- (add|remove|tweak|fix): ([^\n]+)"
     matches = re.finditer(pattern, pr_body, re.MULTILINE)
 
     for match in matches:
         author = match.group(1).strip()
-        changes = match.group(2).strip().splitlines()
+        change_type = match.group(2).capitalize()  # Получаем тип изменения
+        message = match.group(3).strip()  # Получаем само сообщение
 
-        for change in changes:
-            change_type, message = change.split(":", 1)
-            changelog_entries.append({
-                "author": author,
-                "type": change_type.strip('- ').capitalize(),
-                "message": message.strip()
-            })
+        # Добавляем данные в список изменений
+        changelog_entries.append({
+            "author": author,
+            "type": change_type,
+            "message": message
+        })
     return changelog_entries
 
 def get_last_id(changelog_data):
