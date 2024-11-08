@@ -7,5 +7,5 @@ namespace Content.Shared.Starlight.TextToSpeech;
 public sealed partial class TextToSpeechComponent : Component
 {
     [DataField("voice", customTypeSerializer: typeof(PrototypeIdSerializer<VoicePrototype>))]
-    public string? VoicePrototypeId { get; set; }
+    public string? VoicePrototypeId;
 }

@@ -44,7 +44,6 @@
   - type: RequireProjectileTarget
     active: False
   - type: TextToSpeech
-    voice: oracle
 
 - type: entity
   save: false
