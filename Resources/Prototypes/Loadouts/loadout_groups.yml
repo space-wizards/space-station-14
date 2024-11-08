@@ -1412,6 +1412,8 @@
   loadouts:
   - HeadofSecurityJumpsuit
   - HeadofSecurityJumpskirt
+  - HeadofSecurityJumpsuitGrey
+  - HeadofSecurityJumpskirtGrey
   - HeadofSecurityTurtleneck
   - HeadofSecurityTurtleneckSkirt
   - HeadofSecurityFormalSuit
@@ -1435,6 +1437,8 @@
   - HeadofSecurityCoat
   - HeadofSecurityWinterCoat
   - HeadofSecurityWinterCoatUnarmored
+  - ArmorVest
+  - ArmorVestSlim
   - HeadofSecurityEliteArmor
 
 - type: loadoutGroup
