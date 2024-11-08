@@ -5,8 +5,6 @@ concurrency:
 
 on:
   workflow_dispatch:
-  # schedule:
-   # - cron: '0 10 * * *'
 
 jobs:
   publish:
@@ -16,9 +14,7 @@ jobs:
     - name: Install dependencies
       run: sudo apt-get install -y python3-paramiko python3-lxml
 
-    - uses: actions/checkout@v3.6.0
-      with:
-        submodules: 'recursive'
+    - uses: actions/checkout@v3
 
     - name: Publish changelog (Discord)
       run: Tools/actions_changelogs_since_last_run.py
