@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC0-1.0",
-  "copyright": "Created by TheShuEd (github) for ss14, additional modifications by AugustSun",
+  "copyright": "Created by TheShuEd (github) for ss14",
   "size": {
     "x": 32,
     "y": 32
@@ -21,8 +21,5 @@
         ]
       ]
     },
-     {
-      "name": "litcore"
-     }
   ]
 }

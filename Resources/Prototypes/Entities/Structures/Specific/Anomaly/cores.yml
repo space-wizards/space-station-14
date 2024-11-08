@@ -203,7 +203,6 @@
 - type: entity
   parent: BaseAnomalyInertCore
   id: AnomalyCorePyroclasticInert 
-  description: The inert core of a pyroclastic anomaly.
   suffix: Pyroclastic, Inert
   components:
   - type: Sprite
@@ -219,7 +218,6 @@
 - type: entity
   parent: BaseAnomalyInertCore
   id: AnomalyCoreGravityInert 
-  description: The inert core of a gravitational anomaly.
   suffix: Gravity, Inert
   components:
   - type: Sprite
@@ -233,7 +231,6 @@
 - type: entity
   parent: BaseAnomalyInertCore
   id: AnomalyCoreIceInert
-  description: The inert core of an ice anomaly.
   suffix: Ice, Inert
   components:
   - type: Sprite
@@ -247,7 +244,6 @@
 - type: entity
   parent: BaseAnomalyInertCore
   id: AnomalyCoreFleshInert # Can be microwaved to turn it into a massive piece of meat
-  description: The inert core of a flesh anomaly. It pulsates sickeningly, as if alive.
   suffix: Flesh, Inert
   components:
   - type: Sprite
@@ -261,7 +257,6 @@
 - type: entity
   parent: BaseAnomalyInertCore
   id: AnomalyCoreRockInert 
-  description: The inert core of a rock anomaly.
   suffix: Rock, Inert
   components:
   - type: Sprite
@@ -275,7 +270,6 @@
 - type: entity
   parent: BaseAnomalyInertCore
   id: AnomalyCoreLiquidInert 
-  description: The inert core of a liquid anomaly. 
   suffix: Liquid, Inert
   components:
   - type: Sprite
@@ -289,7 +283,6 @@
 - type: entity
   parent: BaseAnomalyInertCore
   id: AnomalyCoreBluespaceInert 
-  description: The inert core of a bluespace anomaly.
   suffix: Bluespace, Inert
   components:
   - type: Sprite
@@ -304,7 +297,6 @@
 - type: entity
   parent: BaseAnomalyInertCore
   id: AnomalyCoreElectricityInert
-  description: The inert core of an electrical anomaly.
   suffix: Electricity, Inert
   components:
   - type: Sprite
@@ -318,7 +310,6 @@
 - type: entity
   parent: BaseAnomalyInertCore
   id: AnomalyCoreFloraInert #Turns into a seed that grows into artifexium
-  description: The inert core of a floral anomaly. Vines sprout from it endlessly, each withering in seconds.
   suffix: Flora, Inert
   components:
   - type: Seed
@@ -334,7 +325,6 @@
 - type: entity
   parent: [ BaseAnomalyInertCore, BaseShadow ] 
   id: AnomalyCoreShadowInert
-  description: The inert core of a shadow anomaly.
   suffix: Shadow, Inert
   components:
   - type: Sprite
@@ -348,7 +338,6 @@
 - type: entity
   parent: BaseAnomalyInertCore 
   id: AnomalyCoreTechInert
-  description: The inert core of a technological anomaly.
   suffix: Tech, Inert
   components:
   - type: Sprite
