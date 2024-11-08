@@ -1,7 +1,7 @@
 - type: entity
   name: Urist McJellid
   parent: BaseMobSpeciesOrganic
-  id: BaseMobJellid
+  id: BaseMobJellidPerson
   abstract: true
   components:
   - type: Hunger
