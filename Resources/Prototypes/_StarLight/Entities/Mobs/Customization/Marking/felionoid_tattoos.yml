@@ -9,7 +9,7 @@
         !type:TattooColoring
       fallbackColor: "#666666"
   sprites:
-  - sprite: _Starlight/Mobs/Customization/Felionoid_tattoos.rsi
+  - sprite: _Starlight/Mobs/Customization/felionoid_tattoos.rsi
     state: heart_l_arm
 
 - type: marking
@@ -23,7 +23,7 @@
         !type:TattooColoring
       fallbackColor: "#666666"
   sprites:
-  - sprite: _Starlight/Mobs/Customization/Felionoid_tattoos.rsi
+  - sprite: _Starlight/Mobs/Customization/felionoid_tattoos.rsi
     state: heart_r_arm
 
 - type: marking
@@ -37,7 +37,7 @@
         !type:TattooColoring
       fallbackColor: "#666666"
   sprites:
-  - sprite: _Starlight/Mobs/Customization/Felionoid_tattoos.rsi
+  - sprite: _Starlight/Mobs/Customization/felionoid_tattoos.rsi
     state: hive_s
 
 - type: marking
@@ -51,5 +51,5 @@
         !type:TattooColoring
       fallbackColor: "#666666"
   sprites:
-  - sprite: _Starlight/Mobs/Customization/Felionoid_tattoos.rsi
+  - sprite: _Starlight/Mobs/Customization/felionoid_tattoos.rsi
     state: nightling_s
