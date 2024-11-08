@@ -3899,3 +3899,11 @@
   id: 473
   time: '2024-11-08T16:24:38.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/637
+- author: hivehum
+  changes:
+  - message: Tranquilizer shells have nocturine in them, making them actually usable
+      again
+    type: Tweak
+  id: 474
+  time: '2024-11-08T16:27:37.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/640
