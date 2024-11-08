@@ -25,6 +25,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Exceptions;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Silicons.StationAi;
@@ -249,11 +250,19 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         if (!TryComp(args.Used, out IntellicardComponent? intelliComp))
             return;
 
-        var isUploading = _slots.CanEject(ent.Owner, args.User, ent.Comp.Slot);
-        var isDownloading = _slots.CanEject(args.Target.Value, args.User, targetHolder.Slot);
+        var cardHasAi = _slots.CanEject(ent.Owner, args.User, ent.Comp.Slot);
+        var coreHasAi = _slots.CanEject(args.Target.Value, args.User, targetHolder.Slot);
 
-        if (isUploading == isDownloading)
+        if (cardHasAi && coreHasAi)
+        {
+            _popup.PopupClient(Loc.GetString("intellicard-core-occupied"), args.User, args.User, PopupType.Medium);
             return;
+        }
+        if (!cardHasAi && !coreHasAi)
+        {
+            _popup.PopupClient(Loc.GetString("intellicard-core-empty"), args.User, args.User, PopupType.Medium);
+            return;
+        }
 
         if (TryGetHeldFromHolder((args.Target.Value, targetHolder), out var held) && _timing.CurTime > intelliComp.NextWarningAllowed)
         {
@@ -261,7 +270,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
             AnnounceIntellicardUsage(held, intelliComp.WarningSound);
         }
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, isUploading ? intelliComp.UploadTime : intelliComp.DownloadTime, new IntellicardDoAfterEvent(), args.Target, ent.Owner)
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, cardHasAi ? intelliComp.UploadTime : intelliComp.DownloadTime, new IntellicardDoAfterEvent(), args.Target, ent.Owner)
         {
             BreakOnDamage = true,
             BreakOnMove = true,
@@ -469,10 +478,7 @@ public sealed partial class JumpToCoreEvent : InstantActionEvent
 }
 
 [Serializable, NetSerializable]
-public sealed partial class IntellicardDoAfterEvent : SimpleDoAfterEvent
-{
-
-}
+public sealed partial class IntellicardDoAfterEvent : SimpleDoAfterEvent;
 
 
 [Serializable, NetSerializable]
