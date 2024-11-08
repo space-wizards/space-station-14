@@ -3940,3 +3940,11 @@
   id: 476
   time: '2024-11-08T16:33:37.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/636
+- author: TGRCdev
+  changes:
+  - message: Security crates now come with an anti-tamper module that acidifies the
+      contents of the box, which will activate if the box is destroyed while locked.
+    type: Tweak
+  id: 477
+  time: '2024-11-08T16:37:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/623
