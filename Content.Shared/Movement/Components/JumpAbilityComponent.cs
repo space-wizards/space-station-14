@@ -20,10 +20,10 @@ public sealed partial class JumpAbilityComponent : Component
     public float JumpDistance = 5f;
 
     /// <summary>
-    /// This gets played whenever a used jump. Predicted by the client.
+    /// This gets played whenever the jump action is used.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public SoundSpecifier SoundJump = new SoundPathSpecifier("/Audio/Effects/gravity_jump.ogg");
+    public SoundSpecifier JumpSound = new SoundPathSpecifier("/Audio/Effects/gravity_jump.ogg");
 }
 
 
