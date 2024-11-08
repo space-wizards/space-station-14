@@ -1,16 +1,14 @@
 - files: 
-  [
-    "cat_hiss1.ogg",
-    "cat_hiss2.ogg",
-    "cat_scream1.ogg", 
-    "cat_scream2.ogg", 
-    "cat_scream3.ogg", 
-    "cat_scream4.ogg",
-    "cat_mew1.ogg",
-    "cat_mew2.ogg",
-    "cat_mew3.ogg",
-    "cat_mew4.ogg",
-  ]
-  license: "Creative Commons NonCommercial"
+  - cat_hiss1.ogg
+  - cat_hiss2.ogg
+  - cat_scream1.ogg 
+  - cat_scream2.ogg 
+  - cat_scream3.ogg 
+  - cat_scream4.ogg
+  - cat_mew1.ogg
+  - cat_mew2.ogg
+  - cat_mew3.ogg
+  - cat_mew4.ogg
+  license: "CC-BY-NC-SA-3.0"
   copyright: "Darkrell"
-  source: "Darkrell"
+  source: "https://github.com/ss14Starlight/space-station-14"
