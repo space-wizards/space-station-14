@@ -3859,3 +3859,11 @@
   id: 469
   time: '2024-11-08T16:11:52.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/648
+- author: widgetbeck
+  changes:
+  - message: Rewrote (almost) all species guidebook entries to 1) be more consistent,
+      2) provide more information, and 3) be more flavorful.
+    type: Tweak
+  id: 470
+  time: '2024-11-08T16:21:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/646
