@@ -18,7 +18,7 @@ pr = repo.get_pull(int(pr_number))
 def parse_changelog(pr_body):
     changelog_entries = []
     # Убедимся, что регулярное выражение соответствует описанному формату
-    pattern = r":cl: ([^\n]+)\n((?:- (add|remove|tweak|fix): [^\n]+\n)+)"
+    pattern = r":cl: ([^\n]+)\n- (add|remove|tweak|fix): ([^\n]+)"
     matches = re.finditer(pattern, pr_body, re.MULTILINE)
 
     for match in matches:
