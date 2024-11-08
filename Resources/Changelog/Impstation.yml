@@ -3933,3 +3933,10 @@
   id: 475
   time: '2024-11-08T16:30:41.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/632
+- author: starlighthowls
+  changes:
+  - message: chef and bartender loadout aprons that unlock with the senior PDA
+    type: Add
+  id: 476
+  time: '2024-11-08T16:33:37.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/636
