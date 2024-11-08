@@ -141,9 +141,9 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 2
-        Slash: 2
-        Heat: 5
+        Piercing: 1.5
+        Slash: 1.5
+        Heat: 7
   - type: IgnitionSource
     ignited: true
 
@@ -170,9 +170,9 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 2
-        Slash: 2
-        Radiation: 2   
+        Piercing: 1.25
+        Slash: 1.25
+        Radiation: 2.5   
 
 - type: entity
   id: PelletShotgunImprovisedUraniumSpread
