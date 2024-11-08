@@ -106,6 +106,23 @@
         prob: 0.5
 
 - type: entity
+  parent: ToolboxMechanical
+  id: ToolboxNanotrasenFilled
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+    - id: Crowbar
+    - id: Wrench
+    - id: Screwdriver
+    - id: Wirecutter
+    - id: Welder
+    - id: Multitool
+    - id: ClothingHandsGlovesCombat
+    - id: ClothingEyesGlassesMeson
+    - id: CableApcStack10
+
+- type: entity
   parent: ToolboxSyndicate
   id: ToolboxSyndicateFilled
   suffix: Filled
