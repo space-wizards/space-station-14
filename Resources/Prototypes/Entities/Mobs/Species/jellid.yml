@@ -65,7 +65,7 @@
         sprite: Mobs/Effects/brute_damage.rsi
         color: "#2cf274"
   - type: Bloodstream
-    bloodReagent: Slime # TODO Color slime blood based on their slime color or smth
+    bloodReagent: SeaWater # the ocean runs through my veins...
   - type: Reactive
     groups:
       Flammable: [ Touch ]
