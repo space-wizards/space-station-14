@@ -329,7 +329,7 @@
 - type: entity
   id: ActionGravityJump
   name: Jump
-  description: By tensing your muscles you jump a short distance in the direction of your gaze.
+  description: Activating the advanced propulsion system, you propel yourself a short distance in the direction of your gaze.
   components:
   - type: InstantAction
     useDelay: 8

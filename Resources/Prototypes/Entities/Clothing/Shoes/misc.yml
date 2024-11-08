@@ -162,8 +162,8 @@
   - type: Clothing
     sprite: Clothing/Shoes/Boots/jumpboots.rsi
   - type: JumpAbility
-    jumpPower: 3
-    soundJump: /Audio/Effects/stealthoff.ogg
+    jumpDistance: 4
+    jumpSound: /Audio/Effects/stealthoff.ogg
   - type: ActionGrant
     actions:
     - ActionGravityJump 

@@ -147,8 +147,9 @@
   result: ClothingShoesBootsJump
   completetime: 2
   materials:
-    Steel: 1000
-    Plastic: 400
+    Steel: 1400
+    Plastic: 600
+    Silver: 200
     Plasma: 200
     
 - type: latheRecipe
