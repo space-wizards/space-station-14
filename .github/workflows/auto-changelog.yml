@@ -8,6 +8,8 @@ jobs:
   update-changelog:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+    environment:
+      name: prod
 
     steps:
     - name: Checkout repository
