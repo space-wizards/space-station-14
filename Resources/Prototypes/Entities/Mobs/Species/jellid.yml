@@ -91,7 +91,7 @@
 
 - type: entity
   parent: MobHumanDummy
-  id: MobSlimePersonDummy
+  id: MobJellidPersonDummy
   noSpawn: true
   components:
     - type: HumanoidAppearance
