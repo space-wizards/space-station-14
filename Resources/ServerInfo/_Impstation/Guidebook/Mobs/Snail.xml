@@ -1,0 +1,38 @@
+<Document>
+  # Gastropoid
+
+  <Box>
+    <GuideEntityEmbed Entity="MobGastropoid" Caption=""/>
+  </Box>
+  Gastropoids are used to extremely humid environments, and depend on moisture to survive. The comparativly harsh dryness of NT's standard life-support protocol leaves them vulnerable to hydrophilic chemicals - [color=#ffa500]Table salt, and anything that contains it as a direct ingredient, causes severe burns.[/color]
+  <Box>
+	<GuideEntityEmbed Entity="FoodShakerSalt" Caption=""/>
+  </Box>
+  ## Foot
+  
+  Their large, singular foot allows them to [color=#1e90ff]stick firmly to surfaces even in low gravity and under slippery conditions,[/color] but renders them [color=#ffa500]unable to move quickly without assistance.[/color]
+  
+  ## Slime Trail
+
+  Using some of the moisture in their body, they can secrete a miraculous substance called "Mucin," which, for unknown reasons, [color=#1e90ff]increases their walk speed while moving over it.[/color] This doesn't seem to work on non-Gastropoids, but perhaps a clever Chemist might be able to change that...
+
+  ## Shell
+  
+  Unlike Earth's gastropods, a Gastropoid's shell is completely hollow, and can be used to store large items. [color=#1e90ff]This means they have two backpack slots.[/color]
+  
+  ## Damage
+  
+  Due to their large shell, they take [color=#1e90ff]20% less damage from blunt and slash,[/color] but their sensitive mucous membranes cause them to take [color=#ffa500]50% more damage from heat and cold, and 20% more damage from poison.[/color]
+  
+  Their blood, similarly to that of Arachnids, uses a copper-based respiratory protein, and as such [color=#ffa500]can only be metabolized from copper, not iron.[/color]
+  
+  ## Gastropoid Naming Conventions
+  Many gastropoids believe time is a reflection of itself. For this reason, they frequently take up first names which are palindromes - spelled the same way forward and backward. Their last names are often related to a species of snail or slug. 
+  - [color=#449944]Acceptable:[/color] Otto Acmaea
+  - [color=#449944]Acceptable:[/color] Vyv Natici
+  - [color=#449944]Acceptable:[/color] Minim Mol
+  - [color=#449944]Acceptable:[/color] Neriren Lottii
+  - [color=#994444]Bad:[/color] Thug Slug
+  - [color=#994444]Bad:[/color] Slurp Slorp
+  - [color=#994444]Bad:[/color] Benry
+</Document>

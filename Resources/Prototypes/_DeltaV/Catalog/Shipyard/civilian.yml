@@ -1,0 +1,20 @@
+- type: vessel
+  id: Reclaimer
+  name: NT-Reclaimer
+  description: A small mining vessel.
+  price: 17000
+  path:
+  - /Maps/Shuttles/mining.yml
+  categories:
+  - Small
+  - Mining
+- type: vessel
+  id: Cargo
+  name: Cargo Ship
+  description: A small shipping vessel.
+  price: 20000
+  path:
+  - /Maps/Shuttles/cargo.yml
+  categories:
+  - Small
+  - Shipping

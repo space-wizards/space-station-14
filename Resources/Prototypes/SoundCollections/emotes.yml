@@ -21,7 +21,6 @@
     - /Audio/Voice/Human/female_cough_1.ogg
     - /Audio/Voice/Human/female_cough_2.ogg
 
-
 - type: soundCollection
   id: Claps
   files:

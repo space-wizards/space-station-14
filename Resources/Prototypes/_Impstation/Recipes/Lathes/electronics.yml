@@ -1,0 +1,11 @@
+# Recipes - Impstation Custom Additions
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: ShipyardComputerCircuitboard
+  result: ShipyardComputerCircuitboard
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: MiniGyroscopeMachineCircuitboard
+  result: MiniGyroscopeMachineCircuitboard

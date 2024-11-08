@@ -1,0 +1,47 @@
+- type: entityTable
+  id: BasicAntagEventsTableDeltaV
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+    - id: ListeningPost
+
+- type: entity
+  id: ListeningPost
+  parent: BaseGameRule
+  components:
+  - type: StationEvent
+    earliestStart: 15
+    weight: 2
+    minimumPlayers: 30
+    maxOccurrences: 1
+    duration: null
+  - type: RuleGrids
+  - type: LoadFarGridRule
+    path: /Maps/_DeltaV/Shuttles/listening_post.yml
+    distanceModifier: 13
+  - type: DebrisSpawnerRule
+    count: 12
+    distanceModifier: 7
+  # TODO: funny trolling or intel related objectives
+  - type: AntagLoadProfileRule
+  - type: AntagSelection
+    agentName: listening-post-round-end-agent-name
+    definitions:
+    - spawnerPrototype: SpawnPointGhostSyndicateListener
+      min: 2
+      max: 2
+      pickPlayer: false
+      startingGear: SyndicateListenerGear
+      roleLoadout:
+      - RoleSurvivalStandard
+      components:
+      - type: RandomMetadata
+        nameSegments:
+        - names_death_commando
+      - type: AutoImplant
+        implants:
+        - DeathAcidifierImplant
+      - type: NpcFactionMember
+        factions:
+        - Syndicate
+      mindRoles:
+      - MindRolePostOperator

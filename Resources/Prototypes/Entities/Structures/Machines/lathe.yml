@@ -201,10 +201,12 @@
       - ClothingHeadHatCone
       - FreezerElectronics
       - Flare
+    dynamicRecipes:
+      - Fulton
+
   - type: EmagLatheRecipes
     emagStaticRecipes:
       - BoxLethalshot
-      - BoxShotgunFlare
       - BoxShotgunSlug
       - CombatKnife
       - MagazineBoxLightRifle
@@ -291,6 +293,7 @@
       - PowerDrill
       - MiningDrill
       - MiningDrillDiamond
+      - FultonBeacon
       - AnomalyScanner
       - AnomalyLocator
       - AnomalyLocatorWide
@@ -454,6 +457,7 @@
     - CutterMachineCircuitboard
     - StationAnchorCircuitboard
     - SalvageMagnetMachineCircuitboard
+    - ShipyardComputerCircuitboard
     dynamicRecipes:
       - ThermomachineFreezerMachineCircuitBoard
       - HellfireFreezerMachineCircuitBoard
@@ -506,6 +510,7 @@
       - EmitterCircuitboard
       - ThrusterMachineCircuitboard
       - GyroscopeMachineCircuitboard
+      - MiniGyroscopeMachineCircuitboard
       - MiniGravityGeneratorCircuitboard
       - ShuttleGunKineticCircuitboard
       - GasRecyclerMachineCircuitboard
@@ -742,7 +747,6 @@
     runningState: icon
     staticRecipes:
       - BoxLethalshot
-      - BoxShotgunFlare
       - BoxShotgunPractice
       - BoxShotgunSlug
       - ClothingEyesHudSecurity
@@ -829,6 +833,8 @@
       - WeaponAdvancedLaser
       - WeaponDisabler
       - WeaponDisablerSMG
+      - WeaponShotgunKammererBeanbag
+      - WeaponShotgunEnforcerBeanbag
       - WeaponLaserCannon
       - WeaponLaserCarbine
       - WeaponXrayCannon
@@ -865,7 +871,6 @@
       runningState: icon
       staticRecipes:
         - BoxLethalshot
-        - BoxShotgunFlare
         - BoxShotgunSlug
         - BoxShellTranquilizer
         - MagazineBoxLightRifle
@@ -1171,6 +1176,7 @@
       - ClothingOuterWinterCentcom
       - ClothingOuterWinterSyndie
       - ClothingOuterWinterSyndieCap
+      - ClothingNeckCloakStraight
   - type: MaterialStorage
     whitelist:
       tags:
@@ -1200,8 +1206,6 @@
   - type: Machine
     board: BiogeneratorMachineCircuitboard
   - type: MaterialStorage
-    insertOnInteract: false
-    canEjectStoredMaterials: false
   - type: ProduceMaterialExtractor
   - type: ItemSlots
     slots:

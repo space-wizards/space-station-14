@@ -1,6 +1,7 @@
 using Content.Client.Movement.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Ghost;
+using Content.Shared._Impstation.Ghost;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
@@ -40,7 +41,9 @@ namespace Content.Client.Ghost
         }
 
         public GhostComponent? Player => CompOrNull<GhostComponent>(_playerManager.LocalEntity);
+        public GhostBarPatronComponent? PlayerGhostPatron => CompOrNull<GhostBarPatronComponent>(_playerManager.LocalEntity); // this feels kind of fucking scuffed but I'm DOING IT ANYWAY
         public bool IsGhost => Player != null;
+        public bool IsGhostBarPatron => PlayerGhostPatron != null;
 
         public event Action<GhostComponent>? PlayerRemoved;
         public event Action<GhostComponent>? PlayerUpdated;
@@ -180,8 +183,8 @@ namespace Content.Client.Ghost
         {
             RaiseNetworkEvent(new GhostBarSpawnEvent());
         }
-		
-		public void ToggleGhostVisibility(bool? visibility = null)
+
+        public void ToggleGhostVisibility(bool? visibility = null)
         {
             GhostVisibility = visibility ?? !GhostVisibility;
         }

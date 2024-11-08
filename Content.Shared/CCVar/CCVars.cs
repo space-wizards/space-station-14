@@ -32,6 +32,21 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> DefaultGuide =
             CVarDef.Create("server.default_guide", "NewPlayer", CVar.REPLICATED | CVar.SERVER);
 
+        /// <summary>
+        /// If greater than 0, automatically restart the server after this many minutes of uptime.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This is intended to work around various bugs and performance issues caused by long continuous server uptime.
+        /// </para>
+        /// <para>
+        /// This uses the same non-disruptive logic as update restarts,
+        /// i.e. the game will only restart at round end or when there is nobody connected.
+        /// </para>
+        /// </remarks>
+        public static readonly CVarDef<int> ServerUptimeRestartMinutes =
+            CVarDef.Create("server.uptime_restart_minutes", 0, CVar.SERVERONLY);
+
         /*
          * Ambience
          */
@@ -472,6 +487,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> GameEntityMenuLookup =
             CVarDef.Create("game.entity_menu_lookup", 0.25f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /// <summary>
+        /// Should the clients window show the server hostname in the title?
+        /// </summary>
+        public static readonly CVarDef<bool> GameHostnameInTitlebar =
+            CVarDef.Create("game.hostname_in_titlebar", true, CVar.SERVER | CVar.REPLICATED);
 
         /*
          * Discord
@@ -1939,6 +1960,24 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> MOTD =
             CVarDef.Create("chat.motd", "", CVar.SERVER | CVar.SERVERONLY | CVar.ARCHIVE, "A message broadcast to each player that joins the lobby.");
 
+        /// <summary>
+        /// A string containing a list of newline-separated words to be highlighted in the chat.
+        /// </summary>
+        public static readonly CVarDef<string> ChatHighlights =
+            CVarDef.Create("chat.highlights", "", CVar.CLIENTONLY | CVar.ARCHIVE, "A list of newline-separated words to be highlighted in the chat.");
+
+        /// <summary>
+        /// An option to toggle the automatic filling of the highlights with the character's info, if available.
+        /// </summary>
+        public static readonly CVarDef<bool> ChatAutoFillHighlights =
+            CVarDef.Create("chat.auto_fill_highlights", false, CVar.CLIENTONLY | CVar.ARCHIVE, "Toggles automatically filling the highlights with the character's information.");
+
+        /// <summary>
+        /// The color in which the highlights will be displayed.
+        /// </summary>
+        public static readonly CVarDef<string> ChatHighlightsColor =
+            CVarDef.Create("chat.highlights_color", "#17FFC1FF", CVar.CLIENTONLY | CVar.ARCHIVE, "The color in which the highlights will be displayed."); 
+
         /*
          * AFK
          */
@@ -2339,6 +2378,12 @@ namespace Content.Shared.CCVar
             CVarDef.Create("replay.auto_record_name", "{year}_{month}_{day}-{hour}_{minute}-round_{round}.zip", CVar.SERVERONLY);
 
         /// <summary>
+        ///     Should the player automatically get up after being knocked down
+        /// </summary>
+        public static readonly CVarDef<bool> AutoGetUp =
+            CVarDef.Create("white.auto_get_up", true, CVar.CLIENT | CVar.ARCHIVE | CVar.REPLICATED); // WD EDIT
+		
+		/// <summary>
         /// Path that, if provided, automatic replays are initially recorded in.
         /// When the recording is done, the file is moved into its final destination.
         /// Unless this path is rooted, it will be relative to <see cref="CVars.ReplayDirectory"/>.

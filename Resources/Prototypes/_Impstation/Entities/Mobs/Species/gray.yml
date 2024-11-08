@@ -1,0 +1,177 @@
+- type: entity
+  save: false
+  name: Urist McGray
+  parent: BaseMobSpeciesOrganic
+  id: BaseMobGray
+  abstract: true
+  components:
+  - type: Absorbable
+  - type: Hunger
+  - type: Thirst
+  - type: Icon
+    sprite: Mobs/Species/Gray/parts.rsi
+    state: full
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 2
+    damageRecovery:
+      types:
+        Asphyxiation: -1.0
+  - type: Sprite
+    noRot: true
+    drawdepth: Mobs
+  - type: Body
+    prototype: Gray
+    requiredLegs: 2
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatHuman
+      amount: 5
+  - type: Fixtures
+    fixtures: # TODO: This needs a second fixture just for mob collisions.
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        # they r smaller
+        density: 120
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Vocal
+    sounds:
+      Male: UnisexGray
+      Female: UnisexGray
+      Unsexed: UnisexGray
+  - type: GrayAccent
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Gray
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#00ff04"
+  - type: Bloodstream
+    bloodReagent: Radium
+  - type: ReplacementAccent
+    accent: gray
+  - type: Inventory
+    templateId: gray
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Gray/displacement.rsi
+            state: jumpsuit
+      head:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Gray/displacement.rsi
+            state: head
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Gray/displacement.rsi
+            state: outerClothing
+      neck:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Gray/displacement.rsi
+            state: neck
+      eyes:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Gray/displacement.rsi
+            state: eyes
+      mask:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Gray/displacement.rsi
+            state: head
+      gloves:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Gray/displacement.rsi
+            state: hand
+      back:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Gray/displacement.rsi
+            state: back
+      ears:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Gray/displacement.rsi
+            state: ears
+  - type: Speech
+    speechSounds: PVC
+  - type: TypingIndicator
+    proto: gray
+  - type: HumanoidAppearance
+    species: Gray
+    hideLayersOnEquip:
+    - Hair
+    - Snout
+
+- type: entity
+  parent: BaseSpeciesDummy
+  id: MobGrayDummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HumanoidAppearance
+    species: Gray
+  - type: Body
+    prototype: Gray
+  - type: Inventory
+    templateId: gray
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Gray/displacement.rsi
+            state: jumpsuit
+      head:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Gray/displacement.rsi
+            state: head
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Gray/displacement.rsi
+            state: outerClothing
+      neck:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Gray/displacement.rsi
+            state: neck
+      eyes:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Gray/displacement.rsi
+            state: head
+      mask:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Gray/displacement.rsi
+            state: head
+      gloves:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Gray/displacement.rsi
+            state: hand
+      back:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Gray/displacement.rsi
+            state: back
+      ears:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Gray/displacement.rsi
+            state: head

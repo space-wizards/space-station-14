@@ -897,9 +897,9 @@
   productEntity: Emag
   discountCategory: veryRareDiscounts
   discountDownTo:
-    Telecrystal: 5
+    Telecrystal: 2 # 5 is um. not a discount when it's normally 4
   cost:
-    Telecrystal: 8
+    Telecrystal: 4 # DV was 8, can no longer emag doors
   categories:
   - UplinkDisruption
 
@@ -912,7 +912,7 @@
   discountDownTo:
     Telecrystal: 2
   cost:
-    Telecrystal: 4
+    Telecrystal: 3
   categories:
   - UplinkDisruption
 
@@ -1073,10 +1073,12 @@
     blacklist:
       tags:
       - NukeOpsUplink
-  - !type:BuyerWhitelistCondition
-    blacklist:
-      components:
-      - SurplusBundle
+  # the impstation special (it's really funny when this happens)
+  # seems to be a roughly 10% chance to hit the juck pot 1 million$ and get a double surplus crate
+  #- !type:BuyerWhitelistCondition
+  #  blacklist:
+  #    components:
+  #    - SurplusBundle
 
 - type: listing
   id: UplinkSuperSurplusBundle
@@ -1092,6 +1094,8 @@
     blacklist:
       tags:
       - NukeOpsUplink
+  # not allowed to be recursive because it set off a chain reaction that crashed my localhost
+  # can still contain normal surplus bundles though smile
   - !type:BuyerWhitelistCondition
     blacklist:
       components:
@@ -1151,7 +1155,7 @@
     Telecrystal: 6
   categories:
   - UplinkAllies
-  
+
 - type: listing
   id: UplinkReinforcementRadioSyndicate
   name: uplink-reinforcement-radio-name
@@ -1852,6 +1856,26 @@
     - UplinkPointless
 
 - type: listing
+  id: UplinkPinStraight
+  name: uplink-pin-straight-name
+  description: uplink-pin-straight-desc
+  productEntity: ClothingNeckStraightPin
+  cost:
+    Telecrystal: 1
+  categories:
+    - UplinkPointless
+
+- type: listing
+  id: UplinkCloakStraight
+  name: uplink-cloak-straight-name
+  description: uplink-cloak-straight-desc
+  productEntity: ClothingNeckCloakStraight
+  cost:
+    Telecrystal: 1
+  categories:
+    - UplinkPointless
+
+- type: listing
   id: UplinkSyndicateBusinessCard
   name: uplink-business-card-name
   description: uplink-business-card-desc
@@ -2071,27 +2095,6 @@
     Telecrystal: 2
   cost:
     Telecrystal: 5 # was 4, with my buff made it 5 to be closer to minibomb -panzer
-  categories:
-  - UplinkJob
-  conditions:
-  - !type:BuyerJobCondition
-    whitelist:
-    - Janitor
-  - !type:BuyerWhitelistCondition
-    blacklist:
-      components:
-      - SurplusBundle
-
-- type: listing
-  id: uplinkCleanerLakeUpgrade
-  name: uplink-cleaner-lake-upgrade-name
-  description: uplink-cleaner-lake-upgrade-desc
-  productEntity: WeaponCleanerLakeUpgradeKit
-  discountCategory: rareDiscounts
-  discountDownTo:
-    Telecrystal: 12
-  cost:
-    Telecrystal: 14 # was 4, with my buff made it 5 to be closer to minibomb -panzer
   categories:
   - UplinkJob
   conditions:

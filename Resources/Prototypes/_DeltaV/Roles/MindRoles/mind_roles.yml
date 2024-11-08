@@ -1,0 +1,22 @@
+# Delta V content merge to bring it into line with the new system - impstation addition
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRoleRecruiter
+  name: Recruiter Role
+#  description: mind-role-recruiter-description
+  components:
+  - type: MindRole
+    antagPrototype: Recruiter
+    exclusiveAntag: true
+  - type: RecruiterRole
+
+- type: entity
+  parent: BaseMindRoleAntag
+  id: MindRolePostOperator
+  name: Listening Post Role
+#  description: mind-role-post-op-description
+  components:
+  - type: MindRole
+    antagPrototype: ListeningPost
+    exclusiveAntag: true
+  - type: ListeningPostRole

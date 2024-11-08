@@ -78,6 +78,7 @@
         - TableMask
         layer:
         - TableLayer
+        - BulletImpassable #Goobstation
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: Wood
@@ -109,6 +110,7 @@
   - type: Construction
     graph: Table
     node: CounterWoodFrame
+  - type: RequireProjectileTarget # Goobstation - Crawling
 
 - type: entity
   id: CounterMetalFrame

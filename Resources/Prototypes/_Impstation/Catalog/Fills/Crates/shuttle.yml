@@ -1,0 +1,23 @@
+- type: entity
+  parent: CrateEngineering
+  id: CrateEngineeringMiniGyroscope
+  name: mini gyroscope crate
+  description: Contains a mini gyroscope flatpack.
+  components:
+  - type: StorageFill
+    contents:
+      - id: MiniGyroscopeFlatpack
+
+- type: entity
+  parent: CrateEngineering
+  id: CrateEngineeringShittle
+  name: shittle starter pack
+  description: The bare minimum required for a spaceworthy vehicle. Go wild, buddy.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ThrusterFlatpack
+      - id: MiniGyroscopeFlatpack
+      - id: ShuttleConsoleCircuitboard
+      - id: PortableGeneratorJrPacmanMachineCircuitboard
+      - id: JugWeldingFuel

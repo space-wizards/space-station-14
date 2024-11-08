@@ -1,0 +1,21 @@
+- type: gamePreset
+  id: AllAboardTheShip
+  alias:
+  - svsaller
+  name: allaboard-title
+  description: allaboard-description
+  showInVote: false #lol. lmao
+  rules:
+    - Nukeops
+    - SpyVsSpy20TC
+    - Revolutionary
+    - Zombie
+    - Changeling
+    - BasicStationEventScheduler
+    - KesslerSyndromeScheduler
+    - MeteorSwarmMildScheduler
+    - MeteorSwarmScheduler
+    - RampingStationEventScheduler
+    - SpaceTrafficControlEventScheduler
+    - SpaceTrafficControlFriendlyEventScheduler
+    - BasicRoundstartVariation

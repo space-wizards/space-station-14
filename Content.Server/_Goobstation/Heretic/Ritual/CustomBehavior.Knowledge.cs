@@ -20,6 +20,9 @@ public sealed partial class RitualKnowledgeBehavior : RitualCustomBehavior
     private EntityLookupSystem _lookup = default!;
     private HereticSystem _heretic = default!;
 
+    [ValidatePrototypeId<DatasetPrototype>]
+    public const string EligibleTagsDataset = "EligibleTags";
+
     // this is basically a ripoff from hereticritualsystem
     public override bool Execute(RitualData args, out string? outstr)
     {
@@ -33,7 +36,7 @@ public sealed partial class RitualKnowledgeBehavior : RitualCustomBehavior
         // generate new set of tags
         if (requiredTags.Count == 0)
             for (int i = 0; i < 4; i++)
-                requiredTags.Add(_rand.Pick(_prot.Index<DatasetPrototype>("EligibleTags").Values), 1);
+                requiredTags.Add(_rand.Pick(_prot.Index<DatasetPrototype>(EligibleTagsDataset).Values), 1);
 
         var lookup = _lookup.GetEntitiesInRange(args.Platform, .75f);
         var missingList = new List<string>();

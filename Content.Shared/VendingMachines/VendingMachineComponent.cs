@@ -88,11 +88,12 @@ namespace Content.Shared.VendingMachines
         /// </summary>
         [DataField("soundVend")]
         // Grabbed from: https://github.com/discordia-space/CEV-Eris/blob/f702afa271136d093ddeb415423240a2ceb212f0/sound/machines/vending_drop.ogg
-        public SoundSpecifier SoundVend = new SoundPathSpecifier("/Audio/Machines/machine_vend.ogg")
+        // not sure how to properly attribute, but it's agpl-3 & we are as well so ???
+        public SoundSpecifier SoundVend = new SoundPathSpecifier("/Audio/_Impstation/Machines/vending_drop.ogg")
         {
             Params = new AudioParams
             {
-                Volume = -2f
+                Volume = -2f,
             }
         };
 

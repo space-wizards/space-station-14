@@ -1,0 +1,66 @@
+- type: marking
+  id: GrayCuteEyes
+  bodyPart: Eyes
+  markingCategory: Head
+  speciesRestriction: [Gray]
+  forcedColoring: true
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/Gray/eyes.rsi
+    state: eyes_cute
+
+- type: marking
+  id: GrayCoolEyes
+  bodyPart: Eyes
+  markingCategory: Head
+  speciesRestriction: [Gray]
+  forcedColoring: true
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#000000"
+  sprites:
+  - sprite: Mobs/Customization/Gray/eyes.rsi
+    state: eyes_cool
+
+- type: marking
+  id: GrayWideEyes
+  bodyPart: Eyes
+  markingCategory: Head
+  speciesRestriction: [Gray]
+  forcedColoring: false
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#3D3D3D"
+  sprites:
+  - sprite: Mobs/Customization/Gray/eyes.rsi
+    state: eyes_wide
+
+- type: marking
+  id: GrayCuteEars
+  bodyPart: Eyes
+  markingCategory: HeadSide
+  speciesRestriction: [Gray]
+  forcedColoring: true
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/Gray/ears.rsi
+    state: ears_cute
+
+- type: marking
+  id: GrayClassicAntenna
+  bodyPart: Head
+  markingCategory: HeadTop
+  speciesRestriction: [Gray]
+  forcedColoring: false
+  followSkinColor: true
+  sprites:
+  - sprite: Mobs/Customization/Gray/antenna.rsi
+    state: antenna_classic

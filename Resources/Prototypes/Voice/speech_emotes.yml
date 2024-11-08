@@ -243,6 +243,31 @@
     - snapped fingers
 
 - type: emote
+  id: Thump
+  name: chat-emote-name-thump
+  category: Hands
+  available: false
+  icon: Interface/Emotes/tailslap.png
+  whitelist:
+    components:
+    - Hands
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-thump"]
+  chatTriggers:
+    - thump
+    - thumps
+    - thumping
+    - thumped
+    - thump tail
+    - thumps tail
+    - thumps their tail
+    - thumps her tail
+    - thumps his tail
+    - thumps its tail
+
+- type: emote
   id: Salute
   name: chat-emote-name-salute
   category: Hands
@@ -311,6 +336,12 @@
   icon: Interface/Emotes/weh.png
   chatMessages: [Wehs!]
 
+- type: emote
+  id: Ungh
+  name: chat-emote-name-weh
+  category: Vocal
+  chatMessages: [UNGHs!]
+  
 - type: emote
   id: Chirp
   name: chat-emote-name-chirp

@@ -1,0 +1,47 @@
+- type: entityTable
+  id: UnknownShuttlesFreelanceTableDeltaV
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+    - id: SyndicateRecruiter
+
+- type: entity
+  parent: BaseUnknownShuttleRule
+  id: SyndicateRecruiter
+  components:
+  - type: StationEvent
+    weight: 4
+    minimumPlayers: 20
+    maxOccurrences: 1
+    duration: null
+  - type: RuleGrids
+  - type: LoadMapRule
+    preloadedGrid: SyndieRecruiterShip
+  - type: AntagSpawner
+    prototype: MobHuman
+  - type: AntagObjectives
+    objectives:
+    - RecruiterEscapeObjective
+    - RecruiterRecruitingObjective
+    - RecruiterKeepPenObjective
+  - type: AntagSelection
+    agentName: recruiter-round-end-agent-name
+    definitions:
+    - spawnerPrototype: SpawnPointGhostRecruiter
+      min: 1
+      max: 1
+      pickPlayer: false
+      startingGear: SyndicateRecruiterGear
+      roleLoadout:
+      - RoleSurvivalStandard
+      components:
+      - type: RandomMetadata
+        nameSegments:
+        - fake_human_first
+        - fake_human_last
+      - type: RandomHumanoidAppearance
+        randomizeName: false
+      - type: NpcFactionMember
+        factions:
+        - Syndicate
+      mindRoles:
+      - MindRolePostOperator

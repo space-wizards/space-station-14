@@ -310,6 +310,17 @@
   - type: GroupExamine
 
 - type: entity
+  parent: [ClothingOuterArmorHoS, ClothingOuterStorageBase, BaseSecurityCommandContraband]
+  id: ClothingOuterArmorHoSEliteArmor
+  name: head of security's elite armor
+  description: High-tech, low-profile body armor with tactical pouches for storage. The alloys used to make it are prohibitively expensive.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Armor/hoselitearmor.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Armor/hoselitearmor.rsi
+
+- type: entity
   parent: [ ClothingOuterBaseLarge, BaseMajorContraband, AllowSuitStorageClothing ]
   id: ClothingOuterArmorChangeling
   name: chitinous armor

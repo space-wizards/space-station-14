@@ -30,6 +30,16 @@
     jumpsuit: ClothingUniformJumpskirtHoS
 
 - type: loadout
+  id: HeadofSecurityJumpsuitGrey
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHoSGrey
+
+- type: loadout
+  id: HeadofSecurityJumpskirtGrey
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtHoSGrey
+
+- type: loadout
   id: HeadofSecurityTurtleneck
   equipment:
     jumpsuit: ClothingUniformJumpsuitHoSAlt
@@ -79,6 +89,14 @@
   equipment:
     neck: ClothingNeckMantleHOS
 
+- type: loadout
+  id: HeadofSecurityGreatcoat
+  equipment:
+    neck: ClothingNeckCloakHosgreatcoat
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranHOS
+
 # OuterClothing
 - type: loadout
   id: HeadofSecurityCoat
@@ -94,6 +112,14 @@
   id: HeadofSecurityWinterCoatUnarmored
   equipment:
     outerClothing: ClothingOuterWinterHoSUnarmored
+
+- type: loadout
+  id: HeadofSecurityEliteArmor
+  equipment:
+    outerClothing: ClothingOuterArmorHoSEliteArmor
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranHOS
 
 # Headset
 - type: loadout

@@ -69,6 +69,19 @@
           Quantity: 9
         - ReagentId: Carbon
           Quantity: 1
+  - type: UserInterface
+    interfaces:
+      enum.ShortConstructionUiKey.Key:
+        type: ShortConstructionMenuBUI
+  - type: ActivatableUI
+    key: enum.ShortConstructionUiKey.Key
+  - type: ShortConstruction
+    prototypes:
+    - Girder
+    - MetalRod
+    - TileSteel
+    - TileWhite
+    - TileDark
 
 - type: entity
   parent: SheetSteel

@@ -9,6 +9,7 @@
     role: JobBorg
     time: 18000  # 5 hrs
   canBeAntag: false
+  joinNotifyCrew: true
   icon: JobIconStationAi
   supervisors: job-supervisors-rd
   jobEntity: StationAiBrain
@@ -21,7 +22,7 @@
   playTimeTracker: JobBorg
   requirements:
     - !type:OverallPlaytimeRequirement
-      time: 216000 # 60 hrs
+      time: 144000 # 40 hrs
   canBeAntag: false
   icon: JobIconBorg
   supervisors: job-supervisors-rd

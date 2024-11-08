@@ -735,12 +735,6 @@
   id: Grenade
 
 - type: Tag
-  id: CleanerGrenade
-
-- type: Tag
-  id: WeaponCleanerLakeUpgradeKit
-
-- type: Tag
   id: HudMedical
 
 - type: Tag
@@ -1057,10 +1051,16 @@
   id: NoBlockAnchoring
 
 - type: Tag
+  id: NoConsoleSound
+
+- type: Tag
   id: NozzleBackTank
 
 - type: Tag
   id: Nugget # for chicken nuggets
+
+- type: Tag
+  id: FakeNukeDisk
 
 - type: Tag
   id: NukeOpsUplink
@@ -1268,6 +1268,9 @@
   id: ShellShotgun
 
 - type: Tag
+  id: ShellShotgunBeanbag
+
+- type: Tag
   id: Shiv
 
 - type: Tag
@@ -1377,6 +1380,9 @@
 
 - type: Tag
   id: Syringe
+
+- type: Tag
+  id: SyringeGunAmmo
 
 - type: Tag
   id: Spellbook

@@ -95,6 +95,7 @@
         - CrateEngineeringTeslaCoil
         - CrateEngineeringSingularityEmitter
         - CrateEngineeringGyroscope
+        - CrateEngineeringMiniGyroscope
         - CrateEngineeringThruster
         - CrateEngineeringToolbox
         - CrateEngineeringShuttle
@@ -130,6 +131,7 @@
         - CrateTrackingImplants
         - CrateSecurityTrackingMindshieldImplants
         - CrateSecurityHelmet
+        - CrateSecurityShotgunNonlethal
         - CrateSecurityArmor
         - CrateRestraints
         - CrateEmergencyExplosive

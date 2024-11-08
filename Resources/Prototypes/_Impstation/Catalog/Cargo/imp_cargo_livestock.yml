@@ -1,0 +1,19 @@
+- type: cargoProduct
+  id: LivestockLuggage
+  icon:
+    sprite: _Impstation/Mobs/NPCs/luggage.rsi
+    state: luggage_open
+  product: CrateNPCLuggage
+  cost: 10000
+  category: cargoproduct-category-name-livestock
+  group: market
+
+- type: cargoProduct
+  id: LivestockCargorilla
+  icon:
+    sprite: _Impstation/Mobs/Animals/cargorilla.rsi
+    state: icon
+  product: CrateNPCCargorilla
+  cost: 1000000
+  category: cargoproduct-category-name-livestock
+  group: market

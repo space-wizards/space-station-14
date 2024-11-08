@@ -1,0 +1,12 @@
+- type: entity
+  parent: IDCardStandard
+  id: CargorillaIDCard
+  name: cargorilla ID card
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: idcargotechnician
+    - type: PresetIdCard
+      job: CargoTechnician
+      name: Cargorilla

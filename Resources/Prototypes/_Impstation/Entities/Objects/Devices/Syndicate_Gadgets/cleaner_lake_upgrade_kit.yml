@@ -1,0 +1,14 @@
+- type: entity
+  name: Shining spring re-militarisation kit
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: WeaponCleanerLakeUpgradeKit
+  description: A re-militarisation kit for the shining spring.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: abductor_mod
+  - type: Item
+    size: Small
+  - type: Tag
+    tags:
+    - WeaponCleanerLakeUpgradeKit

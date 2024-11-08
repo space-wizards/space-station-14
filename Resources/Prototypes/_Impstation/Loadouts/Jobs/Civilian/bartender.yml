@@ -1,0 +1,7 @@
+- type: loadout
+  id: BartenderCuteApron
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorBartender
+  equipment:
+    outerClothing: ClothingOuterApronCuteBar

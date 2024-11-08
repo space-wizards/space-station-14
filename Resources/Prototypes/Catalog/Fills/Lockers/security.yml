@@ -54,6 +54,7 @@
       - id: RemoteSignaller
         amount: 2
       - id: ClothingOuterHardsuitBrigmedic
+      - id: TicketPad #imp special
 
 - type: entity
   id: LockerSecurityFilled
@@ -82,6 +83,7 @@
         prob: 0.6
       - id: BookSpaceLaw
         prob: 0.5
+      - id: TicketPad #imp special
 
 - type: entity
   id: LockerBrigmedicFilled
@@ -117,6 +119,7 @@
         prob: 0.7
       - id: ClothingNeckCloakMoth #bzzz Moth-pocalypse
         prob: 0.15
+      - id: TicketPad #imp special
 
 - type: entity
   id: LockerDetectiveFilled
@@ -228,6 +231,10 @@
       amount: 2
     - id: MagazineShotgun
       amount: 4
+    - id: WeaponShotgunKammererBeanbag
+      amount: 2
+    - id: BoxBeanbag
+      amount: 2
 
 - type: entity
   id: GunSafeSubMachineGunWt550

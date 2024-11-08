@@ -78,7 +78,12 @@
   copyright: "lazyriverfolk"
   source: "https://github.com/impstation/imp-station-14/"
 
-- files: ["grimmbot.webp"]
+- files: ["greeting_card_lobby.webp"]
   license: "CC-BY-SA-4.0"
   copyright: "ghostphasemoon"
+  source: "https://github.com/impstation/imp-station-14/"
+
+- files: ["impstation70snovelcover.webp"]
+  license: "CC-BY-SA-4.0"
+  copyright: "LandsharkRAWR"
   source: "https://github.com/impstation/imp-station-14/"

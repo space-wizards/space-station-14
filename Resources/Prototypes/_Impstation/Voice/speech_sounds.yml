@@ -1,0 +1,35 @@
+- type: speechSounds
+  id: Finfin
+  saySound:
+    path: /Audio/_Impstation/Animals/finfin1.ogg
+  askSound:
+    path: /Audio/_Impstation/Animals/finfin2.ogg
+  exclaimSound:
+    path: /Audio/_Impstation/Animals/finfin3.ogg
+
+- type: speechSounds
+  id: Bros
+  saySound:
+    path: /Audio/_Impstation/Animals/bros_hit.ogg
+  askSound:
+    path: /Audio/_Impstation/Animals/bros_hit.ogg
+  exclaimSound:
+    path: /Audio/_Impstation/Animals/bros_hit.ogg
+
+- type: speechSounds
+  id: Plushie
+  saySound:
+    collection: ToySqueak
+  askSound:
+    collection: ToySqueak
+  exclaimSound:
+    collection: ToySqueak
+
+- type: speechSounds
+  id: Gorilla
+  saySound:
+    path: /Audio/_Impstation/Animals/Gorilla_Chuff.ogg
+  askSound:
+    path: /Audio/_Impstation/Animals/Gorilla_Chuff.ogg
+  exclaimSound:
+    path: /Audio/_Impstation/Animals/Gorilla_Chuff.ogg

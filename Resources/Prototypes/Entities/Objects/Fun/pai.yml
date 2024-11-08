@@ -72,6 +72,10 @@
           Searching: { state: pai-searching-overlay }
           On: { state: pai-on-overlay }
   - type: StationMap
+  - type: ChangeVoiceInContainer
+    whitelist:
+      components:
+        - SecretStash
 
 - type: entity
   parent: [ PersonalAI, BaseSyndicateContraband]
@@ -123,8 +127,8 @@
     - state: gold-pai-swish-overlay
       shader: unshaded
   - type: ToggleableGhostRole
-    roleName: pai-system-role-name
-    roleDescription: pai-system-role-description
+    roleName: pai-system-role-name-gilded
+    roleDescription: pai-system-role-description-gilded
     roleRules: ghost-role-information-familiar-rules
   - type: IntrinsicRadioTransmitter
     channels:

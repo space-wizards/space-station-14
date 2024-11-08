@@ -32,6 +32,10 @@
     proto: PelletShotgunBeanbag
   - type: SpentAmmoVisuals
     state: "beanbag"
+  - type: Tag
+    tags:
+    - ShellShotgun
+    - ShellShotgunBeanbag
 
 - type: entity
   id: ShellShotgunSlug
@@ -117,7 +121,7 @@
     solutions:
       ammo:
         reagents:
-        - ReagentId: ChloralHydrate
+        - ReagentId: Nocturine
           Quantity: 7
   - type: SolutionTransfer
     maxTransferAmount: 7
