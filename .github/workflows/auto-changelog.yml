@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Set up Python
       uses: actions/setup-python@v2
@@ -28,9 +28,12 @@ jobs:
         ACTIONS_SSH_KEY: ${{ secrets.ACTIONS_SSH_KEY }}
       run: |
         mkdir -p ~/.ssh
-        echo "$ACTIONS_SSH_KEY" > ~/.ssh/id_ed25519
+        echo "$ACTIONS_SSH_KEY" | tr -d '\r' > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
         ssh-keyscan github.com >> ~/.ssh/known_hosts
+        
+    - name: Test SSH Connection
+      run: ssh -T git@github.com || exit 0
 
     - name: Parse PR and Update Changelog
       env:
