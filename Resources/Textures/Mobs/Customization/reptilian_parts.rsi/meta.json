@@ -28,6 +28,10 @@
       "directions": 4
     },
     {
+      "name": "tail_aquatic_front",
+      "directions": 4
+    },
+    {
       "name": "tail_smooth_behind_primary",
       "directions": 4
     },
@@ -56,6 +60,10 @@
       "directions": 4
     },
     {
+      "name": "tail_aquatic_behind",
+      "directions": 4
+    },
+    {
       "name": "tail_smooth_primary",
       "directions": 4
     },
@@ -81,6 +89,10 @@
     },
     {
       "name": "tail_ltiger",
+      "directions": 4
+    },
+    {
+      "name": "tail_aquatic",
       "directions": 4
     },
     {
@@ -474,6 +486,84 @@
       ]
     },
     {
+      "name": "tail_aquatic_wagging",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ],
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
       "name": "snout_round",
       "directions": 4
     },
@@ -603,6 +693,10 @@
     },
     {
       "name": "body_backspikes",
+      "directions": 4
+    },
+    {
+      "name": "body_fin",
       "directions": 4
     },
     {
