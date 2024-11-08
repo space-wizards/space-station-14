@@ -1,3 +1,4 @@
+---
 Entries:
 - author: Rinary
   changes:
@@ -5,3 +6,10 @@ Entries:
     type: Add
   id: 1
   time: '2024-08-11T11:38:00.059464+00:00'
+- author: Rinary
+  changes:
+  - message: Added automatic changelog.
+    type: Add
+  id: 2
+  time: '2024-11-08T21:26:53+00:00'
+
