@@ -43,6 +43,13 @@ def update_changelog():
         merge_time = pr.merged_at
         entries = parse_changelog(pr.body)
         
+        # Отладочная печать для проверки парсинга
+        print("Parsed entries:", entries)
+        
+        if not entries:
+            print("No changelog entries found.")
+            return
+        
         if os.path.exists(changelog_path):
             with open(changelog_path, "r") as file:
                 changelog_data = yaml.safe_load(file) or {"Entries": []}
@@ -63,8 +70,10 @@ def update_changelog():
             }
             changelog_data["Entries"].append(changelog_entry)
 
+        # Запись с добавлением новой строки в конце
         with open(changelog_path, "w") as file:
-            yaml.dump(changelog_data, file, allow_unicode=True)
+            yaml.dump(changelog_data, file, allow_unicode=True, explicit_start=True)
+            file.write('\n')  # Добавить новую строку в конце файла
 
 if __name__ == "__main__":
     update_changelog()
