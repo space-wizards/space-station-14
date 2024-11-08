@@ -8,7 +8,6 @@
   components:
   - type: Tag
     tags:
-    - Trash
     - CentrifugeCompatible
   - type: PhysicalComposition
     materialComposition:
@@ -129,5 +128,264 @@
           reagents:
             - ReagentId: SpaceLube
               Quantity: 30
-    - type: Tag
-      tags: []
+
+- type: entity
+  id: AluminiumChemistryVial
+  name:  aluminium vial
+  parent: BaseChemistryEmptyVial
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 30
+          reagents:
+            - ReagentId: Aluminium
+              Quantity: 30
+
+- type: entity
+  id: CarbonChemistryVial
+  name: carbon vial
+  parent: BaseChemistryEmptyVial
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 30
+          reagents:
+            - ReagentId: Carbon
+              Quantity: 30
+
+- type: entity
+  id: ChlorineChemistryVial
+  name:  chlorine vial
+  parent: BaseChemistryEmptyVial
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 30
+          reagents:
+            - ReagentId: Chlorine
+              Quantity: 30
+
+- type: entity
+  id: FluorineChemistryVial
+  name: fluorine vial
+  parent: BaseChemistryEmptyVial
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 30
+          reagents:
+            - ReagentId: Fluorine
+              Quantity: 30
+
+- type: entity
+  id: IodineChemistryVial
+  name:  iodine vial
+  parent: BaseChemistryEmptyVial
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 30
+          reagents:
+            - ReagentId: Iodine
+              Quantity: 30
+
+- type: entity
+  id: PhosphorusChemistryVial
+  name: phosphorus vial
+  parent: BaseChemistryEmptyVial
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 30
+          reagents:
+            - ReagentId: Phosphorus
+              Quantity: 30
+
+- type: entity
+  id: SulfurChemistryVial
+  name: sulfur vial
+  parent: BaseChemistryEmptyVial
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 30
+          reagents:
+            - ReagentId: Sulfur
+              Quantity: 30
+
+- type: entity
+  id: SiliconChemistryVial
+  name: silicon vial
+  parent: BaseChemistryEmptyVial
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 30
+          reagents:
+            - ReagentId: Silicon
+              Quantity: 30
+
+- type: entity
+  id: OxygenChemistryVial
+  name:  oxygen vial
+  parent: BaseChemistryEmptyVial
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 30
+          reagents:
+            - ReagentId: Oxygen
+              Quantity: 30
+
+- type: entity
+  id: NitrogenChemistryVial
+  name: nitrogen vial
+  parent: BaseChemistryEmptyVial
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 30
+          reagents:
+            - ReagentId: Nitrogen
+              Quantity: 30
+
+- type: entity
+  id: HydrogenChemistryVial
+  name: hydrogen vial
+  parent: BaseChemistryEmptyVial
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 30
+          reagents:
+            - ReagentId: Hydrogen
+              Quantity: 30
+
+- type: entity
+  id: LithiumChemistryVial
+  name: lithium vial
+  parent: BaseChemistryEmptyVial
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 30
+          reagents:
+            - ReagentId: Lithium
+              Quantity: 30
+
+- type: entity
+  id: SodiumChemistryVial
+  name: sodium vial
+  parent: BaseChemistryEmptyVial
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 30
+          reagents:
+            - ReagentId: Sodium
+              Quantity: 30
+
+- type: entity
+  id: PotassiumChemistryVial
+  name: potassium vial
+  parent: BaseChemistryEmptyVial
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 30
+          reagents:
+            - ReagentId: Potassium
+              Quantity: 30
+
+- type: entity
+  id: RadiumChemistryVial
+  name: radium vial
+  parent: BaseChemistryEmptyVial
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 30
+          reagents:
+            - ReagentId: Radium
+              Quantity: 30
+
+- type: entity
+  id: IronChemistryVial
+  name: iron vial
+  parent: BaseChemistryEmptyVial
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 30
+          reagents:
+            - ReagentId: Iron
+              Quantity: 30
+
+- type: entity
+  id: CopperChemistryVial
+  name: copper vial
+  parent: BaseChemistryEmptyVial
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 30
+          reagents:
+            - ReagentId: Copper
+              Quantity: 30
+
+- type: entity
+  id: GoldChemistryVial
+  name: gold vial
+  parent: BaseChemistryEmptyVial
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 30
+          reagents:
+            - ReagentId: Gold
+              Quantity: 30
+
+- type: entity
+  id: MercuryChemistryVial
+  name: mercury vial
+  parent: BaseChemistryEmptyVial
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 30
+          reagents:
+            - ReagentId: Mercury
+              Quantity: 30
+
+- type: entity
+  id: SilverChemistryVial
+  name: silver vial
+  parent: BaseChemistryEmptyVial
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 30
+          reagents:
+            - ReagentId: Silver
+              Quantity: 30
+
