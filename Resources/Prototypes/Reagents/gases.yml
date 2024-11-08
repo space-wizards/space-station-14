@@ -395,3 +395,14 @@
           min: 1
         clear: True
         time: 5
+      - !type:Oxygenate
+        conditions:
+        - !type:OrganType
+          type: Jellid
+      - !type:ModifyLungGas
+        conditions:
+        - !type:OrganType
+          type: Jellid
+        ratios:
+          WaterVapor: 1.0
+          SeaWater: -1.0
