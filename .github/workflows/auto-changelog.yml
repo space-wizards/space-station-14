@@ -37,7 +37,7 @@ jobs:
         CHANGELOG_FILE_PATH: 'Resources/Changelog/ChangelogStarlight.yml'
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         PR_NUMBER: ${{ github.event.pull_request.number }}
-      run: ./Tools/_Starlight/python update_changelog.py
+      run: python ./Tools/_Starlight/update_changelog.py
 
     - name: Commit and push changes
       run: |
