@@ -141,7 +141,7 @@
     Steel: 1500
     Plastic: 1000
     Silver: 500
-    
+
 - type: latheRecipe
   id: ClothingShoesBootsJump
   result: ClothingShoesBootsJump
@@ -151,7 +151,7 @@
     Plastic: 600
     Silver: 200
     Plasma: 200
-    
+
 - type: latheRecipe
   id: ModularReceiver
   result: ModularReceiver
