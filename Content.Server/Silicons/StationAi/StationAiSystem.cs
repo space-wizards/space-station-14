@@ -51,7 +51,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
         if (!TryComp<ActorComponent>(uid, out var actor))
             return;
 
-        var msg = Loc.GetString("ai-intellicard-download-warning");
+        var msg = Loc.GetString("ai-consciousness-download-warning");
         var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
         _chats.ChatMessageToOne(ChatChannel.Server, msg, wrappedMessage, default, false, actor.PlayerSession.Channel, colorOverride: Color.Red);
 
