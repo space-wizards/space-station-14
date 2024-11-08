@@ -1,29 +1,21 @@
 - type: entity
-  name: Urist McSlime
+  name: Urist McJellid
   parent: BaseMobSpeciesOrganic
-  id: BaseMobSlimePerson
+  id: BaseMobJellid
   abstract: true
   components:
   - type: Hunger
-  - type: Thirst
   - type: Icon
     sprite: Mobs/Species/Slime/parts.rsi
     state: full
   - type: Body
     prototype: Slime
     requiredLegs: 2
+  - type: Electrified
+    onInteractUsing: false
+    shockTime: 2
+    Probability: 0.5
   # they like eat it idk lol
-  - type: Storage
-    clickInsert: false
-    grid:
-    - 0,0,1,2
-    maxItemSize: Large
-    storageInsertSound:
-      path: /Audio/Voice/Slime/slime_squish.ogg
-  - type: ContainerContainer
-    containers:
-      storagebase: !type:Container
-        ents: []
   - type: UserInterface
     interfaces:
       enum.StorageUiKey.Key:
@@ -53,7 +45,6 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Slime
-  - type: Geras
   - type: PassiveDamage # Around 8 damage a minute healed
     allowedStates:
     - Alive
@@ -70,11 +61,6 @@
         color: "#2cf274"
   - type: Bloodstream
     bloodReagent: Slime # TODO Color slime blood based on their slime color or smth
-  - type: Barotrauma
-    damage:
-      types:
-        Blunt: 0.50 #per second, scales with pressure and other constants.
-        Heat: 0.2 # 0.1 more than humans, i feel like low pressure would make slime boil more than blunt stretch them so i decided on this instead.
   - type: Reactive
     groups:
       Flammable: [ Touch ]
@@ -84,25 +70,12 @@
       methods: [ Touch ]
       effects:
       - !type:WashCreamPieReaction
-    - reagents: [ Water ]
-      methods: [ Touch ]
-      effects:
-      - !type:HealthChange
-        scaleByQuantity: true
-        damage:
-          types:
-            Heat: 0.1
-      - !type:PopupMessage
-        type: Local
-        visualType: Large
-        messages: [ "slime-hurt-by-water-popup" ]
-        probability: 0.25
   - type: Butcherable
     butcheringType: Spike
     spawned:
     - id: FoodMeatSlime
       amount: 5
-  - type: Respirator
+  - type: Respirator #TODO make jellids only able to breathe water
     damage:
       types:
         Asphyxiation: 0.2
