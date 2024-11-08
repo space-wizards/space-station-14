@@ -290,7 +290,6 @@
     energy: 3.5
     color: "#00ccff"
     castShadows: false
-  
 
 - type: entity
   parent: BaseAnomalyInertCore
