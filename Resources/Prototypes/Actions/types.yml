@@ -46,7 +46,7 @@
   id: ActionToggleDome
   name: Toggle energy dome
   description: Turn the energy barrier on or off.
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
     icon: { sprite: Objects/Weapons/Melee/e_shield.rsi, state: eshield-on }
