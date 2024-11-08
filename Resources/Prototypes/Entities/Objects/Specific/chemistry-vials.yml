@@ -115,6 +115,21 @@
               Quantity: 30
     - type: Tag
       tags: []
+      
+- type: entity
+  id: VestineChemistryVialHalf
+  name: vestine vial
+  parent: BaseChemistryEmptyVial
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 15
+          reagents:
+            - ReagentId: Vestine
+              Quantity: 30
+    - type: Tag
+      tags: []
 
 - type: entity
   id: LubeChemistryVial
