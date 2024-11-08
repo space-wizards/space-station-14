@@ -374,25 +374,95 @@
     Gas:
       effects:
       - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Plant
+          shouldHave: false
+        - !type:OrganType
+          type: Vox
+          shouldHave: false
+        - !type:OrganType
+          type: Human
+          shouldHave: false
+        - !type:OrganType
+          type: Slime
+          shouldHave: false
+        - !type:OrganType
+          type: Vox
+          shouldHave: false
+        - !type:OrganType
+          type: Rat
+          shouldHave: false
+        - !type:OrganType
+          type: Animal
+          shouldHave: false
+        # Don't want people to get toxin damage from the gas they just
+        # exhaled, right?
+        - !type:ReagentThreshold
+          min: 0.5
+        scaleByQuantity: true
         ignoreResistances: true
         damage:
           types:
-            Cold: 15 # water, very temperature!!
-            Asphyxiation: 20
+            Cold:
+              20
       - !type:PopupMessage
         type: Local
         messages: [ "water-in-lungs" ]
         probability: 0.7
         conditions:
+        - !type:OrganType
+          type: Plant
+          shouldHave: false
+        - !type:OrganType
+          type: Vox
+          shouldHave: false
+        - !type:OrganType
+          type: Human
+          shouldHave: false
+        - !type:OrganType
+          type: Slime
+          shouldHave: false
+        - !type:OrganType
+          type: Vox
+          shouldHave: false
+        - !type:OrganType
+          type: Rat
+          shouldHave: false
+        - !type:OrganType
+          type: Animal
+          shouldHave: false
         - !type:ReagentThreshold
           reagent: SeaWater
-          min: 1
+          min: 0.5
       - !type:AdjustAlert
         alertType: Drowning
         conditions:
+        conditions:
+        - !type:OrganType
+          type: Plant
+          shouldHave: false
+        - !type:OrganType
+          type: Vox
+          shouldHave: false
+        - !type:OrganType
+          type: Human
+          shouldHave: false
+        - !type:OrganType
+          type: Slime
+          shouldHave: false
+        - !type:OrganType
+          type: Vox
+          shouldHave: false
+        - !type:OrganType
+          type: Rat
+          shouldHave: false
+        - !type:OrganType
+          type: Animal
+          shouldHave: false
         - !type:ReagentThreshold
           reagent: SeaWater
-          min: 1
+          min: 0.5
         clear: True
         time: 5
       - !type:Oxygenate
