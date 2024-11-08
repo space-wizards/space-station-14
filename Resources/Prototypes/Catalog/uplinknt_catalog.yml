@@ -6,7 +6,7 @@
   description: uplink-CaptainSabre-desc
   productEntity: CaptainSabre
   cost:
-    BluespaceCrystal: 10
+    BluespaceCrystal: 8
   categories:
   - UplinkNtWeaponry
 
@@ -120,7 +120,7 @@
   description: uplink-magcell-desc
   productEntity: BaseMagCell
   cost:
-    BluespaceCrystal: 4
+    BluespaceCrystal: 2
   categories:
   - UplinkNtAmmo
 
@@ -130,7 +130,7 @@
   description: uplink-magcelladv-desc
   productEntity: MagCellAdvanced
   cost:
-    BluespaceCrystal: 8
+    BluespaceCrystal: 6
   categories:
   - UplinkNtAmmo
 
@@ -145,16 +145,6 @@
   - UplinkNtAmmo
 
 ## ARMOR
-
-- type: listing
-  id: UplinkClothingGlovesCombat
-  name: uplink-combat-gloves-name
-  description: uplink-combat-gloves-desc
-  productEntity: ClothingHandsGlovesCombat
-  cost:
-    BluespaceCrystal: 1 # at some point we'll roll this into a proper toolbox with gear
-  categories:
-  - UplinkNtArmor
 
 - type: listing
   id: UplinkClothingBulletproof
@@ -176,6 +166,18 @@
   categories:
   - UplinkNtArmor
 
+##CHEMICALS
+
+- type: listing
+  id: UplinkCrateChemicalLabBundle
+  name: uplink-lab-name
+  description: uplink-lab-desc
+  productEntity: CrateChemicalLabBundle
+  cost:
+    BluespaceCrystal: 16
+  categories:
+  - UplinkNtChemicals
+
 ##DISRUPTION
 
 - type: listing
@@ -187,6 +189,16 @@
     BluespaceCrystal: 2
   categories:
   - UplinkNtDisruption
+
+- type: listing
+  id: UplinkToolboxNanotrasenFilled
+  name: uplink-toolbox-name
+  description: uplink-toolbox-desc
+  productEntity: ToolboxNanotrasenFilled
+  cost:
+    BluespaceCrystal: 5
+  categories:
+  - UplinkNtDisruption  
 
 - type: listing
   id: UplinkAnnouncementPad
