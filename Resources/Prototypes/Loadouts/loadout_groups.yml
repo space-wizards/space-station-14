@@ -388,6 +388,7 @@
   - BartenderApron
   - BartenderWintercoat
   - ServiceClownApron
+  - BartenderCuteApron
 
 - type: loadoutGroup
   id: BartenderShoes
@@ -449,6 +450,7 @@
   - ChefJacket
   - ChefWintercoat
   - ServiceClownApron
+  - ChefCuteApron
 
 - type: loadoutGroup
   id: ChefShoes
