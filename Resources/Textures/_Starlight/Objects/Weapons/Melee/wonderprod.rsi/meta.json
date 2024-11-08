@@ -80,11 +80,27 @@
             "directions": 4
         },
         {
+            "name": "sleep-equipped-SUITSTORAGE",
+            "directions": 4
+        },
+        {
+            "name": "sleep-equipped-BACKPACK",
+            "directions": 4
+        },
+        {
             "name": "stun-inhand-left",
             "directions": 4
         },
         {
             "name": "stun-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "stun-equipped-SUITSTORAGE",
+            "directions": 4
+        },
+        {
+            "name": "stun-equipped-BACKPACK",
             "directions": 4
         },
         {
@@ -96,11 +112,27 @@
             "directions": 4
         },
         {
+            "name": "damage-equipped-SUITSTORAGE",
+            "directions": 4
+        },
+        {
+            "name": "damage-equipped-BACKPACK",
+            "directions": 4
+        },
+        {
             "name": "cuffs-inhand-left",
             "directions": 4
         },
         {
             "name": "cuffs-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "cuffs-equipped-SUITSTORAGE",
+            "directions": 4
+        },
+        {
+            "name": "cuffs-equipped-BACKPACK",
             "directions": 4
         }
     ]

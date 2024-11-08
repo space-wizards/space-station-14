@@ -8,9 +8,8 @@
       connections:
       - torso
       organs:
-        brain: OrganHumanBrain
-        eyes: OrganHumanEyes
-        tongue: OrganHumanTongue
+        brain: OrganAbductorBrain
+        eyes: OrganAbductorEyes
     torso:
       part: TorsoAbductor
       connections:
@@ -19,11 +18,11 @@
       - right leg
       - left leg
       organs:
-        heart: OrganHumanHeart
-        lungs: OrganHumanLungs
-        stomach: OrganHumanStomach
-        liver: OrganHumanLiver
-        kidneys: OrganHumanKidneys
+        heart: OrganAbductorHeart
+        lungs: OrganAbductorLungs
+        stomach: OrganAbductorStomach
+        liver: OrganAbductorLiver
+        kidneys: OrganAbductorKidneys
     right arm:
       part: RightArmAbductor
       connections:

@@ -6,7 +6,13 @@
   components:
   - type: Item
     sprite: _Starlight/Objects/Weapons/Melee/wonderprod.rsi
-    size: Normal
+    size: Huge
+  - type: Clothing
+    sprite: _Starlight/Objects/Weapons/Melee/wonderprod.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
   - type: Sprite 
     sprite: _Starlight/Objects/Weapons/Melee/wonderprod.rsi
     state: icon

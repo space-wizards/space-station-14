@@ -1,7 +1,11 @@
 - type: entity
   save: false
   name: Urist McAbductor
-  parent: BaseMobHuman
+  parent:
+  - MobBloodstream
+  - MobAtmosStandard
+  - MobFlammable
+  - BaseMobSpecies
   id: BaseMobAbductor
   abstract: true
   components:
@@ -11,19 +15,31 @@
   - type: Icon
     sprite: _Starlight/Mobs/Species/Abductor/parts.rsi
     state: full
+  - type: Fingerprint
+  - type: Blindable
   - type: Body
     prototype: Abductor
     requiredLegs: 2
+  - type: FireVisuals
+    alternateState: Standing
   - type: Damageable
     damageContainer: Biological
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:
         sprite: Mobs/Effects/brute_damage.rsi
-        color: "#896e55"
+        color: "#878787"
       Burn:
         sprite: Mobs/Effects/burn_damage.rsi
-
+  - type: PassiveDamage
+    allowedStates:
+    - Alive
+    damageCap: 40
+    damage:
+      types:
+        Heat: -0.14
+      groups:
+        Brute: -0.14
 
 - type: entity
   parent: BaseSpeciesDummy

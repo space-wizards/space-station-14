@@ -22,7 +22,7 @@
       "name": "ears"
     },
     {
-      "name": "eyeball"
+      "name": "eyeballs"
     },
     {
       "name": "heart-off"
@@ -55,9 +55,6 @@
     },
     {
       "name": "stomach"
-    },
-    {
-      "name": "tongue"
     },
     {
       "name": "muscle"

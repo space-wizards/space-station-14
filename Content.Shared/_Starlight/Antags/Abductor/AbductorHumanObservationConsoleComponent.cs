@@ -41,11 +41,18 @@ public sealed partial class AbductorsAbilitiesComponent : Component
     [DataField, AutoNetworkedField]
     public EntityUid? ExitConsole;
 
+    [DataField, AutoNetworkedField]
+    public EntityUid? SendYourself;
+
     [DataField]
     public EntityUid[] HiddenActions = [];
 }
 
 public sealed partial class ExitConsoleEvent : InstantActionEvent
+{
+
+}
+public sealed partial class SendYourselfEvent : WorldTargetActionEvent
 {
 
 }

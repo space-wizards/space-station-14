@@ -1,4 +1,6 @@
 using System.Linq;
+using Content.Shared.Clothing.Components;
+using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
@@ -20,6 +22,7 @@ public abstract class SharedItemSwitchSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedItemSystem _item = default!;
+    [Dependency] private readonly ClothingSystem _clothing = default!;
 
     private EntityQuery<ItemSwitchComponent> _query;
 
@@ -34,7 +37,10 @@ public abstract class SharedItemSwitchSystem : EntitySystem
         SubscribeLocalEvent<ItemSwitchComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<ItemSwitchComponent, GetVerbsEvent<ActivationVerb>>(OnActivateVerb);
         SubscribeLocalEvent<ItemSwitchComponent, ActivateInWorldEvent>(OnActivate);
+
+        SubscribeLocalEvent<ClothingComponent, ItemSwitchedEvent>(UpdateClothingLayer);
     }
+
 
     private void OnStartup(Entity<ItemSwitchComponent> ent, ref ComponentStartup args)
     {
@@ -176,4 +182,6 @@ public abstract class SharedItemSwitchSystem : EntitySystem
 
         VisualsChanged(ent, key);
     }
+    private void UpdateClothingLayer(Entity<ClothingComponent> ent, ref ItemSwitchedEvent args) 
+        => _clothing.SetEquippedPrefix(ent, args.State, ent.Comp);
 }

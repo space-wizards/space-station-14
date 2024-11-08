@@ -21,6 +21,9 @@
 		},
 		{
 			"name": "implant"
+		},
+		{
+			"name": "send-yourself"
 		}
 	]
 }

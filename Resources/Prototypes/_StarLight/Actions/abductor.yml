@@ -5,12 +5,27 @@
   description: Exit console.
   components:
   - type: InstantAction
-    priority: -10
+    priority: -20
     itemIconStyle: BigAction
     icon:
-      sprite: Interface/Actions/actions_abductor.rsi
+      sprite: _Starlight/Interface/Actions/actions_abductor.rsi
       state: exit
     event: !type:ExitConsoleEvent
+
+- type: entity
+  id: ActionSendYourself
+  name: Send yourself
+  description: send yourself.
+  components:
+  - type: WorldTargetAction
+    priority: -19
+    range: -1
+    checkCanAccess: false
+    itemIconStyle: BigAction
+    icon:
+      sprite: _Starlight/Interface/Actions/actions_abductor.rsi
+      state: send-yourself
+    event: !type:SendYourselfEvent
 
 - type: entity
   id: ActionReturnToShip
@@ -20,9 +35,9 @@
   - type: InstantAction
     useDelay: 30
     icon:
-      sprite: Interface/Actions/actions_abductor.rsi
+      sprite: _Starlight/Interface/Actions/actions_abductor.rsi
       state: implant
-    priority: -100
+    priority: -12
     event: !type:AbductorReturnToShipEvent
 
 #- type: entity
