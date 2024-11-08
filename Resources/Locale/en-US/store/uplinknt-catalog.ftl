@@ -75,3 +75,6 @@ uplink-vestinehalf-desc = Stolen from a Cybersun hauler, this vial contains 15 u
 
 uplink-lab-name = Portable chemistry lab
 uplink-lab-desc = This crate contains everything needed to go breaking bad. Includes vials of elements, machine flatpacks, and sterile clothing. Power not included.
+
+uplink-disabler-name = Exhaustion magcell
+uplink-disabler-desc = A low-frequency variant of the standard magcell, capable of exhausting targets to unconciousness for a few moments. Useful for 'aquiring' targets.
