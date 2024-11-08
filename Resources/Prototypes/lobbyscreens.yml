@@ -53,3 +53,8 @@
 - type: lobbyBackground
   id: MaintsSlasher
   background: /Textures/LobbyScreens/maints-slasher.webp
+
+- type: lobbyBackground
+  id: SurvivalHarmony
+  background: /Textures/LobbyScreens/survivalharmony.webp
+
