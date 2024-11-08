@@ -9,6 +9,8 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    environment:
+      name: prod
 
     steps:
     - name: Install dependencies
