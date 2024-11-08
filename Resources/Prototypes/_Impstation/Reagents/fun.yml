@@ -65,9 +65,6 @@
       - !type:Polymorph
         prototype: PolymorphBros
         conditions:
-        - !type:OrganType
-          type: Animal
-          shouldHave: false
         - !type:ReagentThreshold
           min: 50
       - !type:AdjustReagent
