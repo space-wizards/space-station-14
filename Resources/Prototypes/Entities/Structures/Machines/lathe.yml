@@ -833,6 +833,8 @@
       - WeaponAdvancedLaser
       - WeaponDisabler
       - WeaponDisablerSMG
+      - WeaponShotgunKammererBeanbag
+      - WeaponShotgunEnforcerBeanbag
       - WeaponLaserCannon
       - WeaponLaserCarbine
       - WeaponXrayCannon
