@@ -9,7 +9,7 @@
     sprite: Mobs/Species/Slime/parts.rsi
     state: full
   - type: Body
-    prototype: Slime
+    prototype: Jellid
     requiredLegs: 2
   - type: Electrified
     onInteractUsing: false
