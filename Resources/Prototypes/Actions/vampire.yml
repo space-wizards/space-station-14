@@ -149,7 +149,7 @@
       sprite: Interface/Actions/actions_vampire.rsi
       state: supernaturalstrength
     event: 
-      !type:VampireUnholyStrengthEvent
+      !type:VampireSupernaturalStrengthEvent
       definitionName: SupernaturalStrength
     useDelay: 60
 
