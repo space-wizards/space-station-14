@@ -202,80 +202,14 @@
 
 - type: entity
   parent: BaseAnomalyInertCore
-  id: AnomalyCorePyroclasticInert # Works like an improved welding tool
-  description: The inert core of a pyroclastic anomaly. Cool to the touch, but radiates searing heat.
+  id: AnomalyCorePyroclasticInert 
+  description: The inert core of a pyroclastic anomaly.
   suffix: Pyroclastic, Inert
   components:
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/pyro_core.rsi
     layers:
     - state: core
-    - state: litcore
-      visible: false
-      shader: unshaded
-      map: ["enum.ToggleVisuals.Layer"]
-  - type: GenericVisualizer
-    visuals:
-      enum.ToggleVisuals.Toggled:
-        enum.ToggleVisuals.Layer:
-          True: { visible: true }
-          False: { visible: false }
-  - type: ItemToggle
-    predictable: false
-    soundActivate:
-      collection: WelderOn
-      params:
-        variation: 0.125
-        volume: -5
-    soundDeactivate:
-      collection: WelderOff
-      params:
-        variation: 0.125
-        volume: -5
-  - type: ItemToggleMeleeWeapon
-    activatedSoundOnHit:
-      path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
-      params:
-        variation: 0.250
-        volume: -10
-    activatedSoundOnHitNoDamage:
-      path: /Audio/Weapons/Guns/Hits/energy_meat1.ogg
-      params:
-        variation: 0.250
-        volume: -12
-    deactivatedSoundOnHitNoDamage:
-      collection: MetalThud
-    activatedDamage:
-        types:
-            Heat: 8
-  - type: ItemToggleSize
-    activatedSize: Large
-  - type: ItemToggleHot
-  - type: UseDelay
-  - type: MeleeWeapon
-    wideAnimationRotation: -90
-    damage:
-      types:
-        Blunt: 5 
-    soundHit:
-      collection: MetalThud
-  - type: RequiresEyeProtection
-  - type: Tool
-    useSound:
-      collection: Welder
-    qualities: Welding
-  - type: RefillableSolution
-    solution: Welder
-  - type: SolutionContainerManager
-    solutions:
-      Welder:
-        reagents:
-        - ReagentId: WeldingFuel
-          Quantity: 500
-        maxVol: 500
-  - type: Welder
-  - type: IgnitionSource
-    temperature: 700
   - type: PointLight
     radius: 1.5
     energy: 1.5
@@ -284,22 +218,12 @@
 
 - type: entity
   parent: BaseAnomalyInertCore
-  id: AnomalyCoreGravityInert # Acts like neck or belt slot slot magboots
-  description: The inert core of a gravitational anomaly. Looks impossibly dense, but feels impossibly light.
+  id: AnomalyCoreGravityInert 
+  description: The inert core of a gravitational anomaly.
   suffix: Gravity, Inert
   components:
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/gravity_core.rsi
-  - type: Clothing
-    sprite: Structures/Specific/Anomalies/Cores/gravity_core.rsi
-    slots:
-    - belt
-    - neck
-  - type: NoSlip
-  - type: Magboots 
-  - type: ClothingSpeedModifier
-    walkModifier: 0.85
-    sprintModifier: 0.8
   - type: PointLight
     radius: 1.5
     energy: 10
@@ -308,8 +232,8 @@
 
 - type: entity
   parent: BaseAnomalyInertCore
-  id: AnomalyCoreIceInert # Slips people, can make slippery floors
-  description: The inert core of an ice anomaly. Slick, but seems to be freezing itself in place...
+  id: AnomalyCoreIceInert
+  description: The inert core of an ice anomaly.
   suffix: Ice, Inert
   components:
   - type: Sprite
@@ -319,25 +243,6 @@
     energy: 1.5
     color: "#befaff"
     castShadows: false
-  - type: Slippery
-  - type: StepTrigger
-    intersectRatio: 0.2
-  - type: CollisionWake
-    enabled: false
-  - type: Physics
-    bodyType: Dynamic
-  - type: Fixtures
-    fixtures:
-      slips:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.2,-0.2,0.2,0.2"
-        hard: false
-        layer:
-        - SlipLayer
-  - type: SpawnAfterInteract
-    prototype: IceCrust
-    doAfter: 2
 
 - type: entity
   parent: BaseAnomalyInertCore
@@ -355,8 +260,8 @@
 
 - type: entity
   parent: BaseAnomalyInertCore
-  id: AnomalyCoreRockInert # Acts as a tiny 1x1 pickaxe
-  description: The inert core of a rock anomaly. Looks like solid stone, but at the same time, shifting...?
+  id: AnomalyCoreRockInert 
+  description: The inert core of a rock anomaly.
   suffix: Rock, Inert
   components:
   - type: Sprite
@@ -366,57 +271,15 @@
     energy: 3.5
     color: "#5ca8cb"
     castShadows: false
-  - type: MeleeWeapon
-    attackRate: 0.7
-    wideAnimationRotation: -135
-    soundHit:
-      path: "/Audio/Weapons/smash.ogg"
-      params:
-        volume: -3
-    damage:
-      groups:
-        Brute: 5
-      types:
-        Structural: 30
 
 - type: entity
   parent: BaseAnomalyInertCore
-  id: AnomalyCoreLiquidInert # Contains a lot of solution, equivalent to a jug; cannot spill when thrown
-  description: The inert core of a liquid anomaly. Tiny, but makes a sloshing sound if you listen closely while it moves.
+  id: AnomalyCoreLiquidInert 
+  description: The inert core of a liquid anomaly. 
   suffix: Liquid, Inert
   components:
-  - type: SolutionContainerManager
-    solutions:
-      beaker:
-        maxVol: 200
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/liquid_core.rsi
-  - type: MixableSolution
-    solution: beaker
-  - type: RefillableSolution
-    solution: beaker
-  - type: DrainableSolution
-    solution: beaker
-  - type: ExaminableSolution
-    solution: beaker
-  - type: DrawableSolution
-    solution: beaker
-  - type: InjectableSolution
-    solution: beaker
-  - type: SolutionTransfer
-    canChangeTransferAmount: true
-  - type: SolutionItemStatus
-    solution: beaker
-  - type: UserInterface
-    interfaces:
-      enum.TransferAmountUiKey.Key:
-        type: TransferAmountBoundUserInterface
-  - type: Drink
-    solution: beaker
-  - type: Spillable
-    solution: beaker
-    spillWhenThrown: false
-  - type: DnaSubstanceTrace
   - type: PointLight
     radius: 1.5
     energy: 3.5
@@ -424,19 +287,11 @@
     castShadows: false
 
 - type: entity
-  parent: [ BaseAnomalyInertCore, BaseStorageItem ]
-  id: AnomalyCoreBluespaceInert # Tiny object box, big internal space
-  description: The inert core of a bluespace anomaly. Looks bigger on the inside, when looking into it.
+  parent: BaseAnomalyInertCore
+  id: AnomalyCoreBluespaceInert 
+  description: The inert core of a bluespace anomaly.
   suffix: Bluespace, Inert
   components:
-  - type: Item
-    size: Normal
-    shape:
-    - 0,0,0,0
-  - type: Storage
-    maxItemSize: Normal
-    grid:
-    - 0,0,2,2
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/bluespace_core.rsi
   - type: PointLight
@@ -447,24 +302,13 @@
   
 
 - type: entity
-  parent: BaseAnomalyInertCore # Has the same properties as a high cap battery
+  parent: BaseAnomalyInertCore
   id: AnomalyCoreElectricityInert
-  description: The inert core of an electrical anomaly. Softly crackles as it channels energy inward.
+  description: The inert core of an electrical anomaly.
   suffix: Electricity, Inert
   components:
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/electric_core.rsi
-  - type: Battery
-    pricePerJoule: 0.15
-    maxCharge: 1080
-    startingCharge: 0
-  - type: PowerCell
-  - type: Tag
-    tags:
-      - PowerCell
-      - ForceableFollow
-  - type: Appearance
-  - type: PowerCellVisuals
   - type: PointLight
     radius: 1.5
     energy: 2.0
@@ -488,9 +332,9 @@
     castShadows: false
 
 - type: entity
-  parent: [ BaseAnomalyInertCore, BaseShadow, BaseRestrictedContraband ] # Acts as a reusable, 2 minute CD smoke grenade
+  parent: [ BaseAnomalyInertCore, BaseShadow ] 
   id: AnomalyCoreShadowInert
-  description: The inert core of a shadow anomaly. A constant shroud of smoke surrounds it.
+  description: The inert core of a shadow anomaly.
   suffix: Shadow, Inert
   components:
   - type: Sprite
@@ -500,16 +344,11 @@
     energy: 2.0
     color: "#793a80"
     castShadows: false
-  - type: SmokeOnUse
-    duration: 30
-    spreadAmount: 50
-  - type: UseDelay
-    delay: 120 # 2 minutes
 
 - type: entity
-  parent: BaseAnomalyInertCore # Grinds into Proktium, a substance even more effective than lube for machines
+  parent: BaseAnomalyInertCore 
   id: AnomalyCoreTechInert
-  description: The inert core of a technological anomaly. Indecipherably complex in its structure.
+  description: The inert core of a technological anomaly.
   suffix: Tech, Inert
   components:
   - type: Sprite
@@ -519,8 +358,3 @@
     energy: 2.0
     color: "#56c1e8"
     castShadows: false
-  - type: Extractable
-    juiceSolution:
-      reagents:
-        - ReagentId: Proktium
-          Quantity: 100

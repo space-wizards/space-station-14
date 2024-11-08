@@ -31,5 +31,3 @@ reagent-desc-cellulose = A crystaline polydextrose polymer, plants swear by this
 reagent-name-rororium = rororium
 reagent-desc-rororium = A strange substance which fills the cores of the hivelords that roam the mining asteroid. Thought to be the source of their regenerative powers.
 
-reagent-name-proktium = proktium
-reagent-desc-proktium = A slick, ever-shifting substance, iridescent in reflection. Can improve the efficiency of lathes significantly.
