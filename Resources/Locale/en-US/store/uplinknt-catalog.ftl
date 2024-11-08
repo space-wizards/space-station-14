@@ -70,5 +70,8 @@ uplink-beachball-desc = The beloved NT-brand beachball, complete with a fragile 
 uplink-toolbox-name = Mechanical toolset
 uplink-toolbox-desc = A toolbox containing everything an Agent needs to get around undetected. Comes with tools, combat gloves and meson goggles.
 
+uplink-vestinehalf-name = A half vial of vestine
+uplink-vestinehalf-desc = Stolen from a Cybersun hauler, this vial contains 15 units of vestine. Goes well with the chemistry lab.
+
 uplink-lab-name = Portable chemistry lab
 uplink-lab-desc = This crate contains everything needed to go breaking bad. Includes vials of elements, machine flatpacks, and sterile clothing. Power not included.
