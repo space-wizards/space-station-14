@@ -269,7 +269,6 @@
   name: tts-voice-name-geraltofrivia
   sex: Male
   silicon: false
-  type: voice
   voice: 1
 
 - type: voice
@@ -277,7 +276,6 @@
   name: tts-voice-name-greyson
   sex: Male
   silicon: false
-  type: voice
   voice: 5
 
 - type: voice
@@ -285,7 +283,6 @@
   name: tts-voice-name-heavy
   sex: Male
   silicon: false
-  type: voice
   voice: 7
 
 - type: voice
@@ -293,7 +290,6 @@
   name: tts-voice-name-medic
   sex: Male
   silicon: false
-  type: voice
   voice: 8
 
 - type: voice
@@ -301,7 +297,6 @@
   name: tts-voice-name-delamain
   sex: Male
   silicon: false
-  type: voice
   voice: 10
 
 - type: voice
@@ -309,7 +304,6 @@
   name: tts-voice-name-g-man
   sex: Male
   silicon: false
-  type: voice
   voice: 16
 
 - type: voice
@@ -317,7 +311,6 @@
   name: tts-voice-name-sam
   sex: Male
   silicon: false
-  type: voice
   voice: 17
 
 - type: voice
@@ -325,7 +318,6 @@
   name: tts-voice-name-adrian
   sex: Male
   silicon: false
-  type: voice
   voice: 21
 
 - type: voice
@@ -333,7 +325,6 @@
   name: tts-voice-name-gary
   sex: Male
   silicon: false
-  type: voice
   voice: 22
 
 - type: voice
@@ -341,7 +332,6 @@
   name: tts-voice-name-jacob
   sex: Male
   silicon: false
-  type: voice
   voice: 31
 
 - type: voice
@@ -349,7 +339,6 @@
   name: tts-voice-name-iris
   sex: Female
   silicon: false
-  type: voice
   voice: 32
 
 - type: voice
@@ -357,7 +346,6 @@
   name: tts-voice-name-arthur
   sex: Male
   silicon: false
-  type: voice
   voice: 33
 
 - type: voice
@@ -365,7 +353,6 @@
   name: tts-voice-name-alice
   sex: Female
   silicon: false
-  type: voice
   voice: 34
 
 - type: voice
@@ -373,7 +360,6 @@
   name: tts-voice-name-sophia
   sex: Female
   silicon: false
-  type: voice
   voice: 35
 
 - type: voice
@@ -381,7 +367,6 @@
   name: tts-voice-name-kevin
   sex: Male
   silicon: false
-  type: voice
   voice: 37
 
 - type: voice
@@ -389,7 +374,6 @@
   name: tts-voice-name-sniper
   sex: Male
   silicon: false
-  type: voice
   voice: 69
 
 - type: voice
@@ -397,7 +381,6 @@
   name: tts-voice-name-soldier
   sex: Male
   silicon: false
-  type: voice
   voice: 70
 
 - type: voice
@@ -405,7 +388,6 @@
   name: tts-voice-name-victoria
   sex: Female
   silicon: false
-  type: voice
   voice: 72
 
 - type: voice
@@ -413,7 +395,6 @@
   name: tts-voice-name-agata
   sex: Female
   silicon: false
-  type: voice
   voice: 73
 
 - type: voice
@@ -421,7 +402,6 @@
   name: tts-voice-name-samantha
   sex: Male
   silicon: false
-  type: voice
   voice: 75
 
 - type: voice
@@ -429,7 +409,6 @@
   name: tts-voice-name-amelia
   sex: Male
   silicon: false
-  type: voice
   voice: 79
 
 - type: voice
@@ -437,7 +416,6 @@
   name: tts-voice-name-scott
   sex: Male
   silicon: false
-  type: voice
   voice: 80
 
 - type: voice
@@ -445,7 +423,6 @@
   name: tts-voice-name-abraham
   sex: Male
   silicon: false
-  type: voice
   voice: 86
 
 - type: voice
@@ -453,7 +430,6 @@
   name: tts-voice-name-mr-riggs
   sex: Male
   silicon: false
-  type: voice
   voice: 96
 
 - type: voice
@@ -461,7 +437,6 @@
   name: tts-voice-name-houston
   sex: Male
   silicon: false
-  type: voice
   voice: 97
 
 - type: voice
@@ -469,7 +444,6 @@
   name: tts-voice-name-darkwillow
   sex: Female
   silicon: false
-  type: voice
   voice: 112
 
 - type: voice
@@ -477,7 +451,6 @@
   name: tts-voice-name-dawnbreaker
   sex: Female
   silicon: false
-  type: voice
   voice: 113
 
 - type: voice
@@ -485,7 +458,6 @@
   name: tts-voice-name-grimstroke
   sex: Male
   silicon: false
-  type: voice
   voice: 114
 
 - type: voice
@@ -493,7 +465,6 @@
   name: tts-voice-name-hoodwink
   sex: Male
   silicon: false
-  type: voice
   voice: 115
 
 - type: voice
@@ -501,7 +472,6 @@
   name: tts-voice-name-mars
   sex: Male
   silicon: false
-  type: voice
   voice: 116
 
 - type: voice
@@ -509,7 +479,6 @@
   name: tts-voice-name-medusa
   sex: Female
   silicon: false
-  type: voice
   voice: 117
 
 - type: voice
@@ -517,7 +486,6 @@
   name: tts-voice-name-oracle
   sex: Unsexed
   silicon: false
-  type: voice
   voice: 118
 
 - type: voice
@@ -525,7 +493,6 @@
   name: tts-voice-name-puck
   sex: Unsexed
   silicon: false
-  type: voice
   voice: 120
 
 - type: voice
@@ -533,7 +500,6 @@
   name: tts-voice-name-snapfire
   sex: Female
   silicon: false
-  type: voice
   voice: 121
 
 - type: voice
@@ -541,7 +507,6 @@
   name: tts-voice-name-timbersaw
   sex: Male
   silicon: false
-  type: voice
   voice: 122
 
 - type: voice
@@ -549,7 +514,6 @@
   name: tts-voice-name-viper
   sex: Female
   silicon: false
-  type: voice
   voice: 124
 
 - type: voice
@@ -557,7 +521,6 @@
   name: tts-voice-name-voidspirit
   sex: Male
   silicon: false
-  type: voice
   voice: 125
 
 - type: voice
@@ -565,7 +528,6 @@
   name: tts-voice-name-sova
   sex: Male
   silicon: false
-  type: voice
   voice: 134
 
 - type: voice
@@ -573,7 +535,6 @@
   name: tts-voice-name-skye-valorant
   sex: Female
   silicon: false
-  type: voice
   voice: 137
 
 - type: voice
@@ -581,7 +542,6 @@
   name: tts-voice-name-astra
   sex: Female
   silicon: false
-  type: voice
   voice: 142
 
 - type: voice
@@ -589,7 +549,6 @@
   name: tts-voice-name-breach
   sex: Male
   silicon: false
-  type: voice
   voice: 143
 
 - type: voice
@@ -597,7 +556,6 @@
   name: tts-voice-name-brimstone
   sex: Male
   silicon: false
-  type: voice
   voice: 144
 
 - type: voice
@@ -605,7 +563,6 @@
   name: tts-voice-name-chamber
   sex: Male
   silicon: false
-  type: voice
   voice: 145
 
 - type: voice
@@ -613,7 +570,6 @@
   name: tts-voice-name-cypher
   sex: Male
   silicon: false
-  type: voice
   voice: 146
 
 - type: voice
@@ -621,7 +577,6 @@
   name: tts-voice-name-fade
   sex: Female
   silicon: false
-  type: voice
   voice: 147
 
 - type: voice
@@ -629,7 +584,6 @@
   name: tts-voice-name-harbor
   sex: Male
   silicon: false
-  type: voice
   voice: 148
 
 - type: voice
@@ -637,7 +591,6 @@
   name: tts-voice-name-kayo
   sex: Unsexed
   silicon: true
-  type: voice
   voice: 149
 
 - type: voice
@@ -645,7 +598,6 @@
   name: tts-voice-name-killjoy
   sex: Female
   silicon: false
-  type: voice
   voice: 150
 
 - type: voice
@@ -653,7 +605,6 @@
   name: tts-voice-name-neon
   sex: Female
   silicon: false
-  type: voice
   voice: 151
 
 - type: voice
@@ -661,7 +612,6 @@
   name: tts-voice-name-omen
   sex: Male
   silicon: false
-  type: voice
   voice: 152
 
 - type: voice
@@ -669,7 +619,6 @@
   name: tts-voice-name-phoenix
   sex: Male
   silicon: false
-  type: voice
   voice: 153
 
 - type: voice
@@ -677,7 +626,6 @@
   name: tts-voice-name-raze
   sex: Female
   silicon: false
-  type: voice
   voice: 154
 
 - type: voice
@@ -685,7 +633,6 @@
   name: tts-voice-name-reyna
   sex: Female
   silicon: false
-  type: voice
   voice: 155
 
 - type: voice
@@ -693,7 +640,6 @@
   name: tts-voice-name-sage
   sex: Female
   silicon: false
-  type: voice
   voice: 156
 
 - type: voice
@@ -701,7 +647,6 @@
   name: tts-voice-name-trollwarlord
   sex: Male
   silicon: false
-  type: voice
   voice: 188
 
 - type: voice
@@ -709,7 +654,6 @@
   name: tts-voice-name-pangolier
   sex: Male
   silicon: false
-  type: voice
   voice: 191
 
 - type: voice
@@ -717,7 +661,6 @@
   name: tts-voice-name-tinker
   sex: Male
   silicon: false
-  type: voice
   voice: 194
 
 - type: voice
@@ -725,7 +668,6 @@
   name: tts-voice-name-xiao
   sex: Male
   silicon: false
-  type: voice
   voice: 200
 
 - type: voice
@@ -733,7 +675,6 @@
   name: tts-voice-name-zhongli
   sex: Male
   silicon: false
-  type: voice
   voice: 221
 
 - type: voice
@@ -741,7 +682,6 @@
   name: tts-voice-name-eula
   sex: Female
   silicon: false
-  type: voice
   voice: 223
 
 - type: voice
@@ -749,7 +689,6 @@
   name: tts-voice-name-ganyu
   sex: Female
   silicon: false
-  type: voice
   voice: 224
 
 - type: voice
@@ -757,7 +696,6 @@
   name: tts-voice-name-hutao
   sex: Female
   silicon: false
-  type: voice
   voice: 225
 
 - type: voice
@@ -765,7 +703,6 @@
   name: tts-voice-name-kamisatoayaka
   sex: Female
   silicon: false
-  type: voice
   voice: 226
 
 - type: voice
@@ -773,7 +710,6 @@
   name: tts-voice-name-keqing
   sex: Female
   silicon: false
-  type: voice
   voice: 227
 
 - type: voice
@@ -781,7 +717,6 @@
   name: tts-voice-name-altairibn-laahad
   sex: Male
   silicon: false
-  type: voice
   voice: 228
 
 - type: voice
@@ -789,7 +724,6 @@
   name: tts-voice-name-homersimpson
   sex: Male
   silicon: false
-  type: voice
   voice: 229
 
 - type: voice
@@ -797,7 +731,6 @@
   name: tts-voice-name-lisasimpson
   sex: Female
   silicon: false
-  type: voice
   voice: 230
 
 - type: voice
@@ -805,7 +738,6 @@
   name: tts-voice-name-charlesmontgomeryburns
   sex: Male
   silicon: false
-  type: voice
   voice: 231
 
 - type: voice
@@ -813,7 +745,6 @@
   name: tts-voice-name-bartsimpson
   sex: Male
   silicon: false
-  type: voice
   voice: 232
 
 - type: voice
@@ -821,7 +752,6 @@
   name: tts-voice-name-demoman
   sex: Male
   silicon: false
-  type: voice
   voice: 233
 
 - type: voice
@@ -829,7 +759,6 @@
   name: tts-voice-name-lich
   sex: Male
   silicon: false
-  type: voice
   voice: 271
 
 - type: voice
@@ -837,7 +766,6 @@
   name: tts-voice-name-lion
   sex: Male
   silicon: false
-  type: voice
   voice: 272
 
 - type: voice
@@ -845,7 +773,6 @@
   name: tts-voice-name-shadowshaman
   sex: Male
   silicon: false
-  type: voice
   voice: 274
 
 - type: voice
@@ -853,7 +780,6 @@
   name: tts-voice-name-skywrathmage
   sex: Male
   silicon: false
-  type: voice
   voice: 275
 
 - type: voice
@@ -861,7 +787,6 @@
   name: tts-voice-name-slark
   sex: Male
   silicon: false
-  type: voice
   voice: 276
 
 - type: voice
@@ -869,7 +794,6 @@
   name: tts-voice-name-stormspirit
   sex: Male
   silicon: false
-  type: voice
   voice: 277
 
 - type: voice
@@ -877,7 +801,6 @@
   name: tts-voice-name-tiny
   sex: Male
   silicon: false
-  type: voice
   voice: 278
 
 - type: voice
@@ -885,7 +808,6 @@
   name: tts-voice-name-witchdoctor
   sex: Male
   silicon: false
-  type: voice
   voice: 279
 
 - type: voice
@@ -893,7 +815,6 @@
   name: tts-voice-name-anti-mage
   sex: Male
   silicon: false
-  type: voice
   voice: 280
 
 - type: voice
@@ -901,7 +822,6 @@
   name: tts-voice-name-drowranger
   sex: Female
   silicon: false
-  type: voice
   voice: 281
 
 - type: voice
@@ -909,7 +829,6 @@
   name: tts-voice-name-leshrac
   sex: Male
   silicon: false
-  type: voice
   voice: 283
 
 - type: voice
@@ -917,7 +836,6 @@
   name: tts-voice-name-spiritbreaker
   sex: Male
   silicon: false
-  type: voice
   voice: 284
 
 - type: voice
@@ -925,7 +843,6 @@
   name: tts-voice-name-bloodseeker
   sex: Male
   silicon: false
-  type: voice
   voice: 285
 
 - type: voice
@@ -933,7 +850,6 @@
   name: tts-voice-name-aoiasahina
   sex: Female
   silicon: false
-  type: voice
   voice: 286
 
 - type: voice
@@ -941,7 +857,6 @@
   name: tts-voice-name-kaedeharakazuha
   sex: Male
   silicon: false
-  type: voice
   voice: 298
 
 - type: voice
@@ -949,7 +864,6 @@
   name: tts-voice-name-sangonomiyakokomi
   sex: Female
   silicon: false
-  type: voice
   voice: 300
 
 - type: voice
@@ -957,7 +871,6 @@
   name: tts-voice-name-shenhe
   sex: Female
   silicon: false
-  type: voice
   voice: 301
 
 - type: voice
@@ -965,7 +878,6 @@
   name: tts-voice-name-wanderer
   sex: Male
   silicon: false
-  type: voice
   voice: 302
 
 - type: voice
@@ -973,7 +885,6 @@
   name: tts-voice-name-bennett
   sex: Male
   silicon: false
-  type: voice
   voice: 303
 
 - type: voice
@@ -981,7 +892,6 @@
   name: tts-voice-name-marlon
   sex: Male
   silicon: false
-  type: voice
   voice: 304
 
 - type: voice
@@ -989,7 +899,6 @@
   name: tts-voice-name-tennessee
   sex: Male
   silicon: false
-  type: voice
   voice: 305
 
 - type: voice
@@ -997,7 +906,6 @@
   name: tts-voice-name-violetepisode2
   sex: Female
   silicon: false
-  type: voice
   voice: 306
 
 - type: voice
@@ -1005,7 +913,6 @@
   name: tts-voice-name-alvinjr
   sex: Male
   silicon: false
-  type: voice
   voice: 307
 
 - type: voice
@@ -1013,7 +920,6 @@
   name: tts-voice-name-clementine
   sex: Female
   silicon: false
-  type: voice
   voice: 308
 
 - type: voice
@@ -1021,7 +927,6 @@
   name: tts-voice-name-lilly
   sex: Female
   silicon: false
-  type: voice
   voice: 309
 
 - type: voice
@@ -1029,7 +934,6 @@
   name: tts-voice-name-louis
   sex: Male
   silicon: false
-  type: voice
   voice: 310
 
 - type: voice
@@ -1037,7 +941,6 @@
   name: tts-voice-name-barneycalhoun
   sex: Male
   silicon: false
-  type: voice
   voice: 311
 
 - type: voice
@@ -1045,7 +948,6 @@
   name: tts-voice-name-elivance-hl-alyx
   sex: Male
   silicon: false
-  type: voice
   voice: 312
 
 - type: voice
@@ -1053,7 +955,6 @@
   name: tts-voice-name-fathergrigori
   sex: Male
   silicon: false
-  type: voice
   voice: 313
 
 - type: voice
@@ -1061,7 +962,6 @@
   name: tts-voice-name-vortigaunt-hl-alyx
   sex: Male
   silicon: false
-  type: voice
   voice: 314
 
 - type: voice
@@ -1069,7 +969,6 @@
   name: tts-voice-name-alyx-hl-alyx
   sex: Female
   silicon: false
-  type: voice
   voice: 315
 
 - type: voice
@@ -1077,7 +976,6 @@
   name: tts-voice-name-bronya
   sex: Female
   silicon: false
-  type: voice
   voice: 316
 
 - type: voice
@@ -1085,7 +983,6 @@
   name: tts-voice-name-clara
   sex: Female
   silicon: false
-  type: voice
   voice: 317
 
 - type: voice
@@ -1093,7 +990,6 @@
   name: tts-voice-name-himeko
   sex: Female
   silicon: false
-  type: voice
   voice: 319
 
 - type: voice
@@ -1101,7 +997,6 @@
   name: tts-voice-name-natasha
   sex: Female
   silicon: false
-  type: voice
   voice: 321
 
 - type: voice
@@ -1109,7 +1004,6 @@
   name: tts-voice-name-sampo
   sex: Male
   silicon: false
-  type: voice
   voice: 322
 
 - type: voice
@@ -1117,7 +1011,6 @@
   name: tts-voice-name-celestialudenberg
   sex: Female
   silicon: false
-  type: voice
   voice: 327
 
 - type: voice
@@ -1125,7 +1018,6 @@
   name: tts-voice-name-hajimehinata
   sex: Male
   silicon: false
-  type: voice
   voice: 328
 
 - type: voice
@@ -1133,7 +1025,6 @@
   name: tts-voice-name-hiyokosaionji
   sex: Female
   silicon: false
-  type: voice
   voice: 329
 
 - type: voice
@@ -1141,7 +1032,6 @@
   name: tts-voice-name-ibukimioda
   sex: Female
   silicon: false
-  type: voice
   voice: 330
 
 - type: voice
@@ -1149,7 +1039,6 @@
   name: tts-voice-name-junkoenoshima
   sex: Female
   silicon: false
-  type: voice
   voice: 331
 
 - type: voice
@@ -1157,7 +1046,6 @@
   name: tts-voice-name-kyokokirigiri
   sex: Female
   silicon: false
-  type: voice
   voice: 332
 
 - type: voice
@@ -1165,7 +1053,6 @@
   name: tts-voice-name-makotonaegi
   sex: Male
   silicon: false
-  type: voice
   voice: 333
 
 - type: voice
@@ -1173,7 +1060,6 @@
   name: tts-voice-name-monokuma
   sex: Male
   silicon: false
-  type: voice
   voice: 334
 
 - type: voice
@@ -1181,7 +1067,6 @@
   name: tts-voice-name-pekopekoyama
   sex: Female
   silicon: false
-  type: voice
   voice: 335
 
 - type: voice
@@ -1189,7 +1074,6 @@
   name: tts-voice-name-circusbaby
   sex: Unsexed
   silicon: false
-  type: voice
   voice: 336
 
 - type: voice
@@ -1197,7 +1081,6 @@
   name: tts-voice-name-foxy
   sex: Unsexed
   silicon: false
-  type: voice
   voice: 337
 
 - type: voice
@@ -1205,7 +1088,6 @@
   name: tts-voice-name-glamrockfreddy
   sex: Male
   silicon: false
-  type: voice
   voice: 338
 
 - type: voice
@@ -1213,7 +1095,6 @@
   name: tts-voice-name-chica-smagicrainbow
   sex: Female
   silicon: false
-  type: voice
   voice: 339
 
 - type: voice
@@ -1221,7 +1102,6 @@
   name: tts-voice-name-toychica
   sex: Female
   silicon: false
-  type: voice
   voice: 340
 
 - type: voice
@@ -1229,7 +1109,6 @@
   name: tts-voice-name-blackpanther
   sex: Male
   silicon: false
-  type: voice
   voice: 403
 
 - type: voice
@@ -1237,7 +1116,6 @@
   name: tts-voice-name-captainmarvel
   sex: Female
   silicon: false
-  type: voice
   voice: 404
 
 - type: voice
@@ -1245,7 +1123,6 @@
   name: tts-voice-name-carnage
   sex: Male
   silicon: false
-  type: voice
   voice: 405
 
 - type: voice
@@ -1253,7 +1130,6 @@
   name: tts-voice-name-doctorstrange
   sex: Male
   silicon: false
-  type: voice
   voice: 406
 
 - type: voice
@@ -1261,7 +1137,6 @@
   name: tts-voice-name-stanlee
   sex: Male
   silicon: false
-  type: voice
   voice: 407
 
 - type: voice
@@ -1269,7 +1144,6 @@
   name: tts-voice-name-hansolo
   sex: Male
   silicon: false
-  type: voice
   voice: 408
 
 - type: voice
@@ -1277,7 +1151,6 @@
   name: tts-voice-name-ironman
   sex: Male
   silicon: false
-  type: voice
   voice: 409
 
 - type: voice
@@ -1285,7 +1158,6 @@
   name: tts-voice-name-judyhopps
   sex: Female
   silicon: false
-  type: voice
   voice: 410
 
 - type: voice
@@ -1293,7 +1165,6 @@
   name: tts-voice-name-maleficent
   sex: Female
   silicon: false
-  type: voice
   voice: 411
 
 - type: voice
@@ -1301,7 +1172,6 @@
   name: tts-voice-name-minniemouse
   sex: Unsexed
   silicon: false
-  type: voice
   voice: 412
 
 - type: voice
@@ -1309,7 +1179,6 @@
   name: tts-voice-name-olaf
   sex: Male
   silicon: false
-  type: voice
   voice: 413
 
 - type: voice
@@ -1317,7 +1186,6 @@
   name: tts-voice-name-spider-man
   sex: Male
   silicon: false
-  type: voice
   voice: 414
 
 - type: voice
@@ -1325,7 +1193,6 @@
   name: tts-voice-name-stitch
   sex: Unsexed
   silicon: false
-  type: voice
   voice: 415
 
 - type: voice
@@ -1333,7 +1200,6 @@
   name: tts-voice-name-venom
   sex: Male
   silicon: false
-  type: voice
   voice: 416
 
 - type: voice
@@ -1341,7 +1207,6 @@
   name: tts-voice-name-yoda
   sex: Male
   silicon: false
-  type: voice
   voice: 417
 
 - type: voice
@@ -1349,7 +1214,6 @@
   name: tts-voice-name-donaldduck
   sex: Unsexed
   silicon: false
-  type: voice
   voice: 418
 
 - type: voice
@@ -1357,7 +1221,6 @@
   name: tts-voice-name-aquaman
   sex: Male
   silicon: false
-  type: voice
   voice: 419
 
 - type: voice
@@ -1365,7 +1228,6 @@
   name: tts-voice-name-mrfreeze
   sex: Male
   silicon: false
-  type: voice
   voice: 420
 
 - type: voice
@@ -1373,7 +1235,6 @@
   name: tts-voice-name-shazam
   sex: Male
   silicon: false
-  type: voice
   voice: 421
 
 - type: voice
@@ -1381,7 +1242,6 @@
   name: tts-voice-name-zhin
   sex: Male
   silicon: false
-  type: voice
   voice: 479
 
 - type: voice
@@ -1389,7 +1249,6 @@
   name: tts-voice-name-mortysmith
   sex: Male
   silicon: false
-  type: voice
   voice: 481
 
 - type: voice
@@ -1397,7 +1256,6 @@
   name: tts-voice-name-barik
   sex: Male
   silicon: false
-  type: voice
   voice: 485
 
 - type: voice
@@ -1405,7 +1263,6 @@
   name: tts-voice-name-bettylabomba
   sex: Female
   silicon: false
-  type: voice
   voice: 490
 
 - type: voice
@@ -1413,7 +1270,6 @@
   name: tts-voice-name-cyno
   sex: Male
   silicon: false
-  type: voice
   voice: 491
 
 - type: voice
@@ -1421,7 +1277,6 @@
   name: tts-voice-name-drogoz
   sex: Male
   silicon: false
-  type: voice
   voice: 496
 
 - type: voice
@@ -1429,7 +1284,6 @@
   name: tts-voice-name-furia
   sex: Female
   silicon: false
-  type: voice
   voice: 500
 
 - type: voice
@@ -1437,7 +1291,6 @@
   name: tts-voice-name-imani
   sex: Female
   silicon: false
-  type: voice
   voice: 503
 
 - type: voice
@@ -1445,7 +1298,6 @@
   name: tts-voice-name-inara
   sex: Female
   silicon: false
-  type: voice
   voice: 507
 
 - type: voice
@@ -1453,7 +1305,6 @@
   name: tts-voice-name-freminet
   sex: Male
   silicon: false
-  type: voice
   voice: 508
 
 - type: voice
@@ -1461,7 +1312,6 @@
   name: tts-voice-name-io
   sex: Female
   silicon: false
-  type: voice
   voice: 511
 
 - type: voice
@@ -1469,7 +1319,6 @@
   name: tts-voice-name-kaveh
   sex: Male
   silicon: false
-  type: voice
   voice: 512
 
 - type: voice
@@ -1477,7 +1326,6 @@
   name: tts-voice-name-moji
   sex: Unsexed
   silicon: false
-  type: voice
   voice: 513
 
 - type: voice
@@ -1485,7 +1333,6 @@
   name: tts-voice-name-skye-paladins
   sex: Female
   silicon: false
-  type: voice
   voice: 514
 
 - type: voice
@@ -1493,7 +1340,6 @@
   name: tts-voice-name-willo
   sex: Female
   silicon: false
-  type: voice
   voice: 516
 
 - type: voice
@@ -1501,7 +1347,6 @@
   name: tts-voice-name-qiqi
   sex: Female
   silicon: false
-  type: voice
   voice: 520
 
 - type: voice
@@ -1509,7 +1354,6 @@
   name: tts-voice-name-raidenshogun
   sex: Female
   silicon: false
-  type: voice
   voice: 521
 
 - type: voice
@@ -1517,7 +1361,6 @@
   name: tts-voice-name-yoimiya
   sex: Female
   silicon: false
-  type: voice
   voice: 526
 
 - type: voice
@@ -1525,7 +1368,6 @@
   name: tts-voice-name-two-face
   sex: Male
   silicon: false
-  type: voice
   voice: 644
 
 - type: voice
@@ -1533,7 +1375,6 @@
   name: tts-voice-name-thepenguin
   sex: Male
   silicon: false
-  type: voice
   voice: 645
 
 - type: voice
@@ -1541,7 +1382,6 @@
   name: tts-voice-name-catwoman
   sex: Female
   silicon: false
-  type: voice
   voice: 646
 
 - type: voice
@@ -1549,7 +1389,6 @@
   name: tts-voice-name-ladyarkham
   sex: Female
   silicon: false
-  type: voice
   voice: 647
 
 - type: voice
@@ -1557,7 +1396,6 @@
   name: tts-voice-name-alfredpennyworth
   sex: Male
   silicon: false
-  type: voice
   voice: 648
 
 - type: voice
@@ -1565,7 +1403,6 @@
   name: tts-voice-name-old-kindly-female
   sex: Female
   silicon: false
-  type: voice
   voice: 672
 
 - type: voice
@@ -1573,7 +1410,6 @@
   name: tts-voice-name-old-kindly-male
   sex: Male
   silicon: false
-  type: voice
   voice: 673
 
 - type: voice
@@ -1581,7 +1417,6 @@
   name: tts-voice-name-young-eager-female
   sex: Female
   silicon: false
-  type: voice
   voice: 677
 
 - type: voice
@@ -1589,7 +1424,6 @@
   name: tts-voice-name-young-eager-male
   sex: Male
   silicon: false
-  type: voice
   voice: 678
 
 - type: voice
@@ -1597,7 +1431,6 @@
   name: tts-voice-name-amaundmotierre
   sex: Male
   silicon: false
-  type: voice
   voice: 679
 
 - type: voice
@@ -1605,7 +1438,6 @@
   name: tts-voice-name-ancano
   sex: Male
   silicon: false
-  type: voice
   voice: 680
 
 - type: voice
@@ -1613,7 +1445,6 @@
   name: tts-voice-name-child-female
   sex: Female
   silicon: false
-  type: voice
   voice: 684
 
 - type: voice
@@ -1621,7 +1452,6 @@
   name: tts-voice-name-child-male
   sex: Male
   silicon: false
-  type: voice
   voice: 685
 
 - type: voice
@@ -1629,7 +1459,6 @@
   name: tts-voice-name-commander-female
   sex: Female
   silicon: false
-  type: voice
   voice: 686
 
 - type: voice
@@ -1637,7 +1466,6 @@
   name: tts-voice-name-commander-male
   sex: Male
   silicon: false
-  type: voice
   voice: 687
 
 - type: voice
@@ -1645,7 +1473,6 @@
   name: tts-voice-name-coward-female
   sex: Female
   silicon: false
-  type: voice
   voice: 688
 
 - type: voice
@@ -1653,7 +1480,6 @@
   name: tts-voice-name-drunk-male
   sex: Male
   silicon: false
-  type: voice
   voice: 691
 
 - type: voice
@@ -1661,7 +1487,6 @@
   name: tts-voice-name-khajiit-female
   sex: Female
   silicon: false
-  type: voice
   voice: 692
 
 - type: voice
@@ -1669,7 +1494,6 @@
   name: tts-voice-name-khajiit-male
   sex: Male
   silicon: false
-  type: voice
   voice: 693
 
 - type: voice
@@ -1677,7 +1501,6 @@
   name: tts-voice-name-madison
   sex: Female
   silicon: false
-  type: voice
   voice: 816
 
 - type: voice
@@ -1685,7 +1508,6 @@
   name: tts-voice-name-alice2
   sex: Male
   silicon: false
-  type: voice
   voice: 10021
 
 - type: voice
@@ -1693,7 +1515,6 @@
   name: tts-voice-name-antonpetrov
   sex: Male
   silicon: false
-  type: voice
   voice: 10023
 
 - type: voice
@@ -1701,7 +1522,6 @@
   name: tts-voice-name-barmen-stalker
   sex: Male
   silicon: false
-  type: voice
   voice: 10029
 
 - type: voice
@@ -1709,7 +1529,6 @@
   name: tts-voice-name-francis
   sex: Male
   silicon: false
-  type: voice
   voice: 10030
 
 - type: voice
@@ -1717,7 +1536,6 @@
   name: tts-voice-name-igor-byasha
   sex: Male
   silicon: false
-  type: voice
   voice: 10035
 
 - type: voice
@@ -1725,7 +1543,6 @@
   name: tts-voice-name-coach
   sex: Male
   silicon: false
-  type: voice
   voice: 10038
 
 - type: voice
@@ -1733,7 +1550,6 @@
   name: tts-voice-name-daddypig
   sex: Male
   silicon: false
-  type: voice
   voice: 10039
 
 - type: voice
@@ -1741,7 +1557,6 @@
   name: tts-voice-name-dannydog
   sex: Male
   silicon: false
-  type: voice
   voice: 10040
 
 - type: voice
@@ -1749,7 +1564,6 @@
   name: tts-voice-name-announcer-tinybunny
   sex: Unsexed
   silicon: false
-  type: voice
   voice: 10042
 
 - type: voice
@@ -1757,7 +1571,6 @@
   name: tts-voice-name-doctor-stalker
   sex: Male
   silicon: false
-  type: voice
   voice: 10043
 
 - type: voice
@@ -1765,7 +1578,6 @@
   name: tts-voice-name-dolgovec1
   sex: Male
   silicon: false
-  type: voice
   voice: 10044
 
 - type: voice
@@ -1773,7 +1585,6 @@
   name: tts-voice-name-dolgovec2
   sex: Male
   silicon: false
-  type: voice
   voice: 10045
 
 - type: voice
@@ -1781,7 +1592,6 @@
   name: tts-voice-name-borispetrov
   sex: Male
   silicon: false
-  type: voice
   voice: 10048
 
 - type: voice
@@ -1789,7 +1599,6 @@
   name: tts-voice-name-nick
   sex: Male
   silicon: false
-  type: voice
   voice: 10050
 
 - type: voice
@@ -1797,7 +1606,6 @@
   name: tts-voice-name-grandpapig
   sex: Male
   silicon: false
-  type: voice
   voice: 10052
 
 - type: voice
@@ -1805,7 +1613,6 @@
   name: tts-voice-name-grannypig
   sex: Female
   silicon: false
-  type: voice
   voice: 10053
 
 - type: voice
@@ -1813,7 +1620,6 @@
   name: tts-voice-name-khariton
   sex: Male
   silicon: false
-  type: voice
   voice: 10055
 
 - type: voice
@@ -1821,7 +1627,6 @@
   name: tts-voice-name-karinapetrova
   sex: Female
   silicon: false
-  type: voice
   voice: 10056
 
 - type: voice
@@ -1829,7 +1634,6 @@
   name: tts-voice-name-katyasmirnova
   sex: Female
   silicon: false
-  type: voice
   voice: 10058
 
 - type: voice
@@ -1837,7 +1641,6 @@
   name: tts-voice-name-liliapavlovna
   sex: Female
   silicon: false
-  type: voice
   voice: 10061
 
 - type: voice
@@ -1845,7 +1648,6 @@
   name: tts-voice-name-madamegazelle
   sex: Female
   silicon: false
-  type: voice
   voice: 10062
 
 - type: voice
@@ -1853,7 +1655,6 @@
   name: tts-voice-name-l4d-louis
   sex: Male
   silicon: false
-  type: voice
   voice: 10063
 
 - type: voice
@@ -1861,7 +1662,6 @@
   name: tts-voice-name-ellis
   sex: Male
   silicon: false
-  type: voice
   voice: 10064
 
 - type: voice
@@ -1869,7 +1669,6 @@
   name: tts-voice-name-missrabbit
   sex: Female
   silicon: false
-  type: voice
   voice: 10066
 
 - type: voice
@@ -1877,7 +1676,6 @@
   name: tts-voice-name-monolit1
   sex: Male
   silicon: false
-  type: voice
   voice: 10067
 
 - type: voice
@@ -1885,7 +1683,6 @@
   name: tts-voice-name-mummypig
   sex: Female
   silicon: false
-  type: voice
   voice: 10068
 
 - type: voice
@@ -1893,7 +1690,6 @@
   name: tts-voice-name-bill
   sex: Male
   silicon: false
-  type: voice
   voice: 10069
 
 - type: voice
@@ -1901,7 +1697,6 @@
   name: tts-voice-name-narrator-peppapig
   sex: Male
   silicon: false
-  type: voice
   voice: 10070
 
 - type: voice
@@ -1909,7 +1704,6 @@
   name: tts-voice-name-odinochka1
   sex: Male
   silicon: false
-  type: voice
   voice: 10071
 
 - type: voice
@@ -1917,7 +1711,6 @@
   name: tts-voice-name-odinochka2
   sex: Male
   silicon: false
-  type: voice
   voice: 10072
 
 - type: voice
@@ -1925,7 +1718,6 @@
   name: tts-voice-name-olyapetrova
   sex: Female
   silicon: false
-  type: voice
   voice: 10074
 
 - type: voice
@@ -1933,7 +1725,6 @@
   name: tts-voice-name-peppapig
   sex: Female
   silicon: false
-  type: voice
   voice: 10075
 
 - type: voice
@@ -1941,7 +1732,6 @@
   name: tts-voice-name-polinamorozova
   sex: Female
   silicon: false
-  type: voice
   voice: 10077
 
 - type: voice
@@ -1949,7 +1739,6 @@
   name: tts-voice-name-rochelle
   sex: Female
   silicon: false
-  type: voice
   voice: 10078
 
 - type: voice
@@ -1957,7 +1746,6 @@
   name: tts-voice-name-romapyatifanov
   sex: Male
   silicon: false
-  type: voice
   voice: 10079
 
 - type: voice
@@ -1965,7 +1753,6 @@
   name: tts-voice-name-sakharov
   sex: Male
   silicon: false
-  type: voice
   voice: 10080
 
 - type: voice
@@ -1973,7 +1760,6 @@
   name: tts-voice-name-semyonbaburin
   sex: Male
   silicon: false
-  type: voice
   voice: 10082
 
 - type: voice
@@ -1981,7 +1767,6 @@
   name: tts-voice-name-svobodovets1
   sex: Male
   silicon: false
-  type: voice
   voice: 10090
 
 - type: voice
@@ -1989,7 +1774,6 @@
   name: tts-voice-name-zoey
   sex: Female
   silicon: false
-  type: voice
   voice: 10091
 
 - type: voice
@@ -1997,7 +1781,6 @@
   name: tts-voice-name-lieutenanttikhonov
   sex: Male
   silicon: false
-  type: voice
   voice: 10092
 
 - type: voice
@@ -2005,7 +1788,6 @@
   name: tts-voice-name-virgil
   sex: Male
   silicon: false
-  type: voice
   voice: 10102
 
 - type: voice
@@ -2013,7 +1795,6 @@
   name: tts-voice-name-military1
   sex: Male
   silicon: false
-  type: voice
   voice: 10103
 
 - type: voice
@@ -2021,5 +1802,4 @@
   name: tts-voice-name-whitaker
   sex: Male
   silicon: false
-  type: voice
   voice: 10104
