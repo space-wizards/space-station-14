@@ -1,4 +1,5 @@
-﻿ui-lobby-title = Lobby
+﻿ui-lobby-welcome = Welcome to { $name }
+ui-lobby-title = Lobby
 ui-lobby-ahelp-button = AHelp
 ui-lobby-options-button = Options
 ui-lobby-leave-button = Leave
