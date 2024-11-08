@@ -3,7 +3,7 @@
   id: BaseAnomalyCore
   abstract: true
   name: anomaly core
-  description: The core of a destroyed incomprehensible object. 
+  description: The core of a destroyed incomprehensible object.
   components:
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/gravity_core.rsi
@@ -202,13 +202,11 @@
 
 - type: entity
   parent: BaseAnomalyInertCore
-  id: AnomalyCorePyroclasticInert 
+  id: AnomalyCorePyroclasticInert
   suffix: Pyroclastic, Inert
   components:
   - type: Sprite
     sprite: Structures/Specific/Anomalies/Cores/pyro_core.rsi
-    layers:
-    - state: core
   - type: PointLight
     radius: 1.5
     energy: 1.5
@@ -217,7 +215,7 @@
 
 - type: entity
   parent: BaseAnomalyInertCore
-  id: AnomalyCoreGravityInert 
+  id: AnomalyCoreGravityInert
   suffix: Gravity, Inert
   components:
   - type: Sprite
@@ -256,7 +254,7 @@
 
 - type: entity
   parent: BaseAnomalyInertCore
-  id: AnomalyCoreRockInert 
+  id: AnomalyCoreRockInert
   suffix: Rock, Inert
   components:
   - type: Sprite
@@ -269,7 +267,7 @@
 
 - type: entity
   parent: BaseAnomalyInertCore
-  id: AnomalyCoreLiquidInert 
+  id: AnomalyCoreLiquidInert
   suffix: Liquid, Inert
   components:
   - type: Sprite
@@ -282,7 +280,7 @@
 
 - type: entity
   parent: BaseAnomalyInertCore
-  id: AnomalyCoreBluespaceInert 
+  id: AnomalyCoreBluespaceInert
   suffix: Bluespace, Inert
   components:
   - type: Sprite
@@ -323,7 +321,7 @@
     castShadows: false
 
 - type: entity
-  parent: [ BaseAnomalyInertCore, BaseShadow ] 
+  parent: [ BaseAnomalyInertCore, BaseShadow ]
   id: AnomalyCoreShadowInert
   suffix: Shadow, Inert
   components:
@@ -336,7 +334,7 @@
     castShadows: false
 
 - type: entity
-  parent: BaseAnomalyInertCore 
+  parent: BaseAnomalyInertCore
   id: AnomalyCoreTechInert
   suffix: Tech, Inert
   components:
