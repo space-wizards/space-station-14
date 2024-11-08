@@ -6,8 +6,8 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Movement.Components;
 
 /// <summary>
-/// Jump setting component.
-/// To add a jump entity use <see cref="ActionGrantComponent"/> and <see cref="ItemActionGrantComponent"/> for an item.
+/// A component for configuring the settings for the jump action.
+/// To give the jump action to an entity use <see cref="ActionGrantComponent"/> and <see cref="ItemActionGrantComponent"/>.
 /// The basic action prototype is "ActionGravityJump".
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
