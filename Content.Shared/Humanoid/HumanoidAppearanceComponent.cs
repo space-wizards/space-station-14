@@ -6,6 +6,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Humanoid;
 
@@ -95,8 +96,8 @@ public sealed partial class HumanoidAppearanceComponent : Component
         {Sex.Female, "Amina"},
         {Sex.Unsexed, "Charlotte"}
     };
-    [DataField]
-    public ProtoId<VoicePrototype>? Voice { get; set; } = "";
+    [DataField("voice", customTypeSerializer: typeof(PrototypeIdSerializer<VoicePrototype>))]
+    public string? Voice { get; set; }
 }
 
 [DataDefinition]
