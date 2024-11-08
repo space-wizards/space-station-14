@@ -80,7 +80,7 @@
     spawned:
     - id: FoodMeatSlime
       amount: 5
-  - type: Respirator #TODO make jellids only able to breathe water
+  - type: Respirator
     damage:
       types:
         Asphyxiation: 0.2
