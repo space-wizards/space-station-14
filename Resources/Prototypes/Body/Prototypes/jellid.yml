@@ -1,6 +1,6 @@
 ﻿- type: body
   id: Jellid
-  name: "jellid"
+  name: "Jellid"
   root: torso
   slots:
     head:
