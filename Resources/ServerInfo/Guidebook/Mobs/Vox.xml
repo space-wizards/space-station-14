@@ -6,12 +6,22 @@
   </Box>
 
   [color=#ffa500]Caution! This species has a severely limiting game mechanic and is not recommended for new players. [/color]
-
-  They breathe nitrogen, and [color=#ffa500] oxygen is very toxic to them.[/color]
-  They need to be on internals at all times to avoid being poisoned by the station's oxygen.
-  Eating or drinking will require you to remove your breath mask, although injecting liquid food is an option.
-
-  Their unarmed claw attacks deal Slash damage instead of Blunt.
+  
+  ## Special Accomodations
+  
+  Vox lungs function very differently from most other species. [color=#ffa500]They are only capable of processing nitrogen,[/color] which is converted to ammonia and exhaled. 
+  
+  Additionally, due to an unusual set of biological circumstances, [color=red][bold]oxygen is highly toxic to them.[/color][/bold] If exposed to oxygen, it will quickly build up in their blood, causing rapid onset organ failure and eventually death.
+  
+  Resultantly, [color=red][bold]Vox must be on internals at all times while aboard NT stations.[/color][/bold] [color=#ffa500]This may make it difficult for Vox to eat or drink normally,[/color] although direct injection of liquid food is possible.
+  
+  NT has made special accomodations for this species, [color=#1e90ff]including readily accessible nitrogen tanks in dispensers and lockers throughout most stations.[/color] Some stations may even have a "Vox Box," an enclosed nitrogen-rich environment devoid of oxygen.
+  
+  ## Damage
+  
+  Vox blood is anaerobic, [color=#1e90ff]but is iron-based, allowing it to be metabolized from iron supplements.[/color]
+  
+  As they possess talons, their unarmed attacks deal Slash damage instead of Blunt.
 
  ## Vox Naming Conventions
 
