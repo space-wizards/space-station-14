@@ -338,6 +338,7 @@
         - ReagentSlimeChlorineTrifluoride
         - ReagentSlimeHonk
         - ReagentSlimeIpecac
+        - ReagentSlimeJuiceThatMakesYouUngh
       chance: 1
 
 - type: entity
@@ -821,3 +822,20 @@
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: alive
         color: "#102000"
+
+- type: entity
+  id: ReagentSlimeJuiceThatMakesYouUngh
+  parent: ReagentSlime
+  suffix: JuiceThatMakesYouUngh
+  components:
+  - type: Bloodstream
+    bloodReagent: JuiceThatMakesYouUngh
+  - type: PointLight
+    color: "#8F3134"
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Aliens/elemental.rsi
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+        color: "#8F3134"
