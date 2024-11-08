@@ -157,7 +157,7 @@
       EntranceFlank: SyndieDungeonWindow
       Junction: BaseAirlock
       WallMounts: SyndieDungeonWalls
-      Window: WallReinforced
+      Window: ReinforcedWindow
     tiles:
       FallbackTile: FloorShuttleRed
     whitelists:
@@ -182,7 +182,7 @@
       EntranceFlank: SovietDungeonWindow
       Junction: BaseAirlock
       WallMounts: SovietDungeonWalls
-      Window: WallBrick
+      Window: WindowRCDResistant
     tiles:
       FallbackTile: FloorConcreteMono
     whitelists:

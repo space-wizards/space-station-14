@@ -42,14 +42,14 @@
   difficulties: 
     - Difficult
     
-- type: salvageDungeonMod
-  id: ElderArenaMod
-  desc: salvage-dungeon-mod-soviet-stronghold
-  proto: ElderArenaDungeon
-  biomes:
-    - Abyss
-  difficulties: 
-    - Difficult
+#- type: salvageDungeonMod
+#  id: ElderArenaMod
+#  desc: salvage-dungeon-mod-soviet-stronghold
+#  proto: ElderArenaDungeon
+#  biomes:
+#    - Abyss
+#  difficulties: 
+#    - Difficult
 
 - type: salvageDungeonMod
   id: Experiment
