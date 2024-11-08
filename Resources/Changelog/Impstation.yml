@@ -3805,3 +3805,10 @@
   id: 465
   time: '2024-11-06T04:23:57.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/625
+- author: hivehum
+  changes:
+  - message: Ore bags can hold salt again.
+    type: Fix
+  id: 466
+  time: '2024-11-08T01:42:21.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/647
