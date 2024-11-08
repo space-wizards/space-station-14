@@ -72,8 +72,6 @@
     - type: Speech
       speechVerb: LargeMob
     - type: NoSlip
-    - type: NPCUseActionOnTarget
-      actionId: ActionMobBlink
     - type: StatusEffects # Overwriting basesimplemob to remove flash, getting flashed as dragon just feelsbad
       allowed:
       - SlowedDown
@@ -147,8 +145,6 @@
       tags:
         - DoorBumpOpener
     - type: NoSlip
-    - type: NPCUseActionOnTarget
-      actionId: ActionMobBlink
     - type: StatusEffects # Overwriting basesimplemob to remove flash, getting flashed as dragon just feelsbad
       allowed:
       - SlowedDown

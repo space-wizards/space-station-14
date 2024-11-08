@@ -1,0 +1,2 @@
+objective-no-owner-traitor-sliver-text = Cut off a sliver from the supermatter crystal.
+objective-description-traitor-sliver-text = Use any cutting tool that comes in handy. A scalpel is more recommended. Also, don't die of radiation poisoning.

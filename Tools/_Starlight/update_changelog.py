@@ -1,0 +1,70 @@
+import os
+import yaml
+import re
+from datetime import datetime
+from github import Github
+
+# Параметры окружения
+changelog_path = os.getenv("CHANGELOG_FILE_PATH")
+pr_number = os.getenv("PR_NUMBER")
+repo_name = os.getenv("GITHUB_REPOSITORY")
+github_token = os.getenv("GITHUB_TOKEN")
+
+# Инициализация GitHub API
+g = Github(github_token)
+repo = g.get_repo(repo_name)
+pr = repo.get_pull(int(pr_number))
+
+def parse_changelog(pr_body):
+    changelog_entries = []
+    pattern = r":cl: (.+?)\n((?:- (add|remove|tweak|fix): .+\n)+)"
+    matches = re.finditer(pattern, pr_body, re.MULTILINE)
+
+    for match in matches:
+        author = match.group(1).strip()
+        changes = match.group(2).strip().splitlines()
+
+        for change in changes:
+            change_type, message = change.split(":", 1)
+            changelog_entries.append({
+                "author": author,
+                "type": change_type.strip('- ').capitalize(),
+                "message": message.strip()
+            })
+    return changelog_entries
+
+def get_last_id(changelog_data):
+    if not changelog_data or "Entries" not in changelog_data or not changelog_data["Entries"]:
+        return 0
+    return max(entry["id"] for entry in changelog_data["Entries"])
+
+def update_changelog():
+    if ":cl:" in pr.body:
+        merge_time = pr.merged_at
+        entries = parse_changelog(pr.body)
+        
+        if os.path.exists(changelog_path):
+            with open(changelog_path, "r") as file:
+                changelog_data = yaml.safe_load(file) or {"Entries": []}
+        else:
+            changelog_data = {"Entries": []}
+
+        last_id = get_last_id(changelog_data)
+        for entry in entries:
+            last_id += 1
+            changelog_entry = {
+                "author": entry["author"],
+                "changes": [{
+                    "message": entry["message"],
+                    "type": entry["type"]
+                }],
+                "id": last_id,
+                "time": merge_time.isoformat()
+            }
+            changelog_data["Entries"].append(changelog_entry)
+
+        with open(changelog_path, "w") as file:
+            yaml.dump(changelog_data, file, allow_unicode=True)
+
+if __name__ == "__main__":
+    update_changelog()

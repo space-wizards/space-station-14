@@ -1,0 +1,20 @@
+- type: entity
+  name: EMP impulse
+  parent: BaseBulletTrigger
+  id: BulletEMP
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Effects/emp.rsi
+    layers:
+    - state: emp_pulse
+  - type: EmpOnTrigger
+    range: 2
+    energyConsumption: 30000
+    disableDuration: 10
+  - type: Ammo
+    muzzleFlash: null
+  - type: PointLight
+    radius: 3.5
+    color: blue
+    energy: 0.5
