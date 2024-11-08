@@ -30,7 +30,7 @@ jobs:
       run: |
         mkdir -p ~/.ssh
         echo "$ACTIONS_SSH_KEY" | tr -d '\r' > ~/.ssh/id_ed25519
-        echo "TEST"
+        echo "$TEST"
         chmod 600 ~/.ssh/id_ed25519
         ssh-keyscan github.com >> ~/.ssh/known_hosts
         
