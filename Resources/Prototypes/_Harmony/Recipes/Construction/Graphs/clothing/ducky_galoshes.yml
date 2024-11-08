@@ -1,0 +1,33 @@
+- type: constructionGraph
+  id: ClothingShoesDuckyGaloshes
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: shoes
+          steps:
+            - tag: ToyRubberDuck
+              name: rubber ducky
+              icon:
+                sprite: Objects/Fun/ducky.rsi
+                state: icon
+              doAfter: 1
+            - tag: ToyRubberDuck
+              name: rubber ducky
+              icon:
+                sprite: Objects/Fun/ducky.rsi
+                state: icon
+              doAfter: 1
+            - tag: ClothingShoesGaloshes
+              name: galoshes
+              icon:
+                sprite: Clothing/Shoes/Specific/galoshes.rsi
+                state: icon
+              doAfter: 1
+            - tag: DrinkSpaceGlue
+              name: glue
+              icon:
+                sprite: Objects/Fun/glue.rsi
+                state: icon
+    - node: shoes
+      entity: ClothingShoesDuckyGaloshes
