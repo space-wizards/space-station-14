@@ -73,7 +73,7 @@
     maxCharge: 4000
     startingCharge: 4000
   - type: ProjectileBatteryAmmoProvider
-    proto: DisablerBolt
+    proto: BulletDisabler
     fireCost: 800  #5 shots
   - type: Tag
     tags:
