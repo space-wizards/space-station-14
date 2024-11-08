@@ -19,10 +19,16 @@ public sealed partial class JumpAbilityComponent : Component
     public float JumpDistance = 5f;
 
     /// <summary>
+    /// Basic “throwing” speed for TryThrow method.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float JumpThrowSpeed = 10f;
+
+    /// <summary>
     /// This gets played whenever the jump action is used.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public SoundSpecifier JumpSound = new SoundPathSpecifier("/Audio/Effects/gravity_jump.ogg");
+    public SoundSpecifier? JumpSound;
 }
 
 public sealed partial class GravityJumpEvent : InstantActionEvent;
