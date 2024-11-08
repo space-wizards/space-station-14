@@ -3821,3 +3821,12 @@
   id: 467
   time: '2024-11-08T02:19:17.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/638
+- author: DinnerCalzone
+  changes:
+  - message: Juice that makes you UNGH added to liquid anomalies and reagent slimes.
+    type: Add
+  - message: Juice that makes you UNGH will now properly transform all species.
+    type: Fix
+  id: 468
+  time: '2024-11-08T16:09:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/651
