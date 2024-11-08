@@ -26,6 +26,5 @@ public sealed partial class JumpAbilityComponent : Component
     public SoundSpecifier JumpSound = new SoundPathSpecifier("/Audio/Effects/gravity_jump.ogg");
 }
 
-
 public sealed partial class GravityJumpEvent : InstantActionEvent;
 
