@@ -131,7 +131,6 @@
       sprite: Objects/Weapons/Grenades/empgrenade.rsi
       state: icon
     event: !type:ActivateImplantEvent
-    
 - type: entity
   id: ActionActivateScramImplant
   name: SCRAM!
