@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: LeoSantich
-  changes:
-  - message: Updated 'narsie' and 'ratvar' to 'Nar'Sie' and 'Ratvar' in randomly generated
-      storybook content.
-    type: Tweak
-  id: 7099
-  time: '2024-08-12T23:20:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30954
 - author: pigeonpeas
   changes:
   - message: Added non command mantle into the winterdrobe
@@ -3949,3 +3941,10 @@
   id: 7598
   time: '2024-11-07T22:02:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33065
+- author: Boaz1111
+  changes:
+  - message: Added casual green jumpsuits and skirts to the clothesmate.
+    type: Add
+  id: 7599
+  time: '2024-11-08T14:50:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31710
