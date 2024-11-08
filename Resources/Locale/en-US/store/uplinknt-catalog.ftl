@@ -19,9 +19,6 @@ uplink-bluehardsuit-desc = A NT-Certified pressure suit graded for 11 kilometers
 uplink-bulletproof-name = Type-III bullet-proof vest
 uplink-bulletproof-desc = A durable vest designed to repel traditional projectile weapons fire. Don't expect too much else, though.
 
-uplink-combat-gloves-name = Combat gloves
-uplink-combat-gloves-desc = Heat, electricity, doorframes; all are now things of the past. These are the epitome of finger protection.
-
 uplink-cburn-name = CBURN equipment bundle
 uplink-cburn-desc = Spare CBURN equipment from a fallen team. Contains a double-barrel shotgun, incendiary shells and a medipen.
 
@@ -72,3 +69,6 @@ uplink-beachball-desc = The beloved NT-brand beachball, complete with a fragile 
 
 uplink-toolbox-name = Mechanical toolset
 uplink-toolbox-desc = A toolbox containing everything an Agent needs to get around undetected. Comes with tools, combat gloves and meson goggles.
+
+uplink-lab-name = Portable chemistry lab
+uplink-lab-desc = This crate contains everything needed to go breaking bad. Includes vials of elements, machine flatpacks, and sterile clothing. Power not included.
