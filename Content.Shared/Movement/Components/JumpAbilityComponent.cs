@@ -14,10 +14,10 @@ namespace Content.Shared.Movement.Components;
 public sealed partial class JumpAbilityComponent : Component
 {
     /// <summary>
-    /// How powerful the jump will be when activated
+    /// How far you will jump (in tiles).
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float JumpPower = 5f;
+    public float JumpDistance = 5f;
 
     /// <summary>
     /// This gets played whenever a used jump. Predicted by the client.
