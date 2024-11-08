@@ -165,7 +165,7 @@
   name: Blink
   description: Teleport to the clicked location.
   components:
-  - type: WorldTargetAction
+  - type: EntityWorldTargetAction
     useDelay: 10
     range: 16
     sound: !type:SoundPathSpecifier
