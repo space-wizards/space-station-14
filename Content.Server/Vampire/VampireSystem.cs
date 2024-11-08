@@ -170,7 +170,12 @@ public sealed partial class VampireSystem : EntitySystem
             if (strength.NextTick <= 0)
             {
                 strength.NextTick = 1;
-                if (!SubtractBloodEssence((uid, vampire), strength.Upkeep) || _vampire.GetBloodEssence(uid) < FixedPoint2.New(200))
+                FixedPoint2 bloodNeed = default;
+                if (strength.Power == "UnholyStrength")
+                    bloodNeed = FixedPoint2.New(200);
+                else
+                    bloodNeed = FixedPoint2.New(300);
+                if (!SubtractBloodEssence((uid, vampire), strength.Upkeep) || _vampire.GetBloodEssence(uid) < bloodNeed)
                 {
                     var vampireUid = new Entity<VampireComponent>(uid, vampire);
                     UnnaturalStrength(vampireUid);

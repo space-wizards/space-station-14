@@ -295,12 +295,12 @@ public sealed partial class VampireSystem
         var damage = new DamageSpecifier();
         damage.DamageDict.Add("Slash", 10);
         var meleeComp = EnsureComp<MeleeWeaponComponent>(vampire);
-        if (HasComp<VampireStrengthComponent>(vampire))
+        if (TryComp<VampireStrengthComponent>(vampire, out var strengthComp) && strengthComp.Power == "UnholyStrength")
         {
             meleeComp.Damage = meleeComp.Damage - damage;
             RemComp<VampireStrengthComponent>(vampire);
         }
-        else
+        else if (!HasComp<VampireStrengthComponent>(vampire))
         {
             var strength = EnsureComp<VampireStrengthComponent>(vampire);
             strength.Upkeep = 1f;
@@ -314,14 +314,18 @@ public sealed partial class VampireSystem
         var damage = new DamageSpecifier();
         damage.DamageDict.Add("Slash", 15);
         var meleeComp = EnsureComp<MeleeWeaponComponent>(vampire);
-        if (HasComp<VampireStrengthComponent>(vampire))
+        if (TryComp<VampireStrengthComponent>(vampire, out var strengthComp) && strengthComp.Power == "SupernaturalStrength")
         {
             meleeComp.Damage = meleeComp.Damage - damage;
             RemComp<PryingComponent>(vampire);
             RemComp<VampireStrengthComponent>(vampire);
         }
-        else
+        else if (!HasComp<VampireStrengthComponent>(vampire))
         {
+            var strength = EnsureComp<VampireStrengthComponent>(vampire);
+            strength.Upkeep = 1f;
+            strength.Power = "SupernaturalStrength";
+            
             var pryComp = EnsureComp<PryingComponent>(vampire);
             pryComp.Force = true;
             pryComp.PryPowered = true;
