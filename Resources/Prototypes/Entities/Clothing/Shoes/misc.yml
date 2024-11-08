@@ -153,7 +153,7 @@
   parent: ClothingShoesBase
   id: ClothingShoesBootsJump
   name: jump boots
-  description: Technological boots used by explorers of new worlds from various unwanted obstacles.
+  description: High-tech boots used by explorers of new worlds to avoid unwanted obstacles.
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Boots/jumpboots.rsi
