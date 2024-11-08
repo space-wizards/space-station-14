@@ -17,8 +17,9 @@
     Probability: 0.5
   - type: IgnitionSource
     temperature: 700
+    ignited: true
   - type: SolutionHeater
-    heatPerSecond: 160
+    heatPerSecond: 100
   # they like eat it idk lol
   - type: UserInterface
     interfaces:
