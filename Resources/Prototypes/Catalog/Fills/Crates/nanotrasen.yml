@@ -1,0 +1,30 @@
+- type: entity
+  id: CrateChemicalLabBundle
+  suffix: Filled
+  parent: CrateMedical
+  name: Portable chemistry lab crate
+  description: Contains everything needed to go breaking bad.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ReagentGrinderFlatpack
+      - id: HotplateFlatpack
+      - id: CentrifugeFlatpack
+      - id: Multitool
+      - id: BoxVial
+      - id: BoxBottle
+      - id: ClothingEyesGlassesChemical
+      - id: 
+      - id: Dropper
+        amount: 2
+      - id: Beaker
+        amount: 2
+      - id: VialBoxP
+      - id: VialBoxP2
+      - id: VialBoxS
+      - id: VialBoxD
+      - id: UniformScrubsColorBlue
+      - id: ClothingHeadHatSurgcapBlue
+      - id: ClothingMaskBreathMedicalSecurity
+      
+
