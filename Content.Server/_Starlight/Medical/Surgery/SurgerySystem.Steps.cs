@@ -174,9 +174,8 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
             {
                 case BodyPartType.Arm: //todo move to systems
                     if (limb.Children.Keys.Count == 0)
-                    {
                         _body.TryCreatePartSlot(limbId, limb.Symmetry == BodyPartSymmetry.Left ? "left hand" : "right hand", BodyPartType.Hand, out var slotId);
-                    }
+
                     foreach (var slotId in limb.Children.Keys)
                     {
                         if (slotId is null) continue;
@@ -195,6 +194,9 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
                     _hands.AddHand(body, BodySystem.GetPartSlotContainerId(slot), limb.Symmetry == BodyPartSymmetry.Left ? HandLocation.Left : HandLocation.Right);
                     break;
                 case BodyPartType.Leg:
+                    if (limb.Children.Keys.Count == 0)
+                        _body.TryCreatePartSlot(limbId, limb.Symmetry == BodyPartSymmetry.Left ? "left foot" : "right foot", BodyPartType.Foot, out var slotId);
+                    break;
                 case BodyPartType.Foot:
                     break;
             }

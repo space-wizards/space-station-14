@@ -43,7 +43,7 @@
     parts: 
     - Torso
   - type: Sprite
-    sprite: Mobs/Species/Human/parts.rsi
+    sprite: Mobs/Species/Skeleton/parts.rsi
     state: torso_m
     
 - type: entity
@@ -61,7 +61,7 @@
     parts:
     - Torso
   - type: Sprite
-    sprite: Mobs/Species/Skeleton/parts.rsi
+    sprite: Mobs/Species/Human/parts.rsi
     state: torso_m
 
 - type: entity
