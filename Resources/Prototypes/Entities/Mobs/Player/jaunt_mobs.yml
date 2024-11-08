@@ -1,22 +1,12 @@
 ﻿- type: entity
   name: jaunt
-  parent: BaseMob
+  parent: [Incorporeal, BaseMob]
   id: BaseMobJaunt
   description: You shouldn't see this!
   suffix: Ethereal
   components:
-  - type: CargoSellBlacklist
   - type: ContentEye
     maxZoom: 1.44,1.44
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.35
-        density: 15
-        mask:
-        - GhostImpassable
   - type: Eye
     drawFov: false
   - type: Input
@@ -25,10 +15,11 @@
   - type: MovementSpeedModifier
     baseSprintSpeed: 12
     baseWalkSpeed: 8
-  - type: MovementIgnoreGravity
   - type: Physics
     bodyType: KinematicController
-    bodyStatus: InAir
+  - type: Visibility
+    layer: 2
+  - type: Spectral
   - type: CanMoveInAir
   - type: NoSlip
   - type: Tag
@@ -42,6 +33,15 @@
   id: EtherealJaunt
   suffix: Wizard
   components:
+  - type: Sprite
+    sprite: Mobs/Ghosts/ghost_human.rsi
+    color: "#60f7eb"
+    layers:
+    - state: animated
+      shader: unshaded
+    noRot: true
+    overrideContainerOcclusion: true
+    drawdepth: Ghosts
   - type: MovementSpeedModifier
     baseSprintSpeed: 6
     baseWalkSpeed: 4
