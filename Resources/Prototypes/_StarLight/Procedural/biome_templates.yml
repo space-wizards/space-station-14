@@ -16,11 +16,6 @@
         - AbyssBushOne
         - AbyssBushTwo
         - AbyssBushThree
-        - AbyssOne
-        - AbyssTwo
-        - AbyssThree
-        - AbyssFour
-        - AbyssFive
     - !type:BiomeDecalLayer
       allowedTiles:
         - FloorAbyss2
@@ -40,15 +35,10 @@
         - Basalt7
         - Basalt8
         - Basalt9
-        - AbyssOne
-        - AbyssTwo
-        - AbyssThree
-        - AbyssFour
-        - AbyssFive
     # Dense vegetation
     - !type:BiomeDecalLayer
       allowedTiles:
-      - FloorAbyss1
+      - FloorAbyss
       divisions: 1
       threshold: -0.35
       noise:
