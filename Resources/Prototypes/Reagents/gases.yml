@@ -378,8 +378,6 @@
         - !type:OrganType
           type: Jellid
           shouldHave: false
-        # Don't want people to get toxin damage from the gas they just
-        # exhaled, right?
         - !type:ReagentThreshold
           min: 0.5
         scaleByQuantity: true
