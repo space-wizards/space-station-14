@@ -85,6 +85,16 @@
         reagents:
         - ReagentId: Silicon
           Quantity: 10
+  - type: UserInterface
+    interfaces:
+      enum.ShortConstructionUiKey.Key:
+        type: ShortConstructionMenuBUI
+  - type: ActivatableUI
+    key: enum.ShortConstructionUiKey.Key
+  - type: ShortConstruction
+    prototypes:
+    - Window
+    - WindowDirectional
 
 - type: entity
   parent: SheetGlass
