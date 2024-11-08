@@ -105,6 +105,16 @@
   - UplinkNtAmmo
 
 - type: listing
+  id: UplinkMagCellDisabler
+  name: uplink-disabler-name
+  description: uplink-disabler-desc
+  productEntity: MagCellDisabler
+  cost:
+    BluespaceCrystal: 6
+  categories:
+  - UplinkNtAmmo
+
+- type: listing
   id: UplinkAutoMagazine
   name: uplink-pistolmag-name
   description: uplink-pistolmag-desc
