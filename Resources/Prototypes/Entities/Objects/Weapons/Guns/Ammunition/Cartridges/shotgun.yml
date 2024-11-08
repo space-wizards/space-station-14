@@ -154,6 +154,45 @@
       state: "depleted-uranium"
 
 - type: entity
+  id: ShellShotgunImprovisedEmpty
+  name: empty improvised shell
+  description: A hollow homemade shotgun shell that can be filled with a somewhat deadly variety of makeshift pellets.
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    layers:
+    - state: improvised-empty
+  - type: SolutionContainerManager
+    solutions:
+      shell:
+        maxVol: 5
+  - type: MixableSolution
+    solution: shell
+  - type: FitsInDispenser
+    solution: shell
+  - type: RefillableSolution
+    solution: shell
+  - type: DrainableSolution
+    solution: shell
+  - type: ExaminableSolution
+    solution: shell
+  - type: DrawableSolution
+    solution: shell
+  - type: InjectableSolution
+    solution: shell
+  - type: SolutionTransfer
+  - type: SolutionItemStatus
+    solution: shell
+  - type: Spillable
+    solution: shell
+  - type: Drink
+    solution: shell
+  - type: Tag
+    tags:
+    - ShellShotgunEmpty
+
+- type: entity
   id: ShellShotgunImprovised
   name: improvised shell (glass)
   description: A homemade shotgun shell that shoots painful glass shrapnel. The spread is so wide that it couldn't hit the broad side of a barn.
