@@ -77,6 +77,8 @@ entities:
     - type: Broadphase
     - type: OccluderTree
     - type: LoadedMap
+    - type: Parallax
+      parallax: HummingbirdStation
   - uid: 2
     components:
     - type: MetaData
@@ -114036,11 +114038,6 @@ entities:
     - type: Transform
       pos: 115.5,-13.5
       parent: 2
-  - uid: 15742
-    components:
-    - type: Transform
-      pos: 108.5,-13.5
-      parent: 2
   - uid: 15747
     components:
     - type: Transform
@@ -151267,7 +151264,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -94899.195
+      secondsUntilStateChange: -98285.39
       state: Opening
     - type: Airlock
       autoClose: False
