@@ -172,7 +172,6 @@
                 sprite: Objects/Tools/matches.rsi
                 state: match_unlit
               doAfter: 0.5
-
     - node: shell
       entity: ShellShotgunImprovisedIncendiary
 
