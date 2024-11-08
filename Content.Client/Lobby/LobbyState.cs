@@ -50,8 +50,11 @@ namespace Content.Client.Lobby
             _voteManager.SetPopupContainer(Lobby.VoteContainer);
             LayoutContainer.SetAnchorPreset(Lobby, LayoutContainer.LayoutPreset.Wide);
 
+            // STARLIGHT-START
             Lobby.ServerName.Text = "☆ Starlight ☆"; //todo
             UpdateLobbyUi();
+            
+            // STARLIGHT-END
 
             Lobby.CharacterPreview.CharacterSetupButton.OnPressed += OnSetupPressed;
             Lobby.ReadyButton.OnPressed += OnReadyPressed;
