@@ -2,25 +2,23 @@ using Content.Shared.Throwing;
 using Content.Shared.Movement.Components;
 using Robust.Shared.Audio.Systems;
 
-
 namespace Content.Shared.Movement.Systems;
 
 public sealed partial class SharedJumpAbilitySystem : EntitySystem
 {
     [Dependency] private readonly ThrowingSystem _throwing = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<JumpAbilityComponent, GravityJumpEvent>(JumpAbility);
+        SubscribeLocalEvent<JumpAbilityComponent, GravityJumpEvent>(OnGravityJump);
     }
 
-    private void JumpAbility(Entity<JumpAbilityComponent> entity, ref GravityJumpEvent args)
+    private void OnGravityJump(Entity<JumpAbilityComponent> entity, ref GravityJumpEvent args)
     {
         var xform = Transform(args.Performer);
-        var throwing = xform.LocalRotation.ToWorldVec() * entity.Comp.JumpPower;
+        var throwing = xform.LocalRotation.ToWorldVec() * entity.Comp.JumpDistance;
         var direction = xform.Coordinates.Offset(throwing); // to make the character jump in the direction he's looking
 
         _throwing.TryThrow(args.Performer, direction);
