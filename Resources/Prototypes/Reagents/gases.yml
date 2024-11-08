@@ -376,25 +376,7 @@
       - !type:HealthChange
         conditions:
         - !type:OrganType
-          type: Plant
-          shouldHave: false
-        - !type:OrganType
-          type: Vox
-          shouldHave: false
-        - !type:OrganType
-          type: Human
-          shouldHave: false
-        - !type:OrganType
-          type: Slime
-          shouldHave: false
-        - !type:OrganType
-          type: Vox
-          shouldHave: false
-        - !type:OrganType
-          type: Rat
-          shouldHave: false
-        - !type:OrganType
-          type: Animal
+          type: Jellid
           shouldHave: false
         # Don't want people to get toxin damage from the gas they just
         # exhaled, right?
@@ -412,25 +394,7 @@
         probability: 0.7
         conditions:
         - !type:OrganType
-          type: Plant
-          shouldHave: false
-        - !type:OrganType
-          type: Vox
-          shouldHave: false
-        - !type:OrganType
-          type: Human
-          shouldHave: false
-        - !type:OrganType
-          type: Slime
-          shouldHave: false
-        - !type:OrganType
-          type: Vox
-          shouldHave: false
-        - !type:OrganType
-          type: Rat
-          shouldHave: false
-        - !type:OrganType
-          type: Animal
+          type: Jellid
           shouldHave: false
         - !type:ReagentThreshold
           reagent: SeaWater
@@ -438,27 +402,8 @@
       - !type:AdjustAlert
         alertType: Drowning
         conditions:
-        conditions:
         - !type:OrganType
-          type: Plant
-          shouldHave: false
-        - !type:OrganType
-          type: Vox
-          shouldHave: false
-        - !type:OrganType
-          type: Human
-          shouldHave: false
-        - !type:OrganType
-          type: Slime
-          shouldHave: false
-        - !type:OrganType
-          type: Vox
-          shouldHave: false
-        - !type:OrganType
-          type: Rat
-          shouldHave: false
-        - !type:OrganType
-          type: Animal
+          type: Jellid
           shouldHave: false
         - !type:ReagentThreshold
           reagent: SeaWater
