@@ -3,7 +3,7 @@
 - type: dungeonRoom
   id: SyndieDungeon17x5a
   size: 17,5
-  atlas: Maps/_Starlight/Dungeon/syndie.yml
+  atlas: /Maps/_Starlight/Dungeon/syndie.yml
   offset: 0,0
   tags:
     - SyndieDungeon
@@ -12,7 +12,7 @@
 - type: dungeonRoom
   id: SyndieDungeon11x5a
   size: 11,5
-  atlas: Maps/_Starlight/Dungeon/syndie.yml
+  atlas: /Maps/_Starlight/Dungeon/syndie.yml
   offset: 0,6
   tags:
     - SyndieDungeon
@@ -20,7 +20,7 @@
 - type: dungeonRoom
   id: SyndieDungeon11x5b
   size: 11,5
-  atlas: Maps/_Starlight/Dungeon/syndie.yml
+  atlas: /Maps/_Starlight/Dungeon/syndie.yml
   offset: 12,6
   tags:
     - SyndieDungeon
@@ -28,7 +28,7 @@
 - type: dungeonRoom
   id: SyndieDungeon7x5a
   size: 7,5
-  atlas: Maps/_Starlight/Dungeon/syndie.yml
+  atlas: /Maps/_Starlight/Dungeon/syndie.yml
   offset: 0,12
   tags:
     - SyndieDungeon
@@ -36,7 +36,7 @@
 - type: dungeonRoom
   id: SyndieDungeon7x5b
   size: 7,5
-  atlas: Maps/_Starlight/Dungeon/syndie.yml
+  atlas: /Maps/_Starlight/Dungeon/syndie.yml
   offset: 8,12
   tags:
     - SyndieDungeon
@@ -44,7 +44,7 @@
 - type: dungeonRoom
   id: SyndieDungeon7x5c
   size: 7,5
-  atlas: Maps/_Starlight/Dungeon/syndie.yml
+  atlas: /Maps/_Starlight/Dungeon/syndie.yml
   offset: 16,12
   tags:
     - SyndieDungeon
@@ -53,7 +53,7 @@
 - type: dungeonRoom
   id: SyndieDungeon5x5a
   size: 5,5
-  atlas: Maps/_Starlight/Dungeon/syndie.yml
+  atlas: /Maps/_Starlight/Dungeon/syndie.yml
   offset: 0,18
   tags:
     - SyndieDungeon
@@ -61,7 +61,7 @@
 - type: dungeonRoom
   id: SyndieDungeon5x5b
   size: 5,5
-  atlas: Maps/_Starlight/Dungeon/syndie.yml
+  atlas: /Maps/_Starlight/Dungeon/syndie.yml
   offset: 6,18
   tags:
     - SyndieDungeon
@@ -69,7 +69,7 @@
 - type: dungeonRoom
   id: SyndieDungeon5x5c
   size: 5,5
-  atlas: Maps/_Starlight/Dungeon/syndie.yml
+  atlas: /Maps/_Starlight/Dungeon/syndie.yml
   offset: 12,18
   tags:
     - SyndieDungeon
@@ -77,7 +77,7 @@
 - type: dungeonRoom
   id: SyndieDungeon5x5d
   size: 5,5
-  atlas: Maps/_Starlight/Dungeon/syndie.yml
+  atlas: /Maps/_Starlight/Dungeon/syndie.yml
   offset: 18,18
   tags:
     - SyndieDungeon
@@ -85,7 +85,7 @@
 - type: dungeonRoom
   id: SyndieDungeon5x5e
   size: 5,5
-  atlas: Maps/_Starlight/Dungeon/syndie.yml
+  atlas: /Maps/_Starlight/Dungeon/syndie.yml
   offset: 24,18
   tags:
     - SyndieDungeon
@@ -94,7 +94,7 @@
 - type: dungeonRoom
   id: SyndieDungeon7x7a
   size: 7,7
-  atlas: Maps/_Starlight/Dungeon/syndie.yml
+  atlas: /Maps/_Starlight/Dungeon/syndie.yml
   offset: 0,42
   tags:
     - SyndieDungeon
@@ -102,7 +102,7 @@
 - type: dungeonRoom
   id: SyndieDungeon7x7b
   size: 7,7
-  atlas: Maps/_Starlight/Dungeon/syndie.yml
+  atlas: /Maps/_Starlight/Dungeon/syndie.yml
   offset: 8,42
   tags:
     - SyndieDungeon
@@ -110,7 +110,7 @@
 - type: dungeonRoom
   id: SyndieDungeon7x7c
   size: 7,7
-  atlas: Maps/_Starlight/Dungeon/syndie.yml
+  atlas: /Maps/_Starlight/Dungeon/syndie.yml
   offset: 16,42
   tags:
     - SyndieDungeon
@@ -121,7 +121,7 @@
 - type: dungeonRoom
   id: SyndieDungeon3x5a
   size: 3,5
-  atlas: Maps/_Starlight/Dungeon/syndie.yml
+  atlas: /Maps/_Starlight/Dungeon/syndie.yml
   offset: 0,24
   tags:
     - SyndieDungeon
@@ -129,7 +129,7 @@
 - type: dungeonRoom
   id: SyndieDungeon3x5b
   size: 3,5
-  atlas: Maps/_Starlight/Dungeon/syndie.yml
+  atlas: /Maps/_Starlight/Dungeon/syndie.yml
   offset: 4,24
   tags:
     - SyndieDungeon
@@ -137,7 +137,7 @@
 - type: dungeonRoom
   id: SyndieDungeon3x5c
   size: 3,5
-  atlas: Maps/_Starlight/Dungeon/syndie.yml
+  atlas: /Maps/_Starlight/Dungeon/syndie.yml
   offset: 8,24
   tags:
     - SyndieDungeon
@@ -145,7 +145,7 @@
 - type: dungeonRoom
   id: SyndieDungeon3x5d
   size: 3,5
-  atlas: Maps/_Starlight/Dungeon/syndie.yml
+  atlas: /Maps/_Starlight/Dungeon/syndie.yml
   offset: 12,24
   tags:
     - SyndieDungeon
@@ -153,7 +153,7 @@
 - type: dungeonRoom
   id: SyndieDungeon3x5e
   size: 3,5
-  atlas: Maps/_Starlight/Dungeon/syndie.yml
+  atlas: /Maps/_Starlight/Dungeon/syndie.yml
   offset: 16,24
   tags:
     - SyndieDungeon
@@ -161,7 +161,7 @@
 - type: dungeonRoom
   id: SyndieDungeon3x5f
   size: 3,5
-  atlas: Maps/_Starlight/Dungeon/syndie.yml
+  atlas: /Maps/_Starlight/Dungeon/syndie.yml
   offset: 20,24
   tags:
     - SyndieDungeon
@@ -169,7 +169,7 @@
 - type: dungeonRoom
   id: SyndieDungeon3x5g
   size: 3,5
-  atlas: Maps/_Starlight/Dungeon/syndie.yml
+  atlas: /Maps/_Starlight/Dungeon/syndie.yml
   offset: 24,24
   tags:
     - SyndieDungeon
@@ -177,7 +177,7 @@
 - type: dungeonRoom
   id: SyndieDungeon3x5h
   size: 3,5
-  atlas: Maps/_Starlight/Dungeon/syndie.yml
+  atlas: /Maps/_Starlight/Dungeon/syndie.yml
   offset: 28,24
   tags:
     - SyndieDungeon
@@ -186,7 +186,7 @@
 - type: dungeonRoom
   id: SyndieDungeon13x3a
   size: 13,3
-  atlas: Maps/_Starlight/Dungeon/syndie.yml
+  atlas: /Maps/_Starlight/Dungeon/syndie.yml
   offset: 0,30
   tags:
     - SyndieDungeon
@@ -194,7 +194,7 @@
 - type: dungeonRoom
   id: SyndieDungeon13x3b
   size: 13,3
-  atlas: Maps/_Starlight/Dungeon/syndie.yml
+  atlas: /Maps/_Starlight/Dungeon/syndie.yml
   offset: 14,30
   tags:
     - SyndieDungeon
@@ -203,7 +203,7 @@
 - type: dungeonRoom
   id: SyndieDungeon11x3a
   size: 11,3
-  atlas: Maps/_Starlight/Dungeon/syndie.yml
+  atlas: /Maps/_Starlight/Dungeon/syndie.yml
   offset: 0,34
   tags:
     - SyndieDungeon
@@ -211,7 +211,7 @@
 - type: dungeonRoom
   id: SyndieDungeon11x3b
   size: 11,3
-  atlas: Maps/_Starlight/Dungeon/syndie.yml
+  atlas: /Maps/_Starlight/Dungeon/syndie.yml
   offset: 12,34
   tags:
     - SyndieDungeon
@@ -220,7 +220,7 @@
 - type: dungeonRoom
   id: SyndieDungeon7x3a
   size: 7,3
-  atlas: Maps/_Starlight/Dungeon/syndie.yml
+  atlas: /Maps/_Starlight/Dungeon/syndie.yml
   offset: 0,38
   tags:
     - SyndieDungeon
@@ -228,7 +228,7 @@
 - type: dungeonRoom
   id: SyndieDungeon7x3b
   size: 7,3
-  atlas: Maps/_Starlight/Dungeon/syndie.yml
+  atlas: /Maps/_Starlight/Dungeon/syndie.yml
   offset: 8,38
   tags:
     - SyndieDungeon
@@ -236,7 +236,7 @@
 - type: dungeonRoom
   id: SyndieDungeon7x3c
   size: 7,3
-  atlas: Maps/_Starlight/Dungeon/syndie.yml
+  atlas: /Maps/_Starlight/Dungeon/syndie.yml
   offset: 16,38
   tags:
     - SyndieDungeon
@@ -244,7 +244,7 @@
 - type: dungeonRoom
   id: SyndieDungeon7x3d
   size: 7,3
-  atlas: Maps/_Starlight/Dungeon/syndie.yml
+  atlas: /Maps/_Starlight/Dungeon/syndie.yml
   offset: 24,38
   tags:
     - SyndieDungeon
