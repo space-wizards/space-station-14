@@ -96,7 +96,7 @@ public sealed partial class HumanoidAppearanceComponent : Component
         {Sex.Unsexed, "Charlotte"}
     };
     [DataField]
-    public ProtoId<VoicePrototype> Voice { get; set; } = "";
+    public ProtoId<VoicePrototype>? Voice { get; set; } = "";
 }
 
 [DataDefinition]
