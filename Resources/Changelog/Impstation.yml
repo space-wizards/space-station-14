@@ -3955,3 +3955,18 @@
   id: 478
   time: '2024-11-08T16:56:16.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/641
+- author: honeyed-lemons
+  changes:
+  - message: Quick Construction menu from Einstein Engine,
+    type: Add
+  id: 479
+  time: '2024-11-08T17:09:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/649
+- author: DinnerCalzone
+  changes:
+  - message: A number of Impstation sounds have been mixed to mono and had their volume
+      adjusted to work with the positional audio system.
+    type: Tweak
+  id: 480
+  time: '2024-11-08T17:08:36.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/644
