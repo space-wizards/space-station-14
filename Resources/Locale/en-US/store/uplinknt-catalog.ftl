@@ -69,3 +69,6 @@ uplink-key-desc = Contains two encryption keys on a classified frequency for the
 
 uplink-beachball-name = High-pressure beachball
 uplink-beachball-desc = The beloved NT-brand beachball, complete with a fragile lining and much higher pressure. Simply throw it and send targets flying back, or propel yourself forwards!
+
+uplink-toolbox-name = Mechanical toolset
+uplink-toolbox-desc = A toolbox containing everything an Agent needs to get around undetected. Comes with tools, combat gloves and meson goggles.
