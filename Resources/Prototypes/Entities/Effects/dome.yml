@@ -37,7 +37,6 @@
 - type: entity
   id: EnergyDomeSmallPink
   categories: [ HideSpawnMenu ]
-  categories: [ HideSpawnMenu ]
   parent: EnergyDomeBase
   components:
   - type: Sprite
@@ -54,7 +53,6 @@
 - type: entity
   id: EnergyDomeSmallCap
   categories: [ HideSpawnMenu ]
-  categories: [ HideSpawnMenu ]
   parent: EnergyDomeBase
   components:
   - type: Sprite
@@ -65,7 +63,6 @@
 
 - type: entity
   id: EnergyDomeSmallRed
-  categories: [ HideSpawnMenu ]
   categories: [ HideSpawnMenu ]
   parent: EnergyDomeBase
   components:
@@ -84,7 +81,6 @@
 
 - type: entity
   id: EnergyDomeMediumBlue
-  categories: [ HideSpawnMenu ]
   categories: [ HideSpawnMenu ]
   parent: EnergyDomeBase
   components:
@@ -113,7 +109,6 @@
 
 - type: entity
   id: EnergyDomeSlowing
-  categories: [ HideSpawnMenu ]
   categories: [ HideSpawnMenu ]
   parent: EnergyDomeBase
   components:
