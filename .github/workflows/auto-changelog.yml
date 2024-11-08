@@ -52,4 +52,4 @@ jobs:
         git config user.email "github-actions[bot]@users.noreply.github.com"
         git add "Resources/Changelog/ChangelogStarlight.yml"
         git commit -m "Update changelog for PR #${{ github.event.pull_request.number }}"
-        git push git@github.com:${{ github.repository }}.git HEAD:main
+        git push git@github.com:${{ github.repository }}.git HEAD:Starlight
