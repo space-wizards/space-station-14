@@ -34,6 +34,6 @@ jobs:
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
-        git add $CHANGELOG_FILE_PATH
+        git add "Resources/Changelog/ChangelogStarlight.yml"
         git commit -m "Update changelog for PR #${{ github.event.pull_request.number }}"
         git push
