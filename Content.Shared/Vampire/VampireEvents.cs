@@ -12,6 +12,7 @@ public sealed partial class VampireOpenMutationsMenu : InstantActionEvent { }
 public sealed partial class VampireScreechEvent : VampireSelfPowerEvent { }
 public sealed partial class VampirePolymorphEvent : VampireSelfPowerEvent { }
 public sealed partial class VampireBloodStealEvent : VampireSelfPowerEvent { }
+public sealed partial class VampireUnholyStrengthEvent : VampireSelfPowerEvent { }
 public sealed partial class VampireCloakOfDarknessEvent : VampireSelfPowerEvent { }
 
 public sealed partial class VampireGlareEvent : VampireTargetedPowerEvent { }

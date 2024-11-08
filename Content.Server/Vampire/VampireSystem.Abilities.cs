@@ -58,6 +58,7 @@ public sealed partial class VampireSystem
         SubscribeLocalEvent<VampireComponent, VampirePolymorphEvent>(OnVampirePolymorph);
         SubscribeLocalEvent<VampireComponent, VampireHypnotiseEvent>(OnVampireHypnotise);
         SubscribeLocalEvent<VampireComponent, VampireBloodStealEvent>(OnVampireBloodSteal);
+        SubscribeLocalEvent<VampireComponent, VampireUnholyStrengthEvent>(OnVampireUnholyStrength);
         SubscribeLocalEvent<VampireComponent, VampireCloakOfDarknessEvent>(OnVampireCloakOfDarkness);
 
         //Hypnotise
@@ -166,6 +167,20 @@ public sealed partial class VampireSystem
 
         BloodSteal(vampire);
 
+        ev.Handled = true;
+    }
+    private void OnVampireUnholyStrength(EntityUid entity, VampireComponent component, VampireUnholyStrengthEvent ev)
+    {
+        if (!TryGetPowerDefinition(ev.DefinitionName, out var def))
+            return;
+
+        var vampire = new Entity<VampireComponent>(entity, component);
+
+        if (!IsAbilityUsable(vampire, def))
+            return;
+        
+        UnnaturalStrength(vampire);
+        
         ev.Handled = true;
     }
     private void OnVampireCloakOfDarkness(EntityUid entity, VampireComponent component, VampireCloakOfDarknessEvent ev)
