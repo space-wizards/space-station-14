@@ -25,7 +25,6 @@ using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.Manager.Exceptions;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Silicons.StationAi;
@@ -256,11 +255,13 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         if (cardHasAi && coreHasAi)
         {
             _popup.PopupClient(Loc.GetString("intellicard-core-occupied"), args.User, args.User, PopupType.Medium);
+            args.Handled = true;
             return;
         }
         if (!cardHasAi && !coreHasAi)
         {
             _popup.PopupClient(Loc.GetString("intellicard-core-empty"), args.User, args.User, PopupType.Medium);
+            args.Handled = true;
             return;
         }
 
