@@ -1,7 +1,7 @@
 - type: dungeonRoom
   id: ElderArena
   size: 25,25
-  atlas: Maps/_Starlight/Dungeon/elder-arena.yml
+  atlas: /Maps/_Starlight/Dungeon/elder-arena.yml
   offset: 0,0
   tags:
     - ElderArena
