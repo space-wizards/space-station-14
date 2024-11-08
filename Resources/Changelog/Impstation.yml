@@ -3867,3 +3867,28 @@
   id: 470
   time: '2024-11-08T16:21:05.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/646
+- author: DinnerCalzone
+  changes:
+  - message: (Hummingbird Station) The station now features its own unique parallax
+      background!
+    type: Add
+  - message: (Hummingbird Station) Added an extra evidence locker to Security.
+    type: Add
+  - message: (Hummingbird Station) Adjusted disposals so trash should now properly
+      dispense out into space after going through the recycler.
+    type: Fix
+  - message: (Hummingbird Station) Fixed a missing disposals pipe in the food service
+      area.
+    type: Fix
+  - message: (Hummingbird Station) Made a number of miscellaneous visual changes.
+    type: Tweak
+  id: 471
+  time: '2024-11-08T16:22:25.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/645
+- author: Pinkbat5
+  changes:
+  - message: Traitors can now purchase straight pride pins and cloaks in the uplink.
+    type: Add
+  id: 472
+  time: '2024-11-08T16:23:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/643
