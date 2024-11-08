@@ -158,7 +158,7 @@
   targetNode: shell
   category: construction-category-weapons
   objectType: Item
-  description: A homemade shotgun shell that shoots painful glass shrapnel. The spread is so wide that it couldn't hit the broad side of a barn.
+  description: Stuff a handful of glass shards and match sticks into an empty shotgun shell.
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
     state: improvised
@@ -171,7 +171,7 @@
   targetNode: shell
   category: construction-category-weapons
   objectType: Item
-  description: A homemade shotgun shell that shoots burning glass shrapnel. The spread is so wide that it couldn't hit the broad side of a barn.
+  description: Fill an empty shotgun shell with welding fuel and stuff it with a handful of glass shards and match sticks.
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
     state: improvised-incendiary
@@ -184,7 +184,7 @@
   targetNode: shell
   category: construction-category-weapons
   objectType: Item
-  description: A homemade shotgun shell that shoots painful uranium glass shrapnel. The spread is so wide that it couldn't hit the broad side of a barn.
+  description: Stuff a handful of uranium glass shards and match sticks into an empty shotgun shell.
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
     state: improvised-uranium
@@ -197,7 +197,7 @@
   targetNode: shell
   category: construction-category-weapons
   objectType: Item
-  description: A homemade shotgun slug that shoots a cylinder of coins. The stack has a tendency to break apart in the blast, limiting its effective range.
+  description: Push a stack of rock hard coins and a handful of match sticks into an empty shotgun shell.
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
     state: coinshot
