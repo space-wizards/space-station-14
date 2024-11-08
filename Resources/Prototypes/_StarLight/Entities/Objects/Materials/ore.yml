@@ -14,7 +14,6 @@
   - type: Item
     sprite: _Starlight/Objects/Materials/ore.rsi
     size: Normal
-    shape: 0.5, 0.5
   - type: Material
   - type: PhysicalComposition
     materialComposition:
