@@ -90,3 +90,17 @@
         - 0 # tritium
         - 2.051379050 # water vapor
       temperature: 293.15
+  - type: SolutionContainerManager
+    solutions:
+      waterTank:
+        maxVol: 30
+  - type: RefillableSolution
+    solution: waterTank
+  - type: ExaminableSolution
+    solution: waterTank
+  - type: Spillable
+    solution: waterTank
+  - type: Vaporizer
+    # TODO: SolutionContainerVisuals
+    # Being able to see how much water is left would be nice
+    # This is left as an exercise to the spriter :ignorant:
