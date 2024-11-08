@@ -111,6 +111,7 @@
         - id: ClothingNeckCloakEnby
         - id: ClothingNeckCloakPan
         - id: ClothingNeckCloakBear
+        - id: ClothingNeckCloakStraight
       - id: ToySkeleton
       - id: Basketball
       - id: Football
@@ -153,6 +154,7 @@
         - id: ClothingNeckTransPin
         - id: ClothingNeckAutismPin
         - id: ClothingNeckGoldAutismPin
+        - id: ClothingNeckStraightPin
     # Rare Group
     - !type:GroupSelector
       weight: 2
@@ -166,6 +168,7 @@
       - id: ClothingUniformJumpsuitFamilyGuy
       - id: WristwatchGold
       - id: RubberStampGreytide
+      - id: StraightHandyFlag
 
 - type: entityTable
   id: MaintToolsTable
@@ -307,6 +310,7 @@
         - ClothingNeckCloakGay
         - ClothingNeckCloakEnby
         - ClothingNeckCloakPan
+        - ClothingNeckCloakStraight
         - ToySkeleton
         - Basketball
         - Football
@@ -324,6 +328,7 @@
         - ClothingNeckNonBinaryPin
         - ClothingNeckPansexualPin
         - ClothingNeckTransPin
+        - ClothingNeckStraightPin
         - CluwneHorn
         - ClothingMaskRat
         - MysteryFigureBox
@@ -346,6 +351,7 @@
         - ClothingHeadHatCowboyBountyHunter
         - ClothingNeckAutismPin
         - ClothingNeckGoldAutismPin
+        - ClothingNeckStraightPin
         - WristwatchGold
       rareChance: 0.01
       prototypes:

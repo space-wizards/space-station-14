@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Straight pride pins by Pinkbat5. Sorry",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "straight"
+    },
+    {
+      "name": "straight-equipped-NECK",
+      "directions": 4
+    }
+  ]
+}
