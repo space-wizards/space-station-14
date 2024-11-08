@@ -93,6 +93,90 @@
       entity: ShellShotgunImprovised
 
 - type: constructionGraph
+  id: ImprovisedIncendiaryShotgunShellGraph
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: shell
+          conditions:
+            - !type:MinSolution
+              solution: shell
+              reagent:
+                ReagentId: WeldingFuel
+              quantity: 5
+          steps:
+            - tag: ShellShotgunEmpty
+              name: empty shotgun shell
+              icon:
+                sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+                state: improvised-empty
+              doAfter: 0.5 
+            - tag: GlassShard
+              name: glass shard
+              icon:
+                sprite: Objects/Materials/Shards/shard.rsi
+                state: shard1
+              doAfter: 0.5 
+            - tag: GlassShard
+              name: glass shard
+              icon:
+                sprite: Objects/Materials/Shards/shard.rsi
+                state: shard2
+              doAfter: 0.5 
+            - tag: GlassShard
+              name: glass shard
+              icon:
+                sprite: Objects/Materials/Shards/shard.rsi
+                state: shard1
+              doAfter: 0.5 
+            - tag: GlassShard
+              name: glass shard
+              icon:
+                sprite: Objects/Materials/Shards/shard.rsi
+                state: shard3
+              doAfter: 0.5 
+            - tag: Matchstick
+              name: match stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: match_unlit
+              doAfter: 0.5 
+            - tag: Matchstick
+              name: match stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: match_unlit
+              doAfter: 0.5 
+            - tag: Matchstick
+              name: match stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: match_unlit
+              doAfter: 0.5 
+            - tag: Matchstick
+              name: match stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: match_unlit
+              doAfter: 0.5 
+            - tag: Matchstick
+              name: match stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: match_unlit
+              doAfter: 0.5 
+            - tag: Matchstick
+              name: match stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: match_unlit
+              doAfter: 0.5
+
+    - node: shell
+      entity: ShellShotgunImprovisedIncendiary
+
+- type: constructionGraph
   id: ImprovisedUraniumShotgunShellGraph
   start: start
   graph:

@@ -221,6 +221,29 @@
     state: "improvised"
 
 - type: entity
+  id: ShellShotgunImprovisedIncendiary
+  name: improvised shell (incendiary)
+  description: A homemade shotgun shell that shoots burning glass shrapnel. The spread is so wide that it couldn't hit the broad side of a barn.
+  parent: BaseShellShotgun
+  components:
+  - type: Tag
+    tags:
+    - Cartridge
+    - ShellShotgun
+    - ShellShotgunLight
+  - type: Sprite
+    layers:
+      - state: improvised-incendiary
+        map: [ "enum.AmmoVisualLayers.Base" ]
+  - type: Construction
+    graph: ImprovisedIncendiaryShotgunShellGraph
+    node: shell
+  - type: CartridgeAmmo
+    proto: PelletShotgunImprovisedIncendiarySpread
+  - type: SpentAmmoVisuals
+    state: "improvised-incendiary"
+
+- type: entity
   id: ShellShotgunImprovisedUranium
   name: improvised shell (uranium glass)
   description: A homemade shotgun shell that shoots painful uranium glass shrapnel. The spread is so wide that it couldn't hit the broad side of a barn.

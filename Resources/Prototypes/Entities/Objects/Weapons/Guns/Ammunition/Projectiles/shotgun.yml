@@ -129,6 +129,35 @@
     spread: 45
 
 - type: entity
+  id: PelletShotgunImprovisedIncendiary
+  name: improvised incendiary pellet
+  categories: [ HideSpawnMenu ]
+  parent: BaseBulletIncendiary
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: shard
+    color: "#d15b00"
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 2
+        Slash: 2
+        Heat: 5
+  - type: IgnitionSource
+    ignited: true
+
+- type: entity
+  id: PelletShotgunImprovisedIncendiarySpread
+  categories: [ HideSpawnMenu ]
+  parent: PelletShotgunImprovisedIncendiary
+  components:
+  - type: ProjectileSpread
+    proto: PelletShotgunImprovisedIncendiary
+    count: 6
+    spread: 45
+
+- type: entity
   id: PelletShotgunImprovisedUranium
   name: improvised uranium pellet
   categories: [ HideSpawnMenu ]
