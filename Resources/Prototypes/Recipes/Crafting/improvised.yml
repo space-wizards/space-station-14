@@ -138,6 +138,19 @@
     state: icon
 
 - type: construction
+  name: empty improvised shell
+  id: ShellShotgunImprovisedEmpty
+  graph: ImprovisedShotgunShellEmptyGraph
+  startNode: start
+  targetNode: shell
+  category: construction-category-weapons
+  objectType: Item
+  description: A hollow homemade shotgun shell that can be filled with a somewhat deadly variety of makeshift pellets.
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: improvised-empty
+
+- type: construction
   name: improvised shell (glass)
   id: ShellShotgunImprovised
   graph: ImprovisedShotgunShellGraph

@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: ImprovisedShotgunShellGraph
+  id: ImprovisedShotgunShellEmptyGraph
   start: start
   graph:
     - node: start
@@ -11,6 +11,23 @@
               doAfter: 0.5 
             - material: Plastic
               amount: 1
+              doAfter: 0.5
+    - node: shell
+      entity: ShellShotgunImprovisedEmpty
+
+- type: constructionGraph
+  id: ImprovisedShotgunShellGraph
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: shell
+          steps:
+            - tag: ShellShotgunEmpty
+              name: empty shotgun shell
+              icon:
+                sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+                state: improvised-empty
               doAfter: 0.5 
             - tag: GlassShard
               name: glass shard
@@ -83,11 +100,11 @@
       edges:
         - to: shell
           steps:
-            - material: Steel
-              amount: 1
-              doAfter: 0.5 
-            - material: Plastic
-              amount: 1
+            - tag: ShellShotgunEmpty
+              name: empty shotgun shell
+              icon:
+                sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+                state: improvised-empty
               doAfter: 0.5 
             - tag: UraniumGlassShard
               name: uranium glass shard
@@ -164,11 +181,11 @@
       edges:
         - to: shell
           steps:
-            - material: Steel
-              amount: 1
-              doAfter: 0.5 
-            - material: Plastic
-              amount: 1
+            - tag: ShellShotgunEmpty
+              name: empty shotgun shell
+              icon:
+                sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+                state: improvised-empty
               doAfter: 0.5 
             - tag: Coin
               name: coin

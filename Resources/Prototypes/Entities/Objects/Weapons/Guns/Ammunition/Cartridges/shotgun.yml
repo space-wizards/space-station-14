@@ -163,6 +163,8 @@
     sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
     layers:
     - state: improvised-empty
+  - type: Item
+    size: Tiny
   - type: SolutionContainerManager
     solutions:
       shell:
@@ -188,6 +190,9 @@
     solution: shell
   - type: Drink
     solution: shell
+  - type: Construction
+    graph: ImprovisedShotgunShellEmptyGraph
+    node: shell
   - type: Tag
     tags:
     - ShellShotgunEmpty
