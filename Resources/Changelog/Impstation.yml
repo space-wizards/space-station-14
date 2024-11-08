@@ -3812,3 +3812,12 @@
   id: 466
   time: '2024-11-08T01:42:21.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/647
+- author: hivehum
+  changes:
+  - message: Added the Airlock Access Override, an emag that can hack doors.
+    type: Add
+  - message: Emags can no longer hack doors.
+    type: Remove
+  id: 467
+  time: '2024-11-08T02:19:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/638
