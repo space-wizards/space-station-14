@@ -13,7 +13,7 @@ public abstract class SharedTrayScannerSystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
-    public const float SubfloorRevealAlpha = 0.99f;
+    public const float SubfloorRevealAlpha = 0.8f;
 
     public override void Initialize()
     {
