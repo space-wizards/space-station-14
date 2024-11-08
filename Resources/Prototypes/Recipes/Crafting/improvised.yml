@@ -138,7 +138,7 @@
     state: icon
 
 - type: construction
-  name: improvised shotgun shell
+  name: improvised shell (glass)
   id: ShellShotgunImprovised
   graph: ImprovisedShotgunShellGraph
   startNode: start
@@ -151,7 +151,7 @@
     state: improvised
 
 - type: construction
-  name: improvised uranium shotgun shell
+  name: improvised shell (uranium glass)
   id: ShellShotgunImprovisedUranium
   graph: ImprovisedUraniumShotgunShellGraph
   startNode: start
@@ -164,7 +164,7 @@
     state: improvised-uranium
 
 - type: construction
-  name: shell (coin slug)
+  name: improvised shell (coin slug)
   id: ShellShotgunCoin
   graph: CoinShotgunShellGraph
   startNode: start

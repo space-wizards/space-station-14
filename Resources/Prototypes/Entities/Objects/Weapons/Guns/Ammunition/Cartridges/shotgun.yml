@@ -141,7 +141,7 @@
 
 - type: entity
   id: ShellShotgunImprovised
-  name: improvised shotgun shell
+  name: improvised shell (glass)
   description: A homemade shotgun shell that shoots painful glass shrapnel. The spread is so wide that it couldn't hit the broad side of a barn.
   parent: BaseShellShotgun
   components:
@@ -164,7 +164,7 @@
 
 - type: entity
   id: ShellShotgunImprovisedUranium
-  name: improvised uranium shotgun shell
+  name: improvised shell (uranium glass)
   description: A homemade shotgun shell that shoots painful uranium glass shrapnel. The spread is so wide that it couldn't hit the broad side of a barn.
   parent: BaseShellShotgun
   components:
@@ -187,7 +187,7 @@
 
 - type: entity
   id: ShellShotgunCoin
-  name: shell (coin slug)
+  name: improvised shell (coin slug)
   description: A homemade shotgun slug that shoots a cylinder of coins. The stack has a tendency to break apart in the blast, limiting its effective range.
   parent: BaseShellShotgun
   components:
@@ -210,7 +210,7 @@
 
 - type: entity
   id: ShellShotgunUranium
-  name: uranium shotgun shell
+  name: shell (.50 uranium)
   parent: BaseShellShotgun
   components:
     - type: Sprite
