@@ -16,7 +16,7 @@
   description: uplink-carbine-desc
   productEntity: WeaponEnergyCarbine
   cost:
-    BluespaceCrystal: 17 # this shit is STRONG-strong. TODO: Cascade Ops DO NOT get this
+    BluespaceCrystal: 15 # this shit is STRONG-strong. TODO: Cascade Ops DO NOT get this
   categories:
   - UplinkNtWeaponry
 
