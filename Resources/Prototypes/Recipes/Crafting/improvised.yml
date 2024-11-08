@@ -164,9 +164,9 @@
     state: improvised-uranium
 
 - type: construction
-  name: improvised coinshot shotgun slug
-  id: ShellShotgunCoinshot
-  graph: CoinshotShotgunShellGraph
+  name: shell (coin slug)
+  id: ShellShotgunCoin
+  graph: CoinShotgunShellGraph
   startNode: start
   targetNode: shell
   category: construction-category-weapons

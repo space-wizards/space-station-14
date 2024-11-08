@@ -157,7 +157,7 @@
       entity: ShellShotgunImprovisedUranium
 
 - type: constructionGraph
-  id: CoinshotShotgunShellGraph
+  id: CoinShotgunShellGraph
   start: start
   graph:
     - node: start
@@ -225,4 +225,4 @@
                 state: match_unlit
               doAfter: 0.5
     - node: shell
-      entity: ShellShotgunCoinshot
+      entity: ShellShotgunCoin

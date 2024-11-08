@@ -156,8 +156,8 @@
     spread: 45
 
 - type: entity
-  id: PelletShotgunCoinshot
-  name: pellet (coinshot)
+  id: PelletShotgunCoin
+  name: pellet (coin slug)
   categories: [ HideSpawnMenu ]
   parent: BaseBullet
   components:
@@ -173,12 +173,12 @@
         Piercing: 14
 
 - type: entity
-  id: PelletShotgunCoinshotSpread
+  id: PelletShotgunCoinSpread
   categories: [ HideSpawnMenu ]
-  parent: PelletShotgunCoinshot
+  parent: PelletShotgunCoin
   components:
   - type: ProjectileSpread
-    proto: PelletShotgunCoinshot
+    proto: PelletShotgunCoin
     count: 2
     spread: 8
 
