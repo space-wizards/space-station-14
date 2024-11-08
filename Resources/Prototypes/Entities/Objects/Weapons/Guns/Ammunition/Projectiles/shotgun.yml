@@ -129,6 +129,33 @@
     spread: 45
 
 - type: entity
+  id: PelletShotgunImprovisedUranium
+  name: improvised uranium pellet
+  categories: [ HideSpawnMenu ]
+  parent: BaseBullet
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: shard
+    color: "#8eff7a"
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 2
+        Slash: 2
+        Radiation: 2   
+
+- type: entity
+  id: PelletShotgunImprovisedUraniumSpread
+  categories: [ HideSpawnMenu ]
+  parent: PelletShotgunImprovisedUranium
+  components:
+  - type: ProjectileSpread
+    proto: PelletShotgunImprovisedUranium
+    count: 10
+    spread: 45
+
+- type: entity
   id: PelletShotgunTranquilizer
   name: pellet (.50 tranquilizer)
   categories: [ HideSpawnMenu ]

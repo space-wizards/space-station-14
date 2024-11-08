@@ -74,3 +74,84 @@
               doAfter: 0.5
     - node: shell
       entity: ShellShotgunImprovised
+
+- type: constructionGraph
+  id: ImprovisedUraniumShotgunShellGraph
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: shell
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 0.5 
+            - material: Plastic
+              amount: 1
+              doAfter: 0.5 
+            - tag: UraniumGlassShard
+              name: uranium glass shard
+              icon:
+                sprite: Objects/Materials/Shards/shard.rsi
+                state: shard1
+                color: "#8eff7a"
+              doAfter: 0.5 
+            - tag: UraniumGlassShard
+              name: uranium glass shard
+              icon:
+                sprite: Objects/Materials/Shards/shard.rsi
+                state: shard2
+                color: "#8eff7a"
+              doAfter: 0.5 
+            - tag: UraniumGlassShard
+              name: uranium glass shard
+              icon:
+                sprite: Objects/Materials/Shards/shard.rsi
+                state: shard1
+                color: "#8eff7a"
+              doAfter: 0.5 
+            - tag: UraniumGlassShard
+              name: uranium glass shard
+              icon:
+                sprite: Objects/Materials/Shards/shard.rsi
+                state: shard3
+                color: "#8eff7a"
+              doAfter: 0.5 
+            - tag: Matchstick
+              name: match stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: match_unlit
+              doAfter: 0.5 
+            - tag: Matchstick
+              name: match stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: match_unlit
+              doAfter: 0.5 
+            - tag: Matchstick
+              name: match stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: match_unlit
+              doAfter: 0.5 
+            - tag: Matchstick
+              name: match stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: match_unlit
+              doAfter: 0.5 
+            - tag: Matchstick
+              name: match stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: match_unlit
+              doAfter: 0.5 
+            - tag: Matchstick
+              name: match stick
+              icon:
+                sprite: Objects/Tools/matches.rsi
+                state: match_unlit
+              doAfter: 0.5
+    - node: shell
+      entity: ShellShotgunImprovisedUranium
