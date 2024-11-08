@@ -5,7 +5,6 @@ using Content.Shared.Follower.Components;
 using Content.Shared.Input;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
-using Robust.Shared.Configuration;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
