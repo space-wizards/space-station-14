@@ -1864,6 +1864,20 @@ namespace Content.Shared.CCVar
             CVarDef.Create("accessibility.chat_window_transparency", 0.85f, CVar.CLIENTONLY | CVar.ARCHIVE);
 
         /// <summary>
+        /// Speech bubble opacity slider, controlling the alpha of the speech bubble.
+        /// Goes from to 0 (completely transparent) to 1 (completely opaque)
+        /// </summary>
+        public static readonly CVarDef<float> SpeechBubbleOpacitySlider =
+            CVarDef.Create("accessibility.speech_bubble_transparency", 0.75f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /// <summary>
+        /// Speech text and name opacity slider, controlling the alpha of the speech text and name.
+        /// Goes from to 0 (completely transparent) to 1 (completely opaque)
+        /// </summary>
+        public static readonly CVarDef<float> SpeechTextAndNameOpacitySlider =
+            CVarDef.Create("accessibility.speech_text_and_name_transparency", 1f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /// <summary>
         /// Toggle for visual effects that may potentially cause motion sickness.
         /// Where reasonable, effects affected by this CVar should use an alternate effect.
         /// Please do not use this CVar as a bandaid for effects that could otherwise be made accessible without issue.

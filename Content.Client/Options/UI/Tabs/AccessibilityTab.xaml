@@ -9,6 +9,8 @@
                 <CheckBox Name="ColorblindFriendlyCheckBox" Text="{Loc 'ui-options-colorblind-friendly'}" />
                 <ui:OptionSlider Name="ChatWindowOpacitySlider" Title="{Loc 'ui-options-chat-window-opacity'}" />
                 <ui:OptionSlider Name="ScreenShakeIntensitySlider" Title="{Loc 'ui-options-screen-shake-intensity'}" />
+                <ui:OptionSlider Name="SpeechBubbleOpacitySlider" Title="{Loc 'ui-options-speech-bubble-opacity'}" />
+                <ui:OptionSlider Name="SpeechTextAndNameOpacitySlider" Title="{Loc 'ui-options-speech-text-and-name-opacity'}" />
             </BoxContainer>
         </ScrollContainer>
         <ui:OptionsTabControlRow Name="Control" Access="Public" />
