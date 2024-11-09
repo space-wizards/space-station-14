@@ -145,7 +145,7 @@
     Silver: 500
     
 - type: latheRecipe
-  id: OrganCyberEyesSec
+  id: OrganCyberEyesMed
   result: OrganCyberEyesMed
   category: Cyberlimbs
   completetime: 10
