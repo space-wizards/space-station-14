@@ -1,6 +1,8 @@
 using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.Components.Solutions;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Systems;
 using Content.Shared.Destructible.Thresholds;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Tag;
@@ -136,12 +138,12 @@ public sealed partial class FoodHasReagent : FoodMetamorphRule
 
     public override bool Check(IPrototypeManager protoMan, EntityManager entMan, EntityUid food, List<FoodSequenceVisualLayer> ingredients)
     {
-        if (!entMan.TryGetComponent<SolutionContainerManagerComponent>(food, out var solMan))
+        if (!entMan.TryGetComponent<SolutionHolderComponent>(food, out var solHolder))
             return false;
 
-        var solutionMan = entMan.System<SharedSolutionContainerSystem>();
+        var solutionSystem = entMan.System<SharedSolutionSystem>();
 
-        if (!solutionMan.TryGetSolution(food, Solution, out var foodSoln, out var foodSolution))
+        if (!solutionSystem.TryGetSolution(food, Solution, out var foodSoln))
             return false;
 
         foreach (var (id, quantity) in foodSoln.Value.Comp.Solution.Contents)
