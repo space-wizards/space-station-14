@@ -2,6 +2,8 @@ name: Update Changelog
 
 on:
   pull_request:
+    branches:
+      - Starlight
     types: [closed]
 
 jobs:
