@@ -16,6 +16,7 @@ public sealed partial class AbductorHumanObservationConsoleComponent : Component
     [DataField, AutoNetworkedField]
     public EntityUid? RemoteEntity;
 }
+
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedAbductorSystem))]
 public sealed partial class AbductorConsoleComponent : Component
 {
