@@ -3970,3 +3970,11 @@
   id: 480
   time: '2024-11-08T17:08:36.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/644
+- author: hivehum
+  changes:
+  - message: The beanbag Kammerer and bandolier are once again clear for bartenders
+      to openly carry.
+    type: Tweak
+  id: 481
+  time: '2024-11-09T02:07:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/654
