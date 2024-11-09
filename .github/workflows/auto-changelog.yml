@@ -1,58 +1,60 @@
 name: Update Changelog
 
 on:
-  pull_request:
+  push:
     branches:
       - Starlight
-    types: [closed]
+
+permissions:
+  contents: write
+  pull-requests: read
 
 jobs:
   update-changelog:
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
-    environment:
-      name: prod
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
 
-    - name: Install Dependencies
-      run: |
-        git checkout Starlight
-        pip install pyyaml
-        pip install PyGithub
+      - name: Install Dependencies
+        run: |
+          pip install pyyaml PyGithub requests
 
-    - name: Set up SSH
-      env:
-        ACTIONS_SSH_KEY: ${{ secrets.ACTIONS_SSH_KEY }}
-        TEST: ${{ secrets.TEST }}
-      run: |
-        mkdir -p ~/.ssh
-        echo "$ACTIONS_SSH_KEY" | tr -d '\r' > ~/.ssh/id_ed25519
-        echo "$TEST"
-        chmod 600 ~/.ssh/id_ed25519
-        ssh-keyscan github.com >> ~/.ssh/known_hosts
-        
-    - name: Test SSH Connection
-      run: ssh -T git@github.com || exit 0
+      - name: Get Pull Request Number
+        id: get_pr
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          COMMIT_SHA=$(git rev-parse HEAD)
+          echo "Current commit SHA: $COMMIT_SHA"
 
-    - name: Parse PR and Update Changelog
-      env:
-        CHANGELOG_FILE_PATH: 'Resources/Changelog/ChangelogStarlight.yml'
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PR_NUMBER: ${{ github.event.pull_request.number }}
-      run: python ./Tools/_Starlight/update_changelog.py
+          # Поиск PR, связанного с этим коммитом
+          PR_DATA=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            "https://api.github.com/search/issues?q=sha:$COMMIT_SHA+is:merged+is:pr")
 
-    - name: Commit and push changes
-      run: |
-        git config user.name "github-actions[bot]"
-        git config user.email "github-actions[bot]@users.noreply.github.com"
-        git add "Resources/Changelog/ChangelogStarlight.yml"
-        git commit -m "Update changelog for PR #${{ github.event.pull_request.number }}"
-        git push git@github.com:${{ github.repository }}.git HEAD:Starlight
+          PR_NUMBER=$(echo "$PR_DATA" | python -c "import sys, json; print(json.load(sys.stdin)['items'][0]['number'])")
+
+          echo "PR Number: $PR_NUMBER"
+
+          echo "::set-output name=PR_NUMBER::$PR_NUMBER"
+
+      - name: Parse PR and Update Changelog
+        env:
+          CHANGELOG_FILE_PATH: 'Resources/Changelog/ChangelogStarlight.yml'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ steps.get_pr.outputs.PR_NUMBER }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python ./Tools/_Starlight/update_changelog.py
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add "Resources/Changelog/ChangelogStarlight.yml"
+          git commit -m "Update changelog for PR #${{ steps.get_pr.outputs.PR_NUMBER }} [skip ci]"
+          git push origin HEAD:Starlight
