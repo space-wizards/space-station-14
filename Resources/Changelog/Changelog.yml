@@ -1,77 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: The sentient plant mutation can no longer be propagated to other trays
-      via seeds or swabs. It has also been made more rare.
-    type: Tweak
-  id: 7092
-  time: '2024-08-11T09:23:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29133
-- author: Moomoobeef
-  changes:
-  - message: Added The Throngler (Plushie) to the grand lottery!!
-    type: Add
-  id: 7093
-  time: '2024-08-11T10:26:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29978
-- author: Plykiya
-  changes:
-  - message: Energy sword weapons are now execution-capable.
-    type: Add
-  id: 7094
-  time: '2024-08-11T22:12:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30909
-- author: Blackern5000
-  changes:
-  - message: Added diamond-tipped mining drills, a science printed item found under
-      T2 industrial.
-    type: Add
-  - message: Standard mining drills now attack faster and break rocks in two hits.
-    type: Tweak
-  - message: Moved ore bags of holding to T2 industrial tech.
-    type: Tweak
-  - message: Grappling guns are now researched with Salvage Equipment.
-    type: Tweak
-  - message: Diamonds are now worth 2,000 spesos each.
-    type: Tweak
-  id: 7095
-  time: '2024-08-12T01:49:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30814
-- author: mirrorcult
-  changes:
-  - message: With space law being overhauled, you can now examine items to see their
-      contraband status, and whether with your current access you'd be accosted by
-      Security for owning it. This will also clearly show non-stealth syndicate items.
-    type: Add
-  id: 7096
-  time: '2024-08-12T03:57:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28688
-- author: DieselMohawk
-  changes:
-  - message: Resprited Security vest and helmet
-    type: Tweak
-  id: 7097
-  time: '2024-08-12T06:20:56.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30291
-- author: Ubaser
-  changes:
-  - message: Mantles are now available in loadouts, requiring 20 hours of that head
-      of department's time.
-    type: Add
-  - message: Mantles are no longer spawned in dressers or able to be printed at uniform
-      lathes.
-    type: Remove
-  id: 7098
-  time: '2024-08-12T07:14:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30929
-- author: LeoSantich
-  changes:
-  - message: Updated 'narsie' and 'ratvar' to 'Nar'Sie' and 'Ratvar' in randomly generated
-      storybook content.
-    type: Tweak
-  id: 7099
-  time: '2024-08-12T23:20:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30954
 - author: pigeonpeas
   changes:
   - message: Added non command mantle into the winterdrobe
@@ -3951,3 +3878,73 @@
   id: 7591
   time: '2024-11-05T00:12:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33170
+- author: kirus59
+  changes:
+  - message: Fixed display of icons when using hunger or thirst huds
+    type: Fix
+  - message: Fixed errors spam when using beer goggles
+    type: Fix
+  id: 7592
+  time: '2024-11-05T16:58:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32832
+- author: Errant
+  changes:
+  - message: Syndicate Reinforcements no longer list their (hidden and unused) codewords
+      on the Round End window.
+    type: Fix
+  id: 7593
+  time: '2024-11-05T18:18:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33181
+- author: Baptr0b0t
+  changes:
+  - message: Fixed Intelicard can see through walls.
+    type: Fix
+  id: 7594
+  time: '2024-11-06T03:28:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33177
+- author: slarticodefast
+  changes:
+  - message: Removed the wanted list cartridge from the captain's PDA.
+    type: Remove
+  id: 7595
+  time: '2024-11-06T13:20:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33084
+- author: BramvanZijp
+  changes:
+  - message: Flare guns have been reworked to no longer automatically eject shells
+      after firing, and must now be opened manually to insert or eject shells. A safety
+      feature has also been added to prevent loading lethal shells into them.
+    type: Tweak
+  - message: Flare guns are twice as likely to appear in emergency closets, with the
+      same rarity as MRE's.
+    type: Tweak
+  - message: Added the security shell gun, a modified flare gun which is capable of
+      handling both nonlethal and lethal shotgun shells. It is able to be crafted
+      in the security techfab without needing any research.
+    type: Add
+  id: 7596
+  time: '2024-11-06T14:27:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32829
+- author: SlamBamActionman
+  changes:
+  - message: WT550 and C20-r's "burst" firemodes are now actual bursts.
+    type: Tweak
+  - message: Drozd is now a burst-only weapon (DPS remains unchanged!).
+    type: Tweak
+  id: 7597
+  time: '2024-11-06T14:39:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31292
+- author: PopGamer46
+  changes:
+  - message: Fixed Lambordeere (botany shuttle) bolt buttons not being connected
+    type: Fix
+  id: 7598
+  time: '2024-11-07T22:02:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33065
+- author: Boaz1111
+  changes:
+  - message: Added casual green jumpsuits and skirts to the clothesmate.
+    type: Add
+  id: 7599
+  time: '2024-11-08T14:50:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31710

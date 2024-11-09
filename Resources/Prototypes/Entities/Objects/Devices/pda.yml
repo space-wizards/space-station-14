@@ -502,7 +502,7 @@
     state: pda-janitor
 
 - type: entity
-  parent: BaseSecurityPDA
+  parent: BasePDA
   id: CaptainPDA
   name: captain PDA
   description: Surprisingly no different from your PDA.
