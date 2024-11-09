@@ -11,7 +11,7 @@ from datetime import datetime
 # Discord and GitHub settings
 DISCORD_WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL")
 CHANGELOG_FILE = "Resources/Changelog/ChangelogStarlight.yml"
-SENT_IDS_FILE = "Resources/Changelog/sent_changelog_ids.yml"
+SENT_IDS_FILE = "Tools/changelogs/sent_changelog_ids.yml"
 
 TYPES_TO_EMOJI = {
     "Fix":    "🐛",

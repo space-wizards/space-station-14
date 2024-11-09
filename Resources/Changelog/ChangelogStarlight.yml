@@ -5,9 +5,11 @@ Entries:
     type: Add
   id: 1
   time: '2024-08-11T11:38:00.059464+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/17
 - author: Rinary
   changes:
   - message: Added automatic changelog.
     type: Add
   id: 2
   time: '2024-11-08T21:26:53.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/33
