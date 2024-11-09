@@ -20,6 +20,12 @@
     {
       "name": "alt-equipped-EARS",
       "directions": 4
+    },
+    {
+      "name": "icon_warden"
+    },
+    {
+      "name": "icon_warden_alt"
     }
   ]
 }
