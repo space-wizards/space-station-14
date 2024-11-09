@@ -19,7 +19,7 @@
     - Hemostat
 
 - type: technology
-  id: CyberLimbsTechAdvanced
+  id: CyberLimbsTech
   name: research-technology-basic-cyberlimbs
   icon:
     sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
@@ -53,3 +53,21 @@
     - BoneSetterAdvanced
     - RetractorAdvanced
     - HemostatAdvanced
+  technologyPrerequisites:
+  - SurgeryTech
+    
+# Tier 2
+
+- type: technology
+  id: CyberOrgansTechAdvanced
+  name: research-technology-advanced-cyberlimbs
+  icon:
+    sprite: _Starlight/Mobs/Species/Cyberlimbs/organs.rsi
+    state: eyeball-l
+  discipline: Biochemical
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+    - OrganCyberEyes
+  technologyPrerequisites:
+  - CyberLimbsTech

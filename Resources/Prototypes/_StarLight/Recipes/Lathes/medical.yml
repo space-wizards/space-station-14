@@ -133,3 +133,12 @@
   materials:
     Plastic: 100
     Steel: 100
+    
+- type: latheRecipe
+  id: OrganCyberEyes
+  result: OrganCyberEyes
+  category: Cyberlimbs
+  completetime: 10
+  materials:
+    Glass: 500
+    Silver: 500
