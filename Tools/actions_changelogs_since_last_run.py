@@ -87,16 +87,21 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
                 emoji = TYPES_TO_EMOJI.get(change['type'], "❓")
                 url = entry.get("url")
                 
+                message = change["message"]
                 if emoji not in changes_by_type:
                     changes_by_type[emoji] = []
-                changes_by_type[emoji].append(change["message"])
+
+                max_field_length = 1024
+                for i in range(0, len(message), max_field_length):
+                    changes_by_type[emoji].append(message[i:i + max_field_length])
 
         for emoji, messages in changes_by_type.items():
-            embed["fields"].append({
-                "name": f"{emoji} {''.join(messages)}",
-                "value": "\n",
-                "inline": False
-            })
+            for message in messages:
+                embed["fields"].append({
+                    "name": f"{emoji} {message}",
+                    "value": "\n",
+                    "inline": False
+                })
             
         embed["fields"].append({
             "name": "\n",
