@@ -18,20 +18,22 @@
         Piercing: 15 # probably nerf this once they're non-antags
         Structural: 15
     soundHit:
-      collection: AlienClaw 
+      collection: AlienClaw
   - type: Unremoveable
 
 - type: entity
   name: vaporizer
-  suffix: Unremoveable # remove this once their speech system works
   parent: ClothingMaskGas
   id: DecapoidBreathingApparatus
   description: 'A neck-mounted breathing apparatus for decapoids. Moistens your gills, if you have them. Also functions as a brain-to-voice translator.'
   components:
-  - type: Unremoveable # remove this once their speech system works
   - type: Sprite
     sprite: _Impstation/Objects/Decapoid/vaporizer.rsi # todo: custom. obviously. also todo: make it able to take in water, convert it to vapor, and internals that steam into the lungs.
     state: icon
+  - type: Tag
+    tags:
+      - Vaporizer
+      - BreathMask
   - type: Clothing
     quickEquip: true
     slots:
@@ -46,7 +48,7 @@
   - type: HideLayerClothing
     slots:
     - Snout
-     
+
 
 - type: entity
   name: vapor tank
@@ -88,4 +90,17 @@
         - 0 # tritium
         - 2.051379050 # water vapor
       temperature: 293.15
-    
+  - type: SolutionContainerManager
+    solutions:
+      waterTank:
+        maxVol: 30
+  - type: RefillableSolution
+    solution: waterTank
+  - type: ExaminableSolution
+    solution: waterTank
+  - type: Spillable
+    solution: waterTank
+  - type: Vaporizer
+    # TODO: SolutionContainerVisuals
+    # Being able to see how much water is left would be nice
+    # This is left as an exercise to the spriter :ignorant:
