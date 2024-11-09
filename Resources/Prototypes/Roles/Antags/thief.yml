@@ -3,6 +3,7 @@
   name: roles-antag-thief-name
   antagonist: true
   setPreference: true
+  playTimeTracker: AntagThief
   objective: roles-antag-thief-objective
   guides: [ Thieves ]
 

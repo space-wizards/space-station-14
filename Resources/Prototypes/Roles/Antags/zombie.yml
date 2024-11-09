@@ -3,6 +3,7 @@
   name: roles-antag-initial-infected-name
   antagonist: true
   setPreference: true
+  playTimeTracker: AntagInitialInfected
   objective: roles-antag-initial-infected-objective
   guides: [ Zombies ]
 
@@ -11,5 +12,6 @@
   name: roles-antag-zombie-name
   antagonist: true
   setPreference: false
+  playTimeTracker: AntagZombie
   objective: roles-antag-zombie-objective
   guides: [ Zombies ]

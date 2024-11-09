@@ -159,12 +159,20 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
     public IEnumerable<KeyValuePair<string, TimeSpan>> FetchPlaytimeByRoles()
     {
         var jobsToMap = _prototypes.EnumeratePrototypes<JobPrototype>();
+        var antagsToMap = _prototypes.EnumeratePrototypes<AntagPrototype>();
 
         foreach (var job in jobsToMap)
         {
             if (_roles.TryGetValue(job.PlayTimeTracker, out var locJobName))
             {
                 yield return new KeyValuePair<string, TimeSpan>(job.Name, locJobName);
+            }
+        }
+        foreach (var antag in antagsToMap)
+        {
+            if (_roles.TryGetValue(antag.PlayTimeTracker, out var locAntagName))
+            {
+                yield return new KeyValuePair<string, TimeSpan>(antag.Name, locAntagName);
             }
         }
     }

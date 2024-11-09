@@ -3,6 +3,7 @@
   name: roles-antag-space-ninja-name
   antagonist: true
   setPreference: false
+  playTimeTracker: AntagNinja
   objective: roles-antag-space-ninja-objective
   guides: [ SpaceNinja ]
 

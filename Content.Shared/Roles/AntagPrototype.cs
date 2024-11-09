@@ -1,6 +1,8 @@
 using Content.Shared.Guidebook;
+using Content.Shared.Players.PlayTimeTracking;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Roles;
 
@@ -20,6 +22,12 @@ public sealed partial class AntagPrototype : IPrototype
     /// </summary>
     [DataField("name")]
     public string Name { get; private set; } = "";
+
+    /// <summary>
+    ///     The playtime that will be tracked while this antag.
+    /// </summary>
+    [DataField("playTimeTracker", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<PlayTimeTrackerPrototype>))]
+    public string PlayTimeTracker { get; private set; } = string.Empty;
 
     /// <summary>
     ///     The antag's objective, shown in a tooltip in the antag preference menu or as a ghost role description.
