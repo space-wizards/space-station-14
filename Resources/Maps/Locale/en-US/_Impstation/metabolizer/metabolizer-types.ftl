@@ -1,1 +1,0 @@
-metabolizer-type-decapoid = Decapoid
