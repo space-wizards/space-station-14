@@ -79,7 +79,11 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
     {
         // prevent malf client violating wanted/reason nullability
         if (msg.Status == SecurityStatus.Wanted != (msg.Reason != null) &&
-            msg.Status == SecurityStatus.Suspected != (msg.Reason != null))
+            msg.Status == SecurityStatus.Suspected != (msg.Reason != null) &&
+            // Additional Harmony statuses
+            msg.Status == SecurityStatus.Monitored != (msg.Reason != null) &&
+            msg.Status == SecurityStatus.Searched != (msg.Reason != null) &&
+            msg.Status == SecurityStatus.KillOnSight != (msg.Reason != null))
             return;
 
         if (!CheckSelected(ent, msg.Actor, out var mob, out var key))
@@ -133,6 +137,14 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             (_, SecurityStatus.Discharged) => "released",
             // going from any other state to wanted, AOS or prisonbreak / lazy secoff never set them to released and they reoffended
             (_, SecurityStatus.Wanted) => "wanted",
+            // Additional Harmony statuses
+            // person is being monitored
+            (_, SecurityStatus.Monitored) => "monitored",
+            // person needs to be searched
+            (_, SecurityStatus.Searched) => "searched",
+            // person is dangerous and needs to be killed on sight
+            (_, SecurityStatus.KillOnSight) => "killonsight",
+            // End of Additional Harmony statuses
             // person is no longer sus
             (SecurityStatus.Suspected, SecurityStatus.None) => "not-suspected",
             // going from wanted to none, must have been a mistake
@@ -141,6 +153,14 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             (SecurityStatus.Detained, SecurityStatus.None) => "released",
             // criminal is no longer on parole
             (SecurityStatus.Paroled, SecurityStatus.None) => "not-parole",
+            // Additional Harmony statuses
+            // person is no longer monitored
+            (SecurityStatus.Monitored, SecurityStatus.None) => "not-monitored",
+            // person no longer needs to be searched
+            (SecurityStatus.Searched, SecurityStatus.None) => "not-searched",
+            // person no longer needs to be KoS
+            (SecurityStatus.KillOnSight, SecurityStatus.None) => "not-killonsight",
+            // End of Additional Harmony statuses
             // this is impossible
             _ => "not-wanted"
         };
