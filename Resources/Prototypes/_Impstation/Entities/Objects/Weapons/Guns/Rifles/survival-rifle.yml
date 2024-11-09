@@ -52,19 +52,10 @@
 
 - type: entity
   name: survival rifle
-  parent: [BaseWeaponRifle, BaseMajorContraband]
+  parent: WeaponRifleSurvivalPistol
   id: WeaponRifleSurvivalRifle
   description: A surprisingly robust improvised rifle for survival environments. It accepts .20 rifle rounds and .35 pistol rounds.
   components:
-  - type: Sprite
-    sprite: _Impstation/Prospectors/Weapons/survival_rifle.rsi
-    layers:
-      - state: base
-        map: ["enum.GunVisualLayers.Base"]
-      - state: mag-0
-        map: ["enum.GunVisualLayers.Mag"]
-  - type: Clothing
-    sprite: _Impstation/Prospectors/Weapons/survival_rifle.rsi
   - type: Gun
     fireRate: 4
     soundGunshot:
@@ -88,31 +79,13 @@
           tags:
             - CartridgePistol
             - CartridgeRifle
-  - type: ContainerContainer
-    containers:
-      gun_magazine: !type:ContainerSlot
-      gun_chamber: !type:ContainerSlot
-  - type: MagazineVisuals
-    magState: mag
-    steps: 1
-    zeroVisible: true
-  - type: Appearance
 
 - type: entity
   name: survival rifle
-  parent: [BaseWeaponRifle, BaseMajorContraband]
+  parent: WeaponRifleSurvivalPistol
   id: WeaponRifleSurvivalSMG
   description: A surprisingly robust improvised rifle for survival environments. It accepts .35 SMG rounds and .35 pistol rounds.
   components:
-  - type: Sprite
-    sprite: _Impstation/Prospectors/Weapons/survival_rifle.rsi
-    layers:
-      - state: base
-        map: ["enum.GunVisualLayers.Base"]
-      - state: mag-0
-        map: ["enum.GunVisualLayers.Mag"]
-  - type: Clothing
-    sprite: _Impstation/Prospectors/Weapons/survival_rifle.rsi
   - type: Gun
     fireRate: 4
     soundGunshot:
@@ -137,12 +110,3 @@
         whitelist:
           tags:
             - CartridgePistol
-  - type: ContainerContainer
-    containers:
-      gun_magazine: !type:ContainerSlot
-      gun_chamber: !type:ContainerSlot
-  - type: MagazineVisuals
-    magState: mag
-    steps: 1
-    zeroVisible: true
-  - type: Appearance
