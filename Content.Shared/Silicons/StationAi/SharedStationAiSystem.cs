@@ -246,6 +246,10 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         if (!TryComp(args.Target, out StationAiHolderComponent? targetHolder))
             return;
 
+        //Don't want to download/upload between several intellicards. You can just pick it up at that point.
+        if (HasComp<IntellicardComponent>(args.Target))
+            return;
+
         if (!TryComp(args.Used, out IntellicardComponent? intelliComp))
             return;
 
