@@ -37,6 +37,8 @@ public sealed partial class EmergencyShuttleSystem
     /// How much time remaining until the shuttle consoles for emergency shuttles are unlocked?
     /// </summary>
     private float _consoleAccumulator = float.MinValue;
+    
+    public float СonsoleAccumulator => _consoleAccumulator;
 
     /// <summary>
     /// How long after the transit is over to end the round.
