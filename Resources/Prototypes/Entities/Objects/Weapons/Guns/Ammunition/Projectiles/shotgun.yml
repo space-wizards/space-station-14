@@ -112,6 +112,9 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     state: shard
+    layers:
+    - state: shard
+      shader: unshaded
   - type: Projectile
     damage:
       types:
@@ -137,6 +140,9 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     state: shard
+    layers:
+    - state: shard
+      shader: unshaded
     color: "#d15b00"
   - type: Projectile
     damage:
@@ -166,6 +172,9 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
     state: shard
+    layers:
+    - state: shard
+      shader: unshaded
     color: "#8eff7a"
   - type: Projectile
     damage:
