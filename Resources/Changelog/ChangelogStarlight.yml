@@ -20,12 +20,25 @@ Entries:
     type: Add
   id: 3
   time: '2024-11-09T20:57:29.000000+00:00'
-  url: https://github.com/ss14Starlight/space-station-14/pull/38
+  url: https://github.com/ss14Starlight/space-station-14/pull/11
 - author: Rinary
   changes:
-  - message: add
-    type: "- add: added cybernetic eyes\r\n- add: added welding eye implant(in dev)"
+  - message: Added welding eye implant(in dev)
+    type: Add
   id: 4
-  time: '2024-11-09T21:14:15.000000+00:00'
-  url: https://github.com/ss14Starlight/space-station-14/pull/40
-
+  time: '2024-11-09T20:57:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/11
+- author: Rinary
+  changes:
+  - message: Added In game time system(four times faster than the real).
+    type: Add
+  id: 5
+  time: '2024-11-09T20:57:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/34
+- author: Rinary
+  changes:
+  - message: In pda added current game time and date, time to evac shuttle(call, arive,launch times).
+    type: Add
+  id: 6
+  time: '2024-11-09T20:57:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/34
