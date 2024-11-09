@@ -244,7 +244,7 @@
 - type: entity
   id: JetpackSalvageFilled
   parent: JetpackSalvage
-  name: salvage jetpack
+  name: refurbished jetpack
   suffix: Filled
   components:
   - type: GasTank
