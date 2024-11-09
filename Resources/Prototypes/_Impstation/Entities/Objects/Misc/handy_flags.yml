@@ -1,0 +1,11 @@
+- type: entity
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: StraightHandyFlag
+  name: straight pride handheld flag
+  description: "It's not a syndicate flag, but it feels like you shouldn't be waving this around anyway."
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Misc/Handy_Flags/straight_handy_flag.rsi
+    state: icon
+  - type: Item
+    sprite: _Impstation/Objects/Misc/Handy_Flags/straight_handy_flag.rsi

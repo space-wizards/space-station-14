@@ -92,8 +92,16 @@
       path: /Audio/Voice/Reptilian/reptilian_scream.ogg
     Laugh:
       path: /Audio/Animals/lizard_happy.ogg
+    Sneeze:
+      collection: MaleSneezes #placeholder
+    Cough:
+      collection: MaleCoughs #placeholder
+    Yawn:
+      collection: MaleYawn #placeholder
     Honk:
       collection: BikeHorn
+    Sigh:
+      collection: MaleSigh #placeholder
     Whistle:
       collection: Whistles
     Crying:
@@ -116,8 +124,16 @@
       path: /Audio/Voice/Reptilian/reptilian_scream.ogg
     Laugh:
       path: /Audio/Animals/lizard_happy.ogg
+    Sneeze:
+      collection: FemaleSneezes #placeholder
+    Cough:
+      collection: FemaleCoughs #placeholder
+    Yawn:
+      collection: FemaleYawn #placeholder
     Honk:
       collection: BikeHorn
+    Sigh:
+      collection: FemaleSigh #placeholder
     Whistle:
       collection: Whistles
     Crying:
@@ -226,8 +242,28 @@
       path: /Audio/Voice/Vox/shriek1.ogg
     Laugh:
       path: /Audio/Voice/Vox/vox_laugh.ogg
+    Sneeze:
+      collection: MaleSneezes #placeholder
+    Cough:
+      collection: MaleCoughs #placeholder
+    Yawn:
+      collection: MaleYawn #placeholder
+    Honk:
+      collection: BikeHorn
+    Sigh:
+      collection: MaleSigh #placeholder
+    Crying:
+      collection: MaleCry #placeholder
+    Whistle:
+      collection: Whistles
+    Weh:
+      collection: Weh
     Ungh:
       collection: Ungh
+    Gasp:
+      collection: MaleGasp #placeholder
+    DefaultDeathgasp:
+      collection: MaleDeathGasp #placeholder
   params:
     variation: 0.125
     # We need vox sounds for the other emotes
@@ -241,8 +277,20 @@
       collection: DionaLaugh
     Chirp:
       path: /Audio/Animals/nymph_chirp.ogg
+    Sneeze:
+      collection: MaleSneezes #placeholder
+    Cough:
+      collection: MaleCoughs #placeholder
+    Yawn:
+      collection: MaleYawn #placeholder
     Honk:
       collection: BikeHorn
+    Sigh:
+      collection: MaleSigh #placeholder
+    Crying:
+      collection: MaleCry #placeholder
+    Whistle:
+      collection: Whistles
     Weh:
       collection: Weh
     Ungh:
@@ -267,6 +315,20 @@
       path: /Audio/Voice/Arachnid/arachnid_chitter.ogg
     Click:
       path: /Audio/Voice/Arachnid/arachnid_click.ogg
+    Sneeze:
+      collection: MaleSneezes #placeholder
+    Cough:
+      collection: MaleCoughs #placeholder
+    Yawn:
+      collection: MaleYawn #placeholder
+    Honk:
+      collection: BikeHorn
+    Sigh:
+      collection: MaleSigh #placeholder
+    Crying:
+      collection: MaleCry #placeholder
+    Whistle:
+      collection: Whistles
     Weh:
       collection: Weh
     Ungh:
@@ -377,6 +439,20 @@
       path: /Audio/Voice/Moth/moth_chitter.ogg
     Squeak:
       path: /Audio/Voice/Moth/moth_squeak.ogg
+    Sneeze:
+      collection: MaleSneezes #placeholder
+    Cough:
+      collection: MaleCoughs #placeholder
+    Yawn:
+      collection: MaleYawn #placeholder
+    Honk:
+      collection: BikeHorn
+    Sigh:
+      collection: MaleSigh #placeholder
+    Crying:
+      collection: MaleCry #placeholder
+    Whistle:
+      collection: Whistles
     Weh:
       collection: Weh
     Ungh:

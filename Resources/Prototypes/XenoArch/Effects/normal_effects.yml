@@ -702,6 +702,7 @@
   id: EffectFaunaSpawnDangerous
   targetDepth: 4
   effectHint: artifact-effect-hint-creation
+  effectProb: 1
   components:
   - type: SpawnArtifact
     maxSpawns: 10
@@ -710,6 +711,7 @@
       orGroup: fauna
     - id: MobAngryBee
       orGroup: fauna
+      maxAmount: 10
     - id: MobBearSpace
       orGroup: fauna
     - id: MobBee
@@ -724,6 +726,9 @@
     - id: MobGrenadePenguin
       orGroup: fauna
       maxAmount: 2
+    - id: DuckDuckGooseSpawner
+      orGroup: fauna
+      prob: 1
     - id: MobPurpleSnake
       orGroup: fauna
     - id: MobSpiderSpace
@@ -735,6 +740,9 @@
     - id: MobDragonDungeon
       orGroup: fauna
       prob: 0.05
+    - id: MobGoliath
+      orGroup: fauna
+      prob: 0.3
 
 - type: artifactEffect
   id: EffectBigIgnite

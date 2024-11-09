@@ -39,6 +39,9 @@
   name: ticket pad
   description: A small folder of sticky-backed tickets.
   components:
+  - type: Item
+    size: Small
+    shape: null
   - type: Sprite
     sprite: _Impstation/Objects/Misc/bureaucracy.rsi
     state: ticket-book

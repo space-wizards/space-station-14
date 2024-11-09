@@ -9,6 +9,7 @@
     role: JobBorg
     time: 18000  # 5 hrs
   canBeAntag: false
+  joinNotifyCrew: true
   icon: JobIconStationAi
   supervisors: job-supervisors-rd
   jobEntity: StationAiBrain

@@ -54,6 +54,10 @@
       - id: DrinkMilkCarton
         amount: 2
       - id: DrinkSoyMilkCarton
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: RandomIngredientBox
 
 - type: entity
   id: ClosetJanitorFilled

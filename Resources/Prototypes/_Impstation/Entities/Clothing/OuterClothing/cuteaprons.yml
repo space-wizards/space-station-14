@@ -1,0 +1,23 @@
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterApronCuteChef
+  suffix: Chef
+  name: apron
+  description: A cute frilly apron.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Misc/aproncutechef.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Misc/aproncutechef.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterApronCuteBar
+  suffix: Bartender
+  name: apron
+  description: A cute frilly apron.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Misc/aproncutebar.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Misc/aproncutebar.rsi
