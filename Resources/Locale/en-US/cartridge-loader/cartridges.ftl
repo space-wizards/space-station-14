@@ -40,6 +40,7 @@ wanted-list-unknown-reason-label = unknown reason
 wanted-list-initiator-label = [color=darkgray]Initiator:[/color] [color=white]{$initiator}[/color]
 wanted-list-unknown-initiator-label = unknown initiator
 
+## Harmony change. Modified to include monitor, search, and killonsight
 wanted-list-status-label = [color=darkgray]status:[/color] {$status ->
         [suspected] [color=yellow]suspected[/color]
         [wanted] [color=red]wanted[/color]
