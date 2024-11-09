@@ -5,6 +5,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.IoC;
 using Content.Shared.CrewManifest;
+using System.Linq;
 
 namespace Content.Client.Cargo.UI
 {
@@ -48,6 +49,13 @@ namespace Content.Client.Cargo.UI
                 CrewList.AddItem(Loc.GetString("cargo-console-order-menu-crewlist-nodata-label"), -2);
                 return;
             }
+
+            // Sort crewManifest by entry name
+            crewManifest.Entries = crewManifest.Entries
+                .OrderBy(entry => entry.Name)
+                .ToArray();
+
+            // Populate the OptionButton
             for (var i = 0; i < crewManifest.Entries.Length; i++)
             {
                 var crewMember = crewManifest.Entries[i];
