@@ -22,6 +22,7 @@ jobs:
 
     - name: Install Dependencies
       run: |
+        git checkout Starlight
         pip install pyyaml
         pip install PyGithub
 
