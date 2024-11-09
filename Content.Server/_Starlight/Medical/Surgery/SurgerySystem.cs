@@ -11,6 +11,7 @@ using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.HealthExaminable;
 using Content.Shared.Interaction;
 using Content.Shared.Prototypes;
+using Content.Shared.Tag;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
@@ -31,6 +32,7 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly ContainerSystem _containers = default!;
     [Dependency] private readonly BlindableSystem _blindable = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
 
     private readonly List<EntProtoId> _surgeries = [];
     public override void Initialize()

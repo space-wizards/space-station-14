@@ -1,0 +1,29 @@
+- type: entity
+  id: OrganCyber
+  parent: BaseHumanOrgan
+  name: "cyber organ"
+  abstract: true
+  components:
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Iron
+        Quantity: 30
+
+- type: entity
+  id: OrganCyberEyes
+  parent: [OrganCyber, BaseOrganEyes]
+  name: cyber eyes
+  description: "I see you and your mind!"
+  components:
+  - type: Sprite
+    sprite: _Starlight/Mobs/Species/Cyberlimbs/organs.rsi
+    layers:
+      - state: eyeball-l
+      - state: eyeball-r
+  - type: Item
+    size: Small
+    heldPrefix: eyeballs
+  - type: Tag
+    tags:
+      - CyberEyes
