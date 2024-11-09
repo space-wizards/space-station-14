@@ -4,13 +4,11 @@ import re
 from datetime import datetime
 from github import Github
 
-# Параметры окружения
 changelog_path = os.getenv("CHANGELOG_FILE_PATH")
 pr_number = os.getenv("PR_NUMBER")
 repo_name = os.getenv("GITHUB_REPOSITORY")
 github_token = os.getenv("GITHUB_TOKEN")
 
-# Инициализация GitHub API
 g = Github(github_token)
 repo = g.get_repo(repo_name)
 pr = repo.get_pull(int(pr_number))
@@ -40,14 +38,12 @@ def get_last_id(changelog_data):
     return max(entry["id"] for entry in changelog_data["Entries"])
 
 def update_changelog():
-    # Выведем тело PR для отладки
     print("PR Body:", pr.body)
     
     if ":cl:" in pr.body:
         merge_time = pr.merged_at
         entries = parse_changelog(pr.body)
         
-        # Отладочная печать для проверки парсинга
         print("Parsed entries:", entries)
         
         if not entries:
@@ -71,13 +67,13 @@ def update_changelog():
                 }],
                 "id": last_id,
                 "time": merge_time.isoformat(timespec='microseconds')
+                "url": f"https://github.com/ss14Starlight/space-station-14/pull/{pr_number}"
             }
             changelog_data["Entries"].append(changelog_entry)
 
-        # Запись с добавлением новой строки в конце
         with open(changelog_path, "w") as file:
             yaml.dump(changelog_data, file, allow_unicode=True, explicit_start=True)
-            file.write('\n')  # Добавить новую строку в конце файла
+            file.write('\n')
 
 if __name__ == "__main__":
     update_changelog()

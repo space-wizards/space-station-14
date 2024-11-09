@@ -85,6 +85,8 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
             sent_ids.append(entry["id"])
             for change in entry["changes"]:
                 emoji = TYPES_TO_EMOJI.get(change['type'], "❓")
+                url = entry.get("url")
+                
                 if emoji not in changes_by_type:
                     changes_by_type[emoji] = []
                 changes_by_type[emoji].append(change["message"])
@@ -98,7 +100,7 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
             
         embed["fields"].append({
             "name": "\n",
-            "value": "[Github](https://github.com/ss14Starlight/space-station-14/pulls?q=is%3Apr+is%3Aclosed)",
+            "value": f"[Github PR]({url})",
             "inline": False
         })
 
