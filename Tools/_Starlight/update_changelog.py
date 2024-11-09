@@ -70,7 +70,7 @@ def update_changelog():
                     "type": entry["type"]
                 }],
                 "id": last_id,
-                "time": merge_time.isoformat()
+                "time": merge_time.isoformat(timespec='microseconds')
             }
             changelog_data["Entries"].append(changelog_entry)
 

@@ -1,27 +1,17 @@
 #!/usr/bin/env python3
 
-#
-# Sends updates to a Discord webhook for new changelog entries since the last GitHub Actions publish run.
-# Automatically figures out the last run and changelog contents with the GitHub API.
-#
-
 import io
 import itertools
 import os
 import requests
 import yaml
 from typing import Any, Iterable
+from datetime import datetime
 
-GITHUB_API_URL    = os.getenv("GITHUB_API_URL", "https://api.github.com")
-GITHUB_REPOSITORY = os.environ["GITHUB_REPOSITORY"]
-GITHUB_RUN        = os.environ["GITHUB_RUN_ID"]
-GITHUB_TOKEN      = os.environ["GITHUB_TOKEN"]
-
-# https://discord.com/developers/docs/resources/webhook
-DISCORD_SPLIT_LIMIT = 2000
-DISCORD_WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL")
-
+# Discord and GitHub settings
+DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1221473347842609173/-ILxel6KqGwRHlhfwWdybLi7UHMtPtzsgYBvWstu_v71tZoGZT4-QlfYXp9UQu3ng943" # os.getenv("DISCORD_WEBHOOK_URL")
 CHANGELOG_FILE = "Resources/Changelog/ChangelogStarlight.yml"
+SENT_IDS_FILE = "Resources/Changelog/sent_changelog_ids.yml"
 
 TYPES_TO_EMOJI = {
     "Fix":    "🐛",
@@ -34,144 +24,81 @@ ChangelogEntry = dict[str, Any]
 
 def main():
     if not DISCORD_WEBHOOK_URL:
-        print("Bad Webhook")
+        print("Bad Webhook URL")
         return
 
-    session = requests.Session()
-    session.headers["Authorization"]        = f"Bearer {GITHUB_TOKEN}"
-    session.headers["Accept"]               = "Accept: application/vnd.github+json"
-    session.headers["X-GitHub-Api-Version"] = "2022-11-28"
-
-    most_recent = get_most_recent_workflow(session)
-    last_sha = most_recent['head_commit']['id']
-    print(f"Last successful publish job was {most_recent['id']}: {last_sha}")
-    last_changelog = yaml.safe_load(get_last_changelog(session, last_sha))
     with open(CHANGELOG_FILE, "r") as f:
         cur_changelog = yaml.safe_load(f)
 
-    diff = diff_changelog(last_changelog, cur_changelog)
-    send_to_discord(diff)
+    sent_ids = load_sent_ids(SENT_IDS_FILE)
+    new_entries = diff_changelog(sent_ids, cur_changelog)
+    
+    if new_entries:
+        send_to_discord(new_entries)
+        update_sent_ids(SENT_IDS_FILE, new_entries)
+    else:
+        print("No new changelog entries to send.")
 
 
-def get_most_recent_workflow(sess: requests.Session) -> Any:
-    workflow_run = get_current_run(sess)
-    past_runs = get_past_runs(sess, workflow_run)
-    for run in past_runs['workflow_runs']:
-        # First past successful run that isn't our current run.
-        if run["id"] == workflow_run["id"]:
-            continue
-
-        return run
+def load_sent_ids(filename: str) -> set[str]:
+    try:
+        with open(filename, "r") as f:
+            return set(yaml.safe_load(f) or [])
+    except FileNotFoundError:
+        return set()
 
 
-def get_current_run(sess: requests.Session) -> Any:
-    resp = sess.get(f"{GITHUB_API_URL}/repos/{GITHUB_REPOSITORY}/actions/runs/{GITHUB_RUN}")
-    resp.raise_for_status()
-    return resp.json()
+def update_sent_ids(filename: str, entries: Iterable[ChangelogEntry]) -> None:
+    sent_ids = load_sent_ids(filename)
+    sent_ids.update(entry["id"] for entry in entries)
+
+    with open(filename, "w") as f:
+        yaml.safe_dump(list(sent_ids), f)
 
 
-def get_past_runs(sess: requests.Session, current_run: Any) -> Any:
-    """
-    Get all successful workflow runs before our current one.
-    """
-    params = {
-        "status": "success",
-        "created": f"<={current_run['created_at']}"
-    }
-    resp = sess.get(f"{current_run['workflow_url']}/runs", params=params)
-    resp.raise_for_status()
-    return resp.json()
-
-
-def get_last_changelog(sess: requests.Session, sha: str) -> str:
-    """
-    Use GitHub API to get the previous version of the changelog YAML (Actions builds are fetched with a shallow clone)
-    """
-    params = {
-        "ref": sha,
-    }
-    headers = {
-        "Accept": "application/vnd.github.raw"
-    }
-
-    resp = sess.get(f"{GITHUB_API_URL}/repos/{GITHUB_REPOSITORY}/contents/{CHANGELOG_FILE}", headers=headers, params=params)
-    resp.raise_for_status()
-    return resp.text
-
-
-def diff_changelog(old: dict[str, Any], cur: dict[str, Any]) -> Iterable[ChangelogEntry]:
-    """
-    Find all new entries not present in the previous publish.
-    """
-    old_entry_ids = {e["id"] for e in old["Entries"]}
-    return (e for e in cur["Entries"] if e["id"] not in old_entry_ids)
-
-
-def get_discord_body(content: str):
-    return {
-            "content": content,
-            # Do not allow any mentions.
-            "allowed_mentions": {
-                "parse": []
-            },
-            # SUPPRESS_EMBEDS
-            "flags": 1 << 2
-        }
-
-
-def send_discord(content: str):
-    body = get_discord_body(content)
-
-    response = requests.post(DISCORD_WEBHOOK_URL, json=body)
-    response.raise_for_status()
+def diff_changelog(sent_ids: set[str], cur: dict[str, Any]) -> Iterable[ChangelogEntry]:
+    return (e for e in cur["Entries"] if e["id"] not in sent_ids)
 
 
 def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
-    if not DISCORD_WEBHOOK_URL:
-        print(f"No discord webhook URL found, skipping discord send")
-        return
+    entries = sorted(entries, key=lambda x: (x["author"], x["time"]))
+    sent_ids = []
 
-    message_content = io.StringIO()
-    # We need to manually split messages to avoid discord's character limit
-    # With that being said this isn't entirely robust
-    # e.g. a sufficiently large CL breaks it, but that's a future problem
+    for (author, time_str), group in itertools.groupby(entries, key=lambda x: (x["author"], x["time"])):
+        try:
+            time = datetime.strptime(time_str, "%Y-%m-%dT%H:%M:%S.%f%z")
+        except ValueError:
+            print(f"Invalid time format for entry by {author}: {time_str}")
+            continue
 
-    for name, group in itertools.groupby(entries, lambda x: x["author"]):
-        # Need to split text to avoid discord character limit
-        group_content = io.StringIO()
-        group_content.write(f"**{name}** updated:\n")
+        embed = {
+            "title": author,
+            "description": "",
+            "fields": [],
+            "timestamp": time.isoformat(),
+            "color": 0x7289DA
+        }
 
         for entry in group:
+            sent_ids.append(entry["id"])
             for change in entry["changes"]:
                 emoji = TYPES_TO_EMOJI.get(change['type'], "❓")
-                message = change['message']
+                message = f"{emoji} {change['message']}"
                 url = entry.get("url")
-                if url and url.strip():
-                    group_content.write(f"{emoji} - {message} [PR]({url}) \n")
-                else:
-                    group_content.write(f"{emoji} - {message}\n")
+                embed["fields"].append({
+                    "name": emoji,
+                    "value": f"{message} {'[Подробнее](' + url + ')' if url else ''}",
+                    "inline": False
+                })
 
-        group_text = group_content.getvalue()
-        message_text = message_content.getvalue()
-        message_length = len(message_text)
-        group_length = len(group_text)
+        send_discord(embed)
 
-        # If adding the text would bring it over the group limit then send the message and start a new one
-        if message_length + group_length >= DISCORD_SPLIT_LIMIT:
-            print("Split changelog  and sending to discord")
-            send_discord(message_text)
+    update_sent_ids(SENT_IDS_FILE, [{"id": eid} for eid in sent_ids])
 
-            # Reset the message
-            message_content = io.StringIO()
 
-        # Flush the group to the message
-        message_content.write(group_text)
-    
-    # Clean up anything remaining
-    message_text = message_content.getvalue()
-    if len(message_text) > 0:
-        print("Sending final changelog to discord")
-        send_discord(message_text)
+def send_discord(embed: dict):
+    response = requests.post(DISCORD_WEBHOOK_URL, json={"embeds": [embed]})
+    response.raise_for_status()
 
 
 main()
