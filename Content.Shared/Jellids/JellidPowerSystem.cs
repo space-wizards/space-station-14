@@ -7,7 +7,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 using Robust.Shared.Player;
 
-namespace Content.Server.Jellids
+namespace Content.Shared.Jellids
 {
     public sealed class JellidSystem : EntitySystem
     {
