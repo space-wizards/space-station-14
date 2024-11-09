@@ -21,4 +21,11 @@ Entries:
   id: 3
   time: '2024-11-09T20:57:29.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/38
+- author: Rinary
+  changes:
+  - message: add
+    type: "- add: added cybernetic eyes\r\n- add: added welding eye implant(in dev)"
+  id: 4
+  time: '2024-11-09T21:14:15.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/40
 
