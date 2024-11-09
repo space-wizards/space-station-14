@@ -9,7 +9,7 @@ from typing import Any, Iterable
 from datetime import datetime
 
 # Discord and GitHub settings
-DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1221473347842609173/-ILxel6KqGwRHlhfwWdybLi7UHMtPtzsgYBvWstu_v71tZoGZT4-QlfYXp9UQu3ng943" # os.getenv("DISCORD_WEBHOOK_URL")
+DISCORD_WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL")
 CHANGELOG_FILE = "Resources/Changelog/ChangelogStarlight.yml"
 SENT_IDS_FILE = "Resources/Changelog/sent_changelog_ids.yml"
 
