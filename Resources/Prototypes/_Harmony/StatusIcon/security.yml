@@ -1,0 +1,21 @@
+# Additional harmony security statuses
+- type: securityIcon
+  parent: SecurityIcon
+  id: SecurityIconMonitored
+  icon:
+    sprite: /Textures/_Harmony/Interface/Misc/security_icons.rsi
+    state: hud_monitored
+
+- type: securityIcon
+  parent: SecurityIcon
+  id: SecurityIconSearched
+  icon:
+    sprite: /Textures/_Harmony/Interface/Misc/security_icons.rsi
+    state: hud_searched
+
+- type: securityIcon
+  parent: SecurityIcon
+  id: SecurityIconKillOnSight
+  icon:
+    sprite: /Textures/_Harmony/Interface/Misc/security_icons.rsi
+    state: hud_killonsight

@@ -1,0 +1,20 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "TODO: sprite author",
+    "size": {
+      "x": 8,
+      "y": 8
+    },
+    "states": [
+      {
+        "name": "hud_monitored"
+      },
+      {
+        "name": "hud_searched"
+      },
+      {
+        "name": "hud_killonsight"
+      }
+    ]
+  }
