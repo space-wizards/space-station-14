@@ -66,7 +66,7 @@ def update_changelog():
                     "type": entry["type"]
                 }],
                 "id": last_id,
-                "time": merge_time.isoformat(timespec='microseconds')
+                "time": merge_time.isoformat(timespec='microseconds'),
                 "url": f"https://github.com/ss14Starlight/space-station-14/pull/{pr_number}"
             }
             changelog_data["Entries"].append(changelog_entry)
