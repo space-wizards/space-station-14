@@ -77,7 +77,7 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
                 if (TryComp<ImplantComponent>(organId, out var organImplant))
                 {
                     if (organImplant.ImplantID == "Welding")
-                        EnsureComp<EyeProtectionComponent>(body);
+                        AddComp<EyeProtectionComponent>(body);
                 }
                 if (TryComp<OrganTongueComponent>(organId, out var organTongue)
                     && !organTongue.IsMuted)
@@ -110,6 +110,11 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
                         organEyes.EyeDamage = blindable.EyeDamage;
                         organEyes.MinDamage = blindable.MinDamage;
                         _blindable.UpdateIsBlind((args.Body, blindable));
+                    }
+                    if (TryComp<ImplantComponent>(organ.Id, out var organImplant))
+                    {
+                        if (organImplant.ImplantID == "Welding")
+                            RemComp<EyeProtectionComponent>(args.Body);
                     }
                     if (TryComp<OrganTongueComponent>(organ.Id, out var organTongue))
                     {
