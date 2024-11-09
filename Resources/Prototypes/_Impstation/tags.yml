@@ -2,10 +2,16 @@
   id: CleanerGrenade
 
 - type: Tag
+  id: ShellShotgunBeanbag
+
+- type: Tag
+  id: Vaporizer
+
+- type: Tag
   id: WeaponCleanerLakeUpgradeKit
 
 - type: Tag
-  id: WeaponSurvivalRifleUpgradeSMGKit
+  id: WeaponSurvivalRifleUpgradeRifleKit
 
 - type: Tag
-  id: WeaponSurvivalRifleUpgradeRifleKit
+  id: WeaponSurvivalRifleUpgradeSMGKit
