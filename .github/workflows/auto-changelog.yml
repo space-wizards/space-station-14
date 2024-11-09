@@ -27,41 +27,22 @@ jobs:
 
       - name: Get Pull Request Number
         id: get_pr
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          COMMIT_SHA=$(git rev-parse HEAD)
-          echo "Current commit SHA: $COMMIT_SHA"
-
-          # Создаем GraphQL запрос
-          QUERY='
-          {
-            repository(owner: "'${{ github.repository_owner }}'", name: "'${{ github.event.repository.name }}'") {
-              object(oid: "'$COMMIT_SHA'") {
-                ... on Commit {
-                  associatedPullRequests(first: 1) {
-                    nodes {
-                      number
-                    }
-                  }
-                }
-              }
-            }
-          }'
-
-          # Выполняем запрос
-          PR_DATA=$(curl -s -H "Authorization: bearer $GITHUB_TOKEN" -X POST -d '{"query": "'"$QUERY"'"}' https://api.github.com/graphql)
-          
-          PR_NUMBER=$(echo "$PR_DATA" | python -c "import sys, json; data=json.load(sys.stdin); nodes = data.get('data', {}).get('repository', {}).get('object', {}).get('associatedPullRequests', {}).get('nodes', []); print(nodes[0]['number'] if nodes else '')")
-          
+          # Получаем сообщение коммита
+          COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+          echo "Commit message: $COMMIT_MESSAGE"
+      
+          # Извлекаем номер PR из сообщения коммита
+          PR_NUMBER=$(echo "$COMMIT_MESSAGE" | grep -oP '(?<=Merge pull request #)\d+')
+      
           if [ -z "$PR_NUMBER" ]; then
-            echo "No PR associated with commit $COMMIT_SHA"
+            echo "No PR number found in commit message."
             exit 0
           fi
-
+      
           echo "PR Number: $PR_NUMBER"
           echo "::set-output name=PR_NUMBER::$PR_NUMBER"
-
+    
       - name: Parse PR and Update Changelog
         if: steps.get_pr.outputs.PR_NUMBER != ''
         env:
