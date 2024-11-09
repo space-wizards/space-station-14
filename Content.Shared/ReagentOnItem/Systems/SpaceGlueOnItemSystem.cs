@@ -28,18 +28,14 @@ public sealed class SpaceGlueOnItemSystem : ReagentOnItemSystem
 
         SubscribeLocalEvent<SpaceGlueOnItemComponent, GotEquippedHandEvent>(OnHandPickUp);
         SubscribeLocalEvent<SpaceGlueOnItemComponent, ExaminedEvent>(OnExamine);
-        SubscribeLocalEvent<SpaceGlueOnItemComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<SpaceGlueOnItemComponent, MapInitEvent>(MapInit);
         SubscribeLocalEvent<SpaceGlueOnItemComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
-
-        SubscribeLocalEvent<SpaceGlueOnItemComponent, ComponentGetState>(GetSpaceGlueState);
-        SubscribeLocalEvent<SpaceGlueOnItemComponent, ComponentHandleState>(HandleSpaceGlueState);
     }
 
-    private void OnInit(EntityUid uid, SpaceGlueOnItemComponent component, ComponentInit args)
+    private void MapInit(EntityUid uid, SpaceGlueOnItemComponent component, MapInitEvent args)
     {
         _nameMod.RefreshNameModifiers(uid);
     }
-
 
     public override void Update(float frameTime)
     {
@@ -114,19 +110,5 @@ public sealed class SpaceGlueOnItemSystem : ReagentOnItemSystem
     private void OnRefreshNameModifiers(Entity<SpaceGlueOnItemComponent> entity, ref RefreshNameModifiersEvent args)
     {
         args.AddModifier("glued-name-prefix");
-    }
-
-    private void HandleSpaceGlueState(EntityUid uid, SpaceGlueOnItemComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not ReagentOnItemComponentState state)
-            return;
-
-        component.EffectStacks = state.EffectStacks;
-        component.MaxStacks = state.MaxStacks;
-    }
-
-    private void GetSpaceGlueState(EntityUid uid, SpaceGlueOnItemComponent component, ref ComponentGetState args)
-    {
-        args.State = new ReagentOnItemComponentState(component.EffectStacks, component.MaxStacks);
     }
 }

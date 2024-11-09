@@ -20,16 +20,3 @@ public abstract partial class ReagentOnItemComponent : Component
     [DataField]
     public FixedPoint2 MaxStacks = 15;
 }
-
-[Serializable, NetSerializable]
-public sealed class ReagentOnItemComponentState : ComponentState
-{
-    public readonly FixedPoint2 EffectStacks;
-    public readonly FixedPoint2 MaxStacks;
-
-    public ReagentOnItemComponentState(FixedPoint2 effectStacks, FixedPoint2 maxStacks)
-    {
-        EffectStacks = effectStacks;
-        MaxStacks = maxStacks;
-    }
-}
