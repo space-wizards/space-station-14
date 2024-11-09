@@ -298,8 +298,6 @@
   components:
   - type: AntiTamper
     containers: [ entity_storage ]
-    mobDamage:
-      Caustic: 85
 
 - type: entity
   parent: [ CrateBaseSecure, BaseRestrictedContraband ]

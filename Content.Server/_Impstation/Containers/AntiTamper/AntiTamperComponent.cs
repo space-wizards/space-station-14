@@ -1,8 +1,6 @@
 using Content.Shared.Damage;
-using Content.Shared.FixedPoint;
 using Content.Shared.Tools;
 using Robust.Shared.Audio;
-using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Containers.AntiTamper;
@@ -12,6 +10,7 @@ namespace Content.Server.Containers.AntiTamper;
 /// acidify the contents.
 /// </summary>
 [RegisterComponent]
+[Access(typeof(AntiTamperSystem))]
 public sealed partial class AntiTamperComponent : Component
 {
     /// <summary>
@@ -39,7 +38,7 @@ public sealed partial class AntiTamperComponent : Component
     /// deleted, and instead will take <seealso cref="MobDamage"/>.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public bool PreventRoundRemoval = false;
+    public bool PreventRoundRemoval = true;
 
     /// <summary>
     /// If <seealso cref="PreventRoundRemoval"/> is <c>true</c>, mobs caught inside
@@ -47,7 +46,13 @@ public sealed partial class AntiTamperComponent : Component
     /// damage instead of being deleted.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public DamageSpecifier MobDamage = default!;
+    public DamageSpecifier MobDamage = new()
+    {
+        DamageDict = new()
+        {
+            { "Caustic", 85 }
+        },
+    };
 
     /// <summary>
     /// If true, mobs with
@@ -66,8 +71,8 @@ public sealed partial class AntiTamperComponent : Component
     public TimeSpan DisarmTime = TimeSpan.FromSeconds(5);
 
     /// <summary>
-    /// If the disarming mob is locked inside of the container, the <seealso cref="DisarmTime"/> will be multiplied
-    /// by this.
+    /// If the disarming mob is locked inside of the container,
+    /// the <seealso cref="DisarmTime"/> will be multiplied by this.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public float DisarmLockedMultiplier = 4;
@@ -76,5 +81,6 @@ public sealed partial class AntiTamperComponent : Component
     /// The tool required to disarm the anti-tamper module. If null,
     /// no tool is required.
     /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public ProtoId<ToolQualityPrototype>? DisarmToolRequired = "Screwing";
 }

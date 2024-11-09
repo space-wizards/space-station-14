@@ -1,17 +1,12 @@
-using Content.Server.Sound;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
-using Content.Shared.Audio;
 using Content.Shared.Containers.AntiTamper;
 using Content.Shared.Damage;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
-using Content.Shared.FixedPoint;
 using Content.Shared.Lock;
-using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Popups;
-using Content.Shared.Storage;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
@@ -119,21 +114,32 @@ public sealed partial class AntiTamperSystem : EntitySystem
         if (!CanDisarm(ent, user, used))
             return;
 
-        TimeSpan delay = ent.Comp.DisarmTime;
+        var delay = ent.Comp.DisarmTime;
         if (_lockSystem.IsLocked(ent.Owner))
             delay *= ent.Comp.DisarmLockedMultiplier;
 
-        var doargs = new DoAfterArgs(EntityManager, user, delay, new AntiTamperDisarmDoAfterEvent(), ent, ent, used)
-        {
-            BreakOnDamage = true,
-            BreakOnMove = true,
-            BreakOnDropItem = true,
-            MovementThreshold = 1.0f,
-            BlockDuplicate = true,
-            DuplicateCondition = DuplicateConditions.SameTarget | DuplicateConditions.SameEvent,
-        };
-
-        _doAfterSystem.TryStartDoAfter(doargs);
+        if (ent.Comp.DisarmToolRequired != null)
+            _toolSystem.UseTool(
+                used!.Value,
+                user,
+                ent.Owner,
+                delay,
+                [ent.Comp.DisarmToolRequired.Value],
+                new AntiTamperDisarmDoAfterEvent(),
+                out _
+            );
+        else
+            _doAfterSystem.TryStartDoAfter(
+                new DoAfterArgs(EntityManager, user, delay, new AntiTamperDisarmDoAfterEvent(), ent, ent, used)
+                {
+                    BreakOnDamage = true,
+                    BreakOnMove = true,
+                    BreakOnDropItem = true,
+                    MovementThreshold = 1.0f,
+                    BlockDuplicate = true,
+                    DuplicateCondition = DuplicateConditions.SameTarget | DuplicateConditions.SameEvent,
+                }
+            );
     }
 
     private void OnDisarmDoAfter(EntityUid uid, AntiTamperComponent comp, AntiTamperDisarmDoAfterEvent args)
@@ -142,6 +148,6 @@ public sealed partial class AntiTamperSystem : EntitySystem
             return;
 
         RemComp<AntiTamperComponent>(uid);
-        _popupSystem.PopupEntity(Loc.GetString("anti-tamper-disarmed"), uid, args.User);
+        _popupSystem.PopupEntity(Loc.GetString("anti-tamper-disarmed", ("container", uid)), uid, args.User);
     }
 }
