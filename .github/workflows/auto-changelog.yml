@@ -28,11 +28,9 @@ jobs:
       - name: Get Pull Request Number
         id: get_pr
         run: |
-          # Получаем сообщение коммита
           COMMIT_MESSAGE=$(git log -1 --pretty=%B)
           echo "Commit message: $COMMIT_MESSAGE"
       
-          # Извлекаем номер PR из сообщения коммита
           PR_NUMBER=$(echo "$COMMIT_MESSAGE" | grep -oP '(?<=Merge pull request #)\d+')
       
           if [ -z "$PR_NUMBER" ]; then
@@ -50,13 +48,29 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ steps.get_pr.outputs.PR_NUMBER }}
           GITHUB_REPOSITORY: ${{ github.repository }}
-        run: python ./Tools/_Starlight/update_changelog.py
+        run: |
+          python ./Tools/_Starlight/update_changelog.py
+          echo "Script exited with code $?"
+
+      - name: Display changelog after update
+        if: steps.get_pr.outputs.PR_NUMBER != ''
+        run: |
+          cat "Resources/Changelog/ChangelogStarlight.yml"
+
+      - name: Git status before commit
+        if: steps.get_pr.outputs.PR_NUMBER != ''
+        run: |
+          git status
 
       - name: Commit and push changes
         if: steps.get_pr.outputs.PR_NUMBER != ''
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+      
           git add "Resources/Changelog/ChangelogStarlight.yml"
-          git commit -m "Update changelog for PR #${{ steps.get_pr.outputs.PR_NUMBER }} [skip ci]"
-          git push origin HEAD:Starlight
+      
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git com
