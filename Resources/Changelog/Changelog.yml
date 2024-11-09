@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: pigeonpeas
-  changes:
-  - message: Added non command mantle into the winterdrobe
-    type: Add
-  id: 7100
-  time: '2024-08-13T09:20:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29774
 - author: TheShuEd
   changes:
   - message: change the way food is sliced - food is now sliced whole after a small
@@ -3948,3 +3941,14 @@
   id: 7599
   time: '2024-11-08T14:50:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31710
+- author: ScarKy0
+  changes:
+  - message: Intellicarding the AI is now a doAfter.
+    type: Tweak
+  - message: AI now gets notified when someone tries to intellicard it.
+    type: Add
+  - message: You can no longer exchange the AI between intellicards.
+    type: Fix
+  id: 7600
+  time: '2024-11-09T19:29:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33198
