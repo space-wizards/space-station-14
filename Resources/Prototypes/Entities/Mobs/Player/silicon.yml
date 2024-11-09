@@ -301,6 +301,7 @@
         unshaded:
           Empty: { state: empty }
           Occupied: { state: full }
+  - type: Intellicard
 
 - type: entity
   id: PlayerStationAiEmpty
