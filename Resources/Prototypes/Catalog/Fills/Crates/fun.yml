@@ -38,73 +38,22 @@
     - id: PlushieHampter
     - !type:GroupSelector
       children:
-      - id: PlushieMoff
-      - id: PlushieMoffMonarch
-      - id: PlushieMoffLuna
-      - id: PlushieMoffAtlas
-      - id: PlushieMoffRedish
-      - id: PlushieMoffRoyal
-      - id: PlushieMoffGothic
-      - id: PlushieMoffLovers
-      - id: PlushieMoffWhitefly
-      - id: PlushieMoffFirewatch
-      - id: PlushieMoffDeadhead
-      - id: PlushieMoffPoison
-      - id: PlushieMoffRagged
-      - id: PlushieMoffSnow
-      - id: PlushieMoffClockwork
-      - id: PlushieMoffMoonfly
-      - id: PlushieMoffWitchwing
-      - id: PlushieMoffPlasmafire
-      - id: PlushieMoffBrown
-      - id: PlushieMoffRosy
-      - id: PlushieMoffRainbow
-        weight: 0.5
-      - id: PlushieMoffsician
-        weight: 0.5
-      - id: PlushieMoffBar
-        weight: 0.5
-      - id: PlushieMoffBluespace
-        weight: 0.5
-      - id: PlushieMoffrror
-        weight: 0.25
+      - id: PlushieMoth
+      - id: PlushieMothMedic
+      - id: PlushieMothEngie
+      - id: PlushieMothSyndie
+      - id: PlushieMothrror
+        weight: 0.1
     - id: PlushieArachind
     - id: PlushiePenguin
 
 - type: entityTable
-  id: AllMoffsPlushieTable
+  id: SafetyMothsPlushieTable
   table: !type:GroupSelector
     children:
-      - id: PlushieMoff
-      - id: PlushieMoffMonarch
-      - id: PlushieMoffLuna
-      - id: PlushieMoffAtlas
-      - id: PlushieMoffRedish
-      - id: PlushieMoffRoyal
-      - id: PlushieMoffGothic
-      - id: PlushieMoffLovers
-      - id: PlushieMoffWhitefly
-      - id: PlushieMoffFirewatch
-      - id: PlushieMoffDeadhead
-      - id: PlushieMoffPoison
-      - id: PlushieMoffRagged
-      - id: PlushieMoffSnow
-      - id: PlushieMoffClockwork
-      - id: PlushieMoffMoonfly
-      - id: PlushieMoffWitchwing
-      - id: PlushieMoffPlasmafire
-      - id: PlushieMoffBrown
-      - id: PlushieMoffRosy
-      - !type:GroupSelector #Rare plush
-        weight: 3
-        children:
-        - id: PlushieMoffRainbow
-        - id: PlushieMoffsician
-        - id: PlushieMoffBar
-        - id: PlushieMoffBluespace
-          weight: 0.5
-        - id: PlushieMoffrror
-          weight: 0.25
+      - id: PlushieMothMedic
+      - id: PlushieMothEngie
+      - id: PlushieMothSyndie
 
 - type: entity
   id: CrateFunPlushie
@@ -120,17 +69,21 @@
           value: 10
 
 - type: entity
-  id: CrateFunMoffPlushieBulk
+  id: CrateFunMothPlushieBulk
   parent: CratePlastic
   name: bulk moff plushie crate
-  description: A buncha soft moff plushies. Throw them around, eat them, play with them! And then wonder how you're gonna explain this purchase to NT... *chitters!*
+  description: A buncha soft Moth plushies. Throw them around, eat them, play with them! And then wonder how you're gonna explain this purchase to NT... *chitters!*
   components:
+  - type: StorageFill
+    contents:
+      - id: PlushieMoth
+        amount: 5
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:NestedSelector
-        tableId: AllMoffsPlushieTable
+        tableId: SafetyMothsPlushieTable
         rolls: !type:ConstantNumberSelector
-          value: 7
+          value: 1
 
 - type: entity
   id: CrateFunLizardPlushieBulk

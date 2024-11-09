@@ -98,7 +98,7 @@
         orGroup: GiftPool
       - id: PlushieArachind
         orGroup: GiftPool
-      - id: PlushieMoffRandom #Squeaks!
+      - id: PlushieMothRandom #Squeaks!
         orGroup: GiftPool
       - id: ClothingNeckCloakMoth
         orGroup: GiftPool

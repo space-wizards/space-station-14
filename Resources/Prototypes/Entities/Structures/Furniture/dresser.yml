@@ -282,65 +282,29 @@
         prob: 0.03
         orGroup: dresserthirdloot
       # Many moff, but prob less
-      - id: PlushieMoff
+      - id: PlushieMoth
         prob: 0.02
         orGroup: dresserthirdloot
-      - id: PlushieMoffMonarch
+      - id: PlushieMothMedic
         prob: 0.02
         orGroup: dresserthirdloot
-      - id: PlushieMoffLuna
+      - id: PlushieMothEngie
         prob: 0.02
         orGroup: dresserthirdloot
-      - id: PlushieMoffAtlas
+      - id: PlushieMothSyndie
         prob: 0.02
         orGroup: dresserthirdloot
-      - id: PlushieMoffRedish
-        prob: 0.02
+      - id: PlushieMothBar
+        prob: 0.01
         orGroup: dresserthirdloot
-      - id: PlushieMoffRoyal
-        prob: 0.02
+      - id: PlushieMothsician
+        prob: 0.01
         orGroup: dresserthirdloot
-      - id: PlushieMoffGothic
-        prob: 0.02
+      - id: PlushieMothRainbow
+        prob: 0.01
         orGroup: dresserthirdloot
-      - id: PlushieMoffLovers
-        prob: 0.02
-        orGroup: dresserthirdloot
-      - id: PlushieMoffWhitefly
-        prob: 0.02
-        orGroup: dresserthirdloot
-      - id: PlushieMoffFirewatch
-        prob: 0.02
-        orGroup: dresserthirdloot
-      - id: PlushieMoffDeadhead
-        prob: 0.02
-        orGroup: dresserthirdloot
-      - id: PlushieMoffPoison
-        prob: 0.02
-        orGroup: dresserthirdloot
-      - id: PlushieMoffRagged
-        prob: 0.02
-        orGroup: dresserthirdloot
-      - id: PlushieMoffSnow
-        prob: 0.02
-        orGroup: dresserthirdloot
-      - id: PlushieMoffClockwork
-        prob: 0.02
-        orGroup: dresserthirdloot
-      - id: PlushieMoffMoonfly
-        prob: 0.02
-        orGroup: dresserthirdloot
-      - id: PlushieMoffWitchwing
-        prob: 0.02
-        orGroup: dresserthirdloot
-      - id: PlushieMoffPlasmafire
-        prob: 0.02
-        orGroup: dresserthirdloot
-      - id: PlushieMoffBrown
-        prob: 0.02
-        orGroup: dresserthirdloot
-      - id: PlushieMoffRosy
-        prob: 0.02
+      - id: PlushieMothBluespace
+        prob: 0.01
         orGroup: dresserthirdloot
       - id: ClothingOuterSuitShrineMaiden
         prob: 0.03

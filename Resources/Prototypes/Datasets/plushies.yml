@@ -1,0 +1,17 @@
+- type: localizedDataset
+  id: PlushiesMothMedic
+  values:
+    prefix: plushie-moth-medic-
+    count: 4
+
+- type: localizedDataset
+  id: PlushiesMothEngie
+  values:
+    prefix: plushie-moth-engie-
+    count: 5
+
+- type: localizedDataset
+  id: PlushiesMothSyndie
+  values:
+    prefix: plushie-moth-syndie-
+    count: 2

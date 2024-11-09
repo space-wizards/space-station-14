@@ -109,12 +109,12 @@
   group: market
 
 - type: cargoProduct
-  id: FunMoffPlushies
+  id: FunMothPlushies
   icon:
     sprite: Objects/Fun/moff_plushie.rsi
     state: moff
-  product: CrateFunMoffPlushieBulk
-  cost: 500
+  product: CrateFunMothPlushieBulk
+  cost: 1000
   category: cargoproduct-category-name-fun
   group: market
 

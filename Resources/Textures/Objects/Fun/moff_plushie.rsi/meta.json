@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/BeeStation/BeeStation-Hornet/commit/ecf8ff1138fa975fadbc58c98b6ca97241fde850, https://github.com/BeeStation/BeeStation-Hornet/pull/10387 (the last 5), and made by Miyugi",
+  "copyright": "Part taken from https://github.com/BeeStation/BeeStation-Hornet/pull/6866, part from https://github.com/BeeStation/BeeStation-Hornet/pull/10387, part made by Miyugi, some characters original from AspEv (https://www.artstation.com/artwork/ykmK9O)",
   "size": {
     "x": 32,
     "y": 32
@@ -19,171 +19,6 @@
       "directions": 4
     },
     {
-      "name": "moff_monarch"
-    },
-	{
-      "name": "moff_monarch-inhand-left",
-      "directions": 4
-    },
-	{
-      "name": "moff_monarch-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "moff_luna"
-    },
-    {
-      "name": "moff_luna-inhand-left",
-      "directions": 4
-    },
-	{
-      "name": "moff_luna-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "moff_atlas"
-    },
-    {
-      "name": "moff_atlas-inhand-left",
-      "directions": 4
-    },
-	{
-      "name": "moff_atlas-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "moff_redish"
-    },
-    {
-      "name": "moff_redish-inhand-left",
-      "directions": 4
-    },
-	{
-      "name": "moff_redish-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "moff_royal"
-    },
-    {
-      "name": "moff_royal-inhand-left",
-      "directions": 4
-    },
-	{
-      "name": "moff_royal-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "moff_gothic"
-    },
-    {
-      "name": "moff_gothic-inhand-left",
-      "directions": 4
-    },
-	{
-      "name": "moff_gothic-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "moff_lovers"
-    },
-    {
-      "name": "moff_lovers-inhand-left",
-      "directions": 4
-    },
-	{
-      "name": "moff_lovers-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "moff_whitefly"
-    },
-    {
-      "name": "moff_whitefly-inhand-left",
-      "directions": 4
-    },
-	{
-      "name": "moff_whitefly-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "moff_firewatch"
-    },
-    {
-      "name": "moff_firewatch-inhand-left",
-      "directions": 4
-    },
-	{
-      "name": "moff_firewatch-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "moff_deadhead"
-    },
-    {
-      "name": "moff_deadhead-inhand-left",
-      "directions": 4
-    },
-	{
-      "name": "moff_deadhead-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "moff_poison"
-    },
-    {
-      "name": "moff_poison-inhand-left",
-      "directions": 4
-    },
-	{
-      "name": "moff_poison-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "moff_ragged"
-    },
-    {
-      "name": "moff_ragged-inhand-left",
-      "directions": 4
-    },
-	{
-      "name": "moff_ragged-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "moff_snow"
-    },
-    {
-      "name": "moff_snow-inhand-left",
-      "directions": 4
-    },
-	{
-      "name": "moff_snow-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "moff_clockwork"
-    },
-    {
-      "name": "moff_clockwork-inhand-left",
-      "directions": 4
-    },
-	{
-      "name": "moff_clockwork-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "moff_moonfly"
-    },
-    {
-      "name": "moff_moonfly-inhand-left",
-      "directions": 4
-    },
-	{
-      "name": "moff_moonfly-inhand-right",
-      "directions": 4
-    },
-    {
       "name": "moffsician"
     },
     {
@@ -191,7 +26,7 @@
       "directions": 4,
 	  "_comment": "made by Miyugi"
     },
-	{
+	  {
       "name": "moffsician-inhand-right",
       "directions": 4,
 	  "_comment": "made by Miyugi"
@@ -204,7 +39,7 @@
       "directions": 4,
 	  "_comment": "made by Miyugi"
     },
-	{
+	  {
       "name": "moffbar-inhand-right",
       "directions": 4,
 	  "_comment": "made by Miyugi"
@@ -216,92 +51,60 @@
       "name": "moffrror-inhand-left",
       "directions": 4
     },
-	{
+	  {
       "name": "moffrror-inhand-right",
       "directions": 4
     },
     {
-      "name": "moff_witchwing",
-	  "_comment": "Sprites from this PR come from https://github.com/BeeStation/BeeStation-Hornet/pull/10387"
-    },
-    {
-      "name": "moff_witchwing-inhand-left",
-      "directions": 4
-    },
-	{
-      "name": "moff_witchwing-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "moff_bluespace"
+      "name": "moff_bluespace",
+    "_comment": "from https://github.com/BeeStation/BeeStation-Hornet/pull/10387"
     },
     {
       "name": "moff_bluespace-inhand-left",
       "directions": 4
     },
-	{
+	  {
       "name": "moff_bluespace-inhand-right",
       "directions": 4
     },
     {
-      "name": "moff_plasmafire"
+      "name": "safety_moth_engineer"
+    },
+	  {
+      "name": "safety_moth-engineer_helmet"
+    },
+	  {
+      "name": "safety_moth-engineer_helmet_orange"
     },
     {
-      "name": "moff_plasmafire-inhand-left",
-      "directions": 4
-    },
-	{
-      "name": "moff_plasmafire-inhand-right",
-      "directions": 4
+      "name": "safety_moth-helmet-on"
     },
     {
-      "name": "moff_brown"
-    },
-    {
-      "name": "moff_brown-inhand-left",
-      "directions": 4
-    },
-	{
-      "name": "moff_brown-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "moff_rosy"
-    },
-	{
-      "name": "moff_rosy-inhand-left",
-      "directions": 4
-    },
-	{
-      "name": "moff_rosy-inhand-right",
-      "directions": 4
-    },
-	{
-	  "name": "moff_all",
-      "delays": [
-        [
-          0.25,
-          0.25,
-          0.25,
-          0.25,
-          0.25,
-          0.25,
-          0.25,
-          0.25,
-          0.25,
-          0.25,
-          0.25,
-          0.25,
-          0.25,
-          0.25,
-          0.25,
-          0.25,
-          0.25,
-          0.25,
-          0.25,
-          0.25
+      "name": "moff_all",
+        "delays": [
+          [
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25
+          ]
         ]
-      ]
-    }
-  ]
-}
+      }
+    ]
+  }

@@ -52,34 +52,34 @@
     - PlushieSpaceLizard
 
 - type: loadout
-  id: PlushieMoff
+  id: PlushieMoth
   storage:
     back:
-    - PlushieMoff
+    - PlushieMoth
 - type: loadout
-  id: PlushieMoffBar
+  id: PlushieMothBar
   effects:
   - !type:GroupLoadoutEffect
     proto: Bartender
   storage:
     back:
-    - PlushieMoffBar
+    - PlushieMothBar
 - type: loadout
-  id: PlushieMoffsician
+  id: PlushieMothsician
   effects:
   - !type:GroupLoadoutEffect
     proto: Musician
   storage:
     back:
-    - PlushieMoffsician
+    - PlushieMothsician
 - type: loadout
-  id: PlushieMoffRainbow
+  id: PlushieMothRainbow
   effects:
   - !type:GroupLoadoutEffect
     proto: GreyTider
   storage:
     back:
-    - PlushieMoffRainbow
+    - PlushieMothRainbow
 
 # Smokeables
 - type: loadout
