@@ -1022,7 +1022,8 @@
       - RightLegCyber
       - LeftFootCyber
       - RightFootCyber
-      - OrganCyberEyes
+      - OrganCyberEyesSec
+      - OrganCyberEyesMed
   - type: Machine
     board: MedicalTechFabCircuitboard
   - type: StealTarget

@@ -135,10 +135,21 @@
     Steel: 100
     
 - type: latheRecipe
-  id: OrganCyberEyes
-  result: OrganCyberEyes
+  id: OrganCyberEyesSec
+  result: OrganCyberEyesSec
   category: Cyberlimbs
   completetime: 10
   materials:
     Glass: 500
+    Gold: 100
+    Silver: 500
+    
+- type: latheRecipe
+  id: OrganCyberEyesSec
+  result: OrganCyberEyesMed
+  category: Cyberlimbs
+  completetime: 10
+  materials:
+    Glass: 500
+    Plasma: 250
     Silver: 500

@@ -11,19 +11,47 @@
         Quantity: 30
 
 - type: entity
-  id: OrganCyberEyes
+  id: OrganCyberEyesSec
   parent: [OrganCyber, BaseOrganEyes]
-  name: cyber eyes
+  name: sec cyber eyes
   description: "I see you and your mind!"
+  components:
+  - type: Sprite
+    sprite: _Starlight/Mobs/Species/Cyberlimbs/organs.rsi
+    layers:
+      - state: sec-eyeball-l
+      - state: sec-eyeball-r
+  - type: Item
+    size: Small
+    heldPrefix: eyeballs
+  - type: Tag
+    tags:
+      - SecCyberEyes
+      
+- type: entity
+  id: OrganCyberEyesMed
+  parent: OrganCyberEyesSec
+  name: med cyber eyes
   components:
   - type: Sprite
     sprite: _Starlight/Mobs/Species/Cyberlimbs/organs.rsi
     layers:
       - state: eyeball-l
       - state: eyeball-r
-  - type: Item
-    size: Small
-    heldPrefix: eyeballs
   - type: Tag
     tags:
-      - CyberEyes
+      - MedCyberEyes
+      
+- type: entity
+  id: OrganCyberEyesOmni
+  parent: OrganCyberEyesSec
+  name: omni cyber eyes
+  components:
+  - type: Sprite
+    sprite: _Starlight/Mobs/Species/Cyberlimbs/organs.rsi
+    layers:
+      - state: omni-eyeball-l
+      - state: omni-eyeball-r
+  - type: Tag
+    tags:
+      - OmniCyberEyes

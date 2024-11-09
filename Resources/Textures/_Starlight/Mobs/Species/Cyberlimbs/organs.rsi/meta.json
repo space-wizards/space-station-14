@@ -12,6 +12,18 @@
     },
     {
       "name": "eyeball-r"
+    },
+    {
+      "name": "sec-eyeball-l"
+    },
+    {
+      "name": "sec-eyeball-r"
+    },
+    {
+      "name": "omni-eyeball-l"
+    },
+    {
+      "name": "omni-eyeball-r"
     }
   ]
 }
