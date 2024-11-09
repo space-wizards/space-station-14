@@ -1,0 +1,77 @@
+# schema file for Yamale
+meta:
+  format: int()
+  postmapinit: bool()
+tilemap: map(str(), key=int())
+entities: list(include('proto'), min=1)
+---
+proto:
+  proto: str(required=True)
+  entities: list(include('entity'), min=1)
+---
+entity:
+  uid: int()
+  components: list(comp())
+  missingComponents: list(str(), required=False)
+
+# Example
+# meta:
+#   format: 3
+#   name: DemoStation
+#   author: Space-Wizards
+#   postmapinit: false
+# tilemap:
+#   0: space
+#   1: floor_asteroid_coarse_sand0
+#   2: floor_asteroid_coarse_sand1
+#   3: floor_asteroid_coarse_sand2
+#   4: floor_asteroid_coarse_sand_dug
+#   5: floor_asteroid_sand
+#   6: floor_asteroid_tile
+#   7: floor_blue
+#   8: floor_dark
+#   9: floor_elevator_shaft
+#   10: floor_freezer
+#   11: floor_glass
+#   12: floor_gold
+#   13: floor_green_circuit
+#   14: floor_hydro
+#   15: floor_lino
+#   16: floor_mono
+#   17: floor_reinforced
+#   18: floor_rglass
+#   19: floor_rock_vault
+#   20: floor_showroom
+#   21: floor_snow
+#   22: floor_steel
+#   23: floor_steel_dirty
+#   24: floor_techmaint
+#   25: floor_warning1
+#   26: floor_warning2
+#   27: floor_white
+#   28: floor_white_warning1
+#   29: floor_white_warning2
+#   30: floor_wood
+#   31: lattice
+#   32: plating
+#   33: plating
+# entities:
+# - uid: 0
+#   components:
+#   - parent: null
+#     type: Transform
+#   - index: 0
+#   chunks:
+#   - ind: "-1,-1"
+#     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAAA==
+#     type: MapGrid
+#   - linearDamping: 0.05
+#     fixtures: []
+#     bodyType: Dynamic
+#     type: Physics
+# - uid: 1
+#   type: SpawnPointLatejoin
+#   components:
+#   - parent: 0
+#     pos: 0,0
+#     type: Transform
