@@ -1,3 +1,4 @@
+---
 Entries:
 - author: Rinary
   changes:
@@ -13,3 +14,11 @@ Entries:
   id: 2
   time: '2024-11-08T21:26:53.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/33
+- author: Rinary
+  changes:
+  - message: Added cybernetic eyes
+    type: Add
+  id: 3
+  time: '2024-11-09T20:57:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/38
+
