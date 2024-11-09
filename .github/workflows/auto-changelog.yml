@@ -23,7 +23,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pip install pyyaml PyGithub requests
+          pip install pyyaml PyGithub
 
       - name: Get Pull Request Number
         id: get_pr
@@ -33,17 +33,37 @@ jobs:
           COMMIT_SHA=$(git rev-parse HEAD)
           echo "Current commit SHA: $COMMIT_SHA"
 
-          # Поиск PR, связанного с этим коммитом
-          PR_DATA=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
-            "https://api.github.com/search/issues?q=sha:$COMMIT_SHA+is:merged+is:pr")
+          # Создаем GraphQL запрос
+          QUERY='
+          {
+            repository(owner: "'${{ github.repository_owner }}'", name: "'${{ github.event.repository.name }}'") {
+              object(oid: "'$COMMIT_SHA'") {
+                ... on Commit {
+                  associatedPullRequests(first: 1) {
+                    nodes {
+                      number
+                    }
+                  }
+                }
+              }
+            }
+          }'
 
-          PR_NUMBER=$(echo "$PR_DATA" | python -c "import sys, json; print(json.load(sys.stdin)['items'][0]['number'])")
+          # Выполняем запрос
+          PR_DATA=$(curl -s -H "Authorization: bearer $GITHUB_TOKEN" -X POST -d '{"query": "'"$QUERY"'"}' https://api.github.com/graphql)
+          
+          PR_NUMBER=$(echo "$PR_DATA" | python -c "import sys, json; data=json.load(sys.stdin); nodes = data.get('data', {}).get('repository', {}).get('object', {}).get('associatedPullRequests', {}).get('nodes', []); print(nodes[0]['number'] if nodes else '')")
+          
+          if [ -z "$PR_NUMBER" ]; then
+            echo "No PR associated with commit $COMMIT_SHA"
+            exit 0
+          fi
 
           echo "PR Number: $PR_NUMBER"
-
           echo "::set-output name=PR_NUMBER::$PR_NUMBER"
 
       - name: Parse PR and Update Changelog
+        if: steps.get_pr.outputs.PR_NUMBER != ''
         env:
           CHANGELOG_FILE_PATH: 'Resources/Changelog/ChangelogStarlight.yml'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -52,6 +72,7 @@ jobs:
         run: python ./Tools/_Starlight/update_changelog.py
 
       - name: Commit and push changes
+        if: steps.get_pr.outputs.PR_NUMBER != ''
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
