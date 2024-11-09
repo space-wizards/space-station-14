@@ -77,10 +77,8 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
                     if (_tag.HasTag(organId, "CyberEyes"))
                     {
                         AddComp<EyeProtectionComponent>(body);
-                        AddComp<ShowHealthBarsComponent>(body);
                         AddComp<ShowHealthIconsComponent>(body);
                         AddComp<ShowJobIconsComponent>(body);
-                        AddComp<ShowCriminalRecordIconsComponent>(body);
                     }
                 }
                 if (TryComp<ImplantComponent>(organId, out var organImplant))
@@ -122,10 +120,8 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
                         if (_tag.HasTag(organ.Id, "CyberEyes"))
                         {
                             RemComp<EyeProtectionComponent>(args.Body);
-                            RemComp<ShowHealthBarsComponent>(args.Body);
                             RemComp<ShowHealthIconsComponent>(args.Body);
                             RemComp<ShowJobIconsComponent>(args.Body);
-                            RemComp<ShowCriminalRecordIconsComponent>(args.Body);
                         }
                     }
                     if (TryComp<ImplantComponent>(organ.Id, out var organImplant))
