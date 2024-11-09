@@ -1,0 +1,16 @@
+name: "Labels: Branch stable"
+
+on:
+  pull_request_target:
+    types:
+      - opened
+    branches:
+      - 'stable'
+
+jobs:
+  add_label:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions-ecosystem/action-add-labels@v1
+      with:
+        labels: "Branch: stable"
