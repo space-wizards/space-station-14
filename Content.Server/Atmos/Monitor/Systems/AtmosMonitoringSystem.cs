@@ -5,6 +5,7 @@ using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -27,6 +28,7 @@ public sealed class AtmosMonitorSystem : EntitySystem
     [Dependency] private readonly AtmosDeviceSystem _atmosDeviceSystem = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly NodeContainerSystem _nodeContainerSystem = default!;
 
     // Commands
     public const string AtmosMonitorSetThresholdCmd = "atmos_monitor_set_threshold";
@@ -233,14 +235,8 @@ public sealed class AtmosMonitorSystem : EntitySystem
 
     private GasMixture? GetGasPipeAirMixture(EntityUid uid, AtmosMonitorComponent component)
     {
-        if (!TryComp<NodeContainerComponent>(uid, out var nodeContainer))
-            return null;
-
-        if (nodeContainer.Nodes.TryGetValue(component.NodeNameMonitoredPipe, out var node) &&
-            node is PipeNode { } pipeNode)
-        {
+        if (_nodeContainerSystem.TryGetNode<PipeNode>(uid, component.NodeNameMonitoredPipe, out var pipeNode))
             return pipeNode.Air;
-        }
 
         return null;
     }
