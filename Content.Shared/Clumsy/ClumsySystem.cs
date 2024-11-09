@@ -95,12 +95,15 @@ public sealed class ClumsySystem : EntitySystem
 
         _audio.PlayPredicted(ent.Comp.TableBonkSound, ent, ent);
 
+        var gettingPutOnTableName = Identity.Entity(args.GettingPutOnTable, EntityManager);
+        var puttingOnTableName = Identity.Entity(args.PuttingOnTable, EntityManager);
+
         if (args.PuttingOnTable == ent.Owner)
             // You are slamming yourself onto the table.
             _popup.PopupClient(Loc.GetString("bonkable-success-message-user", ("bonkable", args.BeingClimbedOn)), ent, ent);
         else
             // Someone else slamed you onto the table.
-            _popup.PopupPredicted(Loc.GetString("bonkable-success-message-others", ("bonker", Name(args.PuttingOnTable)), ("victim", Name(args.GettingPutOnTable)), ("bonkable", args.BeingClimbedOn)), ent, ent);
+            _popup.PopupPredicted(Loc.GetString("bonkable-success-message-others", ("bonker", puttingOnTableName), ("victim", gettingPutOnTableName), ("bonkable", args.BeingClimbedOn)), ent, ent);
 
         args.Cancel();
     }

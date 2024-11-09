@@ -7,7 +7,7 @@ namespace Content.Shared.Clumsy;
 /// <summary>
 /// A simple clumsy tag-component.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ClumsyComponent : Component
 {
 
@@ -23,14 +23,14 @@ public sealed partial class ClumsyComponent : Component
     ///     Default chance to fail a clumsy interaction.
     ///     If a system needs to use something else, add a new variable in the component, do not modify this percentage.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float ClumsyDefaultCheck = 0.5f;
 
     /// <summary>
     ///     Default stun time.
     ///     If a system needs to use something else, add a new variable in the component, do not modify this number.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public TimeSpan ClumsyDefaultStunTime = TimeSpan.FromSeconds(2.5);
 
     // Specific options
@@ -44,13 +44,13 @@ public sealed partial class ClumsyComponent : Component
     /// <summary>
     ///     Stun time after failing to shoot a gun.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public TimeSpan GunShootFailStunTime = TimeSpan.FromSeconds(3);
 
     /// <summary>
     ///     Stun time after failing to shoot a gun.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public DamageSpecifier? GunShootFailDamage;
 
     /// <summary>
