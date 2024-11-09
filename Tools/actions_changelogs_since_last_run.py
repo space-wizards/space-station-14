@@ -76,24 +76,36 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
             "description": "",
             "fields": [],
             "timestamp": time.isoformat(),
-            "color": 0x7289DA
+            "color": 0x7289DA,
         }
+
+        changes_by_type = {}
 
         for entry in group:
             sent_ids.append(entry["id"])
             for change in entry["changes"]:
                 emoji = TYPES_TO_EMOJI.get(change['type'], "❓")
-                message = f"{emoji} {change['message']}"
-                url = entry.get("url")
-                embed["fields"].append({
-                    "name": emoji,
-                    "value": f"{message} {'[Подробнее](' + url + ')' if url else ''}",
-                    "inline": False
-                })
+                if emoji not in changes_by_type:
+                    changes_by_type[emoji] = []
+                changes_by_type[emoji].append(change["message"])
+
+        for emoji, messages in changes_by_type.items():
+            embed["fields"].append({
+                "name": f"{emoji} {''.join(messages)}",
+                "value": "\n",
+                "inline": False
+            })
+            
+        embed["fields"].append({
+            "name": "\n",
+            "value": "[Github](https://github.com/ss14Starlight/space-station-14/pulls?q=is%3Apr+is%3Aclosed)",
+            "inline": False
+        })
 
         send_discord(embed)
 
     update_sent_ids(SENT_IDS_FILE, [{"id": eid} for eid in sent_ids])
+
 
 
 def send_discord(embed: dict):
