@@ -1,6 +1,7 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.Solutions;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Botany.Components;
 
@@ -23,6 +24,9 @@ public sealed partial class PlantHolderComponent : Component
 
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan LastCycle = TimeSpan.Zero;
+
+    [DataField]
+    public SoundSpecifier? WateringSound;
 
     [DataField]
     public bool UpdateSpriteAfterUpdate;

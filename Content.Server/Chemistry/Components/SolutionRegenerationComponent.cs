@@ -16,14 +16,14 @@ public sealed partial class SolutionRegenerationComponent : Component
     /// <summary>
     /// The name of the solution to add to.
     /// </summary>
-    [DataField("solution", required: true), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("solution", required: true)]
     public string SolutionName = string.Empty;
 
     /// <summary>
     /// The solution to add reagents to.
     /// </summary>
-    [DataField("solutionRef")]
-    public Entity<SolutionComponent>? Solution = null;
+    [DataField]
+    public Entity<SolutionComponent>? SolutionRef = null;
 
     /// <summary>
     /// The reagent(s) to be regenerated in the solution.
@@ -34,13 +34,13 @@ public sealed partial class SolutionRegenerationComponent : Component
     /// <summary>
     /// How long it takes to regenerate once.
     /// </summary>
-    [DataField("duration"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public TimeSpan Duration = TimeSpan.FromSeconds(1);
 
     /// <summary>
     /// The time when the next regeneration will occur.
     /// </summary>
-    [DataField("nextChargeTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("nextChargeTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoPausedField]
     public TimeSpan NextRegenTime = TimeSpan.FromSeconds(0);
 }

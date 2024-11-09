@@ -10880,7 +10880,7 @@ entities:
       pos: -42.5,29.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -5682.053
+      secondsUntilStateChange: -5834.8745
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 2
@@ -56106,11 +56106,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -73.5,7.5
       parent: 5350
-  - uid: 6164
-    components:
-    - type: Transform
-      pos: -71.5,-8.5
-      parent: 5350
   - uid: 6165
     components:
     - type: Transform
@@ -63381,14 +63376,11 @@ entities:
         - 0
 - proto: CrewMonitoringServer
   entities:
-  - uid: 26528
+  - uid: 26984
     components:
     - type: Transform
-      pos: 108.5,-7.5
+      pos: 29.5,-36.5
       parent: 5350
-    - type: SingletonDeviceNetServer
-      active: False
-      available: False
 - proto: Crowbar
   entities:
   - uid: 10811
@@ -144591,6 +144583,11 @@ entities:
           showEnts: False
           occludes: True
           ents: []
+  - uid: 26528
+    components:
+    - type: Transform
+      pos: 108.5,-7.5
+      parent: 5350
   - uid: 26547
     components:
     - type: Transform

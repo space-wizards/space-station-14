@@ -210,6 +210,8 @@
     - FoodLemon
   mutationPrototypes:
     - lemoon
+    - lime
+    - orange
   harvestRepeat: Repeat
   lifespan: 55
   maturation: 6
@@ -262,6 +264,9 @@
   packetPrototype: LimeSeeds
   productPrototypes:
     - FoodLime
+  mutationPrototypes:
+    - orange
+    - lemon
   harvestRepeat: Repeat
   lifespan: 55
   maturation: 6
@@ -290,6 +295,8 @@
     - FoodOrange
   mutationPrototypes:
     - extradimensionalOrange
+    - lemon
+    - lime
   harvestRepeat: Repeat
   lifespan: 55
   maturation: 6
@@ -1950,4 +1957,35 @@
     Vitamin:
       Min: 1
       Max: 3
+      PotencyDivisor: 40
+
+- type: seed
+  id: anomalyBerry
+  name: seeds-anomaly-berry-name
+  noun: seeds-noun-seeds
+  displayName: seeds-anomaly-berry-display-name
+  plantRsi: Objects/Specific/Hydroponics/anomaly_berry.rsi
+  packetPrototype: AnomalyBerrySeeds
+  productPrototypes:
+    - FoodAnomalyBerry
+  lifespan: 25
+  maturation: 12
+  production: 3
+  yield: 3
+  potency: 10
+  growthStages: 2
+  waterConsumption: 0.60
+  nutrientConsumption: 0.50
+  chemicals:
+    Artifexium:
+      Min: 1
+      Max: 1
+      PotencyDivisor: 4
+    Nutriment:
+      Min: 1
+      Max: 2
+      PotencyDivisor: 30
+    Vitamin:
+      Min: 1
+      Max: 2
       PotencyDivisor: 40

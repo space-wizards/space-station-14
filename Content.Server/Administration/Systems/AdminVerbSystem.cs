@@ -35,10 +35,11 @@ using Robust.Shared.Toolshed;
 using Robust.Shared.Utility;
 using System.Linq;
 using Content.Server.Silicons.Laws;
+using Content.Shared.Movement.Components;
 using Content.Shared.Chemistry.Components.Solutions;
 using Content.Shared.Silicons.Laws.Components;
 using Robust.Server.Player;
-using Content.Shared.Mind;
+using Content.Shared.Silicons.StationAi;
 using Robust.Shared.Physics.Components;
 using static Content.Shared.Configurable.ConfigurationComponent;
 
@@ -81,7 +82,7 @@ namespace Content.Server.Administration.Systems
         {
             SubscribeLocalEvent<GetVerbsEvent<Verb>>(GetVerbs);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
-            SubscribeLocalEvent<SolutionHolderComponent, SolutionContainerChangedEvent>(OnSolutionChanged);
+            SubscribeLocalEvent<SolutionContainerManagerComponent, SolutionContainerChangedEvent>(OnSolutionChanged);
         }
 
         private void GetVerbs(GetVerbsEvent<Verb> ev)
@@ -543,7 +544,7 @@ namespace Content.Server.Administration.Systems
 
             // Add verb to open Solution Editor
             if (_groupController.CanCommand(player, "addreagent") &&
-                EntityManager.HasComponent<SolutionHolderComponent>(args.Target))
+                EntityManager.HasComponent<SolutionContainerManagerComponent>(args.Target))
             {
                 Verb verb = new()
                 {
@@ -558,7 +559,7 @@ namespace Content.Server.Administration.Systems
         }
 
         #region SolutionsEui
-        private void OnSolutionChanged(Entity<SolutionHolderComponent> entity, ref SolutionContainerChangedEvent args)
+        private void OnSolutionChanged(Entity<SolutionContainerManagerComponent> entity, ref SolutionContainerChangedEvent args)
         {
             foreach (var list in _openSolutionUis.Values)
             {
