@@ -25,7 +25,8 @@ namespace Content.Shared._Starlight.Time
 
         public (TimeSpan Time, string Date) GetStationTime()
         {
-            var stationTime = _timing.CurTime.Subtract(_roundStart).Add(TimeSpan.FromHours(12));
+            var scaledTimeSinceStart = _timing.CurTime.Subtract(_roundStart).Multiply(4);
+            var stationTime = scaledTimeSinceStart.Add(TimeSpan.FromHours(12));
 
             var totalDays = (int) stationTime.TotalDays;
             stationTime = stationTime.Subtract(TimeSpan.FromDays(totalDays));
