@@ -8,10 +8,10 @@
     },
     "states": [
       {
-        "name": "hud_monitored"
+        "name": "hud_monitor"
       },
       {
-        "name": "hud_searched"
+        "name": "hud_search"
       },
       {
         "name": "hud_killonsight"

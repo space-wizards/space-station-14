@@ -47,8 +47,8 @@ wanted-list-status-label = [color=darkgray]status:[/color] {$status ->
         [paroled] [color=green]paroled[/color]
         [discharged] [color=green]discharged[/color]
         ## Harmony additional statuses
-        [monitored] [color=#ff8a00]monitored[/color]
-        [searched] [color=#f63eff]searched[/color]
+        [monitor] [color=#ff8a00]monitor[/color]
+        [search] [color=#f63eff]search[/color]
         [killonsight] [color=red][bold]kill on sight[/bold][/color]
         ## End of harmony additional statuses
         *[other] none

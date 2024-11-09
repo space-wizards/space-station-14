@@ -253,7 +253,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
     {
         if (status == SecurityStatus.Wanted || status == SecurityStatus.Suspected
         // Harmony additional statuses
-            || status == SecurityStatus.Monitored || status == SecurityStatus.Searched
+            || status == SecurityStatus.Monitor || status == SecurityStatus.Search
             || status == SecurityStatus.KillOnSight)
         {
             GetReason(status);
