@@ -1,0 +1,1 @@
+snail-hurt-by-chem-popup = Ouch! Thats not snail friendly.
