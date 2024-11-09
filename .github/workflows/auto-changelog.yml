@@ -28,9 +28,11 @@ jobs:
       - name: Get Pull Request Number
         id: get_pr
         run: |
+          # Получаем сообщение коммита
           COMMIT_MESSAGE=$(git log -1 --pretty=%B)
           echo "Commit message: $COMMIT_MESSAGE"
       
+          # Извлекаем номер PR из сообщения коммита
           PR_NUMBER=$(echo "$COMMIT_MESSAGE" | grep -oP '(?<=Merge pull request #)\d+')
       
           if [ -z "$PR_NUMBER" ]; then
@@ -67,10 +69,13 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-      
+
           git add "Resources/Changelog/ChangelogStarlight.yml"
-      
+
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
-            git com
+            git commit -m "Update changelog for PR #${{ steps.get_pr.outputs.PR_NUMBER }} [skip ci]"
+            git push origin HEAD:Starlight
+          fi
+          
