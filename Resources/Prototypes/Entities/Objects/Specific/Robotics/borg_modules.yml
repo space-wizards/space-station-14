@@ -619,6 +619,7 @@
       items:
       - Crowbar
       - Emag
+      - Doorjack #Delta-V add doorjack, emag no longer opens doors.
       - PinpointerSyndicateNuclear
     - type: BorgModuleIcon
       icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-operative-module }

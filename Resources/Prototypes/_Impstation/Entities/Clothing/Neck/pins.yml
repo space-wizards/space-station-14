@@ -1,0 +1,12 @@
+- type: entity
+  parent: [ ClothingNeckPinBase, BaseSyndicateContraband ]
+  id: ClothingNeckStraightPin
+  name: straight pin
+  description: Be gay do... wait a second.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Misc/pins.rsi
+    state: straight
+  - type: Clothing
+    sprite: _Impstation/Clothing/Neck/Misc/pins.rsi
+    equippedPrefix: straight

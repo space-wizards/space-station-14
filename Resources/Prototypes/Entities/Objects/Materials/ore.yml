@@ -342,6 +342,7 @@
   - type: Tag
     tags:
     - Salt
+    - Ore
   - type: RevealRevenantOnCollide
   - type: Stack
     stackType: SaltOre

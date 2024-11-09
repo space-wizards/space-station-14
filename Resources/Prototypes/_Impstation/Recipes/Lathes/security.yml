@@ -1,0 +1,17 @@
+- type: latheRecipe
+  parent: BaseWeaponRecipe
+  id: WeaponShotgunKammererBeanbag
+  result: WeaponShotgunKammererBeanbag
+  materials:
+    Steel: 300
+    Glass: 200
+    Plastic: 200
+
+- type: latheRecipe
+  parent: BaseWeaponRecipe
+  id: WeaponShotgunEnforcerBeanbag
+  result: WeaponShotgunEnforcerBeanbag
+  materials:
+    Steel: 1000
+    Glass: 500
+    Plastic: 500

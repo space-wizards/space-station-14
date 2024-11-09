@@ -59,6 +59,20 @@
     - type: Speech
       speechSounds: Bros
       speechVerb: Bros
+    - type: Vocal
+      sounds:
+        Male: Bros
+        Female: Bros
+        Unsexed: Bros
+      wilhelmProbability: 0.001
+    - type: TriggerOnMobstateChange
+      mobState:
+      - Dead
+    - type: EmitSoundOnTrigger
+      sound:
+        path: /Audio/_Impstation/Animals/bros_hurt.ogg
+        params:
+          variation: 0.125
     - type: Bloodstream
       bloodMaxVolume: 15
       bloodReagent: VentCrud
@@ -110,6 +124,7 @@
   name: BROS
   parent: MobBros
   id: MobBrosPoly
+  suffix: player transformation
   description: OH FUCK IT'S BROS
   components:
     - type: MobThresholds

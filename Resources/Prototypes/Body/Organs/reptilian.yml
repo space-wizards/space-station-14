@@ -21,3 +21,10 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
+  - type: Metabolizer #added on imp so that reagents can specifically target reptilians. shocked it isnt here by default?
+    maxReagents: 3
+    metabolizerTypes: [ Animal, Reptilian ]
+    removeEmpty: true
+    groups:
+      - id: Food
+      - id: Drink

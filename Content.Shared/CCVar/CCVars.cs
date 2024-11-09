@@ -2378,6 +2378,12 @@ namespace Content.Shared.CCVar
             CVarDef.Create("replay.auto_record_name", "{year}_{month}_{day}-{hour}_{minute}-round_{round}.zip", CVar.SERVERONLY);
 
         /// <summary>
+        ///     Should the player automatically get up after being knocked down
+        /// </summary>
+        public static readonly CVarDef<bool> AutoGetUp =
+            CVarDef.Create("white.auto_get_up", true, CVar.CLIENT | CVar.ARCHIVE | CVar.REPLICATED); // WD EDIT
+		
+		/// <summary>
         /// Path that, if provided, automatic replays are initially recorded in.
         /// When the recording is done, the file is moved into its final destination.
         /// Unless this path is rooted, it will be relative to <see cref="CVars.ReplayDirectory"/>.

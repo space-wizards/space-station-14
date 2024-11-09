@@ -7,8 +7,9 @@
   requirements:
   - !type:RoleTimeRequirement
     role: JobBorg
-    time: 54000  # 15 hrs
+    time: 18000  # 5 hrs
   canBeAntag: false
+  joinNotifyCrew: true
   icon: JobIconStationAi
   supervisors: job-supervisors-rd
   jobEntity: StationAiBrain

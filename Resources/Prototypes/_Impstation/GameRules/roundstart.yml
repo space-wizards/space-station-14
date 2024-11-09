@@ -68,3 +68,33 @@
       forceAllPossible: true
       mindRoles:
       - MindRoleTraitor
+
+- type: entity
+  parent: BaseTraitorRuleNoRandomObjectives
+  id: SpyVsSpy20TC
+  components:
+  - type: TraitorRule
+    startingBalance: 20
+  - type: GameRule
+    minPlayers: 15
+    delay:
+      min: 240
+      max: 420
+  - type: AntagObjectives
+    objectives:
+    - KillRandomTraitorSvSObjective
+    - RandomTraitorAliveSvSObjective
+    - EscapeShuttleObjective
+  - type: AntagSelection
+    definitions:
+    - prefRoles: [ Traitor ]
+      fallbackRoles: [ TraitorSleeper ]
+      max: 100
+      playerRatio: 1
+      blacklist:
+        components:
+        - AntagImmune
+      lateJoinAdditional: true
+      forceAllPossible: true
+      mindRoles:
+      - MindRoleTraitor

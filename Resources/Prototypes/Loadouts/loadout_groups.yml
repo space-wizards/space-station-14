@@ -388,6 +388,7 @@
   - BartenderApron
   - BartenderWintercoat
   - ServiceClownApron
+  - BartenderCuteApron
 
 - type: loadoutGroup
   id: BartenderShoes
@@ -449,6 +450,7 @@
   - ChefJacket
   - ChefWintercoat
   - ServiceClownApron
+  - ChefCuteApron
 
 - type: loadoutGroup
   id: ChefShoes
@@ -1412,6 +1414,8 @@
   loadouts:
   - HeadofSecurityJumpsuit
   - HeadofSecurityJumpskirt
+  - HeadofSecurityJumpsuitGrey
+  - HeadofSecurityJumpskirtGrey
   - HeadofSecurityTurtleneck
   - HeadofSecurityTurtleneckSkirt
   - HeadofSecurityFormalSuit
@@ -1435,6 +1439,8 @@
   - HeadofSecurityCoat
   - HeadofSecurityWinterCoat
   - HeadofSecurityWinterCoatUnarmored
+  - ArmorVest
+  - ArmorVestSlim
   - HeadofSecurityEliteArmor
 
 - type: loadoutGroup

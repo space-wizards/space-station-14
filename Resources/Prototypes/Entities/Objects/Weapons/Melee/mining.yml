@@ -167,7 +167,7 @@
     attackRate: 2
     damage:
       types:
-        Slash: 15
+        Slash: 10
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
   - type: Tag

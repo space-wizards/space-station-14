@@ -644,10 +644,13 @@
     spawns:
     - id: PresentRandom
       prob: 0.95
+      orGroup: present
     - id: PresentRandomUnsafe
       prob: 0.03
+      orGroup: present
     - id: PresentRandomInsane
       prob: 0.02
+      orGroup: present
 
 - type: artifactEffect
   id: EffectAnomaly
@@ -699,6 +702,7 @@
   id: EffectFaunaSpawnDangerous
   targetDepth: 4
   effectHint: artifact-effect-hint-creation
+  effectProb: 1
   components:
   - type: SpawnArtifact
     maxSpawns: 10
@@ -707,6 +711,7 @@
       orGroup: fauna
     - id: MobAngryBee
       orGroup: fauna
+      maxAmount: 10
     - id: MobBearSpace
       orGroup: fauna
     - id: MobBee
@@ -721,6 +726,9 @@
     - id: MobGrenadePenguin
       orGroup: fauna
       maxAmount: 2
+    - id: DuckDuckGooseSpawner
+      orGroup: fauna
+      prob: 1
     - id: MobPurpleSnake
       orGroup: fauna
     - id: MobSpiderSpace
@@ -732,6 +740,9 @@
     - id: MobDragonDungeon
       orGroup: fauna
       prob: 0.05
+    - id: MobGoliath
+      orGroup: fauna
+      prob: 0.3
 
 - type: artifactEffect
   id: EffectBigIgnite
@@ -876,10 +887,13 @@
     spawns:
     - id: PresentRandom
       prob: 0.7
+      orGroup: present
     - id: PresentRandomUnsafe
       prob: 0.2
+      orGroup: present
     - id: PresentRandomInsane
       prob: 0.1
+      orGroup: present
 
 - type: artifactEffect
   id: EffectBookSpawnMundane
@@ -891,76 +905,112 @@
     spawns:
     - id: BookRandomStory
       prob: 0.5
+      orGroup: book
     - id: BookGatsby
       prob: 0.05
+      orGroup: book
     - id: BookTEGtorial
       prob: 0.05
+      orGroup: book
     - id: BookClownLaw
       prob: 0.05
+      orGroup: book
     - id: BookAgony
       prob: 0.05
+      orGroup: book
     - id: BookJanitorTale
       prob: 0.05
+      orGroup: book
     - id: BookInspiration
       prob: 0.05
+      orGroup: book
     - id: BookJourney
       prob: 0.05
+      orGroup: book
     - id: BookMap
       prob: 0.05
+      orGroup: book
     - id: BookRufus
       prob: 0.05
+      orGroup: book
     - id: BookMorgue
       prob: 0.05
+      orGroup: book
     - id: BookMedicalOfficer
       prob: 0.05
+      orGroup: book
     - id: BookWatched
       prob: 0.05
+      orGroup: book
     - id: BookTemple
       prob: 0.05
+      orGroup: book
     - id: BookAurora
       prob: 0.05
+      orGroup: book
     - id: BookEarth
       prob: 0.05
+      orGroup: book
     - id: BookNames
       prob: 0.05
+      orGroup: book
     - id: BookIanDesert
       prob: 0.05
+      orGroup: book
     - id: BookIanArctic
       prob: 0.05
+      orGroup: book
     - id: BookIanCity
       prob: 0.05
+      orGroup: book
     - id: BookIanMountain
       prob: 0.05
+      orGroup: book
     - id: BookIanOcean
       prob: 0.05
+      orGroup: book
     - id: BookIanRanch
       prob: 0.05
+      orGroup: book
     - id: BookIanLostWolfPup
       prob: 0.05
+      orGroup: book
     - id: BookFeather
       prob: 0.05
+      orGroup: book
     - id: BookCafe
       prob: 0.05
+      orGroup: book
     - id: BookPossum
       prob: 0.05
+      orGroup: book
     - id: BookSun
       prob: 0.05
+      orGroup: book
     - id: BookStruck
       prob: 0.05
+      orGroup: book
     - id: BookSlothClownMMD
       prob: 0.05
+      orGroup: book
     - id: BookSlothClownPranks
       prob: 0.05
+      orGroup: book
     - id: BookSlothClownSSS
       prob: 0.05
+      orGroup: book
     - id: BookIanAntarctica
       prob: 0.05
+      orGroup: book
     - id: BookWorld
       prob: 0.05
+      orGroup: book
     - id: BookTruth
       prob: 0.05
+      orGroup: book
     - id: BookNarsieLegend
       prob: 0.05
+      orGroup: book
 
 - type: artifactEffect
   id: EffectBookSpawnMagic
@@ -973,22 +1023,31 @@
     spawns:
     - id: WizardsGrimoire
       prob: 0.1
+      orGroup: magicbook
     - id: SpawnSpellbook
       prob: 1
+      orGroup: magicbook
     - id: ForceWallSpellbook
       prob: 1
+      orGroup: magicbook
     - id: BlinkBook
       prob: 1
+      orGroup: magicbook
     - id: SmiteBook
       prob: 0.3
+      orGroup: magicbook
     - id: KnockSpellbook
       prob: 1
+      orGroup: magicbook
     - id: FireballSpellbook
       prob: 1
+      orGroup: magicbook
     - id: SpawnSpaceGreaseSpellbook
       prob: 1
+      orGroup: magicbook
     - id: ScrollRunes
       prob: 1
+      orGroup: magicbook
 
 - type: artifactEffect
   id: EffectSingulo
