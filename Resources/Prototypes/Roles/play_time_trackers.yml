@@ -187,7 +187,7 @@
   id: AntagInitialInfected
 
 - type: playTimeTracker
-  id: JobNinja
+  id: AntagNinja
 
 - type: playTimeTracker
   id: AntagDragon
