@@ -3985,3 +3985,14 @@
   id: 482
   time: '2024-11-10T02:09:06.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/659
+- author: TGRCDev
+  changes:
+  - message: Anti-tamper crates can now be disarmed with a screwdriver if the crate
+      is unlocked and opened, or if the user is inside of the crate.
+    type: Add
+  - message: Anti-tamper crates no longer delete mobs inside of them. They now deal
+      85 Caustic damage instead.
+    type: Tweak
+  id: 483
+  time: '2024-11-10T02:10:19.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/656
