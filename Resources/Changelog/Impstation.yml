@@ -4018,3 +4018,27 @@
   id: 486
   time: '2024-11-10T18:30:53.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/642
+- author: AirFryerBuyOneGetOneFree
+  changes:
+  - message: Added new map Barratry, also known as Detroit.
+    type: Add
+  id: 487
+  time: '2024-11-10T20:55:25.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/655
+- author: AirFryerBuyOneGetOneFree
+  changes:
+  - message: Added Xeno, a new map from SlamBamActionman!!!!!!!!!!!!!
+    type: Add
+  id: 488
+  time: '2024-11-10T20:55:02.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/657
+- author: EpicToast
+  changes:
+  - message: Add Union Station to files for playtesting! Get friendly with your fellow
+      departments (but not too friendly).
+    type: Add
+  - message: Add some cross-department maintenance airlocks for mapping/spawning in.
+    type: Add
+  id: 489
+  time: '2024-11-10T20:54:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/662
