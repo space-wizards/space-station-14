@@ -31,7 +31,7 @@ public sealed partial class StunProviderComponent : Component
     /// Joules required in the battery to stun someone.  Equals 5 uses on a small battery.
     /// </summary>
     [DataField]
-    public float StunCharge = 72f;
+    public float StunCharge = 60f;
 
     /// <summary>
     /// Damage dealt when stunning someone
