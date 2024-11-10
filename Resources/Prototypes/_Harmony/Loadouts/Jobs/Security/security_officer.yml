@@ -3,3 +3,9 @@
   id: SecurityBandanaHarmony
   equipment:
     head: ClothingHeadBandRed
+
+# Jumpsuit
+- type: loadout
+  id: JumpsuitSecBlue
+  equipment: 
+    jumpsuit: ClothingUniformJumpsuitSecBlue
