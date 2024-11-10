@@ -20,7 +20,7 @@ pr = repo.get_pull(int(pr_number))
 
 def parse_changelog(pr_body):
     changelog_entries = []
-    pattern = r":cl:\s+([^\n]+)\n((?:- (add|remove|tweak|fix): [^\n]+\n?)+)"
+    pattern = r"(?<!<!--\s)^:cl:\s+([^\n]+)\n((?:- (add|remove|tweak|fix): [^\n]+\n?)+)"
     matches = list(re.finditer(pattern, pr_body, re.MULTILINE))
     print(f"Found {len(matches)} ':cl:' blocks in PR body.")
 
