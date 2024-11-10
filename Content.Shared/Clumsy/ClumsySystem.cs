@@ -24,6 +24,7 @@ public sealed class ClumsySystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     public override void Initialize()
     {
@@ -99,11 +100,26 @@ public sealed class ClumsySystem : EntitySystem
         var puttingOnTableName = Identity.Entity(args.PuttingOnTable, EntityManager);
 
         if (args.PuttingOnTable == ent.Owner)
+        {
             // You are slamming yourself onto the table.
-            _popup.PopupClient(Loc.GetString("bonkable-success-message-user", ("bonkable", args.BeingClimbedOn)), ent, ent);
+            _popup.PopupPredicted(
+                Loc.GetString("bonkable-success-message-user", ("bonkable", args.BeingClimbedOn)),
+                Loc.GetString("bonkable-success-message-others", ("victim", gettingPutOnTableName), ("bonkable", args.BeingClimbedOn)),
+                ent,
+                ent);
+        }
         else
+        {
             // Someone else slamed you onto the table.
-            _popup.PopupPredicted(Loc.GetString("bonkable-success-message-others", ("bonker", puttingOnTableName), ("victim", gettingPutOnTableName), ("bonkable", args.BeingClimbedOn)), ent, ent);
+            // This is only run in server so you need to use popup entity.
+            _popup.PopupPredicted(
+                Loc.GetString("forced-bonkable-success-message",
+                    ("bonker", puttingOnTableName),
+                    ("victim", gettingPutOnTableName),
+                    ("bonkable", args.BeingClimbedOn)),
+                ent,
+                null);
+        }
 
         args.Cancel();
     }
