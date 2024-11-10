@@ -36,3 +36,19 @@ roles-antag-thief-objective = Add some NT property to your personal collection w
 
 roles-antag-dragon-name = Space Dragon
 roles-antag-dragon-objective = Create a carp army to take over this quadrant.
+
+# Role timers
+
+AntagNuclearAgent = Nuclear Operative Agent
+AntagNuclearOperative = Nuclear Operative
+AntagNuclearCommander = Nuclear Operative Commander
+AntagSyndicateAgent = Syndicate Agent
+AntagSyndicateSleeperAgent = Syndicate Sleeper Agent
+AntagThief = Thief
+AntagHeadRevolutionary = Head Revolutionary
+AntagRevolutionary = Revolutionary
+AntagZombie = Zombie
+AntagInitialInfected = Initial Infected
+JobNinja = Space Ninja
+AntagDragon = Space Dragon
+AntagSubvertedSilicon = Subverted Silicon

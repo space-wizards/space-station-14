@@ -41,6 +41,10 @@ public abstract class SharedJobSystem : EntitySystem
         {
             _inverseTrackerLookup.Add(job.PlayTimeTracker, job.ID);
         }
+        foreach (var antag in _prototypes.EnumeratePrototypes<AntagPrototype>())
+        {
+            _inverseTrackerLookup.Add(antag.PlayTimeTracker, antag.ID);
+        }
     }
 
     /// <summary>
