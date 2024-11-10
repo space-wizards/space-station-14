@@ -5,7 +5,6 @@ namespace Content.Shared.ReagentOnItem;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
 public sealed partial class SpaceLubeOnItemComponent : ReagentOnItemComponent
 {
-
     /// <summary>
     ///     Probability to reduce the amount of reagent after a grab.
     /// </summary>

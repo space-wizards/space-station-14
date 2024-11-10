@@ -27,19 +27,23 @@ public abstract class ReagentOnItemSystem : EntitySystem
     public bool ApplyReagentEffectToItem(Entity<ItemComponent> item, string reagent, FixedPoint2 quantity, ReagentOnItemComponent comp)
     {
         if (quantity <= 0)
+        {
+            Dirty(item);
             return false;
+        }
 
         // This is very specific, so I don't think it needs to use an event.
         if (HasComp<NonStickSurfaceComponent>(item))
         {
             _popup.PopupEntity(Loc.GetString("non-stick-gloves-reagent-falls-off", ("target", Identity.Entity(item, EntityManager))), item);
             _puddle.TrySpillAt(item, new Solution(reagent, quantity), out var _, false);
-
+            Dirty(item);
             return false;
         }
 
         ConvertReagentToStacks(item, comp, reagent, quantity);
 
+        Dirty(item);
         return true;
     }
 

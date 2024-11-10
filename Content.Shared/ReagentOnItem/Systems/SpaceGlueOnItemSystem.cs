@@ -29,6 +29,9 @@ public sealed class SpaceGlueOnItemSystem : ReagentOnItemSystem
         SubscribeLocalEvent<SpaceGlueOnItemComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<SpaceGlueOnItemComponent, MapInitEvent>(MapInit);
         SubscribeLocalEvent<SpaceGlueOnItemComponent, RefreshNameModifiersEvent>(OnRefreshNameModifiers);
+
+        SubscribeLocalEvent<SpaceGlueOnItemComponent, ComponentGetState>(GetSpaceLubeState);
+        SubscribeLocalEvent<SpaceGlueOnItemComponent, ComponentHandleState>(HandleSpaceLubeState);
     }
 
     private void MapInit(EntityUid uid, SpaceGlueOnItemComponent component, MapInitEvent args)
@@ -41,15 +44,15 @@ public sealed class SpaceGlueOnItemSystem : ReagentOnItemSystem
         base.Update(frameTime);
 
         var query = EntityQueryEnumerator<SpaceGlueOnItemComponent, UnremoveableComponent, MetaDataComponent>();
-        while (query.MoveNext(out var uid, out var glue, out var _, out var meta))
+        while (query.MoveNext(out var uid, out var glue, out _, out _))
         {
             if (_timing.CurTime < glue.TimeOfNextCheck)
                 continue;
 
             if (!SetNextNextCanDropCheck(glue, uid))
             {
-                RemCompDeferred<UnremoveableComponent>(uid);
-                RemCompDeferred<SpaceGlueOnItemComponent>(uid);
+                RemComp<UnremoveableComponent>(uid);
+                RemComp<SpaceGlueOnItemComponent>(uid);
                 _nameMod.RefreshNameModifiers(uid);
             }
         }
@@ -74,7 +77,6 @@ public sealed class SpaceGlueOnItemSystem : ReagentOnItemSystem
     /// <returns> Will return true if the item should still be stuck and false if the item should be droppable (There is less than 1 unit of reagent remaning). </returns>
     private bool SetNextNextCanDropCheck(SpaceGlueOnItemComponent glueComp, EntityUid uid)
     {
-
         if (glueComp.EffectStacks < 1)
             return false;
 
@@ -109,5 +111,19 @@ public sealed class SpaceGlueOnItemSystem : ReagentOnItemSystem
     private void OnRefreshNameModifiers(Entity<SpaceGlueOnItemComponent> entity, ref RefreshNameModifiersEvent args)
     {
         args.AddModifier("glued-name-prefix");
+    }
+
+    private void HandleSpaceLubeState(EntityUid uid, SpaceGlueOnItemComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not ReagentOnItemComponentState state)
+            return;
+
+        component.EffectStacks = state.EffectStacks;
+        component.MaxStacks = state.MaxStacks;
+    }
+
+    private void GetSpaceLubeState(EntityUid uid, SpaceGlueOnItemComponent component, ref ComponentGetState args)
+    {
+        args.State = new ReagentOnItemComponentState(component.EffectStacks, component.MaxStacks);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Content.Shared.EntityEffects;
+﻿using Content.Server.Administration.Commands;
+using Content.Shared.EntityEffects;
 using Content.Shared.Item;
 using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.ReagentOnItem;
@@ -25,11 +26,13 @@ public sealed partial class ApplyGlueToItemEffect : EntityEffect
         args.EntityManager.EnsureComponent<SpaceGlueOnItemComponent>(args.TargetEntity, out var comp);
 
         var result = reagentOnItemSys.ApplyReagentEffectToItem((args.TargetEntity, itemComp), reagentArgs.Reagent, reagentArgs.Quantity, comp);
+        args.EntityManager.Dirty<SpaceGlueOnItemComponent>((args.TargetEntity, comp));
 
         if (!result)
         {
             args.EntityManager.RemoveComponent<SpaceGlueOnItemComponent>(args.TargetEntity);
             nameMod.RefreshNameModifiers((args.TargetEntity, null));
         }
+        args.EntityManager.Dirty<SpaceGlueOnItemComponent>((args.TargetEntity, comp));
     }
 }
