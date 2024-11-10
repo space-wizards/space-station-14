@@ -157,7 +157,7 @@
       sprite: Clothing/Ears/Headsets/freelance.rsi
 
 - type: entity
-  parent: [ClothingHeadsetAlt, BaseCommandContraband]
+  parent: [ClothingHeadsetAlt, BaseRestrictedContraband]
   id: ClothingHeadsetAltWarden
   name: warden's over-ear headset
   components:

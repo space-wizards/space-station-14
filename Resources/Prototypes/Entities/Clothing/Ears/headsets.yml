@@ -290,7 +290,7 @@
       sprite: Clothing/Ears/Headsets/freelance.rsi
 
 - type: entity
-  parent: [ClothingHeadset, BaseCommandContraband]
+  parent: [ClothingHeadset, BaseRestrictedContraband]
   id: ClothingHeadsetWarden
   name: warden headset
   description: A headset used by the warden.
