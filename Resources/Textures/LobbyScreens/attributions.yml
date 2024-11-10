@@ -67,3 +67,8 @@
   license: "CC-BY-NC-SA-4.0"
   copyright: "thesaladmancer on Discord / Twitter"
   source: "https://github.com/ss14-harmony/space-station-14"
+
+- files: ["survivalharmony.webp"]
+  license: "CC0-1.0"
+  copyright: "Logan Avery on Twitter / @eli_sarek"
+  source: "https://github.com/ss14-harmony/space-station-14"
