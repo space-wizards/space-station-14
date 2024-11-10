@@ -25,5 +25,5 @@
       - !type:EntityAnchored
         anchored: false
       steps:
-      - tool: Screwing
-        doAfter: 2
+      - tool: Welding
+        doAfter: 1
