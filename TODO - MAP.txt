@@ -1,0 +1,7 @@
+===DAGGER===
+Landing pad zone as entrance w. grass
+Fill in all rooms
+Power room
+	Add lights
+Add rest zone
+Add enemies (probably midieval / fantasy or undead -esque, dungeon DOES have stone walls after all!)

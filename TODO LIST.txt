@@ -1,0 +1,88 @@
+==================DOORS, FLOORS & WALLS==================
+Wooden Door (Secret :: Wooden Wall)
+
+Blast door, but looks wooden
+-> Also has legend of zelda ding-ding-doo-ding opening sound
+
+Some Fundamentally indestructable:
+* Walls
+* Windows
+* Doors (w. walls)
+
+Slanted Solid-Reinforced Wall (theres only solid)
+
+Add new Circuit Floor colors (orange, purple, yellow)
+
+Directional-window-sized walls that aren't see-through
+
+Slanded Stone (necropolis) walls
+
+========================AI / DUNGEON MASTER========================
+Set AI default laws to dungeon master mode
+
+Set AI playtime requirement to minimal. Something that doesnt take forever to unlock but must be unlocked. (4 hours?)
+
+Change AI default description to "Warning: May narrate in comical voices."
+
+Change AI Core default name to "Vault Intelligence"
+
+Allow AI to spawn enemies, but on an incredibly long cooldown.
+-> Maybe at the cost of some kind of resource?
+-> Check if AI cursor is over all. If so, then don't do anything. Otherwise, proceed with spawning and countdown.
+
+Change UI overlay to be "DM" or "GM"
+
+As Dungeon Master, AI's primary goal is to have fun and make the game fun for the venturers but still antagonize them.
+
+============EVACUATION AND "CENTRAL COMMAND"============
+Make Comms Shuttle console able to be called by anyone.
+-> Make custom console with just one button "Call Pickup / Valkerie / Eagle" (name pending) that calls evac.
+-> Cannot be undone!
+-> Also plays tense get-away music.
+
+Set EVAC shuttle to be much quicker than normal, and everyone has to RUN THROUGH THE DUNGEON TO GET TO IT
+
+Make CentComm some sort of Midieval fantasy-esque tavern with a mix of high-tech and not-tech.
+
+Make Nuclear-disk equivalent item; something super important that needs to be brought to the end and is highly coveted.
+- Really good for making competitive teams
+
+
+============WEAPONS============
+Some flavors of weapons:
+- Claymore (low distance high damage)
+- Pike (more distance low damage)
+- Rapier (good all-rounder)
+
+============ENEMIES============
+Turrets that can be easily destroyed
+Boss enemies that must be killed as a preemptive condition to the dungeon
+
+============OTHER MISCELLANEOUS TODO============
+No-Smoking sign, except it's a "Keep Smoking" sign with a green checkmark.
+
+Sprite for Random Curtain spawner
+
+Alternate-rotated bed sprite (I REALLY want my vertical bed)
+
+Make maps take place on a planet with atmospherics. Solves a lot of the problems with atmos handling.
+
+Corner grass w. dark steel tiles
+
+Nitrogen Wall-Closets (they dont exist)
+
+Magic Conch Shell from SpongeBob:: Math.Random?
+
+Custom join-in roles instead of "passenger" and etc.
+- Fighter (Fundamentally worse at aiming. Like Oni's in Frontier)
+- Medic (Medical supplies. Maybe faster at it, who knows.) Not good at Ranged nor Melee weapons.
+- Ranger (Can actually use ranged weapons but isn't so good in melee)
+
+
+Midieval esque posters or old-timey maps
+
+Party collect money and whatnot in the dungeon before delivering it to a container that tallies up the total like a kind of "high score"
+
+============BACKBURNER============
+Lights entirely disabled in a dungeon. An item will power all unpowered lights nearby.
+-> But it doesn't last long.
