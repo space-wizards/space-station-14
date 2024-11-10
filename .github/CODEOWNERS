@@ -11,11 +11,13 @@
 /Resources/**/*.yml                                 @KeldWolf @FluffMe
 
 # Sprites
-/Resources/Textures/                                @KeldWolf
+/Resources/Textures/                                @DieselMohawk
 
 # Lobby art and music
 /Resources/Audio/Lobby/                             @KeldWolf
-/Resources/Textures/LobbyScreens/                   @KeldWolf
+/Resources/Audio/_Harmony/Lobby/                    @KeldWolf
+/Resources/Textures/LobbyScreens/                   @DieselMohawk
+/Resources/Textures/_Harmony/LobbyScreens/          @DieselMohawk
 
 # Maps
 /Resources/Maps/                                    @spanky-spanky
