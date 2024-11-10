@@ -98,4 +98,47 @@ public static class BanUsernamePanelEuiMsg
             Message = message;
         }
     }
+
+    /// <summary>
+    /// used form client to server to request the current list of all active username bans
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class UsernameRuleRefreshRequest : EuiMessageBase
+    {
+        // public void UsernameRuleRefreshRequest() { }
+    }
+
+    /// <summary>
+    /// used form server to client to send updates about new or deleted username rules.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class UsernameRuleUpdate : EuiMessageBase
+    {
+        public readonly int Id;
+        public readonly string Expression;
+        public readonly bool Add;
+        public readonly bool Regex;
+        public readonly bool ExtendToBan;
+        public readonly bool Silent;
+
+        public UsernameRuleUpdate(
+            string expression,
+            int id,
+            bool add,
+            bool regex,
+            bool extendToBan,
+            bool silent = false
+        )
+        {
+            Id = id;
+            Add = add;
+            Regex = regex;
+            ExtendToBan = extendToBan;
+            Expression = expression;
+            Silent = silent;
+        }
+    }
 }
+
+public readonly record struct UsernameCacheLineUpdate(string Expression, int Id, bool ExtendToBan, bool Regex, bool Add);
+public readonly record struct UsernameCacheLine(string Expression, int Id, bool ExtendToBan, bool Regex);

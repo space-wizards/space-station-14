@@ -9,7 +9,7 @@ namespace Content.Server.Administration;
 
 public sealed class BanUsernamePanelEui : BaseEui
 {
-    [Dependency] private readonly IUsernameRuleManager _usernameRules = default!;
+    [Dependency] private readonly IUsernameRuleManager _usernameRuleManager = default!;
     [Dependency] private readonly ILogManager _log = default!;
     [Dependency] private readonly IAdminManager _admins = default!;
 
@@ -18,8 +18,8 @@ public sealed class BanUsernamePanelEui : BaseEui
     public BanUsernamePanelEui()
     {
         IoCManager.InjectDependencies(this);
-
         _sawmill = _log.GetSawmill("admin.username_bans_eui");
+        _usernameRuleManager.UpdatedCache += SendSingleRule;
     }
 
     public override EuiStateBase GetNewState()
@@ -41,10 +41,73 @@ public sealed class BanUsernamePanelEui : BaseEui
             case BanUsernamePanelEuiMsg.GetRuleInfoRequest r:
                 SendFullUsernameInfo(r.RuleId);
                 break;
+            case BanUsernamePanelEuiMsg.UsernameRuleRefreshRequest r:
+                SendRefreshMessages();
+                break;
         }
     }
 
-    private async void CreateUsernameBan(string regexRule, string? reason, bool ban, bool regex)
+    private void SendRefreshMessages()
+    {
+        if (!_admins.HasAdminFlag(Player, AdminFlags.Ban))
+        {
+            return;
+        }
+
+        var data = _usernameRuleManager.BanData;
+
+        SendClearMessage();
+
+        if (data.Count == 0)
+        {
+            return;
+        }
+
+        for (int i = 0; i < data.Count - 1; i++)
+        {
+            SendSingleRule(data[i], true);
+        }
+
+        var ultimate = data[data.Count - 1];
+        SendSingleRule(ultimate, false);
+    }
+
+    private void SendClearMessage()
+    {
+        SendMessage(new BanUsernamePanelEuiMsg.UsernameRuleUpdate(
+            "",
+            -1,
+            false,
+            false,
+            false,
+            true
+        ));
+    }
+
+    private void SendSingleRule(UsernameCacheLine data, bool silent = false)
+    {
+        SendMessage(new BanUsernamePanelEuiMsg.UsernameRuleUpdate(
+            data.Expression,
+            data.Id,
+            true,
+            data.Regex,
+            data.ExtendToBan,
+            silent
+        ));
+    }
+
+    private void SendSingleRule(UsernameCacheLineUpdate data)
+    {
+        SendMessage(new BanUsernamePanelEuiMsg.UsernameRuleUpdate(
+            data.Expression,
+            data.Id,
+            data.Add,
+            data.Regex,
+            data.ExtendToBan
+        ));
+    }
+
+    private void CreateUsernameBan(string regexRule, string? reason, bool ban, bool regex)
     {
         if (!_admins.HasAdminFlag(Player, AdminFlags.Ban))
         {
@@ -85,14 +148,12 @@ public sealed class BanUsernamePanelEui : BaseEui
             finalMessage = reason;
         }
 
-        _usernameRules.CreateUsernameRule(regex, finalRegexRule, finalMessage ?? "", Player.UserId, ban);
-
-        Close();
+        _usernameRuleManager.CreateUsernameRule(regex, finalRegexRule, finalMessage ?? "", Player.UserId, ban);
     }
 
     private async void SendFullUsernameInfo(int ruleId)
     {
-        var banData = await _usernameRules.GetFullBanInfoAsync(ruleId);
+        var banData = await _usernameRuleManager.GetFullBanInfoAsync(ruleId);
         if (banData is null)
         {
             return;
@@ -112,5 +173,11 @@ public sealed class BanUsernamePanelEui : BaseEui
         );
 
         SendMessage(message);
+    }
+
+    public override void Close()
+    {
+        base.Close();
+        _usernameRuleManager.UpdatedCache -= SendSingleRule;
     }
 }

@@ -92,7 +92,7 @@ namespace Content.Server.EUI
         /// <summary>
         ///     Close the EUI, breaking the connection between client and server.
         /// </summary>
-        public void Close()
+        public virtual void Close()
         {
             Manager.CloseEui(this);
         }

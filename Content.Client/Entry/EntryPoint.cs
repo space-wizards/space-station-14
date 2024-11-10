@@ -58,7 +58,6 @@ namespace Content.Client.Entry
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IClientPreferencesManager _clientPreferencesManager = default!;
-        [Dependency] private readonly IClientUsernameBanCacheManager _usernameRuleCacheManager = default!;
         [Dependency] private readonly EuiManager _euiManager = default!;
         [Dependency] private readonly IVoteManager _voteManager = default!;
         [Dependency] private readonly DocumentParsingManager _documentParsingManager = default!;
@@ -155,7 +154,6 @@ namespace Content.Client.Entry
             _overlayManager.AddOverlay(new RadiationPulseOverlay());
             _chatManager.Initialize();
             _clientPreferencesManager.Initialize();
-            _usernameRuleCacheManager.Initialize();
             _euiManager.Initialize();
             _voteManager.Initialize();
             _userInterfaceManager.SetDefaultTheme("SS14DefaultTheme");

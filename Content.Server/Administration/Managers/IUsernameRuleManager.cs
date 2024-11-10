@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Content.Server.Database;
+using Content.Shared.Administration;
 using Robust.Shared.Network;
 
 
@@ -19,6 +20,16 @@ public interface IUsernameRuleManager
     /// refresh required data (username bans)
     /// </summary>
     void Restart();
+
+    /// <summary>
+    /// Invoked when new information is placed into or removed from the cache
+    /// </summary>
+    event Action<UsernameCacheLineUpdate>? UpdatedCache;
+
+    /// <summary>
+    /// All ban data presently in the cache
+    /// </summary>
+    IReadOnlyList<UsernameCacheLine> BanData { get; }
 
     /// <summary>
     /// Restricts the specified username. Banning all connections witch match the expression
