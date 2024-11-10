@@ -36,8 +36,7 @@ Entries:
   url: https://github.com/ss14Starlight/space-station-14/pull/34
 - author: Rinary
   changes:
-  - message: In pda added current game time and date, time to evac shuttle(call, arive,launch
-      times).
+  - message: In pda added current game time and date, time to evac shuttle(call, arive,launch times).
     type: Add
   id: 6
   time: '2024-11-09T20:57:29.000000+00:00'
@@ -49,14 +48,14 @@ Entries:
   id: 7
   time: '2024-11-10T15:55:07.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/44
-- author: '- add: Added fun!'
+- author: Rinary
   changes:
   - message: Changed fun!
     type: Tweak
   id: 8
   time: '2024-11-10T15:55:07.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/44
-- author: '- add: Added fun!'
+- author: Rinary
   changes:
   - message: Fixed fun!
     type: Fix
