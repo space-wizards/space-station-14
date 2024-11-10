@@ -1,6 +1,6 @@
-﻿using Content.Shared.Chemistry.Components;
-using Content.Shared.EntityEffects;
+﻿using Content.Shared.EntityEffects;
 using Content.Shared.Item;
+using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.ReagentOnItem;
 using Robust.Shared.Prototypes;
 
@@ -8,7 +8,6 @@ namespace Content.Server.EntityEffects.Effects;
 
 public sealed partial class ApplyLubeToItemEffect : EntityEffect
 {
-
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("reagent-effect-guidebook-modify-bleed-amount", ("chance", Probability),
             ("deltasign", MathF.Sign(2)));
@@ -16,6 +15,7 @@ public sealed partial class ApplyLubeToItemEffect : EntityEffect
     public override void Effect(EntityEffectBaseArgs args)
     {
         var reagentOnItemSys = args.EntityManager.EntitySysManager.GetEntitySystem<ReagentOnItemSystem>();
+        var nameMod = args.EntityManager.EntitySysManager.GetEntitySystem<NameModifierSystem>();
 
         if (args is not EntityEffectApplyArgs reagentArgs ||
             reagentArgs.Quantity <= 0 ||
@@ -24,6 +24,12 @@ public sealed partial class ApplyLubeToItemEffect : EntityEffect
 
         args.EntityManager.EnsureComponent<SpaceLubeOnItemComponent>(args.TargetEntity, out var comp);
 
-        reagentOnItemSys.ApplyReagentEffectToItem((args.TargetEntity, itemComp), reagentArgs.Reagent, reagentArgs.Quantity, comp);
+        var result = reagentOnItemSys.ApplyReagentEffectToItem((args.TargetEntity, itemComp), reagentArgs.Reagent, reagentArgs.Quantity, comp);
+
+        if (!result)
+        {
+            args.EntityManager.RemoveComponent<SpaceLubeOnItemComponent>(args.TargetEntity);
+            nameMod.RefreshNameModifiers((args.TargetEntity, null));
+        }
     }
 }

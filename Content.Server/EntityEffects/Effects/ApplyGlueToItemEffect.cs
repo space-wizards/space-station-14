@@ -1,6 +1,6 @@
-﻿using Content.Shared.Chemistry.Components;
-using Content.Shared.EntityEffects;
+﻿using Content.Shared.EntityEffects;
 using Content.Shared.Item;
+using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.ReagentOnItem;
 using Robust.Shared.Prototypes;
 
@@ -15,6 +15,7 @@ public sealed partial class ApplyGlueToItemEffect : EntityEffect
     public override void Effect(EntityEffectBaseArgs args)
     {
         var reagentOnItemSys = args.EntityManager.EntitySysManager.GetEntitySystem<ReagentOnItemSystem>();
+        var nameMod = args.EntityManager.EntitySysManager.GetEntitySystem<NameModifierSystem>();
 
         if (args is not EntityEffectApplyArgs reagentArgs ||
             reagentArgs.Quantity <= 0 ||
@@ -23,6 +24,12 @@ public sealed partial class ApplyGlueToItemEffect : EntityEffect
 
         args.EntityManager.EnsureComponent<SpaceGlueOnItemComponent>(args.TargetEntity, out var comp);
 
-        reagentOnItemSys.ApplyReagentEffectToItem((args.TargetEntity, itemComp), reagentArgs.Reagent, reagentArgs.Quantity, comp);
+        var result = reagentOnItemSys.ApplyReagentEffectToItem((args.TargetEntity, itemComp), reagentArgs.Reagent, reagentArgs.Quantity, comp);
+
+        if (!result)
+        {
+            args.EntityManager.RemoveComponent<SpaceGlueOnItemComponent>(args.TargetEntity);
+            nameMod.RefreshNameModifiers((args.TargetEntity, null));
+        }
     }
 }

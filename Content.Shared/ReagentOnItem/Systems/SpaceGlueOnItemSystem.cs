@@ -21,7 +21,6 @@ public sealed class SpaceGlueOnItemSystem : ReagentOnItemSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly NameModifierSystem _nameMod = default!;
 
-
     public override void Initialize()
     {
         base.Initialize();

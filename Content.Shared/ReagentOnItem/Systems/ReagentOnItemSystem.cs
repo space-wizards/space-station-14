@@ -5,6 +5,8 @@ using Content.Shared.Fluids;
 using Content.Shared.Clothing.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.FixedPoint;
+using Content.Shared.NameModifier.Components;
+using Content.Shared.NameModifier.EntitySystems;
 
 namespace Content.Shared.ReagentOnItem;
 
@@ -32,6 +34,7 @@ public abstract class ReagentOnItemSystem : EntitySystem
         {
             _popup.PopupEntity(Loc.GetString("non-stick-gloves-reagent-falls-off", ("target", Identity.Entity(item, EntityManager))), item);
             _puddle.TrySpillAt(item, new Solution(reagent, quantity), out var _, false);
+
             return false;
         }
 
