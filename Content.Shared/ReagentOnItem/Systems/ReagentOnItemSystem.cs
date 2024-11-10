@@ -28,7 +28,6 @@ public abstract class ReagentOnItemSystem : EntitySystem
     {
         if (quantity <= 0)
         {
-            Dirty(item);
             return false;
         }
 
@@ -37,13 +36,11 @@ public abstract class ReagentOnItemSystem : EntitySystem
         {
             _popup.PopupEntity(Loc.GetString("non-stick-gloves-reagent-falls-off", ("target", Identity.Entity(item, EntityManager))), item);
             _puddle.TrySpillAt(item, new Solution(reagent, quantity), out var _, false);
-            Dirty(item);
             return false;
         }
 
         ConvertReagentToStacks(item, comp, reagent, quantity);
 
-        Dirty(item);
         return true;
     }
 
@@ -56,8 +53,6 @@ public abstract class ReagentOnItemSystem : EntitySystem
         var total = comp.EffectStacks + reagentQuantity;
 
         comp.EffectStacks = FixedPoint2.Min(total, comp.MaxStacks);
-
-        Dirty(item, comp);
 
         if (total > comp.MaxStacks)
             _puddle.TrySpillAt(item, new Solution(reagentProto, reagentQuantity), out var _, false);

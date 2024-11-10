@@ -8,9 +8,7 @@ namespace Content.Server.EntityEffects.Effects;
 
 public sealed partial class ApplyLubeToItemEffect : EntityEffect
 {
-    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-        => Loc.GetString("reagent-effect-guidebook-modify-bleed-amount", ("chance", Probability),
-            ("deltasign", MathF.Sign(2)));
+    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => null;
 
     public override void Effect(EntityEffectBaseArgs args)
     {

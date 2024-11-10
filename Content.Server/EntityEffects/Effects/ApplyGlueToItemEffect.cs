@@ -9,9 +9,7 @@ namespace Content.Server.EntityEffects.Effects;
 
 public sealed partial class ApplyGlueToItemEffect : EntityEffect
 {
-    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-        => Loc.GetString("reagent-effect-guidebook-modify-bleed-amount", ("chance", Probability),
-            ("deltasign", MathF.Sign(2)));
+    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) => null;
 
     public override void Effect(EntityEffectBaseArgs args)
     {
@@ -26,13 +24,13 @@ public sealed partial class ApplyGlueToItemEffect : EntityEffect
         args.EntityManager.EnsureComponent<SpaceGlueOnItemComponent>(args.TargetEntity, out var comp);
 
         var result = reagentOnItemSys.ApplyReagentEffectToItem((args.TargetEntity, itemComp), reagentArgs.Reagent, reagentArgs.Quantity, comp);
-        args.EntityManager.Dirty<SpaceGlueOnItemComponent>((args.TargetEntity, comp));
 
         if (!result)
         {
             args.EntityManager.RemoveComponent<SpaceGlueOnItemComponent>(args.TargetEntity);
             nameMod.RefreshNameModifiers((args.TargetEntity, null));
         }
+
         args.EntityManager.Dirty<SpaceGlueOnItemComponent>((args.TargetEntity, comp));
     }
 }
