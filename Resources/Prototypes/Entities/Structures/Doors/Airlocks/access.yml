@@ -866,6 +866,15 @@
 
 - type: entity
   parent: AirlockMaint
+  id: AirlockMaintEngiCargoLocked
+  suffix: Engineering/Cargo, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsEngineeringCargo ]
+
+- type: entity
+  parent: AirlockMaint
   id: AirlockMaintAtmoLocked
   suffix: Atmospherics, Locked
   components:
@@ -997,6 +1006,15 @@
       board: [ DoorElectronicsMedicalResearch ]
 
 - type: entity
+  parent: AirlockMaintRnDLocked
+  id: AirlockMaintRnDEngiLocked
+  suffix: Engineering/Science, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsEngineeringResearch ]
+
+- type: entity
   parent: AirlockMaint
   id: AirlockMaintSecLocked
   suffix: Security, Locked
@@ -1004,6 +1022,28 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsSecurity ]
+  - type: Wires
+    layoutId: AirlockSecurity
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintSecCargoLocked
+  suffix: Security/Cargo, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSecurityCargo ]
+  - type: Wires
+    layoutId: AirlockSecurity
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintSecMedLocked
+  suffix: Security/Medical, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSecurityMedical ]
   - type: Wires
     layoutId: AirlockSecurity
 
