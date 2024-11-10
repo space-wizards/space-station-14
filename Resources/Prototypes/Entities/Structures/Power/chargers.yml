@@ -168,6 +168,9 @@
           - HitscanBatteryAmmoProvider
           - ProjectileBatteryAmmoProvider
           - Stunbaton
+        blacklist:
+          components:
+          - PowerCell # only charges weapons due to higher wattage
 
 - type: entity
   parent: BaseItemRecharger
@@ -221,6 +224,9 @@
           - HitscanBatteryAmmoProvider
           - ProjectileBatteryAmmoProvider
           - Stunbaton
+        blacklist:
+          components:
+          - PowerCell
 
 - type: entity
   parent: BaseRecharger
