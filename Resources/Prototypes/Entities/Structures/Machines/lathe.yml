@@ -768,7 +768,7 @@
       - TargetHuman
       - TargetSyndicate
       - WeaponDisablerPractice
-      - WeaponFlaregunSecurity
+      - WeaponFlareGunSecurity
       - WeaponLaserCarbinePractice
       - Zipties
     dynamicRecipes:
