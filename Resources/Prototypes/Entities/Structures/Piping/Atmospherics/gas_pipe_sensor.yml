@@ -1,42 +1,5 @@
 - type: entity
-  parent: GasPipeBase
-  id: GasPipeSensorAssembly
-  name: gas pipe sensor assembly
-  description: When assembled, this device will report on the characteristics of the gas in the attached pipe network. 
-  components:
-  - type: Sprite
-    sprite: Structures/Piping/Atmospherics/gas_pipe_sensor.rsi
-    drawdepth: BelowFloor
-    layers:
-    - sprite: Structures/Piping/Atmospherics/pipe.rsi
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-      state: pipeStraight
-    - map: ["base"]
-      state: base
-    - map: [ "enum.ConstructionVisuals.Layer" ]
-      state: cavity 
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.ConstructionVisuals.Key:
-        enum.ConstructionVisuals.Layer:
-          assembly: { state: cavity }
-          wiredAssembly: { state: wires }
-  - type: Construction
-    graph: GasPipeSensor
-    node: assembly
-  - type: NodeContainer
-    nodes:
-      monitored:
-        !type:PipeNode
-        nodeGroupID: Pipe
-        pipeDirection: Longitudinal
-  - type: Tag
-    tags:
-    - Unstackable
-
-- type: entity
-  parent: [AirSensorBase, GasPipeSensorAssembly]
+  parent: [AirSensorBase, GasPipeBase]
   id: GasPipeSensor
   name: gas pipe sensor
   description: Reports on the status of the gas in the attached pipe network. 
@@ -52,18 +15,12 @@
       state: pipeStraight
     - map: ["base"]
       state: base
-    - map: [ "enum.ConstructionVisuals.Layer" ]
-      state: blank
     - map: [ "enum.PowerDeviceVisualLayers.Powered" ]
       state: lights 
       shader: unshaded      
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.ConstructionVisuals.Key:
-        enum.ConstructionVisuals.Layer:
-          wiredSensor: { state: wires_connected }
-          sensor: { state: blank }
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
           False: { state: blank }
@@ -74,7 +31,17 @@
   - type: ExtensionCableReceiver
   - type: Construction
     graph: GasPipeSensor
-    node: sensor  
+    node: sensor 
+  - type: NodeContainer
+    nodes:
+      monitored:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: Longitudinal
+  - type: Tag
+    tags:
+    - AirSensor
+    - Unstackable    
 
 - type: entity
   parent: GasPipeSensor 

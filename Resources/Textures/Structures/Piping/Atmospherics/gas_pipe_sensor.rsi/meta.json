@@ -13,16 +13,7 @@
 	{
             "name": "base"
         },
-		{
-            "name": "cavity"
-        },
-		{
-            "name": "wires"
-        },
-		{
-            "name": "wires_connected"
-        },
-		{
+	{
             "name": "blank"
         },
         {

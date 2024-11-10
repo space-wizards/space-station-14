@@ -4,16 +4,16 @@
   graph:
   - node: start
     edges:
-    - to: assembly
+    - to: sensor
       steps:
       - material: Steel
         amount: 2
         doAfter: 1
 
-  - node: assembly
-    entity: GasPipeSensorAssembly
+  - node: sensor   
+    entity: GasPipeSensor
     actions:
-    - !type:AppearanceChange
+    - !type:SetAnchor
     edges:
     - to: start
       completed:
@@ -21,77 +21,6 @@
         prototype: SheetSteel1
         amount: 2
       - !type:DeleteEntity
-      conditions:
-      - !type:EntityAnchored
-        anchored: false
-      steps:
-      - tool: Screwing
-        doAfter: 2
-
-    - to: wiredAssembly
-      conditions:
-      - !type:EntityAnchored
-      steps:
-      - material: Cable
-        amount: 2
-        doAfter: 1
-
-  - node: wiredAssembly
-    actions:
-    - !type:AppearanceChange
-    edges:
-    - to: assembly
-      completed:
-      - !type:GivePrototype
-        prototype: CableApcStack1
-        amount: 2
-      conditions:
-      - !type:EntityAnchored
-        anchored: false
-      steps:
-      - tool: Cutting
-        doAfter: 1
-
-    - to: sensor
-      completed:
-      - !type:SetAnchor
-        value: false
-      conditions:
-      - !type:EntityAnchored
-      steps:
-      - tool: Screwing
-        doAfter: 2
-
-  - node: wiredSensor
-    actions:
-    - !type:AppearanceChange
-    edges:
-    - to: assembly
-      completed:
-      - !type:GivePrototype
-        prototype: CableApcStack1
-        amount: 2
-      conditions:
-      - !type:EntityAnchored
-        anchored: false
-      steps:
-      - tool: Cutting
-        doAfter: 1
-
-    - to: sensor
-      conditions:
-      - !type:EntityAnchored
-      steps:
-      - tool: Screwing
-        doAfter: 2
-
-  - node: sensor   
-    entity: GasPipeSensor
-    actions:
-    - !type:AppearanceChange
-    - !type:SetAnchor
-    edges:
-    - to: wiredSensor
       conditions:
       - !type:EntityAnchored
         anchored: false
