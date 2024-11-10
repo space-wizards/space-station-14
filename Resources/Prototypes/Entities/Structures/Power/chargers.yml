@@ -150,6 +150,7 @@
   parent: BaseItemRecharger
   id: WeaponCapacitorRecharger
   name: recharger
+  description: A recharger with a properitary weapon-only port.
   components:
   - type: Sprite
     sprite: Structures/Power/recharger.rsi
@@ -172,7 +173,7 @@
   parent: BaseItemRecharger
   id: TurboItemRecharger
   name: turbo recharger
-  description: An overclocked recharger that's been adapted with a global port.
+  description: An overclocked recharger with a global port adaptor for power cells, cages and weapons.
   components:
   - type: Sprite
     sprite: Structures/Power/turbo_recharger.rsi
@@ -195,9 +196,10 @@
           - PotatoBattery
 
 - type: entity
-  parent: BaseItemRecharger
+  parent: BaseItemRecharger # cannot parent to normal rechargers as wallmount version can't be built
   id: WallWeaponCapacitorRecharger
   name: wall recharger
+  description: A space-saving wallmount recharger and another blinking light on the wall. Only recharges weapons.
   components:
   - type: Sprite
     sprite: Structures/Power/wall_recharger.rsi
