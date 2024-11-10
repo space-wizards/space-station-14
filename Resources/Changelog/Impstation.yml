@@ -4011,3 +4011,10 @@
   id: 485
   time: '2024-11-10T07:34:06.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/663
+- author: honeyed-lemons
+  changes:
+  - message: Random Unrevivable is checked after each defib, instead of roundstart.
+    type: Tweak
+  id: 486
+  time: '2024-11-10T18:30:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/642
