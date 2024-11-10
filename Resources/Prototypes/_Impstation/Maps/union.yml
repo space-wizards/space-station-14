@@ -1,7 +1,7 @@
 - type: gameMap
   id: Union
   mapName: 'Union'
-  mapPath: /Maps/union.yml
+  mapPath: /Maps/_Impstation/union.yml
   minPlayers: 35
   maxPlayers: 80
   stations:
