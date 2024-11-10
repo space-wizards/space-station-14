@@ -30,9 +30,7 @@ public sealed class ApplyReagentToItemSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly OpenableSystem _openable = default!;
-    [Dependency] private readonly ReagentOnItemSystem _reagentOnItem = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
-    [Dependency] private readonly ReactiveSystem _reactive = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedPuddleSystem _puddle = default!;
 
