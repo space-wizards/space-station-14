@@ -122,6 +122,8 @@
   - type: Tag # Harmony change. Tag component is needed for ducky galoshes
     tags:
     - ClothingShoesGaloshes
+    - WhitelistChameleon
+    - ClothMade
 
 - type: entity
   parent: [ClothingShoesBaseButcherable, BaseMajorContraband]
