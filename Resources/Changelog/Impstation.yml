@@ -3996,3 +3996,11 @@
   id: 483
   time: '2024-11-10T02:10:19.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/656
+- author: hivehum
+  changes:
+  - message: The Energy Shotgun is as big and beautiful and powerful as you remembered
+      her.
+    type: Tweak
+  id: 484
+  time: '2024-11-10T02:11:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/658
