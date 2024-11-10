@@ -754,3 +754,17 @@
     color: "#f4ffad"
     radius: 5
     energy: 2
+
+#Sunflower Hardsuit
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHelioSphere
+  name: HelioSphere hardsuit helmet
+  description: A space helmet that will allow you to continue your photosynthesis even in full vacuum conditions
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/heliosphere.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/heliosphere.rsi
+  - type: Tag
+    id: SentiflowerWearable

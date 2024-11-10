@@ -955,9 +955,6 @@
   id: MonkeyWearable
 
 - type: Tag
-  id: SentiflowerWearable
-
-- type: Tag
   id: Mop
 
 - type: Tag
@@ -1155,6 +1152,9 @@
 
 - type: Tag
   id: SecBeltEquip
+
+- type: Tag
+  id: SentiflowerWearable
 
 - type: Tag
   id: SecurityHelmet

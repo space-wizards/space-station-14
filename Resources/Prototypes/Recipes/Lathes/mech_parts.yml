@@ -177,3 +177,13 @@
   materials:
     Steel: 500
     Glass: 200
+
+# Sunflower Hardsuit
+- type: latheRecipe
+  id: HydroponicsSunflowerHardSuit
+  result: ClothingOuterHelioSphere
+  completetime: 10
+  materials:
+    Steel: 1000
+    Plastic: 500
+    Glass: 800
