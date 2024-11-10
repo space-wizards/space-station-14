@@ -68,6 +68,10 @@
   components:
   - type: Sharp
     butcherDelayModifier: 1.5 # Butchering with a scalpel, regardless of the type, will take 50% longer
+  - type: Tool
+    qualities:
+    - Slicing
+    speedModifier: 0.66 # pretend the sixes go on forever :)
   - type: Utensil
     types:
       - Knife
