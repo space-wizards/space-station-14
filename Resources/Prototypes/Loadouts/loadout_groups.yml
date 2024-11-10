@@ -304,6 +304,7 @@
   - GreyJumpskirt
   - AncientJumpsuit
   - RainbowJumpsuit
+  - TNGJumpsuit
 
 - type: loadoutGroup
   id: PassengerFace
