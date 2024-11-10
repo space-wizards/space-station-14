@@ -68,6 +68,15 @@
           Quantity: 4.5
         - ReagentId: Carbon
           Quantity: 0.5
+  - type: UserInterface
+    interfaces:
+      enum.ShortConstructionUiKey.Key:
+        type: ShortConstructionMenuBUI
+  - type: ActivatableUI
+    key: enum.ShortConstructionUiKey.Key
+  - type: ShortConstruction
+    prototypes:
+    - Grille
 
 - type: entity
   parent: PartRodMetal

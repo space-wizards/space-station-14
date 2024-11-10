@@ -121,12 +121,12 @@
     state: trans
   - type: Clothing
     equippedPrefix: trans
- 
+
 - type: entity
   parent: ClothingNeckPinBase
   id: ClothingNeckAutismPin
   name: autism pin
-  description: Be autism do crime.
+  description: Be autistic do crime.
   components:
   - type: Sprite
     state: autism
@@ -137,7 +137,7 @@
   parent: ClothingNeckPinBase
   id: ClothingNeckGoldAutismPin
   name: golden autism pin
-  description: Be autism do warcrime.
+  description: Be autistic do warcrimes.
   components:
   - type: Sprite
     state: goldautism

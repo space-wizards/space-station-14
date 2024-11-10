@@ -14,6 +14,7 @@
     - Gray
     - Snail
     - SpElf
+    - Decapoid
 
 - type: guideEntry
   id: Arachnid
@@ -69,3 +70,8 @@
   id: SpElf
   name: Thaven
   text: "/ServerInfo/_Impstation/Guidebook/Mobs/SpElf.xml"
+
+- type: guideEntry
+  id: Decapoid
+  name: REDACTED
+  text: "/ServerInfo/_Impstation/Guidebook/Mobs/Decapoid_REDACTED.xml"

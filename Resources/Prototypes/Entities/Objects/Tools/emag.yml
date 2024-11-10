@@ -6,6 +6,9 @@
   description: The all-in-one hacking solution. The thinking man's lockpick. The iconic EMAG.
   components:
   - type: Emag
+    blacklist: # DeltaV - Split Emag into 2 items, this one cannot emag doors
+      components:
+      - Airlock
   - type: Sprite
     sprite: Objects/Tools/emag.rsi
     state: icon

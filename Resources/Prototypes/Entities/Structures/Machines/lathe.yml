@@ -833,6 +833,8 @@
       - WeaponAdvancedLaser
       - WeaponDisabler
       - WeaponDisablerSMG
+      - WeaponShotgunKammererBeanbag
+      - WeaponShotgunEnforcerBeanbag
       - WeaponLaserCannon
       - WeaponLaserCarbine
       - WeaponXrayCannon
@@ -1174,6 +1176,7 @@
       - ClothingOuterWinterCentcom
       - ClothingOuterWinterSyndie
       - ClothingOuterWinterSyndieCap
+      - ClothingNeckCloakStraight
   - type: MaterialStorage
     whitelist:
       tags:

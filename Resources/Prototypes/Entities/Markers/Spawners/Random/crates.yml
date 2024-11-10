@@ -131,6 +131,7 @@
         - CrateTrackingImplants
         - CrateSecurityTrackingMindshieldImplants
         - CrateSecurityHelmet
+        - CrateSecurityShotgunNonlethal
         - CrateSecurityArmor
         - CrateRestraints
         - CrateEmergencyExplosive

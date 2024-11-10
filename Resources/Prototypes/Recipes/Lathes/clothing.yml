@@ -1017,3 +1017,8 @@
   parent: BaseNeckClothingRecipe
   id: ClothingNeckCloakBear
   result: ClothingNeckCloakBear
+
+- type: latheRecipe
+  parent: BaseNeckClothingRecipe
+  id: ClothingNeckCloakStraight
+  result: ClothingNeckCloakStraight

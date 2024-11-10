@@ -231,6 +231,10 @@
       amount: 2
     - id: MagazineShotgun
       amount: 4
+    - id: WeaponShotgunKammererBeanbag
+      amount: 2
+    - id: BoxBeanbag
+      amount: 2
 
 - type: entity
   id: GunSafeSubMachineGunWt550

@@ -897,9 +897,9 @@
   productEntity: Emag
   discountCategory: veryRareDiscounts
   discountDownTo:
-    Telecrystal: 5
+    Telecrystal: 2 # 5 is um. not a discount when it's normally 4
   cost:
-    Telecrystal: 8
+    Telecrystal: 4 # DV was 8, can no longer emag doors
   categories:
   - UplinkDisruption
 
@@ -1850,6 +1850,26 @@
   name: uplink-scarf-syndie-green-name
   description: uplink-scarf-syndie-green-desc
   productEntity: ClothingNeckScarfStripedSyndieGreen
+  cost:
+    Telecrystal: 1
+  categories:
+    - UplinkPointless
+
+- type: listing
+  id: UplinkPinStraight
+  name: uplink-pin-straight-name
+  description: uplink-pin-straight-desc
+  productEntity: ClothingNeckStraightPin
+  cost:
+    Telecrystal: 1
+  categories:
+    - UplinkPointless
+
+- type: listing
+  id: UplinkCloakStraight
+  name: uplink-cloak-straight-name
+  description: uplink-cloak-straight-desc
+  productEntity: ClothingNeckCloakStraight
   cost:
     Telecrystal: 1
   categories:
