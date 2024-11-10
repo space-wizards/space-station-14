@@ -61,15 +61,12 @@ public sealed class DamageExamineSystem : EntitySystem
         }
         else
         {
-            if (damageSpecifier.DamageDict.Count == 1)
+            if (damageSpecifier.GetTotal() == FixedPoint2.Zero && !damageSpecifier.AnyPositive())
             {
-                // May be simplified to using a foreach(Var x) despite being only one item
-                if(damageSpecifier.DamageDict.Values.GetEnumerator().Current == FixedPoint2.Zero)
-                {
-                    msg.AddMarkupOrThrow(Loc.GetString("damage-none"));
-                    return msg;
-                }
+                msg.AddMarkupOrThrow(Loc.GetString("damage-none"));
+                return msg;
             }
+
             msg.AddMarkupOrThrow(Loc.GetString("damage-examine-type", ("type", type)));
         }
 
