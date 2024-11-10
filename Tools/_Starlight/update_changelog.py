@@ -20,20 +20,27 @@ pr = repo.get_pull(int(pr_number))
 
 def parse_changelog(pr_body):
     changelog_entries = []
-    pattern = r":cl: ([^\n]+)\n((?:- (add|remove|tweak|fix): [^\n]+\n?)+)"
+    pattern = r":cl:\s+([^\n]+)\n((?:- (add|remove|tweak|fix): [^\n]+\n?)+)"
     matches = list(re.finditer(pattern, pr_body, re.MULTILINE))
-    print(f"Found {len(matches)} matches with pattern.")
+    print(f"Found {len(matches)} ':cl:' blocks in PR body.")
 
     for match in matches:
         author = match.group(1).strip()
-        change_type = match.group(2).capitalize()  
-        message = match.group(3).strip()  
-
-        changelog_entries.append({
-            "author": author,
-            "type": change_type,
-            "message": message
-        })
+        changes_block = match.group(2).strip()
+        changes = changes_block.splitlines()
+        for change in changes:
+            change_pattern = r"-\s+(add|remove|tweak|fix):\s+(.+)"
+            change_match = re.match(change_pattern, change)
+            if change_match:
+                change_type = change_match.group(1).capitalize()
+                message = change_match.group(2).strip()
+                changelog_entries.append({
+                    "author": author,
+                    "type": change_type,
+                    "message": message
+                })
+            else:
+                print(f"Warning: Unable to parse change line: {change}")
     return changelog_entries
 
 def get_last_id(changelog_data):
@@ -85,7 +92,7 @@ def update_changelog():
         os.makedirs(os.path.dirname(changelog_path), exist_ok=True)
 
         with open(changelog_path, "w", encoding='utf-8') as file:
-            yaml.dump(changelog_data, file, allow_unicode=True, explicit_start=True)
+            yaml.dump(changelog_data, file, allow_unicode=True)
             file.write('\n')
         print(f"Changelog updated and written to {changelog_path}")
     else:
