@@ -1,8 +1,10 @@
 using System.Numerics;
 using Content.Client.Administration.Systems;
+using Content.Shared.CCVar;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 
 namespace Content.Client.Administration;
@@ -10,6 +12,7 @@ namespace Content.Client.Administration;
 internal sealed class AdminNameOverlay : Overlay
 {
     private readonly AdminSystem _system;
+    private readonly IConfigurationManager _config = default!;
     private readonly IEntityManager _entityManager;
     private readonly IEyeManager _eyeManager;
     private readonly EntityLookupSystem _entityLookup;
@@ -62,11 +65,25 @@ internal sealed class AdminNameOverlay : Overlay
             var screenCoordinates = _eyeManager.WorldToScreen(aabb.Center +
                                                               new Angle(-_eyeManager.CurrentEye.Rotation).RotateVec(
                                                                   aabb.TopRight - aabb.Center)) + new Vector2(1f, 7f);
-            if (playerInfo.Antag) //TODO:ERRANT P2 Put Role Types on the admin overlay
+
+            //TODO:ERRANT read from cvar
+            // var detail = _config.GetCVar(CCVars.AdminOverlayClassic);
+            var detail = false;
+
+            var label = "ANTAG";
+            var color = Color.OrangeRed;
+
+            if (detail is false)
             {
-                args.ScreenHandle.DrawString(_font, screenCoordinates + (lineoffset * 2), "ANTAG", uiScale, Color.OrangeRed);
-;
+                label = Loc.GetString(playerInfo.RoleProto.Name).ToUpper();
+                color = playerInfo.RoleProto.Color;
             }
+
+            if (playerInfo.Antag)
+            {
+                args.ScreenHandle.DrawString(_font, screenCoordinates + (lineoffset * 2), label, uiScale, color);
+            }
+
             args.ScreenHandle.DrawString(_font, screenCoordinates+lineoffset, playerInfo.Username, uiScale, playerInfo.Connected ? Color.Yellow : Color.White);
             args.ScreenHandle.DrawString(_font, screenCoordinates, playerInfo.CharacterName, uiScale, playerInfo.Connected ? Color.Aquamarine : Color.White);
         }

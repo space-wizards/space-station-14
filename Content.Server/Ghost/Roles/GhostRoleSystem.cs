@@ -520,6 +520,7 @@ public sealed class GhostRoleSystem : EntitySystem
             markerRole.Value.Comp2.Name = role.RoleName;
 
             //TODO:ERRANT ugly ugly UGLY
+            //something somethign RoleRule comparison?
             if (role.RoleType != "Neutral" && role.RoleType is not null)
             {
                 markerRole.Value.Comp1.RoleType = role.RoleType;

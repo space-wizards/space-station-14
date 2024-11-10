@@ -1562,7 +1562,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("votekick.ban_duration", 180, CVar.SERVERONLY);
 
         /// <summary>
-        ///     Whether the ghost requirement settings for votekicks should be ignored for the lobby. 
+        ///     Whether the ghost requirement settings for votekicks should be ignored for the lobby.
         /// </summary>
         public static readonly CVarDef<bool> VotekickIgnoreGhostReqInLobby =
             CVarDef.Create("votekick.ignore_ghost_req_in_lobby", true, CVar.SERVERONLY);
@@ -1851,6 +1851,8 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> SeparatedScreenChatSize =
             CVarDef.Create("ui.separated_chat_size", "0.6,0", CVar.CLIENTONLY | CVar.ARCHIVE);
 
+        public static readonly CVarDef<bool> AdminOverlayClassic =
+            CVarDef.Create("ui.admin_overlay_classic", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
         /*
         * Accessibility
