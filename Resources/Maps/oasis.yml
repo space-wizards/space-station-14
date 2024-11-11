@@ -14470,7 +14470,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -76282.734
+      secondsUntilStateChange: -76213.97
       state: Opening
   - uid: 6934
     components:
@@ -14482,7 +14482,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -76285.37
+      secondsUntilStateChange: -76216.6
       state: Opening
   - uid: 6935
     components:
@@ -14494,7 +14494,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -76284.22
+      secondsUntilStateChange: -76215.45
       state: Opening
   - uid: 6936
     components:
@@ -14505,7 +14505,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -76283.44
+      secondsUntilStateChange: -76214.67
       state: Opening
 - proto: AirlockTheatreLocked
   entities:
@@ -81282,6 +81282,13 @@ entities:
     - type: Transform
       pos: -54.5,-11.5
       parent: 2
+- proto: DefaultStationBeaconVox
+  entities:
+  - uid: 29615
+    components:
+    - type: Transform
+      pos: -14.5,17.5
+      parent: 2
 - proto: DefaultStationBeaconWardensOffice
   entities:
   - uid: 11912
@@ -94285,7 +94292,7 @@ entities:
       pos: -13.5,-1.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -67606.72
+      secondsUntilStateChange: -67537.95
     - type: DeviceNetwork
       deviceLists:
       - 18275
@@ -138834,7 +138841,7 @@ entities:
       pos: 36.5,-35.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -104438.56
+      secondsUntilStateChange: -104369.8
       state: Opening
   - uid: 5211
     components:
@@ -190196,7 +190203,7 @@ entities:
       pos: 24.5,2.5
       parent: 21002
     - type: Door
-      secondsUntilStateChange: -449643.22
+      secondsUntilStateChange: -449574.44
       state: Opening
   - uid: 28863
     components:

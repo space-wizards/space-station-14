@@ -81,7 +81,7 @@
       amount: 1
     Sulfur:
       amount: 1
-    Oxygen: 
+    Oxygen:
       amount: 2
   products:
     SulfuricAcid: 3
@@ -204,6 +204,20 @@
       maxRange: 6
       energyConsumption: 12500
       duration: 15
+
+- type: reaction
+  id: Flash
+  impact: High
+  priority: 20
+  reactants:
+    Aluminium:
+      amount: 1
+    Potassium:
+      amount: 1
+    Sulfur:
+      amount: 1
+  effects:
+    - !type:FlashReactionEffect
 
 - type: reaction
   id: TableSalt
@@ -501,29 +515,3 @@
       amount: 1
   products:
     Tazinide: 1
-
-- type: reaction
-  id: Estradiol
-  impact: Medium
-  reactants:
-    Hydroxide:
-      amount: 2
-    Potassium:
-      amount: 1
-    Protein:
-      amount: 2
-  products:
-    Estradiol: 5
-    
-- type: reaction
-  id: Testosterone
-  impact: Medium
-  reactants:
-    Hydroxide:
-      amount: 2
-    Potassium:
-      amount: 1
-    Nutriment:
-      amount: 2
-  products:
-    Testosterone: 5

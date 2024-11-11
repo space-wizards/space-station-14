@@ -272,7 +272,6 @@
     transferAmount: 20
     onlyAffectsMobs: false
     injectOnly: true
-
   - type: SolutionContainerManager
     solutions:
       pen:
@@ -282,6 +281,102 @@
           Quantity: 15
         - ReagentId: Bicaridine
           Quantity: 5
+  - type: Tag
+    tags: []
+
+- type: entity
+  name: puncturase auto-injector
+  parent: ChemicalMedipen
+  id: PunctAutoInjector
+  description: A rapid dose of puncturase and tranexamic acid, intended for combat applications.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medipen.rsi
+    layers:
+    - state: punctpen
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    changeColor: false
+    emptySpriteName: punctpen_empty
+  - type: Hypospray
+    solutionName: pen
+    transferAmount: 15
+    onlyAffectsMobs: false
+    injectOnly: true
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 15
+        reagents:
+        - ReagentId: Puncturase
+          Quantity: 10
+        - ReagentId: TranexamicAcid
+          Quantity: 5
+  - type: Tag
+    tags: []
+
+- type: entity
+  name: pyrazine auto-injector
+  parent: ChemicalMedipen
+  id: PyraAutoInjector
+  description: A rapid dose of pyrazine and dermaline, intended for combat applications.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medipen.rsi
+    layers:
+    - state: pyrapen
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    changeColor: false
+    emptySpriteName: pyrapen_empty
+  - type: Hypospray
+    solutionName: pen
+    transferAmount: 20
+    onlyAffectsMobs: false
+    injectOnly: true
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 20
+        reagents:
+        - ReagentId: Pyrazine
+          Quantity: 10
+        - ReagentId: Dermaline
+          Quantity: 10
+  - type: Tag
+    tags: []
+
+- type: entity
+  name: airloss auto-injector
+  parent: ChemicalMedipen
+  id: AirlossAutoInjector
+  description: A rapid dose of saline and dexalin plus, intended to get someone up quickly.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medipen.rsi
+    layers:
+    - state: dexpen
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    changeColor: false
+    emptySpriteName: dexpen_empty
+  - type: Hypospray
+    solutionName: pen
+    transferAmount: 40
+    onlyAffectsMobs: false
+    injectOnly: true
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 40
+        reagents:
+        - ReagentId: Saline
+          Quantity: 20
+        - ReagentId: DexalinPlus
+          Quantity: 20
   - type: Tag
     tags: []
 

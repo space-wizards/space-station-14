@@ -680,7 +680,10 @@ public sealed class PlantHolderSystem : EntitySystem
             if (TryComp<HandsComponent>(user, out var hands))
             {
                 if (!_botany.CanHarvest(component.Seed, hands.ActiveHandEntity))
+                {
+                    _popup.PopupCursor(Loc.GetString("plant-holder-component-ligneous-cant-harvest-message"), user);
                     return false;
+                }
             }
             else if (!_botany.CanHarvest(component.Seed))
             {
