@@ -1328,8 +1328,8 @@
   chemicals:
     Amatoxin:
       Min: 1
-      Max: 5
-      PotencyDivisor: 10
+      Max: 10
+      PotencyDivisor: 12
     Nutriment: ## yumby :)
       Min: 1
       Max: 5
