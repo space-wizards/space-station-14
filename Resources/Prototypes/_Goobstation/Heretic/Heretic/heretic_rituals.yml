@@ -1,9 +1,9 @@
 ### basic
-
 # Heartbeat of the Mansus (sacrifice)
 - type: hereticRitual
   id: Sacrifice
-  name: heretic-ritual-basic-sacrifice
+  locName: heretic-ritual-basic-sacrifice
+  locDesc: heretic-ritual-basic-sacrifice-desc
   icon: 
     sprite: Mobs/Species/Human/organs.rsi
     state: heart-on
@@ -11,10 +11,10 @@
   - !type:RitualSacrificeBehavior
     onlyTargets: true
 
-# Amber Focus
 - type: hereticRitual
   id: AmberFocus
-  name: heretic-ritual-basic-focus
+  locName: heretic-ritual-basic-focus
+  locDesc: heretic-ritual-basic-focus-desc
   icon: 
     sprite: _Goobstation/Heretic/amber_focus.rsi
     state: icon
@@ -24,23 +24,38 @@
   output:
     ClothingNeckAmberFocus: 1
 
-# Relentless Heartbeat (sacrifice target reroll)
 - type: hereticRitual
   id: LivingHeart
-  name: heretic-ritual-basic-heart
+  locName: heretic-ritual-basic-heart
+  locDesc: heretic-ritual-basic-heart-desc
+  icon: 
+    sprite: _Goobstation/Heretic/items.rsi
+    state: living_heart
   requiredTags:
     Heart: 1
     Pen: 1
     Paper: 1
   outputEvent: !type:EventHereticRerollTargets
 
-
+- type: hereticRitual
+  id: CodexCicatrix
+  locName: heretic-ritual-basic-codex
+  locDesc: heretic-ritual-basic-codex-desc
+  icon:
+    sprite: _Goobstation/Heretic/book.rsi
+    state: icon-on
+  requiredTags:
+    Eyes: 1
+    Book: 1
+    Pen: 1
+  output:
+    CodexCicatrix: 1
 
 ### ash path
-
 - type: hereticRitual
   id: BladeAsh
-  name: heretic-ritual-ash-blade
+  locName: knowledge-path-ash-s1-name
+  locDesc: knowledge-path-ash-s1-desc
   icon: 
     sprite: _Goobstation/Heretic/Blades/blade_ash.rsi
     state: icon
@@ -52,7 +67,8 @@
 
 - type: hereticRitual
   id: MaskOfMadness
-  name: heretic-ritual-ash-mask
+  locName: knowledge-path-ash-s6-name
+  locDesc: knowledge-path-ash-s6-desc
   icon: 
     sprite: _Goobstation/Heretic/mad_mask.rsi
     state: icon
@@ -65,7 +81,8 @@
 
 - type: hereticRitual
   id: AscensionAsh
-  name: heretic-ritual-ash-ascend
+  locName: knowledge-path-ash-s9-name
+  locDesc: knowledge-path-ash-s9-desc
   icon: 
     sprite: _Goobstation/Heretic/abilities_heretic.rsi
     state: ashlord_rite2
@@ -79,10 +96,10 @@
 
 
 ### flesh path
-
 - type: hereticRitual
   id: BladeFlesh
-  name: heretic-ritual-flesh-blade
+  locName: knowledge-path-flesh-s1-name
+  locDesc: knowledge-path-flesh-s1-desc
   icon: 
     sprite: _Goobstation/Heretic/Blades/blade_flesh.rsi
     state: icon
@@ -96,7 +113,8 @@
 
 - type: hereticRitual
   id: ImperfectRitual
-  name: heretic-ritual-flesh-ghoul
+  locName: knowledge-path-flesh-s3-name
+  locDesc: knowledge-path-flesh-s3-desc
   icon: 
     sprite: Mobs/Species/Skeleton/parts.rsi
     state: full
@@ -107,7 +125,8 @@
 
 - type: hereticRitual
   id: RawRitual
-  name: heretic-ritual-flesh-prophet
+  locName: knowledge-path-flesh-s6-name
+  locDesc: knowledge-path-flesh-s6-desc
   icon: 
     sprite: _Goobstation/Heretic/eldritch_mobs.rsi
     state: raw_prophet
@@ -122,7 +141,8 @@
 
 - type: hereticRitual
   id: LonelyRitual
-  name: heretic-ritual-flesh-stalker
+  locName: knowledge-path-flesh-s8-name
+  locDesc: knowledge-path-flesh-s8-desc
   icon: 
     sprite: _Goobstation/Heretic/eldritch_mobs.rsi
     state: stalker
@@ -139,7 +159,8 @@
 
 - type: hereticRitual
   id: AscensionFlesh
-  name: heretic-ritual-flesh-ascend
+  locName: knowledge-path-flesh-s9-name
+  locDesc: knowledge-path-flesh-s9-desc
   icon: 
     sprite: _Goobstation/Heretic/abilities_heretic.rsi
     state: final_hymn
@@ -153,10 +174,10 @@
 
 
 ### void path
-
 - type: hereticRitual
   id: BladeVoid
-  name: heretic-ritual-void-blade
+  locName: knowledge-path-void-s1-name
+  locDesc: knowledge-path-void-s1-desc
   icon: 
     sprite: _Goobstation/Heretic/Blades/blade_void.rsi
     state: icon
@@ -170,7 +191,8 @@
 
 - type: hereticRitual
   id: AscensionVoid
-  name: heretic-ritual-void-ascend
+  locName: knowledge-path-void-s9-name
+  locDesc: knowledge-path-void-s9-desc
   icon: 
     sprite: Interface/Alerts/temperature.rsi
     state: cold3
@@ -186,19 +208,21 @@
 
 
 ### side knowledge
-
 - type: hereticRitual
   id: RitualOfKnowledge
-  name: heretic-ritual-side-knowledge
+  locName: knowledge-path-side-knowledge-name
+  locDesc: knowledge-path-side-knowledge-desc
   icon: 
-    sprite: Objects/Misc/books.rsi
-    state: book_icon
+    sprite: _Goobstation/Heretic/book.rsi
+    state: icon
   customBehaviors:
   - !type:RitualKnowledgeBehavior
 
+## stage 3
 - type: hereticRitual
   id: ArmorerRitual
-  name: heretic-ritual-side-armor
+  locName: knowledge-path-side-s3-armor-name
+  locDesc: knowledge-path-side-s3-armor-desc
   icon: 
     sprite: _Goobstation/Heretic/eldritch_armor.rsi
     state: icon
@@ -207,3 +231,18 @@
     GasMask: 1
   output:
     ClothingOuterArmorHeretic: 1
+
+- type: hereticRitual
+  id: PriestRitual
+  locName: knowledge-path-side-s3-flask-name
+  locDesc: knowledge-path-side-s3-flask-desc
+  icon:
+    sprite: _Goobstation/Heretic/items.rsi
+    state: eldritch_flask
+  requiredTags:
+    WaterTank: 1
+    GlassShard: 1
+  output:
+    HereticEldritchFlask: 1
+
+## stage 7

@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ ClothingHeadBase, BaseMagicContraband ]
   id: ClothingHeadHatHoodHeretic
   name: ominous hood
   description: A torn, dust-caked hood. Strange eyes line the inside.

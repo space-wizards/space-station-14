@@ -1,5 +1,5 @@
 - type: entity
-  parent: BaseItem
+  parent: [ BaseItem, BaseMagicContraband ]
   id: HereticBladeBase
   name: eldritch blade
   description: The sickly blade used by sinister individuals for rituals and sacrifices.
