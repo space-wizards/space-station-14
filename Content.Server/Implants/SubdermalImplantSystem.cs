@@ -110,7 +110,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
             _pullingSystem.TryStopPull(ent, pull);
 
         // Check if the user is pulling anything, and drop it if so
-        if (TryComp(ent, out PullerComponent? puller) && TryComp(puller.Pulling, out PullableComponent? pullable))
+        if (TryComp<PullerComponent>(ent, out var puller) && TryComp<PullableComponent>(puller.Pulling, out var pullable))
             _pullingSystem.TryStopPull(puller.Pulling.Value, pullable);
 
         var xform = Transform(ent);
