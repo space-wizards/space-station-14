@@ -1,0 +1,40 @@
+# Maintenance Hatches
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintEngiCargoLocked
+  suffix: Engineering/Cargo, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsEngineeringCargo ]
+
+- type: entity
+  parent: AirlockMaintRnDLocked
+  id: AirlockMaintRnDEngiLocked
+  suffix: Engineering/Science, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsEngineeringResearch ]
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintSecCargoLocked
+  suffix: Security/Cargo, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSecurityCargo ]
+  - type: Wires
+    layoutId: AirlockSecurity
+
+- type: entity
+  parent: AirlockMaint
+  id: AirlockMaintSecMedLocked
+  suffix: Security/Medical, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsSecurityMedical ]
+  - type: Wires
+    layoutId: AirlockSecurity

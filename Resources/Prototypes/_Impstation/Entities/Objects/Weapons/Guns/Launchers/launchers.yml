@@ -46,3 +46,15 @@
     capacity: 3
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+
+- type: entity
+  name: Urist McMeteor launcher
+  parent: WeaponLauncherAdmemeMeteorLarge
+  id: WeaponLauncherAdmemeUrist
+  description: It fires Urist McMeteors.
+  components:
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeRocket
+    proto: MeteorUrist
