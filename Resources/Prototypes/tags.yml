@@ -1072,6 +1072,9 @@
   id: Plunger
 
 - type: Tag
+  id: PlushieCarp
+
+- type: Tag
   id: PlushieGhost
 
 - type: Tag
@@ -1194,6 +1197,9 @@
 
 - type: Tag
   id: ShellShotgun
+
+- type: Tag
+  id: ShellShotgunLight # shotgun shells that are compatible with the flare gun.
 
 - type: Tag
   id: Shiv

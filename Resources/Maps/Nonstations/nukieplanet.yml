@@ -6576,7 +6576,7 @@ entities:
   - uid: 2031
     components:
     - type: Transform
-      pos: 3.6114278,-10.732791
+      pos: 4.0109396,-12.223828
       parent: 104
   - uid: 2095
     components:
