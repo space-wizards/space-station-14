@@ -1921,10 +1921,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 30
+        maxVol: 10
         reagents:
         - ReagentId: Amatoxin
-          Quantity: 25
+          Quantity: 5
         - ReagentId: Nutriment
           Quantity: 5
   - type: Sprite
