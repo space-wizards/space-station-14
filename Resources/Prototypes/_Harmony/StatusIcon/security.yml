@@ -12,10 +12,3 @@
   icon:
     sprite: /Textures/_Harmony/Interface/Misc/security_icons.rsi
     state: hud_search
-
-- type: securityIcon
-  parent: SecurityIcon
-  id: SecurityIconKillOnSight
-  icon:
-    sprite: /Textures/_Harmony/Interface/Misc/security_icons.rsi
-    state: hud_killonsight

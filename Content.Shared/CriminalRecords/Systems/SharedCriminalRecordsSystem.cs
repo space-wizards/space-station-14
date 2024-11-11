@@ -48,7 +48,6 @@ public abstract class SharedCriminalRecordsSystem : EntitySystem
             // Harmony additional statuses
             SecurityStatus.Monitor => "SecurityIconMonitor",
             SecurityStatus.Search => "SecurityIconSearch",
-            SecurityStatus.KillOnSight => "SecurityIconKillOnSight",
             _ => record.StatusIcon
         };
 

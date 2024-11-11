@@ -19,8 +19,6 @@ public enum SecurityStatus : byte
     Search,
     Suspected,
     Wanted,
-    // Harmony additional status
-    KillOnSight,
     Detained,
     Paroled,
     Discharged

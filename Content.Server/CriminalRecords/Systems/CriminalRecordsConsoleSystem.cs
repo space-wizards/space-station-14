@@ -82,8 +82,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             msg.Status == SecurityStatus.Suspected != (msg.Reason != null) &&
             // Additional Harmony statuses
             msg.Status == SecurityStatus.Monitor != (msg.Reason != null) &&
-            msg.Status == SecurityStatus.Search != (msg.Reason != null) &&
-            msg.Status == SecurityStatus.KillOnSight != (msg.Reason != null))
+            msg.Status == SecurityStatus.Search != (msg.Reason != null))
             return;
 
         if (!CheckSelected(ent, msg.Actor, out var mob, out var key))
@@ -142,8 +141,6 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             (_, SecurityStatus.Monitor) => "monitor",
             // person needs to be searched
             (_, SecurityStatus.Search) => "search",
-            // person is dangerous and needs to be killed on sight
-            (_, SecurityStatus.KillOnSight) => "killonsight",
             // End of Additional Harmony statuses
             // person is no longer sus
             (SecurityStatus.Suspected, SecurityStatus.None) => "not-suspected",
@@ -158,8 +155,6 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             (SecurityStatus.Monitor, SecurityStatus.None) => "not-monitor",
             // person no longer needs to be searched
             (SecurityStatus.Search, SecurityStatus.None) => "not-search",
-            // person no longer needs to be KoS
-            (SecurityStatus.KillOnSight, SecurityStatus.None) => "not-killonsight",
             // End of Additional Harmony statuses
             // this is impossible
             _ => "not-wanted"
