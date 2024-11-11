@@ -17,11 +17,4 @@ public sealed partial class ChangelingRuleComponent : Component
         "ChangelingAbilitySting",
         "ChangelingAbilityUtility"
     };
-
-    public readonly List<ProtoId<EntityPrototype>> Objectives = new()
-    {
-        "ChangelingSurviveObjective",
-        "ChangelingStealDNAObjective",
-        "EscapeIdentityObjective"
-    };
 }

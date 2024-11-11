@@ -31,6 +31,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.Localizations;
 using Robust.Shared.Audio;
 using Content.Shared.Mobs.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Heretic.Abilities;
 
@@ -63,6 +64,7 @@ public sealed partial class HereticAbilitySystem : EntitySystem
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly IMapManager _mapMan = default!;
+    [Dependency] private readonly IPrototypeManager _prot = default!;
 
     private List<EntityUid> GetNearbyPeople(Entity<HereticComponent> ent, float range)
     {
@@ -87,8 +89,6 @@ public sealed partial class HereticAbilitySystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-
-        SubscribeLocalEvent<HereticMagicItemComponent, InventoryRelayedEvent<CheckMagicItemEvent>>(OnCheckMagicItem);
 
         SubscribeLocalEvent<HereticComponent, EventHereticOpenStore>(OnStore);
         SubscribeLocalEvent<HereticComponent, EventHereticMansusGrasp>(OnMansusGrasp);
@@ -131,12 +131,6 @@ public sealed partial class HereticAbilitySystem : EntitySystem
 
         return true;
     }
-    private void OnCheckMagicItem(Entity<HereticMagicItemComponent> ent, ref InventoryRelayedEvent<CheckMagicItemEvent> args)
-    {
-        // no need to check fo anythign because the event gets processed only by magic items
-        args.Args.Handled = true;
-    }
-
     private void OnStore(Entity<HereticComponent> ent, ref EventHereticOpenStore args)
     {
         if (!TryComp<StoreComponent>(ent, out var store))

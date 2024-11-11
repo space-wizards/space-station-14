@@ -41,7 +41,7 @@ public sealed partial class MadnessMaskSystem : EntitySystem
                     continue;
 
                 if (HasComp<StaminaComponent>(look) && _random.Prob(.4f))
-                    _stamina.TakeStaminaDamage(look, 5f, visual: false);
+                    _stamina.TakeStaminaDamage(look, 10f, visual: false, immediate: false);
 
                 if (_random.Prob(.4f))
                     _jitter.DoJitter(look, TimeSpan.FromSeconds(.5f), true, amplitude: 5, frequency: 10);

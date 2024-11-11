@@ -55,7 +55,7 @@ public sealed partial class HereticRitualRuneRadialMenu : RadialMenu
             {
                 StyleClasses = { "RadialMenuButton" },
                 SetSize = new Vector2(64, 64),
-                ToolTip = Loc.GetString(ritualPrototype.Name),
+                ToolTip = Loc.GetString(ritualPrototype.LocName),
                 ProtoId = ritualPrototype.ID
             };
 
