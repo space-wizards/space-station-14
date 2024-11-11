@@ -38,7 +38,7 @@
   color: '#6495ed'
 
 - type: roleType
-  id: SubvertedSilicon
-  roleRule: SubvertedSilicon
+  id: SiliconAntagonist
+  roleRule: SiliconAntagonist
   name: role-type-silicon-antagonist-name
   color: '#c832e6'

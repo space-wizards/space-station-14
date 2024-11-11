@@ -35,7 +35,7 @@ public sealed class RoleTypePrototype : IPrototype
 /// </summary>
 public enum RoleEnum
 {
-    SubvertedSilicon, //TODO:ERRANT ask admins
+    SiliconAntagonist,
     Silicon,
     TeamAntagonist,
     SoloAntagonist,

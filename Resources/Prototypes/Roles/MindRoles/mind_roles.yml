@@ -15,6 +15,7 @@
     antag: true
 
 #Observer
+# Is anything actually using this?
 - type: entity
   parent: BaseMindRole
   id: MindRoleObserver
@@ -38,7 +39,7 @@
 #  description:
   # MindRoleComponent.JobPrototype is filled by SharedJobSystem
 
-# Subverted Silicon
+# Subverted Silicon / emagged borg
 - type: entity
   parent: BaseMindRoleAntag
   id: MindRoleSubvertedSilicon
@@ -47,7 +48,7 @@
   components:
   - type: MindRole
     antagPrototype: SubvertedSilicon
-    roleType: SubvertedSilicon # TODO:ERRANT ask admins
+    roleType: SiliconAntagonist
   - type: SubvertedSiliconRole
 
 # Dragon

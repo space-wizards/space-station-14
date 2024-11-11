@@ -513,6 +513,7 @@ public sealed class GhostRoleSystem : EntitySystem
         var newMind = _mindSystem.CreateMind(player.UserId,
             EntityManager.GetComponent<MetaDataComponent>(mob).EntityName);
 
+        //TODO:ERRANT This should actually be a specifyable mind role
         _roleSystem.MindAddRole(newMind, "MindRoleGhostMarker");
 
         if (_roleSystem.MindHasRole<GhostRoleMarkerRoleComponent>(newMind!, out var markerRole))
