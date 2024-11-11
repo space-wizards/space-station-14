@@ -1,95 +1,99 @@
 using Content.Shared.Chemistry.Components;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Botany.Components;
 
 [RegisterComponent]
 public sealed partial class PlantHolderComponent : Component
 {
-    [DataField("nextUpdate", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan NextUpdate = TimeSpan.Zero;
-    [ViewVariables(VVAccess.ReadWrite), DataField("updateDelay")]
+    [DataField]
     public TimeSpan UpdateDelay = TimeSpan.FromSeconds(3);
 
-    [DataField("lastProduce")]
+    [DataField]
     public int LastProduce;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("missingGas")]
+    [DataField]
     public int MissingGas;
 
-    [DataField("cycleDelay")]
+    [DataField]
     public TimeSpan CycleDelay = TimeSpan.FromSeconds(15f);
 
-    [DataField("lastCycle", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan LastCycle = TimeSpan.Zero;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("updateSpriteAfterUpdate")]
+    [DataField]
+    public SoundSpecifier? WateringSound;
+
+    [DataField]
     public bool UpdateSpriteAfterUpdate;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("drawWarnings")]
+    [DataField]
     public bool DrawWarnings = false;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("waterLevel")]
+    [DataField]
     public float WaterLevel = 100f;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("nutritionLevel")]
+    [DataField]
     public float NutritionLevel = 100f;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("pestLevel")]
+    [DataField]
     public float PestLevel;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("weedLevel")]
+    [DataField]
     public float WeedLevel;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("toxins")]
+    [DataField]
     public float Toxins;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("age")]
+    [DataField]
     public int Age;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("skipAging")]
+    [DataField]
     public int SkipAging;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("dead")]
+    [DataField]
     public bool Dead;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("harvest")]
+    [DataField]
     public bool Harvest;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("sampled")]
+    [DataField]
     public bool Sampled;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("yieldMod")]
+    [DataField]
     public int YieldMod = 1;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("mutationMod")]
+    [DataField]
     public float MutationMod = 1f;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("mutationLevel")]
+    [DataField]
     public float MutationLevel;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("health")]
+    [DataField]
     public float Health;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("weedCoefficient")]
+    [DataField]
     public float WeedCoefficient = 1f;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("seed")]
+    [DataField]
     public SeedData? Seed;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("improperHeat")]
+    [DataField]
     public bool ImproperHeat;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("improperPressure")]
+    [DataField]
     public bool ImproperPressure;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("improperLight")]
+    [DataField]
     public bool ImproperLight;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("forceUpdate")]
+    [DataField]
     public bool ForceUpdate;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("solution")]
+    [DataField]
     public string SoilSolutionName = "soil";
 
     [DataField]
