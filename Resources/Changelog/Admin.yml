@@ -519,5 +519,76 @@ Entries:
   id: 64
   time: '2024-08-31T11:38:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/30433
+- author: nikthechampiongr
+  changes:
+  - message: The addobjective command will now offer completions for username and
+      objectives.
+    type: Tweak
+  id: 65
+  time: '2024-09-08T07:28:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30456
+- author: Fildrance
+  changes:
+  - message: The setmapatmos command now correctly uses its temperature argument
+    type: Fix
+  id: 66
+  time: '2024-09-13T22:49:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32125
+- author: nikthechampiongr
+  changes:
+  - message: Rename verb now acts the same as the rename command.
+    type: Fix
+  - message: Renamed entities will now have their new name appear immediately on entity
+      examination and on crew monitor console.
+    type: Fix
+  id: 67
+  time: '2024-09-15T01:55:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31654
+- author: ElectroJr
+  changes:
+  - message: The `menuvis all` once again makes all entities show up in the right-click
+      context menu.
+    type: Fix
+  id: 68
+  time: '2024-09-23T07:28:42.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32395
+- author: SlamBamActionman
+  changes:
+  - message: Added admin logging for generated codewords.
+    type: Add
+  id: 69
+  time: '2024-10-09T11:55:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32531
+- author: IProduceWidgets
+  changes:
+  - message: invokeverb should work with smite names now. Find the names in the smite
+      tab on mouse hover.
+    type: Fix
+  id: 70
+  time: '2024-10-16T22:24:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32844
+- author: BramvanZijp
+  changes:
+  - message: CC, ERT, Admin, and Deathsquad PDA's now have all departmental programs
+      pre-installed.
+    type: Tweak
+  id: 71
+  time: '2024-10-31T14:53:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32601
+- author: metalgearsloth
+  changes:
+  - message: Added on-call functionality for discord relay to get notified on unanswered
+      ahelps.
+    type: Add
+  id: 72
+  time: '2024-11-02T09:29:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30443
+- author: nikthechampiongr
+  changes:
+  - message: It is now possible to edit the AI's laws through its core and eye.
+    type: Fix
+  id: 73
+  time: '2024-11-02T13:21:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32461
 Name: Admin
 Order: 1

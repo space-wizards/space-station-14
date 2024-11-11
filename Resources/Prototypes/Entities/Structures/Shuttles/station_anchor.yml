@@ -3,6 +3,7 @@
   abstract: true
   name: station anchor
   description: Prevents stations from moving.
+  suffix: On
   placement:
     mode: AlignTileAny
   components:
@@ -56,6 +57,7 @@
   placement:
     mode: AlignTileAny
   components:
+    - type: StationAiWhitelist
     - type: PowerCharge
       windowTitle: station-anchor-window-title
       idlePower: 50
@@ -107,3 +109,11 @@
       interfaces:
         enum.PowerChargeUiKey.Key:
           type: PowerChargeBoundUserInterface
+
+- type: entity
+  parent: StationAnchor
+  id: StationAnchorOff
+  suffix: Off
+  components:
+  - type: StationAnchor
+    switchedOn: false

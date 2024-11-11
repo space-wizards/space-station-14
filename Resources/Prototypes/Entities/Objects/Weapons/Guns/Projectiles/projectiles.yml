@@ -1023,7 +1023,7 @@
 - type: entity
   name: wide laser barrage
   id: BulletLaserSpread
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: BulletLaser
   components:
   - type: ProjectileSpread
@@ -1032,31 +1032,20 @@
     spread: 30 
 
 - type: entity
-  name : heavy laser bolt
-  id: BulletLaserHeavy
-  parent: BulletLaser
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Projectile
-    damage:
-      types:
-        Heat: 15
-
-- type: entity
   name: narrow laser barrage
-  id: BulletLaserHeavySpread
-  noSpawn: true
+  id: BulletLaserSpreadNarrow
+  categories: [ HideSpawnMenu ]
   parent: BulletLaser
   components:
   - type: ProjectileSpread
-    proto: BulletLaserHeavy
-    count: 4 #60 heat damage if you hit all your shots, but narrower spread
+    proto: BulletLaser
+    count: 4 #52 heat damage if you hit all your shots, but narrower spread
     spread: 10
 
 - type: entity
   name: disabling laser barrage
   id: BulletDisablerSmgSpread
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   parent: BulletDisablerSmg
   components:
   - type: ProjectileSpread

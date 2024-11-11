@@ -33,8 +33,8 @@
   result: SheetRGlass1
   completetime: 0
   materials:
-    Glass: 100
-    Steel: 50
+    RawQuartz: 100
+    RawIron: 50
     Coal: 15
 
 - type: latheRecipe
