@@ -76,7 +76,7 @@ public sealed partial class GhostRoleComponent : Component
     /// <summary>
     /// If set, the mob's mind entity will start with this Role Type.
     /// </summary>
-    [DataField, Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends TODO:ERRANT this is my problem now...
+    [DataField, Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)]
     public ProtoId<RoleTypePrototype>? RoleType;
 
     [DataField("allowSpeech")]
