@@ -29,6 +29,7 @@
     - Cartridge
     - ShellShotgun
     - ShellShotgunLight
+    - ShellShotgunBeanbag
   - type: Sprite
     layers:
       - state: beanbag
@@ -37,10 +38,6 @@
     proto: PelletShotgunBeanbag
   - type: SpentAmmoVisuals
     state: "beanbag"
-  - type: Tag
-    tags:
-    - ShellShotgun
-    - ShellShotgunBeanbag
 
 - type: entity
   id: ShellShotgunSlug
