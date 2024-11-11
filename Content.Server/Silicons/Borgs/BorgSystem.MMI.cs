@@ -64,7 +64,7 @@ public sealed partial class BorgSystem
 
         _mind.TransferTo(mindId, component.LinkedMMI, true, mind: mind);
     }
-
+    //TODO:ERRANT where did the silicon add remove code go??
     private void OnMMILinkedRemoved(EntityUid uid, MMILinkedComponent component, EntGotRemovedFromContainerMessage args)
     {
         if (Terminating(uid))
