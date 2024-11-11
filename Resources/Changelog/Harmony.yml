@@ -502,3 +502,27 @@ Entries:
     changes:
     - type: Tweak
       message: Server rules have been updated for better clarity.
+  - id: 172
+    author: BoskiYourk
+    time: '2024-11-10T21:28:18.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/172
+    changes:
+    - type: Tweak
+      message: Updated the blue security uniforms to fit with the rest of security's
+        clothing.
+    - type: Add
+      message: Added the security blue suits to their respective loadout menus.
+  - id: 167
+    author: elisarek
+    time: '2024-11-10T23:36:26.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/167
+    changes:
+    - type: Add
+      message: Added "Survival Harmony" lobby art by Logan Avery
+  - id: 169
+    author: FluffMe
+    time: '2024-11-10T23:37:16.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/169
+    changes:
+    - type: Tweak
+      message: Crew member list in cargo order menu is now sorted by name.
