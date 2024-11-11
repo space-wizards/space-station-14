@@ -42,124 +42,82 @@ Entries:
   id: 6
   time: '2024-11-09T20:57:29.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/34
-- author: '- add: Added fun!'
-  changes:
-  - message: Removed fun!
-    type: Remove
-  id: 7
-  time: '2024-11-10T15:55:07.000000+00:00'
-  url: https://github.com/ss14Starlight/space-station-14/pull/44
-- author: Rinary
-  changes:
-  - message: Changed fun!
-    type: Tweak
-  id: 8
-  time: '2024-11-10T15:55:07.000000+00:00'
-  url: https://github.com/ss14Starlight/space-station-14/pull/44
-- author: Rinary
-  changes:
-  - message: Fixed fun!
-    type: Fix
-  id: 9
-  time: '2024-11-10T15:55:07.000000+00:00'
-  url: https://github.com/ss14Starlight/space-station-14/pull/44
 - author: Rinary
   changes:
   - message: Fixed muiltiple lines in auto changelog.
     type: Fix
-  id: 10
+  id: 7
   time: '2024-11-10T15:55:07.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/44
-- author: '- add: Added fun!'
-  changes:
-  - message: Removed fun!
-    type: Remove
-  id: 11
-  time: '2024-11-11T05:16:12.000000+00:00'
-  url: https://github.com/ss14Starlight/space-station-14/pull/45
-- author: '- add: Added fun!'
-  changes:
-  - message: Changed fun!
-    type: Tweak
-  id: 12
-  time: '2024-11-11T05:16:12.000000+00:00'
-  url: https://github.com/ss14Starlight/space-station-14/pull/45
-- author: '- add: Added fun!'
-  changes:
-  - message: Fixed fun!
-    type: Fix
-  id: 13
-  time: '2024-11-11T05:16:12.000000+00:00'
-  url: https://github.com/ss14Starlight/space-station-14/pull/45
 - author: Darkrell
   changes:
   - message: Added lone abductors ghost role, spawning from 15 minutes with at least
       10 players.
     type: Add
-  id: 14
+  id: 8
   time: '2024-11-11T05:16:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/45
 - author: Darkrell
   changes:
   - message: 'Five abductor glands have been added:'
     type: Add
-  id: 15
+  id: 9
   time: '2024-11-11T05:16:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/45
 - author: Darkrell
   changes:
   - message: 'gland: Heals 3 damage from all sources every 3 seconds.'
     type: Add
-  id: 16
+  id: 10
   time: '2024-11-11T05:16:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/45
 - author: Darkrell
   changes:
   - message: 'gland: Coughs up plasma once per minute.'
     type: Add
-  id: 17
+  id: 11
   time: '2024-11-11T05:16:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/45
 - author: Darkrell
   changes:
   - message: 'gland: Creates a gravity well once per minute.'
     type: Add
-  id: 18
+  id: 12
   time: '2024-11-11T05:16:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/45
 - author: Darkrell
   changes:
   - message: 'gland: Lays a fertilized chicken egg every 30 seconds.'
     type: Add
-  id: 19
+  id: 13
   time: '2024-11-11T05:16:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/45
 - author: Darkrell
   changes:
   - message: 'gland: Lays a fertilized spider egg every 2 minutes.'
     type: Add
-  id: 20
+  id: 14
   time: '2024-11-11T05:16:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/45
 - author: Darkrell
   changes:
   - message: The sounds of some surgical tools have been changed.
     type: Tweak
-  id: 21
+  id: 15
   time: '2024-11-11T05:16:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/45
 - author: Darkrell
   changes:
   - message: Fixed a bug with the RnD console.
     type: Fix
-  id: 22
+  id: 16
   time: '2024-11-11T05:16:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/45
 - author: Darkrell
   changes:
   - message: Fixed a bug with reflectors.
     type: Fix
-  id: 23
+  id: 17
   time: '2024-11-11T05:16:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/45
 

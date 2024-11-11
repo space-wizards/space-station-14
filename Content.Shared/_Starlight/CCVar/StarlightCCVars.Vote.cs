@@ -7,7 +7,7 @@ public sealed partial class StarlightCCVars
     /// RoundEnd Vote
     /// </summary>
     public static readonly CVarDef<int> MinPlayerToVote = 
-        CVarDef.Create("game.min_player_to_vote", 2);
+        CVarDef.Create("vote.min_player_to_vote", 2);
     
     public static readonly CVarDef<bool> ShowRestartVotes = 
         CVarDef.Create("vote.show_restart_votes", true);
@@ -25,7 +25,7 @@ public sealed partial class StarlightCCVars
         CVarDef.Create("vote.run_preset_vote_after_restart", false);
     
     public static readonly CVarDef<int> VotingsDelay = 
-        CVarDef.Create("vote.votings_delay", 90);
+        CVarDef.Create("vote.votings_delay", 60);
     
     public static readonly CVarDef<int> MapVotingCount = 
         CVarDef.Create("vote.map_voting_count", 3);

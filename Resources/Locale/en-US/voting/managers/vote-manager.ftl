@@ -12,8 +12,8 @@ ui-vote-restart-no = No
 ui-vote-restart-abstain = Abstain
 
 ui-vote-gamemode-title = Next gamemode
-ui-vote-gamemode-tie = Tie for gamemode vote! Picking... { $picked }
-ui-vote-gamemode-win = { $winner } won the gamemode vote!
+ui-vote-gamemode-tie = Tie when voting for the game map! A random map is selected...
+ui-vote-gamemode-win = Voting for the game map is over!
 
 ui-vote-map-title = Next map
 ui-vote-map-tie = Tie for map vote! Picking... { $picked }
