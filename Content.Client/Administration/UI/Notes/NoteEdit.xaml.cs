@@ -31,6 +31,20 @@ public sealed partial class NoteEdit : FancyWindow
 
         ResetSubmitButton();
 
+        // It's weird to use minutes as the IDs, but it works and makes sense kind of :)
+        ExpiryLengthDropdown.AddItem("Minutes", (int) TimeSpan.FromMinutes(1).TotalMinutes);
+        ExpiryLengthDropdown.AddItem("Hours", (int) TimeSpan.FromHours(1).TotalMinutes);
+        ExpiryLengthDropdown.AddItem("Days", (int) TimeSpan.FromDays(1).TotalMinutes);
+        ExpiryLengthDropdown.AddItem("Weeks", (int) TimeSpan.FromDays(7).TotalMinutes);
+        ExpiryLengthDropdown.AddItem("Months", (int) TimeSpan.FromDays(30).TotalMinutes);
+        ExpiryLengthDropdown.AddItem("Years", (int) TimeSpan.FromDays(365).TotalMinutes);
+        ExpiryLengthDropdown.AddItem("Centuries", (int) TimeSpan.FromDays(36525).TotalMinutes);
+        ExpiryLengthDropdown.OnItemSelected += OnLengthChanged;
+
+        ExpiryLengthDropdown.SelectId((int) TimeSpan.FromDays(1).TotalMinutes);
+
+        ExpiryLineEdit.OnTextChanged += OnTextChanged;
+
         TypeOption.AddItem(Loc.GetString("admin-note-editor-type-note"), (int) NoteType.Note);
         TypeOption.AddItem(Loc.GetString("admin-note-editor-type-message"), (int) NoteType.Message);
         TypeOption.AddItem(Loc.GetString("admin-note-editor-type-watchlist"), (int) NoteType.Watchlist);
@@ -172,8 +186,9 @@ public sealed partial class NoteEdit : FancyWindow
     {
         ExpiryLabel.Visible = !PermanentCheckBox.Pressed;
         ExpiryLineEdit.Visible = !PermanentCheckBox.Pressed;
+        ExpiryLengthDropdown.Visible = !PermanentCheckBox.Pressed;
 
-        ExpiryLineEdit.Text = !PermanentCheckBox.Pressed ? DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") : string.Empty;
+        ExpiryLineEdit.Text = !PermanentCheckBox.Pressed ? 7.ToString() : string.Empty;
     }
 
     private void OnSecretPressed(BaseButton.ButtonEventArgs _)
@@ -185,6 +200,16 @@ public sealed partial class NoteEdit : FancyWindow
     {
         NoteSeverity = args.Id == -1 ? NoteSeverity = null : (NoteSeverity) args.Id;
         SeverityOption.SelectId(args.Id);
+    }
+
+    private void OnLengthChanged(OptionButton.ItemSelectedEventArgs args)
+    {
+        ExpiryLengthDropdown.SelectId(args.Id);
+    }
+
+    private void OnTextChanged(HistoryLineEdit.LineEditEventArgs args)
+    {
+        ParseExpiryTime();
     }
 
     private void OnSubmitButtonPressed(BaseButton.ButtonEventArgs args)
@@ -263,13 +288,13 @@ public sealed partial class NoteEdit : FancyWindow
             return true;
         }
 
-        if (string.IsNullOrWhiteSpace(ExpiryLineEdit.Text) || !DateTime.TryParse(ExpiryLineEdit.Text, out var result) || DateTime.UtcNow > result)
+        if (string.IsNullOrWhiteSpace(ExpiryLineEdit.Text) || !uint.TryParse(ExpiryLineEdit.Text, out var inputInt))
         {
             ExpiryLineEdit.ModulateSelfOverride = Color.Red;
             return false;
         }
 
-        ExpiryTime = result.ToUniversalTime();
+        ExpiryTime = DateTime.UtcNow.AddMinutes(inputInt * ExpiryLengthDropdown.SelectedId);
         ExpiryLineEdit.ModulateSelfOverride = null;
         return true;
     }
