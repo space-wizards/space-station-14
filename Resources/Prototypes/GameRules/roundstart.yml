@@ -191,7 +191,7 @@
 
 - type: entity
   id: TraitorReinforcement
-  parent: Traitor # Do We actually need to have a whole GameRule for antags that are just a single one-shot spawn?
+  parent: BaseTraitorRule
   components:
   - type: TraitorRule
     giveUplink: false
@@ -200,14 +200,8 @@
   - type: AntagSelection
     definitions:
     - prefRoles: [ Traitor ]
-      max: 8
-      playerRatio: 10
-      blacklist:
-        components:
-        - AntagImmune
-      lateJoinAdditional: true
       mindRoles:
-      - MindRoleTraitorReinforcement
+      - MindRoleTraitor
 
 - type: entity
   id: Revolutionary
@@ -291,7 +285,6 @@
         tableId: CalmPestEventsTable
       - !type:NestedSelector
         tableId: SpicyPestEventsTable
-
 
 - type: entityTable
   id: SpaceTrafficControlTable
