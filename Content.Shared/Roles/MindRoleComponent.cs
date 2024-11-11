@@ -15,7 +15,7 @@ public sealed partial class MindRoleComponent : BaseMindRoleComponent
     ///     A single antag Mind Role is enough to make the owner mind count as Antagonist.
     /// </summary>
     [DataField]
-    public bool Antag { get; set; } = false; //TODO:ERRANT ask admins
+    public bool Antag { get; set; } = false;
 
     /// <summary>
     ///     The mind's current antagonist/special role, or lack thereof;

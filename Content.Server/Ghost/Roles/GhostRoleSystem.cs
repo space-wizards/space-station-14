@@ -519,9 +519,7 @@ public sealed class GhostRoleSystem : EntitySystem
         {
             markerRole.Value.Comp2.Name = role.RoleName;
 
-            //TODO:ERRANT ugly ugly UGLY
-            //something somethign RoleRule comparison?
-            if (role.RoleType != "Neutral" && role.RoleType is not null)
+            if (role.RoleType is not null)
             {
                 markerRole.Value.Comp1.RoleType = role.RoleType;
                 //TODO:ERRANT probably should be an event instead so the function can remain Private
@@ -587,7 +585,7 @@ public sealed class GhostRoleSystem : EntitySystem
                 Identifier = id,
                 Name = role.RoleName,
                 Description = role.RoleDescription,
-                Rules = role.RoleRules, //TODO:ERRANT is this really the only place using RoleEnum ?
+                Rules = role.RoleRules,
                 Requirements = role.Requirements,
                 Kind = kind,
                 RafflePlayerCount = rafflePlayerCount,
