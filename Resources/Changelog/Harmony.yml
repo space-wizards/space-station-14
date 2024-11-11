@@ -475,10 +475,10 @@ Entries:
     url: https://github.com/ss14-harmony/space-station-14/pull/149
     changes:
     - type: Add
-      message: Added Raised by [species name] character traits. These traits allow you
+      message: Added Raised by species character traits. These traits allow you
         to change speech sounds and verbs.
     - type: Add
-      message: Added Voice of [species name] character traits. These traits allow you
+      message: Added Voice of species character traits. These traits allow you
         to fully change your voice. Chittering humans are a thing now...
   - id: 153
     author: thesaladmancer
@@ -502,3 +502,42 @@ Entries:
     changes:
     - type: Tweak
       message: Server rules have been updated for better clarity.
+  - id: 172
+    author: BoskiYourk
+    time: '2024-11-10T21:28:18.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/172
+    changes:
+    - type: Tweak
+      message: Updated the blue security uniforms to fit with the rest of security's
+        clothing.
+    - type: Add
+      message: Added the security blue suits to their respective loadout menus.
+  - id: 167
+    author: elisarek
+    time: '2024-11-10T23:36:26.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/167
+    changes:
+    - type: Add
+      message: Added "Survival Harmony" lobby art by Logan Avery
+  - id: 169
+    author: FluffMe
+    time: '2024-11-10T23:37:16.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/169
+    changes:
+    - type: Tweak
+      message: Crew member list in cargo order menu is now sorted by name.
+  - id: 171
+    author: Unisol
+    time: '2024-11-11T01:05:46.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/171
+    changes:
+    - type: Add
+      message: Added purple toolbox with a little extra something to help janitor through
+        his day
+  - id: 176
+    author: BoskiYourk
+    time: '2024-11-11T05:39:56.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/176
+    changes:
+    - type: Add
+      message: Added the HoS sheriff hat back to the game.
