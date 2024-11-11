@@ -1,0 +1,11 @@
+- type: entity
+  name: janitorial toolbox
+  parent: ToolboxBase
+  id: ToolboxJanitorial
+  description: A purple toolbox, stocked with custodial tools.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Objects/Tools/Toolboxes/toolbox_purple.rsi
+    state: icon
+  - type: Item
+    sprite: _Harmony/Objects/Tools/Toolboxes/toolbox_purple.rsi

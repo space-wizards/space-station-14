@@ -1,0 +1,29 @@
+- type: entity
+  id: ToolboxJanitorialFilled
+  name: janitorial toolbox
+  parent: ToolboxJanitorial
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: Screwdriver
+      - id: Wrench
+      - id: NetworkConfigurator
+      - id: Welder
+      - id: ClothingHeadHatWelding
+        orGroup: weldingmask
+      - id: ClothingHeadHatWeldingMaskFlame
+        prob: 0.05
+        orGroup: weldingmask
+      - id: ClothingHeadHatWeldingMaskFlameBlue
+        prob: 0.05
+        orGroup: weldingmask
+      - id: ClothingHeadHatWeldingMaskPainted
+        prob: 0.05
+        orGroup: weldingmask
+      - id: Plunger
+      # fun items - non-critical
+      - id: ToyRubberDuck
+        prob: 0.15
+      - id: DrinkGinBottleFull
+        prob: 0.2
