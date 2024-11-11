@@ -475,10 +475,10 @@ Entries:
     url: https://github.com/ss14-harmony/space-station-14/pull/149
     changes:
     - type: Add
-      message: Added Raised by [species name] character traits. These traits allow you
+      message: Added Raised by species character traits. These traits allow you
         to change speech sounds and verbs.
     - type: Add
-      message: Added Voice of [species name] character traits. These traits allow you
+      message: Added Voice of species character traits. These traits allow you
         to fully change your voice. Chittering humans are a thing now...
   - id: 153
     author: thesaladmancer
