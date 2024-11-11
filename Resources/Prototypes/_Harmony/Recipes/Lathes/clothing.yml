@@ -8,3 +8,9 @@
   parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpskirtTurtleneckHoPHarmony
   result: ClothingUniformJumpskirtHeadOfPersonnelTurtleneckHarmony
+
+## HoS
+- type: latheRecipe
+  parent: BaseCommandHatRecipe
+  id: ClothingHeadHatHoSWidebrimHarmony
+  result: ClothingHeadHatHoSWidebrimHarmony

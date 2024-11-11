@@ -1,0 +1,10 @@
+- type: entity
+  parent: [ClothingHeadBase, BaseCommandContraband]
+  id: ClothingHeadHatHoSWidebrimHarmony
+  name: head of security's sheriff hat
+  description: A hat sure to remind your officers who's boss.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Head/Hats/hoswidebrimhat.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Head/Hats/hoswidebrimhat.rsi
