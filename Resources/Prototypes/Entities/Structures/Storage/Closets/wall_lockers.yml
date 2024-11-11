@@ -164,3 +164,18 @@
     stateDoorClosed: med_door
   - type: AccessReader
     access: [["Medical"]]
+
+- type: entity
+  id: LockerWallSyndicate
+  parent: BaseWallLocker
+  name: blood-red wall locker
+  description: It's a wall storage unit with a blood-red design.
+  suffix: "Locked"
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: generic
+    stateDoorOpen: syndicate_open
+    stateDoorClosed: syndicate_closed
+  - type: AccessReader
+    access: [["SyndicateAgent"]]

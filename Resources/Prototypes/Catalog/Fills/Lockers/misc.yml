@@ -1,8 +1,31 @@
 - type: entity
   id: LockerSyndicatePersonalFilled
-  suffix: Filled
+  suffix: Nukie, Filled
   parent: LockerSyndicatePersonal
+  description: It's a personal storage unit for operative gear.
   components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: ClothingBeltMilitaryWebbing
+        - id: ClothingHandsGlovesCombat
+        - id: JetpackBlackFilled
+        - id: ClothingUniformJumpsuitOperative
+        - id: ClothingUniformJumpskirtOperative
+        - id: ClothingHeadsetAltSyndicate
+        - id: ClothingEyesHudSyndicate
+
+- type: entity
+  id: LockerSyndicateWallFilled
+  suffix: Nukie, Filled
+  parent: LockerWallSyndicate
+  description: It's a personal storage unit for operative gear.
+  components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
   - type: EntityTableContainerFill
     containers:
       entity_storage: !type:AllSelector
