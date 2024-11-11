@@ -1,0 +1,11 @@
+- type: lobbyBackground
+  id: StationCafe
+  background: /Textures/_Harmony/LobbyScreens/stationcafe.webp
+
+- type: lobbyBackground
+  id: MaintsSlasher
+  background: /Textures/_Harmony/LobbyScreens/maints-slasher.webp
+
+- type: lobbyBackground
+  id: SurvivalHarmony
+  background: /Textures/_Harmony/LobbyScreens/survivalharmony.webp
