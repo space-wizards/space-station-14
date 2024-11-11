@@ -1,11 +1,13 @@
-- type: Tag
-  id: CleanerGrenade
+# PUT YOUR TAGS IN ALPHABETICAL ORDER
 
 - type: Tag
-  id: WeaponCleanerLakeUpgradeKit
+  id: CleanerGrenade
 
 - type: Tag
   id: ShellShotgunBeanbag
 
 - type: Tag
   id: Vaporizer
+
+- type: Tag
+  id: WeaponCleanerLakeUpgradeKit
