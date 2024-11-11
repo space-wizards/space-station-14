@@ -534,3 +534,10 @@ Entries:
     - type: Add
       message: Added purple toolbox with a little extra something to help janitor through
         his day
+  - id: 176
+    author: BoskiYourk
+    time: '2024-11-11T05:39:56.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/176
+    changes:
+    - type: Add
+      message: Added the HoS sheriff hat back to the game.
