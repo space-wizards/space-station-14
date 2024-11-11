@@ -23,6 +23,16 @@
   copyright: "Taken from cmss13"
   source: "https://github.com/cmss13-devs/cmss13/blob/fae73dfa5aedb0a253de04b60085ed8a178d3bf7/sound/surgery/organ2.ogg"
 
+- files: ["bone_setter.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Darkrell"
+  source: "https://github.com/ss14Starlight/space-station-14"
+  
+- files: ["bone_saw.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Darkrell"
+  source: "https://github.com/ss14Starlight/space-station-14"
+
 - files: ["retractor1.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "Taken from cmss13"

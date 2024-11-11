@@ -1,12 +1,13 @@
 - type: entity
   name: wonderprod
   parent: BaseItem
-  id: wonderprod
+  id: Wonderprod
   description: Universal tool of the abductor agent.
   components:
   - type: Item
     sprite: _Starlight/Objects/Weapons/Melee/wonderprod.rsi
     size: Huge
+    storedRotation: -90
   - type: Clothing
     sprite: _Starlight/Objects/Weapons/Melee/wonderprod.rsi
     quickEquip: false
@@ -88,7 +89,7 @@
         addComponents:
         - type: MeleeWeapon
           wideAnimationRotation: -135
-          attackRate: 0.5
+          attackRate: 1
           damage:
             types:
               Shock: 0

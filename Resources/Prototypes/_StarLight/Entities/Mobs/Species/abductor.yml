@@ -3,7 +3,6 @@
   name: Urist McAbductor
   parent:
   - MobBloodstream
-  - MobAtmosStandard
   - MobFlammable
   - BaseMobSpecies
   id: BaseMobAbductor
@@ -24,6 +23,11 @@
     alternateState: Standing
   - type: Damageable
     damageContainer: Biological
+  - type: Tag
+    tags:
+    - CanPilot
+    - FootstepSound
+    - DoorBumpOpener
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:

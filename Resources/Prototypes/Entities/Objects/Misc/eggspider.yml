@@ -21,3 +21,19 @@
     color: "#4faffb"
   - type: StaticPrice
     price: 500
+
+- type: entity
+  parent: BaseItem
+  id: EggSpiderFertilized
+  name: egg spider
+  description: Is it a gemstone? Is it an egg? It looks expensive.
+  components:
+  - type: Timer
+  - type: TimedSpawner
+    prototypes:
+    - MobGiantSpider
+    intervalSeconds: 60
+    minimumEntitiesSpawned: 1
+    maximumEntitiesSpawned: 1
+  - type: TimedDespawn 
+    lifetime: 61

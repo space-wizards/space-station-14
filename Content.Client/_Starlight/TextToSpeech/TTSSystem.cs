@@ -1,17 +1,13 @@
 using System.Collections.Concurrent;
 using System.IO;
-using System.Linq;
-using Content.Shared.Starlight;
 using Content.Shared.Starlight.CCVar;
 using Content.Shared.Starlight.TextToSpeech;
 using Robust.Client.Audio;
-using Robust.Client.ResourceManagement;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
-using Robust.Shared.Utility;
 
 namespace Content.Client._Starlight.TTS;
 
@@ -21,11 +17,8 @@ namespace Content.Client._Starlight.TTS;
 public sealed class TextToSpeechSystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IResourceManager _res = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly SharedAudioSystem _sharedAudio = default!;
-    [Dependency] private readonly IResourceCache _resourceCache = default!;
-    [Dependency] private readonly IDependencyCollection _dependencyCollection = default!;
     [Dependency] private readonly IAudioManager _audioManager = default!;
 
     private readonly ConcurrentQueue<(byte[] file, SoundSpecifier? specifier)> _ttsQueue = [];

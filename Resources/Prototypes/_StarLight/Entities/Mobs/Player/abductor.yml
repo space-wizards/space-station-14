@@ -1,24 +1,73 @@
 ﻿- type: entity
-  name: abductor scientist
+  name: lone abductor
   parent: BaseMobAbductor
   id: MobAbductor
   components:
+  - type: Abductor
+  - type: Tag
+    tags:
+      - Abductor
+      - AbductorScientist
+      - CanPilot
+
+- type: entity
+  name: lone abductor
+  parent: MobAbductor
+  id: MobLoneAbductor
+  components:
+  - type: AntagObjectives
+    objectives:
+    - StealResearchObjective
+  - type: GhostRole
+    name: abductors-ghost-role-name
+    description: abductors-ghost-role-desc
+    rules: abductors-ghost-role-rules
+    raffle:
+      settings: default
   - type: AbductorScientist
   - type: ActionGrant
     actions:
     - ActionReturnToShip
   - type: Loadout
     prototypes:
-      - AbductorScientistGear
-  - type: Tag
-    tags:
-      - Abductor
+      - LoneAbductorGear
 
 - type: startingGear
-  id: AbductorScientistGear
+  id: LoneAbductorGear
   equipment:
+    head: ClothingHeadHelmetAbductor
     jumpsuit: ClothingUniformJumpsuitAbductor
     gloves: ClothingHandsGlovesCombat
     shoes: ClothingShoesBootsCombat
+    pocket1: AbductorGizmo
   inhand:
-  - BriefcaseBrownFilled
+  - Wonderprod
+
+- type: entity
+  name: lone abductor spawner
+  id: SpawnPointLoneAbductor
+  parent: MarkerBase
+  components:
+  - type: SpawnPoint
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: Structures/Wallmounts/signs.rsi
+        state: radiation
+
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: BaseAntagSpawner
+  id: LoneAbductorSpawner
+  components:
+  - type: GhostRole
+    name: abductors-ghost-role-name
+    description: abductors-ghost-role-desc
+    rules: abductors-ghost-role-rules
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: Structures/Wallmounts/signs.rsi
+        state: radiation

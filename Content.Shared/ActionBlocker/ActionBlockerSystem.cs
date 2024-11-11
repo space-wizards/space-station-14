@@ -1,4 +1,4 @@
-using Content.Shared.Body.Events;
+﻿using Content.Shared.Body.Events;
 using Content.Shared.Emoting;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
@@ -97,6 +97,15 @@ namespace Content.Shared.ActionBlocker
             RaiseLocalEvent(target.Value, ref targetEv);
 
             return !targetEv.Cancelled;
+        }
+
+        //🌟Starlight🌟
+        public bool CanInstrumentInteract(EntityUid user, EntityUid used, EntityUid? target)
+        {
+            var ev = new InteractionAttemptEvent(user, target);
+            RaiseLocalEvent(used, ref ev);
+
+            return !ev.Cancelled;
         }
 
         /// <summary>

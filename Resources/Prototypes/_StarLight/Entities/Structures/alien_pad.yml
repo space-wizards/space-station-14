@@ -4,6 +4,7 @@
   name: alien pad
   description: Beam in the pizzas and dig in.
   components:
+  - type: AbductorAlienPad
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
@@ -28,7 +29,6 @@
       map: [ "enum.CargoTelepadLayers.Base" ]
     - state: idle
       map: [ "enum.CargoTelepadLayers.Beam" ]
-      shader: unshaded
   - type: WirelessNetworkConnection
     range: 200
   - type: Appearance

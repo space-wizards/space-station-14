@@ -36,7 +36,8 @@
     - id: SleeperAgents
     - id: ZombieOutbreak
     - id: LoneOpsSpawn
-
+    - id: LoneAbductorSpawn # Starlight
+    
 - type: entity
   id: BaseStationEvent
   parent: BaseGameRule

@@ -41698,7 +41698,7 @@ entities:
     - type: Transform
       pos: 26.613934,-11.4401045
       parent: 1668
-- proto: WeaponTurretHostile
+- proto: WeaponTurretNanoTrasen
   entities:
   - uid: 6577
     components:

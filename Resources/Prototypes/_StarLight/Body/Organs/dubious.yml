@@ -1,0 +1,59 @@
+- type: entity
+  id: OrganDubiousHealth
+  parent: [OrganHumanHeart]
+  name: gland
+  description: Suspicious alien gland, replaces the heart.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Mobs/Species/Cyberlimbs/dubious-organs.rsi
+    state: health
+  - type: AbductorOrgan
+    organ: Health
+
+- type: entity
+  id: OrganDubiousPlasma
+  parent: [OrganHumanHeart]
+  name: gland
+  description: Suspicious alien gland, replaces the heart.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Mobs/Species/Cyberlimbs/dubious-organs.rsi
+    state: gland
+  - type: AbductorOrgan
+    organ: Plasma
+
+- type: entity
+  id: OrganDubiousGravity
+  parent: [OrganHumanHeart]
+  name: gland
+  description: Suspicious alien gland, replaces the heart.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Mobs/Species/Cyberlimbs/dubious-organs.rsi
+    state: slime
+  - type: AbductorOrgan
+    organ: Gravity
+    
+- type: entity
+  id: OrganDubiousEgg
+  parent: [OrganHumanHeart]
+  name: gland
+  description: Suspicious alien gland, replaces the heart.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Mobs/Species/Cyberlimbs/dubious-organs.rsi
+    state: egg
+  - type: AbductorOrgan
+    organ: Egg
+    
+- type: entity
+  id: OrganDubiousSpider
+  parent: [OrganHumanHeart]
+  name: gland
+  description: Suspicious alien gland, replaces the heart.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Mobs/Species/Cyberlimbs/dubious-organs.rsi
+    state: spider
+  - type: AbductorOrgan
+    organ: Spider

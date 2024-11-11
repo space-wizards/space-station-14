@@ -11,10 +11,13 @@ using Content.Shared.Pinpointer;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
+using Content.Shared.Tag;
+using Content.Server.DeviceLinking.Systems;
+using Robust.Server.Containers;
 
 namespace Content.Server.Starlight.Antags.Abductor;
 
-public sealed partial class ConsoleSystem : SharedAbductorSystem
+public sealed partial class AbductorSystem : SharedAbductorSystem
 {
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly EntityManager _entityManager = default!;
@@ -25,6 +28,9 @@ public sealed partial class ConsoleSystem : SharedAbductorSystem
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly TransformSystem _xformSys = default!;
+    [Dependency] private readonly TagSystem _tags = default!;
+    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+    [Dependency] private readonly ContainerSystem _container = default!;
 
     public override void Initialize()
     {
@@ -32,6 +38,10 @@ public sealed partial class ConsoleSystem : SharedAbductorSystem
 
         Subs.BuiEvents<AbductorHumanObservationConsoleComponent>(AbductorCameraConsoleUIKey.Key, subs => subs.Event<AbductorBeaconChosenBuiMsg>(OnAbductorBeaconChosenBuiMsg));
         InitializeActions();
+        InitializeGizmo();
+        InitializeConsole();
+        InitializeOrgans();
+        base.Initialize();
     }
 
     private void OnAbductorBeaconChosenBuiMsg(Entity<AbductorHumanObservationConsoleComponent> ent, ref AbductorBeaconChosenBuiMsg args)

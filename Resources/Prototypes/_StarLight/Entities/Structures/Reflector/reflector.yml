@@ -12,6 +12,7 @@
   - type: Pullable
   - type: Rotatable
   - type: Machine
+  - type: Clickable
   - type: Physics
     bodyType: Static
   - type: Fixtures

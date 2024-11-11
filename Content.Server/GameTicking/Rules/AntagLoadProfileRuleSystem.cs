@@ -31,7 +31,6 @@ public sealed class AntagLoadProfileRuleSystem : GameRuleSystem<AntagLoadProfile
             ? _prefs.GetPreferences(args.Session.UserId).SelectedCharacter as HumanoidCharacterProfile
             : HumanoidCharacterProfile.RandomWithSpecies();
 
-
         if (profile?.Species is not { } speciesId || !_proto.TryIndex(speciesId, out var species))
         {
             species = _proto.Index<SpeciesPrototype>(SharedHumanoidAppearanceSystem.DefaultSpecies);
@@ -42,6 +41,9 @@ public sealed class AntagLoadProfileRuleSystem : GameRuleSystem<AntagLoadProfile
         {
             species = _proto.Index(ent.Comp.SpeciesOverride.Value);
         }
+
+        if(ent.Comp.SpeciesHardOverride is not null)
+            species = _proto.Index(ent.Comp.SpeciesHardOverride.Value);
 
         args.Entity = Spawn(species.Prototype);
         _humanoid.LoadProfile(args.Entity.Value, profile?.WithSpecies(species.ID));

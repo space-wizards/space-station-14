@@ -7,7 +7,7 @@
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 0 0 10">
             <Button Name="StationsButton" Access="Public" Text="&lt; Stations"
                     HorizontalExpand="True" StyleClasses="OpenBoth" />
-            <Button Name="BeaconsButton" Access="Public" Text="Beacons"
+            <Button Name="BeaconsButton" Access="Public" Text="{Loc 'abductors-ui-beacons'}"
                     HorizontalExpand="True" StyleClasses="OpenBoth" />
         </BoxContainer>
         <cc:HSeparator Color="#A04B81" />

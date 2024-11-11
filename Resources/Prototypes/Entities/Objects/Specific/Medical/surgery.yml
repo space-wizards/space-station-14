@@ -249,7 +249,7 @@
   - type: BoneSetter
   - type: SurgeryTool
     startSound:
-      path: /Audio/Effects/hit_kick.ogg
+      path: /Audio/_Starlight/Medical/Surgery/bone_setter.ogg
 
 - type: entity
   name: advanced bone setter
@@ -269,7 +269,7 @@
   - type: SurgeryTool
     speed: 0.6
     startSound:
-      path: /Audio/Effects/hit_kick.ogg
+      path: /Audio/_Starlight/Medical/Surgery/bone_setter.ogg
 
 # Saws
 
@@ -295,7 +295,7 @@
       - Sawing
   - type: SurgeryTool
     startSound:
-      path: /Audio/_Starlight/Medical/Surgery/saw.ogg
+      path: /Audio/_Starlight/Medical/Surgery/bone_saw.ogg
   - type: BoneSaw
 
 # No melee for regular saw because have you ever seen someone use a band saw as a weapon? It's dumb.
@@ -322,7 +322,7 @@
   - type: SurgeryTool
     speed: 0.8
     startSound:
-      path: /Audio/_Starlight/Medical/Surgery/saw.ogg
+      path: /Audio/_Starlight/Medical/Surgery/bone_saw.ogg
   - type: BoneSaw
   
 - type: entity

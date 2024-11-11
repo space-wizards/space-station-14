@@ -32,7 +32,6 @@ public abstract class SharedOnHitSystem : EntitySystem
     {
         SubscribeLocalEvent<InjectOnHitComponent, MeleeHitEvent>(OnInjectOnMeleeHit);
         SubscribeLocalEvent<CuffsOnHitComponent, MeleeHitEvent>(OnCuffsOnMeleeHit);
-        SubscribeLocalEvent<CuffsOnHitComponent, CuffsOnHitDoAfter>(OnCuffsOnHitDoAfter);
 
         base.Initialize();
     }
@@ -65,23 +64,6 @@ public abstract class SharedOnHitSystem : EntitySystem
                 continue;
             _color.RaiseEffect(Color.FromHex("#601653"), new List<EntityUid>(1) { target }, Filter.Pvs(target, entityManager: EntityManager));
         }
-    }
-    private void OnCuffsOnHitDoAfter(Entity<CuffsOnHitComponent> ent, ref CuffsOnHitDoAfter args)
-    {
-        if (!args.Args.Target.HasValue || args.Handled) return;
-
-        var user = args.Args.User;
-        var target = args.Args.Target.Value;
-
-        if (!TryComp<CuffableComponent>(target, out var cuffable) || cuffable.Container.Count != 0)
-            return;
-
-        args.Handled = true;
-
-        var handcuffs = SpawnNextToOrDrop(ent.Comp.HandcuffProtorype, args.User);
-
-        if (!_cuffs.TryAddNewCuffs(target, user, handcuffs, cuffable))
-            QueueDel(handcuffs);
     }
 
     private void OnInjectOnMeleeHit(Entity<InjectOnHitComponent> ent, ref MeleeHitEvent args)

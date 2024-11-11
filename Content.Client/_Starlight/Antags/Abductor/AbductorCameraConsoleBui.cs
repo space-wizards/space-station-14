@@ -1,27 +1,12 @@
-﻿using Content.Client._Starlight;
-using Content.Client._Starlight;
-using Content.Client._Starlight.Medical.Surgery;
-using Content.Client.Administration.UI.CustomControls;
-using Content.Client.Hands.Systems;
-using Content.Shared.Starlight.Antags.Abductor;
-using Content.Shared.Starlight.Medical.Surgery;
-using Content.Shared.Body.Part;
+﻿using Content.Shared.Starlight.Antags.Abductor;
 using JetBrains.Annotations;
-using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
-using Robust.Client.Player;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 using static Content.Shared.Pinpointer.SharedNavMapSystem;
-using static Robust.Client.UserInterface.Control;
 
 namespace Content.Client._Starlight.Antags.Abductor;
 
 [UsedImplicitly]
 public sealed class AbductorCameraConsoleBui : BoundUserInterface
 {
-    [Dependency] private readonly IEntityManager _entities = default!;
-
     [ViewVariables]
     private AbductorCameraConsoleWindow? _window;
     private int? _station;

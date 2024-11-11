@@ -18,6 +18,7 @@
   description: send yourself.
   components:
   - type: WorldTargetAction
+    useDelay: 10
     priority: -19
     range: -1
     checkCanAccess: false
