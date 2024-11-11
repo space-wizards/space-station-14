@@ -587,7 +587,7 @@
     state: pda-janitor
 
 - type: entity
-  parent: BaseSecurityPDA
+  parent: BasePDA
   id: CaptainPDA
   name: captain PDA
   description: Surprisingly no different from your PDA.
@@ -806,6 +806,13 @@
     accentHColor: "#447987"
   - type: Icon
     state: pda-hos
+  - type: CartridgeLoader
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NewsReaderCartridge
+    - WantedListCartridge
+    - LogProbeCartridge
 
 - type: entity
   parent: BaseSecurityPDA
@@ -869,6 +876,16 @@
     borderColor: "#00842e"
   - type: Icon
     state: pda-centcom
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - CrewManifestCartridge
+      - NotekeeperCartridge
+      - NewsReaderCartridge
+      - MedTekCartridge
+      - WantedListCartridge
+      - LogProbeCartridge
+      - AstroNavCartridge
 
 - type: entity
   parent: CentcomPDA
@@ -891,6 +908,8 @@
       - NewsReaderCartridge
       - LogProbeCartridge
       - WantedListCartridge
+      - MedTekCartridge
+      - AstroNavCartridge
 
 - type: entity
   parent: CentcomPDA
@@ -997,14 +1016,6 @@
     uiKey: enum.PdaUiKey.Key
     preinstalled:
       - NotekeeperCartridge
-    cartridgeSlot:
-      priority: -1
-      name: Cartridge
-      ejectSound: /Audio/Machines/id_swipe.ogg
-      insertSound: /Audio/Machines/id_insert.ogg
-      whitelist:
-        components:
-          - Cartridge
 
 - type: entity
   parent: BaseSecurityPDA
@@ -1022,6 +1033,16 @@
     accentVColor: "#447987"
   - type: Icon
     state: pda-ert
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - CrewManifestCartridge
+      - NotekeeperCartridge
+      - NewsReaderCartridge
+      - MedTekCartridge
+      - WantedListCartridge
+      - LogProbeCartridge
+      - AstroNavCartridge
 
 - type: entity
   parent: ERTLeaderPDA
@@ -1062,14 +1083,6 @@
   components:
   - type: Pda
     id: ERTMedicIDCard
-  - type: CartridgeLoader
-    uiKey: enum.PdaUiKey.Key
-    preinstalled:
-      - CrewManifestCartridge
-      - NotekeeperCartridge
-      - NewsReaderCartridge
-      - MedTekCartridge
-      - WantedListCartridge
 
 - type: entity
   parent: ERTLeaderPDA
@@ -1171,6 +1184,13 @@
     borderColor: "#774705"
   - type: Icon
     state: pda-detective
+  - type: CartridgeLoader
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NewsReaderCartridge
+    - WantedListCartridge
+    - LogProbeCartridge
 
 - type: entity
   parent: BaseSecurityPDA
@@ -1202,6 +1222,13 @@
     accentVColor: "#d7d7d0"
   - type: Icon
     state: pda-brigmedic
+  - type: CartridgeLoader
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NewsReaderCartridge
+    - WantedListCartridge
+    - MedTekCartridge
 
 - type: entity
   parent: BasePDA
@@ -1333,11 +1360,3 @@
     preinstalled:
       - NotekeeperCartridge
       - MedTekCartridge
-    cartridgeSlot:
-      priority: -1
-      name: Cartridge
-      ejectSound: /Audio/Machines/id_swipe.ogg
-      insertSound: /Audio/Machines/id_insert.ogg
-      whitelist:
-        components:
-          - Cartridge

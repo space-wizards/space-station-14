@@ -22,6 +22,7 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 25
+      Plastic: 25
   - type: GuideHelp
     guides:
     - Cyborgs
