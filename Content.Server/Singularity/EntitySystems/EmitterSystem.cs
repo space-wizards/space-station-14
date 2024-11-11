@@ -196,7 +196,8 @@ namespace Content.Server.Singularity.EntitySystems
             if (TryComp<ApcPowerReceiverComponent>(uid, out var apcReceiver))
             {
                 apcReceiver.Load = component.PowerUseActive;
-                PowerOn(uid, component);
+                if (apcReceiver.Powered)
+                    PowerOn(uid, component);
             }
             // Do not directly PowerOn().
             // OnReceivedPowerChanged will get fired due to DrawRate change which will turn it on.
