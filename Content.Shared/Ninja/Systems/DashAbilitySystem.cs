@@ -90,7 +90,7 @@ public sealed class DashAbilitySystem : EntitySystem
             _pullingSystem.TryStopPull(user, pull);
 
         // Check if the user is pulling anything, and drop it if so
-        if (TryComp(user, out PullerComponent? puller) && TryComp(puller.Pulling, out PullableComponent? pullable))
+        if (TryComp<PullerComponent>(user, out var puller) && TryComp<PullableComponent>(puller.Pulling, out var pullable))
             _pullingSystem.TryStopPull(puller.Pulling.Value, pullable);
 
         var xform = Transform(user);
