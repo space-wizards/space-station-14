@@ -23,7 +23,8 @@ public enum LogicGate : byte
 [Serializable, NetSerializable]
 public enum LogicGateVisuals : byte
 {
-    Gate
+    Gate,
+    State
 }
 
 /// <summary>
@@ -32,5 +33,20 @@ public enum LogicGateVisuals : byte
 [Serializable, NetSerializable]
 public enum LogicGateLayers : byte
 {
-    Gate
+    Gate,
+    State
 }
+
+[Serializable, NetSerializable]
+public enum LogicGateState : byte
+{
+    Logic,
+    LogicA,
+    LogicB,
+    LogicO,
+    LogicAB,
+    LogicAO,
+    LogicBO,
+    LogicABO
+}
+

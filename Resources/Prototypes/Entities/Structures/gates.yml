@@ -36,8 +36,9 @@
     layers:
     - state: base
     - state: logic
+      map: ["enum.LogicGateLayers.State"]
     - state: or
-      map: [ "enum.LogicGateLayers.Gate" ]
+      map: ["enum.LogicGateLayers.Gate"]
   - type: LogicGate
   - type: UseDelay
     delay: 0.5
@@ -55,6 +56,16 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
+      enum.LogicGateVisuals.State:
+        enum.LogicGateLayers.State:
+          Logic: { state: logic }
+          LogicA: { state: logic_a }
+          LogicB: { state: logic_b }
+          LogicO: { state: logic_o }
+          LogicAB: { state: logic_ab }
+          LogicAO: { state: logic_ao }
+          LogicBO: { state: logic_bo }
+          LogicABO: { state: logic_abo }
       enum.LogicGateVisuals.Gate:
         enum.LogicGateLayers.Gate:
           Or: { state: or }

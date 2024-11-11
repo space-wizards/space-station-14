@@ -18,6 +18,9 @@ public sealed partial class LogicGateComponent : Component
     [DataField]
     public LogicGate Gate = LogicGate.Or;
 
+    [DataField]
+    public LogicGateState State = LogicGateState.Logic;
+
     /// <summary>
     /// Tool quality to use for cycling logic gate operations.
     /// Cannot be pulsing since linking uses that.

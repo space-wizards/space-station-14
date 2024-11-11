@@ -14,6 +14,27 @@
       "name": "logic"
     },
     {
+      "name":  "logic_a"
+    },
+    {
+       "name":  "logic_b"
+    },
+    {
+       "name":  "logic_o"
+    },
+    {
+       "name":  "logic_ab"
+    },
+    {
+       "name":  "logic_ao"
+    },
+    {
+       "name":  "logic_bo"
+    },
+    {
+      "name":  "logic_abo"
+    },
+    {
       "name": "or"
     },
     {

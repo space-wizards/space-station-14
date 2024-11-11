@@ -125,21 +125,27 @@ public sealed class LogicGateSystem : EntitySystem
         {
             case LogicGate.Or:
                 output = a || b;
+                UpdateState(uid,comp,a,b,output);
                 break;
             case LogicGate.And:
                 output = a && b;
+                UpdateState(uid,comp,a,b,output);
                 break;
             case LogicGate.Xor:
                 output = a != b;
+                UpdateState(uid,comp,a,b,output);
                 break;
             case LogicGate.Nor:
                 output = !(a || b);
+                UpdateState(uid,comp,a,b,output);
                 break;
             case LogicGate.Nand:
                 output = !(a && b);
+                UpdateState(uid,comp,a,b,output);
                 break;
             case LogicGate.Xnor:
                 output = a == b;
+                UpdateState(uid,comp,a,b,output);
                 break;
         }
 
@@ -150,5 +156,51 @@ public sealed class LogicGateSystem : EntitySystem
 
             _deviceLink.SendSignal(uid, comp.OutputPort, output);
         }
+    }
+
+    private void UpdateState(EntityUid uid, LogicGateComponent comp, bool a, bool b, bool output)
+    {
+        //im sorry for what im about to do
+
+        if (a && b && output){
+            comp.State = LogicGateState.LogicABO;
+        _appearance.SetData(uid, LogicGateVisuals.State, comp.State);
+        }
+        else if (a && b && !output)
+        {
+            comp.State = LogicGateState.LogicAB;
+            _appearance.SetData(uid, LogicGateVisuals.State, comp.State);
+        }
+        else if (!a && b && output)
+        {
+            comp.State = LogicGateState.LogicBO;
+            _appearance.SetData(uid, LogicGateVisuals.State, comp.State);
+        }
+        else if (a && !b && output)
+        {
+            comp.State = LogicGateState.LogicAO;
+            _appearance.SetData(uid, LogicGateVisuals.State, comp.State);
+        }
+        else if (!a && !b && output)
+        {
+            comp.State = LogicGateState.LogicO;
+            _appearance.SetData(uid, LogicGateVisuals.State, comp.State);
+        }
+        else if (!a && !b && !output)
+        {
+            comp.State = LogicGateState.Logic;
+            _appearance.SetData(uid, LogicGateVisuals.State, comp.State);
+        }
+        else if (a && !b && !output)
+        {
+            comp.State = LogicGateState.LogicA;
+            _appearance.SetData(uid, LogicGateVisuals.State, comp.State);
+        }
+        else if (!a && b && !output)
+        {
+            comp.State = LogicGateState.LogicB;
+            _appearance.SetData(uid, LogicGateVisuals.State, comp.State);
+        }
+
     }
 }
