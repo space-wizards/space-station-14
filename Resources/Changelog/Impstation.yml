@@ -4072,3 +4072,10 @@
   id: 491
   time: '2024-11-11T09:40:28.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/667
+- author: Formlessnameless, Kipdotnet
+  changes:
+  - message: Plastic Slag has a custom sprite now
+    type: Tweak
+  id: 492
+  time: '2024-11-11T12:14:33.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/672
