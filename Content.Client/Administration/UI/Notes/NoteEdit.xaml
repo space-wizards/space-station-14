@@ -5,7 +5,7 @@
     <BoxContainer Orientation="Vertical" Margin="4">
         <TextEdit Name="NoteTextEdit" HorizontalExpand="True" VerticalExpand="True" />
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-            <Label Name="ExpiryLabel" Text="Expires in: " Visible="False" />
+            <Label Name="ExpiryLabel" Text="{Loc admin-note-editor-expiry-label}" Visible="False" />
             <HistoryLineEdit Name="ExpiryLineEdit" PlaceHolder="{Loc admin-note-editor-expiry-placeholder}"
                              Visible="False" HorizontalExpand="True" />
             <OptionButton Name="ExpiryLengthDropdown" Visible="False" />
