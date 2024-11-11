@@ -14470,7 +14470,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -76213.97
+      secondsUntilStateChange: -76246.78
       state: Opening
   - uid: 6934
     components:
@@ -14482,7 +14482,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -76216.6
+      secondsUntilStateChange: -76249.414
       state: Opening
   - uid: 6935
     components:
@@ -14494,7 +14494,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -76215.45
+      secondsUntilStateChange: -76248.266
       state: Opening
   - uid: 6936
     components:
@@ -14505,7 +14505,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -76214.67
+      secondsUntilStateChange: -76247.484
       state: Opening
 - proto: AirlockTheatreLocked
   entities:
@@ -94292,7 +94292,7 @@ entities:
       pos: -13.5,-1.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -67537.95
+      secondsUntilStateChange: -67570.766
     - type: DeviceNetwork
       deviceLists:
       - 18275
@@ -138841,7 +138841,7 @@ entities:
       pos: 36.5,-35.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -104369.8
+      secondsUntilStateChange: -104402.61
       state: Opening
   - uid: 5211
     components:
@@ -161883,10 +161883,10 @@ entities:
       parent: 2
 - proto: SpawnPointBrigmedic
   entities:
-  - uid: 29615
+  - uid: 29616
     components:
     - type: Transform
-      pos: 39.5,-14.5
+      pos: 41.5,-15.5
       parent: 2
 - proto: SpawnPointCaptain
   entities:
@@ -190203,7 +190203,7 @@ entities:
       pos: 24.5,2.5
       parent: 21002
     - type: Door
-      secondsUntilStateChange: -449574.44
+      secondsUntilStateChange: -449607.25
       state: Opening
   - uid: 28863
     components:
