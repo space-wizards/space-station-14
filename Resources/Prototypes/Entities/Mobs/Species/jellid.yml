@@ -20,6 +20,7 @@
     ignited: true
   - type: SolutionHeater
     heatPerSecond: 100
+  - type: ActiveSolutionHeater
   - type: UserInterface
     interfaces:
       enum.StorageUiKey.Key:
