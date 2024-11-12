@@ -15,6 +15,7 @@ public sealed partial class HereticComponent : Component
         "HeartbeatOfMansus",
         "AmberFocus",
         "LivingHeart",
+        "CodexCicatrix",
     };
 
     #endregion

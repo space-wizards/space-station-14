@@ -20,7 +20,10 @@ public sealed partial class HereticActionComponent : Component
 
 #region DoAfters
 
-[Serializable, NetSerializable] public sealed partial class EldritchInfluenceDoAfterEvent : SimpleDoAfterEvent { }
+[Serializable, NetSerializable] public sealed partial class EldritchInfluenceDoAfterEvent : SimpleDoAfterEvent
+{
+    public bool MagicItemActive = false;
+}
 [Serializable, NetSerializable] public sealed partial class DrawRitualRuneDoAfterEvent : SimpleDoAfterEvent
 {
     [NonSerialized] public EntityCoordinates Coords;

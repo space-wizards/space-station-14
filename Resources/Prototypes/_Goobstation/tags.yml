@@ -18,3 +18,6 @@
 
 - type: Tag
   id: SecurityBreathMask
+
+- type: Tag
+  id: WaterTank

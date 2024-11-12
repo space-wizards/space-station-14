@@ -1,0 +1,172 @@
+- type: entity
+  id: PolymorphAshJauntAnimation
+  name: Unknown
+  description: You can't figure out what that is.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: _Goobstation/Heretic/polymorphs.rsi
+    state: ash_jaunt
+    loop: false
+  - type: TimedDespawn
+    lifetime: 1
+
+- type: entity
+  id: PolymorphAshJauntEndAnimation
+  name: Unknown
+  description: You can't figure out what that is.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: _Goobstation/Heretic/polymorphs.rsi
+    state: ash_jaunt_end
+    loop: false
+  - type: TimedDespawn
+    lifetime: 1
+
+- type: entity
+  id: PolymorphAshJaunt
+  name: Unknown
+  description: You can't figure out what that is.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: MindContainer
+  - type: InputMover
+  - type: MobMover
+  - type: Input
+    context: "ghost"
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3
+    baseSprintSpeed: 3
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.40
+        density: 80
+        mask:
+        - GhostImpassable
+  - type: MovementIgnoreGravity
+  - type: Actions
+  - type: NoSlip
+  - type: Eye
+    drawFov: false
+    visMask:
+      - Normal
+      - Ghost
+  - type: ContentEye
+    maxZoom: 1.2, 1.2
+  - type: DoAfter
+  - type: Alerts
+
+# heretic ascend flesh form
+- type: entity
+  parent: BaseMob
+  id: MobHereticFleshAscend
+  name: eldritch horror
+  description: An incomprehensible mess of limbs and eyes. You can feel it's stare into your soul.
+  suffix: DO NOT MAP
+  components:
+  - type: NpcFactionMember
+    factions:
+    - Heretic
+  - type: CombatMode
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 5
+    baseSprintSpeed: 7.5
+    weightlessModifier: 1.5
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _Goobstation/Heretic/eldritch_horror.rsi
+    noRot: true
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: alive
+      Dead:
+        Base: dead
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.40
+        density: 100
+        mask:
+        - FlyingMobMask
+        layer:
+        - FlyingMobLayer
+  - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      500: Critical
+      1000: Dead
+  - type: Damageable
+    damageContainer: Biological
+  - type: StatusEffects
+    allowed:
+    - SlowedDown
+    - RadiationProtection
+  - type: MeleeWeapon
+    hidden: false
+    altDisarm: false
+    autoAttack: true
+    attackRate: 2.5
+    damage:
+      types:
+       Blunt: 20
+       Structural: 60
+    soundHit:
+      collection: Punch
+    animation: WeaponArcFist
+  - type: Devourer
+    foodPreference: Humanoid
+    shouldStoreDevoured: true
+    chemical: Ichor
+    healRate: 15.0
+    whitelist:
+      components:
+      - MobState
+      - Door
+      tags:
+      - Wall
+  - type: Metabolizer
+    solutionOnBody: false
+    updateInterval: 0.25
+    metabolizerTypes: [ Dragon ]
+    groups:
+    - id: Medicine
+    - id: Poison
+  - type: Butcherable
+    spawned:
+    - id: RandomAnomalySpawner
+      amount: 3 # 3 anoms on heretic butcher holy shit eh
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - DoorBumpOpener
+  - type: ActiveRadio
+    channels:
+    - Mansus
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Mansus
+  - type: Examiner
+  - type: Pullable

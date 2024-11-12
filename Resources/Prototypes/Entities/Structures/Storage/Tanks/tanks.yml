@@ -85,6 +85,9 @@
   description: A water tank. It's used to store high amounts of water.
   suffix: Empty
   components:
+  - type: Tag
+    tags:
+    - WaterTank
   - type: StaticPrice
     price: 500
   - type: Sprite

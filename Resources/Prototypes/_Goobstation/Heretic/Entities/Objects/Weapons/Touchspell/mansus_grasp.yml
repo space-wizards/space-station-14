@@ -14,6 +14,6 @@
   - type: UseDelay
   - type: PointLight
     enabled: true
-    radius: 1
+    radius: 1.4
     energy: 1
     color: "#329a00"
