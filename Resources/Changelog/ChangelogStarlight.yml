@@ -145,4 +145,12 @@ Entries:
   id: 20
   time: '2024-11-12T06:08:35.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/46
+- author: '- fix: The bug has been fixed where you couldn''t insert a brain into a
+    borg.'
+  changes:
+  - message: The vampire is now considered an enemy for the hostile factions.
+    type: Fix
+  id: 21
+  time: '2024-11-12T06:10:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/47
 
