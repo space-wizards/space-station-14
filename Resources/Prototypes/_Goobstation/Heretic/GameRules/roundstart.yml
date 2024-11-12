@@ -21,6 +21,9 @@
       max: 5
       playerRatio: 20
       lateJoinAdditional: true
+      blacklist:
+        components:
+          - AntagImmune
       mindRoles:
       - MindRoleHeretic
       startingGear: HereticGear # see Roles/Antags/heretic.yml

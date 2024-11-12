@@ -101,7 +101,7 @@ public sealed partial class MansusGraspSystem : EntitySystem
 
     private void OnAfterInteract(Entity<MansusGraspComponent> ent, ref AfterInteractEvent args)
     {
-        if (!args.CanReach)
+        if (args.Handled || !args.CanReach)
             return;
 
         if (args.Target == null || args.Target == args.User)
@@ -117,6 +117,8 @@ public sealed partial class MansusGraspSystem : EntitySystem
 
         if ((TryComp<HereticComponent>(args.Target, out var th) && th.CurrentPath == ent.Comp.Path))
             return;
+
+        args.Handled = true;
 
         if (HasComp<StatusEffectsComponent>(target))
         {
