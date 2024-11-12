@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Net;
 using Content.Server.Database;
 using Content.Shared.CCVar;
@@ -28,13 +29,18 @@ public sealed class RulesManager
                                _cfg.GetCVar(CCVars.RulesExemptLocal);
 
         var lastRead = await _dbManager.GetLastReadRules(e.Channel.UserId);
+        var bans = await _dbManager.GetServerBansAsync(e.Channel.RemoteEndPoint.Address, e.Channel.UserId, e.Channel.UserData.HWId);
         var hasCooldown = lastRead > LastValidReadTime;
+
+        // When someone is banned, the next time they connect to the server, they will be forced to have the rules popup again.
+        // I'm sure they will read it closely this time :)
+        var banOverride = bans.Count > 0 && bans[^1].ExpirationTime > lastRead;
 
         var showRulesMessage = new SendRulesInformationMessage
         {
             PopupTime = _cfg.GetCVar(CCVars.RulesWaitTime),
             CoreRules = _cfg.GetCVar(CCVars.RulesFile),
-            ShouldShowRules = !isLocalhost && !hasCooldown
+            ShouldShowRules = banOverride || !isLocalhost && !hasCooldown,
         };
         _netManager.ServerSendMessage(showRulesMessage, e.Channel);
     }
