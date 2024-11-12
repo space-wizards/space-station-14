@@ -39,7 +39,16 @@
 #  description:
   # MindRoleComponent.JobPrototype is filled by SharedJobSystem
 
-# Subverted Silicon / emagged borg
+# Silicon
+- type: entity
+  parent: BaseMindRole
+  id: MindRoleBorgedBrain
+  name: Borged Brain Role
+  components:
+  - type: MindRole
+    roleType: Silicon
+  - type: BorgedBrainRole
+
 - type: entity
   parent: BaseMindRoleAntag
   id: MindRoleSubvertedSilicon

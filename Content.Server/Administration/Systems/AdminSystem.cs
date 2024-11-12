@@ -169,7 +169,8 @@ public sealed class AdminSystem : EntitySystem
     private void OnRoleEvent(RoleEvent ev)
     {
         var session = _minds.GetSession(ev.Mind);
-        if (!ev.Antagonist || session == null)
+        // if (!ev.Antagonist || session == null) TODO:ERRANT kill the Antagoinist bool entirely
+        if (session == null)
             return;
 
         UpdatePlayerList(session);
