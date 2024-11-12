@@ -7,6 +7,9 @@
   id: AirAlarmElectronics
 
 - type: Tag
+  id: MagCell
+
+- type: Tag
   id: Airlock
 
 - type: Tag
@@ -545,7 +548,7 @@
 - type: Tag
   id: DrinkSpaceGlue
 
-- type: Tag 
+- type: Tag
   id: Dropper
 
 - type: Tag
@@ -893,6 +896,12 @@
 
 - type: Tag
   id: MicrowaveMachineBoard
+
+- type: Tag
+  id: Drifter
+
+- type: Tag
+  id: Fish
 
 - type: Tag
   id: MimeBelt

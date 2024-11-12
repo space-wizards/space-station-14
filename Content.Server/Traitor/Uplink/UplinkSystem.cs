@@ -6,6 +6,7 @@ using Content.Server.Store.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
+using Content.Shared.Radio.Components;
 
 namespace Content.Server.Traitor.Uplink
 {
@@ -17,6 +18,9 @@ namespace Content.Server.Traitor.Uplink
 
         [ValidatePrototypeId<CurrencyPrototype>]
         public const string TelecrystalCurrencyPrototype = "Telecrystal";
+
+        [ValidatePrototypeId<CurrencyPrototype>]
+        public const string BluespaceCrystalCurrencyPrototype = "BluespaceCrystal";
 
         /// <summary>
         /// Adds an uplink to the target
@@ -51,6 +55,31 @@ namespace Content.Server.Traitor.Uplink
             return true;
         }
 
+        public bool AddUplinkNT(EntityUid user, FixedPoint2? balance, EntityUid? uplinkEntity = null)
+        {
+            // Try to find target item
+            if (uplinkEntity == null)
+            {
+                uplinkEntity = FindUplinkTargetNT(user);
+                if (uplinkEntity == null)
+                    return false;
+            }
+
+            EnsureComp<UplinkComponent>(uplinkEntity.Value);
+            var store = EnsureComp<StoreComponent>(uplinkEntity.Value);
+            store.AccountOwner = user;
+            store.Balance.Clear();
+            if (balance != null)
+            {
+                store.Balance.Clear();
+                _store.TryAddCurrency(new Dictionary<string, FixedPoint2> { { BluespaceCrystalCurrencyPrototype, balance.Value } }, uplinkEntity.Value, store);
+            }
+
+            return true;
+        }
+
+
+
         /// <summary>
         /// Finds the entity that can hold an uplink for a user.
         /// Usually this is a pda in their pda slot, but can also be in their hands. (but not pockets or inside bag, etc.)
@@ -73,6 +102,35 @@ namespace Content.Server.Traitor.Uplink
             foreach (var item in _handsSystem.EnumerateHeld(user))
             {
                 if (HasComp<PdaComponent>(item) || HasComp<StoreComponent>(item))
+                    return item;
+            }
+
+            return null;
+        }
+
+
+        /// <summary>
+        /// Finds the entity that can hold an uplink for an NT agent
+        /// This checks the user's inventory slots for a headset that can hold an uplink. It also checks the user's hands.
+        /// </summary>
+         public EntityUid? FindUplinkTargetNT(EntityUid user)
+        {
+            // Try to find Headset in inventory
+            if (_inventorySystem.TryGetContainerSlotEnumerator(user, out var containerSlotEnumerator))
+            {
+                while (containerSlotEnumerator.MoveNext(out var headsetUid))
+                {
+                    if (!headsetUid.ContainedEntity.HasValue) continue;
+
+                    if (HasComp<HeadsetComponent>(headsetUid.ContainedEntity.Value) || HasComp<StoreComponent>(headsetUid.ContainedEntity.Value))
+                        return headsetUid.ContainedEntity.Value;
+                }
+            }
+
+            // Also check hands
+            foreach (var item in _handsSystem.EnumerateHeld(user))
+            {
+                if (HasComp<HeadsetComponent>(item))
                     return item;
             }
 

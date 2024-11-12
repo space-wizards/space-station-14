@@ -33,9 +33,61 @@
   - type: Appearance
   - type: PowerCellVisuals
   - type: Riggable
-  - type: HitscanBatteryAmmoProvider
-    proto: RedLightLaser
+  - type: ProjectileBatteryAmmoProvider
+    proto: NtBolt
     fireCost: 50
+
+- type: entity
+  name: NT standard magcell
+  description: A rechargeable energy magazine. For use with compatible NT energy weaponry.
+  id: BaseMagCell
+  suffix: Full
+  parent: BasePowerCell
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/MagCell.rsi
+    layers:
+    - state: icon
+  - type: Battery
+    maxCharge: 4000
+    startingCharge: 4000
+  - type: ProjectileBatteryAmmoProvider
+    proto: NtBolt
+    fireCost: 400  #10 shots
+  - type: Tag
+    tags:
+      - MagCell
+
+- type: entity
+  name: NT advanced magcell
+  description: A rechargeable energy magazine for use with compatible NT energy weaponry. This one has an expanded capacity.
+  id: MagCellAdvanced
+  suffix: Full
+  parent: BaseMagCell
+  components:
+  - type: Battery
+    maxCharge: 20000
+    startingCharge: 20000
+  - type: ProjectileBatteryAmmoProvider
+    proto: NtBolt
+    fireCost: 800  #25 shots
+
+- type: entity
+  name: NT experimental magcell
+  description: A rechargeable energy magazine for use with compatible NT energy weaponry. This one has an experimental micro-reactor to self recharge.
+  id: MagCellExperimental
+  suffix: Full
+  parent: BaseMagCell
+  components:
+  - type: Battery
+    maxCharge: 4000
+    startingCharge: 4000
+  - type: ProjectileBatteryAmmoProvider
+    proto: NtBolt
+    fireCost: 400 #10 shots
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 40 # Takes 100 seconds to recharge itself.
 
 - type: entity
   name: potato battery

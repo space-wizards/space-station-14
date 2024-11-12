@@ -16,6 +16,11 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
 using System.Text;
+using Content.Server.Store.Components;  // Added for ListenerComponent
+using Content.Shared.Radio.Components;
+using Content.Shared.Dataset;
+using Content.Shared.Implants;
+
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -31,94 +36,136 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     [Dependency] private readonly SharedJobSystem _jobs = default!;
     [Dependency] private readonly ObjectivesSystem _objectives = default!;
 
+    private readonly IEntityManager _entityManager = IoCManager.Resolve<IEntityManager>();
+
+
     public override void Initialize()
     {
         base.Initialize();
-
         SubscribeLocalEvent<TraitorRuleComponent, AfterAntagEntitySelectedEvent>(AfterEntitySelected);
-
         SubscribeLocalEvent<TraitorRuleComponent, ObjectivesTextPrependEvent>(OnObjectivesTextPrepend);
     }
 
     protected override void Added(EntityUid uid, TraitorRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {
         base.Added(uid, component, gameRule, args);
-        MakeCodewords(component);
+        MakeCodewords(component, "Syndicate"); // Generate Syndicate codewords by default
     }
 
     private void AfterEntitySelected(Entity<TraitorRuleComponent> ent, ref AfterAntagEntitySelectedEvent args)
     {
-        MakeTraitor(args.EntityUid, ent);
+        // Roll to decide the type of traitor
+        var isSyndicate = _random.Prob(0.5f);
+
+        if (isSyndicate)
+        {
+            MakeSyndicateTraitor(args.EntityUid, ent);
+        }
+        else
+        {
+            MakeNanoTrasenTraitor(args.EntityUid, ent);
+        }
     }
 
-    private void MakeCodewords(TraitorRuleComponent component)
+    private void MakeCodewords(TraitorRuleComponent component, string type)
     {
         var adjectives = _prototypeManager.Index(component.CodewordAdjectives).Values;
         var verbs = _prototypeManager.Index(component.CodewordVerbs).Values;
         var codewordPool = adjectives.Concat(verbs).ToList();
         var finalCodewordCount = Math.Min(component.CodewordCount, codewordPool.Count);
-        component.Codewords = new string[finalCodewordCount];
+
+        var codewords = new string[finalCodewordCount];
         for (var i = 0; i < finalCodewordCount; i++)
         {
-            component.Codewords[i] = _random.PickAndTake(codewordPool);
+            codewords[i] = _random.PickAndTake(codewordPool);
+        }
+
+        if (type == "Syndicate")
+        {
+            component.SyndicateCodewords = codewords;
+        }
+        else
+        {
+            component.NanoTrasenCodewords = codewords;
         }
     }
 
-    public bool MakeTraitor(EntityUid traitor, TraitorRuleComponent component, bool giveUplink = true)
+    public bool MakeSyndicateTraitor(EntityUid traitor, TraitorRuleComponent component, bool giveUplink = true)
     {
-        //Grab the mind if it wasnt provided
         if (!_mindSystem.TryGetMind(traitor, out var mindId, out var mind))
             return false;
 
-        var briefing = Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", component.Codewords)));
+        var briefing = Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", component.SyndicateCodewords)));
         var issuer = _random.Pick(_prototypeManager.Index(component.ObjectiveIssuers).Values);
 
         Note[]? code = null;
         if (giveUplink)
         {
-            // Calculate the amount of currency on the uplink.
             var startingBalance = component.StartingBalance;
             if (_jobs.MindTryGetJob(mindId, out _, out var prototype))
                 startingBalance = Math.Max(startingBalance - prototype.AntagAdvantage, 0);
 
-            // creadth: we need to create uplink for the antag.
-            // PDA should be in place already
             var pda = _uplink.FindUplinkTarget(traitor);
             if (pda == null || !_uplink.AddUplink(traitor, startingBalance))
                 return false;
 
-            // Give traitors their codewords and uplink code to keep in their character info menu
             code = EnsureComp<RingerUplinkComponent>(pda.Value).Code;
-
-            // If giveUplink is false the uplink code part is omitted
             briefing = string.Format("{0}\n{1}", briefing,
                 Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", code).Replace("sharp", "#"))));
         }
 
-        _antag.SendBriefing(traitor, GenerateBriefing(component.Codewords, code, issuer), null, component.GreetSoundNotification);
-
+        _antag.SendBriefing(traitor, GenerateBriefing(component.SyndicateCodewords, code, issuer), null, component.GreetSoundNotification);
         component.TraitorMinds.Add(mindId);
 
-        // Assign briefing
         _roleSystem.MindAddRole(mindId, new RoleBriefingComponent
         {
             Briefing = briefing
         }, mind, true);
 
-        // Change the faction
         _npcFaction.RemoveFaction(traitor, component.NanoTrasenFaction, false);
         _npcFaction.AddFaction(traitor, component.SyndicateFaction);
 
         return true;
     }
 
-    // TODO: AntagCodewordsComponent
+   public bool MakeNanoTrasenTraitor(EntityUid traitor, TraitorRuleComponent component, bool giveUplinkNT = true)
+{
+    Log.Error("$NT tator made");
+    MakeCodewords(component, "NanoTrasen");
+
+    if (!_mindSystem.TryGetMind(traitor, out var mindId, out var mind))
+        return false;
+
+    var briefing = Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", component.NanoTrasenCodewords)));
+    var issuer = _random.Pick(_prototypeManager.Index(component.ObjectiveIssuers).Values);
+
+    Note[]? code = null;
+    if (giveUplinkNT)
+    {
+        var implantPrototypeId = "UplinkImplantNT";
+        var implantSystem = _entityManager.System<SharedSubdermalImplantSystem>();
+        implantSystem.AddImplants(traitor, new HashSet<string> { implantPrototypeId });
+
+    }
+
+    _antag.SendBriefing(traitor, GenerateBriefingNT(component.NanoTrasenCodewords, code, issuer), null, component. GreetSoundNotificationNT);
+    component.TraitorMinds.Add(mindId);
+
+    _roleSystem.MindAddRole(mindId, new RoleBriefingComponent
+    {
+        Briefing = briefing
+    }, mind, true);
+
+    _npcFaction.RemoveFaction(traitor, component.NanoTrasenFaction, false);
+    _npcFaction.AddFaction(traitor, component.NanoTrasenTraitorFaction);
+
+    return true;
+}
     private void OnObjectivesTextPrepend(EntityUid uid, TraitorRuleComponent comp, ref ObjectivesTextPrependEvent args)
     {
         args.Text += "\n" + Loc.GetString("traitor-round-end-codewords", ("codewords", string.Join(", ", comp.Codewords)));
     }
 
-    // TODO: figure out how to handle this? add priority to briefing event?
     private string GenerateBriefing(string[] codewords, Note[]? uplinkCode, string? objectiveIssuer = null)
     {
         var sb = new StringBuilder();
@@ -126,6 +173,17 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         sb.AppendLine(Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", codewords))));
         if (uplinkCode != null)
             sb.AppendLine(Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", uplinkCode).Replace("sharp", "#"))));
+
+        return sb.ToString();
+    }
+
+    private string GenerateBriefingNT(string[] codewords, Note[]? uplinkCode, string? objectiveIssuer = null)
+    {
+        var sb = new StringBuilder();
+        sb.AppendLine(Loc.GetString("traitor-role-greeting-nt", ("corporation", objectiveIssuer ?? Loc.GetString("objective-issuer-NT"))));
+        sb.AppendLine(Loc.GetString("traitor-role-codewords-short-nt", ("codewords", string.Join(", ", codewords))));
+        if (uplinkCode != null)
+            sb.AppendLine(Loc.GetString("traitor-role-uplink-code-short-nt", ("code", string.Join("-", uplinkCode).Replace("sharp", "#"))));
 
         return sb.ToString();
     }
@@ -161,3 +219,4 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         return traitors;
     }
 }
+

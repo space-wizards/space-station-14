@@ -104,11 +104,11 @@
 - type: gas
   id: 9
   name: gases-water
-  specificHeat: 600 # Or change it to low values
+  specificHeat: 1000 # Or change it to low values
   heatCapacityRatio: 1.33
-  molarMass: 5
+  molarMass: 18
   gasOverlaySprite: /Textures/Effects/atmospherics.rsi
   gasOverlayState: water
   color: 135c4f # You can change it if you want, its here for gas analyser afaik
-  reagent: Water
+  reagent: SeaWater
   pricePerMole: 0.04

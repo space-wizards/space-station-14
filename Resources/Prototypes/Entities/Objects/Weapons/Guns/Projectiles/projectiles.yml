@@ -376,6 +376,26 @@
         Heat: 10
 
 - type: entity
+  name: nanotrasen energy bolt
+  id: NtBolt
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles_tg.rsi
+    layers:
+    - state: omnilaser_greyscale
+      shader: unshaded
+      color: cyan
+  - type: Projectile
+    #   soundHit:  Waiting on serv3
+    impactEffect: BulletImpactEffectOrangeDisabler
+    damage:
+      types:
+        Heat: 14
+
+
+- type: entity
   name: trident bolt
   id: BulletTrident
   parent: BaseBullet

@@ -248,3 +248,17 @@
         damage:
           types:
             Cellular: 2
+
+- type: reagent
+  id: FishOil
+  name: reagent-name-fishoil
+  group: Biological
+  desc: reagent-desc-fishoil
+  flavor: slimy
+  color: "#ffc000"
+  physicalDesc: reagent-physical-desc-exotic-smelling
+  slippery: true
+  footstepSound:
+    collection: FootstepBlood
+    params:
+      volume: 6

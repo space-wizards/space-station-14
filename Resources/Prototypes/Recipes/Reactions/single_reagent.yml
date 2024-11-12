@@ -11,6 +11,19 @@
     Protein: 0.5
 
 - type: reaction
+  id: SeaWaterBoiling
+  impact: Low
+  minTemp: 212
+  reactants:
+    SeaWater:
+      amount: 1
+  effects:
+  - !type:CreateGas
+    gas: WaterVapor
+  products:
+    TableSalt: 1
+
+- type: reaction
   id: EggCooking
   impact: Low
   minTemp: 344

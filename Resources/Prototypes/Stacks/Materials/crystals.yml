@@ -3,3 +3,10 @@
   name: telecrystal
   icon: Objects/Specific/Syndicate/telecrystal.rsi
   spawn: Telecrystal1
+
+- type: stack
+  id: BluespaceCrystal
+  name: bluespace crystal
+  icon: Objects/Specific/Syndicate/telecrystal.rsi
+  spawn: BluespaceCrystal1
+

@@ -367,3 +367,32 @@
   - type: SingularityDistortion
     falloffPower: 2
     intensity: -1000
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      Artifact: !type:ContainerSlot
+  - type: Nuke
+    explosionType: Default
+    maxIntensity: 100
+    intensitySlope: 5
+    totalIntensity: 5000000
+    diskSlot:
+      name: nuke-slot-component-slot-name-disk
+      insertSound:
+        path: /Audio/Machines/terminal_insert_disc.ogg
+      ejectSound:
+        path: /Audio/Machines/terminal_insert_disc.ogg
+      whitelist:
+        components:
+        - NukeDisk
+    resonanceSlot:
+      name: nuke-slot-component-slot-name-disk
+      insertSound:
+        path: /Audio/Machines/terminal_insert_disc.ogg
+      ejectSound:
+        path: /Audio/Machines/terminal_insert_disc.ogg
+      whitelist:
+        components:
+        - Delaminator
+    alertLevelOnActivate: delta
+    alertLevelOnDeactivate: green

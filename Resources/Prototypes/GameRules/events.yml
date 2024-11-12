@@ -141,54 +141,6 @@
 
 - type: entity
   parent: BaseGameRule
-  id: NinjaSpawn
-  components:
-  - type: StationEvent
-    weight: 6
-    duration: 1
-    earliestStart: 30
-    reoccurrenceDelay: 20
-    minimumPlayers: 30
-  - type: SpaceSpawnRule
-  - type: AntagLoadProfileRule
-  - type: AntagObjectives
-    objectives:
-    - StealResearchObjective
-    - DoorjackObjective
-    - SpiderChargeObjective
-    - TerrorObjective
-    - MassArrestObjective
-    - NinjaSurviveObjective
-  - type: AntagSelection
-    agentName: ninja-round-end-agent-name
-    definitions:
-    - spawnerPrototype: SpawnPointGhostSpaceNinja
-      min: 1
-      max: 1
-      pickPlayer: false
-      startingGear: SpaceNinjaGear
-      briefing:
-        text: ninja-role-greeting
-        color: Green
-        sound: /Audio/Misc/ninja_greeting.ogg
-      components:
-      - type: SpaceNinja
-      - type: NpcFactionMember
-        factions:
-        - Syndicate
-      - type: AutoImplant
-        implants:
-        - DeathAcidifierImplant
-      - type: RandomMetadata
-        nameSegments:
-        - names_ninja_title
-        - names_ninja
-      mindComponents:
-      - type: NinjaRole
-        prototype: SpaceNinja
-
-- type: entity
-  parent: BaseGameRule
   id: RevenantSpawn
   components:
   - type: StationEvent
@@ -462,40 +414,6 @@
         prototype: InitialInfected
 
 - type: entity
-  parent: BaseNukeopsRule
-  id: LoneOpsSpawn
-  components:
-  - type: StationEvent
-    earliestStart: 35
-    weight: 5.5
-    minimumPlayers: 20
-    duration: 1
-  - type: RuleGrids
-  - type: LoadMapRule
-    preloadedGrid: ShuttleStriker
-  - type: NukeopsRule
-    roundEndBehavior: Nothing
-  - type: AntagSelection
-    definitions:
-    - spawnerPrototype: SpawnPointLoneNukeOperative
-      min: 1
-      max: 1
-      pickPlayer: false
-      startingGear: SyndicateLoneOperativeGearFull
-      components:
-      - type: NukeOperative
-      - type: RandomMetadata
-        nameSegments:
-        - SyndicateNamesPrefix
-        - SyndicateNamesNormal
-      - type: NpcFactionMember
-        factions:
-        - Syndicate
-      mindComponents:
-      - type: NukeopsRole
-        prototype: Nukeops
-
-- type: entity
   parent: BaseTraitorRule
   id: SleeperAgents
   components:
@@ -588,13 +506,3 @@
     duration: 1
   - type: IonStormRule
 
-- type: entity
-  id: MimicVendorRule
-  parent: BaseGameRule
-  components:
-    - type: StationEvent
-      earliestStart: 0
-      minimumPlayers: 20
-      maxOccurrences: 1 # this event has diminishing returns on interesting-ness, so we cap it
-      weight: 5
-    - type: MobReplacementRule

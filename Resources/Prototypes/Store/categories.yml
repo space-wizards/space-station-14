@@ -89,6 +89,37 @@
   name: store-category-pointless
   priority: 10
 
+#NT Uplinks
+- type: storeCategory
+  id: UplinkNtWeaponry
+  name: store-category-weapons
+  priority: 0
+
+- type: storeCategory
+  id: UplinkNtAmmo
+  name: store-category-ammo
+  priority: 1
+
+- type: storeCategory
+  id: UplinkNtArmor
+  name: store-category-wearables
+  priority: 2
+
+- type: storeCategory
+  id: UplinkNtDeception
+  name: store-category-deception
+  priority: 5
+
+- type: storeCategory
+  id: UplinkNtDisruption
+  name: store-category-disruption
+  priority: 6
+
+- type: storeCategory
+  id: UplinkNtPointless
+  name: store-category-pointless
+  priority: 10
+
 #revenant
 - type: storeCategory
   id: RevenantAbilities

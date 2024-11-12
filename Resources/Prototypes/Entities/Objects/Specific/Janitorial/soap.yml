@@ -235,3 +235,28 @@
   - type: Residue
     residueAdjective: residue-slippery
     residueColor: residue-blue
+
+- type: entity
+  name: soap
+  id: SoapNTTraitor
+  parent: Soap
+  description: A Nanotrasen brand bar of soap. This one leaves no residue.
+  components:
+  - type: Sprite
+    layers:
+    - state: nt-4
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: SolutionContainerVisuals
+    fillBaseName: nt-
+  - type: Item
+    heldPrefix: nt
+  - type: SolutionContainerManager
+    solutions:
+      soap:
+        maxVol: 100
+        reagents:
+        - ReagentId: SoapReagent
+          Quantity: 100
+  - type: Residue
+    residueAdjective: residue-none
+    residueColor: residue-empty

@@ -22,6 +22,24 @@
       Telecrystal: 0
 
 - type: entity
+  id: StorePresetUplinkNT
+  abstract: true
+  components:
+  - type: Store
+    name: store-preset-name-uplink-nt
+    categories:
+    - UplinkNtWeaponry
+    - UplinkNtArmor
+    - UplinkNtAmmo
+    - UplinkNtDeception
+    - UplinkNtDisruption
+    - UplinkNtPointless
+    currencyWhitelist:
+    - BluespaceCrystal
+    balance:
+      BluespaceCrystal: 0
+
+- type: entity
   id: StorePresetSpellbook
   abstract: true
   components:

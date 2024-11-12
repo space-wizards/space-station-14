@@ -25,6 +25,9 @@ reagent-desc-ichor = An extremely potent regenerative chemical, perfected by spa
 reagent-name-fat = fat
 reagent-desc-fat = No matter how it was obtained, its application is important.
 
+reagent-name-fishoil = fish oil
+reagent-desc-fishoil = A slick chemical obtained from fish meat. It smells strong.
+
 reagent-name-vomit = vomit
 reagent-desc-vomit = You can see a few chunks of someone's last meal in it.
 

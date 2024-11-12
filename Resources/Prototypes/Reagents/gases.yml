@@ -362,3 +362,36 @@
         - !type:ReagentThreshold
           reagent: Frezon
           min: 1
+
+- type: reagent
+  id: SeaWater
+  name: reagent-name-seawater
+  desc: reagent-desc-seawater
+  physicalDesc: reagent-physical-desc-odorless
+  flavor: water and salt
+  color: "#135c4f"
+  metabolisms:
+    Gas:
+      effects:
+      - !type:HealthChange
+        ignoreResistances: true
+        damage:
+          types:
+            Cold: 15 # water, very temperature!!
+            Asphyxiation: 20
+      - !type:PopupMessage
+        type: Local
+        messages: [ "water-in-lungs" ]
+        probability: 0.7
+        conditions:
+        - !type:ReagentThreshold
+          reagent: SeaWater
+          min: 1
+      - !type:AdjustAlert
+        alertType: Drowning
+        conditions:
+        - !type:ReagentThreshold
+          reagent: SeaWater
+          min: 1
+        clear: True
+        time: 5

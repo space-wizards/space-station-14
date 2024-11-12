@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: Clothing
+  parent: [ Clothing, StorePresetUplinkNT ]
   id: ClothingHeadset
   name: headset
   description: An updated, modular intercom that fits over the head. Takes encryption keys.

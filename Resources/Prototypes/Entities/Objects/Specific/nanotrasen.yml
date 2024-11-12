@@ -1,0 +1,73 @@
+- type: entity
+  name: bluespace crystal
+  parent: BaseItem
+  id: BluespaceCrystal
+  suffix: 20 BC
+  description: It feels like it's everywhere and nowhere at the same time.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Nanotrasen/bluespace_crystal.rsi
+    state: Bluespace_Crystal
+  - type: Item
+    sprite: Objects/Specific/Nanotrasen/bluespace_crystal.rsi
+    size: Tiny
+  - type: Stack
+    count: 20
+    stackType: BluespaceCrystal
+  - type: StaticPrice
+    price: 0
+  - type: StackPrice
+    price: 200
+  - type: Currency
+    price:
+      BluespaceCrystal: 1
+
+- type: entity
+  parent: BluespaceCrystal
+  id: BluespaceCrystal1
+  suffix: 1 BC
+  components:
+  - type: Stack
+    count: 1
+
+- type: entity
+  parent: BluespaceCrystal
+  id: BluespaceCrystal5
+  suffix: 5 BC
+  components:
+  - type: Stack
+    count: 5
+
+- type: entity
+  parent: BluespaceCrystal
+  id: BluespaceCrystal10
+  suffix: 10 BC
+  components:
+  - type: Stack
+    count: 10
+
+# Uplinks
+- type: entity
+  parent: [ BaseItem, StorePresetUplinkNT ]
+  id: BaseUplinkRadioNT
+  name: nanotrasen uplink
+  description: Suspiciously looking old radio...
+  suffix: Empty
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/communication.rsi
+    layers:
+    - state: old-radio
+  - type: Item
+    sprite: Objects/Devices/communication.rsi
+    heldPrefix: old-radio
+  - type: UserInterface
+    interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+  - type: Store
+    balance:
+      BluespaceCrystal: 0
+

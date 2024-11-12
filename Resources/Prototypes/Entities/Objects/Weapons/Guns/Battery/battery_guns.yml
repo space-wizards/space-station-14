@@ -52,13 +52,12 @@
     slots:
       gun_magazine:
         name: Magazine
-        startingItem: PowerCellSmall
+        startingItem: BaseMagCell
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
         whitelist:
           tags:
-            - PowerCell
-            - PowerCellSmall
+            - MagCell
   - type: Appearance
   - type: StaticPrice
     price: 500
@@ -477,6 +476,61 @@
     - type: ProjectileBatteryAmmoProvider
       proto: WatcherBoltMagmawing
       fireCost: 60
+
+- type: entity
+  parent: BaseWeaponPowerCellSmall
+  id: WeaponNtBlaster
+  name: BM-138 power blaster
+  description: A Nanotrasen blaster pistol, utilized by operatives and agents. Contains a magazine port for power cells.
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
+      layers:
+        - state: base
+          map: ["enum.GunVisualLayers.Base"]
+        - state: mag-unshaded-4
+          map: ["enum.GunVisualLayers.MagUnshaded"]
+          shader: unshaded
+    - type: Gun
+      fireRate: 3
+      soundGunshot:
+        path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
+
+- type: entity
+  name: NT-331 energy carbine
+  parent: [ WeaponNtBlaster, BaseGunWieldable ]
+  id: WeaponEnergyCarbine
+  description: An advanced particle machine gun used by NT operatives. It has a slot for power cells.
+  components:
+  - type: Item
+    size: Large
+  - type: Tag
+    tags:
+      - Sidearm
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-4
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
+  - type: Gun
+    selectedMode: FullAuto
+    fireRate: 4
+    availableModes:
+      - SemiAuto
+      - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
+  - type: ProjectileBatteryAmmoProvider
+    proto: NtBolt
+    fireCost: 33
+  - type: StaticPrice
+    price: 260
+
 
 - type: entity
   name: disabler SMG

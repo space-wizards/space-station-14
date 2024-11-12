@@ -1097,7 +1097,7 @@ namespace Content.Shared.CCVar
         ///     Whether gas differences will move entities.
         /// </summary>
         public static readonly CVarDef<bool> SpaceWind =
-            CVarDef.Create("atmos.space_wind", false, CVar.SERVERONLY);
+            CVarDef.Create("atmos.space_wind", true, CVar.SERVERONLY);
 
         /// <summary>
         ///     Divisor from maxForce (pressureDifference * 2.25f) to force applied on objects.
@@ -1116,7 +1116,7 @@ namespace Content.Shared.CCVar
         ///     Useful to prevent clipping through objects.
         /// </summary>
         public static readonly CVarDef<float> SpaceWindMaxVelocity =
-            CVarDef.Create("atmos.space_wind_max_velocity", 30f, CVar.SERVERONLY);
+            CVarDef.Create("atmos.space_wind_max_velocity", 20f, CVar.SERVERONLY);
 
         /// <summary>
         ///     The maximum force that may be applied to an object by pushing (i.e. not throwing) atmospheric pressure differences.
@@ -1188,7 +1188,7 @@ namespace Content.Shared.CCVar
         ///     Heat loss per tile due to radiation at 20 degC, in W.
         /// </summary>
         public static readonly CVarDef<float> SuperconductionTileLoss =
-            CVarDef.Create("atmos.superconduction_tile_loss", 30f, CVar.SERVERONLY);
+            CVarDef.Create("atmos.superconduction_tile_loss", 20f, CVar.SERVERONLY);
 
         /// <summary>
         ///     Whether excited groups will be processed and created.
@@ -1279,7 +1279,7 @@ namespace Content.Shared.CCVar
         /// Whether or not OOC chat should be enabled during a round.
         /// </summary>
         public static readonly CVarDef<bool> OocEnableDuringRound =
-            CVarDef.Create("ooc.enable_during_round", false, CVar.NOTIFY | CVar.REPLICATED | CVar.SERVER);
+            CVarDef.Create("ooc.enable_during_round", true, CVar.NOTIFY | CVar.REPLICATED | CVar.SERVER);
 
         public static readonly CVarDef<bool> ShowOocPatronColor =
             CVarDef.Create("ooc.show_ooc_patron_color", true, CVar.ARCHIVE | CVar.REPLICATED | CVar.CLIENT);
@@ -1517,7 +1517,7 @@ namespace Content.Shared.CCVar
         /// How long a shuttle spends in FTL.
         /// </summary>
         public static readonly CVarDef<float> FTLTravelTime =
-            CVarDef.Create("shuttle.travel_time", 15f, CVar.SERVERONLY);
+            CVarDef.Create("shuttle.travel_time", 10f, CVar.SERVERONLY);
 
         /// <summary>
         /// How long the final stage of FTL before arrival should be.
@@ -1966,7 +1966,7 @@ namespace Content.Shared.CCVar
         /// Whether or not the storage UI is static and bound to the hotbar, or unbound and allowed to be dragged anywhere.
         /// </summary>
         public static readonly CVarDef<bool> StaticStorageUI =
-            CVarDef.Create("control.static_storage_ui", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+            CVarDef.Create("control.static_storage_ui", false, CVar.CLIENTONLY | CVar.ARCHIVE);
 
         /// <summary>
         /// Whether or not the storage window uses a transparent or opaque sprite.
@@ -2042,7 +2042,7 @@ namespace Content.Shared.CCVar
         /// Link to GitHub page to show in the launcher.
         /// </summary>
         public static readonly CVarDef<string> InfoLinksGithub =
-            CVarDef.Create("infolinks.github", "", CVar.SERVER | CVar.REPLICATED);
+            CVarDef.Create("infolinks.github", "https://github.com/Pixeltheaertist/Trieste-Port-14/tree/master", CVar.SERVER | CVar.REPLICATED);
 
         /// <summary>
         /// Link to website to show in the launcher.

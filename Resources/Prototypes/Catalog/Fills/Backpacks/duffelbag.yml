@@ -337,3 +337,15 @@
         amount: 2
       - id: SyndieTrickyBomb
         amount: 2
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateBundle
+  id: ClothingBackpackDuffelNtCburnFilled
+  name: CBURN equipment bundle
+  description: "The label on the strap reads 'Turn and burn, Agent.'"
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponShotgunDoubleBarreled
+      - id: BoxShotgunIncendiary
+      - id: CombatMedipen
