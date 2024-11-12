@@ -4,6 +4,9 @@
   id: CleanerGrenade
 
 - type: Tag
+  id: SecTicket
+
+- type: Tag
   id: ShellShotgunBeanbag
 
 - type: Tag
