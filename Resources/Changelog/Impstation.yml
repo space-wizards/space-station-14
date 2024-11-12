@@ -4110,3 +4110,10 @@
   id: 496
   time: '2024-11-12T17:34:13.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/682
+- author: honeyed-lemons
+  changes:
+  - message: Minor changes to the mobster and cowboy accents
+    type: Tweak
+  id: 497
+  time: '2024-11-12T18:00:00.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/684
