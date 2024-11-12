@@ -56574,6 +56574,13 @@ entities:
     - type: Transform
       pos: 126.450806,47.653637
       parent: 2
+- proto: ClothingHeadHatPwig
+  entities:
+  - uid: 23768
+    components:
+    - type: Transform
+      pos: 117.50062,11.604576
+      parent: 2
 - proto: ClothingHeadHatSquid
   entities:
   - uid: 11338
@@ -56888,6 +56895,13 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+- proto: ClothingOuterRobesJudge
+  entities:
+  - uid: 23766
+    components:
+    - type: Transform
+      pos: 117.4821,11.271242
+      parent: 2
 - proto: ClothingOuterWinterMed
   entities:
   - uid: 5636
@@ -133898,6 +133912,11 @@ entities:
     - type: Transform
       pos: 41.5,-1.5
       parent: 2
+  - uid: 23767
+    components:
+    - type: Transform
+      pos: 117.593216,10.516613
+      parent: 2
 - proto: ToyMouse
   entities:
   - uid: 23640
@@ -151589,7 +151608,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -118055.86
+      secondsUntilStateChange: -118200.17
       state: Opening
     - type: Airlock
       autoClose: False
