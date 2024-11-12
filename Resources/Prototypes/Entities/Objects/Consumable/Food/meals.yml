@@ -683,8 +683,8 @@
   - type: Food
   - type: FlavorProfile
     flavors:
-      -sugary
-      -whimsical
+      - whimsy
+      - sugar
   - type: Sprite
     state: big-lollipop
   - type: SolutionContainerManager
