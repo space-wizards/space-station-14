@@ -16,48 +16,52 @@ public sealed partial class EldritchInfluenceSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<EldritchInfluenceComponent, InteractHandEvent>(OnInteract);
+        SubscribeLocalEvent<EldritchInfluenceComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<EldritchInfluenceComponent, EldritchInfluenceDoAfterEvent>(OnDoAfter);
     }
 
-    public void OnInteract(Entity<EldritchInfluenceComponent> ent, ref InteractHandEvent args)
+    public bool CollectInfluence(Entity<EldritchInfluenceComponent> influence, Entity<HereticComponent> user, EntityUid? used = null)
     {
-        if (args.Handled)
-            return;
-
-        if (!HasComp<HereticComponent>(args.User))
-            return;
-
-        if (ent.Comp.Spent)
-            return;
-
-        var dargs = new DoAfterArgs(EntityManager, args.User, 10f, new EldritchInfluenceDoAfterEvent(), ent, ent)
-        {
-            Hidden = true,
-            BreakOnHandChange = true,
-            BreakOnMove = true,
-            BreakOnDamage = true,
-            CancelDuplicate = true
-        };
-        _popup.PopupEntity(Loc.GetString("heretic-influence-start"), args.User, args.User);
-        _doafter.TryStartDoAfter(dargs);
-
-        args.Handled = true;
-    }
-    public void OnDoAfter(Entity<EldritchInfluenceComponent> ent, ref EldritchInfluenceDoAfterEvent args)
-    {
-        if (args.Cancelled)
-            return;
-
-        if (args.Target == null)
-            return;
-
-        if (!TryComp<HereticComponent>(args.User, out var heretic))
-            return;
+        if (influence.Comp.Spent)
+            return false;
 
         var ev = new CheckMagicItemEvent();
-        RaiseLocalEvent(args.User, ev);
+        RaiseLocalEvent(user, ev);
+        if (used != null) RaiseLocalEvent((EntityUid) used, ev);
 
-        _heretic.UpdateKnowledge(args.User, heretic, ev.Handled ? 2 : 1);
+        var doAfter = new EldritchInfluenceDoAfterEvent()
+        {
+            MagicItemActive = ev.Handled,
+        };
+        var dargs = new DoAfterArgs(EntityManager, user, 10f, doAfter, influence, influence);
+        _popup.PopupEntity(Loc.GetString("heretic-influence-start"), influence, user);
+        return _doafter.TryStartDoAfter(dargs);
+    }
+
+    private void OnInteract(Entity<EldritchInfluenceComponent> ent, ref InteractHandEvent args)
+    {
+        if (args.Handled
+        || !TryComp<HereticComponent>(args.User, out var heretic))
+            return;
+
+        args.Handled = CollectInfluence(ent, (args.User, heretic));
+    }
+    private void OnInteractUsing(Entity<EldritchInfluenceComponent> ent, ref InteractUsingEvent args)
+    {
+        if (args.Handled
+        || !TryComp<HereticComponent>(args.User, out var heretic))
+            return;
+
+        args.Handled = CollectInfluence(ent, (args.User, heretic), args.Used);
+    }
+    private void OnDoAfter(Entity<EldritchInfluenceComponent> ent, ref EldritchInfluenceDoAfterEvent args)
+    {
+        if (args.Cancelled
+        || args.Target == null
+        || !TryComp<HereticComponent>(args.User, out var heretic))
+            return;
+
+        _heretic.UpdateKnowledge(args.User, heretic, args.MagicItemActive ? 2 : 1);
 
         Spawn("EldritchInfluenceIntermediate", Transform((EntityUid) args.Target).Coordinates);
         QueueDel(args.Target);

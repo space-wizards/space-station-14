@@ -1,0 +1,32 @@
+# Cross-Department
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsEngineeringResearch
+  suffix: Engineering/Science, Locked
+  components:
+  - type: AccessReader
+    access: [["Research"], ["Engineering"]]
+
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsEngineeringCargo
+  suffix: Engineering/Cargo, Locked
+  components:
+  - type: AccessReader
+    access: [["Cargo"], ["Engineering"]]
+
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsSecurityCargo
+  suffix: Security/Cargo, Locked
+  components:
+  - type: AccessReader
+    access: [["Cargo"], ["Security"]]
+
+- type: entity
+  parent: DoorElectronics
+  id: DoorElectronicsSecurityMedical
+  suffix: Security/Medical, Locked
+  components:
+  - type: AccessReader
+    access: [["Medical"], ["Security"]]

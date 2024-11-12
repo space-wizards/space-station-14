@@ -20,14 +20,3 @@
     antagPrototype: Heretic
     exclusiveAntag: true
   - type: HereticRole
-
-- type: entity
-  parent: BaseMindRoleAntag
-  id: MindRoleGhoul
-  name: Ghoul Role
-#  description: mind-role-changeling-description
-  components:
-  - type: MindRole
-    antagPrototype: Ghoul
-    exclusiveAntag: true
-  - type: GhoulRole

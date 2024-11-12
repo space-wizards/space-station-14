@@ -30,7 +30,7 @@
   parent: BaseScrap
   id: ScrapSteel
   name: blasted steel pile
-  description: An pile of steel welded together in extreme heat. It's of a decent size overall; you could probably get a fair amount of sheets out of it.
+  description: A pile of steel welded together in extreme heat. It's of a decent size overall; you could probably get a fair amount of sheets out of it.
   components:
   - type: Sprite
     layers:
@@ -49,6 +49,25 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 3000 # 30 sheets
+
+- type: entity
+  parent: BaseScrap
+  id: ScrapPlasticSlag
+  name: plastic slag pile
+  description: A pile of slag composed of fused steel and plastic. There's some usable material to be had here.
+  components:
+  - type: Sprite
+    layers:
+      - state: plastic-slag
+        map: [ "base" ]
+  - type: Item
+    size: Ginormous
+    heldPrefix: metal
+  - type: MultiHandedItem
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 500 # 5 sheets
+      Plastic: 2000 # 20 sheets
 
 - type: entity
   parent: BaseScrap
@@ -308,7 +327,7 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 1000 # 10 sheets
-      Plastic: 200 # 2 sheets
+      Plastic: 1000 # 10 sheets
 
 - type: entity
   parent: BaseScrap
@@ -329,7 +348,7 @@
     size: Large
   - type: PhysicalComposition
     materialComposition:
-      Plastic: 500 # 5 sheets
+      Plastic: 800 # 8 sheets
 
 - type: entity
   parent: BaseScrap
@@ -344,7 +363,7 @@
     size: Huge
   - type: PhysicalComposition
     materialComposition:
-      Plastic: 1500 # 15 sheets
+      Plastic: 2000 # 20 sheets
 
 - type: entity
   parent: BaseScrap
@@ -360,7 +379,7 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 300 # 3 sheets
-      Plastic: 200 # 2 sheets
+      Plastic: 500 # 5 sheets
 
 - type: entity
   parent: BaseScrap
@@ -376,7 +395,7 @@
   - type: PhysicalComposition
     materialComposition:
       Gold: 100 # 1 sheet
-      Plastic: 400 # 4 sheets
+      Plastic: 600 # 6 sheets
 
 - type: entity
   parent: BaseScrap
@@ -402,7 +421,7 @@
   - type: PhysicalComposition
     materialComposition:
       Glass: 500 # 5 sheets
-      Plastic: 100 # 1 sheet
+      Plastic: 300 # 3 sheets
 
 
 

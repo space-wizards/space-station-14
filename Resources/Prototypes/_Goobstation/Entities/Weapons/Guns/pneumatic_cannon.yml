@@ -1,0 +1,63 @@
+- type: entity
+  name: regenerating pie cannon
+  parent: BaseStorageItem
+  id: LauncherCreamPieRegenerating
+  description: A self-regenerating pie cannon.
+  suffix: Regenerating
+
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Cannons/pie_cannon.rsi
+
+    layers:
+      - state: piecannon
+
+  #- type: Wieldable
+  #  wieldSound:
+  #    path: /Audio/Items/bow_pull.ogg
+
+  # Don't require wielding to use, it would be valid otherwise
+  #- type: GunRequiresWield
+
+  - type: Gun
+    fireRate: 2 # Lower fire-rate than the old one
+    selectedMode: SemiAuto
+
+    availableModes:
+      - SemiAuto
+      - FullAuto
+
+    soundGunshot:
+      path: /Audio/Effects/thunk.ogg
+    soundEmpty:
+      path: /Audio/Items/hiss.ogg
+
+    clumsyProof: true # It would be extremely, nay, extraordinarily funny if this was false
+
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 10
+
+    rechargeSound:
+      path: /Audio/Items/bikehorn.ogg
+
+  - type: BasicEntityAmmoProvider
+    proto: FoodPieBananaCream
+
+    capacity: 2
+    count: 2
+
+  - type: Item
+    size: Large
+
+  #- type: Clothing
+  #  sprite: Objects/Weapons/Guns/Cannons/pie_cannon.rsi
+  #  quickEquip: false
+
+  #  slots:
+  #    - Back
+
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+

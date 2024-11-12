@@ -3978,3 +3978,113 @@
   id: 481
   time: '2024-11-09T02:07:55.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/654
+- author: hivehum
+  changes:
+  - message: New lobby arts by Wendy & Snip!
+    type: Add
+  id: 482
+  time: '2024-11-10T02:09:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/659
+- author: TGRCDev
+  changes:
+  - message: Anti-tamper crates can now be disarmed with a screwdriver if the crate
+      is unlocked and opened, or if the user is inside of the crate.
+    type: Add
+  - message: Anti-tamper crates no longer delete mobs inside of them. They now deal
+      85 Caustic damage instead.
+    type: Tweak
+  id: 483
+  time: '2024-11-10T02:10:19.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/656
+- author: hivehum
+  changes:
+  - message: The Energy Shotgun is as big and beautiful and powerful as you remembered
+      her.
+    type: Tweak
+  id: 484
+  time: '2024-11-10T02:11:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/658
+- author: KingMudkipIII
+  changes:
+  - message: No-one can defeat the quad lazer.
+    type: Add
+  id: 485
+  time: '2024-11-10T07:34:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/663
+- author: honeyed-lemons
+  changes:
+  - message: Random Unrevivable is checked after each defib, instead of roundstart.
+    type: Tweak
+  id: 486
+  time: '2024-11-10T18:30:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/642
+- author: AirFryerBuyOneGetOneFree
+  changes:
+  - message: Added new map Barratry, also known as Detroit.
+    type: Add
+  id: 487
+  time: '2024-11-10T20:55:25.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/655
+- author: AirFryerBuyOneGetOneFree
+  changes:
+  - message: Added Xeno, a new map from SlamBamActionman!!!!!!!!!!!!!
+    type: Add
+  id: 488
+  time: '2024-11-10T20:55:02.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/657
+- author: EpicToast
+  changes:
+  - message: Add Union Station to files for playtesting! Get friendly with your fellow
+      departments (but not too friendly).
+    type: Add
+  - message: Add some cross-department maintenance airlocks for mapping/spawning in.
+    type: Add
+  id: 489
+  time: '2024-11-10T20:54:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/662
+- author: formlessnameless
+  changes:
+  - message: Added new plasteel slag chunk to fill in the plastic gap for rare salvage
+      resources
+    type: Add
+  - message: Increased plastic yield from certain salvage items that already gave
+      plastic
+    type: Tweak
+  - message: Modified a bunch of trash items to give plastic and steel when recycled
+    type: Tweak
+  - message: Added secure windoors to cargo plastic flaps on Train and Saltern
+    type: Tweak
+  - message: Removed full stack of diamonds from Saltern vault
+    type: Remove
+  - message: Added implanter crate to Saltern armory
+    type: Add
+  - message: Heads now all spawn in one place on Train and Saltern. COMMUNICATE!
+    type: Tweak
+  - message: Added two more grounding rods to Train
+    type: Tweak
+  id: 490
+  time: '2024-11-11T09:39:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/669
+- author: honeyed-lemons
+  changes:
+  - message: Added the Space Cadet Jumpsuit in all jumpsuit colors
+    type: Add
+  id: 491
+  time: '2024-11-11T09:40:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/667
+- author: Formlessnameless, Kipdotnet
+  changes:
+  - message: Plastic Slag has a custom sprite now
+    type: Tweak
+  id: 492
+  time: '2024-11-11T12:14:33.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/672
+- author: formlessnameless
+  changes:
+  - message: Moved department head spawns on Atlas, Omega, and Cluster to the bridge
+    type: Tweak
+  - message: General pipe cleanup on Train, added scrubbers to Atmos
+    type: Tweak
+  id: 493
+  time: '2024-11-12T00:53:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/675

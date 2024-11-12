@@ -24,6 +24,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
 using System.Numerics;
+using System.Text;
 
 namespace Content.Server.Heretic.EntitySystems;
 
@@ -110,7 +111,7 @@ public sealed partial class HereticBladeSystem : EntitySystem
         // void path exxclusive
         if (heretic.CurrentPath == "Void" && heretic.PathStage >= 7)
         {
-            var look = _lookupSystem.GetEntitiesInRange<HereticCombatMarkComponent>(Transform(ent).Coordinates, 15f);
+            var look = _lookupSystem.GetEntitiesInRange<HereticCombatMarkComponent>(Transform(ent).Coordinates, 20f);
             if (look.Count > 0)
             {
                 targetCoords = Transform(look.ToList()[0]).Coordinates;
@@ -133,10 +134,16 @@ public sealed partial class HereticBladeSystem : EntitySystem
 
     private void OnExamine(Entity<HereticBladeComponent> ent, ref ExaminedEvent args)
     {
-        if (!HasComp<HereticComponent>(args.Examiner))
+        if (!TryComp<HereticComponent>(args.Examiner, out var heretic))
             return;
 
-        args.PushMarkup(Loc.GetString("heretic-blade-examine"));
+        var isUpgradedVoid = heretic.CurrentPath == "Void" && heretic.PathStage >= 7;
+
+        var sb = new StringBuilder();
+        sb.AppendLine(Loc.GetString("heretic-blade-examine"));
+        if (isUpgradedVoid) sb.AppendLine(Loc.GetString("heretic-blade-void-examine"));
+
+        args.PushMarkup(sb.ToString());
     }
 
     private void OnMeleeHit(Entity<HereticBladeComponent> ent, ref MeleeHitEvent args)

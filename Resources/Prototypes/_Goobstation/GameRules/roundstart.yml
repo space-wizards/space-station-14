@@ -8,56 +8,20 @@
     delay:
       min: 30
       max: 60
+  - type: AntagObjectives
+    objectives:
+    - ChangelingStealDNAObjective
+    - EscapeIdentityObjective
+    - ChangelingSurviveObjective
   - type: AntagSelection
     agentName: changeling-roundend-name
     definitions:
     - prefRoles: [ Changeling ]
-      max: 7
+      max: 6
       playerRatio: 10
       lateJoinAdditional: true
       blacklist:
         components:
         - AntagImmune
-      mindRoles:
-      - MindRoleChangeling
-
-- type: entity
-  parent: BaseTraitorRule
-  id: CalmTraitor # For Dual Antag Gamemodes
-  components:
-  - type: GameRule
-    minPlayers: 30
-    delay:
-      min: 240
-      max: 420
-  - type: AntagSelection
-    definitions:
-    - prefRoles: [ Traitor ]
-      max: 5
-      playerRatio: 15
-      blacklist:
-        components:
-        - AntagImmune
-        - Changeling
-      lateJoinAdditional: true
-      mindRoles:
-      - MindRoleTraitor
-
-- type: entity
-  parent: Changeling
-  id: CalmLing # For Dual Antag Gamemodes
-  components:
-  - type: GameRule
-    minPlayers: 30
-    delay:
-      min: 30
-      max: 60
-  - type: AntagSelection
-    agentName: changeling-roundend-name
-    definitions:
-    - prefRoles: [ Changeling ]
-      max: 2
-      playerRatio: 15
-      lateJoinAdditional: true
       mindRoles:
       - MindRoleChangeling

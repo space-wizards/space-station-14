@@ -6,11 +6,6 @@
   - type: Objective
     difficulty: 1.5 # unused but necessary i guess
     issuer: objective-issuer-hivemind
-  - type: RoleRequirement
-    roles:
-      mindRoles:
-      - ChangelingRole
-
 
 - type: entity
   parent: [BaseChangelingObjective, BaseSurviveObjective]

@@ -54212,10 +54212,10 @@ entities:
       parent: 30
 - proto: SpawnPointCaptain
   entities:
-  - uid: 250
+  - uid: 685
     components:
     - type: Transform
-      pos: 35.5,7.5
+      pos: 39.5,2.5
       parent: 30
 - proto: SpawnPointCargoTechnician
   entities:
@@ -54257,17 +54257,17 @@ entities:
       parent: 30
 - proto: SpawnPointChiefEngineer
   entities:
-  - uid: 7366
+  - uid: 4706
     components:
     - type: Transform
-      pos: -38.5,9.5
+      pos: 38.5,3.5
       parent: 30
 - proto: SpawnPointChiefMedicalOfficer
   entities:
-  - uid: 2716
+  - uid: 5539
     components:
     - type: Transform
-      pos: -0.5,-15.5
+      pos: 38.5,1.5
       parent: 30
 - proto: SpawnPointClown
   entities:
@@ -54285,17 +54285,17 @@ entities:
       parent: 30
 - proto: SpawnPointHeadOfPersonnel
   entities:
-  - uid: 524
+  - uid: 7366
     components:
     - type: Transform
-      pos: 32.5,-5.5
+      pos: 37.5,1.5
       parent: 30
 - proto: SpawnPointHeadOfSecurity
   entities:
-  - uid: 685
+  - uid: 250
     components:
     - type: Transform
-      pos: 1.5,21.5
+      pos: 37.5,3.5
       parent: 30
 - proto: SpawnPointJanitor
   entities:
@@ -54435,10 +54435,10 @@ entities:
       parent: 30
 - proto: SpawnPointQuartermaster
   entities:
-  - uid: 5539
+  - uid: 2716
     components:
     - type: Transform
-      pos: -28.5,20.5
+      pos: 36.5,3.5
       parent: 30
 - proto: SpawnPointResearchAssistant
   entities:
@@ -54449,10 +54449,10 @@ entities:
       parent: 30
 - proto: SpawnPointResearchDirector
   entities:
-  - uid: 4706
+  - uid: 524
     components:
     - type: Transform
-      pos: -21.5,-10.5
+      pos: 36.5,1.5
       parent: 30
 - proto: SpawnPointSalvageSpecialist
   entities:
