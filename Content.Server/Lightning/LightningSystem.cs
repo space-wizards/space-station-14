@@ -50,6 +50,7 @@ public sealed class LightningSystem : SharedLightningSystem
     public void ShootLightning(EntityUid user, EntityUid target, string lightningPrototype = "Lightning", bool triggerLightningEvents = true)
     {
         var spriteState = LightningRandomizer();
+
         _beam.TryCreateBeam(user, target, lightningPrototype, spriteState);
 
         if (triggerLightningEvents) // we don't want certain prototypes to trigger lightning level events

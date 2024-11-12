@@ -117,7 +117,7 @@ public sealed class ReflectSystem : EntitySystem
             var difference = newVelocity - existingVelocity;
             _physics.SetLinearVelocity(projectile, physics.LinearVelocity + difference, body: physics);
             var velocityAngle = (float)Math.Atan2(newVelocity.Y, newVelocity.X);
-            _transform.SetWorldRotation(projectile, velocityAngle + reflect.OverrideAngle.Value);
+            _transform.SetWorldRotation(projectile, velocityAngle - reflect.OverrideAngle.Value);
         }
         else
         {
