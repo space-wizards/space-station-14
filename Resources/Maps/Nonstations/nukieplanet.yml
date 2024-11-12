@@ -6576,7 +6576,7 @@ entities:
   - uid: 2031
     components:
     - type: Transform
-      pos: 3.6114278,-10.732791
+      pos: 4.0109396,-12.223828
       parent: 104
   - uid: 2095
     components:
@@ -10993,6 +10993,13 @@ entities:
     - type: Transform
       pos: 11.5,-6.5
       parent: 104
+- proto: HandLabeler
+  entities:
+  - uid: 1826
+    components:
+    - type: Transform
+      pos: 3.4542694,-10.616036
+      parent: 104
 - proto: KitchenKnife
   entities:
   - uid: 1061
@@ -13721,7 +13728,7 @@ entities:
     - type: Transform
       pos: 3.5882664,-8.344303
       parent: 104
-- proto: VendingMachineBooze
+- proto: VendingMachineBoozeSyndicate
   entities:
   - uid: 1380
     components:

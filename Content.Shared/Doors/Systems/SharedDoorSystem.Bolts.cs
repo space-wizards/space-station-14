@@ -77,8 +77,20 @@ public abstract partial class SharedDoorSystem
 
     public void SetBoltsDown(Entity<DoorBoltComponent> ent, bool value, EntityUid? user = null, bool predicted = false)
     {
+        TrySetBoltDown(ent, value, user, predicted);
+    }
+
+    public bool TrySetBoltDown(
+        Entity<DoorBoltComponent> ent,
+        bool value,
+        EntityUid? user = null,
+        bool predicted = false
+    )
+    {
+        if (!_powerReceiver.IsPowered(ent.Owner))
+            return false;
         if (ent.Comp.BoltsDown == value)
-            return;
+            return false;
 
         ent.Comp.BoltsDown = value;
         Dirty(ent, ent.Comp);
@@ -89,6 +101,7 @@ public abstract partial class SharedDoorSystem
             Audio.PlayPredicted(sound, ent, user: user);
         else
             Audio.PlayPvs(sound, ent);
+        return true;
     }
 
     private void OnStateChanged(Entity<DoorBoltComponent> entity, ref DoorStateChangedEvent args)
