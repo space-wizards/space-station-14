@@ -11,12 +11,12 @@
     tags:
     - Wrench
   - type: Sprite
-    sprite: Objects/Tools/greatwrench.rsi
+    sprite: _Impstation/Objects/Tools/greatwrench.rsi
     state: icon
   - type: Item
-    sprite: Objects/Tools/greatwrench.rsi
+    sprite: _Impstation/Objects/Tools/greatwrench.rsi
     storedSprite:
-      sprite: Objects/Tools/greatwrench.rsi
+      sprite: _Impstation/Objects/Tools/greatwrench.rsi
       state: storage
     size: Large
   - type: MeleeWeapon
