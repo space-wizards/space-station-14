@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Cojoke-dot
-  changes:
-  - message: Borg's names are now displayed when they make an announcement on the
-      Communications Console.
-    type: Tweak
-  id: 7104
-  time: '2024-08-13T18:31:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30107
 - author: Spessmann
   changes:
   - message: Added Cog, a new midpop map based on Cogmap from ss13
@@ -3949,3 +3941,10 @@
   id: 7603
   time: '2024-11-11T22:58:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32493
+- author: thetolbean
+  changes:
+  - message: Droppers can no longer inject or draw from closed containers.
+    type: Fix
+  id: 7604
+  time: '2024-11-12T12:06:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33011
