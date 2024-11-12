@@ -5,6 +5,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Placeable;
+using Content.Shared.Hands;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
@@ -22,6 +23,8 @@ public sealed class SolutionHeaterSystem : EntitySystem
         SubscribeLocalEvent<SolutionHeaterComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<SolutionHeaterComponent, ItemPlacedEvent>(OnItemPlaced);
         SubscribeLocalEvent<SolutionHeaterComponent, ItemRemovedEvent>(OnItemRemoved);
+        SubscribeLocalEvent<SolutionHeaterComponent, GotEquippedHandEvent>(OnHandPickUp);
+        SubscribeLocalEvent<SolutionHeaterComponent, GotUnequippedHandEvent>(OnHandUnequip);
     }
 
     private void TurnOn(EntityUid uid)
@@ -71,6 +74,39 @@ public sealed class SolutionHeaterSystem : EntitySystem
         var placer = Comp<ItemPlacerComponent>(entity);
         if (placer.PlacedEntities.Count == 0) // Last entity was removed
             TurnOff(entity);
+    }
+
+    private void OnHandPickUp(EntityUid uid, ref GotEquippedHandEvent args)
+    {
+        // Check if the entity being picked up has SolutionHeaterComponent
+        if (!TryComp<SolutionHeaterComponent>(uid, out var solutionHeaterComponent))
+            return;
+
+        // Check if the entity being picked up has ActiveSolutionHeaterComponent
+        if (!HasComp<ActiveSolutionHeaterComponent>(uid))
+            return;
+
+        // Try to get the solution container component of the entity being picked up
+        if (!TryComp<SolutionContainerManagerComponent>(uid, out var container))
+            return;
+
+        // Iterate through all solutions in the container
+        foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((uid, container)))
+        {
+            // Add thermal energy to the solution
+            var energy = solutionHeaterComponent.HeatPerSecond; // Adjust as needed
+            _solutionContainer.AddThermalEnergy(soln, energy);
+        }
+    }
+
+    private void OnHandUnequip(EntityUid uid, ref GotUnequippedHandEvent args)
+    {
+        // Check if the entity being unequipped has ActiveSolutionHeaterComponent
+        if (TryComp<ActiveSolutionHeaterComponent>(uid, out var activeHeaterComponent))
+        {
+            // Remove or disable the ActiveSolutionHeaterComponent to stop heating
+            RemComp<ActiveSolutionHeaterComponent>(uid);
+        }
     }
 
     public override void Update(float frameTime)
