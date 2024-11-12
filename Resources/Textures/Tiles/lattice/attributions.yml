@@ -1,0 +1,10 @@
+
+- files: ["lattice.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "tgstation commit 8abb19545828230d92ba18827feeb42a67a55d49, cropped_parallax modified from parallax."
+  source: "https://github.com/tgstation/tgstation/"
+
+- files: ["border_e.png","border_n.png","border_s.png","border_w.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by TheShuEd"
+  source: "https://github.com/space-wizards/space-station-14/pulls" #TODO past PR code here

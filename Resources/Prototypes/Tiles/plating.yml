@@ -72,7 +72,7 @@
 - type: tile
   id: Lattice
   name: tiles-lattice
-  sprite: /Textures/Tiles/lattice.png
+  sprite: /Textures/Tiles/lattice/lattice.png
   baseTurf: Space
   isSubfloor: true
   deconstructTools: [ Cutting ]
@@ -83,6 +83,12 @@
   isSpace: true
   itemDrop: PartRodMetal1
   heatCapacity: 10000
+  edgeSpritePriority: 1
+  edgeSprites:
+    South: /Textures/Tiles/lattice/border_s.png
+    East: /Textures/Tiles/lattice/border_e.png
+    North: /Textures/Tiles/lattice/border_n.png
+    West: /Textures/Tiles/lattice/border_w.png
 
 - type: tile
   id: TrainLattice
