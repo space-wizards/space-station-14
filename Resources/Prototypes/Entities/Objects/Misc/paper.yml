@@ -73,6 +73,18 @@
           Quantity: 1
 
 - type: entity
+  name: jellid-proof paper
+  parent: Paper
+  id: PaperJellid
+  description: 'A piece of paper covered with a thin layer of steel. Prevents ignition from Jellids writers.'
+  components:
+  - type: Flammable
+    fireSpread: true
+    canResistFire: false
+    alwaysCombustible: true
+    minIgnitionTemperature: 850
+
+- type: entity
   name: paper scrap
   parent: Paper
   id: PaperScrap
