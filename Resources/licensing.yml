@@ -1,0 +1,27 @@
+# Licensing configuration file
+
+# Used by `Tools/rga_check.py` for making sure that all assets have attribution, valid licenses,
+# that custom licenses have their files properly recorded, and various other asset compliance checks
+
+
+# Flag that designates the project as non-commercial and stops the script from screaming about license violation
+# Make sure to flip this off if you're unsure about commerciality of your project
+# This is purely for own checking of assets in your project
+project_is_non_commercial_and_not_for_profit: true
+
+
+# Checks to ignore for running the script without other parameters
+# Useful if you want to ensure linting in CI, but can't turn on full compliance checking yet
+# See ValidationFailure enum for values
+ignore_checks:
+- SOURCE_UNKNOWN
+- UNATTRIBUTED
+
+
+# If you want to make sure certain licenses are treated as invalid even though the project is non-commercial
+# invalid_licenses:
+# - "WTFPL" # Not actually allowed by the rga_validator check, but here as an example
+# - "CC-BY-NC-3.0"
+# - "CC-BY-NC-4.0"
+# - "CC-BY-NC-SA-3.0"
+# - "CC-BY-NC-SA-4.0"
