@@ -21,6 +21,8 @@
     heatPerSecond: 100
   - type: AlwaysHot
   - type: ActiveSolutionHeater
+  - type: TemperatureProtection # MAKE SURE this doesn't reduce damage inflicted from weaponry
+    coefficient: 0.6
   - type: UserInterface
     interfaces:
       enum.StorageUiKey.Key:
