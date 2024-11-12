@@ -84,11 +84,12 @@
   - type: Respirator
     damage:
       types:
-        Asphyxiation: 0.2
+        Slash: 1
     damageRecovery:
       types:
-        Asphyxiation: -1.0
+        Slash: -0.3
     maxSaturation: 15
+    gaspEmote: Scream
 
 - type: entity
   parent: MobHumanDummy
