@@ -29,6 +29,7 @@ public abstract partial class SharedGunSystem
         SubscribeLocalEvent<BallisticAmmoProviderComponent, AfterInteractEvent>(OnBallisticAfterInteract);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, AmmoFillDoAfterEvent>(OnBallisticAmmoFillDoAfter);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, UseInHandEvent>(OnBallisticUse);
+        SubscribeLocalEvent<BallisticAmmoProviderComponent, ActivateInWorldEvent>(OnBallisticActivate);
     }
 
     private void OnBallisticUse(EntityUid uid, BallisticAmmoProviderComponent component, UseInHandEvent args)
@@ -36,8 +37,21 @@ public abstract partial class SharedGunSystem
         if (args.Handled)
             return;
 
-        ManualCycle(uid, component, TransformSystem.GetMapCoordinates(uid), args.User);
+        if (component.Cycleable)
+            ManualCycle(uid, component, TransformSystem.GetMapCoordinates(uid), args.User);
+        else
+            ToggleBolt(uid, component, args.User);
+
         args.Handled = true;
+    }
+
+    private void OnBallisticActivate(EntityUid uid, BallisticAmmoProviderComponent component, ActivateInWorldEvent args)
+    {
+        if (args.Handled || !args.Complex)
+            return;
+
+        args.Handled = true;
+        ToggleBolt(uid, component, args.User);
     }
 
     private void OnBallisticInteractUsing(EntityUid uid, BallisticAmmoProviderComponent component, InteractUsingEvent args)
@@ -49,6 +63,9 @@ public abstract partial class SharedGunSystem
             return;
 
         if (GetBallisticShots(component) >= component.Capacity)
+            return;
+
+        if (component.BoltClosed == true) //add variable for if gun accepts ammo while bolted or unbolted
             return;
 
         component.Entities.Add(args.Used);
@@ -115,6 +132,11 @@ public abstract partial class SharedGunSystem
             return;
         }
 
+        if (target.BoltClosed == true) //do the same here i think
+        {
+            return;
+        }
+
         void SimulateInsertAmmo(EntityUid ammo, EntityUid ammoProvider, EntityCoordinates coordinates)
         {
             var evInsert = new InteractUsingEvent(args.User, ammo, ammoProvider, coordinates);
@@ -160,7 +182,7 @@ public abstract partial class SharedGunSystem
 
     private void OnBallisticVerb(EntityUid uid, BallisticAmmoProviderComponent component, GetVerbsEvent<Verb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || args.Hands == null || !component.Cycleable)
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
             return;
 
         if (component.Cycleable)
@@ -173,6 +195,19 @@ public abstract partial class SharedGunSystem
             });
 
         }
+
+        if (component.BoltClosed != null)
+        {
+            args.Verbs.Add(new Verb()
+            {
+                Text = component.BoltClosed.Value ? Loc.GetString("gun-chamber-bolt-open") : Loc.GetString("gun-chamber-bolt-close"),
+                Act = () =>
+                {
+                    ToggleBolt(uid, component, args.User);
+                }
+            });
+
+        }
     }
 
     private void OnBallisticExamine(EntityUid uid, BallisticAmmoProviderComponent component, ExaminedEvent args)
@@ -180,7 +215,22 @@ public abstract partial class SharedGunSystem
         if (!args.IsInDetailsRange)
             return;
 
-        args.PushMarkup(Loc.GetString("gun-magazine-examine", ("color", AmmoExamineColor), ("count", GetBallisticShots(component))));
+        string boltState;
+
+        using (args.PushGroup(nameof(BallisticAmmoProviderComponent)))
+        {
+            if (component.BoltClosed != null)
+            {
+                if (component.BoltClosed == true)
+                    boltState = Loc.GetString("gun-chamber-bolt-open-state");
+                else
+                    boltState = Loc.GetString("gun-chamber-bolt-closed-state");
+                args.PushMarkup(Loc.GetString("gun-chamber-bolt", ("bolt", boltState),
+                    ("color", component.BoltClosed.Value ? Color.FromHex("#94e1f2") : Color.FromHex("#f29d94"))));
+            }
+
+            args.PushMarkup(Loc.GetString("gun-magazine-examine", ("color", AmmoExamineColor), ("count", GetBallisticShots(component))));
+        }
     }
 
     private void ManualCycle(EntityUid uid, BallisticAmmoProviderComponent component, MapCoordinates coordinates, EntityUid? user = null, GunComponent? gunComp = null)
@@ -212,6 +262,17 @@ public abstract partial class SharedGunSystem
 
     protected abstract void Cycle(EntityUid uid, BallisticAmmoProviderComponent component, MapCoordinates coordinates);
 
+    /// <summary>
+    /// Sets the bolt's positional value to the other state
+    /// </summary>
+    public void ToggleBolt(EntityUid uid, BallisticAmmoProviderComponent component, EntityUid? user = null)
+    {
+        if (component.BoltClosed == null)
+            return;
+
+        SetBoltClosed(uid, component, !component.BoltClosed.Value, user);
+    }
+
     private void OnBallisticInit(EntityUid uid, BallisticAmmoProviderComponent component, ComponentInit args)
     {
         component.Container = Containers.EnsureContainer<Container>(uid, "ballistic-ammo");
@@ -239,6 +300,12 @@ public abstract partial class SharedGunSystem
 
     private void OnBallisticTakeAmmo(EntityUid uid, BallisticAmmoProviderComponent component, TakeAmmoEvent args)
     {
+        if (component.BoltClosed == false)
+        {
+            args.Reason = Loc.GetString("gun-chamber-bolt-ammo");
+            return;
+        }
+
         for (var i = 0; i < args.Shots; i++)
         {
             EntityUid entity;
@@ -248,13 +315,24 @@ public abstract partial class SharedGunSystem
                 entity = component.Entities[^1];
 
                 args.Ammo.Add((entity, EnsureShootable(entity)));
-                component.Entities.RemoveAt(component.Entities.Count - 1);
-                Containers.Remove(entity, component.Container);
+
+                if (component.AutoCycle)
+                {
+                    component.Entities.RemoveAt(component.Entities.Count - 1);
+                    Containers.Remove(entity, component.Container);
+                }
             }
             else if (component.UnspawnedCount > 0)
             {
-                component.UnspawnedCount--;
                 entity = Spawn(component.Proto, args.Coordinates);
+                component.UnspawnedCount--;
+
+                if (!component.AutoCycle)
+                {
+                    component.Entities.Add(entity);
+                    Containers.Insert(entity, component.Container);
+                }
+
                 args.Ammo.Add((entity, EnsureShootable(entity)));
             }
         }
@@ -287,6 +365,40 @@ public abstract partial class SharedGunSystem
         UpdateBallisticAppearance(entity.Owner, entity.Comp);
         UpdateAmmoCount(entity.Owner);
         Dirty(entity);
+    }
+
+    /// <summary>
+    /// Updates the bolt to its new state
+    /// </summary>
+    public void SetBoltClosed(EntityUid uid, BallisticAmmoProviderComponent component, bool value, EntityUid? user = null, AppearanceComponent? appearance = null)
+    {
+        if (component.BoltClosed == null || value == component.BoltClosed)
+            return;
+
+        Appearance.SetData(uid, AmmoVisuals.BoltClosed, value, appearance);
+
+        if (value)
+        {
+            if (user != null)
+                PopupSystem.PopupClient(Loc.GetString("gun-chamber-bolt-closed"), uid, user.Value);
+
+            Audio.PlayPredicted(component.BoltClosedSound, uid, user);
+        }
+        else
+        {
+            Cycle(uid, component, TransformSystem.GetMapCoordinates(uid));
+
+            UpdateAmmoCount(uid);
+
+            if (user != null)
+                PopupSystem.PopupClient(Loc.GetString("gun-chamber-bolt-opened"), uid, user.Value);
+
+            Audio.PlayPredicted(component.BoltOpenedSound, uid, user);
+            UpdateBallisticAppearance(uid, component);
+        }
+
+        component.BoltClosed = value;
+        Dirty(uid, component);
     }
 }
 
