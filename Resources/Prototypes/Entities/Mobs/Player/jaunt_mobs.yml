@@ -15,8 +15,6 @@
   - type: MovementSpeedModifier
     baseSprintSpeed: 12
     baseWalkSpeed: 8
-  - type: Physics
-    bodyType: KinematicController
   - type: Visibility
     layer: 2
   - type: Spectral
