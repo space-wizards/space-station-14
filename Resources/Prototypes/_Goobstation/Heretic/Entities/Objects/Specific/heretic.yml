@@ -1,0 +1,63 @@
+- type: entity
+  parent: [ BaseItem, BaseMagicContraband ]
+  id: CodexCicatrix
+  name: codex cicatrix
+  description: An ominous book you've never seen before. The letters seem to be contantly rearranging themselves.
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Heretic/book.rsi
+    layers:
+    - state: icon
+      map: [ "base" ]
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleVisuals.Toggled:
+        base:
+          True: { state: icon-on }
+          False: { state: icon }
+  - type: Item
+    size: Small
+    sprite: _Goobstation/Heretic/book.rsi
+  - type: UseDelay
+    delay: 1.0
+  - type: PointLight
+    enabled: false
+    radius: 2
+    energy: 1
+    color: "#6e7500"
+    netsync: false
+  - type: Appearance
+  - type: ItemToggle
+    predictable: false
+  - type: ComponentToggler
+    components:
+    - type: HereticMagicItem
+  - type: ItemTogglePointLight
+  - type: ToggleableLightVisuals
+  - type: ItemToggleSize
+    activatedSize: Normal
+
+- type: entity
+  parent: [ DrinkBase, BaseMagicContraband ]
+  id: HereticEldritchFlask
+  name: eldritch flask
+  description: A flask filled with an unknown substance. Who knows what will happen when you take a sip from it.
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Heretic/items.rsi
+    state: eldritch_flask
+  - type: Icon
+    sprite: _Goobstation/Heretic/items.rsi
+    state: eldritch_flask
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        # it's a cryostasis flash filled with healing goodies what could possibly go wrong?
+        # i will certainly not abuse it as a heretic chemist
+        maxVol: 100
+        canReact: false
+        reagents:
+        - ReagentId: Omnizine
+          Quantity: 80
+        - ReagentId: TranexamicAcid
+          Quantity: 20

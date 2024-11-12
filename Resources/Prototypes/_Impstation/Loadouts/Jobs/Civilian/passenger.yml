@@ -1,0 +1,8 @@
+# The Next Generation
+- type: loadout
+  id: GraySpaceCadetJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: GreyTider
+  equipment:
+    jumpsuit: ClothingSpaceCadetJumpsuitColorGray

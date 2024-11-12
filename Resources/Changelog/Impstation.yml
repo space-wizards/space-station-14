@@ -4042,3 +4042,57 @@
   id: 489
   time: '2024-11-10T20:54:09.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/662
+- author: formlessnameless
+  changes:
+  - message: Added new plasteel slag chunk to fill in the plastic gap for rare salvage
+      resources
+    type: Add
+  - message: Increased plastic yield from certain salvage items that already gave
+      plastic
+    type: Tweak
+  - message: Modified a bunch of trash items to give plastic and steel when recycled
+    type: Tweak
+  - message: Added secure windoors to cargo plastic flaps on Train and Saltern
+    type: Tweak
+  - message: Removed full stack of diamonds from Saltern vault
+    type: Remove
+  - message: Added implanter crate to Saltern armory
+    type: Add
+  - message: Heads now all spawn in one place on Train and Saltern. COMMUNICATE!
+    type: Tweak
+  - message: Added two more grounding rods to Train
+    type: Tweak
+  id: 490
+  time: '2024-11-11T09:39:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/669
+- author: honeyed-lemons
+  changes:
+  - message: Added the Space Cadet Jumpsuit in all jumpsuit colors
+    type: Add
+  id: 491
+  time: '2024-11-11T09:40:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/667
+- author: Formlessnameless, Kipdotnet
+  changes:
+  - message: Plastic Slag has a custom sprite now
+    type: Tweak
+  id: 492
+  time: '2024-11-11T12:14:33.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/672
+- author: formlessnameless
+  changes:
+  - message: Moved department head spawns on Atlas, Omega, and Cluster to the bridge
+    type: Tweak
+  - message: General pipe cleanup on Train, added scrubbers to Atmos
+    type: Tweak
+  id: 493
+  time: '2024-11-12T00:53:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/675
+- author: sageu111
+  changes:
+  - message: 'GRAY NAMES HAVE NEW NAMES TO REPRESENT THEIR CULTURE VULTURE LIFESTYLE
+      #SUBURBANGRAYS'
+    type: Tweak
+  id: 494
+  time: '2024-11-12T02:09:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/678
