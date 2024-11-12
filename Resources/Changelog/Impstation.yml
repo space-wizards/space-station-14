@@ -4125,3 +4125,11 @@
   id: 498
   time: '2024-11-12T18:28:54.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/685
+- author: ATDoop
+  changes:
+  - message: Added giant lollipops!!! They can be made by cooking a skewer and 10
+      units of sugar for 5 seconds in a microwave.
+    type: Add
+  id: 499
+  time: '2024-11-12T20:04:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/687
