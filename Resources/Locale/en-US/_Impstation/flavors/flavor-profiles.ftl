@@ -1,0 +1,1 @@
+flavor-base-whimsy = whimsical
