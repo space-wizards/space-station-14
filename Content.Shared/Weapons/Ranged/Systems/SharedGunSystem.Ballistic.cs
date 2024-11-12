@@ -65,7 +65,7 @@ public abstract partial class SharedGunSystem
         if (GetBallisticShots(component) >= component.Capacity)
             return;
 
-        if (component.BoltClosed == true) //add variable for if gun accepts ammo while bolted or unbolted
+        if (component.BoltClosed != null && component.BoltClosed != component.BoltClosedReload)
             return;
 
         component.Entities.Add(args.Used);
@@ -132,7 +132,7 @@ public abstract partial class SharedGunSystem
             return;
         }
 
-        if (target.BoltClosed == true) //do the same here i think
+        if (target.BoltClosed != null && target.BoltClosed != target.BoltClosedReload)
         {
             return;
         }

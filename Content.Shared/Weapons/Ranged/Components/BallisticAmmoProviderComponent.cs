@@ -65,6 +65,12 @@ public sealed partial class BallisticAmmoProviderComponent : Component
     public bool? BoltClosed = null;
 
     /// <summary>
+    /// If the gun can load ammo with the bolt closed. True means bolt must be closed, and false means bolt must be open.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("boltClosedReload"), AutoNetworkedField]
+    public bool? BoltClosedReload = false;
+
+    /// <summary>
     /// Does the gun automatically open and close the bolt upon shooting.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("autoCycle"), AutoNetworkedField]
