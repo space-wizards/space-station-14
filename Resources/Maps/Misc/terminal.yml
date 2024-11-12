@@ -1218,12 +1218,13 @@ entities:
     - type: Transform
       pos: 6.5,2.5
       parent: 818
+    - type: AccessReader
+      access:
+      - - CentralCommand
     - type: Godmode
     - type: BatterySelfRecharger
       autoRechargeRate: 50000
       autoRecharge: True
-    - type: AccessReader
-      access: [["CentralCommand"]]
     missingComponents:
     - Construction
     - Destructible
@@ -1232,12 +1233,13 @@ entities:
     - type: Transform
       pos: -13.5,2.5
       parent: 818
+    - type: AccessReader
+      access:
+      - - CentralCommand
     - type: Godmode
     - type: BatterySelfRecharger
       autoRechargeRate: 50000
       autoRecharge: True
-    - type: AccessReader
-      access: [["CentralCommand"]]
     missingComponents:
     - Construction
     - Destructible
@@ -1246,12 +1248,13 @@ entities:
     - type: Transform
       pos: -13.5,-11.5
       parent: 818
+    - type: AccessReader
+      access:
+      - - CentralCommand
     - type: Godmode
     - type: BatterySelfRecharger
       autoRechargeRate: 50000
       autoRecharge: True
-    - type: AccessReader
-      access: [["CentralCommand"]]
     missingComponents:
     - Construction
     - Destructible
@@ -1260,12 +1263,13 @@ entities:
     - type: Transform
       pos: 6.5,-11.5
       parent: 818
+    - type: AccessReader
+      access:
+      - - CentralCommand
     - type: Godmode
     - type: BatterySelfRecharger
       autoRechargeRate: 50000
       autoRecharge: True
-    - type: AccessReader
-      access: [["CentralCommand"]]
     missingComponents:
     - Construction
     - Destructible
@@ -1275,12 +1279,13 @@ entities:
       rot: 3.141592653589793 rad
       pos: 1.5,6.5
       parent: 818
+    - type: AccessReader
+      access:
+      - - CentralCommand
     - type: Godmode
     - type: BatterySelfRecharger
       autoRechargeRate: 50000
       autoRecharge: True
-    - type: AccessReader
-      access: [["CentralCommand"]]
     missingComponents:
     - Construction
     - Destructible
@@ -1289,12 +1294,13 @@ entities:
     - type: Transform
       pos: 2.5,3.5
       parent: 818
+    - type: AccessReader
+      access:
+      - - CentralCommand
     - type: Godmode
     - type: BatterySelfRecharger
       autoRechargeRate: 50000
       autoRecharge: True
-    - type: AccessReader
-      access: [["CentralCommand"]]
     missingComponents:
     - Construction
     - Destructible
@@ -4120,17 +4126,12 @@ entities:
     - Destructible
 - proto: ChairOfficeDark
   entities:
-  - uid: 591
+  - uid: 18
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 9.5,3.5
       parent: 818
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - Anchorable
-    - Destructible
 - proto: ChairWood
   entities:
   - uid: 577
@@ -4138,51 +4139,31 @@ entities:
     - type: Transform
       pos: 10.5,1.5
       parent: 818
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - Destructible
-    - Anchorable
-  - uid: 703
+  - uid: 591
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 8.5,0.5
       parent: 818
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - Destructible
-    - Anchorable
-  - uid: 704
+  - uid: 703
     components:
     - type: Transform
       pos: 9.5,1.5
       parent: 818
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - Destructible
-    - Anchorable
-  - uid: 714
+  - uid: 704
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 8.5,-0.5
       parent: 818
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - Destructible
-    - Anchorable
 - proto: ChessBoard
   entities:
-  - uid: 918
+  - uid: 714
     components:
     - type: Transform
-      pos: 12.503689,-2.3981738
+      rot: 3.141592653589793 rad
+      pos: 12.5093775,-2.403601
       parent: 818
-    - type: Godmode
 - proto: ClosetWallEmergencyFilledRandom
   entities:
   - uid: 344
@@ -4928,30 +4909,23 @@ entities:
     - Anchorable
 - proto: DrinkGlass
   entities:
+  - uid: 723
+    components:
+    - type: Transform
+      pos: -12.618602,2.5336328
+      parent: 818
   - uid: 915
     components:
     - type: Transform
-      pos: -12.587411,2.5765429
+      pos: -12.399852,2.6273828
       parent: 818
-    - type: Godmode
-    missingComponents:
-    - Destructible
-  - uid: 916
-    components:
-    - type: Transform
-      pos: -12.321786,2.7171679
-      parent: 818
-    - type: Godmode
-    missingComponents:
-    - Destructible
 - proto: DrinkShaker
   entities:
-  - uid: 914
+  - uid: 724
     components:
     - type: Transform
-      pos: -12.649911,2.7640429
+      pos: -12.722768,2.7627993
       parent: 818
-    - type: Godmode
 - proto: ExtinguisherCabinetFilled
   entities:
   - uid: 213
@@ -6223,15 +6197,11 @@ entities:
     - Destructible
 - proto: PaperBin10
   entities:
-  - uid: 737
+  - uid: 729
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 8.5,4.5
       parent: 818
-    - type: Godmode
-    missingComponents:
-    - Anchorable
 - proto: PosterLegitCohibaRobustoAd
   entities:
   - uid: 927
@@ -8089,72 +8059,42 @@ entities:
     - Construction
     - Anchorable
     - Destructible
-  - uid: 723
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 10.5,-20.5
-      parent: 818
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - Anchorable
-    - Destructible
-  - uid: 724
+  - uid: 730
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 8.5,-20.5
       parent: 818
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - Anchorable
-    - Destructible
-  - uid: 729
+  - uid: 737
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -12.5,-1.5
+      rot: 3.141592653589793 rad
+      pos: 10.5,-20.5
       parent: 818
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - Anchorable
-    - Destructible
-  - uid: 730
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -12.5,-2.5
-      parent: 818
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - Anchorable
-    - Destructible
   - uid: 738
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -12.5,-0.5
       parent: 818
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - Anchorable
-    - Destructible
   - uid: 740
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -12.5,0.5
       parent: 818
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - Anchorable
-    - Destructible
+  - uid: 761
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -12.5,-1.5
+      parent: 818
+  - uid: 914
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -12.5,-2.5
+      parent: 818
 - proto: StoolBar
   entities:
   - uid: 230
