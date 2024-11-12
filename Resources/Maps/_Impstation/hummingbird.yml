@@ -12499,19 +12499,19 @@ entities:
   - uid: 2596
     components:
     - type: Transform
-      pos: 54.583874,6.7706003
+      pos: 54.79009,6.0882545
       parent: 2
   - uid: 2597
     components:
     - type: Transform
-      pos: 54.3495,6.6143503
+      pos: 54.35259,5.9945045
       parent: 2
 - proto: AnomalyVesselCircuitboard
   entities:
   - uid: 2612
     components:
     - type: Transform
-      pos: 54.427624,6.2862253
+      pos: 54.336964,6.2288795
       parent: 2
 - proto: APCBasic
   entities:
@@ -13188,7 +13188,7 @@ entities:
   - uid: 2595
     components:
     - type: Transform
-      pos: 54.646374,6.4112253
+      pos: 54.79009,6.3382545
       parent: 2
   - uid: 13695
     components:
@@ -122887,7 +122887,7 @@ entities:
   - uid: 2546
     components:
     - type: Transform
-      pos: 54.50575,5.8174753
+      pos: 54.57134,5.5413795
       parent: 2
 - proto: SheetPlasma1
   entities:
@@ -151589,7 +151589,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -118020.766
+      secondsUntilStateChange: -118055.86
       state: Opening
     - type: Airlock
       autoClose: False
