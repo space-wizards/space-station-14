@@ -150,18 +150,6 @@
     },
     {
       "name": "corn-in-butter"
-    },
-    {
-      "name": "big-lollipop"
-    },
-    {
-        "name": "big-lollipop-inhand-right",
-        "directions": 4
-    },
-    {
-        "name": "big-lollipop-inhand-left",
-        "directions": 4
     }
-
   ]
 }
