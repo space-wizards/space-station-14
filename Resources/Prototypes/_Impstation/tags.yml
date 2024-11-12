@@ -11,3 +11,9 @@
 
 - type: Tag
   id: WeaponCleanerLakeUpgradeKit
+
+- type: Tag
+  id: WeaponSurvivalRifleUpgradeRifleKit
+
+- type: Tag
+  id: WeaponSurvivalRifleUpgradeSMGKit
