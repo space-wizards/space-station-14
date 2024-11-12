@@ -4079,3 +4079,12 @@
   id: 492
   time: '2024-11-11T12:14:33.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/672
+- author: formlessnameless
+  changes:
+  - message: Moved department head spawns on Atlas, Omega, and Cluster to the bridge
+    type: Tweak
+  - message: General pipe cleanup on Train, added scrubbers to Atmos
+    type: Tweak
+  id: 493
+  time: '2024-11-12T00:53:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/675
