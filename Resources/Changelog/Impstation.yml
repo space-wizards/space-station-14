@@ -4103,3 +4103,10 @@
   id: 495
   time: '2024-11-12T17:32:14.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/680
+- author: Darkmajia
+  changes:
+  - message: Tables can now be built from uranium glass.
+    type: Add
+  id: 496
+  time: '2024-11-12T17:34:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/682
