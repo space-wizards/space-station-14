@@ -28,7 +28,7 @@ public sealed partial class StunProviderComponent : Component
     public SoundSpecifier Sound = new SoundCollectionSpecifier("sparks");
 
     /// <summary>
-    /// Joules required in the battery to stun someone.  Equals 5 uses on a small battery.
+    /// Joules required in the battery to stun someone.  Equals 6 uses on a small-capacity power cell, 12, on medium, and 18 on high.
     /// </summary>
     [DataField]
     public float StunCharge = 60f;
