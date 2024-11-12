@@ -22,6 +22,7 @@
   - MagazineBoxRiflePractice
   - WeaponDisablerPractice
   - WeaponLaserCarbinePractice
+  - WeaponFlareGunSecurity
 
 # Shared between secfab and emagged autolathe
 - type: latheRecipePack
