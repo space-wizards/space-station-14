@@ -681,12 +681,16 @@
   description: Wow!!! It's as big as your head!!!
   components:
   - type: Food
+    trash:
+    - FoodKebabSkewer
   - type: FlavorProfile
     flavors:
       - whimsy
       - sugar
   - type: Sprite
     state: big-lollipop
+  - type: Item
+    heldPrefix: big-lollipop
   - type: SolutionContainerManager
     solutions:
       food:

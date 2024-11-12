@@ -195,6 +195,11 @@
   description: flavor-base-chewy
 
 - type: flavor
+  id: whimsy
+  flavorType: Base
+  description: flavor-base-whimsy
+
+- type: flavor
   id: mustard
   flavorType: Complex
   description: flavor-complex-mustard
@@ -1219,12 +1224,12 @@
   id: thavenbad
   flavorType: Complex
   description: flavor-complex-thavenbad
-  
+
 - type: flavor
   id: zombieslushie
   flavorType: Complex
   description: flavor-complex-zombieslushie
-  
+
 - type: flavor
   id: brotherly
   flavorType: Complex
