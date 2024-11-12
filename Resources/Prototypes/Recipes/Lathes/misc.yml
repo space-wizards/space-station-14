@@ -8,6 +8,13 @@
     Glass: 50
 
 - type: latheRecipe
+  id: PaperJellid
+  result: PaperJellid
+  completetime: 1
+  materials:
+    Steel: 15
+
+- type: latheRecipe
   id: LedLightTube
   result: LedLightTube
   category: Lights
