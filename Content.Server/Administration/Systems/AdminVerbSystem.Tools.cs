@@ -241,7 +241,7 @@ public sealed partial class AdminVerbSystem
                     Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Tanks/oxygen.rsi"), "icon"),
                     Act = () =>
                     {
-                        RefillGasTank(args.Target, Gas.Oxygen, tank);
+                        RefillGasTank(args.Target, Gas.Oxygen);
                     },
                     Impact = LogImpact.Extreme,
                     Message = Loc.GetString("admin-trick-internals-refill-oxygen-description"),
@@ -256,7 +256,7 @@ public sealed partial class AdminVerbSystem
                     Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Tanks/red.rsi"), "icon"),
                     Act = () =>
                     {
-                        RefillGasTank(args.Target, Gas.Nitrogen, tank);
+                        RefillGasTank(args.Target, Gas.Nitrogen);
                     },
                     Impact = LogImpact.Extreme,
                     Message = Loc.GetString("admin-trick-internals-refill-nitrogen-description"),
@@ -271,7 +271,7 @@ public sealed partial class AdminVerbSystem
                     Icon = new SpriteSpecifier.Rsi(new("/Textures/Objects/Tanks/plasma.rsi"), "icon"),
                     Act = () =>
                     {
-                        RefillGasTank(args.Target, Gas.Plasma, tank);
+                        RefillGasTank(args.Target, Gas.Plasma);
                     },
                     Impact = LogImpact.Extreme,
                     Message = Loc.GetString("admin-trick-internals-refill-plasma-description"),
@@ -745,9 +745,9 @@ public sealed partial class AdminVerbSystem
         }
     }
 
-    private void RefillGasTank(EntityUid tank, Gas gasType, GasTankComponent? tankComponent = null)
+    private void RefillGasTank(EntityUid tank, Gas gasType)
     {
-        if (!Resolve(tank, ref tankComponent, false) || !TryComp<InternalAirComponent>(tank, out var internalAir))
+        if (!TryComp<InternalAirComponent>(tank, out var internalAir))
             return;
 
         var mixSize = internalAir.Air.Volume;
