@@ -12,26 +12,24 @@
   - type: Item
     size: Small
     sprite: Objects/Weapons/Guns/Shotguns/flaregun.rsi
-  - type: ItemSlots
-    slots:
-      gun_chamber:
-        name: Chamber
-        startingItem: ShellShotgunFlare
-        priority: 1
-        whitelist:
-          tags: ## TODO: Add a risk of the gun blowing up if using non-light shotgun shells, and then re-enable them.
-            ## - ShellShotgun
-            - ShellShotgunLight
   - type: ContainerContainer
     containers:
-      gun_chamber: !type:ContainerSlot
-  - type: ChamberMagazineAmmoProvider
+      ballistic-ammo: !type:Container
+        ents: []
+  - type: BallisticAmmoProvider
+    whitelist:  ## TODO: Add a risk of the gun blowing up if using non-light shotgun shells, and then re-enable them.
+      tags:
+        - ShellShotgunLight
+        ## - ShellShotgun
+    proto: ShellShotgunFlare
+    capacity: 1
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
     autoCycle: false
     boltClosed: true
-    canRack: false
+    cycleable: false
     soundBoltClosed: /Audio/Weapons/Guns/Cock/revolver_cock.ogg
     soundBoltOpened: /Audio/Weapons/Guns/Cock/revolver_cock.ogg
-    soundRack: /Audio/Weapons/Guns/Cock/revolver_cock.ogg
   - type: Clothing
     sprite: Objects/Weapons/Guns/Shotguns/flaregun.rsi
     quickEquip: false
