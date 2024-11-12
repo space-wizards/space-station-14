@@ -68,7 +68,7 @@ public sealed partial class ChangelingComponent : Component
     ///     Maximum amount of biomass a changeling can have.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float MaxBiomass = 60f;
+    public float MaxBiomass = 30f;
 
     /// <summary>
     ///     How much biomass should be removed per cycle.

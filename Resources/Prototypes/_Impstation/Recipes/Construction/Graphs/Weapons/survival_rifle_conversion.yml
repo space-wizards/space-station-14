@@ -1,0 +1,20 @@
+- type: constructionGraph
+  id: UpgradeWeaponSurvivalRifle
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: upgraded_rifle
+          steps:
+            - tag: WeaponSurvivalRifleUpgradeRifleKit
+              doAfter: 2
+        - to: upgraded_smg
+          steps:
+            - tag: WeaponSurvivalRifleUpgradeSMGKit
+              doAfter: 2
+
+    - node: upgraded_rifle
+      entity: WeaponRifleSurvivalRifle
+
+    - node: upgraded_smg
+      entity: WeaponRifleSurvivalSMG

@@ -1,20 +1,4 @@
 # store catalog
-
-- type: listing
-  id: HereticSidePath5
-  name: knowledge-path-side-s5-name
-  description: knowledge-path-side-s5-desc
-  productHereticKnowledge: RitualOfKnowledge
-  cost:
-    KnowledgePoint: 2
-  categories:
-  - HereticPathSide
-  conditions:
-  - !type:ListingLimitedStockCondition
-    stock: 1
-  - !type:HereticPathCondition
-    stage: 0
-
 - type: listing
   id: HereticSidePath3Armor
   name: knowledge-path-side-s3-armor-name
@@ -30,3 +14,34 @@
     stock: 1
   - !type:HereticPathCondition
     stage: 2
+
+- type: listing
+  id: HereticSidePath3Flask
+  name: knowledge-path-side-s3-flask-name
+  description: knowledge-path-side-s3-flask-desc
+  icon: { sprite: _Goobstation/Heretic/items.rsi, state: eldritch_flask }
+  productHereticKnowledge: PriestRitual
+  cost:
+    KnowledgePoint: 2
+  categories:
+  - HereticPathSide
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:HereticPathCondition
+    stage: 2
+
+- type: listing
+  id: HereticSidePathKnowledge
+  name: knowledge-path-side-knowledge-name
+  description: knowledge-path-side-knowledge-desc
+  productHereticKnowledge: RitualOfKnowledge
+  cost:
+    KnowledgePoint: 2
+  categories:
+  - HereticPathSide
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:HereticPathCondition
+    stage: 0

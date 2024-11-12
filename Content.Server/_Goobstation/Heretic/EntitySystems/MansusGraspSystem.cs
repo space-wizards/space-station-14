@@ -101,7 +101,7 @@ public sealed partial class MansusGraspSystem : EntitySystem
 
     private void OnAfterInteract(Entity<MansusGraspComponent> ent, ref AfterInteractEvent args)
     {
-        if (!args.CanReach)
+        if (args.Handled || !args.CanReach)
             return;
 
         if (args.Target == null || args.Target == args.User)
@@ -118,12 +118,14 @@ public sealed partial class MansusGraspSystem : EntitySystem
         if ((TryComp<HereticComponent>(args.Target, out var th) && th.CurrentPath == ent.Comp.Path))
             return;
 
+        args.Handled = true;
+
         if (HasComp<StatusEffectsComponent>(target))
         {
             _chat.TrySendInGameICMessage(args.User, Loc.GetString("heretic-speech-mansusgrasp"), InGameICChatType.Speak, false);
             _audio.PlayPvs(new SoundPathSpecifier("/Audio/Items/welder.ogg"), target);
             _stun.TryKnockdown(target, TimeSpan.FromSeconds(3f), true);
-            _stamina.TakeStaminaDamage(target, 65f);
+            _stamina.TakeStaminaDamage(target, 80f);
             _language.DoRatvarian(target, TimeSpan.FromSeconds(10f), true);
         }
 

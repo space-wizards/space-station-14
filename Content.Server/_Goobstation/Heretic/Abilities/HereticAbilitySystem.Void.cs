@@ -3,10 +3,12 @@ using Content.Server.Body.Components;
 using Content.Server.Heretic.Components;
 using Content.Server.Temperature.Components;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Heretic;
 using Content.Shared.Temperature.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics.Components;
+using System.Linq;
 
 namespace Content.Server.Heretic.Abilities;
 
@@ -89,8 +91,16 @@ public sealed partial class HereticAbilitySystem : EntitySystem
 
         // damage closest ones
         foreach (var pookie in topPriority)
-            if (TryComp<DamageableComponent>(pookie, out var dmg))
-                _dmg.SetAllDamage(pookie, dmg, dmg.TotalDamage + .5f);
+        {
+            if (!TryComp<DamageableComponent>(pookie, out var dmgComp))
+                continue;
+
+            // total damage + 20 divided by all damage types.
+            var damage = (dmgComp.TotalDamage + 20f) / _prot.EnumeratePrototypes<DamageTypePrototype>().Count();
+
+            // apply gaming.
+            _dmg.SetAllDamage(pookie, dmgComp, damage);
+        }
 
         // stun close-mid range
         foreach (var pookie in midPriority)

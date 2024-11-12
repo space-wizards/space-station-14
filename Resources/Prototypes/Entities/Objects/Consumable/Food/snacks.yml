@@ -569,7 +569,8 @@
     - Trash
   - type: PhysicalComposition
     materialComposition:
-      Steel: 100
+      Steel: 50
+      Plastic: 50
   - type: SpaceGarbage
   - type: Food
     requiresSpecialDigestion: true

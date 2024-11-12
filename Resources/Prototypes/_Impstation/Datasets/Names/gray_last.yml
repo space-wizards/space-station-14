@@ -1,26 +1,47 @@
 - type: dataset
   id: names_gray_last
   values:
-  - Shitto # Ascalapha odorata
-  - Zaz # refers to any of the 3 Acherontia
-  - Da # Saturniinae
-  - Gimy # Plagodis dolabraria
-  - Vroo # Temnora
-  - Xen # Usta
-  - Keth # Thysania agrippina
-  - Quas # Operophtera brumata
-
-  # Other languages
-  - Wex # Ancient Greek "moth"
-  - Exo # conceivably any Old Norse descendant of mǫlr but probably more Danish than anything. "oe" digraph for ø.
-  - Ert # literal pseudo-translation of German Nachtfalter
-
-  # Myth and legend
-  - Barathium # belief of moths flying at night signalling the reception of a letter
-  - Dadodododo # Greek figure associated with Hero, and similar sounding to Oleander hawk-moth
-  - Ah
-  - Buudie
-  - Lumari
-  - Lox
-  - Geu
-  - Nuun
+  - Shitto 
+  - Zaz 
+  - Da 
+  - Gimy 
+  - Vroo 
+  - Xen 
+  - Keth 
+  - Quas 
+  - Wex 
+  - Exo 
+  - Ert 
+  - Barathium 
+  - Dadodododo 
+  - Food
+  - Boy
+  - Wonder
+  - Super Kick
+  - Lottery
+  - Puar
+  - Wee
+  - Zambou
+  - Jumbel
+  - Bizkit
+  - Movies
+  - Of Gray
+  - O'Brien
+  - Cerritulus
+  - Bairdii
+  - Soup
+  - Funseeker
+  - L'th
+  - Eats-Burger
+  - " "
+  - Toys
+  - Dragon
+  - Limp
+  - Fly
+  - Flakes
+  - And Drive
+  - Gwomp
+  - Zoo
+  - Egg
+  - Yrggl
+  - White

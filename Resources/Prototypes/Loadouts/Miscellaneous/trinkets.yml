@@ -35,6 +35,13 @@
     back:
     - ClothingHeadHatHairflower
 
+# Headphones
+- type: loadout
+  id: Headphones
+  storage:
+    back:
+    - ClothingNeckHeadphones
+
 # Plushies
 - type: loadout
   id: PlushieLizard

@@ -42,6 +42,7 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 50
+      Plastic: 50
   - type: SpaceGarbage
   - type: Item
     size: Tiny
@@ -111,6 +112,7 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 50
+      Plastic: 50
   - type: SpaceGarbage
   - type: Item
     size: Tiny
