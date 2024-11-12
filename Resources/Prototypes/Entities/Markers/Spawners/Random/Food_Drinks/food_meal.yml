@@ -76,6 +76,7 @@
     #rare
     rarePrototypes:
       - FoodMealMint
+      - FoodMealBigLollipop
       - FoodMealBearsteak
       - FoodMealMilkape
       - DisgustingSweptSoup

@@ -673,3 +673,26 @@
           Quantity: 4
         - ReagentId: Vitamin
           Quantity: 4
+
+- type: entity
+  name: giant lollipop
+  parent: FoodMealBase
+  id: FoodMealBigLollipop
+  description: Wow!!! It's as big as your head!!!
+  components:
+  - type: Food
+  - type: FlavorProfile
+    flavors:
+      -sugary
+      -whimsical
+  - type: Sprite
+    state: big-lollipop
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Sugar
+          Quantity: 10
