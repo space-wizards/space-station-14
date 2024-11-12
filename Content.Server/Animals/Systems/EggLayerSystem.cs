@@ -38,16 +38,14 @@ public sealed class EggLayerSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-
         var query = EntityQueryEnumerator<EggLayerComponent>();
-        var now = _timing.CurTime;
         while (query.MoveNext(out var uid, out var eggLayer))
         {
             // Players should be using the action.
             if (HasComp<ActorComponent>(uid))
                 continue;
 
-            if (now < eggLayer.NextGrowth)
+            if (_timing.CurTime < eggLayer.NextGrowth)
                 continue;
 
             // Randomize next growth time for more organic egglaying.

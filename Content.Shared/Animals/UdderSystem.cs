@@ -1,4 +1,3 @@
-using Content.Shared.Popups;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.DoAfter;
@@ -7,7 +6,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
-
+using Content.Shared.Popups;
 using Content.Shared.Udder;
 using Content.Shared.Verbs;
 using Robust.Shared.Timing;
@@ -30,23 +29,27 @@ public sealed class UdderSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<UdderComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<UdderComponent, GetVerbsEvent<AlternativeVerb>>(AddMilkVerb);
         SubscribeLocalEvent<UdderComponent, MilkingDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<UdderComponent, ExaminedEvent>(OnExamine);
     }
 
+    private void OnMapInit(EntityUid uid, UdderComponent component, MapInitEvent args)
+    {
+        component.NextGrowth = _timing.CurTime + component.GrowthDelay;
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-
         var query = EntityQueryEnumerator<UdderComponent>();
-        var now = _timing.CurTime;
         while (query.MoveNext(out var uid, out var udder))
         {
-            if (now < udder.NextGrowth)
+            if (_timing.CurTime < udder.NextGrowth)
                 continue;
 
-            udder.NextGrowth = now + udder.GrowthDelay;
+            udder.NextGrowth += udder.GrowthDelay;
 
             if (_mobState.IsDead(uid))
                 continue;
@@ -138,24 +141,41 @@ public sealed class UdderSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
+    /// <summary>
+    ///     Defines the text provided on examine.
+    ///     Changes depending on the amount of hunger the target has.
+    /// </summary>
     private void OnExamine(Entity<UdderComponent> entity, ref ExaminedEvent args)
     {
-        var entityIdentity = ("entity", Identity.Entity(args.Examined, EntityManager));
 
-        var message = EntityManager.TryGetComponent(entity, out HungerComponent? hunger) switch
-        {
-            true => _hunger.GetHungerThreshold(hunger) switch
-            {
-                HungerThreshold.Overfed => Loc.GetString("udder-system-examine-overfed", entityIdentity),
-                <= HungerThreshold.Peckish => Loc.GetString("udder-system-examine-hungry", entityIdentity),
-                _ => null
-            },
-            false => Loc.GetString("udder-system-examine-none", entityIdentity)
-        };
+        var entityIdentity = Identity.Entity(args.Examined, EntityManager);
 
-        if (message != null)
+        string message;
+
+        // Check if the target has hunger, otherwise return not hungry.
+        if (!TryComp<HungerComponent>(entity, out var hunger))
         {
+            message = Loc.GetString("udder-system-examine-none", ("entity", entityIdentity));
             args.PushMarkup(message);
+            return;
         }
+
+        // Choose the correct examine string based on HungerThreshold.
+        switch (_hunger.GetHungerThreshold(hunger))
+        {
+            case HungerThreshold.Overfed:
+                message = Loc.GetString("udder-system-examine-overfed", ("entity", entityIdentity));
+                break;
+
+            case <= HungerThreshold.Peckish:
+                message = Loc.GetString("udder-system-examine-hungry", ("entity", entityIdentity));
+                break;
+
+            default:
+                message = Loc.GetString("udder-system-examine-none", ("entity", entityIdentity));
+                break;
+        }
+
+        args.PushMarkup(message);
     }
 }

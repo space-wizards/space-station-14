@@ -23,6 +23,12 @@ public sealed class WoolySystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<WoolyComponent, BeforeFullyEatenEvent>(OnBeforeFullyEaten);
+        SubscribeLocalEvent<WoolyComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(EntityUid uid, WoolyComponent component, MapInitEvent args)
+    {
+        component.NextGrowth = _timing.CurTime + component.GrowthDelay;
     }
 
     public override void Update(float frameTime)
@@ -30,13 +36,12 @@ public sealed class WoolySystem : EntitySystem
         base.Update(frameTime);
 
         var query = EntityQueryEnumerator<WoolyComponent>();
-        var now = _timing.CurTime;
         while (query.MoveNext(out var uid, out var wooly))
         {
-            if (now < wooly.NextGrowth)
+            if (_timing.CurTime < wooly.NextGrowth)
                 continue;
 
-            wooly.NextGrowth = now + wooly.GrowthDelay;
+            wooly.NextGrowth += wooly.GrowthDelay;
 
             if (_mobState.IsDead(uid))
                 continue;

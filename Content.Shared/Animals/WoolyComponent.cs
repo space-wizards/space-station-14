@@ -10,13 +10,13 @@ namespace Content.Shared.Animals;
 ///     Gives the ability to produce wool fibers;
 ///     produces endlessly if the owner does not have a HungerComponent.
 /// </summary>
-[RegisterComponent, Access(typeof(WoolySystem)), AutoGenerateComponentPause, NetworkedComponent]
+[RegisterComponent, AutoGenerateComponentState, AutoGenerateComponentPause, NetworkedComponent]
 public sealed partial class WoolyComponent : Component
 {
     /// <summary>
     ///     The reagent to grow.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadOnly)]
+    [DataField, AutoNetworkedField]
     public ProtoId<ReagentPrototype> ReagentId = "Fiber";
 
     /// <summary>
@@ -28,7 +28,7 @@ public sealed partial class WoolyComponent : Component
     /// <summary>
     ///     The solution to add reagent to.
     /// </summary>
-    [DataField]
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
     public Entity<SolutionComponent>? Solution;
 
     /// <summary>
@@ -40,13 +40,13 @@ public sealed partial class WoolyComponent : Component
     /// <summary>
     ///     The amount of nutrient consumed on update.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float HungerUsage = 10f;
 
     /// <summary>
     ///     How long to wait before growing wool.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public TimeSpan GrowthDelay = TimeSpan.FromMinutes(1);
 
     /// <summary>
