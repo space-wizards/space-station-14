@@ -1,0 +1,107 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "copyright": "Taked From tg station",
+  "license": "CC-BY-SA-3.0",
+  "states": [
+    {
+      "name": "cash_1"
+    },
+    {
+      "name": "cash_2"
+    },
+    {
+      "name": "cash_5"
+    },
+    {
+      "name": "cash_7"
+    },
+    {
+      "name": "cash_10"
+    },
+    {
+      "name": "cash_11"
+    },
+    {
+      "name": "cash_30"
+    },
+    {
+      "name": "cash_40"
+    },
+    {
+      "name": "cash_50"
+    },
+    {
+      "name": "cash_51"
+    },
+    {
+      "name": "cash_70"
+    },
+    {
+      "name": "cash_90"
+    },
+    {
+      "name": "cash_100"
+    },
+    {
+      "name": "cash_101"
+    },
+    {
+      "name": "cash_133"
+    },
+    {
+      "name": "cash_166"
+    },
+    {
+      "name": "cash_200"
+    },
+    {
+      "name": "cash_201"
+    },
+    {
+      "name": "cash_300"
+    },
+    {
+      "name": "cash_400"
+    },
+    {
+      "name": "cash_500"
+    },
+    {
+      "name": "cash_501"
+    },
+    {
+      "name": "cash_700"
+    },
+    {
+      "name": "cash_900"
+    },
+    {
+      "name": "cash_1000"
+    },
+    {
+      "name": "cash_1001"
+    },
+    {
+      "name": "cash_3000"
+    },
+    {
+      "name": "cash_6000"
+    },
+    {
+      "name": "cash_10000"
+    },
+    {
+      "name": "cash_10001"
+    },
+    {
+      "name": "cash_30000"
+    },
+    {
+      "name": "cash_60000"
+    }
+  ]
+}

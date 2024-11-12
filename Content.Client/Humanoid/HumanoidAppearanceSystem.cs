@@ -147,7 +147,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         // We need to ensure hair before applying it or coloring can try depend on markings that can be invalid
         var hairColor = _markingManager.MustMatchSkin(profile.Species, HumanoidVisualLayers.Hair, out var hairAlpha, _prototypeManager)
             ? profile.Appearance.SkinColor.WithAlpha(hairAlpha)
-            : profile.Appearance.HairColor;
+            : profile.Appearance.HairColor.WithAlpha(hairAlpha);
         var hair = new Marking(profile.Appearance.HairStyleId,
             new[] { hairColor });
 

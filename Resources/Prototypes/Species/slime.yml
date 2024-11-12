@@ -13,7 +13,7 @@
   id: MobSlimeSprites
   sprites:
     Head: MobSlimeHead
-    Hair: MobSlimeMarkingFollowSkin
+    Hair: MobSlimeMarkingAlfa
     FacialHair: MobSlimeMarkingFollowSkin
     Chest: MobSlimeTorso
     Eyes: MobHumanoidEyes
@@ -44,6 +44,10 @@
     Arms:
       points: 4
       required: false
+
+- type: humanoidBaseSprite
+  id: MobSlimeMarkingAlfa
+  layerAlpha: 0.5
 
 - type: humanoidBaseSprite
   id: MobSlimeMarkingFollowSkin

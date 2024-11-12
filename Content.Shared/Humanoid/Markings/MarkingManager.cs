@@ -257,8 +257,7 @@ namespace Content.Shared.Humanoid.Markings
                 !prototypeManager.TryIndex(speciesProto.SpriteSet, out HumanoidSpeciesBaseSpritesPrototype? baseSprites) ||
                 !baseSprites.Sprites.TryGetValue(layer, out var spriteName) ||
                 !prototypeManager.TryIndex(spriteName, out HumanoidSpeciesSpriteLayer? sprite) ||
-                sprite == null ||
-                !sprite.MarkingsMatchSkin
+                sprite == null
             )
             {
                 alpha = 1f;
@@ -266,7 +265,7 @@ namespace Content.Shared.Humanoid.Markings
             }
 
             alpha = sprite.LayerAlpha;
-            return true;
+            return sprite.MarkingsMatchSkin;
         }
     }
 }
