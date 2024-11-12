@@ -1,4 +1,4 @@
-﻿#human but no shoes
+# Similar to human, but no shoes and special gloves
 - type: inventoryTemplate
   id: jellid
   slots:
