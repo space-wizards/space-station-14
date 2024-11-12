@@ -4088,3 +4088,11 @@
   id: 493
   time: '2024-11-12T00:53:29.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/675
+- author: sageu111
+  changes:
+  - message: 'GRAY NAMES HAVE NEW NAMES TO REPRESENT THEIR CULTURE VULTURE LIFESTYLE
+      #SUBURBANGRAYS'
+    type: Tweak
+  id: 494
+  time: '2024-11-12T02:09:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/678
