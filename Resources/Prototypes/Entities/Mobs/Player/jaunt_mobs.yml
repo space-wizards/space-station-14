@@ -19,7 +19,6 @@
     layer: 2
   - type: Spectral
   - type: CanMoveInAir
-  - type: NoSlip
   - type: Tag
     tags:
     - HideContextMenu
