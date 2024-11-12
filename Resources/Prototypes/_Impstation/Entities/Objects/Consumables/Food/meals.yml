@@ -1,24 +1,3 @@
-# Base
-
-- type: entity
-  parent: FoodInjectableBase
-  id: FoodMealBase
-  abstract: true
-  description: A delicious meal, cooked with love.
-  components:
-  - type: Item
-    storedRotation: -90
-  - type: Food
-  - type: Sprite
-    sprite: _Impstation/Objects/Consumable/Food/meals.rsi
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 26
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 20
-
 #Candy!!!!
 
 - type: entity
@@ -35,6 +14,7 @@
       - whimsy
       - sugar
   - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Food/meals.rsi
     state: big-lollipop
   - type: Item
     heldPrefix: big-lollipop
