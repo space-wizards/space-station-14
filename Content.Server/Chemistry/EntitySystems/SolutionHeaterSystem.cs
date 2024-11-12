@@ -24,7 +24,6 @@ public sealed class SolutionHeaterSystem : EntitySystem
         SubscribeLocalEvent<SolutionHeaterComponent, ItemPlacedEvent>(OnItemPlaced);
         SubscribeLocalEvent<SolutionHeaterComponent, ItemRemovedEvent>(OnItemRemoved);
         SubscribeLocalEvent<SolutionHeaterComponent, GotEquippedHandEvent>(OnHandPickUp);
-        SubscribeLocalEvent<SolutionHeaterComponent, GotUnequippedHandEvent>(OnHandUnequip);
     }
 
     private void TurnOn(EntityUid uid)
@@ -96,16 +95,6 @@ public sealed class SolutionHeaterSystem : EntitySystem
             // Add thermal energy to the solution
             var energy = solutionHeaterComponent.HeatPerSecond; // Adjust as needed
             _solutionContainer.AddThermalEnergy(soln, energy);
-        }
-    }
-
-    private void OnHandUnequip(EntityUid uid, ref GotUnequippedHandEvent args)
-    {
-        // Check if the entity being unequipped has ActiveSolutionHeaterComponent
-        if (TryComp<ActiveSolutionHeaterComponent>(uid, out var activeHeaterComponent))
-        {
-            // Remove or disable the ActiveSolutionHeaterComponent to stop heating
-            RemComp<ActiveSolutionHeaterComponent>(uid);
         }
     }
 
