@@ -130,7 +130,7 @@
   id: VialBoxP
   parent: BoxVial
   name: vial box (P)
-  description: 
+  description:
   components:
     - type: StorageFill
       contents:
@@ -142,16 +142,16 @@
           amount: 1
         - id: FluorineChemistryVial
           amount: 1
-        - id: Iodine
+        - id: IodineChemistryVial
           amount: 1
         - id: PhosphorusChemistryVial
           amount: 1
-          
+
 - type: entity
   id: VialBoxP2
   parent: BoxVial
   name: vial box (P)
-  description: 
+  description:
   components:
     - type: StorageFill
       contents:
@@ -168,7 +168,7 @@
   id: VialBoxS
   parent: BoxVial
   name: vial box (S)
-  description: 
+  description:
   components:
     - type: StorageFill
       contents:
@@ -187,7 +187,7 @@
   id: VialBoxD
   parent: BoxVial
   name: vial box (D)
-  description: 
+  description:
   components:
     - type: StorageFill
       contents:

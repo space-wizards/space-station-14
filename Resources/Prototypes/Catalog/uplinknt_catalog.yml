@@ -212,13 +212,13 @@
 
 - type: listing
   id: UplinkToolboxNanotrasenFilled
-  name: uplink-toolbox-name
-  description: uplink-toolbox-desc
+  name: uplink-toolboxnt-name
+  description: uplink-toolboxnt-desc
   productEntity: ToolboxNanotrasenFilled
   cost:
     BluespaceCrystal: 5
   categories:
-  - UplinkNtDisruption  
+  - UplinkNtDisruption
 
 - type: listing
   id: UplinkAnnouncementPad

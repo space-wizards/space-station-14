@@ -106,7 +106,7 @@
   priority: 2
 
 - type: storeCategory
-  id: UplikNtArmor
+  id: UplinkNtArmor
   name: store-category-wearables
   priority: 3
 
