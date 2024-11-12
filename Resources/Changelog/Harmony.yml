@@ -541,3 +541,10 @@ Entries:
     changes:
     - type: Add
       message: Added the HoS sheriff hat back to the game.
+  - id: 178
+    author: KeldWolf
+    time: '2024-11-12T09:44:50.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/178
+    changes:
+    - type: Add
+      message: Two more memorable Liltenlines to round end!
