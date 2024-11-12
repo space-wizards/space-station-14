@@ -381,6 +381,10 @@ namespace Content.Server.Construction
 
 					if (!_container.TryGetContainer(newUid, container, out var otherContainer, newContainerManager))
                     {
+						// NOTE: Only Container is supported by Construction!
+                        // todo: one day, the ensured container should be the same type as ourContainer
+						if (oldContainerManager.Containers[container].GetType() != typeof(Container))
+							continue;
                         otherContainer = _container.EnsureContainer<Container>(newUid, container, newContainerManager);
                     }
 
