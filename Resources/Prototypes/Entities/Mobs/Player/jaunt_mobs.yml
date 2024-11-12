@@ -18,7 +18,6 @@
   - type: Visibility
     layer: 2
   - type: Spectral
-  - type: CanMoveInAir
   - type: Tag
     tags:
     - HideContextMenu
