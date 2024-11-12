@@ -195,11 +195,6 @@
   description: flavor-base-chewy
 
 - type: flavor
-  id: whimsy
-  flavorType: Base
-  description: flavor-base-whimsy
-
-- type: flavor
   id: mustard
   flavorType: Complex
   description: flavor-complex-mustard
