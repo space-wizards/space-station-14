@@ -4,11 +4,10 @@
   id: BaseMobJellidPerson
   abstract: true
   components:
-  - type: Hunger
   - type: Icon
     sprite: Mobs/Species/Slime/parts.rsi
     state: full
-  - type: Body
+  - type: Body # TODO: give them a ATP cluster as their stomach, acts as an internal power cell similar to borgs. This is what defines their "hunger" and what charges when holding food.
     prototype: Jellid
     requiredLegs: 2
   - type: Electrified
@@ -18,7 +17,7 @@
   - type: IgnitionSource
     temperature: 700
     ignited: true
-  - type: SolutionHeater
+  - type: SolutionHeater # Add water boiling at a certain temp among other things
     heatPerSecond: 100
   - type: AlwaysHot
   - type: ActiveSolutionHeater
@@ -32,7 +31,6 @@
         type: HumanoidMarkingModifierBoundUserInterface
       enum.StrippingUiKey.Key:
         type: StrippableBoundUserInterface
-  # to prevent bag open/honk spam
   - type: UseDelay
     delay: 0.5
   - type: HumanoidAppearance
@@ -50,7 +48,7 @@
       Unsexed: MaleSlime
   - type: Damageable
     damageContainer: Biological
-    damageModifierSet: Slime
+    damageModifierSet: Slime # add their own modifier
   - type: PassiveDamage
     allowedStates:
     - Alive
@@ -66,7 +64,7 @@
         sprite: Mobs/Effects/brute_damage.rsi
         color: "#2cf274"
   - type: Bloodstream
-    bloodReagent: Water # the ocean runs through my veins...
+    bloodReagent: Water # the ocean runs through my veins... change this to SeaWater once you fix that error
   - type: Reactive
     groups:
       Flammable: [ Touch ]
@@ -87,7 +85,7 @@
         Slash: 1
     damageRecovery:
       types:
-        Slash: -0.3
+        Slash: -0.3 # hopefully shouldn't be OP
     maxSaturation: 15
     gaspEmote: Scream
 
