@@ -437,7 +437,7 @@
   - type: ContainerFill
     containers:
       borg_brain:
-        - PositronicBrain #TODO:ERRANT Roundstart borgs dont get a silicon mindrole!
+        - PositronicBrain
       borg_module:
         - BorgModuleTool
   - type: ItemSlots
