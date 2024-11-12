@@ -1,4 +1,4 @@
-using Content.Shared.Starlight.Antags.Abductor;
+﻿using Content.Shared.Starlight.Antags.Abductor;
 using Content.Shared.Starlight.Medical.Surgery;
 using Content.Shared.Actions;
 using Content.Shared.DoAfter;
@@ -13,12 +13,14 @@ using System.Linq;
 using Content.Shared.Tag;
 using Content.Shared.Popups;
 using System;
+using Content.Shared.ActionBlocker;
 
 namespace Content.Server.Starlight.Antags.Abductor;
 
 public sealed partial class AbductorSystem : SharedAbductorSystem
 {
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
 
     private static readonly ProtoId<TagPrototype> _abductor = "Abductor";
     public void InitializeGizmo()
@@ -39,7 +41,9 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
 
     private void OnGizmoInteract(Entity<AbductorGizmoComponent> ent, ref AfterInteractEvent args)
     {
+        if (!_actionBlockerSystem.CanInstrumentInteract(args.User, args.Used, args.Target)) return;
         if (!args.Target.HasValue) return;
+
         if (TryComp<AbductorConsoleComponent>(args.Target, out var console))
         {
             console.Target = ent.Comp.Target;

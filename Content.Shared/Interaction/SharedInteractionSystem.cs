@@ -1001,9 +1001,6 @@ namespace Content.Shared.Interaction
             if (checkCanInteract && !_actionBlockerSystem.CanInteract(user, target))
                 return false;
 
-            if (!_actionBlockerSystem.CanInstrumentInteract(user, used, target)) // 🌟Starlight🌟
-                return false;
-
             if (checkCanUse && !_actionBlockerSystem.CanUseHeldEntity(user, used))
                 return false;
 

@@ -12,6 +12,7 @@
   - Xeno
   - Zombie
   - Revolutionary
+  - Vampire
 
 - type: npcFaction
   id: DungeonSoviet
@@ -25,6 +26,7 @@
   - Zombie
   - Revolutionary
   - Abyss
+  - Vampire
 
 - type: npcFaction
   id: DungeonSyndicate
@@ -38,6 +40,7 @@
   - Zombie
   - Revolutionary
   - Abyss
+  - Vampire
 
 - type: npcFaction
   id: Dragon
@@ -51,6 +54,7 @@
     - Zombie
     - Revolutionary
     - Abyss
+    - Vampire
 
 - type: npcFaction
   id: NanoTrasen
@@ -63,6 +67,7 @@
   - Zombie
   - Revolutionary
   - Abyss
+  - Vampire
 
 - type: npcFaction
   id: Mouse
@@ -94,6 +99,7 @@
   - Zombie
   - Revolutionary
   - Abyss
+  - Vampire
 
 - type: npcFaction
   id: SimpleNeutral
@@ -109,6 +115,7 @@
   - DungeonSyndicate
   - DungeonSoviet
   - Abyss
+  - Vampire
 
 - type: npcFaction
   id: Xeno
@@ -122,6 +129,7 @@
   - Zombie
   - Revolutionary
   - Abyss
+  - Vampire
 
 - type: npcFaction
   id: Zombie
@@ -136,6 +144,7 @@
   - PetsNT
   - Revolutionary
   - Abyss
+  - Vampire
 
 - type: npcFaction
   id: Revolutionary
@@ -147,6 +156,7 @@
   - DungeonSyndicate
   - DungeonSoviet
   - Abyss
+  - Vampire
   
 - type: npcFaction
   id: Vampire
