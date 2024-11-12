@@ -254,7 +254,7 @@ public sealed class InternalsSystem : EntitySystem
 
         // If pressure in the tank is below low pressure threshold, flash warning on internals UI
         if (TryComp<GasTankComponent>(component.GasTankEntity, out var gasTank)
-            && _gasTank.IsLowPressure(component.GasTankEntity.Value, gasTank))
+            && _gasTank.IsLowPressure((component.GasTankEntity.Value, gasTank)))
         {
             return 0;
         }

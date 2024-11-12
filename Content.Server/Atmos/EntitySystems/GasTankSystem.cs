@@ -147,7 +147,7 @@ namespace Content.Server.Atmos.EntitySystems
             while (query.MoveNext(out var uid, out var comp))
             {
                 var gasTank = (uid, comp);
-                if (comp.IsValveOpen && !IsLowPressure(uid, comp) && comp.OutputPressure > 0)
+                if (comp.IsValveOpen && !IsLowPressure((uid, comp)) && comp.OutputPressure > 0)
                 {
                     ReleaseGas(gasTank);
                 }
@@ -421,11 +421,11 @@ namespace Content.Server.Atmos.EntitySystems
                 Disabled = component.IsConnected,
             });
         }
-        public bool IsLowPressure(EntityUid uid, GasTankComponent component)
+        public bool IsLowPressure(Entity<GasTankComponent> entity)
         {
-            if (!TryComp<InternalAirComponent>(uid, out var internalAir))
+            if (!TryComp<InternalAirComponent>(entity, out var internalAir))
                 return true;
-            return (internalAir.Air?.Pressure ?? 0F) <= component.TankLowPressure;
+            return (internalAir.Air?.Pressure ?? 0F) <= entity.Comp.TankLowPressure;
         }
     }
 }
