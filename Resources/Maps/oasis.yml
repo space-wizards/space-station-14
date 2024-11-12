@@ -226,7 +226,7 @@ entities:
           version: 6
         -4,-2:
           ind: -4,-2
-          tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAbwAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAbwAAAAAAbwAAAAAAbwAAAAAAbwAAAAAAgQAAAAAAgQAAAAAAbwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAbwAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAbwAAAAAAgQAAAAAAbwAAAAAAgQAAAAAAbwAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAbwAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAbwAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAbwAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAbwAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgQAAAAAAYAAAAAACYAAAAAADYAAAAAABYAAAAAAAYAAAAAABYAAAAAABgQAAAAAAbwAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgQAAAAAAYAAAAAADYAAAAAABYAAAAAADYAAAAAACYAAAAAACYAAAAAAAgQAAAAAAbwAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgQAAAAAAYAAAAAADYAAAAAADYAAAAAACYAAAAAAAYAAAAAABYAAAAAADbwAAAAAAbwAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAgQAAAAAARAAAAAAAgQAAAAAAgQAAAAAAYAAAAAACYAAAAAABYAAAAAAAYAAAAAACYAAAAAAAYAAAAAADgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAbwAAAAAAZQAAAAACZQAAAAADYAAAAAACYAAAAAADYAAAAAADYAAAAAADgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAZQAAAAAAZQAAAAABYAAAAAACYAAAAAADYAAAAAADYAAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAARAAAAAAAgQAAAAAAgQAAAAAAbwAAAAAAZQAAAAABZQAAAAACYAAAAAACYAAAAAABYAAAAAABYAAAAAABgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAYAAAAAACYAAAAAADYAAAAAAAYAAAAAACYAAAAAACYAAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAA
+          tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAbwAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAbwAAAAAAbwAAAAAAbwAAAAAAbwAAAAAAgQAAAAAAgQAAAAAAbwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAbwAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAbwAAAAAAgQAAAAAAbwAAAAAAgQAAAAAAbwAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAbwAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAbwAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAbwAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAbwAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgQAAAAAAYAAAAAACYAAAAAADYAAAAAABYAAAAAAAYAAAAAABYAAAAAABgQAAAAAAbwAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgQAAAAAAYAAAAAADYAAAAAABYAAAAAADYAAAAAACYAAAAAACYAAAAAAAgQAAAAAAbwAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgQAAAAAAYAAAAAADYAAAAAADYAAAAAACYAAAAAAAYAAAAAABYAAAAAADbwAAAAAAbwAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAgQAAAAAARAAAAAAAgQAAAAAAgQAAAAAAYAAAAAACYAAAAAABYAAAAAAAYAAAAAACYAAAAAAAYAAAAAADgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAARAAAAAAAgQAAAAAAgQAAAAAAbwAAAAAAZQAAAAACZQAAAAADYAAAAAACYAAAAAADYAAAAAADYAAAAAADgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAgQAAAAAARAAAAAAARAAAAAAAgQAAAAAAZQAAAAAAZQAAAAABYAAAAAACYAAAAAADYAAAAAADYAAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAARAAAAAAAgQAAAAAAgQAAAAAAbwAAAAAAZQAAAAABZQAAAAACYAAAAAACYAAAAAABYAAAAAABYAAAAAABgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAgQAAAAAARAAAAAAAgQAAAAAAgQAAAAAAYAAAAAACYAAAAAADYAAAAAAAYAAAAAACYAAAAAACYAAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAA
           version: 6
         -4,-3:
           ind: -4,-3
@@ -366,7 +366,7 @@ entities:
           version: 6
         -4,-1:
           ind: -4,-1
-          tiles: AAAAAAAAAAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgQAAAAAAbwAAAAAAgQAAAAAAYAAAAAACYAAAAAABgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAgAAAAAAAgQAAAAAAYAAAAAADYAAAAAADYAAAAAAAYAAAAAAAYAAAAAADYAAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAgQAAAAAAYAAAAAACYAAAAAABYAAAAAAAYAAAAAADYAAAAAAAYAAAAAADbwAAAAAAbwAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAgQAAAAAAYAAAAAAAYAAAAAABYAAAAAABYAAAAAABYAAAAAABYAAAAAADgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAgQAAAAAAYAAAAAAAJQAAAAAAJQAAAAADJQAAAAADYAAAAAAAYAAAAAABgQAAAAAAgQAAAAAAUwAAAAAAUwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAgQAAAAAAYAAAAAABJQAAAAAAJQAAAAAAJQAAAAADYAAAAAAAYAAAAAAAYAAAAAADgQAAAAAAOQAAAAAAUwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAgQAAAAAAYAAAAAABJQAAAAAAJQAAAAAAJQAAAAAAYAAAAAACYAAAAAAAYAAAAAAAUwAAAAAAOQAAAAAAUwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAgAAAAAAAgQAAAAAAYAAAAAAAJQAAAAAAJQAAAAADJQAAAAADYAAAAAADYAAAAAACYAAAAAADgQAAAAAAOQAAAAAAUwAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgQAAAAAAYAAAAAACYAAAAAAAYAAAAAADYAAAAAADYAAAAAABYAAAAAABgQAAAAAAgQAAAAAAUwAAAAAAUwAAAAAAAAAAAAAAAAAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAYAAAAAADYAAAAAACYAAAAAADYAAAAAAAYAAAAAACYAAAAAADgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAARAAAAAAAgQAAAAAAgQAAAAAARAAAAAAAYAAAAAAAYAAAAAADYAAAAAACYAAAAAAAYAAAAAADYAAAAAACgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAARAAAAAAAgQAAAAAAgQAAAAAAbwAAAAAAZQAAAAAAZQAAAAADYAAAAAABYAAAAAADYAAAAAAAYAAAAAACgQAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAAAAAAAAAAAAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAZQAAAAACZQAAAAAAYAAAAAAAYAAAAAAAYAAAAAADYAAAAAAAgQAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAAAAAAAAAAAAAAAAARAAAAAAAgQAAAAAAgQAAAAAAbwAAAAAAZQAAAAACZQAAAAADYAAAAAACYAAAAAACYAAAAAACYAAAAAACgQAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAAAAAAAAAAAAAAAAARAAAAAAAgQAAAAAAgQAAAAAARAAAAAAAYAAAAAACYAAAAAAAYAAAAAADYAAAAAACYAAAAAADYAAAAAABgQAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAAAAAAAAAAAAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAYAAAAAAAYAAAAAAAYAAAAAADYAAAAAABYAAAAAABYAAAAAABYAAAAAABYAAAAAADbAAAAAAAbAAAAAAA
+          tiles: AAAAAAAAAAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgQAAAAAAbwAAAAAAgQAAAAAAYAAAAAACYAAAAAABgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgQAAAAAAYAAAAAADYAAAAAADYAAAAAAAYAAAAAAAYAAAAAADYAAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgQAAAAAAYAAAAAACYAAAAAABYAAAAAAAYAAAAAADYAAAAAAAYAAAAAADbwAAAAAAbwAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgQAAAAAAYAAAAAAAJQAAAAAAJQAAAAAAJQAAAAAAYAAAAAABYAAAAAADgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAgAAAAAAAgAAAAAAAgQAAAAAAYAAAAAAAJQAAAAAAJQAAAAADJQAAAAADYAAAAAAAYAAAAAABgQAAAAAAgQAAAAAAUwAAAAAAUwAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAgAAAAAAAgQAAAAAAgQAAAAAAYAAAAAABJQAAAAAAJQAAAAAAJQAAAAADYAAAAAAAYAAAAAAAYAAAAAADgQAAAAAAOQAAAAAAUwAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAYAAAAAABJQAAAAAAJQAAAAAAJQAAAAAAYAAAAAACYAAAAAAAYAAAAAAAUwAAAAAAOQAAAAAAUwAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAYAAAAAAAYAAAAAAAYAAAAAAAYAAAAAAAYAAAAAADYAAAAAACYAAAAAADgQAAAAAAOQAAAAAAUwAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAJQAAAAAAJQAAAAAAYAAAAAADYAAAAAADYAAAAAABYAAAAAABgQAAAAAAgQAAAAAAUwAAAAAAUwAAAAAAAAAAAAAAAAAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAYAAAAAADYAAAAAACYAAAAAADYAAAAAAAYAAAAAACYAAAAAADgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAARAAAAAAAgQAAAAAAgQAAAAAARAAAAAAAJQAAAAAAJQAAAAAAYAAAAAACYAAAAAAAYAAAAAADYAAAAAACgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAAAAAAAAAAAAAAAAARAAAAAAAgQAAAAAAgQAAAAAAbwAAAAAAZQAAAAAAZQAAAAADYAAAAAABYAAAAAADYAAAAAAAYAAAAAACgQAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAAAAAAAAAAAAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAZQAAAAACZQAAAAAAYAAAAAAAYAAAAAAAYAAAAAADYAAAAAAAgQAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAAAAAAAAAAAAAAAAARAAAAAAAgQAAAAAAgQAAAAAAbwAAAAAAZQAAAAACZQAAAAADYAAAAAACYAAAAAACYAAAAAACYAAAAAACgQAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAAAAAAAAAAAAAAAAARAAAAAAAgQAAAAAAgQAAAAAARAAAAAAAJQAAAAAAJQAAAAAAYAAAAAADYAAAAAACYAAAAAADYAAAAAABgQAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAAAAAAAAAAAAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAgQAAAAAAYAAAAAAAYAAAAAAAYAAAAAADYAAAAAABYAAAAAABYAAAAAABYAAAAAABYAAAAAADbAAAAAAAbAAAAAAA
           version: 6
         4,1:
           ind: 4,1
@@ -459,9 +459,6 @@ entities:
             color: '#FFFFFFFF'
             id: Bot
           decals:
-            961: -57,-9
-            962: -56,-9
-            963: -55,-9
             964: -55,-10
             965: -56,-10
             966: -57,-10
@@ -472,6 +469,9 @@ entities:
             971: -56,-12
             972: -57,-12
             3489: -3,-31
+            3930: -57,-13
+            3931: -56,-13
+            3932: -55,-13
         - node:
             angle: 3.141592653589793 rad
             color: '#FFFFFFFF'
@@ -1258,7 +1258,6 @@ entities:
             3286: -53,-11
             3287: -53,-12
             3288: -53,-13
-            3289: -53,-15
             3307: -58,3
             3308: -57,3
             3309: -56,3
@@ -1485,17 +1484,15 @@ entities:
             3245: -58,1
             3246: -58,0
             3247: -58,-1
-            3248: -58,-8
-            3249: -58,-9
             3250: -58,-10
             3251: -58,-11
             3252: -58,-12
-            3253: -58,-13
             3254: -58,-14
             3255: -58,-15
             3343: -47,-5
             3351: -47,-2
             3360: -50,-2
+            3942: -58,-13
         - node:
             color: '#D381C996'
             id: BrickTileWhiteInnerNw
@@ -1693,8 +1690,6 @@ entities:
           decals:
             3256: -58,-15
             3257: -57,-15
-            3258: -54,-15
-            3259: -53,-15
             3260: -53,-13
             3261: -53,-12
             3262: -53,-11
@@ -1710,7 +1705,6 @@ entities:
             3272: -53,1
             3273: -53,2
             3274: -53,3
-            3290: -53,-15
         - node:
             color: '#D381C996'
             id: BrickTileWhiteInnerSe
@@ -1923,18 +1917,12 @@ entities:
             color: '#BC863FFF'
             id: BrickTileWhiteInnerSw
           decals:
-            3291: -53,-15
-            3292: -54,-15
             3293: -57,-15
             3294: -58,-15
             3295: -58,-14
-            3296: -58,-13
             3297: -58,-12
             3298: -58,-11
             3299: -58,-10
-            3300: -58,-9
-            3301: -58,-8
-            3302: -58,-7
             3303: -58,0
             3304: -58,1
             3305: -58,2
@@ -1942,6 +1930,9 @@ entities:
             3346: -47,2
             3352: -47,-2
             3359: -50,1
+            3941: -58,-13
+            3943: -58,-9
+            3946: -54,-15
         - node:
             color: '#D381C996'
             id: BrickTileWhiteInnerSw
@@ -5676,25 +5667,26 @@ entities:
             color: '#FFFFFFFF'
             id: WarnCornerSmallNE
           decals:
-            3340: -58,-13
             3556: -22,42
             3572: -31,35
+            3929: -58,-14
         - node:
             color: '#FFFFFFFF'
             id: WarnCornerSmallNW
           decals:
             979: -56,-7
             983: -56,-3
-            999: -54,-13
             3555: -18,42
             3573: -24,35
+            3928: -54,-14
+            3940: -56,-9
         - node:
             color: '#FFFFFFFF'
             id: WarnCornerSmallSE
           decals:
-            3339: -58,-8
             3553: -22,44
             3571: -31,37
+            3927: -58,-9
         - node:
             color: '#FFFFFFFF'
             id: WarnCornerSmallSW
@@ -5702,9 +5694,10 @@ entities:
             977: -56,-1
             978: -56,-1
             984: -56,-5
-            998: -54,-8
             3554: -18,44
             3570: -24,37
+            3926: -54,-9
+            3939: -56,-7
         - node:
             color: '#FFFFFFFF'
             id: WarnFull
@@ -5712,6 +5705,7 @@ entities:
             2479: 12,53
             2480: 13,53
             2481: 14,53
+            3944: -53,-15
         - node:
             color: '#BC863FFF'
             id: WarnFullGreyscale
@@ -5732,8 +5726,9 @@ entities:
             3334: -58,-12
             3335: -58,-11
             3336: -58,-10
-            3337: -58,-9
             3549: -22,43
+            3924: -58,-13
+            3945: -54,-15
         - node:
             color: '#FFFFFFFF'
             id: WarnLineGreyscaleN
@@ -5769,14 +5764,15 @@ entities:
             id: WarnLineN
           decals:
             974: -57,-1
-            988: -57,-8
-            989: -56,-8
-            990: -56,-8
-            991: -55,-8
             3341: -58,-1
             3546: -19,44
             3547: -20,44
             3548: -21,44
+            3918: -57,-9
+            3919: -56,-9
+            3920: -55,-9
+            3934: -58,-7
+            3935: -57,-7
         - node:
             color: '#FFFFFFFF'
             id: WarnLineS
@@ -5787,20 +5783,18 @@ entities:
             993: -54,-11
             994: -54,-12
             2462: 17,49
-            3338: -54,-9
             3540: 21,46
             3541: 21,47
             3542: 21,48
             3543: 21,49
             3545: -18,43
+            3925: -54,-13
+            3938: -56,-8
         - node:
             color: '#FFFFFFFF'
             id: WarnLineW
           decals:
             973: -57,-7
-            995: -55,-13
-            996: -56,-13
-            997: -57,-13
             2458: 12,46
             2459: 13,46
             2460: 14,46
@@ -5812,10 +5806,15 @@ entities:
             2476: 19,51
             2477: 15,53
             2478: 11,53
-            3342: -58,-7
             3550: -21,42
             3551: -20,42
             3552: -19,42
+            3921: -57,-14
+            3922: -56,-14
+            3923: -55,-14
+            3933: -58,-7
+            3936: -58,-9
+            3937: -57,-9
         - node:
             color: '#FFFFFFFF'
             id: WoodTrimThinCornerNe
@@ -7372,9 +7371,9 @@ entities:
             3: 3276
             0: 32768
           -16,-5:
-            0: 3080
+            0: 35848
           -16,-4:
-            3: 140
+            3: 52428
           -15,-7:
             3: 4368
             0: 3276
@@ -7941,16 +7940,15 @@ entities:
             0: 4879
             3: 52224
           14,5:
-            0: 4593
+            0: 7633
           14,6:
-            0: 1
+            0: 15
             3: 13056
           15,5:
-            0: 248
+            0: 35768
           15,6:
-            3: 14024
-          16,6:
-            3: 34947
+            0: 15
+            3: 13824
           16,7:
             3: 55544
           13,12:
@@ -8101,19 +8099,18 @@ entities:
             0: 1
           -2,-18:
             0: 4096
+          -16,-3:
+            3: 17612
           -16,-2:
-            3: 12
+            3: 4
             0: 51200
           -16,-1:
             0: 2240
-          -16,-3:
-            3: 32768
           -15,-3:
-            3: 4369
-            0: 52428
-          -15,-2:
             3: 1
-            0: 64972
+            0: 56796
+          -15,-2:
+            0: 64975
           -14,-3:
             0: 65535
           -14,-2:
@@ -8121,7 +8118,9 @@ entities:
           16,4:
             3: 25188
           16,5:
-            3: 63010
+            3: 58914
+          16,6:
+            3: 34946
           16,3:
             3: 18018
           17,5:
@@ -11271,11 +11270,19 @@ entities:
       parent: 2
     - type: DeviceList
       devices:
-      - 29003
-      - 29004
+      - 10840
+      - 10841
       - 29050
       - 9276
-      - 28969
+      - 10839
+    - type: DeviceLinkSource
+      linkedPorts:
+        12356:
+        - AirWarning: Close
+        - AirDanger: Close
+        13577:
+        - AirDanger: Close
+        - AirWarning: Close
 - proto: AirCanister
   entities:
   - uid: 4223
@@ -12350,17 +12357,6 @@ entities:
         - DoorStatus: DoorBolt
 - proto: AirlockExternalGlassCargoLocked
   entities:
-  - uid: 826
-    components:
-    - type: Transform
-      pos: -60.5,-20.5
-      parent: 2
-    - type: DeviceLinkSink
-      invokeCounter: 1
-    - type: DeviceLinkSource
-      linkedPorts:
-        28494:
-        - DoorStatus: DoorBolt
   - uid: 11331
     components:
     - type: Transform
@@ -12383,7 +12379,22 @@ entities:
       linkedPorts:
         11336:
         - DoorStatus: DoorBolt
-  - uid: 28494
+  - uid: 29523
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -60.5,-20.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        827:
+        - DoorStatus: InputB
+        29543:
+        - DoorStatus: InputA
+        - DoorStatus: InputB
+  - uid: 29528
     components:
     - type: Transform
       pos: -58.5,-19.5
@@ -12392,19 +12403,39 @@ entities:
       invokeCounter: 1
     - type: DeviceLinkSource
       linkedPorts:
-        826:
-        - DoorStatus: DoorBolt
-  - uid: 28495
+        29536:
+        - DoorStatus: InputA
+        29539:
+        - DoorStatus: InputA
+  - uid: 29532
     components:
     - type: Transform
+      rot: -1.5707963267948966 rad
       pos: -58.5,-17.5
       parent: 2
     - type: DeviceLinkSink
-      invokeCounter: 3
+      invokeCounter: 1
     - type: DeviceLinkSource
       linkedPorts:
-        277:
-        - DoorStatus: DoorBolt
+        29538:
+        - DoorStatus: InputA
+        29534:
+        - DoorStatus: InputA
+  - uid: 29541
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -60.5,-16.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        29542:
+        - DoorStatus: InputA
+        - DoorStatus: InputB
+        826:
+        - DoorStatus: InputB
 - proto: AirlockExternalGlassEngineeringLocked
   entities:
   - uid: 234
@@ -12914,20 +12945,6 @@ entities:
       parent: 2
 - proto: AirlockExternalGlassShuttleLocked
   entities:
-  - uid: 277
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -61.5,-17.5
-      parent: 2
-    - type: DeviceLinkSource
-      linkedPorts:
-        5767:
-        - DoorStatus: InputA
-        - DockStatus: InputA
-        - DockStatus: InputB
-    - type: DeviceLinkSink
-      invokeCounter: 1
   - uid: 353
     components:
     - type: Transform
@@ -13016,6 +13033,42 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -2.5,0.5
       parent: 21002
+  - uid: 24126
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -61.5,-19.5
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        277:
+        - DoorStatus: InputA
+        - DockStatus: InputA
+        - DockStatus: InputB
+        29540:
+        - DockStatus: InputA
+        29535:
+        - DockStatus: InputA
+    - type: DeviceLinkSink
+      invokeCounter: 1
+  - uid: 29530
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -61.5,-17.5
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        10843:
+        - DoorStatus: InputA
+        - DockStatus: InputA
+        - DockStatus: InputB
+        29533:
+        - DockStatus: InputA
+        29537:
+        - DockStatus: InputA
+    - type: DeviceLinkSink
+      invokeCounter: 1
 - proto: AirlockExternalLocked
   entities:
   - uid: 24601
@@ -14417,7 +14470,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -59140.387
+      secondsUntilStateChange: -76213.97
       state: Opening
   - uid: 6934
     components:
@@ -14429,7 +14482,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -59143.02
+      secondsUntilStateChange: -76216.6
       state: Opening
   - uid: 6935
     components:
@@ -14441,7 +14494,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -59141.87
+      secondsUntilStateChange: -76215.45
       state: Opening
   - uid: 6936
     components:
@@ -14452,7 +14505,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -59141.086
+      secondsUntilStateChange: -76214.67
       state: Opening
 - proto: AirlockTheatreLocked
   entities:
@@ -15623,14 +15676,6 @@ entities:
     - type: Transform
       pos: 21.42931,-41.39281
       parent: 2
-- proto: AntimovCircuitBoard
-  entities:
-  - uid: 29447
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 59.214676,22.569477
-      parent: 2
 - proto: APCBasic
   entities:
   - uid: 1172
@@ -15661,12 +15706,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -20.5,-5.5
-      parent: 2
-  - uid: 2421
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 39.5,-18.5
       parent: 2
   - uid: 2763
     components:
@@ -15839,6 +15878,30 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 25.5,35.5
+      parent: 2
+  - uid: 29578
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 34.5,-13.5
+      parent: 2
+  - uid: 29579
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 45.5,-8.5
+      parent: 2
+  - uid: 29580
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 31.5,-23.5
+      parent: 2
+  - uid: 29581
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 55.5,-17.5
       parent: 2
 - proto: APCElectronics
   entities:
@@ -36971,6 +37034,13 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+- proto: Biogenerator
+  entities:
+  - uid: 10836
+    components:
+    - type: Transform
+      pos: 7.5,21.5
+      parent: 2
 - proto: BlastDoor
   entities:
   - uid: 7042
@@ -37187,6 +37257,430 @@ entities:
     - type: Transform
       pos: -11.612324,33.571518
       parent: 2
+  - uid: 11365
+    components:
+    - type: MetaData
+      name: Smart Dock Mk VII User Manual
+    - type: Transform
+      parent: 7896
+    - type: Paper
+      content: >+
+        [head=1][color=darkblue][bold]NanoTrasen Smart Dock Mk VII™ Official Guide[/bold][/color][/head]
+
+
+        [head=2][color=darkgrey][bold]Welcome, Esteemed Employee![/bold][/color][/head]
+
+        You are now the proud user of the state-of-the-art [color=darkblue][bolditalic]NanoTrasen Smart Dock Mk VII™[/bolditalic][/color], the most **overly** advanced docking system in the galaxy! Please read this manual carefully to avoid the usual docking-related incidents. Every successful dock means profit for [bolditalic]NanoTrasen™[/bolditalic] and, in theory, job security for you!
+
+
+        [italic]Note: This dock is classified as "self-learning." What it's learning is still under investigation.[/italic]
+
+
+        [head=2][color=darkgrey][bold]Docking Procedures[/bold][/color][/head]
+
+
+        [bullet] [bold]Step 1:[/bold] Approach the dock with your shuttle’s [color=darkorange][bolditalic]Auto-Brake System™[/bolditalic][/color] engaged. If the brakes are non-functional, proceed to [italic]Step 7: Impact Damage Protocol[/bold].
+
+        [bullet] [bold]Step 2:[/bold] Check that the [color=darkorange][bolditalic]Quantum Stabilizer Unit[/bolditalic][/color] is in "Ready Mode" and not "Phasing Between Realities" (a common glitch). If it’s the latter, reboot the system by sacrificing a power cell.
+
+        [bullet] [bold]Step 3:[/bold] Align your shuttle with the  [color=darkorange][bolditalic]Neuro-Synaptic Docking Beam™[/bolditalic][/color] by using the [bolditalic]manual override[/bolditalic]—the *one* thing on this dock that’s still manual.
+
+        [bullet] [bold]Step 4:[/bold] Initiate the  [color=darkorange][bolditalic]Adaptive Latching Sequence™[/bolditalic][/color] by pressing the [color=silver][bold]big silver button[/bold][/color]. Don’t press the other buttons—unless you like floating in the vacuum of space.
+
+        [bullet] [bold]Step 5:[/bold] Wait patiently as the dock "thinks" about attaching your shuttle. This process may take anywhere from 3 seconds to 3 hours, depending on how much the dock likes you.
+
+
+        [head=2][color=darkgrey][bold]Troubleshooting[/bold][/color][/head]
+
+
+        [bolditalic]Problem: 
+
+        The dock doesn’t respond when you approach.[/bolditalic]  
+
+        Solution: It’s just being shy. Give it some encouragement by knocking lightly on the hull, or jostling the [color=darkorange][bolditalic]Aether Coil Modulator[/bolditalic][/color]. If no response, consult the  [color=blue][bold]Technical Support AI[/bold][/color] (usually known as "Door Stuck").
+
+
+        [bolditalic]Problem: 
+
+        The shuttle is stuck halfway through the docking process.[/bolditalic]  
+
+        Solution: This is an unfortunate but expected outcome. Reboot the dock, reattempt the process, and pray. Alternatively, try "tugging" the shuttle out, but be prepared for the consequences.
+
+
+        [bolditalic]Problem: 
+
+        The dock has *disengaged itself* mid-operation.[/bolditalic]  
+
+        Solution: This is a feature of the  [color=darkblue][bold]NanoTrasen Smart Dock Mk VII™[/bold][/color], called the  [color=darkorange][bolditalic]Premature Release Safety Protocol™[/bolditalic][/color]. It's designed to keep you on your toes. Simply re-dock and hope it doesn’t happen again (spoiler: it will).
+
+
+        [head=2][color=darkgrey][bold]Emergency Procedures[/bold][/color][/head]
+
+
+        [bullet] [bold]Step 1:[/bold] In the event of catastrophic failure, remain calm and activate the [color=darkorange][bolditalic]Emergency Detachment Lever™[/bolditalic][/color]. This will forcibly eject your shuttle—along with any unresolved docking issues—into deep space. Problem solved!
+
+        [bullet] [bold]Step 2:[/bold] If the shuttle begins spinning uncontrollably, use the [color=darkorange][bolditalic]Stabilizer Override Control™[/bolditalic][/color]. If that fails, use the age-old technique: scream and brace for impact.
+
+        [bullet] [bold]Step 3:[/bold] In case of a complete docking collapse (which occurs in *only* 23% of cases), fill out [color=darkblue][italic]Form D-7: Docking Disaster Report™[/italic][/color]. Your report will be reviewed within 3-5 business cycles, after which it will be safely ignored.
+
+
+        [head=2][color=darkgrey][bold]Common Features[/bold][/color][/head]
+
+
+        The  [color=darkblue][bolditalic]NanoTrasen Smart Dock Mk VII™[/bolditalic][/color] comes with a wide variety of [bold]exciting[/bold] and [bold]untested[/bold] features:
+
+
+        [bullet] [bold]Auto-Align Mode™:[/bold] When this works, the dock aligns perfectly with your shuttle. When it doesn't, it aligns with... something else.
+
+        [bullet] [bold]Graviton Locking Arms™:[/bold] These arms are designed to gently secure your shuttle—unless they randomly decide to engage [bold]Crush Mode™[/bold], in which case, hold on tight.
+
+        [bullet] [bold]Friendly Docking Lights™:[/bold] These lights blink and flash to give the illusion that the dock is working, even when it’s not.
+
+
+        [head=2][color=darkgrey][bold]FAQ: Frequently Avoided Questions[/bold][/color][/head]
+
+
+        [bolditalic]Q: What do I do if the dock’s lights go out suddenly?[/bolditalic]  
+
+        A: Nothing. Just accept the darkness. The dock has either entered [color=darkorange][bolditalic]Sleep Mode™[/bolditalic][/color], or something unspeakable is about to happen.
+
+
+        [bolditalic]Q: Why does the dock occasionally whisper my name?[/bolditalic]  
+
+        A: The dock is semi-sentient and enjoys toying with your mental state. We suggest playing along until it decides you’re no longer amusing.
+
+
+        [bolditalic]Q: How do I know if the docking process is complete?[/bolditalic]  
+
+        A: You'll know it's done when your shuttle stops shaking violently and the alarms stop blaring. Or when you black out—whichever comes first.
+
+
+        [head=3][color=darkblue][bold]Thank You for Choosing NanoTrasen™[/bold][/color][/head]
+
+        At [color=darkblue][bolditalic]NanoTrasen™[/bolditalic][/color], we believe that every dock is an opportunity for improvement. Mostly yours. And remember, your [color=darkblue][italic]Corporate Loyalty Bonus™[/italic][/color] is tied directly to how many of these manuals you distribute.
+
+
+
+    - type: Physics
+      canCollide: False
+  - uid: 11371
+    components:
+    - type: MetaData
+      name: Smark Dock Mk VII User Manual
+    - type: Transform
+      parent: 7898
+    - type: Paper
+      content: >+
+        [head=1][color=darkblue][bold]NanoTrasen Smart Dock Mk VII™ Official Guide[/bold][/color][/head]
+
+
+        [head=2][color=darkgrey][bold]Welcome, Esteemed Employee![/bold][/color][/head]
+
+        You are now the proud user of the state-of-the-art [color=darkblue][bolditalic]NanoTrasen Smart Dock Mk VII™[/bolditalic][/color], the most **overly** advanced docking system in the galaxy! Please read this manual carefully to avoid the usual docking-related incidents. Every successful dock means profit for [bolditalic]NanoTrasen™[/bolditalic] and, in theory, job security for you!
+
+
+        [italic]Note: This dock is classified as "self-learning." What it's learning is still under investigation.[/italic]
+
+
+        [head=2][color=darkgrey][bold]Docking Procedures[/bold][/color][/head]
+
+
+        [bullet] [bold]Step 1:[/bold] Approach the dock with your shuttle’s [color=darkorange][bolditalic]Auto-Brake System™[/bolditalic][/color] engaged. If the brakes are non-functional, proceed to [italic]Step 7: Impact Damage Protocol[/bold].
+
+        [bullet] [bold]Step 2:[/bold] Check that the [color=darkorange][bolditalic]Quantum Stabilizer Unit[/bolditalic][/color] is in "Ready Mode" and not "Phasing Between Realities" (a common glitch). If it’s the latter, reboot the system by sacrificing a power cell.
+
+        [bullet] [bold]Step 3:[/bold] Align your shuttle with the  [color=darkorange][bolditalic]Neuro-Synaptic Docking Beam™[/bolditalic][/color] by using the [bolditalic]manual override[/bolditalic]—the *one* thing on this dock that’s still manual.
+
+        [bullet] [bold]Step 4:[/bold] Initiate the  [color=darkorange][bolditalic]Adaptive Latching Sequence™[/bolditalic][/color] by pressing the [color=silver][bold]big silver button[/bold][/color]. Don’t press the other buttons—unless you like floating in the vacuum of space.
+
+        [bullet] [bold]Step 5:[/bold] Wait patiently as the dock "thinks" about attaching your shuttle. This process may take anywhere from 3 seconds to 3 hours, depending on how much the dock likes you.
+
+
+        [head=2][color=darkgrey][bold]Troubleshooting[/bold][/color][/head]
+
+
+        [bolditalic]Problem: 
+
+        The dock doesn’t respond when you approach.[/bolditalic]  
+
+        Solution: It’s just being shy. Give it some encouragement by knocking lightly on the hull, or jostling the [color=darkorange][bolditalic]Aether Coil Modulator[/bolditalic][/color]. If no response, consult the  [color=blue][bold]Technical Support AI[/bold][/color] (usually known as "Door Stuck").
+
+
+        [bolditalic]Problem: 
+
+        The shuttle is stuck halfway through the docking process.[/bolditalic]  
+
+        Solution: This is an unfortunate but expected outcome. Reboot the dock, reattempt the process, and pray. Alternatively, try "tugging" the shuttle out, but be prepared for the consequences.
+
+
+        [bolditalic]Problem: 
+
+        The dock has *disengaged itself* mid-operation.[/bolditalic]  
+
+        Solution: This is a feature of the  [color=darkblue][bold]NanoTrasen Smart Dock Mk VII™[/bold][/color], called the  [color=darkorange][bolditalic]Premature Release Safety Protocol™[/bolditalic][/color]. It's designed to keep you on your toes. Simply re-dock and hope it doesn’t happen again (spoiler: it will).
+
+
+        [head=2][color=darkgrey][bold]Emergency Procedures[/bold][/color][/head]
+
+
+        [bullet] [bold]Step 1:[/bold] In the event of catastrophic failure, remain calm and activate the [color=darkorange][bolditalic]Emergency Detachment Lever™[/bolditalic][/color]. This will forcibly eject your shuttle—along with any unresolved docking issues—into deep space. Problem solved!
+
+        [bullet] [bold]Step 2:[/bold] If the shuttle begins spinning uncontrollably, use the [color=darkorange][bolditalic]Stabilizer Override Control™[/bolditalic][/color]. If that fails, use the age-old technique: scream and brace for impact.
+
+        [bullet] [bold]Step 3:[/bold] In case of a complete docking collapse (which occurs in *only* 23% of cases), fill out [color=darkblue][italic]Form D-7: Docking Disaster Report™[/italic][/color]. Your report will be reviewed within 3-5 business cycles, after which it will be safely ignored.
+
+
+        [head=2][color=darkgrey][bold]Common Features[/bold][/color][/head]
+
+
+        The  [color=darkblue][bolditalic]NanoTrasen Smart Dock Mk VII™[/bolditalic][/color] comes with a wide variety of [bold]exciting[/bold] and [bold]untested[/bold] features:
+
+
+        [bullet] [bold]Auto-Align Mode™:[/bold] When this works, the dock aligns perfectly with your shuttle. When it doesn't, it aligns with... something else.
+
+        [bullet] [bold]Graviton Locking Arms™:[/bold] These arms are designed to gently secure your shuttle—unless they randomly decide to engage [bold]Crush Mode™[/bold], in which case, hold on tight.
+
+        [bullet] [bold]Friendly Docking Lights™:[/bold] These lights blink and flash to give the illusion that the dock is working, even when it’s not.
+
+
+        [head=2][color=darkgrey][bold]FAQ: Frequently Avoided Questions[/bold][/color][/head]
+
+
+        [bolditalic]Q: What do I do if the dock’s lights go out suddenly?[/bolditalic]  
+
+        A: Nothing. Just accept the darkness. The dock has either entered [color=darkorange][bolditalic]Sleep Mode™[/bolditalic][/color], or something unspeakable is about to happen.
+
+
+        [bolditalic]Q: Why does the dock occasionally whisper my name?[/bolditalic]  
+
+        A: The dock is semi-sentient and enjoys toying with your mental state. We suggest playing along until it decides you’re no longer amusing.
+
+
+        [bolditalic]Q: How do I know if the docking process is complete?[/bolditalic]  
+
+        A: You'll know it's done when your shuttle stops shaking violently and the alarms stop blaring. Or when you black out—whichever comes first.
+
+
+        [head=3][color=darkblue][bold]Thank You for Choosing NanoTrasen™[/bold][/color][/head]
+
+        At [color=darkblue][bolditalic]NanoTrasen™[/bolditalic][/color], we believe that every dock is an opportunity for improvement. Mostly yours. And remember, your [color=darkblue][italic]Corporate Loyalty Bonus™[/italic][/color] is tied directly to how many of these manuals you distribute.
+
+
+
+    - type: Physics
+      canCollide: False
+  - uid: 11372
+    components:
+    - type: MetaData
+      name: Smart Dock Mk VII User Manual
+    - type: Transform
+      parent: 7899
+    - type: Paper
+      content: >+
+        [head=1][color=darkblue][bold]NanoTrasen Smart Dock Mk VII™ Official Guide[/bold][/color][/head]
+
+
+        [head=2][color=darkgrey][bold]Welcome, Esteemed Employee![/bold][/color][/head]
+
+        You are now the proud user of the state-of-the-art [color=darkblue][bolditalic]NanoTrasen Smart Dock Mk VII™[/bolditalic][/color], the most **overly** advanced docking system in the galaxy! Please read this manual carefully to avoid the usual docking-related incidents. Every successful dock means profit for [bolditalic]NanoTrasen™[/bolditalic] and, in theory, job security for you!
+
+
+        [italic]Note: This dock is classified as "self-learning." What it's learning is still under investigation.[/italic]
+
+
+        [head=2][color=darkgrey][bold]Docking Procedures[/bold][/color][/head]
+
+
+        [bullet] [bold]Step 1:[/bold] Approach the dock with your shuttle’s [color=darkorange][bolditalic]Auto-Brake System™[/bolditalic][/color] engaged. If the brakes are non-functional, proceed to [italic]Step 7: Impact Damage Protocol[/bold].
+
+        [bullet] [bold]Step 2:[/bold] Check that the [color=darkorange][bolditalic]Quantum Stabilizer Unit[/bolditalic][/color] is in "Ready Mode" and not "Phasing Between Realities" (a common glitch). If it’s the latter, reboot the system by sacrificing a power cell.
+
+        [bullet] [bold]Step 3:[/bold] Align your shuttle with the  [color=darkorange][bolditalic]Neuro-Synaptic Docking Beam™[/bolditalic][/color] by using the [bolditalic]manual override[/bolditalic]—the *one* thing on this dock that’s still manual.
+
+        [bullet] [bold]Step 4:[/bold] Initiate the  [color=darkorange][bolditalic]Adaptive Latching Sequence™[/bolditalic][/color] by pressing the [color=silver][bold]big silver button[/bold][/color]. Don’t press the other buttons—unless you like floating in the vacuum of space.
+
+        [bullet] [bold]Step 5:[/bold] Wait patiently as the dock "thinks" about attaching your shuttle. This process may take anywhere from 3 seconds to 3 hours, depending on how much the dock likes you.
+
+
+        [head=2][color=darkgrey][bold]Troubleshooting[/bold][/color][/head]
+
+
+        [bolditalic]Problem: 
+
+        The dock doesn’t respond when you approach.[/bolditalic]  
+
+        Solution: It’s just being shy. Give it some encouragement by knocking lightly on the hull, or jostling the [color=darkorange][bolditalic]Aether Coil Modulator[/bolditalic][/color]. If no response, consult the  [color=blue][bold]Technical Support AI[/bold][/color] (usually known as "Door Stuck").
+
+
+        [bolditalic]Problem: 
+
+        The shuttle is stuck halfway through the docking process.[/bolditalic]  
+
+        Solution: This is an unfortunate but expected outcome. Reboot the dock, reattempt the process, and pray. Alternatively, try "tugging" the shuttle out, but be prepared for the consequences.
+
+
+        [bolditalic]Problem: 
+
+        The dock has *disengaged itself* mid-operation.[/bolditalic]  
+
+        Solution: This is a feature of the  [color=darkblue][bold]NanoTrasen Smart Dock Mk VII™[/bold][/color], called the  [color=darkorange][bolditalic]Premature Release Safety Protocol™[/bolditalic][/color]. It's designed to keep you on your toes. Simply re-dock and hope it doesn’t happen again (spoiler: it will).
+
+
+        [head=2][color=darkgrey][bold]Emergency Procedures[/bold][/color][/head]
+
+
+        [bullet] [bold]Step 1:[/bold] In the event of catastrophic failure, remain calm and activate the [color=darkorange][bolditalic]Emergency Detachment Lever™[/bolditalic][/color]. This will forcibly eject your shuttle—along with any unresolved docking issues—into deep space. Problem solved!
+
+        [bullet] [bold]Step 2:[/bold] If the shuttle begins spinning uncontrollably, use the [color=darkorange][bolditalic]Stabilizer Override Control™[/bolditalic][/color]. If that fails, use the age-old technique: scream and brace for impact.
+
+        [bullet] [bold]Step 3:[/bold] In case of a complete docking collapse (which occurs in *only* 23% of cases), fill out [color=darkblue][italic]Form D-7: Docking Disaster Report™[/italic][/color]. Your report will be reviewed within 3-5 business cycles, after which it will be safely ignored.
+
+
+        [head=2][color=darkgrey][bold]Common Features[/bold][/color][/head]
+
+
+        The  [color=darkblue][bolditalic]NanoTrasen Smart Dock Mk VII™[/bolditalic][/color] comes with a wide variety of [bold]exciting[/bold] and [bold]untested[/bold] features:
+
+
+        [bullet] [bold]Auto-Align Mode™:[/bold] When this works, the dock aligns perfectly with your shuttle. When it doesn't, it aligns with... something else.
+
+        [bullet] [bold]Graviton Locking Arms™:[/bold] These arms are designed to gently secure your shuttle—unless they randomly decide to engage [bold]Crush Mode™[/bold], in which case, hold on tight.
+
+        [bullet] [bold]Friendly Docking Lights™:[/bold] These lights blink and flash to give the illusion that the dock is working, even when it’s not.
+
+
+        [head=2][color=darkgrey][bold]FAQ: Frequently Avoided Questions[/bold][/color][/head]
+
+
+        [bolditalic]Q: What do I do if the dock’s lights go out suddenly?[/bolditalic]  
+
+        A: Nothing. Just accept the darkness. The dock has either entered [color=darkorange][bolditalic]Sleep Mode™[/bolditalic][/color], or something unspeakable is about to happen.
+
+
+        [bolditalic]Q: Why does the dock occasionally whisper my name?[/bolditalic]  
+
+        A: The dock is semi-sentient and enjoys toying with your mental state. We suggest playing along until it decides you’re no longer amusing.
+
+
+        [bolditalic]Q: How do I know if the docking process is complete?[/bolditalic]  
+
+        A: You'll know it's done when your shuttle stops shaking violently and the alarms stop blaring. Or when you black out—whichever comes first.
+
+
+        [head=3][color=darkblue][bold]Thank You for Choosing NanoTrasen™[/bold][/color][/head]
+
+        At [color=darkblue][bolditalic]NanoTrasen™[/bolditalic][/color], we believe that every dock is an opportunity for improvement. Mostly yours. And remember, your [color=darkblue][italic]Corporate Loyalty Bonus™[/italic][/color] is tied directly to how many of these manuals you distribute.
+
+
+
+    - type: Physics
+      canCollide: False
+  - uid: 29573
+    components:
+    - type: MetaData
+      name: Smart Dock Mk VII User Manual
+    - type: Transform
+      rot: 9.42477796076938 rad
+      pos: -53.18508,9.538769
+      parent: 2
+    - type: Paper
+      content: >+
+        [head=1][color=darkblue][bold]NanoTrasen Smart Dock Mk VII™ Official Guide[/bold][/color][/head]
+
+
+        [head=2][color=darkgrey][bold]Welcome, Esteemed Employee![/bold][/color][/head]
+
+        You are now the proud user of the state-of-the-art [color=darkblue][bolditalic]NanoTrasen Smart Dock Mk VII™[/bolditalic][/color], the most **overly** advanced docking system in the galaxy! Please read this manual carefully to avoid the usual docking-related incidents. Every successful dock means profit for [bolditalic]NanoTrasen™[/bolditalic] and, in theory, job security for you!
+
+
+        [italic]Note: This dock is classified as "self-learning." What it's learning is still under investigation.[/italic]
+
+
+        [head=2][color=darkgrey][bold]Docking Procedures[/bold][/color][/head]
+
+
+        [bullet] [bold]Step 1:[/bold] Approach the dock with your shuttle’s [color=darkorange][bolditalic]Auto-Brake System™[/bolditalic][/color] engaged. If the brakes are non-functional, proceed to [italic]Step 7: Impact Damage Protocol[/bold].
+
+        [bullet] [bold]Step 2:[/bold] Check that the [color=darkorange][bolditalic]Quantum Stabilizer Unit[/bolditalic][/color] is in "Ready Mode" and not "Phasing Between Realities" (a common glitch). If it’s the latter, reboot the system by sacrificing a power cell.
+
+        [bullet] [bold]Step 3:[/bold] Align your shuttle with the  [color=darkorange][bolditalic]Neuro-Synaptic Docking Beam™[/bolditalic][/color] by using the [bolditalic]manual override[/bolditalic]—the *one* thing on this dock that’s still manual.
+
+        [bullet] [bold]Step 4:[/bold] Initiate the  [color=darkorange][bolditalic]Adaptive Latching Sequence™[/bolditalic][/color] by pressing the [color=silver][bold]big silver button[/bold][/color]. Don’t press the other buttons—unless you like floating in the vacuum of space.
+
+        [bullet] [bold]Step 5:[/bold] Wait patiently as the dock "thinks" about attaching your shuttle. This process may take anywhere from 3 seconds to 3 hours, depending on how much the dock likes you.
+
+
+        [head=2][color=darkgrey][bold]Troubleshooting[/bold][/color][/head]
+
+
+        [bolditalic]Problem: 
+
+        The dock doesn’t respond when you approach.[/bolditalic]  
+
+        Solution: It’s just being shy. Give it some encouragement by knocking lightly on the hull, or jostling the [color=darkorange][bolditalic]Aether Coil Modulator[/bolditalic][/color]. If no response, consult the  [color=blue][bold]Technical Support AI[/bold][/color] (usually known as "Door Stuck").
+
+
+        [bolditalic]Problem: 
+
+        The shuttle is stuck halfway through the docking process.[/bolditalic]  
+
+        Solution: This is an unfortunate but expected outcome. Reboot the dock, reattempt the process, and pray. Alternatively, try "tugging" the shuttle out, but be prepared for the consequences.
+
+
+        [bolditalic]Problem: 
+
+        The dock has *disengaged itself* mid-operation.[/bolditalic]  
+
+        Solution: This is a feature of the  [color=darkblue][bold]NanoTrasen Smart Dock Mk VII™[/bold][/color], called the  [color=darkorange][bolditalic]Premature Release Safety Protocol™[/bolditalic][/color]. It's designed to keep you on your toes. Simply re-dock and hope it doesn’t happen again (spoiler: it will).
+
+
+        [head=2][color=darkgrey][bold]Emergency Procedures[/bold][/color][/head]
+
+
+        [bullet] [bold]Step 1:[/bold] In the event of catastrophic failure, remain calm and activate the [color=darkorange][bolditalic]Emergency Detachment Lever™[/bolditalic][/color]. This will forcibly eject your shuttle—along with any unresolved docking issues—into deep space. Problem solved!
+
+        [bullet] [bold]Step 2:[/bold] If the shuttle begins spinning uncontrollably, use the [color=darkorange][bolditalic]Stabilizer Override Control™[/bolditalic][/color]. If that fails, use the age-old technique: scream and brace for impact.
+
+        [bullet] [bold]Step 3:[/bold] In case of a complete docking collapse (which occurs in *only* 23% of cases), fill out [color=darkblue][italic]Form D-7: Docking Disaster Report™[/italic][/color]. Your report will be reviewed within 3-5 business cycles, after which it will be safely ignored.
+
+
+        [head=2][color=darkgrey][bold]Common Features[/bold][/color][/head]
+
+
+        The  [color=darkblue][bolditalic]NanoTrasen Smart Dock Mk VII™[/bolditalic][/color] comes with a wide variety of [bold]exciting[/bold] and [bold]untested[/bold] features:
+
+
+        [bullet] [bold]Auto-Align Mode™:[/bold] When this works, the dock aligns perfectly with your shuttle. When it doesn't, it aligns with... something else.
+
+        [bullet] [bold]Graviton Locking Arms™:[/bold] These arms are designed to gently secure your shuttle—unless they randomly decide to engage [bold]Crush Mode™[/bold], in which case, hold on tight.
+
+        [bullet] [bold]Friendly Docking Lights™:[/bold] These lights blink and flash to give the illusion that the dock is working, even when it’s not.
+
+
+        [head=2][color=darkgrey][bold]FAQ: Frequently Avoided Questions[/bold][/color][/head]
+
+
+        [bolditalic]Q: What do I do if the dock’s lights go out suddenly?[/bolditalic]  
+
+        A: Nothing. Just accept the darkness. The dock has either entered [color=darkorange][bolditalic]Sleep Mode™[/bolditalic][/color], or something unspeakable is about to happen.
+
+
+        [bolditalic]Q: Why does the dock occasionally whisper my name?[/bolditalic]  
+
+        A: The dock is semi-sentient and enjoys toying with your mental state. We suggest playing along until it decides you’re no longer amusing.
+
+
+        [bolditalic]Q: How do I know if the docking process is complete?[/bolditalic]  
+
+        A: You'll know it's done when your shuttle stops shaking violently and the alarms stop blaring. Or when you black out—whichever comes first.
+
+
+        [head=3][color=darkblue][bold]Thank You for Choosing NanoTrasen™[/bold][/color][/head]
+
+        At [color=darkblue][bolditalic]NanoTrasen™[/bolditalic][/color], we believe that every dock is an opportunity for improvement. Mostly yours. And remember, your [color=darkblue][italic]Corporate Loyalty Bonus™[/italic][/color] is tied directly to how many of these manuals you distribute.
+
+
+
 - proto: BookMedicalOfficer
   entities:
   - uid: 29053
@@ -37285,6 +37779,18 @@ entities:
     - type: Transform
       pos: -6.5,32.5
       parent: 2
+    - type: Storage
+      storedItems:
+        11365:
+          position: 0,0
+          _rotation: South
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 11365
   - uid: 7897
     components:
     - type: Transform
@@ -37295,11 +37801,35 @@ entities:
     - type: Transform
       pos: -6.5,34.5
       parent: 2
+    - type: Storage
+      storedItems:
+        11371:
+          position: 0,0
+          _rotation: South
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 11371
   - uid: 7899
     components:
     - type: Transform
       pos: -8.5,32.5
       parent: 2
+    - type: Storage
+      storedItems:
+        11372:
+          position: 0,0
+          _rotation: South
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 11372
   - uid: 7900
     components:
     - type: Transform
@@ -37529,9 +38059,9 @@ entities:
   - uid: 15048
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -53.241848,9.595246
-      parent: 2
+      parent: 29261
+    - type: Physics
+      canCollide: False
   - uid: 29291
     components:
     - type: Transform
@@ -37600,11 +38130,11 @@ entities:
         11862:
           position: 1,0
           _rotation: South
-  - uid: 23238
+  - uid: 29521
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
-      pos: -56.605057,5.3996086
+      pos: -56.42585,5.4972024
       parent: 2
     - type: ContainerContainer
       containers:
@@ -37677,9 +38207,9 @@ entities:
   - uid: 15047
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -53.658516,9.595246
-      parent: 2
+      parent: 29260
+    - type: Physics
+      canCollide: False
   - uid: 28614
     components:
     - type: Transform
@@ -37778,6 +38308,12 @@ entities:
       parent: 3609
     - type: Physics
       canCollide: False
+  - uid: 11381
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -53.65753,9.624434
+      parent: 2
   - uid: 24154
     components:
     - type: Transform
@@ -38006,13 +38542,21 @@ entities:
   - uid: 9656
     components:
     - type: Transform
-      pos: 7.5352507,21.61231
+      pos: 3.4859555,19.501976
       parent: 2
   - uid: 22743
     components:
     - type: Transform
       pos: 7.3088074,9.718449
       parent: 21002
+- proto: ButtonFrameCaution
+  entities:
+  - uid: 5767
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -58.5,-18.5
+      parent: 2
 - proto: ButtonFrameExit
   entities:
   - uid: 10949
@@ -41671,27 +42215,27 @@ entities:
   - uid: 4624
     components:
     - type: Transform
-      pos: 38.5,-17.5
+      pos: 54.5,-17.5
       parent: 2
   - uid: 4625
     components:
     - type: Transform
-      pos: 39.5,-17.5
+      pos: 34.5,-13.5
       parent: 2
   - uid: 4626
     components:
     - type: Transform
-      pos: 40.5,-17.5
+      pos: 39.5,-11.5
       parent: 2
   - uid: 4627
     components:
     - type: Transform
-      pos: 41.5,-17.5
+      pos: 55.5,-17.5
       parent: 2
   - uid: 4628
     components:
     - type: Transform
-      pos: 41.5,-18.5
+      pos: 53.5,-14.5
       parent: 2
   - uid: 4629
     components:
@@ -41766,7 +42310,7 @@ entities:
   - uid: 4643
     components:
     - type: Transform
-      pos: 38.5,-16.5
+      pos: 47.5,-14.5
       parent: 2
   - uid: 4644
     components:
@@ -41877,11 +42421,6 @@ entities:
     components:
     - type: Transform
       pos: 31.5,-15.5
-      parent: 2
-  - uid: 4666
-    components:
-    - type: Transform
-      pos: 41.5,-17.5
       parent: 2
   - uid: 4667
     components:
@@ -42126,12 +42665,7 @@ entities:
   - uid: 4823
     components:
     - type: Transform
-      pos: 50.5,-16.5
-      parent: 2
-  - uid: 4824
-    components:
-    - type: Transform
-      pos: 50.5,-15.5
+      pos: 60.5,18.5
       parent: 2
   - uid: 4825
     components:
@@ -42516,7 +43050,7 @@ entities:
   - uid: 5414
     components:
     - type: Transform
-      pos: 39.5,-18.5
+      pos: 46.5,-8.5
       parent: 2
   - uid: 5463
     components:
@@ -49501,7 +50035,7 @@ entities:
   - uid: 13051
     components:
     - type: Transform
-      pos: 56.5,16.5
+      pos: 45.5,-8.5
       parent: 2
   - uid: 13052
     components:
@@ -55627,6 +56161,101 @@ entities:
     components:
     - type: Transform
       pos: -3.5,16.5
+      parent: 2
+  - uid: 29496
+    components:
+    - type: Transform
+      pos: -60.5,-17.5
+      parent: 2
+  - uid: 29497
+    components:
+    - type: Transform
+      pos: -60.5,-16.5
+      parent: 2
+  - uid: 29498
+    components:
+    - type: Transform
+      pos: -60.5,-15.5
+      parent: 2
+  - uid: 29499
+    components:
+    - type: Transform
+      pos: -60.5,-14.5
+      parent: 2
+  - uid: 29500
+    components:
+    - type: Transform
+      pos: -60.5,-13.5
+      parent: 2
+  - uid: 29501
+    components:
+    - type: Transform
+      pos: -60.5,-12.5
+      parent: 2
+  - uid: 29502
+    components:
+    - type: Transform
+      pos: -56.5,-7.5
+      parent: 2
+  - uid: 29503
+    components:
+    - type: Transform
+      pos: -57.5,-7.5
+      parent: 2
+  - uid: 29504
+    components:
+    - type: Transform
+      pos: -58.5,-7.5
+      parent: 2
+  - uid: 29505
+    components:
+    - type: Transform
+      pos: -59.5,-7.5
+      parent: 2
+  - uid: 29506
+    components:
+    - type: Transform
+      pos: -59.5,-8.5
+      parent: 2
+  - uid: 29575
+    components:
+    - type: Transform
+      pos: 60.5,19.5
+      parent: 2
+  - uid: 29576
+    components:
+    - type: Transform
+      pos: 60.5,20.5
+      parent: 2
+  - uid: 29577
+    components:
+    - type: Transform
+      pos: 60.5,21.5
+      parent: 2
+  - uid: 29582
+    components:
+    - type: Transform
+      pos: 33.5,-23.5
+      parent: 2
+  - uid: 29583
+    components:
+    - type: Transform
+      pos: 32.5,-23.5
+      parent: 2
+  - uid: 29584
+    components:
+    - type: Transform
+      pos: 31.5,-23.5
+      parent: 2
+  - uid: 29585
+    components:
+    - type: Transform
+      pos: 37.5,-20.5
+      parent: 2
+  - uid: 29586
+    components:
+    - type: Transform
+      pos: 37.5,-19.5
       parent: 2
 - proto: CableApcStack1
   entities:
@@ -63304,7 +63933,7 @@ entities:
   - uid: 418
     components:
     - type: Transform
-      pos: 39.5,-18.5
+      pos: 46.5,-8.5
       parent: 2
   - uid: 867
     components:
@@ -63345,6 +63974,11 @@ entities:
     components:
     - type: Transform
       pos: -25.5,0.5
+      parent: 2
+  - uid: 2421
+    components:
+    - type: Transform
+      pos: 53.5,-17.5
       parent: 2
   - uid: 3299
     components:
@@ -63619,12 +64253,17 @@ entities:
   - uid: 4564
     components:
     - type: Transform
-      pos: 40.5,-17.5
+      pos: 54.5,-17.5
       parent: 2
   - uid: 4565
     components:
     - type: Transform
-      pos: 39.5,-17.5
+      pos: 55.5,-17.5
+      parent: 2
+  - uid: 4666
+    components:
+    - type: Transform
+      pos: 47.5,-8.5
       parent: 2
   - uid: 4686
     components:
@@ -64075,6 +64714,11 @@ entities:
     components:
     - type: Transform
       pos: 43.5,-37.5
+      parent: 2
+  - uid: 4824
+    components:
+    - type: Transform
+      pos: 48.5,-8.5
       parent: 2
   - uid: 4855
     components:
@@ -68885,6 +69529,146 @@ entities:
     components:
     - type: Transform
       pos: 25.5,35.5
+      parent: 2
+  - uid: 29587
+    components:
+    - type: Transform
+      pos: 45.5,-8.5
+      parent: 2
+  - uid: 29588
+    components:
+    - type: Transform
+      pos: 40.5,-21.5
+      parent: 2
+  - uid: 29589
+    components:
+    - type: Transform
+      pos: 39.5,-21.5
+      parent: 2
+  - uid: 29590
+    components:
+    - type: Transform
+      pos: 38.5,-21.5
+      parent: 2
+  - uid: 29591
+    components:
+    - type: Transform
+      pos: 36.5,-21.5
+      parent: 2
+  - uid: 29592
+    components:
+    - type: Transform
+      pos: 35.5,-21.5
+      parent: 2
+  - uid: 29593
+    components:
+    - type: Transform
+      pos: 34.5,-21.5
+      parent: 2
+  - uid: 29594
+    components:
+    - type: Transform
+      pos: 37.5,-21.5
+      parent: 2
+  - uid: 29595
+    components:
+    - type: Transform
+      pos: 34.5,-22.5
+      parent: 2
+  - uid: 29596
+    components:
+    - type: Transform
+      pos: 34.5,-23.5
+      parent: 2
+  - uid: 29597
+    components:
+    - type: Transform
+      pos: 33.5,-23.5
+      parent: 2
+  - uid: 29598
+    components:
+    - type: Transform
+      pos: 32.5,-23.5
+      parent: 2
+  - uid: 29599
+    components:
+    - type: Transform
+      pos: 31.5,-23.5
+      parent: 2
+  - uid: 29600
+    components:
+    - type: Transform
+      pos: 40.5,-17.5
+      parent: 2
+  - uid: 29601
+    components:
+    - type: Transform
+      pos: 39.5,-17.5
+      parent: 2
+  - uid: 29602
+    components:
+    - type: Transform
+      pos: 38.5,-17.5
+      parent: 2
+  - uid: 29603
+    components:
+    - type: Transform
+      pos: 38.5,-16.5
+      parent: 2
+  - uid: 29604
+    components:
+    - type: Transform
+      pos: 38.5,-14.5
+      parent: 2
+  - uid: 29605
+    components:
+    - type: Transform
+      pos: 38.5,-15.5
+      parent: 2
+  - uid: 29606
+    components:
+    - type: Transform
+      pos: 38.5,-13.5
+      parent: 2
+  - uid: 29607
+    components:
+    - type: Transform
+      pos: 38.5,-12.5
+      parent: 2
+  - uid: 29608
+    components:
+    - type: Transform
+      pos: 38.5,-11.5
+      parent: 2
+  - uid: 29609
+    components:
+    - type: Transform
+      pos: 37.5,-11.5
+      parent: 2
+  - uid: 29610
+    components:
+    - type: Transform
+      pos: 36.5,-11.5
+      parent: 2
+  - uid: 29611
+    components:
+    - type: Transform
+      pos: 35.5,-11.5
+      parent: 2
+  - uid: 29612
+    components:
+    - type: Transform
+      pos: 34.5,-11.5
+      parent: 2
+  - uid: 29613
+    components:
+    - type: Transform
+      pos: 34.5,-12.5
+      parent: 2
+  - uid: 29614
+    components:
+    - type: Transform
+      pos: 34.5,-13.5
       parent: 2
 - proto: CableTerminal
   entities:
@@ -74612,6 +75396,156 @@ entities:
       rot: 3.141592653589793 rad
       pos: 52.5,27.5
       parent: 2
+  - uid: 29547
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -61.5,-15.5
+      parent: 2
+  - uid: 29548
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -61.5,-13.5
+      parent: 2
+  - uid: 29549
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -61.5,-12.5
+      parent: 2
+  - uid: 29550
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -61.5,-11.5
+      parent: 2
+  - uid: 29551
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -60.5,-15.5
+      parent: 2
+  - uid: 29552
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -60.5,-14.5
+      parent: 2
+  - uid: 29553
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -60.5,-13.5
+      parent: 2
+  - uid: 29554
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -60.5,-12.5
+      parent: 2
+  - uid: 29555
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -60.5,-11.5
+      parent: 2
+  - uid: 29556
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -61.5,-14.5
+      parent: 2
+  - uid: 29557
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -61.5,-21.5
+      parent: 2
+  - uid: 29558
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -61.5,-22.5
+      parent: 2
+  - uid: 29559
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -61.5,-23.5
+      parent: 2
+  - uid: 29560
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -61.5,-24.5
+      parent: 2
+  - uid: 29561
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -60.5,-21.5
+      parent: 2
+  - uid: 29562
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -60.5,-22.5
+      parent: 2
+  - uid: 29563
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -60.5,-23.5
+      parent: 2
+  - uid: 29564
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -60.5,-24.5
+      parent: 2
+  - uid: 29565
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -61.5,-26.5
+      parent: 2
+  - uid: 29566
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -60.5,-26.5
+      parent: 2
+  - uid: 29567
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -60.5,-25.5
+      parent: 2
+  - uid: 29568
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -59.5,-25.5
+      parent: 2
+  - uid: 29569
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -59.5,-24.5
+      parent: 2
+  - uid: 29570
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -59.5,-23.5
+      parent: 2
+  - uid: 29571
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -59.5,-22.5
+      parent: 2
 - proto: Chair
   entities:
   - uid: 495
@@ -78394,6 +79328,11 @@ entities:
       parent: 2
 - proto: ConveyorBelt
   entities:
+  - uid: 11325
+    components:
+    - type: Transform
+      pos: -59.5,-10.5
+      parent: 2
   - uid: 11344
     components:
     - type: Transform
@@ -78466,6 +79405,11 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -56.5,-1.5
       parent: 2
+  - uid: 11361
+    components:
+    - type: Transform
+      pos: -59.5,-8.5
+      parent: 2
   - uid: 11363
     components:
     - type: Transform
@@ -78475,6 +79419,11 @@ entities:
     components:
     - type: Transform
       pos: -57.5,-29.5
+      parent: 2
+  - uid: 11382
+    components:
+    - type: Transform
+      pos: -59.5,-16.5
       parent: 2
   - uid: 11565
     components:
@@ -78526,6 +79475,11 @@ entities:
     - type: Transform
       pos: -57.5,-26.5
       parent: 2
+  - uid: 11990
+    components:
+    - type: Transform
+      pos: -59.5,-15.5
+      parent: 2
   - uid: 12092
     components:
     - type: Transform
@@ -78561,6 +79515,17 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -52.5,-14.5
+      parent: 2
+  - uid: 20597
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -57.5,-7.5
+      parent: 2
+  - uid: 24001
+    components:
+    - type: Transform
+      pos: -59.5,-11.5
       parent: 2
   - uid: 29007
     components:
@@ -78608,6 +79573,44 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -14.5,20.5
+      parent: 2
+  - uid: 29508
+    components:
+    - type: Transform
+      pos: -59.5,-7.5
+      parent: 2
+  - uid: 29511
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -56.5,-7.5
+      parent: 2
+  - uid: 29512
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -58.5,-7.5
+      parent: 2
+  - uid: 29513
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -59.5,-7.5
+      parent: 2
+  - uid: 29515
+    components:
+    - type: Transform
+      pos: -59.5,-12.5
+      parent: 2
+  - uid: 29516
+    components:
+    - type: Transform
+      pos: -59.5,-13.5
+      parent: 2
+  - uid: 29517
+    components:
+    - type: Transform
+      pos: -59.5,-14.5
       parent: 2
 - proto: CorporateCircuitBoard
   entities:
@@ -80251,6 +81254,13 @@ entities:
     components:
     - type: Transform
       pos: -54.5,-11.5
+      parent: 2
+- proto: DefaultStationBeaconVox
+  entities:
+  - uid: 29615
+    components:
+    - type: Transform
+      pos: -14.5,17.5
       parent: 2
 - proto: DefaultStationBeaconWardensOffice
   entities:
@@ -88783,7 +89793,7 @@ entities:
   - uid: 23236
     components:
     - type: Transform
-      pos: -52.941887,9.867835
+      pos: -52.803364,9.780684
       parent: 2
 - proto: DrinkGlass
   entities:
@@ -90777,6 +91787,18 @@ entities:
     - type: Transform
       pos: 28.730253,22.5
       parent: 2
+    - type: Storage
+      storedItems:
+        10837:
+          position: 0,0
+          _rotation: South
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 10837
   - uid: 19175
     components:
     - type: Transform
@@ -90792,6 +91814,18 @@ entities:
     - type: Transform
       pos: -52.221172,11.5
       parent: 2
+    - type: Storage
+      storedItems:
+        15047:
+          position: 0,0
+          _rotation: South
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 15047
   - uid: 29261
     components:
     - type: Transform
@@ -90802,6 +91836,9 @@ entities:
         29262:
           position: 0,0
           _rotation: South
+        15048:
+          position: 1,0
+          _rotation: South
     - type: ContainerContainer
       containers:
         storagebase: !type:Container
@@ -90809,11 +91846,7 @@ entities:
           occludes: True
           ents:
           - 29262
-  - uid: 29268
-    components:
-    - type: Transform
-      pos: -54.773254,11.5
-      parent: 2
+          - 15048
 - proto: filingCabinetTall
   entities:
   - uid: 19177
@@ -93232,7 +94265,7 @@ entities:
       pos: -13.5,-1.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -50464.367
+      secondsUntilStateChange: -67537.95
     - type: DeviceNetwork
       deviceLists:
       - 18275
@@ -125898,6 +126931,8 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 18463
+    - type: AtmosPipeColor
+      color: '#0335FCFF'
   - uid: 14721
     components:
     - type: Transform
@@ -127782,6 +128817,8 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 18463
+    - type: AtmosPipeColor
+      color: '#FF1212FF'
   - uid: 14720
     components:
     - type: Transform
@@ -129094,7 +130131,9 @@ entities:
       parent: 21002
     - type: AtmosPipeColor
       color: '#FF1212FF'
-  - uid: 28969
+- proto: GasVentScrubberVox
+  entities:
+  - uid: 10839
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
@@ -129105,22 +130144,22 @@ entities:
       - 231
     - type: AtmosPipeColor
       color: '#FF1212FF'
-  - uid: 29003
+  - uid: 10840
     components:
     - type: Transform
       rot: 3.141592653589793 rad
-      pos: -13.5,19.5
+      pos: -12.5,19.5
       parent: 2
     - type: DeviceNetwork
       deviceLists:
       - 231
     - type: AtmosPipeColor
       color: '#FF1212FF'
-  - uid: 29004
+  - uid: 10841
     components:
     - type: Transform
       rot: 3.141592653589793 rad
-      pos: -12.5,19.5
+      pos: -13.5,19.5
       parent: 2
     - type: DeviceNetwork
       deviceLists:
@@ -132571,18 +133610,6 @@ entities:
     - type: Transform
       pos: -34.5,37.5
       parent: 2
-  - uid: 10845
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -58.5,-13.5
-      parent: 2
-  - uid: 10847
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -60.5,-16.5
-      parent: 2
   - uid: 10925
     components:
     - type: Transform
@@ -132671,6 +133698,12 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -57.5,6.5
       parent: 2
+  - uid: 11327
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -58.5,-13.5
+      parent: 2
   - uid: 11340
     components:
     - type: Transform
@@ -132682,18 +133715,6 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -58.5,2.5
-      parent: 2
-  - uid: 11342
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -58.5,-8.5
-      parent: 2
-  - uid: 11343
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -58.5,-7.5
       parent: 2
   - uid: 11351
     components:
@@ -132713,59 +133734,17 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -59.5,-3.5
       parent: 2
-  - uid: 11361
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -60.5,-6.5
-      parent: 2
   - uid: 11362
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -59.5,-6.5
       parent: 2
-  - uid: 11366
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -58.5,-11.5
-      parent: 2
-  - uid: 11367
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -58.5,-12.5
-      parent: 2
-  - uid: 11370
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -58.5,-14.5
-      parent: 2
-  - uid: 11372
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -59.5,-16.5
-      parent: 2
   - uid: 11380
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -46.5,4.5
-      parent: 2
-  - uid: 11381
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -59.5,-18.5
-      parent: 2
-  - uid: 11382
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -60.5,-18.5
       parent: 2
   - uid: 11383
     components:
@@ -135155,6 +136134,12 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 17.5,34.5
       parent: 2
+  - uid: 23245
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -58.5,-14.5
+      parent: 2
   - uid: 23276
     components:
     - type: Transform
@@ -135455,11 +136440,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -2.5,-19.5
       parent: 21002
-  - uid: 24126
-    components:
-    - type: Transform
-      pos: -61.5,-19.5
-      parent: 2
   - uid: 24133
     components:
     - type: Transform
@@ -136322,6 +137302,18 @@ entities:
       rot: 3.141592653589793 rad
       pos: 52.5,66.5
       parent: 21002
+  - uid: 28969
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -58.5,-12.5
+      parent: 2
+  - uid: 29004
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -58.5,-8.5
+      parent: 2
   - uid: 29043
     components:
     - type: Transform
@@ -136434,11 +137426,35 @@ entities:
       rot: 3.141592653589793 rad
       pos: 60.5,24.5
       parent: 2
+  - uid: 29448
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -58.5,-9.5
+      parent: 2
   - uid: 29458
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 67.5,23.5
+      parent: 2
+  - uid: 29493
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -58.5,-12.5
+      parent: 2
+  - uid: 29494
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -58.5,-11.5
+      parent: 2
+  - uid: 29495
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -58.5,-11.5
       parent: 2
 - proto: GrilleBroken
   entities:
@@ -136831,18 +137847,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 44.5,-56.5
-      parent: 2
-  - uid: 20597
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -59.5,-7.5
-      parent: 2
-  - uid: 20610
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -59.5,-15.5
       parent: 2
   - uid: 20611
     components:
@@ -137810,7 +138814,7 @@ entities:
       pos: 36.5,-35.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -87296.22
+      secondsUntilStateChange: -104369.8
       state: Opening
   - uid: 5211
     components:
@@ -139548,8 +140552,228 @@ entities:
     - type: Transform
       pos: 35.5,35.5
       parent: 2
+- proto: LogicGateAnd
+  entities:
+  - uid: 2259
+    components:
+    - type: Transform
+      anchored: True
+      pos: -59.5,-17.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        12066:
+        - Output: InputB
+    - type: Physics
+      canCollide: False
+      bodyType: Static
+  - uid: 28494
+    components:
+    - type: Transform
+      anchored: True
+      rot: -1.5707963267948966 rad
+      pos: -60.5,-16.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        29541:
+        - Output: DoorBolt
+    - type: Physics
+      canCollide: False
+      bodyType: Static
+  - uid: 29507
+    components:
+    - type: Transform
+      anchored: True
+      rot: 1.5707963267948966 rad
+      pos: -60.5,-20.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        29523:
+        - Output: DoorBolt
+    - type: Physics
+      canCollide: False
+      bodyType: Static
+  - uid: 29527
+    components:
+    - type: Transform
+      anchored: True
+      pos: -59.5,-19.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        11297:
+        - Output: InputB
+    - type: Physics
+      canCollide: False
+      bodyType: Static
+  - uid: 29533
+    components:
+    - type: Transform
+      anchored: True
+      rot: -1.5707963267948966 rad
+      pos: -61.5,-21.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        29540:
+        - Output: InputB
+    - type: Physics
+      canCollide: False
+      bodyType: Static
+  - uid: 29534
+    components:
+    - type: Transform
+      anchored: True
+      pos: -61.5,-23.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        29539:
+        - Output: InputB
+    - type: Physics
+      canCollide: False
+      bodyType: Static
+  - uid: 29535
+    components:
+    - type: Transform
+      anchored: True
+      rot: 1.5707963267948966 rad
+      pos: -61.5,-15.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        29537:
+        - Output: InputB
+    - type: Physics
+      canCollide: False
+      bodyType: Static
+  - uid: 29536
+    components:
+    - type: Transform
+      anchored: True
+      pos: -61.5,-13.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        29538:
+        - Output: InputB
+    - type: Physics
+      canCollide: False
+      bodyType: Static
+- proto: LogicGateNor
+  entities:
+  - uid: 29542
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -60.5,-15.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        28494:
+        - Output: InputB
+  - uid: 29543
+    components:
+    - type: Transform
+      anchored: True
+      rot: 1.5707963267948966 rad
+      pos: -60.5,-21.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        29507:
+        - Output: InputB
+    - type: Physics
+      canCollide: False
+      bodyType: Static
 - proto: LogicGateOr
   entities:
+  - uid: 826
+    components:
+    - type: Transform
+      anchored: True
+      pos: -60.5,-17.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 4
+    - type: DeviceLinkSource
+      linkedPorts:
+        29527:
+        - Output: InputA
+        12066:
+        - Output: InputA
+    - type: Physics
+      canCollide: False
+      bodyType: Static
+  - uid: 827
+    components:
+    - type: Transform
+      anchored: True
+      pos: -60.5,-19.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 4
+    - type: DeviceLinkSource
+      linkedPorts:
+        2259:
+        - Output: InputA
+        11297:
+        - Output: InputA
+    - type: Physics
+      canCollide: False
+      bodyType: Static
+  - uid: 11297
+    components:
+    - type: Transform
+      anchored: True
+      pos: -58.5,-19.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        29528:
+        - Output: DoorBolt
+    - type: Physics
+      canCollide: False
+      bodyType: Static
+  - uid: 12066
+    components:
+    - type: Transform
+      anchored: True
+      pos: -58.5,-17.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        29532:
+        - Output: DoorBolt
+    - type: Physics
+      canCollide: False
+      bodyType: Static
   - uid: 28922
     components:
     - type: Transform
@@ -139583,8 +140807,146 @@ entities:
       linkedPorts:
         28436:
         - Output: DoorBolt
+  - uid: 29522
+    components:
+    - type: Transform
+      anchored: True
+      pos: -60.5,-18.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 11
+    - type: DeviceLinkSource
+      linkedPorts:
+        29527:
+        - Output: InputB
+        2259:
+        - Output: InputB
+        29533:
+        - Output: InputB
+        29535:
+        - Output: InputB
+        29536:
+        - Output: InputB
+        29534:
+        - Output: InputB
+    - type: Physics
+      canCollide: False
+      bodyType: Static
+  - uid: 29529
+    components:
+    - type: Transform
+      anchored: True
+      rot: 1.5707963267948966 rad
+      pos: -60.5,-22.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        29507:
+        - Output: InputA
+        24126:
+        - Output: DoorBolt
+    - type: Physics
+      canCollide: False
+      bodyType: Static
+  - uid: 29531
+    components:
+    - type: Transform
+      anchored: True
+      rot: -1.5707963267948966 rad
+      pos: -60.5,-14.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        28494:
+        - Output: InputA
+        29530:
+        - Output: DoorBolt
+    - type: Physics
+      canCollide: False
+      bodyType: Static
+  - uid: 29537
+    components:
+    - type: Transform
+      anchored: True
+      pos: -61.5,-14.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        29531:
+        - Output: InputB
+    - type: Physics
+      canCollide: False
+      bodyType: Static
+  - uid: 29538
+    components:
+    - type: Transform
+      anchored: True
+      rot: -1.5707963267948966 rad
+      pos: -60.5,-13.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        29531:
+        - Output: InputA
+    - type: Physics
+      canCollide: False
+      bodyType: Static
+  - uid: 29539
+    components:
+    - type: Transform
+      anchored: True
+      rot: 1.5707963267948966 rad
+      pos: -60.5,-23.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        29529:
+        - Output: InputA
+    - type: Physics
+      canCollide: False
+      bodyType: Static
+  - uid: 29540
+    components:
+    - type: Transform
+      anchored: True
+      pos: -61.5,-22.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        29529:
+        - Output: InputB
+    - type: Physics
+      canCollide: False
+      bodyType: Static
 - proto: LogicGateXor
   entities:
+  - uid: 277
+    components:
+    - type: Transform
+      anchored: True
+      pos: -61.5,-19.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        827:
+        - Output: InputA
+    - type: Physics
+      canCollide: False
+      bodyType: Static
   - uid: 5762
     components:
     - type: Transform
@@ -139662,21 +141024,6 @@ entities:
     - type: Physics
       canCollide: False
       bodyType: Static
-  - uid: 5767
-    components:
-    - type: Transform
-      anchored: True
-      pos: -59.5,-17.5
-      parent: 2
-    - type: DeviceLinkSink
-      invokeCounter: 1
-    - type: DeviceLinkSource
-      linkedPorts:
-        28495:
-        - Output: DoorBolt
-    - type: Physics
-      canCollide: False
-      bodyType: Static
   - uid: 6810
     components:
     - type: Transform
@@ -139721,6 +141068,21 @@ entities:
       linkedPorts:
         7763:
         - Output: DoorBolt
+    - type: Physics
+      canCollide: False
+      bodyType: Static
+  - uid: 10843
+    components:
+    - type: Transform
+      anchored: True
+      pos: -61.5,-17.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        826:
+        - Output: InputA
     - type: Physics
       canCollide: False
       bodyType: Static
@@ -140248,6 +141610,13 @@ entities:
     components:
     - type: Transform
       pos: -27.514933,-49.371128
+      parent: 2
+- proto: MechEquipmentGrabberSmall
+  entities:
+  - uid: 29520
+    components:
+    - type: Transform
+      pos: -56.05085,0.6887263
       parent: 2
 - proto: MedicalBed
   entities:
@@ -140867,6 +142236,11 @@ entities:
     - type: Transform
       pos: 7.5,-6.5
       parent: 21002
+  - uid: 29490
+    components:
+    - type: Transform
+      pos: -61.5,-7.5
+      parent: 2
 - proto: NitrousOxideCanister
   entities:
   - uid: 8864
@@ -141009,14 +142383,6 @@ entities:
       name: Geoffrey
     - type: Transform
       pos: -27.493137,-34.27025
-      parent: 2
-- proto: OverlordCircuitBoard
-  entities:
-  - uid: 29448
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 59.798008,22.579893
       parent: 2
 - proto: OxygenCanister
   entities:
@@ -141272,9 +142638,7 @@ entities:
 
 
         [head=1][bold][color=green]  SHUTTLE CONSTRUCTION
-            AUTHORIZATION
-        FORM[/color][/bold][/head]
-
+            AUTHORIZATION FORM[/color][/bold][/head]
         [bold]=====================================================[/bold]
 
 
@@ -141364,6 +142728,7 @@ entities:
         Authorizing Entity:
 
         __________________________ (Stamp)
+
 
 
     - type: Physics
@@ -141378,9 +142743,7 @@ entities:
 
 
         [head=1][bold][color=green]  SHUTTLE CONSTRUCTION
-            AUTHORIZATION
-        FORM[/color][/bold][/head]
-
+            AUTHORIZATION FORM[/color][/bold][/head]
         [bold]=====================================================[/bold]
 
 
@@ -141470,6 +142833,7 @@ entities:
         Authorizing Entity:
 
         __________________________ (Stamp)
+
 
 
     - type: Physics
@@ -141559,6 +142923,112 @@ entities:
       parent: 2695
     - type: Physics
       canCollide: False
+  - uid: 10837
+    components:
+    - type: Transform
+      parent: 2693
+    - type: Paper
+      content: >+
+        [bold]=====================================================[/bold]
+
+
+        [head=1][bold][color=green]  SHUTTLE CONSTRUCTION
+            AUTHORIZATION FORM[/color][/bold][/head]
+        [bold]=====================================================[/bold]
+
+
+        [bold]Authorizing Entity:[/bold]
+
+        Name: ______________________ , Position: _______________________
+
+
+        [bold]Approved Shipwright(s):[/bold]
+
+        Name: ______________________ , Position: _______________________
+
+        Name: ______________________ , Position: _______________________
+
+        Name: ______________________ , Position: _______________________
+
+        Name: ______________________ , Position: _______________________
+
+
+        [bold]1. PROJECT DETAILS
+
+        [/bold]
+
+        Shuttle Name: ________________________
+
+        Class/Model: __________________________
+
+        Design Specifications: ______________________________
+
+
+        [bold]2. AUTHORIZATION
+
+        [/bold]
+
+        The Authorizing Entity grants the Shipwright permission to commence construction of the specified shuttle. All designs and materials are to be approved by the Authorizing Entity before fabrication begins.
+
+
+        [bold]3. TERMS OF CONSTRUCTION
+
+        [/bold]
+
+        [bullet] [bold]Duration:[/bold] Construction to be completed within ______.
+
+        [bullet] [bold]Resources:[/bold] All materials and components required for construction are to be sourced by the Shipwright, with costs covered by the Authorizing Entity only when preapproved unless otherwise specified.
+
+        [bullet] [bold]Modifications:[/bold] Any design changes must receive prior approval from the Authorizing Entity.
+
+        [bullet] [bold]Remittance:[/bold] As payment for authorization and support services the Shipwright agrees to provide the Authorizing Entity the sum of ___________ in either materials or speso equivalent.
+
+
+        [bold]4. INSPECTION & TESTING
+
+        [/bold]
+
+        The Authorizing Entity reserves the right to inspect the vessel at any stage of construction. Upon completion, the Shipwright must conduct a series of spaceworthiness tests, overseen by the Authorizing Entity.
+
+
+        [bold]5. WARRANTIES & LIABILITY
+
+        [/bold]
+
+        The Shipwright guarantees the vessel will be constructed according to the highest standards of interstellar engineering. Any defects or malfunctions discovered within ______ minutes of delivery must be rectified at the Shipwright’s expense.
+
+
+        [bold]6. DISPUTE RESOLUTION
+
+        [/bold]
+
+        Any disagreements will be resolved by the Station’s Resident Arbitrator.
+
+
+        [bold]SIGNED:
+
+        [/bold]
+
+        Shipwright(s):
+
+        __________________________
+
+        __________________________
+
+        __________________________
+
+        __________________________
+
+
+        Authorizing Entity:
+
+        __________________________ (Stamp)
+
+
+
+
+    - type: Physics
+      canCollide: False
   - uid: 11861
     components:
     - type: Transform
@@ -141609,31 +143079,31 @@ entities:
   - uid: 23239
     components:
     - type: Transform
-      parent: 23238
+      parent: 29521
     - type: Physics
       canCollide: False
   - uid: 23240
     components:
     - type: Transform
-      parent: 23238
+      parent: 29521
     - type: Physics
       canCollide: False
   - uid: 23241
     components:
     - type: Transform
-      parent: 23238
+      parent: 29521
     - type: Physics
       canCollide: False
   - uid: 23242
     components:
     - type: Transform
-      parent: 23238
+      parent: 29521
     - type: Physics
       canCollide: False
   - uid: 23243
     components:
     - type: Transform
-      parent: 23238
+      parent: 29521
     - type: Physics
       canCollide: False
   - uid: 23854
@@ -141661,7 +143131,7 @@ entities:
   - uid: 29252
     components:
     - type: Transform
-      parent: 23238
+      parent: 29521
     - type: Physics
       canCollide: False
   - uid: 29253
@@ -141781,9 +143251,7 @@ entities:
 
 
         [head=1][bold][color=green]  SHUTTLE CONSTRUCTION
-            AUTHORIZATION
-        FORM[/color][/bold][/head]
-
+            AUTHORIZATION FORM[/color][/bold][/head]
         [bold]=====================================================[/bold]
 
 
@@ -141873,6 +143341,7 @@ entities:
         Authorizing Entity:
 
         __________________________ (Stamp)
+
 
 
   - uid: 29262
@@ -141885,9 +143354,7 @@ entities:
 
 
         [head=1][bold][color=green]  SHUTTLE CONSTRUCTION
-            AUTHORIZATION
-        FORM[/color][/bold][/head]
-
+            AUTHORIZATION FORM[/color][/bold][/head]
         [bold]=====================================================[/bold]
 
 
@@ -141977,6 +143444,7 @@ entities:
         Authorizing Entity:
 
         __________________________ (Stamp)
+
 
 
     - type: Physics
@@ -141991,9 +143459,7 @@ entities:
 
 
         [head=1][bold][color=green]  SHUTTLE CONSTRUCTION
-            AUTHORIZATION
-        FORM[/color][/bold][/head]
-
+            AUTHORIZATION FORM[/color][/bold][/head]
         [bold]=====================================================[/bold]
 
 
@@ -142083,6 +143549,7 @@ entities:
         Authorizing Entity:
 
         __________________________ (Stamp)
+
 
     - type: Physics
       canCollide: False
@@ -142097,9 +143564,7 @@ entities:
 
 
         [head=1][bold][color=green]  SHUTTLE CONSTRUCTION
-            AUTHORIZATION
-        FORM[/color][/bold][/head]
-
+            AUTHORIZATION FORM[/color][/bold][/head]
         [bold]=====================================================[/bold]
 
 
@@ -142189,6 +143654,7 @@ entities:
         Authorizing Entity:
 
         __________________________ (Stamp)
+
 
 
   - uid: 29267
@@ -142202,9 +143668,7 @@ entities:
 
 
         [head=1][bold][color=green]  SHUTTLE CONSTRUCTION
-            AUTHORIZATION
-        FORM[/color][/bold][/head]
-
+            AUTHORIZATION FORM[/color][/bold][/head]
         [bold]=====================================================[/bold]
 
 
@@ -142294,6 +143758,7 @@ entities:
         Authorizing Entity:
 
         __________________________ (Stamp)
+
 
 
 - proto: PaperBin10
@@ -142583,6 +144048,12 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 14.100553,-30.277967
       parent: 2
+  - uid: 10838
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -56.686268,5.695119
+      parent: 2
   - uid: 11857
     components:
     - type: Transform
@@ -142615,12 +144086,6 @@ entities:
     - type: Transform
       pos: 12.537674,6.638035
       parent: 21002
-  - uid: 23245
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -56.667557,5.732942
-      parent: 2
   - uid: 23436
     components:
     - type: Transform
@@ -143056,20 +144521,38 @@ entities:
     - type: Transform
       pos: -61.5,-1.5
       parent: 2
-  - uid: 11327
+  - uid: 11366
     components:
     - type: Transform
+      rot: 1.5707963267948966 rad
       pos: -58.5,-1.5
       parent: 2
-  - uid: 11328
+  - uid: 11367
     components:
     - type: Transform
+      rot: 1.5707963267948966 rad
       pos: -58.5,-5.5
       parent: 2
   - uid: 11546
     components:
     - type: Transform
       pos: -47.5,-0.5
+      parent: 2
+  - uid: 29509
+    components:
+    - type: Transform
+      pos: -59.5,-10.5
+      parent: 2
+  - uid: 29510
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -58.5,-7.5
+      parent: 2
+  - uid: 29524
+    components:
+    - type: Transform
+      pos: -59.5,-16.5
       parent: 2
 - proto: PlasticFlapsAirtightOpaque
   entities:
@@ -143079,9 +144562,10 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -1.5,-45.5
       parent: 2
-  - uid: 11225
+  - uid: 11370
     components:
     - type: Transform
+      rot: -1.5707963267948966 rad
       pos: -51.5,-14.5
       parent: 2
 - proto: PlayerStationAi
@@ -145263,12 +146747,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -52.5,-11.5
       parent: 2
-  - uid: 12066
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -57.5,-9.5
-      parent: 2
   - uid: 12067
     components:
     - type: Transform
@@ -145971,6 +147449,12 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 61.5,12.5
       parent: 2
+  - uid: 29447
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -57.5,-10.5
+      parent: 2
   - uid: 29452
     components:
     - type: Transform
@@ -146011,11 +147495,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -45.5,37.5
       parent: 2
-  - uid: 2259
-    components:
-    - type: Transform
-      pos: -59.5,-21.5
-      parent: 2
   - uid: 6947
     components:
     - type: Transform
@@ -146026,6 +147505,11 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -45.5,31.5
+      parent: 2
+  - uid: 11343
+    components:
+    - type: Transform
+      pos: -61.5,-10.5
       parent: 2
   - uid: 11558
     components:
@@ -146064,6 +147548,11 @@ entities:
       parent: 2
     - type: PointLight
       radius: 8
+  - uid: 11987
+    components:
+    - type: Transform
+      pos: -59.5,-21.5
+      parent: 2
   - uid: 12058
     components:
     - type: Transform
@@ -146094,11 +147583,6 @@ entities:
     components:
     - type: Transform
       pos: 48.5,51.5
-      parent: 2
-  - uid: 24001
-    components:
-    - type: Transform
-      pos: -59.5,-26.5
       parent: 2
   - uid: 24003
     components:
@@ -146148,6 +147632,12 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -45.5,27.5
+      parent: 2
+  - uid: 29572
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -59.5,-26.5
       parent: 2
 - proto: PoweredlightSodium
   entities:
@@ -148210,18 +149700,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -61.5,-25.5
       parent: 2
-  - uid: 11986
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -61.5,-24.5
-      parent: 2
-  - uid: 11987
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -61.5,-23.5
-      parent: 2
   - uid: 11988
     components:
     - type: Transform
@@ -148494,6 +149972,12 @@ entities:
       rot: 3.141592653589793 rad
       pos: -14.5,12.5
       parent: 2
+  - uid: 28495
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -61.5,-24.5
+      parent: 2
   - uid: 28983
     components:
     - type: Transform
@@ -148529,6 +150013,12 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -10.5,15.5
+      parent: 2
+  - uid: 29546
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -61.5,-15.5
       parent: 2
 - proto: RailingCorner
   entities:
@@ -148803,6 +150293,12 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 56.5,30.5
+      parent: 2
+  - uid: 29489
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -61.5,-10.5
       parent: 2
 - proto: RailingCornerSmall
   entities:
@@ -149279,6 +150775,33 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 51.5,30.5
+      parent: 2
+  - uid: 29486
+    components:
+    - type: Transform
+      pos: -61.5,-11.5
+      parent: 2
+  - uid: 29487
+    components:
+    - type: Transform
+      pos: -60.5,-10.5
+      parent: 2
+  - uid: 29488
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -61.5,-23.5
+      parent: 2
+  - uid: 29544
+    components:
+    - type: Transform
+      pos: -61.5,-21.5
+      parent: 2
+  - uid: 29545
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -61.5,-14.5
       parent: 2
 - proto: RailingRound
   entities:
@@ -150352,6 +151875,11 @@ entities:
     - type: Transform
       pos: -57.5,-30.5
       parent: 2
+  - uid: 29514
+    components:
+    - type: Transform
+      pos: -59.5,-9.5
+      parent: 2
 - proto: ReinforcedPlasmaWindow
   entities:
   - uid: 1061
@@ -150945,11 +152473,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -27.5,-17.5
-      parent: 2
-  - uid: 827
-    components:
-    - type: Transform
-      pos: -61.5,-19.5
       parent: 2
   - uid: 1206
     components:
@@ -153220,41 +154743,17 @@ entities:
     - type: Transform
       pos: -60.5,-0.5
       parent: 2
-  - uid: 10836
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -58.5,-8.5
-      parent: 2
-  - uid: 10837
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -58.5,-7.5
-      parent: 2
-  - uid: 10840
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -58.5,-12.5
-      parent: 2
-  - uid: 10841
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -58.5,-13.5
-      parent: 2
   - uid: 10842
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
+      rot: 1.5707963267948966 rad
       pos: -58.5,-11.5
       parent: 2
-  - uid: 10843
+  - uid: 10847
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -58.5,-14.5
+      rot: 1.5707963267948966 rad
+      pos: -58.5,-12.5
       parent: 2
   - uid: 10854
     components:
@@ -153337,21 +154836,10 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -25.5,-55.5
       parent: 2
-  - uid: 11297
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -59.5,-18.5
-      parent: 2
   - uid: 11323
     components:
     - type: Transform
       pos: -59.5,-0.5
-      parent: 2
-  - uid: 11325
-    components:
-    - type: Transform
-      pos: -60.5,-6.5
       parent: 2
   - uid: 11326
     components:
@@ -153363,29 +154851,17 @@ entities:
     - type: Transform
       pos: -59.5,-3.5
       parent: 2
-  - uid: 11365
+  - uid: 11342
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -59.5,-16.5
-      parent: 2
-  - uid: 11371
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -60.5,-18.5
+      rot: 1.5707963267948966 rad
+      pos: -58.5,-14.5
       parent: 2
   - uid: 11373
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -59.5,-20.5
-      parent: 2
-  - uid: 11375
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -60.5,-16.5
       parent: 2
   - uid: 11469
     components:
@@ -153900,6 +155376,12 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 20.5,-10.5
       parent: 21002
+  - uid: 23238
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -58.5,-13.5
+      parent: 2
   - uid: 23416
     components:
     - type: Transform
@@ -154175,11 +155657,11 @@ entities:
       parent: 2
 - proto: SalvageMagnet
   entities:
-  - uid: 11990
+  - uid: 29518
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
-      pos: -61.5,-24.5
+      pos: -61.5,-25.5
       parent: 2
 - proto: SaxophoneInstrument
   entities:
@@ -155372,6 +156854,24 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 62.5,9.5
       parent: 2
+  - uid: 29526
+    components:
+    - type: Transform
+      pos: -60.5,-18.5
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        29522:
+        - DoorStatus: InputA
+  - uid: 29574
+    components:
+    - type: Transform
+      pos: -59.5,-18.5
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        29522:
+        - DoorStatus: InputB
 - proto: ShuttersWindowOpen
   entities:
   - uid: 742
@@ -155986,6 +157486,18 @@ entities:
         11338:
         - Pressed: Toggle
         11337:
+        - Pressed: Toggle
+  - uid: 11986
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -58.5,-18.5
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        29526:
+        - Pressed: Toggle
+        29574:
         - Pressed: Toggle
   - uid: 12804
     components:
@@ -159864,6 +161376,13 @@ entities:
       parent: 2
     - type: SpamEmitSound
       enabled: False
+- proto: SpawnMechRipley
+  entities:
+  - uid: 29519
+    components:
+    - type: Transform
+      pos: -55.5,-10.5
+      parent: 2
 - proto: SpawnMobBee
   entities:
   - uid: 610
@@ -163905,6 +165424,8 @@ entities:
       pos: -57.5,-20.5
       parent: 2
     - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSupply
       id: Salvage
   - uid: 29177
     components:
@@ -163927,6 +165448,17 @@ entities:
       - SurveillanceCameraSupply
       nameSet: True
       id: Cargo Dock N
+  - uid: 29525
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -60.5,-18.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraSupply
+      nameSet: True
+      id: Salvage Dock
 - proto: SurveillanceCameraWirelessRouterEntertainment
   entities:
   - uid: 23224
@@ -167582,6 +169114,69 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         19987:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+  - uid: 29268
+    components:
+    - type: Transform
+      pos: -57.5,-8.5
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        29511:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        20597:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        29512:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        29513:
+        - Right: Reverse
+        - Middle: Off
+        - Left: Off
+        29514:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        11361:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        11325:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        24001:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        29515:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        29516:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        29517:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        11990:
+        - Left: Forward
+        - Right: Reverse
+        - Middle: Off
+        29508:
+        - Left: Forward
+        - Right: Off
+        - Middle: Off
+        11382:
         - Left: Forward
         - Right: Reverse
         - Middle: Off
@@ -176469,17 +178064,11 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -58.5,-6.5
       parent: 2
-  - uid: 10838
+  - uid: 10845
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -58.5,-9.5
-      parent: 2
-  - uid: 10839
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -58.5,-10.5
+      rot: 3.141592653589793 rad
+      pos: -60.5,-7.5
       parent: 2
   - uid: 10846
     components:
@@ -177190,6 +178779,12 @@ entities:
     components:
     - type: Transform
       pos: -52.5,-24.5
+      parent: 2
+  - uid: 11225
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -60.5,-6.5
       parent: 2
   - uid: 11226
     components:
@@ -178669,6 +180264,12 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 53.5,28.5
+      parent: 2
+  - uid: 20610
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -60.5,-8.5
       parent: 2
   - uid: 20659
     components:
@@ -181122,6 +182723,12 @@ entities:
       rot: 3.141592653589793 rad
       pos: -22.5,34.5
       parent: 2
+  - uid: 29003
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -58.5,-10.5
+      parent: 2
   - uid: 29293
     components:
     - type: Transform
@@ -181301,6 +182908,12 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 57.5,21.5
+      parent: 2
+  - uid: 29492
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -60.5,-9.5
       parent: 2
 - proto: WallSolid
   entities:
@@ -185566,6 +187179,12 @@ entities:
       rot: 3.141592653589793 rad
       pos: 41.5,-45.5
       parent: 2
+  - uid: 29491
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -60.5,-10.5
+      parent: 2
 - proto: WallSolidRust
   entities:
   - uid: 24642
@@ -186775,7 +188394,7 @@ entities:
       pos: -9.5,17.5
       parent: 2
     - type: DeviceLinkSink
-      invokeCounter: 1
+      invokeCounter: 3
     - type: DeviceLinkSource
       linkedPorts:
         13577:
@@ -186787,7 +188406,7 @@ entities:
       pos: -11.5,17.5
       parent: 2
     - type: DeviceLinkSink
-      invokeCounter: 5
+      invokeCounter: 7
     - type: DeviceLinkSource
       linkedPorts:
         12356:
@@ -187642,6 +189261,18 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -24.5,38.5
+      parent: 2
+  - uid: 11328
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -58.5,-8.5
+      parent: 2
+  - uid: 11375
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -58.5,-9.5
       parent: 2
   - uid: 18936
     components:
@@ -188538,7 +190169,7 @@ entities:
       pos: 24.5,2.5
       parent: 21002
     - type: Door
-      secondsUntilStateChange: -432500.88
+      secondsUntilStateChange: -449574.44
       state: Opening
   - uid: 28863
     components:

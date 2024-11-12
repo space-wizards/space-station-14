@@ -504,6 +504,9 @@
   id: FoodMeatWheat
   description: This doesn't look like meat, but your standards aren't that high to begin with.
   components:
+  - type: FlavorProfile
+    flavors:
+      - falsemeat
   - type: Sprite
     state: clump
   - type: SolutionContainerManager
@@ -522,6 +525,7 @@
   - type: Tag
     tags:
     - Raw
+    - Meat
   - type: Sprite
     state: snake
   - type: SolutionContainerManager
@@ -796,8 +800,8 @@
     node: bacon
   - type: FoodSequenceElement
     entries:
-      Burger: MeatBecon
-      Taco: MeatBecon
+      Burger: MeatBacon
+      Taco: MeatBacon
 
 - type: entity
   name: cooked bear

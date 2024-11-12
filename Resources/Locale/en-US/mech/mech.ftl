@@ -17,3 +17,5 @@ mech-energy-missing = Energy: MISSING
 mech-slot-display = Open Slots: {$amount}
 
 mech-no-enter = You cannot pilot this.
+
+mech-eject-pilot-alert = {$user} is pulling the pilot out of the {$item}!
