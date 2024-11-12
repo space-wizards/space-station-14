@@ -1,62 +1,4 @@
 ﻿Entries:
-- author: Ubaser
-  changes:
-  - message: Mantles are now available in loadouts, requiring 20 hours of that head
-      of department's time.
-    type: Add
-  - message: Mantles are no longer spawned in dressers or able to be printed at uniform
-      lathes.
-    type: Remove
-  id: 7098
-  time: '2024-08-12T07:14:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30929
-- author: LeoSantich
-  changes:
-  - message: Updated 'narsie' and 'ratvar' to 'Nar'Sie' and 'Ratvar' in randomly generated
-      storybook content.
-    type: Tweak
-  id: 7099
-  time: '2024-08-12T23:20:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30954
-- author: pigeonpeas
-  changes:
-  - message: Added non command mantle into the winterdrobe
-    type: Add
-  id: 7100
-  time: '2024-08-13T09:20:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29774
-- author: TheShuEd
-  changes:
-  - message: change the way food is sliced - food is now sliced whole after a small
-      doafter than requires multiple clicks on a single entity
-    type: Tweak
-  id: 7101
-  time: '2024-08-13T10:54:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30824
-- author: Ubaser
-  changes:
-  - message: Add two gatfruit mutations, one fake and one real capfruit which spawns
-      cap guns when eaten.
-    type: Add
-  id: 7102
-  time: '2024-08-13T11:08:40.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30850
-- author: slarticodefast
-  changes:
-  - message: Added new keybindings for rotating and flipping objects. The defaults
-      are R for clockwise, Shift+R for counterclockwise and F for flipping.
-    type: Add
-  id: 7103
-  time: '2024-08-13T13:36:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30540
-- author: Cojoke-dot
-  changes:
-  - message: Borg's names are now displayed when they make an announcement on the
-      Communications Console.
-    type: Tweak
-  id: 7104
-  time: '2024-08-13T18:31:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30107
 - author: Spessmann
   changes:
   - message: Added Cog, a new midpop map based on Cogmap from ss13
@@ -3953,3 +3895,56 @@
   id: 7597
   time: '2024-11-06T14:39:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31292
+- author: PopGamer46
+  changes:
+  - message: Fixed Lambordeere (botany shuttle) bolt buttons not being connected
+    type: Fix
+  id: 7598
+  time: '2024-11-07T22:02:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33065
+- author: Boaz1111
+  changes:
+  - message: Added casual green jumpsuits and skirts to the clothesmate.
+    type: Add
+  id: 7599
+  time: '2024-11-08T14:50:17.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31710
+- author: ScarKy0
+  changes:
+  - message: Intellicarding the AI is now a doAfter.
+    type: Tweak
+  - message: AI now gets notified when someone tries to intellicard it.
+    type: Add
+  - message: You can no longer exchange the AI between intellicards.
+    type: Fix
+  id: 7600
+  time: '2024-11-09T19:29:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33198
+- author: IProduceWidgets
+  changes:
+  - message: weather now has a completion result for how to unset the weather.
+    type: Tweak
+  id: 7601
+  time: '2024-11-10T04:26:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33130
+- author: BramvanZijp
+  changes:
+  - message: The Flare Gun & Security Shell Gun now start in their open/unbolted state.
+    type: Tweak
+  id: 7602
+  time: '2024-11-11T16:12:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33248
+- author: AndrewMontagne
+  changes:
+  - message: APEs could be powered on without local power
+    type: Fix
+  id: 7603
+  time: '2024-11-11T22:58:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32493
+- author: thetolbean
+  changes:
+  - message: Droppers can no longer inject or draw from closed containers.
+    type: Fix
+  id: 7604
+  time: '2024-11-12T12:06:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33011
