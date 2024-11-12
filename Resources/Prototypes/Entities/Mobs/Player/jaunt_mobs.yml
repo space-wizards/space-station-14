@@ -2,7 +2,7 @@
   name: jaunt
   parent: [Incorporeal, BaseMob]
   id: BaseMobJaunt
-  description: You shouldn't see this!
+  description: Faint traces of a humanoid figure linger here
   suffix: Ethereal
   components:
   - type: ContentEye
@@ -18,9 +18,6 @@
   - type: Visibility
     layer: 2
   - type: Spectral
-  - type: Tag
-    tags:
-    - HideContextMenu
 
 # Should be slow, for balance
 - type: entity
