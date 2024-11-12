@@ -71,12 +71,12 @@
       - FoodSoupBungo
       - FoodMealCornInButter
       - FoodSoupStew
+      - FoodMealBigLollipop #impstation edit
     chance: 0.8
     offset: 0.0
     #rare
     rarePrototypes:
       - FoodMealMint
-      - FoodMealBigLollipop
       - FoodMealBearsteak
       - FoodMealMilkape
       - DisgustingSweptSoup

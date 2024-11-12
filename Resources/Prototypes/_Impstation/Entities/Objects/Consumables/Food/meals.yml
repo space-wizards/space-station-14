@@ -1,0 +1,49 @@
+# Base
+
+- type: entity
+  parent: FoodInjectableBase
+  id: FoodMealBase
+  abstract: true
+  description: A delicious meal, cooked with love.
+  components:
+  - type: Item
+    storedRotation: -90
+  - type: Food
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Food/meals.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 26
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
+
+#Candy!!!!
+
+- type: entity
+  name: giant lollipop
+  parent: FoodMealBase
+  id: FoodMealBigLollipop
+  description: Wow!!! It's as big as your head!!!
+  components:
+  - type: Food
+    trash:
+    - FoodKebabSkewer
+  - type: FlavorProfile
+    flavors:
+      - whimsy
+      - sugar
+  - type: Sprite
+    state: big-lollipop
+  - type: Item
+    heldPrefix: big-lollipop
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Sugar
+          Quantity: 10

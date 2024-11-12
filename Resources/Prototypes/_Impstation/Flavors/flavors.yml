@@ -1,0 +1,4 @@
+- type: flavor
+  id: whimsy
+  flavorType: Base
+  description: flavor-base-whimsy

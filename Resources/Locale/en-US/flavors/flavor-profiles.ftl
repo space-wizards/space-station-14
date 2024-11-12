@@ -55,7 +55,6 @@ flavor-base-mindful = mindful
 flavor-base-chewy = chewy
 flavor-base-kingsoda = like you're a champion
 flavor-base-drinkdrink = like dogshit
-flavor-base-whimsy = whimsical
 
 # Complex flavors. Put a flavor here when you want something that's more
 # specific.
