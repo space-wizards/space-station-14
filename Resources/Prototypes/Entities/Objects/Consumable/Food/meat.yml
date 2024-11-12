@@ -1204,7 +1204,7 @@
       Taco: MeatSnail
 
 - type: entity
-  name: anomaly steak
+  name: anomalous steak
   parent: FoodMeatBase
   id: FoodMeatAnomalyCooked
   description: A gigantic mass of cooked meat. A meal for a dinner party, or someone REALLY hungry. 
