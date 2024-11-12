@@ -52,7 +52,7 @@ public sealed partial class NoteEdit : FancyWindow
         ExpiryLengthDropdown.AddItem(Loc.GetString("admin-note-button-centuries"), (int) Multipliers.Centuries);
         ExpiryLengthDropdown.OnItemSelected += OnLengthChanged;
 
-        ExpiryLengthDropdown.SelectId((int) Multipliers.Days);
+        ExpiryLengthDropdown.SelectId((int) Multipliers.Weeks);
 
         ExpiryLineEdit.OnTextChanged += OnTextChanged;
 
@@ -199,7 +199,7 @@ public sealed partial class NoteEdit : FancyWindow
         ExpiryLineEdit.Visible = !PermanentCheckBox.Pressed;
         ExpiryLengthDropdown.Visible = !PermanentCheckBox.Pressed;
 
-        ExpiryLineEdit.Text = !PermanentCheckBox.Pressed ? 7.ToString() : string.Empty;
+        ExpiryLineEdit.Text = !PermanentCheckBox.Pressed ? 1.ToString() : string.Empty;
     }
 
     private void OnSecretPressed(BaseButton.ButtonEventArgs _)
