@@ -14,4 +14,10 @@ public sealed class HCCVars
     /// </summary>
     public static readonly CVarDef<bool> RoundEndPacifist =
         CVarDef.Create("game.round_end_pacifist", false, CVar.SERVERONLY);
+
+    /// <summary>
+    /// Modifies suicide command to ghost without killing the entity.
+    /// </summary>
+    public static readonly CVarDef<bool> DisableSuicide =
+        CVarDef.Create("ic.disable_suicide", false, CVar.SERVER);
 }
