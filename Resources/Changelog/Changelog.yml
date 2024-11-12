@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Added new keybindings for rotating and flipping objects. The defaults
-      are R for clockwise, Shift+R for counterclockwise and F for flipping.
-    type: Add
-  id: 7103
-  time: '2024-08-13T13:36:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30540
 - author: Cojoke-dot
   changes:
   - message: Borg's names are now displayed when they make an announcement on the
@@ -3950,3 +3942,10 @@
   id: 7602
   time: '2024-11-11T16:12:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33248
+- author: AndrewMontagne
+  changes:
+  - message: APEs could be powered on without local power
+    type: Fix
+  id: 7603
+  time: '2024-11-11T22:58:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32493
