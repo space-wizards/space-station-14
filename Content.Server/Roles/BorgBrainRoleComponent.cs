@@ -6,6 +6,6 @@ namespace Content.Server.Roles;
 ///     Added to mind role entities to tag that they are a brain in an MMI.
 /// </summary>
 [RegisterComponent]
-public sealed partial class BorgedBrainRoleComponent : BaseMindRoleComponent
+public sealed partial class BorgBrainRoleComponent : BaseMindRoleComponent
 {
 }

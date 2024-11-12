@@ -3,8 +3,10 @@ using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.GameTicking;
 using Content.Server.Hands.Systems;
 using Content.Server.PowerCell;
+using Content.Server.Roles;
 using Content.Shared.Access.Systems;
 using Content.Shared.Alert;
 using Content.Shared.Database;
@@ -74,6 +76,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
         SubscribeLocalEvent<BorgChassisComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmpty);
         SubscribeLocalEvent<BorgChassisComponent, GetCharactedDeadIcEvent>(OnGetDeadIC);
         SubscribeLocalEvent<BorgChassisComponent, ItemToggledEvent>(OnToggled);
+        SubscribeLocalEvent<BorgChassisComponent, PlayerSpawnCompleteEvent>(OnSpawn);
 
         SubscribeLocalEvent<BorgBrainComponent, MindAddedMessage>(OnBrainMindAdded);
         SubscribeLocalEvent<BorgBrainComponent, PointAttemptEvent>(OnBrainPointAttempt);
@@ -88,6 +91,15 @@ public sealed partial class BorgSystem : SharedBorgSystem
     {
         UpdateBatteryAlert((uid, component));
         _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
+    }
+
+    private void OnSpawn(EntityUid uid, BorgChassisComponent component, PlayerSpawnCompleteEvent args)
+    {
+        if (!_mind.TryGetMind(args.Mob, out var mindId, out _))
+            return;
+
+        if (!_roles.MindHasRole<BorgBrainRoleComponent>(mindId))
+            _roles.MindAddRole(mindId, "MindRoleBorgBrain");
     }
 
     private void OnChassisInteractUsing(EntityUid uid, BorgChassisComponent component, AfterInteractUsingEvent args)

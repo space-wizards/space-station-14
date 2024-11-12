@@ -49,8 +49,8 @@ public sealed partial class BorgSystem
         {
             _mind.TransferTo(mindId, uid, true, mind: mind);
 
-            if (!_roles.MindHasRole<BorgedBrainRoleComponent>(mindId))
-                _roles.MindAddRole(mindId, "MindRoleBorgedBrain");
+            if (!_roles.MindHasRole<BorgBrainRoleComponent>(mindId))
+                _roles.MindAddRole(mindId, "MindRoleBorgBrain");
         }
 
         _appearance.SetData(uid, MMIVisuals.BrainPresent, true);
@@ -86,8 +86,8 @@ public sealed partial class BorgSystem
 
         if (_mind.TryGetMind(linked, out var mindId, out var mind))
         {
-            if (_roles.MindHasRole<BorgedBrainRoleComponent>(mindId))
-                _roles.MindRemoveRole<BorgedBrainRoleComponent>(mindId);
+            if (_roles.MindHasRole<BorgBrainRoleComponent>(mindId))
+                _roles.MindRemoveRole<BorgBrainRoleComponent>(mindId);
 
             _mind.TransferTo(mindId, uid, true, mind: mind);
         }

@@ -42,12 +42,12 @@
 # Silicon
 - type: entity
   parent: BaseMindRole
-  id: MindRoleBorgedBrain
-  name: Borged Brain Role
+  id: MindRoleBorgBrain
+  name: Borg Brain Role
   components:
   - type: MindRole
     roleType: Silicon
-  - type: BorgedBrainRole
+  - type: BorgBrainRole
 
 - type: entity
   parent: BaseMindRoleAntag
