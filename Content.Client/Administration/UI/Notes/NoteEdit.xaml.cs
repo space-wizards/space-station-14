@@ -17,6 +17,17 @@ public sealed partial class NoteEdit : FancyWindow
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IClientConsoleHost _console = default!;
 
+    private enum Multipliers
+    {
+        Minutes,
+        Hours,
+        Days,
+        Weeks,
+        Months,
+        Years,
+        Centuries
+    }
+
     public event Action<int, NoteType, string, NoteSeverity?, bool, DateTime?>? SubmitPressed;
 
     public NoteEdit(SharedAdminNote? note, string playerName, bool canCreate, bool canEdit)
@@ -32,16 +43,16 @@ public sealed partial class NoteEdit : FancyWindow
         ResetSubmitButton();
 
         // It's weird to use minutes as the IDs, but it works and makes sense kind of :)
-        ExpiryLengthDropdown.AddItem("Minutes", (int) TimeSpan.FromMinutes(1).TotalMinutes);
-        ExpiryLengthDropdown.AddItem("Hours", (int) TimeSpan.FromHours(1).TotalMinutes);
-        ExpiryLengthDropdown.AddItem("Days", (int) TimeSpan.FromDays(1).TotalMinutes);
-        ExpiryLengthDropdown.AddItem("Weeks", (int) TimeSpan.FromDays(7).TotalMinutes);
-        ExpiryLengthDropdown.AddItem("Months", (int) TimeSpan.FromDays(30).TotalMinutes);
-        ExpiryLengthDropdown.AddItem("Years", (int) TimeSpan.FromDays(365).TotalMinutes);
-        ExpiryLengthDropdown.AddItem("Centuries", (int) TimeSpan.FromDays(36525).TotalMinutes);
+        ExpiryLengthDropdown.AddItem(Loc.GetString("admin-note-button-minutes"), (int) Multipliers.Minutes);
+        ExpiryLengthDropdown.AddItem(Loc.GetString("admin-note-button-hours"), (int) Multipliers.Hours);
+        ExpiryLengthDropdown.AddItem(Loc.GetString("admin-note-button-days"), (int) Multipliers.Days);
+        ExpiryLengthDropdown.AddItem(Loc.GetString("admin-note-button-weeks"), (int) Multipliers.Weeks);
+        ExpiryLengthDropdown.AddItem(Loc.GetString("admin-note-button-months"), (int) Multipliers.Months);
+        ExpiryLengthDropdown.AddItem(Loc.GetString("admin-note-button-years"), (int) Multipliers.Years);
+        ExpiryLengthDropdown.AddItem(Loc.GetString("admin-note-button-centuries"), (int) Multipliers.Centuries);
         ExpiryLengthDropdown.OnItemSelected += OnLengthChanged;
 
-        ExpiryLengthDropdown.SelectId((int) TimeSpan.FromDays(1).TotalMinutes);
+        ExpiryLengthDropdown.SelectId((int) Multipliers.Days);
 
         ExpiryLineEdit.OnTextChanged += OnTextChanged;
 
@@ -294,7 +305,18 @@ public sealed partial class NoteEdit : FancyWindow
             return false;
         }
 
-        ExpiryTime = DateTime.UtcNow.AddMinutes(inputInt * ExpiryLengthDropdown.SelectedId);
+        var mult = ExpiryLengthDropdown.SelectedId switch
+        {
+            (int) Multipliers.Minutes => TimeSpan.FromMinutes(1).TotalMinutes,
+            (int) Multipliers.Hours => TimeSpan.FromHours(1).TotalMinutes,
+            (int) Multipliers.Days => TimeSpan.FromDays(1).TotalMinutes,
+            (int) Multipliers.Weeks => TimeSpan.FromDays(7).TotalMinutes,
+            (int) Multipliers.Months => TimeSpan.FromDays(30).TotalMinutes,
+            (int) Multipliers.Years => TimeSpan.FromDays(365).TotalMinutes,
+            (int) Multipliers.Centuries => TimeSpan.FromDays(36525).TotalMinutes,
+            _ => throw new ArgumentOutOfRangeException(nameof(ExpiryLengthDropdown.SelectedId), "Multiplier out of range :(")
+        };
+        ExpiryTime = DateTime.UtcNow.AddMinutes(inputInt * mult);
         ExpiryLineEdit.ModulateSelfOverride = null;
         return true;
     }
