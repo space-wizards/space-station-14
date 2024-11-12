@@ -1,6 +1,6 @@
 ﻿#human but no shoes
 - type: inventoryTemplate
-  id: diona
+  id: jellid
   slots:
     - name: jumpsuit
       slotTexture: uniform
@@ -16,9 +16,9 @@
       uiWindowPos: 1,1
       strippingWindowPos: 1,2
       displayName: Suit
-    - name: gloves
+    - name: glovesJellid
       slotTexture: gloves
-      slotFlags: GLOVES
+      slotFlags: GLOVESJELLID
       uiWindowPos: 2,1
       strippingWindowPos: 2,2
       displayName: Gloves
