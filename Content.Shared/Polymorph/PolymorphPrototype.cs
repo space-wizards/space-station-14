@@ -125,7 +125,8 @@ public sealed partial record PolymorphConfiguration
     /// <summary>
     ///     If not null, this sound will be played when being reverted from a polymorph.
     /// </summary>
-    [DataField] public SoundSpecifier? ExitPolymorphSound;
+    [DataField]
+    public SoundSpecifier? ExitPolymorphSound;
 }
 
 public enum PolymorphInventoryChange : byte
