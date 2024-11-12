@@ -6,7 +6,7 @@
   description: A well crafted white uniform made by expensive Nanotrasen machines, it feels like it's almost from another universe.
   components:
   - type: Sprite
-    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/trek.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
     layers:
     - state: icon
   - type: Item
@@ -16,7 +16,7 @@
       right:
       - state: inhand-right
   - type: Clothing
-    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/trek.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
@@ -29,7 +29,7 @@
   description: A well crafted gray uniform made by expensive Nanotrasen machines, it feels like it's almost from another universe.
   components:
   - type: Sprite
-    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/trek.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
     layers:
     - state: icon
       color: "#C4C3C2"
@@ -42,7 +42,7 @@
       - state: inhand-right
         color: "#C4C3C2"
   - type: Clothing
-    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/trek.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
@@ -56,7 +56,7 @@
   description: A well crafted black uniform made by expensive Nanotrasen machines, it feels like it's almost from another universe.
   components:
   - type: Sprite
-    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/trek.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
     layers:
     - state: icon
       color: "#1E1E21"
@@ -69,7 +69,7 @@
       - state: inhand-right
         color: "#1E1E21"
   - type: Clothing
-    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/trek.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
@@ -84,7 +84,7 @@
   description: A well crafted blue uniform made by expensive Nanotrasen machines, it feels like it's almost from another universe.
   components:
   - type: Sprite
-    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/trek.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
     layers:
     - state: icon
       color: "#52aecc"
@@ -97,7 +97,7 @@
       - state: inhand-right
         color: "#52aecc"
   - type: Clothing
-    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/trek.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
@@ -111,7 +111,7 @@
   description: A well crafted dark blue uniform made by expensive Nanotrasen machines, it feels like it's almost from another universe.
   components:
   - type: Sprite
-    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/trek.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
     layers:
     - state: icon
       color: "#3285ba"
@@ -124,7 +124,7 @@
       - state: inhand-right
         color: "#3285ba"
   - type: Clothing
-    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/trek.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
@@ -138,7 +138,7 @@
   description: A well crafted teal uniform made by expensive Nanotrasen machines, it feels like it's almost from another universe.
   components:
   - type: Sprite
-    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/trek.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
     layers:
     - state: icon
       color: "#52aecc"
@@ -151,7 +151,7 @@
       - state: inhand-right
         color: "#52aecc"
   - type: Clothing
-    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/trek.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
@@ -165,7 +165,7 @@
   description: A well crafted green uniform made by expensive Nanotrasen machines, it feels like it's almost from another universe.
   components:
   - type: Sprite
-    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/trek.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
     layers:
     - state: icon
       color: "#9ED63A"
@@ -178,7 +178,7 @@
       - state: inhand-right
         color: "#9ED63A"
   - type: Clothing
-    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/trek.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
@@ -192,7 +192,7 @@
   description: A well crafted dark green uniform made by expensive Nanotrasen machines, it feels like it's almost from another universe.
   components:
   - type: Sprite
-    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/trek.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
     layers:
     - state: icon
       color: "#79CC26"
@@ -205,7 +205,7 @@
       - state: inhand-right
         color: "#79CC26"
   - type: Clothing
-    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/trek.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
@@ -219,7 +219,7 @@
   description: A well crafted orange uniform made by expensive Nanotrasen machines, it feels like it's almost from another universe.
   components:
   - type: Sprite
-    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/trek.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
     layers:
     - state: icon
       color: "#ff8c19"
@@ -232,7 +232,7 @@
       - state: inhand-right
         color: "#ff8c19"
   - type: Clothing
-    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/trek.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
@@ -246,7 +246,7 @@
   description: A well crafted pink uniform made by expensive Nanotrasen machines, it feels like it's almost from another universe.
   components:
   - type: Sprite
-    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/trek.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
     layers:
     - state: icon
       color: "#ffa69b"
@@ -259,7 +259,7 @@
       - state: inhand-right
         color: "#ffa69b"
   - type: Clothing
-    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/trek.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
@@ -273,7 +273,7 @@
   description: A well crafted red uniform made by expensive Nanotrasen machines, it feels like it's almost from another universe.
   components:
   - type: Sprite
-    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/trek.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
     layers:
     - state: icon
       color: "#DB2537"
@@ -286,7 +286,7 @@
       - state: inhand-right
         color: "#DB2537"
   - type: Clothing
-    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/trek.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
@@ -300,7 +300,7 @@
   description: A well crafted yellow uniform made by expensive Nanotrasen machines, it feels like it's almost from another universe.
   components:
   - type: Sprite
-    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/trek.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
     layers:
     - state: icon
       color: "#FFD54F"
@@ -313,7 +313,7 @@
       - state: inhand-right
         color: "#FFD54F"
   - type: Clothing
-    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/trek.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
@@ -327,7 +327,7 @@
   description: A well crafted purple uniform made by expensive Nanotrasen machines, it feels like it's almost from another universe.
   components:
   - type: Sprite
-    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/trek.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
     layers:
     - state: icon
       color: "#9f70cc"
@@ -340,7 +340,7 @@
       - state: inhand-right
         color: "#9f70cc"
   - type: Clothing
-    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/trek.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
@@ -354,7 +354,7 @@
   description: A well crafted light brown uniform made by expensive Nanotrasen machines, it feels like it's almost from another universe.
   components:
   - type: Sprite
-    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/trek.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
     layers:
     - state: icon
       color: "#BC8669"
@@ -367,7 +367,7 @@
       - state: inhand-right
         color: "#BC8669"
   - type: Clothing
-    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/trek.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
@@ -381,7 +381,7 @@
   description: A well crafted brown uniform made by expensive Nanotrasen machines, it feels like it's almost from another universe.
   components:
   - type: Sprite
-    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/trek.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
     layers:
     - state: icon
       color: "#633916"
@@ -394,7 +394,7 @@
       - state: inhand-right
         color: "#633916"
   - type: Clothing
-    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/trek.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
@@ -408,7 +408,7 @@
   description: A well crafted maroon uniform made by expensive Nanotrasen machines, it feels like it's almost from another universe.
   components:
   - type: Sprite
-    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/trek.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
     layers:
     - state: icon
       color: "#cc295f"
@@ -421,7 +421,7 @@
       - state: inhand-right
         color: "#cc295f"
   - type: Clothing
-    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/trek.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacecadet.rsi
     clothingVisuals:
       jumpsuit:
       - state: equipped-INNERCLOTHING
