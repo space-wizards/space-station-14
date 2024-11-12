@@ -120,7 +120,8 @@ public sealed partial record PolymorphConfiguration
     /// <summary>
     ///     If not null, this sound will be played when being polymorphed into something.
     /// </summary>
-    [DataField] public SoundSpecifier? PolymorphSound;
+    [DataField]
+    public SoundSpecifier? PolymorphSound;
 
     /// <summary>
     ///     If not null, this sound will be played when being reverted from a polymorph.
