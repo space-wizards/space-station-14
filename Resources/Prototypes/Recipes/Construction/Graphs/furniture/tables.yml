@@ -73,6 +73,12 @@
             - material: PlasmaGlass
               amount: 1
               doAfter: 1
+
+        - to: TableUraniumGlass # imp edit
+          steps:
+            - material: UraniumGlass
+              amount: 1
+              doAfter: 1
         
         - to: TableBrass
           steps:
@@ -177,6 +183,18 @@
           completed:
             - !type:SpawnPrototype
               prototype: SheetPGlass1
+              amount: 1
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+
+    - node: TableUraniumGlass # imp edit
+      entity: TableUraniumGlass
+      edges:
+        - to: TableFrame
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetUGlass1
               amount: 1
           steps:
             - tool: Anchoring
