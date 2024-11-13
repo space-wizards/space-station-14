@@ -2250,7 +2250,7 @@ entities:
     - Anchorable
     - Destructible
     - Construction
-- proto: Poweredlight
+- proto: AlwaysPoweredWallLight
   entities:
   - uid: 279
     components:
