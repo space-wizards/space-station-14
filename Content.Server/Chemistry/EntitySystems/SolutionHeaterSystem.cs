@@ -108,11 +108,11 @@ namespace Content.Server.Chemistry.EntitySystems
     var playerQuery = EntityQueryEnumerator<HandsComponent>();
     while (playerQuery.MoveNext(out var playerUid, out var handsComponent))
     {
-        Log.Error("$Object was picked up");
+        Log.Error($"Object was picked up");
         
         if (!HasComp<JellidComponent>(playerUid))
             continue; // Skip players who are not Jellid
-            Log.Error("$Player is not a Jellid, skipping");
+            Log.Error($"Player is not a Jellid, skipping");
 
        
         if (handsComponent.ActiveHand?.HeldEntity is not EntityUid heldItem)
@@ -121,12 +121,12 @@ namespace Content.Server.Chemistry.EntitySystems
        
         if (!TryComp<SolutionContainerManagerComponent>(heldItem, out var container))
             continue;
-            Log.Error("$Object is not a viable fluid container");
+            Log.Error($"Object is not a viable fluid container");
 
        
         if (!HasComp<ActiveSolutionHeaterComponent>(playerUid))
             continue;
-            Log.Error("$Player does not have an ActiveSolutionHeaterComponent, somehow.");
+            Log.Error($"Player does not have an ActiveSolutionHeaterComponent, somehow.");
 
      
         energy = itemHeater.HeatPerSecond * frameTime;
@@ -135,7 +135,7 @@ namespace Content.Server.Chemistry.EntitySystems
         foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((heldItem, container)))
         {
             _solutionContainer.AddThermalEnergy(soln, energy);
-            Log.Error("$Heating solutions");
+            Log.Error($"Heating solutions");
         }
     }
 }
