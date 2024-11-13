@@ -61,7 +61,7 @@
         sprite: Mobs/Effects/brute_damage.rsi
         color: "#2cf274"
   - type: Bloodstream
-    bloodReagent: Water # the ocean runs through my veins... change this to SeaWater once you fix that error
+    bloodReagent: SeaWater # the ocean runs through my veins... change this to SeaWater once you fix that error
   - type: Reactive
     groups:
       Flammable: [ Touch ]

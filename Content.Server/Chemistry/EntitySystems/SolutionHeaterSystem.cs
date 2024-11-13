@@ -108,11 +108,9 @@ namespace Content.Server.Chemistry.EntitySystems
 var playerQuery = EntityQueryEnumerator<HandsComponent>();
 while (playerQuery.MoveNext(out var playerUid, out var handsComponent))
 {
-    Log.Error($"Object was picked up");
-    
+
     if (!HasComp<JellidComponent>(playerUid))
     {
-        Log.Error($"Player is not a Jellid, skipping");
         continue;
     }
 
@@ -123,17 +121,15 @@ while (playerQuery.MoveNext(out var playerUid, out var handsComponent))
 
     if (!TryComp<SolutionContainerManagerComponent>(heldItem, out var container))
     {
-        Log.Error($"Object is not a viable fluid container");
         continue;
     }
 
-    float energy = 0f;
-    energy = 10f * frameTime; // God, forgive me for my hardcodedness
+    float energy2 = 0f;
+    energy2 = 15f * frameTime; // God, forgive me for my hardcodedness
 
     foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((heldItem, container)))
     {
-        _solutionContainer.AddThermalEnergy(soln, energy);
-        Log.Error($"Heating solutions");
+        _solutionContainer.AddThermalEnergy(soln, energy2);
     }
 }
 
