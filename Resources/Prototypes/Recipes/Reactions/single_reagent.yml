@@ -13,7 +13,7 @@
 - type: reaction
   id: SeaWaterBoiling
   impact: Low
-  minTemp: 212
+  minTemp: 373.2
   reactants:
     SeaWater:
       amount: 1
