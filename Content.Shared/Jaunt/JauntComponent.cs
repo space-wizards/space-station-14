@@ -16,7 +16,9 @@ public sealed partial class JauntComponent : Component
     [DataField]
     public EntProtoId JauntAction = "ActionPolymorphJaunt";
 
-    // The jaunt action itself
+    /// <summary>
+    ///     The jaunt action itself.
+    /// </summary>
     public EntityUid? Action;
 
     // TODO: Enter & Exit Times and Whitelist when Actions are reworked and can support it
