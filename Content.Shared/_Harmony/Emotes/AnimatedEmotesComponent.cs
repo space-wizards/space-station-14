@@ -1,8 +1,10 @@
+// Original code by whateverusername0 from https://github.com/Goob-Station/Goob-Station/pull/828
+// Rewritten by Jajsha to remove duplicate code.
+
 using Content.Shared.Chat.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Shared.Emoting;
 

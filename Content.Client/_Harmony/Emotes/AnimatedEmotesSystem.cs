@@ -1,3 +1,6 @@
+// Original code by whateverusername0 from https://github.com/Goob-Station/Goob-Station/pull/828
+// Rewritten by Jajsha to remove duplicate code.
+
 using Robust.Client.Animations;
 using Robust.Shared.Animations;
 using Robust.Shared.GameStates;

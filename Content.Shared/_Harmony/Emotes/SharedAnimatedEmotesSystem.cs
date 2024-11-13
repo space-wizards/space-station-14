@@ -1,3 +1,5 @@
+// Original code by whateverusername0 from https://github.com/Goob-Station/Goob-Station/pull/828
+
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Emoting;

@@ -1,4 +1,5 @@
-using Robust.Shared.GameStates;
+// Original code by whateverusername0 from https://github.com/Goob-Station/Goob-Station/pull/828
+
 using Content.Server.Chat.Systems;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Emoting;
