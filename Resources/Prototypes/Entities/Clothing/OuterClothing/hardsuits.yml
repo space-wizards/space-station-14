@@ -40,7 +40,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/atmospherics.rsi
   - type: PressureProtection
-    highPressureMultiplier: 1000
+    highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.001
@@ -75,7 +75,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/engineering.rsi
   - type: PressureProtection
-    highPressureMultiplier: 1000
+    highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.5
@@ -107,7 +107,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/spatio.rsi
   - type: PressureProtection
-    highPressureMultiplier: 1000
+    highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
   - type: Armor
     modifiers:
@@ -136,7 +136,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/salvage.rsi
   - type: PressureProtection
-    highPressureMultiplier: 1000
+    highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
   - type: ExplosionResistance
     damageCoefficient: 0.3
@@ -166,7 +166,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Hardsuits/maxim.rsi
   - type: PressureProtection
-    highPressureMultiplier: 1000
+    highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
   - type: ClothingSpeedModifier
     walkModifier: 1.0
