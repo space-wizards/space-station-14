@@ -153,4 +153,32 @@ Entries:
   id: 21
   time: '2024-11-12T06:10:20.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/47
+- author: '- add: Added fun!'
+  changes:
+  - message: Removed fun!
+    type: Remove
+  id: 22
+  time: '2024-11-13T01:21:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/41
+- author: '- add: Added fun!'
+  changes:
+  - message: Changed fun!
+    type: Tweak
+  id: 23
+  time: '2024-11-13T01:21:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/41
+- author: '- add: Added fun!'
+  changes:
+  - message: Fixed fun!
+    type: Fix
+  id: 24
+  time: '2024-11-13T01:21:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/41
+- author: Rinary
+  changes:
+  - message: Added abductor tools
+    type: Add
+  id: 25
+  time: '2024-11-13T01:21:28.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/41
 
