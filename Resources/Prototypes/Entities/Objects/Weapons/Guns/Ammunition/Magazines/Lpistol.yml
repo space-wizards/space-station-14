@@ -33,7 +33,7 @@
 
 - type: entity
   id: BaseMagazineZipper
-  name: Zipper magazine (.35 auto)
+  name: Zipper magazine (.22 auto)
   parent: BaseItem
   abstract: true
   components:
@@ -102,7 +102,7 @@
 
 - type: entity
   id: MagazineLPistolIncendiary
-  name: Mk 93 magazine (.35 auto incendiary)
+  name: Mk 93 magazine (.22 auto incendiary)
   parent: MagazineLPistol
   components:
   - type: BallisticAmmoProvider
@@ -110,7 +110,7 @@
 
 - type: entity
   id: MagazineLPistolPractice
-  name: Mk 93 magazine (.35 auto practice)
+  name: Mk 93 magazine (.22 auto practice)
   parent: BaseMagazineLPistol
   components:
   - type: BallisticAmmoProvider
@@ -124,7 +124,7 @@
 
 - type: entity
   id: MagazineLPistolUranium
-  name: Mk 93 magazine (.35 auto uranium)
+  name: Mk 93 magazine (.22 auto uranium)
   parent: BaseMagazinePistol
   components:
   - type: BallisticAmmoProvider
