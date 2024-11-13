@@ -19,6 +19,7 @@ public sealed partial class EmotesMenu : RadialMenu
     [Dependency] private readonly EntityManager _entManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     public event Action<ProtoId<EmotePrototype>, string?>? OnPlayEmote;
 
@@ -29,7 +30,6 @@ public sealed partial class EmotesMenu : RadialMenu
 
         var spriteSystem = _entManager.System<SpriteSystem>();
         var whitelistSystem = _entManager.System<EntityWhitelistSystem>();
-        var _cfg = IoCManager.Resolve<IConfigurationManager>();
 
         var main = FindControl<RadialContainer>("Main");
 
