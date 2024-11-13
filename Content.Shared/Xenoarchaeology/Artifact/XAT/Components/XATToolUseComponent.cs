@@ -13,7 +13,7 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAT.Components;
 public sealed partial class XATToolUseComponent : Component
 {
     [DataField, AutoNetworkedField]
-    public ProtoId<ToolQualityPrototype> NeededTool;
+    public ProtoId<ToolQualityPrototype> RequiredTool;
 
     [DataField, AutoNetworkedField]
     public float Delay = 3;

@@ -10,6 +10,7 @@ public sealed class XATItemLandSystem : BaseXATSystem<XATItemLandComponent>
     public override void Initialize()
     {
         base.Initialize();
+
         XATSubscribeDirectEvent<LandEvent>(OnLand);
     }
 

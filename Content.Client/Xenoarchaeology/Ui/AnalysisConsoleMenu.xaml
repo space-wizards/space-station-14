@@ -1,4 +1,4 @@
-﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+<controls:FancyWindow xmlns="https://spacestation14.io"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
@@ -77,7 +77,12 @@
                 </PanelContainer.PanelOverride>
                 <BoxContainer Margin="10 10 10 10" Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
                     <ui:XenoArtifactGraphControl Name="GraphControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                        <Label Name="NoArtiLabel" Text="{Loc 'analysis-console-info-no-artifact'}" HorizontalExpand="True" VerticalExpand="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Label Name="NoArtiLabel"
+                               Text="{Loc 'analysis-console-info-no-artifact'}"
+                               HorizontalExpand="True"
+                               VerticalExpand="True"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"/>
                     </ui:XenoArtifactGraphControl>
                 </BoxContainer>
             </PanelContainer>

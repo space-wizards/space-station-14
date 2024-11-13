@@ -39,13 +39,14 @@ public sealed class XATToolUseSystem : BaseXATSystem<XATToolUseComponent>
         if (!TryComp<ToolComponent>(args.Used, out var tool))
             return;
 
+        var toolUseTriggerComponent = node.Comp1;
         args.Handled = _tool.UseTool(args.Used,
             args.User,
             artifact,
-            node.Comp1.Delay,
-            node.Comp1.NeededTool,
+            toolUseTriggerComponent.Delay,
+            toolUseTriggerComponent.RequiredTool,
             new XATToolUseDoAfterEvent(GetNetEntity(node)),
-            fuel: node.Comp1.Fuel,
+            fuel: toolUseTriggerComponent.Fuel,
             tool);
     }
 }

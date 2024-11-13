@@ -49,6 +49,7 @@ public abstract class SharedArtifactAnalyzerSystem : EntitySystem
         {
             if (!TryComp<AnalysisConsoleComponent>(source, out var analysis))
                 continue;
+
             analysis.AnalyzerEntity = GetNetEntity(ent);
             ent.Comp.Console = source;
             Dirty(source, analysis);
@@ -70,14 +71,17 @@ public abstract class SharedArtifactAnalyzerSystem : EntitySystem
 
     private void OnPortDisconnected(Entity<AnalysisConsoleComponent> ent, ref PortDisconnectedEvent args)
     {
-        if (args.Port != ent.Comp.LinkingPort || ent.Comp.AnalyzerEntity == null)
+        var analyzerNetEntity = ent.Comp.AnalyzerEntity;
+        if (args.Port != ent.Comp.LinkingPort || analyzerNetEntity == null)
             return;
 
-        if (TryComp<ArtifactAnalyzerComponent>(GetEntity(ent.Comp.AnalyzerEntity), out var analyzer))
+        var analyzerEntityUid = GetEntity(analyzerNetEntity);
+        if (TryComp<ArtifactAnalyzerComponent>(analyzerEntityUid, out var analyzer))
         {
             analyzer.Console = null;
-            Dirty(GetEntity(ent.Comp.AnalyzerEntity.Value), analyzer);
+            Dirty(analyzerEntityUid.Value, analyzer);
         }
+
         ent.Comp.AnalyzerEntity = null;
         Dirty(ent);
     }
@@ -86,17 +90,18 @@ public abstract class SharedArtifactAnalyzerSystem : EntitySystem
     {
         analyzer = null;
 
-        if (!_powerReceiver.IsPoweredShared(ent))
+        var consoleEnt = ent.Owner;
+        if (!_powerReceiver.IsPowered(consoleEnt))
             return false;
 
         var analyzerUid = GetEntity(ent.Comp.AnalyzerEntity);
-        if (!TryComp<ArtifactAnalyzerComponent>(analyzerUid, out var comp))
+        if (!TryComp<ArtifactAnalyzerComponent>(analyzerUid, out var analyzerComp))
             return false;
 
-        if (!_powerReceiver.IsPoweredShared(analyzerUid.Value))
+        if (!_powerReceiver.IsPowered(analyzerUid.Value))
             return false;
 
-        analyzer = (analyzerUid.Value, comp);
+        analyzer = (analyzerUid.Value, analyzerComp);
         return true;
     }
 
@@ -118,10 +123,10 @@ public abstract class SharedArtifactAnalyzerSystem : EntitySystem
     {
         analysisConsole = null;
 
-        if (!TryComp<AnalysisConsoleComponent>(ent.Comp.Console, out var comp))
+        if (!TryComp<AnalysisConsoleComponent>(ent.Comp.Console, out var consoleComp))
             return false;
 
-        analysisConsole = (ent.Comp.Console.Value, comp);
+        analysisConsole = (ent.Comp.Console.Value, consoleComp);
         return true;
     }
 }

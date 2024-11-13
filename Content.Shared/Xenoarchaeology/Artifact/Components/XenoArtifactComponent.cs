@@ -17,9 +17,15 @@ public sealed partial class XenoArtifactComponent : Component
 {
     public static string NodeContainerId = "node-container";
 
+    /// <summary>
+    /// Marker, if nodes graph should be generated for artifact.
+    /// </summary>
     [DataField]
-    public bool DoGeneration = true;
+    public bool IsGenerationRequired = true;
 
+    /// <summary>
+    /// Container for artifact graph node entities.
+    /// </summary>
     [ViewVariables]
     public Container NodeContainer = default!;
 
@@ -30,15 +36,22 @@ public sealed partial class XenoArtifactComponent : Component
     [DataField, AutoNetworkedField]
     public List<NetEntity> CachedActiveNodes = new();
 
+    /// <summary>
+    /// Cache of interconnected node chunks - segments.
+    /// This is cached and updated when nodes are removed, added, or unlocked.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public List<List<NetEntity>> CachedSegments = new();
 
+    /// <summary>
+    /// Marker, if true - node activations should not happen.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public bool Suppressed;
 
     /// <summary>
     /// A multiplier applied to the calculated point value
-    /// to determine the monetary value of the artifact
+    /// to determine the monetary value of the artifact.
     /// </summary>
     [DataField]
     public float PriceMultiplier = 0.10f;
@@ -56,6 +69,9 @@ public sealed partial class XenoArtifactComponent : Component
     [DataField]
     public TimeSpan UnlockStateRefractory = TimeSpan.FromSeconds(10);
 
+    /// <summary>
+    /// When next unlock session can be triggered.
+    /// </summary>
     [DataField, AutoPausedField]
     public TimeSpan NextUnlockTime;
     #endregion
@@ -63,7 +79,7 @@ public sealed partial class XenoArtifactComponent : Component
     // NOTE: you should not be accessing any of these values directly. Use the methods in SharedXenoArtifactSystem.Graph
     #region Graph
     /// <summary>
-    /// List of all of the nodes currently on this artifact.
+    /// List of all nodes currently on this artifact.
     /// Indexes are used as a lookup table for <see cref="NodeAdjacencyMatrix"/>.
     /// </summary>
     [DataField, AutoNetworkedField]
@@ -102,12 +118,21 @@ public sealed partial class XenoArtifactComponent : Component
     [DataField]
     public MinMax NodesPerSegmentLayer = new(1, 3);
 
+    /// <summary>
+    /// How man nodes can be randomly added on top of usual distribution (per layer).
+    /// </summary>
     [DataField]
     public MinMax ScatterPerLayer = new(0, 2);
 
+    /// <summary>
+    /// Effects that can be used during this artefact generation.
+    /// </summary>
     [DataField]
     public ProtoId<WeightedRandomEntityPrototype> EffectWeights = "XenoArtifactEffectsDefault";
 
+    /// <summary>
+    /// Triggers that can be used during this artefact generation.
+    /// </summary>
     [DataField]
     public ProtoId<WeightedRandomXenoArchTriggerPrototype> TriggerWeights = "DefaultTriggers";
     #endregion

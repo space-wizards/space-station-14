@@ -15,7 +15,10 @@ namespace Content.Client.Xenoarchaeology.Ui;
 [GenerateTypedNameReferences]
 public sealed partial class XenoArtifactGraphControl : BoxContainer
 {
+    private static readonly Color _lockedNodeColor = Color.FromHex("#777777");
+    
     [Dependency] private readonly IEntityManager _entityManager = default!;
+    private readonly XenoArtifactSystem _artifactSystem;
 
     private Entity<XenoArtifactComponent>? _artifact;
 
@@ -24,8 +27,6 @@ public sealed partial class XenoArtifactGraphControl : BoxContainer
     private readonly Font _font;
 
     public event Action<Entity<XenoArtifactNodeComponent>>? OnNodeSelected;
-
-    private static Color _lockedNodeColor = Color.FromHex("#777777");
 
     private float NodeRadius => 25 * UIScale;
     private float NodeDiameter => NodeRadius * 2;
@@ -41,7 +42,11 @@ public sealed partial class XenoArtifactGraphControl : BoxContainer
         IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
 
-        _font = new VectorFont(IoCManager.Resolve<IResourceCache>().GetResource<FontResource>("/EngineFonts/NotoSans/NotoSansMono-Regular.ttf"), 16);
+        _artifactSystem = _entityManager.System<XenoArtifactSystem>();
+
+        var fontResource = IoCManager.Resolve<IResourceCache>()
+                                     .GetResource<FontResource>("/EngineFonts/NotoSans/NotoSansMono-Regular.ttf");
+        _font = new VectorFont(fontResource, 16);
     }
 
     public void SetArtifact(Entity<XenoArtifactComponent>? artifact)
@@ -58,6 +63,7 @@ public sealed partial class XenoArtifactGraphControl : BoxContainer
 
         if (_hoveredNode == null)
             return;
+
         OnNodeSelected?.Invoke(_hoveredNode.Value);
         UserInterfaceManager.ClickSound();
     }
@@ -72,10 +78,9 @@ public sealed partial class XenoArtifactGraphControl : BoxContainer
 
         var cursor = (UserInterfaceManager.MousePositionScaled.Position * UIScale) - GlobalPixelPosition;
 
-        var artiSys = _entityManager.System<XenoArtifactSystem>();
-
-        var maxDepth = artiSys.GetAllNodes(_artifact.Value).Max(s => s.Comp.Depth);
-        var segments = artiSys.GetSegments(_artifact.Value);
+        var maxDepth = _artifactSystem.GetAllNodes(_artifact.Value)
+                                      .Max(s => s.Comp.Depth);
+        var segments = _artifactSystem.GetSegments(_artifact.Value);
 
         var bottomLeft = Position // the position
                          + new Vector2(0, Size.Y * UIScale) // the scaled height of the control
@@ -97,18 +102,18 @@ public sealed partial class XenoArtifactGraphControl : BoxContainer
 
         foreach (var segment in segments)
         {
-            var orderedNodes = artiSys.GetDepthOrderedNodes(segment);
+            var orderedNodes = _artifactSystem.GetDepthOrderedNodes(segment);
 
             foreach (var (_, nodes) in orderedNodes)
             {
                 for (var i = 0; i < nodes.Count; i++)
                 {
                     var node = nodes[i];
-                    var pos =  GetNodePos(node);
+                    var pos = GetNodePos(node, ySpacing, segments, ref bottomLeft);
                     var hovered = (cursor - pos).LengthSquared() <= NodeRadius * NodeRadius;
 
                     var color = _lockedNodeColor;
-                    if (artiSys.IsNodeActive(_artifact.Value, node))
+                    if (_artifactSystem.IsNodeActive(_artifact.Value, node))
                     {
                         color = Color.Plum;
                     }
@@ -125,7 +130,7 @@ public sealed partial class XenoArtifactGraphControl : BoxContainer
 
                     handle.DrawCircle(pos, NodeRadius, Color.ToSrgb(color), false);
 
-                    var text = artiSys.GetNodeId(node);
+                    var text = _artifactSystem.GetNodeId(node);
                     var dimensions = handle.GetDimensions(_font, text, 1);
                     handle.DrawString(_font, pos - new Vector2(dimensions.X / 2, dimensions.Y / 2), text, color);
                 }
@@ -133,47 +138,48 @@ public sealed partial class XenoArtifactGraphControl : BoxContainer
 
             foreach (var node in segment)
             {
-                var from = GetNodePos(node) + new Vector2(0, -NodeRadius);
-                var successors = artiSys.GetDirectSuccessorNodes((_artifact.Value, _artifact.Value.Comp), node);
+                var from = GetNodePos(node, ySpacing, segments, ref bottomLeft) + new Vector2(0, -NodeRadius);
+                var successors = _artifactSystem.GetDirectSuccessorNodes((_artifact.Value, _artifact.Value.Comp), node);
                 foreach (var s in successors)
                 {
                     var color = _lockedNodeColor;
                     if (!node.Comp.Locked)
                         color = Color.White;
 
-                    var to = GetNodePos(s) + new Vector2(0, NodeRadius);
+                    var to = GetNodePos(s, ySpacing, segments, ref bottomLeft) + new Vector2(0, NodeRadius);
                     handle.DrawLine(from, to, color);
                 }
             }
 
             bottomLeft.X += GetBiggestWidth(segment) + segmentSpacing;
         }
+    }
 
-        Vector2 GetNodePos(Entity<XenoArtifactNodeComponent> node)
-        {
-            var yPos = -(NodeDiameter + ySpacing) * node.Comp.Depth;
+    // bottomLeft is copied - that not great.
+    private Vector2 GetNodePos(Entity<XenoArtifactNodeComponent> node, float ySpacing, List<List<Entity<XenoArtifactNodeComponent>>> segments, ref Vector2 bottomLeft)
+    {
+        var yPos = -(NodeDiameter + ySpacing) * node.Comp.Depth;
 
-            var segment = segments.First(s => s.Contains(node));
-            var depthOrderedNodes = artiSys.GetDepthOrderedNodes(segment);
-            var biggestTier = depthOrderedNodes.Max(s => s.Value.Count);
-            var nodesInLayer = depthOrderedNodes.GetValueOrDefault(node.Comp.Depth)!.Count;
-            var biggestWidth = (NodeDiameter + MinXSpacing) * biggestTier;
+        var segment = segments.First(s => s.Contains(node));
+        var depthOrderedNodes = _artifactSystem.GetDepthOrderedNodes(segment);
+        var biggestTier = depthOrderedNodes.Max(s => s.Value.Count);
+        var nodesInLayer = depthOrderedNodes.GetValueOrDefault(node.Comp.Depth)!.Count;
+        var biggestWidth = (NodeDiameter + MinXSpacing) * biggestTier;
 
-            var xSpacing = Math.Clamp((biggestWidth - (NodeDiameter * nodesInLayer)) / (nodesInLayer - 1), MinXSpacing, MaxXSpacing);
-            var layerXOffset = (biggestWidth - (xSpacing * (nodesInLayer - 1)) - (NodeDiameter * nodesInLayer)) / 2;
+        var xSpacing = Math.Clamp((biggestWidth - (NodeDiameter * nodesInLayer)) / (nodesInLayer - 1), MinXSpacing, MaxXSpacing);
+        var layerXOffset = (biggestWidth - (xSpacing * (nodesInLayer - 1)) - (NodeDiameter * nodesInLayer)) / 2;
 
-            var index = depthOrderedNodes.GetValueOrDefault(node.Comp.Depth)!.IndexOf(node);
+        var index = depthOrderedNodes.GetValueOrDefault(node.Comp.Depth)!.IndexOf(node);
 
-            var xPos = NodeDiameter * index + (xSpacing * index) + layerXOffset;
+        var xPos = NodeDiameter * index + (xSpacing * index) + layerXOffset;
 
-            return bottomLeft + new Vector2(xPos, yPos);
-        }
+        return bottomLeft + new Vector2(xPos, yPos);
     }
 
     private float GetBiggestWidth(List<Entity<XenoArtifactNodeComponent>> nodes)
     {
-        var artiSys = _entityManager.System<XenoArtifactSystem>();
-        var num = artiSys.GetDepthOrderedNodes(nodes).Max(p => p.Value.Count);
+        var num = _artifactSystem.GetDepthOrderedNodes(nodes)
+                                 .Max(p => p.Value.Count);
         return (NodeDiameter * num) + MinXSpacing * (num - 1);
     }
 }

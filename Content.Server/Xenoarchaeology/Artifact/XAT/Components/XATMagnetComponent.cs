@@ -1,5 +1,3 @@
-using Robust.Shared.GameStates;
-
 namespace Content.Server.Xenoarchaeology.Artifact.XAT.Components;
 
 [RegisterComponent, Access(typeof(XATMagnetSystem))]

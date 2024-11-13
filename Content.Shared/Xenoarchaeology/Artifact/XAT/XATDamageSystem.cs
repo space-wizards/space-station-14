@@ -22,32 +22,41 @@ public sealed class XATDamageSystem : BaseXATSystem<XATDamageComponent>
         if (!args.DamageIncreased || args.DamageDelta == null)
             return;
 
+        var damageTriggerComponent = node.Comp1;
         if (Timing.IsFirstTimePredicted)
-            node.Comp1.AccumulatedDamage += args.DamageDelta;
+            damageTriggerComponent.AccumulatedDamage += args.DamageDelta;
 
-        foreach (var (type, needed) in node.Comp1.TypesNeeded)
+        foreach (var (type, needed) in damageTriggerComponent.TypesNeeded)
         {
-            if (node.Comp1.AccumulatedDamage.DamageDict.GetValueOrDefault(type) >= needed)
+            if (damageTriggerComponent.AccumulatedDamage.DamageDict.GetValueOrDefault(type) >= needed)
             {
-                node.Comp1.AccumulatedDamage.DamageDict.Clear();
-                Dirty(node, node.Comp1);
-                Trigger(artifact, node);
+                InvokeTrigger(artifact, node);
                 return; // intentional. Do not continue checks
             }
         }
 
-        foreach (var (group, needed) in node.Comp1.GroupsNeeded)
+        foreach (var (group, needed) in damageTriggerComponent.GroupsNeeded)
         {
-            if (!node.Comp1.AccumulatedDamage.TryGetDamageInGroup(_prototype.Index(group), out var damage))
+            var damageGroupPrototype = _prototype.Index(group);
+            if (!damageTriggerComponent.AccumulatedDamage.TryGetDamageInGroup(damageGroupPrototype, out var damage))
                 continue;
 
             if (damage >= needed)
             {
-                node.Comp1.AccumulatedDamage.DamageDict.Clear();
-                Dirty(node, node.Comp1);
-                Trigger(artifact, node);
+                InvokeTrigger(artifact, node);
                 return; // intentional. Do not continue checks
             }
         }
+    }
+
+    private void InvokeTrigger(
+        Entity<XenoArtifactComponent> artifact,
+        Entity<XATDamageComponent, XenoArtifactNodeComponent> node
+    )
+    {
+        var damageTriggerComponent = node.Comp1;
+        damageTriggerComponent.AccumulatedDamage.DamageDict.Clear();
+        Dirty(node, damageTriggerComponent);
+        Trigger(artifact, node);
     }
 }

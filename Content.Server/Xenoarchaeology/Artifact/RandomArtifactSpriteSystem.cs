@@ -1,11 +1,11 @@
-﻿using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Shared.Item;
+using Content.Shared.Xenoarchaeology.Artifact;
 using Content.Shared.Xenoarchaeology.XenoArtifacts;
 using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Xenoarchaeology.XenoArtifacts;
+namespace Content.Server.Xenoarchaeology.Artifact;
 
 public sealed class RandomArtifactSpriteSystem : EntitySystem
 {
@@ -18,7 +18,7 @@ public sealed class RandomArtifactSpriteSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<RandomArtifactSpriteComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<RandomArtifactSpriteComponent, ArtifactActivatedEvent>(OnActivated);
+        SubscribeLocalEvent<RandomArtifactSpriteComponent, XenoArtifactNodeActivatedEvent>(OnActivated);
     }
 
     public override void Update(float frameTime)
@@ -47,7 +47,7 @@ public sealed class RandomArtifactSpriteSystem : EntitySystem
         _item.SetHeldPrefix(uid, "ano" + randomSprite.ToString("D2")); //set item artifact inhands
     }
 
-    private void OnActivated(EntityUid uid, RandomArtifactSpriteComponent component, ArtifactActivatedEvent args)
+    private void OnActivated(EntityUid uid, RandomArtifactSpriteComponent component, ref XenoArtifactNodeActivatedEvent args)
     {
         _appearance.SetData(uid, SharedArtifactsVisuals.IsActivated, true);
         component.ActivationStart = _time.CurTime;

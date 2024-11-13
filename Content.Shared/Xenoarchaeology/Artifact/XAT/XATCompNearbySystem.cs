@@ -13,10 +13,12 @@ public sealed class XATCompNearbySystem : BaseXATSystem<XATCompNearbyComponent>
     protected override void UpdateXAT(
         Entity<XenoArtifactComponent> artifact,
         Entity<XATCompNearbyComponent, XenoArtifactNodeComponent> node,
-        float frameTime)
+        float frameTime
+    )
     {
         var pos = _transform.GetMapCoordinates(artifact);
         var comp = EntityManager.ComponentFactory.GetRegistration(node.Comp1.Comp);
+
         _entities.Clear();
         _entityLookup.GetEntitiesInRange(comp.Type, pos, node.Comp1.Radius, _entities);
 

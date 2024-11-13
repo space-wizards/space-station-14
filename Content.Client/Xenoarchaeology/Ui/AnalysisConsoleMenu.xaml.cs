@@ -27,14 +27,15 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
     [Dependency] private readonly IResourceCache _resCache = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+
     private readonly ArtifactAnalyzerSystem _artifactAnalyzer;
     private readonly XenoArtifactSystem _xenoArtifact;
     private readonly AudioSystem _audio;
 
-    private Entity<AnalysisConsoleComponent> _owner;
+    private readonly Entity<AnalysisConsoleComponent> _owner;
     private Entity<XenoArtifactNodeComponent>? _currentNode;
 
-    private readonly List<(string, int)> _nodeExtractionValues = new();
+    private readonly List<(string NodeId, int ExtractedPoints)> _nodeExtractionValues = new();
     private TimeSpan? _nextExtractStringTime;
     private int _extractionSum;
     private readonly FormattedMessage _extractionMessage = new();
@@ -54,12 +55,7 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         if (BackPanel.PanelOverride is StyleBoxTexture tex)
             tex.Texture = _resCache.GetTexture("/Textures/Interface/Nano/button.svg.96dpi.png");
 
-        IDLabel.SetMarkup(Loc.GetString("analysis-console-info-id"));
-        ClassLabel.SetMarkup(Loc.GetString("analysis-console-info-class"));
-        LockedLabel.SetMarkup(Loc.GetString("analysis-console-info-locked"));
-        EffectLabel.SetMarkup(Loc.GetString("analysis-console-info-effect"));
-        TriggerLabel.SetMarkup(Loc.GetString("analysis-console-info-trigger"));
-        DurabilityLabel.SetMarkup(Loc.GetString("analysis-console-info-durability"));
+        InitStaticLabels();
 
         GraphControl.OnNodeSelected += node =>
         {
@@ -77,7 +73,6 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         var comp = _ent.GetComponent<AnalysisConsoleComponent>(owner);
         _owner = (owner, comp);
         Update((owner, comp));
-        SetSelectedNode(null);
     }
 
     private void StartExtract(BaseButton.ButtonEventArgs obj)
@@ -99,6 +94,7 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
             var pointValue = _xenoArtifact.GetResearchValue(node);
             if (pointValue <= 0)
                 continue;
+
             var nodeId = _xenoArtifact.GetNodeId(node);
 
             var text = Loc.GetString("analysis-console-extract-value", ("id", nodeId), ("value", pointValue));
@@ -108,7 +104,7 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         if (_nodeExtractionValues.Count == 0)
             _nodeExtractionValues.Add((Loc.GetString("analysis-console-extract-none"), 0));
 
-        _nodeExtractionValues.Sort((x, y) => x.Item2.CompareTo(y.Item2));
+        _nodeExtractionValues.Sort((x, y) => x.ExtractedPoints.CompareTo(y.ExtractedPoints));
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
@@ -130,15 +126,15 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         }
 
         var (message, value) = _nodeExtractionValues.First();
+        _extractionMessage.AddMarkupOrThrow(message);
+        _extractionMessage.PushNewline();
+        ExtractionResearchLabel.SetMessage(_extractionMessage);
+
         _nodeExtractionValues.RemoveAt(0);
 
         var delay = _nodeExtractionValues.Count == 0 ? TimeSpan.FromSeconds(3) : TimeSpan.FromSeconds(0.25);
         _nextExtractStringTime = _timing.CurTime + delay;
         _extractionSum += value;
-        _extractionMessage.AddMarkupOrThrow(message);
-        _extractionMessage.PushNewline();
-
-        ExtractionResearchLabel.SetMessage(_extractionMessage);
         ExtractionSumLabel.SetMarkup(Loc.GetString("analysis-console-extract-sum", ("value", _extractionSum)));
 
         if (_playerManager.LocalSession?.AttachedEntity is { } attachedEntity)
@@ -176,7 +172,9 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
             NoArtiLabel.Visible = false;
         }
 
-        if (_currentNode == null || arti == null || !_xenoArtifact.TryGetIndex((arti.Value, arti.Value), _currentNode.Value, out _))
+        if (_currentNode == null
+            || arti == null
+            || !_xenoArtifact.TryGetIndex((arti.Value, arti.Value), _currentNode.Value, out _))
         {
             SetSelectedNode(null);
         }
@@ -187,15 +185,16 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         InfoContainer.Visible = node != null;
         if (!_artifactAnalyzer.TryGetArtifactFromConsole(_owner, out var artifact))
             return;
+
         NoneSelectedLabel.Visible = node == null;
 
         if (node == null)
             return;
 
-        IDValueLabel.SetMarkup(Loc.GetString("analysis-console-info-id-value",
-            ("id", _xenoArtifact.GetNodeId(node.Value))));
+        var nodeId = _xenoArtifact.GetNodeId(node.Value);
+        IDValueLabel.SetMarkup(Loc.GetString("analysis-console-info-id-value", ("id", nodeId)));
 
-        // If active, state is 2. else, it is 0 or 1 based on whether or not it is unlocked.
+        // If active, state is 2. else, it is 0 or 1 based on whether it is unlocked, or not.
         var lockedState = _xenoArtifact.IsNodeActive(artifact.Value, node.Value)
             ? 2
             : node.Value.Comp.Locked
@@ -244,6 +243,16 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
 
         ClassValueLabel.SetMarkup(Loc.GetString("analysis-console-info-class-value",
             ("class", Loc.GetString($"artifact-node-class-{Math.Min(6, predecessorNodes.Count + 1)}"))));
+    }
+
+    private void InitStaticLabels()
+    {
+        IDLabel.SetMarkup(Loc.GetString("analysis-console-info-id"));
+        ClassLabel.SetMarkup(Loc.GetString("analysis-console-info-class"));
+        LockedLabel.SetMarkup(Loc.GetString("analysis-console-info-locked"));
+        EffectLabel.SetMarkup(Loc.GetString("analysis-console-info-effect"));
+        TriggerLabel.SetMarkup(Loc.GetString("analysis-console-info-trigger"));
+        DurabilityLabel.SetMarkup(Loc.GetString("analysis-console-info-durability"));
     }
 }
 

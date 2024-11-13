@@ -18,6 +18,8 @@ public sealed partial class XATReactiveComponent : Component
     [DataField, AutoNetworkedField]
     public HashSet<ProtoId<ReagentPrototype>> Reagents = new();
 
+    //todo: ReactiveGroupPrototype
+
     [DataField, AutoNetworkedField]
     public FixedPoint2 MinQuantity = 5f;
 }

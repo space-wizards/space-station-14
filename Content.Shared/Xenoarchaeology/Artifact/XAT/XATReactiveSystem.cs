@@ -16,13 +16,14 @@ public sealed class XATReactiveSystem : BaseXATSystem<XATReactiveComponent>
 
     private void OnReaction(Entity<XenoArtifactComponent> artifact, Entity<XATReactiveComponent, XenoArtifactNodeComponent> node, ref ReactionEntityEvent args)
     {
-        if (!node.Comp1.ReactionMethods.Contains(args.Method))
+        var artefactReactiveTriggerComponent = node.Comp1;
+        if (!artefactReactiveTriggerComponent.ReactionMethods.Contains(args.Method))
             return;
 
-        if (args.ReagentQuantity.Quantity < node.Comp1.MinQuantity)
+        if (args.ReagentQuantity.Quantity < artefactReactiveTriggerComponent.MinQuantity)
             return;
 
-        if (!node.Comp1.Reagents.Contains(args.Reagent.ID))
+        if (!artefactReactiveTriggerComponent.Reagents.Contains(args.Reagent.ID))
             return;
 
         Trigger(artifact, node);

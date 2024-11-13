@@ -55,13 +55,6 @@
     - 0,0,10,5
 
 - type: artifactEffect
-  id: EffectPhasing
-  targetDepth: 2
-  effectHint: artifact-effect-hint-phasing
-  permanentComponents:
-  - type: PhasingArtifact
-
-- type: artifactEffect
   id: EffectWandering
   targetDepth: 2
   effectHint: artifact-effect-hint-displacement

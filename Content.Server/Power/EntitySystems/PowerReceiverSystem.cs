@@ -164,11 +164,6 @@ namespace Content.Server.Power.EntitySystems
             return !_recQuery.Resolve(uid, ref receiver, false) || receiver.Powered;
         }
 
-        public override bool IsPoweredShared(EntityUid uid)
-        {
-            return IsPowered(uid);
-        }
-
         /// <summary>
         /// Turn this machine on or off.
         /// Returns true if we turned it on, false if we turned it off.

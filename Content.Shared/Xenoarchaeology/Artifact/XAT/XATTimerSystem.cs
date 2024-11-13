@@ -25,8 +25,10 @@ public sealed class XATTimerSystem : BaseXATSystem<XATTimerComponent>
         if (!args.IsInDetailsRange)
             return;
 
-        args.PushMarkup(Loc.GetString("xenoarch-trigger-examine-timer",
-            ("time", MathF.Ceiling((float) (node.Comp1.NextActivation - Timing.CurTime).TotalSeconds))));
+        args.PushMarkup(
+            Loc.GetString("xenoarch-trigger-examine-timer",
+            ("time", MathF.Ceiling((float) (node.Comp1.NextActivation - Timing.CurTime).TotalSeconds)))
+        );
     }
 
     protected override void UpdateXAT(Entity<XenoArtifactComponent> artifact, Entity<XATTimerComponent, XenoArtifactNodeComponent> node, float frameTime)

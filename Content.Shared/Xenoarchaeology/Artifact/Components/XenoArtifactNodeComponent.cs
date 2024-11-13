@@ -17,13 +17,13 @@ public sealed partial class XenoArtifactNodeComponent : Component
     public int Depth;
 
     /// <summary>
-    /// Denotes whether or not an artifact node has been activated through the required triggers.
+    /// Denotes whether an artifact node has been activated at least once (through the required triggers).
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool Locked = true;
 
     /// <summary>
-    /// Strings that denote the triggers that this node has.
+    /// List of trigger descriptions that this node require for activation.
     /// </summary>
     [DataField, AutoNetworkedField]
     public LocId TriggerTip;
@@ -35,6 +35,9 @@ public sealed partial class XenoArtifactNodeComponent : Component
     public NetEntity? Attached;
 
     #region Durability
+    /// <summary>
+    /// Marker, is durability of node degraded or not.
+    /// </summary>
     public bool Degraded => Durability <= 0;
 
     /// <summary>
@@ -53,7 +56,7 @@ public sealed partial class XenoArtifactNodeComponent : Component
     /// The variance from MaxDurability present when a node is created.
     /// </summary>
     [DataField]
-    public MinMax InitialDurabilityVariation = new(0, 2);
+    public MinMax MaxDurabilityCanDecreaseBy = new(0, 2);
     #endregion
 
     #region Research
@@ -63,9 +66,15 @@ public sealed partial class XenoArtifactNodeComponent : Component
     [DataField, AutoNetworkedField]
     public float BasePointValue = 5000;
 
+    /// <summary>
+    /// todo: xml-doc
+    /// </summary>
     [DataField, AutoNetworkedField]
     public int ResearchValue;
 
+    /// <summary>
+    /// todo: xml-doc
+    /// </summary>
     [DataField, AutoNetworkedField]
     public int ConsumedResearchValue;
     #endregion

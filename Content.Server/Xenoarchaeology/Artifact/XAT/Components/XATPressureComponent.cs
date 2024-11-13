@@ -7,13 +7,13 @@ namespace Content.Server.Xenoarchaeology.Artifact.XAT.Components;
 public sealed partial class XATPressureComponent : Component
 {
     /// <summary>
-    /// The lower-end pressure threshold
+    /// The lower-end pressure threshold. Is not considered when null.
     /// </summary>
     [DataField]
     public float? MinPressureThreshold;
 
     /// <summary>
-    /// The higher-end pressure threshold
+    /// The higher-end pressure threshold. Is not considered when null.
     /// </summary>
     [DataField]
     public float? MaxPressureThreshold;

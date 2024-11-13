@@ -51,6 +51,8 @@ public abstract partial class SharedXenoArtifactSystem
 
     public void TriggerXenoArtifact(Entity<XenoArtifactComponent> ent, Entity<XenoArtifactNodeComponent> node)
     {
+        // limits spontaneous chain activations, also prevents spamming every triggering tool to activate nodes
+        // without real knowledge about triggers
         if (_timing.CurTime < ent.Comp.NextUnlockTime)
             return;
 

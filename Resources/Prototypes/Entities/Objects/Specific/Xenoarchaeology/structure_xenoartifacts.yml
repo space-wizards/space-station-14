@@ -6,6 +6,7 @@
   abstract: true
   noSpawn: true
   components:
+  # Visual
   - type: Sprite
     drawdepth: SmallObjects
     sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
@@ -16,9 +17,14 @@
     - state: ano30_on
       map: [ "enum.ArtifactsVisualLayers.Effect" ]
       visible: false
-  - type: Damageable
-  - type: Physics
-    bodyType: Dynamic
+  - type: Appearance
+  - type: RandomArtifactSprite
+    maxSprite: 36
+  - type: RandomSprite
+    available:
+    - enum.ArtifactsVisualLayers.Effect:
+        ano01_on: Rainbow
+  - type: InteractionOutline
   - type: Transform
     noRot: true
   - type: UserInterface #needs to be here for certain effects
@@ -31,9 +37,6 @@
         type: InstrumentBoundUserInterface
       enum.IntercomUiKey.Key:
         type: IntercomBoundUserInterface
-  - type: Reactive
-    groups:
-      Acidic: [Touch]
   - type: Fixtures
     fixtures:
       fix1:
@@ -45,51 +48,48 @@
         - Opaque
         mask:
         - MachineMask
-  - type: InteractionOutline
-  - type: Artifact
-  - type: RandomArtifactSprite
-    maxSprite: 36
-  - type: RandomSprite
-    available:
-    - enum.ArtifactsVisualLayers.Effect:
-        ano01_on: Rainbow
-  - type: Appearance
-  - type: Actions
   - type: GuideHelp
     guides:
     - Xenoarchaeology
+  # gameplay interactions
+  - type: XenoArtifact
+  - type: Damageable
+  - type: Actions
+  - type: Physics
+    bodyType: Dynamic
   - type: StealTarget
     stealGroup: XenoArtifact
-  - type: ContainerContainer
-    containers:
-      storagebase: !type:Container # needed for the EffectStorage artifactEffect
-        ents: [ ]
-      revolver-ammo: !type:Container # needed for the EffectBigIron artifactEffect
+  # These components are needed for certain triggers to work.
+  - type: RadiationReceiver
+  - type: Reactive
 
 - type: entity
   parent: BaseXenoArtifact
   id: SimpleXenoArtifact
   suffix: Simple
   components:
-  - type: Artifact
-    nodesMin: 2
-    nodesMax: 5
+  - type: XenoArtifact
+    nodeCount:
+      min: 2
+      max: 5
 
 - type: entity
   parent: BaseXenoArtifact
   id: MediumXenoArtifact
   suffix: Medium
   components:
-  - type: Artifact
-    nodesMin: 5
-    nodesMax: 9
+  - type: XenoArtifact
+    nodeCount:
+      min: 5
+      max: 9
 
 - type: entity
   parent: BaseXenoArtifact
   id: ComplexXenoArtifact
   suffix: Complex
   components:
-  - type: Artifact
-    nodesMin: 9
-    nodesMax: 13
+  - type: XenoArtifact
+    nodeCount:
+      min: 9
+      max: 13
 

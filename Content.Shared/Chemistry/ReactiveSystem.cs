@@ -117,10 +117,5 @@ public readonly record struct ReactionEntityEvent(
     ReactionMethod Method,
     ReagentPrototype Reagent,
     ReagentQuantity ReagentQuantity,
-    Solution? Source)
-{
-    public readonly ReactionMethod Method = Method;
-    public readonly ReagentPrototype Reagent = Reagent;
-    public readonly ReagentQuantity ReagentQuantity = ReagentQuantity;
-    public readonly Solution? Source = Source;
-}
+    Solution? Source
+);

@@ -20,14 +20,15 @@ public sealed class XATTemperatureSystem : BaseXATSystem<XATTemperatureComponent
 
         var curTemp = mixture.Temperature;
 
-        if (node.Comp1.TriggerOnHigherTemp)
+        var temperatureTriggerComponent = node.Comp1;
+        if (temperatureTriggerComponent.TriggerOnHigherTemp)
         {
-            if (curTemp >= node.Comp1.TargetTemperature)
+            if (curTemp >= temperatureTriggerComponent.TargetTemperature)
                 Trigger(artifact, node);
         }
         else
         {
-            if (curTemp <= node.Comp1.TargetTemperature)
+            if (curTemp <= temperatureTriggerComponent.TargetTemperature)
                 Trigger(artifact, node);
         }
     }

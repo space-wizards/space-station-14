@@ -1,5 +1,4 @@
 using Content.Shared.Research.Components;
-using Content.Shared.Xenoarchaeology.Equipment;
 using Content.Shared.Xenoarchaeology.Equipment.Components;
 using JetBrains.Annotations;
 

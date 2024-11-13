@@ -46,44 +46,52 @@ public abstract partial class SharedXenoArtifactSystem
 
     public void FinishUnlockingState(Entity<XenoArtifactUnlockingComponent, XenoArtifactComponent> ent)
     {
-        string unlockMsg;
+        string unlockAttemptResultMsg;
+        var artifactComponent = ent.Comp2;
         if (TryGetNodeFromUnlockState(ent, out var node))
         {
             // TODO: animation
-            SetNodeUnlocked((ent, ent.Comp2), node.Value);
-            unlockMsg = "artifact-unlock-state-end-success";
-            ActivateNode((ent, ent.Comp2), node.Value, null, null, Transform(ent).Coordinates, false);
+            SetNodeUnlocked((ent, artifactComponent), node.Value);
+            unlockAttemptResultMsg = "artifact-unlock-state-end-success";
+            ActivateNode((ent, artifactComponent), node.Value, null, null, Transform(ent).Coordinates, false);
         }
         else
         {
-            unlockMsg = "artifact-unlock-state-end-failure";
+            unlockAttemptResultMsg = "artifact-unlock-state-end-failure";
         }
 
         if (_net.IsServer)
-            _popup.PopupEntity(Loc.GetString(unlockMsg), ent);
+            _popup.PopupEntity(Loc.GetString(unlockAttemptResultMsg), ent);
 
-        RemComp(ent, ent.Comp1);
-        ent.Comp2.NextUnlockTime = _timing.CurTime + ent.Comp2.UnlockStateRefractory;
+        var unlockingComponent = ent.Comp1;
+        RemComp(ent, unlockingComponent);
+        artifactComponent.NextUnlockTime = _timing.CurTime + artifactComponent.UnlockStateRefractory;
     }
 
+    /// <summary>
+    /// Gets first locked node that can be unlocked (it is locked and all predecessor are unlocked).
+    /// </summary>
     public bool TryGetNodeFromUnlockState(
         Entity<XenoArtifactUnlockingComponent, XenoArtifactComponent> ent,
-        [NotNullWhen(true)] out Entity<XenoArtifactNodeComponent>? node)
+        [NotNullWhen(true)] out Entity<XenoArtifactNodeComponent>? node
+    )
     {
         node = null;
 
-        foreach (var nodeIndex in ent.Comp1.TriggeredNodeIndexes)
+        var artifactUnlockingComponent = ent.Comp1;
+        foreach (var nodeIndex in artifactUnlockingComponent.TriggeredNodeIndexes)
         {
-            var curNode = GetNode((ent, ent.Comp2), nodeIndex);
+            var artifactComponent = ent.Comp2;
+            var curNode = GetNode((ent, artifactComponent), nodeIndex);
             if (!curNode.Comp.Locked || !CanUnlockNode((curNode, curNode)))
                 continue;
 
-            var neededIndices = GetPredecessorNodes((ent, ent.Comp2), nodeIndex);
-            neededIndices.Add(nodeIndex);
+            var requiredIndices = GetPredecessorNodes((ent, artifactComponent), nodeIndex);
+            requiredIndices.Add(nodeIndex);
 
             // Make sure the two sets are identical
-            if (neededIndices.Count != ent.Comp1.TriggeredNodeIndexes.Count ||
-                !ent.Comp1.TriggeredNodeIndexes.All(neededIndices.Contains))
+            if (requiredIndices.Count != artifactUnlockingComponent.TriggeredNodeIndexes.Count
+                || !artifactUnlockingComponent.TriggeredNodeIndexes.All(requiredIndices.Contains))
                 continue;
 
             node = curNode;

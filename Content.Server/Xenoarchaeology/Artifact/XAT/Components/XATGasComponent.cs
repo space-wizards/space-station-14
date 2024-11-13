@@ -9,7 +9,7 @@ namespace Content.Server.Xenoarchaeology.Artifact.XAT.Components;
 public sealed partial class XATGasComponent : Component
 {
     /// <summary>
-    /// The gas that needs to be supplied
+    /// The gas that is related to trigger.
     /// </summary>
     [DataField]
     public Gas TargetGas;
@@ -21,7 +21,7 @@ public sealed partial class XATGasComponent : Component
     public float Moles = Atmospherics.MolesCellStandard * 0.1f;
 
     /// <summary>
-    /// Whether or not the gas should be present or not
+    /// Marker, if mentioned gas should be present in entity tile for trigger to activate, or it should not.
     /// </summary>
     [DataField]
     public bool ShouldBePresent = true;

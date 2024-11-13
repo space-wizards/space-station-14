@@ -1,0 +1,12 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    Title="{Loc 'node-scan-display-title'}"
+    MinSize="305 120"
+    SetSize="305 120"
+    Resizable="False"
+    >
+    <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True" >
+        <Label Name="NoActiveNodeDataLabel" Text="{Loc 'node-scan-no-data'}" Margin="30 0 0 0" />
+        <GridContainer Name="ActiveNodesList" Columns="4" Rows="2"/>
+    </BoxContainer>
+</controls:FancyWindow>

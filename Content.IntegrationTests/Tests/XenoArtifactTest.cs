@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Xenoarchaeology.Artifact;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Robust.Shared.GameObjects;
@@ -15,7 +15,7 @@ public sealed class XenoArtifactTest
   name: artifact
   components:
   - type: XenoArtifact
-    doGeneration: false
+    isGenerationRequired: false
 
 - type: entity
   id: TestArtifactNode
@@ -265,7 +265,7 @@ public sealed class XenoArtifactTest
         await server.WaitPost(() =>
         {
             var artifactUid = entManager.Spawn("TestArtifact");
-            var artifactEnt = (artifactUid, entManager.GetComponent<XenoArtifactComponent>(artifactUid));
+            Entity<XenoArtifactComponent> artifactEnt = (artifactUid, entManager.GetComponent<XenoArtifactComponent>(artifactUid));
 
             Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node1, false));
             Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node2, false));
@@ -299,9 +299,13 @@ public sealed class XenoArtifactTest
             artifactSystem.SetNodeUnlocked(node3!.Value);
             artifactSystem.SetNodeUnlocked(node5!.Value);
 
-            var activeNodes = new[] { entManager.GetNetEntity(node3!.Value.Owner), entManager.GetNetEntity(node5!.Value.Owner) };
-            Assert.That(artifactEnt.Item2.CachedActiveNodes, Is.SupersetOf(activeNodes));
-            Assert.That(artifactEnt.Item2.CachedActiveNodes, Has.Count.EqualTo(activeNodes.Length));
+            NetEntity[] expectedActiveNodes =
+            [
+                entManager.GetNetEntity(node3!.Value.Owner),
+                entManager.GetNetEntity(node5!.Value.Owner)
+            ];
+            Assert.That(artifactEnt.Comp.CachedActiveNodes, Is.SupersetOf(expectedActiveNodes));
+            Assert.That(artifactEnt.Comp.CachedActiveNodes, Has.Count.EqualTo(expectedActiveNodes.Length));
 
         });
         await server.WaitRunTicks(1);

@@ -20,7 +20,8 @@ public sealed class XATDeathSystem : BaseXATSystem<XATDeathComponent>
     {
         if (args.NewMobState != MobState.Dead)
             return;
-        var coords1 = Transform(args.Target).Coordinates;
+
+        var targetCoords = Transform(args.Target).Coordinates;
 
         var query = EntityQueryEnumerator<XATDeathComponent, XenoArtifactNodeComponent>();
         while (query.MoveNext(out var uid, out var comp, out var node))
@@ -33,8 +34,8 @@ public sealed class XATDeathSystem : BaseXATSystem<XATDeathComponent>
             if (!CanTrigger(artifact, (uid, node)))
                 continue;
 
-            var coords2 = Transform(artifact).Coordinates;
-            if (_transform.InRange(coords1, coords2, comp.Range))
+            var artifactCoords = Transform(artifact).Coordinates;
+            if (_transform.InRange(targetCoords, artifactCoords, comp.Range))
                 Trigger(artifact, (uid, comp, node));
         }
     }

@@ -11,7 +11,14 @@
       sprite: Objects/Specific/Xenoarchaeology/node_scanner.rsi
     - type: NodeScanner
     - type: UseDelay
-      delay: 3
+      delay: 1
     - type: GuideHelp
       guides:
       - ArtifactReports
+    - type: ActivatableUI
+      key: enum.NodeScannerUiKey.Key
+      singleUser: true
+    - type: UserInterface #needs to be here for certain effects
+      interfaces:
+        enum.NodeScannerUiKey.Key:
+          type: NodeScannerBoundUserInterface

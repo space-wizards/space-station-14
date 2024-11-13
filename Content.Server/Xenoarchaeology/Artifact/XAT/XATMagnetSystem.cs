@@ -21,7 +21,7 @@ public sealed class XATMagnetSystem : BaseXATSystem<XATMagnetComponent>
 
     private void OnMagnetActivated(ref SalvageMagnetActivatedEvent args)
     {
-        var coords1 = Transform(args.Magnet).Coordinates;
+        var magnetCoordinates = Transform(args.Magnet).Coordinates;
 
         var query = EntityQueryEnumerator<XATMagnetComponent, XenoArtifactNodeComponent>();
         while (query.MoveNext(out var uid, out var comp, out var node))
@@ -34,8 +34,8 @@ public sealed class XATMagnetSystem : BaseXATSystem<XATMagnetComponent>
             if (!CanTrigger(artifact, (uid, node)))
                 continue;
 
-            var coords2 = Transform(artifact).Coordinates;
-            if (_transform.InRange(coords1, coords2, comp.MagnetRange))
+            var artifactCoordinates = Transform(artifact).Coordinates;
+            if (_transform.InRange(magnetCoordinates, artifactCoordinates, comp.MagnetRange))
                 Trigger(artifact, (uid, comp, node));
         }
     }

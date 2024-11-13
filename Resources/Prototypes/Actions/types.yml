@@ -215,18 +215,6 @@
     event: !type:VendingMachineSelfDispenseEvent
 
 - type: entity
-  id: ActionArtifactActivate
-  name: Activate Artifact
-  description: Immediately activates your current artifact node.
-  components:
-  - type: InstantAction
-    icon:
-      sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
-      state: ano01
-    useDelay: 60
-    event: !type:ArtifactSelfActivateEvent
-
-- type: entity
   id: ActionToggleBlock
   name: Block
   description: Raise or lower your shield.

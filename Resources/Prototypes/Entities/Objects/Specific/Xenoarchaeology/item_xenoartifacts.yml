@@ -6,6 +6,7 @@
   abstract: true
   noSpawn: true
   components:
+  # Visual
   - type: Sprite
     sprite: Objects/Specific/Xenoarchaeology/item_artifacts.rsi
     layers:
@@ -14,15 +15,11 @@
     - state: ano01_on
       map: [ "enum.ArtifactsVisualLayers.Effect" ]
       visible: false
-  - type: Damageable
   - type: Physics
     bodyType: Dynamic
   - type: CollisionWake
     enabled: false
   - type: InteractionOutline
-  - type: Reactive
-    groups:
-      Acidic: [Touch]
   - type: Fixtures
     fixtures:
       fix1:
@@ -36,7 +33,6 @@
         - Opaque
         restitution: 0.3  # fite me
         friction: 0.2
-  - type: Artifact
   - type: RandomArtifactSprite
     maxSprite: 11
     activationTime: 2.4
@@ -55,44 +51,51 @@
       enum.IntercomUiKey.Key:
         type: IntercomBoundUserInterface
   - type: Appearance
+  - type: GuideHelp
+    guides:
+    - Xenoarchaeology
+  # gameplay interactions
+  - type: XenoArtifact
+  - type: Damageable
+  - type: Actions
   - type: Item
     size: Normal
     sprite: Objects/Specific/Xenoarchaeology/item_artifacts.rsi
     heldPrefix: ano01
-  - type: Actions
   - type: Construction
     graph: Artifact
     node: done
-  - type: GuideHelp
-    guides:
-    - Xenoarchaeology
+  - type: Reactive
 
 - type: entity
   parent: BaseXenoArtifactItem
   id: SimpleXenoArtifactItem
   suffix: Simple
   components:
-  - type: Artifact
-    nodesMin: 2
-    nodesMax: 5
+  - type: XenoArtifact
+    nodeCount:
+      min: 2
+      max: 5
 
 - type: entity
   parent: BaseXenoArtifactItem
   id: MediumXenoArtifactItem
   suffix: Medium
   components:
-  - type: Artifact
-    nodesMin: 5
-    nodesMax: 9
+  - type: XenoArtifact
+    nodeCount:
+      min: 5
+      max: 9
 
 - type: entity
   parent: BaseXenoArtifactItem
   id: ComplexXenoArtifactItem
   suffix: Complex
   components:
-  - type: Artifact
-    nodesMin: 9
-    nodesMax: 13
+  - type: XenoArtifact
+    nodeCount:
+      min: 9
+      max: 13
 
 # this exists for crafting item artifacts so that the final result can be simple, medium, or complex.
 - type: entity
@@ -100,9 +103,10 @@
   id: VariedXenoArtifactItem
   suffix: Varied
   components:
-  - type: Artifact
-    nodesMin: 2
-    nodesMax: 13
+  - type: XenoArtifact
+    nodeCount:
+      min: 2
+      max: 13
 
 - type: entity
   id: ArtifactFragment

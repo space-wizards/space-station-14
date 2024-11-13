@@ -47,7 +47,7 @@
       Heat: 50
 # This kinda trivializes the difficulty.
 #  - type: XATToolUse
-#    neededTool: Welding
+#    requiredTool: Welding
 #    delay: 5
 #    fuel: 10
 
@@ -189,7 +189,7 @@
   tip: xenoarch-trigger-tip-wrenching
   components:
   - type: XATToolUse
-    neededTool: Anchoring
+    requiredTool: Anchoring
   - type: XATExaminableText
     examineText: xenoarch-trigger-examine-wrenching
 
@@ -198,7 +198,7 @@
   tip: xenoarch-trigger-tip-prying
   components:
   - type: XATToolUse
-    neededTool: Prying
+    requiredTool: Prying
   - type: XATExaminableText
     examineText: xenoarch-trigger-examine-prying
 
@@ -207,7 +207,7 @@
   tip: xenoarch-trigger-tip-screwing
   components:
   - type: XATToolUse
-    neededTool: Screwing
+    requiredTool: Screwing
   - type: XATExaminableText
     examineText: xenoarch-trigger-examine-screwing
 
@@ -216,7 +216,7 @@
   tip: xenoarch-trigger-tip-pulsing
   components:
   - type: XATToolUse
-    neededTool: Pulsing
+    requiredTool: Pulsing
   - type: XATExaminableText
     examineText: xenoarch-trigger-examine-pulsing
 
