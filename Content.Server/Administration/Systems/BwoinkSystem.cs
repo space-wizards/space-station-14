@@ -82,6 +82,8 @@ namespace Content.Server.Administration.Systems
         private int _maxAdditionalChars;
         private readonly Dictionary<NetUserId, DateTime> _activeConversations = new();
 
+        private bool _hasPanicBunkerBeenActivatedThisRound = false;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -108,7 +110,11 @@ namespace Content.Server.Administration.Systems
 
             SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameRunLevelChanged);
             SubscribeNetworkEvent<BwoinkClientTypingUpdated>(OnClientTypingUpdated);
-            SubscribeLocalEvent<RoundRestartCleanupEvent>(_ => _activeConversations.Clear());
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(_ =>
+            {
+                _activeConversations.Clear();
+                _hasPanicBunkerBeenActivatedThisRound = false;
+            });
 
         	_rateLimit.Register(
                 RateLimitKey,
@@ -155,6 +161,11 @@ namespace Content.Server.Administration.Systems
         private void OnOverrideChanged(string obj)
         {
             _overrideClientName = obj;
+        }
+
+        public List<DateTime> GetActiveConnectionTimes()
+        {
+            return _activeConversations.Values.ToList();
         }
 
         private async void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
@@ -684,6 +695,8 @@ namespace Content.Server.Administration.Systems
 
             LogBwoink(msg);
 
+            CheckActivatePanicBunker();
+
             var admins = GetTargetAdmins();
 
             // Notify all admins
@@ -818,6 +831,44 @@ namespace Content.Server.Administration.Systems
                 Receivers = !parameters.NoReceivers,
                 Message = stringbuilder.ToString(),
             };
+        }
+
+        private void CheckActivatePanicBunker()
+        {
+            if (_config.GetCVar(CCVars.PanicBunkerEnabled) || _hasPanicBunkerBeenActivatedThisRound)
+                return;
+
+            // Don't turn it on if there are any admins online and the CCVar is enabled.
+            if (_adminManager.ActiveAdmins.Any() && _config.GetCVar(CCVars.PanicBunkerDisableWithAdmins))
+                return;
+
+            var totalAhelpsPerRound = _config.GetCVar(CCVars.ActivatePanicBunkerAhelpsPerRound);
+
+            var aHelpTime = _config.GetCVar(CCVars.ActivatePanicBunkerAhelpsTime);
+            var aHelpAmount = _config.GetCVar(CCVars.ActivatePanicBunkerAhelpsAmount);
+
+            if (_activeConversations.Count > totalAhelpsPerRound)
+            {
+                _config.SetCVar(CCVars.PanicBunkerEnabled, true);
+                _sawmill.Info($"Panic bunker enabled, total aHelps this round has exceeded {totalAhelpsPerRound}.");
+                _hasPanicBunkerBeenActivatedThisRound = true;
+                return;
+            }
+
+            var aHelpsInTime = 0;
+            foreach (var conversationTime in _activeConversations.Values.ToList())
+            {
+                // Count all the aHelps that have had activity in the last aHelpTime minutes.
+                if (conversationTime > DateTime.Now - TimeSpan.FromMinutes(aHelpTime))
+                    aHelpsInTime++;
+            }
+
+            if (aHelpsInTime >= aHelpAmount)
+            {
+                _config.SetCVar(CCVars.PanicBunkerEnabled, true);
+                _sawmill.Info($"Panic bunker enabled, {aHelpsInTime} aHelps have occured in the last {aHelpTime} minutes.");
+                _hasPanicBunkerBeenActivatedThisRound = true;
+            }
         }
 
         private record struct DiscordRelayedData

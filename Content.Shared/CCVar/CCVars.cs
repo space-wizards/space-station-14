@@ -936,6 +936,25 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> AdminUseCustomNamesAdminRank =
             CVarDef.Create("admin.use_custom_names_admin_rank", true, CVar.SERVERONLY);
 
+        /// <summary>
+        /// If this many aHelps have occured in a round, the server will automatically go into panic bunker mode.
+        /// Will respect <see cref="PanicBunkerDisableWithAdmins"/> and will only ever activate at most once per round.
+        /// </summary>
+        public static readonly CVarDef<int> ActivatePanicBunkerAhelpsPerRound =
+            CVarDef.Create("admin.activate_panic_bunker_after_at", 20, CVar.SERVERONLY);
+
+        /// <summary>
+        /// If <see cref="ActivatePanicBunkerAhelpsAmount"/> aHelps have been received in <see cref="ActivatePanicBunkerAhelpsTime"/> many minutes,
+        /// the server will automatically go into panic bunker mode.
+        /// Will respect <see cref="PanicBunkerDisableWithAdmins"/> and will only ever activate at most once per round.
+        /// </summary>
+        public static readonly CVarDef<int> ActivatePanicBunkerAhelpsTime =
+            CVarDef.Create("admin.activate_panic_bunker_received_ahelps_time", 10, CVar.SERVERONLY);
+
+        /// <inheritdoc cref="ActivatePanicBunkerAhelpsTime"/>
+        public static readonly CVarDef<int> ActivatePanicBunkerAhelpsAmount =
+            CVarDef.Create("admin.activate_panic_bunker_received_ahelps_amount", 10, CVar.SERVERONLY);
+
         /*
          * AHELP
          */
@@ -1562,7 +1581,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("votekick.ban_duration", 180, CVar.SERVERONLY);
 
         /// <summary>
-        ///     Whether the ghost requirement settings for votekicks should be ignored for the lobby. 
+        ///     Whether the ghost requirement settings for votekicks should be ignored for the lobby.
         /// </summary>
         public static readonly CVarDef<bool> VotekickIgnoreGhostReqInLobby =
             CVarDef.Create("votekick.ignore_ghost_req_in_lobby", true, CVar.SERVERONLY);
