@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Made cigarettes/cigars/joints edible and have the same effect as when
-      smoked.
-    type: Add
-  id: 3
-  time: '2024-06-24T23:49:16.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/3
 - author: TheGrimbeeper
   changes:
   - message: Rat King nerfs and rules
@@ -4145,3 +4137,14 @@
   id: 502
   time: '2024-11-13T05:44:02.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/693
+- author: Drags-His-Tail
+  changes:
+  - message: Keel-Ree's Guide To Medbay will now appear on shelves in a library near
+      you!
+    type: Add
+  - message: "Books written and submitted by you all will now appear more frequently\
+      \ in the library! Can\u2019t repeat the past? \u2026Why of course you can!"
+    type: Tweak
+  id: 503
+  time: '2024-11-13T06:35:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/691
