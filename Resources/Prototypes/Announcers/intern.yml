@@ -2,7 +2,7 @@
   id: Intern
   basePath: /Audio/Announcers/Intern
   baseAudioParams:
-    volume: -20
+    volume: -7
   announcements:
     # Communications
     - id: announce # Communications console
