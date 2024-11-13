@@ -11,7 +11,7 @@
     mayTransfer: true
     whitelist:
       tags:
-        - Cartridge22
+        - CartridgeLPistol
     capacity: 20
   - type: Item
     size: Small
@@ -44,7 +44,7 @@
     mayTransfer: true
     whitelist:
       tags:
-        - Cartridge22
+        - CartridgeLPistol
     capacity: 6
   - type: Item
     size: Small
@@ -78,7 +78,7 @@
   parent: BaseMagazineLPistol
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgePistol
+    proto: CartridgeLPistol
   - type: Sprite
     layers:
     - state: red
@@ -90,7 +90,7 @@
   id: MagazineZipperEmpty
   name: Zipper magazine (.22 auto any)
   suffix: empty
-  parent: MagazineZipper
+  parent: BaseMagazineZipper
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -103,7 +103,7 @@
 - type: entity
   id: MagazineLPistolIncendiary
   name: Mk 93 magazine (.22 auto incendiary)
-  parent: MagazineLPistol
+  parent: BaseMagazineLPistol
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLPistolIncendiary
