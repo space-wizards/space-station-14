@@ -37,3 +37,7 @@
 - type: lobbyBackground
   id: Woods
   background: /Textures/_Impstation/LobbyScreens/woodsbig.webp
+
+- type: lobbyBackground
+  id: PTAsWoe
+  background: /Textures/_Impstation/LobbyScreens/PTAs-woe.webp
