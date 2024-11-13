@@ -11,16 +11,11 @@
     prototype: Jellid
     requiredLegs: 2
   - type: Electrified
-    onInteractUsing: false
     shockTime: 2
-    Probability: 0.5
   - type: IgnitionSource
     temperature: 700
     ignited: true
-  - type: SolutionHeater # Add water boiling at a certain temp among other things
-    heatPerSecond: 100
   - type: AlwaysHot
-  - type: ActiveSolutionHeater
   - type: TemperatureProtection # MAKE SURE this doesn't reduce damage inflicted from weaponry
     coefficient: 0.6
   - type: UserInterface
@@ -92,7 +87,7 @@
     gaspEmote: Scream
   - type: Inventory
     templateId: jellid
-  - type: Jellid # This is what dictates heating objects in one's hands.
+  - type: Jellid # This is what dictates heating objects in one's hands and igniting objects.
 
   # TODOS: Add ATP cell cluster, code a JellidSystem and Component that basically uses similar to borgchassis code, where it displays the power percentage on the player's UI. Make a unique damage event though if battery is empty.
   #        Ideally the battery shouldn't have a OnRemoved event, because that'd mean that the Jellid is almost certainly gibbed and already dead beyond repair.
