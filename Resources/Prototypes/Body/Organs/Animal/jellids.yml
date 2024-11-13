@@ -10,7 +10,7 @@
         - state: lung-l-slime
         - state: lung-r-slime
     - type: Lung
-      alert: Drowning
+      alert: Lysis
     - type: Metabolizer
       removeEmpty: true
       solutionOnBody: false
