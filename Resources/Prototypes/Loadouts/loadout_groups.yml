@@ -1639,6 +1639,7 @@
   minLimit: 0
   loadouts:
   - BrigmedicBeret
+  - BrigmedicCap
 
 - type: loadoutGroup
   id: BrigmedicNeck

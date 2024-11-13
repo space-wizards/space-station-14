@@ -1,0 +1,15 @@
+- type: entity
+  parent: ClothingHeadHeadHatBaseFlippable
+  id: ClothingHeadHatBrigmedicsoft
+  name: brigmedic cap
+  description: It's a baseball hat that matches a brigmedic's uniform, complete with an antennae to link with their issued glasses.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Soft/brigmedicsoft.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Soft/brigmedicsoft.rsi
+
+- type: entity
+  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatBrigmedicsoft]
+  id: ClothingHeadHatBrigmedicsoftFlipped
+  name: brigmedic cap
