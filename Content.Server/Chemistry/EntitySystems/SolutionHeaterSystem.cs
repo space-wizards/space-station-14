@@ -5,7 +5,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Placeable;
-using Content.Shared.Hands; // This should be at the top of the file, not inside the method.
+using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 
@@ -25,7 +25,6 @@ namespace Content.Server.Chemistry.EntitySystems
             SubscribeLocalEvent<SolutionHeaterComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<SolutionHeaterComponent, ItemPlacedEvent>(OnItemPlaced);
             SubscribeLocalEvent<SolutionHeaterComponent, ItemRemovedEvent>(OnItemRemoved);
-            SubscribeLocalEvent<SolutionHeaterComponent, GotEquippedHandEvent>(OnHandPickUp);
         }
 
         private void TurnOn(EntityUid uid)
@@ -77,72 +76,70 @@ namespace Content.Server.Chemistry.EntitySystems
                 TurnOff(entity);
         }
 
-        private void OnHandPickUp(EntityUid uid, SolutionHeaterComponent solutionHeaterComponent, ref GotEquippedHandEvent args)
+        public override void Update(float frameTime)
+{
+    base.Update(frameTime);
+
+    // Define energy variable that will be reused
+    float energy;
+
+    // First, check for placed entities and heat their solutions.
+    var query = EntityQueryEnumerator<ActiveSolutionHeaterComponent, SolutionHeaterComponent, ItemPlacerComponent>();
+    while (query.MoveNext(out _, out _, out var heater, out var placer))
+    {
+        foreach (var heatingEntity in placer.PlacedEntities)
         {
-            // Make sure we are dealing with the correct event and user
-            if (args.User == null)
+            // Only heat solutions in containers that have the necessary component
+            if (!TryComp<SolutionContainerManagerComponent>(heatingEntity, out var container))
+                continue;
+
+            // Calculate energy based on the heater's heat rate
+            energy = heater.HeatPerSecond * frameTime;
+
+            // Apply thermal energy to the solutions in the container
+            foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((heatingEntity, container)))
             {
-                return;
-            }
-
-            Log.Info($"Item with SolutionHeaterComponent picked up by {args.User}");
-
-            // Check if the user has an ActiveSolutionHeaterComponent
-            if (!HasComp<ActiveSolutionHeaterComponent>(args.User))
-            {
-                return; // User doesn't have an active heater component
-            }
-
-            // Get the user's hand (if they have one)
-            if (!TryComp<HandsComponent>(args.User, out var handsComponent))
-            {
-                return; // User doesn't have a hands component
-            }
-
-            // Get the item the user is holding in their active hand
-            EntityUid? heldItem = handsComponent.ActiveHand?.HeldEntity;
-            if (heldItem == null)
-            {
-                return; // No item is held in the user's active hand
-            }
-
-            // Check if the held item has a SolutionContainerManagerComponent
-            if (!TryComp<SolutionContainerManagerComponent>(heldItem.Value, out var container))
-            {
-                return; // No SolutionContainerManagerComponent on the held item
-            }
-
-            // Iterate through all solutions in the container
-            foreach (var solutionEntry in _solutionContainer.EnumerateSolutions((heldItem.Value, container)))
-            {
-                var soln = solutionEntry.Solution;  // Access the solution
-                Log.Info($"Heating solution: {soln}");
-
-                // Add thermal energy to the solution
-                var energy = solutionHeaterComponent.HeatPerSecond;  // Use the heater component attached to the item
                 _solutionContainer.AddThermalEnergy(soln, energy);
             }
         }
+    }
 
-        public override void Update(float frameTime)
+    // Now check for players holding valid items that need heating
+    var playerQuery = EntityQueryEnumerator<HandsComponent>();
+    while (playerQuery.MoveNext(out var playerUid, out var handsComponent))
+    {
+        Log.Error("$Object was picked up");
+        
+        if (!HasComp<JellidComponent>(playerUid))
+            continue; // Skip players who are not Jellid
+            Log.Error("$Player is not a Jellid, skipping");
+
+       
+        if (handsComponent.ActiveHand?.HeldEntity is not EntityUid heldItem)
+            continue;
+
+       
+        if (!TryComp<SolutionContainerManagerComponent>(heldItem, out var container))
+            continue;
+            Log.Error("$Object is not a viable fluid container");
+
+       
+        if (!HasComp<ActiveSolutionHeaterComponent>(playerUid))
+            continue;
+            Log.Error("$Player does not have an ActiveSolutionHeaterComponent, somehow.");
+
+     
+        energy = itemHeater.HeatPerSecond * frameTime;
+
+        
+        foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((heldItem, container)))
         {
-            base.Update(frameTime);
-
-            var query = EntityQueryEnumerator<ActiveSolutionHeaterComponent, SolutionHeaterComponent, ItemPlacerComponent>();
-            while (query.MoveNext(out _, out _, out var heater, out var placer))
-            {
-                foreach (var heatingEntity in placer.PlacedEntities)
-                {
-                    if (!TryComp<SolutionContainerManagerComponent>(heatingEntity, out var container))
-                        continue;
-
-                    var energy = heater.HeatPerSecond * frameTime;
-                    foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((heatingEntity, container)))
-                    {
-                        _solutionContainer.AddThermalEnergy(soln, energy);
-                    }
-                }
-            }
+            _solutionContainer.AddThermalEnergy(soln, energy);
+            Log.Error("$Heating solutions");
         }
+    }
+}
+
+
     }
 }
