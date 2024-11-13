@@ -34,7 +34,7 @@ public sealed partial class UdderComponent : Component
     /// <summary>
     ///     The amount of reagent to be generated on update.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public FixedPoint2 QuantityPerUpdate = 25;
 
     /// <summary>

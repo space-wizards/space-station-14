@@ -34,7 +34,7 @@ public sealed partial class WoolyComponent : Component
     /// <summary>
     ///     The amount of reagent to be generated on update.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public FixedPoint2 Quantity = 25;
 
     /// <summary>
