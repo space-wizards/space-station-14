@@ -563,3 +563,10 @@ Entries:
     - type: Tweak
       message: Suicide console command is now disabled on Harmony. It will just ghost
         you instead.
+  - id: 168
+    author: Unisol
+    time: '2024-11-13T15:58:03.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/168
+    changes:
+    - type: Add
+      message: added rubber ducky galoshes. Quack Quack!
