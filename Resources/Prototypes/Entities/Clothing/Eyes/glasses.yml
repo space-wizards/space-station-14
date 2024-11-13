@@ -235,3 +235,16 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/ninjavisor.rsi
   - type: FlashImmunity
+
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesStaticTest
+  name: static test glasses
+  description: WAWA!
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/thermal.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/thermal.rsi
+  - type: StaticViewer
