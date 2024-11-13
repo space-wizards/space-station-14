@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: Heavily nerfed rat king's damage (by a lot this time)
-    type: Tweak
-  id: 6
-  time: '2024-06-29T03:40:49.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/8
 - author: ultramario1998
   changes:
   - message: Hot Finfin Fix
@@ -4170,3 +4163,10 @@
   id: 505
   time: '2024-11-13T06:45:40.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/689
+- author: hivehum
+  changes:
+  - message: Added the Hypereutactic Blade.
+    type: Add
+  id: 506
+  time: '2024-11-13T19:27:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/639
