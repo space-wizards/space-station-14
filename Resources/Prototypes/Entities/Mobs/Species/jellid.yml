@@ -92,6 +92,7 @@
     gaspEmote: Scream
   - type: Inventory
     templateId: jellid
+  - type: Jellid # This is what dictates heating objects in one's hands.
 
   # TODOS: Add ATP cell cluster, code a JellidSystem and Component that basically uses similar to borgchassis code, where it displays the power percentage on the player's UI. Make a unique damage event though if battery is empty.
   #        Ideally the battery shouldn't have a OnRemoved event, because that'd mean that the Jellid is almost certainly gibbed and already dead beyond repair.
