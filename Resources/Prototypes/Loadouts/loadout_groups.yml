@@ -1793,6 +1793,7 @@
   loadouts:
   - MedicalDoctorJumpsuit
   - MedicalDoctorJumpskirt
+  - SpaceMedicalJumpsuit
   - SeniorPhysicianJumpsuit
   - SeniorPhysicianJumpskirt
   - MedicalBlueScrubs
@@ -1874,6 +1875,7 @@
   loadouts:
   - ChemistJumpsuit
   - ChemistJumpskirt
+  - SpaceChemistJumpsuit
 
 - type: loadoutGroup
   id: ChemistNeck
