@@ -89,6 +89,12 @@ namespace Content.Server.Atmos.EntitySystems
             // Get the item that was equipped
             var equippedItem = args.Equipped;
 
+            if (!HasComp<JellidComponent>(playerUid))
+            {
+                Log.Error($"Player is not a Jellid");
+                return;
+            }
+
             // Check if the item is flammable
             if (TryComp<FlammableComponent>(equippedItem, out var flammable))
             {
