@@ -1,7 +1,10 @@
-namespace Content.Shared.Jellids;
+using Content.Shared.GameObjects.Components;
 
-[RegisterComponent]
-public sealed partial class JellidEntityComponent : Component
+namespace Content.Server.Chemistry.EntitySystems
 {
+    [RegisterComponent]
+    public class JellidComponent : Component
+    {
 
+    }
 }
