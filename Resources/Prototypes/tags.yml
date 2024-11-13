@@ -390,6 +390,9 @@
 - type: Tag
   id: CartridgePistol
 
+  - type: Tag
+  id: CartridgeLPistol
+
 - type: Tag
   id: CartridgeRifle
 
@@ -952,6 +955,12 @@
 - type: Tag
   id: MagazinePistol
 
+- type: Tag
+  id: MagazineLPistol
+
+- type: Tag
+  id: MagazineZipper
+  
 - type: Tag
   id: MagazinePistolCaselessRifle
 
