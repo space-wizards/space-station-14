@@ -1,0 +1,11 @@
+using Content.Shared.GameObjects.Components;
+
+namespace Content.Server.Components
+{
+    [RegisterComponent]
+    public class JellidComponent : Component
+    {
+        // This component doesn't need to hold data for now,
+        // it will be used just to mark entities of the "Jellid" race.
+    }
+}
