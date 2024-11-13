@@ -74,6 +74,9 @@ public sealed partial class EmotesMenu : RadialMenu
                 ProtoId = emote.ID,
             };
 
+            if (emote.IsCustomContentType)
+                button.CustomEmoteContent = name;
+
             var tex = new TextureRect
             {
                 VerticalAlignment = VAlignment.Center,
@@ -115,7 +118,7 @@ public sealed partial class EmotesMenu : RadialMenu
 
             castChild.OnButtonUp += _ =>
             {
-                OnPlayEmote?.Invoke(castChild.ProtoId, castChild.ToolTip);
+                OnPlayEmote?.Invoke(castChild.ProtoId, castChild.CustomEmoteContent);
                 Close();
             };
         }
@@ -126,4 +129,5 @@ public sealed partial class EmotesMenu : RadialMenu
 public sealed class EmoteMenuButton : RadialMenuTextureButton
 {
     public ProtoId<EmotePrototype> ProtoId { get; set; }
+    public string? CustomEmoteContent { get; set; }
 }
