@@ -1630,7 +1630,7 @@ entities:
     - Anchorable
     - Destructible
     - Construction
-- proto: CableApcExtension
+- proto: CableApcExtensionUncuttable
   entities:
   - uid: 203
     components:
@@ -3063,7 +3063,7 @@ entities:
     missingComponents:
     - Destructible
     - RCDDeconstructable
-- proto: CableHV
+- proto: CableHVUncuttable
   entities:
   - uid: 413
     components:
@@ -3110,7 +3110,7 @@ entities:
     missingComponents:
     - Destructible
     - RCDDeconstructable
-- proto: CableMV
+- proto: CableMVUncuttable
   entities:
   - uid: 177
     components:
@@ -3769,7 +3769,7 @@ entities:
     missingComponents:
     - Destructible
     - RCDDeconstructable
-- proto: CableTerminal
+- proto: CableTerminalUncuttable
   entities:
   - uid: 417
     components:
