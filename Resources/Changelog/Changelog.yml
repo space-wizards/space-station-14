@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: PoorMansDreams
-  changes:
-  - message: Throngler Plushie looks like a plushie
-    type: Tweak
-  id: 7106
-  time: '2024-08-13T20:32:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30969
 - author: IProduceWidgets
   changes:
   - message: shuttle events have been separated from other midround events and can
@@ -3949,3 +3942,10 @@
   id: 7605
   time: '2024-11-13T02:59:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33223
+- author: Ubaser
+  changes:
+  - message: Window sprites are now slightly more transparent.
+    type: Tweak
+  id: 7606
+  time: '2024-11-13T12:30:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33282
