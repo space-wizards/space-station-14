@@ -20,7 +20,6 @@ public sealed class PermanentBlindnessSystem : EntitySystem
     {
         SubscribeLocalEvent<PermanentBlindnessComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<PermanentBlindnessComponent, ComponentShutdown>(OnShutdown);
-        //SubscribeLocalEvent<PermanentBlindnessComponent, ComponentRemove>(OnRemove);
         SubscribeLocalEvent<PermanentBlindnessComponent, ExaminedEvent>(OnExamined);
     }
 
