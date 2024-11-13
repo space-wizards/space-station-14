@@ -175,7 +175,8 @@ public sealed class UdderSystem : EntitySystem
                 message = Loc.GetString("udder-system-examine-hungry", ("entity", entityIdentity));
                 break;
 
-            case HungerThreshold.Starving:
+            // There's a final hunger threshold called "dead" but animals don't actually die so we'll re-use this.
+            case <= HungerThreshold.Starving:
                 message = Loc.GetString("udder-system-examine-starved", ("entity", entityIdentity));
                 break;
 
