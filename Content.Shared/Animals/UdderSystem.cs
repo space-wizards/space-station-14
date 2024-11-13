@@ -163,17 +163,24 @@ public sealed class UdderSystem : EntitySystem
         // Choose the correct examine string based on HungerThreshold.
         switch (_hunger.GetHungerThreshold(hunger))
         {
-            case HungerThreshold.Overfed:
+            case >= HungerThreshold.Overfed:
                 message = Loc.GetString("udder-system-examine-overfed", ("entity", entityIdentity));
                 break;
 
-            case <= HungerThreshold.Peckish:
+            case HungerThreshold.Okay:
+                message = Loc.GetString("udder-system-examine-okay", ("entity", entityIdentity));
+                break;
+
+            case HungerThreshold.Peckish:
                 message = Loc.GetString("udder-system-examine-hungry", ("entity", entityIdentity));
                 break;
 
-            default:
-                message = Loc.GetString("udder-system-examine-none", ("entity", entityIdentity));
+            case HungerThreshold.Starving:
+                message = Loc.GetString("udder-system-examine-starved", ("entity", entityIdentity));
                 break;
+
+            default:
+                return;
         }
 
         args.PushMarkup(message);
