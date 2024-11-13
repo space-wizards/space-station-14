@@ -125,7 +125,7 @@ while (playerQuery.MoveNext(out var playerUid, out var handsComponent))
     }
 
     float energy2 = 0f;
-    energy2 = 15f * frameTime; // God, forgive me for my hardcodedness
+    energy2 = 30f * frameTime; // God, forgive me for my hardcodedness
 
     foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((heldItem, container)))
     {
