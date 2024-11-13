@@ -1,0 +1,12 @@
+- type: entity
+  id: ClothingAbductorBeltFilled
+  parent: ClothingAbductorBelt
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: CrowbarAbductor
+      - id: WrenchAbductor
+      - id: ScrewdriverAbductor
+      - id: WirecutterAbductor
+      - id: WelderAbductor

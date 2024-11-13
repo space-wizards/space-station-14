@@ -14,16 +14,25 @@
 			"name": "advanced-retractor"
 		},
 		{
+			"name": "abductor-retractor"
+		},
+		{
 			"name": "hemostat"
 		},
 		{
 			"name": "advanced-hemostat"
 		},
 		{
+			"name": "abductor-hemostat"
+		},
+		{
 			"name": "setter"
 		},
 		{
 			"name": "advanced-setter"
+		},
+		{
+			"name": "abductor-setter"
 		},
 		{
 			"name": "inhand-left",

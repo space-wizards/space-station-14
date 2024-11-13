@@ -183,3 +183,23 @@
       - state: equipped-BELT
       - state: cover-equipped-BELT
         color: "#968000"
+
+# Abductor's Crowbar
+- type: entity
+  parent: BaseCrowbar
+  id: CrowbarAbductor
+  name: abductor's crowbar
+  description: A multipurpose tool to pry open doors and fight interdimensional invaders.
+  components:
+  - type: Sprite
+    state: abductor
+  - type: Item
+    storedSprite:
+      sprite: Objects/Tools/crowbar.rsi
+      state: abductor
+  - type: Tool
+    speedModifier: 2
+    qualities:
+      - Prying
+    useSound:
+      path: /Audio/Items/crowbar.ogg

@@ -11,6 +11,9 @@
 			"name": "drill"
 		},
 		{
+			"name": "abductor"
+		},
+		{
 			"name": "inhand-left",
 			"directions": 4
 		},

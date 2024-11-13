@@ -96,3 +96,56 @@
   - type: Appearance
   - type: StaticPrice
     price: 1000
+    
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingAbductorBelt
+  name: abductor belt
+  description: Can hold various OUR things.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Belt/abductor.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Belt/abductor.rsi
+  - type: Storage
+    maxItemSize: Normal
+    grid:
+    - 0,0,9,1
+    whitelist:
+      tags:
+        - Powerdrill
+        - Wirecutter
+        - Crowbar
+        - Screwdriver
+        - Flashlight
+        - Wrench
+        - GeigerCounter
+        - Flare
+        - CableCoil
+        - CigPack
+        - Radio
+        - Knife
+        - Multitool
+        - AppraisalTool
+        - JawsOfLife
+        - GPS
+        - WeldingMask
+      components:
+        - SprayPainter
+        - NetworkConfigurator
+        - Welder
+        - PowerCell
+        - Geiger
+        - TrayScanner
+        - GasAnalyzer
+        - HandLabeler
+        - Stunbaton
+        - FlashOnTrigger
+        - SmokeOnTrigger
+        - Flash
+        - Handcuff
+        - BallisticAmmoProvider
+        - Ammo
+  - type: Appearance
+  - type: StaticPrice
+    price: 1000

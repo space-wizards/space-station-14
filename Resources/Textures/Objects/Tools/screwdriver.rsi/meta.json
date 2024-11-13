@@ -11,6 +11,18 @@
       "name": "screwdriver"
     },
     {
+      "name": "abductor",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
       "name": "screwdriver-map"
     },
     {
