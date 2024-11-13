@@ -1,5 +1,8 @@
-﻿using Content.Server.Atmos.Components;
+﻿using Content.Server.Administration.Logs;
+using Content.Server.Atmos.Components;
+using Content.Shared.Atmos;
 using Content.Shared.Damage;
+using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 
 
@@ -14,6 +17,7 @@ public sealed class InWaterSystem : EntitySystem
     private float _timer = 0f;
     [Dependency] private readonly AtmosphereSystem _atmo = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly IAdminLogManager _adminLog = default!;
 
     public override void Initialize()
     {
@@ -39,21 +43,39 @@ public sealed class InWaterSystem : EntitySystem
             {
                 continue;
             }
-            var totalDamage = FixedPoint2.Zero;
-            foreach (var (barotraumaDamageType, _) in inWater.Damage.DamageDict)
+            // No point calculating things if we aren't in water
+            GasMixture? mixture = _atmo.GetContainingMixture(uid);
+            if (!(mixture != null && mixture.GetMoles(9) >= inWater.WaterThreshold))
             {
-                if (!damageable.Damage.DamageDict.TryGetValue(barotraumaDamageType, out var damage))
+                if (inWater.TakingDamage)
+                {
+                    inWater.TakingDamage = false;
+                    //Look at me i'm even being proper with logging
+                    _adminLog.Add(LogType.Electrocution, $"Entity {uid} is no longer taking damage from water.");
+                }
+                continue;
+            }
+
+            var totalDamage = FixedPoint2.Zero;
+            foreach (var (damageType, _) in inWater.Damage.DamageDict)
+            {
+                if (!damageable.Damage.DamageDict.TryGetValue(damageType, out var damage))
                     continue;
                 totalDamage += damage;
             }
 
-            //if (totalDamage >= gasComp.MaxDamage)
-            //    continue;
-
-            if (_atmo.GetContainingMixture(uid) is { } mixture)
+            if (totalDamage >= inWater.MaxDamage)
             {
-
+                continue;
             }
+
+            _damageable.TryChangeDamage(uid, inWater.Damage, true);
+            if (!inWater.TakingDamage)
+            {
+                inWater.TakingDamage = true;
+                _adminLog.Add(LogType.Electrocution, $"Entity {uid} is now taking damage from water.");
+            }
+
         }
     }
 }

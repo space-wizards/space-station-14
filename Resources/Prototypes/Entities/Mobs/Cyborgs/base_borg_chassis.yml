@@ -222,6 +222,11 @@
     guides:
       - Cyborgs
   - type: StepTriggerImmune
+  - type: InWater
+    damagedByWater: true
+    damage:
+        types:
+            Shock: 5
 
 - type: entity
   abstract: true
