@@ -286,6 +286,23 @@
     - id: FoodPizzaCotton
     - id: KnifePlastic
 
+- type: entity
+  name: pizza box
+  parent: FoodBoxPizza
+  id: FoodBoxPizzaFilledMoth
+  suffix: Filled
+  components:
+  - type: Sprite
+    layers:
+    - state: box
+    - state: box-open
+      map: ["enum.StorageVisualLayers.Door"]
+  - type: StorageFill
+    contents:
+    - id: FoodPizzaCotton
+      amount: 1
+    - id: KnifePlastic
+      amount: 1
 # Nugget
 
 - type: entity

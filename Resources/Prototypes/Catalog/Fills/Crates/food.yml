@@ -166,3 +166,120 @@
       - id: DrinkFourteenLokoCan
         amount: 4
 
+- type: entity
+  id: CrateFoodGetMore
+  parent: CratePlastic
+  name: Getmore Bakemore crate
+  description: GetMore branded snacks and baking supplies for the creative chef, all without the need of emptying your station's GetMore machines!
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodSnackRaisins
+      amount: 6
+    - id: FoodSnackChocolate
+      amount: 6
+    - id: FoodSnackPistachios
+      amount: 6
+    - id: ReagentContainerFlour
+      amount: 3
+    - id: ReagentContainerSugar
+      amount: 2
+    - id: FoodCondimentPacketSalt
+      amount: 3
+    - id: DrinkMilkCarton
+      amount: 2
+    - id: FoodContainerEgg
+      amount: 2
+
+- type: entity
+  id: CrateFoodCannibal
+  parent: CrateFreezer
+  name: black market meats freezer
+  description: Some meat for the kitchen, just don't ask where it came from. Includes 8 pieces of meat.
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodMeatHuman
+      amount: 4
+    - id: FoodMeatLizard
+      amount: 2
+    - id: FoodMeatPlant
+      amount: 2
+
+- type: entity
+  id: CrateFoodPizzaMoth
+  parent: CratePlastic
+  name: moth pizza delivery
+  description: Help feed your station's hungry moths with some tasty cotton pizzas! Includes 4 pizzas.
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodBoxPizzaFilledMoth
+      amount: 4
+    - id: LidSalami
+      prob: 0.01
+
+- type: entity
+  id: CrateFoodSurprise
+  parent: CratePlastic
+  name: personnel surprise crate
+  description: A tasty surprise for a special person on the station. Not made for sharing!
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodBurgerCrazy
+      amount: 1
+    - id: FoodMealFriesCheesy
+      amount: 1
+    - id: DrinkColaBottleFull
+      amount: 1
+    - id: FoodCakeBirthdaySlice
+      amount: 1
+    - id: ClothingHeadHatPartyWaterCup
+      amount: 1
+    - id: MysteryFigureBox
+      amount: 1
+
+- type: entity
+  id: CrateFoodIceCream
+  parent: CratePlastic
+  name: ice cream delivery
+  description: An assortment of ice cream delights for any occasion! Includes 16 frozen treats.
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodFrozenSandwich
+      amount: 3
+    - id: FoodFrozenSandwichStrawberry
+      amount: 2
+    - id: FoodFrozenPopsicleOrange
+      amount: 2
+    - id: FoodFrozenPopsicleBerry
+      amount: 2
+    - id: FoodFrozenPopsicleJumbo
+      amount: 3
+    - id: FoodFrozenCornuto
+      amount: 2
+    - id: FoodFrozenSundae
+      amount: 2
+
+- type: entity
+  id: CrateFoodSnowcone
+  parent: CratePlastic
+  name: snowcone delivery
+  description: A packed crate of refreshing snowcones for a hard working crew, or even a lazy one! Includes 16 snowcones.
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodFrozenSnowconeBase
+      amount: 3
+    - id: FoodFrozenSnowconeBerry
+      amount: 3
+    - id: FoodFrozenSnowconeFruit
+      amount: 3
+    - id: FoodFrozenSnowconeRainbow
+      amount: 3
+    - id: FoodFrozenSnowconeClown
+      amount: 2
+    - id: FoodFrozenSnowconeMime
+      amount: 2
