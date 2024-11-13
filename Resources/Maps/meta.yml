@@ -11115,7 +11115,7 @@ entities:
       pos: -42.5,29.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -24915.055
+      secondsUntilStateChange: -25260.242
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 2
@@ -13937,6 +13937,8 @@ entities:
       parent: 5350
   - uid: 10831
     components:
+    - type: MetaData
+      name: TEG APC
     - type: Transform
       pos: 69.5,-28.5
       parent: 5350
@@ -136249,20 +136251,6 @@ entities:
         - Pressed: Toggle
         24628:
         - Pressed: Toggle
-  - uid: 27123
-    components:
-    - type: MetaData
-      desc: Opens and closes the blast doors of the combustion chamber.
-      name: blast doors
-    - type: Transform
-      pos: 69.5,-43.5
-      parent: 5350
-    - type: DeviceLinkSource
-      linkedPorts:
-        27136:
-        - Pressed: Toggle
-        27135:
-        - Pressed: Toggle
 - proto: SignalButtonDirectional
   entities:
   - uid: 3005
@@ -138068,6 +138056,8 @@ entities:
       parent: 5350
   - uid: 27014
     components:
+    - type: MetaData
+      name: TEG SMES
     - type: Transform
       pos: 70.5,-26.5
       parent: 5350
@@ -141126,6 +141116,8 @@ entities:
       parent: 5350
   - uid: 27141
     components:
+    - type: MetaData
+      name: TEG Substation
     - type: Transform
       pos: 70.5,-25.5
       parent: 5350
