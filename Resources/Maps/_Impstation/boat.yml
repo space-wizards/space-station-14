@@ -57989,7 +57989,7 @@ entities:
     - type: ContainerContainer
       containers:
         lens_slot: !type:ContainerSlot {}
-- proto: ClothingEyesHudMedSecCrafted
+- proto: ClothingEyesHudMedSec
   entities:
   - uid: 14941
     components:

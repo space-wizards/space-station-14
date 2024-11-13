@@ -8252,7 +8252,7 @@ entities:
     - type: ContainerContainer
       containers:
         lens_slot: !type:ContainerSlot {}
-- proto: ClothingEyesHudMedSecCrafted
+- proto: ClothingEyesHudMedSec
   entities:
   - uid: 2441
     components:

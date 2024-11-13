@@ -151,15 +151,15 @@
   parent: [ClothingEyesBase, BaseLensSlot, ShowSecurityIcons, ShowMedicalIcons, BaseSecurityContraband]
   id: ClothingEyesHudMedSec
   name: medsec hud
-  description: A specialized pair of glasses with flash protection that displays both medical and security information, only issued to brigmedics.
+  description: A specialized pair of glasses that displays both medical and security information.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Hud/medsec.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/medsec.rsi
-  - type: FlashImmunity
-  - type: EyeProtection
-    protectionTime: 5
+  - type: Construction
+    graph: ClothingEyesHudMedSec
+    node: shoes
 
 - type: entity
   parent: [ClothingEyesBase, BaseLensSlot, ShowSecurityIcons, ShowMedicalIcons]
