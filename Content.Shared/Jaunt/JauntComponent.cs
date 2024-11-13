@@ -3,8 +3,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Jaunt;
 
-// Used to control various aspects of a Jaunt
-//  Can be used in-place of giving a jaunt-action directly
+/// <summary>
+///     Used to control various aspects of a Jaunt.
+///     Can be used in place of giving a jaunt-action directly.
+/// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class JauntComponent : Component
 {
