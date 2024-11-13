@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Spessmann
-  changes:
-  - message: Added Cog, a new midpop map based on Cogmap from ss13
-    type: Add
-  id: 7105
-  time: '2024-08-13T19:27:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30840
 - author: PoorMansDreams
   changes:
   - message: Throngler Plushie looks like a plushie
@@ -3948,3 +3941,11 @@
   id: 7604
   time: '2024-11-12T12:06:43.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33011
+- author: august-sun
+  changes:
+  - message: The inert flesh anomaly core can now be microwaved to turn into an anomalous
+      meat mass.
+    type: Tweak
+  id: 7605
+  time: '2024-11-13T02:59:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33223
