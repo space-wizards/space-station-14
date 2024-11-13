@@ -548,3 +548,18 @@ Entries:
     changes:
     - type: Add
       message: Two more memorable Liltenlines to round end!
+  - id: 182
+    author: spanky-spanky
+    time: '2024-11-13T14:52:59.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/182
+    changes:
+    - type: Add
+      message: New lobby track, "Rusty Cans (Battle)."
+  - id: 181
+    author: FluffMe
+    time: '2024-11-13T14:58:47.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/181
+    changes:
+    - type: Tweak
+      message: Suicide console command is now disabled on Harmony. It will just ghost
+        you instead.
