@@ -59,7 +59,7 @@
 - type: entity
   id: CartridgeLPistolUranium
   name: cartridge (.22 auto uranium)
-  parent: BaseCartridgePistol
+  parent: BaseCartridgeLPistol
   components:
   - type: CartridgeAmmo
     proto: BulletLPistolUranium
