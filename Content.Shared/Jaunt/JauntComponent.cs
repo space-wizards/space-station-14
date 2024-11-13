@@ -10,7 +10,9 @@ namespace Content.Shared.Jaunt;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class JauntComponent : Component
 {
-    // Which Jaunt Action the component should grant
+    /// <summary>
+    ///     Which Jaunt Action the component should grant.
+    /// </summary>
     [DataField]
     public EntProtoId JauntAction = "ActionPolymorphJaunt";
 
