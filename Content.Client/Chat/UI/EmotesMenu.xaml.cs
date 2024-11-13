@@ -61,7 +61,7 @@ public sealed partial class EmotesMenu : RadialMenu
             }
             else
             {
-                name = emote.Name;
+                name = Loc.GetString(emote.Name);
             }
 
             var parent = FindControl<RadialContainer>(emote.Category.ToString());
@@ -70,7 +70,7 @@ public sealed partial class EmotesMenu : RadialMenu
             {
                 StyleClasses = { "RadialMenuButton" },
                 SetSize = new Vector2(64f, 64f),
-                ToolTip = Loc.GetString(name),
+                ToolTip = name,
                 ProtoId = emote.ID,
             };
 
