@@ -14,12 +14,13 @@ public sealed partial class GunSystem
         if (component.Entities.Count > 0)
         {
             var existing = component.Entities[^1];
-            EjectCartridge(existing);
 
             component.Entities.RemoveAt(component.Entities.Count - 1);
 
             Containers.Remove(existing, component.Container);
             EnsureShootable(existing);
+
+            EjectCartridge(existing);
         }
         else if (component.UnspawnedCount > 0)
         {

@@ -65,7 +65,7 @@ public abstract partial class SharedGunSystem
         if (GetBallisticShots(component) >= component.Capacity)
             return;
 
-        if (component.BoltClosed != null && component.BoltClosed != component.BoltClosedReload)
+        if (component.BoltClosed == true)
             return;
 
         component.Entities.Add(args.Used);
@@ -132,7 +132,7 @@ public abstract partial class SharedGunSystem
             return;
         }
 
-        if (target.BoltClosed != null && target.BoltClosed != target.BoltClosedReload)
+        if (target.BoltClosed == true)
         {
             return;
         }
@@ -316,24 +316,14 @@ public abstract partial class SharedGunSystem
 
                 args.Ammo.Add((entity, EnsureShootable(entity)));
 
-                if (component.AutoCycle)
-                {
-                    component.Entities.RemoveAt(component.Entities.Count - 1);
-                    Containers.Remove(entity, component.Container);
-                }
+                component.Entities.RemoveAt(component.Entities.Count - 1);
+                Containers.Remove(entity, component.Container);
             }
             else if (component.UnspawnedCount > 0)
             {
-                entity = Spawn(component.Proto, args.Coordinates);
                 component.UnspawnedCount--;
-
+                entity = Spawn(component.Proto, args.Coordinates);
                 args.Ammo.Add((entity, EnsureShootable(entity)));
-
-                if (!component.AutoCycle)
-                {
-                    component.Entities.Add(entity);
-                    Containers.Insert(entity, component.Container);
-                }
             }
         }
 
