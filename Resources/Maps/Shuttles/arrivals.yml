@@ -363,7 +363,7 @@ entities:
     - Anchorable
     - Construction
     - Destructible
-- proto: CableApcExtension
+- proto: CableApcExtensionUncuttable
   entities:
   - uid: 123
     components:
@@ -734,7 +734,7 @@ entities:
     missingComponents:
     - Destructible
     - RCDDeconstructable
-- proto: CableHV
+- proto: CableHVUncuttable
   entities:
   - uid: 79
     components:
@@ -1042,7 +1042,7 @@ entities:
     missingComponents:
     - Destructible
     - RCDDeconstructable
-- proto: CableMV
+- proto: CableMVUncuttable
   entities:
   - uid: 117
     components:
@@ -1098,7 +1098,7 @@ entities:
     missingComponents:
     - Destructible
     - RCDDeconstructable
-- proto: CableTerminal
+- proto: CableTerminalUncuttable
   entities:
   - uid: 84
     components:
