@@ -418,4 +418,4 @@
           type: Jellid
         ratios:
           WaterVapor: 1.0
-          SeaWater: -1.0
+          Water: -1.0

@@ -16,12 +16,6 @@
       uiWindowPos: 1,1
       strippingWindowPos: 1,2
       displayName: Suit
-    - name: glovesJellid
-      slotTexture: gloves
-      slotFlags: GLOVESJELLID
-      uiWindowPos: 2,1
-      strippingWindowPos: 2,2
-      displayName: Gloves
     - name: neck
       slotTexture: neck
       slotFlags: NECK
