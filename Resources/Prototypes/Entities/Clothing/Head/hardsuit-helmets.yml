@@ -128,7 +128,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/salvage.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.525
+    highPressureMultiplier: 1000
     lowPressureMultiplier: 1000
   - type: PointLight
     radius: 7
@@ -147,7 +147,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/maxim.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.08
+    highPressureMultiplier: 1000
     lowPressureMultiplier: 1000
   - type: Armor
     modifiers:
