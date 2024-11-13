@@ -844,16 +844,19 @@ namespace Content.Server.Administration.Systems
 
             var totalAhelpsPerRound = _config.GetCVar(CCVars.ActivatePanicBunkerAhelpsPerRound);
 
-            var aHelpTime = _config.GetCVar(CCVars.ActivatePanicBunkerAhelpsTime);
-            var aHelpAmount = _config.GetCVar(CCVars.ActivatePanicBunkerAhelpsAmount);
-
-            if (_activeConversations.Count > totalAhelpsPerRound)
+            if (totalAhelpsPerRound > 0 && _activeConversations.Count > totalAhelpsPerRound)
             {
                 _config.SetCVar(CCVars.PanicBunkerEnabled, true);
                 _sawmill.Info($"Panic bunker enabled, total aHelps this round has exceeded {totalAhelpsPerRound}.");
                 _hasPanicBunkerBeenActivatedThisRound = true;
                 return;
             }
+
+            var aHelpTime = _config.GetCVar(CCVars.ActivatePanicBunkerAhelpsTime);
+            var aHelpAmount = _config.GetCVar(CCVars.ActivatePanicBunkerAhelpsAmount);
+
+            if (aHelpTime <= 0 || aHelpAmount <= 0)
+                return;
 
             var aHelpsInTime = 0;
             foreach (var conversationTime in _activeConversations.Values.ToList())

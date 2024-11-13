@@ -939,6 +939,7 @@ namespace Content.Shared.CCVar
         /// <summary>
         /// If this many aHelps have occured in a round, the server will automatically go into panic bunker mode.
         /// Will respect <see cref="PanicBunkerDisableWithAdmins"/> and will only ever activate at most once per round.
+        /// If zero or less, the feature is disabled.
         /// </summary>
         public static readonly CVarDef<int> ActivatePanicBunkerAhelpsPerRound =
             CVarDef.Create("admin.activate_panic_bunker_after_at", 20, CVar.SERVERONLY);
@@ -947,6 +948,7 @@ namespace Content.Shared.CCVar
         /// If <see cref="ActivatePanicBunkerAhelpsAmount"/> aHelps have been received in <see cref="ActivatePanicBunkerAhelpsTime"/> many minutes,
         /// the server will automatically go into panic bunker mode.
         /// Will respect <see cref="PanicBunkerDisableWithAdmins"/> and will only ever activate at most once per round.
+        /// Set either value to 0 or less to disable.
         /// </summary>
         public static readonly CVarDef<int> ActivatePanicBunkerAhelpsTime =
             CVarDef.Create("admin.activate_panic_bunker_received_ahelps_time", 10, CVar.SERVERONLY);
