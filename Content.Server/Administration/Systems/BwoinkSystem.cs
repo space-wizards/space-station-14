@@ -163,11 +163,6 @@ namespace Content.Server.Administration.Systems
             _overrideClientName = obj;
         }
 
-        public List<DateTime> GetActiveConnectionTimes()
-        {
-            return _activeConversations.Values.ToList();
-        }
-
         private async void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {
             if (e.NewStatus == SessionStatus.Disconnected)
@@ -839,7 +834,7 @@ namespace Content.Server.Administration.Systems
                 return;
 
             // Don't turn it on if there are any admins online and the CCVar is enabled.
-            if (_adminManager.ActiveAdmins.Any() && _config.GetCVar(CCVars.PanicBunkerDisableWithAdmins))
+            if (GetNonAfkAdmins().Count > 0 && _config.GetCVar(CCVars.PanicBunkerDisableWithAdmins))
                 return;
 
             var totalAhelpsPerRound = _config.GetCVar(CCVars.ActivatePanicBunkerAhelpsPerRound);
