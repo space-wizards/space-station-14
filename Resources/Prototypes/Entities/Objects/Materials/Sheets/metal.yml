@@ -79,6 +79,7 @@
     prototypes:
     - Girder
     - MetalRod
+    - MachineFrame
     - TileSteel
     - TileWhite
     - TileDark
