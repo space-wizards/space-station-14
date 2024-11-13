@@ -37,7 +37,7 @@ public sealed class PermanentBlindnessSystem : EntitySystem
 
         if (blindable.MinDamage != 0)
         {
-            _blinding.SetMinDamage(new Entity<BlindableComponent?>(blindness.Owner, blindable), 0);
+            _blinding.SetMinDamage((blindness.Owner, blindable), 0);
         }
     }
 
