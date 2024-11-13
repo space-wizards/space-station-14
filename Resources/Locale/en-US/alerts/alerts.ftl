@@ -7,8 +7,11 @@ alerts-low-nitrogen-desc = There is [color=red]not enough nitrogen[/color] in th
 alerts-high-toxin-name = [color=red]High Toxin Level[/color]
 alerts-high-toxin-desc = There are [color=red]too many toxins[/color] in the air you are breathing. Put on [color=green]internals[/color] or get away.
 
-alerts-drowning-name = [color=red]Plasmolysis[/color]
-alerts-drowning-desc = Your membrane is [color=red]falling apart[/color]! You need [color=green]seawater[/color]!
+alerts-lysis-name = [color=red]Plasmolysis[/color]
+alerts-lysis-desc = Your membrane is [color=red]falling apart[/color]! You need [color=green]seawater[/color]!
+
+alerts-drowning-name = [color=red]Drowning[/color]
+alerts-drowning-desc = You are[color=red]drowning[/color]! Turn on [color=green]internals[/color] or get away!
 
 alerts-low-pressure-name = [color=red]Low Pressure[/color]
 alerts-low-pressure-desc = The air around you is [color=red]hazardously thin[/color]. A [color=green]space suit[/color] would protect you.
