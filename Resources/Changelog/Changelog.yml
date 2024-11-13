@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: IProduceWidgets
-  changes:
-  - message: shuttle events have been separated from other midround events and can
-      now happen concurrently.
-    type: Tweak
-  - message: Cargo Gift events should be less likely.
-    type: Tweak
-  - message: meteors have been changed to be more responsive to player count.
-    type: Tweak
-  - message: 'Game mode: Kessler syndrome - What if survival but also the apocalypse?'
-    type: Add
-  - message: 'Game mode: Zombeteors - Zombies and a meteor shower all at once!'
-    type: Add
-  id: 7107
-  time: '2024-08-14T05:21:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29320
 - author: Blackern5000
   changes:
   - message: Combat medical kits now contain saline syringes.
@@ -3949,3 +3933,11 @@
   id: 7606
   time: '2024-11-13T12:30:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33282
+- author: keronshb
+  changes:
+  - message: Added Ethereal Jaunt! A Wizard Spell that turns you invisible and into
+      a ghost-like creature for escaping!
+    type: Add
+  id: 7607
+  time: '2024-11-13T23:36:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33201
