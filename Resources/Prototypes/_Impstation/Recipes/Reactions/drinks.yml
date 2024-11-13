@@ -341,3 +341,17 @@
       amount: 1
   products:
     ThumperDrink: 3
+
+- type: reaction
+  id: TheGrease
+  requiredMixerCategories:
+  - Stir
+  reactants:
+    DontTell:
+      amount: 3
+    Slime:
+      amount: 2
+    Plasma:
+      amount: 1
+  products:
+    TheGrease: 6

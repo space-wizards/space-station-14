@@ -53,8 +53,6 @@ flavor-base-horrible = horrible
 flavor-base-terrible = terrible
 flavor-base-mindful = mindful
 flavor-base-chewy = chewy
-flavor-base-kingsoda = like you're a champion
-flavor-base-drinkdrink = like dogshit
 
 # Complex flavors. Put a flavor here when you want something that's more
 # specific.
@@ -183,8 +181,6 @@ flavor-complex-true-nature = like the true nature of reality
 flavor-complex-false-meat = not entirely unlike meat
 flavor-complex-paper = like mushy pulp
 flavor-complex-compressed-meat = like compressed meat
-flavor-complex-finfin = like your best friend
-flavor-complex-radiation = like radiation
 
 # Drink-specific flavors.
 
@@ -229,7 +225,6 @@ flavor-complex-milk = like milk
 flavor-complex-tea = like tea
 flavor-complex-ice = like ice
 flavor-complex-mopwata = like stagnant, dirty water
-flavor-complex-raktaccino = fantastically bitter
 
 ## Cocktails
 flavor-complex-arnold-palmer = like a hole-in-one
@@ -269,30 +264,19 @@ flavor-complex-themartinez = like violets and lemon vodka
 flavor-complex-cogchamp = like brass
 flavor-complex-white-gilgamesh = like lightly carbonated cream
 flavor-complex-antifreeze = warm
-flavor-complex-cottonbool = like an angry cloud
-flavor-complex-genderfluid = transitional
-flavor-complex-thavenbad = like you need to pretend you like it
-flavor-complex-zombieslushie = like frostbitten meat
 
 ### This is exactly what pilk tastes like. I'm not even joking. I might've been a little drunk though
 flavor-complex-pilk = like sweet milk
-
-flavor-complex-apple-martini-crystal-lite = tastes like imitation appletini
-flavor-complex-horsepussy = tastes like death and a subsequent memorial
 
 # Medicine/chemical-specific flavors.
 
 ## Generic flavors.
 flavor-complex-medicine = like medicine
-flavor-complex-cigarettes = like cigarettes
+
 flavor-complex-carpet = like a handful of fur
 flavor-complex-bee = unbeelievable
 flavor-complex-sax = like jazz
 flavor-complex-bottledlightning = like lightning in a bottle
 flavor-complex-punishment = like punishment
-flavor-complex-crud = like crud
-flavor-complex-snotty = like snot
-flavor-complex-speed = like speed
 flavor-weh = like weh
-flavour-stardust = like stardust
-flavor-complex-brotherly = brotherly
+
