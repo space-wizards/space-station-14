@@ -21,12 +21,6 @@
             - material: Cable
               amount: 5
               doAfter: 5
-            - tag: Radio
-              name: radio
-              icon:
-                sprite: Objects/Devices/communication.rsi
-                state: walkietalkie
-              doAfter: 5
             - tag: CapacitorStockPart
               name: capacitor
               icon:

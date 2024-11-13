@@ -160,6 +160,9 @@
   - type: Construction
     graph: HudMedSec
     node: medsecHud
+  - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 5
 
 - type: entity
   parent: [ClothingEyesBase, BaseLensSlot, ShowSecurityIcons, ShowMedicalIcons]
