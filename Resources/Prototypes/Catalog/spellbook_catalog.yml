@@ -168,6 +168,6 @@
   conditions:
   - !type:BuyBeforeCondition
     whitelist:
-      - SpellbookJaunt
+    - SpellbookJaunt
   - !type:ListingLimitedStockCondition
     stock: 2
