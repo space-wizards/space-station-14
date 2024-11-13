@@ -105,40 +105,38 @@ namespace Content.Server.Chemistry.EntitySystems
     }
 
     // Now check for players holding valid items that need heating
-    var playerQuery = EntityQueryEnumerator<HandsComponent>();
-    while (playerQuery.MoveNext(out var playerUid, out var handsComponent))
+var playerQuery = EntityQueryEnumerator<HandsComponent>();
+while (playerQuery.MoveNext(out var playerUid, out var handsComponent))
+{
+    Log.Error($"Object was picked up");
+    
+    if (!HasComp<JellidComponent>(playerUid))
     {
-        Log.Error($"Object was picked up");
-        
-        if (!HasComp<JellidComponent>(playerUid))
-            Log.Error($"Player is not a Jellid, skipping");
-            continue; // Skip players who are not Jellid
-
-       
-        if (handsComponent.ActiveHand?.HeldEntity is not EntityUid heldItem)
-            continue;
-
-       
-        if (!TryComp<SolutionContainerManagerComponent>(heldItem, out var container))
-            Log.Error($"Object is not a viable fluid container");
-            continue;
-
-       
-        if (!HasComp<ActiveSolutionHeaterComponent>(playerUid))
-        {
-            Log.Error($"Player does not have an ActiveSolutionHeaterComponent, somehow.");
-            continue;
-        }
-        var itemHeater = EnsureComp<ActiveSolutionHeaterComponent>(playerUid);
-        energy = itemHeater.HeatPerSecond * frameTime;
-
-        
-        foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((heldItem, container)))
-        {
-            _solutionContainer.AddThermalEnergy(soln, energy);
-            Log.Error($"Heating solutions");
-        }
+        Log.Error($"Player is not a Jellid, skipping");
+        continue;
     }
+
+    if (handsComponent.ActiveHand?.HeldEntity is not EntityUid heldItem)
+    {
+        continue;
+    }
+
+    if (!TryComp<SolutionContainerManagerComponent>(heldItem, out var container))
+    {
+        Log.Error($"Object is not a viable fluid container");
+        continue;
+    }
+
+    float energy = 0f;
+    energy = 10f * frameTime; // God, forgive me for my hardcodedness
+
+    foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((heldItem, container)))
+    {
+        _solutionContainer.AddThermalEnergy(soln, energy);
+        Log.Error($"Heating solutions");
+    }
+}
+
 }
 
 
