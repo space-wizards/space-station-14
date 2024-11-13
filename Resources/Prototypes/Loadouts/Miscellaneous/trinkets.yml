@@ -212,10 +212,22 @@
     - GoldPersonalAI
 
 - type: loadout
-  id: FolderBlack
+  id: FolderHamster
   storage:
     back:
-    - BoxFolderBlack
+    - BoxFolderHamster
+
+- type: loadout
+  id: FolderMime
+  storage:
+    back:
+    - BoxFolderMime
+
+- type: loadout
+  id: FolderPun
+  storage:
+    back:
+    - BoxFolderPun
 
 - type: loadout
   id: BarFlask
