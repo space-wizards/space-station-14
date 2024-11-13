@@ -11115,7 +11115,7 @@ entities:
       pos: -42.5,29.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -25260.242
+      secondsUntilStateChange: -25306.475
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 2
@@ -44241,6 +44241,11 @@ entities:
     components:
     - type: Transform
       pos: 71.5,-31.5
+      parent: 5350
+  - uid: 27123
+    components:
+    - type: Transform
+      pos: 70.5,-25.5
       parent: 5350
 - proto: CableHVStack
   entities:
