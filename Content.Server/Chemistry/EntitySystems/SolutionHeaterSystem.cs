@@ -111,8 +111,8 @@ namespace Content.Server.Chemistry.EntitySystems
         Log.Error($"Object was picked up");
         
         if (!HasComp<JellidComponent>(playerUid))
-            continue; // Skip players who are not Jellid
             Log.Error($"Player is not a Jellid, skipping");
+            continue; // Skip players who are not Jellid
 
        
         if (handsComponent.ActiveHand?.HeldEntity is not EntityUid heldItem)
@@ -120,15 +120,16 @@ namespace Content.Server.Chemistry.EntitySystems
 
        
         if (!TryComp<SolutionContainerManagerComponent>(heldItem, out var container))
-            continue;
             Log.Error($"Object is not a viable fluid container");
+            continue;
 
        
         if (!HasComp<ActiveSolutionHeaterComponent>(playerUid))
-            continue;
+        {
             Log.Error($"Player does not have an ActiveSolutionHeaterComponent, somehow.");
-
-     
+            continue;
+        }
+        var itemHeater = EnsureComp<ActiveSolutionHeaterComponent>(playerUid);
         energy = itemHeater.HeatPerSecond * frameTime;
 
         
