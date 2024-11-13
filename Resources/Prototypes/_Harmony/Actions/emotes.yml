@@ -1,0 +1,40 @@
+- type: emote
+  id: Flip
+  name: chat-emote-name-flip
+  category: Hands
+  chatMessages: ["chat-emote-msg-flip"]
+  chatTriggers:
+  - flip
+  - flip.
+  - flip!
+  - flips
+  - flips.
+  - flips!
+  - does a flip
+  - does a flip.
+  - does a flip!
+  event: !type:AnimatedEmoteEvent { emote: "flip", length: 500 }
+
+- type: emote
+  id: Spin
+  name: chat-emote-name-spin
+  category: Hands
+  chatMessages: ["chat-emote-msg-spin"]
+  chatTriggers:
+  - spin
+  - spins
+  - spins.
+  - spins!
+  event: !type:AnimatedEmoteEvent { emote: "spin", length: 600 }
+
+- type: emote
+  id: Jump
+  name: chat-emote-name-jump
+  category: Hands
+  chatMessages: ["chat-emote-msg-jump"]
+  chatTriggers:
+  - jump
+  - jumps
+  - jumps.
+  - jumps!
+  event: !type:AnimatedEmoteEvent { emote: "jump", length: 250 }
