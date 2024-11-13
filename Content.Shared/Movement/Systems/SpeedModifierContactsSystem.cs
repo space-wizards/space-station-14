@@ -1,6 +1,7 @@
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
+using Content.Shared.Gravity;
 using Content.Shared.Slippery;
 using Content.Shared.Whitelist;
 using Robust.Shared.Physics.Components;
@@ -12,6 +13,7 @@ namespace Content.Shared.Movement.Systems;
 public sealed class SpeedModifierContactsSystem : EntitySystem
 {
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedGravitySystem _gravity = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _speedModifierSystem = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
@@ -79,6 +81,11 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
     private void MovementSpeedCheck(EntityUid uid, SpeedModifiedByContactComponent component, RefreshMovementSpeedModifiersEvent args)
     {
         if (!EntityManager.TryGetComponent<PhysicsComponent>(uid, out var physicsComponent))
+            return;
+
+        // entities that are weightless, i.e. no gravity, should not be affected by contact slowdowns
+        // entities that are in the air, i.e. flying mobs, should not be affected by contact slowdowns
+        if (_gravity.IsWeightless(uid) || physicsComponent.BodyStatus == BodyStatus.InAir)
             return;
 
         var walkSpeed = 0.0f;
