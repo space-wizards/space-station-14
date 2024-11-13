@@ -370,6 +370,9 @@
   physicalDesc: reagent-physical-desc-odorless
   flavor: water and salt
   color: "#135c4f"
+  recognizable: true
+  boilingPoint: 100.0
+  meltingPoint: 0.0
   metabolisms:
     Gas:
       effects:
