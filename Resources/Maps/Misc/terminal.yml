@@ -1211,6 +1211,170 @@ entities:
     - RCDDeconstructable
     - Destructible
     - Construction
+- proto: AlwaysPoweredWallLight
+  entities:
+  - uid: 150
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -8.5,-5.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 188
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 11.5,2.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 195
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -2.5,-1.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 209
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 7.5,-5.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 341
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 1.5,-1.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 634
+    components:
+    - type: Transform
+      pos: 9.5,-16.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 636
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 9.5,-11.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 649
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -10.5,-11.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 650
+    components:
+    - type: Transform
+      pos: -10.5,-16.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 687
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -13.5,1.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 701
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -6.5,3.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 702
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 5.5,3.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 715
+    components:
+    - type: Transform
+      pos: -0.5,5.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 717
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -7.5,-3.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
+  - uid: 742
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 6.5,-3.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - RCDDeconstructable
+    - Destructible
 - proto: APCBasic
   entities:
   - uid: 205
@@ -1403,6 +1567,7 @@ entities:
       parent: 818
     - type: Godmode
     missingComponents:
+    - ApcPowerReceiver
     - Destructible
 - proto: BlockGameArcade
   entities:
@@ -1414,6 +1579,7 @@ entities:
       parent: 818
     - type: Godmode
     missingComponents:
+    - ApcPowerReceiver
     - Anchorable
     - Construction
     - Destructible
@@ -1425,6 +1591,7 @@ entities:
       parent: 818
     - type: Godmode
     missingComponents:
+    - ApcPowerReceiver
     - Anchorable
     - Construction
     - Destructible
@@ -1459,6 +1626,7 @@ entities:
       parent: 818
     - type: Godmode
     missingComponents:
+    - ApcPowerReceiver
     - Anchorable
     - Destructible
     - Construction
@@ -6402,170 +6570,6 @@ entities:
       pos: -13.5,-3.5
       parent: 818
     - type: Godmode
-- proto: Poweredlight
-  entities:
-  - uid: 150
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -8.5,-5.5
-      parent: 818
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - RCDDeconstructable
-    - Destructible
-  - uid: 188
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 11.5,2.5
-      parent: 818
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - RCDDeconstructable
-    - Destructible
-  - uid: 195
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -2.5,-1.5
-      parent: 818
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - RCDDeconstructable
-    - Destructible
-  - uid: 209
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 7.5,-5.5
-      parent: 818
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - RCDDeconstructable
-    - Destructible
-  - uid: 341
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 1.5,-1.5
-      parent: 818
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - RCDDeconstructable
-    - Destructible
-  - uid: 634
-    components:
-    - type: Transform
-      pos: 9.5,-16.5
-      parent: 818
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - RCDDeconstructable
-    - Destructible
-  - uid: 636
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 9.5,-11.5
-      parent: 818
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - RCDDeconstructable
-    - Destructible
-  - uid: 649
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -10.5,-11.5
-      parent: 818
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - RCDDeconstructable
-    - Destructible
-  - uid: 650
-    components:
-    - type: Transform
-      pos: -10.5,-16.5
-      parent: 818
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - RCDDeconstructable
-    - Destructible
-  - uid: 687
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -13.5,1.5
-      parent: 818
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - RCDDeconstructable
-    - Destructible
-  - uid: 701
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -6.5,3.5
-      parent: 818
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - RCDDeconstructable
-    - Destructible
-  - uid: 702
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 5.5,3.5
-      parent: 818
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - RCDDeconstructable
-    - Destructible
-  - uid: 715
-    components:
-    - type: Transform
-      pos: -0.5,5.5
-      parent: 818
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - RCDDeconstructable
-    - Destructible
-  - uid: 717
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -7.5,-3.5
-      parent: 818
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - RCDDeconstructable
-    - Destructible
-  - uid: 742
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 6.5,-3.5
-      parent: 818
-    - type: Godmode
-    missingComponents:
-    - Construction
-    - RCDDeconstructable
-    - Destructible
 - proto: RandomSpawner
   entities:
   - uid: 895
@@ -7806,6 +7810,7 @@ entities:
       parent: 818
     - type: Godmode
     missingComponents:
+    - ApcPowerReceiver
     - Anchorable
     - Destructible
     - Construction
@@ -7819,6 +7824,7 @@ entities:
       parent: 818
     - type: Godmode
     missingComponents:
+    - ApcPowerReceiver
     - Anchorable
     - Construction
     - Destructible
@@ -7830,6 +7836,7 @@ entities:
       parent: 818
     - type: Godmode
     missingComponents:
+    - ApcPowerReceiver
     - Anchorable
     - Construction
     - Destructible
@@ -8310,6 +8317,7 @@ entities:
     - type: Godmode
     missingComponents:
     - Destructible
+    - ApcPowerReceiver
     - Anchorable
     - Construction
 - proto: VendingMachineBooze
@@ -8323,6 +8331,7 @@ entities:
     missingComponents:
     - Destructible
     - Anchorable
+    - ApcPowerReceiver
 - proto: VendingMachineCigs
   entities:
   - uid: 744
@@ -8334,6 +8343,7 @@ entities:
     missingComponents:
     - Destructible
     - Anchorable
+    - ApcPowerReceiver
 - proto: VendingMachineCola
   entities:
   - uid: 635
@@ -8345,6 +8355,7 @@ entities:
     missingComponents:
     - Destructible
     - Anchorable
+    - ApcPowerReceiver
 - proto: VendingMachineGames
   entities:
   - uid: 748
@@ -8356,6 +8367,7 @@ entities:
     missingComponents:
     - Destructible
     - Anchorable
+    - ApcPowerReceiver
 - proto: VendingMachineSnack
   entities:
   - uid: 637
@@ -8367,6 +8379,7 @@ entities:
     missingComponents:
     - Destructible
     - Anchorable
+    - ApcPowerReceiver
 - proto: WallRiveted
   entities:
   - uid: 10
