@@ -31,8 +31,12 @@ using Robust.Shared.Random;
 using Content.Server.Inventory;
 using Content.Shared.Inventory;
 using Content.Server.Inventory;
-using Content.Server.Inventory.Events;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Maps;
+using Content.Shared.Hands;
+using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
+using Content.Server.Chemistry.EntitySystems;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -259,7 +263,7 @@ namespace Content.Server.Atmos.EntitySystems
             UpdateAppearance(uid, flammable);
         }
 
-        private void Ignite(EntityUid uid, EntityUid ignitionSource, FlammableComponent? flammable = null, EntityUid? ignitionSourceUser = null)
+        internal void Ignite(EntityUid uid, EntityUid ignitionSource, FlammableComponent? flammable = null, EntityUid? ignitionSourceUser = null)
         {
             if (!Resolve(uid, ref flammable))
                 return;
@@ -282,7 +286,7 @@ namespace Content.Server.Atmos.EntitySystems
             UpdateAppearance(uid, flammable);
         }
 
-        private void AdjustFireStacks(EntityUid uid, float stackDelta, FlammableComponent flammable, bool ignite = false)
+        internal void AdjustFireStacks(EntityUid uid, float stackDelta, FlammableComponent flammable, bool ignite = false)
         {
             flammable.FireStacks = Math.Clamp(flammable.FireStacks + stackDelta, 0, flammable.MaxFireStacks);
             if (ignite)
