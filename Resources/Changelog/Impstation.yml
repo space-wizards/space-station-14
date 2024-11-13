@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: Rat King nerfs and rules
-    type: Tweak
-  id: 4
-  time: '2024-06-27T18:08:57.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/5
 - author: ultramario1998
   changes:
   - message: Fin Fin Part 1
@@ -4148,3 +4141,32 @@
   id: 503
   time: '2024-11-13T06:35:41.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/691
+- author: DinnerCalzone
+  changes:
+  - message: "(Hummingbird) Among peque\xF1o has been given proper judge attire."
+    type: Add
+  - message: (Hummingbird) Added the nuke keg to the maints gambling room.
+    type: Add
+  - message: (Hummingbird) Added windows to the security locker room.
+    type: Add
+  - message: (Hummingbird) Added a shuttle dock to the arrivals area.
+    type: Add
+  - message: (Hummingbird) Added a small maints dock west of the port escape pods.
+    type: Add
+  - message: (Hummingbird) Command roles start in the conference room on the bridge.
+    type: Tweak
+  - message: (Hummingbird) Shortened the evac and annex dock hallways and added debris
+      protection to the evac port.
+    type: Tweak
+  - message: (Hummingbird) Adjusted the salvage recycler area.
+    type: Tweak
+  - message: (Hummingbird) Made various visual changes to tiles and decals.
+    type: Tweak
+  - message: (Hummingbird) Power should now reach the TV in the captain's quarters.
+    type: Fix
+  - message: (Hummingbird) Various other minor changes for a more pleasant gaming
+      experience.
+    type: Tweak
+  id: 504
+  time: '2024-11-13T06:37:25.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/679
