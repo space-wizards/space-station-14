@@ -30,7 +30,6 @@
       children:
       - id: BookAurora
       - id: BookCafe
-      - id: BookClownLaw
       - id: BookEarth
       - id: BookFeather
       - id: BookIanAntarctica
@@ -59,9 +58,19 @@
       - id: BookTruth
       - id: BookWatched
       - id: BookWorld
-      - id: BookAgony
-      - id: BookTEGtorial
+    # Impstation Books
+    - !type:GroupSelector
+      rolls: !type:RangeNumberSelector
+        range: 0, 2
+      children:
+      - id: BookAgony 
+      - id: BookClownLaw
       - id: BookGatsby
+      - !type:GroupSelector
+        children:
+        - id: BookKeelBay
+        - id: BookKeelBayWorn
+      - id: BookTEGtorial
 
 - type: entity
   id: BookshelfFilled

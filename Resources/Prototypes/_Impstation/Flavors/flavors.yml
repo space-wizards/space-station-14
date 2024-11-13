@@ -82,3 +82,9 @@
   id: grease
   flavorType: Complex
   description: flavor-complex-grease
+
+- type: flavor
+  id: whimsy
+  flavorType: Base
+  description: flavor-base-whimsy
+

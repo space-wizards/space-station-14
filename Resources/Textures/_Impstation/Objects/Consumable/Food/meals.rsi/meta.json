@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "lollipop by Doop",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "big-lollipop"
+      },
+      {
+        "name": "big-lollipop-inhand-right",
+        "directions": 4
+      },
+      {
+        "name": "big-lollipop-inhand-left",
+        "directions": 4
+      }
+
+    ]
+  }

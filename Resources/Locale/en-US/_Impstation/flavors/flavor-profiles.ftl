@@ -20,4 +20,4 @@ flavor-complex-brotherly = brotherly
 flavor-complex-crud = like crud
 flavor-complex-snotty = like snot
 flavor-complex-speed = like speed
-
+flavor-base-whimsy = whimsical

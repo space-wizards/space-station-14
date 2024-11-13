@@ -1,0 +1,21 @@
+- type: entity
+  parent: [ClothingUniformBase, ClothingUniformFoldableBase]
+  id: ClothingUniformSpaceJumpsuitMedical
+  name: space medical jumpsuit
+  description: A high quality medical jumpsuit made from the highest quality fibers.. It almost feels like it's from another universe.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacedoctor.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacedoctor.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, ClothingUniformFoldableBase]
+  id: ClothingUniformSpaceJumpsuitChemist
+  name: space chemist jumpsuit
+  description: A high quality chemist jumpsuit made from the highest quality fibers.. It almost feels like it's from another universe.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacechemist.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacechemist.rsi

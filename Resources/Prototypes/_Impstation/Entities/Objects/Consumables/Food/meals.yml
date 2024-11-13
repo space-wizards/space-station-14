@@ -1,0 +1,29 @@
+#Candy!!!!
+
+- type: entity
+  name: giant lollipop
+  parent: FoodMealBase
+  id: FoodMealBigLollipop
+  description: Wow!!! It's as big as your head!!!
+  components:
+  - type: Food
+    trash:
+    - FoodKebabSkewer
+  - type: FlavorProfile
+    flavors:
+      - whimsy
+      - sugar
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Food/meals.rsi
+    state: big-lollipop
+  - type: Item
+    heldPrefix: big-lollipop
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Sugar
+          Quantity: 10
