@@ -50,15 +50,15 @@ public sealed class PermanentBlindnessSystem : EntitySystem
 
     private void OnMapInit(Entity<PermanentBlindnessComponent> blindness, ref MapInitEvent args)
     {
-        if (!_entityManager.TryGetComponent<BlindableComponent>(blindness, out var blindable))
+        if(!TryComp<BlindableComponent>(blindness, out var blindable))
             return;
 
         if (blindness.Comp.Blindness != 0)
-            _blinding.SetMinDamage(new Entity<BlindableComponent?>(blindness.Owner, blindable), blindness.Comp.Blindness);
+            _blinding.SetMinDamage((blindness.Owner, blindable), blindness.Comp.Blindness);
         else
         {
             var maxMagnitudeInt = (int) BlurryVisionComponent.MaxMagnitude;
-            _blinding.SetMinDamage(new Entity<BlindableComponent?>(blindness.Owner, blindable), maxMagnitudeInt);
+            _blinding.SetMinDamage((blindness.Owner, blindable), maxMagnitudeInt);
         }
     }
 }
