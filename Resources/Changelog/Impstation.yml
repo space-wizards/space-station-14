@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ultramario1998
-  changes:
-  - message: Fin Fin Part 1
-    type: Add
-  id: 5
-  time: '2024-06-29T02:19:17.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/7
 - author: TheGrimbeeper
   changes:
   - message: Heavily nerfed rat king's damage (by a lot this time)
@@ -4170,3 +4163,10 @@
   id: 504
   time: '2024-11-13T06:37:25.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/679
+- author: suyo
+  changes:
+  - message: Added three new expedition tracks!
+    type: Add
+  id: 505
+  time: '2024-11-13T06:45:40.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/689
