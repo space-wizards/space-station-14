@@ -19,10 +19,7 @@ public sealed partial class AnimatedEmotesSystem : SharedAnimatedEmotesSystem
         base.Initialize();
 
         SubscribeLocalEvent<AnimatedEmotesComponent, ComponentHandleState>(OnHandleState);
-
-        SubscribeLocalEvent<AnimatedEmotesComponent, AnimationFlipEmoteEvent>(OnFlip);
-        SubscribeLocalEvent<AnimatedEmotesComponent, AnimationSpinEmoteEvent>(OnSpin);
-        SubscribeLocalEvent<AnimatedEmotesComponent, AnimationJumpEmoteEvent>(OnJump);
+        SubscribeLocalEvent<AnimatedEmotesComponent, AnimatedEmoteEvent>(OnAnimatedEmote);
     }
 
     public void PlayEmote(EntityUid uid, Animation anim, string animationKey = "emoteAnimKeyId")
@@ -43,14 +40,22 @@ public sealed partial class AnimatedEmotesSystem : SharedAnimatedEmotesSystem
             RaiseLocalEvent(uid, emote.Event);
     }
 
-    private void OnFlip(Entity<AnimatedEmotesComponent> ent, ref AnimationFlipEmoteEvent args)
+    private void OnAnimatedEmote(Entity<AnimatedEmotesComponent> ent, ref AnimatedEmoteEvent args)
     {
-        var a = new Animation
+        var anim = new Animation
         {
-            Length = TimeSpan.FromMilliseconds(500),
-            AnimationTracks =
-            {
-                new AnimationTrackComponentProperty
+            Length = TimeSpan.FromMilliseconds(args.Length),
+            AnimationTracks = { GetAnimationForEmote(args.Emote) }
+        };
+        PlayEmote(ent, anim);
+    }
+
+    private AnimationTrackComponentProperty GetAnimationForEmote(String emote)
+    {
+        switch (emote)
+        {
+            case "flip":
+                return new AnimationTrackComponentProperty
                 {
                     ComponentType = typeof(SpriteComponent),
                     Property = nameof(SpriteComponent.Rotation),
@@ -61,19 +66,9 @@ public sealed partial class AnimatedEmotesSystem : SharedAnimatedEmotesSystem
                         new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(180), 0.25f),
                         new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(360), 0.25f),
                     }
-                }
-            }
-        };
-        PlayEmote(ent, a);
-    }
-    private void OnSpin(Entity<AnimatedEmotesComponent> ent, ref AnimationSpinEmoteEvent args)
-    {
-        var a = new Animation
-        {
-            Length = TimeSpan.FromMilliseconds(600),
-            AnimationTracks =
-            {
-                new AnimationTrackComponentProperty
+                };
+            case "spin":
+                return new AnimationTrackComponentProperty
                 {
                     ComponentType = typeof(TransformComponent),
                     Property = nameof(TransformComponent.LocalRotation),
@@ -90,19 +85,9 @@ public sealed partial class AnimatedEmotesSystem : SharedAnimatedEmotesSystem
                         new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(270), 0.075f),
                         new AnimationTrackProperty.KeyFrame(Angle.Zero, 0.075f),
                     }
-                }
-            }
-        };
-        PlayEmote(ent, a, "emoteAnimSpin");
-    }
-    private void OnJump(Entity<AnimatedEmotesComponent> ent, ref AnimationJumpEmoteEvent args)
-    {
-        var a = new Animation
-        {
-            Length = TimeSpan.FromMilliseconds(250),
-            AnimationTracks =
-            {
-                new AnimationTrackComponentProperty
+                };
+            case "jump":
+                return new AnimationTrackComponentProperty
                 {
                     ComponentType = typeof(SpriteComponent),
                     Property = nameof(SpriteComponent.Offset),
@@ -113,9 +98,9 @@ public sealed partial class AnimatedEmotesSystem : SharedAnimatedEmotesSystem
                         new AnimationTrackProperty.KeyFrame(new Vector2(0, .35f), 0.125f),
                         new AnimationTrackProperty.KeyFrame(Vector2.Zero, 0.125f),
                     }
-                }
-            }
-        };
-        PlayEmote(ent, a);
+                };
+        }
+
+        return new AnimationTrackComponentProperty();
     }
 }

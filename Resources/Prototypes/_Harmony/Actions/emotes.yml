@@ -13,7 +13,7 @@
   - does a flip
   - does a flip.
   - does a flip!
-  event: !type:AnimationFlipEmoteEvent
+  event: !type:AnimatedEmoteEvent { emote: "flip", length: 500 }
 
 - type: emote
   id: Spin
@@ -25,7 +25,7 @@
   - spins
   - spins.
   - spins!
-  event: !type:AnimationSpinEmoteEvent
+  event: !type:AnimatedEmoteEvent { emote: "spin", length: 600 }
 
 - type: emote
   id: Jump
@@ -37,4 +37,4 @@
   - jumps
   - jumps.
   - jumps!
-  event: !type:AnimationJumpEmoteEvent
+  event: !type:AnimatedEmoteEvent { emote: "jump", length: 250 }
