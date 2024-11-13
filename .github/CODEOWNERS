@@ -43,9 +43,3 @@
 /Content.*/NPC @metalgearsloth
 /Content.*/Shuttles @metalgearsloth
 /Content.*/Weapons @metalgearsloth
-
-# IProduceWidgets
-/Content.*/StationEvents/** @IProduceWidgets
-/Content.*/GameTicking/Events/* @IProduceWidgets
-/Content.*/GameTicking/Rules/* @IProduceWidgets
-/Resources/Prototypes/GameRules/** @IProduceWidgets
