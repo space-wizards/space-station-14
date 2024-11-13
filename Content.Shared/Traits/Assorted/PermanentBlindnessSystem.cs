@@ -20,6 +20,7 @@ public sealed class PermanentBlindnessSystem : EntitySystem
     {
         SubscribeLocalEvent<PermanentBlindnessComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<PermanentBlindnessComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<PermanentBlindnessComponent, ComponentRemove>(OnRemove);
         SubscribeLocalEvent<PermanentBlindnessComponent, ExaminedEvent>(OnExamined);
     }
 
@@ -34,6 +35,17 @@ public sealed class PermanentBlindnessSystem : EntitySystem
     private void OnShutdown(Entity<PermanentBlindnessComponent> blindness, ref ComponentShutdown args)
     {
         _blinding.UpdateIsBlind(blindness.Owner);
+    }
+
+    private void OnRemove(Entity<PermanentBlindnessComponent> blindness, ref ComponentRemove args)
+    {
+        if (!_entityManager.TryGetComponent<BlindableComponent>(blindness, out var blindable))
+            return;
+
+        if (blindable.MinDamage != 0)
+        {
+            _blinding.SetMinDamage(new Entity<BlindableComponent?>(blindness.Owner, blindable), 0);
+        }
     }
 
     private void OnMapInit(Entity<PermanentBlindnessComponent> blindness, ref MapInitEvent args)
