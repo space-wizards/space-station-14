@@ -25,7 +25,6 @@
     capacity: 1
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
-    autoCycle: false
     boltClosed: true
     cycleable: false
     soundBoltClosed: /Audio/Weapons/Guns/Cock/revolver_cock.ogg
@@ -60,14 +59,11 @@
   - type: Item
     size: Small
     sprite: Objects/Weapons/Guns/Shotguns/flaregun_security.rsi
-  - type: ItemSlots
-    slots:
-      gun_chamber:
-        name: Chamber
-        priority: 1
-        whitelist:
-          tags:
-            - ShellShotgun
+  - type: BallisticAmmoProvider
+    whitelist:  ## TODO: Add a risk of the gun blowing up if using non-light shotgun shells, and then re-enable them.
+      tags:
+        - ShellShotgun
+    proto: null
   - type: Tag
     tags:
     - Sidearm
