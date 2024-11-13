@@ -4133,3 +4133,12 @@
   id: 499
   time: '2024-11-12T20:04:17.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/687
+- author: honeyed-lemons
+  changes:
+  - message: Medical and Chemist versions of the Space Jumpsuit
+    type: Add
+  - message: Adjusted Space Cadet Jumpsuit textures
+    type: Tweak
+  id: 500
+  time: '2024-11-13T03:01:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/686
