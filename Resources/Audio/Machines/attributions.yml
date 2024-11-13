@@ -186,3 +186,8 @@
   license: "CC0-1.0"
   copyright: "by ScarKy0"
   source: "https://github.com/space-wizards/space-station-14/pull/32012"
+
+- files: ["ame_fuelinjection.ogg"]
+  license: "CC0-1.0"
+  copyright: "by AftrLite (Github). Uses audio from hypospray.ogg and hiss.ogg (Found in Resources/Audio/Items)"
+  source: "https://github.com/space-wizards/space-station-14/pull/33097"
