@@ -5,6 +5,11 @@
   chatMessages: ["chat-emote-msg-flip"]
   chatTriggers:
   - flip
+  - flip.
+  - flip!
+  - flips
+  - flips.
+  - flips!
   - does a flip
   - does a flip.
   - does a flip!
