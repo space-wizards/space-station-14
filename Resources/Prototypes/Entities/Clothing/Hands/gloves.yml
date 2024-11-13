@@ -441,3 +441,20 @@
     fiberMaterial: fibers-rubber
     fiberColor: fibers-yellow
   - type: FingerprintMask
+
+
+- type: entity
+  parent: ClothingHandsButcherable
+  id: ClothingHandsGlovesJellid
+  name: jellid gloves TEST
+  description: Wawa moment.
+  components:
+  - type: Clothing
+    slots: [glovesJellid]
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/mercfingerless.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/mercfingerless.rsi
+  - type: Fiber
+    fiberMaterial: fibers-insulative
+    fiberColor: fibers-olive
