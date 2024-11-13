@@ -23,7 +23,7 @@
 - type: entity
   id: BulletLPistolIncendiary
   parent: BaseBulletIncendiary
-  name: bullet (.35 auto incendiary)
+  name: bullet (.22 auto incendiary)
   categories: [ HideSpawnMenu ]
   components:
   - type: Projectile
