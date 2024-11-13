@@ -327,13 +327,13 @@ public abstract partial class SharedGunSystem
                 entity = Spawn(component.Proto, args.Coordinates);
                 component.UnspawnedCount--;
 
+                args.Ammo.Add((entity, EnsureShootable(entity)));
+
                 if (!component.AutoCycle)
                 {
                     component.Entities.Add(entity);
                     Containers.Insert(entity, component.Container);
                 }
-
-                args.Ammo.Add((entity, EnsureShootable(entity)));
             }
         }
 
