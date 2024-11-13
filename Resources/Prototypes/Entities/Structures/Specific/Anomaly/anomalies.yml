@@ -82,7 +82,7 @@
       visible: false
   - type: PointLight
     radius: 6.0
-    energy: 7.5
+    energy: 5
     color: "#E25822"
     castShadows: false
   - type: PyroclasticAnomaly
@@ -165,7 +165,7 @@
       visible: false
   - type: PointLight
     radius: 2.0
-    energy: 5.0
+    energy: 2.5
     color: "#ffffaa"
     castShadows: false
   - type: ElectricityAnomaly
@@ -278,7 +278,7 @@
       visible: false
   - type: PointLight
     radius: 2.0
-    energy: 7.5
+    energy: 5
     color: "#00ccff"
     castShadows: false
   - type: BluespaceAnomaly
@@ -385,7 +385,7 @@
       visible: false
   - type: PointLight
     radius: 2.0
-    energy: 7.5
+    energy: 4
     color: "#5ca8cb"
     castShadows: false
   - type: TileSpawnAnomaly
@@ -412,7 +412,7 @@
     color: "#52ff39"
   - type: PointLight
     radius: 2.0
-    energy: 7.5
+    energy: 4
     color: "#52ff39"
   - type: EntitySpawnAnomaly
     entries:
@@ -462,7 +462,7 @@
     color: "#fb4747"
   - type: PointLight
     radius: 2.0
-    energy: 7.5
+    energy: 4
     color: "#fb4747"
   - type: EntitySpawnAnomaly
     entries:
@@ -512,7 +512,7 @@
     color: "#47f8ff"
   - type: PointLight
     radius: 2.0
-    energy: 7.5
+    energy: 4
     color: "#47f8ff"
   - type: EntitySpawnAnomaly
     entries:
@@ -562,7 +562,7 @@
     color: "#ff8227"
   - type: PointLight
     radius: 2.0
-    energy: 7.5
+    energy: 4
     color: "#ff8227"
   - type: EntitySpawnAnomaly
     entries:

@@ -45,13 +45,13 @@
           interpolate: Linear
           maxDuration: 10.0
           startValue: 0.0
-          endValue: 3.0
+          endValue: 2.0
           property: Energy
         - !type:FadeBehaviour # fade out energy as it burns out
           id: fade_out
           interpolate: Linear
           maxDuration: 10 # 300.0
-          startValue: 3.0
+          startValue: 2.0
           endValue: 0.2
           property: Energy
         - !type:FadeBehaviour # fade out radius as it burns out

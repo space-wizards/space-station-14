@@ -249,7 +249,7 @@
   components:
   - type: LightBulb
     color: "#B4FCF0"
-    lightEnergy: 4.5
+    lightEnergy: 2.5
     lightRadius: 12
     lightSoftness: 0.5
     BurningTemperature: 350
@@ -263,7 +263,7 @@
   components:
   - type: LightBulb
     color: "#FFAF38"
-    lightEnergy: 4
+    lightEnergy: 2.5
     lightRadius: 10
     lightSoftness: 0.5
     BurningTemperature: 350
@@ -277,7 +277,7 @@
   components:
   - type: LightBulb
     color: "#47f8ff"
-    lightEnergy: 3
+    lightEnergy: 2
     lightRadius: 8
     lightSoftness: 0.5
     BurningTemperature: 350
@@ -297,7 +297,7 @@
   components:
   - type: LightBulb
     color: "#39a1ff"
-    lightEnergy: 3
+    lightEnergy: 2
     lightRadius: 8
     lightSoftness: 0.5
     BurningTemperature: 350
@@ -317,7 +317,7 @@
   components:
   - type: LightBulb
     color: "#ff66cc"
-    lightEnergy: 3
+    lightEnergy: 2
     lightRadius: 8
     lightSoftness: 0.5
     BurningTemperature: 350
@@ -337,7 +337,7 @@
   components:
   - type: LightBulb
     color: "#ff8227"
-    lightEnergy: 3
+    lightEnergy: 2
     lightRadius: 8
     lightSoftness: 0.5
     BurningTemperature: 350
@@ -357,7 +357,7 @@
   components:
   - type: LightBulb
     color: "#fb4747"
-    lightEnergy: 3
+    lightEnergy: 2
     lightRadius: 8
     lightSoftness: 0.5
     BurningTemperature: 350
@@ -377,7 +377,7 @@
   components:
   - type: LightBulb
     color: "#52ff39"
-    lightEnergy: 3
+    lightEnergy: 2
     lightRadius: 8
     lightSoftness: 0.5
     BurningTemperature: 350
