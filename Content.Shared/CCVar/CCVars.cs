@@ -942,7 +942,7 @@ namespace Content.Shared.CCVar
         /// If zero or less, the feature is disabled.
         /// </summary>
         public static readonly CVarDef<int> ActivatePanicBunkerAhelpsPerRound =
-            CVarDef.Create("admin.activate_panic_bunker_after_at", 20, CVar.SERVERONLY);
+            CVarDef.Create("admin.activate_panic_bunker_after_ahelps", 20, CVar.SERVERONLY);
 
         /// <summary>
         /// If <see cref="ActivatePanicBunkerAhelpsAmount"/> aHelps have been received in <see cref="ActivatePanicBunkerAhelpsTime"/> many minutes,
