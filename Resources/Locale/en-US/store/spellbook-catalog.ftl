@@ -17,6 +17,9 @@ spellbook-polymorph-rod-desc = Change into an Immovable Rod with limited movemen
 spellbook-charge-name = Charge
 spellbook-charge-desc = Adds a charge back to your wand!
 
+spellbook-ethereal-jaunt-name = Ethereal Jaunt
+spellbook-ethereal-jaunt-description = Slip into the ethereal plane to slip away from your enemies!
+
 # Equipment
 
 spellbook-wand-polymorph-door-name = Wand of Entrance
@@ -33,3 +36,6 @@ spellbook-event-summon-ghosts-description = Who ya gonna call?
 # Upgrades
 spellbook-upgrade-fireball-name = Upgrade Fireball
 spellbook-upgrade-fireball-description = Upgrades Fireball to a maximum of level 3!
+
+spellbook-upgrade-jaunt-name = Upgrade Ethereal Jaunt
+spellbook-upgrade-jaunt-description = Upgrades Jaunt to a maximum of level 3!
