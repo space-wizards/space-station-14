@@ -34,4 +34,4 @@
                 state: capacitor
               doAfter: 5
     - node: medsecHud
-      entity: ClothingEyesHudMedSec
+      entity: ClothingEyesHudMedSecCrafted

@@ -6195,7 +6195,7 @@ entities:
     - type: Transform
       pos: 18.517508,-2.1870496
       parent: 2
-- proto: ClothingEyesHudMedSec
+- proto: ClothingEyesHudMedSecCrafted
   entities:
   - uid: 903
     components:

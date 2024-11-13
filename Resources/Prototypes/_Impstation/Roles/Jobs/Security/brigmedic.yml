@@ -27,7 +27,7 @@
 - type: startingGear
   id: BrigmedicGear
   equipment:
-    eyes: ClothingEyesGlassesSecurity
+    eyes: ClothingEyesHudMedSec
     ears: ClothingHeadsetBrigmedic
     id: BrigmedicPDA
     belt: ClothingBeltMedicalFilled
