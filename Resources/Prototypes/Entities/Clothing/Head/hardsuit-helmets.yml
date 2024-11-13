@@ -114,6 +114,7 @@
   - type: PressureProtection
     highPressureMultiplier: 1000
     lowPressureMultiplier: 1000
+  - type: StaticViewer
 
 #Salvage Hardsuit
 - type: entity
@@ -132,6 +133,7 @@
   - type: PointLight
     radius: 7
     energy: 3
+  - type: StaticViewer
 
 - type: entity
   parent: ClothingHeadHardsuitBase
@@ -516,6 +518,7 @@
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
+  - type: StaticViewer
 
 #Pirate Captain Hardsuit
 - type: entity
