@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: formlessnameless
   changes:
-  - message: Added Space Grease
-    type: Add
-  id: 2
-  time: '2024-06-22T18:34:53.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/2
-- author: formlessnameless
-  changes:
   - message: Made cigarettes/cigars/joints edible and have the same effect as when
       smoked.
     type: Add
@@ -4143,3 +4136,12 @@
   id: 501
   time: '2024-11-13T03:02:58.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/681
+- author: DinnerCalzone
+  changes:
+  - message: Someone got into the intern's room and showed him how to use the gain
+      knob on his microphone so he won't be so loud. They didn't let him out of the
+      room though, which is pretty fucked up.
+    type: Tweak
+  id: 502
+  time: '2024-11-13T05:44:02.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/693
