@@ -413,16 +413,22 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         if (ent.Comp.RemoteEntity == null)
             return;
 
-        var user = GetInsertedAI(ent);
-
-        if (user == null)
+        if (!_containers.TryGetContainer(ent.Owner, StationAiHolderComponent.Container, out var container) ||
+            container.ContainedEntities.Count != 1)
+        {
             return;
+        }
 
         // Attach them to the portable eye that can move around.
-        if (TryComp(user, out EyeComponent? eyeComp))
-            _eye.SetTarget(user.Value, ent.Comp.RemoteEntity.Value, eyeComp);
+        var user = container.ContainedEntities[0];
 
-        _mover.SetRelay(user.Value, ent.Comp.RemoteEntity.Value);
+        if (TryComp(user, out EyeComponent? eyeComp))
+        {
+            _eye.SetDrawFov(user, false, eyeComp);
+            _eye.SetTarget(user, ent.Comp.RemoteEntity.Value, eyeComp);
+        }
+
+        _mover.SetRelay(user, ent.Comp.RemoteEntity.Value);
     }
 
     private EntityUid? GetInsertedAI(Entity<StationAiCoreComponent> ent)
@@ -430,8 +436,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         if (!_containers.TryGetContainer(ent.Owner, StationAiHolderComponent.Container, out var container) ||
             container.ContainedEntities.Count != 1)
         {
-            _eye.SetDrawFov(user, false, eyeComp);
-            _eye.SetTarget(user, ent.Comp.RemoteEntity.Value, eyeComp);
+            return null;
         }
 
         return container.ContainedEntities[0];
