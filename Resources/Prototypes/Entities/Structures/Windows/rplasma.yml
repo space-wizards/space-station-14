@@ -82,6 +82,8 @@
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks_directional.rsi
+  - type: RadiationBlocker
+    resistance: 2
   - type: Destructible
     thresholds:
     - trigger:
