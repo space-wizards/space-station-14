@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: formlessnameless
   changes:
-  - message: Added Pipi
-    type: Add
-  id: 1
-  time: '2024-06-19T20:07:39.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/1
-- author: formlessnameless
-  changes:
   - message: Added Space Grease
     type: Add
   id: 2
@@ -4142,3 +4135,11 @@
   id: 500
   time: '2024-11-13T03:01:58.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/686
+- author: AftrLite
+  changes:
+  - message: New sprites for Crysosleep pods, Heaters (Atmos), Freezers (Atmos), as
+      well as their Hellfire variants, with new animations!
+    type: Add
+  id: 501
+  time: '2024-11-13T03:02:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/681
