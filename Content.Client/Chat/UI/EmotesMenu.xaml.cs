@@ -38,7 +38,7 @@ public sealed partial class EmotesMenu : RadialMenu
         {
             var player = _playerManager.LocalSession?.AttachedEntity;
             if (emote.Category == EmoteCategory.Invalid ||
-                emote.ChatTriggers.Count == 0 && emote.Category != EmoteCategory.GlobalCustom ||
+                emote.ChatTriggers.Count == 0 && !emote.IsCustomContentType ||
                 !(player.HasValue && whitelistSystem.IsWhitelistPassOrNull(emote.Whitelist, player.Value)) ||
                 whitelistSystem.IsBlacklistPass(emote.Blacklist, player.Value))
                 continue;
@@ -50,9 +50,9 @@ public sealed partial class EmotesMenu : RadialMenu
 
             string name;
 
-            if (emote.Category == EmoteCategory.GlobalCustom)
+            if (emote.IsCustomContentType)
             {
-                var value = _cfg.GetCVar<string>(emote.ID).Trim();
+                var value = _cfg.GetCVar<string>(emote.CustomContentCVar!).Trim();
 
                 if (string.IsNullOrEmpty(value))
                     continue;

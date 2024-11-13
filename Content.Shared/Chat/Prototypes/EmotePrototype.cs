@@ -68,6 +68,14 @@ public sealed partial class EmotePrototype : IPrototype
     /// </summary>
     [DataField]
     public HashSet<string> ChatTriggers = new();
+
+    /// <summary>
+    ///     The name of the CVar that contains the user defined content.
+    /// </summary>
+    [DataField]
+    public string? CustomContentCVar;
+
+    public bool IsCustomContentType => CustomContentCVar != null;
 }
 
 /// <summary>

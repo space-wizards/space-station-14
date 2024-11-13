@@ -26,7 +26,7 @@ public sealed partial class EmotesMenuSystem : EntitySystem
         if (!_prototypeManager.TryIndex(msg.ProtoId, out var proto))
             return;
 
-        if (proto.Category == EmoteCategory.GlobalCustom)
+        if (proto.IsCustomContentType)
         {
             _chat.TryCustomEmote(player.Value, proto, msg.CustomEmote);
         }
