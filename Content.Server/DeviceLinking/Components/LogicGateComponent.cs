@@ -18,8 +18,18 @@ public sealed partial class LogicGateComponent : Component
     [DataField]
     public LogicGate Gate = LogicGate.Or;
 
+
     [DataField]
-    public LogicGateState State = LogicGateState.Logic;
+    public LogicGateState InputA = LogicGateState.Low;
+
+
+    [DataField]
+    public LogicGateState InputB = LogicGateState.Low;
+
+
+    [DataField]
+    public LogicGateState Output = LogicGateState.Low;
+
 
     /// <summary>
     /// Tool quality to use for cycling logic gate operations.
@@ -58,6 +68,8 @@ public sealed partial class LogicGateComponent : Component
 
     [DataField]
     public SignalState StateB = SignalState.Low;
+
+
 
     [DataField]
     public bool LastOutput;

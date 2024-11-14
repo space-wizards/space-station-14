@@ -36,9 +36,14 @@
     layers:
     - state: base
     - state: logic
-      map: ["enum.LogicGateLayers.State"]
+    - state: empty
+      map: ["enum.LogicGateLayers.InputA"]
+    - state: empty
+      map: [ "enum.LogicGateLayers.InputB" ]
+    - state: empty
+      map: [ "enum.LogicGateLayers.Output" ]
     - state: or
-      map: ["enum.LogicGateLayers.Gate"]
+      map: [ "enum.LogicGateLayers.Gate" ]
   - type: LogicGate
   - type: UseDelay
     delay: 0.5
@@ -56,16 +61,6 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.LogicGateVisuals.State:
-        enum.LogicGateLayers.State:
-          Logic: { state: logic }
-          LogicA: { state: logic_a }
-          LogicB: { state: logic_b }
-          LogicO: { state: logic_o }
-          LogicAB: { state: logic_ab }
-          LogicAO: { state: logic_ao }
-          LogicBO: { state: logic_bo }
-          LogicABO: { state: logic_abo }
       enum.LogicGateVisuals.Gate:
         enum.LogicGateLayers.Gate:
           Or: { state: or }
@@ -74,6 +69,18 @@
           Nor: { state: nor }
           Nand: { state: nand }
           Xnor: { state: xnor }
+      enum.LogicGateVisuals.InputA:
+        enum.LogicGateLayers.InputA:
+          High: {state: logic_a }
+          Low:  { state: empty }
+      enum.LogicGateVisuals.InputB:
+        enum.LogicGateLayers.InputB:
+          High: { state: logic_b }
+          Low:  { state: empty }
+      enum.LogicGateVisuals.Output:
+        enum.LogicGateLayers.Output:
+          High: { state: logic_o }
+          Low:  { state: empty }
 
 - type: entity
   parent: LogicGateOr
