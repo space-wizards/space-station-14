@@ -134,10 +134,3 @@
           tags:
             - MagazineZipper
         whitelistFailPopup: gun-magazine-whitelist-fail
-      gun_chamber:
-        name: Chamber
-        startingItem: CartridgeLPistol
-        priority: 1
-        whitelist:
-          tags:
-            - CartridgeLPistol
