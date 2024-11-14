@@ -71,7 +71,7 @@
 
 - type: entity
   id: MagazineBoxLPistolUranium
-  parent: BaseMagazineBoxPistol
+  parent: BaseMagazineBoxLPistol
   name: ammunition box (.22 auto uranium)
   components:
   - type: BallisticAmmoProvider
