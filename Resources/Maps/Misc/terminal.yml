@@ -4297,33 +4297,73 @@ entities:
   - uid: 18
     components:
     - type: Transform
+      anchored: True
       rot: 3.141592653589793 rad
       pos: 9.5,3.5
       parent: 818
+    - type: Physics
+      bodyType: Static
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
 - proto: ChairWood
   entities:
   - uid: 577
     components:
     - type: Transform
+      anchored: True
       pos: 10.5,1.5
       parent: 818
+    - type: Physics
+      bodyType: Static
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Destructible
+    - Anchorable
   - uid: 591
     components:
     - type: Transform
+      anchored: True
       rot: 1.5707963267948966 rad
       pos: 8.5,0.5
       parent: 818
+    - type: Physics
+      bodyType: Static
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Destructible
+    - Anchorable
   - uid: 703
     components:
     - type: Transform
+      anchored: True
       pos: 9.5,1.5
       parent: 818
+    - type: Physics
+      bodyType: Static
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Destructible
+    - Anchorable
   - uid: 704
     components:
     - type: Transform
+      anchored: True
       rot: 1.5707963267948966 rad
       pos: 8.5,-0.5
       parent: 818
+    - type: Physics
+      bodyType: Static
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Destructible
+    - Anchorable
 - proto: ChessBoard
   entities:
   - uid: 714
@@ -6578,36 +6618,6 @@ entities:
       pos: -4.5,4.5
       parent: 818
     - type: Godmode
-- proto: RandomVending
-  entities:
-  - uid: 835
-    components:
-    - type: Transform
-      pos: 9.5,-20.5
-      parent: 818
-    - type: Godmode
-  - uid: 836
-    components:
-    - type: Transform
-      pos: -10.5,-20.5
-      parent: 818
-    - type: Godmode
-- proto: RandomVendingDrinks
-  entities:
-  - uid: 692
-    components:
-    - type: Transform
-      pos: 11.5,-5.5
-      parent: 818
-    - type: Godmode
-- proto: RandomVendingSnacks
-  entities:
-  - uid: 834
-    components:
-    - type: Transform
-      pos: 11.5,-6.5
-      parent: 818
-    - type: Godmode
 - proto: ReinforcedWindow
   entities:
   - uid: 19
@@ -8047,9 +8057,12 @@ entities:
   - uid: 119
     components:
     - type: Transform
+      anchored: True
       rot: 3.141592653589793 rad
       pos: -11.5,-20.5
       parent: 818
+    - type: Physics
+      bodyType: Static
     - type: Godmode
     missingComponents:
     - Construction
@@ -8058,9 +8071,12 @@ entities:
   - uid: 639
     components:
     - type: Transform
+      anchored: True
       rot: 3.141592653589793 rad
       pos: -9.5,-20.5
       parent: 818
+    - type: Physics
+      bodyType: Static
     - type: Godmode
     missingComponents:
     - Construction
@@ -8069,39 +8085,87 @@ entities:
   - uid: 730
     components:
     - type: Transform
+      anchored: True
       rot: 3.141592653589793 rad
       pos: 8.5,-20.5
       parent: 818
+    - type: Physics
+      bodyType: Static
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 737
     components:
     - type: Transform
+      anchored: True
       rot: 3.141592653589793 rad
       pos: 10.5,-20.5
       parent: 818
+    - type: Physics
+      bodyType: Static
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 738
     components:
     - type: Transform
+      anchored: True
       rot: -1.5707963267948966 rad
       pos: -12.5,-0.5
       parent: 818
+    - type: Physics
+      bodyType: Static
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 740
     components:
     - type: Transform
+      anchored: True
       rot: -1.5707963267948966 rad
       pos: -12.5,0.5
       parent: 818
+    - type: Physics
+      bodyType: Static
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 761
     components:
     - type: Transform
+      anchored: True
       rot: -1.5707963267948966 rad
       pos: -12.5,-1.5
       parent: 818
+    - type: Physics
+      bodyType: Static
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
   - uid: 914
     components:
     - type: Transform
+      anchored: True
       rot: -1.5707963267948966 rad
       pos: -12.5,-2.5
       parent: 818
+    - type: Physics
+      bodyType: Static
+    - type: Godmode
+    missingComponents:
+    - Construction
+    - Anchorable
+    - Destructible
 - proto: StoolBar
   entities:
   - uid: 230
@@ -8332,6 +8396,17 @@ entities:
     - Destructible
     - Anchorable
     - ApcPowerReceiver
+- proto: VendingMachineChang
+  entities:
+  - uid: 692
+    components:
+    - type: Transform
+      pos: 9.5,-20.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Anchorable
 - proto: VendingMachineCigs
   entities:
   - uid: 744
@@ -8356,6 +8431,39 @@ entities:
     - Destructible
     - Anchorable
     - ApcPowerReceiver
+- proto: VendingMachineColaBlack
+  entities:
+  - uid: 834
+    components:
+    - type: Transform
+      pos: -10.5,-20.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Anchorable
+- proto: VendingMachineDiscount
+  entities:
+  - uid: 836
+    components:
+    - type: Transform
+      pos: 11.5,-6.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Anchorable
+- proto: VendingMachineDrGibb
+  entities:
+  - uid: 835
+    components:
+    - type: Transform
+      pos: 11.5,-5.5
+      parent: 818
+    - type: Godmode
+    missingComponents:
+    - Destructible
+    - Anchorable
 - proto: VendingMachineGames
   entities:
   - uid: 748
