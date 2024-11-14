@@ -36,7 +36,6 @@
 - type: randomHumanoidSettings
   id: DeathSquad
   parent: EventHumanoidMindShielded
-  randomizeName: false
   components:
     - type: GhostRole
       name: ghost-role-information-Death-Squad-name
@@ -599,7 +598,6 @@
 - type: randomHumanoidSettings
   id: Cluwne
   parent: EventHumanoid
-  randomizeName: false
   components:
     - type: GhostRole
       name: ghost-role-information-cluwne-name

@@ -39,7 +39,7 @@ public sealed class IdBindSystem : EntitySystem
         if (!TryComp<PdaComponent>(uPda, out var pDA))
             return;
 
-        _pdaSystem.SetOwner(uPda.Value, pDA, data.EntityName);
+        _pdaSystem.SetOwner(uPda.Value, pDA, ent, data.EntityName);
         //Remove after running once
         RemCompDeferred<IdBindComponent>(ent);
     }
