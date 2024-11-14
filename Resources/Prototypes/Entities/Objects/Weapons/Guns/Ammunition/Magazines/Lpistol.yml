@@ -32,8 +32,8 @@
   - type: Appearance
 
 - type: entity
-  id: BaseMagazinePipper
-  name: pipper magazine (.22 auto)
+  id: BaseMagazineZipper
+  name: zipper .22 magazine (.22 auto)
   parent: BaseItem
   abstract: true
   components:
@@ -47,7 +47,7 @@
         - CartridgeLPistol
     capacity: 6
   - type: Item
-    size: Small
+    size: Tiny
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
@@ -87,8 +87,8 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  id: MagazinePipperEmpty
-  name: pipper magazine (.22 auto any)
+  id: MagazineZipperEmpty
+  name: zipper .22 magazine (.22 auto any)
   suffix: empty
   parent: BaseMagazineZipper
   components:
