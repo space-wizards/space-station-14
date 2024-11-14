@@ -32,8 +32,8 @@
   - type: Appearance
 
 - type: entity
-  id: BaseMagazineZipper
-  name: zipper magazine (.22 auto)
+  id: BaseMagazinePipper
+  name: pipper magazine (.22 auto)
   parent: BaseItem
   abstract: true
   components:
@@ -87,8 +87,8 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  id: MagazineZipperEmpty
-  name: zipper magazine (.22 auto any)
+  id: MagazinePipperEmpty
+  name: pipper magazine (.22 auto any)
   suffix: empty
   parent: BaseMagazineZipper
   components:
