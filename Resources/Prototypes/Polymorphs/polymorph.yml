@@ -186,3 +186,19 @@
     forced: true
     revertOnCrit: false
     revertOnDeath: false
+
+# Temporary Jaunt
+# Don't make permanent jaunts until action system can be reworked to allow do afters and cooldown pausing
+- type: polymorph
+  id: Jaunt
+  configuration:
+    entity: EtherealJaunt
+    transferName: true
+    inventory: None
+    forced: true
+    revertOnDeath: true
+    revertOnCrit: true
+    allowRepeatedMorphs: false
+    polymorphSound: /Audio/Magic/ethereal_enter.ogg
+    exitPolymorphSound: /Audio/Magic/ethereal_exit.ogg
+    duration: 3
