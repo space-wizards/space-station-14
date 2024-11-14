@@ -30,7 +30,6 @@
         - PAI
     penSlot:
       startingItem: Pen
-      priority: -1
       whitelist:
         tags:
         - Write
@@ -38,6 +37,7 @@
       name: access-id-card-component-default
       ejectSound: /Audio/Machines/id_swipe.ogg
       insertSound: /Audio/Machines/id_insert.ogg
+      priority: -1
       whitelist:
         components:
         - IdCard
