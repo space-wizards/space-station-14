@@ -3,7 +3,7 @@
 
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Emoting;
+namespace Content.Shared._Harmony.Emoting;
 
 public abstract class SharedAnimatedEmotesSystem : EntitySystem
 {

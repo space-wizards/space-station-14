@@ -6,12 +6,12 @@ using Robust.Client.Animations;
 using Robust.Shared.Animations;
 using Robust.Shared.GameStates;
 using Robust.Client.GameObjects;
-using Content.Shared.Emoting;
 using System.Numerics;
 using Robust.Shared.Prototypes;
 using Content.Shared.Chat.Prototypes;
+using Content.Shared._Harmony.Emoting;
 
-namespace Content.Client.Emoting;
+namespace Content.Client._Harmony.Emoting;
 
 public sealed partial class AnimatedEmotesSystem : SharedAnimatedEmotesSystem
 {
