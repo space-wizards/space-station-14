@@ -41,7 +41,7 @@ public sealed partial class AnimatedEmotesSystem : SharedAnimatedEmotesSystem
     public void InitializeEmoteAnimations()
     {
         // flip emote
-        _emoteAnimations["flip"] = new AnimationTrackComponentProperty
+        _emoteAnimations["Flip"] = new AnimationTrackComponentProperty
         {
             ComponentType = typeof(SpriteComponent),
             Property = nameof(SpriteComponent.Rotation),
@@ -55,7 +55,7 @@ public sealed partial class AnimatedEmotesSystem : SharedAnimatedEmotesSystem
         };
 
         // spin emote
-        _emoteAnimations["spin"] = new AnimationTrackComponentProperty
+        _emoteAnimations["Spin"] = new AnimationTrackComponentProperty
         {
             ComponentType = typeof(TransformComponent),
             Property = nameof(TransformComponent.LocalRotation),
@@ -75,7 +75,7 @@ public sealed partial class AnimatedEmotesSystem : SharedAnimatedEmotesSystem
         };
 
         // jump emote
-        _emoteAnimations["jump"] = new AnimationTrackComponentProperty
+        _emoteAnimations["Jump"] = new AnimationTrackComponentProperty
         {
             ComponentType = typeof(SpriteComponent),
             Property = nameof(SpriteComponent.Offset),
@@ -99,16 +99,24 @@ public sealed partial class AnimatedEmotesSystem : SharedAnimatedEmotesSystem
 
     private void OnHandleState(EntityUid uid, AnimatedEmotesComponent component, ref ComponentHandleState args)
     {
-        if (args.Current is not AnimatedEmotesComponentState state
-        || !_prot.TryIndex<EmotePrototype>(state.Emote, out var emote))
+        if (args.Current is not AnimatedEmotesComponentState state)
             return;
 
-        if (emote.Event != null)
-            RaiseLocalEvent(uid, emote.Event);
+        if (!_prot.TryIndex<EmotePrototype>(state.Emote, out var emote))
+            return;
+
+        if (!emote.Animated || emote.AnimationLength == null)
+            return;
+
+        var ev = new AnimatedEmoteEvent { Emote = emote.ID, Length = emote.AnimationLength.Value };
+        RaiseLocalEvent(uid, ev);
     }
 
     private void OnAnimatedEmote(Entity<AnimatedEmotesComponent> ent, ref AnimatedEmoteEvent args)
     {
+        if (args.Length <= 0 || !_emoteAnimations.ContainsKey(args.Emote))
+            return;
+
         var anim = new Animation
         {
             Length = TimeSpan.FromMilliseconds(args.Length),

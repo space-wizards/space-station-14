@@ -71,7 +71,11 @@ public sealed partial class EmotePrototype : IPrototype
 
     // Harmony - Is this emote animated.
     [DataField]
-    public object? Event = null;
+    public bool Animated = false;
+
+    // Harmony - Duration of animation.
+    [DataField]
+    public int? AnimationLength;
 }
 
 /// <summary>
