@@ -1,0 +1,13 @@
+- type: marking
+  id: DionaThornsHead
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Jellid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/diona.rsi
+    state: thorns_head
