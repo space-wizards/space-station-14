@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: TheShuEd
-  changes:
-  - message: added morbilliard variants of procedural tacos and kebabs
-    type: Add
-  - message: removed all microwave taco and kebabs recipes (except for the taco shell
-      itself)
-    type: Remove
-  - message: you can fight with a skewer (even if it has food on it)
-    type: Tweak
-  - message: now you can't put more than 10 layers on a burger. (20 before)
-    type: Tweak
-  id: 7109
-  time: '2024-08-14T13:04:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30905
 - author: themias
   changes:
   - message: Fixed lizards being unable to eat custom burgers
@@ -3941,3 +3927,21 @@
   id: 7608
   time: '2024-11-14T16:56:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33303
+- author: PJB3005
+  changes:
+  - message: Borgs can now select their chassis type upon creation (construction or
+      job spawn), immediately giving borgs access to all chassis types.
+    type: Add
+  - message: Borg chassis types now come with built-in modules depending on the type,
+      so you can immediately do your job without help from science. Some upgrade modules
+      must still be installed later however.
+    type: Add
+  - message: Specialized chassis types have been removed from construction, as they
+      are no longer necessary.
+    type: Remove
+  - message: Borg unlock access is no longer determined by their chassis, it's always
+      science or command. This means the janitor can't unlock jani borgs anymore.
+    type: Remove
+  id: 7609
+  time: '2024-11-14T17:08:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32586
