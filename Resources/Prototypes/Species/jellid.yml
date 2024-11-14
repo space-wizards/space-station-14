@@ -13,7 +13,7 @@
   id: MobJellidSprites
   sprites:
     Head: MobJellidHead
-    Hair: MobJellidMarkingFollowSkin
+    HeadSide: MobJellidMarkingFollowSkin
     FacialHair: MobJelidMarkingFollowSkin
     Chest: MobJellidTorso
     Eyes: MobHumanoidEyes
