@@ -435,39 +435,3 @@
       interactFailureString: petting-failure-syndicate-cyborg
       interactSuccessSound:
         path: /Audio/Ambience/Objects/periodic_beep.ogg
-
-
-- type: entity
-  id: BorgChassisNanoTraitor
-  parent: BaseBorgChassisNanoTraitor
-  name: Nanotrasen cyborg
-  description: A modular cyborg utilized by NT agents.
-  components:
-    - type: Sprite
-      layers:
-        - state: robot_e_r
-        - state: robot_e
-          map: ["enum.BorgVisualLayers.Light"]
-          shader: unshaded
-          visible: false
-        - state: synd_engi_l
-          shader: unshaded
-          map: ["light"]
-          visible: false
-    - type: BorgChassis
-      maxModules: 3
-      moduleWhitelist:
-        tags:
-          - BorgModuleGeneric
-          - BorgModuleEngineering
-          - BorgModuleMedical
-          - BorgModuleService
-          - BorgModuleJanitor
-          - BorgModuleCargo
-          - BorgModuleSyndicate
-      hasMindState: robot_e_r
-      noMindState: robot_e
-    - type: ShowHealthBars
-      damageContainers:
-      - Inorganic
-      - Silicon
