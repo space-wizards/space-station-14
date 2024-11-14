@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: joelsgp
-  changes:
-  - message: Add new logo and more loading tips
-    type: Add
-  id: 13
-  time: '2024-07-02T20:39:11.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/15
 - author: LucasTheDrgn
   changes:
   - message: Forever Weed Brownies
@@ -4217,3 +4210,10 @@
   id: 512
   time: '2024-11-14T22:43:50.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/707
+- author: AirFryerBuyOneGetOneFree
+  changes:
+  - message: 'Added three animated emotes: flipping, spinning, and jumping!!'
+    type: Add
+  id: 513
+  time: '2024-11-14T22:47:21.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/704
