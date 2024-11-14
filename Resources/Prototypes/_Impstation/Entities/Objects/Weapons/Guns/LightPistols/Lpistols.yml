@@ -1,76 +1,6 @@
 - type: entity
-  name: BaseLPistol
-  parent: BaseItem
-  id: BaseWeaponLPistol
-  description: A poopy pooty point and shooty.
-  abstract: true
-  components:
-  - type: Sprite
-    layers:
-      - state: base
-        map: ["enum.GunVisualLayers.Base"]
-      - state: mag-0
-        map: ["enum.GunVisualLayers.Mag"]
-  - type: Item
-    size: Small
-    shape:
-    - 0,0,1,0
-    - 0,1,0,1
-  - type: Tag
-    tags:
-    - Sidearm
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Pistols/viper.rsi
-    quickEquip: false
-    slots:
-    - suitStorage
-    - Belt
-  - type: Gun
-    fireRate: 6
-    selectedMode: SemiAuto
-    availableModes:
-      - SemiAuto
-      - FullAuto
-    soundGunshot:
-      path: /_Impstation/Audio/Weapons/Guns/Gunshots/light-pistol.ogg
-  - type: ChamberMagazineAmmoProvider
-    soundRack:
-      path: /Audio/Weapons/Guns/Cock/pistol_cock.ogg
-  - type: ItemSlots
-    slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: MagazineLPistol
-        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
-        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
-        priority: 2
-        whitelist:
-          tags:
-            - MagazineLPistol
-        whitelistFailPopup: gun-magazine-whitelist-fail
-      gun_chamber:
-        name: Chamber
-        startingItem: CartridgeLPistol
-        priority: 1
-        whitelist:
-          tags:
-            - CartridgeLPistol
-  - type: ContainerContainer
-    containers:
-      gun_magazine: !type:ContainerSlot
-      gun_chamber: !type:ContainerSlot
-  - type: AmmoCounter
-  - type: MagazineVisuals
-    magState: mag
-    steps: 1
-    zeroVisible: true
-  - type: Appearance
-  - type: StaticPrice
-    price: 500
-
-- type: entity
   name: mk 93
-  parent: [ BaseWeaponLPistol, BaseRestrictedContraband ]
+  parent: [ BaseWeaponPistol, BaseRestrictedContraband ]
   id: WeaponPistolMk93
   description: The famous sidearm modified with a fully automatic receiver. Uses .22 auto ammo.
   components:
@@ -94,10 +24,29 @@
     - FullAuto
     soundGunshot:
       path: /_Impstation/Audio/Weapons/Guns/Gunshots/light-pistol.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineLPistol
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineLPistol
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeLPistol
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeLPistol
 
 - type: entity
   name: zipper .22
-  parent: [ BaseWeaponLPistol, BaseRestrictedContraband ]
+  parent: [ BaseWeaponPistol, BaseRestrictedContraband ]
   id: WeaponPistolZipper
   description: Better at delivering the killing blow to the business of its manufacturer than to its actual targets. Uses .22 auto ammo.
   components:
