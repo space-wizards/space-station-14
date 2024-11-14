@@ -7,7 +7,7 @@
   - type: Icon
     sprite: Mobs/Species/Slime/parts.rsi
     state: full
-  - type: Body # TODO: give them a ATP cluster as their stomach, acts as an internal power cell similar to borgs. This is what defines their "hunger" and what charges when holding food.
+  - type: Body
     prototype: Jellid
     requiredLegs: 2
   - type: Electrified
@@ -16,7 +16,7 @@
     temperature: 700
     ignited: true
   - type: AlwaysHot
-  - type: TemperatureProtection # MAKE SURE this doesn't reduce damage inflicted from weaponry
+  - type: TemperatureProtection
     coefficient: 0.6
   - type: UserInterface
     interfaces:
@@ -61,7 +61,7 @@
         sprite: Mobs/Effects/brute_damage.rsi
         color: "#2cf274"
   - type: Bloodstream
-    bloodReagent: SeaWater # the ocean runs through my veins... change this to SeaWater once you fix that error
+    bloodReagent: SeaWater # the ocean runs through my veins...
   - type: Reactive
     groups:
       Flammable: [ Touch ]
@@ -79,7 +79,7 @@
   - type: Respirator
     damage:
       types:
-        Slash: 1
+        Slash: 4
     damageRecovery:
       types:
         Slash: -0.3 # hopefully shouldn't be OP
