@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ultramario1998
-  changes:
-  - message: Added green marijuana
-    type: Add
-  id: 9
-  time: '2024-07-01T18:55:18.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/11
 - author: joelsgp
   changes:
   - message: Fix Lemo tag on bounty
@@ -4173,3 +4166,10 @@
   id: 508
   time: '2024-11-14T01:20:32.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/701
+- author: honeyed-lemons
+  changes:
+  - message: Space Scientist Jumpsuit
+    type: Add
+  id: 509
+  time: '2024-11-14T01:22:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/698
