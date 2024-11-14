@@ -25,3 +25,8 @@
   license: "CC-BY-SA-3.0"
   copyright: "Sunset by PigeonBeans. Exported in Mono OGG."
   source: "https://soundcloud.com/pigeonbeans/sunset"
+
+- files: ["ocean_man.ogg"]
+  license: "WTFPL"
+  copyright: "Ocean Man by Ween. Converted to OGG via y2mate.com"    
+  source: "https://youtu.be/vcaPiiFZu2o"
