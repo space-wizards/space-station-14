@@ -1,7 +1,7 @@
+# To add a new emote, add the prototype here and define animation frames in InitializeEmoteAnimations() at Content.Client/_Harmony/Emoting/AnimatedEmotesSystem.cs
 - type: emote
   id: Flip
   name: chat-emote-name-flip
-  category: Hands
   chatMessages: ["chat-emote-msg-flip"]
   chatTriggers:
   - flip
@@ -13,28 +13,29 @@
   - does a flip
   - does a flip.
   - does a flip!
-  event: !type:AnimatedEmoteEvent { emote: "flip", length: 500 }
+  animated: true
+  animationLength: 500
 
 - type: emote
   id: Spin
   name: chat-emote-name-spin
-  category: Hands
   chatMessages: ["chat-emote-msg-spin"]
   chatTriggers:
   - spin
   - spins
   - spins.
   - spins!
-  event: !type:AnimatedEmoteEvent { emote: "spin", length: 600 }
+  animated: true
+  animationLength: 600
 
 - type: emote
   id: Jump
   name: chat-emote-name-jump
-  category: Hands
   chatMessages: ["chat-emote-msg-jump"]
   chatTriggers:
   - jump
   - jumps
   - jumps.
   - jumps!
-  event: !type:AnimatedEmoteEvent { emote: "jump", length: 250 }
+  animated: true
+  animationLength: 250
