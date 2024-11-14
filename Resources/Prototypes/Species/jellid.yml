@@ -37,7 +37,7 @@
   points:
     Hair:
       points: 1
-      required: false
+      required: yes
     FacialHair:
       points: 1
       required: false
