@@ -1,41 +1,6 @@
 ﻿Entries:
 - author: joelsgp
   changes:
-  - message: Add custom logo, icons, and loading tips
-    type: Add
-  id: 11
-  time: '2024-07-01T23:22:47.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/13
-- author: TGRCDev
-  changes:
-  - message: Pets can now smoke
-    type: Add
-  id: 12
-  time: '2024-07-08T16:51:26.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/14
-- author: joelsgp
-  changes:
-  - message: Add new logo and more loading tips
-    type: Add
-  id: 13
-  time: '2024-07-02T20:39:11.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/15
-- author: LucasTheDrgn
-  changes:
-  - message: Forever Weed Brownies
-    type: Add
-  id: 14
-  time: '2024-07-03T15:39:30.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/16
-- author: joelsgp
-  changes:
-  - message: Newports (sprites by Arch)
-    type: Add
-  id: 15
-  time: '2024-07-03T15:39:46.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/17
-- author: joelsgp
-  changes:
   - message: Finfin foods
     type: Add
   id: 16
@@ -4173,3 +4138,84 @@
   id: 510
   time: '2024-11-14T05:52:08.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/696
+- author: EpicToast
+  changes:
+  - message: 'Made a bunch of miscellaneous updates and fixes for Union Station:'
+    type: Fix
+  - message: Made some layout changes.
+    type: Tweak
+  - message: Filled the Research Director's locker.
+    type: Tweak
+  - message: Fixed the slot count for paramedics, atmospheric technicians, salvage
+      specialists, and others.
+    type: Tweak
+  - message: Added a command-only area to the tech vault.
+    type: Add
+  - message: Gave every department extra resources.
+    type: Add
+  - message: Gave chemistry, salvage, atmos and robotics some extra utilities they
+      were missing.
+    type: Add
+  - message: Gave the captain their captain's thoughts, spare ID and flask.
+    type: Add
+  - message: Added more decals.
+    type: Add
+  - message: Added the pleasure pig.
+    type: Add
+  - message: And much more.
+    type: Tweak
+  id: 511
+  time: '2024-11-14T22:40:35.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/706
+- author: DinnerCalzone
+  changes:
+  - message: (Hummingbird) Added a map beacon to the storage area in the shooting
+      range.
+    type: Add
+  - message: (Hummingbird) Added biohazard suit closets to virology and sec storage
+      area.
+    type: Add
+  - message: (Hummingbird) Added emergency wall closet and fire-safety wall closet
+      to sec storage area.
+    type: Add
+  - message: (Hummingbird) Added wall shelves to the kitchen and bar.
+    type: Add
+  - message: (Hummingbird) Added HoS's and Captain's flasks to their quarters.
+    type: Add
+  - message: (Hummingbird) Added a containment zone to keep a dark entity at bay.
+    type: Add
+  - message: (Hummingbird) Added a few more disposals chutes around the map.
+    type: Add
+  - message: (Hummingbird) You can now have a lollipop for being so brave at the doctor's.
+    type: Add
+  - message: (Hummingbird) Replaced a number of ore and asteroid rocks with bananium
+      ore rocks. Treat your clowns.
+    type: Tweak
+  - message: (Hummingbird) Made evac lounge narrower and fixed LV cabling.
+    type: Tweak
+  id: 512
+  time: '2024-11-14T22:43:50.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/707
+- author: AirFryerBuyOneGetOneFree
+  changes:
+  - message: 'Added three animated emotes: flipping, spinning, and jumping!!'
+    type: Add
+  id: 513
+  time: '2024-11-14T22:47:21.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/704
+- author: Darkmajia
+  changes:
+  - message: Quick construction radial menus work with more materials.
+    type: Add
+  - message: Uranium directional windows are now in the construction menu.
+    type: Add
+  id: 514
+  time: '2024-11-14T22:57:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/683
+- author: AirFryerBuyOneGetOneFree
+  changes:
+  - message: Changed crawling and stand up speed to be slower overall.
+    type: Tweak
+  id: 515
+  time: '2024-11-14T23:02:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/711
