@@ -1,0 +1,17 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "hud_monitor and hud_search by DieselMohawk",
+    "size": {
+      "x": 8,
+      "y": 8
+    },
+    "states": [
+      {
+        "name": "hud_monitor"
+      },
+      {
+        "name": "hud_search"
+      }
+    ]
+  }
