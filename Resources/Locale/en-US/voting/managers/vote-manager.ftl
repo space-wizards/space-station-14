@@ -12,12 +12,12 @@ ui-vote-restart-no = No
 ui-vote-restart-abstain = Abstain
 
 ui-vote-gamemode-title = Next gamemode
-ui-vote-gamemode-tie = Tie when voting for the game map! A random map is selected...
-ui-vote-gamemode-win = Voting for the game map is over!
+ui-vote-gamemode-tie = Tie when voting for the game preset! A random preset is selected...
+ui-vote-gamemode-win = Voting for the game preset is over!
 
 ui-vote-map-title = Next map
-ui-vote-map-tie = Tie for map vote! Picking... { $picked }
-ui-vote-map-win = { $winner } won the map vote!
+ui-vote-map-tie = Tie when voting for the game map! A random map is selected...
+ui-vote-map-win = Voting for the game map is over!
 ui-vote-map-notlobby = Voting for maps is only valid in the pre-round lobby!
 ui-vote-map-notlobby-time = Voting for maps is only valid in the pre-round lobby with { $time } remaining!
 
