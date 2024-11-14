@@ -5,10 +5,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: size-label
-        uses: pascalgn/size-label-action@v0.5.5
+        uses: "pascalgn/size-label-action@v0.5.5"
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          IGNORED: "**/*.bundle.*\n**/*.chunk.*" # **/*.dmm\n
         with:
           # Custom size configuration
           sizes: >
@@ -17,5 +16,5 @@ jobs:
               "10": "S",
               "30": "M",
               "100": "L",
-              "1000": "XL",
+              "1000": "XL"
             }
