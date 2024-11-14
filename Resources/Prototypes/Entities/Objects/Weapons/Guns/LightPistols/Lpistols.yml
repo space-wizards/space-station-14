@@ -70,7 +70,7 @@
 
 - type: entity
   name: mk 93
-  parent: [BaseWeaponLPistol, BaseRestrictedContraband]
+  parent: [ BaseWeaponLPistol, BaseRestrictedContraband ]
   id: WeaponPistolMk93
   description: The famous sidearm modified with a fully automatic receiver. Uses .22 auto ammo.
   components:
@@ -96,9 +96,9 @@
       path: /Audio/Weapons/Guns/Gunshots/light-pistol.ogg
 
 - type: entity
-  name: zipper
-  parent: [BaseWeaponLPistol, BaseRestrictedContraband]
-  id: WeaponPistolZipper # the spaces in description are for formatting.
+  name: zipper .22
+  parent: [ BaseWeaponLPistol, BaseRestrictedContraband ]
+  id: WeaponPistolZipper
   description: Better at delivering the killing blow to the business of its manufacturer than to its actual targets. Uses .22 auto ammo.
   components:
   - type: Sprite
@@ -113,11 +113,11 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Pistols/zipper.rsi
   - type: Gun
+    fireRate: 3
     minAngle: 5
     maxAngle: 90
     angleIncrease: 15
     angleDecay: 5
-    fireRate: 3
     availableModes:
     - SemiAuto
     soundGunshot:
@@ -134,3 +134,10 @@
           tags:
             - MagazineZipper
         whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeLPistol
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeLPistol
