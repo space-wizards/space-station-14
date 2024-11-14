@@ -390,9 +390,6 @@
 - type: Tag
   id: CartridgePistol
 
-  - type: Tag
-  id: CartridgeLPistol
-
 - type: Tag
   id: CartridgeRifle
 
@@ -949,15 +946,12 @@
 - type: Tag
   id: MagazineLightRiflePan
 
-  - type: Tag
-  id: MagazineLPistol
-
 - type: Tag
   id: MagazineMagnum
 
 - type: Tag
   id: MagazinePistol
-  
+
 - type: Tag
   id: MagazinePistolCaselessRifle
 
@@ -981,9 +975,6 @@
 
 - type: Tag
   id: MagazineGrenade
-
-  - type: Tag
-  id: MagazineZipper
 
 # Magazines end
 
