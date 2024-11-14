@@ -597,6 +597,9 @@
     damage:
       types:
         Blunt: 10
+  - type: Tag
+    tags:
+    - HighRiskItem
   - type: StealTarget
     stealGroup: BoxFolderQmClipboard
 
