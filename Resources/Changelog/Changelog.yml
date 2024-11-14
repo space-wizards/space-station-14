@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Blackern5000
-  changes:
-  - message: Combat medical kits now contain saline syringes.
-    type: Add
-  id: 7108
-  time: '2024-08-14T06:25:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29954
 - author: TheShuEd
   changes:
   - message: added morbilliard variants of procedural tacos and kebabs
@@ -3941,3 +3934,10 @@
   id: 7607
   time: '2024-11-13T23:36:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33201
+- author: CheddaCheez
+  changes:
+  - message: Fixed mimes being unable to break their vow more than once. Despicable!
+    type: Fix
+  id: 7608
+  time: '2024-11-14T16:56:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33303
