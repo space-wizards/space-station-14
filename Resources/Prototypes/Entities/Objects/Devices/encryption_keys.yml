@@ -227,7 +227,7 @@
   - type: Sprite
     layers:
     - state: crypt_silver
-    - state: borg_label
+    - state: ai_label
 
 - type: entity
   parent: [ EncryptionKey, BaseSyndicateContraband ]
@@ -242,7 +242,7 @@
   - type: Sprite
     layers:
     - state: crypt_red
-    - state: borg_label
+    - state: ai_label
 
 - type: entity
   parent: EncryptionKey

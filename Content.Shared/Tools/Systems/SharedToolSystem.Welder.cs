@@ -55,7 +55,7 @@ public abstract partial class SharedToolSystem
         if (!Resolve(uid, ref welder, ref solutionContainer))
             return default;
 
-        if (!SolutionContainer.TryGetSolution(
+        if (!SolutionContainerSystem.TryGetSolution(
                 (uid, solutionContainer),
                 welder.FuelSolutionName,
                 out _,
