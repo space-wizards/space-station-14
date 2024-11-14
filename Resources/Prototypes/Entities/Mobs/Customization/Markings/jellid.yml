@@ -1,7 +1,7 @@
 - type: marking
-  id: DionaThornsHead
-  bodyPart: HeadTop
-  markingCategory: HeadTop
+  id: JellidMantle
+  bodyPart: HeadSide
+  markingCategory: HeadSide
   speciesRestriction: [Jellid]
   coloring:
     default:
