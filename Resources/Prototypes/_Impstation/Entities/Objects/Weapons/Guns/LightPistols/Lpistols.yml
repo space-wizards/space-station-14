@@ -23,7 +23,7 @@
     - SemiAuto
     - FullAuto
     soundGunshot:
-      path: /_Impstation/Audio/Weapons/Guns/Gunshots/light-pistol.ogg
+      path: /Audio/_Impstation/Weapons/Guns/Gunshots/light-pistol.ogg
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -70,7 +70,7 @@
     availableModes:
     - SemiAuto
     soundGunshot:
-      path: /_Impstation/Audio/Weapons/Guns/Gunshots/zipper.ogg
+      path: /Audio/_Impstation/Weapons/Guns/Gunshots/zipper.ogg
   - type: ItemSlots
     slots:
       gun_magazine:
