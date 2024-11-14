@@ -56,19 +56,19 @@
   id: MobJellidHead
   baseSprite:
     sprite: Mobs/Species/Jellids/Parts.rsi
-    state: jellid_head
+    state: jellidHead
 
 - type: humanoidBaseSprite
   id: MobJellidHeadMale
   baseSprite:
     sprite: Mobs/Species/Jellids/Parts.rsi
-    state: jellid_head
+    state: jellidHead
 
 - type: humanoidBaseSprite
   id: MobJellidHeadFemale
   baseSprite:
     sprite: Mobs/Species/Jellids/Parts.rsi
-    state: jellid_head
+    state: jellidHead
 
 - type: humanoidBaseSprite
   id: MobJellidTorso
