@@ -8,6 +8,8 @@ namespace Content.Server.Power.Components
     {
         [ViewVariables(VVAccess.ReadWrite)] [DataField("autoRecharge")] public bool AutoRecharge { get; set; }
 
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("ignoreFull")] public bool IgnoreFull { get; set; }
+
         [ViewVariables(VVAccess.ReadWrite)] [DataField("autoRechargeRate")] public float AutoRechargeRate { get; set; }
     }
 }
