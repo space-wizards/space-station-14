@@ -12,7 +12,7 @@ namespace Content.Client.Administration;
 internal sealed class AdminNameOverlay : Overlay
 {
     private readonly AdminSystem _system;
-    private readonly IConfigurationManager _config = default!;
+    private readonly IConfigurationManager _config = IoCManager.Resolve<IConfigurationManager>(); // TODO is this even legal?
     private readonly IEntityManager _entityManager;
     private readonly IEyeManager _eyeManager;
     private readonly EntityLookupSystem _entityLookup;
@@ -66,10 +66,8 @@ internal sealed class AdminNameOverlay : Overlay
                                                               new Angle(-_eyeManager.CurrentEye.Rotation).RotateVec(
                                                                   aabb.TopRight - aabb.Center)) + new Vector2(1f, 7f);
 
-            //TODO:ERRANT read from cvar
-            // var detail = _config.GetCVar(CCVars.AdminOverlayClassic);
-            var detail = false;
-
+            //TODO put this cvar somewhere on the UI, currently its console only
+            var detail = _config.GetCVar(CCVars.AdminOverlayClassic);
             var label = "ANTAG";
             var color = Color.OrangeRed;
 
