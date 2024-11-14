@@ -315,6 +315,15 @@
     - BorgModules
     - MechParts
     - MechEquipment
+    - BorgModuleAdvancedCleaning
+    - BorgModuleAdvancedTool
+    - BorgModuleGPS
+    - BorgModuleArtifact
+    - BorgModuleAnomaly
+    - BorgModuleGardening
+    - BorgModuleHarvesting
+    - BorgModuleDefibrillator
+    - BorgModuleAdvancedTreatment
   - type: MaterialStorage
     whitelist:
       tags:
