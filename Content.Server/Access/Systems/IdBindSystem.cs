@@ -25,8 +25,7 @@ public sealed class IdBindSystem : EntitySystem
         if (!_cardSystem.TryFindIdCard(ent, out var cardId))
             return;
 
-        if (!TryComp<MetaDataComponent>(ent, out var data))
-            return;
+        var data = MetaData(ent);
 
         _cardSystem.TryChangeFullName(cardId, data.EntityName, cardId);
 
@@ -42,7 +41,7 @@ public sealed class IdBindSystem : EntitySystem
 
         _pdaSystem.SetOwner(uPda.Value, pDA, data.EntityName);
         //Remove after running once
-        EntityManager.RemoveComponentDeferred<IdBindComponent>(ent);
+        RemCompDeferred<IdBindComponent>(ent);
     }
 }
 

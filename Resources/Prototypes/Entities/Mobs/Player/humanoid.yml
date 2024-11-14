@@ -11,6 +11,7 @@
 - type: randomHumanoidSettings
   id: EventHumanoidMindShielded
   parent: EventHumanoid
+  randomizeName: false
   components:
     - type: MindShield
     - type: InitialInfectedExempt
@@ -458,7 +459,6 @@
 - type: randomHumanoidSettings
   id: CBURNAgent
   parent: EventHumanoidMindShielded
-  randomizeName: false
   components:
     - type: Loadout
       prototypes: [CBURNGear]
