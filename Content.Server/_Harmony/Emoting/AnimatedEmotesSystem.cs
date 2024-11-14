@@ -6,7 +6,7 @@ using Content.Shared.Chat.Prototypes;
 using Robust.Shared.Prototypes;
 using Content.Shared._Harmony.Emoting;
 
-namespace Content.Server.Emoting;
+namespace Content.Server._Harmony.Emoting;
 
 public sealed partial class AnimatedEmotesSystem : SharedAnimatedEmotesSystem
 {
