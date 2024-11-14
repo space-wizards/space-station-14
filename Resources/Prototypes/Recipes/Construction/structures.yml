@@ -1731,19 +1731,54 @@
   conditions:
     - !type:TileNotBlocked
 
+# False walls
 - type: construction
-  name: solid secret door
-  id: SolidSecretDoor
-  graph: SecretDoor
+  name: displaced girder
+  id: GirderDisplaced
+  graph: DisplacedGirder
   startNode: start
-  targetNode: solidSecretDoor
+  targetNode: displacedGirder
   category: construction-category-structures
-  description: A secret door for the wall.
+  description: Girder with poorly tightened bolts, for creating false walls.
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: Structures/Doors/secret_door.rsi
+    sprite: Structures/Doors/false_walls/displaced_girder.rsi
+    state: displaced
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: solid false wall
+  id: SolidFalseWall
+  graph: DisplacedGirder
+  startNode: start
+  targetNode: solidFalseWall
+  category: construction-category-structures
+  description: False wall for your secrets.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Doors/false_walls/solid_fwall.rsi
+    state: closed
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: reinforced false wall
+  id: ReinfFalseWall
+  graph: DisplacedGirder
+  startNode: start
+  targetNode: reinfFalseWall
+  category: construction-category-structures
+  description: False wall for your secrets.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Doors/false_walls/reinf_fwall.rsi
     state: closed
   conditions:
     - !type:TileNotBlocked

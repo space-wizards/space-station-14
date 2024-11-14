@@ -1,0 +1,92 @@
+- type: entity
+  id: BaseFalseWall
+  parent: BaseStructure
+  name: solid wall # No meta
+  suffix: false wall
+  abstract: true
+  description: Keeps the air in and the greytide out.
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/false_walls/solid_fwall.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: AnimationPlayer
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49"
+        density: 100
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+  - type: Door
+    bumpOpen: false
+    clickOpen: true
+    canCrush: false
+    closeTimeOne: 0.2
+    closeTimeTwo: 0.6
+    openTimeOne: 0.6
+    openTimeTwo: 0.2
+    openingAnimationTime: 1.2
+    closingAnimationTime: 1.2
+  - type: Appearance
+  - type: Weldable
+    time: 2
+  - type: Airtight
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
+  - type: RCDDeconstructable
+    cost: 6
+    delay: 8
+    fx: EffectRCDDeconstruct8
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          DisplacedGirder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: walls
+    mode: NoSprite
+  - type: Occluder
+  - type: Tag
+    tags:
+    - Structure
+    - Wall
+  - type: BlockWeather
+
+- type: entity
+  id: SolidFalseWall
+  name: solid wall
+  parent: BaseFalseWall
+  components:
+  - type: Construction
+    graph: DisplacedGirder
+    node: solidFalseWall
+
+- type: entity
+  id: ReinforcedFalseWall
+  name: reinforced wall
+  parent: BaseFalseWall
+  components:
+  - type: Construction
+    graph: DisplacedGirder
+    node: reinfFalseWall
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallicStrong
+  - type: Sprite
+    sprite: Structures/Doors/false_walls/reinf_fwall.rsi
