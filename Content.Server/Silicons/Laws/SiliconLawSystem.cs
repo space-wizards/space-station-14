@@ -75,14 +75,14 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     {
         if (!component.Subverted)
             return;
-        EnsureSubvertedSiliconRole(uid);
+        EnsureSubvertedSiliconRole(args.Mind);
     }
 
     private void OnLawProviderMindRemoved(EntityUid uid, SiliconLawProviderComponent component, MindRemovedMessage args)
     {
         if (!component.Subverted)
             return;
-        RemoveSubvertedSiliconRole(uid);
+        RemoveSubvertedSiliconRole(args.Mind);
 
     }
 
@@ -179,21 +179,14 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
     }
 
-    private void EnsureSubvertedSiliconRole(EntityUid uid)
+    private void EnsureSubvertedSiliconRole(EntityUid mindId)
     {
-        if (!_mind.TryGetMind(uid, out var mindId, out _))
-            return;
-
         if (!_roles.MindHasRole<SubvertedSiliconRoleComponent>(mindId))
             _roles.MindAddRole(mindId, "MindRoleSubvertedSilicon");
-
     }
 
-    private void RemoveSubvertedSiliconRole(EntityUid uid)
+    private void RemoveSubvertedSiliconRole(EntityUid mindId)
     {
-        if (!_mind.TryGetMind(uid, out var mindId, out _))
-            return;
-
         if (_roles.MindHasRole<SubvertedSiliconRoleComponent>(mindId))
             _roles.MindTryRemoveRole<SubvertedSiliconRoleComponent>(mindId);
     }
