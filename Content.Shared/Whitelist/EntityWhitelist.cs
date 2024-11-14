@@ -44,8 +44,15 @@ public sealed partial class EntityWhitelist
     [DataField]
     public List<ProtoId<ItemSizePrototype>>? Sizes;
 
-    [NonSerialized, Access(typeof(EntityWhitelistSystem))]
-    public List<ComponentRegistration>? Registrations;
+    [NonSerialized]
+    private List<ComponentRegistration>? _registrations;
+
+    [Access(typeof(EntityWhitelistSystem))]
+    public List<ComponentRegistration>? Registrations
+    {
+        get => _registrations;
+        set => _registrations = value;
+    }
 
     /// <summary>
     ///     Tags that are allowed in the whitelist.
