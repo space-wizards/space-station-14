@@ -131,12 +131,6 @@ namespace Content.Shared.Storage
         [DataField]
         public bool HideStackVisualsWhenClosed = true;
 
-        /// <summary>
-        /// Blocking the field of vision for all entities parented this storage.
-        /// </summary>
-        [DataField]
-        public bool BlockVision = true;
-
         [Serializable, NetSerializable]
         public enum StorageUiKey : byte
         {
