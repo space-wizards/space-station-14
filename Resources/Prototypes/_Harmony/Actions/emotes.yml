@@ -1,3 +1,4 @@
+# To add a new emote, add the prototype here and define animation frames in InitializeEmoteAnimations() at Content.Client/_Harmony/Emoting/AnimatedEmotesSystem.cs
 - type: emote
   id: Flip
   name: chat-emote-name-flip
