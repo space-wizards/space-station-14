@@ -279,6 +279,11 @@ namespace Content.Server.RoundEnd
                 time = countdownTime.Value.Seconds;
                 unitsLocString = "eta-units-seconds";
             }
+            else if (countdownTime.Value.TotalSeconds < 120)
+            {
+                time = countdownTime.Value.Minutes;
+                unitsLocString = "eta-units-minute";
+            }
             else
             {
                 time = countdownTime.Value.Minutes;
