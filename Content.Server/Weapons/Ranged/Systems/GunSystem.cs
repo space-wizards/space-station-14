@@ -42,7 +42,6 @@ public sealed partial class GunSystem : SharedGunSystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
 
     private const float DamagePitchVariation = 0.05f;
-    public const float GunClumsyChance = 0.5f;
 
     public override void Initialize()
     {
