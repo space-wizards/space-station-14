@@ -37,3 +37,8 @@
   license: "CC-BY-SA-4.0"
   copyright: "snip cowlegz"
   source: "https://github.com/impstation/imp-station-14/"
+
+- files: ["PTAs-woe.webp]
+  license: "CC-BY-SA-4.0"
+  copyright: "widgetbeck"
+  source: "https://github.com/impstation/imp-station-14/"
