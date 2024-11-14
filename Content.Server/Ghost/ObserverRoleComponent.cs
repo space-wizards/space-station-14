@@ -11,3 +11,5 @@ public sealed partial class ObserverRoleComponent : BaseRoleComponent
     public string Name => Loc.GetString("observer-role-name");
 
 }
+
+//TODO:ERRANT Decide the fate of ObserverRole

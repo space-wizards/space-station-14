@@ -187,6 +187,7 @@ public abstract class SharedRoleSystem : EntitySystem
     //Returns true if this changed the mind's role type
     private bool MindRolesUpdate(EntityUid mindId)
     {
+        //get the most important/latest mind role
         var roleType = GetRoleTypeByTime(mindId);
 
         if (Comp<MindComponent>(mindId).RoleType != roleType)
@@ -277,7 +278,7 @@ public abstract class SharedRoleSystem : EntitySystem
             if (!HasComp<T>(role))
                 continue;
 
-            if (!TryComp(role, out MindRoleComponent? roleComp))
+            if (!HasComp<MindRoleComponent>(role))
             {
                 Log.Error($"Encountered mind role entity {ToPrettyString(role)} without a {nameof(MindRoleComponent)}");
                 continue;

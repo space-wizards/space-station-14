@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Mind;
 
 /// <summary>
-///     The core properties of Role Types, not intended to be alterable or uploadable under any conditions
+///     The core properties of Role Types
 /// </summary>
 [Prototype, Serializable]
 public sealed class RoleTypePrototype : IPrototype

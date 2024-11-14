@@ -8,6 +8,9 @@ namespace Content.Server.Roles;
 [RegisterComponent]
 public sealed partial class RoleBriefingComponent : BaseRoleComponent
 {
-    [DataField("briefing"), ViewVariables(VVAccess.ReadWrite)]
-    public string Briefing = "";
+    // [DataField("briefing"), ViewVariables(VVAccess.ReadWrite)]
+    // public string Briefing = ""; TODO:ERRANT test if the new one still works perfectly
+
+    [DataField]
+    public string Briefing;
 }

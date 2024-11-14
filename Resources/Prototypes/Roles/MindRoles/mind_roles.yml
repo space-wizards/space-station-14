@@ -15,7 +15,6 @@
     antag: true
 
 #Observer
-# Is anything actually using this?
 - type: entity
   parent: BaseMindRole
   id: MindRoleObserver
@@ -231,7 +230,6 @@
   - type: MindRole
     antagPrototype: TraitorSleeper
 
-#TODO:ERRANT is this maybe overcomplicated? The monkeys at least are Team Antag to begin with and perhaps don't need any Activation
 - type: entity
   parent: MindRoleTraitor
   id: MindRoleTraitorReinforcement

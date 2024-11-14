@@ -170,7 +170,7 @@ public sealed class AdminSystem : EntitySystem
     {
         var session = _minds.GetSession(ev.Mind);
 
-        if (session == null || !ev.RoleTypeUpdate)
+        if (!ev.RoleTypeUpdate || session == null)
             return;
 
         UpdatePlayerList(session);
@@ -255,6 +255,7 @@ public sealed class AdminSystem : EntitySystem
                     roleType = role;
                 else
                 {
+                    //TODO:ERRANT this should not be an admin log but an Error
                     _adminLogger.Add(LogType.Mind,
                         LogImpact.High,
                         $"{mindComp.CharacterName} has invalid Role Type '{mindComp.RoleType}'. Displaying 'Neutral' instead");
