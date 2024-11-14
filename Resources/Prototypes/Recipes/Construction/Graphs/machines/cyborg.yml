@@ -205,6 +205,3 @@
 
   - node: syndicatesaboteur
     entity: BorgChassisSyndicateSaboteur
-
-  - node: derelictcyborg
-    entity: BorgChassisDerelict

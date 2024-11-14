@@ -240,9 +240,6 @@ ghost-role-information-syndicate-cyborg-assault-name = Syndicate Assault Cyborg
 ghost-role-information-syndicate-cyborg-saboteur-name = Syndicate Saboteur Cyborg
 ghost-role-information-syndicate-cyborg-description = The Syndicate needs reinforcements. You, a cold silicon killing machine, will help them.
 
-ghost-role-information-derelict-cyborg-name = Derelict Cyborg
-ghost-role-information-derelict-cyborg-description = You were a regular cyborg that got lost in space. After drifting in whichever direction the laws of physics would have it for years, you have drifted close to a Nanotrasen space station. You have a fire extinguisher and mass scanner which can be used to board the station. Years of exposure to ion storms have left your silicon laws altered - check them upon spawning.
-
 ghost-role-information-security-name = Security
 ghost-role-information-security-description = You are part of a security task force, but seem to have found yourself in a strange situation...
 
