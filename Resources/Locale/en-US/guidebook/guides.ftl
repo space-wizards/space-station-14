@@ -59,6 +59,7 @@ guide-entry-radio = Radio and Speech
 guide-entry-references = Tables & References
 guide-entry-drinks = Drinks
 guide-entry-foodrecipes = Food Recipes
+guide-entry-microwaverecipes = Microwave Recipes
 guide-entry-chemicals = Chemicals
 guide-entry-elements = Elements
 guide-entry-narcotics = Narcotics

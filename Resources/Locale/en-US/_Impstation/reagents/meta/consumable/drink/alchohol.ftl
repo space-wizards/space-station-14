@@ -51,3 +51,6 @@ reagent-desc-starrynight = A beautiful drink fashioned in memoriam of a great te
 
 reagent-name-thumperdrink = thumper
 reagent-desc-thumperdrink = A delicious blend of fruit juice and liquor, from the shelves of the Reptilian homeworld to a bar counter near you.
+
+reagent-name-thegrease = the grease
+reagent-desc-thegrease = A dubious liquid with a film on top, it looks homemade and.. Very greasy.

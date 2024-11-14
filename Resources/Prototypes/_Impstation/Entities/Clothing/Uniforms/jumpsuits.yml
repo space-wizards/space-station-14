@@ -19,3 +19,14 @@
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacechemist.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacechemist.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, ClothingUniformFoldableBase]
+  id: ClothingUniformSpaceJumpsuitScientist
+  name: space scientist jumpsuit
+  description: A high quality scientist jumpsuit made from the highest quality fibers.. It almost feels like it's from another universe.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacescientist.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacescientist.rsi

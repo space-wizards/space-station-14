@@ -17,7 +17,7 @@
   - type: Icon
     sprite: _Impstation/Objects/Consumable/Drinks/thee_horsepussy.rsi
     state: icon
-    
+
 - type: entity
   parent: DrinkGlass
   id: DrinkCalimotxoGlass
@@ -49,7 +49,7 @@
   - type: Icon
     sprite: Objects/Consumable/Drinks/rootbeerglass.rsi
     state: icon
-    
+
 - type: entity
   parent: DrinkGlass
   id: DrinkReaganomicsGlass
@@ -65,7 +65,7 @@
   - type: Icon
     sprite: Objects/Consumable/Drinks/whiskeyglass.rsi
     state: icon
-    
+
 - type: entity
   parent: DrinkGlass
   id: DrinkGatorWineGlass
@@ -81,7 +81,7 @@
   - type: Icon
     sprite: Objects/Consumable/Drinks/wineglass.rsi
     state: icon
-    
+
 - type: entity
   parent: DrinkGlass
   id: DrinkRotgutGlass
@@ -97,7 +97,7 @@
   - type: Icon
     sprite: Objects/Consumable/Drinks/whiskeyglass.rsi
     state: icon
-    
+
 - type: entity
   parent: DrinkGlass
   id: DrinkBumWineGlass
@@ -113,7 +113,7 @@
   - type: Icon
     sprite: Objects/Consumable/Drinks/wineglass.rsi
     state: icon
-    
+
 - type: entity
   parent: DrinkGlass
   id: DrinkVoxRocksGlass
@@ -129,7 +129,7 @@
   - type: Icon
     sprite: Objects/Consumable/Drinks/beerglass.rsi
     state: icon
-    
+
 - type: entity
   parent: DrinkGlass
   id: DrinkJungleJuiceGlass
@@ -145,7 +145,7 @@
   - type: Icon
     sprite: Objects/Consumable/Drinks/lemonadeglass.rsi
     state: icon
-    
+
 - type: entity
   parent: DrinkGlass
   id: DrinkTheDrinkGlass
@@ -290,7 +290,7 @@
   - type: Icon
     sprite: Objects/Consumable/Drinks/martiniglassnoolive.rsi
     state: icon
-    
+
 - type: entity
   parent: DrinkGlass
   id: DrinkRaktaccinoGlass
@@ -306,7 +306,7 @@
   - type: Icon
     sprite: _Impstation/Objects/Consumable/Drinks/raktaccino.rsi
     state: icon
- 
+
 # soda
 # king soda ain't got a metamorphic glass sprite
 - type: entity
@@ -337,7 +337,7 @@
   - type: Icon
     sprite: Objects/Consumable/Drinks/lemonadeglass.rsi
     state: icon
-          
+
 - type: entity
   parent: DrinkGlass
   id: DrinkGenderfluidGlass
@@ -353,7 +353,7 @@
   - type: Icon
     sprite: _Impstation/Objects/Consumable/Drinks/genderfluid.rsi
     state: icon
-          
+
 - type: entity
   parent: DrinkGlass
   id: DrinkZombieSlushieGlass
@@ -368,4 +368,20 @@
           Quantity: 30
   - type: Icon
     sprite: _Impstation/Objects/Consumable/Drinks/zombieslushie.rsi
+    state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkTheGreaseGlass
+  suffix: the grease
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: TheGrease
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/moonshineglass.rsi
     state: icon
