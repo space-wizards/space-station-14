@@ -13,6 +13,7 @@
 
   defaultModules:
   - BorgModuleTool
+  - BorgModuleFireExtinguisher
 
   radioChannels:
   - Science
@@ -46,7 +47,6 @@
   defaultModules:
   - BorgModuleTool
   - BorgModuleConstruction
-  - BorgModuleRCD
   - BorgModuleCable
 
   radioChannels:
@@ -152,6 +152,7 @@
 
   defaultModules:
   - BorgModuleTreatment
+  - BorgModuleDefibrillator
 
   radioChannels:
   - Science
@@ -200,7 +201,6 @@
   defaultModules:
   - BorgModuleMusique
   - BorgModuleService
-  - BorgModuleClowning
 
   radioChannels:
   - Science
