@@ -32,7 +32,7 @@
       - SemiAuto
       - FullAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/Mk93.ogg
+      path: /_Impstation/Audio/Weapons/Guns/Gunshots/light-pistol.ogg
   - type: ChamberMagazineAmmoProvider
     soundRack:
       path: /Audio/Weapons/Guns/Cock/pistol_cock.ogg
@@ -75,14 +75,14 @@
   description: The famous sidearm modified with a fully automatic receiver. Uses .22 auto ammo.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/mk93.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/mk93.rsi
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Pistols/mk93.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/mk93.rsi
   - type: Gun
     minAngle: 2
     maxAngle: 12
@@ -93,7 +93,7 @@
     - SemiAuto
     - FullAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/light-pistol.ogg
+      path: /_Impstation/Audio/Weapons/Guns/Gunshots/light-pistol.ogg
 
 - type: entity
   name: zipper .22
@@ -102,7 +102,7 @@
   description: Better at delivering the killing blow to the business of its manufacturer than to its actual targets. Uses .22 auto ammo.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Pistols/zipper.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/zipper.rsi
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -111,7 +111,7 @@
   - type: Item
     size: Tiny
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Pistols/zipper.rsi
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/zipper.rsi
   - type: Gun
     fireRate: 3
     minAngle: 5
@@ -121,7 +121,7 @@
     availableModes:
     - SemiAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/zipper.ogg
+      path: /_Impstation/Audio/Weapons/Guns/Gunshots/zipper.ogg
   - type: ItemSlots
     slots:
       gun_magazine:
