@@ -550,7 +550,7 @@
 
 #Makeshift Hardsuit Helmet
 - type: entity
-  parent: ClothingHeadHardsuitWithLightBase
+  parent: [ BaseMajorContraband, ClothingHeadHardsuitWithLightBase ]
   id: ClothingHeadHelmetProspector
   name: makeshift hardsuit helmet
   description: A helmet cobbled together with cloth, insulation, and metal that barely meets low-pressure safety standards. It'll do.
@@ -583,6 +583,33 @@
     lowPressureMultiplier: 1000
   - type: PointLight
     color: green
+
+#Desperado Helmet
+- type: entity
+  parent: [ BaseMajorContraband, ClothingHeadHelmetHardsuitSyndieCommander ]
+  id: ClothingHeadHelmetDesperado
+  name: desperado hardsuit helmet
+  description: An impressively sturdy and impressively Space-Texan hardsuit helmet.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Prospectors/desperado-hardsuit-helmet.rsi
+  - type: PointLight
+    color: green
+  - type: ToggleableLightVisuals
+    clothingVisuals:
+      head:
+      - state: on-equipped-HELMET
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: off-equipped-HELMET
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
 
 #CENTCOMM / ERT HARDSUITS
 #ERT Leader Hardsuit
