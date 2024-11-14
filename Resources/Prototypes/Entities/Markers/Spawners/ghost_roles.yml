@@ -19,7 +19,8 @@
     name: ghost-role-information-rat-king-name
     description: ghost-role-information-rat-king-description
     rules: ghost-role-information-freeagent-rules
-    roleType: FreeAgent
+    mindRoles:
+    - MindRoleGhostRoleFreeAgent
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -41,7 +42,8 @@
     name: ghost-role-information-remilia-name
     description: ghost-role-information-remilia-description
     rules: ghost-role-information-familiar-rules
-    roleType: Familiar
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
     raffle:
       settings: short
   - type: GhostRoleMobSpawner
@@ -63,7 +65,8 @@
     name: ghost-role-information-cerberus-name
     description: ghost-role-information-cerberus-description
     rules: ghost-role-information-familiar-rules
-    roleType: Familiar
+    mindRoles:
+    - MindRoleGhostRoleFamiliar
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -84,7 +87,8 @@
   components:
   - type: GhostRole
     rules: ghost-role-information-rules-default-team-antagonist
-    roleType: TeamAntagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -105,7 +109,8 @@
     name: ghost-role-information-loneop-name
     description: ghost-role-information-loneop-description
     rules: ghost-role-information-rules-default-solo-antagonist
-    roleType: TeamAntagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
@@ -122,7 +127,8 @@
     name: roles-antag-nuclear-operative-commander-name
     description: roles-antag-nuclear-operative-commander-objective
     rules: ghost-role-information-rules-default-team-antagonist
-    roleType: TeamAntagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
@@ -133,7 +139,8 @@
     name: roles-antag-nuclear-operative-agent-name
     description: roles-antag-nuclear-operative-agent-objective
     rules: ghost-role-information-rules-default-team-antagonist
-    roleType: TeamAntagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
@@ -144,7 +151,8 @@
     name: roles-antag-nuclear-operative-name
     description: roles-antag-nuclear-operative-objective
     rules: ghost-role-information-rules-default-team-antagonist
-    roleType: TeamAntagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
 
 - type: entity
   categories: [ HideSpawnMenu, Spawner ]
@@ -155,7 +163,8 @@
     name: ghost-role-information-space-dragon-name
     description: ghost-role-information-space-dragon-description
     rules: ghost-role-information-space-dragon-rules
-    roleType: TeamAntagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
   - type: Sprite
     layers:
     - state: green
@@ -171,7 +180,8 @@
     name: ghost-role-information-space-ninja-name
     description: ghost-role-information-space-ninja-description
     rules: ghost-role-information-antagonist-rules
-    roleType: SoloAntagonist
+    mindRoles:
+    - MindRoleGhostRoleSoloAntagonist
     raffle:
       settings: default
   - type: Sprite

@@ -169,7 +169,8 @@ public sealed class AdminSystem : EntitySystem
     private void OnRoleEvent(RoleEvent ev)
     {
         var session = _minds.GetSession(ev.Mind);
-        // if (!ev.Antagonist || session == null) TODO:ERRANT kill the Antagoinist bool entirely
+
+        // TODO:ERRANT maybe use a check here to only do this if the role type actually changed
         if (session == null)
             return;
 

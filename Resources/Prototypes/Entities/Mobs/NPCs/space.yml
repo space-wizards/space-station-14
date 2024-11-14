@@ -385,7 +385,8 @@
     name: ghost-role-information-snail-name
     description: ghost-role-information-snail-description
     rules: ghost-role-information-freeagent-rules
-    roleType: FreeAgent
+    mindRoles:
+    - MindRoleGhostRoleFreeAgent
   - type: GhostTakeoverAvailable
   - type: Emoting
   - type: Sprite

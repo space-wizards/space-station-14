@@ -513,24 +513,19 @@ public sealed class GhostRoleSystem : EntitySystem
         var newMind = _mindSystem.CreateMind(player.UserId,
             EntityManager.GetComponent<MetaDataComponent>(mob).EntityName);
 
-        //TODO:ERRANT This should actually be a specifyable mind role
-        _roleSystem.MindAddRole(newMind, "MindRoleGhostMarker");
-
-        if (_roleSystem.MindHasRole<GhostRoleMarkerRoleComponent>(newMind!, out var markerRole))
-        {
-            markerRole.Value.Comp2.Name = role.RoleName;
-
-            if (role.RoleType is not null)
-            {
-                markerRole.Value.Comp1.RoleType = role.RoleType;
-                //TODO:ERRANT probably should be an event instead so the function can remain Private
-                _roleSystem.MindRolesChanged(newMind);
-            }
-
-        }
-
         _mindSystem.SetUserId(newMind, player.UserId);
         _mindSystem.TransferTo(newMind, mob);
+
+        foreach (var mind in role.MindRoles)
+        {
+            if(!_prototype.TryIndex(mind, out var comp))
+                continue;
+
+            _roleSystem.MindAddRole(newMind, mind);
+        }
+
+        if (_roleSystem.MindHasRole<GhostRoleMarkerRoleComponent>(newMind!, out var markerRole))
+            markerRole.Value.Comp2.Name = role.RoleName;
     }
 
     /// <summary>

@@ -11,7 +11,8 @@
       name: ghost-role-information-behonker-name
       description: ghost-role-information-behonker-description
       rules: ghost-role-information-antagonist-rules
-      roleType: SoloAntagonist
+      mindRoles:
+      - MindRoleGhostRoleSoloAntagonist
       raffle:
         settings: default
     - type: GhostTakeoverAvailable

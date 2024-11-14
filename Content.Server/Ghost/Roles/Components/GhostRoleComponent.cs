@@ -1,5 +1,6 @@
 using Content.Server.Ghost.Roles.Raffles;
 using Content.Server.Mind.Commands;
+using Content.Shared.Ghost.Roles;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
@@ -74,10 +75,10 @@ public sealed partial class GhostRoleComponent : Component
     }
 
     /// <summary>
-    /// If set, the mob's mind entity will start with this Role Type.
+    /// The mind roles that will be added to the mob's mind entity
     /// </summary>
     [DataField, Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)]
-    public ProtoId<RoleTypePrototype>? RoleType;
+    public List<ProtoId<EntityPrototype>> MindRoles = new List<ProtoId<EntityPrototype>>(){"MindRoleGhostRoleNeutral"};
 
     [DataField("allowSpeech")]
     [ViewVariables(VVAccess.ReadWrite)]

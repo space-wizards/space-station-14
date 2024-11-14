@@ -42,7 +42,8 @@
       rules: ghost-role-information-Death-Squad-rules
       raffle:
         settings: short
-      roleType: Familiar
+      mindRoles:
+      - MindRoleGhostRoleFamiliar
     - type: Loadout
       prototypes: [ DeathSquadGear ]
       roleLoadout: [ RoleSurvivalEVA ]

@@ -23,13 +23,69 @@
   components:
   - type: ObserverRole
 
-#Ghostrole Marker
+#Ghost Roles
 - type: entity
   parent: BaseMindRole
-  id: MindRoleGhostMarker
+  id: MindRoleGhostRoleNeutral
   name: Ghost Role
   components:
   - type: GhostRoleMarkerRole
+
+- type: entity
+  parent: BaseMindRole
+  id: MindRoleGhostRoleFamiliar
+  name: Ghost Role (Familiar)
+  components:
+  - type: MindRole
+    roleType: Familiar
+  - type: GhostRoleMarkerRole
+
+- type: entity
+  parent: BaseMindRole
+  id: MindRoleGhostRoleFreeAgent
+  name: Ghost Role (Free Agent)
+  components:
+  - type: MindRole
+    roleType: FreeAgent
+  - type: GhostRoleMarkerRole
+
+- type: entity
+  parent: BaseMindRole
+  id: MindRoleGhostRoleSilicon
+  name: Ghost Role (Silicon)
+  components:
+  - type: MindRole
+    roleType: Silicon
+  - type: GhostRoleMarkerRole
+
+- type: entity
+  parent: BaseMindRole
+  id: MindRoleGhostRoleSiliconAntagonist
+  name: Ghost Role (Silicon Antagonist)
+  components:
+  - type: MindRole
+    roleType: SiliconAntagonist
+  - type: GhostRoleMarkerRole
+
+- type: entity
+  parent: BaseMindRole
+  id: MindRoleGhostRoleSoloAntagonist
+  name: Ghost Role (Solo Antagonist)
+  components:
+  - type: MindRole
+    roleType: SoloAntagonist
+  - type: GhostRoleMarkerRole
+
+- type: entity
+  parent: BaseMindRole
+  id: MindRoleGhostRoleTeamAntagonist
+  name: Ghost Role (Team Antagonist)
+  components:
+  - type: MindRole
+    roleType: TeamAntagonist
+  - type: GhostRoleMarkerRole
+
+
 
 # The Job MindRole holds the mob's Job prototype
 - type: entity

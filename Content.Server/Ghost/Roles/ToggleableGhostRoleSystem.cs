@@ -57,7 +57,7 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
         ghostRole.RoleDescription = Loc.GetString(component.RoleDescription);
         ghostRole.RoleRules = Loc.GetString(component.RoleRules);
         ghostRole.JobProto = component.JobProto;
-        ghostRole.RoleType = component.RoleType;
+        ghostRole.MindRoles = component.MindRoles;
     }
 
     private void OnExamined(EntityUid uid, ToggleableGhostRoleComponent component, ExaminedEvent args)

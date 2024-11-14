@@ -31,7 +31,7 @@ public sealed partial class ToggleableGhostRoleComponent : Component
     public string RoleRules = string.Empty;
 
     [DataField]
-    public string RoleType = string.Empty;
+    public List<ProtoId<EntityPrototype>> MindRoles;
 
     [DataField]
     public string WipeVerbText = string.Empty;

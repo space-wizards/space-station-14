@@ -193,7 +193,8 @@
     name: ghost-role-information-artifact-name
     description: ghost-role-information-artifact-description
     rules: ghost-role-information-freeagent-rules
-    roleType: FreeAgent
+    mindRoles:
+    - MindRoleGhostRoleFreeAgent
     raffle:
       settings: default
   - type: GhostTakeoverAvailable

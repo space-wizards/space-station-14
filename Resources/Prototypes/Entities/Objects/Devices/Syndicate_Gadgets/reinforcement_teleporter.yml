@@ -26,7 +26,8 @@
     name: ghost-role-information-syndicate-reinforcement-spy-name
     description: ghost-role-information-syndicate-reinforcement-description
     rules: ghost-role-information-rules-default-solo-antagonist
-    roleType: TeamAntagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -44,7 +45,8 @@
     name: ghost-role-information-nukeop-reinforcement-name
     description: ghost-role-information-nukeop-reinforcement-description
     rules: ghost-role-information-nukeop-reinforcement-rules
-    roleType: TeamAntagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -60,7 +62,8 @@
     name: ghost-role-information-syndicate-monkey-reinforcement-name
     description: ghost-role-information-syndicate-monkey-reinforcement-description
     rules: ghost-role-information-rules-default-familiar
-    roleType: TeamAntagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -86,7 +89,8 @@
     name: ghost-role-information-SyndiCat-name
     description: ghost-role-information-SyndiCat-description
     rules: ghost-role-information-rules-default-familiar
-    roleType: TeamAntagonist
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -105,7 +109,8 @@
       name: ghost-role-information-syndicate-cyborg-assault-name
       description: ghost-role-information-syndicate-cyborg-description
       rules: ghost-role-information-silicon-rules
-      roleType: SiliconAntagonist
+      mindRoles:
+      - MindRoleGhostRoleSiliconAntagonist
       raffle:
         settings: default
     - type: GhostRoleMobSpawner
