@@ -30,7 +30,11 @@ public sealed class IdBindSystem : EntitySystem
         _cardSystem.TryChangeFullName(cardId, data.EntityName, cardId);
 
         if (!ent.Comp.BindPDAOwner)
-            return;
+        {
+			//Remove after running once
+			RemCompDeferred<IdBindComponent>(ent);
+			return;
+        }
 
         //Get PDA from main slot and set us as owner
         if (!_inventory.TryGetSlotEntity(ent, "id", out var uPda))
