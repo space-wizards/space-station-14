@@ -75,16 +75,13 @@ public sealed partial class GhostRoleComponent : Component
     /// <summary>
     /// The mind roles that will be added to the mob's mind entity
     /// </summary>
-    /// TODO:ERRANT can I remove this typeof GhostroleSystem solution?
-    [DataField, Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)]
+    [DataField, Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // Don't make eye contact
     public List<ProtoId<EntityPrototype>> MindRoles = new List<ProtoId<EntityPrototype>>(){"MindRoleGhostRoleNeutral"};
 
-    [DataField("allowSpeech")]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool AllowSpeech { get; set; } = true;
 
-    [DataField("allowMovement")]
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public bool AllowMovement { get; set; }
 
     [ViewVariables(VVAccess.ReadOnly)]
