@@ -10,9 +10,6 @@ namespace Content.Client.Administration.UI.Tabs.PlayerTab;
 [GenerateTypedNameReferences]
 public sealed partial class PlayerTabEntry : PanelContainer
 {
-
-    // [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
     public NetEntity? PlayerEntity;
 
     public PlayerTabEntry(PlayerInfo player, StyleBoxFlat styleBoxFlat)
