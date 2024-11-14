@@ -75,7 +75,7 @@
   name: ammunition box (.22 auto uranium)
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgePistolUranium
+    proto: CartridgeLPistolUranium
   - type: Sprite
     layers:
     - state: base
