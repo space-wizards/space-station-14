@@ -29,9 +29,6 @@ public abstract class SharedRoleSystem : EntitySystem
     public override void Initialize()
     {
         Subs.CVar(_cfg, CCVars.GameRoleTimerOverride, SetRequirementOverride, true);
-
-        SubscribeLocalEvent<RoleAddedEvent>(OnRoleEvent);
-        SubscribeLocalEvent<RoleRemovedEvent>(OnRoleEvent);
     }
 
     private void SetRequirementOverride(string value)
@@ -129,8 +126,6 @@ public abstract class SharedRoleSystem : EntitySystem
             return;
         }
 
-        var antagonist = false;
-
         if (!_prototypes.TryIndex(protoId, out var protoEnt))
         {
             Log.Error($"Failed to add role {protoId} to {ToPrettyString(mindId)} : Role prototype does not exist");
@@ -155,17 +150,18 @@ public abstract class SharedRoleSystem : EntitySystem
             DebugTools.Assert(!mindRoleComp.ExclusiveAntag);
         }
 
-        antagonist |= mindRoleComp.Antag;
         mind.MindRoles.Add(mindRoleId);
 
         // Show briefing
         var mindEv = new MindRoleAddedEvent(silent);
         RaiseLocalEvent(mindId, ref mindEv);
 
+        var update = MindRolesUpdate(mindId);
+
         // RoleType refresh, Role time tracking, Update Admin playerlist
         if (mind.OwnedEntity != null)
         {
-            var message = new RoleAddedEvent(mindId, mind, antagonist, silent);
+            var message = new RoleAddedEvent(mindId, mind, update, silent);
             RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
         }
 
@@ -187,17 +183,19 @@ public abstract class SharedRoleSystem : EntitySystem
         }
     }
 
-    private void OnRoleEvent(RoleEvent args)
-    {
-        MindRolesChanged(args.MindId);
-    }
-
-    public void MindRolesChanged(EntityUid mindId)
+    //Select the mind's currently "active" mind role entity, and update the mind's role type, if necessary
+    //Returns true if this changed the mind's role type
+    private bool MindRolesUpdate(EntityUid mindId)
     {
         var roleType = GetRoleTypeByTime(mindId);
 
         if (Comp<MindComponent>(mindId).RoleType != roleType)
+        {
             SetRoleType(mindId, roleType);
+            return true;
+        }
+
+        return false;
     }
 
     private ProtoId<RoleTypePrototype> GetRoleTypeByTime(EntityUid mindId)
@@ -231,14 +229,11 @@ public abstract class SharedRoleSystem : EntitySystem
             return;
         }
 
-        if (comp.RoleType == roleTypeId)
-            return;
-
         comp.RoleType = roleTypeId;
         Dirty(mind, comp);
 
+        // Update player character window
         if (_minds.TryGetSession(mind, out var session))
-            // Update player character window
             RaiseNetworkEvent(new MindRoleTypeChangedEvent(), session.Channel);
         else
         {
@@ -259,7 +254,6 @@ public abstract class SharedRoleSystem : EntitySystem
         _adminLogger.Add(LogType.Mind,
             LogImpact.High,
             $"Role Type of {ToPrettyString(comp.OwnedEntity)} changed to {roleTypeId}");
-
     }
 
     /// <summary>
@@ -277,7 +271,6 @@ public abstract class SharedRoleSystem : EntitySystem
             return false;
 
         var found = false;
-        var antagonist = false;
         var delete = new List<EntityUid>();
         foreach (var role in mind.Comp.MindRoles)
         {
@@ -290,7 +283,6 @@ public abstract class SharedRoleSystem : EntitySystem
                 continue;
             }
 
-            antagonist |= roleComp.Antag | roleComp.ExclusiveAntag;
             _entityManager.DeleteEntity(role);
             delete.Add(role);
             found = true;
@@ -304,9 +296,11 @@ public abstract class SharedRoleSystem : EntitySystem
             mind.Comp.MindRoles.Remove(role);
         }
 
+        var update = MindRolesUpdate(mind);
+
         if (mind.Comp.OwnedEntity != null)
         {
-            var message = new RoleRemovedEvent(mind.Owner, mind.Comp, antagonist);
+            var message = new RoleRemovedEvent(mind.Owner, mind.Comp, update);
             RaiseLocalEvent(mind.Comp.OwnedEntity.Value, message, true);
         }
 

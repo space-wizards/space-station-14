@@ -170,8 +170,7 @@ public sealed class AdminSystem : EntitySystem
     {
         var session = _minds.GetSession(ev.Mind);
 
-        // TODO:ERRANT maybe use a check here to only do this if the role type actually changed
-        if (session == null)
+        if (session == null || !ev.RoleTypeUpdate)
             return;
 
         UpdatePlayerList(session);

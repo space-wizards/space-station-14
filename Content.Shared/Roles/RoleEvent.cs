@@ -8,4 +8,4 @@ namespace Content.Shared.Roles;
 /// <param name="MindId">The mind id associated with the player.</param>
 /// <param name="Mind">The mind component associated with the mind id.</param>
 /// <param name="Antagonist">Whether or not the role makes the player an antagonist.</param>
-public abstract record RoleEvent(EntityUid MindId, MindComponent Mind, bool Antagonist);
+public abstract record RoleEvent(EntityUid MindId, MindComponent Mind, bool RoleTypeUpdate);

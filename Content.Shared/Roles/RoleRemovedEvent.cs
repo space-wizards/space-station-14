@@ -11,4 +11,4 @@ namespace Content.Shared.Roles;
 ///     Whether or not the role made the player an antagonist.
 ///     They may still be one due to one of their other roles.
 /// </param>
-public sealed record RoleRemovedEvent(EntityUid MindId, MindComponent Mind, bool Antagonist) : RoleEvent(MindId, Mind, Antagonist);
+public sealed record RoleRemovedEvent(EntityUid MindId, MindComponent Mind, bool RoleTypeUpdate) : RoleEvent(MindId, Mind, RoleTypeUpdate);
