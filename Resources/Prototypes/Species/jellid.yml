@@ -1,6 +1,6 @@
 - type: species
   id: JellidPerson
-  name: species-name-slime
+  name: species-name-jellid
   roundStart: true
   prototype: MobJellidPerson
   sprites: MobJellidSprites
@@ -55,20 +55,20 @@
 - type: humanoidBaseSprite
   id: MobJellidHead
   baseSprite:
-    sprite: Mobs/Species/Slime/parts.rsi
-    state: head_m
+    sprite: Mobs/Species/Jellids/Parts.rsi
+    state: jellid_head
 
 - type: humanoidBaseSprite
   id: MobJellidHeadMale
   baseSprite:
-    sprite: Mobs/Species/Slime/parts.rsi
-    state: head_m
+    sprite: Mobs/Species/Jellids/Parts.rsi
+    state: jellid_head
 
 - type: humanoidBaseSprite
   id: MobJellidHeadFemale
   baseSprite:
-    sprite: Mobs/Species/Slime/parts.rsi
-    state: head_f
+    sprite: Mobs/Species/Jellids/Parts.rsi
+    state: jellid_head
 
 - type: humanoidBaseSprite
   id: MobJellidTorso
