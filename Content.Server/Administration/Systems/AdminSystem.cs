@@ -10,9 +10,7 @@ using Content.Server.Popups;
 using Content.Server.StationRecords.Systems;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Events;
-using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
-using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
@@ -40,7 +38,6 @@ namespace Content.Server.Administration.Systems;
 public sealed class AdminSystem : EntitySystem
 {
     [Dependency] private readonly IAdminManager _adminManager = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -254,12 +251,7 @@ public sealed class AdminSystem : EntitySystem
                 if (_proto.TryIndex(mindComp.RoleType, out var role))
                     roleType = role;
                 else
-                {
-                    //TODO:ERRANT this should not be an admin log but an Error
-                    _adminLogger.Add(LogType.Mind,
-                        LogImpact.High,
-                        $"{mindComp.CharacterName} has invalid Role Type '{mindComp.RoleType}'. Displaying 'Neutral' instead");
-                }
+                    Log.Error($"{ToPrettyString(mindId)} has invalid Role Type '{mindComp.RoleType}'. Displaying '{Loc.GetString(roleType.Name)}' instead");
             }
             antag = _role.MindIsAntagonist(mindId);
             startingRole = _jobs.MindTryGetJobName(mindId);

@@ -6,8 +6,6 @@ using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Character.Controls;
 using Content.Client.UserInterface.Systems.Character.Windows;
 using Content.Client.UserInterface.Systems.Objectives.Controls;
-using Content.Shared.Administration.Logs;
-using Content.Shared.Database;
 using Content.Shared.Input;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
@@ -29,16 +27,21 @@ namespace Content.Client.UserInterface.Systems.Character;
 [UsedImplicitly]
 public sealed class CharacterUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>, IOnSystemChanged<CharacterInfoSystem>
 {
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IEntityManager _ent = default!;
+    [Dependency] private readonly ILogManager _logMan = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
     [UISystemDependency] private readonly CharacterInfoSystem _characterInfo = default!;
     [UISystemDependency] private readonly SpriteSystem _sprite = default!;
+
+    private ISawmill _sawmill = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+
+        _sawmill = _logMan.GetSawmill("ui");
 
         SubscribeNetworkEvent<MindRoleTypeChangedEvent>(OnRoleTypeChanged);
     }
@@ -215,11 +218,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
             color = proto.Color;
         }
         else
-        {
-            _adminLogger.Add(LogType.Mind,
-                LogImpact.High,
-                $"UI of {_player.LocalEntity} tried to display invalid Role Type '{mind.RoleType}'. Displaying 'Neutral' instead");
-        }
+            _sawmill.Error($"{_player.LocalEntity} has invalid Role Type '{mind.RoleType}'. Displaying '{roleText}' instead");
 
         _window.RoleType.Text = roleText;
         _window.RoleType.FontColorOverride = color;
