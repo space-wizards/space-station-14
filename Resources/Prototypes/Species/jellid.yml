@@ -3,8 +3,134 @@
   name: species-name-slime
   roundStart: true
   prototype: MobJellidPerson
-  sprites: MobSlimeSprites
+  sprites: MobJellidSprites
   defaultSkinTone: "#b8b8b8"
-  markingLimits: MobSlimeMarkingLimits
-  dollPrototype: MobSlimePersonDummy
+  markingLimits: MobJellidMarkingLimits
+  dollPrototype: MobJellidPersonDummy
   skinColoration: Hues
+
+- type: speciesBaseSprites
+  id: MobJellidSprites
+  sprites:
+    Head: MobJellidHead
+    Hair: MobJellidMarkingFollowSkin
+    FacialHair: MobJelidMarkingFollowSkin
+    Chest: MobJellidTorso
+    Eyes: MobHumanoidEyes
+    LArm: MobJellidLArm
+    RArm: MobJellidRArm
+    LHand: MobJellidLHand
+    RHand: MobJellidRHand
+    LLeg: MobJellidLLeg
+    RLeg: MobJellidRLeg
+    LFoot: MobJellidLFoot
+    RFoot: MobSlimeRFoot
+
+
+- type: markingPoints
+  id: MobJellidMarkingLimits
+  points:
+    Hair:
+      points: 1
+      required: false
+    FacialHair:
+      points: 1
+      required: false
+    Chest:
+      points: 1
+      required: false
+    Legs:
+      points: 4
+      required: false
+    Arms:
+      points: 4
+      required: false
+
+- type: humanoidBaseSprite
+  id: MobJellidMarkingFollowSkin
+  markingsMatchSkin: true
+  layerAlpha: 0.5
+
+- type: humanoidBaseSprite
+  id: MobJellidHead
+  baseSprite:
+    sprite: Mobs/Species/Slime/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobJellidHeadMale
+  baseSprite:
+    sprite: Mobs/Species/Slime/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobJellidHeadFemale
+  baseSprite:
+    sprite: Mobs/Species/Slime/parts.rsi
+    state: head_f
+
+- type: humanoidBaseSprite
+  id: MobJellidTorso
+  baseSprite:
+    sprite: Mobs/Species/Slime/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobJellidTorsoMale
+  baseSprite:
+    sprite: Mobs/Species/Slime/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobJellidTorsoFemale
+  baseSprite:
+    sprite: Mobs/Species/Slime/parts.rsi
+    state: torso_f
+
+- type: humanoidBaseSprite
+  id: MobJellidLLeg
+  baseSprite:
+    sprite: Mobs/Species/Slime/parts.rsi
+    state: l_leg
+
+- type: humanoidBaseSprite
+  id: MobJellidLArm
+  baseSprite:
+    sprite: Mobs/Species/Slime/parts.rsi
+    state: l_arm
+
+- type: humanoidBaseSprite
+  id: MobJellidLHand
+  baseSprite:
+    sprite: Mobs/Species/Slime/parts.rsi
+    state: l_hand
+
+- type: humanoidBaseSprite
+  id: MobJellidLFoot
+  baseSprite:
+    sprite: Mobs/Species/Slime/parts.rsi
+    state: l_foot
+
+- type: humanoidBaseSprite
+  id: MobJellidRLeg
+  baseSprite:
+    sprite: Mobs/Species/Slime/parts.rsi
+    state: r_leg
+
+- type: humanoidBaseSprite
+  id: MobJellidRArm
+  baseSprite:
+    sprite: Mobs/Species/Slime/parts.rsi
+    state: r_arm
+
+- type: humanoidBaseSprite
+  id: MobJellidRHand
+  baseSprite:
+    sprite: Mobs/Species/Slime/parts.rsi
+    state: r_hand
+
+- type: humanoidBaseSprite
+  id: MobJellidRFoot
+  baseSprite:
+    sprite: Mobs/Species/Slime/parts.rsi
+    state: r_foot
