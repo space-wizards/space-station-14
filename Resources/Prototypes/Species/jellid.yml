@@ -14,7 +14,6 @@
   sprites:
     Head: MobJellidHead
     HeadSide: MobJellidMarkingFollowSkin
-    FacialHair: MobJelidMarkingFollowSkin
     Chest: MobJellidTorso
     Eyes: MobHumanoidEyes
     LArm: MobJellidLArm
