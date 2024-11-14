@@ -1,6 +1,6 @@
 - type: entity
   id: BaseMagazineLPistol
-  name: pistol magazine (.22 auto)
+  name: Pistol Magazine (.22 auto)
   parent: [ BaseItem, BaseRestrictedContraband ]
   abstract: true
   components:
@@ -33,7 +33,7 @@
 
 - type: entity
   id: BaseMagazineZipper
-  name: Zipper magazine (.22 auto)
+  name: Zipper Magazine (.22 auto)
   parent: BaseItem
   abstract: true
   components:
@@ -66,7 +66,7 @@
 
 - type: entity
   id: MagazineLPistolEmpty
-  name: Mk 93 magazine (.22 auto any)
+  name: Mk 93 Magazine (.22 auto any)
   parent: MagazineLPistol
   components:
   - type: BallisticAmmoProvider
@@ -74,7 +74,7 @@
 
 - type: entity
   id: MagazineLPistol
-  name: Mk 93 magazine (.22 auto)
+  name: Mk 93 Magazine (.22 auto)
   parent: BaseMagazineLPistol
   components:
   - type: BallisticAmmoProvider
@@ -88,7 +88,7 @@
 
 - type: entity
   id: MagazineZipperEmpty
-  name: Zipper magazine (.22 auto any)
+  name: Zipper Magazine (.22 auto any)
   suffix: empty
   parent: BaseMagazineZipper
   components:
@@ -102,7 +102,7 @@
 
 - type: entity
   id: MagazineLPistolIncendiary
-  name: Mk 93 magazine (.22 auto incendiary)
+  name: Mk 93 Magazine (.22 auto incendiary)
   parent: BaseMagazineLPistol
   components:
   - type: BallisticAmmoProvider
@@ -110,7 +110,7 @@
 
 - type: entity
   id: MagazineLPistolPractice
-  name: Mk 93 magazine (.22 auto practice)
+  name: Mk 93 Magazine (.22 auto practice)
   parent: BaseMagazineLPistol
   components:
   - type: BallisticAmmoProvider
@@ -124,8 +124,8 @@
 
 - type: entity
   id: MagazineLPistolUranium
-  name: Mk 93 magazine (.22 auto uranium)
-  parent: BaseMagazinePistol
+  name: Mk 93 Magazine (.22 auto uranium)
+  parent: BaseMagazineLPistol
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLPistolUranium
