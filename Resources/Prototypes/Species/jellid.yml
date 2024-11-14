@@ -15,7 +15,7 @@
     Head: MobJellidHead
     HeadSide: MobJellidMarkingFollowSkin
     Chest: MobJellidTorso
-    Eyes: MobHumanoidEyes
+    Eyes: MobJellidEyes
     LArm: MobJellidLArm
     RArm: MobJellidRArm
     LHand: MobJellidLHand
@@ -29,7 +29,7 @@
   id: MobJellidEyes
   baseSprite:
     sprite: Mobs/Customization/eyes.rsi
-    state: eyes
+    state: jellid
 
 - type: markingPoints
   id: MobJellidMarkingLimits
