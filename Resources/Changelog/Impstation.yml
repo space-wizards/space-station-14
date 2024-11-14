@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: LucasTheDrgn
-  changes:
-  - message: Forever Weed Brownies
-    type: Add
-  id: 14
-  time: '2024-07-03T15:39:30.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/16
 - author: joelsgp
   changes:
   - message: Newports (sprites by Arch)
@@ -4217,3 +4210,12 @@
   id: 513
   time: '2024-11-14T22:47:21.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/704
+- author: Darkmajia
+  changes:
+  - message: Quick construction radial menus work with more materials.
+    type: Add
+  - message: Uranium directional windows are now in the construction menu.
+    type: Add
+  id: 514
+  time: '2024-11-14T22:57:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/683
