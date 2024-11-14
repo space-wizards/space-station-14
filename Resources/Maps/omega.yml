@@ -4648,9 +4648,13 @@ entities:
   - uid: 6692
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -23.5,-26.5
+      rot: 3.141592653589793 rad
+      pos: -25.5,-29.5
       parent: 4812
+    - type: DeviceList
+      devices:
+      - 6253
+      - 5033
   - uid: 7234
     components:
     - type: Transform
@@ -54547,6 +54551,9 @@ entities:
       rot: 3.141592653589793 rad
       pos: -24.5,-27.5
       parent: 4812
+    - type: DeviceNetwork
+      deviceLists:
+      - 6692
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 5222
@@ -55489,6 +55496,9 @@ entities:
       rot: 3.141592653589793 rad
       pos: -26.5,-26.5
       parent: 4812
+    - type: DeviceNetwork
+      deviceLists:
+      - 6692
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 6417
