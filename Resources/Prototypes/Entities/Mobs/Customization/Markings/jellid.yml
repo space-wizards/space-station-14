@@ -10,4 +10,4 @@
           color: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/Jellid.rsi
-    state: HeadMantle
+    state: head_mantle
