@@ -60,7 +60,7 @@ public sealed class IonStormSystem : EntitySystem
     private const string Foods = "IonStormFoods";
 
     /// <summary>
-    /// Randomly alters the laws of an individual silicon. Epic test fail
+    /// Randomly alters the laws of an individual silicon.
     /// </summary>
     public void IonStormTarget(Entity<SiliconLawBoundComponent, IonStormTargetComponent> ent, bool adminlog = true)
     {
