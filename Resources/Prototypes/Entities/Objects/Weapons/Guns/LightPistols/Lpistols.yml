@@ -93,7 +93,7 @@
     - SemiAuto
     - FullAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/mk93.ogg
+      path: /Audio/Weapons/Guns/Gunshots/light-pistol.ogg
 
 - type: entity
   name: Zipper
@@ -121,7 +121,7 @@
     availableModes:
     - SemiAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/Zipper.ogg
+      path: /Audio/Weapons/Guns/Gunshots/zipper.ogg
   - type: ItemSlots
     slots:
       gun_magazine:
