@@ -69,7 +69,7 @@
     price: 500
 
 - type: entity
-  name: Mk 93
+  name: mk 93
   parent: [BaseWeaponLPistol, BaseRestrictedContraband]
   id: WeaponPistolMk93
   description: The famous sidearm modified with a fully automatic receiver. Uses .22 auto ammo.
@@ -96,7 +96,7 @@
       path: /Audio/Weapons/Guns/Gunshots/light-pistol.ogg
 
 - type: entity
-  name: Zipper
+  name: zipper
   parent: [BaseWeaponLPistol, BaseRestrictedContraband]
   id: WeaponPistolZipper # the spaces in description are for formatting.
   description: Better at delivering the killing blow to the business of its manufacturer than to its actual targets. Uses .22 auto ammo.
