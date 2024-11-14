@@ -8,12 +8,14 @@ public sealed class ChildBlockVisionSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly BlindableSystem _blindable = default!;
 
+    private EntityQuery<TransformComponent> _transformQuery;
     private EntityQuery<ChildBlockVisionComponent> _blockQuery;
     private EntityQuery<MapGridComponent> _mapQuery;
     public override void Initialize()
     {
         base.Initialize();
 
+        _transformQuery = GetEntityQuery<TransformComponent>();
         _blockQuery = GetEntityQuery<ChildBlockVisionComponent>();
         _mapQuery = GetEntityQuery<MapGridComponent>();
 
@@ -38,6 +40,9 @@ public sealed class ChildBlockVisionSystem : EntitySystem
     /// </summary>
     private bool HaveBlockVisionParent(EntityUid ent)
     {
+        if (!_transformQuery.HasComp(ent))
+            return false;
+
         if (_mapQuery.HasComp(ent))
             return false;
 
