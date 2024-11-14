@@ -35,7 +35,7 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
             while (query.MoveNext(out var uid, out var grid))
             {
                 _data.Add((uid, grid));
-                GridOptions.AddItem($"{uid} {(playerGrid == uid ? " (Current)" : "")}");
+                GridOptions.AddItem($"{uid} {(playerGrid == uid ? Loc.GetString($"admin-ui-atmos-grid-current") : "")}");
             }
 
             GridOptions.OnItemSelected += eventArgs => GridOptions.SelectId(eventArgs.Id);

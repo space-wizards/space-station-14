@@ -56,7 +56,7 @@
   - type: Tool
     qualities:
     - Rolling
-    speed: 0.25 # its small so takes longer to roll the entire dough flat
+    speedModifier: 0.25 # its small so takes longer to roll the entire dough flat
   - type: SpaceGarbage
   - type: TrashOnSolutionEmpty
     solution: drink
@@ -66,6 +66,7 @@
   - type: Tag
     tags:
     - DrinkCan
+  - type: DnaSubstanceTrace
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -432,6 +433,7 @@
     whitelist:
       tags:
         - Cola
+    hideStackVisualsWhenClosed: false
   - type: StorageFill
     contents:
       - id: DrinkColaCan

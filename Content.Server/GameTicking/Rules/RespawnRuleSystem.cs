@@ -1,8 +1,9 @@
 using Content.Server.Chat.Managers;
-using Content.Server.GameTicking.Components;
+using Content.Server.Database.Migrations.Postgres;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Chat;
+using Content.Shared.GameTicking.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mind;
 using Content.Shared.Mobs;
@@ -34,38 +35,6 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
     }
 
-    private void OnSuicide(SuicideEvent ev)
-    {
-        if (!TryComp<ActorComponent>(ev.Victim, out var actor))
-           return;
-
-        var query = EntityQueryEnumerator<RespawnTrackerComponent>();
-        while (query.MoveNext(out _, out var respawn))
-        {
-            if (respawn.Players.Remove(actor.PlayerSession.UserId))
-                QueueDel(ev.Victim);
-        }
-    }
-
-    private void OnMobStateChanged(MobStateChangedEvent args)
-    {
-        if (args.NewMobState == MobState.Alive)
-            return;
-
-        if (!TryComp<ActorComponent>(args.Target, out var actor))
-            return;
-
-        var query = EntityQueryEnumerator<RespawnDeadRuleComponent, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out _, out var rule))
-        {
-            if (!GameTicker.IsGameRuleActive(uid, rule))
-                continue;
-
-            if (RespawnPlayer(args.Target, uid, actor: actor))
-                break;
-        }
-    }
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -75,8 +44,7 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
 
         foreach (var tracker in EntityQuery<RespawnTrackerComponent>())
         {
-            var queue = new Dictionary<NetUserId, TimeSpan>(tracker.RespawnQueue);
-            foreach (var (player, time) in queue)
+            foreach (var (player, time) in tracker.RespawnQueue)
             {
                 if (_timing.CurTime < time)
                     continue;
@@ -92,53 +60,84 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
         }
     }
 
-    /// <summary>
-    /// Adds a given player to the respawn tracker, ensuring that they are respawned if they die.
-    /// </summary>
-    public void AddToTracker(EntityUid player, EntityUid tracker, RespawnTrackerComponent? component = null, ActorComponent? actor = null)
+    private void OnSuicide(SuicideEvent ev)
     {
-        if (!Resolve(tracker, ref component) || !Resolve(player, ref actor, false))
-            return;
+        if (!TryComp<ActorComponent>(ev.Victim, out var actor))
+           return;
 
-        AddToTracker(actor.PlayerSession.UserId, tracker, component);
+        var query = EntityQueryEnumerator<RespawnTrackerComponent>();
+        while (query.MoveNext(out _, out var respawn))
+        {
+            if (respawn.Players.Remove(actor.PlayerSession.UserId))
+                QueueDel(ev.Victim);
+        }
     }
 
-    /// <summary>
-    /// Adds a given player to the respawn tracker, ensuring that they are respawned if they die.
-    /// </summary>
-    public void AddToTracker(NetUserId id, EntityUid tracker, RespawnTrackerComponent? component = null)
+    private void OnMobStateChanged(MobStateChangedEvent args)
     {
-        if (!Resolve(tracker, ref component))
+        if (args.NewMobState != MobState.Dead)
             return;
 
-        component.Players.Add(id);
+        if (!TryComp<ActorComponent>(args.Target, out var actor))
+            return;
+
+        var query = EntityQueryEnumerator<RespawnDeadRuleComponent, RespawnTrackerComponent, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out var respawnRule, out  var tracker, out var rule))
+        {
+            if (!GameTicker.IsGameRuleActive(uid, rule))
+                continue;
+
+            if (respawnRule.AlwaysRespawnDead)
+                AddToTracker(actor.PlayerSession.UserId, (uid, tracker));
+            if (RespawnPlayer((args.Target, actor), (uid, tracker)))
+                break;
+        }
     }
 
     /// <summary>
     /// Attempts to directly respawn a player, skipping the lobby screen.
     /// </summary>
-    public bool RespawnPlayer(EntityUid player, EntityUid respawnTracker, RespawnTrackerComponent? component = null, ActorComponent? actor = null)
+    public bool RespawnPlayer(Entity<ActorComponent> player, Entity<RespawnTrackerComponent> respawnTracker)
     {
-        if (!Resolve(respawnTracker, ref component) || !Resolve(player, ref actor, false))
+        if (!respawnTracker.Comp.Players.Contains(player.Comp.PlayerSession.UserId) || respawnTracker.Comp.RespawnQueue.ContainsKey(player.Comp.PlayerSession.UserId))
             return false;
 
-        if (!component.Players.Contains(actor.PlayerSession.UserId) || component.RespawnQueue.ContainsKey(actor.PlayerSession.UserId))
-            return false;
-
-        if (component.RespawnDelay == TimeSpan.Zero)
+        if (respawnTracker.Comp.RespawnDelay == TimeSpan.Zero)
         {
             if (_station.GetStations().FirstOrNull() is not { } station)
                 return false;
 
-            QueueDel(player);
-            GameTicker.MakeJoinGame(actor.PlayerSession, station, silent: true);
+            if (respawnTracker.Comp.DeleteBody)
+                QueueDel(player);
+            GameTicker.MakeJoinGame(player.Comp.PlayerSession, station, silent: true);
             return false;
         }
 
-        var msg = Loc.GetString("rule-respawn-in-seconds", ("second", component.RespawnDelay.TotalSeconds));
+        var msg = Loc.GetString("rule-respawn-in-seconds", ("second", respawnTracker.Comp.RespawnDelay.TotalSeconds));
         var wrappedMsg = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
-        _chatManager.ChatMessageToOne(ChatChannel.Server, msg, wrappedMsg, respawnTracker, false, actor.PlayerSession.Channel, Color.LimeGreen);
-        component.RespawnQueue[actor.PlayerSession.UserId] = _timing.CurTime + component.RespawnDelay;
+        _chatManager.ChatMessageToOne(ChatChannel.Server, msg, wrappedMsg, respawnTracker, false, player.Comp.PlayerSession.Channel, Color.LimeGreen);
+
+        respawnTracker.Comp.RespawnQueue[player.Comp.PlayerSession.UserId] = _timing.CurTime + respawnTracker.Comp.RespawnDelay;
+
         return true;
+    }
+
+    /// <summary>
+    /// Adds a given player to the respawn tracker, ensuring that they are respawned if they die.
+    /// </summary>
+    public void AddToTracker(Entity<ActorComponent?> player, Entity<RespawnTrackerComponent?> respawnTracker)
+    {
+        if (!Resolve(respawnTracker, ref respawnTracker.Comp) || !Resolve(player, ref player.Comp, false))
+            return;
+
+        AddToTracker(player.Comp.PlayerSession.UserId, (respawnTracker, respawnTracker.Comp));
+    }
+
+    /// <summary>
+    /// Adds a given player to the respawn tracker, ensuring that they are respawned if they die.
+    /// </summary>
+    public void AddToTracker(NetUserId id, Entity<RespawnTrackerComponent> tracker)
+    {
+        tracker.Comp.Players.Add(id);
     }
 }

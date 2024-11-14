@@ -1,128 +1,26 @@
 ﻿<Control xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-         xmlns:s="clr-namespace:Content.Client.Stylesheets"
-         xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
+         xmlns:ui="clr-namespace:Content.Client.Options.UI">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Vertical" Margin="8 8 8 8" VerticalExpand="True">
             <Label Text="{Loc 'ui-options-volume-label'}"
-                   FontColorOverride="{x:Static s:StyleNano.NanoGold}"
                    StyleClasses="LabelKeyText"/>
             <BoxContainer Orientation="Vertical" Margin="0 3 0 0">
-                <BoxContainer Orientation="Horizontal" Margin="5 0 0 0">
-                    <Label Text="{Loc 'ui-options-master-volume'}" HorizontalExpand="True" />
-                    <Control MinSize="8 0" />
-                    <Slider Name="MasterVolumeSlider"
-                            MinValue="0"
-                            MaxValue="100"
-                            HorizontalExpand="True"
-                            MinSize="80 0"
-                            Rounded="True" />
-                    <Control MinSize="8 0" />
-                    <Label Name="MasterVolumeLabel" MinSize="48 0" Align="Right" />
-                    <Control MinSize="4 0"/>
-                </BoxContainer>
-                <Control MinSize="0 8" />
-                <BoxContainer Orientation="Horizontal" Margin="5 0 0 0">
-                    <Label Text="{Loc 'ui-options-midi-volume'}" HorizontalExpand="True" />
-                    <Control MinSize="8 0" />
-                    <Slider Name="MidiVolumeSlider"
-                            MinValue="0"
-                            MaxValue="100"
-                            HorizontalExpand="True"
-                            MinSize="80 0"
-                            Rounded="True" />
-                    <Control MinSize="8 0" />
-                    <Label Name="MidiVolumeLabel" MinSize="48 0" Align="Right" />
-                    <Control MinSize="4 0"/>
-                </BoxContainer>
-                <BoxContainer Orientation="Horizontal" Margin="5 0 0 0">
-                    <Label Text="{Loc 'ui-options-ambient-music-volume'}" HorizontalExpand="True" />
-                    <Control MinSize="8 0" />
-                    <Slider Name="AmbientMusicVolumeSlider"
-                            MinValue="0"
-                            MaxValue="100"
-                            HorizontalExpand="True"
-                            MinSize="80 0"
-                            Rounded="True" />
-                    <Control MinSize="8 0" />
-                    <Label Name="AmbientMusicVolumeLabel" MinSize="48 0" Align="Right" />
-                    <Control MinSize="4 0"/>
-                </BoxContainer>
-                <BoxContainer Orientation="Horizontal" Margin="5 0 0 0">
-                    <Label Text="{Loc 'ui-options-ambience-volume'}" HorizontalExpand="True" />
-                    <Control MinSize="8 0" />
-                    <Slider Name="AmbienceVolumeSlider"
-                            MinValue="0"
-                            MaxValue="100"
-                            HorizontalExpand="True"
-                            MinSize="80 0"
-                            Rounded="True" />
-                    <Control MinSize="8 0" />
-                    <Label Name="AmbienceVolumeLabel" MinSize="48 0" Align="Right" />
-                    <Control MinSize="4 0"/>
-                </BoxContainer>
-                <BoxContainer Orientation="Horizontal" Margin="5 0 0 0">
-                    <Label Text="{Loc 'ui-options-lobby-volume'}" HorizontalExpand="True" />
-                    <Control MinSize="8 0" />
-                    <Slider Name="LobbyVolumeSlider"
-                            MinValue="0"
-                            MaxValue="100"
-                            HorizontalExpand="True"
-                            MinSize="80 0"
-                            Rounded="True" />
-                    <Control MinSize="8 0" />
-                    <Label Name="LobbyVolumeLabel" MinSize="48 0" Align="Right" />
-                    <Control MinSize="4 0"/>
-                </BoxContainer>
-                <BoxContainer Orientation="Horizontal" Margin="5 0 0 0">
-                    <Label Text="{Loc 'ui-options-interface-volume'}" HorizontalExpand="True" />
-                    <Control MinSize="8 0" />
-                    <Slider Name="InterfaceVolumeSlider"
-                            MinValue="0"
-                            MaxValue="100"
-                            HorizontalExpand="True"
-                            MinSize="80 0"
-                            Rounded="True" />
-                    <Control MinSize="8 0" />
-                    <Label Name="InterfaceVolumeLabel" MinSize="48 0" Align="Right" />
-                    <Control MinSize="4 0"/>
-                </BoxContainer>
-                <BoxContainer Orientation="Horizontal" Margin="5 0 0 0">
-                    <Label Text="{Loc 'ui-options-ambience-max-sounds'}" HorizontalExpand="True" />
-                    <Control MinSize="8 0" />
-                    <Slider Name="AmbienceSoundsSlider"
-                            MinValue="0"
-                            MaxValue="1"
-                            HorizontalExpand="True"
-                            MinSize="80 0"
-                            Rounded="True" />
-                    <Control MinSize="8 0" />
-                    <Label Name="AmbienceSoundsLabel" MinSize="48 0" Align="Right" />
-                    <Control MinSize="4 0"/>
-                </BoxContainer>
-                <Control MinSize="0 8" />
+                <ui:OptionSlider Name="SliderVolumeMaster" Title="{Loc 'ui-options-master-volume'}"
+                                 Margin="0 0 0 8" />
+                <ui:OptionSlider Name="SliderVolumeMidi" Title="{Loc 'ui-options-midi-volume'}" />
+                <ui:OptionSlider Name="SliderVolumeAmbientMusic" Title="{Loc 'ui-options-ambient-music-volume'}" />
+                <ui:OptionSlider Name="SliderVolumeAmbience" Title="{Loc 'ui-options-ambience-volume'}" />
+                <ui:OptionSlider Name="SliderVolumeLobby" Title="{Loc 'ui-options-lobby-volume'}" />
+                <ui:OptionSlider Name="SliderVolumeInterface" Title="{Loc 'ui-options-interface-volume'}" />
+                <ui:OptionSlider Name="SliderMaxAmbienceSounds" Title="{Loc 'ui-options-ambience-max-sounds'}"
+                                 Margin="0 0 0 8" />
                 <CheckBox Name="LobbyMusicCheckBox" Text="{Loc 'ui-options-lobby-music'}" />
                 <CheckBox Name="RestartSoundsCheckBox" Text="{Loc 'ui-options-restart-sounds'}" />
                 <CheckBox Name="EventMusicCheckBox" Text="{Loc 'ui-options-event-music'}" />
                 <CheckBox Name="AdminSoundsCheckBox" Text="{Loc 'ui-options-admin-sounds'}" />
             </BoxContainer>
         </BoxContainer>
-        <controls:StripeBack HasBottomEdge="False" HasMargins="False">
-            <BoxContainer Orientation="Horizontal"
-                          Align="End"
-                          HorizontalExpand="True"
-                          VerticalExpand="True">
-                <Button Name="ResetButton"
-                        Text="{Loc 'ui-options-reset-all'}"
-                        StyleClasses="Caution"
-                        HorizontalExpand="True"
-                        HorizontalAlignment="Right" />
-                <Control MinSize="2 0" />
-                <Button Name="ApplyButton"
-                        Text="{Loc 'ui-options-apply'}"
-                        TextAlign="Center"
-                        HorizontalAlignment="Right" />
-            </BoxContainer>
-        </controls:StripeBack>
+        <ui:OptionsTabControlRow Name="Control" Access="Public" />
     </BoxContainer>
 </Control>

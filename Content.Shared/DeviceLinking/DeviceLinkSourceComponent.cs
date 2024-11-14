@@ -12,12 +12,12 @@ public sealed partial class DeviceLinkSourceComponent : Component
     /// The ports the device link source sends signals from
     /// </summary>
     [DataField]
-    public HashSet<ProtoId<SourcePortPrototype>>? Ports;
+    public HashSet<ProtoId<SourcePortPrototype>> Ports = new();
 
     /// <summary>
-    /// A list of sink uids that got linked for each port
+    /// Dictionary mapping each port to a set of linked sink entities.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables] // This is not serialized as it can be constructed from LinkedPorts
     public Dictionary<ProtoId<SourcePortPrototype>, HashSet<EntityUid>> Outputs = new();
 
     /// <summary>
@@ -32,7 +32,7 @@ public sealed partial class DeviceLinkSourceComponent : Component
     /// The list of source to sink ports for each linked sink entity for easier managing of links
     /// </summary>
     [DataField]
-    public Dictionary<EntityUid, HashSet<(ProtoId<SourcePortPrototype> source, ProtoId<SinkPortPrototype> sink)>> LinkedPorts = new();
+    public Dictionary<EntityUid, HashSet<(ProtoId<SourcePortPrototype> Source, ProtoId<SinkPortPrototype> Sink)>> LinkedPorts = new();
 
     /// <summary>
     ///     Limits the range devices can be linked across.

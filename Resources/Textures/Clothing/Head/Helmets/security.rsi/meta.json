@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e. Vox state by Flareguy for SS14",
+  "copyright": "Made by DieselMohawk for use in SS14",
   "size": {
     "x": 32,
     "y": 32
@@ -16,14 +16,6 @@
     },
     {
       "name": "equipped-HELMET-vox",
-      "directions": 4
-    },
-    {
-      "name": "light-equipped-HELMET",
-      "directions": 4
-    },
-    {
-      "name": "lighton-equipped-HELMET",
       "directions": 4
     },
     {

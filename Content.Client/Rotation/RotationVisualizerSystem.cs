@@ -23,8 +23,8 @@ public sealed class RotationVisualizerSystem : SharedRotationVisualsSystem
         if (args.Sprite == null)
             return;
 
-        // If not defined, defaults to standing.
-        _appearance.TryGetData<RotationState>(uid, RotationVisuals.RotationState, out var state, args.Component);
+        if (!_appearance.TryGetData<RotationState>(uid, RotationVisuals.RotationState, out var state, args.Component))
+            return;
 
         switch (state)
         {

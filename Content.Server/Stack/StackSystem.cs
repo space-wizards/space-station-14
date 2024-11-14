@@ -51,7 +51,7 @@ namespace Content.Server.Stack
 
             // Get a prototype ID to spawn the new entity. Null is also valid, although it should rarely be picked...
             var prototype = _prototypeManager.TryIndex<StackPrototype>(stack.StackTypeId, out var stackType)
-                ? stackType.Spawn
+                ? stackType.Spawn.ToString()
                 : Prototype(uid)?.ID;
 
             // Set the output parameter in the event instance to the newly split stack.
@@ -74,6 +74,15 @@ namespace Content.Server.Stack
         /// <summary>
         ///     Spawns a stack of a certain stack type. See <see cref="StackPrototype"/>.
         /// </summary>
+        public EntityUid Spawn(int amount, ProtoId<StackPrototype> id, EntityCoordinates spawnPosition)
+        {
+            var proto = _prototypeManager.Index(id);
+            return Spawn(amount, proto, spawnPosition);
+        }
+
+        /// <summary>
+        ///     Spawns a stack of a certain stack type. See <see cref="StackPrototype"/>.
+        /// </summary>
         public EntityUid Spawn(int amount, StackPrototype prototype, EntityCoordinates spawnPosition)
         {
             // Set the output result parameter to the new stack entity...
@@ -91,19 +100,69 @@ namespace Content.Server.Stack
         /// </summary>
         public List<EntityUid> SpawnMultiple(string entityPrototype, int amount, EntityCoordinates spawnPosition)
         {
-            var proto = _prototypeManager.Index<EntityPrototype>(entityPrototype);
-            proto.TryGetComponent<StackComponent>(out var stack);
-            var maxCountPerStack = GetMaxCount(stack);
+            if (amount <= 0)
+            {
+                Log.Error(
+                    $"Attempted to spawn an invalid stack: {entityPrototype}, {amount}. Trace: {Environment.StackTrace}");
+                return new();
+            }
+
+            var spawns = CalculateSpawns(entityPrototype, amount);
+
             var spawnedEnts = new List<EntityUid>();
+            foreach (var count in spawns)
+            {
+                var entity = SpawnAtPosition(entityPrototype, spawnPosition);
+                spawnedEnts.Add(entity);
+                SetCount(entity, count);
+            }
+
+            return spawnedEnts;
+        }
+
+        /// <inheritdoc cref="SpawnMultiple(string,int,EntityCoordinates)"/>
+        public List<EntityUid> SpawnMultiple(string entityPrototype, int amount, EntityUid target)
+        {
+            if (amount <= 0)
+            {
+                Log.Error(
+                    $"Attempted to spawn an invalid stack: {entityPrototype}, {amount}. Trace: {Environment.StackTrace}");
+                return new();
+            }
+
+            var spawns = CalculateSpawns(entityPrototype, amount);
+
+            var spawnedEnts = new List<EntityUid>();
+            foreach (var count in spawns)
+            {
+                var entity = SpawnNextToOrDrop(entityPrototype, target);
+                spawnedEnts.Add(entity);
+                SetCount(entity, count);
+            }
+
+            return spawnedEnts;
+        }
+
+        /// <summary>
+        /// Calculates how many stacks to spawn that total up to <paramref name="amount"/>.
+        /// </summary>
+        /// <param name="entityPrototype">The stack to spawn.</param>
+        /// <param name="amount">The amount of pieces across all stacks.</param>
+        /// <returns>The list of stack counts per entity.</returns>
+        private List<int> CalculateSpawns(string entityPrototype, int amount)
+        {
+            var proto = _prototypeManager.Index<EntityPrototype>(entityPrototype);
+            proto.TryGetComponent<StackComponent>(out var stack, EntityManager.ComponentFactory);
+            var maxCountPerStack = GetMaxCount(stack);
+            var amounts = new List<int>();
             while (amount > 0)
             {
-                var entity = Spawn(entityPrototype, spawnPosition);
-                spawnedEnts.Add(entity);
                 var countAmount = Math.Min(maxCountPerStack, amount);
-                SetCount(entity, countAmount);
                 amount -= countAmount;
+                amounts.Add(countAmount);
             }
-            return spawnedEnts;
+
+            return amounts;
         }
 
         private void OnStackAlternativeInteract(EntityUid uid, StackComponent stack, GetVerbsEvent<AlternativeVerb> args)

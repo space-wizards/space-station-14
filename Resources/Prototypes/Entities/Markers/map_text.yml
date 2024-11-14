@@ -1,0 +1,11 @@
+﻿- type: entity
+  id: MapText
+  parent: MarkerBase
+  name: map text
+  placement:
+    mode: PlaceFree
+  components:
+  - type: MapText
+  - type: Sprite
+    state: pink
+

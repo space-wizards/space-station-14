@@ -1,6 +1,7 @@
 using Content.Shared.Atmos.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.UserInterface.Systems.Atmos.GasTank
 {
@@ -14,7 +15,7 @@ namespace Content.Client.UserInterface.Systems.Atmos.GasTank
         {
         }
 
-        public void SetOutputPressure(in float value)
+        public void SetOutputPressure(float value)
         {
             SendMessage(new GasTankSetPressureMessage
             {
@@ -30,9 +31,10 @@ namespace Content.Client.UserInterface.Systems.Atmos.GasTank
         protected override void Open()
         {
             base.Open();
-            _window = new GasTankWindow(this);
-            _window.OnClose += Close;
-            _window.OpenCentered();
+            _window = this.CreateWindow<GasTankWindow>();
+            _window.SetTitle(EntMan.GetComponent<MetaDataComponent>(Owner).EntityName);
+            _window.OnOutputPressure += SetOutputPressure;
+            _window.OnToggleInternals += ToggleInternals;
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)

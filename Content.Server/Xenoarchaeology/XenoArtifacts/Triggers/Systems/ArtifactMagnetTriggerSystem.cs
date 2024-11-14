@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Salvage;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 using Content.Shared.Clothing;
+using Content.Shared.Item.ItemToggle.Components;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
 
@@ -29,11 +30,11 @@ public sealed class ArtifactMagnetTriggerSystem : EntitySystem
 
         _toActivate.Clear();
 
-        //assume that there's more instruments than artifacts
-        var query = EntityQueryEnumerator<MagbootsComponent, TransformComponent>();
-        while (query.MoveNext(out _, out var magboot, out var magXform))
+        //assume that there's more magboots than artifacts
+        var query = EntityQueryEnumerator<MagbootsComponent, TransformComponent, ItemToggleComponent>();
+        while (query.MoveNext(out _, out var magboot, out var magXform, out var toggle))
         {
-            if (!magboot.On)
+            if (!toggle.Activated)
                 continue;
 
             var artiQuery = EntityQueryEnumerator<ArtifactMagnetTriggerComponent, TransformComponent>();

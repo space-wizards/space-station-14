@@ -67,14 +67,17 @@
                                        Description="{Loc 'comp-pda-ui-ringtone-button-description'}"/>
                 <pda:PdaSettingsButton Name="ActivateMusicButton"
                                        Access="Public"
+                                       Visible="False"
                                        Text="{Loc 'pda-bound-user-interface-music-button'}"
                                        Description="{Loc 'pda-bound-user-interface-music-button-description'}"/>
                 <pda:PdaSettingsButton Name="ShowUplinkButton"
                                        Access="Public"
+                                       Visible="False"
                                        Text="{Loc 'pda-bound-user-interface-show-uplink-title'}"
                                        Description="{Loc 'pda-bound-user-interface-show-uplink-description'}"/>
                 <pda:PdaSettingsButton Name="LockUplinkButton"
                                        Access="Public"
+                                       Visible="False"
                                        Text="{Loc 'pda-bound-user-interface-lock-uplink-title'}"
                                        Description="{Loc 'pda-bound-user-interface-lock-uplink-description'}"/>
             </BoxContainer>

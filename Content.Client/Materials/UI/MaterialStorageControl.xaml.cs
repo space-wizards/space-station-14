@@ -87,6 +87,6 @@ public sealed partial class MaterialStorageControl : ScrollContainer
         }
 
         _currentMaterials = mats;
-        NoMatsLabel.Visible = ChildCount == 1;
+        NoMatsLabel.Visible = MaterialList.ChildCount == 1;
     }
 }

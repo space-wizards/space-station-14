@@ -4,6 +4,7 @@
   antagonist: true
   setPreference: true
   objective: roles-antag-initial-infected-objective
+  guides: [ Zombies ]
 
 - type: antag
   id: Zombie
@@ -11,3 +12,4 @@
   antagonist: true
   setPreference: false
   objective: roles-antag-zombie-objective
+  guides: [ Zombies ]

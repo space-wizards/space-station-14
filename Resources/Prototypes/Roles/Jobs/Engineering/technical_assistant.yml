@@ -27,3 +27,6 @@
     belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetEngineering
     pocket2: BookEngineersHandbook
+  #storage:
+    #back:
+    #- Stuff

@@ -4,7 +4,6 @@
   icon: { sprite: "/Textures/Objects/Materials/ingots.rsi", state: gold }
   spawn: IngotGold1
   maxCount: 30
-  itemSize: 1
 
 - type: stack
   id: Silver
@@ -12,4 +11,3 @@
   icon: { sprite: "/Textures/Objects/Materials/ingots.rsi", state: silver }
   spawn: IngotSilver1
   maxCount: 30
-  itemSize: 1

@@ -1,0 +1,12 @@
+- type: entity
+  abstract: true
+  parent: [BaseItem, PowerCellSlotSmallItem]
+  id: BaseHandheldComputer
+  components:
+  - type: ActivatableUIRequiresPowerCell
+  - type: ItemToggle
+    onUse: false # above component does the toggling
+  - type: PowerCellDraw
+    drawRate: 0
+    useRate: 20
+  - type: ToggleCellDraw

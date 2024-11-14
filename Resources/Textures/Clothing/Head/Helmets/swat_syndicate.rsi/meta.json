@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/fb2d71495bfe81446159ef528534193d09dd8d34, inhand sprites by Flareguy, icon edited by Flareguy. Vox state taken from from Paradise at https://github.com/ParadiseSS13/Paradise/blob/b1658390731745adf5cc9fb039bb0f17ad3c11a7/icons/mob/clothing/species/vox/helmet.dmi ",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/d90c7e5de6f6d94596c164da78dbc8d3cd35bb99 and modified by Flareguy for SS14",
   "size": {
     "x": 32,
     "y": 32

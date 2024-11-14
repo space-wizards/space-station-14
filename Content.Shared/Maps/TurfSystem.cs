@@ -44,7 +44,7 @@ public sealed class TurfSystem : EntitySystem
 
         var size = grid.TileSize;
         var localPos = new Vector2(indices.X * size + (size / 2f), indices.Y * size + (size / 2f));
-        var worldPos = matrix.Transform(localPos);
+        var worldPos = Vector2.Transform(localPos, matrix);
 
         // This is scaled to 95 % so it doesn't encompass walls on other tiles.
         var tileAabb = Box2.UnitCentered.Scale(0.95f * size);

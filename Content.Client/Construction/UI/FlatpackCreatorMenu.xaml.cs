@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Client.Materials;
+using Content.Client.Materials.UI;
 using Content.Client.Message;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Construction.Components;
@@ -23,19 +24,17 @@ public sealed partial class FlatpackCreatorMenu : FancyWindow
     private readonly ItemSlotsSystem _itemSlots;
     private readonly FlatpackSystem _flatpack;
     private readonly MaterialStorageSystem _materialStorage;
-    private readonly SpriteSystem _spriteSystem;
 
-    private readonly EntityUid _owner;
+    private EntityUid _owner;
 
     [ValidatePrototypeId<EntityPrototype>]
     public const string NoBoardEffectId = "FlatpackerNoBoardEffect";
 
     private EntityUid? _currentBoard = EntityUid.Invalid;
-    private EntityUid? _machinePreview;
 
     public event Action? PackButtonPressed;
 
-    public FlatpackCreatorMenu(EntityUid uid)
+    public FlatpackCreatorMenu()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
@@ -43,31 +42,26 @@ public sealed partial class FlatpackCreatorMenu : FancyWindow
         _itemSlots = _entityManager.System<ItemSlotsSystem>();
         _flatpack = _entityManager.System<FlatpackSystem>();
         _materialStorage = _entityManager.System<MaterialStorageSystem>();
-        _spriteSystem = _entityManager.System<SpriteSystem>();
-
-        _owner = uid;
 
         PackButton.OnPressed += _ => PackButtonPressed?.Invoke();
 
-        MaterialStorageControl.SetOwner(uid);
         InsertLabel.SetMarkup(Loc.GetString("flatpacker-ui-insert-board"));
+    }
+
+    public void SetEntity(EntityUid uid)
+    {
+        _owner = uid;
+        MaterialStorageControl.SetOwner(uid);
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
 
-        if (_machinePreview is not { } && _entityManager.Deleted(_machinePreview))
-        {
-            _machinePreview = null;
-            MachineSprite.SetEntity(_machinePreview);
-        }
-
         if (!_entityManager.TryGetComponent<FlatpackCreatorComponent>(_owner, out var flatpacker) ||
             !_itemSlots.TryGetSlot(_owner, flatpacker.SlotId, out var itemSlot))
             return;
 
-        MachineBoardComponent? machineBoardComp = null;
         if (flatpacker.Packing)
         {
             PackButton.Disabled = true;
@@ -75,20 +69,16 @@ public sealed partial class FlatpackCreatorMenu : FancyWindow
         else if (_currentBoard != null)
         {
             Dictionary<string, int> cost;
-            if (_entityManager.TryGetComponent(_currentBoard, out machineBoardComp) &&
-                machineBoardComp.Prototype is not null)
+            if (_entityManager.TryGetComponent<MachineBoardComponent>(_currentBoard, out var machineBoardComp))
                 cost = _flatpack.GetFlatpackCreationCost((_owner, flatpacker), (_currentBoard.Value, machineBoardComp));
             else
-                cost = _flatpack.GetFlatpackCreationCost((_owner, flatpacker));
+                cost = _flatpack.GetFlatpackCreationCost((_owner, flatpacker), null);
 
             PackButton.Disabled = !_materialStorage.CanChangeMaterialAmount(_owner, cost);
         }
 
         if (_currentBoard == itemSlot.Item)
             return;
-
-        if (_machinePreview != null)
-            _entityManager.DeleteEntity(_machinePreview);
 
         _currentBoard = itemSlot.Item;
         CostHeaderLabel.Visible = _currentBoard != null;
@@ -99,35 +89,32 @@ public sealed partial class FlatpackCreatorMenu : FancyWindow
             string? prototype = null;
             Dictionary<string, int>? cost = null;
 
-            if (machineBoardComp != null || _entityManager.TryGetComponent(_currentBoard, out machineBoardComp))
+            if (_entityManager.TryGetComponent<MachineBoardComponent>(_currentBoard, out var newMachineBoardComp))
             {
-                prototype = machineBoardComp.Prototype;
-                cost = _flatpack.GetFlatpackCreationCost((_owner, flatpacker), (_currentBoard.Value, machineBoardComp));
+                prototype = newMachineBoardComp.Prototype;
+                cost = _flatpack.GetFlatpackCreationCost((_owner, flatpacker), (_currentBoard.Value, newMachineBoardComp));
             }
             else if (_entityManager.TryGetComponent<ComputerBoardComponent>(_currentBoard, out var computerBoard))
             {
                 prototype = computerBoard.Prototype;
-                cost = _flatpack.GetFlatpackCreationCost((_owner, flatpacker));
+                cost = _flatpack.GetFlatpackCreationCost((_owner, flatpacker), null);
             }
 
             if (prototype is not null && cost is not null)
             {
                 var proto = _prototypeManager.Index<EntityPrototype>(prototype);
-                _machinePreview = _entityManager.Spawn(proto.ID);
-                _spriteSystem.ForceUpdate(_machinePreview.Value);
+                MachineSprite.SetPrototype(prototype);
                 MachineNameLabel.SetMessage(proto.Name);
                 CostLabel.SetMarkup(GetCostString(cost));
             }
         }
         else
         {
-            _machinePreview = _entityManager.Spawn(NoBoardEffectId);
+            MachineSprite.SetPrototype(NoBoardEffectId);
             CostLabel.SetMessage(Loc.GetString("flatpacker-ui-no-board-label"));
             MachineNameLabel.SetMessage(" ");
             PackButton.Disabled = true;
         }
-
-        MachineSprite.SetEntity(_machinePreview);
     }
 
     private string GetCostString(Dictionary<string, int> costs)
@@ -149,20 +136,12 @@ public sealed partial class FlatpackCreatorMenu : FancyWindow
                 ("amount", amountText),
                 ("material", Loc.GetString(matProto.Name)));
 
-            msg.AddMarkup(text);
+            msg.TryAddMarkup(text, out _);
 
             if (i != orderedCosts.Length - 1)
                 msg.PushNewline();
         }
 
         return msg.ToMarkup();
-    }
-
-    public override void Close()
-    {
-        base.Close();
-
-        _entityManager.DeleteEntity(_machinePreview);
-        _machinePreview = null;
     }
 }

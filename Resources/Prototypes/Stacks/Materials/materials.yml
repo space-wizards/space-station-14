@@ -4,7 +4,6 @@
   icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
   spawn: MaterialBiomass1
   maxCount: 100
-  itemSize: 1
 
 - type: stack
   id: WoodPlank
@@ -12,7 +11,6 @@
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: wood }
   spawn: MaterialWoodPlank1
   maxCount: 30
-  itemSize: 1
 
 - type: stack
   id: Cardboard
@@ -20,7 +18,6 @@
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: cardboard }
   spawn: MaterialCardboard1
   maxCount: 30
-  itemSize: 1
 
 - type: stack
   id: Cloth
@@ -28,7 +25,6 @@
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: cloth }
   spawn: MaterialCloth1
   maxCount: 30
-  itemSize: 1
 
 - type: stack
   id: Durathread
@@ -36,7 +32,6 @@
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: durathread }
   spawn: MaterialDurathread1
   maxCount: 30
-  itemSize: 1
 
 - type: stack
   id: Diamond
@@ -44,7 +39,6 @@
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: diamond }
   spawn: MaterialDiamond1
   maxCount: 30
-  itemSize: 2
 
 - type: stack
   id: Cotton
@@ -52,7 +46,6 @@
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: cotton }
   spawn: MaterialCotton1
   maxCount: 30
-  itemSize: 1
 
 - type: stack
   id: Pyrotton
@@ -60,7 +53,6 @@
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: pyrotton }
   spawn: MaterialPyrotton1
   maxCount: 30
-  itemSize: 1
 
 - type: stack
   id: Bananium
@@ -68,7 +60,6 @@
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: bananium }
   spawn: MaterialBananium1
   maxCount: 10
-  itemSize: 2
 
 - type: stack
   id: MeatSheets
@@ -76,7 +67,6 @@
   icon: { sprite: /Textures/Objects/Materials/Sheets/meaterial.rsi, state: meat }
   spawn: MaterialSheetMeat1
   maxCount: 30
-  itemSize: 1
 
 - type: stack
   id: WebSilk
@@ -84,7 +74,20 @@
   icon: { sprite: /Textures/Objects/Materials/silk.rsi, state: icon }
   spawn: MaterialWebSilk1
   maxCount: 50
-  itemSize: 1
+
+- type: stack
+  id: SpaceCarpTooth
+  name: space carp tooth
+  icon: { sprite: /Textures/Objects/Materials/Mob/carptooth.rsi, state: tooth}
+  spawn: MaterialToothSpaceCarp1
+  maxCount: 30
+
+- type: stack
+  id: SharkMinnowTooth
+  name: sharkminnow tooth
+  icon: { sprite: /Textures/Objects/Materials/Mob/sharktooth.rsi, state: tooth}
+  spawn: MaterialToothSharkminnow1
+  maxCount: 30
 
 - type: stack
   id: Bones
@@ -92,7 +95,6 @@
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: bones}
   spawn: MaterialBones1
   maxCount: 30
-  itemSize: 1
 
 - type: stack
   id: Gunpowder
@@ -100,4 +102,10 @@
   icon: { sprite: /Textures/Objects/Misc/reagent_fillings.rsi, state: powderpile }
   spawn: MaterialGunpowder
   maxCount: 60
-  itemSize: 1
+
+- type: stack
+  id: GoliathHide
+  name: goliath hide
+  icon: { sprite: /Textures/Objects/Materials/hide.rsi, state: goliath_hide }
+  spawn: MaterialGoliathHide1
+  maxCount: 30

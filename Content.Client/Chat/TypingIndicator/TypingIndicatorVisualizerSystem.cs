@@ -2,21 +2,36 @@
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Prototypes;
+using Content.Shared.Inventory;
 
 namespace Content.Client.Chat.TypingIndicator;
 
 public sealed class TypingIndicatorVisualizerSystem : VisualizerSystem<TypingIndicatorComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
+
 
     protected override void OnAppearanceChange(EntityUid uid, TypingIndicatorComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
-        if (!_prototypeManager.TryIndex<TypingIndicatorPrototype>(component.Prototype, out var proto))
+        var currentTypingIndicator = component.TypingIndicatorPrototype;
+
+        var evt = new BeforeShowTypingIndicatorEvent();
+
+        if (TryComp<InventoryComponent>(uid, out var inventoryComp))
+            _inventory.RelayEvent((uid, inventoryComp), ref evt);
+
+        var overrideIndicator = evt.GetMostRecentIndicator();
+
+        if (overrideIndicator != null)
+            currentTypingIndicator = overrideIndicator.Value;
+
+        if (!_prototypeManager.TryIndex(currentTypingIndicator, out var proto))
         {
-            Log.Error($"Unknown typing indicator id: {component.Prototype}");
+            Log.Error($"Unknown typing indicator id: {component.TypingIndicatorPrototype}");
             return;
         }
 

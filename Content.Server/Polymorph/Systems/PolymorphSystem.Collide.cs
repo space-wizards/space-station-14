@@ -1,6 +1,7 @@
 using Content.Server.Polymorph.Components;
 using Content.Shared.Polymorph;
 using Content.Shared.Projectiles;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Prototypes;
@@ -9,6 +10,8 @@ namespace Content.Server.Polymorph.Systems;
 
 public partial class PolymorphSystem
 {
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+
     /// <summary>
     /// Need to do this so we don't get a collection enumeration error in physics by polymorphing
     /// an entity we're colliding with
@@ -39,8 +42,8 @@ public partial class PolymorphSystem
             return;
 
         var other = args.OtherEntity;
-        if (!component.Whitelist.IsValid(other, EntityManager)
-            || component.Blacklist != null && component.Blacklist.IsValid(other, EntityManager))
+        if (_whitelistSystem.IsWhitelistFail(component.Whitelist, other) ||
+            _whitelistSystem.IsBlacklistPass(component.Blacklist, other))
             return;
 
         _queuedPolymorphUpdates.Enqueue(new (other, component.Sound, component.Polymorph));

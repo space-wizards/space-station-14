@@ -59,7 +59,7 @@
   parent: BaseItem
   id: VoiceTrigger
   name: voice trigger
-  description: Adds a machine link that is triggered by vocal keywords
+  description: Adds a machine link that is triggered by vocal keywords.
   components:
   - type: Sprite
     sprite: Objects/Devices/voice.rsi

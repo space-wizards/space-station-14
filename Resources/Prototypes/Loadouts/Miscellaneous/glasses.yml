@@ -21,36 +21,24 @@
 # Glasses
 - type: loadout
   id: Glasses
-  equipment: Glasses
-
-- type: startingGear
-  id: Glasses
   equipment:
     eyes: ClothingEyesGlasses
 
 # Special options
-# Jamjar    
+# Jamjar
 - type: loadout
   id: GlassesJamjar
-  equipment: GlassesJamjar
   effects:
   - !type:GroupLoadoutEffect
     proto: JamjarTimer
-
-- type: startingGear
-  id: GlassesJamjar
   equipment:
     eyes: ClothingEyesGlassesJamjar
 
 # Jensen
 - type: loadout
   id: GlassesJensen
-  equipment: GlassesJensen
   effects:
   - !type:GroupLoadoutEffect
     proto: JensenTimer
-
-- type: startingGear
-  id: GlassesJensen
   equipment:
     eyes: ClothingEyesGlassesJensen

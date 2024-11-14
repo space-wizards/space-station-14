@@ -11,6 +11,7 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Lock;
 using Content.Shared.Popups;
+using Content.Shared.Power;
 using Content.Shared.Projectiles;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
@@ -195,7 +196,8 @@ namespace Content.Server.Singularity.EntitySystems
             if (TryComp<ApcPowerReceiverComponent>(uid, out var apcReceiver))
             {
                 apcReceiver.Load = component.PowerUseActive;
-                PowerOn(uid, component);
+                if (apcReceiver.Powered)
+                    PowerOn(uid, component);
             }
             // Do not directly PowerOn().
             // OnReceivedPowerChanged will get fired due to DrawRate change which will turn it on.

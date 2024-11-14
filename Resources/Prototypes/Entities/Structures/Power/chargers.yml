@@ -34,7 +34,7 @@
         sound:
           collection: MetalBreak
   - type: StaticPrice
-    price: 25
+    price: 75
 
 - type: entity
   abstract: true
@@ -58,12 +58,15 @@
         density: 500
         mask:
         - TabletopMachineMask
+        layer:
+        - BulletImpassable
   - type: PowerChargerVisuals
   - type: ContainerContainer
     containers:
       charger_slot: !type:ContainerSlot
       machine_board: !type:Container
       machine_parts: !type:Container
+  - type: RequireProjectileTarget
 
 - type: entity
   parent: BaseItemRecharger

@@ -9,33 +9,24 @@
       time: 216000 #60 hrs
 
 # Head
-
-- type: loadout
-  id: ScientificBeret
-  equipment: ScientificBeret
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: SeniorResearcher
-
 - type: startingGear
   id: ScientificBeret
   equipment:
     head: ClothingHeadHatBeretRND
 
 - type: loadout
-  id: RoboticistCap
-  equipment: RoboticistCap
+  id: ScientificBeret
+  startingGear: ScientificBeret
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorResearcher
 
-- type: startingGear
+- type: loadout
   id: RoboticistCap
   equipment:
     head: ClothingHeadHatCorpsoft
 
 - type: loadout
-  id: SkullBandana
-  equipment: SkullBandana
-
-- type: startingGear
   id: SkullBandana
   equipment:
     head: ClothingHeadBandSkull
@@ -44,175 +35,103 @@
 
 - type: loadout
   id: ScientistTie
-  equipment: ScientistTie
-
-- type: startingGear
-  id: ScientistTie
   equipment:
     neck: ClothingNeckTieSci
 
 # Jumpsuit
 - type: loadout
   id: ScientistJumpsuit
-  equipment: ScientistJumpsuit
-
-- type: startingGear
-  id: ScientistJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitScientist
 
 - type: loadout
-  id: ScientistJumpskirt
-  equipment: ScientistJumpskirt
-
-- type: startingGear
   id: ScientistJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtScientist
 
 - type: loadout
   id: RoboticistJumpsuit
-  equipment: RoboticistJumpsuit
-
-- type: startingGear
-  id: RoboticistJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitRoboticist
 
 - type: loadout
-  id: RoboticistJumpskirt
-  equipment: RoboticistJumpskirt
-
-- type: startingGear
   id: RoboticistJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtRoboticist
 
 - type: loadout
   id: SeniorResearcherJumpsuit
-  equipment: SeniorResearcherJumpsuit
   effects:
   - !type:GroupLoadoutEffect
     proto: SeniorResearcher
-
-- type: startingGear
-  id: SeniorResearcherJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitSeniorResearcher
 
 - type: loadout
   id: SeniorResearcherJumpskirt
-  equipment: SeniorResearcherJumpskirt
   effects:
   - !type:GroupLoadoutEffect
     proto: SeniorResearcher
-
-- type: startingGear
-  id: SeniorResearcherJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtSeniorResearcher
 
 # Back
 - type: loadout
   id: ScientistBackpack
-  equipment: ScientistBackpack
-
-- type: startingGear
-  id: ScientistBackpack
   equipment:
-    back: ClothingBackpackScienceFilled
+    back: ClothingBackpackScience
 
 - type: loadout
   id: ScientistSatchel
-  equipment: ScientistSatchel
-
-- type: startingGear
-  id: ScientistSatchel
   equipment:
-    back: ClothingBackpackSatchelScienceFilled
+    back: ClothingBackpackSatchelScience
 
 - type: loadout
   id: ScientistDuffel
-  equipment: ScientistDuffel
-
-- type: startingGear
-  id: ScientistDuffel
   equipment:
-    back: ClothingBackpackDuffelScienceFilled
+    back: ClothingBackpackDuffelScience
 
 # OuterClothing
 - type: loadout
-  id: RegularLabCoat
-  equipment: RegularLabCoat
-
-- type: startingGear
   id: RegularLabCoat
   equipment:
     outerClothing: ClothingOuterCoatLab
 
 - type: loadout
   id: ScienceLabCoat
-  equipment: ScienceLabCoat
-
-- type: startingGear
-  id: ScienceLabCoat
   equipment:
     outerClothing: ClothingOuterCoatRnd
 
 - type: loadout
-  id: ScienceWintercoat
-  equipment: ScienceWintercoat
-
-- type: startingGear
   id: ScienceWintercoat
   equipment:
     outerClothing: ClothingOuterWinterSci
 
 - type: loadout
   id: RoboticistLabCoat
-  equipment: RoboticistLabCoat
-
-- type: startingGear
-  id: RoboticistLabCoat
   equipment:
     outerClothing: ClothingOuterCoatRobo
 
 - type: loadout
-  id: RoboticistWintercoat
-  equipment: RoboticistWintercoat
-
-- type: startingGear
   id: RoboticistWintercoat
   equipment:
     outerClothing: ClothingOuterWinterRobo
 
 - type: loadout
   id: SeniorResearcherLabCoat
-  equipment: SeniorResearcherLabCoat
   effects:
   - !type:GroupLoadoutEffect
     proto: SeniorResearcher
-
-- type: startingGear
-  id: SeniorResearcherLabCoat
   equipment:
     outerClothing: ClothingOuterCoatLabSeniorResearcher
 
 # Gloves
 - type: loadout
   id: LatexGloves
-  equipment: LatexGloves
-
-- type: startingGear
-  id: LatexGloves
   equipment:
     gloves: ClothingHandsGlovesLatex
 
 - type: loadout
-  id: RobohandsGloves
-  equipment: RobohandsGloves
-
-- type: startingGear
   id: RobohandsGloves
   equipment:
     gloves: ClothingHandsGlovesRobohands
@@ -220,31 +139,19 @@
 # Shoes
 - type: loadout
   id: ScienceWinterBoots
-  equipment: ScienceWinterBoots
-
-- type: startingGear
-  id: ScienceWinterBoots
   equipment:
     shoes: ClothingShoesBootsWinterSci
 
 # ID
 - type: loadout
   id: ScientistPDA
-  equipment: ScientistPDA
-
-- type: startingGear
-  id: ScientistPDA
   equipment:
     id: SciencePDA
 
 - type: loadout
   id: SeniorResearcherPDA
-  equipment: SeniorResearcherPDA
   effects:
   - !type:GroupLoadoutEffect
     proto: SeniorResearcher
-
-- type: startingGear
-  id: SeniorResearcherPDA
   equipment:
     id: SeniorResearcherPDA

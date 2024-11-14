@@ -1,11 +1,11 @@
 using System.Linq;
-using System.Numerics;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
 using Content.Server.Station.Components;
 using Content.Server.Station.Events;
-using Content.Shared.Fax;
+using Content.Shared.CCVar;
 using Content.Shared.Station;
+using Content.Shared.Station.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -30,7 +30,6 @@ public sealed class StationSystem : EntitySystem
 {
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
@@ -282,50 +281,10 @@ public sealed class StationSystem : EntitySystem
         var data = Comp<StationDataComponent>(station);
         name ??= MetaData(station).EntityName;
 
-        var entry = gridIds ?? Array.Empty<EntityUid>();
-
-        foreach (var grid in entry)
+        foreach (var grid in gridIds ?? Array.Empty<EntityUid>())
         {
             AddGridToStation(station, grid, null, data, name);
         }
-
-        if (TryComp<StationRandomTransformComponent>(station, out var random))
-        {
-            Angle? rotation = null;
-            Vector2? offset = null;
-
-            if (random.MaxStationOffset != null)
-                offset = _random.NextVector2(-random.MaxStationOffset.Value, random.MaxStationOffset.Value);
-
-            if (random.EnableStationRotation)
-                rotation = _random.NextAngle();
-
-            foreach (var grid in entry)
-            {
-                //planetary maps give an error when trying to change from position or rotation.
-                //This is still the case, but it will be irrelevant after the https://github.com/space-wizards/space-station-14/pull/26510
-                if (rotation != null && offset != null)
-                {
-                    var pos = _transform.GetWorldPosition(grid);
-                    _transform.SetWorldPositionRotation(grid, pos + offset.Value, rotation.Value);
-                    continue;
-                }
-                if (rotation != null)
-                {
-                    _transform.SetWorldRotation(grid, rotation.Value);
-                    continue;
-                }
-                if (offset != null)
-                {
-                    var pos = _transform.GetWorldPosition(grid);
-                    _transform.SetWorldPosition(grid, pos + offset.Value);
-                    continue;
-                }
-            }
-        }
-
-        if (LifeStage(station) < EntityLifeStage.MapInitialized)
-            throw new Exception($"Station must be man-initialized");
 
         var ev = new StationPostInitEvent((station, data));
         RaiseLocalEvent(station, ref ev, true);

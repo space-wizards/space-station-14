@@ -7,7 +7,4 @@ namespace Content.Shared.Weapons.Reflect;
 /// Reflection events will then be relayed.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class ReflectUserComponent : Component
-{
-
-}
+public sealed partial class ReflectUserComponent : Component;

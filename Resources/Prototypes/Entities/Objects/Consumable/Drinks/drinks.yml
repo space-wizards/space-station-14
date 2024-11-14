@@ -35,6 +35,7 @@
     interfaces:
       enum.TransferAmountUiKey.Key:
         type: TransferAmountBoundUserInterface
+  - type: DnaSubstanceTrace
 
 - type: entity
   parent: DrinkBase
@@ -78,6 +79,9 @@
     solution: drink
   - type: FitsInDispenser
     solution: drink
+  - type: Tag
+    tags:
+      - DrinkGlass
 
 # Transformable container - normal glass
 - type: entity
@@ -1218,7 +1222,7 @@
         - ReagentId: JuiceLemon
           Quantity: 30
   - type: Icon
-    sprite: Objects/Consumable/Drinks/lemonjuice.rsi
+    sprite: Objects/Consumable/Drinks/lemonjuiceglass.rsi
     state: icon
 
 - type: entity
@@ -2138,7 +2142,7 @@
   parent: DrinkGlassBase
   id: DrinkWaterJug
   name: water jug
-  description: Stay hydrated
+  description: Stay hydrated.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -2327,44 +2331,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-white.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkRamen
-  name: cup ramen
-  description: Just add 10ml boiling water. A taste that reminds you of your school years.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 40 #big cup
-        reagents:
-        - ReagentId: DryRamen
-          Quantity: 25
-        - ReagentId: Soysauce
-          Quantity: 5
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/ramen.rsi
-  - type: Tag
-    tags:
-    - Trash
-  - type: SpaceGarbage
-
-- type: entity
-  parent: DrinkRamen
-  id: DrinkHellRamen
-  name: hell ramen
-  description: Just add 10ml boiling water. Super spicy flavor.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 40
-        reagents:
-        - ReagentId: DryRamen
-          Quantity: 25
-        - ReagentId: CapsaicinOil
-          Quantity: 5
 
 - type: entity
   parent: DrinkGlass

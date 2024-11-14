@@ -12,13 +12,12 @@ namespace Content.Shared.Construction.Conditions
         public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {
             var entManager = IoCManager.Resolve<IEntityManager>();
-            var tagQuery = entManager.GetEntityQuery<TagComponent>();
             var sysMan = entManager.EntitySysManager;
             var tagSystem = sysMan.GetEntitySystem<TagSystem>();
 
             foreach (var entity in location.GetEntitiesInTile(LookupFlags.Static))
             {
-                if (tagSystem.HasTag(entity, "Window", tagQuery))
+                if (tagSystem.HasTag(entity, "Window"))
                     return false;
             }
 

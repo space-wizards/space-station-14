@@ -3,6 +3,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Diagnostics;
+using System.Numerics;
 
 namespace Content.Server.Maps;
 
@@ -21,16 +22,22 @@ public sealed partial class GameMapPrototype : IPrototype
     [IdDataField]
     public string ID { get; private set; } = default!;
 
+    [DataField]
+    public float MaxRandomOffset = 1000f;
+
+    [DataField]
+    public bool RandomRotation = true;
+
     /// <summary>
     /// Name of the map to use in generic messages, like the map vote.
     /// </summary>
-    [DataField("mapName", required: true)]
+    [DataField(required: true)]
     public string MapName { get; private set; } = default!;
 
     /// <summary>
     /// Relative directory path to the given map, i.e. `/Maps/saltern.yml`
     /// </summary>
-    [DataField("mapPath", required: true)]
+    [DataField(required: true)]
     public ResPath MapPath { get; private set; } = default!;
 
     [DataField("stations", required: true)]

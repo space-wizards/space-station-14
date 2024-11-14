@@ -1,120 +1,255 @@
 - type: entity
-  name: survival box
   parent: BoxCardboard
   id: BoxSurvival
+  name: survival box
   description: It's a box with basic internals inside.
+  suffix: Standard
   components:
   - type: StorageFill
     contents:
-      - id: ClothingMaskBreath
-      - id: EmergencyOxygenTankFilled
-      - id: EmergencyMedipen
-      - id: Flare
-      - id: FoodSnackNutribrick
-      - id: DrinkWaterBottleFull
+    - id: ClothingMaskBreath
+    - id: EmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkWaterBottleFull
   - type: Sprite
     layers:
-      - state: internals
-      - state: emergencytank
+    - state: internals
+    - state: emergencytank
 
 - type: entity
-  name: extended-capacity survival box
+  parent: BoxSurvival
+  id: BoxSurvivalNitrogen
+  suffix: Standard N2
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreath
+    - id: EmergencyNitrogenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkWaterBottleFull
+  # Intentionally wrong picture on the box. NT did not care enough to change it.
+  - type: Label
+    currentLabel: reagent-name-nitrogen
+
+- type: entity
   parent: BoxCardboard
   id: BoxSurvivalEngineering
+  name: extended-capacity survival box
   description: It's a box with basic internals inside. This one is labelled to contain an extended-capacity tank.
+  suffix: Extended
   components:
   - type: StorageFill
     contents:
-      - id: ClothingMaskBreath
-      - id: ExtendedEmergencyOxygenTankFilled
-      - id: EmergencyMedipen
-      - id: Flare
-      - id: FoodSnackNutribrick
-      - id: DrinkWaterBottleFull
+    - id: ClothingMaskBreath
+    - id: ExtendedEmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkWaterBottleFull
   - type: Sprite
     layers:
-      - state: internals
-      - state: extendedtank
+    - state: internals
+    - state: extendedtank
 
 - type: entity
-  name: survival box
+  parent: BoxSurvivalEngineering
+  id: BoxSurvivalEngineeringNitrogen
+  suffix: Extended N2
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreath
+    - id: ExtendedEmergencyNitrogenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkWaterBottleFull
+  # Intentionally wrong picture on the box. NT did not care enough to change it.
+  - type: Label
+    currentLabel: reagent-name-nitrogen
+
+- type: entity
+
   parent: BoxCardboard
   id: BoxSurvivalSecurity
+  name: survival box
   description: It's a box with basic internals inside.
   suffix: Security
   components:
   - type: StorageFill
     contents:
-      - id: ClothingMaskGasSecurity
-      - id: EmergencyOxygenTankFilled
-      - id: EmergencyMedipen
-      - id: Flare
-      - id: FoodSnackNutribrick
-      - id: DrinkWaterBottleFull
+    - id: ClothingMaskGasSecurity
+    - id: EmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkWaterBottleFull
   - type: Sprite
     layers:
-      - state: internals
-      - state: emergencytank
+    - state: internals
+    - state: emergencytank
 
 - type: entity
-  name: survival box
+  parent: BoxSurvivalSecurity
+  id: BoxSurvivalSecurityNitrogen
+  suffix: Security N2
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskGasSecurity
+    - id: EmergencyNitrogenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkWaterBottleFull
+  # Intentionally wrong picture on the box. NT did not care enough to change it.
+  - type: Label
+    currentLabel: reagent-name-nitrogen
+
+- type: entity
+
   parent: BoxCardboard
   id: BoxSurvivalMedical
+  name: survival box
   description: It's a box with basic internals inside.
   suffix: Medical
   components:
   - type: StorageFill
     contents:
-      - id: ClothingMaskBreathMedical
-      - id: EmergencyOxygenTankFilled
-      - id: EmergencyMedipen
-      - id: Flare
-      - id: FoodSnackNutribrick
-      - id: DrinkWaterBottleFull
+    - id: ClothingMaskBreathMedical
+    - id: EmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkWaterBottleFull
   - type: Sprite
     layers:
-      - state: internals
-      - state: emergencytank
+    - state: internals
+    - state: emergencytank
 
 - type: entity
-  name: box of hugs
+  parent: BoxSurvivalMedical
+  id: BoxSurvivalMedicalNitrogen
+  suffix: Medical N2
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreathMedical
+    - id: EmergencyNitrogenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkWaterBottleFull
+  # Intentionally wrong picture on the box. NT did not care enough to change it.
+  - type: Label
+    currentLabel: reagent-name-nitrogen
+
+- type: entity
   parent: BoxCardboard
   id: BoxHug
+  name: box of hugs
   description: A special box for sensitive people.
   suffix: Emergency
   components:
   - type: Sprite
     layers:
-      - state: box_hug
-      - state: heart
+    - state: box_hug
+    - state: heart
   - type: Item
     heldPrefix: hug
   - type: StorageFill
     contents:
-      - id: ClothingMaskBreath
-      - id: EmergencyFunnyOxygenTankFilled
-      - id: EmergencyMedipen
-      - id: Flare
-      - id: FoodSnackNutribrick
-      - id: DrinkWaterBottleFull
+    - id: ClothingMaskBreath
+    - id: EmergencyFunnyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkWaterBottleFull
   - type: Tag
     tags:
-      - BoxHug
+    - BoxHug
 
 - type: entity
-  name: extended-capacity survival box
-  parent: BoxCardboard
-  id: BoxSurvivalSyndicate
-  description: It's a box with basic internals inside. This one is labelled to contain an extended-capacity tank.
+  parent: BoxHug
+  id: BoxHugNitrogen
+  suffix: Emergency N2
   components:
   - type: StorageFill
     contents:
-      - id: ClothingMaskGasSyndicate
-      - id: ExtendedEmergencyOxygenTankFilled
-      - id: EmergencyMedipen
-      - id: Flare
-      - id: FoodSnackNutribrick
+    - id: ClothingMaskBreath
+    - id: EmergencyNitrogenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkWaterBottleFull
+  - type: Label
+    currentLabel: reagent-name-nitrogen
+
+- type: entity
+  parent: BoxSurvival
+  id: BoxMime
+  suffix: Mime, Emergency
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreath
+    - id: EmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodBreadBaguette
+    - id: DrinkWaterBottleFull
+
+- type: entity
+  parent: BoxSurvivalNitrogen
+  id: BoxMimeNitrogen
+  suffix: Mime, Emergency N2
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreath
+    - id: EmergencyNitrogenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodBreadBaguette
+    - id: DrinkWaterBottleFull
+  - type: Label
+    currentLabel: reagent-name-nitrogen
+
+- type: entity
+  parent: BoxCardboard
+  id: BoxSurvivalSyndicate
+  name: extended-capacity survival box
+  description: It's a box with basic internals inside. This one is labelled to contain an extended-capacity tank.
+  suffix: Syndicate
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskGasSyndicate
+    - id: ExtendedEmergencyOxygenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
   - type: Sprite
     layers:
-      - state: internals
-      - state: extendedtank
+    - state: internals
+    - state: extendedtank
+
+- type: entity
+  parent: BoxSurvivalSyndicate
+  id: BoxSurvivalSyndicateNitrogen
+  suffix: Syndicate N2
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskGasSyndicate
+    - id: ExtendedEmergencyNitrogenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    # Intentionally wrong picture on the box to mimic the NT one
+  - type: Label
+    currentLabel: reagent-name-nitrogen

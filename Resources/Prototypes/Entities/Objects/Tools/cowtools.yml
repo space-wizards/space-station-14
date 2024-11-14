@@ -21,7 +21,7 @@
     - Cutting
     useSound:
       path: /Audio/Items/wirecutter.ogg
-    speed: 0.05
+    speedModifier: 0.05
   - type: Item
     sprite: Objects/Tools/Cowtools/haycutters.rsi
 
@@ -46,7 +46,7 @@
     - Screwing
     useSound:
       collection: Screwdriver
-    speed: 0.05
+    speedModifier: 0.05
 
 - type: entity
   name: wronch
@@ -69,7 +69,7 @@
     - Anchoring
     useSound:
       path: /Audio/Items/ratchet.ogg
-    speed: 0.05
+    speedModifier: 0.05
 
 - type: entity
   name: cowbar
@@ -91,11 +91,10 @@
   - type: Tool
     qualities:
     - Prying
-    useSound:
-      path: /Audio/Items/crowbar.ogg
-    speed: 0.05
   - type: ToolTileCompatible
+    delay: 10
   - type: Prying
+    speedModifier: 0.05
 
 - type: entity
   name: mooltitool
@@ -127,7 +126,7 @@
     size: Small
     sprite: Objects/Tools/Cowtools/cowelder.rsi
   - type: Tool
-    speed: 0.05
+    speedModifier: 0.05
 
 - type: entity
   name: milkalyzer

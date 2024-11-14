@@ -1,0 +1,91 @@
+#Spawners
+- type: entity
+  id: RandomIngredient
+  name: random ingredient spawner
+  suffix: Non-Plant
+  parent: MarkerBase
+  placement:
+    mode: PlaceFree
+  components:
+  - type: Transform
+    anchored: false
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Consumable/Food/ingredients.rsi
+        state: cheesewheel
+  - type: EntityTableSpawner
+    table: !type:NestedSelector
+      tableId: IngredientTable
+      prob: 0.80
+
+#Tables
+- type: entityTable
+  id: IngredientTable
+  table: !type:GroupSelector
+    children:
+    #Common
+    - !type:GroupSelector
+      weight: 10
+      children:
+      - id: ReagentContainerOliveoil
+      - id: ReagentContainerMayo
+      - id: FoodButter
+        amount: !type:RangeNumberSelector
+          range: 1, 2
+      - id: FoodContainerEgg
+      - id: FoodCondimentBottleEnzyme
+      - id: DrinkSodaWaterBottleFull
+      - id: FoodShakerSalt
+      - id: FoodShakerPepper
+      - !type:GroupSelector
+        children:
+        - id: ReagentContainerFlour
+        - id: ReagentContainerCornmeal
+        - id: ReagentContainerRice
+        - id: ReagentContainerSugar
+        - !type:GroupSelector
+          children:
+          - id: ReagentContainerFlourSmall
+          - id: ReagentContainerCornmealSmall
+          - id: ReagentContainerRiceSmall
+          - id: ReagentContainerSugarSmall
+      - !type:GroupSelector
+        children:
+        - id: DrinkMilkCarton
+        - id: DrinkSoyMilkCarton
+        - id: DrinkOatMilkCarton
+        - id: DrinkMilkCarton
+      - !type:GroupSelector
+        children:
+        - id: FoodCheese
+        - id: FoodChevre
+        - id: FoodTofu
+        - !type:GroupSelector
+          children:
+          - id: FoodCheeseSlice
+            amount: !type:RangeNumberSelector
+              range: 1, 5
+          - id: FoodChevreSlice
+            amount: !type:RangeNumberSelector
+              range: 1, 5
+          - id: FoodTofuSlice
+            amount: !type:RangeNumberSelector
+              range: 1, 5
+      - !type:GroupSelector
+        children:
+        - id: FoodCondimentBottleColdsauce
+        - id: FoodCondimentBottleVinegar
+        - id: FoodCondimentBottleHotsauce
+        - id: FoodCondimentBottleKetchup
+        - id: FoodCondimentBottleBBQ
+        - id: FoodCondimentBottleKetchup
+        - id: FoodCondimentBottleKetchup
+    #Rare
+    - !type:GroupSelector
+      weight: 0.5
+      children:
+      - id: FoodCannabisButter
+        amount: !type:RangeNumberSelector
+          range: 1, 2
+      - id: EggBoxBroken
