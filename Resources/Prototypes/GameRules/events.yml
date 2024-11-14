@@ -35,7 +35,6 @@
     - id: RevenantSpawn
     - id: SleeperAgents
     - id: ZombieOutbreak
-    - id: DerelictCyborgSpawn
     - id: LoneOpsSpawn
 
 - type: entity
