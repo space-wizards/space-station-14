@@ -1,4 +1,4 @@
-# Similar to human, but no shoes and special gloves
+# Similar to human, but no shoes, like Diona
 - type: inventoryTemplate
   id: jellid
   slots:
@@ -22,6 +22,12 @@
       uiWindowPos: 0,2
       strippingWindowPos: 0,1
       displayName: Neck
+    - name: gloves
+      slotTexture: gloves
+      slotFlags: GLOVES
+      uiWindowPos: 2,1
+      strippingWindowPos: 2,2
+      displayName: Gloves
     - name: mask
       slotTexture: mask
       slotFlags: MASK
