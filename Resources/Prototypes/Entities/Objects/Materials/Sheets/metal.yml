@@ -79,6 +79,7 @@
     prototypes:
     - Girder
     - MetalRod
+    - MachineFrame
     - TileSteel
     - TileWhite
     - TileDark
@@ -155,6 +156,17 @@
           Quantity: 3.3
         - ReagentId: Copper
           Quantity: 6.7
+  - type: UserInterface
+    interfaces:
+      enum.ShortConstructionUiKey.Key:
+        type: ShortConstructionMenuBUI
+  - type: ActivatableUI
+    key: enum.ShortConstructionUiKey.Key
+  - type: ShortConstruction
+    prototypes:
+    - ClockworkGirder
+    - TileBrassFilled
+    - TileBrassReebe
 
 - type: entity
   parent: SheetBrass
