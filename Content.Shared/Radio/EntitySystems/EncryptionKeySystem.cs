@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Administration.Managers;
 using Content.Shared.Chat;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
@@ -23,6 +24,7 @@ namespace Content.Shared.Radio.EntitySystems;
 /// </summary>
 public sealed partial class EncryptionKeySystem : EntitySystem
 {
+    [Dependency] private readonly ISharedAdminManager _admin = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _net = default!;
@@ -174,7 +176,7 @@ public sealed partial class EncryptionKeySystem : EntitySystem
 
     private void OnHolderExamined(EntityUid uid, EncryptionKeyHolderComponent component, ExaminedEvent args)
     {
-        if (!args.IsInDetailsRange)
+        if (!args.IsInDetailsRange && !_admin.IsAdmin(args.Examiner))
             return;
 
         if (component.KeyContainer.ContainedEntities.Count == 0)
@@ -199,7 +201,7 @@ public sealed partial class EncryptionKeySystem : EntitySystem
 
     private void OnKeyExamined(EntityUid uid, EncryptionKeyComponent component, ExaminedEvent args)
     {
-        if (!args.IsInDetailsRange)
+        if (!args.IsInDetailsRange && !_admin.IsAdmin(args.Examiner))
             return;
 
         if(component.Channels.Count > 0)
