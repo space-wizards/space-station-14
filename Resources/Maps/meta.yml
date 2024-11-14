@@ -74915,8 +74915,6 @@ entities:
       pos: 66.5,-25.5
       parent: 5350
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 11752
       - 26994
@@ -74926,8 +74924,6 @@ entities:
       pos: 67.5,-25.5
       parent: 5350
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 11752
       - 26994
@@ -108211,8 +108207,6 @@ entities:
       pos: 69.5,-31.5
       parent: 5350
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 11752
     - type: AtmosPipeColor
@@ -109611,8 +109605,6 @@ entities:
       pos: 72.5,-31.5
       parent: 5350
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 11752
     - type: AtmosPipeColor
