@@ -21,7 +21,7 @@
 - type: entity
   id: CartridgeLPistol
   name: cartridge (.22 auto)
-  parent: BaseCartridgeLPistol
+  parent: BaseCartridgePListol
   components:
   - type: CartridgeAmmo
     proto: BulletLPistol
@@ -32,7 +32,7 @@
   parent: BaseCartridgeLPistol
   components:
   - type: CartridgeAmmo
-    proto: BulletPistolLPractice
+    proto: BulletLPistolPractice
   -  type: Sprite
      layers:
        - state: base
