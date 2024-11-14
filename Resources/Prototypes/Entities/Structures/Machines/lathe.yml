@@ -569,7 +569,6 @@
     - PositronicBrain
     - SciFlash
     - BorgModuleCable
-    - BorgModuleFireExtinguisher
     - BorgModuleRadiationDetection
     - BorgModuleTool
     - CyborgEndoskeleton
@@ -584,11 +583,12 @@
     - BorgModuleAdvancedCleaning
     - BorgModuleAdvancedTool
     - BorgModuleGPS
+    - BorgModuleRCD
     - BorgModuleArtifact
     - BorgModuleAnomaly
     - BorgModuleGardening
     - BorgModuleHarvesting
-    - BorgModuleDefibrillator
+    - BorgModuleClowning
     - BorgModuleAdvancedTreatment
     - RipleyHarness
     - RipleyLArm
