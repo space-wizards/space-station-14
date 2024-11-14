@@ -30,7 +30,8 @@
                     </BoxContainer>
                 </Control>
                 <controls:ConfirmButton Name="ConfirmTypeButton" Text="{Loc 'borg-select-type-menu-confirm'}"
-                                        Disabled="True" HorizontalAlignment="Right" />
+                                        Disabled="True" HorizontalAlignment="Right"
+                                        MinWidth="200" />
             </BoxContainer>
         </BoxContainer>
 
