@@ -8,7 +8,7 @@
   },
   "states": [
     {
-      "name": "JellidMantle",
+      "name": "head_mantle",
       "directions": 4
     }
   ]
