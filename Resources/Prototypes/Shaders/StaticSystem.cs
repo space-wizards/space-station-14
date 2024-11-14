@@ -4,6 +4,7 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Overlays;
 using Robust.Client.Player;
 using Robust.Shared.Player;
+using Robust.Shared.Log;
 
 namespace Content.Client.Overlays
 {
@@ -11,67 +12,50 @@ namespace Content.Client.Overlays
     /// This system manages the HUD overlays based on the player's equipped items, like showing the camera static shader
     /// when the "StaticViewer" component is equipped.
     /// </summary>
-    public class StaticViewerHudSystem : EquipmentHudSystem<StaticViewerComponent>
+    public class StaticViewerHudSystem : EntitySystem
     {
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
-        
-        protected override SlotFlags TargetSlots => SlotFlags.ALL; // Or whatever slots you want to check for
 
-        protected override void UpdateInternal(RefreshEquipmentHudEvent<StaticViewerComponent> args)
+        public override void Initialize()
         {
-            base.UpdateInternal(args);
-            
-            // Check if the component is equipped, and apply the overlay
-            if (args.Components.Count > 0)
-            {
-                ApplyStaticOverlay();
-            }
+            base.Initialize();
+            Log.Error("StaticViewerHudSystem Initialized");
+
+            // Subscribe to events for when the StaticViewerComponent is equipped and unequipped
+            SubscribeLocalEvent<SkatesComponent, ClothingGotEquippedEvent>(OnGotEquipped);
+            SubscribeLocalEvent<SkatesComponent, ClothingGotUnequippedEvent>(OnGotUnequipped);
         }
 
-        protected override void DeactivateInternal()
+        /// <summary>
+        /// Called when the item with the StaticViewerComponent is equipped.
+        /// </summary>
+        public void OnGotEquipped(EntityUid uid, StaticViewerComponent component, OnGotEquippedEvent args)
         {
-            base.DeactivateInternal();
+            Log.Error($"StaticViewerComponent equipped on entity {uid}, applying overlay.");
+            ApplyStaticOverlay();
+        }
 
-            // Remove the overlay when deactivating
+        /// <summary>
+        /// Called when the item with the StaticViewerComponent is unequipped.
+        /// </summary>
+        private void OnGotUnequipped(EntityUid uid, StaticViewerComponent component, OnGotUnequippedEvent args)
+        {
+            Log.Error($"StaticViewerComponent unequipped from entity {uid}, removing overlay.");
             RemoveStaticOverlay();
         }
 
         private void ApplyStaticOverlay()
         {
-            // Apply the "CameraStatic" overlay to the player's screen
+            // Add the static overlay to the player's screen
+            Log.Error("Applying CameraStatic overlay");
             _overlayManager.AddOverlay(new ShaderOverlay("CameraStatic"));
         }
 
         private void RemoveStaticOverlay()
         {
-            // Remove the "CameraStatic" overlay
+            // Remove the static overlay from the player's screen
+            Log.Error("Removing CameraStatic overlay");
             _overlayManager.RemoveOverlay("CameraStatic");
-        }
-
-        protected override void OnCompEquip(EntityUid uid, StaticViewerComponent component, GotEquippedEvent args)
-        {
-            base.OnCompEquip(uid, component, args);
-            
-            // Apply the overlay when the item is equipped
-            ApplyStaticOverlay();
-        }
-
-        protected override void OnCompUnequip(EntityUid uid, StaticViewerComponent component, GotUnequippedEvent args)
-        {
-            base.OnCompUnequip(uid, component, args);
-            
-            // Remove the overlay when the item is unequipped
-            RemoveStaticOverlay();
-        }
-
-        // If you need to refresh the equipment and manage overlays
-        protected override void OnRefreshComponentHud(EntityUid uid, StaticViewerComponent component, RefreshEquipmentHudEvent<StaticViewerComponent> args)
-        {
-            base.OnRefreshComponentHud(uid, component, args);
-
-            // Apply the overlay when the equipment HUD is refreshed
-            ApplyStaticOverlay();
         }
     }
 }
-
