@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: joelsgp
   changes:
-  - message: Fix Lemo tag on bounty
-    type: Fix
-  id: 10
-  time: '2024-07-01T21:57:29.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/12
-- author: joelsgp
-  changes:
   - message: Add custom logo, icons, and loading tips
     type: Add
   id: 11
@@ -4173,3 +4166,10 @@
   id: 509
   time: '2024-11-14T01:22:26.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/698
+- author: widgetbeck
+  changes:
+  - message: Added new shittle lobby art.
+    type: Add
+  id: 510
+  time: '2024-11-14T05:52:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/696
