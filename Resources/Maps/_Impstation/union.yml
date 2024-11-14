@@ -8452,7 +8452,7 @@ entities:
       pos: -20.5,-24.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -167918.3
+      secondsUntilStateChange: -168041.95
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -8968,7 +8968,7 @@ entities:
       pos: 33.5,-43.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -123876.98
+      secondsUntilStateChange: -124000.64
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -9699,7 +9699,7 @@ entities:
       pos: 35.5,-10.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -7599.685
+      secondsUntilStateChange: -7723.346
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -10094,7 +10094,7 @@ entities:
       pos: 14.5,-6.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -186752.75
+      secondsUntilStateChange: -186876.4
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -95714,12 +95714,6 @@ entities:
     - type: Transform
       pos: 56.5,-9.5
       parent: 2
-  - uid: 2546
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -25.5,-18.5
-      parent: 2
   - uid: 2647
     components:
     - type: Transform
@@ -96862,6 +96856,12 @@ entities:
     - type: Transform
       pos: -12.5,-29.5
       parent: 2
+  - uid: 2546
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -18.5,-19.5
+      parent: 2
   - uid: 2587
     components:
     - type: Transform
@@ -97462,12 +97462,6 @@ entities:
     - type: Transform
       pos: -12.5,-17.5
       parent: 2
-  - uid: 7987
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -21.5,-19.5
-      parent: 2
   - uid: 7997
     components:
     - type: Transform
@@ -97982,6 +97976,11 @@ entities:
     components:
     - type: Transform
       pos: -46.5,-51.5
+      parent: 2
+  - uid: 18826
+    components:
+    - type: Transform
+      pos: -24.5,-17.5
       parent: 2
   - uid: 18964
     components:
@@ -107801,6 +107800,13 @@ entities:
       parent: 2
     - type: SurveillanceCamera
       id: Outer Loop 18 (Extra Deck Crossroads)
+  - uid: 7987
+    components:
+    - type: Transform
+      pos: -24.5,-15.5
+      parent: 2
+    - type: SurveillanceCamera
+      id: Outer Loop 04 (Cargo Entrance)
   - uid: 15662
     components:
     - type: Transform
@@ -107841,13 +107847,6 @@ entities:
       parent: 2
     - type: SurveillanceCamera
       id: Outer Loop 03 (Cargo)
-  - uid: 18826
-    components:
-    - type: Transform
-      pos: -25.5,-18.5
-      parent: 2
-    - type: SurveillanceCamera
-      id: Outer Loop 04 (Cargo Maints)
   - uid: 18827
     components:
     - type: Transform
