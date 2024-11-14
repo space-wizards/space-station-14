@@ -598,6 +598,7 @@
 - type: randomHumanoidSettings
   id: Cluwne
   parent: EventHumanoid
+  randomizeName: false
   components:
     - type: GhostRole
       name: ghost-role-information-cluwne-name
