@@ -1,4 +1,5 @@
-// Original code by whateverusername0 from https://github.com/Goob-Station/Goob-Station/pull/828
+// Original code by whateverusername0 from Goob-Station at commit 3022db4
+// Available at: https://github.com/Goob-Station/Goob-Station/blob/3022db48e89ff00b762004767e7850023df3ee97/Content.Server/_Goobstation/Emoting/AnimatedEmotesSystem.cs
 
 using Content.Server.Chat.Systems;
 using Content.Shared.Chat.Prototypes;
