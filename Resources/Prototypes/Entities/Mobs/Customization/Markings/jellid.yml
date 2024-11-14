@@ -9,5 +9,5 @@
         !type:SimpleColoring
           color: "#FFFFFF"
   sprites:
-  - sprite: Mobs/Customization/diona.rsi
-    state: thorns_head
+  - sprite: Mobs/Customization/jellid.rsi
+    state: HeadMantle
