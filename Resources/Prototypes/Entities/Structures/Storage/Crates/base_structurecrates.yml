@@ -93,6 +93,7 @@
     containers:
       - entity_storage
   - type: RequireProjectileTarget
+  - type: ChildBlockVision
 
 - type: entity
   parent: CrateGeneric

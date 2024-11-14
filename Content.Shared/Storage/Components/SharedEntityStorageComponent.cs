@@ -124,6 +124,12 @@ public abstract partial class SharedEntityStorageComponent : Component
     /// </summary>
     [ViewVariables]
     public Container Contents = default!;
+
+    /// <summary>
+    /// Blocking the field of vision for all entities parented this storage.
+    /// </summary>
+    [DataField]
+    public bool BlockVision = true;
 }
 
 [Serializable, NetSerializable]

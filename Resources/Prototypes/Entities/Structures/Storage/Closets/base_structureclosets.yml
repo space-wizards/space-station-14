@@ -93,6 +93,7 @@
     stateDoorClosed: generic_door
   - type: StaticPrice
     price: 75
+  - type: ChildBlockVision
 
 # steel closet base (that can be constructed/deconstructed)
 - type: entity
