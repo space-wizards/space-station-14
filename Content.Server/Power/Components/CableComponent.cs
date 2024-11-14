@@ -33,7 +33,7 @@ public sealed partial class CableComponent : Component
 
     [DataField("cuttingDelay")]
     public float CuttingDelay = 1f;
-}
+} 
 
 /// <summary>
 ///     Event to be raised when a cable is anchored / unanchored
