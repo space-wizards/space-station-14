@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: joelsgp
-  changes:
-  - message: Add custom logo, icons, and loading tips
-    type: Add
-  id: 11
-  time: '2024-07-01T23:22:47.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/13
 - author: TGRCDev
   changes:
   - message: Pets can now smoke
@@ -4173,3 +4166,32 @@
   id: 510
   time: '2024-11-14T05:52:08.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/696
+- author: EpicToast
+  changes:
+  - message: 'Made a bunch of miscellaneous updates and fixes for Union Station:'
+    type: Fix
+  - message: Made some layout changes.
+    type: Tweak
+  - message: Filled the Research Director's locker.
+    type: Tweak
+  - message: Fixed the slot count for paramedics, atmospheric technicians, salvage
+      specialists, and others.
+    type: Tweak
+  - message: Added a command-only area to the tech vault.
+    type: Add
+  - message: Gave every department extra resources.
+    type: Add
+  - message: Gave chemistry, salvage, atmos and robotics some extra utilities they
+      were missing.
+    type: Add
+  - message: Gave the captain their captain's thoughts, spare ID and flask.
+    type: Add
+  - message: Added more decals.
+    type: Add
+  - message: Added the pleasure pig.
+    type: Add
+  - message: And much more.
+    type: Tweak
+  id: 511
+  time: '2024-11-14T22:40:35.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/706
