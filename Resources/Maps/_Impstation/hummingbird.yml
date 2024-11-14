@@ -4192,7 +4192,8 @@ entities:
           11,5:
             1: 65295
           11,6:
-            1: 65520
+            6: 16
+            1: 65504
           11,7:
             1: 56796
           11,8:
@@ -58100,6 +58101,13 @@ entities:
     - type: Transform
       pos: 12.5,8.5
       parent: 2
+- proto: ContrabassInstrument
+  entities:
+  - uid: 18470
+    components:
+    - type: Transform
+      pos: 47.5,27.5
+      parent: 2
 - proto: ConveyorBelt
   entities:
   - uid: 1614
@@ -65875,7 +65883,7 @@ entities:
   - uid: 18488
     components:
     - type: Transform
-      pos: 47.728893,30.622076
+      pos: 47.702515,30.807577
       parent: 2
 - proto: DrinkGinTonicglass
   entities:
@@ -66298,7 +66306,7 @@ entities:
   - uid: 18473
     components:
     - type: Transform
-      pos: 47.43202,30.325201
+      pos: 47.546265,30.807577
       parent: 2
 - proto: DrinkVacuumFlask
   entities:
@@ -110395,15 +110403,33 @@ entities:
       parent: 2
     - type: Lock
       locked: False
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
           showEnts: False
           occludes: True
           ents:
-          - 18485
           - 18486
           - 18487
+          - 18485
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -112503,7 +112529,7 @@ entities:
   - uid: 18531
     components:
     - type: Transform
-      pos: 47.510986,29.78513
+      pos: 47.626076,29.792603
       parent: 2
 - proto: ParticleAcceleratorControlBoxUnfinished
   entities:
@@ -112789,7 +112815,7 @@ entities:
   - uid: 21885
     components:
     - type: Transform
-      pos: 47.684975,30.119694
+      pos: 47.4542,30.026978
       parent: 2
 - proto: PhoneInstrument
   entities:
@@ -117966,13 +117992,6 @@ entities:
     components:
     - type: Transform
       pos: 79.5,-36.5
-      parent: 2
-- proto: RandomInstruments
-  entities:
-  - uid: 19985
-    components:
-    - type: Transform
-      pos: 47.5,27.5
       parent: 2
 - proto: RandomPainting
   entities:
@@ -134051,11 +134070,6 @@ entities:
     - type: Transform
       pos: 47.5,30.5
       parent: 2
-  - uid: 18470
-    components:
-    - type: Transform
-      pos: 47.5,29.5
-      parent: 2
   - uid: 18622
     components:
     - type: Transform
@@ -134109,6 +134123,11 @@ entities:
     components:
     - type: Transform
       pos: 135.5,6.5
+      parent: 2
+  - uid: 19985
+    components:
+    - type: Transform
+      pos: 47.5,29.5
       parent: 2
   - uid: 22350
     components:
@@ -152577,7 +152596,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -127092.51
+      secondsUntilStateChange: -127910.28
       state: Opening
     - type: Airlock
       autoClose: False
@@ -153365,6 +153384,13 @@ entities:
     components:
     - type: Transform
       pos: 39.563046,48.548695
+      parent: 2
+- proto: WoodblockInstrument
+  entities:
+  - uid: 23909
+    components:
+    - type: Transform
+      pos: 47.45653,29.469915
       parent: 2
 - proto: WoodDoor
   entities:
