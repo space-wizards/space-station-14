@@ -19,7 +19,6 @@ using Content.Shared.Stacks;
 using Content.Shared.Starlight.Antags.Abductor;
 using Content.Shared.Starlight.Medical.Surgery.Effects.Step;
 using Content.Shared.UserInterface;
-using JetBrains.FormatRipper.Elf;
 using NAudio.CoreAudioApi;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
