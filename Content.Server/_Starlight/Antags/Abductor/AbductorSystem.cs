@@ -7,8 +7,12 @@ using Content.Shared.Eye;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Pinpointer;
+using Content.Shared.Inventory.VirtualItem;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.UserInterface;
+using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Robust.Server.GameObjects;
 using Content.Shared.Tag;
 using Robust.Server.Containers;
@@ -28,6 +32,10 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
     [Dependency] private readonly TagSystem _tags = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly SharedVirtualItemSystem _virtualItem = default!;
+    
+    private EntityUid? console = null;
 
     public override void Initialize()
     {
@@ -49,6 +57,32 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
             var beacon = _entityManager.GetEntity(args.Beacon.NetEnt);
             var eye = SpawnAtPosition(ent.Comp.RemoteEntityProto, Transform(beacon).Coordinates);
             ent.Comp.RemoteEntity = eye;
+            
+            console = ent.Owner;
+            
+            if (TryComp<HandsComponent>(args.Actor, out var handsComponent))
+            {
+                foreach (var hand in _hands.EnumerateHands(args.Actor, handsComponent))
+                {
+                    if (hand.HeldEntity == null)
+                        continue;
+                    
+                    if (HasComp<UnremoveableComponent>(hand.HeldEntity))
+                        continue;
+
+                    _hands.DoDrop(args.Actor, hand, true, handsComponent);
+                }
+                
+                if (_virtualItem.TrySpawnVirtualItemInHand(ent.Owner, args.Actor, out var virtItem1))
+                {
+                    EnsureComp<UnremoveableComponent>(virtItem1.Value);
+                }
+
+                if (_virtualItem.TrySpawnVirtualItemInHand(ent.Owner, args.Actor, out var virtItem2))
+                {
+                    EnsureComp<UnremoveableComponent>(virtItem2.Value);
+                }
+            }
 
             var visibility = EnsureComp<VisibilityComponent>(eye);
 
@@ -84,6 +118,9 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
         {
             var relay = comp.RelayEntity;
             RemComp(actor, comp);
+
+            if (console != null)
+                _virtualItem.DeleteInHandsMatching(actor, console.Value);
 
             if (TryComp(actor, out EyeComponent? eyeComp))
             {
