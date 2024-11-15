@@ -19,7 +19,9 @@ public sealed partial class InGasComponent : Component
     [DataField("gasID"), ViewVariables(VVAccess.ReadWrite)]
     public int GasId = 9;
 
-    // amount of gas needed to trigger effect
+    ///  <summary>
+    ///     amount of gas needed to trigger effect in mols.
+    /// </summary>
     [DataField("gasThreshold"), ViewVariables(VVAccess.ReadWrite)]
     public float GasThreshold = 0.1f;
 
