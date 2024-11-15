@@ -13,7 +13,7 @@
   id: MobJellidSprites
   sprites:
     Head: MobJellidHead
-    HeadSide: MobJellidMarkingFollowSkin
+    Hair: MobJellidMarkingFollowSkin
     Chest: MobJellidTorso
     Eyes: MobJellidEyes
     LArm: MobJellidLArm
@@ -34,9 +34,9 @@
 - type: markingPoints
   id: MobJellidMarkingLimits
   points:
-    HeadSide:
+    Hair:
       points: 1
-      required: yes
+      required: false
     Chest:
       points: 1
       required: false
