@@ -44,7 +44,7 @@
   - BodyBag
   - WhiteCane
 
-- type: latheRecipepack
+- type: latheRecipePack
   id: RollerBedsStatic
   recipes:
   - RollerBedSpawnFolded
