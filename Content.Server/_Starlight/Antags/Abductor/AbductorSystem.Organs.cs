@@ -18,7 +18,6 @@ using Content.Shared.Damage;
 using Robust.Shared.Toolshed.TypeParsers;
 using Content.Shared.Damage.Prototypes;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Supermatter.Components;
 using Content.Shared.Atmos;
 using Content.Server.Chat.Systems;
 
