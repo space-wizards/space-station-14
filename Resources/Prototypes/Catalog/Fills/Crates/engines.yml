@@ -127,7 +127,7 @@
       - id: SolarAssemblyFlatpack
         amount: 6
 
-- type: entity #modified from upstream but its technically not bespoke so im leaving it in their filesystem
+- type: entity
   id: CrateEngineeringShuttle
   parent: CrateEngineeringSecure
   name: shuttle powering crate
@@ -137,9 +137,8 @@
     contents:
       - id: WallmountSubstationElectronics
       - id: WallmountGeneratorAPUElectronics
-      - id: APCElectronics #added apc electronics, capacitor, and empty power cell here on imp for convenience
-      - id: CapacitorStockPart
-      - id: PowerCellSmallPrinted
+      - id: HandheldGPSBasic
+      - id: InflatableDoorStack1
 
 - type: entity
   id: CrateEngineeringTeslaGenerator
