@@ -41,7 +41,7 @@ public sealed partial class InGasComponent : Component
     public FixedPoint2 MaxDamage = 200;
 
     /// <summary>
-    /// Used to track when damage starts/stops. Used in logs.
+    /// Used to track when damage starts/stops. Used in logs + the alert.
     /// </summary>
     [DataField]
     public bool TakingDamage = false;
