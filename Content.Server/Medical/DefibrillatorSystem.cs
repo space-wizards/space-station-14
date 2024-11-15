@@ -179,18 +179,19 @@ public sealed class DefibrillatorSystem : EntitySystem
             revive = false;
         }
 
-        if (HasComp<RandomUnrevivableComponent>(target) && revive)
+        if (revive && HasComp<RandomUnrevivableComponent>(target))
         {
-            if (Comp<RandomUnrevivableComponent>(target).Chance > _random.NextDouble())
+            var dnrComponent = Comp<RandomUnrevivableComponent>(target);
+
+            if (dnrComponent.Chance > _random.NextDouble())
             {
-                _chatManager.TrySendInGameICMessage(uid, Loc.GetString("defibrillator-unrevivable"),
-                    InGameICChatType.Speak, true);
-                Comp<RandomUnrevivableComponent>(target).Chance = 0.0f;
+                _chatManager.TrySendInGameICMessage(uid,
+                    Loc.GetString("defibrillator-unrevivable"),
+                    InGameICChatType.Speak,
+                    true);
+
+                dnrComponent.Chance = 0.0f;
                 revive = false;
-            }
-            else
-            {
-                Comp<RandomUnrevivableComponent>(target).Chance =- 0.1f;
             }
         }
 
