@@ -3,6 +3,7 @@
   maps:
   - Atlas
   - Bagel
+  - Barratry
   - Box
   - Cog
   - Cluster
@@ -13,8 +14,9 @@
   - Meta
   - Oasis
   - Omega
-  - Saltern
   - Packed
   - Reach
+  - Saltern
   - Train
   - Union
+  - Xeno
