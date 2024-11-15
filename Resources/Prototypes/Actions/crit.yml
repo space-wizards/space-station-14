@@ -43,3 +43,5 @@
       sprite: Interface/Actions/actions_crit.rsi
       state: lastwords
     event: !type:CritLastWordsEvent
+    startDelay: true
+    useDelay: 10
