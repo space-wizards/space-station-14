@@ -1707,6 +1707,72 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
         #endregion
 
+        # region IPIntel
+
+        public async Task<bool> AddIPIntelCache(DateTime time, IPAddress ip, float score)
+        {
+            await using var db = await GetDb();
+
+            var exists = await db.DbContext.IPIntelCache
+                .Where(w => ip.Equals(w.Address))
+                .AnyAsync();
+
+            if (exists)
+                return false;
+
+            var cache = new IPIntelCache
+            {
+                Time = time,
+                Address = ip,
+                Score = score,
+            };
+            db.DbContext.IPIntelCache.Add(cache);
+            await db.DbContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> UpdateIPIntelCache(DateTime time, IPAddress ip, float score)
+        {
+            await using var db = await GetDb();
+
+            var existing = await db.DbContext.IPIntelCache
+                .Where(w => ip.Equals(w.Address))
+                .SingleAsync();
+
+            existing.Score = score;
+            existing.Time = time;
+
+            await db.DbContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<List<IPIntelCache>> GetIPIntelCache(IPAddress ip)
+        {
+            await using var db = await GetDb();
+
+            return await db.DbContext.IPIntelCache
+                .Where(w => ip.Equals(w.Address))
+                .ToListAsync();
+        }
+
+        public async Task<bool> RemoveIPIntelCache(IPAddress ip)
+        {
+            await using var db = await GetDb();
+
+            var cache = await db.DbContext.IPIntelCache
+                .Where(w => ip.Equals(w.Address))
+                .SingleOrDefaultAsync();
+
+            if (cache == null)
+                return false;
+
+            db.DbContext.IPIntelCache.Remove(cache);
+            await db.DbContext.SaveChangesAsync();
+            return true;
+        }
+
+        #endregion
+
         // SQLite returns DateTime as Kind=Unspecified, Npgsql actually knows for sure it's Kind=Utc.
         // Normalize DateTimes here so they're always Utc. Thanks.
         protected abstract DateTime NormalizeDatabaseTime(DateTime time);

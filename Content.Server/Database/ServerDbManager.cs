@@ -315,6 +315,16 @@ namespace Content.Server.Database
 
         #endregion
 
+        #region IPintel
+
+        Task<bool> AddIPIntelCache(DateTime time, IPAddress ip, float score);
+
+        Task<bool> UpdateIPIntelCache(DateTime time, IPAddress ip, float score);
+        Task<List<IPIntelCache>> GetIPIntelCache(IPAddress ip);
+        Task<bool> RemoveIPIntelCache(IPAddress ip);
+
+        #endregion
+
         #region DB Notifications
 
         void SubscribeToNotifications(Action<DatabaseNotification> handler);
@@ -978,6 +988,30 @@ namespace Content.Server.Database
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.RemoveJobWhitelist(player, job));
+        }
+
+        public Task<bool> AddIPIntelCache(DateTime time, IPAddress ip, float score)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.AddIPIntelCache(time, ip, score));
+        }
+
+        public Task<bool> UpdateIPIntelCache(DateTime time, IPAddress ip, float score)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.UpdateIPIntelCache(time, ip, score));
+        }
+
+        public Task<List<IPIntelCache>> GetIPIntelCache(IPAddress ip)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetIPIntelCache(ip));
+        }
+
+        public Task<bool> RemoveIPIntelCache(IPAddress ip)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.RemoveIPIntelCache(ip));
         }
 
         public void SubscribeToNotifications(Action<DatabaseNotification> handler)

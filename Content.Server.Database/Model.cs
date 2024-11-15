@@ -43,6 +43,8 @@ namespace Content.Server.Database
         public DbSet<AdminMessage> AdminMessages { get; set; } = null!;
         public DbSet<RoleWhitelist> RoleWhitelists { get; set; } = null!;
         public DbSet<BanTemplate> BanTemplate { get; set; } = null!;
+        public DbSet<IPIntelCache> IPIntelCache { get; set; } = null!;
+        public DbSet<IPIntelRateLimit> IPIntelRateLimit { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -923,6 +925,7 @@ namespace Content.Server.Database
          * Reservation by commenting out the value is likely sufficient for this purpose, but may impact projects which depend on SS14 like SS14.Admin.
          */
         BabyJail = 4,
+        IPIntel = 5,
     }
 
     public class ServerBanHit
@@ -1205,5 +1208,25 @@ namespace Content.Server.Database
         /// </summary>
         /// <seealso cref="ServerBan.Hidden"/>
         public bool Hidden { get; set; }
+    }
+
+    public class IPIntelCache
+    {
+        public int Id { get; set; }
+
+        public DateTime Time { get; set; }
+
+        public IPAddress Address { get; set; } = null!;
+
+        public float Score { get; set; }
+    }
+
+    public class IPIntelRateLimit
+    {
+        public int Id { get; set; }
+
+        public int Minute { get; set; }
+
+        public int Day { get; set; }
     }
 }

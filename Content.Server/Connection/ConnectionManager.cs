@@ -60,6 +60,25 @@ namespace Content.Server.Connection
         private ISawmill _sawmill = default!;
         private readonly Dictionary<NetUserId, TimeSpan> _temporaryBypasses = [];
 
+        public void PostInit()
+        {
+            // Whitelists
+            _cfg.OnValueChanged(CCVars.WhitelistPrototypeList, UpdateWhitelists, true);
+
+            // Ipintel
+            _cfg.OnValueChanged(CCVars.IPIntelEmail, b => _contactEmail = b, true);
+            _cfg.OnValueChanged(CCVars.IPIntelBase, b => _baseUrl = b, true);
+            _cfg.OnValueChanged(CCVars.IPIntelRejectUnknown, b => _rejectUnknown = b, true);
+            _cfg.OnValueChanged(CCVars.IPIntelRejectBad, b => _rejectBad = b, true);
+            _cfg.OnValueChanged(CCVars.IPIntelRejectRateLimited, b => _rejectLimited = b, true);
+            _cfg.OnValueChanged(CCVars.IPIntelMaxMinute, b => _requestLimitMinute = b, true);
+            _cfg.OnValueChanged(CCVars.IPIntelMaxDay, b => _requestLimitDay = b, true);
+            _cfg.OnValueChanged(CCVars.IPIntelBadRating, b => _rating = b, true);
+            _cfg.OnValueChanged(CCVars.IPIntelCacheLength, b => _cacheDays = b, true);
+            _cfg.OnValueChanged(CCVars.IPIntelExceptPlaytime, b => _exceptPlaytime = b, true);
+            _cfg.OnValueChanged(CCVars.IPIntelAlertAdmin, b => _alertAdmin = b, true);
+            _cfg.OnValueChanged(CCVars.IPIntelWarnAdminRating, b => _alertAdminWarn = b, true);
+        }
 
         public void Initialize()
         {
@@ -277,7 +296,7 @@ namespace Content.Server.Connection
                 {
                     _sawmill.Error("Whitelist enabled but no whitelists loaded.");
                     // Misconfigured, deny everyone.
-                    return (ConnectionDenyReason.Whitelist, Loc.GetString("whitelist-misconfigured"), null);
+                    return (ConnectionDenyReason.Whitelist, Loc.GetString("generic-misconfigured"), null);
                 }
 
                 foreach (var whitelist in _whitelists)
@@ -298,6 +317,15 @@ namespace Content.Server.Connection
                     // Whitelisted, don't check any more.
                     break;
                 }
+            }
+
+            // ALWAYS keep this at the end, to preserve the API limit.
+            if (_cfg.GetCVar(CCVars.IPIntelEnabled) && adminData == null)
+            {
+                var result = await IsVpnOrProxy(e);
+
+                if (result.IsBad)
+                    return (ConnectionDenyReason.IPIntel, result.Reason, null);
             }
 
             return null;
