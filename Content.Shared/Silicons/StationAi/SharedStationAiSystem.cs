@@ -356,10 +356,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
         ent.Comp.Remote = isRemote;
 
-        if (ent.Comp.RemoteEntity == null)
-            return;
-
-        var coords = Transform(ent.Comp.RemoteEntity.Value).Coordinates;
+        EntityCoordinates? coords = ent.Comp.RemoteEntity != null ? Transform(ent.Comp.RemoteEntity.Value).Coordinates : null;
 
         // Attach new eye
         ClearEye(ent);
@@ -403,6 +400,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     {
         if (_net.IsClient)
             return;
+
         QueueDel(ent.Comp.RemoteEntity);
         ent.Comp.RemoteEntity = null;
         Dirty(ent);
@@ -447,7 +445,8 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         if (_timing.ApplyingState)
             return;
 
-        SwitchRemoteEntityMode(ent, true);
+        ent.Comp.Remote = true;
+        SetupEye(ent);
 
         // Just so text and the likes works properly
         _metadata.SetEntityName(ent.Owner, MetaData(args.Entity).EntityName);
@@ -460,6 +459,8 @@ public abstract partial class SharedStationAiSystem : EntitySystem
         if (_timing.ApplyingState)
             return;
 
+        ent.Comp.Remote = true;
+
         // Reset name to whatever
         _metadata.SetEntityName(ent.Owner, Prototype(ent.Owner)?.Name ?? string.Empty);
 
@@ -471,6 +472,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
             _eye.SetDrawFov(args.Entity, true, eyeComp);
             _eye.SetTarget(args.Entity, null, eyeComp);
         }
+
         ClearEye(ent);
     }
 

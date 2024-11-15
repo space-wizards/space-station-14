@@ -83,6 +83,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
         SubscribeLocalEvent<HolopadUserComponent, EmoteEvent>(OnEmote);
         SubscribeLocalEvent<HolopadUserComponent, JumpToCoreEvent>(OnJumpToCore);
         SubscribeLocalEvent<HolopadComponent, GetVerbsEvent<AlternativeVerb>>(AddToggleProjectorVerb);
+        SubscribeLocalEvent<HolopadComponent, EntRemovedFromContainerMessage>(OnAiRemove);
     }
 
     #region: Holopad UI bound user interface messages
@@ -421,6 +422,17 @@ public sealed class HolopadSystem : SharedHolopadSystem
         };
 
         args.Verbs.Add(verb);
+    }
+
+    private void OnAiRemove(Entity<HolopadComponent> entity, ref EntRemovedFromContainerMessage args)
+    {
+        if (!HasComp<StationAiCoreComponent>(entity))
+            return;
+
+        if (!TryComp<TelephoneComponent>(entity, out var entityTelephone))
+            return;
+
+        _telephoneSystem.EndTelephoneCalls((entity, entityTelephone));
     }
 
     #endregion
