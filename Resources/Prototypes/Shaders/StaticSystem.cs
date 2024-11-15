@@ -71,6 +71,7 @@ namespace Content.Client.Overlays
 
         protected override void OnCompEquip(EntityUid uid, StaticViewerComponent component, GotEquippedEvent args)
         {
+            Log.Error($"Static Equipped");
             base.OnCompEquip(uid, component, args);
             
             // Apply the overlay when the item is equipped
@@ -79,6 +80,7 @@ namespace Content.Client.Overlays
 
         protected override void OnCompUnequip(EntityUid uid, StaticViewerComponent component, GotUnequippedEvent args)
         {
+            Log.Error($"Static unequipped");
             base.OnCompUnequip(uid, component, args);
             
             // Remove the overlay when the item is unequipped
