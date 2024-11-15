@@ -18,13 +18,13 @@
   category: cargoproduct-category-name-shuttle
   group: market
 
-# - type: cargoProduct
-  # id: ShuttlePowerKit
-  # icon:
-    # sprite: Structures/Machines/computers.rsi
-    # state: avionics-systems
-  # product: CrateEngineeringShuttle
-  # cost: 3000
-  # category: cargoproduct-category-name-shuttle
-  # group: market
-#  locked: true   # only the QM has permission to order by default
+- type: cargoProduct #reimplemented from upstream. if people abuse this then re-comment this out and kill them with rocks and hammers
+  id: ShuttlePowerKit
+  icon:
+    sprite: Structures/Machines/computers.rsi
+    state: avionics-systems
+  product: CrateEngineeringShuttle
+  cost: 1125 #buffed a lot. the contents of the crate are less than 200 spesos so its still more than a 500% markup for a 2w generator
+  category: cargoproduct-category-name-shuttle
+  group: market
+  locked: true   # only the QM has permission to order by default
