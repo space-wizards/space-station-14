@@ -187,5 +187,7 @@
   - type: ContainerContainer
     containers:
       paper_label: !type:ContainerSlot
+      storagebase: !type:Container
+        ents: []
   - type: UseDelay
     delay: 0.3
