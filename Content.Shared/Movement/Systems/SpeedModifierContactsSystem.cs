@@ -83,11 +83,6 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
         if (!EntityManager.TryGetComponent<PhysicsComponent>(uid, out var physicsComponent))
             return;
 
-        // entities that are weightless, i.e. no gravity, should not be affected by contact slowdowns
-        // entities that are in the air, i.e. flying mobs, should not be affected by contact slowdowns
-        if (_gravity.IsWeightless(uid) || physicsComponent.BodyStatus == BodyStatus.InAir)
-            return;
-
         var walkSpeed = 0.0f;
         var sprintSpeed = 0.0f;
 
@@ -100,6 +95,11 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
             if (TryComp<SpeedModifierContactsComponent>(ent, out var slowContactsComponent))
             {
                 if (_whitelistSystem.IsWhitelistPass(slowContactsComponent.IgnoreWhitelist, uid))
+                    continue;
+
+                // entities that are weightless or in the air, i.e. no gravity or flying mobs, should not be affected by contact speed modifiers
+                // unless the entity applying the contact speed modifier has AffectAirborneMovementComponent
+                if (!HasComp<AffectAirborneMovementComponent>(ent) && (_gravity.IsWeightless(uid) || physicsComponent.BodyStatus == BodyStatus.InAir))
                     continue;
 
                 walkSpeed += slowContactsComponent.WalkSpeedModifier;
