@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Hemp and hemp products
-    type: Add
-  id: 19
-  time: '2024-07-05T17:15:59.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/22
-- author: formlessnameless
-  changes:
-  - message: Hemp balance changes and PAI as trinkets
-    type: Tweak
-  id: 20
-  time: '2024-07-06T21:51:36.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/23
 - author: joelsgp
   changes:
   - message: Finfin meat sprites and new tips
@@ -4219,3 +4205,19 @@
   id: 518
   time: '2024-11-15T13:16:57.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/724
+- author: mqole
+  changes:
+  - message: Heretic metashield for all you rules perverts
+    type: Add
+  - message: Metashield information now easier to find in the guidebook
+    type: Tweak
+  id: 519
+  time: '2024-11-15T13:19:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/713
+- author: DinnerCalzone
+  changes:
+  - message: (Hummingbird) Added more directional signs around the station.
+    type: Add
+  id: 520
+  time: '2024-11-15T13:19:36.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/721
