@@ -10,7 +10,7 @@ using Content.Shared.FixedPoint;
 namespace Content.Server.Atmos.EntitySystems;
 
 /// <summary>
-/// This handles...
+/// Handles detecting wether an entity is in a given gas, and applying effects if so.
 /// </summary>
 public sealed class InGasSystem : EntitySystem
 {
@@ -20,14 +20,6 @@ public sealed class InGasSystem : EntitySystem
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        //Subscribe to relevant events here.
-        //SubscribeLocalEvent<>();
-    }
 
     public bool InGas(EntityUid uid, int? gasId = null, float? gasThreshold = null)
     {
@@ -72,6 +64,7 @@ public sealed class InGasSystem : EntitySystem
                 {
                     inGas.TakingDamage = false;
                     //Look at me i'm even being proper with logging
+                    //todo make this actually work
                     _adminLog.Add(LogType.Electrocution, $"Entity {uid} is no longer taking damage from water.");
                 }
                 continue;

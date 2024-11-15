@@ -29,8 +29,9 @@ public sealed partial class InGasComponent : Component
     /// </summary>
     [DataField("damagedByGas"), ViewVariables(VVAccess.ReadWrite)]
     public bool DamagedByGas = false;
-
+    /// <summary>
     /// Damage caused by gas contact
+    /// </summary>
     [DataField("damage"), ViewVariables(VVAccess.ReadWrite)]
     public DamageSpecifier Damage = default!;
 
