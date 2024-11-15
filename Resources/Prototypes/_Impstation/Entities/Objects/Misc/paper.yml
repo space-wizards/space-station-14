@@ -36,6 +36,9 @@
     - Document
     - Paper
     - SecTicket
+  - type: FlavorProfile
+    flavors:
+    - secticket
 
 
 - type: entity

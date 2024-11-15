@@ -196,6 +196,15 @@
           Quantity: 3
         - ReagentId: Copper
           Quantity: 2
+  - type: UserInterface
+    interfaces:
+      enum.ShortConstructionUiKey.Key:
+        type: ShortConstructionMenuBUI
+  - type: ActivatableUI
+    key: enum.ShortConstructionUiKey.Key
+  - type: ShortConstruction
+    prototypes:
+    - CableTerminal
 
 - type: entity
   parent: CableApcStack
