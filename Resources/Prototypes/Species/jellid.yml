@@ -35,6 +35,7 @@
 
 - type: markingPoints
   id: MobJellidMarkingLimits
+  onlyWhitelisted: true
   points:
     Hair:
       points: 1
