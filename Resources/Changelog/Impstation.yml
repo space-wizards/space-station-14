@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: joelsgp
-  changes:
-  - message: Finfin meat sprites and new tips
-    type: Add
-  id: 21
-  time: '2024-07-08T16:51:38.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/25
-- author: TGRCDev
-  changes:
-  - message: Added the ability to disable the singularity's warping effect
-    type: Tweak
-  id: 22
-  time: '2024-07-14T22:25:25.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/27
-- author: TGRCDev
-  changes:
-  - message: Added an autolathe recipe for the desk bell
-    type: Add
-  id: 23
-  time: '2024-07-16T15:31:12.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/28
 - author: LucasTheDrgn
   changes:
   - message: Asterade
@@ -4221,3 +4200,36 @@
   id: 520
   time: '2024-11-15T13:19:36.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/721
+- author: honeyed-lemons
+  changes:
+  - message: Random DNR no longer can be rerolled after failing
+    type: Fix
+  id: 521
+  time: '2024-11-15T19:45:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/716
+- author: hivehum
+  changes:
+  - message: Spy vs Spy now requires a significantly higher minimum player count.
+    type: Tweak
+  id: 522
+  time: '2024-11-15T19:45:36.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/726
+- author: EpicToast
+  changes:
+  - message: Added Union Station to the default map rotation!
+    type: Add
+  - message: 'Made some tweaks and fixes to Union Station, including:'
+    type: Tweak
+  - message: Added proper janitor spawns.
+    type: Tweak
+  - message: Added more station beacons to the map.
+    type: Tweak
+  - message: Added space heaters to atmos.
+    type: Tweak
+  - message: Added a notice from CentComm to disposals.
+    type: Tweak
+  - message: And much more.
+    type: Tweak
+  id: 523
+  time: '2024-11-15T19:46:04.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/725
