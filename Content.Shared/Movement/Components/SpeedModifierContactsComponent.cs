@@ -13,9 +13,13 @@ public sealed partial class SpeedModifierContactsComponent : Component
     [AutoNetworkedField]
     public float WalkSpeedModifier = 1.0f;
 
-    [AutoNetworkedField]
     [DataField("sprintSpeedModifier"), ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
     public float SprintSpeedModifier = 1.0f;
+
+    [DataField("affectAirborne"), ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
+    public bool AffectAirborne = false;
 
     [DataField("ignoreWhitelist")]
     public EntityWhitelist? IgnoreWhitelist;
