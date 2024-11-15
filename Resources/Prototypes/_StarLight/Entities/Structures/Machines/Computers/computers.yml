@@ -68,3 +68,6 @@
     layers:
     - state: eye
       shader: unshaded
+  - type: Tag
+    tags:
+    - CantInteract
