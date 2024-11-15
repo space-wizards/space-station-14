@@ -195,46 +195,23 @@ Entries:
   id: 27
   time: '2024-11-15T20:48:29.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/50
-- author: '- add: Added fun!'
-  changes:
-  - message: Removed fun!
-    type: Remove
-  id: 28
-  time: '2024-11-15T21:38:47.000000+00:00'
-  url: https://github.com/ss14Starlight/space-station-14/pull/51
-- author: '- add: Added fun!'
-  changes:
-  - message: Changed fun!
-    type: Tweak
-  id: 29
-  time: '2024-11-15T21:38:47.000000+00:00'
-  url: https://github.com/ss14Starlight/space-station-14/pull/51
-- author: '- add: Added fun!'
-  changes:
-  - message: Fixed fun!
-    type: Fix
-  id: 30
-  time: '2024-11-15T21:38:47.000000+00:00'
-  url: https://github.com/ss14Starlight/space-station-14/pull/51
 - author: Rinary
   changes:
-  - message: Fixed bug when abductor can steal item's using abductor's monitoring
-      console
+  - message: "Fixed bug when abductor can steal item's using abductor's monitoring console"
     type: Fix
   id: 31
   time: '2024-11-15T21:38:47.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/51
 - author: Rinary
   changes:
-  - message: Fixed bug when abductor can open doors using abductor's monitoring console
+  - message: "Fixed bug when abductor can open doors using abductor's monitoring console"
     type: Fix
   id: 32
   time: '2024-11-15T21:38:47.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/51
 - author: Rinary
   changes:
-  - message: Fixed bug when abductor can interact with items using using abductor's
-      monitoring console
+  - message: "Fixed bug when abductor can interact with items using using abductor's monitoring console"
     type: Fix
   id: 33
   time: '2024-11-15T21:38:47.000000+00:00'
