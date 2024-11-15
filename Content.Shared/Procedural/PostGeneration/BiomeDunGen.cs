@@ -1,3 +1,4 @@
+using Content.Shared.Maps;
 using Content.Shared.Parallax.Biomes;
 using Robust.Shared.Prototypes;
 
@@ -11,4 +12,10 @@ public sealed partial class BiomeDunGen : IDunGenLayer
 {
     [DataField(required: true)]
     public ProtoId<BiomeTemplatePrototype> BiomeTemplate;
+
+    /// <summary>
+    /// creates a biome only on the specified tiles
+    /// </summary>
+    [DataField]
+    public HashSet<ProtoId<ContentTileDefinition>>? TileMask;
 }

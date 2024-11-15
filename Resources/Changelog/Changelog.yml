@@ -1,78 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Added new keybindings for rotating and flipping objects. The defaults
-      are R for clockwise, Shift+R for counterclockwise and F for flipping.
-    type: Add
-  id: 7103
-  time: '2024-08-13T13:36:45.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30540
-- author: Cojoke-dot
-  changes:
-  - message: Borg's names are now displayed when they make an announcement on the
-      Communications Console.
-    type: Tweak
-  id: 7104
-  time: '2024-08-13T18:31:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30107
-- author: Spessmann
-  changes:
-  - message: Added Cog, a new midpop map based on Cogmap from ss13
-    type: Add
-  id: 7105
-  time: '2024-08-13T19:27:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30840
-- author: PoorMansDreams
-  changes:
-  - message: Throngler Plushie looks like a plushie
-    type: Tweak
-  id: 7106
-  time: '2024-08-13T20:32:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30969
-- author: IProduceWidgets
-  changes:
-  - message: shuttle events have been separated from other midround events and can
-      now happen concurrently.
-    type: Tweak
-  - message: Cargo Gift events should be less likely.
-    type: Tweak
-  - message: meteors have been changed to be more responsive to player count.
-    type: Tweak
-  - message: 'Game mode: Kessler syndrome - What if survival but also the apocalypse?'
-    type: Add
-  - message: 'Game mode: Zombeteors - Zombies and a meteor shower all at once!'
-    type: Add
-  id: 7107
-  time: '2024-08-14T05:21:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29320
-- author: Blackern5000
-  changes:
-  - message: Combat medical kits now contain saline syringes.
-    type: Add
-  id: 7108
-  time: '2024-08-14T06:25:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29954
-- author: TheShuEd
-  changes:
-  - message: added morbilliard variants of procedural tacos and kebabs
-    type: Add
-  - message: removed all microwave taco and kebabs recipes (except for the taco shell
-      itself)
-    type: Remove
-  - message: you can fight with a skewer (even if it has food on it)
-    type: Tweak
-  - message: now you can't put more than 10 layers on a burger. (20 before)
-    type: Tweak
-  id: 7109
-  time: '2024-08-14T13:04:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30905
-- author: themias
-  changes:
-  - message: Fixed lizards being unable to eat custom burgers
-    type: Fix
-  id: 7110
-  time: '2024-08-14T19:47:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31005
 - author: Erisfiregamer1
   changes:
   - message: New chemical, Sedin. It restores seeds on plants 20% of the time with
@@ -3950,3 +3876,72 @@
   id: 7602
   time: '2024-11-11T16:12:36.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33248
+- author: AndrewMontagne
+  changes:
+  - message: APEs could be powered on without local power
+    type: Fix
+  id: 7603
+  time: '2024-11-11T22:58:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32493
+- author: thetolbean
+  changes:
+  - message: Droppers can no longer inject or draw from closed containers.
+    type: Fix
+  id: 7604
+  time: '2024-11-12T12:06:43.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33011
+- author: august-sun
+  changes:
+  - message: The inert flesh anomaly core can now be microwaved to turn into an anomalous
+      meat mass.
+    type: Tweak
+  id: 7605
+  time: '2024-11-13T02:59:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33223
+- author: Ubaser
+  changes:
+  - message: Window sprites are now slightly more transparent.
+    type: Tweak
+  id: 7606
+  time: '2024-11-13T12:30:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33282
+- author: keronshb
+  changes:
+  - message: Added Ethereal Jaunt! A Wizard Spell that turns you invisible and into
+      a ghost-like creature for escaping!
+    type: Add
+  id: 7607
+  time: '2024-11-13T23:36:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33201
+- author: CheddaCheez
+  changes:
+  - message: Fixed mimes being unable to break their vow more than once. Despicable!
+    type: Fix
+  id: 7608
+  time: '2024-11-14T16:56:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33303
+- author: PJB3005
+  changes:
+  - message: Borgs can now select their chassis type upon creation (construction or
+      job spawn), immediately giving borgs access to all chassis types.
+    type: Add
+  - message: Borg chassis types now come with built-in modules depending on the type,
+      so you can immediately do your job without help from science. Some upgrade modules
+      must still be installed later however.
+    type: Add
+  - message: Specialized chassis types have been removed from construction, as they
+      are no longer necessary.
+    type: Remove
+  - message: Borg unlock access is no longer determined by their chassis, it's always
+      science or command. This means the janitor can't unlock jani borgs anymore.
+    type: Remove
+  id: 7609
+  time: '2024-11-14T17:08:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32586
+- author: thetolbean
+  changes:
+  - message: The Quartermaster's requisition digi-board can no longer be recycled.
+    type: Fix
+  id: 7610
+  time: '2024-11-15T06:54:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33315
