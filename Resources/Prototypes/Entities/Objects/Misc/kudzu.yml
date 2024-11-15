@@ -10,7 +10,6 @@
     - type: Transform
       anchored: true
     - type: Physics
-    - type: AffectAirborneMovement
     - type: Kudzu
     - type: GrowingKudzu
     - type: ActiveEdgeSpreader
