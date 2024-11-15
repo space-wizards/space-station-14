@@ -18,7 +18,7 @@ namespace Content.Client.Overlays
         {
             base.Initialize();
 
-            _staticOverlay = new ShaderOverlay(_prototypeManager.Index<ShaderPrototype>("CameraStatic").Instance().Duplicate());
+            _staticOverlay = new ShaderOverlay(_prototypeManager.Index<ShaderPrototype>("Grainy").Instance().Duplicate());
 
             SubscribeLocalEvent<StaticViewerComponent, GotEquippedEvent>(OnCompEquip);
             SubscribeLocalEvent<StaticViewerComponent, GotUnequippedEvent>(OnCompUnequip);
