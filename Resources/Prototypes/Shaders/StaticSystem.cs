@@ -9,7 +9,6 @@ namespace Content.Client.Overlays
 {
     public sealed class StaticViewerHudSystem : EntitySystem
     {
-        [Dependency] private readonly IPlayerManager _player = default!;
         [Dependency] private readonly IOverlayManager _overlayMan = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -27,18 +26,12 @@ namespace Content.Client.Overlays
 
         private void OnCompEquip(EntityUid uid, StaticViewerComponent component, GotEquippedEvent args)
         {
-            if (_player.LocalPlayer?.ControlledEntity == args.Equipee)
-            {
-                _overlayMan.AddOverlay(_staticOverlay);
-            }
+            _overlayMan.AddOverlay(_staticOverlay);
         }
 
         private void OnCompUnequip(EntityUid uid, StaticViewerComponent component, GotUnequippedEvent args)
         {
-            if (_player.LocalPlayer?.ControlledEntity == args.Equipee)
-            {
-                _overlayMan.RemoveOverlay(_staticOverlay);
-            }
+            _overlayMan.RemoveOverlay(_staticOverlay);
         }
     }
 }
