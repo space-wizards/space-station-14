@@ -605,5 +605,12 @@ Entries:
   id: 75
   time: '2024-11-13T23:27:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31751
+- author: Beck Thompson
+  changes:
+  - message: Notes now use duration instead of timestamps for note expiry times.
+    type: Tweak
+  id: 76
+  time: '2024-11-15T03:24:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33262
 Name: Admin
 Order: 1

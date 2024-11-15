@@ -1,56 +1,4 @@
 ﻿Entries:
-- author: Blackern5000
-  changes:
-  - message: Combat medical kits now contain saline syringes.
-    type: Add
-  id: 7108
-  time: '2024-08-14T06:25:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29954
-- author: TheShuEd
-  changes:
-  - message: added morbilliard variants of procedural tacos and kebabs
-    type: Add
-  - message: removed all microwave taco and kebabs recipes (except for the taco shell
-      itself)
-    type: Remove
-  - message: you can fight with a skewer (even if it has food on it)
-    type: Tweak
-  - message: now you can't put more than 10 layers on a burger. (20 before)
-    type: Tweak
-  id: 7109
-  time: '2024-08-14T13:04:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30905
-- author: themias
-  changes:
-  - message: Fixed lizards being unable to eat custom burgers
-    type: Fix
-  id: 7110
-  time: '2024-08-14T19:47:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31005
-- author: Erisfiregamer1
-  changes:
-  - message: New chemical, Sedin. It restores seeds on plants 20% of the time with
-      other adverse effects included.
-    type: Add
-  id: 7111
-  time: '2024-08-15T00:38:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27110
-- author: PoorMansDreams
-  changes:
-  - message: Added Star sticker in loadouts for Secoffs
-    type: Add
-  id: 7112
-  time: '2024-08-15T01:50:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29767
-- author: FATFSAAM2
-  changes:
-  - message: added 7 new figurine voice lines.
-    type: Add
-  - message: changed a hos figurine voice line to not include a typo.
-    type: Fix
-  id: 7113
-  time: '2024-08-15T12:34:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30865
 - author: to4no_fix
   changes:
   - message: Added a new electropack that shocks when a trigger is triggered
@@ -3941,3 +3889,57 @@
   id: 7607
   time: '2024-11-13T23:36:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33201
+- author: CheddaCheez
+  changes:
+  - message: Fixed mimes being unable to break their vow more than once. Despicable!
+    type: Fix
+  id: 7608
+  time: '2024-11-14T16:56:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33303
+- author: PJB3005
+  changes:
+  - message: Borgs can now select their chassis type upon creation (construction or
+      job spawn), immediately giving borgs access to all chassis types.
+    type: Add
+  - message: Borg chassis types now come with built-in modules depending on the type,
+      so you can immediately do your job without help from science. Some upgrade modules
+      must still be installed later however.
+    type: Add
+  - message: Specialized chassis types have been removed from construction, as they
+      are no longer necessary.
+    type: Remove
+  - message: Borg unlock access is no longer determined by their chassis, it's always
+      science or command. This means the janitor can't unlock jani borgs anymore.
+    type: Remove
+  id: 7609
+  time: '2024-11-14T17:08:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32586
+- author: thetolbean
+  changes:
+  - message: The Quartermaster's requisition digi-board can no longer be recycled.
+    type: Fix
+  id: 7610
+  time: '2024-11-15T06:54:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33315
+- author: RedBookcase
+  changes:
+  - message: Mixing up a Snow White no longer creates extra liquid out of thin air.
+    type: Fix
+  id: 7611
+  time: '2024-11-15T20:52:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33331
+- author: lzk228
+  changes:
+  - message: Added 10 seconds delay to Succumb action
+    type: Add
+  id: 7612
+  time: '2024-11-15T21:21:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32985
+- author: Beck Thompson
+  changes:
+  - message: Minor tweaks to clumsiness. Some of the timings and or noises have been
+      changed slightly!
+    type: Tweak
+  id: 7613
+  time: '2024-11-15T23:46:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31147
