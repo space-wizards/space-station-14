@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: FATFSAAM2
-  changes:
-  - message: added 7 new figurine voice lines.
-    type: Add
-  - message: changed a hos figurine voice line to not include a typo.
-    type: Fix
-  id: 7113
-  time: '2024-08-15T12:34:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30865
 - author: to4no_fix
   changes:
   - message: Added a new electropack that shocks when a trigger is triggered
@@ -3944,3 +3935,11 @@
   id: 7612
   time: '2024-11-15T21:21:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32985
+- author: Beck Thompson
+  changes:
+  - message: Minor tweaks to clumsiness. Some of the timings and or noises have been
+      changed slightly!
+    type: Tweak
+  id: 7613
+  time: '2024-11-15T23:46:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31147
