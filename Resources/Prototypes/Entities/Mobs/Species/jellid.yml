@@ -31,7 +31,7 @@
   - type: UseDelay
     delay: 0.5
   - type: HumanoidAppearance
-    species: SlimePerson
+    species: JellidPerson
   - type: Speech
     speechVerb: Slime
     speechSounds: Slime
@@ -40,26 +40,22 @@
     proto: slime
   - type: Vocal
     sounds:
-      Male: MaleSlime
-      Female: FemaleSlime
       Unsexed: MaleSlime
   - type: Damageable
     damageContainer: Biological
-    damageModifierSet: Slime # add their own modifier
+    damageModifierSet: Jellid
   - type: PassiveDamage
     allowedStates:
     - Alive
     damageCap: 65
     damage:
-      types:
-        Heat: -0.14
       groups:
         Brute: -0.14
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:
         sprite: Mobs/Effects/brute_damage.rsi
-        color: "#2cf274"
+        color: "#00ccff"
   - type: Bloodstream
     bloodReagent: SeaWater # the ocean runs through my veins...
   - type: Reactive
@@ -95,9 +91,6 @@
     autoRecharge: true
     autoRechargeRate: -2
     ignoreFull: true # prevents the charge from stopping
-
-  # TODOS: Add ATP cell cluster, code a JellidSystem and Component that basically uses similar to borgchassis code, where it displays the power percentage on the player's UI. Make a unique damage event though if battery is empty.
-  #        Ideally the battery shouldn't have a OnRemoved event, because that'd mean that the Jellid is almost certainly gibbed and already dead beyond repair.
 
 - type: entity
   parent: MobHumanDummy
