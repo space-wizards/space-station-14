@@ -246,6 +246,36 @@ public sealed partial class CCVars
             CVarDef.Create("game.ipintel_enabled", false, CVar.SERVERONLY);
 
         /// <summary>
+        /// Whether clients which are flagged as a VPN (score of 1) will be denied
+        /// </summary>
+        public static readonly CVarDef<bool> IPIntelRejectBad =
+            CVarDef.Create("game.ipintel_reject_bad", true, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Whether clients which cannot be checked due to a rate limit will be denied
+        /// </summary>
+        public static readonly CVarDef<bool> IPIntelRejectRateLimited =
+            CVarDef.Create("game.ipintel_reject_ratelimited", false, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Whether clients which cannot be checked due to an error of some form will be denied
+        /// </summary>
+        public static readonly CVarDef<bool> IPIntelRejectUnknown =
+            CVarDef.Create("game.ipintel_reject_unknown", false, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Should an admin message be made if the connection got rejected cause of ipintel?
+        /// </summary>
+        public static readonly CVarDef<bool> IPIntelAlertAdminReject =
+            CVarDef.Create("game.ipintel_alert_admin_rejected", false, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Make people bonk when trying to climb certain objects like tables.
+        /// </summary>
+        public static readonly CVarDef<bool> GameTableBonk =
+            CVarDef.Create("game.table_bonk", false, CVar.REPLICATED);
+
+        /// <summary>
         /// A contact email to be sent along with the request. Required by IPIntel
         /// </summary>
         public static readonly CVarDef<string> IPIntelEmail =
@@ -270,30 +300,6 @@ public sealed partial class CCVars
             CVarDef.Create("game.ipintel_request_limit_daily", 500, CVar.SERVERONLY);
 
         /// <summary>
-        /// Rating to reject at. Anything equal to or higher than this will reject the connection.
-        /// </summary>
-        public static readonly CVarDef<float> IPIntelBadRating =
-            CVarDef.Create("game.ipintel_bad_rating", 0.8f, CVar.SERVERONLY);
-
-        /// <summary>
-        /// Whether clients which are flagged as a VPN (score of 1) will be denied
-        /// </summary>
-        public static readonly CVarDef<bool> IPIntelRejectBad =
-            CVarDef.Create("game.ipintel_reject_bad", true, CVar.SERVERONLY);
-
-        /// <summary>
-        /// Whether clients which cannot be checked due to a rate limit will be denied
-        /// </summary>
-        public static readonly CVarDef<bool> IPIntelRejectRateLimited =
-            CVarDef.Create("game.ipintel_reject_ratelimited", false, CVar.SERVERONLY);
-
-        /// <summary>
-        /// Whether clients which cannot be checked due to an error of some form will be denied
-        /// </summary>
-        public static readonly CVarDef<bool> IPIntelRejectUnknown =
-            CVarDef.Create("game.ipintel_reject_unknown", false, CVar.SERVERONLY);
-
-        /// <summary>
         /// How long to store results in the cache before they must be retrieved again in days.
         /// </summary>
         public static readonly CVarDef<int> IPIntelCacheLength =
@@ -309,22 +315,16 @@ public sealed partial class CCVars
             CVarDef.Create("game.ipintel_except_playtime", 300, CVar.SERVERONLY);
 
         /// <summary>
-        /// Should an admin message be made if the connection got denied cause of ipintel?
+        /// Rating to reject at. Anything equal to or higher than this will reject the connection.
         /// </summary>
-        public static readonly CVarDef<bool> IPIntelAlertAdmin =
-            CVarDef.Create("game.ipintel_alert_admin", false, CVar.SERVERONLY);
+        public static readonly CVarDef<float> IPIntelBadRating =
+            CVarDef.Create("game.ipintel_bad_rating", 0.8f, CVar.SERVERONLY);
 
         /// <summary>
         /// Rating to send an admin warning over, but not reject the connection. Set to 0 to disable
         /// </summary>
-        public static readonly CVarDef<float> IPIntelWarnAdminRating =
-            CVarDef.Create("game.ipintel_warn_admin_rating", 0f, CVar.SERVERONLY);
-
-        /// <summary>
-        ///     Make people bonk when trying to climb certain objects like tables.
-        /// </summary>
-        public static readonly CVarDef<bool> GameTableBonk =
-            CVarDef.Create("game.table_bonk", false, CVar.REPLICATED);
+        public static readonly CVarDef<float> IPIntelAlertAdminWarnRating =
+            CVarDef.Create("game.ipintel_alert_admin_warn_rating", 0f, CVar.SERVERONLY);
 
         /// <summary>
         ///     Whether or not status icons are rendered for everyone.

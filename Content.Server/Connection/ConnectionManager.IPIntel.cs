@@ -11,7 +11,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.Connection;
 
 /// <summary>
-/// Handles checking if the connecting IP address is sus.
+/// Handles checking/warning if the connecting IP address is sus.
 /// </summary>
 public sealed partial class ConnectionManager
 {
@@ -25,12 +25,12 @@ public sealed partial class ConnectionManager
     private bool _rejectUnknown;
     private bool _rejectBad;
     private bool _rejectLimited;
+    private bool _alertAdminReject;
     private int _requestLimitMinute;
     private int _requestLimitDay;
-    private float _rating;
     private int _cacheDays;
-    private int _exceptPlaytime;
-    private bool _alertAdmin;
+    private int _exemptPlaytime;
+    private float _rating;
     private float _alertAdminWarn;
     private async Task<(bool IsBad, string Reason)> IsVpnOrProxy(NetConnectingArgs e)
     {
@@ -41,10 +41,10 @@ public sealed partial class ConnectionManager
             return (false, string.Empty);
         }
 
-        // Check playtime, if 0 we skip this check. If player has more playtime then _exceptPlaytime is configured for then they get to skip this check.
+        // Check playtime, if 0 we skip this check. If player has more playtime then _exemptPlaytime is configured for then they get to skip this check.
         // Helps with saving your limited request limit.
         var overallTime = ( await _db.GetPlayTimes(e.UserId)).Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall);
-        if (overallTime != null && overallTime.TimeSpent.TotalMinutes >= _exceptPlaytime && _exceptPlaytime != 0f)
+        if (overallTime != null && overallTime.TimeSpent.TotalMinutes >= _exemptPlaytime && _exemptPlaytime != 0f)
         {
             return (false, string.Empty);
         }
@@ -57,13 +57,13 @@ public sealed partial class ConnectionManager
         // Does it exist?
         if (query.Count != 0)
         {
-            // Continue to score check if result is not older than _cacheDays
+            // Skip to score check if result is older than _cacheDays
             if (!query.Any(a => (DateTime.Now - a.Time).TotalDays > _cacheDays))
             {
                 var cachedScore = query.FirstOrDefault()?.Score.ToString(CultureInfo.CurrentCulture);
                 return await ScoreCheck(cachedScore!, e, false, false);
             }
-            // This record is expired.
+            // This record is expired and should be updated.
             expired = true;
         }
 
@@ -72,7 +72,7 @@ public sealed partial class ConnectionManager
             return _rejectLimited ? (true, Loc.GetString("ipintel-server-ratelimited")) : (false, string.Empty);
 
         // Ensure our contact email is good to use.
-        if (_contactEmail == string.Empty || !_contactEmail!.Contains('@'))
+        if (string.IsNullOrEmpty(_contactEmail) || !_contactEmail.Contains('@') || !_contactEmail.Contains('.'))
         {
             _sawmill.Error("IPIntel is enabled, but contact email is empty or not a valid email, treating this connection like an unknown IPIntel response.");
             return _rejectUnknown ? (true, Loc.GetString("generic-misconfigured")) : (false, string.Empty);
@@ -141,23 +141,24 @@ public sealed partial class ConnectionManager
     {
         var score = Parse.Float(response);
         var ip = e.IP.Address;
+        var decisionIsReject = score > _rating;
 
         if (expired)
             await _db.UpdateIPIntelCache(DateTime.Now, ip, score);
         else if (newEntry)
             await _db.AddIPIntelCache(DateTime.Now, ip, score);
 
-        if (_alertAdminWarn != 0f && _alertAdminWarn < score && !(score > _rating))
+        if (_alertAdminWarn != 0f && _alertAdminWarn < score && !decisionIsReject)
         {
             _chatManager.SendAdminAlert(Loc.GetString("admin-alert-ipintel-warning",
                 ("player", e.UserName),
                 ("percent", Math.Round(score * 100))));
         }
 
-        if (!(score > _rating))
+        if (!decisionIsReject)
             return (false, string.Empty);
 
-        if (_alertAdmin)
+        if (_alertAdminReject)
         {
             _chatManager.SendAdminAlert(Loc.GetString("admin-alert-ipintel-blocked",
                 ("player", e.UserName),

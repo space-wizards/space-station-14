@@ -75,9 +75,9 @@ namespace Content.Server.Connection
             _cfg.OnValueChanged(CCVars.IPIntelMaxDay, b => _requestLimitDay = b, true);
             _cfg.OnValueChanged(CCVars.IPIntelBadRating, b => _rating = b, true);
             _cfg.OnValueChanged(CCVars.IPIntelCacheLength, b => _cacheDays = b, true);
-            _cfg.OnValueChanged(CCVars.IPIntelExceptPlaytime, b => _exceptPlaytime = b, true);
-            _cfg.OnValueChanged(CCVars.IPIntelAlertAdmin, b => _alertAdmin = b, true);
-            _cfg.OnValueChanged(CCVars.IPIntelWarnAdminRating, b => _alertAdminWarn = b, true);
+            _cfg.OnValueChanged(CCVars.IPIntelExceptPlaytime, b => _exemptPlaytime = b, true);
+            _cfg.OnValueChanged(CCVars.IPIntelAlertAdminReject, b => _alertAdminReject = b, true);
+            _cfg.OnValueChanged(CCVars.IPIntelAlertAdminWarnRating, b => _alertAdminWarn = b, true);
         }
 
         public void Initialize()
