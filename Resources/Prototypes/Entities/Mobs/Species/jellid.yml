@@ -91,6 +91,10 @@
     autoRecharge: true
     autoRechargeRate: -2
     ignoreFull: true # prevents the charge from stopping
+  - type: PointLight
+    radius: 1.5
+    energy: 0.2
+    color: "#Ffffff"
 
 - type: entity
   parent: MobHumanDummy
