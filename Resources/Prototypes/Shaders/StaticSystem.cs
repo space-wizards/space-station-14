@@ -4,6 +4,8 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Overlays;
 using Robust.Client.Player;
 using Robust.Shared.Player;
+using Robust.Client.Graphics;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Overlays
 {
@@ -14,8 +16,17 @@ namespace Content.Client.Overlays
     public class StaticViewerHudSystem : EquipmentHudSystem<StaticViewerComponent>
     {
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
-        
-        protected override SlotFlags TargetSlots => SlotFlags.ALL; // Or whatever slots you want to check for
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
+        private readonly ShaderInstance _staticShader;
+
+        protected override SlotFlags TargetSlots => SlotFlags.ALL; // Or specify the slots you want to check for
+
+        public StaticViewerHudSystem()
+        {
+            IoCManager.InjectDependencies(this);
+            _staticShader = _prototypeManager.Index<ShaderPrototype>("CameraStatic").Instance().Duplicate();
+        }
 
         protected override void UpdateInternal(RefreshEquipmentHudEvent<StaticViewerComponent> args)
         {
@@ -25,6 +36,10 @@ namespace Content.Client.Overlays
             if (args.Components.Count > 0)
             {
                 ApplyStaticOverlay();
+            }
+            else
+            {
+                RemoveStaticOverlay();
             }
         }
 
@@ -39,13 +54,19 @@ namespace Content.Client.Overlays
         private void ApplyStaticOverlay()
         {
             // Apply the "CameraStatic" overlay to the player's screen
-            _overlayManager.AddOverlay(new ShaderOverlay("CameraStatic"));
+            if (!_overlayManager.HasOverlay("CameraStatic"))
+            {
+                _overlayManager.AddOverlay(new ShaderOverlay(_staticShader));
+            }
         }
 
         private void RemoveStaticOverlay()
         {
             // Remove the "CameraStatic" overlay
-            _overlayManager.RemoveOverlay("CameraStatic");
+            if (_overlayManager.HasOverlay("CameraStatic"))
+            {
+                _overlayManager.RemoveOverlay("CameraStatic");
+            }
         }
 
         protected override void OnCompEquip(EntityUid uid, StaticViewerComponent component, GotEquippedEvent args)
@@ -74,4 +95,3 @@ namespace Content.Client.Overlays
         }
     }
 }
-
