@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: joelsgp
-  changes:
-  - message: Finfin foods
-    type: Add
-  id: 16
-  time: '2024-07-04T17:44:01.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/18
-- author: formlessnameless
-  changes:
-  - message: Stop Pipi and Fin Fin from spawning in lockers and dying
-    type: Tweak
-  id: 17
-  time: '2024-07-04T20:09:35.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/19
-- author: joelsgp
-  changes:
-  - message: Fix green marijuana sprites and starting with newports
-    type: Fix
-  id: 18
-  time: '2024-07-05T17:16:10.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/21
 - author: formlessnameless
   changes:
   - message: Hemp and hemp products
@@ -4219,3 +4198,24 @@
   id: 515
   time: '2024-11-14T23:02:55.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/711
+- author: hivehum
+  changes:
+  - message: Xeno and Barratry are now part of the map rotation.
+    type: Tweak
+  id: 516
+  time: '2024-11-15T13:15:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/700
+- author: kipdotnet
+  changes:
+  - message: Security tickets now taste bad.
+    type: Add
+  id: 517
+  time: '2024-11-15T13:16:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/718
+- author: AftrLite
+  changes:
+  - message: A new book! It's got lore.
+    type: Add
+  id: 518
+  time: '2024-11-15T13:16:57.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/724
