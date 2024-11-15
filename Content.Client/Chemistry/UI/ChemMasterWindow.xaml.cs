@@ -12,6 +12,7 @@ using Robust.Shared.Utility;
 using System.Linq;
 using System.Numerics;
 using Content.Shared.FixedPoint;
+using Robust.Client.Graphics;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Chemistry.UI
@@ -44,7 +45,7 @@ namespace Content.Client.Chemistry.UI
             PillTypeButtons = new Button[20];
             for (uint i = 0; i < PillTypeButtons.Length; i++)
             {
-                // For every button decide which stylebase to have
+                // For every button decide which StyleBase to have
                 // Every row has 10 buttons
                 String styleBase = StyleBase.ButtonOpenBoth;
                 uint modulo = i % 10;
@@ -180,38 +181,63 @@ namespace Content.Client.Chemistry.UI
                 Text = $"{state.BufferCurrentVolume}u",
                 StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
             };
-            bufferHBox.AddChild(bufferVol);
+            bufferHBox.AddChild(bufferVol); 
+            
+            // initialises count of loop for purposes of alternating background color each layer,
+            // also initialises the two color values for alternating in the buffer window.
 
+            int layerCount = 0;
+            Color layerColor1 = Color.FromHex("#202025");
+            Color layerColor2 = Color.FromHex("#1B1B1E");
             foreach (var (reagent, quantity) in state.BufferReagents)
             {
                 // Try to get the prototype for the given reagent. This gives us its name.
                 _prototypeManager.TryIndex(reagent.Prototype, out ReagentPrototype? proto);
                 var name = proto?.LocalizedName ?? Loc.GetString("chem-master-window-unknown-reagent-text");
-
+                
+               
                 if (proto != null)
                 {
-                    BufferInfo.Children.Add(new BoxContainer
+                    // Iterate layerCount and then set backgroundColor accordingly.
+                    layerCount++;
+                    Color currentLayerColor = (layerCount % 2 == 1) ? layerColor1 : layerColor2;
+                    
+                    BufferInfo.Children.Add(new PanelContainer
                     {
-                        Orientation = LayoutOrientation.Horizontal,
+                        // Applies a color tint to the current reagent row
+                        PanelOverride = new StyleBoxFlat(currentLayerColor),
                         Children =
                         {
-                            new Label {Text = $"{name}: "},
-                            new Label
+                            new BoxContainer
                             {
-                                Text = $"{quantity}u",
-                                StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
-                            },
+                                Orientation = LayoutOrientation.Horizontal,
+                                Children =
+                                {
+                                    new Label { Text = $"{name}: " },
+                                    new Label
+                                    {
+                                        Text = $"{quantity}u",
+                                        StyleClasses = { StyleNano.StyleClassLabelSecondaryColor }
+                                    },
 
-                            // Padding
-                            new Control {HorizontalExpand = true},
-
-                            MakeReagentButton("1", ChemMasterReagentAmount.U1, reagent, true, StyleBase.ButtonOpenRight),
-                            MakeReagentButton("5", ChemMasterReagentAmount.U5, reagent, true, StyleBase.ButtonOpenBoth),
-                            MakeReagentButton("10", ChemMasterReagentAmount.U10, reagent, true, StyleBase.ButtonOpenBoth),
-                            MakeReagentButton("25", ChemMasterReagentAmount.U25, reagent, true, StyleBase.ButtonOpenBoth),
-                            MakeReagentButton("50", ChemMasterReagentAmount.U50, reagent, true, StyleBase.ButtonOpenBoth),
-                            MakeReagentButton("100", ChemMasterReagentAmount.U100, reagent, true, StyleBase.ButtonOpenBoth),
-                            MakeReagentButton(Loc.GetString("chem-master-window-buffer-all-amount"), ChemMasterReagentAmount.All, reagent, true, StyleBase.ButtonOpenLeft),
+                                    // Padding
+                                    new Control { HorizontalExpand = true },
+                                    // Provides a Unicode "medium vertical bar" and colors it based on the reagent.
+                                    new Label
+                                    {
+                                        Text = "\u2759",
+                                        Modulate = proto.SubstanceColor
+                                    },
+                                    
+                                    MakeReagentButton("1", ChemMasterReagentAmount.U1, reagent, true, StyleBase.ButtonOpenRight),
+                                    MakeReagentButton("5", ChemMasterReagentAmount.U5, reagent, true, StyleBase.ButtonOpenBoth),
+                                    MakeReagentButton("10", ChemMasterReagentAmount.U10, reagent, true, StyleBase.ButtonOpenBoth),
+                                    MakeReagentButton("25", ChemMasterReagentAmount.U25, reagent, true, StyleBase.ButtonOpenBoth),
+                                    MakeReagentButton("50", ChemMasterReagentAmount.U50, reagent, true, StyleBase.ButtonOpenBoth),
+                                    MakeReagentButton("100", ChemMasterReagentAmount.U100, reagent, true, StyleBase.ButtonOpenBoth),
+                                    MakeReagentButton(Loc.GetString("chem-master-window-buffer-all-amount"), ChemMasterReagentAmount.All, reagent, true, StyleBase.ButtonOpenLeft),
+                                }
+                            }
                         }
                     });
                 }
