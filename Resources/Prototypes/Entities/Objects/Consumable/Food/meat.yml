@@ -1471,6 +1471,7 @@
     entries:
       Burger: MeatCutlet
       Taco: MeatCutlet
+      #Skewer: MeatCutletSkewer H: COMMENTED OUT because it no worky :(
 
 - type: entity
   name: bear cutlet
@@ -1503,6 +1504,7 @@
     entries:
       Burger: BearCutletBurger
       Taco: BearCutlet
+      #Skewer: BearCutletSkewer
 
 - type: entity
   name: penguin cutlet

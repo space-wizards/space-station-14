@@ -340,6 +340,20 @@
   - Cutlet
   - Meat
 
+#- type: foodSequenceElement    H: COMMENTED OUT because it no worky :(
+#  id: MeatCutletSkewer
+#  components:
+#  - type: Sprite
+#    layers:
+#    - state: skewer-meat
+#    - state: skewer-meat-alpha
+#      color: brown
+#  - type: Tag
+#    tags:
+#    - Cooked
+#    - Cutlet
+#    - Meat
+
 # Bear cutlet
 
 - type: foodSequenceElement
@@ -363,6 +377,21 @@
   - Cooked
   - Cutlet
   - Meat
+
+#- type: foodSequenceElement    H: COMMENTED OUT because it no worky :(
+#  id: BearCutletSkewer
+#  name: feed-sequence-content-bear
+#  components:
+#  - type: Sprite
+#    layers:
+#    - state: skewer-meat
+#    - state: skewer-meat-alpha
+#      color: green
+#  - type: Tag
+#    tags:
+#    - Cooked
+#    - Cutlet
+#   - Meat
 
 # Penguin cutlet
 
