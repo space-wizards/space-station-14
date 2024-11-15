@@ -1,6 +1,7 @@
-﻿using Content.Shared.Atmos;
+﻿using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Atmos.Components;
 
@@ -26,7 +27,7 @@ public sealed partial class InGasComponent : Component
     ///   Whether the entity is damaged by water.
     ///   By default things are not
     /// </summary>
-    [DataField("damagedByWater"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("damagedByGas"), ViewVariables(VVAccess.ReadWrite)]
     public bool DamagedByGas = false;
 
     /// Damage caused by gas contact
@@ -42,5 +43,12 @@ public sealed partial class InGasComponent : Component
     /// <summary>
     /// Used to track when damage starts/stops. Used in logs.
     /// </summary>
+    [DataField]
     public bool TakingDamage = false;
+
+    [DataField]
+    public ProtoId<AlertPrototype> DrowningAlert = "Drowning";
+
+    [DataField]
+    public ProtoId<AlertCategoryPrototype> BreathingAlertCategory = "Breathing";
 }

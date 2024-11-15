@@ -1,5 +1,6 @@
 ﻿using Content.Server.Administration.Logs;
 using Content.Server.Atmos.Components;
+using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.Database;
@@ -16,6 +17,7 @@ public sealed class InGasSystem : EntitySystem
     private const float UpdateTimer = 1f;
     private float _timer = 0f;
     [Dependency] private readonly AtmosphereSystem _atmo = default!;
+    [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
 
@@ -93,6 +95,16 @@ public sealed class InGasSystem : EntitySystem
             {
                 inGas.TakingDamage = true;
                 _adminLog.Add(LogType.Electrocution, $"Entity {uid} is now taking damage from water.");
+            }
+
+            switch (inGas.TakingDamage)
+            {
+                case true:
+                    _alerts.ShowAlert(uid, inGas.DrowningAlert, 1);
+                    break;
+                default:
+                    _alerts.ClearAlertCategory(uid, inGas.BreathingAlertCategory);
+                    break;
             }
 
         }
