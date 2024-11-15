@@ -305,8 +305,8 @@ public sealed partial class CCVars
         /// Trust me you want one.
         /// </remarks>>
         /// </summary>
-        public static readonly CVarDef<int> IPIntelExceptPlaytime =
-            CVarDef.Create("game.ipintel_except_playtime", 300, CVar.SERVERONLY);
+        public static readonly CVarDef<int> IPIntelExemptPlaytime =
+            CVarDef.Create("game.ipintel_exempt_playtime", 300, CVar.SERVERONLY);
 
         /// <summary>
         /// Rating to reject at. Anything equal to or higher than this will reject the connection.
