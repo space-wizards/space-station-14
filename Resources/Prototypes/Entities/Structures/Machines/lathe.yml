@@ -125,6 +125,7 @@
     - CargoStatic
     - MaterialsStatic
     - BasicChemistryStatic
+    - RollerBedsStatic
     - LightsStatic
     - ServiceStatic
     - PowerCellsStatic
@@ -192,7 +193,6 @@
     staticPacks:
     - ChemistryStatic
     #- SurgeryStatic # Disabled until surgery matters
-    - ScienceToolsStatic
     dynamicPacks:
     - AdvancedTools
     - ScienceEquipment
@@ -474,6 +474,7 @@
     - TopicalsStatic
     - ChemistryStatic
     - MedicalStatic
+    - RollerBedsStatic
     - MedicalClothingStatic
     - EmptyMedkitsStatic
     - SurgeryStatic

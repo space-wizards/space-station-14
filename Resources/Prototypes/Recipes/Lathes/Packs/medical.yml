@@ -42,10 +42,14 @@
   - HandheldHealthAnalyzer
   - DiseaseSwab
   - BodyBag
+  - WhiteCane
+
+- type: latheRecipepack
+  id: RollerBedsStatic
+  recipes:
   - RollerBedSpawnFolded
   - CheapRollerBedSpawnFolded
   - EmergencyRollerBedSpawnFolded
-  - WhiteCane
 
 - type: latheRecipePack
   id: MedicalClothingStatic
