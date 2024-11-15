@@ -87,14 +87,14 @@
     gaspEmote: Scream
   - type: Inventory
     templateId: jellid
-  - type: Jellid # This is what dictates heating objects in one's hands and igniting objects.
+  - type: Jellid # This is what dictates heating objects in one's hands, igniting objects, and draining power from objects and batteries.
   - type: Battery
     maxCharge: 1800
-    startingCharge: 1800
+    startingCharge: 1800 # 15 minutes until death
   - type: BatterySelfRecharger
     autoRecharge: true
     autoRechargeRate: -2
-    ignoreFull: true
+    ignoreFull: true # prevents the charge from stopping
 
   # TODOS: Add ATP cell cluster, code a JellidSystem and Component that basically uses similar to borgchassis code, where it displays the power percentage on the player's UI. Make a unique damage event though if battery is empty.
   #        Ideally the battery shouldn't have a OnRemoved event, because that'd mean that the Jellid is almost certainly gibbed and already dead beyond repair.
