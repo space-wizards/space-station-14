@@ -45,7 +45,7 @@ namespace Content.Client.Chemistry.UI
             PillTypeButtons = new Button[20];
             for (uint i = 0; i < PillTypeButtons.Length; i++)
             {
-                // For every button decide which StyleBase to have
+                // For every button decide which stylebase to have
                 // Every row has 10 buttons
                 String styleBase = StyleBase.ButtonOpenBoth;
                 uint modulo = i % 10;
@@ -184,7 +184,7 @@ namespace Content.Client.Chemistry.UI
             bufferHBox.AddChild(bufferVol); 
             
             // initialises count of loop for purposes of alternating background color each layer,
-            // also initialises the two color values for alternating in the buffer window.
+            // and also initialises the two color values for alternating in the buffer window.
 
             int layerCount = 0;
             Color layerColor1 = Color.FromHex("#202025");
