@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Fixed lizards being unable to eat custom burgers
-    type: Fix
-  id: 7110
-  time: '2024-08-14T19:47:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31005
 - author: Erisfiregamer1
   changes:
   - message: New chemical, Sedin. It restores seeds on plants 20% of the time with
@@ -3945,3 +3938,10 @@
   id: 7609
   time: '2024-11-14T17:08:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32586
+- author: thetolbean
+  changes:
+  - message: The Quartermaster's requisition digi-board can no longer be recycled.
+    type: Fix
+  id: 7610
+  time: '2024-11-15T06:54:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33315
