@@ -19,8 +19,9 @@ public abstract partial class SharedSurgerySystem
     protected readonly Queue<Action> _delayQueue = new();
     private void InitializeSteps()
     {
+        SubscribeLocalEvent<SurgeryStepComponent, SurgeryStepCompleteEvent>(OnStepComplete);
+        SubscribeLocalEvent<SurgeryClearProgressComponent, SurgeryStepCompleteEvent>(OnClearProgressStep);
         SubscribeLocalEvent<SurgeryStepComponent, SurgeryStepEvent>(OnStep);
-        SubscribeLocalEvent<SurgeryClearProgressComponent, SurgeryStepEvent>(OnClearProgressStep);
         SubscribeLocalEvent<SurgeryTargetComponent, SurgeryDoAfterEvent>(OnTargetDoAfter);
 
         SubscribeLocalEvent<SurgeryStepComponent, SurgeryCanPerformStepEvent>(OnCanPerformStep);
@@ -47,43 +48,52 @@ public abstract partial class SharedSurgerySystem
         {
             StepProto = args.Step,
             SurgeryProto = args.Surgery,
-            IsFinal = surgery.Comp.Steps[^1] == args.Step,
         };
         RaiseLocalEvent(step, ref ev);
+
+        if (ev.IsCancelled) return;
+        var evComplete = new SurgeryStepCompleteEvent(args.User, ent, part, GetTools(args.User))
+        {
+            StepProto = args.Step,
+            SurgeryProto = args.Surgery,
+            IsFinal = surgery.Comp.Steps[^1] == args.Step,
+        };
+        RaiseLocalEvent(step, ref evComplete);
 
         if (_net.IsClient) return;
         _delayAccumulator = 0f;
         _delayQueue.Enqueue(() => RefreshUI(ent));
     }
 
-    private void OnClearProgressStep(Entity<SurgeryClearProgressComponent> ent, ref SurgeryStepEvent args)
+    private void OnClearProgressStep(Entity<SurgeryClearProgressComponent> ent, ref SurgeryStepCompleteEvent args)
     {
         var progress = Comp<SurgeryProgressComponent>(args.Part);
         progress.CompletedSteps.Clear();
         progress.CompletedSurgeries.Clear();
     }
-
+    private void OnStepComplete(Entity<SurgeryStepComponent> ent, ref SurgeryStepCompleteEvent args)
+    {
+        if (TryComp<SurgeryClearProgressComponent>(ent, out _)) return;
+        if (TryComp<SurgeryProgressComponent>(args.Part, out var progress))
+        {
+            progress.CompletedSteps.Add($"{args.SurgeryProto}:{args.StepProto}");
+            if (!progress.StartedSurgeries.Contains(args.SurgeryProto) && !args.IsFinal)
+                progress.StartedSurgeries.Add(args.SurgeryProto);
+            if (progress.StartedSurgeries.Contains(args.SurgeryProto) && args.IsFinal)
+                progress.StartedSurgeries.Remove(args.SurgeryProto);
+        }
+        else
+        {
+            progress = new SurgeryProgressComponent { CompletedSteps = [$"{args.SurgeryProto}:{args.StepProto}"]};
+            if(!args.IsFinal)
+                progress.StartedSurgeries.Add(args.SurgeryProto);
+            AddComp(args.Part, progress);
+        }
+        if (args.IsFinal)
+            progress.CompletedSurgeries.Add(args.SurgeryProto);
+    }
     private void OnStep(Entity<SurgeryStepComponent> ent, ref SurgeryStepEvent args)
     {
-        if (!TryComp<SurgeryClearProgressComponent>(ent, out _))
-        {
-            if (TryComp<SurgeryProgressComponent>(args.Part, out var progress))
-            {
-                progress.CompletedSteps.Add($"{args.SurgeryProto}:{args.StepProto}");
-                if(!progress.StartedSurgeries.Contains(args.SurgeryProto) && !args.IsFinal)
-                    progress.StartedSurgeries.Add(args.SurgeryProto);
-                if (progress.StartedSurgeries.Contains(args.SurgeryProto) && args.IsFinal)
-                    progress.StartedSurgeries.Remove(args.SurgeryProto);
-            }
-            else
-            {
-                progress = new SurgeryProgressComponent { CompletedSteps = [$"{args.SurgeryProto}:{args.StepProto}"] };
-                AddComp(args.Part, progress);
-            }
-            if (args.IsFinal)
-                progress.CompletedSurgeries.Add(args.SurgeryProto);
-        }
-
         foreach (var reg in (ent.Comp.Tools ?? []).Values)
         {
             var tool = args.Tools.FirstOrDefault(x => HasComp(x, reg.Component.GetType()));
@@ -162,7 +172,7 @@ public abstract partial class SharedSurgerySystem
         {
             return;
         }
-        if(!PreviousStepsComplete(body, part, surgery, args.Step) || IsStepComplete(part, args.Surgery, args.Step))
+        if (!PreviousStepsComplete(body, part, surgery, args.Step) || IsStepComplete(part, args.Surgery, args.Step))
         {
             var progress = Comp<SurgeryProgressComponent>(part);
             Dirty(part, progress);

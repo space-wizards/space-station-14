@@ -3,7 +3,6 @@ using Content.Server.DoAfter;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Starlight.Antags.Abductor;
-using Content.Shared.Actions;
 using Content.Shared.Eye;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
@@ -12,7 +11,6 @@ using Content.Shared.Silicons.StationAi;
 using Content.Shared.UserInterface;
 using Robust.Server.GameObjects;
 using Content.Shared.Tag;
-using Content.Server.DeviceLinking.Systems;
 using Robust.Server.Containers;
 
 namespace Content.Server.Starlight.Antags.Abductor;
@@ -24,7 +22,6 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly SharedEyeSystem _eye = default!;
     [Dependency] private readonly SharedMoverController _mover = default!;
-    [Dependency] private readonly ActionContainerSystem _actionsCont = default!;
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly TransformSystem _xformSys = default!;

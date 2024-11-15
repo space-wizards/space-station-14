@@ -38,6 +38,8 @@ public sealed partial class PlayerRolesManager : IPlayerRolesManager, IPostInjec
         .Where(p => p.Value.Data.Flags.HasFlag(PlayerFlags.Mentor))
         .Select(p => p.Key);
 
+    public IEnumerable<PlayerReg> Players => _players.Values;
+
     private ISawmill _sawmill = default!;
     private string? _discordKey;
     private string? _discordCallback;
@@ -62,7 +64,7 @@ public sealed partial class PlayerRolesManager : IPlayerRolesManager, IPostInjec
             Login(e.Session);
         else if (e.NewStatus == SessionStatus.Disconnected)
         {
-            _players.Remove(e.Session, out var data);
+            if(_players.Remove(e.Session, out var data))
             _ = _dbManager.SetPlayerDataForAsync(e.Session.UserId, new PlayerDataDTO
             {
                 Balance = data!.Data.Balance
@@ -128,16 +130,6 @@ public sealed partial class PlayerRolesManager : IPlayerRolesManager, IPostInjec
             Balance = dbData.Balance
         };
     }
-    private async Task SavePlayerData(ICommonSession session, PlayerData data)
-    {
-        var dbData = new PlayerDataDTO
-        {
-            UserId = session.UserId,
-            Balance = data.Balance,
-        };
-        await _dbManager.SetPlayerDataForAsync(session.UserId, dbData);
-    }
-
     public PlayerData? GetPlayerData(EntityUid uid)
     {
         if (!_playerManager.TryGetSessionByEntity(uid, out var session)) return null;
@@ -149,7 +141,7 @@ public sealed partial class PlayerRolesManager : IPlayerRolesManager, IPostInjec
     private const int ALL_ROLES = (int)PlayerFlags.Staff | (int)PlayerFlags.Retiree | (int)PlayerFlags.AlfaTester | (int)PlayerFlags.Mentor | (int)PlayerFlags.AllRoles;
     public bool IsAllRolesAvailable(ICommonSession session) => _players.TryGetValue(session, out var data) && ((int)data.Data.Flags & ALL_ROLES) != 0;
 
-    private sealed class PlayerReg(ICommonSession session, PlayerData data)
+    public sealed class PlayerReg(ICommonSession session, PlayerData data)
     {
         public readonly ICommonSession Session = session;
 
