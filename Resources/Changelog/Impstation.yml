@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Syndie Vs Syndie
-    type: Add
-  id: 25
-  time: '2024-07-18T01:29:28.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/30
 - author: LucasTheDrgn
   changes:
   - message: Asterade 1.1
@@ -4236,3 +4229,10 @@
   id: 524
   time: '2024-11-15T19:47:57.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/717
+- author: Darkmajia
+  changes:
+  - message: The ursa minor plushie can now be found in plushie crates.
+    type: Add
+  id: 525
+  time: '2024-11-15T20:33:14.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/727
