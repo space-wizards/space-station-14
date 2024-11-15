@@ -27,6 +27,8 @@ Nolius - Programming, Debugging, General help
 
 Verslebas - Programming, Debugging
 
+Lyroth - Programming
+
 Lupino - Debugging, General help
 
 Målingen - Spriting, Lore help, General help
