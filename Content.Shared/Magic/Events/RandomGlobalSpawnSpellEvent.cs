@@ -1,6 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Storage;
-using System.ComponentModel.DataAnnotations;
+using Robust.Shared.Audio;
 
 namespace Content.Shared.Magic.Events;
 
@@ -13,16 +13,10 @@ public sealed partial class RandomGlobalSpawnSpellEvent : InstantActionEvent, IS
     public List<EntitySpawnEntry> Spawns = new();
 
     /// <summary>
-    /// Whether or not to include players without minds (i.e. disconnected from the server).
-    /// </summary>
-    [DataField]
-    public bool RequireMind = true;
-
-    /// <summary>
     /// Sound that will play globally when cast
     /// </summary>
     [DataField]
-    public string Sound = string.Empty;
+    public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Magic/staff_animation.ogg");
 
     [DataField]
     public string? Speech { get; private set; }

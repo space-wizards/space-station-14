@@ -14,6 +14,7 @@ using Content.Shared.Lock;
 using Content.Shared.Magic.Components;
 using Content.Shared.Magic.Events;
 using Content.Shared.Maps;
+using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -60,6 +61,7 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
 
     public override void Initialize()
     {
@@ -514,51 +516,29 @@ public abstract class SharedMagicSystem : EntitySystem
 
     private void OnRandomGlobalSpawnSpell(RandomGlobalSpawnSpellEvent ev)
     {
-        if (!_net.IsServer)
-            return;
-
-        if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
-            return;
-
-        if (ev.Spawns is not { } spawns)
+        if (!_net.IsServer || ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer) || ev.Spawns is not { } spawns)
             return;
 
         ev.Handled = true;
         Speak(ev);
 
-        // I stole this from SharedMindSystem GetAliveHumansExcept but...
-        // without the Except. Wiz should get their gun too!
-        // Also querying for TransformComponent,
-        // changing list to TransformComponent instead of EntityUid,
-        // and adding TransformComponent instead of the mind.
-        var allHumans = new List<TransformComponent>();
-        // HumanoidAppearanceComponent is used to prevent mice, pAIs, etc from being chosen
-        var query = EntityQueryEnumerator<MindContainerComponent, MobStateComponent, HumanoidAppearanceComponent, TransformComponent>();
-        while (query.MoveNext(out var uid, out var mc, out var mobState, out _, out var body))
-        {
-            // the player needs to have a mind if required
-            if (ev.RequireMind)
-            {
-                if (mc.Mind == null)
-                    continue;
-            }
-
-            // the player has to be alive
-            if (_mobState.IsAlive(uid, mobState))
-                allHumans.Add(body);
-        }
+        var allHumans = _mind.GetAliveHumans();
 
         foreach (var human in allHumans)
         {
-            var mapCoords = _transform.GetMapCoordinates(human);
+            if (!human.Comp.OwnedEntity.HasValue)
+                continue;
+
+            var ent = human.Comp.OwnedEntity.Value;
+
+            var mapCoords = _transform.GetMapCoordinates(ent);
             foreach (var spawn in EntitySpawnCollection.GetSpawns(spawns, _random))
             {
                 var spawned = Spawn(spawn, mapCoords);
-                _hands.PickupOrDrop(human.Owner, spawned);
+                _hands.PickupOrDrop(ent, spawned);
             }
         }
 
-        // Makes more sense to me for one global noise as opposed to creating a positional noise for each player
         _audio.PlayGlobal(ev.Sound, ev.Performer);
     }
 

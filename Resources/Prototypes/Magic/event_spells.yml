@@ -11,6 +11,8 @@
       state: icon
     event: !type:ToggleGhostVisibilityToAllEvent
 
+# TODO: Add Whitelist/Blacklist and Component support to EntitySpawnLists (to avoid making huge hardcoded lists like below).
+
 - type: entity
   id: ActionSummonGuns
   name: Summon Guns
@@ -156,8 +158,6 @@
       - id: RevolverCapGunFake
         orGroup: Guns
       speech: action-speech-spell-summon-guns
-      requireMind: true
-      sound: /Audio/Magic/staff_animation.ogg
       
 - type: entity
   id: ActionSummonMagic
@@ -202,5 +202,3 @@
       - id: WeaponStaffPolymorphDoor
         orGroup: Magics
       speech: action-speech-spell-summon-magic
-      requireMind: true
-      sound: /Audio/Magic/staff_animation.ogg
