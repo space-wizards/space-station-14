@@ -1,7 +1,7 @@
 - type: marking
   id: JellidMantle
-  bodyPart: HeadSide
-  markingCategory: HeadSide
+  bodyPart: Hair
+  markingCategory: Hair
   speciesRestriction: [Jellid]
   coloring:
     default:
