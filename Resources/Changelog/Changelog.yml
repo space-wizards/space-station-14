@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Erisfiregamer1
-  changes:
-  - message: New chemical, Sedin. It restores seeds on plants 20% of the time with
-      other adverse effects included.
-    type: Add
-  id: 7111
-  time: '2024-08-15T00:38:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/27110
 - author: PoorMansDreams
   changes:
   - message: Added Star sticker in loadouts for Secoffs
@@ -3945,3 +3937,10 @@
   id: 7610
   time: '2024-11-15T06:54:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33315
+- author: RedBookcase
+  changes:
+  - message: Mixing up a Snow White no longer creates extra liquid out of thin air.
+    type: Fix
+  id: 7611
+  time: '2024-11-15T20:52:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33331
