@@ -270,12 +270,6 @@ public sealed partial class CCVars
             CVarDef.Create("game.ipintel_alert_admin_rejected", false, CVar.SERVERONLY);
 
         /// <summary>
-        ///     Make people bonk when trying to climb certain objects like tables.
-        /// </summary>
-        public static readonly CVarDef<bool> GameTableBonk =
-            CVarDef.Create("game.table_bonk", false, CVar.REPLICATED);
-
-        /// <summary>
         /// A contact email to be sent along with the request. Required by IPIntel
         /// </summary>
         public static readonly CVarDef<string> IPIntelEmail =
@@ -325,6 +319,12 @@ public sealed partial class CCVars
         /// </summary>
         public static readonly CVarDef<float> IPIntelAlertAdminWarnRating =
             CVarDef.Create("game.ipintel_alert_admin_warn_rating", 0f, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Make people bonk when trying to climb certain objects like tables.
+        /// </summary>
+        public static readonly CVarDef<bool> GameTableBonk =
+            CVarDef.Create("game.table_bonk", false, CVar.REPLICATED);
 
         /// <summary>
         ///     Whether or not status icons are rendered for everyone.
