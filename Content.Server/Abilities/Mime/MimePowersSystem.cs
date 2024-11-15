@@ -146,8 +146,8 @@ namespace Content.Server.Abilities.Mime
             mimePowers.ReadyToRepent = false;
             mimePowers.VowBroken = false;
             AddComp<MutedComponent>(uid);
-            _alertsSystem.ClearAlert(uid, mimePowers.VowAlert);
-            _alertsSystem.ShowAlert(uid, mimePowers.VowBrokenAlert);
+            _alertsSystem.ClearAlert(uid, mimePowers.VowBrokenAlert);
+            _alertsSystem.ShowAlert(uid, mimePowers.VowAlert);
             _actionsSystem.AddAction(uid, ref mimePowers.InvisibleWallActionEntity, mimePowers.InvisibleWallAction, uid);
         }
     }

@@ -163,6 +163,7 @@
       - FoodPlateSmallPlastic
       - FoodBowlBig
       - FoodPlateTin
+      - FoodPlateMuffinTin
       - FoodKebabSkewer
       - SprayBottle
       - MopItem
@@ -199,11 +200,9 @@
       - WetFloorSign
       - ClothingHeadHatCone
       - FreezerElectronics
-      - Flare
   - type: EmagLatheRecipes
     emagStaticRecipes:
       - BoxLethalshot
-      - BoxShotgunFlare
       - BoxShotgunSlug
       - CombatKnife
       - MagazineBoxLightRifle
@@ -573,11 +572,6 @@
     - BorgModuleFireExtinguisher
     - BorgModuleRadiationDetection
     - BorgModuleTool
-    - BorgModuleAppraisal
-    - BorgModuleConstruction
-    - BorgModuleService
-    - BorgModuleTreatment
-    - BorgModuleCleaning
     - CyborgEndoskeleton
     - LeftArmBorg
     - RightArmBorg
@@ -585,50 +579,15 @@
     - RightLegBorg
     - LightHeadBorg
     - TorsoBorg
-    - LeftArmBorgEngineer
-    - RightArmBorgEngineer
-    - LeftLegBorgEngineer
-    - RightLegBorgEngineer
-    - HeadBorgEngineer
-    - TorsoBorgEngineer
-    - LeftLegBorgJanitor
-    - RightLegBorgJanitor
-    - HeadBorgJanitor
-    - TorsoBorgJanitor
-    - LeftArmBorgMedical
-    - RightArmBorgMedical
-    - LeftLegBorgMedical
-    - RightLegBorgMedical
-    - HeadBorgMedical
-    - TorsoBorgMedical
-    - LeftArmBorgMining
-    - RightArmBorgMining
-    - LeftLegBorgMining
-    - RightLegBorgMining
-    - HeadBorgMining
-    - TorsoBorgMining
-    - LeftArmBorgService
-    - RightArmBorgService
-    - LeftLegBorgService
-    - RightLegBorgService
-    - HeadBorgService
-    - TorsoBorgService
     dynamicRecipes:
     - ProximitySensor
-    - BorgModuleLightReplacer
     - BorgModuleAdvancedCleaning
-    - BorgModuleMining
-    - BorgModuleGrapplingGun
     - BorgModuleAdvancedTool
     - BorgModuleGPS
-    - BorgModuleRCD
     - BorgModuleArtifact
     - BorgModuleAnomaly
     - BorgModuleGardening
     - BorgModuleHarvesting
-    - BorgModuleMusique
-    - BorgModuleClowning
-    - BorgModuleDiagnosis
     - BorgModuleDefibrillator
     - BorgModuleAdvancedTreatment
     - RipleyHarness
@@ -733,7 +692,6 @@
     runningState: icon
     staticRecipes:
       - BoxLethalshot
-      - BoxShotgunFlare
       - BoxShotgunPractice
       - BoxShotgunSlug
       - ClothingEyesHudSecurity
@@ -770,6 +728,7 @@
       - TargetHuman
       - TargetSyndicate
       - WeaponDisablerPractice
+      - WeaponFlareGunSecurity
       - WeaponLaserCarbinePractice
       - Zipties
     dynamicRecipes:
@@ -856,7 +815,6 @@
       runningState: icon
       staticRecipes:
         - BoxLethalshot
-        - BoxShotgunFlare
         - BoxShotgunSlug
         - BoxShellTranquilizer
         - MagazineBoxLightRifle
@@ -1176,8 +1134,6 @@
   - type: Machine
     board: BiogeneratorMachineCircuitboard
   - type: MaterialStorage
-    insertOnInteract: false
-    canEjectStoredMaterials: false
   - type: ProduceMaterialExtractor
   - type: ItemSlots
     slots:
