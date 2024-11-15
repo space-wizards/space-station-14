@@ -11,7 +11,7 @@ namespace Content.Server.Atmos.EntitySystems;
 /// <summary>
 /// This handles...
 /// </summary>
-public sealed class InWaterSystem : EntitySystem
+public sealed class InGasSystem : EntitySystem
 {
     private const float UpdateTimer = 1f;
     private float _timer = 0f;
@@ -27,6 +27,25 @@ public sealed class InWaterSystem : EntitySystem
         //SubscribeLocalEvent<>();
     }
 
+    public bool InGas(EntityUid uid, int? gasId = null, float? gasThreshold = null)
+    {
+        var mixture = _atmo.GetContainingMixture(uid);
+        var inGas = EntityManager.GetComponent<InGasComponent>(uid);
+        //Use provided data if no component present
+        if (inGas == null)
+        {
+            if (gasId == null || gasThreshold == null)
+            {
+                throw new Exception("Missing gasId and/or gasThreshold in InGas call");
+            }
+
+            return (mixture != null && mixture.GetMoles((int)gasId) >= gasThreshold);
+        }
+
+        //If we are not in the gas return false, else true
+        return (mixture != null && mixture.GetMoles(inGas.GasId) >= inGas.GasThreshold);
+    }
+
     public override void Update(float frameTime)
     {
         _timer += frameTime;
@@ -36,20 +55,20 @@ public sealed class InWaterSystem : EntitySystem
 
         _timer -= UpdateTimer;
 
-        var enumerator = EntityQueryEnumerator<InWaterComponent, DamageableComponent>();
-        while (enumerator.MoveNext(out var uid, out var inWater, out var damageable))
+        var enumerator = EntityQueryEnumerator<InGasComponent, DamageableComponent>();
+        while (enumerator.MoveNext(out var uid, out var inGas, out var damageable))
         {
-            if (!inWater.DamagedByWater)
+            if (!inGas.DamagedByGas)
             {
                 continue;
             }
             // No point calculating things if we aren't in water
-            GasMixture? mixture = _atmo.GetContainingMixture(uid);
-            if (!(mixture != null && mixture.GetMoles(9) >= inWater.WaterThreshold))
+
+            if (!InGas(uid))
             {
-                if (inWater.TakingDamage)
+                if (inGas.TakingDamage)
                 {
-                    inWater.TakingDamage = false;
+                    inGas.TakingDamage = false;
                     //Look at me i'm even being proper with logging
                     _adminLog.Add(LogType.Electrocution, $"Entity {uid} is no longer taking damage from water.");
                 }
@@ -57,22 +76,22 @@ public sealed class InWaterSystem : EntitySystem
             }
 
             var totalDamage = FixedPoint2.Zero;
-            foreach (var (damageType, _) in inWater.Damage.DamageDict)
+            foreach (var (damageType, _) in inGas.Damage.DamageDict)
             {
                 if (!damageable.Damage.DamageDict.TryGetValue(damageType, out var damage))
                     continue;
                 totalDamage += damage;
             }
 
-            if (totalDamage >= inWater.MaxDamage)
+            if (totalDamage >= inGas.MaxDamage)
             {
                 continue;
             }
 
-            _damageable.TryChangeDamage(uid, inWater.Damage, true);
-            if (!inWater.TakingDamage)
+            _damageable.TryChangeDamage(uid, inGas.Damage, true);
+            if (!inGas.TakingDamage)
             {
-                inWater.TakingDamage = true;
+                inGas.TakingDamage = true;
                 _adminLog.Add(LogType.Electrocution, $"Entity {uid} is now taking damage from water.");
             }
 
