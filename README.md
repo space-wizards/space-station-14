@@ -26,6 +26,9 @@ We are not currently accepting translations of the game on our main repository. 
 1. Clone this repo.
 2. Run `RUN_THIS.py` to init submodules and download the engine.
 3. Compile the solution.
+4. add wiz and ling
+5. ????
+6. Profit!
 
 [More detailed instructions on building the project.](https://docs.spacestation14.com/en/general-development/setup.html)
 
