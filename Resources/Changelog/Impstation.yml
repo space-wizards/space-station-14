@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: LucasTheDrgn
-  changes:
-  - message: Asterade
-    type: Add
-  id: 24
-  time: '2024-07-17T00:20:32.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/29
 - author: formlessnameless
   changes:
   - message: Syndie Vs Syndie
@@ -4233,3 +4226,13 @@
   id: 523
   time: '2024-11-15T19:46:04.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/725
+- author: kipdotnet
+  changes:
+  - message: Added the shittle powering pack. contains boards for a wallmount generator,
+      wallmount substation, and APC.
+    type: Add
+  - message: added an inflatable door to the shittle starter pack.
+    type: Tweak
+  id: 524
+  time: '2024-11-15T19:47:57.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/717
