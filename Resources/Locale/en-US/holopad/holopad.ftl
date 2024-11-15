@@ -35,3 +35,6 @@ holopad-window-flavor-right = v3.0.9
 
 # Holograms
 holopad-hologram-name = hologram of {THE($name)}
+
+# Holopad actions
+activate-holopad-projector-verb = Activate holopad projector

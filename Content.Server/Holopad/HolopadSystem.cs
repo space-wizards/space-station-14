@@ -13,12 +13,11 @@ using Content.Shared.Labels.Components;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.Telephone;
 using Content.Shared.UserInterface;
+using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Content.Server.Holopad;
@@ -83,6 +82,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
         // Misc events
         SubscribeLocalEvent<HolopadUserComponent, EmoteEvent>(OnEmote);
         SubscribeLocalEvent<HolopadUserComponent, JumpToCoreEvent>(OnJumpToCore);
+        SubscribeLocalEvent<HolopadComponent, GetVerbsEvent<AlternativeVerb>>(AddToggleProjectorVerb);
     }
 
     #region: Holopad UI bound user interface messages
@@ -390,6 +390,37 @@ public sealed class HolopadSystem : SharedHolopadSystem
             return;
 
         _telephoneSystem.EndTelephoneCalls((stationAiCore.Value, stationAiCoreTelephone));
+    }
+
+    private void AddToggleProjectorVerb(Entity<HolopadComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract)
+            return;
+
+        if (!this.IsPowered(entity, EntityManager))
+            return;
+
+        if (!TryComp<TelephoneComponent>(entity, out var entityTelephone) ||
+            _telephoneSystem.IsTelephoneEngaged((entity, entityTelephone)))
+            return;
+
+        var user = args.User;
+
+        if (!TryComp<StationAiHeldComponent>(user, out var userAiHeld))
+            return;
+
+        if (!_stationAiSystem.TryGetStationAiCore((user, userAiHeld), out var stationAiCore) ||
+            stationAiCore.Value.Comp.RemoteEntity == null)
+            return;
+
+        AlternativeVerb verb = new()
+        {
+            Act = () => ActivateProjector(entity, user),
+            Text = Loc.GetString("activate-holopad-projector-verb"),
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/vv.svg.192dpi.png")),
+        };
+
+        args.Verbs.Add(verb);
     }
 
     #endregion
