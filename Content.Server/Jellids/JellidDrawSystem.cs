@@ -30,6 +30,7 @@ namespace Content.Server.Jellid.Systems
             {
                 if (Charging)
                     {
+                    Log.Error($"Prevented damage.");
                     return
                     }
             {
@@ -86,6 +87,7 @@ private void DrainPower(BatteryComponent containerBattery, BatteryComponent inte
     { 
         get 
         { 
+        Log.Error($"Is Charging!")
         return DrainAmount > 0;
         } 
     }
