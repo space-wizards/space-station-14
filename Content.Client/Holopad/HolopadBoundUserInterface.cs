@@ -1,5 +1,6 @@
 using Content.Shared.Holopad;
 using Content.Shared.Silicons.StationAi;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Shared.Player;
 using System.Numerics;
@@ -9,6 +10,7 @@ namespace Content.Client.Holopad;
 public sealed class HolopadBoundUserInterface : BoundUserInterface
 {
     [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
+    [Dependency] private readonly IClyde _displayManager = default!;
 
     [ViewVariables]
     private HolopadWindow? _window;
@@ -47,10 +49,13 @@ public sealed class HolopadBoundUserInterface : BoundUserInterface
         _window.SendHolopadActivateProjectorMessageAction += SendHolopadActivateProjectorMessage;
         _window.SendHolopadRequestStationAiMessageAction += SendHolopadRequestStationAiMessage;
 
-        // If this is a request for an AI, open the menu 
-        // in the bottom right hand corner of the screen
+        // If this call is addressed to an AI, open the window in the bottom right hand corner of the screen
         if (uiKey == HolopadUiKey.AiRequestWindow)
-            _window.OpenCenteredAt(new Vector2(0.95f, 0.95f));
+            _window.OpenCenteredAt(new Vector2(1f, 1f));
+
+        // Otherwise offset to the left so the holopad can still be seen
+        else
+            _window.OpenCenteredAt(new Vector2(0.3333f, 0.50f));
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
