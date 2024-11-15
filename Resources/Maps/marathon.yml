@@ -53347,6 +53347,12 @@ entities:
       rot: 3.141592653589793 rad
       pos: -43.5,29.5
       parent: 30
+  - uid: 2016
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -41.5,46.5
+      parent: 30
   - uid: 2129
     components:
     - type: Transform
@@ -53454,12 +53460,6 @@ entities:
       parent: 30
 - proto: ComputerMedicalRecords
   entities:
-  - uid: 2016
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -41.5,46.5
-      parent: 30
   - uid: 5801
     components:
     - type: Transform
@@ -61046,7 +61046,7 @@ entities:
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
-      pos: 17.5,13.5
+      pos: 3.5,-5.5
       parent: 30
   - uid: 19836
     components:
@@ -61169,8 +61169,7 @@ entities:
   - uid: 21375
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 1.5,31.5
+      pos: 2.5,29.5
       parent: 30
   - uid: 21380
     components:
@@ -61182,11 +61181,8 @@ entities:
     components:
     - type: Transform
       rot: 3.141592653589793 rad
-      pos: 1.5,25.5
+      pos: 41.5,32.5
       parent: 30
-    - type: PointLight
-      enabled: True
-    - type: ActiveEmergencyLight
   - uid: 21385
     components:
     - type: Transform
@@ -61262,8 +61258,8 @@ entities:
   - uid: 22562
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 5.5,-26.5
+      rot: -1.5707963267948966 rad
+      pos: -4.5,42.5
       parent: 30
   - uid: 22563
     components:
@@ -61439,6 +61435,57 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 20.5,25.5
+      parent: 30
+  - uid: 22663
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 9.5,1.5
+      parent: 30
+  - uid: 22664
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 10.5,-11.5
+      parent: 30
+  - uid: 22665
+    components:
+    - type: Transform
+      pos: 3.5,8.5
+      parent: 30
+  - uid: 22666
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -30.5,-15.5
+      parent: 30
+  - uid: 22667
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -20.5,-17.5
+      parent: 30
+  - uid: 22668
+    components:
+    - type: Transform
+      pos: 13.5,-31.5
+      parent: 30
+  - uid: 22669
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -5.5,25.5
+      parent: 30
+  - uid: 22670
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 26.5,7.5
+      parent: 30
+  - uid: 22671
+    components:
+    - type: Transform
+      pos: 19.5,15.5
       parent: 30
 - proto: EmergencyMedipen
   entities:
