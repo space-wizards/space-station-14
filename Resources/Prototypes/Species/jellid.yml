@@ -8,6 +8,8 @@
   markingLimits: MobJellidMarkingLimits
   dollPrototype: MobJellidPersonDummy
   skinColoration: Hues
+  sexes:
+  - Unsexed
 
 - type: speciesBaseSprites
   id: MobJellidSprites
