@@ -1,61 +1,37 @@
-using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
-using Content.Shared.Overlays;
+using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Player;
-using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Overlays
 {
-    /// <summary>
-    /// This system manages the HUD overlays based on the player's equipped items, like showing the camera static shader
-    /// when the "StaticViewer" component is equipped.
-    /// </summary>
-    public class StaticViewerHudSystem : EntitySystem
+    public sealed class StaticViewerHudSystem : EntitySystem
     {
-        [Dependency] private readonly IOverlayManager _overlayManager = default!;
+        [Dependency] private readonly IOverlayManager _overlayMan = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
+        private ShaderOverlay _staticOverlay = default!;
 
         public override void Initialize()
         {
             base.Initialize();
-            Log.Error("StaticViewerHudSystem Initialized");
 
-            // Subscribe to events for when the StaticViewerComponent is equipped and unequipped
-            SubscribeLocalEvent<SkatesComponent, ClothingGotEquippedEvent>(OnGotEquipped);
-            SubscribeLocalEvent<SkatesComponent, ClothingGotUnequippedEvent>(OnGotUnequipped);
+            _staticOverlay = new ShaderOverlay(_prototypeManager.Index<ShaderPrototype>("Grainy").Instance().Duplicate());
+
+            SubscribeLocalEvent<StaticViewerComponent, GotEquippedEvent>(OnCompEquip);
+            SubscribeLocalEvent<StaticViewerComponent, GotUnequippedEvent>(OnCompUnequip);
         }
 
-        /// <summary>
-        /// Called when the item with the StaticViewerComponent is equipped.
-        /// </summary>
-        public void OnGotEquipped(EntityUid uid, StaticViewerComponent component, OnGotEquippedEvent args)
+        private void OnCompEquip(EntityUid uid, StaticViewerComponent component, GotEquippedEvent args)
         {
-            Log.Error($"StaticViewerComponent equipped on entity {uid}, applying overlay.");
-            ApplyStaticOverlay();
+            _overlayMan.AddOverlay(_staticOverlay);
         }
 
-        /// <summary>
-        /// Called when the item with the StaticViewerComponent is unequipped.
-        /// </summary>
-        private void OnGotUnequipped(EntityUid uid, StaticViewerComponent component, OnGotUnequippedEvent args)
+        private void OnCompUnequip(EntityUid uid, StaticViewerComponent component, GotUnequippedEvent args)
         {
-            Log.Error($"StaticViewerComponent unequipped from entity {uid}, removing overlay.");
-            RemoveStaticOverlay();
-        }
-
-        private void ApplyStaticOverlay()
-        {
-            // Add the static overlay to the player's screen
-            Log.Error("Applying CameraStatic overlay");
-            _overlayManager.AddOverlay(new ShaderOverlay("CameraStatic"));
-        }
-
-        private void RemoveStaticOverlay()
-        {
-            // Remove the static overlay from the player's screen
-            Log.Error("Removing CameraStatic overlay");
-            _overlayManager.RemoveOverlay("CameraStatic");
+            _overlayMan.RemoveOverlay(_staticOverlay);
         }
     }
 }
