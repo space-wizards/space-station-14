@@ -41,21 +41,49 @@ public sealed class ItemCounterSystem : SharedItemCounterSystem
     public void ProcessOpaqueSprite(EntityUid uid, string layer, int count, int maxCount, List<string> states, bool hide = false, SpriteComponent? sprite = null)
     {
         if (!Resolve(uid, ref sprite)
-        ||  !sprite.LayerMapTryGet(layer, out var layerKey, logError: true))
+        || !sprite.LayerMapTryGet(layer, out var layerKey, logError: true))
             return;
-        
+
         var activeState = ContentHelpers.RoundToEqualLevels(count, maxCount, states.Count);
+        sprite.LayerSetState(layerKey, states[activeState]);
+        sprite.LayerSetVisible(layerKey, !hide);
+    }
+    //Starlight
+    public void ProcessOpaqueSpriteByTable(EntityUid uid, string layer, int count, List<string> states, List<int> table, bool hide = false, SpriteComponent? sprite = null)
+    {
+        if (!Resolve(uid, ref sprite) || !sprite.LayerMapTryGet(layer, out var layerKey, logError: true))
+            return;
+
+        var activeState = 0;
+        var index = table.BinarySearch(count);
+
+        if (index >= 0)
+        {
+            activeState = index;
+        }
+        else
+        {
+            index = ~index;
+            activeState = index - 1;
+
+            if (activeState < 0)
+                activeState = 0;
+        }
+
+        if (activeState >= states.Count)
+            activeState = states.Count - 1;
+
         sprite.LayerSetState(layerKey, states[activeState]);
         sprite.LayerSetVisible(layerKey, !hide);
     }
 
     public void ProcessCompositeSprite(EntityUid uid, int count, int maxCount, List<string> layers, bool hide = false, SpriteComponent? sprite = null)
     {
-        if(!Resolve(uid, ref sprite))
+        if (!Resolve(uid, ref sprite))
             return;
-        
+
         var activeTill = ContentHelpers.RoundToNearestLevels(count, maxCount, layers.Count);
-        for(var i = 0; i < layers.Count; ++i)
+        for (var i = 0; i < layers.Count; ++i)
         {
             sprite.LayerSetVisible(layers[i], !hide && i < activeTill);
         }

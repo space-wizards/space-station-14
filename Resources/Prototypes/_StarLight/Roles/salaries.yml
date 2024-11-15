@@ -1,0 +1,48 @@
+- type: Salaries
+  id: standart
+  jobs:
+    Captain: 150
+    HeadOfPersonnel: 130
+    HeadOfSecurity: 145
+    ChiefEngineer: 140
+    ResearchDirector: 130
+    ChiefMedicalOfficer: 135
+    Quartermaster: 120
+
+    Chemist: 90
+    Paramedic: 50
+    MedicalDoctor: 55
+    MedicalIntern: 23
+
+    AtmosphericTechnician: 90
+    StationEngineer: 55
+    TechnicalAssistant: 23
+
+    Warden: 80
+    Detective: 80
+    SecurityOfficer: 50
+    SecurityCadet: 23
+
+    StationAI: 155
+    Borg: 85
+
+    Chaplain: 50
+    Chef: 50
+    Janitor: 30
+    Botanist: 50
+    Librarian: 50
+    Musician: 40
+    Bartender: 50
+    Mime: 30
+    Clown: 30
+    ServiceWorker: 23
+
+    Scientist: 65
+    ResearchAssistant: 23
+
+    SalvageSpecialist: 60
+    CargoTechnician: 45
+
+    Lawyer: 55
+
+    Visitor: 0

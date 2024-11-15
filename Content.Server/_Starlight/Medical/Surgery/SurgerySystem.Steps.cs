@@ -44,8 +44,8 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
 
     private void OnStepBleedComplete(Entity<SurgeryStepBleedEffectComponent> ent, ref SurgeryStepEvent args)
     {
-        if(ent.Comp.Damage is not null && TryComp<DamageableComponent>(args.Body, out var comp))
-            _damageableSystem.SetDamage(args.Body, comp, ent.Comp.Damage);
+        if (ent.Comp.Damage is not null && TryComp<DamageableComponent>(args.Body, out var comp))
+            _damageableSystem.TryChangeDamage(args.Body, ent.Comp.Damage);
         //todo add wound
     }
 
@@ -68,7 +68,7 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
         {
             if (_body.InsertOrgan(part, organId, ent.Comp.Slot, bodyPart, organComp) // todo move to system
             && TryComp<DamageableComponent>(organId, out var organDamageable)
-            && TryComp<DamageableComponent>(body, out var bodyDamageable))   
+            && TryComp<DamageableComponent>(body, out var bodyDamageable))
             {
                 if (TryComp<OrganEyesComponent>(organId, out var organEyes)
                     && TryComp<BlindableComponent>(body, out var blindable))
@@ -103,7 +103,7 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
                         AddComp<EyeProtectionComponent>(body);
                 }
                 if (TryComp<AbductorOrganComponent>(organId, out var abductorOrgan) && TryComp<AbductorVictimComponent>(body, out var victim))
-                        victim.Organ = abductorOrgan.Organ;
+                    victim.Organ = abductorOrgan.Organ;
                 if (TryComp<OrganTongueComponent>(organId, out var organTongue)
                     && !organTongue.IsMuted)
                     RemComp<MutedComponent>(body);
@@ -121,7 +121,7 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
         var type = ent.Comp.Organ.Values.First().Component.GetType();
         foreach (var organ in organs) // todo move to system
         {
-            if (HasComp(organ.Id, type)) 
+            if (HasComp(organ.Id, type))
             {
                 if (_body.RemoveOrgan(organ.Id, organ.Component)
                     && TryComp<OrganDamageComponent>(organ.Id, out var damageRule)
@@ -169,9 +169,9 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
                     }
                     if (TryComp<AbductorOrganComponent>(organ.Id, out var abductorOrgan) && TryComp<AbductorVictimComponent>(args.Body, out var victim))
                     {
-                        if(victim.Organ == abductorOrgan.Organ)
+                        if (victim.Organ == abductorOrgan.Organ)
                             victim.Organ = AbductorOrganType.None;
-                    } 
+                    }
                     var change = _damageableSystem.TryChangeDamage(args.Body, damageRule.Damage.Invert(), true, false, bodyDamageable);
                     if (change is not null)
                         _damageableSystem.TryChangeDamage(organ.Id, change.Invert(), true, false, organDamageable);
@@ -206,62 +206,65 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
         var part = args.Part;
         var body = args.Body;
 
-        _delayAccumulator = 0;
-        _delayQueue.Enqueue(() =>
+        var slot = limb.PartType switch
         {
-            var slot = "";
-            foreach (var slotTemp in _body.TryGetFreePartSlots(part, bodyPart))
-            {
-                slot = slotTemp;
-                if (_body.AttachPart(part, slot, limbId, bodyPart, limb))
-                    break;
-            }
+            BodyPartType.Arm => limb.Symmetry == BodyPartSymmetry.Left ? "left_arm" : "right_arm",
+            BodyPartType.Hand => limb.Symmetry == BodyPartSymmetry.Left ? "left_hand" : "right_hand",
+            BodyPartType.Leg => limb.Symmetry == BodyPartSymmetry.Left ? "left_leg" : "right_leg",
+            BodyPartType.Foot => limb.Symmetry == BodyPartSymmetry.Left ? "left_foot" : "right_foot",
+            _ => "",
+        };
+        if (!_body.AttachPart(part, slot, limbId, bodyPart, limb))
+        {
+            args.IsCancelled = true;
+            return;
+        }
 
-            if (TryComp<HumanoidAppearanceComponent>(body, out var humanoid)) //todo move to system
+        if (TryComp<HumanoidAppearanceComponent>(body, out var humanoid)) //todo move to system
+        {
+            var limbs = _body.GetBodyPartAdjacentParts(limbId, limb).Except([part]).Concat([limbId]);
+            foreach (var partLimbId in limbs)
             {
-                var limbs = _body.GetBodyPartAdjacentParts(limbId, limb).Except([part]).Concat([limbId]);
-                foreach (var partLimbId in limbs)
+                if (TryComp<BaseLayerIdComponent>(partLimbId, out var baseLayerStorage)
+                    && TryComp(partLimbId, out BodyPartComponent? partLimb))
                 {
-                    if (TryComp<BaseLayerIdComponent>(partLimbId, out var baseLayerStorage)
-                        && TryComp(partLimbId, out BodyPartComponent? partLimb))
-                    {
-                        var layer = partLimb.ToHumanoidLayers();
-                        if (layer is null) continue;
-                        _humanoidAppearanceSystem.SetBaseLayerId(body, layer.Value, baseLayerStorage.Layer, true, humanoid);
-                    }
+                    var layer = partLimb.ToHumanoidLayers();
+                    if (layer is null) continue;
+                    _humanoidAppearanceSystem.SetBaseLayerId(body, layer.Value, baseLayerStorage.Layer, true, humanoid);
                 }
             }
-            switch (limb.PartType)
-            {
-                case BodyPartType.Arm: //todo move to systems
-                    if (limb.Children.Keys.Count == 0)
-                        _body.TryCreatePartSlot(limbId, limb.Symmetry == BodyPartSymmetry.Left ? "left hand" : "right hand", BodyPartType.Hand, out var slotId);
+        }
 
-                    foreach (var slotId in limb.Children.Keys)
+        switch (limb.PartType)
+        {
+            case BodyPartType.Arm: //todo move to systems
+                if (limb.Children.Keys.Count == 0)
+                    _body.TryCreatePartSlot(limbId, limb.Symmetry == BodyPartSymmetry.Left ? "left hand" : "right hand", BodyPartType.Hand, out var slotId);
+
+                foreach (var slotId in limb.Children.Keys)
+                {
+                    if (slotId is null) continue;
+                    var slotFullId = BodySystem.GetPartSlotContainerId(slotId);
+                    var child = _containers.GetContainer(limbId, slotFullId);
+
+                    foreach (var containedEnt in child.ContainedEntities)
                     {
-                        if (slotId is null) continue;
-                        var slotFullId = BodySystem.GetPartSlotContainerId(slotId);
-                        var child = _containers.GetContainer(limbId, slotFullId);
-
-                        foreach (var containedEnt in child.ContainedEntities)
-                        {
-                            if (TryComp(containedEnt, out BodyPartComponent? innerPart)
-                                && innerPart.PartType == BodyPartType.Hand)
-                                _hands.AddHand(body, slotFullId, limb.Symmetry == BodyPartSymmetry.Left ? HandLocation.Left : HandLocation.Right);
-                        }
+                        if (TryComp(containedEnt, out BodyPartComponent? innerPart)
+                            && innerPart.PartType == BodyPartType.Hand)
+                            _hands.AddHand(body, slotFullId, limb.Symmetry == BodyPartSymmetry.Left ? HandLocation.Left : HandLocation.Right);
                     }
-                    break;
-                case BodyPartType.Hand:
-                    _hands.AddHand(body, BodySystem.GetPartSlotContainerId(slot), limb.Symmetry == BodyPartSymmetry.Left ? HandLocation.Left : HandLocation.Right);
-                    break;
-                case BodyPartType.Leg:
-                    if (limb.Children.Keys.Count == 0)
-                        _body.TryCreatePartSlot(limbId, limb.Symmetry == BodyPartSymmetry.Left ? "left foot" : "right foot", BodyPartType.Foot, out var slotId);
-                    break;
-                case BodyPartType.Foot:
-                    break;
-            }
-        });
+                }
+                break;
+            case BodyPartType.Hand:
+                _hands.AddHand(body, BodySystem.GetPartSlotContainerId(slot), limb.Symmetry == BodyPartSymmetry.Left ? HandLocation.Left : HandLocation.Right);
+                break;
+            case BodyPartType.Leg:
+                if (limb.Children.Keys.Count == 0)
+                    _body.TryCreatePartSlot(limbId, limb.Symmetry == BodyPartSymmetry.Left ? "left foot" : "right foot", BodyPartType.Foot, out var slotId);
+                break;
+            case BodyPartType.Foot:
+                break;
+        }
     }
     private void OnStepAmputationComplete(Entity<SurgeryStepAmputationEffectComponent> ent, ref SurgeryStepEvent args)
     {

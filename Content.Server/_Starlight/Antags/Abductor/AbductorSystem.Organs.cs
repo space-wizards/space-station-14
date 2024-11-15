@@ -50,7 +50,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
             _delayAccumulator = 0;
             _stopwatch.Restart();
             var query = EntityQueryEnumerator<AbductorVictimComponent>();
-            while (query.MoveNext(out var uid, out var victim) && _stopwatch.Elapsed < TimeSpan.FromMilliseconds(1))
+            while (query.MoveNext(out var uid, out var victim) && _stopwatch.Elapsed < TimeSpan.FromMilliseconds(0.5))
             {
                 if(victim.Organ != AbductorOrganType.None)
                     Do(uid, victim);

@@ -1,0 +1,125 @@
+- type: listing
+  id: VendorPlushieCarp
+  productEntity: PlushieCarp
+  cost:
+    NTCredit: 12
+  categories:
+  - SLPlushies
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+
+- type: listing
+  id: VendorSLPlushiesharkGrey
+  productEntity: SLPlushiesharkGrey
+  cost:
+    NTCredit: 20
+  categories:
+  - SLPlushies
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 3
+  
+- type: listing
+  id: VendorSLPlushiesharkPink
+  productEntity: SLPlushiesharkPink
+  cost:
+    NTCredit: 30
+  categories:
+  - SLPlushies
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1 
+
+- type: listing
+  id: VendorPlushieHampter
+  productEntity: PlushieHampter
+  cost:
+    NTCredit: 20
+  categories:
+  - SLPlushies
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+
+- type: listing
+  id: VendorSingularityToy
+  productEntity: SingularityToy
+  cost:
+    NTCredit: 1000
+  categories:
+  - SLPlushies
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+# SLSpecies
+
+- type: listing
+  id: VendorPlushieArachind
+  productEntity: PlushieArachind
+  cost:
+    NTCredit: 10
+  categories:
+  - SLSpecies
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: VendorPlushieDiona
+  productEntity: PlushieDiona
+  cost:
+    NTCredit: 10
+  categories:
+  - SLSpecies
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+        
+- type: listing
+  id: VendorPlushieHuman
+  productEntity: PlushieHuman
+  cost:
+    NTCredit: 10
+  categories:
+  - SLSpecies
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1    
+
+- type: listing
+  id: VendorPlushieMoth
+  productEntity: PlushieMoth
+  cost:
+    NTCredit: 10
+  categories:
+  - SLSpecies
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1   
+
+- type: listing
+  id: VendorPlushieXeno
+  productEntity: PlushieXeno
+  cost:
+    NTCredit: 10
+  categories:
+  - SLSpecies
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1   
+
+- type: listing
+  id: VendorPlushieVox
+  productEntity: PlushieVox
+  cost:
+    NTCredit: 10
+  categories:
+  - SLSpecies
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+# 

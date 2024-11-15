@@ -1,0 +1,228 @@
+- type: currency
+  id: NTCredit
+  displayName: materials-unit-credits
+  cash:
+    1: NTCredit
+  canWithdraw: true
+
+- type: entity
+  parent: BaseItem
+  id: NTCredit
+  name: credit
+  description: You gotta have real money.
+  components:
+  - type: NTCash
+  - type: Item
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,-2
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      NTCredit: 1
+  - type: StaticPrice
+    price: 0
+  - type: Stack
+    stackType: NTCredit
+    count: 1
+    baseLayer: base
+    layerStates:
+    - cash_1
+    - cash_2
+    - cash_5
+    - cash_7
+    - cash_10
+    - cash_11
+    - cash_30
+    - cash_40
+    - cash_50
+    - cash_51  
+    - cash_70  
+    - cash_90  
+    - cash_100 
+    - cash_101 
+    - cash_133 
+    - cash_166 
+    - cash_200 
+    - cash_201 
+    - cash_300 
+    - cash_400 
+    - cash_500 
+    - cash_501 
+    - cash_700 
+    - cash_900 
+    - cash_1000
+    - cash_1001
+    - cash_3000
+    - cash_6000
+    - cash_10000
+    - cash_10001
+    - cash_30000
+    - cash_60000
+    layerCountStates:
+    - 1
+    - 2
+    - 5
+    - 7
+    - 10
+    - 11
+    - 30
+    - 40
+    - 50
+    - 51  
+    - 70  
+    - 90  
+    - 100 
+    - 101 
+    - 133 
+    - 166 
+    - 200 
+    - 201 
+    - 300 
+    - 400 
+    - 500 
+    - 501 
+    - 700 
+    - 900 
+    - 1000
+    - 1001
+    - 3000
+    - 6000
+    - 10000
+    - 10001
+    - 30000
+    - 60000
+  - type: Sprite
+    sprite: _Starlight/Objects/Economy/cash.rsi
+    state: cash_1
+    layers:
+    - state: cash_1
+      map: ["base"]
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      fix1:
+        density: 30
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,-0.2,0.25,0.1"
+        mask:
+        - ItemMask
+  - type: Appearance
+  - type: Currency
+    price:
+      NTCredit: 1
+
+- type: material
+  id: NTCredit
+  name: credit
+  unit: materials-unit-credit
+  stackEntity: NTCredit
+  icon: { sprite: /Textures/_Starlight/Objects/Economy/cash.rsi, state: cash_1 }
+  price: 1
+
+- type: stack
+  id: NTCredit
+  name: credit
+  icon: { sprite: /Textures/_Starlight/Objects/Economy/cash.rsi, state: cash_1 }
+  spawn: NTCredit
+
+- type: entity
+  parent: NTCredit
+  id: NTCredit10
+  suffix: 10
+  components:
+  - type: Icon
+    sprite: _Starlight/Objects/Economy/cash.rsi
+    state: cash_10
+  - type: Stack
+    count: 10
+
+- type: entity
+  parent: NTCredit
+  id: NTCredit50
+  suffix: 50
+  components:
+  - type: Icon
+    sprite: _Starlight/Objects/Economy/cash.rsi
+    state: cash_50
+  - type: Stack
+    count: 50
+
+- type: entity
+  parent: NTCredit
+  id: NTCredit100
+  suffix: 100
+  components:
+  - type: Icon
+    sprite: _Starlight/Objects/Economy/cash.rsi
+    state: cash_100
+  - type: Stack
+    count: 100
+
+- type: entity
+  parent: NTCredit
+  id: NTCredit200
+  suffix: 200
+  components:
+  - type: Icon
+    sprite: _Starlight/Objects/Economy/cash.rsi
+    state: cash_200
+  - type: Stack
+    count: 200
+
+- type: entity
+  parent: NTCredit
+  id: NTCredit500
+  suffix: 500
+  components:
+  - type: Icon
+    sprite: _Starlight/Objects/Economy/cash.rsi
+    state: cash_500
+  - type: Stack
+    count: 500
+
+- type: entity
+  parent: NTCredit
+  id: NTCredit1000
+  suffix: 1000
+  components:
+  - type: Icon
+    sprite: _Starlight/Objects/Economy/cash.rsi
+    state: cash_1000
+  - type: Stack
+    count: 1000
+
+- type: entity
+  parent: NTCredit
+  id: NTCredit10000
+  suffix: 10000
+  components:
+  - type: Icon
+    sprite: _Starlight/Objects/Economy/cash.rsi
+    state: cash_10000
+  - type: Stack
+    count: 10000
+
+- type: entity
+  parent: NTCredit
+  id: NTCredit30000
+  suffix: 30000
+  components:
+  - type: Icon
+    sprite: _Starlight/Objects/Economy/cash.rsi
+    state: cash_30000
+  - type: Stack
+    count: 30000
+
+- type: entity
+  parent: NTCredit
+  id: NTCredit60000
+  suffix: 60000
+  components:
+  - type: Icon
+    sprite: _Starlight/Objects/Economy/cash.rsi
+    state: cash_60000
+  - type: Stack
+    count: 60000

@@ -33,6 +33,12 @@
     state: no_eyes
 
 - type: humanoidBaseSprite
+  id: MobAbductorHeadFemale
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Abductor/parts.rsi
+    state: head
+
+- type: humanoidBaseSprite
   id: MobAbductorHeadMale
   baseSprite:
     sprite: _Starlight/Mobs/Species/Abductor/parts.rsi
@@ -46,6 +52,12 @@
 
 - type: humanoidBaseSprite
   id: MobAbductorTorsoMale
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Abductor/parts.rsi
+    state: torso
+
+- type: humanoidBaseSprite
+  id: MobAbductorTorsoFemale
   baseSprite:
     sprite: _Starlight/Mobs/Species/Abductor/parts.rsi
     state: torso
