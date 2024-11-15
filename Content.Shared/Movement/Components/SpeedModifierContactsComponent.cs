@@ -17,7 +17,7 @@ public sealed partial class SpeedModifierContactsComponent : Component
     [AutoNetworkedField]
     public float SprintSpeedModifier = 1.0f;
 
-    [DataField("affectAirborne"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     public bool AffectAirborne = false;
 
