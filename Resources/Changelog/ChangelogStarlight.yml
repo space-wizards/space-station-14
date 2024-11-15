@@ -181,4 +181,18 @@ Entries:
   id: 25
   time: '2024-11-13T01:21:28.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/41
+- author: starlight
+  changes:
+  - message: ATMs and 2 vending machines for credits have been added.
+    type: Add
+  id: 26
+  time: '2024-11-15T20:48:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/50
+- author: starlight
+  changes:
+  - message: The salary has been added; it is paid every 15 minutes.
+    type: Add
+  id: 27
+  time: '2024-11-15T20:48:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/50
 
