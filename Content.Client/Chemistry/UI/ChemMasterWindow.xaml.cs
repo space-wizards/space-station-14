@@ -222,14 +222,21 @@ namespace Content.Client.Chemistry.UI
 
                                     // Padding
                                     new Control { HorizontalExpand = true },
-                                    // Provides a Unicode "medium vertical bar" and colors it based on the reagent.
-                                    new Label
+                                    // Colored panels for reagents, and invocation of proto to choose the correct color.
+                                    new PanelContainer
                                     {
-                                        Text = "\u2759",
-                                        Modulate = proto.SubstanceColor
+                                        Name = "colorPanel",
+                                        VerticalExpand = true,
+                                        MinSize = new Vector2(4,8),
+                                        PanelOverride = new StyleBoxFlat
+                                            {
+                                            BackgroundColor = proto.SubstanceColor
+                                            },
+                                        Margin = new Thickness(0,1)
+                                        
                                     },
                                     
-                                    MakeReagentButton("1", ChemMasterReagentAmount.U1, reagent, true, StyleBase.ButtonOpenRight),
+                                    MakeReagentButton("1", ChemMasterReagentAmount.U1, reagent, true, StyleBase.ButtonOpenBoth),
                                     MakeReagentButton("5", ChemMasterReagentAmount.U5, reagent, true, StyleBase.ButtonOpenBoth),
                                     MakeReagentButton("10", ChemMasterReagentAmount.U10, reagent, true, StyleBase.ButtonOpenBoth),
                                     MakeReagentButton("25", ChemMasterReagentAmount.U25, reagent, true, StyleBase.ButtonOpenBoth),
