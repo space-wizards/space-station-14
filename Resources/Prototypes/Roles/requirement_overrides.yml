@@ -2,293 +2,258 @@
   id: Reduced
   jobs:
     Captain:
-      - !type:DepartmentTimeRequirement
-        department: Engineering
-        time: 21600 # 6 hours
-      - !type:DepartmentTimeRequirement
-        department: Medical
-        time: 21600 # 6 hours
-      - !type:DepartmentTimeRequirement
-        department: Security
-        time: 21600 # 6 hours
-      - !type:DepartmentTimeRequirement
-        department: Science
-        time: 21600 # 6 hours
-      - !type:DepartmentTimeRequirement
-        department: Cargo
-        time: 21600 # 6 hours
-      - !type:DepartmentTimeRequirement
-        department: Civilian
-        time: 21600 # 6 hours
-      - !type:DepartmentTimeRequirement
-        department: Command
-        time: 36000 # 10 hours in Command
-      - !type:OverallPlaytimeRequirement
-        time: 36000 # 10 hours overall playtime
-      - !type:RoleTimeRequirement
-        role: StationAI
-        time: 3600 # 1 hour as Station AI
-
+    - !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 21600 # 6 hours
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 21600 # 6 hours
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 21600 # 6 hours
+    - !type:DepartmentTimeRequirement
+      department: Science
+      time: 21600 # 6 hours
+    - !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 21600 # 6 hours
+    - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 21600 # 6 hours
+    - !type:DepartmentTimeRequirement
+      department: Command
+      time: 36000 # 10 hours in Command
+    - !type:OverallPlaytimeRequirement
+      time: 36000 # 10 hours overall playtime
+    - !type:RoleTimeRequirement
+      role: JobStationAi
+      time: 3600 # 1 hour as Station AI
     HeadOfPersonnel:
-      - !type:DepartmentTimeRequirement
-        department: Engineering
-        time: 10800 # 3 hours
-      - !type:DepartmentTimeRequirement
-        department: Medical
-        time: 10800 # 3 hours
-      - !type:DepartmentTimeRequirement
-        department: Security
-        time: 10800 # 3 hours
-      - !type:DepartmentTimeRequirement
-        department: Science
-        time: 10800 # 3 hours
-      - !type:DepartmentTimeRequirement
-        department: Cargo
-        time: 10800 # 3 hours
-      - !type:DepartmentTimeRequirement
-        department: Civilian
-        time: 10800 # 3 hours
-      - !type:DepartmentTimeRequirement
-        department: Command
-        time: 18000 # 5 hours in Command for HoP
-      - !type:OverallPlaytimeRequirement
-        time: 25200 # 7 hours
-
+    - !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 10800 # 3 hours
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 10800 # 3 hours
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 10800 # 3 hours
+    - !type:DepartmentTimeRequirement
+      department: Science
+      time: 10800 # 3 hours
+    - !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 10800 # 3 hours
+    - !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 10800 # 3 hours
+    - !type:DepartmentTimeRequirement
+      department: Command
+      time: 18000 # 5 hours in Command for HoP
+    - !type:OverallPlaytimeRequirement
+      time: 25200 # 7 hours
     HeadOfSecurity:
-      - !type:DepartmentTimeRequirement
-        department: Security
-        time: 10800 # 3 hours
-      - !type:DepartmentTimeRequirement
-        department: Command
-        time: 3600 # 1 hour in Command
-      - !type:OverallPlaytimeRequirement
-        time: 18000 # 5 hours
-      - !type:RoleTimeRequirement
-        role: Warden
-        time: 10800 # 3 hours as Warden
-      - !type:RoleTimeRequirement
-        role: SecurityOfficer
-        time: 7200 # 2 hours as Security Officer
-
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 10800 # 3 hours
+    - !type:DepartmentTimeRequirement
+      department: Command
+      time: 3600 # 1 hour in Command
+    - !type:OverallPlaytimeRequirement
+      time: 18000 # 5 hours
+    - !type:RoleTimeRequirement
+      role: JobWarden
+      time: 10800 # 3 hours as Warden
+    - !type:RoleTimeRequirement
+      role: JobSecurityOfficer
+      time: 7200 # 2 hours as Security Officer
     ChiefEngineer:
-      - !type:DepartmentTimeRequirement
-        department: Engineering
-        time: 10800 # 3 hours
-      - !type:OverallPlaytimeRequirement
-        time: 18000 # 5 hours
-      - !type:RoleTimeRequirement
-        role: AtmosphericTechnician
-        time: 10800 # 3 hours as Atmospheric Technician
-      - !type:RoleTimeRequirement
-        role: StationEngineer
-        time: 3600 # 1 hour as Station Engineer
-
+    - !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 10800 # 3 hours
+    - !type:OverallPlaytimeRequirement
+      time: 18000 # 5 hours
+    - !type:RoleTimeRequirement
+      role: JobAtmosphericTechnician
+      time: 10800 # 3 hours as Atmospheric Technician
+    - !type:RoleTimeRequirement
+      role: JobStationEngineer
+      time: 3600 # 1 hour as Station Engineer
     ResearchDirector:
-      - !type:DepartmentTimeRequirement
-        department: Science
-        time: 10800 # 3 hours
-      - !type:OverallPlaytimeRequirement
-        time: 18000 # 5 hours
-      - !type:RoleTimeRequirement
-        role: Scientist
-        time: 3600 # 1 hour as Scientist
-
+    - !type:DepartmentTimeRequirement
+      department: Science
+      time: 10800 # 3 hours
+    - !type:OverallPlaytimeRequirement
+      time: 18000 # 5 hours
+    - !type:RoleTimeRequirement
+      role: JobScientist
+      time: 3600 # 1 hour as Scientist
     ChiefMedicalOfficer:
-      - !type:DepartmentTimeRequirement
-        department: Medical
-        time: 10800 # 3 hours
-      - !type:OverallPlaytimeRequirement
-        time: 18000 # 5 hours
-      - !type:RoleTimeRequirement
-        role: MedicalDoctor
-        time: 3600 # 1 hour as Medical Doctor
-      - !type:RoleTimeRequirement
-        role: Chemist
-        time: 3600 # 1 hour as Chemist
-
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 10800 # 3 hours
+    - !type:OverallPlaytimeRequirement
+      time: 18000 # 5 hours
+    - !type:RoleTimeRequirement
+      role: JobMedicalDoctor
+      time: 3600 # 1 hour as Medical Doctor
+    - !type:RoleTimeRequirement
+      role: JobChemist
+      time: 3600 # 1 hour as Chemist
     Quartermaster:
-      - !type:DepartmentTimeRequirement
-        department: Cargo
-        time: 10800 # 3 hours
-      - !type:OverallPlaytimeRequirement
-        time: 18000 # 5 hours
-      - !type:RoleTimeRequirement
-        role: CargoTechnician
-        time: 3600 # 1 hour as Cargo Technician
-      - !type:RoleTimeRequirement
-        role: SalvageSpecialist
-        time: 7200 # 2 hours as Salvage Specialist
-
+    - !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 10800 # 3 hours
+    - !type:OverallPlaytimeRequirement
+      time: 18000 # 5 hours
+    - !type:RoleTimeRequirement
+      role: JobCargoTechnician
+      time: 3600 # 1 hour as Cargo Technician
+    - !type:RoleTimeRequirement
+      role: JobSalvageSpecialist
+      time: 7200 # 2 hours as Salvage Specialist
     MedicalDoctor:
-      - !type:OverallPlaytimeRequirement
-        time: 0
-      - !type:RoleTimeRequirement
-        role: MedicalIntern
-        time: 3600 # 1 hour as Medical Intern
-
+    - !type:OverallPlaytimeRequirement
+      time: 0
+    - !type:RoleTimeRequirement
+      role: JobMedicalIntern
+      time: 3600 # 1 hour as Medical Intern
     Chemist:
-      - !type:OverallPlaytimeRequirement
-        time: 0
-      - !type:RoleTimeRequirement
-        role: MedicalIntern
-        time: 3600 # 1 hour as Medical Intern
-
+    - !type:OverallPlaytimeRequirement
+      time: 0
+    - !type:RoleTimeRequirement
+      role: JobMedicalIntern
+      time: 3600 # 1 hour as Medical Intern
     Paramedic:
-      - !type:OverallPlaytimeRequirement
-        time: 0
-      - !type:RoleTimeRequirement
-        role: MedicalDoctor
-        time: 3600 # 1 hour as Medical Doctor
-
+    - !type:OverallPlaytimeRequirement
+      time: 0
+    - !type:RoleTimeRequirement
+      role: JobMedicalDoctor
+      time: 3600 # 1 hour as Medical Doctor
     StationEngineer:
-      - !type:OverallPlaytimeRequirement
-        time: 0
-      - !type:RoleTimeRequirement
-        role: TechnicalAssistant
-        time: 3600 # 1 hour as Technical Assistant
-
+    - !type:OverallPlaytimeRequirement
+      time: 0
+    - !type:RoleTimeRequirement
+      role: JobTechnicalAssistant
+      time: 3600 # 1 hour as Technical Assistant
     AtmosphericTechnician:
-      - !type:OverallPlaytimeRequirement
-        time: 0
-      - !type:RoleTimeRequirement
-        role: StationEngineer
-        time: 3600 # 1 hour as Station Engineer
-
+    - !type:OverallPlaytimeRequirement
+      time: 0
+    - !type:RoleTimeRequirement
+      role: JobStationEngineer
+      time: 3600 # 1 hour as Station Engineer
     Warden:
-      - !type:OverallPlaytimeRequirement
-        time: 7200 # 2 hours
-
+    - !type:OverallPlaytimeRequirement
+      time: 7200 # 2 hours
     SecurityCadet:
-      - !type:OverallPlaytimeRequirement
-        time: 1800 # 30 minutes overall playtime
-      - !type:DepartmentTimeRequirement
-        department: Security
-        time: 54000 # 15 hrs
-        inverted: true 
-
+    - !type:OverallPlaytimeRequirement
+      time: 1800 # 30 minutes overall playtime
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 54000 # 15 hrs
+      inverted: true 
     SecurityOfficer:
-      - !type:OverallPlaytimeRequirement
-        time: 3600 # 1 hour overall playtime
-      - !type:RoleTimeRequirement
-        role: SecurityCadet
-        time: 3600 # 1 hour as Security Cadet
-
+    - !type:OverallPlaytimeRequirement
+      time: 3600 # 1 hour overall playtime
+    - !type:RoleTimeRequirement
+      role: JobSecurityCadet
+      time: 3600 # 1 hour as Security Cadet
     Detective:
-      - !type:OverallPlaytimeRequirement
-        time: 5400 # 1 hour 30 minutes
-      - !type:RoleTimeRequirement
-        role: SecurityOfficer
-        time: 3600 # 1 hour as Security Officer
-
+    - !type:OverallPlaytimeRequirement
+      time: 5400 # 1 hour 30 minutes
+    - !type:RoleTimeRequirement
+      role: JobSecurityOfficer
+      time: 3600 # 1 hour as Security Officer
     StationAI:
-      - !type:OverallPlaytimeRequirement
-        time: 0
-      - !type:RoleTimeRequirement
-        role: Borg
-        time: 10800 # 3 hours as Borg
-
+    - !type:OverallPlaytimeRequirement
+      time: 0
+    - !type:RoleTimeRequirement
+      role: JobBorg
+      time: 10800 # 3 hours as Borg
     Borg:
-      - !type:OverallPlaytimeRequirement
-        time: 3600 # 1 hour overall playtime
-
+    - !type:OverallPlaytimeRequirement
+      time: 3600 # 1 hour overall playtime
     Bartender:
-      - !type:OverallPlaytimeRequirement
-        time: 0
-      - !type:RoleTimeRequirement
-        role: ServiceWorker
-        time: 1200 # 20 minutes as Service Worker
-
+    - !type:OverallPlaytimeRequirement
+      time: 0
+    - !type:RoleTimeRequirement
+      role: JobServiceWorker
+      time: 1200 # 20 minutes as Service Worker
     Chef:
-      - !type:OverallPlaytimeRequirement
-        time: 0
-      - !type:RoleTimeRequirement
-        role: ServiceWorker
-        time: 1200 # 20 minutes as Service Worker
-
+    - !type:OverallPlaytimeRequirement
+      time: 0
+    - !type:RoleTimeRequirement
+      role: JobServiceWorker
+      time: 1200 # 20 minutes as Service Worker
     Scientist:
-      - !type:OverallPlaytimeRequirement
-        time: 0
-      - !type:RoleTimeRequirement
-        role: ResearchAssistant
-        time: 3600 # 1 hour as Research Assistant
-
+    - !type:OverallPlaytimeRequirement
+      time: 0
+    - !type:RoleTimeRequirement
+      role: JobResearchAssistant
+      time: 3600 # 1 hour as Research Assistant
     SalvageSpecialist:
-      - !type:OverallPlaytimeRequirement
-        time: 0
-      - !type:RoleTimeRequirement
-        role: CargoTechnician
-        time: 5400 # 1 hour 30 minutes as Cargo Technician
-
+    - !type:OverallPlaytimeRequirement
+      time: 0
+    - !type:RoleTimeRequirement
+      role: JobCargoTechnician
+      time: 5400 # 1 hour 30 minutes as Cargo Technician
     Botanist:
-      - !type:OverallPlaytimeRequirement
-        time: 0
-      - !type:RoleTimeRequirement
-        role: ServiceWorker
-        time: 1200 # 20 minutes as Service Worker
-
+    - !type:OverallPlaytimeRequirement
+      time: 0
+    - !type:RoleTimeRequirement
+      role: JobServiceWorker
+      time: 1200 # 20 minutes as Service Worker
     Clown:
-      - !type:OverallPlaytimeRequirement
-        time: 0
-      - !type:RoleTimeRequirement
-        role: Passenger
-        time: 600 # 10 minutes as Passenger
-
+    - !type:OverallPlaytimeRequirement
+      time: 0
+    - !type:RoleTimeRequirement
+      role: JobPassenger
+      time: 600 # 10 minutes as Passenger
     CargoTechnician:
-      - !type:OverallPlaytimeRequirement
-        time: 0
-
+    - !type:OverallPlaytimeRequirement
+      time: 0
     TechnicalAssistant:
-      - !type:OverallPlaytimeRequirement
-        time: 300 # 5 minutes overall playtime
-      - !type:DepartmentTimeRequirement
-        department: Engineering
-        time: 54000 # 15 hrs
-        inverted: true 
-
+    - !type:OverallPlaytimeRequirement
+      time: 300 # 5 minutes overall playtime
+    - !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 54000 # 15 hrs
+      inverted: true 
     MedicalIntern:
-      - !type:OverallPlaytimeRequirement
-        time: 300 # 5 minutes overall playtime
-      - !type:DepartmentTimeRequirement
-        department: Medical
-        time: 54000 # 15 hrs
-        inverted: true 
-
+    - !type:OverallPlaytimeRequirement
+      time: 300 # 5 minutes overall playtime
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 54000 # 15 hrs
+      inverted: true 
     ResearchAssistant:
-      - !type:OverallPlaytimeRequirement
-        time: 300 # 5 minutes overall playtime
-      - !type:DepartmentTimeRequirement
-        department: Science
-        time: 54000 # 15 hrs
-        inverted: true 
-
+    - !type:OverallPlaytimeRequirement
+      time: 300 # 5 minutes overall playtime
+    - !type:DepartmentTimeRequirement
+      department: Science
+      time: 54000 # 15 hrs
+      inverted: true 
     Chaplain:
-      - !type:OverallPlaytimeRequirement
-        time: 0
-
+    - !type:OverallPlaytimeRequirement
+      time: 0
     Janitor:
-      - !type:OverallPlaytimeRequirement
-        time: 0
-
+    - !type:OverallPlaytimeRequirement
+      time: 0
     Lawyer:
-      - !type:OverallPlaytimeRequirement
-        time: 0
-
+    - !type:OverallPlaytimeRequirement
+      time: 0
     Librarian:
-      - !type:OverallPlaytimeRequirement
-        time: 0
-
+    - !type:OverallPlaytimeRequirement
+      time: 0
     Mime:
-      - !type:OverallPlaytimeRequirement
-        time: 0
-
+    - !type:OverallPlaytimeRequirement
+      time: 0
     Musician:
-      - !type:OverallPlaytimeRequirement
-        time: 0
-
+    - !type:OverallPlaytimeRequirement
+      time: 0
     ServiceWorker:
-      - !type:OverallPlaytimeRequirement
-        time: 300 # 5 minutes overall playtime
-
+    - !type:OverallPlaytimeRequirement
+      time: 300 # 5 minutes overall playtime
     Visitor:
-      - !type:OverallPlaytimeRequirement
-        time: 0
+    - !type:OverallPlaytimeRequirement
+      time: 0

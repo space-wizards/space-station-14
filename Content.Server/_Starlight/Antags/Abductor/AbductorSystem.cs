@@ -56,7 +56,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
         {
             var beacon = _entityManager.GetEntity(args.Beacon.NetEnt);
             var eye = SpawnAtPosition(ent.Comp.RemoteEntityProto, Transform(beacon).Coordinates);
-            ent.Comp.RemoteEntity = eye;
+            ent.Comp.RemoteEntity = GetNetEntity(eye);
             
             console = ent.Owner;
             
@@ -91,24 +91,24 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
             if (TryComp(args.Actor, out EyeComponent? eyeComp))
             {
                 _eye.SetVisibilityMask(args.Actor, eyeComp.VisibilityMask | (int)VisibilityFlags.Abductor, eyeComp);
-                _eye.SetTarget(args.Actor, ent.Comp.RemoteEntity.Value, eyeComp);
+                _eye.SetTarget(args.Actor, eye, eyeComp);
                 _eye.SetDrawFov(args.Actor, false);
 
                 if (!HasComp<StationAiOverlayComponent>(args.Actor))
                     AddComp(args.Actor, new StationAiOverlayComponent { AllowCrossGrid = true });
-                if (!TryComp(ent.Comp.RemoteEntity, out RemoteEyeSourceContainerComponent? remoteEyeSourceContainerComponent))
+                if (!TryComp(eye, out RemoteEyeSourceContainerComponent? remoteEyeSourceContainerComponent))
                 {
                     remoteEyeSourceContainerComponent = new RemoteEyeSourceContainerComponent { Actor = args.Actor };
-                    AddComp(ent.Comp.RemoteEntity.Value, remoteEyeSourceContainerComponent);
+                    AddComp(eye, remoteEyeSourceContainerComponent);
                 }
                 else
                     remoteEyeSourceContainerComponent.Actor = args.Actor;
-                Dirty(ent.Comp.RemoteEntity.Value, remoteEyeSourceContainerComponent);
+                Dirty(eye, remoteEyeSourceContainerComponent);
             }
 
             AddActions(args);
 
-            _mover.SetRelay(args.Actor, ent.Comp.RemoteEntity.Value);
+            _mover.SetRelay(args.Actor, eye);
         }
     }
 

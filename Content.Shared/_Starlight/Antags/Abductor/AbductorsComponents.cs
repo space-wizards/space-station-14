@@ -14,7 +14,7 @@ public sealed partial class AbductorHumanObservationConsoleComponent : Component
     public EntProtoId? RemoteEntityProto = "AbductorHumanObservationConsoleEye";
 
     [DataField, AutoNetworkedField]
-    public EntityUid? RemoteEntity;
+    public NetEntity? RemoteEntity;
 }
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedAbductorSystem)), AutoGenerateComponentState]
 public sealed partial class AbductorConsoleComponent : Component

@@ -10,8 +10,8 @@
     stock: 3
 
 - type: listing
-  id: VendorSLPlushiesharkGrey
-  productEntity: SLPlushiesharkGrey
+  id: VendorPlushiesharkGrey
+  productEntity: PlushiesharkGrey
   cost:
     NTCredit: 20
   categories:
@@ -21,8 +21,8 @@
     stock: 3
   
 - type: listing
-  id: VendorSLPlushiesharkPink
-  productEntity: SLPlushiesharkPink
+  id: VendorPlushiesharkPink
+  productEntity: PlushiesharkPink
   cost:
     NTCredit: 30
   categories:

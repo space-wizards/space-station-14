@@ -18,6 +18,14 @@ g = Github(github_token)
 repo = g.get_repo(repo_name)
 pr = repo.get_pull(int(pr_number))
 
+def remove_comments(pr_body):
+    """
+    Removes all content inside HTML comments <!-- --> from the PR body.
+    """
+    pattern = r"<!--.*?-->"
+    cleaned_body = re.sub(pattern, "", pr_body, flags=re.DOTALL)
+    return cleaned_body
+
 def parse_changelog(pr_body):
     changelog_entries = []
     pattern = r"(?<!<!--\s)^:cl:\s+([^\n]+)\n((?:- (add|remove|tweak|fix): [^\n]+\n?)+)"
@@ -53,12 +61,14 @@ def update_changelog():
         print("PR body is empty.")
         return
 
-    print("PR Body:", repr(pr.body))
+    print("Original PR Body:", repr(pr.body))
+    cleaned_body = remove_comments(pr.body)
+    print("Cleaned PR Body:", repr(cleaned_body))
 
-    if ":cl:" in pr.body:
-        print("Found ':cl:' in PR body.")
+    if ":cl:" in cleaned_body:
+        print("Found ':cl:' in PR body after removing comments.")
         merge_time = pr.merged_at
-        entries = parse_changelog(pr.body)
+        entries = parse_changelog(cleaned_body)
 
         print("Parsed entries:", entries)
 
@@ -96,7 +106,7 @@ def update_changelog():
             file.write('\n')
         print(f"Changelog updated and written to {changelog_path}")
     else:
-        print("No ':cl:' tag found in PR body.")
+        print("No ':cl:' tag found in PR body after removing comments.")
         return
 
 if __name__ == "__main__":
