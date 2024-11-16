@@ -14,21 +14,21 @@
     torso:
       part: TorsoDiona
       connections:
-      - right arm
-      - left arm
-      - right leg
-      - left leg
+      - right_arm
+      - left_arm
+      - right_leg
+      - left_leg
       organs:
         stomach: OrganDionaStomachNymph
         lungs: OrganDionaLungsNymph
     right arm:
       part: RightArmDiona
       connections:
-      - right hand
+      - right_hand
     left arm:
       part: LeftArmDiona
       connections:
-      - left hand
+      - left_hand
     right hand:
       part: RightHandDiona
     left hand:
@@ -36,11 +36,11 @@
     right leg:
       part: RightLegDiona
       connections:
-      - right foot
+      - right_foot
     left leg:
       part: LeftLegDiona
       connections:
-      - left foot
+      - left_foot
     right foot:
       part: RightFootDiona
     left foot:

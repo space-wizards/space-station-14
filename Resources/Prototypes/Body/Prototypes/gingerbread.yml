@@ -14,10 +14,10 @@
     torso:
       part: TorsoGingerbread
       connections:
-      - right arm
-      - left arm
-      - right leg
-      - left leg
+      - right_arm
+      - left_arm
+      - right_leg
+      - left_leg
       organs:
         heart: OrganHumanHeart
         lungs: OrganHumanLungs
@@ -27,11 +27,11 @@
     right arm:
       part: RightArmGingerbread
       connections:
-      - right hand
+      - right_hand
     left arm:
       part: LeftArmGingerbread
       connections:
-      - left hand
+      - left_hand
     right hand:
       part: RightHandGingerbread
     left hand:
@@ -39,11 +39,11 @@
     right leg:
       part: RightLegGingerbread
       connections:
-      - right foot
+      - right_foot
     left leg:
       part: LeftLegGingerbread
       connections:
-      - left foot
+      - left_foot
     right foot:
       part: RightFootGingerbread
     left foot:
