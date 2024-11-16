@@ -228,7 +228,7 @@ public sealed class IonStormSystem : EntitySystem
         var subjects = _robustRandom.Prob(0.5f) ? objectsThreats : Loc.GetString("ion-storm-people");
 
         // message logic!!!
-        return _robustRandom.Next(0, 36) switch
+        return _robustRandom.Next(0, 35) switch
         {
             0  => Loc.GetString("ion-storm-law-on-station", ("joined", joined), ("subjects", triple)),
             1  => Loc.GetString("ion-storm-law-no-shuttle", ("joined", joined), ("subjects", triple)),
@@ -251,19 +251,19 @@ public sealed class IonStormSystem : EntitySystem
             18 => Loc.GetString("ion-storm-law-you-must-never", ("must", must)),
             19 => Loc.GetString("ion-storm-law-eat", ("who", crewAll), ("adjective", adjective), ("food", _robustRandom.Prob(0.5f) ? food : triple)),
             20 => Loc.GetString("ion-storm-law-drink", ("who", crewAll), ("adjective", adjective), ("drink", drink)),
-            22 => Loc.GetString("ion-storm-law-change-job", ("who", crewAll), ("adjective", adjective), ("change", jobChange)),
-            23 => Loc.GetString("ion-storm-law-highest-rank", ("who", crew1)),
-            24 => Loc.GetString("ion-storm-law-lowest-rank", ("who", crew1)),
-            25 => Loc.GetString("ion-storm-law-crew-must", ("who", crewAll), ("must", must)),
-            26 => Loc.GetString("ion-storm-law-crew-must-go", ("who", crewAll), ("area", area)),
-            27 => Loc.GetString("ion-storm-law-crew-only-1", ("who", crew1), ("part", part)),
-            28 => Loc.GetString("ion-storm-law-crew-only-2", ("who", crew1), ("other", crew2), ("part", part)),
-            29 => Loc.GetString("ion-storm-law-crew-only-subjects", ("adjective", adjective), ("subjects", subjects), ("part", part)),
-            30 => Loc.GetString("ion-storm-law-crew-must-do", ("must", must), ("part", part)),
-            31 => Loc.GetString("ion-storm-law-crew-must-have", ("adjective", adjective), ("objects", objects), ("part", part)),
-            32 => Loc.GetString("ion-storm-law-crew-must-eat", ("who", who), ("adjective", adjective), ("food", food), ("part", part)),
-            33 => Loc.GetString("ion-storm-law-harm", ("who", harm)),
-            34 => Loc.GetString("ion-storm-law-protect", ("who", harm)),
+            21 => Loc.GetString("ion-storm-law-change-job", ("who", crewAll), ("adjective", adjective), ("change", jobChange)),
+            22 => Loc.GetString("ion-storm-law-highest-rank", ("who", crew1)),
+            23 => Loc.GetString("ion-storm-law-lowest-rank", ("who", crew1)),
+            24 => Loc.GetString("ion-storm-law-crew-must", ("who", crewAll), ("must", must)),
+            25 => Loc.GetString("ion-storm-law-crew-must-go", ("who", crewAll), ("area", area)),
+            26 => Loc.GetString("ion-storm-law-crew-only-1", ("who", crew1), ("part", part)),
+            27 => Loc.GetString("ion-storm-law-crew-only-2", ("who", crew1), ("other", crew2), ("part", part)),
+            28 => Loc.GetString("ion-storm-law-crew-only-subjects", ("adjective", adjective), ("subjects", subjects), ("part", part)),
+            29 => Loc.GetString("ion-storm-law-crew-must-do", ("must", must), ("part", part)),
+            30 => Loc.GetString("ion-storm-law-crew-must-have", ("adjective", adjective), ("objects", objects), ("part", part)),
+            31 => Loc.GetString("ion-storm-law-crew-must-eat", ("who", who), ("adjective", adjective), ("food", food), ("part", part)),
+            32 => Loc.GetString("ion-storm-law-harm", ("who", harm)),
+            33 => Loc.GetString("ion-storm-law-protect", ("who", harm)),
             _ => Loc.GetString("ion-storm-law-concept-verb", ("concept", concept), ("verb", verb), ("subjects", triple))
         };
     }
