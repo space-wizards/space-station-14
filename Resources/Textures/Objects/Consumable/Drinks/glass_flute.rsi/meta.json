@@ -1,11 +1,11 @@
-﻿{
+{
     "version": 1,
     "size": {
         "x": 32,
         "y": 32
     },
     "license": "CC-BY-NC-SA-4.0",
-    "copyright": "Original sprite by github user moonheart08, redrawn by github user joshepvodka.",
+    "copyright": "drawn by verslebas. Fills levels by Tayrtahn. Redrawn by github user joshepvodka.",
     "states": [
         {
             "name": "icon"
