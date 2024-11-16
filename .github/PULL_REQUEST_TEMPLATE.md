@@ -23,7 +23,7 @@ If your PR contains in-game changes you must provide screenshots/videos of the c
 <!--
 If you want the players to know about changes made in this PR, specify them using the template outside the comment. Short and informative.
 
-:cl: Darkrell
+:cl: STARLIGHT TEAM
 - add: Added Starlight.
 - remove: Removed SS13.
 - tweak: Changed SS14.
