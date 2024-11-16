@@ -292,7 +292,6 @@
   moodDesc: spelf-mood-folk-hero-desc
   moodVars:
     dagdChanceName: DAGDname
-    dagdChanceDesc: DAGD
 
 # Greencomms Blogger: You must keep the station informed about every minute detail of your life.
 - type: spelfMood
@@ -341,6 +340,3 @@
 #  moodDesc: spelf-mood-number-good-desc
 #  moodVars:
 #    number: SpelfMoodNumber
-
-
-
