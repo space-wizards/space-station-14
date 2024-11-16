@@ -1,7 +1,6 @@
 - type: roundvotingchances
   id: Basic
   chances:
-    Secret: 1.0 # XD Secret
     Survival: 0.1
     KesslerSyndrome: 0.1
     Greenshift: 0.6

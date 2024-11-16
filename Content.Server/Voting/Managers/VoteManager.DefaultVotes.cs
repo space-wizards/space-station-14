@@ -221,6 +221,8 @@ namespace Content.Server.Voting.Managers
         private void CreatePresetVote(ICommonSession? initiator)
         {
             var presets = GetGamePresets();
+            
+            presets.Add("Secret", Loc.GetString("ui-vote-secret-map"));
 
             var alone = _playerManager.PlayerCount == 1 && initiator != null;
             var options = new VoteOptions
@@ -595,7 +597,7 @@ namespace Content.Server.Voting.Managers
 
             if (!_prototypeManager.TryIndex<RoundVotingChancesPrototype>(prototypeId, out var chancesPrototype))
             {
-                Logger.Warning($"Не удалось найти прототип шансов с ID: {prototypeId}");
+                Logger.Warning($"Failed to find a chance prototype with ID: {prototypeId}");
                 return presets;
             }
 
@@ -620,7 +622,7 @@ namespace Content.Server.Voting.Managers
 
             if (validPresets.Count == 0)
             {
-                Logger.Warning("Нет подходящих игровых режимов для текущего количества игроков.");
+                Logger.Warning("There are no suitable game modes for the current number of players.");
                 return presets;
             }
 
