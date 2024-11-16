@@ -286,7 +286,7 @@ public sealed partial class CCVars
         /// Note: Some flags may increase the chances of false positives and request time. The default should be fine for most servers.
         /// </summary>
         public static readonly CVarDef<string> IPIntelFlags =
-            CVarDef.Create("game.ipintel_baseurl", "b", CVar.SERVERONLY);
+            CVarDef.Create("game.ipintel_flags", "b", CVar.SERVERONLY);
 
         /// <summary>
         /// Maximum amount of requests per Minute. For free you get 15.
