@@ -120,79 +120,40 @@ Entries:
   id: 17
   time: '2024-11-11T05:16:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/45
-- author: '- fix: The supermatter now produces tritium instead of plasma (needed for
-    plasma setups).'
-  changes:
-  - message: Supermatter lightning now comes in different colors.
-    type: Fix
-  id: 18
-  time: '2024-11-12T06:08:35.000000+00:00'
-  url: https://github.com/ss14Starlight/space-station-14/pull/46
-- author: '- fix: The supermatter now produces tritium instead of plasma (needed for
-    plasma setups).'
-  changes:
-  - message: Heating now varies significantly by gas (2 emitters for nitrogen, 4 for
-      plasma, 8 only for frezon).
-    type: Fix
-  id: 19
-  time: '2024-11-12T06:08:35.000000+00:00'
-  url: https://github.com/ss14Starlight/space-station-14/pull/46
-- author: '- fix: The supermatter now produces tritium instead of plasma (needed for
-    plasma setups).'
-  changes:
-  - message: Production also varies significantly (over 20 rads on frezon).
-    type: Fix
-  id: 20
-  time: '2024-11-12T06:08:35.000000+00:00'
-  url: https://github.com/ss14Starlight/space-station-14/pull/46
-- author: '- fix: The bug has been fixed where you couldn''t insert a brain into a
+- author: Darkrell
     borg.'
   changes:
   - message: The vampire is now considered an enemy for the hostile factions.
     type: Fix
-  id: 21
+  id: 18
   time: '2024-11-12T06:10:20.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/47
-- author: '- add: Added fun!'
+- author: Darkrell
   changes:
-  - message: Removed fun!
-    type: Remove
-  id: 22
-  time: '2024-11-13T01:21:28.000000+00:00'
-  url: https://github.com/ss14Starlight/space-station-14/pull/41
-- author: '- add: Added fun!'
-  changes:
-  - message: Changed fun!
-    type: Tweak
-  id: 23
-  time: '2024-11-13T01:21:28.000000+00:00'
-  url: https://github.com/ss14Starlight/space-station-14/pull/41
-- author: '- add: Added fun!'
-  changes:
-  - message: Fixed fun!
+  - message: The bug has been fixed where you couldn''t insert a brain into a borg.
     type: Fix
-  id: 24
-  time: '2024-11-13T01:21:28.000000+00:00'
-  url: https://github.com/ss14Starlight/space-station-14/pull/41
+  id: 19
+  time: '2024-11-12T06:10:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/47
 - author: Rinary
   changes:
   - message: Added abductor tools
     type: Add
-  id: 25
+  id: 20
   time: '2024-11-13T01:21:28.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/41
 - author: starlight
   changes:
   - message: ATMs and 2 vending machines for credits have been added.
     type: Add
-  id: 26
+  id: 21
   time: '2024-11-15T20:48:29.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/50
 - author: starlight
   changes:
   - message: The salary has been added; it is paid every 15 minutes.
     type: Add
-  id: 27
+  id: 22
   time: '2024-11-15T20:48:29.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/50
 - author: Rinary
@@ -200,14 +161,14 @@ Entries:
   - message: Fixed bug when abductor can steal item's using abductor's monitoring
       console
     type: Fix
-  id: 31
+  id: 23
   time: '2024-11-15T21:38:47.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/51
 - author: Rinary
   changes:
   - message: Fixed bug when abductor can open doors using abductor's monitoring console
     type: Fix
-  id: 32
+  id: 24
   time: '2024-11-15T21:38:47.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/51
 - author: Rinary
@@ -215,21 +176,21 @@ Entries:
   - message: Fixed bug when abductor can interact with items using using abductor's
       monitoring console
     type: Fix
-  id: 33
+  id: 25
   time: '2024-11-15T21:38:47.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/51
 - author: Rinary
   changes:
   - message: Added Ban webhooks.
     type: Add
-  id: 34
+  id: 26
   time: '2024-11-16T11:30:20.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/53
 - author: Rinary
   changes:
   - message: Fixed bug when Secret don't adding in preset votes.
     type: Fix
-  id: 35
+  id: 27
   time: '2024-11-16T18:28:31.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/56
 
