@@ -20,7 +20,7 @@
   components:
   - type: Magic
   - type: InstantAction
-    useDelay: 600
+    useDelay: 300
     itemIconStyle: BigAction
     icon:
       sprite: Objects/Weapons/Guns/Rifles/ak.rsi
@@ -166,7 +166,7 @@
   components:
   - type: Magic
   - type: InstantAction
-    useDelay: 600
+    useDelay: 300
     itemIconStyle: BigAction
     icon:
       sprite: Objects/Magic/magicactions.rsi
