@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: TGRCDev
   changes:
-  - message: Fixed mouse position being incorrectly warped when the singularity overlay
-      is disabled
-    type: Fix
-  id: 29
-  time: '2024-07-19T23:21:39.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/35
-- author: TGRCDev
-  changes:
   - message: Fixed errors with the mobster accent
     type: Fix
   id: 30
@@ -4239,3 +4231,14 @@
   id: 528
   time: '2024-11-16T11:57:53.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/705
+- author: Darkmajia
+  changes:
+  - message: New folders are available in the trinkets loadout with consistent paper
+      and cute themes!
+    type: Add
+  - message: The black folder is no longer in the trinkets loadout. Pick a new one
+      out!
+    type: Remove
+  id: 529
+  time: '2024-11-16T15:10:21.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/697
