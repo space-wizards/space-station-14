@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: Mervill
-  changes:
-  - message: The Gas Analyzer won't spuriously shut down for seemly no reason.
-    type: Tweak
-  - message: The Gas Analyzer will always switch to the device tab when a new object
-      is scanned.
-    type: Tweak
-  - message: The Gas Analyzer's interaction range is now equal to the standard interaction
-      range
-    type: Fix
-  - message: Clicking the Gas Analyzer when it's in your hand has proper enable/disable
-      behavior.
-    type: Fix
-  id: 7115
-  time: '2024-08-15T14:45:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30763
 - author: Nimfar11
   changes:
   - message: Adds a gold toilet
@@ -3933,3 +3917,10 @@
   id: 7614
   time: '2024-11-16T03:25:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33101
+- author: Southbridge
+  changes:
+  - message: The BRB sign is now included in the Bureaucracy Crate
+    type: Add
+  id: 7615
+  time: '2024-11-16T03:26:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33341
