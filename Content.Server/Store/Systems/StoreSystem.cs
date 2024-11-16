@@ -31,7 +31,7 @@ public sealed partial class StoreSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<StoreComponent, ActivatableUIOpenAttemptEvent>(OnStoreOpenAttempt);
-        SubscribeLocalEvent<AccessReaderComponent, ActivatableUIOpenAttemptEvent>(OnStoreOpenAttempt); //🌟Starlight🌟
+        //SubscribeLocalEvent<AccessReaderComponent, ActivatableUIOpenAttemptEvent>(OnStoreOpenAttempt); //🌟Starlight🌟 This broke all the computers.
         SubscribeLocalEvent<CurrencyComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<StoreComponent, BeforeActivatableUIOpenEvent>(BeforeActivatableUiOpen);
 
