@@ -27,6 +27,7 @@ public abstract class SharedIntellicardSystem : EntitySystem
 
     [ValidatePrototypeId<EntityPrototype>]
     private static readonly EntProtoId DefaultAi = "StationAiBrain";
+
     [ValidatePrototypeId<JobPrototype>]
     private static readonly EntProtoId StationAiJob = "StationAi";
 
@@ -65,6 +66,7 @@ public abstract class SharedIntellicardSystem : EntitySystem
         QueueDel(args.Args.Used);
         _popup.PopupEntity(Loc.GetString("ai-convert-finished"), args.User, args.User, PopupType.Medium);
     }
+
     private void OnUsingBorgBrainOnConverterInteract(Entity<StationAiConverterComponent> ent, ref AfterInteractUsingEvent args)
     {
         if (args.Handled || !args.CanReach || args.Target == null)
@@ -73,7 +75,7 @@ public abstract class SharedIntellicardSystem : EntitySystem
         if (!TryComp(args.Target, out StationAiHolderComponent? targetHolder))
             return;
 
-        if (!TryComp(args.Used, out BorgBrainComponent? _))
+        if (!HasComp<BorgBrainComponent>(args.Used))
             return;
 
         //We don't want an empty mind to be insertable.

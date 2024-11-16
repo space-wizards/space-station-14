@@ -22,7 +22,6 @@ public sealed class IntellicardSystem : SharedIntellicardSystem
         SubscribeLocalEvent<IntellicardComponent, GetVerbsEvent<ActivationVerb>>(AddIntellicardWipeVerb);
     }
 
-
     private void AddIntellicardWipeVerb(Entity<IntellicardComponent> ent, ref GetVerbsEvent<ActivationVerb> args)
     {
         if (args.Hands == null || !args.CanAccess || !args.CanInteract)
