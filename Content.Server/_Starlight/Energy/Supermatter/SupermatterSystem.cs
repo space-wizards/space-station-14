@@ -1,4 +1,5 @@
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Lightning;
 using Content.Server.Starlight.Energy.Supermatter;
 using Content.Shared.Abilities.Goliath;
 using Content.Shared.Damage;
@@ -18,9 +19,10 @@ public sealed class SupermatterSystem : AccUpdateEntitySystem
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
+    [Dependency] private readonly LightningSystem _lightning = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-
+    
     private readonly Dictionary<EntityUid, Entity<SupermatterComponent>> _supermatters = [];
     public override void Initialize()
     {
@@ -48,13 +50,14 @@ public sealed class SupermatterSystem : AccUpdateEntitySystem
 
     private void HandleLighting(Entity<SupermatterComponent> supermatter)
     {
-
+        if(_lightning.ShootRandomLightnings(supermatter.Owner, supermatter.Comp.AccLighting.Float(), 1))
+            supermatter.Comp.AccLighting = 0;
     }
 
     private void HandleRadiation(Entity<SupermatterComponent> supermatter)
     {
         var radComp = EnsureComp<RadiationSourceComponent>(supermatter.Owner);
-        radComp.Intensity = supermatter.Comp.AccRadiation.Float() / 100;
+        radComp.Intensity = supermatter.Comp.AccRadiation.Float() / 10;
 
         supermatter.Comp.AccRadiation /= supermatter.Comp.RadiationStability;
     }
@@ -106,7 +109,7 @@ public sealed class SupermatterSystem : AccUpdateEntitySystem
 
         supermatter.Comp.AccBreak = MathHelper.Clamp(supermatter.Comp.AccBreak + (trueDamage * Const.BreakPercent), 0, 9999);
         supermatter.Comp.AccHeat = MathHelper.Clamp(supermatter.Comp.AccHeat + (trueDamage * Const.HeatPercent), 0, 9999);
-        supermatter.Comp.AccLighting = MathHelper.Clamp(supermatter.Comp.AccLighting + (trueDamage * Const.LightingPercent), 0, 9999);
-        supermatter.Comp.AccRadiation = MathHelper.Clamp(supermatter.Comp.AccRadiation + (trueDamage * Const.RadiationPercent), 0, 9999);
+        supermatter.Comp.AccLighting = MathHelper.Clamp(supermatter.Comp.AccLighting + (trueDamage * Const.LightingPercent), 0, 25);
+        supermatter.Comp.AccRadiation = MathHelper.Clamp(supermatter.Comp.AccRadiation + (trueDamage * Const.RadiationPercent), 0, 1000);
     }
 }
