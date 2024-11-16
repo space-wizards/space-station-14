@@ -20,6 +20,8 @@
 
     - Change the security status between [color=gray]None[/color], [color=yellow]Wanted[/color] and [color=red]Detained[/color]. When setting it to Wanted you will be asked to write a reason.
 
+    - [bold][color=green]Harmony Specific[/color][/bold]: The security status can also be changed to [color=#358a67]Monitor[/color] and [color=#b88828]Search[/color].
+
     - If they are wanted, you can see the reason given below the status dropdown.
 
     - Once someone has been arrested, update their status on the console so everyone knows they no longer need to be captured.
