@@ -11,7 +11,19 @@
 			"name": "cautery"
 		},
 		{
-			"name": "abductor"
+			"name": "abductor",
+            "delays": [
+              [
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1
+              ]
+            ]
 		},
 		{
 			"name": "inhand-left",
