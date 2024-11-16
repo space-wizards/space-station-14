@@ -5,7 +5,7 @@
   description: A large duffel bag for holding various surgery goods.
   components:
   - type: Sprite
-    sprite: _StarLight/Clothing/Back/Duffels/abductor.rsi
+    sprite: _Starlight/Clothing/Back/Duffels/abductor.rsi
   - type: ExplosionResistance
     damageCoefficient: 0.1
   - type: Storage
