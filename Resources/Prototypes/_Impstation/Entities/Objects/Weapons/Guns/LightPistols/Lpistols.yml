@@ -99,21 +99,21 @@
   suffix: armor-piercing
   components:
 - type: ItemSlots
-    slots:
-      gun_magazine:
-        name: Magazine
-        startingItem: MagazineZipperAP
-        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
-        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
-        priority: 2
-        whitelist:
-          tags:
-            - MagazineZipper
-        whitelistFailPopup: gun-magazine-whitelist-fail
-      gun_chamber:
-        name: Chamber
-        startingItem: CartridgeLPistolAP
-        priority: 1
-        whitelist:
-          tags:
-            - CartridgeLPistol
+  slots:
+    gun_magazine:
+      name: Magazine
+      startingItem: MagazineZipperAP
+      insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+      ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+      priority: 2
+      whitelist:
+        tags:
+          - MagazineZipper
+      whitelistFailPopup: gun-magazine-whitelist-fail
+    gun_chamber:
+      name: Chamber
+      startingItem: CartridgeLPistolAP
+      priority: 1
+      whitelist:
+        tags:
+          - CartridgeLPistol
