@@ -43,3 +43,14 @@
       types:
         Radiation: 6
         Piercing: 8
+
+- type: entity
+  id: BulletLPistolAP
+  parent: BaseBulletAP
+  name: bullet (.22 auto APDSFS)
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 35
