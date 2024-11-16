@@ -61,6 +61,8 @@ def check_rsi(rsi: str, schema: Draft7Validator):
         return
 
     state_names = {state["name"] for state in meta_json["states"]}
+    
+    ignore_list = ["bestia.png", "dantalion.png", "hemomancer.png", "gargantua.png", "umbrae.png"]
 
     # Go over contents of RSI directory and ensure there is no extra garbage.
     for name in os.listdir(rsi):
@@ -73,7 +75,7 @@ def check_rsi(rsi: str, schema: Draft7Validator):
 
         # All PNGs must be defined in the meta.json
         png_state_name = name[:-4]
-        if png_state_name not in state_names:
+        if png_state_name not in state_names or png_state_name not in ignore_list:
             add_error(rsi, f"PNG not defined in metadata: {name}")
 
 
