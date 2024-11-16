@@ -17,15 +17,15 @@ internal static class Const
 
     public static GasProperties[] GasProperties =
     [
-        new (0.24f, 0.90f), // oxygen
-        new (0.20f, 0.64f), // nitrogen
-        new (0.12f, 1.11f), // carbon dioxide
-        new (0.60f, 0.21f), // plasma
-        new (0.30f, 0.45f), // tritium
-        new (0.14f, 1.21f), // vapor
-        new (0.16f, 0.91f), // ommonium
-        new (0.13f, 0.99f), // n2o
-        new (1.00f, 0.01f), // frezon
+        new (0.24f, 0.90f, 1.9f), // oxygen
+        new (0.20f, 0.64f, 2.0f), // nitrogen
+        new (0.12f, 1.11f, 3.5f), // carbon dioxide
+        new (0.60f, 0.21f, 1.6f), // plasma
+        new (0.30f, 0.45f, 1.3f), // tritium
+        new (0.14f, 1.21f, 2.5f), // vapor
+        new (0.16f, 0.91f, 4.4f), // ommonium
+        new (0.13f, 0.99f, 2.2f), // n2o
+        new (1.00f, 0.01f, 1.1f), // frezon
     ];
 
     public static float MinPressure = 33f;
@@ -36,4 +36,4 @@ internal static class Const
     public static string[] AudioCrack = ["/Audio/_Starlight/Effects/supermatter/crystal_crack_1.ogg", "/Audio/_Starlight/Effects/supermatter/crystal_crack_2.ogg"];
     public static string[] AudioBurn = ["/Audio/_Starlight/Effects/supermatter/burning_1.ogg", "/Audio/_Starlight/Effects/supermatter/burning_2.ogg", "/Audio/_Starlight/Effects/supermatter/burning_3.ogg"];
 }
-public record struct GasProperties(float HeatTransferPerMole, float HeatModifier);
+public record struct GasProperties(float HeatTransferPerMole, float HeatModifier, float RadiationStability);

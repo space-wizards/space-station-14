@@ -4,6 +4,7 @@ using Content.Shared.Abilities.Goliath;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
+using Content.Shared.Radiation.Components;
 using Content.Shared.Starlight.Antags.Abductor;
 using Content.Shared.Starlight.Energy.Supermatter;
 using Robust.Server.Audio;
@@ -41,6 +42,21 @@ public sealed class SupermatterSystem : AccUpdateEntitySystem
     {
         HandleDamage(supermatter);
         HandleGas(supermatter);
+        HandleRadiation(supermatter);
+        HandleLighting(supermatter);
+    }
+
+    private void HandleLighting(Entity<SupermatterComponent> supermatter)
+    {
+
+    }
+
+    private void HandleRadiation(Entity<SupermatterComponent> supermatter)
+    {
+        var radComp = EnsureComp<RadiationSourceComponent>(supermatter.Owner);
+        radComp.Intensity = supermatter.Comp.AccRadiation.Float() / 100;
+
+        supermatter.Comp.AccRadiation /= supermatter.Comp.RadiationStability;
     }
 
     private void HandleGas(Entity<SupermatterComponent> supermatter)
@@ -64,6 +80,7 @@ public sealed class SupermatterSystem : AccUpdateEntitySystem
         if (gas.TotalMoles == 0) return;
         float heatTransfer = 0;
         float heatModifier = 0;
+        float radiationStability = 0;
 
         for (var i = 0; i < Const.GasProperties.Length; i++)
         {
@@ -71,7 +88,10 @@ public sealed class SupermatterSystem : AccUpdateEntitySystem
             var percent = Math.Clamp(gas.Moles[i] / gas.TotalMoles, 0, 1);
             heatTransfer += prop.HeatTransferPerMole * gas.Moles[i];
             heatModifier += prop.HeatModifier * percent;
+            radiationStability += prop.RadiationStability * percent;
         }
+
+        supermatter.Comp.RadiationStability = MathHelper.Clamp(radiationStability, 1, 10);
 
         var heatDelta = heatTransfer <= supermatter.Comp.AccHeat.Float() ? heatTransfer : supermatter.Comp.AccHeat.Float();
         supermatter.Comp.AccHeat = MathHelper.Clamp(supermatter.Comp.AccHeat - heatDelta, 0, 9999);
