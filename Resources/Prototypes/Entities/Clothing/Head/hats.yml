@@ -460,7 +460,7 @@
     - HamsterWearable
     - WhitelistChameleon
 
-  - type: Butcherable
+  - type: Butcherable #USA was here
       spawned:
       - id: cloth
         amount: 1
