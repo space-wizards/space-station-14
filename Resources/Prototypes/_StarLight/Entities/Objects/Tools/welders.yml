@@ -5,9 +5,9 @@
   description: "An experimental welder capable of self-fuel generation and less harmful to the eyes."
   components:
   - type: Sprite
-    sprite: _StarLight/Objects/Tools/welder_abductor.rsi
+    sprite: _Starlight/Objects/Tools/welder_abductor.rsi
   - type: Item
-    sprite: _StarLight/Objects/Tools/welder_abductor.rsi
+    sprite: _Starlight/Objects/Tools/welder_abductor.rsi
   - type: SolutionContainerManager
     solutions:
       Welder:
