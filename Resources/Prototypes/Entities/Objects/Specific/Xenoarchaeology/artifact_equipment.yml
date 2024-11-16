@@ -103,7 +103,6 @@
     - type: StaticPrice
       price: 250
 
-
 - type: entity
   parent: BaseStorageItem
   id: HandheldArtifactContainer
