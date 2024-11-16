@@ -75,3 +75,54 @@
       - id: FineTicket
       - id: FineTicket
       - id: FineTicket
+
+- type: entity
+  id: BoxFolderBlackLoadout
+  parent: BoxFolderBase
+  name: black folder
+  suffix: Loadout
+  description: A plain black folder filled with top secret paperwork.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Misc/bureaucracy.rsi
+    layers:
+    - state: folder-black
+  - type: Item
+    sprite: _Impstation/Objects/Misc/bureaucracy.rsi
+    size: Small
+    shape: null
+  - type: StorageFill
+    contents:
+    - id: Paper
+    - id: Paper
+    - id: PaperOffice
+
+- type: entity
+  id: BoxFolderHamster
+  parent: BoxFolderBlackLoadout
+  name: hamster folder
+  description: A cute hamster-themed folder filled with top secret paperwork.
+  components:
+  - type: Sprite
+    layers:
+    - state: folder-hamster
+
+- type: entity
+  id: BoxFolderMime
+  parent: BoxFolderBlackLoadout
+  name: mime folder
+  description: A striped folder filled with top secret paperwork. Its paper rustle silently.
+  components:
+  - type: Sprite
+    layers:
+    - state: folder-mime
+
+- type: entity
+  id: BoxFolderPun
+  parent: BoxFolderBlackLoadout
+  name: pun pun folder
+  description: A cute Pun Pun-themed folder filled with top secret paperwork.
+  components:
+  - type: Sprite
+    layers:
+    - state: folder-pun
