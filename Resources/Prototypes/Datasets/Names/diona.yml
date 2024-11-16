@@ -1,11 +1,50 @@
-- type: localizedDataset
+- type: dataset
   id: DionaFirst
   values:
-    prefix: names-diona-first-dataset-
-    count: 22
+  - Moss
+  - Mushroom
+  - Herb
+  - Ivy
+  - Stalk
+  - Petal
+  - Thorn
+  - Rose
+  - Dandelion
+  - Birch
+  - Willow
+  - Bay
+  - Lake
+  - River
+  - Creek
+  - Meadow
+  - Canyon
+  - Mountain
+  - Peak
+  - Garden
+  - Soil
+  - Flower
 
-- type: localizedDataset
+- type: dataset
   id: DionaLast
   values:
-    prefix: names-diona-last-dataset-
-    count: 21
+  - Peace
+  - Harmony
+  - Relaxation
+  - Serendipity
+  - Calmness
+  - Introspection
+  - Union
+  - Comfort
+  - Dreams
+  - Quietude
+  - Balance
+  - Gentleness
+  - Placidity
+  - Repose
+  - Serenity
+  - Stillness
+  - Tranquility
+  - Ease
+  - Equilibrium
+  - Composure
+  - Control

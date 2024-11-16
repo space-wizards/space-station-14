@@ -1,5 +1,11 @@
-- type: localizedDataset
+- type: dataset
   id: ShuttleNames
   values:
-    prefix: names-cargo-shuttle-dataset-
-    count: 8
+  - A Shuttle Will Not Occur
+  - Big Money Shuttle
+  - Engine Change
+  - Ships-the-Cargo
+  - Shootel
+  - Shuttle McShuttleface
+  - ShuttleShuttle
+  - Urist McShuttle
