@@ -8,12 +8,14 @@
   markingLimits: MobJellidMarkingLimits
   dollPrototype: MobJellidPersonDummy
   skinColoration: Hues
+  sexes:
+  - Unsexed
 
 - type: speciesBaseSprites
   id: MobJellidSprites
   sprites:
     Head: MobJellidHead
-    HeadSide: MobJellidMarkingFollowSkin
+    Hair: MobJellidMarkingFollowSkin
     Chest: MobJellidTorso
     Eyes: MobJellidEyes
     LArm: MobJellidLArm
@@ -33,8 +35,9 @@
 
 - type: markingPoints
   id: MobJellidMarkingLimits
+  onlyWhitelisted: true
   points:
-    HeadSide:
+    Hair:
       points: 1
       required: false
     Chest:

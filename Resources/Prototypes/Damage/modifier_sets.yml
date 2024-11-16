@@ -160,6 +160,18 @@
     Cellular: 0.2
 
 - type: damageModifierSet
+  id: Jellid
+  coefficients:
+    Blunt: 0.6
+    Slash: 1.2
+    Piercing: 1.2
+    Heat: 1.2 # They burn easier, and take increased slash and bloodloss damage due to their osmosis getting McFucked up
+    Bloodloss: 1.2
+    Cold: 0.2
+    Poison: 0.8
+    Cellular: 1
+
+- type: damageModifierSet
   id: Infernal
   coefficients:
     Blunt: 0.8

@@ -15,6 +15,8 @@ namespace Content.Server.Jellid.Systems
         [Dependency] private readonly BatterySystem _battery = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
 
+        public float DrainAmount;
+        
         public override void Initialize()
         {
             base.Initialize();
@@ -22,13 +24,17 @@ namespace Content.Server.Jellid.Systems
         }
         private void OnChargeChanged(Entity<JellidComponent> entity, ref ChargeChangedEvent args)
         {
-            float DamageCharge = 1f;
+            float DamageCharge = 120f;
             if (TryComp<BatteryComponent>(entity.Owner, out var battery) &&
                 battery.CurrentCharge < DamageCharge)
             {
-                var damage = new DamageSpecifier
+                if (Charging)
+                    {
+                    Log.Error($"Prevented damage.");
+                    return
+                    }
             {
-                DamageDict = { ["Slash"] = 5f } //TODO: Lower the speed this fuckin kills you, also add popups and make it so it shows a alert when you are at 50%, 25%, 10%, 5%.
+                DamageDict = { ["Slash"] = 1.5f } // This should start a 60-second ramping countdown to death once you hit DamageCharge
             };
             _damageable.TryChangeDamage(entity.Owner, damage, origin: entity.Owner);
                 Log.Error($"Damage is being taken");
@@ -74,10 +80,17 @@ private void DrainPower(BatteryComponent containerBattery, BatteryComponent inte
 
         Log.Error($"Drained {drainAmount} power from {containerBattery.Owner} to {internalBattery.Owner}.");
     }
+    
 }
 
-
-
+    public bool Charging 
+    { 
+        get 
+        { 
+        Log.Error($"Is Charging!")
+        return DrainAmount > 0;
+        } 
+    }
 
     }
 }
