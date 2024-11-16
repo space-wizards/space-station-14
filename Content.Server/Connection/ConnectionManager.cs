@@ -191,7 +191,13 @@ namespace Content.Server.Connection
                 hwId = null;
             }
 
-            var asnBans = await _db.GetServerAsnBanAsync()
+            // THIS IS A WIP
+            var asn = await IpToAsn(addr.ToString());
+            if (asn == null)
+            {
+                _sawmill.Error("ASN lookup failed, bypassing this step.");
+            }
+            // THIS IS A WIP
 
             var bans = await _db.GetServerBansAsync(addr, userId, hwId, includeUnbanned: false);
             if (bans.Count > 0)
@@ -395,8 +401,10 @@ namespace Content.Server.Connection
             return assigned;
         }
 
-        private async Task<string> IpToAsn(string ip)
+        private async Task<string?> IpToAsn(string ip)
         {
+            // This will be implemented later
+            return null;
         }
     }
 }
