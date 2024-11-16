@@ -1,4 +1,42 @@
 - type: entity
   id: SupermatterCrystal
+  name: supermatter
+  descruption: A glowing supermatter crystal, with half an ID card lying next to it, and it says "Clown pira..." on it.
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Supermatter
+  - type: Transform
+    noRot: true
+    anchored: true
+  - type: InteractionOutline
+  - type: Clickable
+  - type: Anchorable
+    delay: 2
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 190
+        friction: 0.8
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Pullable
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/supermatter.rsi
+    state: supermatter
+    shader: unshaded
+  - type: Icon
+    sprite: _Starlight/Objects/Specific/supermatter.rsi
+    state: supermatter
+  - type: PointLight
+    enabled: true
+    color: "#FFFB97"
+ # - type: LightningTarget 
+ #   priority: 1
