@@ -208,10 +208,10 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
 
         var slot = limb.PartType switch
         {
-            BodyPartType.Arm => limb.Symmetry == BodyPartSymmetry.Left ? "left_arm" : "right_arm",
-            BodyPartType.Hand => limb.Symmetry == BodyPartSymmetry.Left ? "left_hand" : "right_hand",
-            BodyPartType.Leg => limb.Symmetry == BodyPartSymmetry.Left ? "left_leg" : "right_leg",
-            BodyPartType.Foot => limb.Symmetry == BodyPartSymmetry.Left ? "left_foot" : "right_foot",
+            BodyPartType.Arm => limb.Symmetry == BodyPartSymmetry.Left ? "left arm" : "right arm",
+            BodyPartType.Hand => limb.Symmetry == BodyPartSymmetry.Left ? "left hand" : "right hand",
+            BodyPartType.Leg => limb.Symmetry == BodyPartSymmetry.Left ? "left leg" : "right leg",
+            BodyPartType.Foot => limb.Symmetry == BodyPartSymmetry.Left ? "left foot" : "right foot",
             _ => "",
         };
         if (!_body.AttachPart(part, slot, limbId, bodyPart, limb))

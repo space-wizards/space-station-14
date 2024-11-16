@@ -15,37 +15,37 @@
     torso:
       part: TorsoHuman
       connections:
-      - right_arm
-      - left_arm
-      - right_leg
-      - left_leg
+      - right arm
+      - left arm
+      - right leg
+      - left leg
       organs:
         heart: OrganHumanHeart
         lungs: OrganHumanLungs
         stomach: OrganHumanStomach
         liver: OrganHumanLiver
         kidneys: OrganHumanKidneys
-    right_arm:
+    right arm:
       part: RightArmHuman
       connections:
-      - right_hand
-    left_arm:
+      - right hand
+    left arm:
       part: LeftArmHuman
       connections:
-      - left_hand
-    right_hand:
+      - left hand
+    right hand:
       part: RightHandHuman
-    left_hand:
+    left hand:
       part: LeftHandHuman
-    right_leg:
+    right leg:
       part: RightLegHuman
       connections:
-      - right_foot
-    left_leg:
+      - right foot
+    left leg:
       part: LeftLegHuman
       connections:
-      - left_foot
-    right_foot:
+      - left foot
+    right foot:
       part: RightFootHuman
-    left_foot:
+    left foot:
       part: LeftFootHuman
