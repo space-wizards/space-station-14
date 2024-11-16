@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: IProduceWidgets
-  changes:
-  - message: Meteor dust should more consistently happen instead of meteors.
-    type: Tweak
-  id: 7118
-  time: '2024-08-15T19:33:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31018
 - author: Emisse
   changes:
   - message: Atlas, Cluster, Europa, & Saltern removed from the game.
@@ -3922,3 +3915,11 @@
   id: 7617
   time: '2024-11-16T04:30:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33019
+- author: Aquif
+  changes:
+  - message: There is now a button to view your admin remarks in the character editor,
+      right next to the stats button.
+    type: Tweak
+  id: 7618
+  time: '2024-11-16T05:09:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31761
