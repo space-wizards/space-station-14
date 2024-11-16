@@ -41,7 +41,7 @@ spelf-mood-violence-permitted-name = Violence Between Thaven Is Permitted
 spelf-mood-violence-permitted-desc = ... With no legal repercussions.
 
 spelf-mood-spelf-only-crew-name = Thaven Vs. The World
-spelf-mood-spelf-only-crew-desc = You believe that Nanotrasen is not accomodating enough of Thaven needs. An effort should be made to fight for better rights and protections under Space Law.
+spelf-mood-spelf-only-crew-desc = You believe that Nanotrasen is not accommodating enough of Thaven needs. An effort should be made to fight for better rights and protections under Space Law.
 
 spelf-mood-your-department-only-name = Other Departments Are Inefficient
 spelf-mood-your-department-only-desc = You strongly believe that your department is the only one that actually does anything.
@@ -53,7 +53,7 @@ spelf-mood-violence-distasteful-name = Violence Is Distasteful
 spelf-mood-violence-distasteful-desc = Conflict should be settled through mediated dispute, and one should only resort to violence if all other options have failed.
 
 spelf-mood-pet-god-name = {$pet} Is A God
-spelf-mood-pet-god-desc = {$pet} must be collected and brought to the Chapel to be worshipped and brought offerings.
+spelf-mood-pet-god-desc = {$pet} must be collected and brought to the Chapel to be worshiped and brought offerings.
 
 spelf-mood-room-holy-name = {$room} Is A Holy Place
 spelf-mood-room-holy-desc = Thaven must congregate at least three times per day at {$room}. If such a room does not exist, it must be constructed. If it is made inaccessible, Thaven must set up a place of worship as close to it as they legally can.
@@ -63,4 +63,3 @@ spelf-mood-delicacy-desc = {$edible} is a traditional Thaven delicacy. All Thave
 
 spelf-mood-holiday-name = Today is {$day}
 spelf-mood-holiday-desc = You think you remember the traditional celebrations...
-
