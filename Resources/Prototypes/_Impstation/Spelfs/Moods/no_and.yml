@@ -39,6 +39,9 @@
     - Claustrophobic
     - Agoraphobic
     - NonSmoker
+    - MadHatter
+    - Crawler
+    - Elevated
 
 # Your Moods are a strictly-kept secret, and should never be revealed to anyone.
 - type: spelfMood
@@ -292,6 +295,7 @@
   moodDesc: spelf-mood-claustrophobic-desc
   conflicts:
     - Agoraphobic
+    - StationIsAlive
 
 # Agoraphobic: Open spaces are uncomfortable. Seek to rearrange such spaces into small, efficient and modular rooms.
 - type: spelfMood
@@ -300,6 +304,7 @@
   moodDesc: spelf-mood-agoraphobic-desc
   conflicts:
     - Claustrophobic
+    - StationIsAlive
 
 # Non-Smoker: Secondhand smoke is incredibly dangerous. Avoid areas where people are smoking in public.
 - type: spelfMood
@@ -316,6 +321,26 @@
     word1: SpelfWords
     word2: SpelfWords
     word3: SpelfWords
+
+# Mad Hatter: You are alone on the station. Everyone else is a figment of your imagination.
+- type: spelfMood
+  id: MadHatter
+  moodName: spelf-mood-mad-hatter-name
+  moodDesc: spelf-mood-mad-hatter-desc
+
+# Creepy Crawly: You have extreme vertigo, to the point where merely standing upright can cause discomfort. You're much more comfortable crawling along the floor.
+- type: spelfMood
+  id: Crawler
+  moodName: spelf-mood-crawler-name
+  moodDesc: spelf-mood-crawler-desc
+
+# The Floor Is Lava: You prefer to be elevated whenever possible - Standing atop tables, railings, etc., is where you feel the most comfortable. 
+- type: spelfMood
+  id: Elevated
+  moodName: spelf-mood-elevated-name
+  moodDesc: spelf-mood-elevated-desc
+  conflicts:
+    - Crawler
 
 # [ITEM]s are an abomination. You must avoid them at all costs, and destroy them if necessary.
 #- type: spelfMood
@@ -335,7 +360,3 @@
 #  moodDesc: spelf-mood-color-bad-desc
 #  conflicts:
 #    - ColorGood
-
-
-
-
