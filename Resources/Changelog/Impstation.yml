@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: TGRCDev
   changes:
-  - message: Fixed errors with the mobster accent
-    type: Fix
-  id: 30
-  time: '2024-07-22T23:45:04.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/36
-- author: TGRCDev
-  changes:
   - message: Dragging mobs who are crit/dead deals slight blunt damage
     type: Tweak
   id: 31
@@ -4242,3 +4235,14 @@
   id: 529
   time: '2024-11-16T15:10:21.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/697
+- author: widgetbeck
+  changes:
+  - message: Updated the Gray guidebook entry to be more in-line with that of other
+      species, while preserving the original Transmission.
+    type: Tweak
+  - message: Updated Gray naming conventions. Please take a look at their Guidebook
+      entry before naming your Gray "Kanye West."
+    type: Tweak
+  id: 530
+  time: '2024-11-16T15:36:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/731
