@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TGRCDev
-  changes:
-  - message: Dragging mobs who are crit/dead deals slight blunt damage
-    type: Tweak
-  id: 31
-  time: '2024-07-22T23:44:52.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/39
 - author: starlighthowls
   changes:
   - message: New drinks!
@@ -4246,3 +4239,17 @@
   id: 530
   time: '2024-11-16T15:36:54.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/731
+- author: widgetbeck
+  changes:
+  - message: Added several new Thaven moods.
+    type: Add
+  - message: Tweaked the wording of several Thaven moods, and fixed several typos.
+    type: Tweak
+  - message: Fixed Thaven damage numbers being wrong - Thaven are no longer buff,
+      and their damageModifierSet is now accurate to the Guidebook.
+    type: Fix
+  - message: Thaven Die A Glorious Death rare EMAG mood should now roll correctly.
+    type: Fix
+  id: 531
+  time: '2024-11-16T16:57:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/730
