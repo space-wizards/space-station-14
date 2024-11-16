@@ -68,6 +68,7 @@ namespace Content.Server.Connection
             // Ipintel
             _cfg.OnValueChanged(CCVars.IPIntelEmail, b => _contactEmail = b, true);
             _cfg.OnValueChanged(CCVars.IPIntelBase, b => _baseUrl = b, true);
+            _cfg.OnValueChanged(CCVars.IPIntelFlags, b => _flags = b, true);
             _cfg.OnValueChanged(CCVars.IPIntelRejectUnknown, b => _rejectUnknown = b, true);
             _cfg.OnValueChanged(CCVars.IPIntelRejectBad, b => _rejectBad = b, true);
             _cfg.OnValueChanged(CCVars.IPIntelRejectRateLimited, b => _rejectLimited = b, true);

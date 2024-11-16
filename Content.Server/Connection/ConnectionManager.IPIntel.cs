@@ -22,6 +22,7 @@ public sealed partial class ConnectionManager
     // CCVars, they are initialized in ConnectionManager.cs
     private string? _contactEmail;
     private string? _baseUrl;
+    private string? _flags;
     private bool _rejectUnknown;
     private bool _rejectBad;
     private bool _rejectLimited;
@@ -81,7 +82,7 @@ public sealed partial class ConnectionManager
         // Info about flag B: https://getipintel.net/free-proxy-vpn-tor-detection-api/#flagsb
         // TLDR: We don't care about knowing if a connection is compromised.
         // We just want to know if it's a vpn. This also speeds up the request by quite a bit. (A full scan can take 200ms to 5 seconds. This will take at most 120ms)
-        using var request = await _httpClient.GetAsync($"{_baseUrl}/check.php?ip={ip}&contact={_contactEmail}&flags=b");
+        using var request = await _httpClient.GetAsync($"{_baseUrl}/check.php?ip={ip}&contact={_contactEmail}&flags={_flags}");
 
         if (request.StatusCode == HttpStatusCode.TooManyRequests)
         {

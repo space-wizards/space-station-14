@@ -282,6 +282,13 @@ public sealed partial class CCVars
             CVarDef.Create("game.ipintel_baseurl", "https://check.getipintel.net", CVar.SERVERONLY);
 
         /// <summary>
+        /// The flags to use in the request to IPIntel, please look here for more info. https://getipintel.net/free-proxy-vpn-tor-detection-api/#optional_settings
+        /// Note: Some flags may increase the chances of false positives and request time. The default should be fine for most servers.
+        /// </summary>
+        public static readonly CVarDef<string> IPIntelFlags =
+            CVarDef.Create("game.ipintel_baseurl", "b", CVar.SERVERONLY);
+
+        /// <summary>
         /// Maximum amount of requests per Minute. For free you get 15.
         /// </summary>
         public static readonly CVarDef<int> IPIntelMaxMinute =
