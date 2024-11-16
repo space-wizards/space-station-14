@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Fixing Traitor Objectives
-    type: Fix
-  id: 28
-  time: '2024-07-19T19:00:51.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/34
 - author: TGRCDev
   changes:
   - message: Fixed mouse position being incorrectly warped when the singularity overlay
@@ -4238,3 +4231,11 @@
   id: 527
   time: '2024-11-16T11:04:34.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/714
+- author: smpletan
+  changes:
+  - message: Added the Desperado Hardsuit for Prospectors, currently inaccessible
+      outside of admin intervention.
+    type: Add
+  id: 528
+  time: '2024-11-16T11:57:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/705
