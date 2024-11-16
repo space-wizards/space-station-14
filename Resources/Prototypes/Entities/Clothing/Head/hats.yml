@@ -454,16 +454,16 @@
     sprite: Clothing/Head/Hats/surgcap_blue.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/surgcap_blue.rsi
+   # - type: Butcherable #USA was here
+   # butcheringType: Knife
+   #   spawned:
+   #   - id: MaterialCloth1
+   #     amount: 2
   - type: Tag
     tags:
     - ClothMade
     - HamsterWearable
     - WhitelistChameleon
-
-  - type: Butcherable #USA was here
-      spawned:
-      - id: cloth
-        amount: 1
 
 - type: entity
   parent: ClothingHeadBase
