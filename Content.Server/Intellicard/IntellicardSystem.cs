@@ -1,4 +1,5 @@
 using Content.Server.Ghost.Roles;
+using Content.Server.RandomMetadata;
 using Content.Shared.Intellicard;
 using Content.Shared.Popups;
 using Content.Shared.Silicons.StationAi;
@@ -14,6 +15,8 @@ public sealed class IntellicardSystem : SharedIntellicardSystem
     [Dependency] private readonly   SharedPopupSystem _popup = default!;
     [Dependency] private readonly   ToggleableGhostRoleSystem  _ghostRole = default!;
     [Dependency] private readonly   SharedStationAiSystem _stationAi = default!;
+    [Dependency] private readonly   MetaDataSystem _metaData = default!;
+    [Dependency] private readonly   RandomMetadataSystem  _randomMeta = default!;
 
     public override void Initialize()
     {
@@ -46,5 +49,16 @@ public sealed class IntellicardSystem : SharedIntellicardSystem
             }
         };
         args.Verbs.Add(verb);
+    }
+
+    protected override void RandomizeAiName(EntityUid uid)
+    {
+        if (!TryComp<RandomMetadataComponent>(uid, out var metadata))
+            return;
+
+        if (metadata.NameSegments != null)
+        {
+            _metaData.SetEntityName(uid, _randomMeta.GetRandomFromSegments(metadata.NameSegments, metadata.NameSeparator));
+        }
     }
 }

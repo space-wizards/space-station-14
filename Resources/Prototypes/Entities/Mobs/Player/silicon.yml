@@ -404,6 +404,8 @@
     - HideContextMenu
     - StationAi
     - NoConsoleSound
+  - type: RandomMetadata
+    nameSegments: [ names_ai ]
 
 # Hologram projection that the AI's eye tracks.
 - type: entity

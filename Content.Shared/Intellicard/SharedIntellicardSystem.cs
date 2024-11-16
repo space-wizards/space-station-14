@@ -25,11 +25,9 @@ public abstract class SharedIntellicardSystem : EntitySystem
     [Dependency] private readonly   SharedRoleSystem _roles = default!;
     [Dependency] private readonly   SharedStationAiSystem _stationAi = default!;
 
-    [ValidatePrototypeId<EntityPrototype>]
-    private static readonly EntProtoId DefaultAi = "StationAiBrain";
+    private readonly EntProtoId _defaultAi = "StationAiBrain";
 
-    [ValidatePrototypeId<JobPrototype>]
-    private static readonly EntProtoId StationAiJob = "StationAi";
+    private readonly EntProtoId _stationAiJob = "StationAi";
 
     public override void Initialize()
     {
@@ -58,11 +56,12 @@ public abstract class SharedIntellicardSystem : EntitySystem
             return;
 
         // Swap the job of the mind.
-        _roles.MindAddJobRole(mindId, mind, false, StationAiJob);
+        _roles.MindAddJobRole(mindId, mind, false, _stationAiJob);
 
         // Try to create a new AiBrain inside of the targetHolder
-        var brain = SpawnInContainerOrDrop(DefaultAi, ent.Owner, StationAiHolderComponent.Container);
+        var brain = SpawnInContainerOrDrop(_defaultAi, ent.Owner, StationAiHolderComponent.Container);
         _mind.TransferTo(mindId, brain);
+        RandomizeAiName(brain);
         QueueDel(args.Args.Used);
         _popup.PopupEntity(Loc.GetString("ai-convert-finished"), args.User, args.User, PopupType.Medium);
     }
@@ -119,6 +118,8 @@ public abstract class SharedIntellicardSystem : EntitySystem
 
         _metadata.SetEntityName(ent.Owner, Prototype(ent.Owner)?.Name ?? string.Empty);
     }
+
+    protected virtual void RandomizeAiName(EntityUid ent) { }
 }
 
 [Serializable, NetSerializable]
