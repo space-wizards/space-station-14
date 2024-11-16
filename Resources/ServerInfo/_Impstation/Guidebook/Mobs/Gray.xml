@@ -1,42 +1,56 @@
 <Document>
-  # Gray
-
+  # Grays
   <Box>
-    <GuideEntityEmbed Entity="MobGray" Caption=""/>
+  <GuideEntityEmbed Entity="MobGray" Caption=""/>
   </Box>
-  ## GLEEP TEK NEWPORT
-  <Box>
-    <GuideEntityEmbed Entity="CigPackNewport" Caption=""/>
-  </Box>
-  GLEEP OUU PIB ZOOTI FRIENDS WOGLUMP GLEEP LOVE THESE THINGS!!!!
-    <Box>
-    <GuideEntityEmbed Entity="GreenMarijuanaSeeds" Caption=""/>
-    <GuideEntityEmbed Entity="ToyNuke" Caption=""/>
-    <GuideEntityEmbed Entity="PlushieHuman" Caption=""/>
-  </Box>
-  GIVE US ZIIP JORL THEM PIB GLEEP WORK JAZEE MO!!!
-
-   <Box>
-    <GuideEntityEmbed Entity="FoodBurgerSuper" Caption=""/>
-  </Box>
-[color=#1b67a5] - Unknown Transmission Recieved by Nanotrasen Sensors [/color]
-
-
-  GLEEP TAKE [color=#1e90ff]60% LESS NOOT DAMAGE, 60% LESS HEAT DAMAGE, PIB 80% LESS POISON DAMAGE[/color] YII [color=#ffa500]50% MORE BLUNT DAMAGE, 50% MORE SLASH DAMAGE, 50% MORE PIERCING DAMAGE[/color]
-
-  GLEEP BLEED [color=#64ff33]RADIUM[/color]!!!
+  ## Physiology
+  Grays are much like Humans, in many ways. Their basic external physiology is largely similar to that of Humans, although they exhibit no sexual dimorphism. Internally, however, Grays are remarkably different - The structures of their organs are utterly unique among observed species, and [color=#ffa500]their blood is composed entirely of liquid Radium, which cannot be metabolized from any known source.[/color] 
+  
+  Their bodies are adapted for exposure to extreme environments, so they take [color=#1e90ff]60% less damage from Cold and Heat, and 80% less Poison damage,[/color] but are otherwise very fragile - They take [color=#ffa500]50% more Blunt, Slash, and Piercing damage.[/color]
+  
+  ## Language
+  [color=#ffa500]The Gray language, colloquially known as "Grayspeak," has evaded attempts at automatic translation up to this point.[/color] Although some Grays have, through various means, learned how to speak Common, [color=#ffa500]most Grays are largely unintelligible to other species.[/color]
+  
+  ## Culture
+  Grays are cultural sponges, and appear to absorb elements of other Humanoid cultures rapidly through exposure. However, they have been observed to possess a singular fascination with Human culture from the early Internet era, and their knowledge of it appears to terminate around the year 2010. It is unknown precisely why this is the case.
 
   ## GRAY NAMING CONVENTIONS
 
-  GLEEP TYPICALLY USE GRAYSPEAK OR GRAYSPEAK-ADJACENT SOUNDS JAZEE MILX NAMES.
-  GLEEP FRUP SOMETIMES NAME THEMSELVES AFTER STUPEE CULTURE
+  Grays typically name themselves after Grayspeak-adjacent sounds, or "corrupted," Grayspeak-ified versions of things that interest them from other Humanoid cultures - generally surface-level interpretations of the names of products. For example, "Tonka Truck"  may become "Tonky Chuck." Try to avoid outright, unchanged references to recent media or memes.
 
-  - [color=#449944]ZIGEEF:[/color] Carp Shitto
-  - [color=#449944]ZIGEEF:[/color] Gnarpy Da
-  - [color=#449944]ZIGEEF:[/color] Tonky Chuck
-  - [color=#449944]ZIGEEF:[/color] New Ports
-  - [color=#449944]ZIGEEF:[/color] Hyundai Sonata
-  - [color=#994444]DENI:[/color] Isuggest Forcefem
-  - [color=#994444]DENI:[/color] The Syndicate
-  - [color=#994444]DENI:[/color] Benry
+  - [color=#449944]GOOD:[/color] Carp Shitto
+  - [color=#449944]GOOD:[/color] Gnarpy Da
+  - [color=#449944]GOOD:[/color] Yippi Zoota
+  - [color=#449944]GOOD:[/color] Tonky Chuck
+  - [color=#449944]GOOD:[/color] New Ports
+  - [color=#449944]GOOD:[/color] Ford Mustang
+  - [color=#449944]GOOD:[/color] Images
+  - [color=#449944]GOOD:[/color] Emess Paint
+  - [color=#449944]GOOD:[/color] Spunch Bop
+  - [color=#ffa500]YOU'RE ON THIN ICE, BUDDY:[/color] Isuggest Forcefem
+  - [color=#994444]BAD:[/color] The Syndicate
+  - [color=#994444]BAD:[/color] Kanye West
+  - [color=#994444]BAD:[/color] Talk Tuah Podcast
+  - [color=#994444]BAD:[/color] Call Of Duty Black Ops 2
+  - [color=#994444]BAD:[/color] Skibidi Toilet
+  - [color=#994444]BAD:[/color] Benry
+  
+[color=#1b67a5][bold]Unknown Transmission Recieved by Nanotrasen Sensors:[/color][/bold]
+  
+  ## GLEEP TEK NEWPORT
+  <Box>
+  <GuideEntityEmbed Entity="CigPackNewport" Caption=""/>
+  </Box>
+  GLEEP OUU PIB ZOOTI FRIENDS WOGLUMP GLEEP LOVE THESE THINGS!!!!
+  <Box>
+  <GuideEntityEmbed Entity="GreenMarijuanaSeeds" Caption=""/>
+  <GuideEntityEmbed Entity="ToyNuke" Caption=""/>
+  <GuideEntityEmbed Entity="PlushieHuman" Caption=""/>
+  </Box>
+  GIVE US ZIIP JORL THEM PIB GLEEP WORK JAZEE MO!!!
+  <Box>
+  <GuideEntityEmbed Entity="FoodBurgerSuper" Caption=""/>
+  </Box>
+[color=#1b67a5]- End Transmission.[/color]
+
 </Document>
