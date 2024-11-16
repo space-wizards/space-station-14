@@ -127,14 +127,8 @@ public sealed class DefibrillatorSystem : EntitySystem
             });
     }
 
-    public void Zap(EntityUid uid,
-        EntityUid target,
-        EntityUid user,
-        DefibrillatorComponent? component = null,
-        MobStateComponent? mob = null,
-        MobThresholdsComponent? thresholds = null)
+    public void Zap(EntityUid uid, EntityUid target, EntityUid user, DefibrillatorComponent? component = null, MobStateComponent? mob = null, MobThresholdsComponent? thresholds = null)
     {
-        var revive = true;
         if (!Resolve(uid, ref component) || !Resolve(target, ref mob, ref thresholds, false))
             return;
 
@@ -167,37 +161,33 @@ public sealed class DefibrillatorSystem : EntitySystem
                 Loc.GetString("defibrillator-rotten"),
                 InGameICChatType.Speak,
                 true);
-            revive = false;
+            return;
         }
 
-        if (HasComp<UnrevivableComponent>(target) && revive)
+        if (HasComp<UnrevivableComponent>(target))
         {
             _chatManager.TrySendInGameICMessage(uid,
                 Loc.GetString("defibrillator-unrevivable"),
                 InGameICChatType.Speak,
                 true);
-            revive = false;
+            return;
         }
 
-        if (revive && HasComp<RandomUnrevivableComponent>(target))
+        if (HasComp<RandomUnrevivableComponent>(target))
         {
             var dnrComponent = Comp<RandomUnrevivableComponent>(target);
 
-            if (dnrComponent.Chance > _random.NextDouble())
+            if (dnrComponent.Chance < _random.NextDouble())
             {
-                _chatManager.TrySendInGameICMessage(uid,
-                    Loc.GetString("defibrillator-unrevivable"),
-                    InGameICChatType.Speak,
-                    true);
-
-                dnrComponent.Chance = 0.0f;
-                revive = false;
+                _chatManager.TrySendInGameICMessage(uid, Loc.GetString("defibrillator-unrevivable"), InGameICChatType.Speak, true);
+                dnrComponent.Chance = 0f;
+                AddComp<UnrevivableComponent>(target);
+                return;
             }
-        }
-
-        if (!revive)
-        {
-            return;
+            else
+            {
+                dnrComponent.Chance -= 0.1f;
+            }
         }
 
         if (_mobState.IsDead(target, mob))
