@@ -65,7 +65,7 @@
     fireRate: 3
     minAngle: 5
     maxAngle: 90
-    angleIncrease: 15
+    angleIncrease: 30
     angleDecay: 5
     availableModes:
     - SemiAuto
