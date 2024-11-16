@@ -1,62 +1,4 @@
 ﻿Entries:
-- author: to4no_fix
-  changes:
-  - message: Added a new electropack that shocks when a trigger is triggered
-    type: Add
-  - message: Added a new shock collar that shocks when a trigger is triggered
-    type: Add
-  - message: Two shock collars and two remote signallers added to the warden's locker
-    type: Add
-  - message: Shock collar added as a new target for the thief
-    type: Add
-  - message: A new Special Means technology has been added to the Arsenal research
-      branch at the 1st research level. Its research opens up the possibility of producing
-      electropacks at security techfab. The cost of technology research is 5000
-    type: Add
-  id: 7114
-  time: '2024-08-15T14:30:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30529
-- author: Mervill
-  changes:
-  - message: The Gas Analyzer won't spuriously shut down for seemly no reason.
-    type: Tweak
-  - message: The Gas Analyzer will always switch to the device tab when a new object
-      is scanned.
-    type: Tweak
-  - message: The Gas Analyzer's interaction range is now equal to the standard interaction
-      range
-    type: Fix
-  - message: Clicking the Gas Analyzer when it's in your hand has proper enable/disable
-      behavior.
-    type: Fix
-  id: 7115
-  time: '2024-08-15T14:45:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30763
-- author: Nimfar11
-  changes:
-  - message: Adds a gold toilet
-    type: Add
-  - message: Adds a target for the Thief to steal the golden toilet
-    type: Add
-  - message: Corrected the sprite image for the normal toilet.
-    type: Fix
-  id: 7116
-  time: '2024-08-15T19:23:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31049
-- author: themias
-  changes:
-  - message: Raw meat cutlets can be cooked on a grill
-    type: Tweak
-  id: 7117
-  time: '2024-08-15T19:30:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31048
-- author: IProduceWidgets
-  changes:
-  - message: Meteor dust should more consistently happen instead of meteors.
-    type: Tweak
-  id: 7118
-  time: '2024-08-15T19:33:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31018
 - author: Emisse
   changes:
   - message: Atlas, Cluster, Europa, & Saltern removed from the game.
@@ -3943,3 +3885,41 @@
   id: 7613
   time: '2024-11-15T23:46:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31147
+- author: SaphireLattice
+  changes:
+  - message: Crayon UI now has categories and queue
+    type: Add
+  id: 7614
+  time: '2024-11-16T03:25:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33101
+- author: Southbridge
+  changes:
+  - message: The BRB sign is now included in the Bureaucracy Crate
+    type: Add
+  id: 7615
+  time: '2024-11-16T03:26:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33341
+- author: SaphireLattice
+  changes:
+  - message: Utensils can finally go into disposals
+    type: Fix
+  id: 7616
+  time: '2024-11-16T03:39:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33326
+- author: K-Dynamic
+  changes:
+  - message: Solar assembly crate now comes with 10 flatpacks and 20 glass to make
+      expansion and repairs easier, as well as increasing in price from 525 to 1250
+      spesos.
+    type: Tweak
+  id: 7617
+  time: '2024-11-16T04:30:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33019
+- author: Aquif
+  changes:
+  - message: There is now a button to view your admin remarks in the character editor,
+      right next to the stats button.
+    type: Tweak
+  id: 7618
+  time: '2024-11-16T05:09:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31761
