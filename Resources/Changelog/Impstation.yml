@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: starlighthowls
   changes:
-  - message: New drinks!
-    type: Add
-  id: 32
-  time: '2024-07-22T23:43:58.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/40
-- author: starlighthowls
-  changes:
   - message: Moth friendly food!
     type: Add
   id: 33
@@ -4253,3 +4246,11 @@
   id: 531
   time: '2024-11-16T16:57:10.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/730
+- author: Darkmajia
+  changes:
+  - message: Random unrevivable is so fixed for real this time and it's not even funny
+      how fixed it is. For real this time.
+    type: Fix
+  id: 532
+  time: '2024-11-16T20:15:14.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/734
