@@ -7,7 +7,7 @@ using Content.Shared.Xenoarchaeology.Artifact.XAT;
 
 namespace Content.Server.Xenoarchaeology.Artifact.XAT;
 
-public sealed class XATMagnetSystem : BaseXATSystem<XATMagnetComponent>
+public sealed class XATMagnetSystem : BaseQueryUpdateXATSystem<XATMagnetComponent>
 {
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
@@ -42,8 +42,6 @@ public sealed class XATMagnetSystem : BaseXATSystem<XATMagnetComponent>
 
     protected override void UpdateXAT(Entity<XenoArtifactComponent> artifact, Entity<XATMagnetComponent, XenoArtifactNodeComponent> node, float frameTime)
     {
-        base.UpdateXAT(artifact, node, frameTime);
-
         var query = EntityQueryEnumerator<MagbootsComponent, ItemToggleComponent, TransformComponent>();
         while (query.MoveNext(out _, out _, out var itemToggle, out var xform))
         {

@@ -1,3 +1,5 @@
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Timing;
@@ -9,6 +11,7 @@ namespace Content.Shared.Xenoarchaeology.Artifact;
 public abstract partial class SharedXenoArtifactSystem
 {
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     private void InitializeXAE()
     {
@@ -73,12 +76,17 @@ public abstract partial class SharedXenoArtifactSystem
         EntityUid? user,
         EntityUid? target,
         EntityCoordinates coordinates,
-        bool consumeDurability = true)
+        bool consumeDurability = true
+    )
     {
         if (node.Comp.Degraded)
             return false;
 
-        //TODO: admin log my dear.
+        _adminLogger.Add(
+            LogType.ArtifactNode,
+            LogImpact.Low,
+            $"{ToPrettyString(artifact.Owner)} node {ToPrettyString(node)} got activated at {coordinates}"
+        );
         if (consumeDurability)
         {
             AdjustNodeDurability((node, node.Comp), -1);
@@ -96,4 +104,5 @@ public readonly record struct XenoArtifactNodeActivatedEvent(
     Entity<XenoArtifactNodeComponent> Node,
     EntityUid? User,
     EntityUid? Target,
-    EntityCoordinates Coordinates);
+    EntityCoordinates Coordinates
+);

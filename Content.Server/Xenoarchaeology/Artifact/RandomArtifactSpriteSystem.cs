@@ -17,8 +17,9 @@ public sealed class RandomArtifactSpriteSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<RandomArtifactSpriteComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<RandomArtifactSpriteComponent, XenoArtifactNodeActivatedEvent>(OnActivated);
+        SubscribeLocalEvent<RandomArtifactSpriteComponent, ArtifactActivatedEvent>(OnActivated);
     }
 
     public override void Update(float frameTime)
@@ -47,7 +48,7 @@ public sealed class RandomArtifactSpriteSystem : EntitySystem
         _item.SetHeldPrefix(uid, "ano" + randomSprite.ToString("D2")); //set item artifact inhands
     }
 
-    private void OnActivated(EntityUid uid, RandomArtifactSpriteComponent component, ref XenoArtifactNodeActivatedEvent args)
+    private void OnActivated(EntityUid uid, RandomArtifactSpriteComponent component, ref ArtifactActivatedEvent args)
     {
         _appearance.SetData(uid, SharedArtifactsVisuals.IsActivated, true);
         component.ActivationStart = _time.CurTime;

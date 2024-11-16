@@ -3,7 +3,7 @@ using Content.Shared.Xenoarchaeology.Artifact.XAT.Components;
 
 namespace Content.Shared.Xenoarchaeology.Artifact.XAT;
 
-public sealed class XATCompNearbySystem : BaseXATSystem<XATCompNearbyComponent>
+public sealed class XATCompNearbySystem : BaseQueryUpdateXATSystem<XATCompNearbyComponent>
 {
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -16,13 +16,15 @@ public sealed class XATCompNearbySystem : BaseXATSystem<XATCompNearbyComponent>
         float frameTime
     )
     {
+        var compNearbyComponent = node.Comp1;
+
         var pos = _transform.GetMapCoordinates(artifact);
-        var comp = EntityManager.ComponentFactory.GetRegistration(node.Comp1.Comp);
+        var comp = EntityManager.ComponentFactory.GetRegistration(compNearbyComponent.RequireComponentWithName);
 
         _entities.Clear();
-        _entityLookup.GetEntitiesInRange(comp.Type, pos, node.Comp1.Radius, _entities);
+        _entityLookup.GetEntitiesInRange(comp.Type, pos, compNearbyComponent.Radius, _entities);
 
-        if (_entities.Count >= node.Comp1.Count)
+        if (_entities.Count >= compNearbyComponent.Count)
             Trigger(artifact, node);
     }
 }

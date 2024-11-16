@@ -4,7 +4,7 @@ using Content.Shared.Xenoarchaeology.Artifact.XAT.Components;
 
 namespace Content.Shared.Xenoarchaeology.Artifact.XAT;
 
-public sealed class XATTimerSystem : BaseXATSystem<XATTimerComponent>
+public sealed class XATTimerSystem : BaseQueryUpdateXATSystem<XATTimerComponent>
 {
     public override void Initialize()
     {
@@ -33,8 +33,6 @@ public sealed class XATTimerSystem : BaseXATSystem<XATTimerComponent>
 
     protected override void UpdateXAT(Entity<XenoArtifactComponent> artifact, Entity<XATTimerComponent, XenoArtifactNodeComponent> node, float frameTime)
     {
-        base.UpdateXAT(artifact, node, frameTime);
-
         if (Timing.CurTime > node.Comp1.NextActivation)
             Trigger(artifact, node);
     }

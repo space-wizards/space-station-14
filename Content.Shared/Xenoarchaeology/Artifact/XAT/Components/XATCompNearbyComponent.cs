@@ -9,8 +9,12 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAT.Components;
 [RegisterComponent, NetworkedComponent, Access(typeof(XATCompNearbyComponent)), AutoGenerateComponentState]
 public sealed partial class XATCompNearbyComponent : Component
 {
+    /// <summary>
+    /// Component name that is required to activate trigger.
+    /// Is spelled without 'Component' suffix.
+    /// </summary>
     [DataField(customTypeSerializer: typeof(ComponentNameSerializer)), AutoNetworkedField]
-    public string Comp = "Item";
+    public string RequireComponentWithName = "Item";
 
     [DataField, AutoNetworkedField]
     public float Radius = 5;

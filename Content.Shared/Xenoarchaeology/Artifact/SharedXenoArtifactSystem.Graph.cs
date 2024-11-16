@@ -132,6 +132,9 @@ public abstract partial class SharedXenoArtifactSystem
         {
             RebuildXenoArtifactMetaData(ent);
         }
+
+        CancelUnlockingOnGraphStructureChange((ent, ent.Comp));
+
         return true;
     }
 
@@ -164,6 +167,8 @@ public abstract partial class SharedXenoArtifactSystem
         {
             RebuildXenoArtifactMetaData(ent);
         }
+
+        CancelUnlockingOnGraphStructureChange((ent, ent.Comp));
 
         return true;
     }
@@ -202,6 +207,8 @@ public abstract partial class SharedXenoArtifactSystem
             RebuildXenoArtifactMetaData(ent);
         }
 
+        CancelUnlockingOnGraphStructureChange((ent, ent.Comp));
+
         return true;
     }
 
@@ -226,6 +233,9 @@ public abstract partial class SharedXenoArtifactSystem
         }
 
         Dirty(node);
+
+        CancelUnlockingOnGraphStructureChange((ent, ent.Comp));
+
         return true;
     }
 
@@ -250,6 +260,8 @@ public abstract partial class SharedXenoArtifactSystem
         {
             RebuildXenoArtifactMetaData(ent);
         }
+
+        CancelUnlockingOnGraphStructureChange((ent, ent.Comp));
     }
 
     public HashSet<Entity<XenoArtifactNodeComponent>> GetDirectPredecessorNodes(Entity<XenoArtifactComponent?> ent, EntityUid node)
@@ -436,5 +448,14 @@ public abstract partial class SharedXenoArtifactSystem
         }
 
         Dirty(ent);
+    }
+
+    private void CancelUnlockingOnGraphStructureChange(Entity<XenoArtifactComponent> ent)
+    {
+        if (!TryComp<XenoArtifactUnlockingComponent>(ent, out var unlockingComponent))
+            return;
+
+        Entity<XenoArtifactUnlockingComponent, XenoArtifactComponent> artifactEnt = (ent, unlockingComponent, ent.Comp);
+        CancelUnlockingState(artifactEnt);
     }
 }

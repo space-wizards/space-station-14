@@ -78,15 +78,9 @@ public abstract partial class SharedXenoArtifactSystem
 /// Event wrapper for XenoArch Trigger events.
 /// </summary>
 [ByRefEvent]
-public sealed class XenoArchNodeRelayedEvent<TEvent> : EntityEventArgs
+public record struct XenoArchNodeRelayedEvent<TEvent>(Entity<XenoArtifactComponent> Artifact, TEvent Args)
 {
-    public Entity<XenoArtifactComponent> Artifact;
+    public TEvent Args = Args;
 
-    public TEvent Args;
-
-    public XenoArchNodeRelayedEvent(Entity<XenoArtifactComponent> artifact, TEvent args)
-    {
-        Artifact = artifact;
-        Args = args;
-    }
+    public Entity<XenoArtifactComponent> Artifact = Artifact;
 }

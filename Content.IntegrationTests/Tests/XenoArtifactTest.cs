@@ -18,6 +18,54 @@ public sealed class XenoArtifactTest
     isGenerationRequired: false
 
 - type: entity
+  id: TestGenArtifactFlat
+  name: artifact
+  components:
+  - type: XenoArtifact
+    isGenerationRequired: true
+    nodeCount:
+      min: 2
+      max: 2
+    segmentSize:
+      min: 1
+      max: 1
+    nodesPerSegmentLayer:
+      min: 1
+      max: 1
+
+- type: entity
+  id: TestGenArtifactTall
+  name: artifact
+  components:
+  - type: XenoArtifact
+    isGenerationRequired: true
+    nodeCount:
+      min: 2
+      max: 2
+    segmentSize:
+      min: 2
+      max: 2
+    nodesPerSegmentLayer:
+      min: 1
+      max: 1
+
+- type: entity
+  id: TestGenArtifactFull
+  name: artifact
+  components:
+  - type: XenoArtifact
+    isGenerationRequired: true
+    nodeCount:
+      min: 6
+      max: 6
+    segmentSize:
+      min: 6
+      max: 6
+    nodesPerSegmentLayer:
+      min: 2
+      max: 2
+
+- type: entity
   id: TestArtifactNode
   name: artifact node
   components:
@@ -313,5 +361,48 @@ public sealed class XenoArtifactTest
         await pair.CleanReturnAsync();
     }
 
-    // TODO: write test for segments because we'll probably need that.
+    [Test]
+    public async Task XenoArtifactGenerateSegmentsTest()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+
+        var entManager = server.ResolveDependency<IEntityManager>();
+        var artifactSystem = entManager.System<SharedXenoArtifactSystem>();
+
+        await server.WaitPost(() =>
+        {
+            var artifact1Uid = entManager.Spawn("TestGenArtifactFlat");
+            Entity<XenoArtifactComponent> artifact1Ent = (artifact1Uid, entManager.GetComponent<XenoArtifactComponent>(artifact1Uid));
+
+            var segments1 = artifactSystem.GetSegments(artifact1Ent);
+            Assert.That(segments1.Count, Is.EqualTo(2));
+            Assert.That(segments1[0].Count, Is.EqualTo(1));
+            Assert.That(segments1[1].Count, Is.EqualTo(1));
+
+            var artifact2Uid = entManager.Spawn("TestGenArtifactTall");
+            Entity<XenoArtifactComponent> artifact2Ent = (artifact2Uid, entManager.GetComponent<XenoArtifactComponent>(artifact2Uid));
+
+            var segments2 = artifactSystem.GetSegments(artifact2Ent);
+            Assert.That(segments2.Count, Is.EqualTo(1));
+            Assert.That(segments2[0].Count, Is.EqualTo(2));
+
+            var artifact3Uid = entManager.Spawn("TestGenArtifactFull");
+            Entity<XenoArtifactComponent> artifact3Ent = (artifact3Uid, entManager.GetComponent<XenoArtifactComponent>(artifact3Uid));
+
+            var segments3 = artifactSystem.GetSegments(artifact3Ent);
+            Assert.That(segments3.Count, Is.EqualTo(1));
+            Assert.That(segments3.Sum(x => x.Count), Is.EqualTo(6));
+            var nodesDepths = segments3[0].Select(x => x.Comp.Depth).ToArray();
+            Assert.That(nodesDepths.Distinct().Count(), Is.EqualTo(3));
+            var grouped = nodesDepths.ToLookup(x => x);
+            Assert.That(grouped[0].Count() , Is.EqualTo(2));
+            Assert.That(grouped[1].Count() , Is.EqualTo(2));
+            Assert.That(grouped[2].Count() , Is.EqualTo(2));
+
+        });
+        await server.WaitRunTicks(1);
+
+        await pair.CleanReturnAsync();
+    }
 }

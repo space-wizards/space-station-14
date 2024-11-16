@@ -33,7 +33,7 @@
   tip: xenoarch-trigger-tip-music
   components:
   - type: XATCompNearby
-    comp: ActiveInstrument
+    requireComponentWithName: ActiveInstrument
 
 - type: xenoArchTrigger
   id: TriggerHeat

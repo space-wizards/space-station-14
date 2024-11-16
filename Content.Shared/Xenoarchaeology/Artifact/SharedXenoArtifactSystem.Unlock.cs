@@ -1,14 +1,16 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Xenoarchaeology.Artifact;
 
 public abstract partial class SharedXenoArtifactSystem
 {
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+
     private EntityQuery<XenoArtifactUnlockingComponent> _unlockingQuery;
 
-    // TODO: we should cancel the unlock state if you remove/add nodes
     private void InitializeUnlock()
     {
         _unlockingQuery = GetEntityQuery<XenoArtifactUnlockingComponent>();
@@ -50,10 +52,17 @@ public abstract partial class SharedXenoArtifactSystem
         var artifactComponent = ent.Comp2;
         if (TryGetNodeFromUnlockState(ent, out var node))
         {
-            // TODO: animation
             SetNodeUnlocked((ent, artifactComponent), node.Value);
             unlockAttemptResultMsg = "artifact-unlock-state-end-success";
-            ActivateNode((ent, artifactComponent), node.Value, null, null, Transform(ent).Coordinates, false);
+            var activated = ActivateNode((ent, artifactComponent), node.Value, null, null, Transform(ent).Coordinates, false);
+
+            if (activated)
+            {
+                _audio.PlayPvs(ent.Comp1.ActivationSound, ent.Owner);
+
+                var unlockingFinishedEvent = new ArtifactActivatedEvent();
+                RaiseLocalEvent(ent.Owner, ref unlockingFinishedEvent);
+            }
         }
         else
         {
@@ -66,6 +75,11 @@ public abstract partial class SharedXenoArtifactSystem
         var unlockingComponent = ent.Comp1;
         RemComp(ent, unlockingComponent);
         artifactComponent.NextUnlockTime = _timing.CurTime + artifactComponent.UnlockStateRefractory;
+    }
+
+    public void CancelUnlockingState(Entity<XenoArtifactUnlockingComponent, XenoArtifactComponent> ent)
+    {
+        RemComp(ent, ent.Comp1);
     }
 
     /// <summary>
@@ -101,3 +115,9 @@ public abstract partial class SharedXenoArtifactSystem
         return node != null;
     }
 }
+
+/// <summary>
+/// Event of artifact node finishing unlocking and getting 1 or more node activated.
+/// </summary>
+[ByRefEvent]
+public record struct ArtifactActivatedEvent(EntityUid ArtifactUid);

@@ -8,10 +8,14 @@ public sealed class XATDeathSystem : BaseXATSystem<XATDeathComponent>
 {
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
+    private EntityQuery<XenoArtifactComponent> _xenoArtifactQuery;
+
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
+
+        _xenoArtifactQuery = GetEntityQuery<XenoArtifactComponent>();
 
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
     }

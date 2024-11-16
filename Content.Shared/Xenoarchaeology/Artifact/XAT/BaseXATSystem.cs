@@ -8,13 +8,13 @@ public abstract class BaseXATSystem<T> : EntitySystem where T : Component
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] protected readonly SharedXenoArtifactSystem XenoArtifact = default!;
 
-    protected EntityQuery<XenoArtifactComponent> _xenoArtifactQuery;
     private EntityQuery<XenoArtifactUnlockingComponent> _unlockingQuery;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
-        _xenoArtifactQuery = GetEntityQuery<XenoArtifactComponent>();
+        base.Initialize();
+
         _unlockingQuery = GetEntityQuery<XenoArtifactUnlockingComponent>();
     }
 
@@ -32,31 +32,6 @@ public abstract class BaseXATSystem<T> : EntitySystem where T : Component
         });
     }
 
-    protected delegate void XATEventHandler<TEvent>(Entity<XenoArtifactComponent> artifact, Entity<T, XenoArtifactNodeComponent> node, ref TEvent args)
-        where TEvent : notnull;
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        // TODO: need a pre-function so we can initialize queries
-        // TODO: add a way to defer triggering artifacts to the end of the Update loop
-
-        var query = EntityQueryEnumerator<T, XenoArtifactNodeComponent>();
-        while (query.MoveNext(out var uid, out var comp, out var node))
-        {
-            if (node.Attached == null)
-                continue;
-
-            var artifact = _xenoArtifactQuery.Get(GetEntity(node.Attached.Value));
-
-            if (!CanTrigger(artifact, (uid, node)))
-                continue;
-
-            UpdateXAT(artifact, (uid, comp, node), frameTime);
-        }
-    }
-
     protected bool CanTrigger(Entity<XenoArtifactComponent> artifact, Entity<XenoArtifactNodeComponent> node)
     {
         if (Timing.CurTime < artifact.Comp.NextUnlockTime)
@@ -72,15 +47,16 @@ public abstract class BaseXATSystem<T> : EntitySystem where T : Component
         return true;
     }
 
-    protected virtual void UpdateXAT(Entity<XenoArtifactComponent> artifact, Entity<T, XenoArtifactNodeComponent> node, float frameTime)
-    {
-
-    }
-
     protected void Trigger(Entity<XenoArtifactComponent> artifact, Entity<T, XenoArtifactNodeComponent> node)
     {
         if (Timing.IsFirstTimePredicted)
             Log.Debug($"Activated trigger {typeof(T).Name} on node {ToPrettyString(node)} for {ToPrettyString(artifact)}");
         XenoArtifact.TriggerXenoArtifact(artifact, (node.Owner, node.Comp2));
     }
+
+    protected delegate void XATEventHandler<TEvent>(
+        Entity<XenoArtifactComponent> artifact,
+        Entity<T, XenoArtifactNodeComponent> node,
+        ref TEvent args
+    ) where TEvent : notnull;
 }

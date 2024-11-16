@@ -16,16 +16,40 @@ public sealed class XATReactiveSystem : BaseXATSystem<XATReactiveComponent>
 
     private void OnReaction(Entity<XenoArtifactComponent> artifact, Entity<XATReactiveComponent, XenoArtifactNodeComponent> node, ref ReactionEntityEvent args)
     {
-        var artefactReactiveTriggerComponent = node.Comp1;
-        if (!artefactReactiveTriggerComponent.ReactionMethods.Contains(args.Method))
+        var reactiveTriggerComponent = node.Comp1;
+        if (!reactiveTriggerComponent.ReactionMethods.Contains(args.Method))
             return;
 
-        if (args.ReagentQuantity.Quantity < artefactReactiveTriggerComponent.MinQuantity)
+        if (args.ReagentQuantity.Quantity < reactiveTriggerComponent.MinQuantity)
             return;
 
-        if (!artefactReactiveTriggerComponent.Reagents.Contains(args.Reagent.ID))
+        if (!reactiveTriggerComponent.Reagents.Contains(args.Reagent.ID))
+            return;
+
+        if (reactiveTriggerComponent.ReactiveGroups?.Count > 0 && !ReagentHaveReactiveGroup(args, reactiveTriggerComponent))
             return;
 
         Trigger(artifact, node);
+    }
+
+    private static bool ReagentHaveReactiveGroup(ReactionEntityEvent args, XATReactiveComponent reactiveTriggerComponent)
+    {
+        var reactiveReagentEffectEntries = args.Reagent.ReactiveEffects;
+        if (reactiveReagentEffectEntries == null)
+        {
+            return false;
+        }
+
+        var reactiveGroups = reactiveTriggerComponent.ReactiveGroups;
+        foreach(var reactiveGroup in reactiveGroups)
+        {
+            if (reactiveReagentEffectEntries.TryGetValue(reactiveGroup, out var effectEntry)
+                && effectEntry.Methods?.Contains(args.Method) == true)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

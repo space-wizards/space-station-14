@@ -67,13 +67,13 @@ public sealed partial class XenoArtifactNodeComponent : Component
     public float BasePointValue = 5000;
 
     /// <summary>
-    /// todo: xml-doc
+    /// Amount of points available currently for extracting.
     /// </summary>
     [DataField, AutoNetworkedField]
     public int ResearchValue;
 
     /// <summary>
-    /// todo: xml-doc
+    /// Amount of points already extracted from node.
     /// </summary>
     [DataField, AutoNetworkedField]
     public int ConsumedResearchValue;

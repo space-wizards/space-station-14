@@ -15,9 +15,8 @@ namespace Content.Client.Xenoarchaeology.Ui;
 [GenerateTypedNameReferences]
 public sealed partial class XenoArtifactGraphControl : BoxContainer
 {
-    private static readonly Color _lockedNodeColor = Color.FromHex("#777777");
-    
     [Dependency] private readonly IEntityManager _entityManager = default!;
+
     private readonly XenoArtifactSystem _artifactSystem;
 
     private Entity<XenoArtifactComponent>? _artifact;
@@ -48,6 +47,11 @@ public sealed partial class XenoArtifactGraphControl : BoxContainer
                                      .GetResource<FontResource>("/EngineFonts/NotoSans/NotoSansMono-Regular.ttf");
         _font = new VectorFont(fontResource, 16);
     }
+
+    public Color LockedNodeColor { get; set; } = Color.FromHex("#777777");
+    public Color ActiveNodeColor { get; set; } = Color.Plum;
+    public Color UnlockedNodeColor { get; set; } = Color.White;
+    public Color HoveredNodeColor { get; set; } = Color.DimGray;
 
     public void SetArtifact(Entity<XenoArtifactComponent>? artifact)
     {
@@ -112,20 +116,20 @@ public sealed partial class XenoArtifactGraphControl : BoxContainer
                     var pos = GetNodePos(node, ySpacing, segments, ref bottomLeft);
                     var hovered = (cursor - pos).LengthSquared() <= NodeRadius * NodeRadius;
 
-                    var color = _lockedNodeColor;
+                    var color = LockedNodeColor;
                     if (_artifactSystem.IsNodeActive(_artifact.Value, node))
                     {
-                        color = Color.Plum;
+                        color = ActiveNodeColor;
                     }
                     else if (!node.Comp.Locked)
                     {
-                        color = Color.White;
+                        color = UnlockedNodeColor;
                     }
 
                     if (hovered)
                     {
                         _hoveredNode = node;
-                        handle.DrawCircle(pos, NodeRadius, Color.DimGray);
+                        handle.DrawCircle(pos, NodeRadius, HoveredNodeColor);
                     }
 
                     handle.DrawCircle(pos, NodeRadius, Color.ToSrgb(color), false);
@@ -142,9 +146,9 @@ public sealed partial class XenoArtifactGraphControl : BoxContainer
                 var successors = _artifactSystem.GetDirectSuccessorNodes((_artifact.Value, _artifact.Value.Comp), node);
                 foreach (var s in successors)
                 {
-                    var color = _lockedNodeColor;
-                    if (!node.Comp.Locked)
-                        color = Color.White;
+                    var color = node.Comp.Locked
+                        ? LockedNodeColor
+                        : UnlockedNodeColor;
 
                     var to = GetNodePos(s, ySpacing, segments, ref bottomLeft) + new Vector2(0, NodeRadius);
                     handle.DrawLine(from, to, color);

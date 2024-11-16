@@ -5,14 +5,12 @@ using Content.Shared.Xenoarchaeology.Artifact.XAT;
 
 namespace Content.Server.Xenoarchaeology.Artifact.XAT;
 
-public sealed class XATPressureSystem : BaseXATSystem<XATPressureComponent>
+public sealed class XATPressureSystem : BaseQueryUpdateXATSystem<XATPressureComponent>
 {
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
 
     protected override void UpdateXAT(Entity<XenoArtifactComponent> artifact, Entity<XATPressureComponent, XenoArtifactNodeComponent> node, float frameTime)
     {
-        base.UpdateXAT(artifact, node, frameTime);
-
         var xform = Transform(artifact);
 
         if (_atmosphere.GetTileMixture((artifact, xform)) is not { } mixture)

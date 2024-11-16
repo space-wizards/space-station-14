@@ -1,3 +1,4 @@
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Xenoarchaeology.Artifact.Components;
@@ -19,4 +20,17 @@ public sealed partial class XenoArtifactUnlockingComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField, AutoPausedField]
     public TimeSpan EndTime;
+
+    /// <summary>
+    /// The sound that plays when an artifact is activated
+    /// </summary>
+    [DataField]
+    public SoundSpecifier ActivationSound = new SoundCollectionSpecifier("ArtifactActivation")
+    {
+        Params = new()
+        {
+            Variation = 0.1f,
+            Volume = 3f
+        }
+    };
 }
