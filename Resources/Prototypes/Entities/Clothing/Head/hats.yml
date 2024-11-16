@@ -445,7 +445,7 @@
     accent: SpanishAccent
 
 - type: entity
-  parent: [ClothingMaskBaseButcherable, ClothingHeadBase]
+  parent: ClothingHeadBase
   id: ClothingHeadHatSurgcapBlue
   name: surgical cap
   description: A blue cap surgeons wear during operations. Keeps their hair from tickling your internal organs.
@@ -460,8 +460,13 @@
     - HamsterWearable
     - WhitelistChameleon
 
+  - type: Butcherable
+      spawned:
+      - id: cloth
+        amount: 1
+
 - type: entity
-  parent: [ClothingMaskBaseButcherable, ClothingHeadBase]
+  parent: ClothingHeadBase
   id: ClothingHeadHatSurgcapGreen
   name: surgical cap
   description: A green cap surgeons wear during operations. Keeps their hair from tickling your internal organs.
@@ -472,7 +477,7 @@
     sprite: Clothing/Head/Hats/surgcap_green.rsi
 
 - type: entity
-  parent: [ClothingMaskBaseButcherable, ClothingHeadBase]
+  parent: ClothingHeadBase
   id: ClothingHeadHatSurgcapPurple
   name: surgical cap
   description: A purple cap surgeons wear during operations. Keeps their hair from tickling your internal organs.
