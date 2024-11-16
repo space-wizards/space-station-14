@@ -97,11 +97,7 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
 
         for emoji, messages in changes_by_type.items():
             for message in messages:
-                embed["fields"].append({
-                    "name": f"{emoji} {message}",
-                    "value": "\n",
-                    "inline": False
-                })
+                embed["description"].append(f"\n {emoji} {message}")
             
         embed["fields"].append({
             "name": "\n",
