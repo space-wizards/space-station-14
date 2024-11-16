@@ -1,4 +1,6 @@
+using Content.Server.Starlight.Energy.Supermatter;
 using Content.Shared.Abilities.Goliath;
+using Content.Shared.Damage;
 using Content.Shared.Starlight.Antags.Abductor;
 using Content.Shared.Starlight.Energy.Supermatter;
 
@@ -6,6 +8,8 @@ namespace Content.Server.Starlight.Energy.Supermatter;
 
 public sealed class SupermatterSystem : AccUpdateEntitySystem
 {
+    [Dependency] private readonly DamageableSystem _damageable = default!;
+
     private readonly Dictionary<EntityUid, Entity<SupermatterComponent>> _supermatters = [];
     public override void Initialize()
     {
@@ -20,8 +24,23 @@ public sealed class SupermatterSystem : AccUpdateEntitySystem
     protected override void AccUpdate()
     {
         foreach (var supermatter in _supermatters)
-        {
+            Handle(supermatter.Value);
+    }
 
-        }
+    private void Handle(Entity<SupermatterComponent> supermatter)
+    {
+        HandleDamage(supermatter);
+    }
+
+    private void HandleDamage(Entity<SupermatterComponent> supermatter)
+    {
+        EnsureComp<DamageableComponent>(supermatter.Owner, out var damageable);
+        var trueDamage = damageable.TotalDamage;
+        _damageable.TryChangeDamage(supermatter.Owner, damageable.Damage.Invert(), true);
+
+        supermatter.Comp.AccBreak = MathHelper.Clamp(supermatter.Comp.AccBreak + (trueDamage * Const.BreakPercent), 0, 9999);
+        supermatter.Comp.AccHeat = MathHelper.Clamp(supermatter.Comp.AccHeat + (trueDamage * Const.HeatPercent), 0, 9999);
+        supermatter.Comp.AccLighting = MathHelper.Clamp(supermatter.Comp.AccLighting + (trueDamage * Const.LightingPercent), 0, 9999);
+        supermatter.Comp.AccRadiation = MathHelper.Clamp(supermatter.Comp.AccRadiation + (trueDamage * Const.RadiationPercent), 0, 9999);
     }
 }

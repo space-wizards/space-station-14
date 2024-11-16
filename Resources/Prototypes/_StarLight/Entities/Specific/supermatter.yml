@@ -20,13 +20,13 @@
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.45"
+          bounds: "-0.40,-0.40,0.40,0.40"
         density: 190
         friction: 0.8
         mask:
         - MachineMask
         layer:
-        - MachineLayer
+        - WallLayer
   - type: Pullable
   - type: Sprite
     sprite: _Starlight/Objects/Specific/supermatter.rsi
@@ -38,5 +38,8 @@
   - type: PointLight
     enabled: true
     color: "#FFFB97"
+  - type: Damageable
+    damageModifierSet: RGlass
+    damageContainer: StructuralInorganic
  # - type: LightningTarget 
  #   priority: 1
