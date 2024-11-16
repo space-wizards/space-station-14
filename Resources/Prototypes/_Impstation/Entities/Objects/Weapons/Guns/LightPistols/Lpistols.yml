@@ -64,7 +64,7 @@
   - type: Gun
     fireRate: 3
     minAngle: 5
-    maxAngle: 90
+    maxAngle: 100
     angleIncrease: 30
     angleDecay: 5
     availableModes:
