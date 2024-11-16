@@ -414,6 +414,11 @@ namespace Content.Server.Database
         public abstract Task AddServerBanAsync(ServerBanDef serverBan);
         public abstract Task AddServerUnbanAsync(ServerUnbanDef serverUnban);
 
+        public abstract Task<ServerAsnBanDef?> GetServerAsnBanAsync(int id);
+        public abstract Task<ServerAsnBanDef?> GetServerAsnBanAsync(string asn);
+        public abstract Task AddServerAsnBanAsync(ServerAsnBanDef serverAsnBan);
+        public abstract Task AddServerAsnUnbanAsync(ServerAsnUnbanDef serverAsnUnban);
+
         public async Task EditServerBan(int id, string reason, NoteSeverity severity, DateTimeOffset? expiration, Guid editedBy, DateTimeOffset editedAt)
         {
             await using var db = await GetDb();

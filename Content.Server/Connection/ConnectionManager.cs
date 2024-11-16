@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using Content.Server.Chat.Managers;
@@ -189,6 +190,8 @@ namespace Content.Server.Connection
                 // Or hardware ID checks disabled.
                 hwId = null;
             }
+
+            var asnBans = await _db.GetServerAsnBanAsync()
 
             var bans = await _db.GetServerBansAsync(addr, userId, hwId, includeUnbanned: false);
             if (bans.Count > 0)
@@ -390,6 +393,10 @@ namespace Content.Server.Connection
             var assigned = new NetUserId(Guid.NewGuid());
             await _db.AssignUserIdAsync(name, assigned);
             return assigned;
+        }
+
+        private async Task<string> IpToAsn(string ip)
+        {
         }
     }
 }

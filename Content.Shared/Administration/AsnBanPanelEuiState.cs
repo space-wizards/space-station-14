@@ -22,11 +22,11 @@ public static class AsnBanPanelEuiStateMsg
     public sealed class CreateAsnBanRequest : EuiMessageBase
     {
         public string Asn { get; set; }
-        public uint Minutes { get; set; }
+        public uint? Minutes { get; set; }
         public string Reason { get; set; }
         public NoteSeverity Severity { get; set; }
 
-        public CreateAsnBanRequest(string asn, uint minutes, string reason, NoteSeverity severity)
+        public CreateAsnBanRequest(string asn, uint? minutes, string reason, NoteSeverity severity)
         {
             Asn = asn;
             Minutes = minutes;

@@ -91,8 +91,13 @@ namespace Content.Server.Database
             ImmutableArray<byte>? hwId,
             bool includeUnbanned=true);
 
+        Task<ServerAsnBanDef?> GetServerAsnBanAsync(int id);
+        Task<ServerAsnBanDef?> GetServerAsnBanAsync(string asn);
         Task AddServerBanAsync(ServerBanDef serverBan);
         Task AddServerUnbanAsync(ServerUnbanDef serverBan);
+
+        Task AddServerAsnBanAsync(ServerAsnBanDef serverAsnBan);
+        Task AddServerAsnUnbanAsync(ServerAsnUnbanDef serverAsnUnban);
 
         public Task EditServerBan(
             int id,
@@ -506,6 +511,30 @@ namespace Content.Server.Database
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.AddServerUnbanAsync(serverUnban));
+        }
+
+        public Task AddServerAsnBanAsync(ServerAsnBanDef serverAsnBan)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.AddServerAsnBanAsync(serverAsnBan));
+        }
+
+        public Task<ServerAsnBanDef?> GetServerAsnBanAsync(int id)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetServerAsnBanAsync(id));
+        }
+
+        public Task<ServerAsnBanDef?> GetServerAsnBanAsync(string asn)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetServerAsnBanAsync(asn));
+        }
+
+        public Task AddServerAsnUnbanAsync(ServerAsnUnbanDef serverAsnUnban)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.AddServerAsnUnbanAsync(serverAsnUnban));
         }
 
         public Task EditServerBan(int id, string reason, NoteSeverity severity, DateTimeOffset? expiration, Guid editedBy, DateTimeOffset editedAt)
