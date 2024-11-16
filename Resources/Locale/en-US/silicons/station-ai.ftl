@@ -22,3 +22,8 @@ toggle-light = Toggle light
 ai-device-not-responding = Device is not responding
 
 ai-consciousness-download-warning = Your consciousness is being downloaded.
+
+ai-convert-no-mind = This brain has no neural activity.
+ai-convert-occupied = This device is already occupied by a digital consciousness.
+ai-convert-warning = WARNING! This cannot be undone.
+ai-convert-finished = The brain crumbles in your hands.
