@@ -225,4 +225,11 @@ Entries:
   id: 34
   time: '2024-11-16T11:30:20.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/53
+- author: Rinary
+  changes:
+  - message: Fixed bug when Secret don't adding in preset votes.
+    type: Fix
+  id: 35
+  time: '2024-11-16T18:28:31.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/56
 
