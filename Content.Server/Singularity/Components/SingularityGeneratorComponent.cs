@@ -53,7 +53,7 @@ public sealed partial class SingularityGeneratorComponent : Component
     /// Message to use when there's no containment field on cardinal directions
     /// </summary>
     [DataField]
-    public LocId ContainmentFailsafeMessage;
+    public LocId ContainmentFailsafeMessage = "comp-generator-failsafe";
 
     /// <summary>
     /// For how long the failsafe will cause the generator to stop working and not issue a failsafe warning
@@ -66,5 +66,5 @@ public sealed partial class SingularityGeneratorComponent : Component
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer))]
     [AutoPausedField]
-    public TimeSpan NextFailsafe;
+    public TimeSpan NextFailsafe = TimeSpan.Zero;
 }
