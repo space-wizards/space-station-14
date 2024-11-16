@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: LucasTheDrgn
-  changes:
-  - message: Asterade 1.1
-    type: Tweak
-  id: 26
-  time: '2024-07-18T18:01:35.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/32
 - author: starlighthowls
   changes:
   - message: Removes the cost on accentless
@@ -4236,3 +4229,12 @@
   id: 525
   time: '2024-11-15T20:33:14.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/727
+- author: hivehum
+  changes:
+  - message: "government regulatory agencies don\u2019t want you to know this but\
+      \ you can cook a bunch of cigarettes into a soup to get some extra bang for\
+      \ your buck"
+    type: Add
+  id: 526
+  time: '2024-11-16T11:03:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/728
