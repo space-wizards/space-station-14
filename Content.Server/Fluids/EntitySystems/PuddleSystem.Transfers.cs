@@ -2,15 +2,12 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.DragDrop;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
-using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
-using Content.Server.Hands.Systems;
 
 namespace Content.Server.Fluids.EntitySystems;
 
 public sealed partial class PuddleSystem
 {
-    [Dependency] private readonly HandsSystem _handsSystem = default!;
     private void InitializeTransfers()
     {
         SubscribeLocalEvent<RefillableSolutionComponent, DragDropDraggedEvent>(OnRefillableDragged);
@@ -18,7 +15,7 @@ public sealed partial class PuddleSystem
 
     private void OnRefillableDragged(Entity<RefillableSolutionComponent> entity, ref DragDropDraggedEvent args)
     {
-        if (!TryComp<HandsComponent>(args.User, out var hands) || hands == null || _handsSystem.CountFreeableHands((args.User, hands)) == 0)
+        if (!TryComp<HandsComponent>(args.User, out _))
         {
             _popups.PopupEntity(Loc.GetString("mopping-system-no-hands"), args.User, args.User);
             return;
