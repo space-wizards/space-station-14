@@ -190,3 +190,5 @@
         ents: []
   - type: UseDelay
     delay: 0.3
+  - type: StaticPrice
+    price: 250
