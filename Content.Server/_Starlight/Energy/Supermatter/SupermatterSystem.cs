@@ -2,8 +2,13 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Starlight.Energy.Supermatter;
 using Content.Shared.Abilities.Goliath;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
+using Content.Shared.FixedPoint;
 using Content.Shared.Starlight.Antags.Abductor;
 using Content.Shared.Starlight.Energy.Supermatter;
+using Robust.Server.Audio;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Starlight.Energy.Supermatter;
 
@@ -11,6 +16,9 @@ public sealed class SupermatterSystem : AccUpdateEntitySystem
 {
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+    [Dependency] private readonly AudioSystem _audio = default!;
+    [Dependency] private readonly IPrototypeManager _prototypes = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     private readonly Dictionary<EntityUid, Entity<SupermatterComponent>> _supermatters = [];
     public override void Initialize()
@@ -38,9 +46,26 @@ public sealed class SupermatterSystem : AccUpdateEntitySystem
     private void HandleGas(Entity<SupermatterComponent> supermatter)
     {
         var gas = _atmosphere.GetTileMixture(supermatter.Owner) ?? new();
-        for (int i = 0; i < Const.GasProperties.Length; i++)
-        {
 
+        if (gas.Pressure < Const.MinPressure || gas.Pressure > Const.MaxPressure)
+        {
+            _audio.PlayPvs(_random.Pick(Const.AudioCrack), supermatter.Owner);
+            DamageSpecifier damage = new(_prototypes.Index<DamageGroupPrototype>("Brute"), Math.Max(Const.MinPressure - gas.Pressure, gas.Pressure - Const.MaxPressure));//todo specifier needs to be reused
+            _damageable.TryChangeDamage(supermatter.Owner, damage, true);
+        }
+
+        if (gas.Temperature > Const.MaxTemperature)
+        {
+            _audio.PlayPvs(_random.Pick(Const.AudioBurn), supermatter.Owner);
+            DamageSpecifier damage = new(_prototypes.Index<DamageGroupPrototype>("Burn"), Const.MaxTemperature - gas.Temperature);  //todo specifier needs to be reused
+            _damageable.TryChangeDamage(supermatter.Owner, damage, true);
+        }
+        double heatTransfer = 0;
+
+        for (var i = 0; i < Const.GasProperties.Length; i++)
+        {
+            var prop = Const.GasProperties[i];
+            heatTransfer += prop.HeatTransferPerMole * gas.Moles[i];
         }
     }
 
