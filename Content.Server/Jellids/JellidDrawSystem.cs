@@ -16,7 +16,7 @@ namespace Content.Server.Jellid.Systems
         [Dependency] private readonly DamageableSystem _damageable = default!;
 
         public float DrainAmount;
-        
+
         public override void Initialize()
         {
             base.Initialize();
@@ -31,11 +31,9 @@ namespace Content.Server.Jellid.Systems
                 if (Charging)
                     {
                     Log.Error($"Prevented damage.");
-                    return
+                    return;
                     }
-            {
-                DamageDict = { ["Slash"] = 1.5f } // This should start a 60-second ramping countdown to death once you hit DamageCharge
-            };
+                DamageDict = ["Slash"] = 1.5f;
             _damageable.TryChangeDamage(entity.Owner, damage, origin: entity.Owner);
                 Log.Error($"Damage is being taken");
             }
@@ -80,16 +78,16 @@ private void DrainPower(BatteryComponent containerBattery, BatteryComponent inte
 
         Log.Error($"Drained {drainAmount} power from {containerBattery.Owner} to {internalBattery.Owner}.");
     }
-    
+
 }
 
-    public bool Charging 
-    { 
-        get 
-        { 
-        Log.Error($"Is Charging!")
+    public bool Charging
+    {
+        get
+        {
+        Log.Error($"Is Charging!");
         return DrainAmount > 0;
-        } 
+        }
     }
 
     }
