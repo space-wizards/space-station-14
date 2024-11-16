@@ -1,21 +1,4 @@
 ﻿Entries:
-- author: to4no_fix
-  changes:
-  - message: Added a new electropack that shocks when a trigger is triggered
-    type: Add
-  - message: Added a new shock collar that shocks when a trigger is triggered
-    type: Add
-  - message: Two shock collars and two remote signallers added to the warden's locker
-    type: Add
-  - message: Shock collar added as a new target for the thief
-    type: Add
-  - message: A new Special Means technology has been added to the Arsenal research
-      branch at the 1st research level. Its research opens up the possibility of producing
-      electropacks at security techfab. The cost of technology research is 5000
-    type: Add
-  id: 7114
-  time: '2024-08-15T14:30:39.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30529
 - author: Mervill
   changes:
   - message: The Gas Analyzer won't spuriously shut down for seemly no reason.
@@ -3943,3 +3926,10 @@
   id: 7613
   time: '2024-11-15T23:46:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31147
+- author: SaphireLattice
+  changes:
+  - message: Crayon UI now has categories and queue
+    type: Add
+  id: 7614
+  time: '2024-11-16T03:25:06.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33101
