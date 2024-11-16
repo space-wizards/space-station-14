@@ -1,12 +1,24 @@
 - type: entity
-  abstract: true
   parent: BaseItem
-  id: BaseLogicItem
+  id: LogicEmptyCircuit
+  name: empty circuit
+  description: Something seems to be missing.
   components:
   - type: Sprite
     sprite: Objects/Devices/gates.rsi
+    layers:
+    - state: base
   - type: Anchorable
   - type: Rotatable
+  - type: Construction
+    graph: LogicGate
+    node: empty
+
+- type: entity
+  abstract: true
+  parent: LogicEmptyCircuit
+  id: BaseLogicItem
+  components:
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
@@ -15,13 +27,15 @@
 
 - type: entity
   parent: BaseLogicItem
-  id: LogicGate
+  id: LogicGateOr
   name: logic gate
   description: A logic gate with two inputs and one output. Technicians can change its mode of operation using a screwdriver.
+  suffix: Or
   components:
   - type: Sprite
     layers:
     - state: base
+    - state: logic
     - state: or
       map: [ "enum.LogicGateLayers.Gate" ]
   - type: LogicGate
@@ -37,7 +51,6 @@
     lastSignals:
       Output: false
   - type: Construction
-    graph: LogicGate
     node: logic_gate
   - type: Appearance
   - type: GenericVisualizer
@@ -52,13 +65,80 @@
           Xnor: { state: xnor }
 
 - type: entity
+  parent: LogicGateOr
+  id: LogicGateAnd
+  suffix: And
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: and
+      map: [ "enum.LogicGateLayers.Gate" ]
+  - type: LogicGate
+    gate: And
+
+- type: entity
+  parent: LogicGateOr
+  id: LogicGateXor
+  suffix: Xor
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: xor
+      map: [ "enum.LogicGateLayers.Gate" ]
+  - type: LogicGate
+    gate: Xor
+
+- type: entity
+  parent: LogicGateOr
+  id: LogicGateNor
+  suffix: Nor
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: nor
+      map: [ "enum.LogicGateLayers.Gate" ]
+  - type: LogicGate
+    gate: Nor
+
+- type: entity
+  parent: LogicGateOr
+  id: LogicGateNand
+  suffix: Nand
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: nand
+      map: [ "enum.LogicGateLayers.Gate" ]
+  - type: LogicGate
+    gate: Nand
+
+- type: entity
+  parent: LogicGateOr
+  id: LogicGateXnor
+  suffix: Xnor
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: xnor
+      map: [ "enum.LogicGateLayers.Gate" ]
+  - type: LogicGate
+    gate: Xnor
+
+- type: entity
   parent: BaseLogicItem
   id: EdgeDetector
   name: edge detector
   description: Splits rising and falling edges into unique pulses and detects how edgy you are.
   components:
   - type: Sprite
-    state: edge_detector
+    layers:
+    - state: base
+    - state: edge_detector
   - type: EdgeDetector
   - type: DeviceLinkSink
     ports:
@@ -71,7 +151,6 @@
       OutputHigh: false
       OutputLow: false
   - type: Construction
-    graph: LogicGate
     node: edge_detector
 
 - type: entity
@@ -81,7 +160,9 @@
   description: Generates signals in response to powernet changes. Can be cycled between cable voltages.
   components:
   - type: Sprite
-    state: power_sensor
+    layers:
+    - state: base
+    - state: power_sensor
   - type: PowerSensor
   - type: PowerSwitchable
     examineText: power-sensor-voltage-examine
@@ -117,5 +198,25 @@
       PowerCharging: false
       PowerDischarging: false
   - type: Construction
-    graph: LogicGate
     node: power_sensor
+
+- type: entity
+  parent: BaseLogicItem
+  id: MemoryCell
+  name: memory cell
+  description: A D-Latch circuit that stores a signal which can be changed depending on input and enable ports.
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: memory_cell
+  - type: MemoryCell
+  - type: DeviceLinkSink
+    ports:
+    - MemoryInput
+    - MemoryEnable
+  - type: DeviceLinkSource
+    ports:
+    - Output
+  - type: Construction
+    node: memory_cell

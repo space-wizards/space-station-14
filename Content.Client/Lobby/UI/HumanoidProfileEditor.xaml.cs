@@ -6,6 +6,7 @@ using Content.Client.Lobby.UI.Loadouts;
 using Content.Client.Lobby.UI.Roles;
 using Content.Client.Message;
 using Content.Client.Players.PlayTimeTracking;
+using Content.Client.Sprite;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Systems.Guidebook;
 using Content.Shared.CCVar;
@@ -27,6 +28,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Client.Utility;
 using Robust.Shared.Configuration;
+using Robust.Shared.ContentPack;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -43,6 +45,7 @@ namespace Content.Client.Lobby.UI
         private readonly IFileDialogManager _dialogManager;
         private readonly IPlayerManager _playerManager;
         private readonly IPrototypeManager _prototypeManager;
+        private readonly IResourceManager _resManager;
         private readonly MarkingManager _markingManager;
         private readonly JobRequirementsManager _requirements;
         private readonly LobbyUIController _controller;
@@ -54,6 +57,7 @@ namespace Content.Client.Lobby.UI
         private LoadoutWindow? _loadoutWindow;
 
         private bool _exporting;
+        private bool _imaging;
 
         /// <summary>
         /// If we're attempting to save.
@@ -107,6 +111,7 @@ namespace Content.Client.Lobby.UI
             ILogManager logManager,
             IPlayerManager playerManager,
             IPrototypeManager prototypeManager,
+            IResourceManager resManager,
             JobRequirementsManager requirements,
             MarkingManager markings)
         {
@@ -119,6 +124,7 @@ namespace Content.Client.Lobby.UI
             _prototypeManager = prototypeManager;
             _markingManager = markings;
             _preferencesManager = preferencesManager;
+            _resManager = resManager;
             _requirements = requirements;
             _controller = UserInterfaceManager.GetUIController<LobbyUIController>();
 
@@ -130,6 +136,16 @@ namespace Content.Client.Lobby.UI
             ExportButton.OnPressed += args =>
             {
                 ExportProfile();
+            };
+
+            ExportImageButton.OnPressed += args =>
+            {
+                ExportImage();
+            };
+
+            OpenImagesButton.OnPressed += args =>
+            {
+                _resManager.UserData.OpenOsWindow(ContentSpriteSystem.Exports);
             };
 
             ResetButton.OnPressed += args =>
@@ -424,7 +440,6 @@ namespace Content.Client.Lobby.UI
             SpeciesInfoButton.OnPressed += OnSpeciesInfoButtonPressed;
 
             UpdateSpeciesGuidebookIcon();
-            ReloadPreview();
             IsDirty = false;
         }
 
@@ -634,7 +649,7 @@ namespace Content.Client.Lobby.UI
                 selector.Select(Profile?.AntagPreferences.Contains(antag.ID) == true ? 0 : 1);
 
                 var requirements = _entManager.System<SharedRoleSystem>().GetAntagRequirement(antag);
-                if (!_requirements.CheckRoleTime(requirements, out var reason))
+                if (!_requirements.CheckRoleRequirements(requirements, (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter, out var reason))
                 {
                     selector.LockRequirements(reason);
                     Profile = Profile?.WithAntagPreference(antag.ID, false);
@@ -697,11 +712,15 @@ namespace Content.Client.Lobby.UI
             _entManager.DeleteEntity(PreviewDummy);
             PreviewDummy = EntityUid.Invalid;
 
-            if (Profile == null || !_prototypeManager.HasIndex<SpeciesPrototype>(Profile.Species))
+            if (Profile == null || !_prototypeManager.HasIndex(Profile.Species))
                 return;
 
             PreviewDummy = _controller.LoadProfileEntity(Profile, JobOverride, ShowClothes.Pressed);
             SpriteView.SetEntity(PreviewDummy);
+            _entManager.System<MetaDataSystem>().SetEntityName(PreviewDummy, Profile.Name);
+
+            // Check and set the dirty flag to enable the save/reset buttons as appropriate.
+            SetDirty();
         }
 
         /// <summary>
@@ -762,6 +781,9 @@ namespace Content.Client.Lobby.UI
                 return;
 
             _entManager.System<HumanoidAppearanceSystem>().LoadProfile(PreviewDummy, Profile);
+
+            // Check and set the dirty flag to enable the save/reset buttons as appropriate.
+            SetDirty();
         }
 
         private void OnSpeciesInfoButtonPressed(BaseButton.ButtonEventArgs args)
@@ -887,7 +909,7 @@ namespace Content.Client.Lobby.UI
                     icon.Texture = jobIcon.Icon.Frame0();
                     selector.Setup(items, job.LocalizedName, 200, job.LocalizedDescription, icon, job.Guides);
 
-                    if (!_requirements.IsAllowed(job, out var reason))
+                    if (!_requirements.IsAllowed(job, (HumanoidCharacterProfile?)_preferencesManager.Preferences?.SelectedCharacter, out var reason))
                     {
                         selector.LockRequirements(reason);
                     }
@@ -998,7 +1020,6 @@ namespace Content.Client.Lobby.UI
                 roleLoadout.AddLoadout(loadoutGroup, loadoutProto, _prototypeManager);
                 _loadoutWindow.RefreshLoadouts(roleLoadout, session, collection);
                 Profile = Profile?.WithLoadout(roleLoadout);
-                SetDirty();
                 ReloadPreview();
             };
 
@@ -1007,7 +1028,6 @@ namespace Content.Client.Lobby.UI
                 roleLoadout.RemoveLoadout(loadoutGroup, loadoutProto, _prototypeManager);
                 _loadoutWindow.RefreshLoadouts(roleLoadout, session, collection);
                 Profile = Profile?.WithLoadout(roleLoadout);
-                SetDirty();
                 ReloadPreview();
             };
 
@@ -1017,7 +1037,6 @@ namespace Content.Client.Lobby.UI
             _loadoutWindow.OnClose += () =>
             {
                 JobOverride = null;
-                SetDirty();
                 ReloadPreview();
             };
 
@@ -1042,7 +1061,6 @@ namespace Content.Client.Lobby.UI
                 return;
 
             Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithMarkings(markings.GetForwardEnumerator().ToList()));
-            SetDirty();
             ReloadProfilePreview();
         }
 
@@ -1110,7 +1128,6 @@ namespace Content.Client.Lobby.UI
                 }
             }
 
-            SetDirty();
             ReloadProfilePreview();
         }
 
@@ -1122,6 +1139,17 @@ namespace Content.Client.Lobby.UI
 
             _loadoutWindow?.Dispose();
             _loadoutWindow = null;
+        }
+
+        protected override void EnteredTree()
+        {
+            base.EnteredTree();
+            ReloadPreview();
+        }
+
+        protected override void ExitedTree()
+        {
+            base.ExitedTree();
             _entManager.DeleteEntity(PreviewDummy);
             PreviewDummy = EntityUid.Invalid;
         }
@@ -1130,7 +1158,6 @@ namespace Content.Client.Lobby.UI
         {
             Profile = Profile?.WithAge(newAge);
             ReloadPreview();
-            SetDirty();
         }
 
         private void SetSex(Sex newSex)
@@ -1153,14 +1180,12 @@ namespace Content.Client.Lobby.UI
             UpdateGenderControls();
             Markings.SetSex(newSex);
             ReloadPreview();
-            SetDirty();
         }
 
         private void SetGender(Gender newGender)
         {
             Profile = Profile?.WithGender(newGender);
             ReloadPreview();
-            SetDirty();
         }
 
         private void SetSpecies(string newSpecies)
@@ -1174,7 +1199,6 @@ namespace Content.Client.Lobby.UI
             RefreshLoadouts();
             UpdateSexControls(); // update sex for new species
             UpdateSpeciesGuidebookIcon();
-            SetDirty();
             ReloadPreview();
         }
 
@@ -1182,6 +1206,11 @@ namespace Content.Client.Lobby.UI
         {
             Profile = Profile?.WithName(newName);
             SetDirty();
+
+            if (!IsDirty)
+                return;
+
+            _entManager.System<MetaDataSystem>().SetEntityName(PreviewDummy, newName);
         }
 
         private void SetSpawnPriority(SpawnPriorityPreference newSpawnPriority)
@@ -1511,6 +1540,19 @@ namespace Content.Client.Lobby.UI
             var name = HumanoidCharacterProfile.GetName(Profile.Species, Profile.Gender);
             SetName(name);
             UpdateNameEdit();
+        }
+
+        private async void ExportImage()
+        {
+            if (_imaging)
+                return;
+
+            var dir = SpriteView.OverrideDirection ?? Direction.South;
+
+            // I tried disabling the button but it looks sorta goofy as it only takes a frame or two to save
+            _imaging = true;
+            await _entManager.System<ContentSpriteSystem>().Export(PreviewDummy, dir, includeId: false);
+            _imaging = false;
         }
 
         private async void ImportProfile()

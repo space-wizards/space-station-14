@@ -1,18 +1,10 @@
 # Jumpsuit
 - type: loadout
   id: WhiteJumpsuit
-  equipment: WhiteJumpsuit
-
-- type: startingGear
-  id: WhiteJumpsuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorWhite
 
 - type: loadout
-  id: WhiteJumpskirt
-  equipment: WhiteJumpskirt
-
-- type: startingGear
   id: WhiteJumpskirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtColorWhite

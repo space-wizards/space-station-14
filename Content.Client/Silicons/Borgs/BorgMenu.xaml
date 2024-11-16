@@ -10,7 +10,7 @@
                   VerticalExpand="True">
         <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" Margin="15 10 15 15">
             <BoxContainer Orientation="Horizontal">
-                <ProgressBar Name="ChargeBar" Access="Public" HorizontalExpand="True" MinValue="0" MaxValue="1">
+                <ProgressBar Name="ChargeBar" Access="Public" HorizontalExpand="True" MinValue="0" Value="1" MaxValue="1">
                     <Label Name="ChargeLabel" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5 0 0 0"/>
                 </ProgressBar>
                 <Control MinWidth="5"/>

@@ -54,6 +54,7 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
         ghostRole.RoleName = Loc.GetString(component.RoleName);
         ghostRole.RoleDescription = Loc.GetString(component.RoleDescription);
         ghostRole.RoleRules = Loc.GetString(component.RoleRules);
+        ghostRole.JobProto = component.JobProto;
     }
 
     private void OnExamined(EntityUid uid, ToggleableGhostRoleComponent component, ExaminedEvent args)
@@ -96,7 +97,7 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
 
     private void AddWipeVerb(EntityUid uid, ToggleableGhostRoleComponent component, GetVerbsEvent<ActivationVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract)
+        if (args.Hands == null || !args.CanAccess || !args.CanInteract)
             return;
 
         if (TryComp<MindContainerComponent>(uid, out var mind) && mind.HasMind)

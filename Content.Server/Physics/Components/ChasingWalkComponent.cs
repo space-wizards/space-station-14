@@ -65,7 +65,7 @@ public sealed partial class ChasingWalkComponent : Component
     /// The component that the entity is chasing
     /// </summary>
     [DataField(required: true)]
-    public ComponentRegistry ChasingComponent = default!;
+    public ComponentRegistry ChasingComponent = [];
 
     /// <summary>
     /// The maximum radius in which the entity chooses the target component to follow

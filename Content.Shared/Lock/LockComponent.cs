@@ -87,6 +87,13 @@ public sealed partial class LockComponent : Component
 public record struct LockToggleAttemptEvent(EntityUid User, bool Silent = false, bool Cancelled = false);
 
 /// <summary>
+/// Event raised on the user when a toggle is attempted.
+/// Can be cancelled to prevent it.
+/// </summary>
+[ByRefEvent]
+public record struct UserLockToggleAttemptEvent(EntityUid Target, bool Silent = false, bool Cancelled = false);
+
+/// <summary>
 /// Event raised on a lock after it has been toggled.
 /// </summary>
 [ByRefEvent]

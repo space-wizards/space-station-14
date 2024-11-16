@@ -16,6 +16,7 @@ using Content.Shared.Cluwne;
 using Content.Shared.Interaction.Components;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.NameModifier.EntitySystems;
+using Content.Shared.Clumsy;
 
 namespace Content.Server.Cluwne;
 
@@ -29,7 +30,6 @@ public sealed class CluwneSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly NameModifierSystem _nameMod = default!;
 
     public override void Initialize()

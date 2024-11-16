@@ -47,7 +47,7 @@
 - type: guideEntry
   id: Botanical
   name: guide-entry-botanical
-  text: "/ServerInfo/Guidebook/ChemicalTabs/Botany.xml"
+  text: "/ServerInfo/Guidebook/Medical/Botanicals.xml"
   filterEnabled: True
 
 - type: guideEntry

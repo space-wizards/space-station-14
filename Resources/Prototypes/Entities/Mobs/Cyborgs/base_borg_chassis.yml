@@ -69,9 +69,15 @@
         type: BorgBoundUserInterface
       enum.StrippingUiKey.Key:
         type: StrippableBoundUserInterface
+      # Only used for NT borgs that can switch type, defined here to avoid copy-pasting the rest of this component.
+      enum.BorgSwitchableTypeUiKey.SelectBorgType:
+        type: BorgSelectTypeUserInterface
   - type: ActivatableUI
     key: enum.BorgUiKey.Key
   - type: SiliconLawBound
+  - type: ActionGrant
+    actions:
+    - ActionViewLaws
   - type: EmagSiliconLaw
     stunTime: 5
   - type: SiliconLawProvider
@@ -82,6 +88,7 @@
   - type: Hands
     showInHands: false
     disableExplosionRecursion: true
+    canBeStripped: false
   - type: ComplexInteraction
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
@@ -99,6 +106,11 @@
     doAfterDelay: 10
     allowSelfRepair: false
   - type: BorgChassis
+  - type: LockingWhitelist
+    blacklist:
+      components:
+      - BorgChassis
+      - RoboticsConsole
   - type: WiresPanel
   - type: ActivatableUIRequiresPanel
   - type: NameIdentifier
@@ -113,12 +125,16 @@
     cellSlotId: cell_slot
     fitsInCharger: true
   - type: ItemToggle
+    onActivate: false # You should not be able to turn off a borg temporarily.
+    activated: false # gets activated when a mind is added
     onUse: false # no item-borg toggling sorry
+  - type: ItemTogglePointLight
   - type: AccessToggle
   # TODO: refactor movement to just be based on toggle like speedboots but for the boots themselves
   # TODO: or just have sentient speedboots be fast idk
   - type: PowerCellDraw
     drawRate: 0.6
+  # no ToggleCellDraw since dont want to lose access when power is gone
   - type: ItemSlots
     slots:
       cell_slot:
@@ -144,6 +160,7 @@
       collection: FootstepBorg
   - type: Construction
     graph: Cyborg
+    node: cyborg
     containers:
     - part-container
     - cell_slot
@@ -220,8 +237,13 @@
   - type: Emoting
   - type: GuideHelp
     guides:
-      - Cyborgs
-  - type: StepTriggerImmune
+    - Cyborgs
+    - Robotics
+  - type: ProtectedFromStepTriggers
+  - type: DamageOnInteractProtection
+    damageProtection:
+      flatReductions:
+        Heat: 10 # capable of touching light bulbs and stoves without feeling pain!
 
 - type: entity
   abstract: true
@@ -232,6 +254,7 @@
     deviceNetId: Wireless
     receiveFrequencyId: CyborgControl
     transmitFrequencyId: RoboticsConsole
+    savableAddress: false
   - type: OnUseTimerTrigger
     delay: 10
     examinable: false
@@ -266,7 +289,9 @@
   - type: AccessReader
     access: [["Command"], ["Research"]]
   - type: ShowJobIcons
-  - type: ShowMindShieldIcons
+  - type: InteractionPopup
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
   id: BaseBorgChassisSyndicate
