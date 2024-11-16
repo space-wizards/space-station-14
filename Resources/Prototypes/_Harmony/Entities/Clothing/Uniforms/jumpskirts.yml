@@ -1,5 +1,16 @@
 - type: entity
   parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpskirtCaptainTurtleneckHarmony
+  name: captain's turtleneck
+  description: A regal blue turtleneck sweater finely made with mothroach silk. Fit for a captain.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Uniforms/Jumpskirt/capturtleskirt.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Uniforms/Jumpskirt/capturtleskirt.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
   id: ClothingUniformJumpskirtHeadOfPersonnelTurtleneckHarmony
   name: head of personnel's turtleneck
   description: A blue turtle neck meant to amplify the comfort of the office. Watch out for dog hairs.

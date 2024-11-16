@@ -117,6 +117,8 @@
   - CaptainJumpskirt
   - CaptainFormalSuit
   - CaptainFormalSkirt
+  - CaptainJumpsuitTurtleneckHarmony #Harmony
+  - CaptainJumpskirtTurtleneckHarmony #Harmony
 
 - type: loadoutGroup
   id: CaptainNeck

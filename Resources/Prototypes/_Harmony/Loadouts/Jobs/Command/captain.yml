@@ -1,3 +1,14 @@
+# Jumpsuit
+- type: loadout
+  id: CaptainJumpsuitTurtleneckHarmony
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCaptainTurtleneckHarmony
+
+- type: loadout
+  id: CaptainJumpskirtTurtleneckHarmony
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtCaptainTurtleneckHarmony
+
 # Outer clothing
 - type: loadout
   id: CaptainArmoredWinterCoatHarmony
