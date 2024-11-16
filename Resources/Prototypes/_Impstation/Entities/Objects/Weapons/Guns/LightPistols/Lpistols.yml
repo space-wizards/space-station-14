@@ -98,7 +98,7 @@
   id: WeaponPistolZipperAP # For the uplink.
   suffix: armor-piercing
   components:
- - type: ItemSlots
+- type: ItemSlots
     slots:
       gun_magazine:
         name: Magazine
