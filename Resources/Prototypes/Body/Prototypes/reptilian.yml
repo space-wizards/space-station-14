@@ -20,18 +20,18 @@
         liver: OrganAnimalLiver
         kidneys: OrganHumanKidneys
       connections:
-      - right_arm
-      - left_arm
-      - right_leg
-      - left_leg
+      - right arm
+      - left arm
+      - right leg
+      - left leg
     right arm:
       part: RightArmReptilian
       connections:
-      - right_hand
+      - right hand
     left arm:
       part: LeftArmReptilian
       connections:
-      - left_hand
+      - left hand
     right hand:
       part: RightHandReptilian
     left hand:
@@ -39,11 +39,11 @@
     right leg:
       part: RightLegReptilian
       connections:
-      - right_foot
+      - right foot
     left leg:
       part: LeftLegReptilian
       connections:
-      - left_foot
+      - left foot
     right foot:
       part: RightFootReptilian
     left foot:

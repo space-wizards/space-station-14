@@ -10,18 +10,18 @@
     torso:
       part: TorsoSkeleton
       connections:
-      - right_arm
-      - left_arm
-      - right_leg
-      - left_leg
+      - right arm
+      - left arm
+      - right leg
+      - left leg
     right arm:
       part: RightArmSkeleton
       connections:
-      - right_hand
+      - right hand
     left arm:
       part: LeftArmSkeleton
       connections:
-      - left_hand
+      - left hand
     right hand:
       part: RightHandSkeleton
     left hand:
@@ -29,11 +29,11 @@
     right leg:
       part: RightLegSkeleton
       connections:
-      - right_foot
+      - right foot
     left leg:
       part: LeftLegSkeleton
       connections:
-      - left_foot
+      - left foot
     right foot:
       part: RightFootSkeleton
     left foot:

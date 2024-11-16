@@ -20,18 +20,18 @@
         liver: OrganAnimalLiver
         kidneys: OrganHumanKidneys
       connections:
-      - right_arm
-      - left_arm
-      - right_leg
-      - left_leg
+      - right arm
+      - left arm
+      - right leg
+      - left leg
     right arm:
       part: RightArmMoth
       connections:
-      - right_hand
+      - right hand
     left arm:
       part: LeftArmMoth
       connections:
-      - left_hand
+      - left hand
     right hand:
       part: RightHandMoth
     left hand:
@@ -39,11 +39,11 @@
     right leg:
       part: RightLegMoth
       connections:
-      - right_foot
+      - right foot
     left leg:
       part: LeftLegMoth
       connections:
-      - left_foot
+      - left foot
     right foot:
       part: RightFootMoth
     left foot:

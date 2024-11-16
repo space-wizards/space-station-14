@@ -20,18 +20,18 @@
         liver: OrganArachnidLiver
         kidneys: OrganArachnidKidneys
       connections:
-      - right_arm
-      - left_arm
-      - right_leg
-      - left_leg
+      - right arm
+      - left arm
+      - right leg
+      - left leg
     right arm:
       part: RightArmArachnid
       connections:
-      - right_hand
+      - right hand
     left arm:
       part: LeftArmArachnid
       connections:
-      - left_hand
+      - left hand
     right hand:
       part: RightHandArachnid
     left hand:
@@ -39,11 +39,11 @@
     right leg:
       part: RightLegArachnid
       connections:
-      - right_foot
+      - right foot
     left leg:
       part: LeftLegArachnid
       connections:
-      - left_foot
+      - left foot
     right foot:
       part: RightFootArachnid
     left foot:

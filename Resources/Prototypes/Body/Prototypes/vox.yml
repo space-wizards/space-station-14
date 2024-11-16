@@ -14,10 +14,10 @@
     torso:
       part: TorsoVox
       connections:
-      - right_arm
-      - left_arm
-      - right_leg
-      - left_leg
+      - right arm
+      - left arm
+      - right leg
+      - left leg
       organs:
         heart: OrganHumanHeart
         lungs: OrganVoxLungs
@@ -27,11 +27,11 @@
     right arm:
       part: RightArmVox
       connections:
-      - right_hand
+      - right hand
     left arm:
       part: LeftArmVox
       connections:
-      - left_hand
+      - left hand
     right hand:
       part: RightHandVox
     left hand:
@@ -39,11 +39,11 @@
     right leg:
       part: RightLegVox
       connections:
-      - right_foot
+      - right foot
     left leg:
       part: LeftLegVox
       connections:
-      - left_foot
+      - left foot
     right foot:
       part: RightFootVox
     left foot:

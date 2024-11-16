@@ -14,10 +14,10 @@
     torso:
       part: TorsoFelionoid
       connections:
-      - right_arm
-      - left_arm
-      - right_leg
-      - left_leg
+      - right arm
+      - left arm
+      - right leg
+      - left leg
       organs:
         heart: OrganAnimalHeart
         lungs: OrganHumanLungs
@@ -27,11 +27,11 @@
     right arm:
       part: RightArmFelionoid
       connections:
-      - right_hand
+      - right hand
     left arm:
       part: LeftArmFelionoid
       connections:
-      - left_hand
+      - left hand
     right hand:
       part: RightHandFelionoid
     left hand:
@@ -39,11 +39,11 @@
     right leg:
       part: RightLegFelionoid
       connections:
-      - right_foot
+      - right foot
     left leg:
       part: LeftLegFelionoid
       connections:
-      - left_foot
+      - left foot
     right foot:
       part: RightFootFelionoid
     left foot:
