@@ -78,6 +78,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
         ent.Comp.Target = GetNetEntity(args.Target);
         EnsureComp<AbductorVictimComponent>(args.Target.Value, out var victimComponent);
         victimComponent.LastActivation = _time.CurTime + TimeSpan.FromMinutes(5);
-        victimComponent.Position = EnsureComp<TransformComponent>(args.Target.Value).Coordinates;
+
+        victimComponent.Position ??= EnsureComp<TransformComponent>(args.Target.Value).Coordinates;
     }
 }
