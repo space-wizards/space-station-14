@@ -80,24 +80,18 @@ namespace Content.Client.Overlays
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
         public override bool RequestScreenTexture => true;
 
-        protected override bool BeforeDraw(in OverlayDrawArgs args)
-{
-    var playerEntity = _playerManager.LocalEntity;
+ protected override bool BeforeDraw(in OverlayDrawArgs args)
+    {
+        if (!_entityManager.TryGetComponent(_playerManager.LocalEntity, out EyeComponent? eyeComp))
+            return false;
 
-    // Check if playerEntity is not null before using it
-    if (playerEntity == null)
-        return false;
+        if (args.Viewport.Eye != eyeComp.Eye)
+            return false;
 
-    // Now playerEntity is guaranteed to have a value of type EntityUid, so it's safe to use .Value
-    if (!_entityManager.HasComponent<EyeComponent>(playerEntity))  // No need to use .Value, EntityUid is no longer nullable
-        return false;
+        return true;
+    }
 
-    var eyeComponent = _entityManager.GetComponent<EyeComponent>(playerEntity);  // No need for .Value here
-    if (args.Viewport.Eye != eyeComponent.Eye)
-        return false;
 
-    return true;  // Allow the drawing
-}
 
 
         protected override void Draw(in OverlayDrawArgs args)
@@ -111,5 +105,7 @@ namespace Content.Client.Overlays
             handle.DrawRect(args.WorldBounds, Color.White);
             handle.UseShader(null);
         }
+
+
     }
 }
