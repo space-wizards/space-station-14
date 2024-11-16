@@ -197,23 +197,32 @@ Entries:
   url: https://github.com/ss14Starlight/space-station-14/pull/50
 - author: Rinary
   changes:
-  - message: "Fixed bug when abductor can steal item's using abductor's monitoring console"
+  - message: Fixed bug when abductor can steal item's using abductor's monitoring
+      console
     type: Fix
   id: 31
   time: '2024-11-15T21:38:47.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/51
 - author: Rinary
   changes:
-  - message: "Fixed bug when abductor can open doors using abductor's monitoring console"
+  - message: Fixed bug when abductor can open doors using abductor's monitoring console
     type: Fix
   id: 32
   time: '2024-11-15T21:38:47.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/51
 - author: Rinary
   changes:
-  - message: "Fixed bug when abductor can interact with items using using abductor's monitoring console"
+  - message: Fixed bug when abductor can interact with items using using abductor's
+      monitoring console
     type: Fix
   id: 33
   time: '2024-11-15T21:38:47.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/51
+- author: Rinary
+  changes:
+  - message: Added Ban webhooks.
+    type: Add
+  id: 34
+  time: '2024-11-16T11:30:20.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/53
 
