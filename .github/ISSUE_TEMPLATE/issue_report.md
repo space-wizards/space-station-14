@@ -1,6 +1,6 @@
 ---
 name: Report an Issue
-about: "..."
+about: "Report a bug to the developers to solve the problem."
 title: ''
 labels: ''
 assignees: ''
@@ -13,8 +13,5 @@ assignees: ''
 **Reproduction**
 <!-- Include the steps to reproduce if applicable. -->
 
-**Screenshots**
+**Media**
 <!-- If applicable, add screenshots to help explain your problem. -->
-
-**Additional context**
-<!-- Add any other context about the problem here. Anything you think is related to the issue. -->
