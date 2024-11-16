@@ -94,6 +94,7 @@ cmd-asnbanpanel-server = This can not be used from the server console
 cmd-asnbanpanel-player-err = The specified player could not be found
 asn-ban-panel-title = ASN banning panel
 asn-ban-panel-asn = ASN
+asn-ban-panel-placeholder = 32-bit ASN
 asn-ban-panel-severity = Severity:
 asn-ban-panel-submit = Ban
 asn-ban-panel-tabs-info = Info

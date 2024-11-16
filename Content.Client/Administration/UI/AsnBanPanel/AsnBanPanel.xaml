@@ -9,7 +9,7 @@
                     <Label Text="{Loc asn-ban-panel-asn}" MinWidth="100"/>
                     <Control MinWidth="50" />
                     <LineEdit Name="ASNLine" MinWidth="100" HorizontalExpand="True"
-                              PlaceHolder="{Loc asn-ban-panel-asn}"/>
+                              PlaceHolder="{Loc asn-ban-panel-placeholder}"/>
                 </BoxContainer>
                 <BoxContainer Orientation="Horizontal" Margin="2">
                     <LineEdit Name="TimeLine" MaxWidth="150" MinWidth="70" PlaceHolder="0" />

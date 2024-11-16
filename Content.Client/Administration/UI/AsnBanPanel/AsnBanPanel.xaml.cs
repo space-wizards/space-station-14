@@ -84,7 +84,7 @@ public AsnBanPanel()
         if (Asn == ASNLine.Text)
             return;
         Asn = ASNLine.Text;
-        if (string.IsNullOrWhiteSpace(Asn))
+        if (string.IsNullOrWhiteSpace(Asn) || !int.TryParse(Asn, out _))
             ErrorLevel |= ErrorLevelEnum.Asn;
         else
             ErrorLevel &= ~ErrorLevelEnum.Asn;
