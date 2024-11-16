@@ -15,6 +15,7 @@ public sealed partial class SeparatedChatGameScreen : InGameScreen
     [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     private readonly float _chatMinWidth;
+    private float? _deferredSplitFraction = null;
 
     public SeparatedChatGameScreen()
     {
@@ -59,6 +60,12 @@ public sealed partial class SeparatedChatGameScreen : InGameScreen
         ViewportContainer.MaxWidth = EyeManager.PixelsPerMeter * max * scale;
         // SplitContainer doesn't respect MaxSize, so set a MinSize on the chat instead.
         SeparatedChatPanel.MinWidth = Math.Max(_chatMinWidth, Width - ViewportContainer.MaxWidth);
+
+        if (_deferredSplitFraction is float fraction)
+        {
+            ScreenContainer.SplitFraction = fraction;
+            _deferredSplitFraction = null;
+        }
     }
 
     public override ChatBox ChatBox => GetWidget<ChatBox>()!;
@@ -66,5 +73,13 @@ public sealed partial class SeparatedChatGameScreen : InGameScreen
     public override void SetChatSize(Vector2 size)
     {
         ScreenContainer.ResizeMode = SplitContainer.SplitResizeMode.RespectChildrenMinSize;
+
+        ScreenContainer.SplitFraction = size.X;
+        if (ScreenContainer.SplitFraction == 0)
+        {
+            // Failed because SplitContainer tried to lay out its children
+            // despite being 0x0 before first draw. Queue the size for later.
+            _deferredSplitFraction = size.X;
+        }
     }
 }
