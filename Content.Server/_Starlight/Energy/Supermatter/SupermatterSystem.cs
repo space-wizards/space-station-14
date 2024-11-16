@@ -50,7 +50,7 @@ public sealed class SupermatterSystem : AccUpdateEntitySystem
         if (gas.Pressure < Const.MinPressure || gas.Pressure > Const.MaxPressure)
         {
             _audio.PlayPvs(_random.Pick(Const.AudioCrack), supermatter.Owner);
-            DamageSpecifier damage = new(_prototypes.Index<DamageGroupPrototype>("Brute"), Math.Max(Const.MinPressure - gas.Pressure, gas.Pressure - Const.MaxPressure));//todo specifier needs to be reused
+            DamageSpecifier damage = new(_prototypes.Index<DamageGroupPrototype>("Brute"), Math.Max(Const.MinPressure - gas.Pressure, gas.Pressure - Const.MaxPressure)); //todo specifier needs to be reused
             _damageable.TryChangeDamage(supermatter.Owner, damage, true);
         }
 
@@ -60,13 +60,22 @@ public sealed class SupermatterSystem : AccUpdateEntitySystem
             DamageSpecifier damage = new(_prototypes.Index<DamageGroupPrototype>("Burn"), Const.MaxTemperature - gas.Temperature);  //todo specifier needs to be reused
             _damageable.TryChangeDamage(supermatter.Owner, damage, true);
         }
-        double heatTransfer = 0;
+
+        if (gas.TotalMoles == 0) return;
+        float heatTransfer = 0;
+        float heatModifier = 0;
 
         for (var i = 0; i < Const.GasProperties.Length; i++)
         {
             var prop = Const.GasProperties[i];
+            var percent = Math.Clamp(gas.Moles[i] / gas.TotalMoles, 0, 1);
             heatTransfer += prop.HeatTransferPerMole * gas.Moles[i];
+            heatModifier += prop.HeatModifier * percent;
         }
+
+        var heatDelta = heatTransfer <= supermatter.Comp.AccHeat.Float() ? heatTransfer : supermatter.Comp.AccHeat.Float();
+        supermatter.Comp.AccHeat = MathHelper.Clamp(supermatter.Comp.AccHeat - heatDelta, 0, 9999);
+        gas.Temperature += heatDelta * heatModifier;
     }
 
     private void HandleDamage(Entity<SupermatterComponent> supermatter)
