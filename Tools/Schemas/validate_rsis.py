@@ -75,7 +75,7 @@ def check_rsi(rsi: str, schema: Draft7Validator):
 
         # All PNGs must be defined in the meta.json
         png_state_name = name[:-4]
-        if png_state_name not in state_names and png_state_name not in ignore_list:
+        if png_state_name not in state_names and name not in ignore_list:
             add_error(rsi, f"PNG not defined in metadata: {name}")
 
 
