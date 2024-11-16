@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Raw meat cutlets can be cooked on a grill
-    type: Tweak
-  id: 7117
-  time: '2024-08-15T19:30:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31048
 - author: IProduceWidgets
   changes:
   - message: Meteor dust should more consistently happen instead of meteors.
@@ -3920,3 +3913,12 @@
   id: 7616
   time: '2024-11-16T03:39:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33326
+- author: K-Dynamic
+  changes:
+  - message: Solar assembly crate now comes with 10 flatpacks and 20 glass to make
+      expansion and repairs easier, as well as increasing in price from 525 to 1250
+      spesos.
+    type: Tweak
+  id: 7617
+  time: '2024-11-16T04:30:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33019
