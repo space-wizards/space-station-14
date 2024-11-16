@@ -164,7 +164,7 @@
     - !type:RoleTimeRequirement
       role: JobSecurityOfficer
       time: 3600 # 1 hour as Security Officer
-    StationAI:
+    StationAi:
     - !type:OverallPlaytimeRequirement
       time: 0
     - !type:RoleTimeRequirement
