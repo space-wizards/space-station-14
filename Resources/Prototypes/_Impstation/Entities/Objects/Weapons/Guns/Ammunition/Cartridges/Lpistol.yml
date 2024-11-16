@@ -57,6 +57,21 @@
         color: "#ff6e52"
 
 - type: entity
+  id: CartridgeLPistolAP
+  name: cartridge (.22 Auto APDSFS)
+  parent: BaseCartridgeLPistol
+  components:
+  - type: CartridgeAmmo
+    proto: BulletLPistolAP
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#0a0a0a"
+
+- type: entity
   id: CartridgeLPistolUranium
   name: cartridge (.22 auto uranium)
   parent: BaseCartridgeLPistol
