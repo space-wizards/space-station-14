@@ -7,3 +7,13 @@
      Sugar: 10
   solids:
      FoodKebabSkewer: 1 #it's healthy for microwaves
+
+- type: microwaveMealRecipe
+  id: RecipeCamelSoup
+  name: camel's soup recipe
+  result: FoodCamelSoup
+  time: 15
+  solids:
+     TearGasGrenade: 1
+     FoodBowlBig: 1
+     Cigarette: 8 # YUMMY!!!!!!!!!
