@@ -1,3 +1,4 @@
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Starlight.Energy.Supermatter;
 using Content.Shared.Abilities.Goliath;
 using Content.Shared.Damage;
@@ -9,6 +10,7 @@ namespace Content.Server.Starlight.Energy.Supermatter;
 public sealed class SupermatterSystem : AccUpdateEntitySystem
 {
     [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
 
     private readonly Dictionary<EntityUid, Entity<SupermatterComponent>> _supermatters = [];
     public override void Initialize()
@@ -30,6 +32,16 @@ public sealed class SupermatterSystem : AccUpdateEntitySystem
     private void Handle(Entity<SupermatterComponent> supermatter)
     {
         HandleDamage(supermatter);
+        HandleGas(supermatter);
+    }
+
+    private void HandleGas(Entity<SupermatterComponent> supermatter)
+    {
+        var gas = _atmosphere.GetTileMixture(supermatter.Owner) ?? new();
+        for (int i = 0; i < Const.GasProperties.Length; i++)
+        {
+
+        }
     }
 
     private void HandleDamage(Entity<SupermatterComponent> supermatter)

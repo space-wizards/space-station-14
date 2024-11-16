@@ -41,5 +41,5 @@
   - type: Damageable
     damageModifierSet: RGlass
     damageContainer: StructuralInorganic
- # - type: LightningTarget 
+ # - type: LightningTarget  Tesla needs to interact too.
  #   priority: 1
