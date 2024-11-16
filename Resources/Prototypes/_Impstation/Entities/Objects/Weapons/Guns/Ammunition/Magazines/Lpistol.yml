@@ -67,7 +67,7 @@
 - type: entity
   id: MagazineLPistolEmpty
   name: mk 93 magazine (.22 auto any)
-  parent: MagazineLPistol
+  parent: BaseMagazineLPistol
   components:
   - type: BallisticAmmoProvider
     proto: null
@@ -76,6 +76,20 @@
   id: MagazineLPistol
   name: mk 93 magazine (.22 auto)
   parent: BaseMagazineLPistol
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLPistol
+  - type: Sprite
+    layers:
+    - state: red
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  id: MagazineZipper
+  name: zipper magazine (.22 auto)
+  parent: BaseMagazineZipper
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeLPistol
