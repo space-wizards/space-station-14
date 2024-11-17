@@ -12,7 +12,7 @@ namespace Content.Client.UserInterface.Screens;
 [GenerateTypedNameReferences]
 public sealed partial class SeparatedChatGameScreen : InGameScreen
 {
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    private readonly IConfigurationManager _cfg = IoCManager.Resolve<IConfigurationManager>();
 
     private readonly float _chatMinWidth;
     private float? _deferredSplitFraction = null;
@@ -38,6 +38,14 @@ public sealed partial class SeparatedChatGameScreen : InGameScreen
         ViewportContainer.OnResized += ResizeActionContainer;
 
         OnResized += RecalculateViewportDesiredSize;
+        // Note: currently these run after the like callbacks on MainViewport,
+        // and may misbehave if that changes.
+        _cfg.OnValueChanged(CCVars.ViewportMinimumWidth, _ => RecalculateViewportDesiredSize());
+        _cfg.OnValueChanged(CCVars.ViewportStretch, _ => RecalculateViewportDesiredSize());
+        _cfg.OnValueChanged(CCVars.ViewportSnapToleranceClip, _ => RecalculateViewportDesiredSize());
+        _cfg.OnValueChanged(CCVars.ViewportSnapToleranceMargin, _ => RecalculateViewportDesiredSize());
+        _cfg.OnValueChanged(CCVars.ViewportScaleRender, _ => RecalculateViewportDesiredSize());
+        _cfg.OnValueChanged(CCVars.ViewportFixedScaleFactor, _ => RecalculateViewportDesiredSize());
 
         _chatMinWidth = SeparatedChatPanel.MinWidth;
     }
@@ -53,19 +61,22 @@ public sealed partial class SeparatedChatGameScreen : InGameScreen
         // When the main window is reszied, calculate a new min/max for the
         // ViewportContainer so that the chat will prefer to resize instead
         // of letterboxing the viewport.
-        var min = _cfg.GetCVar(CCVars.ViewportMinimumWidth);
-        var max = _cfg.GetCVar(CCVars.ViewportMaximumWidth);
         var scale = MainViewport.Viewport.FixedRenderScale;
-        ViewportContainer.MinWidth = EyeManager.PixelsPerMeter * min * scale;
-        ViewportContainer.MaxWidth = EyeManager.PixelsPerMeter * max * scale;
+        var min = EyeManager.PixelsPerMeter * scale * _cfg.GetCVar(CCVars.ViewportMinimumWidth);
+        var max = EyeManager.PixelsPerMeter * scale * _cfg.GetCVar(CCVars.ViewportMaximumWidth);
+
         // SplitContainer doesn't respect MaxSize, so set a MinSize on the chat instead.
-        SeparatedChatPanel.MinWidth = Math.Max(_chatMinWidth, Width - ViewportContainer.MaxWidth);
+        ViewportContainer.MinWidth = min;
+        SeparatedChatPanel.MinWidth = Math.Max(_chatMinWidth, Width - max);
 
         if (_deferredSplitFraction is float fraction)
         {
             ScreenContainer.SplitFraction = fraction;
             _deferredSplitFraction = null;
         }
+
+        // Correct for naughty behavior in SplitContainer by forcing a relayout.
+        ScreenContainer.SplitCenter = Math.Clamp(ScreenContainer.SplitCenter, min, max);
     }
 
     public override ChatBox ChatBox => GetWidget<ChatBox>()!;
