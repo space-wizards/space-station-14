@@ -148,7 +148,7 @@ public record struct FoodSequenceVisualLayer
 
     public FoodSequenceVisualLayer(ProtoId<FoodSequenceElementPrototype> proto,
         SpriteSpecifier? sprite,                                                /* H:this too (i know it's the same fuckin' thing) */
-        Vector2 scale,                                                          /* H:might also be able to use a second constructor for handling SpriteSpecifiers vs SpriteComponents if shit goes to shit */
+        Vector2 scale,
         Vector2 offset)
     {
         Proto = proto;

@@ -13,8 +13,8 @@ public sealed class ClientFoodSequenceSystem : SharedFoodSequenceSystem
 
     private void OnHandleState(Entity<FoodSequenceStartPointComponent> start, ref AfterAutoHandleStateEvent args)
     {
-        if (!TryComp<SpriteComponent>(start, out var sprite))       /* H:really curious how something that *doesn't have* a SpriteComponent can output a SpriteComponent */
-            return;                                                 /* H:after a brief look at both SpriteSpecifier and SpriteComponent... this shouldn't be possible. What am I missing? */
+        if (!TryComp<SpriteComponent>(start, out var sprite))
+            return;
 
         UpdateFoodVisuals(start, sprite);
     }
@@ -38,24 +38,33 @@ public sealed class ClientFoodSequenceSystem : SharedFoodSequenceSystem
             if (state.Sprite is null)
                 continue;
 
-            var keyCode = $"food-layer-{counter}";      /* H:nest a loop for each layer in each stored sprite in the List? */
-            start.Comp.RevealedLayers.Add(keyCode);
+            var layer = 0;
+            bool anotherLayer = true;
+            while(anotherLayer)     //Nested loop to handle multi-layer sprites.
+            {
+                var keyCode = $"food-layer-{counter}-{layer}";      /* H:nest a loop for each layer in each stored sprite in the List? */
+                start.Comp.RevealedLayers.Add(keyCode);
+                /* H: TryGetLayer(int, out Layer) could work for pulling layers */
+                //state.Sprite.TryGetLayer(layer, out var thisLayer);         this needs to be uncommented if AddLayer(Layer, int) gets publiced for me PLEASE I BEG YOU
+                sprite.LayerMapTryGet(start.Comp.TargetLayerMap, out var index);
+                //sprite.AddLayer(thisLayer, index);        DOESN'T WORK because the AddLayer I'm trying to use is private.
 
-            sprite.LayerMapTryGet(start.Comp.TargetLayerMap, out var index);        /* H:this part could be a smol issue */
+                if (start.Comp.InverseLayers)       /* H:think this is used primarily for skewers. it all goes in circles. */
+                    index++;                        /* H:I do kinda have to figure out how to bypass it for them, though... probably just index = index++ - layer would work */
 
-            if (start.Comp.InverseLayers)       /* H:think this is used primarily for skewers. it all goes in circles. */
-                index++;
+                sprite.AddBlankLayer(index);
+                sprite.LayerMapSet(keyCode, index);
+                sprite.LayerSetSprite(index, state.Sprite);
+                sprite.LayerSetScale(index, state.Scale);
 
-            sprite.AddBlankLayer(index);
-            sprite.LayerMapSet(keyCode, index);
-            sprite.LayerSetSprite(index, state.Sprite);
-            sprite.LayerSetScale(index, state.Scale);
-
-            //Offset the layer                             /* H:stuff below has to be excluded from nested loop */
-            var layerPos = start.Comp.StartPosition;
-            layerPos += (start.Comp.Offset * counter) + state.LocalOffset;
-            sprite.LayerSetOffset(index, layerPos);
-
+                //Offset the layer
+                var layerPos = start.Comp.StartPosition;
+                layerPos += (start.Comp.Offset * counter) + state.LocalOffset;
+                sprite.LayerSetOffset(index, layerPos);
+                //Checks if another sprite layer in the current sprite layer exists.
+                //state.Sprite.LayerExists(++layer, out anotherLayer);
+                anotherLayer = false;
+            }
             counter++;
         }
     }

@@ -341,9 +341,10 @@
   - Meat
 
 #- type: foodSequenceElement    H: COMMENTED OUT because it no worky :(
-#  id: MeatCutletSkewer
+#  id: MeatCutletSkewer                 I need to rewrite this thing one way or another anyways.
 #  components:
 #  - type: Sprite
+#    sprite: Objects/Consumable/Food/skewer.rsi
 #    layers:
 #    - state: skewer-meat
 #    - state: skewer-meat-alpha
@@ -379,10 +380,11 @@
   - Meat
 
 #- type: foodSequenceElement    H: COMMENTED OUT because it no worky :(
-#  id: BearCutletSkewer
+#  id: BearCutletSkewer             I need to rewrite this thing one way or another anyways.
 #  name: feed-sequence-content-bear
 #  components:
 #  - type: Sprite
+#    sprite: Objects/Consumable/Food/skewer.rsi
 #    layers:
 #    - state: skewer-meat
 #    - state: skewer-meat-alpha
