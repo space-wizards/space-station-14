@@ -1,11 +1,15 @@
 using Content.Server.Antag;
 using Content.Server.Atmos.Components;
+using Content.Server.Body.Systems;
+using Content.Server.Body.Components;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
 using Content.Server.Objectives;
 using Content.Server.Roles;
 using Content.Server.Vampire;
+using Content.Server.Bible.Components; 
 using Content.Shared.Alert;
+using Content.Shared.Body.Components;
 using Content.Shared.Vampire.Components;
 using Content.Shared.NPC.Prototypes;
 using Content.Shared.NPC.Systems;
@@ -32,6 +36,7 @@ public sealed partial class VampireRuleSystem : GameRuleSystem<VampireRuleCompon
     [Dependency] private readonly ObjectivesSystem _objective = default!;
     [Dependency] private readonly VampireSystem _vampire = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly BodySystem _body = default!;
 
     public readonly SoundSpecifier BriefingSound = new SoundPathSpecifier("/Audio/Ambience/Antag/vampire_start.ogg");
 
@@ -56,6 +61,10 @@ public sealed partial class VampireRuleSystem : GameRuleSystem<VampireRuleCompon
     private void OnSelectAntag(EntityUid mindId, VampireRuleComponent comp, ref AfterAntagEntitySelectedEvent args)
     {
         var ent = args.EntityUid;
+        
+        if (HasComp<BibleUserComponent>(ent) || !TryComp<BodyComponent>(ent, out var body) || _body.TryGetBodyOrganEntityComps<StomachComponent>((ent, body), out var stomachs))
+            return;
+        
         _antag.SendBriefing(ent, MakeBriefing(ent), Color.Yellow, BriefingSound);
         MakeVampire(ent, comp);
     }
