@@ -65,6 +65,8 @@
   - type: Construction
     graph: Artifact
     node: done
+  # These components are needed for certain triggers to work.
+  - type: RadiationReceiver
   - type: Reactive
 
 - type: entity

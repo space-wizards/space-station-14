@@ -10,7 +10,7 @@
     XenoArtifactSpeedUp: 4.0
     XenoArtifactDrill: 6.0
     #XenoArtifactGun: 4.0 #it conflicts with default interaction - it should activate artifact nodes
-    XenoArtifactGhost: 10.0
+    XenoArtifactGhost: 2.0
     XenoArtifactMultitool: 10.0
     XenoArtifactEffectBadFeeling: 10.0
     XenoArtifactEffectGoodFeeling: 10.0
@@ -67,12 +67,11 @@
   id: XenoArtifactEffectsStructure
   weights:
     XenoArtifactEffectUniversalIntercom: 10.0
-    XenoArtifactStorage: 10.0
     XenoArtifactSolutionStorage: 10.0
     XenoArtifactPhasing: 2.0
     XenoArtifactWandering: 4.0
     XenoArtifactGenerateEnergy: 10.0
-    XenoArtifactGhost: 10.0
+    XenoArtifactGhost: 2.0
     XenoArtifactEffectBadFeeling: 10.0
     XenoArtifactEffectGoodFeeling: 10.0
     XenoArtifactEffectJunkSpawn: 10.0
@@ -141,7 +140,8 @@
   description: Obtains ability of long-distance communication device
   components:
   - type: XAEApplyComponents
-    permanentComponents:
+    applyIfAlreadyHave: true
+    components:
     - type: RadioMicrophone
       powerRequired: false
       toggleOnInteract: false
@@ -170,7 +170,8 @@
   description: Obtains ability of musical instrument
   components:
   - type: XAEApplyComponents
-    permanentComponents:
+    applyIfAlreadyHave: true
+    components:
     - type: Instrument
     - type: ActivatableUI
       singleUser: true
@@ -183,7 +184,7 @@
   description: Obtains ability of hidden storage
   components:
   - type: XAEApplyComponents
-    permanentComponents:
+    components:
     - type: Item
       size: Huge
     - type: Storage
@@ -204,7 +205,7 @@
   description: Starts to move sporadially
   components:
   - type: XAEApplyComponents
-    permanentComponents:
+    components:
     - type: RandomWalk
       minSpeed: 12
       maxSpeed: 20
@@ -217,7 +218,7 @@
   description: Obtains ability of container for chemical solutions
   components:
   - type: XAEApplyComponents
-    permanentComponents:
+    components:
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -245,7 +246,7 @@
   description: Improves holder movement speed
   components:
   - type: XAEApplyComponents
-    permanentComponents:
+    components:
     - type: HeldSpeedModifier
       walkModifier: 1.2
       sprintModifier: 1.3
@@ -256,7 +257,7 @@
   description: Obtains ability of drill
   components:
   - type: XAEApplyComponents
-    permanentComponents:
+    components:
     - type: UseDelay
     - type: MeleeWeapon
       damage:
@@ -273,7 +274,7 @@
   description: Produces power
   components:
   - type: XAEApplyComponents
-    permanentComponents:
+    components:
     - type: PowerSupplier
       supplyRate: 20000
     - type: NodeContainer
@@ -289,7 +290,9 @@
   description: Obtains ability of firearm
   components:
   - type: XAEApplyComponents
-    permanentComponents:
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
     - type: RevolverAmmoProvider
       whitelist:
         tags:
@@ -318,7 +321,7 @@
   description: Becomes sentient
   components:
   - type: XAEApplyComponents
-    permanentComponents:
+    components:
     - type: GhostRole
       allowMovement: true
       allowSpeech: true
@@ -339,7 +342,7 @@
   description: Obtains ability of multitool
   components:
   - type: XAEApplyComponents
-    permanentComponents:
+    components:
     - type: UserInterface
       interfaces:
           enum.SignalLinkerUiKey.Key:
@@ -617,7 +620,9 @@
   description: Becomes mildly radioactive
   components:
   - type: XAEApplyComponents
-    permanentComponents:
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
     - type: RadiationSource
       intensity: 1
       slope: 0.3
@@ -646,7 +651,9 @@
   description: Create small gravity well
   components:
   - type: XAEApplyComponents
-    permanentComponents:
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
     - type: GravityWell
       maxRange: 3
       baseRadialAcceleration: 1
@@ -658,7 +665,9 @@
   description: Create small gravity well
   components:
   - type: XAEApplyComponents
-    permanentComponents:
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
     - type: GravityWell
       maxRange: 3
       baseRadialAcceleration: -1
@@ -670,7 +679,7 @@
   description: Create light interference
   components:
   - type: XAEApplyComponents
-    permanentComponents:
+    components:
     - type: Stealth
       hadOutline: true
     - type: StealthOnMove
@@ -929,7 +938,9 @@
   description: Becomes highly radioactive
   components:
   - type: XAEApplyComponents
-    permanentComponents:
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
     - type: RadiationSource
     intensity: 2
     slope: 0.3

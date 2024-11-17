@@ -13,6 +13,22 @@ public sealed class XAEFoamSystem : BaseXAESystem<XAEFoamComponent>
     [Dependency] private readonly SmokeSystem _smoke = default!;
 
     /// <inheritdoc />
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<XAEFoamComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(EntityUid uid, XAEFoamComponent component, MapInitEvent args)
+    {
+        if (component.Reagents.Count != 0)
+            return;
+
+        component.SelectedReagent = _random.Pick(component.Reagents);
+    }
+
+    /// <inheritdoc />
     protected override void OnActivated(Entity<XAEFoamComponent> ent, ref XenoArtifactNodeActivatedEvent args)
     {
         var component = ent.Comp;

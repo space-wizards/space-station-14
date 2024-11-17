@@ -12,5 +12,17 @@ public sealed partial class XAEApplyComponentsComponent : Component
     /// Components that are permanently added to an entity when the effect's node is entered.
     /// </summary>
     [DataField]
-    public ComponentRegistry PermanentComponents = new();
+    public ComponentRegistry Components = new();
+
+    /// <summary>
+    /// Does adding components need to be done only on first activation.
+    /// </summary>
+    [DataField]
+    public bool ApplyIfAlreadyHave { get; set; }
+
+    /// <summary>
+    /// Does component need to be restored when activated 2nd or more times.
+    /// </summary>
+    [DataField]
+    public bool RefreshOnReactivate { get; set; }
 }
