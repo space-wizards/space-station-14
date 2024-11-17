@@ -195,7 +195,7 @@ namespace Content.Server.Connection
             var asn = await IpToAsn(addr.ToString());
             if (asn == null)
             {
-                _sawmill.Error("ASN lookup failed, bypassing this step.");
+                _sawmill.Warning("ASN lookup failed, bypassing this step.");
             }
             // THIS IS A WIP
 
