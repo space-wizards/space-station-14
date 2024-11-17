@@ -15,13 +15,15 @@ internal static class Const
     public static FixedPoint2 LightingPercent = 0.03f;
     public static FixedPoint2 RadiationPercent = 0.11f;
 
+    public static FixedPoint2 DamageMultiplayer = 3.14f;
+
     public static GasProperties[] GasProperties =
     [
-        new (0.24f, 0.90f, 1.9f), // oxygen
-        new (0.20f, 0.64f, 2.0f), // nitrogen
+        new (0.24f, 0.90f, 1.4f), // oxygen
+        new (0.20f, 0.64f, 1.5f), // nitrogen
         new (0.12f, 1.11f, 3.5f), // carbon dioxide
-        new (0.60f, 0.21f, 1.6f), // plasma
-        new (0.30f, 0.45f, 1.3f), // tritium
+        new (0.60f, 0.21f, 1.3f), // plasma
+        new (0.30f, 0.45f, 1.2f), // tritium
         new (0.14f, 1.21f, 2.5f), // vapor
         new (0.16f, 0.91f, 4.4f), // ommonium
         new (0.13f, 0.99f, 2.2f), // n2o
