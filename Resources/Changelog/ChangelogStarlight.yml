@@ -193,4 +193,24 @@ Entries:
   id: 27
   time: '2024-11-16T18:28:31.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/56
-
+- author: Rinary
+  changes:
+  - message: Removed core station from map pool.
+    type: Remove
+  id: 28
+  time: '2024-11-17T10:10:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/63
+- author: Rinary
+  changes:
+  - message: Fixed ban webhooks reason.
+    type: Fix
+  id: 29
+  time: '2024-11-17T10:10:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/63
+- author: Rinary
+  changes:
+  - message: Changed firelock electrincs price, from 61 spessos to 16 spessos.
+    type: Tweak
+  id: 30
+  time: '2024-11-17T10:10:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/63
