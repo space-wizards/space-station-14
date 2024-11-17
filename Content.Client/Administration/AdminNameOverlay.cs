@@ -1,6 +1,7 @@
 using System.Numerics;
 using Content.Client.Administration.Systems;
 using Content.Shared.CCVar;
+using Content.Shared.Mind;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -66,18 +67,21 @@ internal sealed class AdminNameOverlay : Overlay
                                                               new Angle(-_eyeManager.CurrentEye.Rotation).RotateVec(
                                                                   aabb.TopRight - aabb.Center)) + new Vector2(1f, 7f);
 
-            //TODO put this cvar somewhere on the UI, currently its console only
-            var detail = _config.GetCVar(CCVars.AdminOverlayClassic);
-            var label = "ANTAG";
-            var color = Color.OrangeRed;
+            //TODO make this adjustable via GUI
+            var classic = _config.GetCVar(CCVars.AdminOverlayClassic);
+            var label = Loc.GetString(playerInfo.RoleProto.Name).ToUpper();
+            var color = playerInfo.RoleProto.Color;
+            //TODO make this adjustable via GUI
+            var filter = new List<RoleEnum>(){RoleEnum.SoloAntagonist, RoleEnum.TeamAntagonist, RoleEnum.SiliconAntagonist, RoleEnum.FreeAgent};
 
-            if (detail is false)
+            if (classic is true)
             {
-                label = Loc.GetString(playerInfo.RoleProto.Name).ToUpper();
-                color = playerInfo.RoleProto.Color;
+                label = Loc.GetString("admin-overlay-antag-legacy");
+                color = Color.OrangeRed;
             }
 
-            if (playerInfo.Antag)
+            if (filter.Contains(playerInfo.RoleProto.RoleRule) && !classic ||
+                playerInfo.Antag && classic )
             {
                 args.ScreenHandle.DrawString(_font, screenCoordinates + (lineoffset * 2), label, uiScale, color);
             }
