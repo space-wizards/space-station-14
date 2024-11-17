@@ -188,13 +188,13 @@
     inhandVisuals:
       left:
       - state: inhand-left
-        color: "#B72B2F"
+        color: "#C12D30"
         sprite: Clothing/Uniforms/Jumpskirt/color.rsi
       - state: overlay-inhand-left
         sprite: Clothing/Uniforms/Jumpsuit/hos.rsi
       right:
       - state: inhand-right
-        color: "#B72B2F"
+        color: "#C12D30"
         sprite: Clothing/Uniforms/Jumpskirt/color.rsi
       - state: overlay-inhand-right
         sprite: Clothing/Uniforms/Jumpsuit/hos.rsi
