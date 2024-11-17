@@ -358,22 +358,6 @@
     count: 15
 
 - type: entity
-  parent: Coal
-  id: Coal20
-  suffix: Twenty
-  components:
-  - type: Stack
-    count: 20
-
-- type: entity
-  parent: Coal
-  id: Coal25
-  suffix: Twentyfive
-  components:
-  - type: Stack
-    count: 25
-
-- type: entity
   parent: OreBase
   id: SaltOre
   name: salt
