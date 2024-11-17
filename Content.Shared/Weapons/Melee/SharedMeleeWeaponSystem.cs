@@ -191,16 +191,13 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
 
     private void OnHeavyAttack(HeavyAttackEvent msg, EntitySessionEventArgs args)
     {
-        if (args.SenderSession.AttachedEntity is not { } user)
+        if (args.SenderSession.AttachedEntity == null
+            || HasComp<MechPilotComponent>(args.SenderSession.AttachedEntity)
+            || !TryGetWeapon(args.SenderSession.AttachedEntity.Value, out var weaponUid, out var weapon)
+            || weaponUid != GetEntity(msg.Weapon))
             return;
 
-        if (!TryGetWeapon(user, out var weaponUid, out var weapon) ||
-            weaponUid != GetEntity(msg.Weapon))
-        {
-            return;
-        }
-
-        AttemptAttack(user, weaponUid, weapon, msg, args.SenderSession);
+        AttemptAttack(args.SenderSession.AttachedEntity.Value, weaponUid, weapon, msg, args.SenderSession);
     }
 
     private void OnDisarmAttack(DisarmAttackEvent msg, EntitySessionEventArgs args)

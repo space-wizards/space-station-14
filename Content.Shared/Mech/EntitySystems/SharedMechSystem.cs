@@ -388,6 +388,11 @@ public abstract class SharedMechSystem : EntitySystem
 
         if (component.PilotSlot.ContainedEntity == null)
             return false;
+        
+        if (HasComp<NoRotateOnMoveComponent>(uid))
+        {
+            RemComp<NoRotateOnMoveComponent>(uid);
+        }
 
         var pilot = component.PilotSlot.ContainedEntity.Value;
 
@@ -421,7 +426,7 @@ public abstract class SharedMechSystem : EntitySystem
             args.Cancel();
     }
 
-    private void UpdateAppearance(EntityUid uid, MechComponent? component = null,
+    public void UpdateAppearance(EntityUid uid, MechComponent? component = null,
         AppearanceComponent? appearance = null)
     {
         if (!Resolve(uid, ref component, ref appearance, false))
