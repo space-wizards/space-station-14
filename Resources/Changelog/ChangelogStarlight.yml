@@ -120,8 +120,7 @@ Entries:
   id: 17
   time: '2024-11-11T05:16:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/45
-- author: Darkrell
-    borg.'
+- author: Darkrell borg.'
   changes:
   - message: The vampire is now considered an enemy for the hostile factions.
     type: Fix
@@ -221,3 +220,18 @@ Entries:
   id: 31
   time: '2024-11-17T10:50:00.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/63
+- author: Rinary
+  changes:
+  - message: Fixed bug when bible user can be vampire.
+    type: Fix
+  id: 32
+  time: '2024-11-17T11:14:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/65
+- author: Rinary
+  changes:
+  - message: Fixed bug when species without stomach can be vampire.
+    type: Fix
+  id: 33
+  time: '2024-11-17T11:14:35.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/65
+
