@@ -670,6 +670,11 @@ public sealed class HolopadSystem : SharedHolopadSystem
         // Switch the AI's perspective from free roaming to the target holopad
         _xformSystem.SetCoordinates(stationAiCore.Value.Comp.RemoteEntity.Value, Transform(entity).Coordinates);
         _stationAiSystem.SwitchRemoteEntityMode(stationAiCore.Value, false);
+
+        // Open the holopad Ui if it hasn't been opened yet
+        if (TryComp<UserInterfaceComponent>(entity, out var entityUserInterfaceComponent) &&
+            !_userInterfaceSystem.IsUiOpen((entity, entityUserInterfaceComponent), HolopadUiKey.InteractionWindow))
+            _userInterfaceSystem.OpenUi((entity, entityUserInterfaceComponent), HolopadUiKey.InteractionWindow, user);
     }
 
     private void ExecuteBroadcast(Entity<HolopadComponent> source, EntityUid user)
