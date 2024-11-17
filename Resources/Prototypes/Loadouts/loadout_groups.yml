@@ -1412,6 +1412,7 @@
   loadouts:
   - HeadofSecurityHead
   - HeadofSecurityBeret
+  - HeadofSecurityPatrolCap
 
 - type: loadoutGroup
   id: HeadofSecurityJumpsuit
