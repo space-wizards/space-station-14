@@ -35,6 +35,7 @@
     damage:
       types:
         Blunt: 0
+    hidden: true
   - type: PhysicalComposition
     materialComposition:
       Cloth: 100
@@ -346,6 +347,23 @@
 
 - type: entity
   parent: PlushieLizard
+  id: PlushieRainbowLizard #Weh but gay
+  description: An adorable stuffed toy that resembles a lizardperson of every color. You just might trip while staring at it...
+  name: rainbow lizard plushie
+  components:
+  - type: PointLight
+    radius: 1.5
+    energy: 2
+  - type: RgbLightController
+    layers: [ 0 ]
+  - type: Clothing
+    clothingVisuals:
+      head:
+      - state: lizard-equipped-HELMET
+        shader: unshaded
+
+- type: entity
+  parent: PlushieLizard
   id: PlushieLizardMirrored
   components:
   - type: Item
@@ -581,6 +599,11 @@
       path: /Audio/Effects/bite.ogg
     angle: 0
     animation: WeaponArcBite # Rrrr!
+  - type: Tag
+    tags:
+      - Payload
+      - ClothMade
+      - PlushieCarp
 
 - type: entity
   parent: PlushieCarp

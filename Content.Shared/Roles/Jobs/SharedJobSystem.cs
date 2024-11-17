@@ -103,7 +103,6 @@ public abstract class SharedJobSystem : EntitySystem
     public bool MindHasJobWithId(EntityUid? mindId, string prototypeId)
     {
 
-        MindRoleComponent? comp = null;
         if (mindId is null)
             return false;
 
@@ -112,9 +111,7 @@ public abstract class SharedJobSystem : EntitySystem
         if (role is null)
             return false;
 
-        comp = role.Value.Comp;
-
-        return (comp.JobPrototype == prototypeId);
+        return role.Value.Comp1.JobPrototype == prototypeId;
     }
 
     public bool MindTryGetJob(
@@ -124,7 +121,7 @@ public abstract class SharedJobSystem : EntitySystem
         prototype = null;
         MindTryGetJobId(mindId, out var protoId);
 
-        return (_prototypes.TryIndex<JobPrototype>(protoId, out prototype) || prototype is not null);
+        return _prototypes.TryIndex(protoId, out prototype) || prototype is not null;
     }
 
     public bool MindTryGetJobId(
@@ -137,9 +134,9 @@ public abstract class SharedJobSystem : EntitySystem
             return false;
 
         if (_roles.MindHasRole<JobRoleComponent>(mindId.Value, out var role))
-            job = role.Value.Comp.JobPrototype;
+            job = role.Value.Comp1.JobPrototype;
 
-        return (job is not null);
+        return job is not null;
     }
 
     /// <summary>
