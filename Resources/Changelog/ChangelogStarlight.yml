@@ -120,7 +120,7 @@ Entries:
   id: 17
   time: '2024-11-11T05:16:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/45
-- author: Darkrell borg.'
+- author: Darkrell
   changes:
   - message: The vampire is now considered an enemy for the hostile factions.
     type: Fix
