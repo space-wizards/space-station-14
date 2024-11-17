@@ -17,7 +17,7 @@
     - VeryReligious
     - OnlySpeakToCommand
     - Scheduler
-    - RadioOnly
+#    - RadioOnly
     - ProperStorage
     - SwearingGood
 #    - StatementOnly
@@ -45,6 +45,9 @@
     - Optimist
     - ItemGood
     - Hypochondriac
+    - ImposterSyndrome
+    - YesMan
+    - Centrist
 
 # You are extremely possessive of your property. Refuse to relinquish it, and if it is misplaced or stolen, it must be retrieved at all costs. 
 - type: spelfMood
@@ -322,13 +325,41 @@
   moodName: spelf-mood-optimist-name
   moodDesc: spelf-mood-optimist-desc
 
-# You've been sickly since you were a child. Everything negative you experience is the result of a potentially terminal illness, for which you need immediate medical treatment.
+# Hypochondriac: You've been sickly since you were a child. Everything negative you experience is the result of a potentially terminal illness, for which you need immediate medical treatment.
 - type: spelfMood
   id: Hypochondriac
   moodName: spelf-mood-hypochondriac-name
   moodDesc: spelf-mood-hypochondriac-desc
 
+# Imposter Syndrome: You feel your life experience drain from your mind. You are brand-new at your job, unsure of how anything works. You should probably find someone experienced to show you the ropes.
+- type: spelfMood
+  id: ImposterSyndrome
+  moodName: spelf-mood-imposter-syndrome-name
+  moodDesc: spelf-mood-imposter-syndrome-desc
 
+# Yes Man: You just can't say "no." You must agree with everyone, and perform any task requested of you, regardless of its source.
+- type: spelfMood
+  id: YesMan
+  moodName: spelf-mood-yes-man-name
+  moodDesc: spelf-mood-yes-man-desc
+  conflicts:
+    - Centrist
+
+# Centrist: You are ambivalent towards any and all decisions, and refuse to take sides. 
+- type: spelfMood
+  id: Centrist
+  moodName: spelf-mood-centrist-name
+  moodDesc: spelf-mood-centrist-desc
+  conflicts:
+    - YesMan
+
+# Public Sector: Your job should not be done in private if it can be helped. If at all possible, you should renovate the facilities to allow public access to your workplace.
+- type: spelfMood
+  id: PublicSector
+  moodName: spelf-mood-public-sector-name
+  moodDesc: spelf-mood-public-sector-desc
+  conflicts:
+    - StationIsAlive
 
 # The color [COLOR] is the only acceptable color for decorations. Endeavor to make your environment this color where possible.
 #- type: spelfMood

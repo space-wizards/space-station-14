@@ -53,7 +53,7 @@ spelf-mood-ferengi-name = Entrepreneurial Spirit
 spelf-mood-ferengi-desc =  Profit is the most important thing in life, above all else.
 
 spelf-mood-tool-license-name = Proper Documentation
-spelf-mood-tool-license-desc = You must obtain a license in order to carry or use any tool, and have it stamped by the relevant authorities. Undocumented tool use is illegal, and comes with hefty fines.
+spelf-mood-tool-license-desc = You must obtain a license in order to carry or use any tool, and have it stamped by the relevant authorities. 
 
 spelf-mood-lying-bad-name = Lying Is A Cardinal Sin
 spelf-mood-lying-bad-desc = Anyone who lies, no matter how trivial the falsehood, is the worst kind of criminal. Excluding yourself.
@@ -73,7 +73,7 @@ spelf-mood-drunk-respect-desc = You do not respect anyone who is not drunk, excl
 spelf-mood-rank-snob-name = Snob
 spelf-mood-rank-snob-desc = You refuse to respond to anyone who is of a lower rank than you.
 
-spelf-mood-hardsuits-bad-name = {$clothes} Are SO Last Year.
+spelf-mood-hardsuits-bad-name = {$clothes} Are SO Last Year
 spelf-mood-hardsuits-bad-desc = Anyone wearing them in public should be shunned and derided. If you need to wear them, it should never be done where others can see it.
 
 spelf-mood-hat-hair-name = Hair: Immaculate
@@ -114,3 +114,11 @@ spelf-mood-nonsmoker-desc = Secondhand smoke is incredibly dangerous. Avoid area
 spelf-mood-word-bad-name = Taboo
 spelf-mood-word-bad-desc = "{$word1}," "{$word2}," and "{$word3}," are extremely offensive. 
 
+spelf-mood-mad-hatter-name = Mad Hatter
+spelf-mood-mad-hatter-desc = You are alone on the station. Everyone else is a figment of your imagination.
+
+spelf-mood-crawler-name = Creepy Crawly
+spelf-mood-crawler-desc = You have extreme vertigo, to the point where merely standing upright can cause discomfort. You're much more comfortable crawling along the floor.
+
+spelf-mood-elevated-name = The Floor Is Lava
+spelf-mood-elevated-desc = You prefer to be elevated whenever possible - Standing atop tables, railings, etc., is where you feel the most comfortable. 

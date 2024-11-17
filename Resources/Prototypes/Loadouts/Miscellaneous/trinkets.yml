@@ -215,7 +215,25 @@
   id: FolderBlack
   storage:
     back:
-    - BoxFolderBlack
+    - BoxFolderBlackLoadout
+
+- type: loadout
+  id: FolderHamster
+  storage:
+    back:
+    - BoxFolderHamster
+
+- type: loadout
+  id: FolderMime
+  storage:
+    back:
+    - BoxFolderMime
+
+- type: loadout
+  id: FolderPun
+  storage:
+    back:
+    - BoxFolderPun
 
 - type: loadout
   id: BarFlask

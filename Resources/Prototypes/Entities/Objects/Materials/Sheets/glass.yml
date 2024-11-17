@@ -181,6 +181,16 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: UserInterface
+    interfaces:
+      enum.ShortConstructionUiKey.Key:
+        type: ShortConstructionMenuBUI
+  - type: ActivatableUI
+    key: enum.ShortConstructionUiKey.Key
+  - type: ShortConstruction
+    prototypes:
+    - ReinforcedWindow
+    - WindowReinforcedDirectional
 
 - type: entity
   parent: SheetRGlass
@@ -258,6 +268,16 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: UserInterface
+    interfaces:
+      enum.ShortConstructionUiKey.Key:
+        type: ShortConstructionMenuBUI
+  - type: ActivatableUI
+    key: enum.ShortConstructionUiKey.Key
+  - type: ShortConstruction
+    prototypes:
+    - PlasmaWindow
+    - PlasmaWindowDirectional
 
 - type: entity
   parent: SheetPGlass
@@ -324,6 +344,16 @@
         - ReagentId: Carbon
           Quantity: 0.5
         canReact: false
+  - type: UserInterface
+    interfaces:
+      enum.ShortConstructionUiKey.Key:
+        type: ShortConstructionMenuBUI
+  - type: ActivatableUI
+    key: enum.ShortConstructionUiKey.Key
+  - type: ShortConstruction
+    prototypes:
+    - ReinforcedPlasmaWindow
+    - PlasmaReinforcedWindowDirectional
 
 - type: entity
   parent: SheetRPGlass
@@ -399,6 +429,16 @@
         - ReagentId: Uranium
           Quantity: 10
         canReact: false
+  - type: UserInterface
+    interfaces:
+      enum.ShortConstructionUiKey.Key:
+        type: ShortConstructionMenuBUI
+  - type: ActivatableUI
+    key: enum.ShortConstructionUiKey.Key
+  - type: ShortConstruction
+    prototypes:
+    - UraniumWindow
+    - UraniumWindowDirectional
 
 - type: entity
   parent: SheetUGlass
@@ -453,6 +493,16 @@
         - ReagentId: Carbon
           Quantity: 0.5
         canReact: false
+  - type: UserInterface
+    interfaces:
+      enum.ShortConstructionUiKey.Key:
+        type: ShortConstructionMenuBUI
+  - type: ActivatableUI
+    key: enum.ShortConstructionUiKey.Key
+  - type: ShortConstruction
+    prototypes:
+    - ReinforcedUraniumWindow
+    - UraniumReinforcedWindowDirectional
 
 - type: entity
   parent: SheetRUGlass
@@ -530,6 +580,16 @@
         - ReagentId: Copper
           Quantity: 6.7
         canReact: false
+  - type: UserInterface
+    interfaces:
+      enum.ShortConstructionUiKey.Key:
+        type: ShortConstructionMenuBUI
+  - type: ActivatableUI
+    key: enum.ShortConstructionUiKey.Key
+  - type: ShortConstruction
+    prototypes:
+    - ClockworkWindow
+    - WindowClockworkDirectional
 
 - type: entity
   parent: SheetClockworkGlass
