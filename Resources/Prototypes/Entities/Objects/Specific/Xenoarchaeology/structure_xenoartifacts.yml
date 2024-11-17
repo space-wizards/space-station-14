@@ -53,6 +53,7 @@
     - Xenoarchaeology
   # gameplay interactions
   - type: XenoArtifact
+    effectWeights: XenoArtifactEffectsStructure
   - type: Damageable
   - type: Actions
   - type: Physics

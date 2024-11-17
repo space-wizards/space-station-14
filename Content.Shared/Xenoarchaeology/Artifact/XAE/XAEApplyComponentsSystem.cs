@@ -11,17 +11,10 @@ public sealed class XAEApplyComponentsSystem : BaseXAESystem<XAEApplyComponentsC
     {
         var artifact = args.Artifact;
 
-        foreach (var (name, _) in ent.Comp.PermanentComponents)
+        foreach (var registry in ent.Comp.PermanentComponents)
         {
-            var reg = _componentFactory.GetRegistration(name);
-
-            if (EntityManager.HasComponent(artifact, reg.Type))
-                continue;
-
-            var comp = (Component)_componentFactory.GetComponent(reg);
-
-            EntityManager.RemoveComponent(artifact, comp.GetType());
-            EntityManager.AddComponent(artifact, comp);
+            var clone = _componentFactory.GetComponent(registry.Value);
+            EntityManager.AddComponent(artifact, clone, overwrite: true);
         }
     }
 }

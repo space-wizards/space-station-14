@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Shared.Storage;
 using Content.Shared.Xenoarchaeology.Artifact.XAE.Components;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Xenoarchaeology.Artifact.XAE;
 
@@ -9,10 +10,14 @@ public sealed class XAESpawnSystem : BaseXAESystem<XAESpawnComponent>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     /// <inheritdoc />
     protected override void OnActivated(Entity<XAESpawnComponent> ent, ref XenoArtifactNodeActivatedEvent args)
     {
+        if (!_timing.IsFirstTimePredicted)
+            return;
+
         var component = ent.Comp;
         if (component.Spawns is not { } spawns)
             return;
