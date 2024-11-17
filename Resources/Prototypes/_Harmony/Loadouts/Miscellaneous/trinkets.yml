@@ -1,0 +1,60 @@
+#Harmony trinkets below
+- type: loadout
+  id: ClothingNeckVulturePin
+  storage:
+    back:
+    - ClothingNeckVulturePin
+
+- type: loadout
+  id: ClothingNeckMirosPin
+  storage:
+    back:
+    - ClothingNeckMirosPin
+
+- type: loadout
+  id: ClothingNeckSalamanderPin
+  storage:
+    back:
+    - ClothingNeckSalamanderPin
+
+- type: loadout
+  id: ClothingNeckLizardPin
+  storage:
+    back:
+    - ClothingNeckLizardPin
+
+- type: loadout
+  id: ClothingNeckLeviathanPin
+  storage:
+    back:
+    - ClothingNeckLeviathanPin
+
+- type: loadout
+  id: ClothingNeckFrontierPin
+  storage:
+    back:
+    - ClothingNeckFrontierPin
+
+- type: loadout
+  id: ClothingNeckCosmaticDriftPin
+  storage:
+    back:
+    - ClothingNeckCosmaticDriftPin
+
+- type: loadout
+  id: ClothingNeckDeltaVPin
+  storage:
+    back:
+    - ClothingNeckDeltaVPin
+
+- type: loadout
+  id: ClothingNeckAxolotlPin
+  storage:
+    back:
+    - ClothingNeckAxolotlPin
+
+- type: loadout
+  id: HarmonicaInstrument
+  storage:
+    back:
+    - HarmonicaInstrument
