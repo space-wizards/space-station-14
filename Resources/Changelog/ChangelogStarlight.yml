@@ -214,3 +214,10 @@ Entries:
   id: 30
   time: '2024-11-17T10:10:00.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/63
+- author: Rinary
+  changes:
+  - message: Secret vote now are default in game map or game preset voting.
+    type: Tweak
+  id: 31
+  time: '2024-11-17T10:50:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/63

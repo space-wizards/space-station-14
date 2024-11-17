@@ -220,9 +220,12 @@ namespace Content.Server.Voting.Managers
 
         private void CreatePresetVote(ICommonSession? initiator)
         {
-            var presets = GetGamePresets();
-            
+            var presets = new Dictionary<string, string>();
             presets.Add("Secret", Loc.GetString("ui-vote-secret-map"));
+            foreach (var preset in GetGamePresets())
+            {
+                presets.Add(preset.Key, preset.Value);
+            }
 
             var alone = _playerManager.PlayerCount == 1 && initiator != null;
             var options = new VoteOptions
@@ -265,6 +268,12 @@ namespace Content.Server.Voting.Managers
                 var ticker = _entityManager.EntitySysManager.GetEntitySystem<GameTicker>();
                 ticker.SetGamePreset(picked);
             };
+            
+            foreach (var player in _playerManager.Sessions)
+            {
+                // Everybody defaults to an secret vote.
+                 vote.CastVote(player, 0);
+            }
         }
 
         private void CreateMapVote(ICommonSession? initiator)
@@ -337,6 +346,12 @@ namespace Content.Server.Voting.Managers
                     }
                 }
             };
+            
+            foreach (var player in _playerManager.Sessions)
+            {
+                // Everybody defaults to an secret vote.
+                 vote.CastVote(player, 0);
+            }
         }
 
         private async void CreateVotekickVote(ICommonSession? initiator, string[]? args)
