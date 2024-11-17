@@ -426,7 +426,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         var adminName = banDef.BanningAdmin == null ? Loc.GetString("system-user") : (await _db.GetPlayerRecordByUserId(banDef.BanningAdmin.Value))?.LastSeenUserName ?? Loc.GetString("system-user");
         var targetName = banDef.UserId == null ? Loc.GetString("server-ban-no-name", ("hwid", hwid)) : (await _db.GetPlayerRecordByUserId(banDef.UserId.Value))?.LastSeenUserName ?? Loc.GetString("server-ban-no-name", ("hwid", hwid));
         var expiresString = banDef.ExpirationTime == null ? Loc.GetString("server-ban-string-never") : "" + TimeZoneInfo.ConvertTimeFromUtc(banDef.ExpirationTime.Value.UtcDateTime, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
-        var reason = banDef.Reason;
+        var reason = banDef.Reason.Replace("\n", "\n> ").Trim() ?? "No reason provided";
         var id = banDef.Id;
         var round = "" + banDef.RoundId;
         var severity = "" + banDef.Severity;
@@ -529,7 +529,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         var adminName = banDef.BanningAdmin == null ? Loc.GetString("system-user") : (await _db.GetPlayerRecordByUserId(banDef.BanningAdmin.Value))?.LastSeenUserName ?? Loc.GetString("system-user");
         var targetName = banDef.UserId == null ? Loc.GetString("server-ban-no-name", ("hwid", hwid)) : (await _db.GetPlayerRecordByUserId(banDef.UserId.Value))?.LastSeenUserName ?? Loc.GetString("server-ban-no-name", ("hwid", hwid));
         var expiresString = banDef.ExpirationTime == null ? Loc.GetString("server-ban-string-never") : "" + TimeZoneInfo.ConvertTimeFromUtc(banDef.ExpirationTime.Value.UtcDateTime, TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
-        var reason = banDef.Reason;
+        var reason = banDef.Reason.Replace("\n", "\n> ").Trim() ?? "No reason provided";
         var id = banDef.Id;
         var round = "" + banDef.RoundId;
         var severity = "" + banDef.Severity;
