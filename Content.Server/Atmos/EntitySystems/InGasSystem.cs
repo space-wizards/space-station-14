@@ -63,6 +63,7 @@ public sealed class InGasSystem : EntitySystem
                 if (inGas.TakingDamage)
                 {
                     inGas.TakingDamage = false;
+                    _alerts.ClearAlertCategory(uid, inGas.BreathingAlertCategory);
                     //Look at me i'm even being proper with logging
                     //todo make this actually work
                     _adminLog.Add(LogType.Electrocution, $"Entity {uid} is no longer taking damage from water.");
@@ -88,18 +89,8 @@ public sealed class InGasSystem : EntitySystem
             {
                 inGas.TakingDamage = true;
                 _adminLog.Add(LogType.Electrocution, $"Entity {uid} is now taking damage from water.");
+                _alerts.ShowAlert(uid, inGas.DamageAlert, 1);
             }
-
-            switch (inGas.TakingDamage)
-            {
-                case true:
-                    _alerts.ShowAlert(uid, inGas.DrowningAlert, 1);
-                    break;
-                default:
-                    _alerts.ClearAlertCategory(uid, inGas.BreathingAlertCategory);
-                    break;
-            }
-
         }
     }
 }

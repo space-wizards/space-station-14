@@ -49,8 +49,11 @@ public sealed partial class InGasComponent : Component
     [DataField]
     public bool TakingDamage = false;
 
+    /// <summary>
+    /// The alert to send when the entity is damaged by gas.
+    /// </summary>
     [DataField]
-    public ProtoId<AlertPrototype> DrowningAlert = "Drowning";
+    public ProtoId<AlertPrototype> DamageAlert = "ShortCircuit";
 
     [DataField]
     public ProtoId<AlertCategoryPrototype> BreathingAlertCategory = "Breathing";
