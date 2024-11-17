@@ -953,7 +953,7 @@
   - HeadofSecurityHead
   - HeadofSecurityBeret
   - HoSWidebrimHarmony # Harmony
-  
+
 - type: loadoutGroup
   id: HeadofSecurityJumpsuit
   name: loadout-group-head-of-security-jumpsuit
@@ -1350,7 +1350,7 @@
   name: loadout-group-breath-tool
   minLimit: 1
   maxLimit: 1
-  hidden: true
+  hidden: false # Harmony change for various Vox masks
   loadouts:
   - LoadoutSpeciesBreathTool
 
@@ -1359,7 +1359,7 @@
   name: loadout-group-breath-tool
   minLimit: 1
   maxLimit: 1
-  hidden: true
+  hidden: false # Harmony change for various Vox masks
   loadouts:
   - LoadoutSpeciesBreathToolMedical
 
@@ -1368,6 +1368,6 @@
   name: loadout-group-breath-tool
   minLimit: 1
   maxLimit: 1
-  hidden: true
+  hidden: false # Harmony change for various Vox masks
   loadouts:
   - LoadoutSpeciesBreathToolSecurity
