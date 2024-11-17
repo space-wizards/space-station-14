@@ -73,8 +73,6 @@
     layerData:
     - sprite: Mobs/Silicon/station_ai.rsi
       state: default
-  - type: Speech
-    speechVerb: Robotic
   - type: ShowJobIcons
 
 - type: entity
