@@ -584,3 +584,10 @@ Entries:
     changes:
     - type: Add
       message: 'Added two new wanted statuses to the criminal records: monitor and search.'
+  - id: 186
+    author: thesaladmancer
+    time: '2024-11-16T01:40:43.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/186
+    changes:
+    - type: Add
+      message: Added Captain's Turtleneck and skirt variant.
