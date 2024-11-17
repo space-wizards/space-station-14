@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: Emisse
   changes:
-  - message: Atlas, Cluster, Europa, & Saltern removed from the game.
-    type: Remove
-  id: 7119
-  time: '2024-08-15T21:10:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31058
-- author: Emisse
-  changes:
   - message: Origin removed from the game.
     type: Remove
   id: 7120
@@ -3923,3 +3916,10 @@
   id: 7618
   time: '2024-11-16T05:09:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31761
+- author: SpaceRox1244
+  changes:
+  - message: Closets and lockers now have visuals for being labeled with papers.
+    type: Add
+  id: 7619
+  time: '2024-11-17T03:27:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33318
