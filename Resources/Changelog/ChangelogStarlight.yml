@@ -234,4 +234,18 @@ Entries:
   id: 33
   time: '2024-11-17T11:14:35.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/65
+- author: Rinary
+  changes:
+  - message: Added mech rotation when it in combat mode.
+    type: Add
+  id: 34
+  time: '2024-11-17T13:57:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/67
+- author: Rinary
+  changes:
+  - message: Removed heavy melee attacks of mech.
+    type: Remove
+  id: 35
+  time: '2024-11-17T13:57:03.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/67
 
