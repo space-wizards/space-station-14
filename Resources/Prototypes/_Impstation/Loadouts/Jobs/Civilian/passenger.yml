@@ -5,4 +5,4 @@
   - !type:GroupLoadoutEffect
     proto: GreyTider
   equipment:
-    jumpsuit: ClothingSpaceCadetJumpsuitColorGray
+    jumpsuit: ClothingUniformSpaceJumpsuitGrayTider
