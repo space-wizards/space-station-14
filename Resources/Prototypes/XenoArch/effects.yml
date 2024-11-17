@@ -9,7 +9,7 @@
     XenoArtifactWandering: 4.0
     XenoArtifactSpeedUp: 4.0
     XenoArtifactDrill: 6.0
-    XenoArtifactGun: 4.0
+    #XenoArtifactGun: 4.0 #it conflicts with default interaction - it should activate artifact nodes
     XenoArtifactGhost: 10.0
     XenoArtifactMultitool: 10.0
     XenoArtifactEffectBadFeeling: 10.0
