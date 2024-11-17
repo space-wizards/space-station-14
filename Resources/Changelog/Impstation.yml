@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: starlighthowls
-  changes:
-  - message: Fixed broken drink sprite
-    type: Fix
-  id: 36
-  time: '2024-07-25T19:51:04.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/45
 - author: ultramario1998
   changes:
   - message: Added Beenades
@@ -4275,3 +4268,12 @@
   id: 535
   time: '2024-11-17T21:39:47.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/741
+- author: formlessnameless
+  changes:
+  - message: Root Beer can be used to make bombs
+    type: Fix
+  - message: Midround lings have objectives again
+    type: Fix
+  id: 536
+  time: '2024-11-17T21:55:25.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/743
