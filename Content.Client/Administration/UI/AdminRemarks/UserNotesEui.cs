@@ -1,4 +1,3 @@
-using Content.Client.Administration.UI.Notes;
 using Content.Client.Eui;
 using Content.Shared.Administration.Notes;
 using Content.Shared.Eui;

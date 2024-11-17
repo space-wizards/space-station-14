@@ -216,8 +216,7 @@ namespace Content.Client.Actions
             return priorityA - priorityB;
         }
 
-        protected override void ActionAdded(EntityUid performer, EntityUid actionId, ActionsComponent comp,
-            BaseActionComponent action)
+        protected override void ActionAdded(EntityUid performer, EntityUid actionId, ActionsComponent comp, BaseActionComponent action)
         {
             if (_playerManager.LocalEntity != performer)
                 return;

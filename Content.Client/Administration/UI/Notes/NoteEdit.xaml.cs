@@ -126,7 +126,7 @@ public sealed partial class NoteEdit : FancyWindow
         SeverityOption.ModulateSelfOverride = null;
     }
 
-    private NoteSeverity? _noteSeverity = null;
+    private NoteSeverity? _noteSeverity ;
 
     private string PlayerName { get; }
     private int NoteId { get; }

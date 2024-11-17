@@ -12,7 +12,7 @@ namespace Content.Client.Administration.UI.Bwoink
     {
         private readonly Action<string> _messageSender;
 
-        public int Unread { get; private set; } = 0;
+        public int Unread { get; private set; }
         public DateTime LastMessage { get; private set; } = DateTime.MinValue;
         private List<string> PeopleTyping { get; set; } = new();
         public event Action<string>? InputTextChanged;

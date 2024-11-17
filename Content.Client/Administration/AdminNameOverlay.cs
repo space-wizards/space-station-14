@@ -3,9 +3,7 @@ using Content.Client.Administration.Systems;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
-using Robust.Shared;
 using Robust.Shared.Enums;
-using Robust.Shared.Configuration;
 
 namespace Content.Client.Administration;
 
@@ -67,7 +65,6 @@ internal sealed class AdminNameOverlay : Overlay
             if (playerInfo.Antag)
             {
                 args.ScreenHandle.DrawString(_font, screenCoordinates + (lineoffset * 2), "ANTAG", uiScale, Color.OrangeRed);
-;
             }
             args.ScreenHandle.DrawString(_font, screenCoordinates+lineoffset, playerInfo.Username, uiScale, playerInfo.Connected ? Color.Yellow : Color.White);
             args.ScreenHandle.DrawString(_font, screenCoordinates, playerInfo.CharacterName, uiScale, playerInfo.Connected ? Color.Aquamarine : Color.White);

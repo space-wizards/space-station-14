@@ -193,8 +193,7 @@ namespace Content.Client.Administration.UI.Bwoink
 
         public void SelectChannel(NetUserId channel)
         {
-            if (!ChannelSelector.PlayerInfo.TryFirstOrDefault(
-                i => i.SessionId == channel, out var info))
+            if (!ChannelSelector.PlayerInfo.TryFirstOrDefault(i => i.SessionId == channel, out var info))
                 return;
 
             // clear filter if we're trying to select a channel for a player that isn't currently filtered

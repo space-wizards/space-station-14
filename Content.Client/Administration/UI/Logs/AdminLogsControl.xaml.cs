@@ -509,10 +509,7 @@ public sealed partial class AdminLogsControl : Control
             RoundLogs = round.Value;
         }
 
-        Count.Text = Loc.GetString(
-            "admin-logs-count",
-            ("showing", ShownLogs), ("total", TotalLogs), ("round", RoundLogs)
-        );
+        Count.Text = Loc.GetString("admin-logs-count", ("showing", ShownLogs), ("total", TotalLogs), ("round", RoundLogs));
     }
 
     protected override void Dispose(bool disposing)
