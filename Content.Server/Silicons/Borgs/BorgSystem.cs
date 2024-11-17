@@ -92,6 +92,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
         _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
     }
 
+    // Borgs that enter the game through the normal StationSpawningSystem process get their Silicon role type here
     private void OnSpawn(EntityUid uid, BorgChassisComponent component, PlayerSpawnCompleteEvent args)
     {
         if (!_mind.TryGetMind(args.Mob, out var mindId, out _))
