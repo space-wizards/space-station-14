@@ -6,6 +6,7 @@ using Content.Shared.Xenoarchaeology.Artifact.XAE.Components;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Xenoarchaeology.Artifact.XAE;
 
@@ -17,10 +18,14 @@ public sealed class XAEThrowArtifactSystem : BaseXAESystem<XAEThrowArtifactCompo
     [Dependency] private readonly TileSystem _tile = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     /// <inheritdoc />
     protected override void OnActivated(Entity<XAEThrowArtifactComponent> ent, ref XenoArtifactNodeActivatedEvent args)
     {
+        if (!_timing.IsFirstTimePredicted)
+            return;
+
         var component = ent.Comp;
         var xform = Transform(ent);
         if (TryComp<MapGridComponent>(xform.GridUid, out var grid))

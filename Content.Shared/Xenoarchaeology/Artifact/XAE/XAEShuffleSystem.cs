@@ -1,6 +1,7 @@
 using Content.Shared.Mobs.Components;
 using Content.Shared.Xenoarchaeology.Artifact.XAE.Components;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Xenoarchaeology.Artifact.XAE;
 
@@ -9,10 +10,14 @@ public sealed class XAEShuffleSystem : BaseXAESystem<XAEShuffleComponent>
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     /// <inheritdoc />
     protected override void OnActivated(Entity<XAEShuffleComponent> ent, ref XenoArtifactNodeActivatedEvent args)
     {
+        if(!_timing.IsFirstTimePredicted)
+            return;
+
         var mobState = GetEntityQuery<MobStateComponent>();
 
         List<Entity<TransformComponent>> toShuffle = new();
