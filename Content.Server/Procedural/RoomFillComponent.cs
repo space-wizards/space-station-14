@@ -31,5 +31,5 @@ public sealed partial class RoomFillComponent : Component
     /// Should any existing entities / decals be bulldozed first.
     /// </summary>
     [DataField]
-    public bool ClearExisting;
+    public bool ClearExisting = true;
 }
