@@ -113,6 +113,16 @@
       sprite: Objects/Consumable/Drinks/glass_clear.rsi
       state: icon
   - type: TransformableContainer
+  - type: PolymorphGlass
+    verbName: polymorph-glass-component-change-mode
+    glasses:
+    - DrinkGlass
+    - DrinkGlassCoupeShaped
+    - DrinkGlassFlute
+    - DrinkGlassOldFashioned
+    - DrinkGlassCollins
+    - DrinkGlassTumbler
+    - DrinkGlassPint
 
 - type: entity
   parent: DrinkGlassBase
@@ -143,6 +153,16 @@
     containers:
       garnish_slot: !type:ContainerSlot {}
       decoration_slot: !type:ContainerSlot {}
+  - type: PolymorphGlass
+    verbName: polymorph-glass-component-change-mode
+    glasses:
+    - DrinkGlass
+    - DrinkGlassCoupeShaped
+    - DrinkGlassFlute
+    - DrinkGlassOldFashioned
+    - DrinkGlassCollins
+    - DrinkGlassTumbler
+    - DrinkGlassPint
 
 - type: entity
   name: tumbler glass
