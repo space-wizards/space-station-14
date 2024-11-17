@@ -30,6 +30,8 @@
         amount: 5
   - type: Bloodstream
     bloodReagent: Sugar
+  - type: Sprite #smol as dorf but also thin
+    scale: 0.8, 0.8
   - type: Fixtures
     fixtures:
       fix1:
