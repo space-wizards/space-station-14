@@ -12,15 +12,7 @@
 
   A room will often have an Air Alarm mounted on the wall, for quick control over multiple devices in that room.
 
-  ## Linking Devices
-  You can link devices to an Air Alarm by using either a Multitool or Network Configurator in List mode. Click on the device you want to link to save it to the tool, and then click on the air alarm to bring up the linking menu. The linking menu has multiple options:
-  - Set: Overwrites the current list of linked devices with the devices saved on the tool.
-  - Add: Adds the devices saved on the tool to the current list of linked devices.
-  - Clear: Removes all linked devices from the air alarm.
-  - Copy: Copies the list of currently linked devices to the tool.
-  - Show: Draws a line between the air alarm and all linked devices. This is useful for visualizing the area the air alarm covers.
-
-  If you need to clear your tool, you can press (replace with fancy interact control key puller) on the tool to bring up a list of saved devices, and then press the "Clear" button.
+  You can see how to link devices in (insert guide link here later numnut!!!!)
 
   ## User Interface
   Interacting with an Air Alarm will bring up a menu with 3 sections:
