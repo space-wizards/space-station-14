@@ -50,6 +50,16 @@
     jumpsuit: ClothingUniformJumpskirtHoSAlt
 
 - type: loadout
+  id: HeadofSecurityProfessionalJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHoSPro
+
+- type: loadout
+  id: HeadofSecurityProfessionalJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtHoSPro
+
+- type: loadout
   id: HeadofSecurityFormalSuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitHosFormal
