@@ -590,5 +590,27 @@ Entries:
   id: 73
   time: '2024-11-02T13:21:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32461
+- author: Repo
+  changes:
+  - message: All role bans in a set are updated on edits now.
+    type: Fix
+  id: 74
+  time: '2024-11-12T21:03:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30659
+- author: Aquif
+  changes:
+  - message: tag:with toolshed command. It takes in a list of entities via pipe and
+      returns the entities from the list with the given tag.
+    type: Add
+  id: 75
+  time: '2024-11-13T23:27:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31751
+- author: Beck Thompson
+  changes:
+  - message: Notes now use duration instead of timestamps for note expiry times.
+    type: Tweak
+  id: 76
+  time: '2024-11-15T03:24:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33262
 Name: Admin
 Order: 1
