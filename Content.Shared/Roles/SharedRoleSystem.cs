@@ -152,10 +152,6 @@ public abstract class SharedRoleSystem : EntitySystem
 
         mind.MindRoles.Add(mindRoleId);
 
-        // Show briefing
-        var mindEv = new MindRoleAddedEvent(silent);
-        RaiseLocalEvent(mindId, ref mindEv);
-
         var update = MindRolesUpdate(mindId);
 
         // RoleType refresh, Role time tracking, Update Admin playerlist
@@ -183,8 +179,12 @@ public abstract class SharedRoleSystem : EntitySystem
         }
     }
 
-    //Select the mind's currently "active" mind role entity, and update the mind's role type, if necessary
-    //Returns true if this changed the mind's role type
+    /// <summary>
+    ///     Select the mind's currently "active" mind role entity, and update the mind's role type, if necessary
+    /// </summary>
+    /// <returns>
+    ///     True if this changed the mind's role type
+    /// </returns>>
     private bool MindRolesUpdate(EntityUid mindId)
     {
         //get the most important/latest mind role
