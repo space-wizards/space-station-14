@@ -60,13 +60,13 @@ public sealed class KillPersonConditionSystem : EntitySystem
         // TODO: make a reusable filter system to avoid duplication with PickRandomHead or any future objectives
         var allHumans = _mind.GetAliveHumans(args.MindId);
         if (comp.RoleWhitelist is {} whitelist)
-            allHumans.RemoveAll(mindId => !_role.MindHasMatchingRole(mindId, whitelist));
+            allHumans.RemoveWhere(mindId => !_role.MindHasMatchingRole(mindId, whitelist));
         if (comp.RoleBlacklist is {} blacklist)
-            allHumans.RemoveAll(mindId => _role.MindHasMatchingRole(mindId, blacklist));
+            allHumans.RemoveWhere(mindId => _role.MindHasMatchingRole(mindId, blacklist));
 
         if (comp.OnlyChoosableJobs)
         {
-            allHumans.RemoveAll(mindId => !(
+            allHumans.RemoveWhere(mindId => !(
                 _role.MindHasRole<JobRoleComponent>(mindId, out var role) &&
                 role?.Comp1.JobPrototype is {} jobId &&
                 _proto.Index(jobId).SetPreference));
