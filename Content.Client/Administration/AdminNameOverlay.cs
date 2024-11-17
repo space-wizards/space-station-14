@@ -76,7 +76,7 @@ internal sealed class AdminNameOverlay : Overlay
 
             if (classic is true)
             {
-                label = Loc.GetString("admin-overlay-antag-legacy");
+                label = Loc.GetString("admin-overlay-antag-classic");
                 color = Color.OrangeRed;
             }
 
