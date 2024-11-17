@@ -14641,7 +14641,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -110328.33
+      secondsUntilStateChange: -110422.52
       state: Opening
   - uid: 6934
     components:
@@ -14653,7 +14653,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -110330.96
+      secondsUntilStateChange: -110425.16
       state: Opening
   - uid: 6935
     components:
@@ -14665,7 +14665,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -110329.81
+      secondsUntilStateChange: -110424.01
       state: Opening
   - uid: 6936
     components:
@@ -14676,7 +14676,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -110329.03
+      secondsUntilStateChange: -110423.23
       state: Opening
 - proto: AirlockTheatreLocked
   entities:
@@ -37933,92 +37933,36 @@ entities:
       parent: 2
 - proto: BoxLightMixed
   entities:
-  - uid: 28351
-    components:
-    - type: Transform
-      parent: 3055
-    - type: Storage
-      storedItems:
-        29719:
-          position: 0,0
-          _rotation: South
-        29720:
-          position: 1,0
-          _rotation: South
-        29721:
-          position: 2,0
-          _rotation: South
-        29722:
-          position: 3,0
-          _rotation: South
-        29723:
-          position: 4,0
-          _rotation: South
-        29724:
-          position: 5,0
-          _rotation: South
-        29725:
-          position: 0,2
-          _rotation: South
-        29726:
-          position: 1,2
-          _rotation: South
-        29727:
-          position: 2,2
-          _rotation: South
-        29728:
-          position: 3,2
-          _rotation: South
-        29729:
-          position: 4,2
-          _rotation: South
-        29730:
-          position: 5,2
-          _rotation: South
-    - type: ContainerContainer
-      containers:
-        storagebase: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 29719
-          - 29720
-          - 29721
-          - 29722
-          - 29723
-          - 29724
-          - 29725
-          - 29726
-          - 29727
-          - 29728
-          - 29729
-          - 29730
-    - type: Physics
-      canCollide: False
-    - type: UseDelay
-      delays:
-        default:
-          length: 1
-        quickInsert:
-          length: 0.5
-        storage: {}
-    - type: InsideEntityStorage
-- proto: BoxLighttubeHoliday
-  entities:
   - uid: 3061
     components:
     - type: Transform
-      pos: 22.565325,-4.450918
-      parent: 2
+      parent: 3055
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
   - uid: 3062
     components:
     - type: Transform
-      pos: 22.377825,-4.565501
-      parent: 2
+      parent: 3055
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+- proto: BoxLighttubeHoliday
+  entities:
   - uid: 9677
     components:
     - type: Transform
-      pos: 22.794493,-4.325918
+      pos: 22.321835,-4.544016
+      parent: 2
+  - uid: 28351
+    components:
+    - type: Transform
+      pos: 22.571835,-4.450266
+      parent: 2
+  - uid: 29719
+    components:
+    - type: Transform
+      pos: 22.83225,-4.2523494
       parent: 2
 - proto: BoxMouthSwab
   entities:
@@ -77231,12 +77175,13 @@ entities:
           showEnts: False
           occludes: True
           ents:
+          - 3062
+          - 3061
           - 3077
           - 3076
           - 3059
           - 3060
           - 3075
-          - 28351
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -94485,7 +94430,7 @@ entities:
       pos: -13.5,-1.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -101652.31
+      secondsUntilStateChange: -101746.51
     - type: DeviceNetwork
       deviceLists:
       - 18275
@@ -139203,7 +139148,7 @@ entities:
       pos: 36.5,-35.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -138484.17
+      secondsUntilStateChange: -138578.38
       state: Opening
   - uid: 5211
     components:
@@ -140246,44 +140191,6 @@ entities:
     - type: Transform
       pos: 27.345627,0.6012745
       parent: 21002
-- proto: LightBulb
-  entities:
-  - uid: 29725
-    components:
-    - type: Transform
-      parent: 28351
-    - type: Physics
-      canCollide: False
-  - uid: 29726
-    components:
-    - type: Transform
-      parent: 28351
-    - type: Physics
-      canCollide: False
-  - uid: 29727
-    components:
-    - type: Transform
-      parent: 28351
-    - type: Physics
-      canCollide: False
-  - uid: 29728
-    components:
-    - type: Transform
-      parent: 28351
-    - type: Physics
-      canCollide: False
-  - uid: 29729
-    components:
-    - type: Transform
-      parent: 28351
-    - type: Physics
-      canCollide: False
-  - uid: 29730
-    components:
-    - type: Transform
-      parent: 28351
-    - type: Physics
-      canCollide: False
 - proto: Lighter
   entities:
   - uid: 28870
@@ -140299,44 +140206,6 @@ entities:
     - type: Transform
       pos: 22.221575,-4.065501
       parent: 2
-- proto: LightTube
-  entities:
-  - uid: 29719
-    components:
-    - type: Transform
-      parent: 28351
-    - type: Physics
-      canCollide: False
-  - uid: 29720
-    components:
-    - type: Transform
-      parent: 28351
-    - type: Physics
-      canCollide: False
-  - uid: 29721
-    components:
-    - type: Transform
-      parent: 28351
-    - type: Physics
-      canCollide: False
-  - uid: 29722
-    components:
-    - type: Transform
-      parent: 28351
-    - type: Physics
-      canCollide: False
-  - uid: 29723
-    components:
-    - type: Transform
-      parent: 28351
-    - type: Physics
-      canCollide: False
-  - uid: 29724
-    components:
-    - type: Transform
-      parent: 28351
-    - type: Physics
-      canCollide: False
 - proto: LightTubeCrystalRed
   entities:
   - uid: 970
@@ -191330,7 +191199,7 @@ entities:
       pos: 24.5,2.5
       parent: 21002
     - type: Door
-      secondsUntilStateChange: -483688.84
+      secondsUntilStateChange: -483783.06
       state: Opening
   - uid: 28863
     components:

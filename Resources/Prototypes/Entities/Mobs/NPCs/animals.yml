@@ -3524,6 +3524,7 @@
     rootTask:
       task: SimpleHostileCompound
   - type: Puller
+    needsHands: false
 
 - type: entity
   name: reindeer doe
