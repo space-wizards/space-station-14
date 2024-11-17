@@ -8,7 +8,4 @@ public sealed partial class PolymorphGlassComponent : Component
 {
     [DataField("glasses", required: true)]
     public List<EntProtoId> Glasses;
-
-    [DataField("verbName", required: true)]
-    public string VerbName;
 }

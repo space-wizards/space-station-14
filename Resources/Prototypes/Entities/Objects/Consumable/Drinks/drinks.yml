@@ -114,7 +114,6 @@
       state: icon
   - type: TransformableContainer
   - type: PolymorphGlass
-    verbName: polymorph-glass-component-change-mode
     glasses:
     - DrinkGlass
     - DrinkGlassCoupeShaped
@@ -154,7 +153,6 @@
       garnish_slot: !type:ContainerSlot {}
       decoration_slot: !type:ContainerSlot {}
   - type: PolymorphGlass
-    verbName: polymorph-glass-component-change-mode
     glasses:
     - DrinkGlass
     - DrinkGlassCoupeShaped
