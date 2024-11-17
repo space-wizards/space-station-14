@@ -124688,6 +124688,10 @@ entities:
       rot: 3.141592653589793 rad
       pos: 86.5,-54.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        19756:
+        - Pressed: Toggle
   - uid: 1665
     components:
     - type: Transform
@@ -130958,7 +130962,7 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraGeneral
       nameSet: True
-      id: Evac 3
+      id: Evac 2
   - uid: 17604
     components:
     - type: Transform
@@ -131440,6 +131444,27 @@ entities:
       - SurveillanceCameraGeneral
       nameSet: True
       id: Arboretum Hallway
+  - uid: 23995
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 109.5,-36.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: Evac Lobby
+  - uid: 23996
+    components:
+    - type: Transform
+      pos: 117.5,-42.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: Evac 1
 - proto: SurveillanceCameraMedical
   entities:
   - uid: 22653
@@ -153145,7 +153170,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -134727.31
+      secondsUntilStateChange: -134976.83
       state: Opening
     - type: Airlock
       autoClose: False
