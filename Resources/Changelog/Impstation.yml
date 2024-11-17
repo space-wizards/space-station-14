@@ -1,27 +1,6 @@
 ﻿Entries:
 - author: starlighthowls
   changes:
-  - message: Moth friendly food!
-    type: Add
-  id: 33
-  time: '2024-07-22T23:43:48.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/41
-- author: 12rabbits
-  changes:
-  - message: Add ready manifest to pre-round lobby
-    type: Add
-  id: 34
-  time: '2024-07-23T21:42:54.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/43
-- author: TGRCDev
-  changes:
-  - message: Drag damage tweaks
-    type: Tweak
-  id: 35
-  time: '2024-07-25T00:18:14.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/44
-- author: starlighthowls
-  changes:
   - message: Fixed broken drink sprite
     type: Fix
   id: 36
@@ -4254,3 +4233,45 @@
   id: 532
   time: '2024-11-16T20:15:14.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/734
+- author: Darkmajia
+  changes:
+  - message: Saltern's bridge APC is now properly connected at roundstart.
+    type: Fix
+  id: 533
+  time: '2024-11-17T21:39:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/740
+- author: Sha-Seng
+  changes:
+  - message: Brigmedic Cap is now obtainable at spawn or from the secdrobe for ballcap
+      enjoyers
+    type: Add
+  - message: Brigmedics now spawn with the paramed belt since it doesn't look horrible
+      with their uniform
+    type: Tweak
+  - message: MedSec HUD no longer requires a radio to craft since it has no communication
+      functionality
+    type: Tweak
+  - message: MedSec HUD lens opacity increased so odd skin/eyes don't ruin the good
+      look
+    type: Tweak
+  id: 534
+  time: '2024-11-17T21:40:40.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/692
+- author: EpicToast
+  changes:
+  - message: 'Made updates to Union Station, including:'
+    type: Tweak
+  - message: Gave atmos their own substation.
+    type: Add
+  - message: Gave engineering an additional cable crate.
+    type: Add
+  - message: Gave maintenance airlocks their proper access locks.
+    type: Fix
+  - message: Removed the cryo pod that was causing the captain to not spawn in the
+      conference room.
+    type: Fix
+  - message: Fixed some unpowered lights and vending machines.
+    type: Fix
+  id: 535
+  time: '2024-11-17T21:39:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/741
