@@ -181,7 +181,7 @@
 
 - type: entity
   name: sawn-off shotgun
-  parent: BaseWeaponShotgun
+  parent: [BaseWeaponShotgun, BaseGunWieldable, BaseMinorContraband]
   id: WeaponShotgunSawn
   description: Groovy! Uses .50 shotgun shells.
   components:
