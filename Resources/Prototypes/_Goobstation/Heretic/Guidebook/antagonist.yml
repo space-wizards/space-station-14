@@ -1,7 +1,7 @@
 - type: guideEntry
   id: Heretics
   name: guide-entry-heretics
-  text: "/ServerInfo/_Goobstation/Guidebook/Antagonist/Heretics.xml"
+  text: "/ServerInfo/_Impstation/Guidebook/Antagonist/Heretics.xml" # for imp metashield
   children:
   - HereticsAsh
   - HereticsFlesh

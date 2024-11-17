@@ -1,0 +1,13 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            Title="{Loc 'crew-medal-ui-header'}">
+    <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="150">
+        <Label Text="{Loc 'crew-medal-ui-reason'}" />
+        <BoxContainer Orientation="Horizontal">
+            <LineEdit Name="ReasonLineEdit" HorizontalExpand="True" />
+            <Button Name="SaveButton" Text="{Loc crew-medal-ui-save}"/>
+        </BoxContainer>
+        <Label Name="CharacterLabel" Text="" />
+        <Label Text="{Loc 'crew-medal-ui-info'}" />
+    </BoxContainer>
+</DefaultWindow>

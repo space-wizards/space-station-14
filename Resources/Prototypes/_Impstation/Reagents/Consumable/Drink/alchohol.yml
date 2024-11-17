@@ -211,7 +211,7 @@
         damage:
           types:
             Poison: -0.5
-           # Asphyxiation: -0.25 
+           # Asphyxiation: -0.25
   fizziness: .7
 
 - type: reagent
@@ -246,7 +246,7 @@
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: true
   fizziness: 1
-  
+
 - type: reagent
   id: BloodierMary
   name: reagent-name-bloodier-mary
@@ -261,8 +261,8 @@
   metamorphicMaxFillLevels: 5
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: true
-  fizziness: .3 
-  
+  fizziness: .3
+
 - type: reagent
   id: SalvagersSoothe
   name: reagent-name-salvagerssoothe
@@ -301,7 +301,7 @@
           groups:
             Brute: -2
   fizziness: .7
-  
+
 - type: reagent
   id: DontTell
   name: reagent-name-donttelldsheriff
@@ -326,7 +326,7 @@
         reagent: Ethanol
         amount: 0.35
   fizziness: 0.1
-  
+
 - type: reagent
   id: CottonBool
   name: reagent-name-cottonbool
@@ -351,13 +351,13 @@
         conditions:
         - !type:OrganType
           type: Moth
-          shouldHave: true    
+          shouldHave: true
         factor: 4
       - !type:Emote
         conditions:
         - !type:OrganType
           type: Moth
-          shouldHave: true        
+          shouldHave: true
         emote: Squeak
         showInChat: true
         force: true
@@ -367,7 +367,7 @@
       - !type:ModifyBleedAmount
         amount: -0.75
   fizziness: .1
-  
+
 - type: reagent
   id: ThavenBad
   name: reagent-name-thavenbad
@@ -389,7 +389,7 @@
       - !type:SatiateThirst
         factor: 2
   fizziness: .1
-  
+
 - type: reagent
   id: StarryNight
   name: reagent-name-starrynight
@@ -418,7 +418,7 @@
         emote: Yawn
         showInChat: true
   fizziness: 0.5
-  
+
 - type: reagent
   id: UAP
   name: reagent-name-uap
@@ -504,7 +504,7 @@
         conditions:
         - !type:OrganType
           type: Reptilian
-          shouldHave: true         
+          shouldHave: true
         emote: Thump
         showInChat: false
         force: true
@@ -513,9 +513,33 @@
         conditions:
         - !type:OrganType
           type: Reptilian
-          shouldHave: true         
+          shouldHave: true
         emote: Thump
         showInChat: true
         force: true
         probability: 0.2
   fizziness: .1
+
+- type: reagent
+  id: TheGrease
+  name: reagent-name-thegrease
+  parent: BaseAlcohol
+  desc: reagent-desc-thegrease
+  physicalDesc: reagent-physical-desc-thegrease
+  flavor: grease
+  color: "#CEE29A"
+  recognizable: true
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/moonshineglass.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: true
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 1
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.5

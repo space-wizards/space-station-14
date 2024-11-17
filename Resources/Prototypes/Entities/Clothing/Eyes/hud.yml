@@ -151,7 +151,7 @@
   parent: [ClothingEyesBase, BaseLensSlot, ShowSecurityIcons, ShowMedicalIcons, BaseSecurityCommandContraband]
   id: ClothingEyesHudMedSec
   name: medsec hud
-  description: An eye display that looks like a mixture of medical and security huds.
+  description: A specialized pair of glasses that displays both medical and security information.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Hud/medsec.rsi

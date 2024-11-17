@@ -22,6 +22,9 @@
   - CigarGold
   - GoldPersonalAI
   - FolderBlack
+  - FolderHamster
+  - FolderMime
+  - FolderPun
   - BarFlask
   - NewtonCradle
   - ClothingNeckLGBTPin
@@ -1336,6 +1339,7 @@
   loadouts:
   - ScientistJumpsuit
   - ScientistJumpskirt
+  - SpaceScienceJumpsuit
   - RoboticistJumpsuit
   - RoboticistJumpskirt
   - ScientistJumpsuitFormal
@@ -1643,6 +1647,7 @@
   minLimit: 0
   loadouts:
   - BrigmedicBeret
+  - BrigmedicCap
 
 - type: loadoutGroup
   id: BrigmedicNeck
