@@ -2593,3 +2593,67 @@
     entries:
       Taco: AnomalyBerry
       Burger: AnomalyBerryBurger
+
+- type: entity
+  name: bonioon bulb
+  description: A strange floating bulb.. Nothing worth crying over.
+  parent: FoodProduceBase
+  id: Bonioon
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/Bonioon.rsi
+ # - type: Item
+ #   size: Small
+ #   sprite: Objects/Specific/Hydroponics/Bonioon.rsi
+ #  heldPrefix: produce
+  - type: Produce
+    seedId: bonioon
+  - type: FlavorProfile
+    flavors:
+      - onion
+      - strange
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Vitamin
+          Quantity: 2
+        - ReagentId: Allicin
+          Quantity: 10
+  - type: Tag
+    tags:
+    - Vegetable
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 0.01
+    intensitySlope: 1
+    totalIntensity: 0.1
+  - type: Damageable
+    damageContainer: Biological
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:SpillBehavior
+        solution: food
+      - !type:TriggerBehavior
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.50
+        density: 80
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
