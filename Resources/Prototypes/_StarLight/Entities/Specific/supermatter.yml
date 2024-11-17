@@ -24,9 +24,9 @@
         density: 190
         friction: 0.8
         mask:
-        - MachineMask
+          - FullTileMask
         layer:
-        - WallLayer
+          - FullTileLayer
   - type: Pullable
   - type: Sprite
     sprite: _Starlight/Objects/Specific/supermatter.rsi
@@ -43,3 +43,44 @@
     damageContainer: StructuralInorganic
  # - type: LightningTarget  Tesla needs to interact too.
  #   priority: 1
+
+
+- type: entity
+  id: Cascad1
+  name: cascad
+  descruption: Consequences of the supermatter crystal's cascade failure.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Damageable
+      damageContainer: StructuralInorganic
+      damageModifierSet: Glass
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 80
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak
+    - type: Sprite
+      drawdepth: Walls
+      sprite: _Starlight/Objects/Specific/supermatter_cascade.rsi
+      layers:
+        - state: cascade_1
+    - type: Icon
+      sprite: _Starlight/Objects/Specific/supermatter_cascade.rsi
+      state: cascade_1
+    - type: Physics
+      bodyType: Static
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.5,-0.5,0.5,0.5"
+          layer:
+          - GlassLayer
