@@ -2,6 +2,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Lightning;
 using Content.Server.Starlight.Energy.Supermatter;
 using Content.Shared.Abilities.Goliath;
+using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
@@ -11,6 +12,7 @@ using Content.Shared.Starlight.Energy.Supermatter;
 using Robust.Server.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Toolshed.TypeParsers;
 
 namespace Content.Server.Starlight.Energy.Supermatter;
 
@@ -24,6 +26,8 @@ public sealed class SupermatterSystem : AccUpdateEntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
 
     private readonly Dictionary<EntityUid, Entity<SupermatterComponent>> _supermatters = [];
+    private DamageGroupPrototype? _brute;
+    private DamageGroupPrototype? _burn;
     public override void Initialize()
     {
         SubscribeLocalEvent<SupermatterComponent, ComponentStartup>(AddSupermatter);
@@ -46,6 +50,15 @@ public sealed class SupermatterSystem : AccUpdateEntitySystem
         HandleGas(supermatter);
         HandleRadiation(supermatter);
         HandleLighting(supermatter);
+        HandleDestruction(supermatter);
+    }
+
+    private void HandleDestruction(Entity<SupermatterComponent> supermatter)
+    {
+        var damageToApply = MathHelper.Clamp((supermatter.Comp.AccBreak - Const.RegenerationPerSecond) / 100, Const.RegenerationPerSecond, Const.MaxDamagePerSecond);
+        supermatter.Comp.AccBreak = 0;
+
+        supermatter.Comp.Durability = MathHelper.Clamp(supermatter.Comp.Durability - damageToApply, 0f, 100f);
     }
 
     private void HandleLighting(Entity<SupermatterComponent> supermatter)
@@ -66,22 +79,11 @@ public sealed class SupermatterSystem : AccUpdateEntitySystem
     private void HandleGas(Entity<SupermatterComponent> supermatter)
     {
         var gas = _atmosphere.GetTileMixture(supermatter.Owner) ?? new();
+        DamageByPressure(supermatter, gas);
+        DamageByTemperature(supermatter, gas);
 
-        if (gas.Pressure < Const.MinPressure || gas.Pressure > Const.MaxPressure)
-        {
-            _audio.PlayPvs(_random.Pick(Const.AudioCrack), supermatter.Owner);
-            DamageSpecifier damage = new(_prototypes.Index<DamageGroupPrototype>("Brute"), Math.Max(Const.MinPressure - gas.Pressure, gas.Pressure - Const.MaxPressure)); //todo specifier needs to be reused
-            _damageable.TryChangeDamage(supermatter.Owner, damage, true);
-        }
+        if (gas.TotalMoles < 1) return;
 
-        if (gas.Temperature > Const.MaxTemperature)
-        {
-            _audio.PlayPvs(_random.Pick(Const.AudioBurn), supermatter.Owner);
-            DamageSpecifier damage = new(_prototypes.Index<DamageGroupPrototype>("Burn"), Const.MaxTemperature - gas.Temperature);  //todo specifier needs to be reused
-            _damageable.TryChangeDamage(supermatter.Owner, damage, true);
-        }
-
-        if (gas.TotalMoles == 0) return;
         float heatTransfer = 0;
         float heatModifier = 0;
         float radiationStability = 0;
@@ -97,9 +99,46 @@ public sealed class SupermatterSystem : AccUpdateEntitySystem
 
         supermatter.Comp.RadiationStability = MathHelper.Clamp(radiationStability, 1, 10);
 
-        var heatDelta = heatTransfer <= supermatter.Comp.AccHeat.Float() ? heatTransfer : supermatter.Comp.AccHeat.Float();
-        supermatter.Comp.AccHeat = MathHelper.Clamp(supermatter.Comp.AccHeat - heatDelta, 0, 9999);
+        ProcessHeat(supermatter, gas, heatTransfer, heatModifier);
+        TryCompensateDamage(supermatter, gas);
+    }
+
+    private static void TryCompensateDamage(Entity<SupermatterComponent> supermatter, GasMixture gas)
+    {
+        var breakDelta = supermatter.Comp.AccBreak > Const.EvaporationCompensation ? Const.EvaporationCompensation : supermatter.Comp.AccBreak;
+        if (breakDelta == 0) return;
+        supermatter.Comp.AccBreak -= breakDelta;
+
+        gas.AdjustMoles((int)Gas.Tritium, breakDelta.Float());
+    }
+
+    private static void ProcessHeat(Entity<SupermatterComponent> supermatter, GasMixture gas, float heatTransfer, float heatModifier)
+    {
+        var accHeat = supermatter.Comp.AccHeat.Float();
+        var heatDelta = heatTransfer <= accHeat ? heatTransfer : accHeat;
+
+        accHeat = MathHelper.Clamp(accHeat - heatDelta, 0, 9999); ;
+        supermatter.Comp.AccHeat = 0;
         gas.Temperature += heatDelta * heatModifier;
+        supermatter.Comp.AccBreak += accHeat;
+    }
+
+    private void DamageByTemperature(Entity<SupermatterComponent> supermatter, GasMixture gas)
+    {
+        if (gas.Temperature <= Const.MaxTemperature) return;
+        _audio.PlayPvs(_random.Pick(Const.AudioBurn), supermatter.Owner);
+        _burn ??= _prototypes.Index<DamageGroupPrototype>("Burn");
+        DamageSpecifier damage = new(_burn, Const.MaxTemperature - gas.Temperature);
+        _damageable.TryChangeDamage(supermatter.Owner, damage, true);
+    }
+
+    private void DamageByPressure(Entity<SupermatterComponent> supermatter, GasMixture gas)
+    {
+        if (gas.Pressure >= Const.MinPressure && gas.Pressure <= Const.MaxPressure) return;
+        _audio.PlayPvs(_random.Pick(Const.AudioCrack), supermatter.Owner);
+        _brute ??= _prototypes.Index<DamageGroupPrototype>("Brute");
+        DamageSpecifier damage = new(_brute, Math.Max(Const.MinPressure - gas.Pressure, gas.Pressure - Const.MaxPressure));
+        _damageable.TryChangeDamage(supermatter.Owner, damage, true);
     }
 
     private void HandleDamage(Entity<SupermatterComponent> supermatter)

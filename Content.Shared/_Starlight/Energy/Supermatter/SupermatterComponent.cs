@@ -21,4 +21,10 @@ public sealed partial class SupermatterComponent : Component
 
     [ViewVariables(VVAccess.ReadOnly)]
     public FixedPoint2 RadiationStability = 1f;
+
+    [ViewVariables(VVAccess.ReadOnly)]
+    public FixedPoint2 Durability = 100f;
+
+    [ViewVariables(VVAccess.ReadOnly)]
+    public FixedPoint2 LastSendedDurability = 100f;
 }
