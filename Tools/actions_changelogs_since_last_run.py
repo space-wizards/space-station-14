@@ -98,12 +98,9 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
         for emoji, messages in changes_by_type.items():
             for message in messages:
                 embed["description"] += f"\n {emoji} {message}"
-            
-        embed["fields"].append({
-            "name": "\n",
-            "value": f"[Github PR]({url})",
-            "inline": False
-        })
+        
+        if url not null:
+            embed["description"] += f"\n[GitHub Pull Request]({url})"
 
         send_discord(embed)
 
