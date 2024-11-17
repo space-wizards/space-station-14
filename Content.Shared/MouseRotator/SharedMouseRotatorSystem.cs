@@ -29,9 +29,17 @@ public abstract class SharedMouseRotatorSystem : EntitySystem
         {
             if (rotator.GoalRotation == null)
                 continue;
+            
+            var target = uid;
+            
+            if (TryComp<MechPilotComponent>(uid, out var mechPilot))
+            {
+                target = mechPilot.Mech;
+                xform = Transform(mechPilot.Mech);
+            }
 
             if (_rotate.TryRotateTo(
-                    uid,
+                    target,
                     rotator.GoalRotation.Value,
                     frameTime,
                     rotator.AngleTolerance,
