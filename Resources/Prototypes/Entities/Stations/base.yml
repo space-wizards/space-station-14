@@ -60,6 +60,7 @@
           maxCount: 2
           stationGrid: false
           paths:
+          - /Maps/Ruins/abandoned_outpost.yml
           - /Maps/Ruins/chunked_tcomms.yml
           - /Maps/Ruins/biodome_satellite.yml
           - /Maps/Ruins/derelict.yml
