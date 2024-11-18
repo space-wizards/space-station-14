@@ -15,7 +15,8 @@ public enum AbductorOrganType : byte
     Plasma,
     Gravity,
     Egg,
-    Spider
+    Spider,
+    Vent
 }
 [Serializable, NetSerializable]
 public enum AbductorCameraConsoleUIKey

@@ -1,7 +1,7 @@
 - type: entity
   id: SupermatterCrystal
   name: supermatter
-  descruption: A glowing supermatter crystal, with half an ID card lying next to it, and it says "Clown pira..." on it.
+  description: A glowing supermatter crystal, with half an ID card lying next to it, and it says "Clown pira..." on it.
   placement:
     mode: SnapgridCenter
   components:

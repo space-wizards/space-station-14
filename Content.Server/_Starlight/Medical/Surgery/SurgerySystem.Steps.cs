@@ -19,6 +19,7 @@ using Content.Shared.Starlight;
 using Content.Shared.Overlays;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Starlight.Antags.Abductor;
+using Content.Shared.VentCraw;
 
 namespace Content.Server.Starlight.Medical.Surgery;
 // Based on the RMC14.
@@ -102,8 +103,13 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
                     if (organImplant.ImplantID == "Welding")
                         AddComp<EyeProtectionComponent>(body);
                 }
-                if (TryComp<AbductorOrganComponent>(organId, out var abductorOrgan) && TryComp<AbductorVictimComponent>(body, out var victim))
-                    victim.Organ = abductorOrgan.Organ;
+                if (TryComp<AbductorOrganComponent>(organId, out var abductorOrgan))
+                {
+                    if (TryComp<AbductorVictimComponent>(body, out var victim))
+                        victim.Organ = abductorOrgan.Organ;
+                    if (abductorOrgan.Organ == AbductorOrganType.Vent)
+                        AddComp<VentCrawlerComponent>(body);
+                }
                 if (TryComp<OrganTongueComponent>(organId, out var organTongue)
                     && !organTongue.IsMuted)
                     RemComp<MutedComponent>(body);
@@ -167,10 +173,13 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
                         organTongue.IsMuted = HasComp<MutedComponent>(args.Body);
                         AddComp<MutedComponent>(args.Body);
                     }
-                    if (TryComp<AbductorOrganComponent>(organ.Id, out var abductorOrgan) && TryComp<AbductorVictimComponent>(args.Body, out var victim))
+                    if (TryComp<AbductorOrganComponent>(organ.Id, out var abductorOrgan))
                     {
-                        if (victim.Organ == abductorOrgan.Organ)
-                            victim.Organ = AbductorOrganType.None;
+                        if (TryComp<AbductorVictimComponent>(args.Body, out var victim))
+                            if (victim.Organ == abductorOrgan.Organ)
+                                victim.Organ = AbductorOrganType.None;
+                        if (abductorOrgan.Organ == AbductorOrganType.Vent)
+                            RemComp<VentCrawlerComponent>(args.Body);
                     }
                     var change = _damageableSystem.TryChangeDamage(args.Body, damageRule.Damage.Invert(), true, false, bodyDamageable);
                     if (change is not null)
