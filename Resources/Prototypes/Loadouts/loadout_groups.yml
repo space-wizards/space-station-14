@@ -207,6 +207,8 @@
   loadouts:
   - LacedShoes
   - LeatherShoes
+  - BlackCommandHeels
+  - BlueCommandHeels
   - CaptainJumpBoots
 
 - type: loadoutGroup
@@ -260,6 +262,8 @@
   - LacedShoes
   - LeatherShoes
   - HoPShoesWhite
+  - BlackCommandHeels
+  - BlueCommandHeels
 
 - type: loadoutGroup
   id: HoPOuterClothing
