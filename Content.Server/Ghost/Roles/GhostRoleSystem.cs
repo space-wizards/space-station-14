@@ -518,7 +518,7 @@ public sealed class GhostRoleSystem : EntitySystem
 
         foreach (var mind in role.MindRoles)
         {
-            if(!_prototype.TryIndex(mind, out var comp))
+            if(!_prototype.HasIndex(mind))
                 continue;
 
             _roleSystem.MindAddRole(newMind, mind);

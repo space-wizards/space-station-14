@@ -74,7 +74,7 @@ internal sealed class AdminNameOverlay : Overlay
             //TODO make this adjustable via GUI
             var filter = new List<RoleEnum>(){RoleEnum.SoloAntagonist, RoleEnum.TeamAntagonist, RoleEnum.SiliconAntagonist, RoleEnum.FreeAgent};
 
-            if (classic is true)
+            if (classic)
             {
                 label = Loc.GetString("admin-overlay-antag-classic");
                 color = Color.OrangeRed;

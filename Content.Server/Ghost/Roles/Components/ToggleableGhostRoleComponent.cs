@@ -46,5 +46,5 @@ public sealed partial class ToggleableGhostRoleComponent : Component
     public string StopSearchVerbPopup = string.Empty;
 
     [DataField("job")]
-    public ProtoId<JobPrototype>? JobProto = null;
+    public ProtoId<JobPrototype>? JobProto;
 }
