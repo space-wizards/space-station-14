@@ -9,6 +9,7 @@
   - ShuttleCraft
   - Networking
   - Flooding
+  - TheArtifact
 
 - type: guideEntry
   id: Construction
@@ -16,6 +17,11 @@
   text: "/ServerInfo/Guidebook/Engineering/Construction.xml"
   children: 
   - AirlockSecurity
+
+- type: guideEntry
+  id: TheArtifact
+  name: guide-entry-the-artifact
+  text: "/ServerInfo/Guidebook/Engineering/TheArtifact.xml"
 
 - type: guideEntry
   id: Flooding
