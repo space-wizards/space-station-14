@@ -222,8 +222,9 @@
     guides:
       - Cyborgs
   - type: StepTriggerImmune
-  - type: InWater
-    damagedByWater: true
+  - type: InGas
+    gasId: 9
+    damagedByGas: true
     damage:
         types:
             Shock: 5
