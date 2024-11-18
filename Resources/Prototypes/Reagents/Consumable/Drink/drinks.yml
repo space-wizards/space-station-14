@@ -436,6 +436,7 @@
   parent: BaseDrink
   desc: reagent-desc-water
   slippery: true
+  evaporates: true
   physicalDesc: reagent-physical-desc-translucent
   flavor: water
   color: "#75b1f0"
