@@ -22,7 +22,7 @@
         <Label Text="{Loc sandbox-window-your-character-label}"/>
         <Button Name="GiveAghostButton" Access="Public" Text="{Loc sandbox-window-ghost-button}"/>
         <Button Name="GiveFullAccessButton" Access="Public" Text="{Loc sandbox-window-grant-full-access-button}"/>
-        <Button Name="SuicideButton" Access="Public" Text="{Loc sandbox-window-toggle-suicide-button}" ToggleMode="True"/>
+        <Button Name="SuicideButton" Access="Public" Text="{Loc sandbox-window-toggle-suicide-button}"/>
         <Button Name="RespawnButton" Access="Public" Text="{Loc sandbox-window-respawn-button}"/>
     </BoxContainer>
 </windows:SandboxWindow>
