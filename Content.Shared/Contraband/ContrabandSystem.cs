@@ -58,7 +58,7 @@ public sealed class ContrabandSystem : EntitySystem
         {
             var severity = _proto.Index(ent.Comp.Severity);
             var jobList = new List<string>();
-            if (severity.ShowDepartments && ent.Comp is { AllowedDepartments: not null })
+            if (severity.ShowDepartmentsAndJobs && ent.Comp is { AllowedDepartments: not null })
             {
                 if (ent.Comp is { AllowedJobs: not null })
                 {
@@ -69,10 +69,8 @@ public sealed class ContrabandSystem : EntitySystem
                 var departmentList = ent.Comp.AllowedDepartments.Select(p => Loc.GetString($"department-{p.Id}")).ToList();
 
                 //creating a combined list of jobs and departments for the restricted text
-                foreach (var job in jobList)
-                {
-                    departmentList.Add(job);
-                }
+                departmentList.AddRange(jobList);
+
                 var list = ContentLocalizationManager.FormatList(departmentList);
 
                 // department restricted text
