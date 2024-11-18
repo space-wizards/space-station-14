@@ -1,4 +1,4 @@
-namespace Content.Shared.Xenoarchaeology.Artifact.XAE.Components;
+namespace Content.Server.Xenoarchaeology.Artifact.XAE.Components;
 
 /// <summary>
 /// Throws all nearby entities backwards.

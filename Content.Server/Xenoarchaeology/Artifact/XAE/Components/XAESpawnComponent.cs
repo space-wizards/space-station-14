@@ -1,6 +1,7 @@
 using Content.Shared.Storage;
+using Content.Shared.Xenoarchaeology.Artifact.XAE;
 
-namespace Content.Shared.Xenoarchaeology.Artifact.XAE.Components;
+namespace Content.Server.Xenoarchaeology.Artifact.XAE.Components;
 
 /// <summary>
 ///     When activated artifact will spawn an entity from prototype.

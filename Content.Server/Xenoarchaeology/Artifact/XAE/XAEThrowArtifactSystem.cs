@@ -2,13 +2,16 @@ using System.Numerics;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Throwing;
+using Content.Shared.Xenoarchaeology.Artifact;
+using Content.Shared.Xenoarchaeology.Artifact.XAE;
 using Content.Shared.Xenoarchaeology.Artifact.XAE.Components;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using XAEThrowArtifactComponent = Content.Server.Xenoarchaeology.Artifact.XAE.Components.XAEThrowArtifactComponent;
 
-namespace Content.Shared.Xenoarchaeology.Artifact.XAE;
+namespace Content.Server.Xenoarchaeology.Artifact.XAE;
 
 public sealed class XAEThrowArtifactSystem : BaseXAESystem<XAEThrowArtifactComponent>
 {

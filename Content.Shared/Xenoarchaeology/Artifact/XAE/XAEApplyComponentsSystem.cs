@@ -19,7 +19,7 @@ public sealed class XAEApplyComponentsSystem : BaseXAESystem<XAEApplyComponentsC
 
         foreach (var registry in ent.Comp.Components)
         {
-            if (ent.Comp.ApplyIfAlreadyHave && EntityManager.HasComponent(artifact, registry.Value.Component.GetType()))
+            if (!ent.Comp.ApplyIfAlreadyHave && EntityManager.HasComponent(artifact, registry.Value.Component.GetType()))
             {
                 continue;
             }
