@@ -19,14 +19,14 @@ internal static class Const
 
     public static GasProperties[] GasProperties =
     [
-        new (0.24f, 0.90f, 1.4f), // oxygen
-        new (0.20f, 0.64f, 1.5f), // nitrogen
-        new (0.12f, 1.11f, 3.5f), // carbon dioxide
-        new (0.60f, 0.21f, 1.3f), // plasma
+        new (0.24f, 1.20f, 1.4f), // oxygen
+        new (0.20f, 1.46f, 1.5f), // nitrogen
+        new (0.12f, 2.21f, 3.5f), // carbon dioxide
+        new (0.60f, 0.61f, 1.3f), // plasma
         new (0.30f, 0.45f, 1.2f), // tritium
-        new (0.14f, 1.21f, 2.5f), // vapor
-        new (0.16f, 0.91f, 4.4f), // ommonium
-        new (0.13f, 0.99f, 2.2f), // nitrous oxide
+        new (0.14f, 2.31f, 2.5f), // vapor
+        new (0.16f, 2.11f, 4.4f), // ommonium
+        new (0.13f, 2.19f, 2.2f), // nitrous oxide
         new (1.00f, 0.01f, 1.1f), // frezon
     ];
 
@@ -35,7 +35,7 @@ internal static class Const
 
     public static float MaxTemperature = Atmospherics.T0C + 150;
 
-    public static float EvaporationCompensation = 20;
+    public static float EvaporationCompensation = 10;
 
     public static FixedPoint2 MaxDamagePerSecond = (100f / 120f) + RegenerationPerSecond; // Ensures it takes at least 2 minutes to deplete
     public static FixedPoint2 RegenerationPerSecond = 0.3f;

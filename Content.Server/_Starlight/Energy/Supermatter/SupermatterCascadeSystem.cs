@@ -11,6 +11,7 @@ using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Directions;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
+using Content.Shared.Random.Helpers;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
@@ -27,6 +28,7 @@ public sealed class SupermatterCascadeSystem : EntitySystem
 
     private readonly LinkedList<Branch> _branches = [];
     private LinkedListNode<Branch>? node;
+    private readonly string[] _prototypes = ["Cascad1", "Cascad2", "Cascad3", "Cascad4", "Cascad5"];
     public override void Initialize()
     {
     }
@@ -56,7 +58,7 @@ public sealed class SupermatterCascadeSystem : EntitySystem
         {
             branch.Direction = branch.RotateRight();
         }
-        else if (rand < 25)
+        else if (rand < 25 && _branches.Count < 10)
         {
             var leftBranch = new Branch
             {
@@ -90,12 +92,12 @@ public sealed class SupermatterCascadeSystem : EntitySystem
             node = nextNode;
             return;
         }
-        branch.Coordinates.SnapToGrid(gridComp);
+        branch.Coordinates = branch.Coordinates.SnapToGrid(gridComp);
 
         foreach (var entity in _lookup.GetEntitiesIntersecting(branch.Coordinates))
             QueueDel(entity);
 
-        SpawnAttachedTo("Cascad1", branch.Coordinates);
+        SpawnAttachedTo(_random.Pick(_prototypes), branch.Coordinates);
 
         node = nextNode;
     }

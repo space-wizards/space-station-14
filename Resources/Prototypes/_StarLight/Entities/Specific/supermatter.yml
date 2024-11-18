@@ -84,3 +84,47 @@
             bounds: "-0.5,-0.5,0.5,0.5"
           layer:
           - GlassLayer
+
+- type: entity
+  id: Cascad2
+  parent: Cascad1
+  components: 
+    - type: Sprite
+      layers:
+        - state: cascade_2
+    - type: Icon
+      sprite: _Starlight/Objects/Specific/supermatter_cascade.rsi
+      state: cascade_2
+
+- type: entity
+  id: Cascad3
+  parent: Cascad1
+  components: 
+    - type: Sprite
+      layers:
+        - state: cascade_3
+    - type: Icon
+      sprite: _Starlight/Objects/Specific/supermatter_cascade.rsi
+      state: cascade_3
+
+- type: entity
+  id: Cascad4
+  parent: Cascad1
+  components: 
+    - type: Sprite
+      layers:
+        - state: cascade_4
+    - type: Icon
+      sprite: _Starlight/Objects/Specific/supermatter_cascade.rsi
+      state: cascade_4
+
+- type: entity
+  id: Cascad5
+  parent: Cascad1
+  components: 
+    - type: Sprite
+      layers:
+        - state: cascade_5
+    - type: Icon
+      sprite: _Starlight/Objects/Specific/supermatter_cascade.rsi
+      state: cascade_5
