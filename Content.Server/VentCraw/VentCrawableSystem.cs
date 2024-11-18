@@ -1,11 +1,12 @@
 using System.Linq;
-using Content.Server.Tools.Components;
-using Content.Server.VentCraw.Tube.Components;
-using Content.Server.VentCraw.Components;
+using Content.Shared.VentCraw.Tube.Components;
+using Content.Shared.VentCraw.Components;
 using Content.Shared.Body.Components;
+using Content.Shared.Tools.Components;
 using Content.Shared.Item;
 using Content.Shared.Movement.Events;
 using Content.Shared.VentCraw;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
@@ -79,7 +80,7 @@ namespace Content.Server.VentCraw
             if (!CanInsert(uid, toInsert, holder))
                 return false;
 
-            if (!holder.Container.Insert(toInsert, EntityManager))
+            if (!_containerSystem.Insert(toInsert, holder.Container))
                 return false;
 
             if (TryComp<PhysicsComponent>(toInsert, out var physBody))
@@ -100,7 +101,7 @@ namespace Content.Server.VentCraw
             if (!Resolve(uid, ref holder))
                 return false;
 
-            if (!holder.Container.CanInsert(toInsert))
+            if (!_containerSystem.CanInsert(toInsert, holder.Container))
             {
                 return false;
             }
@@ -136,7 +137,7 @@ namespace Content.Server.VentCraw
                 RemComp<BeingVentCrawComponent>(entity);
 
                 var meta = MetaData(entity);
-                holder.Container.Remove(entity, EntityManager, meta: meta, reparent: false, force: true);
+                _containerSystem.Remove(entity, holder.Container, reparent: false, force: true);
 
                 var xform = Transform(entity);
                 if (xform.ParentUid != uid)
@@ -144,10 +145,10 @@ namespace Content.Server.VentCraw
 
                 _xformSystem.AttachToGridOrMap(entity, xform);
 
-                if (TryComp<VentCrawlerComponent>(entity, out var ventCrawlerComponent))
+                if (TryComp<VentCrawlerComponent>(entity, out var ventCrawComp))
                 {
-                    ventCrawlerComponent.InTube = false;
-                    Dirty(ventCrawlerComponent);
+                    ventCrawComp.InTube = false;
+                    Dirty(entity , ventCrawComp);
                 }
 
                 if (EntityManager.TryGetComponent(entity, out PhysicsComponent? physics))
@@ -190,7 +191,7 @@ namespace Content.Server.VentCraw
                 comp.Holder = holderUid;
             }
 
-            if (!to.Contents.Insert(holderUid))
+            if (!_containerSystem.Insert(holderUid, to.Contents))
             {
                 ExitVentCraws(holderUid, holder, holderTransform);
                 return false;
@@ -281,7 +282,7 @@ namespace Content.Server.VentCraw
                     }
                     else
                     {
-                        Comp<VentCrawTubeComponent>(currentTube).Contents.Remove(uid, reparent: false, force: true);
+                        _containerSystem.Remove(uid, Comp<VentCrawTubeComponent>(currentTube).Contents ,reparent: false, force: true);
 
                         if (holder.FirstEntry)
                             holder.FirstEntry = false;

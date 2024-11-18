@@ -1,22 +1,25 @@
 using System.Linq;
 using Content.Server.Construction.Completions;
 using Content.Server.Popups;
-using Content.Server.Tools.Components;
-using Content.Server.VentCraw.Tube.Components;
-using Content.Server.VentCraw.Components;
+using Content.Shared.VentCraw.Tube.Components;
+using Content.Shared.VentCraw.Components;
+using Content.Shared.Tools.Components;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
 using Content.Shared.Movement.Systems;
 using Content.Shared.VentCraw;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.VentCraw
 {
     public sealed class VentCrawTubeSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly SharedMapSystem _mapSystem = default!;
         [Dependency] private readonly VentCrawableSystem _ventCrawableSystemSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly VentCrawTubeSystem _ventCrawTubeSystem = default!;
@@ -81,10 +84,9 @@ namespace Content.Server.VentCraw
                 }
             }
 
-            var args = new DoAfterArgs(user, crawler.EnterDelay, new EnterVentDoAfterEvent(), user, target: uid, used: user)
+            var args = new DoAfterArgs(EntityManager, user, crawler.EnterDelay, new EnterVentDoAfterEvent(), user, uid, user)
             {
-                BreakOnTargetMove = true,
-                BreakOnUserMove = true,
+                BreakOnMove = true,
                 BreakOnDamage = false
             };
 
@@ -175,11 +177,14 @@ namespace Content.Server.VentCraw
             var oppositeDirection = nextDirection.GetOpposite();
 
             var xform = Transform(target);
-            if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
+            if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
+                return null;
+            
+            if (xform.GridUid == null)
                 return null;
 
             var position = xform.Coordinates;
-            foreach (var entity in grid.GetInDir(position, nextDirection))
+            foreach (EntityUid entity in _mapSystem.GetInDir(xform.GridUid.Value, grid ,position, nextDirection))
             {
                 if (!TryComp(entity, out VentCrawTubeComponent? tube))
                 {
@@ -258,7 +263,7 @@ namespace Content.Server.VentCraw
 
             _mover.SetRelay(entity, holder);
             ventCrawlerComponent.InTube = true;
-            Dirty(ventCrawlerComponent);
+            Dirty(entity, ventCrawlerComponent);
 
             return _ventCrawableSystemSystem.EnterTube(holder, uid, holderComponent);
         }
