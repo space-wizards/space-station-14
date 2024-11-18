@@ -91,7 +91,7 @@
   - type: Vocal
     sounds:
       Male: UnisexDiona
-      Female: FemaleDiona
+      Female: FemaleDiona #placeholder, this should be UnisexDiona once they have a complete set of emotes
       Unsexed: UnisexDiona
   - type: BodyEmotes
     soundsId: DionaBodyEmotes
