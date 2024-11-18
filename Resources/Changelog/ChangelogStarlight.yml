@@ -258,4 +258,11 @@ Entries:
   id: 36
   time: '2024-11-18T07:18:01.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/64
+- author: VigersRay
+  changes:
+  - message: Added collective mind for dionas.
+    type: Add
+  id: 37
+  time: '2024-11-18T18:47:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/69
 
