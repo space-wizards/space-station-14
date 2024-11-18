@@ -30,7 +30,7 @@
   components:
   - type: GasVentScrubber
     wideNet: true # Air alarm with auto mode overrides filters with hardcoded defaults so default to widenet
-    filterGases:
+    priorityGases:
     - Oxygen # filter out oxygen as well as regular harmful gases
     - CarbonDioxide
     - Plasma
