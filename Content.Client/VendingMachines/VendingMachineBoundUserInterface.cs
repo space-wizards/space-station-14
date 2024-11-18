@@ -38,6 +38,13 @@ namespace Content.Client.VendingMachines
             _menu?.Populate(_cachedInventory);
         }
 
+        public void UpdateAmounts()
+        {
+            var system = EntMan.System<VendingMachineSystem>();
+            _cachedInventory = system.GetAllInventory(Owner);
+            _menu?.UpdateAmounts(_cachedInventory);
+        }
+
         private void OnItemSelected(GUIBoundKeyEventArgs args, ListData data)
         {
             if (args.Function != EngineKeyFunctions.UIClick)
@@ -54,7 +61,7 @@ namespace Content.Client.VendingMachines
             if (selectedItem == null)
                 return;
 
-            SendMessage(new VendingMachineEjectMessage(selectedItem.Type, selectedItem.ID));
+            SendPredictedMessage(new VendingMachineEjectMessage(selectedItem.Type, selectedItem.ID));
         }
 
         protected override void Dispose(bool disposing)
