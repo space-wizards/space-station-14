@@ -942,8 +942,8 @@
     refreshOnReactivate: true
     components:
     - type: RadiationSource
-    intensity: 2
-    slope: 0.3
+      intensity: 2
+      slope: 0.3
 
 - type: entity
   id: XenoArtifactMaterialSpawn

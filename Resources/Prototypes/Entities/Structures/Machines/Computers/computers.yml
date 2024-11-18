@@ -492,7 +492,6 @@
       state: generic_panel_open
   - type: ResearchClient
   - type: AnalysisConsole
-    reportEntityId: PaperArtifactAnalyzer
   - type: DeviceList
   - type: DeviceNetwork
     deviceNetId: Wired
