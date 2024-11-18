@@ -1,10 +1,9 @@
-using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Verbs;
-using Robust.Shared.Prototypes;
-using Robust.Server.GameObjects;
-using Content.Shared.Containers.ItemSlots;
-using Content.Shared.FixedPoint;
 using Content.Shared.Bar;
+using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Verbs;
+using Robust.Server.GameObjects;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Bar;
 
@@ -13,7 +12,6 @@ public sealed class TransformableContainerSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionsSystem = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
-    [Dependency] private readonly TransformSystem _xformSystem = default!;
 
     public override void Initialize()
     {

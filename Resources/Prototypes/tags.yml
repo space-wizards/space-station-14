@@ -861,10 +861,16 @@
   id: Lemon
 
 - type: Tag
+  id: LemonGarnish
+
+- type: Tag
   id: LightBulb
 
 - type: Tag
   id: Lime
+
+- type: Tag
+  id: LimeGarnish
 
 - type: Tag
   id: Machete

@@ -181,11 +181,11 @@
       lemon:
         whitelist:
           tags:
-            - Lemon
+            - LemonGarnish
       lime:
         whitelist:
           tags:
-            - Lime
+            - LimeGarnish
       cherry:
         whitelist:
           tags:
@@ -223,11 +223,11 @@
       lemon:
         whitelist:
           tags:
-            - Lemon
+            - LemonGarnish
       lime:
         whitelist:
           tags:
-            - Lime
+            - LimeGarnish
       cherry:
         whitelist:
           tags:
@@ -265,11 +265,11 @@
       lemon:
         whitelist:
           tags:
-            - Lemon
+            - LemonGarnish
       lime:
         whitelist:
           tags:
-            - Lime
+            - LimeGarnish
       cherry:
         whitelist:
           tags:
@@ -307,11 +307,11 @@
       lemon:
         whitelist:
           tags:
-            - Lemon
+            - LemonGarnish
       lime:
         whitelist:
           tags:
-            - Lime
+            - LimeGarnish
       cherry:
         whitelist:
           tags:
@@ -349,11 +349,11 @@
       lemon:
         whitelist:
           tags:
-            - Lemon
+            - LemonGarnish
       lime:
         whitelist:
           tags:
-            - Lime
+            - LimeGarnish
       cherry:
         whitelist:
           tags:
@@ -391,11 +391,11 @@
       lemon:
         whitelist:
           tags:
-            - Lemon
+            - LemonGarnish
       lime:
         whitelist:
           tags:
-            - Lime
+            - LimeGarnish
       cherry:
         whitelist:
           tags:

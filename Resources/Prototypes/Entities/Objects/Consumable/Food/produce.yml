@@ -617,7 +617,7 @@
         Quantity: 2
   - type: Tag
     tags:
-    - Lemon
+    - LemonGarnish
     - Fruit
     - DrinkGarnish
   - type: FoodSequenceElement
@@ -709,7 +709,7 @@
         Quantity: 2
   - type: Tag
     tags:
-    - Lime
+    - LimeGarnish
     - Fruit
     - DrinkGarnish
   - type: FoodSequenceElement
