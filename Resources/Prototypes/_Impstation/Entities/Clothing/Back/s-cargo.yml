@@ -1,0 +1,27 @@
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackSCargoDuffelPurple
+  name: S-Cargo duffel bag
+  description: An extra large, extra soft duffel bag shipped straight from the Gastropoid homeworld. It'll fit comfortably inside the shell of anyone who has one.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Back/Duffels/scargo_purple.rsi
+  - type: Storage
+    maxItemSize: Huge
+    grid:
+    - 0,1,1,4
+    - 3,0,8,4
+    - 10,1,11,4
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 0.85
+  - type: HeldSpeedModifier
+  
+- type: entity
+  parent: ClothingBackpackSCargoDuffelPurple
+  id: ClothingBackpackSCargoDuffelCyan
+  name: S-Cargo duffel bag
+  description: An extra large, extra soft duffel bag shipped straight from the Gastropoid homeworld. It'll fit comfortably inside the shell of anyone who has one.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Back/Duffels/scargo_cyan.rsi
