@@ -571,7 +571,7 @@ Entries:
     - type: Add
       message: added rubber ducky galoshes. Quack Quack!
   - id: 183
-    author: Zap527
+    author: Jajsha
     time: '2024-11-13T23:15:55.0000000+00:00'
     url: https://github.com/ss14-harmony/space-station-14/pull/183
     changes:
@@ -591,3 +591,32 @@ Entries:
     changes:
     - type: Add
       message: Added Captain's Turtleneck and skirt variant.
+  - id: 193
+    author: BoskiYourk
+    time: '2024-11-18T01:58:54.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/193
+    changes:
+    - type: Tweak
+      message: Updated the detective's trenchcoats and fedoras
+  - id: 195
+    author: jack-thedragon95
+    time: '2024-11-18T02:06:26.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/195
+    changes:
+    - type: Add
+      message: Added Auralis Worship Mask to loadout menu SKREEEEEE!!!!
+  - id: 194
+    author: TheCrimsonJupiter
+    time: '2024-11-18T02:20:51.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/194
+    changes:
+    - type: Tweak
+      message: Holoparasites now take longer to gib targets
+  - id: 192
+    author: Jajsha
+    time: '2024-11-18T03:12:30.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/192
+    changes:
+    - type: Tweak
+      message: The emagged recycler now deals massive brute damage instead of instantly
+        gibbing players.
