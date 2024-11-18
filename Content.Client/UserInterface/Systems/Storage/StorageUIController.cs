@@ -7,7 +7,6 @@ using Content.Client.UserInterface.Systems.Hotbar.Widgets;
 using Content.Client.UserInterface.Systems.Storage.Controls;
 using Content.Client.Verbs.UI;
 using Content.Shared.CCVar;
-using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
@@ -234,15 +233,6 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
 
         if (args.Function == ContentKeyFunctions.MoveStoredItem)
         {
-            var handsSystem = _entity.System<HandsSystem>();
-
-            if (handsSystem.TryGetPlayerHands(out HandsComponent? handsComponent) &&
-                handsComponent.ActiveHandEntity != null)
-            {
-                args.Handle();
-                return;
-            }
-
             DraggingRotation = control.Location.Rotation;
 
             _menuDragHelper.MouseDown(control);
@@ -316,12 +306,6 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
                     _entity.GetNetEntity(draggingGhost.Entity),
                     _entity.GetNetEntity(storageEnt),
                     new ItemStorageLocation(DraggingRotation, position)));
-            }
-            else
-            {
-                _entity.RaisePredictiveEvent(new StorageRemoveItemEvent(
-                    _entity.GetNetEntity(draggingGhost.Entity),
-                    _entity.GetNetEntity(storageEnt)));
             }
 
             _menuDragHelper.EndDrag();

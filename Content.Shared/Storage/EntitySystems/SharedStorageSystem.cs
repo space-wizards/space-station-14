@@ -129,7 +129,6 @@ public abstract class SharedStorageSystem : EntitySystem
         SubscribeAllEvent<StorageInteractWithItemEvent>(OnInteractWithItem);
         SubscribeAllEvent<StorageSetItemLocationEvent>(OnSetItemLocation);
         SubscribeAllEvent<StorageInsertItemIntoLocationEvent>(OnInsertItemIntoLocation);
-        SubscribeAllEvent<StorageRemoveItemEvent>(OnRemoveItem);
         SubscribeAllEvent<StorageSaveItemLocationEvent>(OnSaveItemLocation);
 
         SubscribeLocalEvent<StorageComponent, GotReclaimedEvent>(OnReclaimed);
@@ -631,35 +630,12 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!ValidateInput(args, msg.StorageEnt, msg.ItemEnt, out var player, out var storage, out var item))
             return;
 
-        if (!ValidateEmptyHand(args, out var hand))
-            return;
-
-        if (_sharedHandsSystem.TryPickup(player, item, hand, animate: false, handsComp: player.Comp))
-            InsertAt(storage!, item!, msg.Location, out _, player, true, false);
-
         _adminLog.Add(
             LogType.Storage,
             LogImpact.Low,
             $"{ToPrettyString(player):player} is updating the location of {ToPrettyString(item):item} within {ToPrettyString(storage):storage}");
-    }
 
-    private void OnRemoveItem(StorageRemoveItemEvent msg, EntitySessionEventArgs args)
-    {
-        if (!ValidateInput(args, msg.StorageEnt, msg.ItemEnt, out var player, out var storage, out var item))
-            return;
-
-        if (!ValidateEmptyHand(args, out var hand))
-            return;
-
-        _sharedHandsSystem.TryPickup(player, item, hand, animate: false, handsComp: player.Comp);
-
-        _adminLog.Add(
-            LogType.Storage,
-            LogImpact.Low,
-            $"{ToPrettyString(player):player} is removing {ToPrettyString(item):item} from {ToPrettyString(storage):storage}");
-        _sharedHandsSystem.TryDrop(player, hand);
-
-        Audio.PlayPredicted(storage.Comp.StorageRemoveSound, storage, player, _audioParams);
+        TrySetItemStorageLocation(item!, storage!, msg.Location);
     }
 
     private void OnInsertItemIntoLocation(StorageInsertItemIntoLocationEvent msg, EntitySessionEventArgs args)
