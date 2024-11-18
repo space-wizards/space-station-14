@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TGRCDev
-  changes:
-  - message: Baseball bat can now deflect thrown objects
-    type: Add
-  id: 38
-  time: '2024-07-26T00:41:36.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/47
 - author: formlessnameless
   changes:
   - message: Add codeword highlighting, from an inactive upstream PR by SlamBamActionman
@@ -4281,3 +4274,10 @@
   id: 537
   time: '2024-11-18T08:15:01.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/746
+- author: TheGrimbeeper
+  changes:
+  - message: Admins can now make things with GasMinerComponent work while unanchored
+    type: Tweak
+  id: 538
+  time: '2024-11-18T10:01:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/751
