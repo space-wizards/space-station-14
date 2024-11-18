@@ -1,0 +1,25 @@
+# Timers
+- type: loadoutEffectGroup
+  id: Command10Hr
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Command
+      time: 36000 # 10 hours
+
+- type: loadout
+  id: BlackCommandHeels
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Command10Hr
+  equipment:
+    shoes: ClothingShoesHeelsCommandBlack
+
+- type: loadout
+  id: BlueCommandHeels
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Command10Hr
+  equipment:
+    shoes: ClothingShoesHeelsCommandBlue

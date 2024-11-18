@@ -1,27 +1,6 @@
 ﻿Entries:
 - author: ultramario1998
   changes:
-  - message: Added Beenades
-    type: Add
-  id: 37
-  time: '2024-07-25T21:24:19.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/46
-- author: TGRCDev
-  changes:
-  - message: Baseball bat can now deflect thrown objects
-    type: Add
-  id: 38
-  time: '2024-07-26T00:41:36.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/47
-- author: formlessnameless
-  changes:
-  - message: Add codeword highlighting, from an inactive upstream PR by SlamBamActionman
-    type: Add
-  id: 39
-  time: '2024-07-26T19:19:29.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/49
-- author: ultramario1998
-  changes:
   - message: Bees from buzzochloric are now angry by default
     type: Tweak
   id: 40
@@ -4277,3 +4256,29 @@
   id: 536
   time: '2024-11-17T21:55:25.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/743
+- author: honeyed-lemons
+  changes:
+  - message: Gilded Blue and Black heels for HoP and Captain
+    type: Add
+  - message: Gilded Gray Space Jumpsuit for GrayTiders!
+    type: Add
+  - message: Gray Space Jumpsuits can now be found in ClothesMates
+    type: Tweak
+  id: 537
+  time: '2024-11-18T08:15:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/746
+- author: TheGrimbeeper
+  changes:
+  - message: Admins can now make things with GasMinerComponent work while unanchored
+    type: Tweak
+  id: 538
+  time: '2024-11-18T10:01:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/751
+- author: kipdotnet, AftrLite
+  changes:
+  - message: Added the S-Cargo Duffel Bundle to the cargo shop, for all fashion-forward
+      Gastropoids to enjoy.
+    type: Add
+  id: 539
+  time: '2024-11-18T10:06:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/750
