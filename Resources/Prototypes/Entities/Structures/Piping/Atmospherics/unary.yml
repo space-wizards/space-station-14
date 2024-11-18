@@ -75,7 +75,6 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_vent.ogg
-    - type: Weldable
 
 - type: entity
   parent: GasUnaryBase
@@ -156,7 +155,6 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_vent.ogg
-    - type: Weldable
 
 - type: entity
   parent: GasUnaryBase
