@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: ActionSummonGhosts
   name: Summon Ghosts
   description: Makes all current ghosts permanently invisible
@@ -10,3 +10,195 @@
       sprite: Mobs/Ghosts/ghost_human.rsi
       state: icon
     event: !type:ToggleGhostVisibilityToAllEvent
+
+# TODO: Add Whitelist/Blacklist and Component support to EntitySpawnLists (to avoid making huge hardcoded lists like below).
+
+- type: entity
+  id: ActionSummonGuns
+  name: Summon Guns
+  description: AK47s for everyone! Places a random gun in front of everybody.
+  components:
+  - type: Magic
+  - type: InstantAction
+    useDelay: 300
+    itemIconStyle: BigAction
+    icon:
+      sprite: Objects/Weapons/Guns/Rifles/ak.rsi
+      state: base
+    event: !type:RandomGlobalSpawnSpellEvent
+      spawns:
+      - id: WeaponPistolViper
+        orGroup: Guns
+      - id: WeaponPistolCobra
+        orGroup: Guns
+      - id: WeaponPistolMk58
+        orGroup: Guns
+      - id: WeaponPistolN1984
+        orGroup: Guns
+      - id: WeaponRevolverDeckard
+        orGroup: Guns
+      - id: WeaponRevolverInspector
+        orGroup: Guns
+      - id: WeaponRevolverMateba
+        orGroup: Guns
+      - id: WeaponRevolverPython
+        orGroup: Guns
+      - id: WeaponRevolverPirate
+        orGroup: Guns
+      - id: WeaponRifleAk
+        orGroup: Guns
+      - id: WeaponRifleM90GrenadeLauncher
+        orGroup: Guns
+      - id: WeaponRifleLecter
+        orGroup: Guns
+      - id: WeaponShotgunBulldog
+        orGroup: Guns
+      - id: WeaponShotgunDoubleBarreled
+        orGroup: Guns
+      - id: WeaponShotgunEnforcer
+        orGroup: Guns
+      - id: WeaponShotgunKammerer
+        orGroup: Guns
+      - id: WeaponShotgunSawn
+        orGroup: Guns
+      - id: WeaponShotgunHandmade
+        orGroup: Guns
+      - id: WeaponShotgunBlunderbuss
+        orGroup: Guns
+      - id: WeaponShotgunImprovised
+        orGroup: Guns
+      - id: WeaponSubMachineGunAtreides
+        orGroup: Guns
+      - id: WeaponSubMachineGunC20r
+        orGroup: Guns
+      - id: WeaponSubMachineGunDrozd
+        orGroup: Guns
+      - id: WeaponSubMachineGunWt550
+        orGroup: Guns
+      - id: WeaponSniperMosin
+        orGroup: Guns
+      - id: WeaponSniperHristov
+        orGroup: Guns
+      - id: Musket
+        orGroup: Guns
+      - id: WeaponPistolFlintlock
+        orGroup: Guns
+      - id: WeaponLauncherChinaLake
+        orGroup: Guns
+      - id: WeaponLauncherRocket
+        orGroup: Guns
+      - id: WeaponLauncherPirateCannon
+        orGroup: Guns
+      - id: WeaponTetherGun
+        orGroup: Guns
+      - id: WeaponForceGun
+        orGroup: Guns
+      - id: WeaponGrapplingGun
+        orGroup: Guns
+      - id: WeaponLightMachineGunL6
+        orGroup: Guns
+      - id: WeaponLaserSvalinn
+        orGroup: Guns
+      - id: WeaponLaserGun
+        orGroup: Guns
+      - id: WeaponMakeshiftLaser
+        orGroup: Guns
+      - id: WeaponTeslaGun
+        orGroup: Guns
+      - id: WeaponLaserCarbinePractice
+        orGroup: Guns
+      - id: WeaponLaserCarbine
+        orGroup: Guns
+      - id: WeaponPulsePistol
+        orGroup: Guns
+      - id: WeaponPulseCarbine
+        orGroup: Guns
+      - id: WeaponPulseRifle
+        orGroup: Guns
+      - id: WeaponLaserCannon
+        orGroup: Guns
+      - id: WeaponParticleDecelerator
+        orGroup: Guns
+      - id: WeaponXrayCannon
+        orGroup: Guns
+      - id: WeaponDisablerPractice
+        orGroup: Guns
+      - id: WeaponDisabler
+        orGroup: Guns
+      - id: WeaponDisablerSMG
+        orGroup: Guns
+      - id: WeaponTaser
+        orGroup: Guns
+      - id: WeaponAntiqueLaser
+        orGroup: Guns
+      - id: WeaponAdvancedLaser
+        orGroup: Guns
+      - id: WeaponPistolCHIMP
+        orGroup: Guns
+      - id: WeaponBehonkerLaser
+        orGroup: Guns
+      - id: WeaponEnergyShotgun
+        orGroup: Guns
+      - id: WeaponMinigun
+        orGroup: Guns
+      - id: BowImprovised
+        orGroup: Guns
+      - id: WeaponFlareGun
+        orGroup: Guns
+      - id: WeaponImprovisedPneumaticCannon
+        orGroup: Guns
+      - id: WeaponWaterPistol
+        orGroup: Guns
+      - id: WeaponWaterBlaster
+        orGroup: Guns
+      - id: WeaponWaterBlasterSuper
+        orGroup: Guns
+      - id: RevolverCapGun
+        orGroup: Guns
+      - id: RevolverCapGunFake
+        orGroup: Guns
+      speech: action-speech-spell-summon-guns
+      
+- type: entity
+  id: ActionSummonMagic
+  name: Summon Magic
+  description: Places a random magical item in front of everybody. Nothing could go wrong!
+  components:
+  - type: Magic
+  - type: InstantAction
+    useDelay: 300
+    itemIconStyle: BigAction
+    icon:
+      sprite: Objects/Magic/magicactions.rsi
+      state: magicmissile
+    event: !type:RandomGlobalSpawnSpellEvent
+      spawns:
+      - id: SpawnSpellbook
+        orGroup: Magics
+      - id: ForceWallSpellbook
+        orGroup: Magics
+      - id: BlinkBook
+        orGroup: Magics
+      - id: SmiteBook
+        orGroup: Magics
+      - id: KnockSpellbook
+        orGroup: Magics
+      - id: FireballSpellbook
+        orGroup: Magics
+      - id: WeaponWandPolymorphCarp
+        orGroup: Magics
+      - id: WeaponWandPolymorphMonkey
+        orGroup: Magics
+      - id: WeaponWandFireball
+        orGroup: Magics
+      - id: WeaponWandPolymorphDoor
+        orGroup: Magics
+      - id: WeaponWandCluwne
+        orGroup: Magics
+      - id: WeaponWandPolymorphBread
+        orGroup: Magics
+      - id: WeaponStaffHealing
+        orGroup: Magics
+      - id: WeaponStaffPolymorphDoor
+        orGroup: Magics
+      speech: action-speech-spell-summon-magic

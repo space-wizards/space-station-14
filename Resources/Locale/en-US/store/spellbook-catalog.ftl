@@ -20,6 +20,9 @@ spellbook-charge-desc = Adds a charge back to your wand!
 spellbook-lightning-name = Lightning Bolt
 spellbook-lightning-desc = Thunderbolt and lightning, very very frightening!
 
+spellbook-ethereal-jaunt-name = Ethereal Jaunt
+spellbook-ethereal-jaunt-description = Slip into the ethereal plane to slip away from your enemies!
+
 # Equipment
 
 spellbook-wand-polymorph-door-name = Wand of Entrance
@@ -33,9 +36,18 @@ spellbook-wand-polymorph-carp-description = For when you need a carp filet quick
 spellbook-event-summon-ghosts-name = Summon Ghosts
 spellbook-event-summon-ghosts-description = Who ya gonna call?
 
+spellbook-event-summon-guns-name = Summon Guns
+spellbook-event-summon-guns-description = AK47s for everyone! Places a random gun in front of everybody. Disables refunds when bought!
+
+spellbook-event-summon-magic-name = Summon Magic
+spellbook-event-summon-magic-description = Places a random magical item in front of everybody. Nothing could go wrong! Disables refunds when bought!
+
 # Upgrades
 spellbook-upgrade-fireball-name = Upgrade Fireball
 spellbook-upgrade-fireball-description = Upgrades Fireball to a maximum of level 3!
 
 spellbook-upgrade-lightning-name = Upgrade Lightning Bolt
 spellbook-upgrade-lightning-description = Upgrades Lightning Bolt to a maximum of level 3!
+
+spellbook-upgrade-jaunt-name = Upgrade Ethereal Jaunt
+spellbook-upgrade-jaunt-description = Upgrades Jaunt to a maximum of level 3!

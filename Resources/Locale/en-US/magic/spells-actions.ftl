@@ -4,3 +4,5 @@ action-speech-spell-smite = EI NATH!
 action-speech-spell-summon-magicarp = AIE KHUSE EU
 action-speech-spell-fireball = ONI'SOMA!
 action-speech-spell-lightning = SHU'ZAS TWER
+action-speech-spell-summon-guns = YOR'NEE VES-KORFA
+action-speech-spell-summon-magic = RYGOIN FEMA-VERECO
