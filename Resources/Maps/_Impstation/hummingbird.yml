@@ -2399,11 +2399,11 @@ entities:
             id: HalfTileOverlayGreyscale
           decals:
             5008: 52,-38
-            5010: 78,-41
             5014: 89,-36
             5016: 99,-37
             5017: 117,-14
             5023: 78,6
+            5058: 73,-41
         - node:
             color: '#DE3A3A96'
             id: HalfTileOverlayGreyscale
@@ -2411,12 +2411,28 @@ entities:
             2184: 116,-5
             2185: 115,-5
         - node:
+            color: '#FED83DCC'
+            id: HalfTileOverlayGreyscale
+          decals:
+            5120: 76,-41
+            5121: 77,-41
+            5122: 78,-41
+            5123: 79,-41
+            5124: 80,-41
+        - node:
             color: '#9FED5896'
             id: HalfTileOverlayGreyscale180
           decals:
             5020: 117,0
             5031: 39,0
             5034: 45,-16
+        - node:
+            color: '#FED83DCC'
+            id: HalfTileOverlayGreyscale180
+          decals:
+            5127: 72,33
+            5128: 73,33
+            5129: 74,33
         - node:
             color: '#334E6DBF'
             id: HalfTileOverlayGreyscale270
@@ -2466,6 +2482,12 @@ entities:
             2177: 113,-8
             2182: 105,-7
             2183: 105,-8
+        - node:
+            color: '#FED83DCC'
+            id: HalfTileOverlayGreyscale270
+          decals:
+            5125: 98,-3
+            5126: 98,-4
         - node:
             color: '#334E6DBF'
             id: HalfTileOverlayGreyscale90
@@ -54585,6 +54607,12 @@ entities:
     - type: Transform
       pos: 37.5,-24.5
       parent: 2
+  - uid: 19940
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 98.5,-2.5
+      parent: 2
   - uid: 19942
     components:
     - type: Transform
@@ -54596,11 +54624,32 @@ entities:
     - type: Transform
       pos: 44.5,-57.5
       parent: 2
+  - uid: 21495
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 98.5,-3.5
+      parent: 2
   - uid: 23603
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 88.5,2.5
+      parent: 2
+  - uid: 24131
+    components:
+    - type: Transform
+      pos: 77.5,-40.5
+      parent: 2
+  - uid: 24132
+    components:
+    - type: Transform
+      pos: 78.5,-40.5
+      parent: 2
+  - uid: 24133
+    components:
+    - type: Transform
+      pos: 79.5,-40.5
       parent: 2
 - proto: ChairFolding
   entities:
@@ -67057,11 +67106,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 67.5,-12.5
       parent: 2
-  - uid: 15013
-    components:
-    - type: Transform
-      pos: 77.5,-39.5
-      parent: 2
   - uid: 15042
     components:
     - type: Transform
@@ -67217,6 +67261,11 @@ entities:
     components:
     - type: Transform
       pos: 87.5,-39.5
+      parent: 2
+  - uid: 24134
+    components:
+    - type: Transform
+      pos: 71.5,-39.5
       parent: 2
 - proto: FaxMachineBase
   entities:
@@ -124113,11 +124162,6 @@ entities:
     - type: Transform
       pos: 93.5,-8.5
       parent: 2
-  - uid: 21495
-    components:
-    - type: Transform
-      pos: 79.5,-39.5
-      parent: 2
   - uid: 21634
     components:
     - type: Transform
@@ -124259,6 +124303,11 @@ entities:
     components:
     - type: Transform
       pos: 89.5,-30.5
+      parent: 2
+  - uid: 24136
+    components:
+    - type: Transform
+      pos: 72.5,-39.5
       parent: 2
 - proto: Screwdriver
   entities:
@@ -130279,11 +130328,6 @@ entities:
     - type: Transform
       pos: 141.5,-21.5
       parent: 2
-  - uid: 19940
-    components:
-    - type: Transform
-      pos: 78.5,-39.5
-      parent: 2
   - uid: 19944
     components:
     - type: Transform
@@ -130363,6 +130407,11 @@ entities:
     components:
     - type: Transform
       pos: 99.5,-35.5
+      parent: 2
+  - uid: 24135
+    components:
+    - type: Transform
+      pos: 73.5,-39.5
       parent: 2
 - proto: StationMapCircuitboard
   entities:
@@ -153897,7 +153946,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -138713.66
+      secondsUntilStateChange: -139878.1
       state: Opening
     - type: Airlock
       autoClose: False
@@ -154892,6 +154941,24 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 120.5,6.5
+      parent: 2
+  - uid: 15013
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 74.5,33.5
+      parent: 2
+  - uid: 24137
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 73.5,33.5
+      parent: 2
+  - uid: 24138
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 72.5,33.5
       parent: 2
 - proto: Wrench
   entities:
