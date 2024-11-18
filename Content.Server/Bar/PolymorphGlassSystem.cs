@@ -53,6 +53,7 @@ public sealed class TransformableContainerSystem : EntitySystem
         //  Trying to keep my vars in scope.
         EntityUid? targetEntity = null;
 
+        // If the entity was in a container (e.g. Hands) I try getting it so i can spawn the new glass in it as well.
         if (inContainer)
         {
             var containingUid = position.EntityId;
