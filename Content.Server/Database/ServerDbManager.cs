@@ -318,7 +318,6 @@ namespace Content.Server.Database
         #region IPintel
 
         Task<bool> AddIPIntelCache(DateTime time, IPAddress ip, float score);
-
         Task<bool> UpdateIPIntelCache(DateTime time, IPAddress ip, float score);
         Task<List<IPIntelCache>> GetIPIntelCache(IPAddress ip);
         Task<bool> RemoveIPIntelCache(IPAddress ip);

@@ -17,7 +17,12 @@ public sealed partial class ConnectionManager
 {
     private readonly HttpClient _httpClient = new();
 
-    private bool _ratelimited;
+    private bool _ratelimitedMinute;
+    private bool _ratelimitedDay;
+    private int _currentRequestsDay;
+    private int _currentRequestsMinute;
+    private DateTime _lastRatelimited;
+    private bool _limitHasBeenHandled;
 
     // CCVars, they are initialized in ConnectionManager.cs
     private string? _contactEmail;
@@ -69,7 +74,9 @@ public sealed partial class ConnectionManager
         }
 
         // Check our api limits. If we are ratelimited we back out.
-        if (_ratelimited)
+        await HandleRatelimit();
+
+        if (_ratelimitedMinute || _ratelimitedDay)
             return _rejectLimited ? (true, Loc.GetString("ipintel-server-ratelimited")) : (false, string.Empty);
 
         // Ensure our contact email is good to use.
@@ -79,6 +86,8 @@ public sealed partial class ConnectionManager
             return _rejectUnknown ? (true, Loc.GetString("generic-misconfigured")) : (false, string.Empty);
         }
 
+        _currentRequestsDay++;
+        _currentRequestsMinute++;
         // Info about flag B: https://getipintel.net/free-proxy-vpn-tor-detection-api/#flagsb
         // TLDR: We don't care about knowing if a connection is compromised.
         // We just want to know if it's a vpn. This also speeds up the request by quite a bit. (A full scan can take 200ms to 5 seconds. This will take at most 120ms)
@@ -93,7 +102,6 @@ public sealed partial class ConnectionManager
             // also helps to have minute/day requests stored in the db
 
             _sawmill.Warning("We hit the IPIntel request limit at some point.");
-            _ratelimited = true;
             return _rejectLimited ? (true, Loc.GetString("ipintel-server-ratelimited")) : (false, string.Empty);
         }
 
@@ -136,6 +144,53 @@ public sealed partial class ConnectionManager
                 return await ScoreCheck(response, e, expired, query.Count == 0);
             }
         }
+    }
+
+    private async Task HandleRatelimit()
+    {
+        // Oh my god this is terrible
+        if (_currentRequestsDay < _requestLimitDay)
+        {
+            if (ShouldLiftRateLimit(_ratelimitedDay, _lastRatelimited, TimeSpan.FromDays(1)))
+            {
+                _sawmill.Info("IPIntel daily rate limit lifted. We are back to normal.");
+                _ratelimitedDay = false;
+                _currentRequestsDay = 0;
+                _limitHasBeenHandled = false;
+                return;
+            }
+
+            if (_limitHasBeenHandled)
+                return;
+
+            _sawmill.Warning($"We just hit our last daily IPIntel limit ({_requestLimitDay})");
+            _ratelimitedDay = true;
+            _lastRatelimited = DateTime.Now;
+        }
+        else if (_currentRequestsMinute < _requestLimitMinute)
+        {
+            if (ShouldLiftRateLimit(_ratelimitedMinute, _lastRatelimited, TimeSpan.FromMinutes(1)))
+            {
+                _sawmill.Info("IPIntel minute rate limit lifted. We are back to normal.");
+                _ratelimitedMinute = false;
+                _currentRequestsMinute = 0;
+                _limitHasBeenHandled = false;
+                return;
+            }
+
+            if (_limitHasBeenHandled)
+                return;
+
+            _sawmill.Warning($"We just hit our last minute IPIntel limit ({_requestLimitMinute}).");
+            _ratelimitedMinute = true;
+            _lastRatelimited = DateTime.Now;
+        }
+    }
+
+    private bool ShouldLiftRateLimit(bool currentlyRatelimited, DateTime lastRatelimited, TimeSpan liftingTime)
+    {
+        // Should we raise this limit now?
+        return currentlyRatelimited && DateTime.Now - lastRatelimited >= liftingTime;
     }
 
     private async Task<(bool, string Empty)> ScoreCheck(string response, NetConnectingArgs e, bool expired , bool newEntry)

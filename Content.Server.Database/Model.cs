@@ -44,7 +44,6 @@ namespace Content.Server.Database
         public DbSet<RoleWhitelist> RoleWhitelists { get; set; } = null!;
         public DbSet<BanTemplate> BanTemplate { get; set; } = null!;
         public DbSet<IPIntelCache> IPIntelCache { get; set; } = null!;
-        public DbSet<IPIntelRateLimit> IPIntelRateLimit { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -1219,14 +1218,5 @@ namespace Content.Server.Database
         public IPAddress Address { get; set; } = null!;
 
         public float Score { get; set; }
-    }
-
-    public class IPIntelRateLimit
-    {
-        public int Id { get; set; }
-
-        public int Minute { get; set; }
-
-        public int Day { get; set; }
     }
 }
