@@ -152,6 +152,27 @@
     - FolkHero
 
 - type: dataset
+  id: SpeechRestrictions
+  values:
+    - FullNameAndTitle
+    - NamesAreRude
+    - Clarity
+    - SwearingGood
+    - StatementOnly
+    - Imitation
+    - Unclarity
+    - SwearingBad
+    - QuestionOnly
+    - MustAnswer
+    - OnlyWhisper
+    - OnlyYell
+    - Rhyme
+    - Alliterate
+    - ThirdPerson
+    - TitleCase
+    - GreySpeak
+
+- type: dataset
   id: SpelfWords
   values:
   - accept
