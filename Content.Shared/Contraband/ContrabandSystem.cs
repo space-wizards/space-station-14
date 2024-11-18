@@ -18,7 +18,6 @@ public sealed class ContrabandSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedIdCardSystem _id = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     private bool _contrabandExamineEnabled;
 
