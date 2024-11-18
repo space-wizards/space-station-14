@@ -2602,10 +2602,10 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/Bonioon.rsi
- # - type: Item
- #   size: Small
- #   sprite: Objects/Specific/Hydroponics/Bonioon.rsi
- #  heldPrefix: produce
+  - type: Item
+    size: Small
+    sprite: Objects/Specific/Hydroponics/Bonioon.rsi
+    heldPrefix: produce
   - type: Produce
     seedId: bonioon
   - type: FlavorProfile
@@ -2645,15 +2645,15 @@
       - !type:TriggerBehavior
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Physics
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeCircle
-          radius: 0.50
-        density: 80
-        mask:
-        - MobMask
-        layer:
-        - MobLayer
+  #- type: Physics     Im gonna clean these shenans below if i cant it working x.x
+  #- type: Fixtures
+  #  fixtures:
+  #    fix1:
+  #      shape:
+  #        !type:PhysShapeCircle
+  #        radius: 0.50
+  #      density: 80
+  #      mask:
+  #      - MobMask
+  #      layer:
+  #      - MobLayer
