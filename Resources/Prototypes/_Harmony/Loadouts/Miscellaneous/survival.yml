@@ -1,0 +1,8 @@
+# Breath Tool On Face
+- type: loadout
+  id: LoadoutClothingMaskAuralis
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: EffectSpeciesVox
+  equipment:
+    mask: ClothingMaskAuralis
