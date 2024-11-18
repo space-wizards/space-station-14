@@ -260,9 +260,38 @@ Entries:
   url: https://github.com/ss14Starlight/space-station-14/pull/64
 - author: VigersRay
   changes:
-  - message: Added collective mind for dionas.
+  - message: Added vent. crawling for small beings.
     type: Add
   id: 37
+  time: '2024-11-18T18:46:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/68
+- author: Rinary
+  changes:
+  - message: Refactored vent crawling to new game version.
+    type: Tweak
+  id: 38
+  time: '2024-11-18T18:46:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/68
+- author: Rinary
+  changes:
+  - message: Added abductor's vent gland(Allows to crawling in vents).
+    type: Add
+  id: 39
+  time: '2024-11-18T18:46:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/68
+- author: Rinary
+  changes:
+  - message: Added contortionist's jumpsuit for atmosian uplink(Allows to crawling
+      in vents).
+    type: Add
+  id: 40
+  time: '2024-11-18T18:46:39.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/68
+- author: VigersRay
+  changes:
+  - message: Added collective mind for dionas.
+    type: Add
+  id: 41
   time: '2024-11-18T18:47:01.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/69
 
