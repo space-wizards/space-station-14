@@ -9,6 +9,8 @@ using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
+using Content.Server.Power.Components;
+using Content.Server.Tools.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Piping.Unary;
@@ -56,6 +58,12 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             SubscribeLocalEvent<GasVentPumpComponent, WeldableChangedEvent>(OnWeldChanged);
             SubscribeLocalEvent<GasVentPumpComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<GasVentPumpComponent, VentScrewedDoAfterEvent>(OnVentScrewed);
+        }
+
+        private void OnWeldChanged(EntityUid uid, GasVentPumpComponent component, WeldableChangedEvent args)
+        {
+            component.Welded = !component.Welded;
+            UpdateState(uid, component);
         }
 
         private void OnGasVentPumpUpdated(EntityUid uid, GasVentPumpComponent vent, ref AtmosDeviceUpdateEvent args)

@@ -862,6 +862,7 @@
   id: MobCrab
   description: A folk legend goes around that his claw snaps spacemen out of existence over distasteful remarks. Be polite and tolerant for your own safety.
   components:
+  - type: VentCrawler
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -1226,6 +1227,7 @@
   description: The genetic bipedal ancestor of... Uh... Something. Yeah, there's definitely something on the station that descended from whatever this is.
   abstract: true
   components:
+  - type: VentCrawler
   - type: CombatMode
   - type: Inventory
     templateId: monkey
@@ -1594,6 +1596,7 @@
   id: MobMouse
   description: Squeak!
   components:
+  - type: VentCrawler
   - type: Body
     prototype: Mouse
   - type: GhostRole
@@ -1947,6 +1950,7 @@
   id: MobSlug
   description: And they called this a lizard?
   components:
+  - type: VentCrawler
   - type: MovementSpeedModifier
     baseWalkSpeed : 2
     baseSprintSpeed : 3
@@ -1994,6 +1998,7 @@
   id: MobFrog
   description: Hop hop hop. Lookin' moist.
   components:
+  - type: VentCrawler
   - type: MovementSpeedModifier
     baseWalkSpeed: 3
     baseSprintSpeed: 6
@@ -2235,6 +2240,98 @@
       behaviors:
       - !type:ExplodeBehavior
 
+- type: entity
+  name: monkey
+  id: MobMonkeySyndicateAgent
+  parent: SimpleMobBase # doesn't parent off monkeys to be able to not have the clumsy component
+  description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
+  suffix: syndicate
+  components:
+  - type: VentCrawler
+  - type: CombatMode
+  - type: NameIdentifier
+    group: Monkey
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-primate
+  - type: Inventory
+    templateId: monkey
+    speciesId: monkey
+  - type: InventorySlots
+  - type: Cuffable
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 80
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: monkey
+      sprite: Mobs/Animals/monkey.rsi
+    - map: [ "jumpsuit" ]
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+    - map: [ "id" ]
+    - map: [ "outerClothing" ]
+    - map: [ "mask" ]
+    - map: [ "head" ]
+    - map: [ "clownedon" ]
+      sprite: "Effects/creampie.rsi"
+      state: "creampie_human"
+      visible: false
+  - type: Hands
+  - type: GenericVisualizer
+    visuals:
+      enum.CreamPiedVisuals.Creamed:
+        clownedon: # Not 'creampied' bc I can already see Skyrat complaining about conflicts.
+          True: {visible: true}
+          False: {visible: false}
+  - type: Speech
+    speechSounds: Monkey
+  - type: Body
+    prototype: Primate
+    requiredLegs: 1 # TODO: More than 1 leg
+  - type: CreamPied
+  - type: FireVisuals
+    sprite: Mobs/Effects/onfire.rsi
+    normalState: Monkey_burning
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeat
+      amount: 3
+  - type: MonkeyAccent
+  - type: Puller
+  - type: CanHostGuardian
+  - type: NpcFactionMember
+    factions:
+    - Syndicate
+  - type: GhostRole
+    prob: 0.05
+    makeSentient: true
+    name: ghost-role-information-monkey-name
+    description: ghost-role-information-monkey-description
+  - type: GhostTakeoverAvailable
+  - type: IdExaminable
+  - type: Loadout
+    prototype: SyndicateOperativeGearMonkey
+    prototypes: [SyndicateOperativeGearMonkey]
+
   # I have included a snake_hiss.ogg sound file so if you want to use that be my guest
 - type: entity
   name: snake
@@ -2242,6 +2339,7 @@
   id: MobSnake
   description: Hissss! Bites aren't poisonous.
   components:
+  - type: VentCrawler
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -2291,6 +2389,7 @@
   id: MobGiantSpider
   description: Widely recognized to be the literal worst thing in existence.
   components:
+  - type: VentCrawler
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -2818,6 +2917,7 @@
   id: MobCorgiPuppy
   description: A little corgi! Aww...
   components:
+  - type: VentCrawler
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/corgi.rsi
@@ -3181,6 +3281,7 @@
   id: MobHamster
   description: A cute, fluffy, robust hamster.
   components:
+  - type: VentCrawler
   - type: GhostRole
     makeSentient: true
     allowSpeech: true
