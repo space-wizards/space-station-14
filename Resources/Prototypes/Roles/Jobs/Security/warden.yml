@@ -9,7 +9,6 @@
       time: 10800 # 30 hrs
   startingGear: WardenGear
   icon: "JobIconWarden"
-  requireAdminNotify: true
   supervisors: job-supervisors-hos
   canBeAntag: false
   access:

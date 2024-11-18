@@ -106,6 +106,28 @@
 
 - type: entity
   parent: AirlockExternal
+  id: AirlockExternalCommandLocked
+  suffix: External, Command, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsCommand ]
+  - type: Wires
+    layoutId: AirlockCommand
+
+- type: entity
+  parent: AirlockExternalGlass
+  id: AirlockExternalGlassCommandLocked
+  suffix: External, Glass, Command, Locked
+  components:
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronicsCommand ]
+  - type: Wires
+    layoutId: AirlockCommand
+
+- type: entity
+  parent: AirlockExternal
   id: AirlockExternalAtmosphericsLocked
   suffix: External, Atmospherics, Locked
   components:
