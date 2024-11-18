@@ -20,6 +20,12 @@ namespace Content.Shared.Atmos
         public const float OneAtmosphere = 101.325f;
 
         /// <summary>
+        ///     Default target for vents in kPA.
+        ///     It is set slightly higher than 1 ATM, as to cause air to circulate.
+        /// </summary>
+        public const float OneAtmosphereTarget = OneAtmosphere * 1.05f;
+
+        /// <summary>
         ///     Maximum external pressure (in kPA) a gas miner will, by default, output to.
         ///     This is used to initialize roundstart atmos rooms.
         /// </summary>
@@ -225,8 +231,8 @@ namespace Content.Shared.Atmos
         public const float SuperSaturationEnds = SuperSaturationThreshold / 3;
 
         public const float OxygenBurnRateBase = 1.4f;
-        public const float PlasmaMinimumBurnTemperature = (100f+T0C);
-        public const float PlasmaUpperTemperature = (1370f+T0C);
+        public const float PlasmaMinimumBurnTemperature = (100f + T0C);
+        public const float PlasmaUpperTemperature = (1370f + T0C);
         public const float PlasmaOxygenFullburn = 10f;
         public const float PlasmaBurnRateDelta = 9f;
 

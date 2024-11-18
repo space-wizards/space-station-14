@@ -59,7 +59,7 @@ namespace Content.Server.Atmos.Portable
                 && portableNode.ConnectionsEnabled)
             {
                 _atmosphereSystem.React(component.Air, portableNode);
-                if (portableNode.NodeGroup is PipeNet {NodeCount: > 1} net)
+                if (portableNode.NodeGroup is PipeNet { NodeCount: > 1 } net)
                     _canisterSystem.MixContainerWithPipeNet(component.Air, net.Air);
             }
 
@@ -69,7 +69,7 @@ namespace Content.Server.Atmos.Portable
                 return;
             }
 
-            if (args.Grid is not {} grid)
+            if (args.Grid is not { } grid)
                 return;
 
             var position = _transformSystem.GetGridTilePositionOrDefault(uid);
@@ -137,7 +137,7 @@ namespace Content.Server.Atmos.Portable
 
         private bool Scrub(float timeDelta, PortableScrubberComponent scrubber, GasMixture? tile)
         {
-            return _scrubberSystem.Scrub(timeDelta, scrubber.TransferRate * _atmosphereSystem.PumpSpeedup(), ScrubberPumpDirection.Scrubbing, scrubber.FilterGases, tile, scrubber.Air);
+            return _scrubberSystem.Scrub(timeDelta, scrubber.TransferRate * _atmosphereSystem.PumpSpeedup(), Atmospherics.OneAtmosphere, ScrubberPumpDirection.Scrubbing, scrubber.FilterGases, [], tile, scrubber.Air);
         }
 
         private void UpdateAppearance(EntityUid uid, bool isFull, bool isRunning)

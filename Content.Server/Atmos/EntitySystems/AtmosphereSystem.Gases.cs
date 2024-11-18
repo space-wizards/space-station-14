@@ -58,7 +58,7 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         private float GetHeatCapacity(GasMixture mixture)
-            =>  GetHeatCapacityCalculation(mixture.Moles, mixture.Immutable);
+            => GetHeatCapacityCalculation(mixture.Moles, mixture.Immutable);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private float GetHeatCapacityCalculation(float[] moles, bool space)
@@ -202,7 +202,7 @@ namespace Content.Server.Atmos.EntitySystems
             // And now we transfer the gas.
             var removed = mixture.Remove(transferMoles);
 
-            if(output != null)
+            if (output != null)
                 Merge(output, removed);
 
             return true;
@@ -241,12 +241,29 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         public void ScrubInto(GasMixture mixture, GasMixture destination, IReadOnlyCollection<Gas> filterGases)
         {
-            var buffer = new GasMixture(mixture.Volume){Temperature = mixture.Temperature};
+            var buffer = new GasMixture(mixture.Volume) { Temperature = mixture.Temperature };
 
             foreach (var gas in filterGases)
             {
                 buffer.AdjustMoles(gas, mixture.GetMoles(gas));
                 mixture.SetMoles(gas, 0f);
+            }
+
+            Merge(destination, buffer);
+        }
+
+        /// <summary>
+        ///     Scrubs a fraction of specified gases from a gas mixture into a <see cref="destination"/> gas mixture.
+        /// </summary>
+        public void ScrubInto(GasMixture mixture, GasMixture destination, IReadOnlyCollection<Gas> filterGases, float fraction)
+        {
+            var buffer = new GasMixture(mixture.Volume) { Temperature = mixture.Temperature };
+
+            foreach (var gas in filterGases)
+            {
+                var moles = mixture.GetMoles(gas) * fraction;
+                buffer.AdjustMoles(gas, moles);
+                mixture.AdjustMoles(gas, -moles);
             }
 
             Merge(destination, buffer);
@@ -299,7 +316,7 @@ namespace Content.Server.Atmos.EntitySystems
         {
             var moles = 0f;
 
-            for(var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
+            for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
                 var gasMoles = sample.Moles[i];
                 var delta = MathF.Abs(gasMoles - otherSample.Moles[i]);
@@ -338,7 +355,7 @@ namespace Content.Server.Atmos.EntitySystems
                 var doReaction = true;
                 for (var i = 0; i < prototype.MinimumRequirements.Length; i++)
                 {
-                    if(i >= Atmospherics.TotalNumberOfGases)
+                    if (i >= Atmospherics.TotalNumberOfGases)
                         throw new IndexOutOfRangeException("Reaction Gas Minimum Requirements Array Prototype exceeds total number of gases!");
 
                     var req = prototype.MinimumRequirements[i];
@@ -354,7 +371,7 @@ namespace Content.Server.Atmos.EntitySystems
                     continue;
 
                 reaction = prototype.React(mixture, holder, this, HeatScale);
-                if(reaction.HasFlag(ReactionResult.StopReactions))
+                if (reaction.HasFlag(ReactionResult.StopReactions))
                     break;
             }
 

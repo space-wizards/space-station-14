@@ -23,7 +23,9 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         public string OutletName { get; set; } = "pipe";
 
         [DataField]
-        public HashSet<Gas> FilterGases = new(GasVentScrubberData.DefaultFilterGases);
+        public HashSet<Gas> PriorityGases = new(GasVentScrubberData.DefaultPriorityGases);
+        [DataField]
+        public HashSet<Gas> DisabledGases = new();
 
         [DataField]
         public ScrubberPumpDirection PumpDirection { get; set; } = ScrubberPumpDirection.Scrubbing;
@@ -39,6 +41,17 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         }
 
         private float _transferRate = Atmospherics.MaxTransferRate;
+
+        /// <summary>
+        ///     Target pressure. If the pressure is below this value only priority gases are getting scrubbed.
+        /// </summary>
+        [DataField]
+        public float TargetPressure
+        {
+            get => _targetPressure;
+            set => _targetPressure = Math.Max(value, 0f);
+        }
+        private float _targetPressure = Atmospherics.OneAtmosphere;
 
         [DataField]
         public float MaxTransferRate = Atmospherics.MaxTransferRate;
@@ -59,9 +72,11 @@ namespace Content.Server.Atmos.Piping.Unary.Components
             {
                 Enabled = Enabled,
                 Dirty = IsDirty,
-                FilterGases = FilterGases,
+                PriorityGases = PriorityGases,
+                DisabledGases = DisabledGases,
                 PumpDirection = PumpDirection,
                 VolumeRate = TransferRate,
+                TargetPressure = TargetPressure,
                 WideNet = WideNet
             };
         }
@@ -72,13 +87,20 @@ namespace Content.Server.Atmos.Piping.Unary.Components
             IsDirty = data.Dirty;
             PumpDirection = data.PumpDirection;
             TransferRate = data.VolumeRate;
+            TargetPressure = data.TargetPressure;
             WideNet = data.WideNet;
 
-            if (!data.FilterGases.SequenceEqual(FilterGases))
+            if (!data.PriorityGases.SequenceEqual(PriorityGases))
             {
-                FilterGases.Clear();
-                foreach (var gas in data.FilterGases)
-                    FilterGases.Add(gas);
+                PriorityGases.Clear();
+                foreach (var gas in data.PriorityGases)
+                    PriorityGases.Add(gas);
+            }
+            if (!data.DisabledGases.SequenceEqual(DisabledGases))
+            {
+                DisabledGases.Clear();
+                foreach (var gas in data.DisabledGases)
+                    DisabledGases.Add(gas);
             }
         }
     }
