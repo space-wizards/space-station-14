@@ -12,11 +12,11 @@ namespace Content.Server.Intellicard;
 /// </summary>
 public sealed class IntellicardSystem : SharedIntellicardSystem
 {
-    [Dependency] private readonly   SharedPopupSystem _popup = default!;
-    [Dependency] private readonly   ToggleableGhostRoleSystem  _ghostRole = default!;
-    [Dependency] private readonly   SharedStationAiSystem _stationAi = default!;
-    [Dependency] private readonly   MetaDataSystem _metaData = default!;
-    [Dependency] private readonly   RandomMetadataSystem  _randomMeta = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly ToggleableGhostRoleSystem  _ghostRole = default!;
+    [Dependency] private readonly SharedStationAiSystem _stationAi = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly RandomMetadataSystem  _randomMeta = default!;
 
     public override void Initialize()
     {

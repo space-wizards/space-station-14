@@ -79,7 +79,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
 
             _stationJobs.TryAdjustJobSlot(uniqueStation, _aiJobId, -1, clamp: true);
         }
-        
+
         if(!force)
             RemCompDeferred<ContainerSpawnPointComponent>(ent);
     }

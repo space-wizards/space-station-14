@@ -17,13 +17,13 @@ namespace Content.Shared.Intellicard;
 /// </summary>
 public abstract class SharedIntellicardSystem : EntitySystem
 {
-    [Dependency] private readonly   IGameTiming _gameTiming = default!;
-    [Dependency] private readonly   SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly   MetaDataSystem _metadata = default!;
-    [Dependency] private readonly   SharedMindSystem _mind = default!;
-    [Dependency] private readonly   SharedPopupSystem _popup = default!;
-    [Dependency] private readonly   SharedRoleSystem _roles = default!;
-    [Dependency] private readonly   SharedStationAiSystem _stationAi = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly MetaDataSystem _metadata = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedRoleSystem _roles = default!;
+    [Dependency] private readonly SharedStationAiSystem _stationAi = default!;
 
     private readonly EntProtoId _defaultAi = "StationAiBrain";
 
