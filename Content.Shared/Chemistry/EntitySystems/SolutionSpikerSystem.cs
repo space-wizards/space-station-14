@@ -24,23 +24,18 @@ public sealed class SolutionSpikerSystem : EntitySystem
         SubscribeLocalEvent<RefillableSolutionComponent, InteractUsingEvent>(OnInteractUsing);
     }
 
-    private void OnInteractUsing(Entity<RefillableSolutionComponent> entity, ref InteractUsingEvent args)
-    {
-        TrySpike(args.Used, args.Target, args.User, entity.Comp);
-    }
-
     /// <summary>
     ///     Immediately transfer all reagents from this entity, to the other entity.
     ///     The source entity will then be acted on by TriggerSystem.
     /// </summary>
-    /// <param name="source">Source of the solution.</param>
-    /// <param name="target">Target to spike with the solution from source.</param>
-    /// <param name="user">User spiking the target solution.</param>
-    private void TrySpike(EntityUid source, EntityUid target, EntityUid user, RefillableSolutionComponent? spikableTarget = null,
-        SolutionSpikerComponent? spikableSource = null,
-        SolutionContainerManagerComponent? managerSource = null,
-        SolutionContainerManagerComponent? managerTarget = null)
+    private void OnInteractUsing(Entity<RefillableSolutionComponent> entity, ref InteractUsingEvent args)
     {
+        var (source, target, user) = (args.Used, args.Target, args.User);
+        SolutionSpikerComponent? spikableSource = null;
+        var spikableTarget = entity.Comp;
+        SolutionContainerManagerComponent? managerSource = null;
+        SolutionContainerManagerComponent? managerTarget = null;
+
         if (!Resolve(source, ref spikableSource, ref managerSource, false)
             || !Resolve(target, ref spikableTarget, ref managerTarget, false)
             || !_solution.TryGetRefillableSolution((target, spikableTarget, managerTarget), out var targetSoln, out var targetSolution)
@@ -60,6 +55,7 @@ public sealed class SolutionSpikerSystem : EntitySystem
 
         _popup.PopupClient(Loc.GetString(spikableSource.Popup, ("spiked-entity", target), ("spike-entity", source)), user, user);
         sourceSolution.RemoveAllSolution();
+
         if (spikableSource.Delete)
             QueueDel(source);
     }
