@@ -157,7 +157,18 @@ public abstract class SharedImplanterSystem : EntitySystem
             }
             else
             {
-                var implant = implantContainer.ContainedEntities.FirstOrNull(entity => Prototype(entity) != null && component.DeimplantChosen == Prototype(entity)!);
+                EntityUid? implant = null;
+                var implants = implantContainer.ContainedEntities;
+                foreach (var implantEntity in implants)
+                {
+                    if (TryComp<SubdermalImplantComponent>(implantEntity, out var subdermalComp))
+                    {
+                        if (component.DeimplantChosen == subdermalComp.DrawableProtoIdOverride ||
+                            (Prototype(implantEntity) != null && component.DeimplantChosen == Prototype(implantEntity)!))
+                            implant = implantEntity;
+                    }
+                }
+
                 if (implant != null && implantCompQuery.TryGetComponent(implant, out var implantComp))
                 {
                     //Don't remove a permanent implant
