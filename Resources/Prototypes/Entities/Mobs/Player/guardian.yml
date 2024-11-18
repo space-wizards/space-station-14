@@ -93,7 +93,9 @@
         collection: Punch
       damage:
         types:
-          Blunt: 20
+          Blunt: 6
+          Slash: 7
+          Piercing: 7
           Structural: 20
     - type: MeleeSpeech
     - type: UserInterface
