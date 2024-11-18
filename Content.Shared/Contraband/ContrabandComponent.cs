@@ -25,4 +25,12 @@ public sealed partial class ContrabandComponent : Component
     [DataField]
     [AutoNetworkedField]
     public HashSet<ProtoId<DepartmentPrototype>>? AllowedDepartments = ["Security"];
+
+    /// <summary>
+    ///     Which jobs is this item restricted to?
+    ///     If empty, no jobs are allowed to use this beyond the allowed departments.
+    /// </summary>
+    [DataField]
+    [AutoNetworkedField]
+    public HashSet<ProtoId<JobPrototype>> AllowedJobs = [];
 }
