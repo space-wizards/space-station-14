@@ -11,9 +11,9 @@ public abstract partial class SharedPuddleSystem
     {
         return solution.Contents.Where(x =>
         {
-            _prototypeManager.TryIndex(x.Reagent.Prototype, out ReagentPrototype? y);
-            if (y == null) return false;
-            return y.Evaporates;
+            //Check if the prototype for the ReagentId is slippery.
+            _prototypeManager.TryIndex(x.Reagent.Prototype, out ReagentPrototype? proto);
+            return proto?.Evaporates is bool value && value;
         }).Select(x => x.Reagent.Prototype).ToArray();
     }
 
