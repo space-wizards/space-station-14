@@ -57,6 +57,9 @@ public sealed class SolutionSpikerSystem : EntitySystem
         sourceSolution.RemoveAllSolution();
 
         if (spikableSource.Delete)
+        {
             QueueDel(source);
+            args.Handled = true;
+        }
     }
 }
