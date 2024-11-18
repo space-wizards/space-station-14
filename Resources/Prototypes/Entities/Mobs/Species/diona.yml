@@ -5,6 +5,8 @@
   id: BaseMobDiona
   abstract: true
   components:
+  - type: CollectiveMind
+    channel: Dionas
   - type: HumanoidAppearance
     species: Diona
   - type: Hunger

@@ -27,4 +27,4 @@ objective-condition-abduct-description = (use the Gizmo on a subdued victim, the
 
 abductor-role-greeting = I am a professional combat scientist of a high-tech race. My task is to abduct humans, conduct experiments on them, and return them intact for the purity of the experiment. It is not in my interest to destroy the station, kill, or assist the crew.
 
-roles-antag-abductor-objective = Find the nuke disk and blow up the station.
+roles-antag-abductor-objective = Kidnap station crew and perform your experiments on them!
