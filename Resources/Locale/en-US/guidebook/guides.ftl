@@ -3,6 +3,7 @@ guide-entry-engineering = Engineering
 guide-entry-construction = Construction
 guide-entry-airlock-security = Airlock Upgrades
 guide-entry-atmospherics = Atmospherics
+guide-entry-flooding = Flooding
 guide-entry-botany = Botany
 guide-entry-fires = Fires & Space
 guide-entry-shuttle-craft = Shuttle-craft
