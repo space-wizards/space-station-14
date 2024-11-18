@@ -248,4 +248,14 @@ Entries:
   id: 35
   time: '2024-11-17T13:57:03.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/67
+- author: STARLIGHT TEAM
+  changes:
+  - message: The basic supermatter has been added; it still needs balancing. It can
+      be run on nitrogen, plasma, or frezon. We cool it down, shoot emitters, all
+      the usual steps. When the crystal's integrity drops to 0, branches emerge from
+      the crystal, turning everything on the station into crystal.
+    type: Add
+  id: 36
+  time: '2024-11-18T07:18:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/64
 
