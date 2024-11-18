@@ -80,7 +80,7 @@ public sealed class XenoArtifactCommand : ToolshedCommand
     }
 
     [ValidatePrototypeId<EntityPrototype>]
-    public const string ArtifactPrototype = "XenoArtifact";
+    public const string ArtifactPrototype = "BaseXenoArtifact";
 
     [CommandImplementation("averageResearch")]
     public float AverageResearch()

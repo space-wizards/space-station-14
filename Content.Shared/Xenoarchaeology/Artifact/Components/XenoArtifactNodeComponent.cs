@@ -26,7 +26,7 @@ public sealed partial class XenoArtifactNodeComponent : Component
     /// List of trigger descriptions that this node require for activation.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public LocId TriggerTip;
+    public LocId? TriggerTip;
 
     /// <summary>
     /// The entity whose graph this node is a part of.
