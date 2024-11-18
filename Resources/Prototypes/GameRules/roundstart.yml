@@ -294,8 +294,8 @@
         tableId: UnknownShuttlesFriendlyTable
       - !type:NestedSelector
         tableId: UnknownShuttlesFreelanceTable
-      - !type:NestedSelector
-        tableId: UnknownShuttlesHostileTable
+      #- !type:NestedSelector - Removed from GreyStation
+        #tableId: UnknownShuttlesHostileTable
 
 - type: entity
   id: BasicStationEventScheduler
