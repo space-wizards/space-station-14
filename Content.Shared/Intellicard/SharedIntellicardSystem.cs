@@ -63,7 +63,11 @@ public abstract class SharedIntellicardSystem : EntitySystem
         _mind.TransferTo(mindId, brain);
         RandomizeAiName(brain);
         QueueDel(args.Args.Used);
+
         _popup.PopupEntity(Loc.GetString("ai-convert-finished"), args.User, args.User, PopupType.Medium);
+
+        if(HasComp<StationAiCoreComponent>(ent.Owner))
+            _stationAi.TryRemoveAiJobSlot(ent.Owner);
     }
 
     private void OnUsingBorgBrainOnConverterInteract(Entity<StationAiConverterComponent> ent, ref AfterInteractUsingEvent args)

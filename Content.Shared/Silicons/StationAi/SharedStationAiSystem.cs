@@ -320,6 +320,8 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
         QueueDel(ent.Comp.RemoteEntity);
         ent.Comp.RemoteEntity = null;
+
+        TryRemoveAiJobSlot(ent.Owner);
     }
 
     private void OnCorePower(Entity<StationAiCoreComponent> ent, ref PowerChangedEvent args)
@@ -440,6 +442,8 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     }
 
     public virtual void AnnounceIntellicardUsage(EntityUid uid, SoundSpecifier? cue = null) { }
+
+    public virtual void TryRemoveAiJobSlot(EntityUid ent, bool force = false) { }
 
     public virtual bool SetVisionEnabled(Entity<StationAiVisionComponent> entity, bool enabled, bool announce = false)
     {
