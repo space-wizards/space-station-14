@@ -385,6 +385,8 @@ namespace Content.Shared.Examine
                     totalMessage.PushNewline();
             }
 
+            totalMessage.TrimTrailingNewlines();
+
             return totalMessage;
         }
 
