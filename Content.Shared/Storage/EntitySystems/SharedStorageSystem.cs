@@ -1508,27 +1508,6 @@ public abstract class SharedStorageSystem : EntitySystem
         return true;
     }
 
-    /// <summary>
-    /// Check if the entity interacting with the container is doing so with an empty hand.
-    /// </summary>
-    private bool ValidateEmptyHand(EntitySessionEventArgs args, [NotNullWhen(true)] out Hand? emptyHand)
-    {
-        emptyHand = null;
-
-        if (args.SenderSession.AttachedEntity is not { } playerUid)
-            return false;
-
-        if (!TryComp(playerUid, out HandsComponent? hands) || hands.Count == 0)
-            return false;
-
-        if (hands.ActiveHand == null || hands.ActiveHand.HeldEntity != null)
-            return false;
-
-        emptyHand = hands.ActiveHand;
-
-        return true;
-    }
-
     [Serializable, NetSerializable]
     protected sealed class StorageComponentState : ComponentState
     {
