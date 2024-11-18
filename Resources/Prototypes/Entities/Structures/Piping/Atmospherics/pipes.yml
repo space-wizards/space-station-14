@@ -68,7 +68,7 @@
 
 - type: entity
   id: VentCrawHolder
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   name: vent claw holder
   components:
     - type: VentCrawHolder
