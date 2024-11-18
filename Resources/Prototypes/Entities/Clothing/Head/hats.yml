@@ -281,10 +281,11 @@
   name: brown fedora
   description: It's a brown fedora.
   components:
+  # Harmony Change: Sprites updated for use in detective clothing update
   - type: Sprite
-    sprite: Clothing/Head/Hats/brownfedora.rsi
+    sprite: _Harmony/Clothing/Head/Hats/brownfedora.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hats/brownfedora.rsi
+    sprite: _Harmony/Clothing/Head/Hats/brownfedora.rsi
   - type: Tag
     tags:
     - ClothMade
@@ -297,10 +298,11 @@
   name: grey fedora
   description: It's a grey fedora.
   components:
+  # Harmony Change: Sprites updated for us in detective clothing update
   - type: Sprite
-    sprite: Clothing/Head/Hats/greyfedora.rsi
+    sprite: _Harmony/Clothing/Head/Hats/greyfedora.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hats/greyfedora.rsi
+    sprite: _Harmony/Clothing/Head/Hats/greyfedora.rsi
 
 - type: entity
   parent: ClothingHeadBase
