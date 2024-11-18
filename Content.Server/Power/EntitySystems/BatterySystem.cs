@@ -90,10 +90,11 @@ namespace Content.Server.Power.EntitySystems
                 if (!comp.AutoRecharge) continue;
                 if (batt.IsFullyCharged) continue;
 
-                //
                 if (comp.AutoRechargePause)
+                {
                     if (comp.NextAutoRecharge > Timing.CurTime)
                         continue;
+                }
 
                 SetCharge(uid, batt.CurrentCharge + comp.AutoRechargeRate * frameTime, batt);
             }
@@ -156,7 +157,9 @@ namespace Content.Server.Power.EntitySystems
             battery.CurrentCharge = MathHelper.Clamp(value, 0, battery.MaxCharge);
             if (MathHelper.CloseTo(battery.CurrentCharge, old) &&
                 !(old != battery.CurrentCharge && battery.CurrentCharge == battery.MaxCharge))
+            {
                 return;
+            }
 
             var ev = new ChargeChangedEvent(battery.CurrentCharge, battery.MaxCharge);
             RaiseLocalEvent(uid, ref ev);
@@ -176,7 +179,7 @@ namespace Content.Server.Power.EntitySystems
             if (value < 0)
                 value = batteryself.AutoRechargePauseTime;
 
-            if (Timing.CurTime+TimeSpan.FromSeconds(value) <= batteryself.NextAutoRecharge)
+            if (Timing.CurTime + TimeSpan.FromSeconds(value) <= batteryself.NextAutoRecharge)
                 return;
 
             SetChargeCooldown(uid, batteryself.AutoRechargePauseTime, batteryself);
@@ -191,7 +194,7 @@ namespace Content.Server.Power.EntitySystems
                 return;
 
             if (value >= 0)
-                batteryself.NextAutoRecharge = Timing.CurTime+TimeSpan.FromSeconds(value);
+                batteryself.NextAutoRecharge = Timing.CurTime + TimeSpan.FromSeconds(value);
             else
                 batteryself.NextAutoRecharge = Timing.CurTime;
         }
