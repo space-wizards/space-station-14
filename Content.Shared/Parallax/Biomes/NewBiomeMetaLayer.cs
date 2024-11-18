@@ -29,6 +29,11 @@ public sealed record NewBiomeMetaLayer
     public List<INewBiomeMetaLayer> SubLayers = new();
 }
 
+public interface INewBiomeMetaLayer
+{
+
+}
+
 [RegisterComponent]
 public sealed partial class NewBiomeComponent : Component
 {
@@ -52,5 +57,3 @@ public interface IBiomeLoadedData
     /// </summary>
     bool Unloadable { get; set; }
 }
-
-public sealed record 
