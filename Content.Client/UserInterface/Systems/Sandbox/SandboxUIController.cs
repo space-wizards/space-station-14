@@ -149,7 +149,6 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
         _window.ToggleSubfloorButton.OnPressed += _ => _sandbox.ToggleSubFloor();
         _window.ShowMarkersButton.OnPressed += _ => _sandbox.ShowMarkers();
         _window.ShowBbButton.OnPressed += _ => _sandbox.ShowBb();
-        _window.MachineLinkingButton.OnPressed += _ => _sandbox.MachineLinking();
     }
 
     private void CheckSandboxVisibility()
