@@ -605,3 +605,10 @@ Entries:
     changes:
     - type: Add
       message: Added Auralis Worship Mask to loadout menu SKREEEEEE!!!!
+  - id: 194
+    author: TheCrimsonJupiter
+    time: '2024-11-18T02:20:51.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/194
+    changes:
+    - type: Tweak
+      message: Holoparasites now take longer to gib targets
