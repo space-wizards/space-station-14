@@ -228,11 +228,11 @@ namespace Content.Client.Chemistry.UI
                                     {
                                         Name = "colorPanel",
                                         VerticalExpand = true,
-                                        MinSize = new Vector2(4,8),
+                                        MinWidth = 4,
                                         PanelOverride = new StyleBoxFlat
-                                            {
+                                        {
                                             BackgroundColor = proto.SubstanceColor
-                                            },
+                                        },
                                         Margin = new Thickness(0,1)
                                         
                                     },
@@ -348,11 +348,11 @@ namespace Content.Client.Chemistry.UI
                             {
                                 Name = "colorPanel",
                                 VerticalExpand = true,
-                                MinSize = new Vector2(4,8),
+                                MinWidth = 4,
                                 PanelOverride = new StyleBoxFlat
                                 {
                                     BackgroundColor = proto.SubstanceColor
-                                            },
+                                },
                                 Margin = new Thickness(0,1)
                                         
                             },
