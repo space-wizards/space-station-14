@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ultramario1998
-  changes:
-  - message: Added Beenades
-    type: Add
-  id: 37
-  time: '2024-07-25T21:24:19.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/46
 - author: TGRCDev
   changes:
   - message: Baseball bat can now deflect thrown objects
@@ -4277,3 +4270,14 @@
   id: 536
   time: '2024-11-17T21:55:25.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/743
+- author: honeyed-lemons
+  changes:
+  - message: Gilded Blue and Black heels for HoP and Captain
+    type: Add
+  - message: Gilded Gray Space Jumpsuit for GrayTiders!
+    type: Add
+  - message: Gray Space Jumpsuits can now be found in ClothesMates
+    type: Tweak
+  id: 537
+  time: '2024-11-18T08:15:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/746
