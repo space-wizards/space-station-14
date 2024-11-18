@@ -1,13 +1,13 @@
 - files: ["aspid.yml"]
   authors: Checkraze
 
-- files: ["bagel.yml"]
+- files: ["bagel.yml", "SL_bagel.yml"]
   authors: Emisse
 
 - files: ["barratry.yml"]
   authors: Emogarbage, Scribbles0
  
-- files: ["box.yml"]
+- files: ["box.yml", "SL_box.yml"]
   authors: ACJM, Emisse
 
 - files: ["centcomm.yml"]

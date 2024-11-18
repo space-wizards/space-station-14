@@ -1,0 +1,9 @@
+- files: ["crystal_crack_1.ogg","crystal_crack_2.ogg", "burning_1.ogg", "burning_2.ogg", "burning_3.ogg"]
+  license: "CC-BY-4.0"
+  copyright: 'Darkrell'
+  source: "https://github.com/ss14Starlight/space-station-14"
+
+- files: ["emitter2.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation"
+  source: "https://github.com/tgstation/tgstation/blob/master/sound/weapons/emitter2.ogg"

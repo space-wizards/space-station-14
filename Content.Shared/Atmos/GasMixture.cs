@@ -18,7 +18,7 @@ namespace Content.Shared.Atmos
         public static GasMixture SpaceGas => new() {Volume = Atmospherics.CellVolume, Temperature = Atmospherics.TCMB, Immutable = true};
 
         // No access, to ensure immutable mixtures are never accidentally mutated.
-        [Access(typeof(SharedAtmosphereSystem), typeof(SharedAtmosDebugOverlaySystem), Other = AccessPermissions.None)]
+        [Access(typeof(SharedAtmosphereSystem), typeof(SharedAtmosDebugOverlaySystem), Other = AccessPermissions.Read)]
         [DataField]
         public float[] Moles = new float[Atmospherics.AdjustedNumberOfGases];
 

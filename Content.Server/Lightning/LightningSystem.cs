@@ -70,7 +70,7 @@ public sealed class LightningSystem : SharedLightningSystem
     /// <param name="lightningPrototype">The prototype for the lightning to be created</param>
     /// <param name="arcDepth">how many times to recursively fire lightning bolts from the target points of the first shot.</param>
     /// <param name="triggerLightningEvents">if the lightnings being fired should trigger lightning events.</param>
-    public void ShootRandomLightnings(EntityUid user, float range, int boltCount, string lightningPrototype = "Lightning", int arcDepth = 0, bool triggerLightningEvents = true)
+    public bool ShootRandomLightnings(EntityUid user, float range, int boltCount, string lightningPrototype = "Lightning", int arcDepth = 0, bool triggerLightningEvents = true)
     {
         //TODO: add support to different priority target tablem for different lightning types
         //TODO: Remove Hardcode LightningTargetComponent (this should be a parameter of the SharedLightningComponent)
@@ -81,6 +81,7 @@ public sealed class LightningSystem : SharedLightningSystem
         _random.Shuffle(targets);
         targets.Sort((x, y) => y.Comp.Priority.CompareTo(x.Comp.Priority));
 
+        bool shooted = false;  //starlight
         int shootedCount = 0;
         int count = -1;
         while(shootedCount < boltCount)
@@ -94,12 +95,14 @@ public sealed class LightningSystem : SharedLightningSystem
                 continue;
 
             ShootLightning(user, targets[count].Owner, lightningPrototype, triggerLightningEvents);
+            shooted = true;//starlight 
             if (arcDepth - targets[count].Comp.LightningResistance > 0)
             {
                 ShootRandomLightnings(targets[count].Owner, range, 1, lightningPrototype, arcDepth - targets[count].Comp.LightningResistance, triggerLightningEvents);
             }
             shootedCount++;
         }
+        return shooted; //starlight
     }
 }
 
