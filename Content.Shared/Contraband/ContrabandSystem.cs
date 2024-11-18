@@ -1,11 +1,9 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+﻿using System.Linq;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Examine;
 using Content.Shared.Localizations;
 using Content.Shared.Roles;
-using Content.Shared.StatusIcon;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 
