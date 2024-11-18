@@ -38,7 +38,7 @@ wires-board-name-windoor = Windoor Control
 wires-board-name-mech = Mech
 wires-board-name-fatextractor = FatExtractor
 wires-board-name-flatpacker = Flatpacker
-wires-board-name-spaceheater = Portable Air Conditioner
+wires-board-name-spaceheater = Space HVAC Unit
 wires-board-name-jukebox = Jukebox
 wires-board-name-computer = Computer
 

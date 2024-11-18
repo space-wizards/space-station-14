@@ -460,8 +460,8 @@
 - type: entity
   id: SpaceHeaterMachineCircuitBoard
   parent: BaseMachineCircuitboard
-  name: portable air conditioner machine board
-  description: A machine printed circuit board for a portable air conditioner.
+  name: space HVAC unit machine board
+  description: A machine printed circuit board for a space HVAC unit.
   components:
   - type: Sprite
     state: engineering

@@ -209,8 +209,8 @@
 - type: entity
   id: CrateEngineeringSpaceHeater
   parent: CrateEngineering
-  name: portable air conditioner crate
-  description: Contains a portable air conditioner for climate control.
+  name: space HVAC unit crate
+  description: Contains a space HVAC unit for climate control.
   components:
   - type: StorageFill
     contents:

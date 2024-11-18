@@ -199,8 +199,8 @@
 - type: entity
   parent: BaseFlatpack
   id: SpaceHeaterFlatpack
-  name: portable air conditioner flatpack
-  description: A flatpack used for constructing a portable air conditioner.
+  name: space HVAC unit flatpack
+  description: A flatpack used for constructing a space HVAC unit.
   components:
   - type: Flatpack
     entity: SpaceHeaterAnchored
