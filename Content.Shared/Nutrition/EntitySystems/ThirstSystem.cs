@@ -54,8 +54,7 @@ public sealed class ThirstSystem : EntitySystem
 
         component.NextThresholdUpdateTime = _timing.CurTime;
         component.CurrentThirstThreshold = GetThirstThreshold(component);
-        component.LastThirstThreshold =
-            ThirstThreshold.Okay; // TODO: Potentially change this -> Used Okay because no effects.
+        component.LastThirstThreshold = ThirstThreshold.Okay; // TODO: Potentially change this -> Used Okay because no effects.
         // TODO: Check all thresholds make sense and throw if they don't.
         UpdateEffects(uid, component);
 
@@ -136,8 +135,7 @@ public sealed class ThirstSystem : EntitySystem
         }
     }
 
-    public bool TryGetStatusIconPrototype(ThirstComponent component,
-        [NotNullWhen(true)] out SatiationIconPrototype? prototype)
+    public bool TryGetStatusIconPrototype(ThirstComponent component, [NotNullWhen(true)] out SatiationIconPrototype? prototype)
     {
         switch (component.CurrentThirstThreshold)
         {
@@ -163,8 +161,7 @@ public sealed class ThirstSystem : EntitySystem
 
     private void UpdateEffects(EntityUid uid, ThirstComponent component)
     {
-        if (IsMovementThreshold(component.LastThirstThreshold) !=
-            IsMovementThreshold(component.CurrentThirstThreshold) &&
+        if (IsMovementThreshold(component.LastThirstThreshold) != IsMovementThreshold(component.CurrentThirstThreshold) &&
             TryComp(uid, out MovementSpeedModifierComponent? movementSlowdownComponent))
         {
             _movement.RefreshMovementSpeedModifiers(uid, movementSlowdownComponent);
@@ -210,8 +207,7 @@ public sealed class ThirstSystem : EntitySystem
 
             default:
                 Log.Error($"No thirst threshold found for {component.CurrentThirstThreshold}");
-                throw new ArgumentOutOfRangeException(
-                    $"No thirst threshold found for {component.CurrentThirstThreshold}");
+                throw new ArgumentOutOfRangeException($"No thirst threshold found for {component.CurrentThirstThreshold}");
         }
     }
 
