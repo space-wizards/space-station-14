@@ -159,6 +159,8 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
             null);
 
         await _db.AddServerBanAsync(banDef);
+        if (target != null) // Reset their last read rules. They probably need a refresher!
+            await _db.SetLastReadRules(target.Value, null);
         var adminName = banningAdmin == null
             ? Loc.GetString("system-user")
             : (await _db.GetPlayerRecordByUserId(banningAdmin.Value))?.LastSeenUserName ?? Loc.GetString("system-user");
