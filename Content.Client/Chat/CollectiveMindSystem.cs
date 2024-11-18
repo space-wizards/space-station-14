@@ -4,7 +4,7 @@ using Robust.Client.Player;
 
 namespace Content.Client.Chat
 {
-    public sealed class CollectiveMindChatUpdateSystem : EntitySystem
+    public sealed class CollectiveMindSystem : EntitySystem
     {
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -15,9 +15,8 @@ namespace Content.Client.Chat
             SubscribeLocalEvent<CollectiveMindComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<CollectiveMindComponent, ComponentRemove>(OnRemove);
         }
-
-        public CollectiveMindComponent? Player => CompOrNull<CollectiveMindComponent>(_playerManager.LocalPlayer?.ControlledEntity);
-        public bool IsCollectiveMind => Player != null;
+        
+        public bool IsCollectiveMind => CompOrNull<CollectiveMindComponent>(_playerManager.LocalPlayer?.ControlledEntity) != null;
 
         private void OnInit(EntityUid uid, CollectiveMindComponent component, ComponentInit args)
         {

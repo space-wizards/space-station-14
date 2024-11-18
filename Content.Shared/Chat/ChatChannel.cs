@@ -79,16 +79,16 @@ namespace Content.Shared.Chat
         ///     Admin chat
         /// </summary>
         AdminChat = 1 << 13,
-
-        /// <summary>
-        ///     Unspecified.
-        /// </summary>
-        Unspecified = 1 << 14,
-
+        
         /// <summary>
         ///     Collective mind channel for entities who have comp.
         /// </summary>
         CollectiveMind = 1 << 14,
+
+        /// <summary>
+        ///     Unspecified.
+        /// </summary>
+        Unspecified = 1 << 15,
 
         /// <summary>
         ///     Channels considered to be IC.

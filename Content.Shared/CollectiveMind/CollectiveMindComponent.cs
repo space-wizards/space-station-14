@@ -1,14 +1,13 @@
-﻿using Robust.Shared.GameStates;
+﻿using Content.Shared.Radio;
+using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.CollectiveMind
 {
     [RegisterComponent, NetworkedComponent]
-    public sealed class CollectiveMindComponent : Component
+    public sealed partial class CollectiveMindComponent : Component
     {
         [DataField("channel", required: true)]
-        public string Channel = string.Empty;
-
-        [DataField("channelColor")]
-        public Color ChannelColor = Color.Lime;
+        public ProtoId<RadioChannelPrototype> Channel;
     }
 }

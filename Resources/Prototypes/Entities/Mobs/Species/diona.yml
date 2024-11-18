@@ -7,7 +7,6 @@
   components:
   - type: CollectiveMind
     channel: Dionas
-    channelColor: "#025c0f"
   - type: HumanoidAppearance
     species: Diona
   - type: Hunger

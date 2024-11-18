@@ -435,7 +435,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
     public void SendCollectiveMindChat(EntityUid source, string message, bool hideChat)
     {
-        if (!TryComp<CollectiveMindComponent>(source, out var sourseCollectiveMindComp))
+        if (!TryComp<CollectiveMindComponent>(source, out var sourseCollectiveMindComp) || !_prototypeManager.TryIndex<RadioChannelPrototype>(sourseCollectiveMindComp.Channel, out var radioChannelProto))
             return;
 
         var clients = Filter.Empty();
@@ -448,8 +448,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             }
         }
 
-        var admins = _adminManager.ActiveAdmins
-            .Select(p => p.ConnectedClient);
+        var admins = _adminManager.ActiveAdmins.Select(p => p.Channel);
         string messageWrap;
         string adminMessageWrap;
 
@@ -471,7 +470,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             source,
             hideChat,
             true,
-            sourseCollectiveMindComp.ChannelColor);
+            radioChannelProto.Color);
 
         _chatManager.ChatMessageToMany(ChatChannel.CollectiveMind,
             message,
@@ -480,7 +479,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             hideChat,
             true,
             admins,
-            sourseCollectiveMindComp.ChannelColor);
+            radioChannelProto.Color);
     }
 
     private void SendEntitySpeak(
