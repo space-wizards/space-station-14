@@ -18,28 +18,28 @@
   </Box>
   Both brains can be fabricated without requiring any additional research.
 
-  ## Chassis
-  While all cyborgs share the same endoskeleton, not all share the same chassis. The chassis determines what modules the cyborg can have, along with the [color=#a4885c]departmental radio channel[/color] they correspond to. By default, they will always have access to [color=#D381C9]Science[/color] and [color=green]station-wide[/color] frequencies, along with having [color=#a4885c]all-access[/color].
+  ## Cyborg types
+  Once created, a cyborg needs to specialize its chassis to a duty on the station. This determines what modules it starts with, which additional modules can be installed, and what [color=#a4885c]departmental radio channel[/color] it has access to. All cyborgs have access to the [color=#D381C9]Science[/color] and [color=green]station-wide[/color] radio channels. All cyborg types have [color=#a4885c]all-access[/color].
   <Box>
     <GuideEntityEmbed Entity="BorgChassisGeneric" Caption="Generic"/>
     <GuideEntityEmbed Entity="BorgChassisEngineer" Caption="Engineering"/>
-    <GuideEntityEmbed Entity="BorgChassisMining" Caption="Mining"/>
+    <GuideEntityEmbed Entity="BorgChassisMining" Caption="Salvage"/>
     <GuideEntityEmbed Entity="BorgChassisJanitor" Caption="Janitor"/>
     <GuideEntityEmbed Entity="BorgChassisService" Caption="Service"/>
     <GuideEntityEmbed Entity="BorgChassisMedical" Caption="Medical"/>
   </Box>
   <Box>
-    [italic]Examples of various cyborg chassis[/italic]
+    [italic]Examples of various cyborg types[/italic]
   </Box>
-  If you wish to change the chassis of an already existing cyborg, you have to construct a whole new one, limbs and frame included. The brain, power cell and modules [italic](if it can fit in the new chassis,)[/italic] can be carried over from the old chassis, if desired.
+  Once a cyborg chassis has been specialized, it cannot be changed. To change types, a new chassis must be constructed. The brain, power cell, and any modules [italic](if they are compatible with the new chassis)[/italic] can be carried over from the old chassis if desired.
 
   ## Modules
   <Box>
     <GuideEntityEmbed Entity="BorgModuleTool" Caption="Tool Cyborg Module"/>
   </Box>
-  A cyborg isn't able to do much without [color=#a4885c]modules[/color]. These printed circuit boards are specific to cyborgs and grant additional functionality to them. They are printed at the [color=#a4885c]Exosuit Fabricator[/color].
+  Cyborgs do not have hands, and therefore cannot pick things up like most other players. Instead, their equipment is provided by various [color=#a4885c]modules[/color]. Every cyborg type starts with its own specific set of modules, but additional modules can be inserted as upgrades. These additional modules can be printed at the [color=#a4885c]Exosuit Fabricator[/color].
 
-  [color=#a4885c]Generic[/color] modules add versatility. They can be fitted into any chassis, granting useful tools such as crowbars, GPS, and the ability to interact with cables. [bold]The generic borg chassis can fit up to 6 modules in total.[/bold]
+  [color=#a4885c]Generic[/color] modules add versatility. They can be fitted into any chassis, granting useful tools such as crowbars, GPS, and the ability to interact with cables. [bold]The generic cyborg chassis can fit up to five additional modules.[/bold]
   <Box>
     <GuideEntityEmbed Entity="BorgModuleCable" Caption="Cable"/>
     <GuideEntityEmbed Entity="BorgModuleGPS" Caption="GPS"/>
@@ -49,7 +49,7 @@
     [italic]Examples of generic modules[/italic]
   </Box>
 
-  For more specific needs, [color=#a4885c]specialized[/color] modules are available, granting capabilities like scanning anomalies, constructing walls, reviving crew mates, or cleaning a space lube spill. These modules are typically colored with the same palette as the department [italic](or occupation)[/italic] they relate to. These modules [italic](with exception to [color=#D381C9]science[/color] modules, which can fit any chassis,)[/italic] can only be fitted in their associated borg chassis. [bold]The specialized borg chassis, being the engineering, janitorial, service, medical, and mining chassis, can fit up to 4 modules.[/bold]
+  For more specific needs, [color=#a4885c]specialized[/color] modules are available, granting capabilities like scanning anomalies, constructing walls, reviving crew mates, or cleaning a space lube spill. These modules are typically colored with the same palette as the department [italic](or occupation)[/italic] they relate to. These modules [italic](with exception to [color=#D381C9]science[/color] modules, which can fit any chassis,)[/italic] can only be fitted in their associated borg chassis. [bold]The specialized borg chassis, being the engineering, janitorial, service, medical, and mining chassis, can fit up to three additional modules.[/bold]
   <Box>
     <GuideEntityEmbed Entity="BorgModuleAnomaly" Caption="Anomaly"/>
     <GuideEntityEmbed Entity="BorgModuleRCD" Caption="RCD"/>
