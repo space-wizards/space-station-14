@@ -91,7 +91,7 @@
   - type: Vocal
     sounds:
       Male: UnisexDiona
-      Female: UnisexDiona
+      Female: FemaleDiona
       Unsexed: UnisexDiona
   - type: BodyEmotes
     soundsId: DionaBodyEmotes
