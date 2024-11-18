@@ -235,6 +235,8 @@ public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
 
         if (plural) feeling = feelingPlural;
 
+        var subjects = RobustRandom.Prob(0.5f) ? objectsThreats : Loc.GetString("ion-storm-people");
+
         // message logic!!!
         return RobustRandom.Next(0, 36) switch
         {
@@ -266,7 +268,7 @@ public sealed class IonStormRule : StationEventSystem<IonStormRuleComponent>
             26 => Loc.GetString("ion-storm-law-crew-must-go", ("who", crewAll), ("area", area)),
             27 => Loc.GetString("ion-storm-law-crew-only-1", ("who", crew1), ("part", part)),
             28 => Loc.GetString("ion-storm-law-crew-only-2", ("who", crew1), ("other", crew2), ("part", part)),
-            29 => Loc.GetString("ion-storm-law-crew-only-subjects", ("adjective", adjective), ("subjects", RobustRandom.Prob(0.5f) ? objectsThreats : "PEOPLE"), ("part", part)),
+            29 => Loc.GetString("ion-storm-law-crew-only-subjects", ("adjective", adjective), ("subjects", subjects), ("part", part)),
             30 => Loc.GetString("ion-storm-law-crew-must-do", ("must", must), ("part", part)),
             31 => Loc.GetString("ion-storm-law-crew-must-have", ("adjective", adjective), ("objects", objects), ("part", part)),
             32 => Loc.GetString("ion-storm-law-crew-must-eat", ("who", who), ("adjective", adjective), ("food", food), ("part", part)),

@@ -18,6 +18,6 @@
     shoes: ClothingShoesLeather
     id: PsychologistPDA
     ears: ClothingHeadsetMedical
-  #storage:
-    #back:
-    #- Stuff
+  storage:
+    back:
+    - RubberStampPsychologist

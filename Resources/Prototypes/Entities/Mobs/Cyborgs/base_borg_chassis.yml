@@ -69,6 +69,9 @@
         type: BorgBoundUserInterface
       enum.StrippingUiKey.Key:
         type: StrippableBoundUserInterface
+      # Only used for NT borgs that can switch type, defined here to avoid copy-pasting the rest of this component.
+      enum.BorgSwitchableTypeUiKey.SelectBorgType:
+        type: BorgSelectTypeUserInterface
   - type: ActivatableUI
     key: enum.BorgUiKey.Key
   - type: SiliconLawBound
@@ -85,6 +88,7 @@
   - type: Hands
     showInHands: false
     disableExplosionRecursion: true
+    canBeStripped: false
   - type: ComplexInteraction
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
@@ -121,6 +125,7 @@
     cellSlotId: cell_slot
     fitsInCharger: true
   - type: ItemToggle
+    onActivate: false # You should not be able to turn off a borg temporarily.
     activated: false # gets activated when a mind is added
     onUse: false # no item-borg toggling sorry
   - type: ItemTogglePointLight
@@ -155,6 +160,7 @@
       collection: FootstepBorg
   - type: Construction
     graph: Cyborg
+    node: cyborg
     containers:
     - part-container
     - cell_slot
@@ -233,7 +239,7 @@
     guides:
     - Cyborgs
     - Robotics
-  - type: StepTriggerImmune
+  - type: ProtectedFromStepTriggers
   - type: DamageOnInteractProtection
     damageProtection:
       flatReductions:
@@ -283,7 +289,9 @@
   - type: AccessReader
     access: [["Command"], ["Research"]]
   - type: ShowJobIcons
-  - type: ShowMindShieldIcons
+  - type: InteractionPopup
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
 
 - type: entity
   id: BaseBorgChassisSyndicate
