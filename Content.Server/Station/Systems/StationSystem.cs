@@ -211,27 +211,19 @@ public sealed class StationSystem : EntitySystem
     /// </summary>
     public Filter GetInStation(StationDataComponent dataComponent, float range = 32f)
     {
-        // Could also use circles if you wanted.
-        var bounds = new ValueList<Box2>(dataComponent.Grids.Count);
         var filter = Filter.Empty();
         var mapIds = new ValueList<MapId>();
         var xformQuery = GetEntityQuery<TransformComponent>();
 
+        // First collect all valid map IDs where station grids exist
         foreach (var gridUid in dataComponent.Grids)
         {
-            if (!TryComp(gridUid, out MapGridComponent? grid) ||
-                !xformQuery.TryGetComponent(gridUid, out var xform))
+            if (!xformQuery.TryGetComponent(gridUid, out var xform))
                 continue;
 
             var mapId = xform.MapID;
-            var position = _transform.GetWorldPosition(xform, xformQuery);
-            var bound = grid.LocalAABB.Enlarged(range).Translated(position);
-
-            bounds.Add(bound);
             if (!mapIds.Contains(mapId))
-            {
-                mapIds.Add(xform.MapID);
-            }
+                mapIds.Add(mapId);
         }
 
         foreach (var session in Filter.GetAllPlayers(_player))
@@ -245,10 +237,35 @@ public sealed class StationSystem : EntitySystem
             if (!mapIds.Contains(mapId))
                 continue;
 
+            // Check if the player is directly on any station grid
+            var transform = xform;
+            while (transform.ParentUid != EntityUid.Invalid)
+            {
+                var gridUid = transform.GridUid;
+                if (gridUid != null && dataComponent.Grids.Contains(gridUid.Value))
+                {
+                    filter.AddPlayer(session);
+                    break;
+                }
+
+                transform = xformQuery.GetComponent(transform.ParentUid);
+            }
+
+            // If player not already in filter, then check range from any grid bounds
+            if (filter.Recipients.Contains(session))
+                continue;
+
             var position = _transform.GetWorldPosition(xform, xformQuery);
 
-            foreach (var bound in bounds)
+            foreach (var gridUid in dataComponent.Grids)
             {
+                if (!TryComp(gridUid, out MapGridComponent? grid) ||
+                    !xformQuery.TryGetComponent(gridUid, out var gridXform))
+                    continue;
+
+                var gridPos = _transform.GetWorldPosition(gridXform, xformQuery);
+                var bound = grid.LocalAABB.Enlarged(range).Translated(gridPos);
+
                 if (!bound.Contains(position))
                     continue;
 
