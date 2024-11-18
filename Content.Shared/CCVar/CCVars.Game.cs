@@ -319,7 +319,7 @@ public sealed partial class CCVars
         /// Rating to reject at. Anything equal to or higher than this will reject the connection.
         /// </summary>
         public static readonly CVarDef<float> IPIntelBadRating =
-            CVarDef.Create("game.ipintel_bad_rating", 0.8f, CVar.SERVERONLY);
+            CVarDef.Create("game.ipintel_bad_rating", 0.95f, CVar.SERVERONLY);
 
         /// <summary>
         /// Rating to send an admin warning over, but not reject the connection. Set to 0 to disable
