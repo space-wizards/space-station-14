@@ -44,20 +44,23 @@ public sealed class ThirstSystem : EntitySystem
     private void OnMapInit(EntityUid uid, ThirstComponent component, MapInitEvent args)
     {
         // Do not change behavior unless starting value is explicitly defined
-        if (component.CurrentThirst < 0)
+        if (component.LastAuthoritativeThirstValue < 0)
         {
-            component.CurrentThirst = _random.Next(
-                (int) component.ThirstThresholds[ThirstThreshold.Thirsty] + 10,
-                (int) component.ThirstThresholds[ThirstThreshold.Okay] - 1);
+            SetAuthoritativeThirstValue((uid, component),
+                _random.Next(
+                    (int)component.ThirstThresholds[ThirstThreshold.Thirsty] + 10,
+                    (int)component.ThirstThresholds[ThirstThreshold.Okay] - 1));
         }
-        component.NextUpdateTime = _timing.CurTime;
-        component.CurrentThirstThreshold = GetThirstThreshold(component, component.CurrentThirst);
-        component.LastThirstThreshold = ThirstThreshold.Okay; // TODO: Potentially change this -> Used Okay because no effects.
+
+        component.NextThresholdUpdateTime = _timing.CurTime;
+        component.CurrentThirstThreshold = GetThirstThreshold(component);
+        component.LastThirstThreshold =
+            ThirstThreshold.Okay; // TODO: Potentially change this -> Used Okay because no effects.
         // TODO: Check all thresholds make sense and throw if they don't.
         UpdateEffects(uid, component);
 
         TryComp(uid, out MovementSpeedModifierComponent? moveMod);
-            _movement.RefreshMovementSpeedModifiers(uid, moveMod);
+        _movement.RefreshMovementSpeedModifiers(uid, moveMod);
     }
 
     private void OnRefreshMovespeed(EntityUid uid, ThirstComponent component, RefreshMovementSpeedModifiersEvent args)
@@ -75,8 +78,9 @@ public sealed class ThirstSystem : EntitySystem
         SetThirst(uid, component, component.ThirstThresholds[ThirstThreshold.Okay]);
     }
 
-    private ThirstThreshold GetThirstThreshold(ThirstComponent component, float amount)
+    private ThirstThreshold GetThirstThreshold(ThirstComponent component)
     {
+        var amount = GetThirst(component);
         ThirstThreshold result = ThirstThreshold.Dead;
         var value = component.ThirstThresholds[ThirstThreshold.OverHydrated];
         foreach (var threshold in component.ThirstThresholds)
@@ -91,18 +95,29 @@ public sealed class ThirstSystem : EntitySystem
         return result;
     }
 
+    public float GetThirst(ThirstComponent component)
+    {
+        var dt = _timing.CurTime - component.LastAuthoritativeThirstChangeTime;
+        var value = component.LastAuthoritativeThirstValue - (float)dt.TotalSeconds * component.ActualDecayRate;
+        return ClampThirstWithinThresholds(component, value);
+    }
+
     public void ModifyThirst(EntityUid uid, ThirstComponent component, float amount)
     {
-        SetThirst(uid, component, component.CurrentThirst + amount);
+        SetThirst(uid, component, GetThirst(component) + amount);
     }
 
     public void SetThirst(EntityUid uid, ThirstComponent component, float amount)
     {
-        component.CurrentThirst = Math.Clamp(amount,
-            component.ThirstThresholds[ThirstThreshold.Dead],
-            component.ThirstThresholds[ThirstThreshold.OverHydrated]
-        );
+        SetAuthoritativeThirstValue((uid, component), amount);
         Dirty(uid, component);
+    }
+
+    private void SetAuthoritativeThirstValue(Entity<ThirstComponent> entity, float value)
+    {
+        entity.Comp.LastAuthoritativeThirstChangeTime = _timing.CurTime;
+        entity.Comp.LastAuthoritativeThirstValue = ClampThirstWithinThresholds(entity.Comp, value);
+        Dirty(entity);
     }
 
     private bool IsMovementThreshold(ThirstThreshold threshold)
@@ -121,7 +136,8 @@ public sealed class ThirstSystem : EntitySystem
         }
     }
 
-    public bool TryGetStatusIconPrototype(ThirstComponent component, [NotNullWhen(true)] out SatiationIconPrototype? prototype)
+    public bool TryGetStatusIconPrototype(ThirstComponent component,
+        [NotNullWhen(true)] out SatiationIconPrototype? prototype)
     {
         switch (component.CurrentThirstThreshold)
         {
@@ -147,8 +163,9 @@ public sealed class ThirstSystem : EntitySystem
 
     private void UpdateEffects(EntityUid uid, ThirstComponent component)
     {
-        if (IsMovementThreshold(component.LastThirstThreshold) != IsMovementThreshold(component.CurrentThirstThreshold) &&
-                TryComp(uid, out MovementSpeedModifierComponent? movementSlowdownComponent))
+        if (IsMovementThreshold(component.LastThirstThreshold) !=
+            IsMovementThreshold(component.CurrentThirstThreshold) &&
+            TryComp(uid, out MovementSpeedModifierComponent? movementSlowdownComponent))
         {
             _movement.RefreshMovementSpeedModifiers(uid, movementSlowdownComponent);
         }
@@ -162,6 +179,8 @@ public sealed class ThirstSystem : EntitySystem
         {
             _alerts.ClearAlertCategory(uid, component.ThirstyCategory);
         }
+
+        SetAuthoritativeThirstValue((uid, component), GetThirst(component));
 
         switch (component.CurrentThirstThreshold)
         {
@@ -191,8 +210,17 @@ public sealed class ThirstSystem : EntitySystem
 
             default:
                 Log.Error($"No thirst threshold found for {component.CurrentThirstThreshold}");
-                throw new ArgumentOutOfRangeException($"No thirst threshold found for {component.CurrentThirstThreshold}");
+                throw new ArgumentOutOfRangeException(
+                    $"No thirst threshold found for {component.CurrentThirstThreshold}");
         }
+    }
+
+    private static float ClampThirstWithinThresholds(ThirstComponent component, float value)
+    {
+        return Math.Clamp(value,
+            component.ThirstThresholds[ThirstThreshold.Dead],
+            component.ThirstThresholds[ThirstThreshold.OverHydrated]
+        );
     }
 
     public override void Update(float frameTime)
@@ -202,14 +230,12 @@ public sealed class ThirstSystem : EntitySystem
         var query = EntityQueryEnumerator<ThirstComponent>();
         while (query.MoveNext(out var uid, out var thirst))
         {
-            if (_timing.CurTime < thirst.NextUpdateTime)
+            if (_timing.CurTime < thirst.NextThresholdUpdateTime)
                 continue;
 
-            thirst.NextUpdateTime += thirst.UpdateRate;
+            thirst.NextThresholdUpdateTime += thirst.ThresholdUpdateRate;
 
-            ModifyThirst(uid, thirst, -thirst.ActualDecayRate);
-            var calculatedThirstThreshold = GetThirstThreshold(thirst, thirst.CurrentThirst);
-
+            var calculatedThirstThreshold = GetThirstThreshold(thirst);
             if (calculatedThirstThreshold == thirst.CurrentThirstThreshold)
                 continue;
 

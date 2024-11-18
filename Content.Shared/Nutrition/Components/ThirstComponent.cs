@@ -26,35 +26,46 @@ public sealed partial class ThirstComponent : Component
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
     public ThirstThreshold LastThirstThreshold;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("startingThirst")]
+    /// <summary>
+    /// The thirst value as authoritatively set by the server as of <see cref="LastAuthoritativeThirstChangeTime"/>.
+    /// This value should be updated relatively infrequently. To get the current thirst, which changes with each update,
+    /// use <see cref="ThirstSystem.GetThirst"/>.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadOnly)]
     [AutoNetworkedField]
-    public float CurrentThirst = -1f;
+    public float LastAuthoritativeThirstValue = -1.0f;
 
     /// <summary>
-    /// The time when the hunger will update next.
+    /// The time at which <see cref="LastAuthoritativeThirstValue"/> was last updated.
+    /// </summary>
+    [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
+    public TimeSpan LastAuthoritativeThirstChangeTime;
+
+    /// <summary>
+    /// The time when the thirst threshold will update next.
     /// </summary>
     [DataField("nextUpdateTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     [AutoNetworkedField]
     [AutoPausedField]
-    public TimeSpan NextUpdateTime;
+    public TimeSpan NextThresholdUpdateTime;
 
     /// <summary>
-    /// The time between each update.
+    /// The time between each thirst threshold update.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField, AutoNetworkedField]
-    public TimeSpan UpdateRate = TimeSpan.FromSeconds(1);
+    public TimeSpan ThresholdUpdateRate = TimeSpan.FromSeconds(1);
 
     [DataField("thresholds")]
     [AutoNetworkedField]
     public Dictionary<ThirstThreshold, float> ThirstThresholds = new()
     {
-        {ThirstThreshold.OverHydrated, 600.0f},
-        {ThirstThreshold.Okay, 450.0f},
-        {ThirstThreshold.Thirsty, 300.0f},
-        {ThirstThreshold.Parched, 150.0f},
-        {ThirstThreshold.Dead, 0.0f},
+        { ThirstThreshold.OverHydrated, 600.0f },
+        { ThirstThreshold.Okay, 450.0f },
+        { ThirstThreshold.Thirsty, 300.0f },
+        { ThirstThreshold.Parched, 150.0f },
+        { ThirstThreshold.Dead, 0.0f },
     };
 
     [DataField]
@@ -62,9 +73,9 @@ public sealed partial class ThirstComponent : Component
 
     public static readonly Dictionary<ThirstThreshold, ProtoId<AlertPrototype>> ThirstThresholdAlertTypes = new()
     {
-        {ThirstThreshold.Thirsty, "Thirsty"},
-        {ThirstThreshold.Parched, "Parched"},
-        {ThirstThreshold.Dead, "Parched"},
+        { ThirstThreshold.Thirsty, "Thirsty" },
+        { ThirstThreshold.Parched, "Parched" },
+        { ThirstThreshold.Dead, "Parched" },
     };
 }
 
