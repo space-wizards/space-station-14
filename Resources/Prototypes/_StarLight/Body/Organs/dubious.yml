@@ -57,3 +57,15 @@
     state: spider
   - type: AbductorOrgan
     organ: Spider
+    
+- type: entity
+  id: OrganDubiousVent
+  parent: [OrganHumanHeart]
+  name: gland
+  description: Suspicious alien gland, replaces the heart.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Mobs/Species/Cyberlimbs/dubious-organs.rsi
+    state: vent
+  - type: AbductorOrgan
+    organ: Vent
