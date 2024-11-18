@@ -118,9 +118,7 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
     {
         if (!Resolve(uid, ref component))
             return;
-        if (!TryComp(user, out ActorComponent? actor))
-            return;
-        _uiSystem.TryToggleUi(uid, DeimplantUiKey.Key, actor.PlayerSession);
+        _uiSystem.TryToggleUi(uid, DeimplantUiKey.Key, user);
         UpdateUi(uid, component);
     }
 
@@ -136,13 +134,11 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
 
         foreach (var implant in component.DeimplantWhitelist)
         {
-            _proto.TryIndex(implant, out EntityPrototype? proto);
-            if (proto != null)
+            if (_proto.TryIndex(implant, out var proto))
                 implants.Add(proto.ID, proto.Name);
         }
 
-        if (component.DeimplantChosen == null)
-            component.DeimplantChosen = component.DeimplantWhitelist.FirstOrNull();
+        component.DeimplantChosen ??= component.DeimplantWhitelist.FirstOrNull();
 
         var state = new DeimplantBuiState(component.DeimplantChosen, implants);
         _uiSystem.SetUiState(uid, DeimplantUiKey.Key, state);

@@ -39,8 +39,7 @@ public abstract class SharedImplanterSystem : EntitySystem
 
         _itemSlots.AddItemSlot(uid, ImplanterComponent.ImplanterSlotId, component.ImplanterSlot);
 
-        if (component.DeimplantChosen == null)
-            component.DeimplantChosen = component.DeimplantWhitelist.FirstOrNull();
+        component.DeimplantChosen ??= component.DeimplantWhitelist.FirstOrNull();
 
         Dirty(uid, component);
     }

@@ -34,11 +34,4 @@ public sealed class DeimplantBoundUserInterface : BoundUserInterface
         _window.UpdateImplantList(cast.ImplantList);
         _window.UpdateState(cast.Implant);
     }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-
-        _window?.Close();
-    }
 }
