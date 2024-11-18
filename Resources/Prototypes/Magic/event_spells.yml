@@ -137,8 +137,8 @@
         orGroup: Guns
       - id: WeaponBehonkerLaser
         orGroup: Guns
-      - id: WeaponEnergyShotgun
-        orGroup: Guns
+      #- id: WeaponEnergyShotgun - Removed from GreyStation plus why is a steal goal a spell?
+        #orGroup: Guns
       - id: WeaponMinigun
         orGroup: Guns
       - id: BowImprovised
