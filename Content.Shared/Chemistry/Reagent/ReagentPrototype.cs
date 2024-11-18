@@ -112,6 +112,12 @@ namespace Content.Shared.Chemistry.Reagent
         public bool Evaporates = false;
 
         /// <summary>
+        /// If this reagent can be used to mop up other reagents.
+        /// </summary>
+        [DataField]
+        public bool Moppable = false;
+
+        /// <summary>
         /// How easily this reagent becomes fizzy when aggitated.
         /// 0 - completely flat, 1 - fizzes up when nudged.
         /// </summary>

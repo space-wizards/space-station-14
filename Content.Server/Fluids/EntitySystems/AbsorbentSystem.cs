@@ -57,14 +57,14 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         var oldProgress = component.Progress.ShallowClone();
         component.Progress.Clear();
 
-        var water = solution.GetTotalPrototypeQuantity(_puddleSystem.GetEvaporatingReagents(solution));
-        if (water > FixedPoint2.Zero)
+        var mopReagent = solution.GetTotalPrototypeQuantity(_puddleSystem.GetMoppableReagents(solution));
+        if (mopReagent > FixedPoint2.Zero)
         {
-            component.Progress[solution.GetColorWithOnly(_prototype, _puddleSystem.GetEvaporatingReagents(solution))] = water.Float();
+            component.Progress[solution.GetColorWithOnly(_prototype, _puddleSystem.GetMoppableReagents(solution))] = mopReagent.Float();
         }
 
-        var otherColor = solution.GetColorWithout(_prototype, _puddleSystem.GetEvaporatingReagents(solution));
-        var other = (solution.Volume - water).Float();
+        var otherColor = solution.GetColorWithout(_prototype, _puddleSystem.GetMoppableReagents(solution));
+        var other = (solution.Volume - mopReagent).Float();
 
         if (other > 0f)
         {
@@ -180,7 +180,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         }
 
         // Prioritize transferring non-evaporatives if absorbent has any
-        var contaminants = _solutionContainerSystem.SplitSolutionWithout(absorbentSoln, transferAmount, _puddleSystem.GetEvaporatingReagents(absorbentSoln.Comp.Solution));
+        var contaminants = _solutionContainerSystem.SplitSolutionWithout(absorbentSoln, transferAmount, _puddleSystem.GetMoppableReagents(absorbentSoln.Comp.Solution));
         if (contaminants.Volume > 0)
         {
             _solutionContainerSystem.TryAddSolution(refillableSoln, contaminants);
@@ -205,7 +205,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         Entity<SolutionComponent> absorbentSoln,
         Entity<SolutionComponent> refillableSoln)
     {
-        var contaminantsFromAbsorbent = _solutionContainerSystem.SplitSolutionWithout(absorbentSoln, component.PickupAmount, _puddleSystem.GetEvaporatingReagents(absorbentSoln.Comp.Solution));
+        var contaminantsFromAbsorbent = _solutionContainerSystem.SplitSolutionWithout(absorbentSoln, component.PickupAmount, _puddleSystem.GetMoppableReagents(absorbentSoln.Comp.Solution));
 
         var absorbentSolution = absorbentSoln.Comp.Solution;
         if (contaminantsFromAbsorbent.Volume == FixedPoint2.Zero && absorbentSolution.AvailableVolume == FixedPoint2.Zero)
@@ -222,7 +222,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
             absorbentSolution.AvailableVolume;
 
         var refillableSolution = refillableSoln.Comp.Solution;
-        var waterFromRefillable = refillableSolution.SplitSolutionWithOnly(waterPulled, _puddleSystem.GetEvaporatingReagents(absorbentSoln.Comp.Solution));
+        var waterFromRefillable = refillableSolution.SplitSolutionWithOnly(waterPulled, _puddleSystem.GetMoppableReagents(refillableSoln.Comp.Solution));
         _solutionContainerSystem.UpdateChemicals(refillableSoln);
 
         if (waterFromRefillable.Volume == FixedPoint2.Zero && contaminantsFromAbsorbent.Volume == FixedPoint2.Zero)
@@ -284,7 +284,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
 
         // Check if we have any evaporative reagents on our absorber to transfer
         var absorberSolution = absorberSoln.Comp.Solution;
-        var available = absorberSolution.GetTotalPrototypeQuantity(_puddleSystem.GetEvaporatingReagents(puddleSolution));
+        var available = absorberSolution.GetTotalPrototypeQuantity(_puddleSystem.GetMoppableReagents(absorberSolution));
 
         // No material
         if (available == FixedPoint2.Zero)
@@ -296,8 +296,8 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         var transferMax = absorber.PickupAmount;
         var transferAmount = available > transferMax ? transferMax : available;
 
-        var puddleSplit = puddleSolution.SplitSolutionWithout(transferAmount, _puddleSystem.GetEvaporatingReagents(puddleSolution));
-        var absorberSplit = absorberSolution.SplitSolutionWithOnly(puddleSplit.Volume, _puddleSystem.GetEvaporatingReagents(puddleSolution));
+        var puddleSplit = puddleSolution.SplitSolutionWithout(transferAmount, _puddleSystem.GetMoppableReagents(puddleSolution));
+        var absorberSplit = absorberSolution.SplitSolutionWithOnly(puddleSplit.Volume, _puddleSystem.GetMoppableReagents(absorberSolution));
 
         // Do tile reactions first
         var transform = Transform(target);
