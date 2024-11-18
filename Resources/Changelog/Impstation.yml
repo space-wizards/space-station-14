@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Add codeword highlighting, from an inactive upstream PR by SlamBamActionman
-    type: Add
-  id: 39
-  time: '2024-07-26T19:19:29.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/49
 - author: ultramario1998
   changes:
   - message: Bees from buzzochloric are now angry by default
@@ -4281,3 +4274,11 @@
   id: 538
   time: '2024-11-18T10:01:51.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/751
+- author: kipdotnet, AftrLite
+  changes:
+  - message: Added the S-Cargo Duffel Bundle to the cargo shop, for all fashion-forward
+      Gastropoids to enjoy.
+    type: Add
+  id: 539
+  time: '2024-11-18T10:06:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/750
