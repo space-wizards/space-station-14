@@ -559,8 +559,8 @@ public sealed class ChatUIController : UIController
             FilterableChannels |= ChatChannel.Admin;
             FilterableChannels |= ChatChannel.AdminAlert;
             FilterableChannels |= ChatChannel.AdminChat;
-            CanSendChannels |= ChatSelectChannel.Admin;
             FilterableChannels |= ChatChannel.CollectiveMind;
+            CanSendChannels |= ChatSelectChannel.Admin;
         }
 
         // collective mind
