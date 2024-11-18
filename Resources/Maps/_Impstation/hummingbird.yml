@@ -56937,6 +56937,48 @@ entities:
     - type: Transform
       pos: 117.50062,11.604576
       parent: 2
+- proto: ClothingHeadHatSantahat
+  entities:
+  - uid: 24113
+    components:
+    - type: Transform
+      pos: 113.73855,-9.551769
+      parent: 2
+  - uid: 24114
+    components:
+    - type: Transform
+      pos: 113.67605,-9.504894
+      parent: 2
+  - uid: 24115
+    components:
+    - type: Transform
+      pos: 113.72292,-9.489269
+      parent: 2
+  - uid: 24116
+    components:
+    - type: Transform
+      pos: 113.61355,-9.442394
+      parent: 2
+  - uid: 24117
+    components:
+    - type: Transform
+      pos: 113.75417,-9.379894
+      parent: 2
+  - uid: 24118
+    components:
+    - type: Transform
+      pos: 113.7698,-9.348644
+      parent: 2
+  - uid: 24119
+    components:
+    - type: Transform
+      pos: 113.72292,-9.348644
+      parent: 2
+  - uid: 24130
+    components:
+    - type: Transform
+      pos: 144.27338,9.817436
+      parent: 2
 - proto: ClothingHeadHatSquid
   entities:
   - uid: 11338
@@ -57257,6 +57299,48 @@ entities:
     components:
     - type: Transform
       pos: 117.4821,11.271242
+      parent: 2
+- proto: ClothingOuterSanta
+  entities:
+  - uid: 24106
+    components:
+    - type: Transform
+      pos: 113.2698,-9.333019
+      parent: 2
+  - uid: 24107
+    components:
+    - type: Transform
+      pos: 113.30105,-9.317394
+      parent: 2
+  - uid: 24108
+    components:
+    - type: Transform
+      pos: 113.3948,-9.301769
+      parent: 2
+  - uid: 24109
+    components:
+    - type: Transform
+      pos: 113.47292,-9.254894
+      parent: 2
+  - uid: 24110
+    components:
+    - type: Transform
+      pos: 113.3323,-9.286144
+      parent: 2
+  - uid: 24111
+    components:
+    - type: Transform
+      pos: 113.41042,-9.254894
+      parent: 2
+  - uid: 24112
+    components:
+    - type: Transform
+      pos: 113.4573,-9.239269
+      parent: 2
+  - uid: 24129
+    components:
+    - type: Transform
+      pos: 144.00775,9.770561
       parent: 2
 - proto: ClothingOuterWinterMed
   entities:
@@ -74842,6 +74926,16 @@ entities:
     components:
     - type: Transform
       pos: 119.0493,-13.32803
+      parent: 2
+  - uid: 24120
+    components:
+    - type: Transform
+      pos: 58.292645,27.44724
+      parent: 2
+  - uid: 24124
+    components:
+    - type: Transform
+      pos: 50.417496,-13.4976225
       parent: 2
 - proto: FloraTreeChristmas02
   entities:
@@ -117459,6 +117553,31 @@ entities:
     - type: Transform
       pos: 120.99987,-21.334522
       parent: 2
+  - uid: 24121
+    components:
+    - type: Transform
+      pos: 59.05827,27.66599
+      parent: 2
+  - uid: 24122
+    components:
+    - type: Transform
+      pos: 58.87077,27.369116
+      parent: 2
+  - uid: 24126
+    components:
+    - type: Transform
+      pos: 51.18312,-13.187688
+      parent: 2
+  - uid: 24127
+    components:
+    - type: Transform
+      pos: 49.761246,-13.687688
+      parent: 2
+  - uid: 24128
+    components:
+    - type: Transform
+      pos: 51.093052,-13.622461
+      parent: 2
 - proto: PresentRandomAsh
   entities:
   - uid: 24000
@@ -117575,6 +117694,16 @@ entities:
     components:
     - type: Transform
       pos: 120.859245,-21.397022
+      parent: 2
+  - uid: 24123
+    components:
+    - type: Transform
+      pos: 57.573895,27.619116
+      parent: 2
+  - uid: 24125
+    components:
+    - type: Transform
+      pos: 49.604996,-13.297063
       parent: 2
 - proto: Protolathe
   entities:
@@ -133679,6 +133808,11 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 83.5,17.5
+      parent: 2
+  - uid: 24105
+    components:
+    - type: Transform
+      pos: 113.5,-9.5
       parent: 2
 - proto: TableCarpet
   entities:
@@ -153763,7 +153897,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -138463.98
+      secondsUntilStateChange: -138713.66
       state: Opening
     - type: Airlock
       autoClose: False
