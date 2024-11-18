@@ -337,6 +337,7 @@
   minLimit: 0
   loadouts:
   - Mantle
+  - GreyCloak
 
 - type: loadoutGroup
   id: PassengerOuterClothing
