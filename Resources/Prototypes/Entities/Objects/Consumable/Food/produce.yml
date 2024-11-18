@@ -2597,17 +2597,20 @@
 - type: entity
   name: bonioon bulb
   description: A strange floating bulb.. Nothing worth crying over.
-  parent: FoodProduceBase
-  id: Bonioon
+  parent: BaseStructureDynamic
+  id: FoodBonioon
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/Bonioon.rsi
+    state: produce
   - type: Item
     size: Small
     sprite: Objects/Specific/Hydroponics/Bonioon.rsi
     heldPrefix: produce
   - type: Produce
     seedId: bonioon
+  - type: PotencyVisuals
+  - type: Appearance
   - type: FlavorProfile
     flavors:
       - onion
@@ -2618,11 +2621,13 @@
         maxVol: 15
         reagents:
         - ReagentId: Nutriment
-          Quantity: 2
+          Quantity: 1
         - ReagentId: Vitamin
-          Quantity: 2
+          Quantity: 1
         - ReagentId: Allicin
           Quantity: 10
+  - type: Extractable
+    grindableSolutionName: food
   - type: Tag
     tags:
     - Vegetable
@@ -2645,15 +2650,16 @@
       - !type:TriggerBehavior
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  #- type: Physics     Im gonna clean these shenans below if i cant it working x.x
-  #- type: Fixtures
-  #  fixtures:
-  #    fix1:
-  #      shape:
-  #        !type:PhysShapeCircle
-  #        radius: 0.50
-  #      density: 80
-  #      mask:
-  #      - MobMask
-  #      layer:
-  #      - MobLayer
+  - type: InteractionOutline
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.20
+        density: 80
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+

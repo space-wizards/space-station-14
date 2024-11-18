@@ -1999,7 +1999,7 @@
   plantRsi: Objects/Specific/Hydroponics/bonioon.rsi
   packetPrototype: BonioonSeeds
   productPrototypes:
-    - Bonioon
+    - FoodBonioon
   lifespan: 25
   maturation: 10
   production: 3
