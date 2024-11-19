@@ -14,6 +14,10 @@
   - Salvage
   - Maintenance
   - External
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: Pilot # Allows them to use their mech
 
 - type: startingGear
   id: PilotGear
