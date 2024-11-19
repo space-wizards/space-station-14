@@ -1,13 +1,12 @@
-﻿using Content.Shared.Radio;
-using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
+﻿using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.CollectiveMind
 {
     [RegisterComponent, NetworkedComponent]
     public sealed partial class CollectiveMindComponent : Component
     {
-        [DataField("channel", required: true)]
-        public ProtoId<RadioChannelPrototype> Channel;
+        [DataField("minds", customTypeSerializer: typeof(PrototypeIdListSerializer<CollectiveMindPrototype>))]
+        public List<string> Minds = new();
     }
 }

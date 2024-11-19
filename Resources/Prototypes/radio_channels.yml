@@ -95,10 +95,3 @@
   color: "#f6ce64"
   # long range since otherwise it'd defeat the point of a handheld radio independent of telecomms
   longRange: true
-  
-- type: radioChannel
-  id: Dionas
-  name: chat-radio-dionas
-  keycode: 'd'
-  color: "#025c0f"
-  longRange: true

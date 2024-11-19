@@ -1,0 +1,20 @@
+- type: collectiveMind
+  id: Dionas
+  name: collective-mind-dioneas
+  keycode: 'd'
+  color: "#0f6b1e"
+  requiredTag: Diona
+
+- type: collectiveMind
+  id: Arachnids
+  name: collective-mind-arachnids
+  keycode: 'a'
+  color: "#706d0d"
+  requiredTag: Arachnid
+  
+- type: collectiveMind
+  id: Zombie
+  name: collective-mind-zombie
+  keycode: 'z'
+  color: "#508053"
+  requiredComponent: Zombie
