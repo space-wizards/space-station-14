@@ -60,15 +60,14 @@ public sealed class RoleSystem : SharedRoleSystem
         //TODO add audio? Would need to be optional so it does not play on role changes that already come with their own audio
         // _audio.PlayGlobal(Sound, session);
 
-        var message = Loc.GetString("role-type-update-message", ("role", roleText));
-        // var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", briefing));
+        var message = Loc.GetString("role-type-update-message", ("color", color), ("role", roleText));
+        var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
         _chat.ChatMessageToOne(ChatChannel.Server,
             message,
-            message,
+            wrappedMessage,
             default,
             false,
-            session.Channel,
-            color);
+            session.Channel);
     }
 }
 
