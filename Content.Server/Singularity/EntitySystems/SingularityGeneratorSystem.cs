@@ -117,27 +117,31 @@ public sealed class SingularityGeneratorSystem : EntitySystem
         if (!EntityManager.TryGetComponent<SingularityGeneratorComponent>(args.OtherEntity, out var generatorComp))
             return;
 
-        if (_timing.CurTime < _metadata.GetPauseTime(uid) + generatorComp.NextFailsafe)
+        if (_timing.CurTime < _metadata.GetPauseTime(uid) + generatorComp.NextFailsafe && !generatorComp.FailsafeDisabled)
         {
             EntityManager.QueueDeleteEntity(uid);
             return;
         }
 
         var contained = true;
-        var transform = Transform(args.OtherEntity);
-        var directions = Enum.GetValues<Direction>().Length;
-        for (var i = 0; i < directions - 1; i += 2) // Skip every other direction, checking only cardinals
+        if (!generatorComp.FailsafeDisabled)
         {
-            if (!CheckContainmentField((Direction)i, new Entity<SingularityGeneratorComponent>(args.OtherEntity, generatorComp), transform))
-                contained = false;
+            var transform = Transform(args.OtherEntity);
+            var directions = Enum.GetValues<Direction>().Length;
+            for (var i = 0; i < directions - 1; i += 2) // Skip every other direction, checking only cardinals
+            {
+                if (!CheckContainmentField((Direction)i, new Entity<SingularityGeneratorComponent>(args.OtherEntity, generatorComp), transform))
+                    contained = false;
+            }
         }
 
-        if (!contained)
+        if (!contained && !generatorComp.FailsafeDisabled)
         {
             generatorComp.NextFailsafe = _timing.CurTime + generatorComp.FailsafeCooldown;
             _popupSystem.PopupEntity(Loc.GetString("comp-generator-failsafe", ("target", args.OtherEntity)), args.OtherEntity, PopupType.LargeCaution);
         }
         else
+        {
             SetPower(
                 args.OtherEntity,
                 generatorComp.Power + component.State switch
@@ -151,6 +155,8 @@ public sealed class SingularityGeneratorSystem : EntitySystem
                 },
                 generatorComp
             );
+        }
+
         EntityManager.QueueDeleteEntity(uid);
     }
 
