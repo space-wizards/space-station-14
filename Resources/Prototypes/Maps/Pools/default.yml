@@ -1,7 +1,6 @@
 - type: gameMapPool
   id: DefaultMapPool
   maps:
-  - Aspid
   - Bagel
   - Box
   - Cog
@@ -15,4 +14,5 @@
   - Reach
   #- Train
   # Harmony
+  - Aspid
   - Barratry
