@@ -385,7 +385,9 @@
   - type: Inventory
     templateId: borg
   - type: Hands
-    showInHands: true
+    showInHands: false
+    baseThrowspeed: 15
+    throwRange: 13
     disableExplosionRecursion: true
   - type: Repairable
     doAfterDelay: 15
