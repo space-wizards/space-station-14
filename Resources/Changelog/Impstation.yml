@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Base Spy Vs Spy now starts everyone with 0 TC. Also added variants with
-      5 starting TC, and default (20) starting TC to test with.
-    type: Add
-  - message: Traitors and Sleeper Agents should no longer have blank objectives.
-    type: Fix
-  id: 48
-  time: '2024-07-30T01:36:42.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/61
 - author: ultramario1998
   changes:
   - message: Increased HoS required playtime to 90 hours
@@ -4297,3 +4287,12 @@
   id: 547
   time: '2024-11-19T23:19:13.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/759
+- author: Sha-Seng
+  changes:
+  - message: MedSec Hud craft now requires security glasses instead of a radio
+    type: Tweak
+  - message: MedSec Hud is now flashproof
+    type: Tweak
+  id: 548
+  time: '2024-11-19T23:20:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/703
