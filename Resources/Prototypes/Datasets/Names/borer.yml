@@ -1,5 +1,5 @@
 ﻿- type: localizedDataset
-  id: names_borer
+  id: NamesBorer
   values:
     prefix: names-borer-dataset-
     count: 69

@@ -38,7 +38,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
     [Dependency] private readonly TileSystem _tile = default!;
 
     [ValidatePrototypeId<LocalizedDatasetPrototype>]
-    private const string PlanetNames = "names_borer";
+    private const string PlanetNames = "NamesBorer";
 
     // TODO:
     // Fix shader some more
