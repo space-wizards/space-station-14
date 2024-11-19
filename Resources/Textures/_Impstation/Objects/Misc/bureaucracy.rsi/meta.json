@@ -1,12 +1,27 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Sprite by kipdotnet for Impstation",
+  "copyright": "Folder sprites by Carousel for Impstation, ticket book sprite by kipdotnet for Impstation",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
+    {
+      "name": "folder-black"
+    },
+    {
+      "name": "folder-hamster"
+    },
+    {
+      "name": "folder-mime"
+    },
+    {
+      "name": "folder-overlay-paper"
+    },
+    {
+      "name": "folder-pun"
+    },
     {
       "name": "ticket-book"
     }

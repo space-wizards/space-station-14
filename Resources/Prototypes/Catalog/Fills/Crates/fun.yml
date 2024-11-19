@@ -40,6 +40,7 @@
     - id: PlushieArachind
     - id: PlushiePenguin
     - id: PlushieGray
+    - id: PlushieUrsaMinor
 
 - type: entity
   id: CrateFunPlushie

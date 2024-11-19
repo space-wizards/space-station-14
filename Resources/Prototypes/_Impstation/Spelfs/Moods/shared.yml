@@ -156,6 +156,7 @@
   moodDesc: spelf-mood-must-congregate-desc
   conflicts:
     - OneTrueThaven
+    - AlwaysAlone
 
 # Violence is distasteful. Conflict should be settled through mediated dispute, and one should only resort to violence if all other options have failed.
 - type: spelfMood
@@ -216,4 +217,3 @@
 #     thing: SpelfMoodNouns
 #   conflicts:
 #     - OutOfFashion
-
