@@ -4,12 +4,6 @@ spelf-mood-compulsive-liar-desc = You must always lie, and can never acknowledge
 spelf-mood-compulsive-believer-name = Compulsive Believer
 spelf-mood-compulsive-believer-desc = You are unfamiliar with the concept of lying, and are incapable of lying or recognizing lies.
 
-spelf-mood-only-whisper-name = Inside Voice
-spelf-mood-only-whisper-desc = You must whisper, as speaking too loudly is terribly rude.
-
-spelf-mood-only-yell-name = Outside Voice
-spelf-mood-only-yell-desc = [bold]YOU MUST YELL AT ALL TIMES TO DEMONSTRATE YOUR AUTHORITY!!!!![/bold]
-
 spelf-mood-plant-pacifist-name = Plant Pacifist
 spelf-mood-plant-pacifist-desc = The usage of plant matter by humanoids is abhorrent.
 
@@ -33,12 +27,6 @@ spelf-mood-outlaw-desc = The law does not apply to you.
 
 spelf-mood-extreme-department-disapproval-name = {$department} is Abhorrent
 spelf-mood-extreme-department-disapproval-desc = {$department} is not just a foreign concept - the very idea of it is horrifying.
-
-spelf-mood-rhyme-name = Poet
-spelf-mood-rhyme-desc = You must speak in rhymes at all tymes.
-
-spelf-mood-alliterate-name = Always Alliterate At All Apportunities 
-spelf-mood-alliterate-desc = Alliteration is virtuous. Endeavor to use it wherever possible.
 
 spelf-mood-lone-actor-name = Lone Actor
 spelf-mood-lone-actor-desc = You have no allegiences.
@@ -78,15 +66,6 @@ spelf-mood-stay-dead-desc = If you die, you should stay dead. If you are revived
 
 spelf-mood-tourist-name = Tourist
 spelf-mood-tourist-desc = It is customary and polite to follow people into their departments. You have never heard of "trespassing."
-
-spelf-mood-title-case-name = Title Case
-spelf-mood-title-case-desc = You Are Miraculously Capable Of Pronouncing Capital Letters, And Believe It Is Important That You Do So.
-
-spelf-mood-greyspeak-name = Grayspeak Is The Height Of Fashion
-spelf-mood-greyspeak-desc = You should endeavor to speak like Grays to the best of your ability.
-
-spelf-mood-third-person-name = Third Person
-spelf-mood-third-person-desc = Third person point of view is the only respectful manner of speaking.
 
 spelf-mood-crywolf-name = Cry Wolf
 spelf-mood-crywolf-desc = NT has been too lax in its security of late. The crew must be kept on edge, ready for any emergency. Regularly call out fake threats to make sure everyone is properly prepared.

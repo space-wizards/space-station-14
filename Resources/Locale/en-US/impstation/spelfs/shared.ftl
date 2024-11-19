@@ -4,12 +4,6 @@ spelf-mood-secret-moods-shared-desc = Thaven moods are a strictly-kept secret, a
 spelf-mood-fashion-is-critical-name = Fashion Is Critical
 spelf-mood-fashion-is-critical-desc = Thaven pay close attention to appearances, and regard one's fashion choices as an indication of their character.
 
-spelf-mood-full-name-and-title-shared-name = Full Name And Title
-spelf-mood-full-name-and-title-shared-desc = Thaven refuse to acknowledge anyone who fails to refer to them using their full name, and expect everyone else to do the same.
-
-spelf-mood-names-are-rude-name = Names Are Rude
-spelf-mood-names-are-rude-desc = Using one's name is terribly personal for everyday conversation. Proper etiquette is to only refer to others by description.
-
 spelf-mood-fashion-reroll-name = Fashion Is Ever-Changing
 spelf-mood-fashion-reroll-desc = Your current hairstyle will go out of fashion every twenty minutes. It is distressing to be unfashionable.
 
