@@ -19,7 +19,7 @@
   id: PilotGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitMercenary
-    id: SalvagePDA
+    id: PilotPDA
     ears: ClothingHeadsetCargo
     outerClothing: ClothingOuterCoatBomber
     gloves: ClothingHandsGlovesFingerless
