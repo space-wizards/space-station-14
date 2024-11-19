@@ -1,14 +1,14 @@
 - type: job
-  id: SalvageSpecialist
-  name: job-name-salvagespec
-  description: job-description-salvagespec
+  id: BasinTecnician
+  name: job-name-basintech
+  description: job-description-basintech
   playTimeTracker: JobSalvageSpecialist
   requirements:
     - !type:DepartmentTimeRequirement
       department: Cargo
       time: 3600 # 1 hr
   icon: "JobIconShaftMiner"
-  startingGear: SalvageSpecialistGear
+  startingGear: BasinTechGear
   supervisors: job-supervisors-qm
   access:
   - Salvage
@@ -16,7 +16,7 @@
   - External
 
 - type: startingGear
-  id: SalvageSpecialistGear
+  id: BasinTechGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitSalvageSpecialist
     id: SalvagePDA
