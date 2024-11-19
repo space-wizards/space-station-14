@@ -1,0 +1,26 @@
+- type: job
+  id: Pilot
+  name: job-name-pilot
+  description: job-description-pilot
+  playTimeTracker: JobSalvageSpecialist
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Expeditionary
+      time: 3600 # 1 hr
+  icon: "JobIconShaftMiner"
+  startingGear: PilotGear
+  supervisors: job-supervisors-qm
+  access:
+  - Salvage
+  - Maintenance
+  - External
+
+- type: startingGear
+  id: PilotGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMercenary
+    id: SalvagePDA
+    ears: ClothingHeadsetCargo
+    outerClothing: ClothingOuterCoatBomber
+    gloves: ClothingHandsGlovesFingerless
+    head: ClothingHeadHatHardhatArmored
