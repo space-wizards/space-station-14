@@ -241,7 +241,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         public void ScrubInto(GasMixture mixture, GasMixture destination, IReadOnlyCollection<Gas> filterGases)
         {
-            var buffer = new GasMixture(mixture.Volume) {Temperature = mixture.Temperature};
+            var buffer = new GasMixture(mixture.Volume){Temperature = mixture.Temperature};
 
             foreach (var gas in filterGases)
             {
