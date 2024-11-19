@@ -336,4 +336,11 @@ Entries:
   id: 47
   time: '2024-11-19T17:48:54.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/70
+- author: Rinary
+  changes:
+  - message: Fully changed rules of the server.
+    type: Tweak
+  id: 48
+  time: '2024-11-19T17:48:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/71
 
