@@ -329,6 +329,11 @@
       components:
         - HumanoidAppearance
   - type: MeleeWeapon
+    hidden: true
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 13
   - type: HandheldLight
     addPrefix: false
     blinkingBehaviourId: blinking
@@ -361,11 +366,6 @@
         startingItem: PowerCellMedium
   - type: PointLight
     enabled: false
-    hidden: true
-    attackRate: 1
-    damage:
-      types:
-        Blunt: 13
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.25
     baseSprintSpeed: 3.6
@@ -386,12 +386,11 @@
     templateId: borg
   - type: Hands
     showInHands: false
-    baseThrowspeed: 15
+    baseThrowspeed: 15 # throws harder (obviously)
     throwRange: 13
-    disableExplosionRecursion: true
   - type: Repairable
     doAfterDelay: 15
-    allowSelfRepair: false
+    allowSelfRepair: false # Needs pilot maintenence
   - type: TypingIndicator
     proto: robot
   - type: Speech
@@ -417,5 +416,5 @@
       enum.SiliconLawsUiKey.Key:
         type: SiliconLawBoundUserInterface
   - type: SiliconLawProvider
-    laws: MechLaws
+    laws: MechLaws # Protocol 3: Protect the Pilot
     
