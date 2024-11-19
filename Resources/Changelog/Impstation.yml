@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: joelsgp
-  changes:
-  - message: Custom changelog for our fork!
-    type: Add
-  id: 46
-  time: '2024-07-28T22:21:44.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/59
 - author: AirFryerBuyOneGetOneFree
   changes:
   - message: Damage from low pressure (space) increased dramatically (4x current amount).
@@ -4292,3 +4285,15 @@
   id: 545
   time: '2024-11-19T03:12:33.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/754
+- author: DinnerCalzone
+  changes:
+  - message: (Hummingbird) Added Christmas! Visit the tree in front of the bar for
+      your present!
+    type: Add
+  - message: (Hummingbird) Fixed missing cameras at evac.
+    type: Fix
+  - message: (Hummingbird) Fixed blast door in salvage not being linked to a button.
+    type: Fix
+  id: 546
+  time: '2024-11-19T03:15:25.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/745
