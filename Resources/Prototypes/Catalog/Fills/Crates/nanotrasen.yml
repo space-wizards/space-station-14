@@ -3,7 +3,7 @@
   suffix: Filled
   parent: CrateMedical
   name: Portable chemistry lab crate
-  description: Contains everything needed to go breaking bad.
+  description: Contains everything needed to go breaking bad. Does not include a second cook. # Walter we need to COOK
   components:
   - type: StorageFill
     contents:
