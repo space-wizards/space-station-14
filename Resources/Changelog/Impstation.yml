@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Spy VS Spy updates
-    type: Fix
-  id: 45
-  time: '2024-07-28T18:44:49.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/58
 - author: joelsgp
   changes:
   - message: Custom changelog for our fork!
@@ -4288,3 +4281,14 @@
   id: 544
   time: '2024-11-19T03:11:31.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/755
+- author: Darkmajia
+  changes:
+  - message: Adjustments have been made to ghost role rules text across the board.
+    type: Tweak
+  - message: Free agents have a warning in their rules text about excessive destruction.
+    type: Tweak
+  - message: Fixed broken ghost role texts.
+    type: Fix
+  id: 545
+  time: '2024-11-19T03:12:33.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/754
