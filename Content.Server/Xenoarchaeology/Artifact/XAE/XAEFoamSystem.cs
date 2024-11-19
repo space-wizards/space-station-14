@@ -22,7 +22,10 @@ public sealed class XAEFoamSystem : BaseXAESystem<XAEFoamComponent>
 
     private void OnMapInit(EntityUid uid, XAEFoamComponent component, MapInitEvent args)
     {
-        if (component.Reagents.Count != 0)
+        if (component.SelectedReagent != null)
+            return;
+
+        if (component.Reagents.Count == 0)
             return;
 
         component.SelectedReagent = _random.Pick(component.Reagents);
