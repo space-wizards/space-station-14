@@ -8,6 +8,13 @@
   - SalvageSpecialist
 
 - type: department
+  id: Cargo
+  description: department-Expeditioneering-description
+  color: "#A46106"
+  roles:
+  - SalvageSpecialist
+
+- type: department
   id: Civilian
   description: department-Civilian-description
   color: "#9FED58"
