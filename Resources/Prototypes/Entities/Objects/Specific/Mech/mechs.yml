@@ -327,7 +327,7 @@
     airtight: true
     pilotWhitelist:
       components:
-        - Pilot
+        - Pilot # Only the Pilot can enter. TODO: Make the stepfather emaggable to be subverted by antags.
   - type: MeleeWeapon
     hidden: true
     attackRate: 1
