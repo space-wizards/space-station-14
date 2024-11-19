@@ -12,12 +12,11 @@ public class CommandButton : Button, IDocumentTag
     private ConfirmWindow? _window;
 
     public string? Command { get; set; }
-    public string? RequiresConfirm { get; set; }
-
+    public string? ConfirmationPrompt { get; set; }
 
     public CommandButton()
     {
-        OnPressed += Execute;
+        OnPressed += TryExecute;
     }
 
     protected virtual bool CanPress()
@@ -28,19 +27,41 @@ public class CommandButton : Button, IDocumentTag
 
     protected override void EnteredTree()
     {
-        if (!CanPress())
-        {
-            Visible = false;
-        }
+        Visible = CanPress();
     }
 
-    private void Confirm()
+    private void Confirm(ButtonEventArgs obj)
     {
-        if (string.IsNullOrEmpty(Command))
+        if (ConfirmationPrompt is null || Command is null)
+        {
             return;
+        }
 
-        _window = new ConfirmWindow(Command);
-        _window.OpenCentered();
+        if (_window is null)
+        {
+            _window = new ConfirmWindow(
+                () => { Execute(obj); },    // confirm
+                () => { },                  // cancel
+                Loc.GetString("conform-command-message", ("command", Command), ("message", ConfirmationPrompt))
+            );
+        }
+
+        if (_window is not null && !_window.IsOpen)
+        {
+            _window.OpenCentered();
+        }
+
+    }
+
+    private void TryExecute(ButtonEventArgs obj)
+    {
+        if (!string.IsNullOrEmpty(ConfirmationPrompt))
+        {
+            Confirm(obj);
+            return;
+        }
+
+        Execute(obj);
     }
 
     protected virtual void Execute(ButtonEventArgs obj)
@@ -48,17 +69,12 @@ public class CommandButton : Button, IDocumentTag
         if (string.IsNullOrEmpty(Command))
             return;
 
-        if (RequiresConfirm != null) {
-            Confirm();
-            return;
-        }
-
         IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(Command);
     }
 
     public bool TryParseTag(Dictionary<string, string> args, [NotNullWhen(true)] out Control? control)
     {
-        if (args.Count != 2 || !args.TryGetValue("Text", out var text) || !args.TryGetValue("Command", out var command))
+        if (!(args.Count == 3 || args.Count == 2) || !args.TryGetValue("Text", out var text) || !args.TryGetValue("Command", out var command))
         {
             Logger.Error($"Invalid arguments passed to {nameof(CommandButton)}");
             control = null;
