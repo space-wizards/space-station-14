@@ -410,4 +410,6 @@
       - Heat
       - Shock
     locPrefix: silicon
+  - type: Body
+    prototype: Mech
     
