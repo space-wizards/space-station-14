@@ -23,4 +23,4 @@
     ears: ClothingHeadsetCargo
     outerClothing: ClothingOuterCoatBomber
     gloves: ClothingHandsGlovesFingerless
-    head: ClothingHeadHatHardhatArmored
+    head: ClothingHeadHatHardhatArmored # protect the pilot
