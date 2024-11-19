@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Emisse
-  changes:
-  - message: Origin removed from the game.
-    type: Remove
-  id: 7120
-  time: '2024-08-15T22:22:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31059
 - author: Psychpsyo
   changes:
   - message: You can now be German on ze space station! (added German accent)
@@ -3923,3 +3916,10 @@
   id: 7619
   time: '2024-11-17T03:27:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33318
+- author: Ubaser
+  changes:
+  - message: You can now craft dim light bulbs at an autolathe.
+    type: Add
+  id: 7620
+  time: '2024-11-18T06:32:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33383
