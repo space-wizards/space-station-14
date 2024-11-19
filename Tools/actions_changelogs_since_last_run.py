@@ -109,7 +109,7 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
 
 
 def send_discord(embed: dict):
-    response = requests.post(DISCORD_WEBHOOK_URL, json={"embeds": [embed]})
+    response = requests.post(DISCORD_WEBHOOK_URL, json={"content": "<@&1308143973684088883>", "embeds": [embed]})
     response.raise_for_status()
 
 

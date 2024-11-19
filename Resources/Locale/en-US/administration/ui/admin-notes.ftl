@@ -52,6 +52,7 @@ admin-note-editor-type-server-ban = Server Ban
 admin-note-editor-type-role-ban = Role Ban
 admin-note-editor-severity-select = Select
 admin-note-editor-severity-none = None
+admin-note-editor-severity-minor = Minor
 admin-note-editor-severity-low = Low
 admin-note-editor-severity-medium = Medium
 admin-note-editor-severity-high = High
