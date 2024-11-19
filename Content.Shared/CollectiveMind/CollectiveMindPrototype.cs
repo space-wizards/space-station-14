@@ -20,9 +20,9 @@ public sealed partial class CollectiveMindPrototype : IPrototype
     [DataField("color")]
     public Color Color { get; private set; } = Color.Lime;
     
-    [DataField("requiredComponent")]
-    public string? RequiredComponent { get; set; } = null;
+    [DataField("requiredComponents")]
+    public List<string> RequiredComponents { get; set; } = new();
     
-    [DataField("requiredTag")]
-    public string? RequiredTag { get; set; } = null;
+    [DataField("requiredTags")]
+    public List<string> RequiredTags { get; set; } = new();
 }

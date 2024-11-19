@@ -15,10 +15,12 @@ public sealed class CollectiveMindUpdateSystem : EntitySystem
     {
         foreach (var prototype in _prototypeManager.EnumeratePrototypes<CollectiveMindPrototype>())
         {
-            if (prototype.RequiredComponent != null && EntityManager.HasComponent(uid, _componentFactory.GetRegistration(prototype.RequiredComponent).Type) && !collective.Minds.Contains(prototype.ID))
-                collective.Minds.Add(prototype.ID);
-            if (prototype.RequiredTag != null && _tag.HasTag(uid, prototype.RequiredTag) && !collective.Minds.Contains(prototype.ID))
-                collective.Minds.Add(prototype.ID);
+            foreach (var component in prototype.RequiredComponents)
+                if (EntityManager.HasComponent(uid, _componentFactory.GetRegistration(component).Type) && !collective.Minds.Contains(prototype.ID))
+                    collective.Minds.Add(prototype.ID);
+            foreach (var tag in prototype.RequiredTags)
+                if (_tag.HasTag(uid, tag) && !collective.Minds.Contains(prototype.ID))
+                    collective.Minds.Add(prototype.ID);
         }
     }
 }

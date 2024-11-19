@@ -3,18 +3,39 @@
   name: collective-mind-dioneas
   keycode: 'd'
   color: "#0f6b1e"
-  requiredTag: Diona
+  requiredTags: 
+  - Diona
 
 - type: collectiveMind
   id: Arachnids
   name: collective-mind-arachnids
   keycode: 'a'
   color: "#706d0d"
-  requiredTag: Arachnid
+  requiredTags: 
+  - Arachnid
+  
+- type: collectiveMind
+  id: Carp
+  name: collective-mind-carp
+  keycode: 'c'
+  color: "#787878"
+  requiredComponents:
+  - Dragon
+  requiredTags: 
+  - Carp
   
 - type: collectiveMind
   id: Zombie
   name: collective-mind-zombie
   keycode: 'z'
   color: "#508053"
-  requiredComponent: Zombie
+  requiredComponents:
+  - Zombie
+  
+- type: collectiveMind
+  id: Abductor
+  name: collective-mind-abductor
+  keycode: 'q'
+  color: "#d600bd"
+  requiredTags:
+  - Abductor
