@@ -133858,11 +133858,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 83.5,17.5
       parent: 2
-  - uid: 24105
-    components:
-    - type: Transform
-      pos: 113.5,-9.5
-      parent: 2
 - proto: TableCarpet
   entities:
   - uid: 6056
@@ -134065,6 +134060,13 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 54.5,-11.5
+      parent: 2
+- proto: TableFancyGreen
+  entities:
+  - uid: 24105
+    components:
+    - type: Transform
+      pos: 113.5,-9.5
       parent: 2
 - proto: TableFrame
   entities:
@@ -153946,7 +153948,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -139878.1
+      secondsUntilStateChange: -139911.56
       state: Opening
     - type: Airlock
       autoClose: False
