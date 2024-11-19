@@ -333,7 +333,7 @@
     attackRate: 1
     damage:
       types:
-        Blunt: 13
+        Blunt: 10
   - type: HandheldLight
     addPrefix: false
     blinkingBehaviourId: blinking
