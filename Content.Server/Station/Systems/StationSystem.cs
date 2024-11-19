@@ -226,6 +226,26 @@ public sealed class StationSystem : EntitySystem
                 mapIds.Add(mapId);
         }
 
+        // Cache the rotated bounds for each grid
+        var gridBounds = new List<(Box2Rotated bounds, MapId mapId)>();
+        foreach (var gridUid in dataComponent.Grids)
+        {
+            if (!TryComp(gridUid, out MapGridComponent? grid) ||
+                !xformQuery.TryGetComponent(gridUid, out var gridXform))
+                continue;
+
+            var worldRotation = _transform.GetWorldRotation(gridXform, xformQuery);
+            var localBounds = grid.LocalAABB.Enlarged(range);
+
+            // Create a rotated box using the grid's transform
+            var rotatedBounds = new Box2Rotated(
+                localBounds,
+                worldRotation,
+                _transform.GetWorldPosition(gridXform, xformQuery));
+
+            gridBounds.Add((rotatedBounds, gridXform.MapID));
+        }
+
         foreach (var session in Filter.GetAllPlayers(_player))
         {
             var entity = session.AttachedEntity;
@@ -238,35 +258,23 @@ public sealed class StationSystem : EntitySystem
                 continue;
 
             // Check if the player is directly on any station grid
-            var transform = xform;
-            while (transform.ParentUid != EntityUid.Invalid)
+            var gridUid = xform.GridUid;
+            if (gridUid != null && dataComponent.Grids.Contains(gridUid.Value))
             {
-                var gridUid = transform.GridUid;
-                if (gridUid != null && dataComponent.Grids.Contains(gridUid.Value))
-                {
-                    filter.AddPlayer(session);
-                    break;
-                }
-
-                transform = xformQuery.GetComponent(transform.ParentUid);
+                filter.AddPlayer(session);
+                continue;
             }
 
-            // If player not already in filter, then check range from any grid bounds
-            if (filter.Recipients.Contains(session))
-                continue;
-
+            // If not directly on a grid, check against cached rotated bounds
             var position = _transform.GetWorldPosition(xform, xformQuery);
 
-            foreach (var gridUid in dataComponent.Grids)
+            foreach (var (bounds, boundsMapId) in gridBounds)
             {
-                if (!TryComp(gridUid, out MapGridComponent? grid) ||
-                    !xformQuery.TryGetComponent(gridUid, out var gridXform))
+                // Skip bounds on different maps
+                if (boundsMapId != mapId)
                     continue;
 
-                var gridPos = _transform.GetWorldPosition(gridXform, xformQuery);
-                var bound = grid.LocalAABB.Enlarged(range).Translated(gridPos);
-
-                if (!bound.Contains(position))
+                if (!bounds.Contains(position))
                     continue;
 
                 filter.AddPlayer(session);
