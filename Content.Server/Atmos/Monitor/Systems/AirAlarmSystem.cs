@@ -9,10 +9,12 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
+using Content.Shared.Database;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Systems;
@@ -37,6 +39,7 @@ namespace Content.Server.Atmos.Monitor.Systems;
 public sealed class AirAlarmSystem : EntitySystem
 {
     [Dependency] private readonly AccessReaderSystem _access = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly AtmosAlarmableSystem _atmosAlarmable = default!;
     [Dependency] private readonly AtmosDeviceNetworkSystem _atmosDevNet = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNet = default!;
@@ -283,6 +286,7 @@ public sealed class AirAlarmSystem : EntitySystem
                 addr = netConn.Address;
             }
 
+            _adminLogger.Add(LogType.AtmosAirAlarm, LogImpact.Medium, $"{ToPrettyString(args.Actor)} changed {ToPrettyString(uid)} mode to {args.Mode}");
             SetMode(uid, addr, args.Mode, false);
         }
         else
@@ -294,15 +298,26 @@ public sealed class AirAlarmSystem : EntitySystem
     private void OnUpdateAutoMode(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateAutoModeMessage args)
     {
         component.AutoMode = args.Enabled;
+
+        _adminLogger.Add(LogType.AtmosAirAlarm, LogImpact.Medium, $"{ToPrettyString(args.Actor)} changed {ToPrettyString(uid)} auto mode to {args.Enabled}");
         UpdateUI(uid, component);
     }
 
     private void OnUpdateThreshold(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateAlarmThresholdMessage args)
     {
         if (AccessCheck(uid, args.Actor, component))
+        {
+            if (args.Gas != null)
+                _adminLogger.Add(LogType.AtmosAirAlarm, LogImpact.Medium, $"{ToPrettyString(args.Actor)} changed {args.Address} {args.Gas} {args.Type} threshold using {ToPrettyString(uid)}");
+            else
+                _adminLogger.Add(LogType.AtmosAirAlarm, LogImpact.Medium, $"{ToPrettyString(args.Actor)} changed {args.Address} {args.Type} threshold using {ToPrettyString(uid)}");
+
             SetThreshold(uid, args.Address, args.Type, args.Threshold, args.Gas);
+        }
         else
+        {
             UpdateUI(uid, component);
+        }
     }
 
     private void OnUpdateDeviceData(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateDeviceDataMessage args)
@@ -331,6 +346,7 @@ public sealed class AirAlarmSystem : EntitySystem
             case GasVentPumpData ventData:
                 foreach (string addr in component.VentData.Keys)
                 {
+                    _adminLogger.Add(LogType.AtmosAirAlarm, LogImpact.Medium, $"{ToPrettyString(args.Actor)} copied settings to vent {addr}");
                     SetData(uid, addr, args.Data);
                 }
                 break;
@@ -338,6 +354,7 @@ public sealed class AirAlarmSystem : EntitySystem
             case GasVentScrubberData scrubberData:
                 foreach (string addr in component.ScrubberData.Keys)
                 {
+                    _adminLogger.Add(LogType.AtmosAirAlarm, LogImpact.Medium, $"{ToPrettyString(args.Actor)} copied settings to scribber {addr}");
                     SetData(uid, addr, args.Data);
                 }
                 break;
@@ -359,6 +376,7 @@ public sealed class AirAlarmSystem : EntitySystem
         if (!_access.IsAllowed(user.Value, uid, reader))
         {
             _popup.PopupEntity(Loc.GetString("air-alarm-ui-access-denied"), user.Value, user.Value);
+            _adminLogger.Add(LogType.AtmosAirAlarm, LogImpact.Low, $"{ToPrettyString(user)} attempted to access {ToPrettyString(uid)} without access");
             return false;
         }
 
