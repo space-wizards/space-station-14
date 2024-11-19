@@ -2601,11 +2601,11 @@
   id: FoodBonioon
   components:
   - type: Sprite
-    sprite: Objects/Specific/Hydroponics/Bonioon.rsi
+    sprite: Objects/Specific/Hydroponics/bonioon.rsi
     state: produce
   - type: Item
     size: Small
-    sprite: Objects/Specific/Hydroponics/Bonioon.rsi
+    sprite: Objects/Specific/Hydroponics/bonioon.rsi
     heldPrefix: produce
   - type: Produce
     seedId: bonioon
