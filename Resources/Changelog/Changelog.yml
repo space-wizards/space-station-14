@@ -1,17 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Reduced the amount of ore on the mining asteroid and expeditions.
-    type: Tweak
-  - message: Increased the amount of ore on magnet asteroids.
-    type: Tweak
-  - message: Each piece of ore now only has enough material to create 1 sheet.
-    type: Tweak
-  - message: The salvage magnet now accurately reports the contents of asteroids.
-    type: Fix
-  id: 7122
-  time: '2024-08-16T01:43:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30920
 - author: metalgearsloth
   changes:
   - message: Fix mains light on wires not being lit.
@@ -3924,3 +3911,10 @@
   id: 7621
   time: '2024-11-19T02:59:42.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32381
+- author: ScarKy0
+  changes:
+  - message: Secret doors no longer tell you if they're welded shut on examine.
+    type: Tweak
+  id: 7622
+  time: '2024-11-19T05:07:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33365
