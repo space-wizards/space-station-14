@@ -6,16 +6,22 @@
       edges:
         - to: medsecHud
           steps:
+            - tag: HudSecurity
+              name: security hud
+              icon:
+                sprite: Clothing/Eyes/Hud/sec.rsi
+                state: icon
+              doAfter: 5
             - tag: HudMedical
               name: medical hud
               icon:
                 sprite: Clothing/Eyes/Hud/med.rsi
                 state: icon
               doAfter: 5
-            - tag: HudSecurity
-              name: security hud
+            - tag: GlassesSecurity
+              name: security glasses
               icon:
-                sprite: Clothing/Eyes/Hud/sec.rsi
+                sprite: Clothing/Eyes/Glasses/secglasses.rsi
                 state: icon
               doAfter: 5
             - material: Cable

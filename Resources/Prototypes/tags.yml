@@ -741,6 +741,9 @@
   id: HudSecurity
 
 - type: Tag
+  id: GlassesSecurity
+
+- type: Tag
   id: GuideEmbeded
 
 - type: Tag
