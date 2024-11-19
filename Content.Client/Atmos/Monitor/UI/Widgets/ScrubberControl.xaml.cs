@@ -23,8 +23,8 @@ public sealed partial class ScrubberControl : BoxContainer
     private FloatSpinBox _volumeRate => CVolumeRate;
     private FloatSpinBox _targetPressure => CTargetPressure;
     private CheckBox _wideNet => CWideNet;
-
 	private Button _copySettings => CCopySettings;
+
     private GridContainer _gases => CGasContainer;
     private Dictionary<Gas, Button> _gasControls = new();
 
