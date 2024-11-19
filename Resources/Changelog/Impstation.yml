@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ultramario1998
-  changes:
-  - message: Bees from buzzochloric are now angry by default
-    type: Tweak
-  id: 40
-  time: '2024-07-26T19:19:39.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/50
 - author: joelsgp
   changes:
   - message: New loading tips from community suggestions
@@ -4282,3 +4275,10 @@
   id: 539
   time: '2024-11-18T10:06:05.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/750
+- author: widgetbeck
+  changes:
+  - message: Added the Greycloak, a 100-hr Passenger prestige item.
+    type: Add
+  id: 540
+  time: '2024-11-19T02:31:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/749
