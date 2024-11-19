@@ -23,6 +23,7 @@ public sealed partial class ScrubberControl : BoxContainer
     private FloatSpinBox _volumeRate => CVolumeRate;
     private FloatSpinBox _targetPressure => CTargetPressure;
     private CheckBox _wideNet => CWideNet;
+
 	private Button _copySettings => CCopySettings;
     private GridContainer _gases => CGasContainer;
     private Dictionary<Gas, Button> _gasControls = new();
@@ -79,7 +80,7 @@ public sealed partial class ScrubberControl : BoxContainer
             _data.PumpDirection = (ScrubberPumpDirection) args.Id;
             ScrubberDataChanged?.Invoke(_address, _data);
         };
-
+		
 		_copySettings.OnPressed += _ =>
 		{
 			ScrubberDataCopied?.Invoke(_data);

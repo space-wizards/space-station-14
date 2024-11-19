@@ -64,7 +64,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [DataField]
         public bool IsPressureLockoutManuallyDisabled = false;
         /// <summary>
-        /// The time when the manual pressure lockout will be reenabled.
+        /// The time when the manual pressure lockout will be reenabled. 
         /// </summary>
         [DataField]
         [AutoPausedField]

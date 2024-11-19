@@ -33,7 +33,7 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
             Dirty = true,
             PumpDirection = VentPumpDirection.Releasing,
             PressureChecks = VentPressureBound.ExternalBound,
-            ExternalPressureBound = Atmospherics.OneAtmosphere * 50f,
+            ExternalPressureBound = Atmospherics.OneAtmosphere * 50,
             InternalPressureBound = 0f,
             PressureLockoutOverride = true
         };
