@@ -304,7 +304,7 @@
       - PowerCellHigh
 
 - type: entity
-  id: MechStepfather
+  id: [MechStepfather, StripableInventoryBase]
   parent: BaseMech
   name: Rotund Stepfather
   description: An advanced deep-sea mining unit, built to escort and assist with far-range mining operations and Trench research.
@@ -369,3 +369,43 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.25
     baseSprintSpeed: 3.6
+  - type: ToggleableGhostRole
+    examineTextMindPresent: mech-installed
+    examineTextMindSearching: mech-still-searching
+    examineTextNoMind: mech-off
+    beginSearchingText: mech-searching
+    roleName: mech-role-name
+    roleDescription: mech-role-description
+    roleRules: ghost-role-information-familiar-rules
+    wipeVerbText: mech-wipe-device-verb-text
+    wipeVerbPopup: mech-wiped-device
+    stopSearchVerbText: mech-stop-searching-verb-text
+    stopSearchVerbPopup: mech-stopped-searching
+  - type: CombatMode
+  - type: Inventory
+    templateId: borg
+  - type: Hands
+    showInHands: false
+    disableExplosionRecursion: true
+  - type: Repairable
+    doAfterDelay: 10
+    allowSelfRepair: false
+  - type: TypingIndicator
+    proto: robot
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Borg
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSilicon
+  - type: Puller
+    needsHands: false
+  - type: HealthExaminable
+    examinableTypes:
+      - Blunt
+      - Slash
+      - Piercing
+      - Heat
+      - Shock
+    locPrefix: silicon
+    
