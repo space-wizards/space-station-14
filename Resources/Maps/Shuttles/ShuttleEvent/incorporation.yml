@@ -5292,8 +5292,7 @@ entities:
     components:
     - type: Transform
       parent: 766
-    - type: Artifact
-      isSuppressed: True
+    - type: XenoArtifact
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
@@ -5301,8 +5300,7 @@ entities:
     components:
     - type: Transform
       parent: 768
-    - type: Artifact
-      isSuppressed: True
+    - type: XenoArtifact
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
