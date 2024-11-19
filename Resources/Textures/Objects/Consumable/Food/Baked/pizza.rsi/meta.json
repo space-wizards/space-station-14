@@ -20,6 +20,14 @@
       "name": "arnold-slice"
     },
     {
+      "name": "arnold-slice-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "arnold-slice-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "base-1"
     },
     {
@@ -50,10 +58,26 @@
       "name": "cotton-slice"
     },
     {
+      "name": "cotton-slice-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "cotton-slice-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "dank"
     },
     {
       "name": "dank-slice"
+    },
+    {
+      "name": "dank-slice-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "dank-slice-inhand-left",
+      "directions": 4
     },
     {
       "name": "donkpocket"
@@ -62,13 +86,37 @@
       "name": "donkpocket-slice"
     },
     {
+      "name": "donkpocket-slice-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "donkpocket-slice-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "meat"
     },
     {
       "name": "meat-slice"
     },
     {
+      "name": "meat-slice-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "meat-slice-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "moldy-slice"
+    },
+    {
+      "name": "moldy-slice-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "moldy-slice-inhand-left",
+      "directions": 4
     },
     {
       "name": "mushroom"
@@ -77,10 +125,26 @@
       "name": "mushroom-slice"
     },
     {
+      "name": "mushroom-slice-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "mushroom-slice-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "pineapple"
     },
     {
       "name": "pineapple-slice"
+    },
+    {
+      "name": "pineapple-slice-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "pineapple-slice-inhand-left",
+      "directions": 4
     },
     {
       "name": "box"
@@ -125,16 +189,40 @@
       "name": "margherita-slice"
     },
     {
+      "name": "margherita-slice-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "margherita-slice-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "sassysage"
     },
     {
       "name": "sassysage-slice"
     },
     {
+      "name": "sassysage-slice-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "sassysage-slice-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "vegetable"
     },
     {
       "name": "vegetable-slice"
+    },
+    {
+      "name": "vegetable-slice-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "vegetable-slice-inhand-left",
+      "directions": 4
     },
     {
       "name": "box-inhand-right",
@@ -149,6 +237,14 @@
     },
     {
       "name": "uranium-slice"
+    },
+    {
+      "name": "uranium-slice-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "uranium-slice-inhand-left",
+      "directions": 4
     }
   ]
 }

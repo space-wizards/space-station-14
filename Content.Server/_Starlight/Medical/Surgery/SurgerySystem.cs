@@ -33,6 +33,7 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
     [Dependency] private readonly ContainerSystem _containers = default!;
     [Dependency] private readonly BlindableSystem _blindable = default!;
     [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly MetaDataSystem _metadata = default!;
 
     private readonly List<EntProtoId> _surgeries = [];
     public override void Initialize()

@@ -451,13 +451,16 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
             return;
         }
 
-        var markingObject = new Marking(marking, colors);
-        markingObject.Forced = forced;
+        var markingObject = new Marking(marking, colors)
+        {
+            Forced = forced
+        };
         humanoid.MarkingSet.AddBack(prototype.MarkingCategory, markingObject);
 
         if (sync)
             Dirty(uid, humanoid);
     }
+    //Starlight
     public void SetTTSVoice(EntityUid uid, string voiceId, HumanoidAppearanceComponent humanoid)
     {
         if (!TryComp<TextToSpeechComponent>(uid, out var comp))

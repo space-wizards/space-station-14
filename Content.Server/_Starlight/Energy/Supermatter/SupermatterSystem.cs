@@ -61,7 +61,7 @@ public sealed class SupermatterSystem : AccUpdateEntitySystem
 
         float damage = 1;
         if (TryComp<FixturesComponent>(args.User, out var fixture))
-            damage = fixture.Fixtures.Select(x => x.Value.Density).Aggregate((i, p) => p + i) / 10;
+            damage = fixture.Fixtures.Select(x => x.Value.Density).Aggregate((i, p) => p + i) / 3;
 
         _burn ??= _prototypes.Index<DamageGroupPrototype>("Burn");
         _damageable.TryChangeDamage(ent.Owner, new(_burn, damage), true);
@@ -77,7 +77,7 @@ public sealed class SupermatterSystem : AccUpdateEntitySystem
         _audio.PlayPvs(Const.AudioEvaporate, ent.Owner);
         float damage = 1;
         if (TryComp<FixturesComponent>(args.OtherEntity, out var fixture))
-            damage = fixture.Fixtures.Select(x => x.Value.Density).Aggregate((i, p) => p + i) / 10;
+            damage = fixture.Fixtures.Select(x => x.Value.Density).Aggregate((i, p) => p + i) / 3;
 
         _burn ??= _prototypes.Index<DamageGroupPrototype>("Burn");
         _damageable.TryChangeDamage(ent.Owner, new(_burn, damage), true);
@@ -125,18 +125,14 @@ public sealed class SupermatterSystem : AccUpdateEntitySystem
         supermatter.Comp.LastSendedDurability = supermatter.Comp.Durability;
 
         if (currentDurability > lastDurability)
-        {
             _radioSystem.SendRadioMessage(supermatter.Owner, $"The crystal is regenerating. Durability: {currentDurability}%", _engi, supermatter.Owner);
-            return;
-        }
-        if (currentDurability > 75)
-            _radioSystem.SendRadioMessage(supermatter.Owner, $"Attention! The crystal is destabilizing. Durability: {currentDurability}%", _engi, supermatter.Owner);
-        else if (currentDurability > 50)
-            _chat.DispatchServerAnnouncement($"Attention! The crystal is destabilizing. Durability: {currentDurability}%", Color.Yellow);
-        else if (currentDurability > 25)
-            _chat.DispatchServerAnnouncement($"Critical state of the crystal! Durability: {currentDurability}%", Color.Red);
-        else
-            _chat.DispatchServerAnnouncement($"Crystal destruction is inevitable. Current durability: {currentDurability}%", Color.Red);
+        else switch (currentDurability)
+            {
+                case > 75: _radioSystem.SendRadioMessage(supermatter.Owner, $"Attention! The crystal is destabilizing. Durability: {currentDurability}%", _engi, supermatter.Owner); break;
+                case > 50: _chat.DispatchServerAnnouncement($"Attention! The crystal is destabilizing. Durability: {currentDurability}%", Color.Yellow); break;
+                case > 25: _chat.DispatchServerAnnouncement($"Critical state of the crystal! Durability: {currentDurability}%", Color.OrangeRed); break;
+                default: _chat.DispatchServerAnnouncement($"Crystal destruction is inevitable. Current durability: {currentDurability}%", Color.Red); break;
+            }
     }
 
     private void HandleDestruction(Entity<SupermatterComponent> supermatter)
