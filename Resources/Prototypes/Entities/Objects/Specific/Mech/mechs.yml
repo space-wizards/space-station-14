@@ -31,6 +31,7 @@
     - Water
     TransferRate: 0.9
   - type: AirIntake
+    PumpPower: 2
   # for intake and filter to work
   - type: AtmosDevice
     requireAnchored: false
