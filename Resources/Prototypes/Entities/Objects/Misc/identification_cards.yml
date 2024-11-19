@@ -238,7 +238,7 @@
     - state: default
     - state: idshaftminer
   - type: PresetIdCard
-    job: SalvageSpecialist
+    job: Pilot
     
 - type: entity
   parent: IDCardStandard
@@ -250,7 +250,7 @@
     - state: default
     - state: idshaftminer
   - type: PresetIdCard
-    job: SalvageSpecialist
+    job: BasinTechnician
 
 - type: entity
   parent: IDCardStandard
