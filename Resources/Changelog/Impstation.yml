@@ -1,20 +1,6 @@
 ﻿Entries:
 - author: joelsgp
   changes:
-  - message: Add End as default keybind for opening round end summary
-    type: Tweak
-  id: 42
-  time: '2024-07-28T17:09:46.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/55
-- author: joelsgp
-  changes:
-  - message: Add new lobby music
-    type: Add
-  id: 43
-  time: '2024-07-28T17:10:10.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/56
-- author: joelsgp
-  changes:
   - message: Prototype fixes
     type: Fix
   id: 44
@@ -4284,3 +4270,20 @@
   id: 541
   time: '2024-11-19T02:53:33.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/752
+- author: hivehum
+  changes:
+  - message: Holoparasites and holoclowns can now experience some joy and whimsy in
+      their short, miserable lives.
+    type: Add
+  id: 542
+  time: '2024-11-19T03:09:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/757
+- author: Sha-Seng
+  changes:
+  - message: enforcer and beanbag enforcer have altered stocks with pistol grips now
+    type: Tweak
+  - message: fixed a few pixels on the beanbag kammerer too
+    type: Fix
+  id: 543
+  time: '2024-11-19T03:10:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/756
