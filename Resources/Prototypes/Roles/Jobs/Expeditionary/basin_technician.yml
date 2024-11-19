@@ -1,5 +1,5 @@
 - type: job
-  id: BasinTecnician
+  id: BasinTechnician
   name: job-name-basintech
   description: job-description-basintech
   playTimeTracker: JobSalvageSpecialist
