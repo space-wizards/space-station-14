@@ -6038,11 +6038,6 @@ entities:
     - type: Transform
       pos: 4.5,-8.5
       parent: 2
-  - uid: 881
-    components:
-    - type: Transform
-      pos: 5.5,-8.5
-      parent: 2
   - uid: 882
     components:
     - type: Transform
@@ -6058,12 +6053,24 @@ entities:
     - type: Transform
       pos: -16.5,6.5
       parent: 2
-- proto: ClosetFireFilled
+- proto: ClosetEmergencyN2FilledRandom
   entities:
+  - uid: 881
+    components:
+    - type: Transform
+      pos: 5.5,-8.5
+      parent: 2
   - uid: 885
     components:
     - type: Transform
       pos: 11.5,13.5
+      parent: 2
+- proto: ClosetFireFilled
+  entities:
+  - uid: 1739
+    components:
+    - type: Transform
+      pos: 12.5,11.5
       parent: 2
 - proto: ClosetJanitorFilled
   entities:
