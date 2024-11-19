@@ -1,0 +1,47 @@
+<Document>
+  # Vampire
+  
+  <Box>
+    [color=#999999][italic]"Vampire of darkness, sucking all your blood."[/italic][/color]
+  </Box>
+
+  You're just a regular vampire. You and your colleagues sneaked into the station in the guise of an employee to gain the strength and power to survive. You're overcome with [color=#eb4034]bloodlust[/color].
+
+  Your task is to absorb as much blood as possible while not severely harming the crew. Because that's how you reveal yourself. You have mutations in your arsenal. that can trigger a variety of different abilities.
+
+  ## Mutations
+  
+  Mutations allow a vampire to gain abilities, the mutation selection opens when 100 blood is drawn. currently there are only 4 mutations represented:
+  
+  [bold]Hemomancer[/bold]
+   - Focuses on blood magic and manipulating the blood around him.
+   - Abilities:
+   - Screech (200 blood)
+   - Blood Steal (300 blood)
+   
+  [bold]Shadow[/bold]
+  - Focuses on darkness, stealth, mobility.
+  - Abilities:
+  - Glare (200 blood)
+  - Cloak of Darkness (300 blood)
+  
+  [bold]Gargantua[/bold]
+  - Focuses on melee damage and resilience.
+  - Abilities:
+  - Unholy Strength (200 blood)
+  - Supernatural Strength (300 blood)
+  
+  [bold]Bestia[/bold]
+  - Focuses on turning and collecting trophies.
+  - Abilities:
+  - Bat Form (200 blood)
+  - Mouse Form (300 blood)
+  
+  
+  ## Blood System
+  
+  You've probably encountered a moment when choosing a mutation. 
+  Your abilities don't appear, it's not a bug! 
+  Abilities appear only at a certain blood level, as well as disappear, if your blood is less than 200 you lose all abilities, if less than 300 you lose the last one. 
+
+</Document>
