@@ -114,7 +114,7 @@
       food:
         reagents:
         - ReagentId: FishOil
-          Quantity: 3
+          Quantity: 10
   - type: Butcherable
     spawned:
     - id: FoodMeatFish
