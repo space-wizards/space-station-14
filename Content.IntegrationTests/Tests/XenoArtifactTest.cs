@@ -396,9 +396,9 @@ public sealed class XenoArtifactTest
             var nodesDepths = segments3[0].Select(x => x.Comp.Depth).ToArray();
             Assert.That(nodesDepths.Distinct().Count(), Is.EqualTo(3));
             var grouped = nodesDepths.ToLookup(x => x);
-            Assert.That(grouped[0].Count() , Is.EqualTo(2));
-            Assert.That(grouped[1].Count() , Is.EqualTo(2));
-            Assert.That(grouped[2].Count() , Is.EqualTo(2));
+            Assert.That(grouped[0].Count(), Is.EqualTo(2));
+            Assert.That(grouped[1].Count(), Is.GreaterThanOrEqualTo(2)); // tree is attempting sometimes to get wider (so it will look like a tree)
+            Assert.That(grouped[2].Count(), Is.LessThanOrEqualTo(2)); // maintain same width or, if we used 3 nodes on previous layer - we only have 1 left!
 
         });
         await server.WaitRunTicks(1);
