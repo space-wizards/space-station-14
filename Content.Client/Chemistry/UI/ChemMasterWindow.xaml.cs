@@ -179,154 +179,110 @@ namespace Content.Client.Chemistry.UI
             var bufferVol = new Label
             {
                 Text = $"{state.BufferCurrentVolume}u",
-                StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
+                StyleClasses = { StyleNano.StyleClassLabelSecondaryColor }
             };
-            bufferHBox.AddChild(bufferVol); 
-            
+            bufferHBox.AddChild(bufferVol);
+
             // initialises count of loop for purposes of alternating background color each layer,
             // and also initialises the two color values for alternating in the buffer window.
 
-            int layerCount = 0;
-            Color layerColor1 = Color.FromHex("#202025");
-            Color layerColor2 = Color.FromHex("#1B1B1E");
-            
+            var layerCount = 0;
+            var layerColor1 = Color.FromHex("#202025");
+            var layerColor2 = Color.FromHex("#1B1B1E");
+
             foreach (var (reagent, quantity) in state.BufferReagents)
             {
-                // Try to get the prototype for the given reagent. This gives us its name and allows for SubstanceColor.
-                _prototypeManager.TryIndex(reagent.Prototype, out ReagentPrototype? proto);
-                var name = proto?.LocalizedName ?? Loc.GetString("chem-master-window-unknown-reagent-text");
-                
-               
-                if (proto != null)
-                {
-                    // Iterate layerCount and then set backgroundColor accordingly.
-                    layerCount++;
-                    Color currentLayerColor = (layerCount % 2 == 1) ? layerColor1 : layerColor2;
-                    
-                    BufferInfo.Children.Add(new PanelContainer
-                    {
-                        // Applies a color tint to the current reagent row
-                        PanelOverride = new StyleBoxFlat(currentLayerColor),
-                        Children =
-                        {
-                            new BoxContainer
-                            {
-                                Orientation = LayoutOrientation.Horizontal,
-                                Children =
-                                {
-                                    new Label { Text = $"{name}: " },
-                                    new Label
-                                    {
-                                        Text = $"{quantity}u",
-                                        StyleClasses = { StyleNano.StyleClassLabelSecondaryColor }
-                                    },
+                // Iterate layerCount and then set backgroundColor accordingly.
+                // TODO: Make this striped list thing into its own Control
+                layerCount++;
+                var currentLayerColor = (layerCount % 2 == 1) ? layerColor1 : layerColor2;
 
-                                    // Padding
-                                    new Control { HorizontalExpand = true },
-                                    // Colored panels for reagents, and invocation of proto to choose the correct color.
-                                    new PanelContainer
-                                    {
-                                        Name = "colorPanel",
-                                        VerticalExpand = true,
-                                        MinWidth = 4,
-                                        PanelOverride = new StyleBoxFlat
-                                        {
-                                            BackgroundColor = proto.SubstanceColor
-                                        },
-                                        Margin = new Thickness(0,1)
-                                        
-                                    },
-                                    
-                                    MakeReagentButton("1", ChemMasterReagentAmount.U1, reagent, true, StyleBase.ButtonOpenBoth),
-                                    MakeReagentButton("5", ChemMasterReagentAmount.U5, reagent, true, StyleBase.ButtonOpenBoth),
-                                    MakeReagentButton("10", ChemMasterReagentAmount.U10, reagent, true, StyleBase.ButtonOpenBoth),
-                                    MakeReagentButton("25", ChemMasterReagentAmount.U25, reagent, true, StyleBase.ButtonOpenBoth),
-                                    MakeReagentButton("50", ChemMasterReagentAmount.U50, reagent, true, StyleBase.ButtonOpenBoth),
-                                    MakeReagentButton("100", ChemMasterReagentAmount.U100, reagent, true, StyleBase.ButtonOpenBoth),
-                                    MakeReagentButton(Loc.GetString("chem-master-window-buffer-all-amount"), ChemMasterReagentAmount.All, reagent, true, StyleBase.ButtonOpenLeft),
-                                }
-                            }
-                        }
-                    });
-                }
+                BufferInfo.Children.Add(BuildReagentRow(currentLayerColor, reagent, quantity, true));
             }
         }
 
         private void BuildContainerUI(Control control, ContainerInfo? info)
-{
-    control.Children.Clear();
-
-    if (info is null)
-    {
-        control.Children.Add(new Label
         {
-            Text = Loc.GetString("chem-master-window-no-container-loaded-text")
-        });
-        return;
-    }
+            control.Children.Clear();
 
-    // Name of the container and its fill status (Ex: 44/100u)
-    control.Children.Add(new BoxContainer
-    {
-        Orientation = LayoutOrientation.Horizontal,
-        Children =
-        {
-            new Label { Text = $"{info.DisplayName}: " },
-            new Label
+            if (info is null)
             {
-                Text = $"{info.CurrentVolume}/{info.MaxVolume}",
-                StyleClasses = { StyleNano.StyleClassLabelSecondaryColor }
+                control.Children.Add(new Label
+                {
+                    Text = Loc.GetString("chem-master-window-no-container-loaded-text")
+                });
+                return;
+            }
+
+            // Name of the container and its fill status (Ex: 44/100u)
+            control.Children.Add(new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal,
+                Children =
+                {
+                    new Label { Text = $"{info.DisplayName}: " },
+                    new Label
+                    {
+                        Text = $"{info.CurrentVolume}/{info.MaxVolume}",
+                        StyleClasses = { StyleNano.StyleClassLabelSecondaryColor }
+                    }
+                }
+            });
+
+            IEnumerable<(ReagentId Id, FixedPoint2 Quantity)> contents;
+
+            if (info.Entities != null)
+            {
+                // Only using Id and Quantity, name retrieval will happen in foreach
+                contents = info.Entities.Select(x => (default(ReagentId), x.Quantity));
+            }
+            else if (info.Reagents != null)
+            {
+                contents = info.Reagents.Select(x => (x.Reagent, x.Quantity));
+            }
+            else
+            {
+                return;
+            }
+
+            // initialises count of loop for purposes of alternating background color each layer,
+            // and also initialises the two color values for alternating in the buffer window.
+
+            var layerCount = 0;
+            var layerColor1 = Color.FromHex("#202025");
+            var layerColor2 = Color.FromHex("#1B1B1E");
+
+            foreach (var (reagent, quantity) in contents)
+            {
+                // Skips the loop for non-reagent entities such as pill bottles.
+                if (reagent.Prototype is null)
+                    continue;
+
+                // Increment layerCount and then set backgroundColor accordingly.
+                layerCount++;
+                var currentLayerColor = (layerCount % 2 == 1) ? layerColor1 : layerColor2;
+
+                control.Children.Add(BuildReagentRow(currentLayerColor, reagent, quantity, false));
             }
         }
-    });
 
-    IEnumerable<(ReagentId Id, FixedPoint2 Quantity)> contents;
-
-    if (info.Entities != null)
-    {
-        // Only using Id and Quantity, name retrieval will happen in foreach
-        contents = info.Entities.Select(x => (default(ReagentId), x.Quantity));
-    }
-    else if (info.Reagents != null)
-    {
-        contents = info.Reagents.Select(x => (x.Reagent, x.Quantity));
-    }
-    else
-    {
-        return;
-    }
-    
-    // initialises count of loop for purposes of alternating background color each layer,
-    // and also initialises the two color values for alternating in the buffer window.
-    
-    int layerCount = 0;
-    Color layerColor1 = Color.FromHex("#202025");
-    Color layerColor2 = Color.FromHex("#1B1B1E");
-    
-    foreach (var (reagent, quantity) in contents)
-    {
-        // Skips the loop for non-reagent entities such as pill bottles.
-        if (reagent.Prototype == null)
+        private Control BuildReagentRow(Color rowColor, ReagentId reagent, FixedPoint2 quantity, bool isBuffer)
         {
-            continue;
-        }
+            // Try to get the prototype for the given reagent. This gives us its name and allows for SubstanceColor.
+            // This was moved to the inside of the loop in order to facilitate colored panels,
+            // and bring it closer to in-line with the buffer and reagent dispensers.
+            _prototypeManager.TryIndex(reagent.Prototype, out ReagentPrototype? proto);
+            var name = proto?.LocalizedName ?? Loc.GetString("chem-master-window-unknown-reagent-text");
 
-        // Try to get the prototype for the given reagent. This gives us its name and allows for SubstanceColor.
-        // This was moved to the inside of the loop in order to facilitate colored panels,
-        // and bring it closer to in-line with the buffer and reagent dispensers.
-        _prototypeManager.TryIndex(reagent.Prototype, out ReagentPrototype? proto);
-        var name = proto?.LocalizedName ?? Loc.GetString("chem-master-window-unknown-reagent-text");
-        
-        if (proto != null)
-        {
-            // Iterate layerCount and then set backgroundColor accordingly.
-            layerCount++;
-            Color currentLayerColor = (layerCount % 2 == 1) ? layerColor1 : layerColor2;
-                    
-            control.Children.Add(new PanelContainer
+            if (proto is null)
+                // Catch any weird null prototype reagents but don't really let to interact with them
+                // No styling but eh, this shouldn't *happen* in first place
+                return new Label { Text = name };
+
+            return new PanelContainer
             {
                 // Applies a color tint to the current reagent row
-                PanelOverride = new StyleBoxFlat(currentLayerColor),
+                PanelOverride = new StyleBoxFlat(rowColor),
                 Children =
                 {
                     new BoxContainer
@@ -354,34 +310,26 @@ namespace Content.Client.Chemistry.UI
                                     BackgroundColor = proto.SubstanceColor
                                 },
                                 Margin = new Thickness(0,1)
-                                        
+
                             },
-                                    
-                            MakeReagentButton("1", ChemMasterReagentAmount.U1, reagent, false, StyleBase.ButtonOpenBoth),
-                            MakeReagentButton("5", ChemMasterReagentAmount.U5, reagent, false, StyleBase.ButtonOpenBoth),
-                            MakeReagentButton("10", ChemMasterReagentAmount.U10, reagent, false, StyleBase.ButtonOpenBoth),
-                            MakeReagentButton("25", ChemMasterReagentAmount.U25, reagent, false, StyleBase.ButtonOpenBoth),
-                            MakeReagentButton("50", ChemMasterReagentAmount.U50, reagent, false, StyleBase.ButtonOpenBoth),
-                            MakeReagentButton("100", ChemMasterReagentAmount.U100, reagent, false, StyleBase.ButtonOpenBoth),
-                            MakeReagentButton(Loc.GetString("chem-master-window-buffer-all-amount"), ChemMasterReagentAmount.All, reagent, false, StyleBase.ButtonOpenLeft),
+
+                            MakeReagentButton("1", ChemMasterReagentAmount.U1, reagent, isBuffer, StyleBase.ButtonOpenBoth),
+                            MakeReagentButton("5", ChemMasterReagentAmount.U5, reagent, isBuffer, StyleBase.ButtonOpenBoth),
+                            MakeReagentButton("10", ChemMasterReagentAmount.U10, reagent, isBuffer, StyleBase.ButtonOpenBoth),
+                            MakeReagentButton("25", ChemMasterReagentAmount.U25, reagent, isBuffer, StyleBase.ButtonOpenBoth),
+                            MakeReagentButton("50", ChemMasterReagentAmount.U50, reagent, isBuffer, StyleBase.ButtonOpenBoth),
+                            MakeReagentButton("100", ChemMasterReagentAmount.U100, reagent, isBuffer, StyleBase.ButtonOpenBoth),
+                            MakeReagentButton(Loc.GetString("chem-master-window-buffer-all-amount"), ChemMasterReagentAmount.All, reagent, isBuffer, StyleBase.ButtonOpenLeft),
                         }
                     }
                 }
-            });
+            };
         }
-    }
-}
 
-        public String LabelLine
+        public string LabelLine
         {
-            get
-            {
-                return LabelLineEdit.Text;
-            }
-            set
-            {
-                LabelLineEdit.Text = value;
-            }
+            get => LabelLineEdit.Text;
+            set => LabelLineEdit.Text = value;
         }
     }
 
