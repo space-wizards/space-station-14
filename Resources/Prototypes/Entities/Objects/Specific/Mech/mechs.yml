@@ -307,7 +307,7 @@
   id: [MechStepfather, StripableInventoryBase]
   parent: BaseMech
   name: Rotund Stepfather
-  description: A rugged deep-sea mining unit, designed to work in tandem with a Pilot. The onboard AI operates the primary clamps while the pilot operates the modules.
+  description: A rugged deep-sea mining unit, designed to work in tandem with a Pilot. The onboard AI operates the primary clamp while the pilot operates the modules.
   components:
   - type: Sprite
     drawdepth: Mobs
