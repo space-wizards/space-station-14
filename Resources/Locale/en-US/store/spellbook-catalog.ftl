@@ -20,6 +20,9 @@ spellbook-charge-desc = Adds a charge back to your wand!
 spellbook-ethereal-jaunt-name = Ethereal Jaunt
 spellbook-ethereal-jaunt-description = Slip into the ethereal plane to slip away from your enemies!
 
+spellbook-mind-swap-name = Mind Swap
+spellbook-mind-swap-description = Exchange bodies with another person!
+
 # Equipment
 
 spellbook-wand-polymorph-door-name = Wand of Entrance

@@ -77,6 +77,7 @@ public abstract class SharedMagicSystem : EntitySystem
         SubscribeLocalEvent<KnockSpellEvent>(OnKnockSpell);
         SubscribeLocalEvent<ChargeSpellEvent>(OnChargeSpell);
         SubscribeLocalEvent<RandomGlobalSpawnSpellEvent>(OnRandomGlobalSpawnSpell);
+        SubscribeLocalEvent<MindSwapSpellEvent>(OnMindSwapSpell);
 
         // Spell wishlist
         //  A wishlish of spells that I'd like to implement or planning on implementing in a future PR
@@ -540,6 +541,34 @@ public abstract class SharedMagicSystem : EntitySystem
         }
 
         _audio.PlayGlobal(ev.Sound, ev.Performer);
+    }
+
+    #endregion
+    #region Mindswap Spells
+
+    private void OnMindSwapSpell(MindSwapSpellEvent ev)
+    {
+        if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
+            return;
+
+        ev.Handled = true;
+        Speak(ev);
+
+        // Need performer mind, but target mind is unnecessary, such as taking over a NPC
+        // Need to get target mind before putting performer mind into their body if they have one
+        // Thus, assign bool before first transfer, then check afterwards
+
+        if (!_mind.TryGetMind(ev.Performer, out var perMind, out var perMindComp))
+            return;
+
+        var tarHasMind = _mind.TryGetMind(ev.Target, out var tarMind, out var tarMindComp);
+
+        _mind.TransferTo(perMind, ev.Target);
+
+        if (tarHasMind)
+        {
+            _mind.TransferTo(tarMind, ev.Performer);
+        }
     }
 
     #endregion
