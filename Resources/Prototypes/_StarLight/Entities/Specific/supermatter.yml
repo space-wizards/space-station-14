@@ -48,7 +48,7 @@
 - type: entity
   id: Cascad1
   name: cascad
-  descruption: Consequences of the supermatter crystal's cascade failure.
+  description: Consequences of the supermatter crystal's cascade failure.
   placement:
     mode: SnapgridCenter
   components:

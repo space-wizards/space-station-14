@@ -13,4 +13,4 @@
   conditions:
   - !type:BuyerJobCondition
     whitelist:
-    - Atmosian
+    - AtmosphericTechnician
