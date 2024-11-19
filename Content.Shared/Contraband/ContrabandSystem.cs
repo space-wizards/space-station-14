@@ -89,7 +89,10 @@ public sealed class ContrabandSystem : EntitySystem
             if (_id.TryFindIdCard(args.Examiner, out var id))
             {
                 departments = id.Comp.JobDepartments;
-                jobId = Loc.GetString(id.Comp.JobIcon.Id).Replace("JobIcon", string.Empty);
+                if (id.Comp.JobTitle is not null)
+                {
+                    jobId = id.Comp.JobTitle;
+                }
             }
 
             // either its fully restricted, you have no departments, or your departments and job don't intersect with the restricted departments and jobs
