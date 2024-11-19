@@ -1,12 +1,61 @@
 - type: entity
   parent: BaseItem
+  id: EmptyDeskBell
+  name: empty desk bell
+  description: It's missing the noise maker.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/desk_bell.rsi
+    state: "icon_empty"
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        collection: DeskBell
+        params:
+            variation: 0.03
+            volume: 5
+            pitch: 1.5
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Construction
+    graph: BellGraph
+    node: unfinishedDeskBell
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            SheetSteel1:
+              min: 0
+              max: 1
+          offset: 0
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      collection: DeskBell
+      params:
+          variation: 0.03
+          volume: 3
+    damage:
+      types:
+        Blunt: 4
+
+- type: entity
+  parent: EmptyDeskBell
   id: DeskBell
   name: desk bell
   description: The cornerstone of any customer service job. You feel an unending urge to ring it.
   components:
   - type: Sprite
-    sprite: Objects/Misc/desk_bell.rsi
-    state: "normal"
+    state: "icon_bell"
   - type: Tag
     tags:
       - Payload
@@ -18,6 +67,12 @@
         variation: 0.03
         volume: 3
     onActivate: true
+  - type: EmitSoundOnLand
+    sound:
+      collection: DeskBell
+      params:
+          variation: 0.03
+          volume: 3
   - type: EmitSoundOnUse
     sound:
       collection: DeskBell
@@ -30,21 +85,36 @@
       params:
           variation: 0.03
           volume: 3
-  - type: EmitSoundOnLand
-    sound:
-      collection: DeskBell
-      params:
-          variation: 0.03
-          volume: 3
   - type: UseDelay
     delay: 0.5
-  - type: MeleeWeapon
-    wideAnimationRotation: 180
-    soundHit:
-      collection: DeskBell
-      params:
-          variation: 0.03
-          volume: 3
-    damage:
-      types:
-        Blunt: 4
+  - type: Construction
+    graph: BellGraph
+    node: deskBell
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: DeskBell
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            PartRodMetal1:
+              min: 0
+              max: 1
+          offset: 0
+        - !type:ChangeConstructionNodeBehavior
+          node: unfinishedDeskBell
+        - !type:DoActsBehavior
+          acts: ["Destruction"]

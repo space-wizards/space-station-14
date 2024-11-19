@@ -1,0 +1,41 @@
+- type: constructionGraph
+  id: BellGraph
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: unfinishedDeskBell
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 1.5
+
+    - node: unfinishedDeskBell
+      entity: EmptyDeskBell
+      edges:
+        - to: deskBell
+          steps:
+            - material: MetalRod
+              amount: 1
+              doAfter: 1
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:DeleteEntity
+          steps:
+            - tool: Screwing
+              doAfter: 2
+
+    - node: deskBell
+      entity: DeskBell
+      edges:
+        - to: unfinishedDeskBell
+          completed:
+            - !type:SpawnPrototype
+              prototype: PartRodMetal1
+              amount: 1
+          steps:
+            - tool: Screwing
+              doAfter: 1
