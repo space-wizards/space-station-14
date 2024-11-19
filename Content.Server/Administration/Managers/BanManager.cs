@@ -576,7 +576,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
                         Color = 0x803045,
                         Thumbnail = new EmbedThumbnail
                         {
-                            Url = "https://i.imgur.com/R6YJEnU.png",
+                            Url = "https://i.imgur.com/As5sGru.png",
                         },
                         Author = new EmbedAuthor
                         {
