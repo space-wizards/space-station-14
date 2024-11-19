@@ -32,9 +32,7 @@
   id: CrewMonitoring
   icon:
     sprite: Structures/Machines/server.rsi
-    layers:
-    - state: server
-    - state: variant-crew
+    state: server
   product: CrateCrewMonitoring
   cost: 2000
   category: cargoproduct-category-name-science
