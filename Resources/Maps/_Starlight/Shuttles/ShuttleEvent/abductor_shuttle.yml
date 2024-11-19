@@ -597,7 +597,7 @@ entities:
     - type: Transform
       pos: 0.5,6.5
       parent: 1
-- proto: ClothingBackpackDuffelSyndicateFilledMedical
+- proto: ClothingBackpackDuffelAbductorFilled
   entities:
   - uid: 208
     components:
