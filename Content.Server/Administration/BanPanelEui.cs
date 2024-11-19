@@ -125,6 +125,7 @@ public sealed class BanPanelEui : BaseEui
             {
                 _banManager.CreateRoleBan(targetUid, target, Player.UserId, addressRange, targetHWid, role, minutes, severity, reason, now);
             }
+            _banManager.WebhookUpdateRoleBans(targetUid, target, Player.UserId, addressRange, targetHWid, roles, minutes, severity, reason, now);
 
             Close();
             return;
