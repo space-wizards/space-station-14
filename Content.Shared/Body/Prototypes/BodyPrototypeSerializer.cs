@@ -40,6 +40,9 @@ public sealed class BodyPrototypeSerializer : ITypeReader<BodyPrototype, Mapping
         {
             foreach (var (key, value) in organsNode)
             {
+                if (organ.Value == "null" || organ.Value == null)
+                    continue;
+                
                 if (key is not ValueDataNode)
                 {
                     nodes.Add(new ErrorNode(key, $"Key is not a value data node"));
@@ -52,7 +55,7 @@ public sealed class BodyPrototypeSerializer : ITypeReader<BodyPrototype, Mapping
                     continue;
                 }
 
-                if (!prototypes.TryIndex(organ.Value, out EntityPrototype? organPrototype) && organ.Value != "null" && organ.Value != null)
+                if (!prototypes.TryIndex(organ.Value, out EntityPrototype? organPrototype))
                 {
                     nodes.Add(new ErrorNode(value, $"No organ entity prototype found with id {organ.Value}"));
                     continue;
