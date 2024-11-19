@@ -60,6 +60,12 @@
     bodyType: Dynamic
   - type: StealTarget
     stealGroup: XenoArtifact
+  - type: ContainerContainer
+    containers:
+      node-container: !type:Container
+        showEnts: False
+        occludes: True
+        ents: []
   # These components are needed for certain triggers to work.
   - type: RadiationReceiver
   - type: Reactive
