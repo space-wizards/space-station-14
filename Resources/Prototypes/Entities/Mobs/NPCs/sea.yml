@@ -113,7 +113,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: UncookedAnimalProteins
+        - ReagentId: FishOil
           Quantity: 3
   - type: Butcherable
     spawned:
@@ -123,6 +123,7 @@
     combatToggleAction: ActionCombatModeToggleOff
   - type: Bloodstream
     bloodMaxVolume: 30
+    bloodReagent: FishOil
   - type: MobPrice
     price: 400
   - type: BadFood
