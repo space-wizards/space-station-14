@@ -1,6 +1,7 @@
 - type: gameMapPool
   id: DefaultMapPool
   maps:
+  - Aspid
   - Bagel
   - Box
   - Cog
