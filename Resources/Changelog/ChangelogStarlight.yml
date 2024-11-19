@@ -294,4 +294,46 @@ Entries:
   id: 41
   time: '2024-11-18T18:47:01.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/69
+- author: Rinary
+  changes:
+  - message: Added arachnid collective mind.
+    type: Add
+  id: 42
+  time: '2024-11-19T17:48:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/70
+- author: Rinary
+  changes:
+  - message: Added zombie collective mind.
+    type: Add
+  id: 43
+  time: '2024-11-19T17:48:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/70
+- author: Rinary
+  changes:
+  - message: Added collective mind to carps and dragon.
+    type: Add
+  id: 44
+  time: '2024-11-19T17:48:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/70
+- author: Rinary
+  changes:
+  - message: Added collective mind to abductor.
+    type: Add
+  id: 45
+  time: '2024-11-19T17:48:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/70
+- author: Rinary
+  changes:
+  - message: 'Added numeration for collective mind(Like: Abductor 1, Abductor 5).'
+    type: Add
+  id: 46
+  time: '2024-11-19T17:48:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/70
+- author: Rinary
+  changes:
+  - message: Updated collective mind system to easier creation of collective mind.
+    type: Tweak
+  id: 47
+  time: '2024-11-19T17:48:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/70
 
