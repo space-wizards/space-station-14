@@ -36,10 +36,12 @@
   id: LoneAbductorGear
   equipment:
     head: ClothingHeadHelmetAbductor
+    ears: ClothingHeadsetAltAbductor
     jumpsuit: ClothingUniformJumpsuitAbductor
     gloves: ClothingHandsGlovesCombat
     shoes: ClothingShoesBootsCombat
     pocket1: AbductorGizmo
+    belt: ClothingAbductorBelt
   inhand:
   - Wonderprod
 

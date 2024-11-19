@@ -24,6 +24,7 @@
     - DoorBumpOpener
     - SpiderCraft
     - AnomalyHost
+    - Arachnid
   - type: Butcherable
     butcheringType: Spike
     spawned:

@@ -51,6 +51,9 @@ public sealed class BodyPrototypeSerializer : ITypeReader<BodyPrototype, Mapping
                     nodes.Add(new ErrorNode(value, $"Value is not a value data node"));
                     continue;
                 }
+                
+                if (organ.Value == "null" || organ.Value == null)
+                    continue;
 
                 if (!prototypes.TryIndex(organ.Value, out EntityPrototype? organPrototype))
                 {
