@@ -362,6 +362,36 @@
 
 - type: entity
   parent: BasePDA
+  id: PilotPDA
+  name: pilot PDA
+  description: Protocol III, protect the PDA.
+  components:
+  - type: Pda
+    id: PilotIDCard
+    state: pda-miner
+  - type: PdaBorderColor
+    borderColor: "#af9366"
+    accentVColor: "#8900c9"
+  - type: Icon
+    state: pda-miner
+
+- type: entity
+  parent: BasePDA
+  id: BasinTechPDA
+  name: basin technician PDA
+  description: It's completely waterlogged.
+  components:
+  - type: Pda
+    id: BasinTechIDCard
+    state: pda-miner
+  - type: PdaBorderColor
+    borderColor: "#af9366"
+    accentVColor: "#8900c9"
+  - type: Icon
+    state: pda-miner
+
+- type: entity
+  parent: BasePDA
   id: BartenderPDA
   name: bartender PDA
   description: Smells like beer.
