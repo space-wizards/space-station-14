@@ -388,13 +388,13 @@
     showInHands: false
     disableExplosionRecursion: true
   - type: Repairable
-    doAfterDelay: 10
+    doAfterDelay: 15
     allowSelfRepair: false
   - type: TypingIndicator
     proto: robot
   - type: Speech
     speechVerb: Robotic
-    speechSounds: Borg
+    speechSounds: SyndieBorg
   - type: Vocal
     sounds:
       Unsexed: UnisexSilicon
