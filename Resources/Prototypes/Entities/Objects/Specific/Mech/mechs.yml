@@ -376,7 +376,7 @@
     beginSearchingText: mech-searching
     roleName: mech-role-name
     roleDescription: mech-role-description
-    roleRules: ghost-role-information-familiar-rules
+    roleRules: ghost-role-information-mech-rules
     wipeVerbText: mech-wipe-device-verb-text
     wipeVerbPopup: mech-wiped-device
     stopSearchVerbText: mech-stop-searching-verb-text
