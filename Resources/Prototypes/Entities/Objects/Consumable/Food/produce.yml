@@ -2634,7 +2634,7 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
-    maxIntensity: 0.01
+    maxIntensity: 0.001
     intensitySlope: 1
     totalIntensity: 0.1
   - type: Damageable
