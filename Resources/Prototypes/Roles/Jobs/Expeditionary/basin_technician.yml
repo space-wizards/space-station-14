@@ -19,5 +19,5 @@
   id: BasinTechGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitSalvageSpecialist
-    id: SalvagePDA
+    id: BasinTechPDA
     ears: ClothingHeadsetCargo
