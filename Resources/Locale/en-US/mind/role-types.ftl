@@ -1,4 +1,4 @@
-role-type-neutral-name = Neutral
+role-type-crew-aligned-name = Crew Aligned
 role-type-solo-antagonist-name = Solo Antagonist
 role-type-team-antagonist-name = Team Antagonist
 role-type-free-agent-name = Free Agent

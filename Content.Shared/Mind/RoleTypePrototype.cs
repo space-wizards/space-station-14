@@ -21,7 +21,7 @@ public sealed class RoleTypePrototype : IPrototype
     ///     The role's name as displayed on the UI.
     /// </summary>
     [DataField(required: true)]
-    public string Name = "role-type-neutral-name";
+    public string Name = "role-type-crew-aligned-name";
 
     /// <summary>
     ///     The role's displayed color.

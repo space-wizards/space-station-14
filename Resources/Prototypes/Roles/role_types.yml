@@ -4,7 +4,7 @@
 - type: roleType
   id: Neutral
   roleRule: Neutral
-  name: role-type-neutral-name
+  name: role-type-crew-aligned-name
   color: '#eeeeee'
 
 - type: roleType

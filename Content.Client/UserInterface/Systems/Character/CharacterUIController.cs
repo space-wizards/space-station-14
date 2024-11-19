@@ -210,7 +210,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
         var mind = _ent.EnsureComponent<MindComponent>(container.Mind.Value);
 
-        var roleText = Loc.GetString("role-type-neutral-name");
+        var roleText = Loc.GetString("role-type-crew-aligned-name");
         var color = Color.White;
         if (_prototypeManager.TryIndex(mind.RoleType, out var proto))
         {
