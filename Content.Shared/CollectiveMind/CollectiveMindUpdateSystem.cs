@@ -11,6 +11,8 @@ public sealed class CollectiveMindUpdateSystem : EntitySystem
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     
+    private static int _currentId = 0;
+
     public void UpdateCollectiveMind(EntityUid uid, CollectiveMindComponent collective)
     {
         foreach (var prototype in _prototypeManager.EnumeratePrototypes<CollectiveMindPrototype>())
@@ -22,5 +24,8 @@ public sealed class CollectiveMindUpdateSystem : EntitySystem
                 if (_tag.HasTag(uid, tag) && !collective.Minds.Contains(prototype.ID))
                     collective.Minds.Add(prototype.ID);
         }
+        
+        if (collective.UniqueId == null)
+            collective.UniqueId = ++_currentId;
     }
 }

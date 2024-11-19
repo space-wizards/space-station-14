@@ -460,6 +460,11 @@ public sealed partial class ChatSystem : SharedChatSystem
                 clients.AddPlayer(actorComp.PlayerSession);
             }
         }
+        
+        var Number = $"{sourseCollectiveMindComp.UniqueId}";
+        
+        if (sourseCollectiveMindComp.UniqueId == null)
+            Number = "Unknown";
 
         var admins = _adminManager.ActiveAdmins
             .Select(p => p.Channel);
@@ -468,7 +473,8 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         messageWrap = Loc.GetString("collective-mind-chat-wrap-message",
             ("message", message),
-            ("channel", collectiveMind.LocalizedName));
+            ("channel", collectiveMind.LocalizedName),
+            ("number", Number));
 
         adminMessageWrap = Loc.GetString("collective-mind-chat-wrap-message-admin",
             ("source", source),

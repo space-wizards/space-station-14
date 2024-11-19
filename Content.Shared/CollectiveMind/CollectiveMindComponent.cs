@@ -8,5 +8,8 @@ namespace Content.Shared.CollectiveMind
     {
         [DataField("minds", customTypeSerializer: typeof(PrototypeIdListSerializer<CollectiveMindPrototype>))]
         public List<string> Minds = new();
+
+        [DataField("entityID")]
+        public int? UniqueId { get; set; } = null;
     }
 }

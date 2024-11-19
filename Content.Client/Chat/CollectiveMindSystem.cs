@@ -8,6 +8,7 @@ namespace Content.Client.Chat
     {
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly CollectiveMindUpdateSystem _collectiveSystem = default!;
 
         public override void Initialize()
         {
