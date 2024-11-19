@@ -91,6 +91,19 @@
   - type: ReplacementAccent
     accent: liar
 
+- type: trait
+  id: Hypomania
+  name: trait-hypomania-name
+  description: trait-hypomania-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: HypomaniaAccent
+    laughChance: 0.3
+  - type: EmotionLoop
+    timeBetweenEmotions: 30, 60
+    emotion: Laugh
+
 # 2 Cost
 
 - type: trait
