@@ -122,6 +122,30 @@
   order: 3
   lawString: law-syndicate-3
 
+# Mech
+- type: siliconLawset
+  id: MechLaws
+  laws:
+  - Mech1
+  - Mech2
+  - Mech3
+  obeysTo: laws-owner-pilot
+
+- type: siliconLaw
+  id: Mech1
+  order: 1
+  lawString: law-mech-1
+
+- type: siliconLaw
+  id: Mech2
+  order: 2
+  lawString: law-mech-2
+
+- type: siliconLaw
+  id: Mech3
+  order: 3
+  lawString: law-mech-3
+
 # Syndicate cyborg laws
 # intentionally excluded from IonStormLawsets
 - type: siliconLawset
