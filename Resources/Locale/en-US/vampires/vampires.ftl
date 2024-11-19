@@ -84,7 +84,7 @@ vampire-mutation-gargantua-info =
 vampire-mutation-bestia-info = 
     Bestia
     
-    Фокусируется на превращении и собирании трофеев
+    Focuses on turning and collecting trophies.
     
     Abilities:
     
