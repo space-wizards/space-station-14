@@ -412,4 +412,10 @@
     locPrefix: silicon
   - type: Body
     prototype: Mech
+  - type: UserInterface
+    interfaces:
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+  - type: SiliconLawProvider
+    laws: MechLaws
     
