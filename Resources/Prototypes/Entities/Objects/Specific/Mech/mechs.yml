@@ -321,13 +321,14 @@
       path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
   - type: Mech
     baseState: stepfather
-    openState: stepfather-open
+    openState: stepfather
     brokenState: ripley-broken
     mechToPilotDamageMultiplier: 0.50
     airtight: true
     pilotWhitelist:
       components:
         - HumanoidAppearance
+        - Pilot
   - type: MeleeWeapon
     hidden: true
     attackRate: 1
