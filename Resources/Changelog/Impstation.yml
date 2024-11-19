@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: joelsgp
-  changes:
-  - message: Prototype fixes
-    type: Fix
-  id: 44
-  time: '2024-07-28T17:10:23.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/57
 - author: formlessnameless
   changes:
   - message: Spy VS Spy updates
@@ -4287,3 +4280,11 @@
   id: 543
   time: '2024-11-19T03:10:10.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/756
+- author: hivehum
+  changes:
+  - message: You can no longer receive Antimov law boards and singularity beacons
+      from Syndicate Surplus Crates.
+    type: Tweak
+  id: 544
+  time: '2024-11-19T03:11:31.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/755
