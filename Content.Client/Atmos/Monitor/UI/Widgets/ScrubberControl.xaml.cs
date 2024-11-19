@@ -95,40 +95,44 @@ public sealed partial class ScrubberControl : BoxContainer
                 ToggleMode = true,
                 HorizontalExpand = true
             };
-            if (_data.PriorityGases.Contains(value))
+            if (_data.FilterGases.Contains(value))
             {
                 gasButton.StyleClasses.Add("ButtonColorGreen");
             }
-            if (_data.DisabledGases.Contains(value))
+            else if (!_data.OverflowGases.Contains(value))
             {
                 gasButton.StyleClasses.Add(StyleBase.ButtonCaution);
             }
             gasButton.OnPressed += args =>
             {
-                int state = 0;
-                if (_data.DisabledGases.Contains(value))
+                var beforeState = 0; // Disabled
+                if (_data.OverflowGases.Contains(value))
                 {
-                    state = 2;
+                    beforeState = 1; // Overflow
                 }
-                else if (_data.PriorityGases.Contains(value))
+                else if (_data.FilterGases.Contains(value))
                 {
-                    state = 1;
+                    beforeState = 2; // Filter
                 }
 
-                _data.PriorityGases.Remove(value);
-                _data.DisabledGases.Remove(value);
+                _data.FilterGases.Remove(value);
+                _data.OverflowGases.Remove(value);
                 gasButton.StyleClasses.Remove("ButtonColorGreen");
                 gasButton.StyleClasses.Remove(StyleBase.ButtonCaution);
                 gasButton.Pressed = false;
-                if (state == 0)
+
+                switch (beforeState)
                 {
-                    _data.PriorityGases.Add(value);
-                    gasButton.StyleClasses.Add("ButtonColorGreen");
-                }
-                else if (state == 1)
-                {
-                    _data.DisabledGases.Add(value);
-                    gasButton.StyleClasses.Add(StyleBase.ButtonCaution);
+                    case 0: // Disabled -> Overflow
+                        _data.OverflowGases.Add(value);
+                        break;
+                    case 1: // Overflow -> Filter
+                        _data.FilterGases.Add(value);
+                        gasButton.StyleClasses.Add("ButtonColorGreen");
+                        break;
+                    case 2: // Filter -> Disabled
+                        gasButton.StyleClasses.Add(StyleBase.ButtonCaution);
+                        break;
                 }
 
                 ScrubberDataChanged?.Invoke(_address, _data);
@@ -155,20 +159,20 @@ public sealed partial class ScrubberControl : BoxContainer
 
         _data.WideNet = data.WideNet;
         _wideNet.Pressed = _data.WideNet;
-        _data.PriorityGases = data.PriorityGases;
-        _data.DisabledGases = data.DisabledGases;
+        _data.FilterGases = data.FilterGases;
+        _data.OverflowGases = data.OverflowGases;
 
         foreach (var value in Enum.GetValues<Gas>())
         {
             _gasControls[value].StyleClasses.Remove("ButtonColorGreen");
             _gasControls[value].StyleClasses.Remove(StyleBase.ButtonCaution);
-            if (data.DisabledGases.Contains(value))
-            {
-                _gasControls[value].StyleClasses.Add(StyleBase.ButtonCaution);
-            }
-            else if (data.PriorityGases.Contains(value))
+            if (data.FilterGases.Contains(value))
             {
                 _gasControls[value].StyleClasses.Add("ButtonColorGreen");
+            }
+            else if (!data.OverflowGases.Contains(value))
+            {
+                _gasControls[value].StyleClasses.Add(StyleBase.ButtonCaution);
             }
         }
     }

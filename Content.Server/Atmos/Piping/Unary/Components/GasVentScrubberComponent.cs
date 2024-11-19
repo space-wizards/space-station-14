@@ -23,9 +23,9 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         public string OutletName { get; set; } = "pipe";
 
         [DataField]
-        public HashSet<Gas> PriorityGases = new(GasVentScrubberData.DefaultPriorityGases);
+        public HashSet<Gas> FilterGases = new(GasVentScrubberData.DefaultFilterGases);
         [DataField]
-        public HashSet<Gas> DisabledGases = new();
+        public HashSet<Gas> OverflowGases = new(GasVentScrubberData.DefaultOverflowGases);
 
         [DataField]
         public ScrubberPumpDirection PumpDirection { get; set; } = ScrubberPumpDirection.Scrubbing;
@@ -72,8 +72,8 @@ namespace Content.Server.Atmos.Piping.Unary.Components
             {
                 Enabled = Enabled,
                 Dirty = IsDirty,
-                PriorityGases = PriorityGases,
-                DisabledGases = DisabledGases,
+                FilterGases = FilterGases,
+                OverflowGases = OverflowGases,
                 PumpDirection = PumpDirection,
                 VolumeRate = TransferRate,
                 TargetPressure = TargetPressure,
@@ -90,17 +90,17 @@ namespace Content.Server.Atmos.Piping.Unary.Components
             TargetPressure = data.TargetPressure;
             WideNet = data.WideNet;
 
-            if (!data.PriorityGases.SequenceEqual(PriorityGases))
+            if (!data.FilterGases.SequenceEqual(FilterGases))
             {
-                PriorityGases.Clear();
-                foreach (var gas in data.PriorityGases)
-                    PriorityGases.Add(gas);
+                FilterGases.Clear();
+                foreach (var gas in data.FilterGases)
+                    FilterGases.Add(gas);
             }
-            if (!data.DisabledGases.SequenceEqual(DisabledGases))
+            if (!data.OverflowGases.SequenceEqual(OverflowGases))
             {
-                DisabledGases.Clear();
-                foreach (var gas in data.DisabledGases)
-                    DisabledGases.Add(gas);
+                OverflowGases.Clear();
+                foreach (var gas in data.OverflowGases)
+                    OverflowGases.Add(gas);
             }
         }
     }

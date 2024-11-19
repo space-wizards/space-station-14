@@ -69,16 +69,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             var position = _transformSystem.GetGridTilePositionOrDefault(uid);
             var environment = _atmosphereSystem.GetTileMixture(grid, args.Map, position, true);
 
-            HashSet<Gas> overflowGases = [];
-            foreach (var value in Enum.GetValues<Gas>())
-            {
-                if (!scrubber.DisabledGases.Contains(value) && !scrubber.PriorityGases.Contains(value))
-                {
-                    overflowGases.Add(value);
-                }
-            }
-
-            Scrub(timeDelta, scrubber, overflowGases, environment, outlet);
+            Scrub(timeDelta, scrubber, environment, outlet);
 
             if (!scrubber.WideNet)
                 return;
@@ -87,7 +78,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             var enumerator = _atmosphereSystem.GetAdjacentTileMixtures(grid, position, false, true);
             while (enumerator.MoveNext(out var adjacent))
             {
-                Scrub(timeDelta, scrubber, overflowGases, adjacent, outlet);
+                Scrub(timeDelta, scrubber, adjacent, outlet);
             }
         }
 
@@ -97,15 +88,15 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         private void OnVentScrubberEnterAtmosphere(EntityUid uid, GasVentScrubberComponent component,
             AtmosDeviceEnabledEvent args) => UpdateState(uid, component);
 
-        private void Scrub(float timeDelta, GasVentScrubberComponent scrubber, HashSet<Gas> overflowGases, GasMixture? tile, PipeNode outlet)
+        private void Scrub(float timeDelta, GasVentScrubberComponent scrubber, GasMixture? tile, PipeNode outlet)
         {
-            Scrub(timeDelta, scrubber.TransferRate*_atmosphereSystem.PumpSpeedup(), scrubber.TargetPressure, scrubber.PumpDirection, scrubber.PriorityGases, overflowGases, tile, outlet.Air);
+            Scrub(timeDelta, scrubber.TransferRate*_atmosphereSystem.PumpSpeedup(), scrubber.TargetPressure, scrubber.PumpDirection, scrubber.FilterGases, scrubber.OverflowGases, tile, outlet.Air);
         }
 
         /// <summary>
         /// True if we were able to scrub, false if we were not.
         /// </summary>
-        public bool Scrub(float timeDelta, float transferRate, float targetPressure, ScrubberPumpDirection mode, HashSet<Gas> priorityGases, HashSet<Gas> overflowGases, GasMixture? tile, GasMixture destination)
+        public bool Scrub(float timeDelta, float transferRate, float targetPressure, ScrubberPumpDirection mode, HashSet<Gas> filterGases, HashSet<Gas> overflowGases, GasMixture? tile, GasMixture destination)
         {
             // Cannot scrub if tile is null or air-blocked.
             if (tile == null
@@ -129,7 +120,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 {
                     _atmosphereSystem.ScrubInto(removed, destination, overflowGases, 0.5f);
                 }
-                _atmosphereSystem.ScrubInto(removed, destination, priorityGases);
+                _atmosphereSystem.ScrubInto(removed, destination, filterGases);
 
                 // Remix the gases.
                 _atmosphereSystem.Merge(tile, removed);

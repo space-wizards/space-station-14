@@ -9,14 +9,14 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
         public bool Enabled { get; set; }
         public bool Dirty { get; set; }
         public bool IgnoreAlarms { get; set; } = false;
-        public HashSet<Gas> PriorityGases { get; set; } = new(DefaultPriorityGases);
-        public HashSet<Gas> DisabledGases { get; set; } = [];
+        public HashSet<Gas> FilterGases { get; set; } = new(DefaultFilterGases);
+        public HashSet<Gas> OverflowGases { get; set; } = new(DefaultOverflowGases);
         public ScrubberPumpDirection PumpDirection { get; set; } = ScrubberPumpDirection.Scrubbing;
         public float VolumeRate { get; set; } = 200f;
         public float TargetPressure { get; set; } = Atmospherics.OneAtmosphere;
         public bool WideNet { get; set; } = false;
 
-        public static HashSet<Gas> DefaultPriorityGases = new()
+        public static HashSet<Gas> DefaultFilterGases = new()
         {
             Gas.CarbonDioxide,
             Gas.Plasma,
@@ -26,14 +26,19 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
             Gas.NitrousOxide,
             Gas.Frezon
         };
+        public static HashSet<Gas> DefaultOverflowGases = new()
+        {
+            Gas.Oxygen,
+            Gas.Nitrogen
+        };
 
         // Presets for 'dumb' air alarm modes
 
         public static GasVentScrubberData FilterModePreset = new GasVentScrubberData
         {
             Enabled = true,
-            PriorityGases = new(GasVentScrubberData.DefaultPriorityGases),
-            DisabledGases = [],
+            FilterGases = new(GasVentScrubberData.DefaultFilterGases),
+            OverflowGases = new(GasVentScrubberData.DefaultOverflowGases),
             PumpDirection = ScrubberPumpDirection.Scrubbing,
             VolumeRate = 200f,
             TargetPressure = Atmospherics.OneAtmosphere,
@@ -43,8 +48,8 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
         public static GasVentScrubberData WideFilterModePreset = new GasVentScrubberData
         {
             Enabled = true,
-            PriorityGases = new(GasVentScrubberData.DefaultPriorityGases),
-            DisabledGases = [],
+            FilterGases = new(GasVentScrubberData.DefaultFilterGases),
+            OverflowGases = new(GasVentScrubberData.DefaultOverflowGases),
             PumpDirection = ScrubberPumpDirection.Scrubbing,
             VolumeRate = 200f,
             TargetPressure = Atmospherics.OneAtmosphere,
@@ -55,8 +60,8 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
         {
             Enabled = false,
             Dirty = true,
-            PriorityGases = [],
-            DisabledGases = new(Enum.GetValues<Gas>()),
+            FilterGases = [],
+            OverflowGases = [],
             PumpDirection = ScrubberPumpDirection.Scrubbing,
             VolumeRate = 200f,
             TargetPressure = Atmospherics.OneAtmosphere,
@@ -67,8 +72,8 @@ namespace Content.Shared.Atmos.Piping.Unary.Components
         {
             Enabled = true,
             Dirty = true,
-            PriorityGases = new(GasVentScrubberData.DefaultPriorityGases),
-            DisabledGases = [],
+            FilterGases = new(GasVentScrubberData.DefaultFilterGases),
+            OverflowGases = new(GasVentScrubberData.DefaultOverflowGases),
             PumpDirection = ScrubberPumpDirection.Siphoning,
             VolumeRate = 200f,
             TargetPressure = 0f,
