@@ -122,7 +122,7 @@
   - type: CombatMode
     combatToggleAction: ActionCombatModeToggleOff
   - type: Bloodstream
-    bloodMaxVolume: 30
+    bloodMaxVolume: 10
     bloodReagent: FishOil
   - type: MobPrice
     price: 400
