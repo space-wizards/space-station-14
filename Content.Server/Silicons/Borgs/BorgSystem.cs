@@ -99,7 +99,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
             return;
 
         if (!_roles.MindHasRole<BorgBrainRoleComponent>(mindId))
-            _roles.MindAddRole(mindId, "MindRoleBorgBrain");
+            _roles.MindAddRole(mindId, "MindRoleBorgBrain", silent: true);
     }
 
     private void OnChassisInteractUsing(EntityUid uid, BorgChassisComponent component, AfterInteractUsingEvent args)
