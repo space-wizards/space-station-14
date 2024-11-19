@@ -259,12 +259,5 @@
 
 - type: latheRecipe
   parent: BaseToolbox
-  id: ToolboxGolden
-  result: ToolboxGolden
-  materials:
-    Gold: 500
-
-- type: latheRecipe
-  parent: BaseToolbox
   id: ToolboxSyndicate
   result: ToolboxSyndicate
