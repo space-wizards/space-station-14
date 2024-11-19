@@ -11,21 +11,25 @@ public sealed class CollectiveMindUpdateSystem : EntitySystem
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     
-    private static int _currentId = 0;
+    private static Dictionary<string, int> _currentId = new();
 
     public void UpdateCollectiveMind(EntityUid uid, CollectiveMindComponent collective)
     {
         foreach (var prototype in _prototypeManager.EnumeratePrototypes<CollectiveMindPrototype>())
         {
+            if (!_currentId.ContainsKey(prototype.ID))
+                _currentId[prototype.ID] = 0;
+            
             foreach (var component in prototype.RequiredComponents)
-                if (EntityManager.HasComponent(uid, _componentFactory.GetRegistration(component).Type) && !collective.Minds.Contains(prototype.ID))
-                    collective.Minds.Add(prototype.ID);
+                if (EntityManager.HasComponent(uid, _componentFactory.GetRegistration(component).Type) && !collective.Minds.ContainsKey(prototype.ID))
+                    collective.Minds.Add(prototype.ID, ++_currentId[prototype.ID]);
+                else if (!EntityManager.HasComponent(uid, _componentFactory.GetRegistration(component).Type) && collective.Minds.ContainsKey(prototype.ID))
+                    collective.Minds.Remove(prototype.ID);
             foreach (var tag in prototype.RequiredTags)
-                if (_tag.HasTag(uid, tag) && !collective.Minds.Contains(prototype.ID))
-                    collective.Minds.Add(prototype.ID);
+                if (_tag.HasTag(uid, tag) && !collective.Minds.ContainsKey(prototype.ID))
+                    collective.Minds.Add(prototype.ID, ++_currentId[prototype.ID]);
+                else if (!_tag.HasTag(uid, tag) && collective.Minds.ContainsKey(prototype.ID))
+                    collective.Minds.Remove(prototype.ID);
         }
-        
-        if (collective.UniqueId == null)
-            collective.UniqueId = ++_currentId;
     }
 }

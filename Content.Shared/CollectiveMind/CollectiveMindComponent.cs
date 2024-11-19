@@ -6,10 +6,7 @@ namespace Content.Shared.CollectiveMind
     [RegisterComponent, NetworkedComponent]
     public sealed partial class CollectiveMindComponent : Component
     {
-        [DataField("minds", customTypeSerializer: typeof(PrototypeIdListSerializer<CollectiveMindPrototype>))]
-        public List<string> Minds = new();
-
-        [DataField("entityID")]
-        public int? UniqueId { get; set; } = null;
+        [DataField("minds")]
+        public Dictionary<string, int> Minds = new();
     }
 }

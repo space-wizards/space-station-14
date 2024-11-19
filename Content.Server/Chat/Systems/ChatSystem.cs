@@ -445,7 +445,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
     private void SendCollectiveMindChat(EntityUid source, string message, CollectiveMindPrototype? collectiveMind)
     {
-        if (_mobStateSystem.IsDead(source) || collectiveMind == null || message == "" || !TryComp<CollectiveMindComponent>(source, out var sourseCollectiveMindComp) || !sourseCollectiveMindComp.Minds.Contains(collectiveMind.ID))
+        if (_mobStateSystem.IsDead(source) || collectiveMind == null || message == "" || !TryComp<CollectiveMindComponent>(source, out var sourseCollectiveMindComp) || !sourseCollectiveMindComp.Minds.ContainsKey(collectiveMind.ID))
             return;
 
         var clients = Filter.Empty();
@@ -455,16 +455,13 @@ public sealed partial class ChatSystem : SharedChatSystem
             if (_mobStateSystem.IsDead(uid))
                 continue;
 
-            if (collectMindComp.Minds.Contains(collectiveMind.ID))
+            if (collectMindComp.Minds.ContainsKey(collectiveMind.ID))
             {
                 clients.AddPlayer(actorComp.PlayerSession);
             }
         }
         
-        var Number = $"{sourseCollectiveMindComp.UniqueId}";
-        
-        if (sourseCollectiveMindComp.UniqueId == null)
-            Number = "Unknown";
+        var Number = $"{sourseCollectiveMindComp.Minds[collectiveMind.ID]}";
 
         var admins = _adminManager.ActiveAdmins
             .Select(p => p.Channel);
@@ -479,7 +476,8 @@ public sealed partial class ChatSystem : SharedChatSystem
         adminMessageWrap = Loc.GetString("collective-mind-chat-wrap-message-admin",
             ("source", source),
             ("message", message),
-            ("channel", collectiveMind.LocalizedName));
+            ("channel", collectiveMind.LocalizedName),
+            ("number", Number));
 
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"CollectiveMind chat from {ToPrettyString(source):Player}: {message}");
 
@@ -490,6 +488,16 @@ public sealed partial class ChatSystem : SharedChatSystem
             source,
             false,
             true,
+            collectiveMind.Color); 
+            
+        // FOR ADMINS
+        _chatManager.ChatMessageToMany(ChatChannel.CollectiveMind,
+            message,
+            adminMessageWrap,
+            source,
+            false,
+            true,
+            admins,
             collectiveMind.Color);
     }
 
