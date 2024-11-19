@@ -385,7 +385,7 @@
   - type: Inventory
     templateId: borg
   - type: Hands
-    showInHands: false
+    showInHands: true
     disableExplosionRecursion: true
   - type: Repairable
     doAfterDelay: 15
@@ -399,7 +399,7 @@
     sounds:
       Unsexed: UnisexSilicon
   - type: Puller
-    needsHands: false
+    needsHands: true
   - type: HealthExaminable
     examinableTypes:
       - Blunt
