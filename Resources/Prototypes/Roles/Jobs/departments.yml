@@ -5,12 +5,11 @@
   roles:
   - CargoTechnician
   - Quartermaster
-  - SalvageSpecialist
 
 - type: department
-  id: Cargo
+  id: Expeditionary
   description: department-Expeditioneering-description
-  color: "#A46106"
+  color: "#846DCF"
   roles:
   - SalvageSpecialist
 
