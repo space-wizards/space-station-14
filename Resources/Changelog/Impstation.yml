@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: joelsgp
   changes:
-  - message: New loading tips from community suggestions
-    type: Add
-  id: 41
-  time: '2024-07-28T17:09:34.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/54
-- author: joelsgp
-  changes:
   - message: Add End as default keybind for opening round end summary
     type: Tweak
   id: 42
@@ -4282,3 +4275,12 @@
   id: 540
   time: '2024-11-19T02:31:05.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/749
+- author: widgetbeck
+  changes:
+  - message: Thaven speech quirk moods are now (as a group) as likely to roll as any
+      other single mood, which should make Thaven moods more interesting on average,
+      and make it easier to play a consistent character.
+    type: Tweak
+  id: 541
+  time: '2024-11-19T02:53:33.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/752
