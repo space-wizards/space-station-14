@@ -619,6 +619,7 @@
     tags:
     - LemonGarnish
     - Fruit
+    - Slice
     - DrinkGarnish
   - type: FoodSequenceElement
     entries:
@@ -711,6 +712,7 @@
     tags:
     - LimeGarnish
     - Fruit
+    - Slice
     - DrinkGarnish
   - type: FoodSequenceElement
     entries:
