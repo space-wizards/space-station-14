@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 using Content.Server.Singularity.EntitySystems;
@@ -59,7 +59,7 @@ public sealed partial class SingularityGeneratorComponent : Component
     /// For how long the failsafe will cause the generator to stop working and not issue a failsafe warning
     /// </summary>
     [DataField]
-    public TimeSpan FailsafeCooldown = TimeSpan.FromSeconds(30);
+    public TimeSpan FailsafeCooldown = TimeSpan.FromSeconds(10);
 
     /// <summary>
     /// How long until the generator can issue a failsafe warning again
