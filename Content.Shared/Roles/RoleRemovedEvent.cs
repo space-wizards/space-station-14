@@ -7,8 +7,5 @@ namespace Content.Shared.Roles;
 /// </summary>
 /// <param name="MindId">The mind id associated with the player.</param>
 /// <param name="Mind">The mind component associated with the mind id.</param>
-/// <param name="Antagonist">
-///     Whether or not the role made the player an antagonist.
-///     They may still be one due to one of their other roles.
-/// </param>
+/// <param name="RoleTypeUpdate">True if this update has changed the mind's role type</param>
 public sealed record RoleRemovedEvent(EntityUid MindId, MindComponent Mind, bool RoleTypeUpdate) : RoleEvent(MindId, Mind, RoleTypeUpdate);
