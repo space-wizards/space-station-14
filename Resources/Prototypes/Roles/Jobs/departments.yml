@@ -12,6 +12,7 @@
   color: "#846DCF"
   roles:
   - SalvageSpecialist
+  - BasinTechnician
 
 - type: department
   id: Civilian
