@@ -58,8 +58,8 @@ public sealed partial class MechSystem : SharedMechSystem
         SubscribeLocalEvent<MechComponent, MechEquipmentRemoveMessage>(OnRemoveEquipmentMessage);
 
         SubscribeLocalEvent<MechComponent, UpdateCanMoveEvent>(OnMechCanMoveEvent);
-       #SubscribeLocalEvent<MechPilotComponent, UpdateCanMoveEvent>(OnPilotCanMoveEvent);
-       #TODO: Locking independent mech movement if pilot is inside
+       // SubscribeLocalEvent<MechPilotComponent, UpdateCanMoveEvent>(OnPilotCanMoveEvent);
+       // TODO: Locking independent mech movement if pilot is inside
 
         SubscribeLocalEvent<MechPilotComponent, ToolUserAttemptUseEvent>(OnToolUseAttempt);
         SubscribeLocalEvent<MechPilotComponent, InhaleLocationEvent>(OnInhale);
