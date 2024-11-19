@@ -29,7 +29,7 @@
     - NitrousOxide
     - Frezon
     - Water
-    #- Helium3 TODO: fusion
+    TransferRate: 0.9
   - type: AirIntake
   # for intake and filter to work
   - type: AtmosDevice
