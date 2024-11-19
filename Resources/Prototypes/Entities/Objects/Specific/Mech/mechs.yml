@@ -327,7 +327,6 @@
     airtight: true
     pilotWhitelist:
       components:
-        - HumanoidAppearance
         - Pilot
   - type: MeleeWeapon
     hidden: true
