@@ -325,6 +325,8 @@ public sealed class AirAlarmSystem : EntitySystem
         if (AccessCheck(uid, args.Actor, component)
             && _deviceList.ExistsInDeviceList(uid, args.Address))
         {
+            _adminLogger.Add(LogType.AtmosAirAlarm, LogImpact.Medium, $"{ToPrettyString(args.Actor)} changed {args.Address} settings using {ToPrettyString(uid)}");
+
             SetDeviceData(uid, args.Address, args.Data);
         }
         else
