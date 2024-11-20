@@ -27,7 +27,7 @@ public sealed class SupermatterCascadeSystem : EntitySystem
 
     private readonly LinkedList<Branch> _branches = [];
     private LinkedListNode<Branch>? node;
-    private readonly string[] _prototypes = ["Cascad1", "Cascad2", "Cascad3", "Cascad4", "Cascad5"];
+    private readonly string[] _prototypes = ["Cascad1", "Cascad2", "Cascad3", "Cascad4", "Cascad5", "Cascad6"];
     public override void Initialize()
     {
     }
