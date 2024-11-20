@@ -343,4 +343,19 @@ Entries:
   id: 48
   time: '2024-11-19T17:48:54.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/71
+- author: STARLIGHT TEAM
+  changes:
+  - message: The ability to attach any item as a limb has been added, along with the
+      option for the body owner to use the item.
+    type: Add
+  id: 49
+  time: '2024-11-20T00:09:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/72
+- author: STARLIGHT TEAM
+  changes:
+  - message: Pizza textures for in-hand.
+    type: Add
+  id: 50
+  time: '2024-11-20T00:09:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/72
 
