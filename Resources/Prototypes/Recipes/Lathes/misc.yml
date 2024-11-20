@@ -53,6 +53,15 @@
     Glass: 50
 
 - type: latheRecipe
+  id: DimLightBulb
+  result: DimLightBulb
+  category: Lights
+  completetime: 2
+  materials:
+    Steel: 50
+    Glass: 50
+
+- type: latheRecipe
   id: GlowstickRed
   result: GlowstickRed
   category: Lights

@@ -1,4 +1,4 @@
-﻿# Offensive
+# Offensive
 - type: listing
   id: SpellbookFireball
   name: spellbook-fireball-name
@@ -131,6 +131,34 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+
+- type: listing
+  id: SpellbookEventSummonGuns
+  name: spellbook-event-summon-guns-name
+  description: spellbook-event-summon-guns-description
+  productAction: ActionSummonGuns
+  cost:
+    WizCoin: 2
+  categories:
+  - SpellbookEvents
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  disableRefund: true
+
+- type: listing
+  id: SpellbookEventSummonMagic
+  name: spellbook-event-summon-magic-name
+  description: spellbook-event-summon-magic-description
+  productAction: ActionSummonMagic
+  cost:
+    WizCoin: 2
+  categories:
+  - SpellbookEvents
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  disableRefund: true
 
 # Upgrades
 - type: listing
