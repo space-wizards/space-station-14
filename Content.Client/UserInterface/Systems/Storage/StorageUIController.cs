@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Client.Examine;
 using Content.Client.Hands.Systems;
 using Content.Client.Interaction;
+using Content.Client.Storage;
 using Content.Client.Storage.Systems;
 using Content.Client.UserInterface.Systems.Hotbar.Widgets;
 using Content.Client.UserInterface.Systems.Storage.Controls;
@@ -63,9 +64,32 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
     {
         base.Initialize();
 
+        UIManager.OnScreenChanged += OnScreenChange;
+
         _configuration.OnValueChanged(CCVars.StaticStorageUI, OnStaticStorageChanged, true);
         _configuration.OnValueChanged(CCVars.OpaqueStorageWindow, OnOpaqueWindowChanged, true);
         _configuration.OnValueChanged(CCVars.StorageWindowTitle, OnStorageWindowTitle, true);
+    }
+
+    private void OnScreenChange((UIScreen? Old, UIScreen? New) obj)
+    {
+        // Handle reconnects with hotbargui.
+        if (!StaticStorageUIEnabled ||
+            obj.New == null ||
+            !EntityManager.TryGetComponent(_player.LocalEntity, out UserInterfaceUserComponent? userComp))
+        {
+            return;
+        }
+
+        var uiSystem = EntityManager.System<SharedUserInterfaceSystem>();
+
+        foreach (var bui in uiSystem.GetActorUis((_player.LocalEntity.Value, userComp)))
+        {
+            if (!uiSystem.TryGetOpenUi<StorageBoundUserInterface>(bui.Entity, StorageComponent.StorageUiKey.Key, out var storageBui))
+                continue;
+
+            storageBui.ReOpen();
+        }
     }
 
     private void OnStorageWindowTitle(bool obj)
