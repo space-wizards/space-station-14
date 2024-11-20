@@ -372,3 +372,11 @@ Entries:
   id: 52
   time: '2024-11-20T06:50:49.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/72
+- author: Rinary
+  changes:
+  - message: Added collective mind to spiders
+    type: Add
+  id: 53
+  time: '2024-11-20T18:27:29.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/74
+
