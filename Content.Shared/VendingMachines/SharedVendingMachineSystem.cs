@@ -98,6 +98,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
                     Dirty(uid, comp);
 
                     EjectItem(uid, comp);
+                    UpdateUI((uid, comp));
                 }
             }
 

@@ -10,6 +10,7 @@ using Robust.Client.UserInterface;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.IdentityManagement;
 using Robust.Client.Graphics;
+using Robust.Shared.Timing;
 
 namespace Content.Client.VendingMachines.UI
 {
@@ -21,6 +22,12 @@ namespace Content.Client.VendingMachines.UI
 
         private readonly Dictionary<EntProtoId, EntityUid> _dummies = [];
         private readonly Dictionary<EntProtoId, (ListContainerButton Button, VendingMachineItem Item)> _listItems = new();
+        private readonly Dictionary<EntProtoId, uint> _amounts = new();
+
+        /// <summary>
+        /// Where the vending machine is able to be interacted with or not.
+        /// </summary>
+        private bool _enabled;
 
         public event Action<GUIBoundKeyEventArgs, ListData>? OnItemSelected;
 
@@ -73,18 +80,19 @@ namespace Content.Client.VendingMachines.UI
             var item = new VendingMachineItem(protoID, text);
             _listItems[protoID] = (button, item);
             button.AddChild(item);
-
-            button.ToolTip = text;
             button.AddStyleClass("ButtonSquare");
+            button.Disabled = !_enabled || _amounts[protoID] == 0;
         }
 
         /// <summary>
         /// Populates the list of available items on the vending machine interface
         /// and sets icons based on their prototypes
         /// </summary>
-        public void Populate(List<VendingMachineInventoryEntry> inventory)
+        public void Populate(List<VendingMachineInventoryEntry> inventory, bool enabled)
         {
+            _enabled = enabled;
             _listItems.Clear();
+            _amounts.Clear();
 
             if (inventory.Count == 0 && VendingContents.Visible)
             {
@@ -115,7 +123,10 @@ namespace Content.Client.VendingMachines.UI
                 var entry = inventory[i];
 
                 if (!_prototypeManager.TryIndex(entry.ID, out var prototype))
+                {
+                    _amounts[entry.ID] = 0;
                     continue;
+                }
 
                 if (!_dummies.TryGetValue(entry.ID, out var dummy))
                 {
@@ -125,6 +136,7 @@ namespace Content.Client.VendingMachines.UI
 
                 var itemName = Identity.Name(dummy, _entityManager);
                 var itemText = $"{itemName} [{entry.Amount}]";
+                _amounts[entry.ID] = entry.Amount;
 
                 if (itemText.Length > longestEntry.Length)
                     longestEntry = itemText;
@@ -143,19 +155,22 @@ namespace Content.Client.VendingMachines.UI
         /// <summary>
         /// Updates text entries for vending data in place without modifying the list controls.
         /// </summary>
-        public void UpdateAmounts(List<VendingMachineInventoryEntry> cachedInventory)
+        public void UpdateAmounts(List<VendingMachineInventoryEntry> cachedInventory, bool enabled)
         {
+            _enabled = enabled;
+
             foreach (var (proto, uid) in _dummies)
             {
                 if (!_listItems.TryGetValue(proto, out var button))
                     continue;
 
                 var dummy = _dummies[proto];
+                var amount = cachedInventory.First(o => o.ID == proto).Amount;
                 // Could be better? Problem is all inventory entries get squashed.
-                var text = GetItemText(dummy, cachedInventory.First(o => o.ID == proto).Amount);
+                var text = GetItemText(dummy, amount);
 
-                button.Button.ToolTip = text;
                 button.Item.SetText(text);
+                button.Button.Disabled = !enabled || amount == 0;
             }
         }
 
