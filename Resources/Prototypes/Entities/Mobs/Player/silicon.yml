@@ -375,7 +375,7 @@
   - type: BlockMovement
     blockInteraction: false
   - type: SiliconLawProvider
-    laws: Crewsimov
+    laws: DungeonMasterLawset
   - type: SiliconLawBound
   - type: ActionGrant
     actions:
