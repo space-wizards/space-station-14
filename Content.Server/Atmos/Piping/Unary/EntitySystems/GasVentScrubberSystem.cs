@@ -199,7 +199,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                     if (previous.WideNet != setData.WideNet)
                     {
                         string enabled = setData.WideNet ? "enabled" : "disabled" ;
-                        _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(uid)} {enabled}");
+                        _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(uid)} WideNet {enabled}");
                     }
 
                     component.FromAirAlarmData(setData);

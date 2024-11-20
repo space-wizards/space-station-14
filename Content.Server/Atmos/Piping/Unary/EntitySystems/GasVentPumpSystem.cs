@@ -246,7 +246,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                         _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(uid)} direction changed to {setData.PumpDirection}");
 
                     if (previous.PressureChecks != setData.PressureChecks)
-                        _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(uid)} check changed to {setData.PressureChecks}");
+                        _adminLogger.Add(LogType.AtmosDeviceSetting, LogImpact.Medium, $"{ToPrettyString(uid)} pressure check changed to {setData.PressureChecks}");
 
                     if (previous.ExternalPressureBound != setData.ExternalPressureBound)
                     {

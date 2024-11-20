@@ -427,7 +427,7 @@ public sealed class AtmosMonitorSystem : EntitySystem
                     _adminLogger.Add(
                         LogType.AtmosDeviceSetting,
                         LogImpact.Medium,
-                        $"{ToPrettyString(uid)} {logPrefix} {change.Type} changed from {change.Previous} {logValueSuffix} to {change.Current} {logValueSuffix}"
+                        $"{ToPrettyString(uid)} {logPrefix} {change.Type} changed from {change.Previous.Value} {logValueSuffix} to {change.Current.Value} {logValueSuffix}"
                     );
                 }
             }
