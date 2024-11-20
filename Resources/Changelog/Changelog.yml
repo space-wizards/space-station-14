@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: You can now smelt ores in intervals smaller than 30.
-    type: Add
-  id: 7132
-  time: '2024-08-17T05:12:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31074
 - author: themias
   changes:
   - message: Added a recipe for croissants
@@ -3923,3 +3916,11 @@
   id: 7631
   time: '2024-11-20T05:55:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33358
+- author: TheWaffleJesus
+  changes:
+  - message: You can now craft items with stacks of capacitors without it eating it
+      all!
+    type: Fix
+  id: 7632
+  time: '2024-11-20T07:18:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31966
