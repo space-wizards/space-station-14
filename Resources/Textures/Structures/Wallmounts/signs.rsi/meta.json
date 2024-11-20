@@ -324,7 +324,11 @@
             "name": "oxidants"
         },
         {
-            "name": "pods"
+            "name" : "pods"
+        },
+        {
+            "name": "pods_directional",
+            "directions": 4
         },
         {
             "name": "prison"

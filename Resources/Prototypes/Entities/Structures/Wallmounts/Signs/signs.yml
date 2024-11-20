@@ -524,6 +524,15 @@
 
 - type: entity
   parent: BaseSign
+  id: SignEscapePodsDirectional
+  name: escape pods sign directional
+  description: A sign indicating the escape pods.
+  components:
+  - type: Sprite
+    state: pods_directional
+
+- type: entity
+  parent: BaseSign
   id: SignEVA
   name: EVA sign
   description: A sign indicating an EVA area. EVA equipment may be required beyond this point.
