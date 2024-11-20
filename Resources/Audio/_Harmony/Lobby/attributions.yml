@@ -4,6 +4,6 @@
   source: "https://www.subsetgames.com/forum/viewtopic.php?f=11&t=15663"
 
 ﻿- files: ["harmonilla.ogg"]
-  license: ""
-  copyright: ""
-  source: ""
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "meatballwalkin"
+  source: "https://github.com/ss14-harmony/space-station-14"
