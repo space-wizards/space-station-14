@@ -87,4 +87,9 @@
   id: whimsy
   flavorType: Base
   description: flavor-base-whimsy
+  
+- type: flavor
+  id: secticket
+  flavorType: Complex
+  description: flavor-complex-secticket
 
