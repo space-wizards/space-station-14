@@ -317,8 +317,8 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
         var virtualCustomLimb = EnsureComp<CustomLimbComponent>(virtualIteam);
         _metadata.SetEntityName(virtualIteam, metada.EntityName, virtualMetadata);
 
-        marker.VirtualPart = GetNetEntity(virtualIteam);
-        virtualCustomLimb.Item = GetNetEntity(itemId);
+        marker.VirtualPart = virtualIteam;
+        virtualCustomLimb.Item = itemId;
 
         virtualBodyPart.PartType = slotId switch
         {
@@ -347,7 +347,7 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
                 return;
 
             var vizualizer = EnsureComp<CustomLimbVisualizerComponent>(args.Body);
-            vizualizer.Layers[layer.Value] = GetNetEntity(itemId);
+            vizualizer.Layers[layer.Value] = itemId;
             Dirty(args.Body, vizualizer);
 
         }
@@ -386,10 +386,9 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
             if (_containers.Remove(args.Part, container, destination: xform.Coordinates))
             {
                 if (TryComp<CustomLimbComponent>(args.Part, out var virtualLimb) 
-                    && virtualLimb.Item.HasValue
-                    && TryGetEntity(virtualLimb.Item, out var ItemId))
+                    && virtualLimb.Item.HasValue)
                 {
-                    RemoveItemHand(args.Body, ItemId.Value, BodySystem.GetPartSlotContainerId(slotId));
+                    RemoveItemHand(args.Body, virtualLimb.Item.Value, BodySystem.GetPartSlotContainerId(slotId));
 
                     var vizualizer = EnsureComp<CustomLimbVisualizerComponent>(args.Body);
 
@@ -472,9 +471,8 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
 
     private void CustomLimbRemoved(Entity<CustomLimbMarkerComponent> ent, ref ComponentRemove args)
     {
-        if (ent.Comp.VirtualPart is null
-           || !TryGetEntity(ent.Comp.VirtualPart.Value, out var virtualPart)) return;
-        QueueDel(virtualPart);
+        if (ent.Comp.VirtualPart is null) return;
+        QueueDel(ent.Comp.VirtualPart.Value);
     }
 
     private static HumanoidVisualLayers? GetLayer(string slotId) => slotId switch
