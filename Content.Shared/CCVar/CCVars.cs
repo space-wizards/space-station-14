@@ -1366,7 +1366,7 @@ namespace Content.Shared.CCVar
         ///     This multiplier is added after all other checks are made, and applies to both throwing force, and how easy it is for an entity to be thrown.
         /// </summary>
         public static readonly CVarDef<float> AtmosHumanoidThrowMultiplier =
-            CVarDef.Create("atmos.humanoid_throw_multiplier", 2f, CVar.SERVERONLY);
+            CVarDef.Create("atmos.humanoid_throw_multiplier", 4f, CVar.SERVERONLY);
 
         /// <summary>
         /// Maximum explosion radius for explosions caused by bursting a gas tank ("max caps").
