@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Nar'Sie is satiated; moppable blood will no longer duplicate.
-    type: Fix
-  id: 7125
-  time: '2024-08-16T10:47:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30983
 - author: Blackern5000
   changes:
   - message: Disabler SMGs no longer fit in combat boots
@@ -3918,3 +3911,11 @@
   id: 7624
   time: '2024-11-20T00:57:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33415
+- author: SlamBamActionman
+  changes:
+  - message: It's no longer possible to drag an item out of a container's UI to drop
+      it.
+    type: Tweak
+  id: 7625
+  time: '2024-11-20T01:00:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32706
