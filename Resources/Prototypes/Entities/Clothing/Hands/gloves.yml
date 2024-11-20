@@ -230,6 +230,7 @@
     stealthy: true
   - type: ToggleClothing
     action: ActionToggleNinjaGloves
+    disableOnUnequip: true
   - type: NinjaGloves
     abilities:
     - components:
