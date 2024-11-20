@@ -48,3 +48,6 @@ trait-voxvocals-desc = You are somehow able to fully mimic Vox speech. (Replace 
 
 trait-hypophonia-name = Hypophonia
 trait-hypophonia-desc = You can only whisper.
+
+trait-illeism-name = Illeism
+trait-illeism-desc = You seem to only be able to refer to yourself by name.

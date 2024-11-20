@@ -95,6 +95,15 @@
       speechVerb: Vox
       speechSounds: Vox
 
+- type: trait
+  id: HarmonyIlleism
+  name: trait-illeism-name
+  description: trait-illeism-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: IlleismAccent
+
 # Full speech and vocal replacement traits
 - type: trait
   id: HarmonyArachnidVocals
