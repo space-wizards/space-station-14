@@ -10,6 +10,8 @@
   - MinorAntagonists
   - SpaceNinja
   - Thieves
+  - Vampires
+  - Abductors
 
 - type: guideEntry
   id: Traitors
@@ -45,3 +47,13 @@
   id: Thieves
   name: guide-entry-thieves
   text: "/ServerInfo/Guidebook/Antagonist/Thieves.xml"
+
+- type: guideEntry
+  id: Vampires
+  name: guide-entry-vampires
+  text: "/ServerInfo/Guidebook/Antagonist/Vampires.xml"
+  
+- type: guideEntry
+  id: Abductors
+  name: guide-entry-abductors
+  text: "/ServerInfo/Guidebook/Antagonist/Abductors.xml"

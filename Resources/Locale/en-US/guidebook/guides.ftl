@@ -77,6 +77,8 @@ guide-entry-revolutionaries = Revolutionaries
 guide-entry-minor-antagonists = Minor Antagonists
 guide-entry-space-ninja = Space Ninja
 guide-entry-thieves = Thieves
+guide-entry-vampires = Vampires
+guide-entry-abductors = Abductors
 
 guide-entry-rules = Server Rules
 guide-entry-rules-core-only = Core Only Ruleset
