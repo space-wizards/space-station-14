@@ -28,6 +28,9 @@ namespace Content.Client.Chemistry.UI
         public readonly Button[] PillTypeButtons;
 
         private const string PillsRsiPath = "/Textures/Objects/Specific/Chemistry/pills.rsi";
+        // Declares a cache for the last sent state from server.
+        // This is needed to allow for lists to repopulate when switching between input and output tabs.
+        private ChemMasterBoundUserInterfaceState? _currentState;
 
         /// <summary>
         /// Create and initialize the chem master UI client-side. Creates the basic layout,
@@ -87,6 +90,8 @@ namespace Content.Client.Chemistry.UI
 
             Tabs.SetTabTitle(0, Loc.GetString("chem-master-window-input-tab"));
             Tabs.SetTabTitle(1, Loc.GetString("chem-master-window-output-tab"));
+            // Subscribe to tab changes.
+            Tabs.OnTabChanged += OnTabChanged;
         }
 
         private ReagentButton MakeReagentButton(string text, ChemMasterReagentAmount amount, ReagentId id, bool isBuffer, string styleClass)
@@ -96,6 +101,35 @@ namespace Content.Client.Chemistry.UI
                 => OnReagentButtonPressed?.Invoke(args, button);
             return button;
         }
+        /// <summary>
+        /// Conditionally generates a set of reagent buttons based on the supplied boolean argument.
+        /// </summary>
+        private List<ReagentButton> CreateReagentButtonConstructors(ReagentId reagent, bool isBuffer, bool isInput)
+        {
+            if (!isInput)
+                return new List<ReagentButton>(); // Return an empty list if button creation is disabled.
+
+            var buttonConfigs = new (string text, ChemMasterReagentAmount amount, string styleClass)[]
+            {
+                ("1", ChemMasterReagentAmount.U1, StyleBase.ButtonOpenBoth),
+                ("5", ChemMasterReagentAmount.U5, StyleBase.ButtonOpenBoth),
+                ("10", ChemMasterReagentAmount.U10, StyleBase.ButtonOpenBoth),
+                ("25", ChemMasterReagentAmount.U25, StyleBase.ButtonOpenBoth),
+                ("50", ChemMasterReagentAmount.U50, StyleBase.ButtonOpenBoth),
+                ("100", ChemMasterReagentAmount.U100, StyleBase.ButtonOpenBoth),
+                (Loc.GetString("chem-master-window-buffer-all-amount"), ChemMasterReagentAmount.All, StyleBase.ButtonOpenLeft),
+            };
+
+            var buttons = new List<ReagentButton>();
+
+            foreach (var (text, amount, styleClass) in buttonConfigs)
+            {
+                var button = MakeReagentButton(text, amount, reagent, isBuffer, styleClass);
+                buttons.Add(button);
+            }
+
+            return buttons;
+        }
 
         /// <summary>
         /// Update the UI state when new state data is received from the server.
@@ -104,6 +138,8 @@ namespace Content.Client.Chemistry.UI
         public void UpdateState(BoundUserInterfaceState state)
         {
             var castState = (ChemMasterBoundUserInterfaceState) state;
+            _currentState = castState;
+            
             if (castState.UpdateLabel)
                 LabelLine = GenerateLabel(castState);
             UpdatePanelInfo(castState);
@@ -132,7 +168,14 @@ namespace Content.Client.Chemistry.UI
             if (BottleDosage.Value > bottleAmountMax)
                 BottleDosage.Value = bottleAmountMax;
         }
-
+        //forces the UI to refresh using cached data on swapping tab
+        private void OnTabChanged(int tabIndex)
+        {
+            if (_currentState != null)
+            {
+                UpdatePanelInfo(_currentState);
+            }
+        }
         /// <summary>
         /// Generate a product label based on reagents in the buffer.
         /// </summary>
@@ -183,24 +226,24 @@ namespace Content.Client.Chemistry.UI
             };
             bufferHBox.AddChild(bufferVol);
 
-            // initialises count of loop for purposes of alternating background color each layer,
+            // initialises count of loop for purposes of alternating background color each row,
             // and also initialises the two color values for alternating in the buffer window.
 
-            var layerCount = 0;
-            var layerColor1 = Color.FromHex("#202025");
-            var layerColor2 = Color.FromHex("#1B1B1E");
+            var rowCount = 0;
+            var rowColor1 = Color.FromHex("#202025");
+            var rowColor2 = Color.FromHex("#1B1B1E");
 
             foreach (var (reagent, quantity) in state.BufferReagents)
             {
-                // Iterate layerCount and then set backgroundColor accordingly.
+                // Iterate rowCount and then set backgroundColor accordingly.
                 // TODO: Make this striped list thing into its own Control
-                layerCount++;
-                var currentLayerColor = (layerCount % 2 == 1) ? layerColor1 : layerColor2;
-
-                BufferInfo.Children.Add(BuildReagentRow(currentLayerColor, reagent, quantity, true));
+                rowCount++;
+                var currentRowColor = (rowCount % 2 == 1) ? rowColor1 : rowColor2;
+                var isInput = true;
+                BufferInfo.Children.Add(BuildReagentRow(currentRowColor, reagent, quantity, true, isInput, false));
             }
         }
-
+        
         private void BuildContainerUI(Control control, ContainerInfo? info)
         {
             control.Children.Clear();
@@ -228,104 +271,117 @@ namespace Content.Client.Chemistry.UI
                     }
                 }
             });
-
-            IEnumerable<(ReagentId Id, FixedPoint2 Quantity)> contents;
-
+            
+            IEnumerable<(string name, ReagentId Id, FixedPoint2 Quantity)> contents;
+            // initialises count of loop for purposes of alternating background color each row,
+            // and also initialises the two color values for alternating in the buffer window.
+            var rowCount = 0;
+            var rowColor1 = Color.FromHex("#202025");
+            var rowColor2 = Color.FromHex("#1B1B1E");
+            var currentTab = Tabs.CurrentTab;
             if (info.Entities != null)
             {
-                // Only using Id and Quantity, name retrieval will happen in foreach
-                contents = info.Entities.Select(x => (default(ReagentId), x.Quantity));
+                foreach (var entity in info.Entities)
+                {
+                    var reagent = default(ReagentId);
+                    var quantity = entity.Quantity;
+                    if (currentTab == 1)
+                    {
+                        
+                        var currentRowColor = (rowCount % 2 == 1) ? rowColor1 : rowColor2;
+                        control.Children.Add(BuildReagentRow(currentRowColor, reagent, quantity, true, false, true));
+                    }
+                }
             }
-            else if (info.Reagents != null)
+            if (info.Reagents != null)
             {
-                contents = info.Reagents.Select(x => (x.Reagent, x.Quantity));
+                contents = info.Reagents.Select(x => (x.Reagent.Prototype, x.Reagent, x.Quantity));
+                foreach (var (name, reagent, quantity) in contents)
+                {
+                    // Increment rowCount and then set backgroundColor accordingly.
+                    rowCount++;
+                    var currentRowColor = (rowCount % 2 == 1) ? rowColor1 : rowColor2;
+                    
+                    if (currentTab == 0)
+                    {
+                        control.Children.Add(BuildReagentRow(currentRowColor, reagent, quantity, false, true, false));
+                    }
+                }
+            }
+        }
+
+        private Control BuildReagentRow(Color rowColor, ReagentId reagent, FixedPoint2 quantity, bool isBuffer, bool isInput, bool isEntity)
+        {
+            Color reagentColor = rowColor;
+            if (isEntity)
+            {
+                return new Label { Text = $"{reagent}: " };
+            }
+            // Try to get the prototype for the given reagent. This gives us its name and allows for SubstanceColor.
+            _prototypeManager.TryIndex(reagent.Prototype, out ReagentPrototype? proto);
+            if (proto is null)
+            {
+                // If the prototype is null, displays a placeholder text
+                return new Label { Text = Loc.GetString("chem-master-window-unknown-reagent-text") };
             }
             else
             {
-                return;
+                reagentColor = proto.SubstanceColor;
             }
 
-            // initialises count of loop for purposes of alternating background color each layer,
-            // and also initialises the two color values for alternating in the buffer window.
-
-            var layerCount = 0;
-            var layerColor1 = Color.FromHex("#202025");
-            var layerColor2 = Color.FromHex("#1B1B1E");
-
-            foreach (var (reagent, quantity) in contents)
+            var name = proto.LocalizedName;
+            
+            //entities are not reagents, so they will have their panels be the same color as the background.
+            if (reagentColor == default)
             {
-                // Skips the loop for non-reagent entities such as pill bottles.
-                if (reagent.Prototype is null)
-                    continue;
-
-                // Increment layerCount and then set backgroundColor accordingly.
-                layerCount++;
-                var currentLayerColor = (layerCount % 2 == 1) ? layerColor1 : layerColor2;
-
-                control.Children.Add(BuildReagentRow(currentLayerColor, reagent, quantity, false));
+                reagentColor = rowColor;
             }
-        }
 
-        private Control BuildReagentRow(Color rowColor, ReagentId reagent, FixedPoint2 quantity, bool isBuffer)
-        {
-            // Try to get the prototype for the given reagent. This gives us its name and allows for SubstanceColor.
-            // This was moved to the inside of the loop in order to facilitate colored panels,
-            // and bring it closer to in-line with the buffer and reagent dispensers.
-            _prototypeManager.TryIndex(reagent.Prototype, out ReagentPrototype? proto);
-            var name = proto?.LocalizedName ?? Loc.GetString("chem-master-window-unknown-reagent-text");
-
-            if (proto is null)
-                // Catch any weird null prototype reagents but don't really let to interact with them
-                // No styling but eh, this shouldn't *happen* in first place
-                return new Label { Text = name };
-
-            return new PanelContainer
+            var reagentButtonConstructors = CreateReagentButtonConstructors(reagent, isBuffer, isInput);
+            
+            // Create the row layout with the color panel
+            var rowContainer = new BoxContainer
             {
-                // Applies a color tint to the current reagent row
-                PanelOverride = new StyleBoxFlat(rowColor),
+                Orientation = LayoutOrientation.Horizontal,
                 Children =
                 {
-                    new BoxContainer
+                    new Label { Text = $"{name}: " },
+                    new Label
                     {
-                        Orientation = LayoutOrientation.Horizontal,
-                        Children =
+                        Text = $"{quantity}u",
+                        StyleClasses = { StyleNano.StyleClassLabelSecondaryColor }
+                    },
+
+                    // Padding
+                    new Control { HorizontalExpand = true },
+                    // Colored panels for reagents
+                    new PanelContainer
+                    {
+                        Name = "colorPanel",
+                        VerticalExpand = true,
+                        MinWidth = 4,
+                        PanelOverride = new StyleBoxFlat
                         {
-                            new Label { Text = $"{name}: " },
-                            new Label
-                            {
-                                Text = $"{quantity}u",
-                                StyleClasses = { StyleNano.StyleClassLabelSecondaryColor }
-                            },
-
-                            // Padding
-                            new Control { HorizontalExpand = true },
-                            // Colored panels for reagents, and invocation of proto to choose the correct color.
-                            new PanelContainer
-                            {
-                                Name = "colorPanel",
-                                VerticalExpand = true,
-                                MinWidth = 4,
-                                PanelOverride = new StyleBoxFlat
-                                {
-                                    BackgroundColor = proto.SubstanceColor
-                                },
-                                Margin = new Thickness(0,1)
-
-                            },
-
-                            MakeReagentButton("1", ChemMasterReagentAmount.U1, reagent, isBuffer, StyleBase.ButtonOpenBoth),
-                            MakeReagentButton("5", ChemMasterReagentAmount.U5, reagent, isBuffer, StyleBase.ButtonOpenBoth),
-                            MakeReagentButton("10", ChemMasterReagentAmount.U10, reagent, isBuffer, StyleBase.ButtonOpenBoth),
-                            MakeReagentButton("25", ChemMasterReagentAmount.U25, reagent, isBuffer, StyleBase.ButtonOpenBoth),
-                            MakeReagentButton("50", ChemMasterReagentAmount.U50, reagent, isBuffer, StyleBase.ButtonOpenBoth),
-                            MakeReagentButton("100", ChemMasterReagentAmount.U100, reagent, isBuffer, StyleBase.ButtonOpenBoth),
-                            MakeReagentButton(Loc.GetString("chem-master-window-buffer-all-amount"), ChemMasterReagentAmount.All, reagent, isBuffer, StyleBase.ButtonOpenLeft),
-                        }
+                            BackgroundColor = reagentColor
+                        },
+                        Margin = new Thickness(0, 1)
                     }
                 }
             };
-        }
 
+            // Add the reagent buttons after the color panel
+            foreach (var button in reagentButtonConstructors)
+            {
+                rowContainer.AddChild(button);
+            }
+
+            return new PanelContainer
+            {
+                PanelOverride = new StyleBoxFlat(rowColor),
+                Children = { rowContainer }
+            };
+        }
+        
         public string LabelLine
         {
             get => LabelLineEdit.Text;
