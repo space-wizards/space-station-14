@@ -620,3 +620,24 @@ Entries:
     - type: Tweak
       message: The emagged recycler now deals massive brute damage instead of instantly
         gibbing players.
+  - id: 203
+    author: Golinth
+    time: '2024-11-19T23:48:11.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/203
+    changes:
+    - type: Add
+      message: Added Aspid, a medium pop map based around a luxury star cruiser!
+  - id: 199
+    author: thetolbean
+    time: '2024-11-20T18:06:39.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/199
+    changes:
+    - type: Add
+      message: Added illeism as a selectable speech trait!
+  - id: 201
+    author: Zap527
+    time: '2024-11-20T19:19:26.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/201
+    changes:
+    - type: Tweak
+      message: Immovable rods now deal massive pierce damage instead of deleting you.
