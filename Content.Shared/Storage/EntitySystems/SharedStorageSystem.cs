@@ -675,19 +675,6 @@ public abstract class SharedStorageSystem : EntitySystem
         TrySetItemStorageLocation(item!, storage!, msg.Location);
     }
 
-    private void OnRemoveItem(StorageRemoveItemEvent msg, EntitySessionEventArgs args)
-    {
-        if (!ValidateInput(args, msg.StorageEnt, msg.ItemEnt, out var player, out var storage, out var item))
-            return;
-
-        _adminLog.Add(
-            LogType.Storage,
-            LogImpact.Low,
-            $"{ToPrettyString(player):player} is removing {ToPrettyString(item):item} from {ToPrettyString(storage):storage}");
-        TransformSystem.DropNextTo(item.Owner, player.Owner);
-        Audio.PlayPredicted(storage.Comp.StorageRemoveSound, storage, player, _audioParams);
-    }
-
     private void OnStorageNested(OpenNestedStorageEvent msg, EntitySessionEventArgs args)
     {
         if (!NestedStorage)

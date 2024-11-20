@@ -40,7 +40,7 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
     /// <summary>
     /// Cached positions for opening nested storage.
     /// </summary>
-    private Dictionary<EntityUid, Vector2> _reservedStorage = new();
+    private readonly Dictionary<EntityUid, Vector2> _reservedStorage = new();
 
     private readonly DragDropHelper<ItemGridPiece> _menuDragHelper;
 
@@ -290,13 +290,6 @@ public sealed class StorageUIController : UIController, IOnSystemChanged<Storage
                     // Cancel it (rather than dropping).
                     window.Reclaim(dragLoc, control);
                 }
-            }
-            // Dropped it randomly so remove it.
-            else
-            {
-                EntityManager.RaisePredictiveEvent(new StorageRemoveItemEvent(
-                    EntityManager.GetNetEntity(draggingGhost.Entity),
-                    EntityManager.GetNetEntity(sourceStorage)));
             }
 
             targetStorage?.FlagDirty();
