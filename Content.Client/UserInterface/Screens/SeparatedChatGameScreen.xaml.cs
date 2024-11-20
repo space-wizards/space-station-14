@@ -69,6 +69,7 @@ public sealed partial class SeparatedChatGameScreen : InGameScreen
         if (uiScale == 0f)
             uiScale = _uiManager.DefaultUIScale;
 
+        // CurrentRenderScale would be more correct, but it gets updated after us.
         var gameScale = MainViewport.Viewport.FixedRenderScale;
         var min = EyeManager.PixelsPerMeter * gameScale * _cfg.GetCVar(CCVars.ViewportMinimumWidth) / uiScale;
         var max = EyeManager.PixelsPerMeter * gameScale * _cfg.GetCVar(CCVars.ViewportMaximumWidth) / uiScale;
