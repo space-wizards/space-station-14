@@ -24,6 +24,26 @@
       "directions": 4
     },
     {
+      "name": "derelict",
+      "directions": 4
+    },
+    {
+      "name": "derelict_e",
+      "directions": 4
+    },
+    {
+      "name": "derelict_e_r",
+      "directions": 4
+    },
+    {
+      "name": "derelict_icon",
+      "directions": 1
+    },
+    {
+      "name": "derelict_l",
+      "directions": 4
+    },
+    {
       "name": "engineer",
       "directions": 4
     },
