@@ -1185,7 +1185,7 @@
     node: wall
 
 
-# Lavalend Walls
+# Lavaland Walls
 
 - type: entity
   parent: BaseWall
