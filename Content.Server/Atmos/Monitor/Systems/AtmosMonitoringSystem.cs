@@ -374,61 +374,24 @@ public sealed class AtmosMonitorSystem : EntitySystem
         if (!Resolve(uid, ref monitor))
             return;
 
+        // Used for logging after the switch statement
+        string logPrefix = "";
+        string logValueSuffix = "";
+        AtmosAlarmThreshold? logPreviousThreshold = null;
+
         switch (type)
         {
             case AtmosMonitorThresholdType.Pressure:
-                if (monitor.PressureThreshold != null)
-                {
-                    foreach (var change in threshold.GetChanges(monitor.PressureThreshold))
-                    {
-                        if (change.Current.Enabled != change.Previous?.Enabled)
-                        {
-                            var enabled = change.Current.Enabled ? "enabled" : "disabled";
-                            _adminLogger.Add(
-                                LogType.AtmosDeviceSetting,
-                                LogImpact.Medium,
-                                $"{ToPrettyString(uid)} pressure {change.Type} {enabled}"
-                            );
-                        }
-
-                        if (change.Current.Value != change.Previous?.Value)
-                        {
-                            _adminLogger.Add(
-                                LogType.AtmosDeviceSetting,
-                                LogImpact.Medium,
-                                $"{ToPrettyString(uid)} pressure {change.Type} changed from {change.Previous} kPa to {change.Current} kPa"
-                            );
-                        }
-                    }
-                }
+                logPrefix = "pressure";
+                logValueSuffix = "kPa";
+                logPreviousThreshold = monitor.PressureThreshold;
 
                 monitor.PressureThreshold = threshold;
                 break;
             case AtmosMonitorThresholdType.Temperature:
-                if (monitor.TemperatureThreshold != null)
-                {
-                    foreach (var change in threshold.GetChanges(monitor.TemperatureThreshold))
-                    {
-                        if (change.Current.Enabled != change.Previous?.Enabled)
-                        {
-                            var enabled = change.Current.Enabled ? "enabled" : "disabled";
-                            _adminLogger.Add(
-                                LogType.AtmosDeviceSetting,
-                                LogImpact.Medium,
-                                $"{ToPrettyString(uid)} temperature {change.Type} {enabled}"
-                            );
-                        }
-
-                        if (change.Current.Value != change.Previous?.Value)
-                        {
-                            _adminLogger.Add(
-                                LogType.AtmosDeviceSetting,
-                                LogImpact.Medium,
-                                $"{ToPrettyString(uid)} temperature {change.Type} changed from {change.Previous} K to {change.Current} K"
-                            );
-                        }
-                    }
-                }
+                logPrefix = "temperature";
+                logValueSuffix = "K";
+                logPreviousThreshold = monitor.TemperatureThreshold;
 
                 monitor.TemperatureThreshold = threshold;
                 break;
@@ -436,33 +399,38 @@ public sealed class AtmosMonitorSystem : EntitySystem
                 if (gas == null || monitor.GasThresholds == null)
                     return;
 
-                if (monitor.GasThresholds.TryGetValue((Gas) gas, out var gasThreshold))
-                {
-                    foreach (var change in threshold.GetChanges(gasThreshold))
-                    {
-                        if (change.Current.Enabled != change.Previous?.Enabled)
-                        {
-                            var enabled = change.Current.Enabled ? "enabled" : "disabled";
-                            _adminLogger.Add(
-                                LogType.AtmosDeviceSetting,
-                                LogImpact.Medium,
-                                $"{ToPrettyString(uid)} {gas} {change.Type} {enabled}"
-                            );
-                        }
-
-                        if (change.Current.Value != change.Previous?.Value)
-                        {
-                            _adminLogger.Add(
-                                LogType.AtmosDeviceSetting,
-                                LogImpact.Medium,
-                                $"{ToPrettyString(uid)} {gas} {change.Type} changed from {change.Previous} K to {change.Current} K"
-                            );
-                        }
-                    }
-                }
+                logPrefix = ((Gas) gas).ToString();
+                logValueSuffix = "kPa";
+                monitor.GasThresholds.TryGetValue((Gas) gas, out logPreviousThreshold);
 
                 monitor.GasThresholds[(Gas) gas] = threshold;
                 break;
+        }
+
+        // Admin log each change separately rather than logging the whole state
+        if (logPreviousThreshold != null)
+        {
+            foreach (var change in threshold.GetChanges(logPreviousThreshold))
+            {
+                if (change.Current.Enabled != change.Previous?.Enabled)
+                {
+                    var enabled = change.Current.Enabled ? "enabled" : "disabled";
+                    _adminLogger.Add(
+                        LogType.AtmosDeviceSetting,
+                        LogImpact.Medium,
+                        $"{ToPrettyString(uid)} {logPrefix} {change.Type} {enabled}"
+                    );
+                }
+
+                if (change.Current.Value != change.Previous?.Value)
+                {
+                    _adminLogger.Add(
+                        LogType.AtmosDeviceSetting,
+                        LogImpact.Medium,
+                        $"{ToPrettyString(uid)} {logPrefix} {change.Type} changed from {change.Previous} {logValueSuffix} to {change.Current} {logValueSuffix}"
+                    );
+                }
+            }
         }
     }
 }
