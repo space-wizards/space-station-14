@@ -72,6 +72,8 @@ public sealed partial class SeparatedChatGameScreen : InGameScreen
         var gameScale = MainViewport.Viewport.FixedRenderScale;
         var min = EyeManager.PixelsPerMeter * gameScale * _cfg.GetCVar(CCVars.ViewportMinimumWidth) / uiScale;
         var max = EyeManager.PixelsPerMeter * gameScale * _cfg.GetCVar(CCVars.ViewportMaximumWidth) / uiScale;
+        // Chat minWidth overpowers viewport minWidth.
+        min = Math.Min(min, Width - _chatMinWidth);
 
         // SplitContainer doesn't respect MaxSize, so set a MinSize on the chat instead.
         ViewportContainer.MinWidth = min;
