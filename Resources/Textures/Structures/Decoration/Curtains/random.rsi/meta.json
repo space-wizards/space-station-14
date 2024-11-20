@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "license": "MIT",
+  "copyright": "Created by LukeZurg22 (github) for Space Station14",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "open",
+      "directions": 1
+    },
+    {
+      "name": "closed",
+      "directions": 1
+    }
+  ]
+}

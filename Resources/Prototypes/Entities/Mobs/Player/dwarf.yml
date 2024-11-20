@@ -1,5 +1,5 @@
 - type: entity
   save: false
-  name: Urist McHands The Dwarf
+  name: John Dwarf
   parent: BaseMobDwarf
   id: MobDwarf

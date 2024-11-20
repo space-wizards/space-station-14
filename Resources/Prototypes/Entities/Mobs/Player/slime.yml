@@ -1,4 +1,5 @@
 - type: entity
   save: false
+  name: John Slime
   parent: BaseMobSlimePerson
   id: MobSlimePerson

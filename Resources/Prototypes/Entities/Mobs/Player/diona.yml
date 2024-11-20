@@ -1,6 +1,6 @@
 - type: entity
   save: false
-  name: Urist McPlants
+  name: John Plant
   parent: BaseMobDiona
   id: MobDiona
   components:

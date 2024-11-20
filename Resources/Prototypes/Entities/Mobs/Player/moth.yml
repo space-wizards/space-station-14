@@ -1,5 +1,5 @@
 - type: entity
   save: false
-  name: Urist McFluff
+  name: John Moth
   parent: BaseMobMoth
   id: MobMoth
