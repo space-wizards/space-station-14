@@ -69,7 +69,7 @@
 - type: entity
   id: VentCrawHolder
   categories: [ HideSpawnMenu ]
-  name: vent claw holder
+  name: vent craw holder
   components:
     - type: VentCrawHolder
     - type: InputMover

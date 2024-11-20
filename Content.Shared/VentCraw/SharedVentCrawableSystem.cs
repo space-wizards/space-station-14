@@ -150,7 +150,7 @@ public sealed class SharedVentCrawableSystem : EntitySystem
         if (holder.CurrentTube != null)
         {
             holder.PreviousTube = holder.CurrentTube;
-             holder.PreviousDirection = holder.CurrentDirection;
+            holder.PreviousDirection = holder.CurrentDirection;
         }
         holder.CurrentTube = toUid;
 
@@ -170,11 +170,10 @@ public sealed class SharedVentCrawableSystem : EntitySystem
             
             if (holder.CurrentTube == null)
             {
-                Log.Warning($"CurrentTube is null for entity {uid}.");
                 continue;
             }
 
-            var currentTube = holder.CurrentTube!.Value;
+            var currentTube = holder.CurrentTube.Value;
 
             if (holder.IsMoving && holder.NextTube == null)
             {
@@ -225,15 +224,7 @@ public sealed class SharedVentCrawableSystem : EntitySystem
                 frameTime -= time;
             }
             else if (holder.NextTube != null && holder.TimeLeft == 0)
-            {
-                var tubeContents = Comp<VentCrawTubeComponent>(holder.NextTube.Value).Contents;
-                if (tubeContents.ContainedEntities.Count > 0)
-                {
-                    var exitEvent = new VentCrawExitEvent();
-                    RaiseLocalEvent(uid, ref exitEvent);
-                    continue;
-                }
-                
+            {                
                 if (HasComp<VentCrawEntryComponent>(holder.NextTube.Value) && !holder.FirstEntry)
                 {
                     var welded = false;
