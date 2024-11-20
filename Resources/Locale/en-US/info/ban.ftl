@@ -17,6 +17,10 @@ cmd-ban-hint-duration-4 = 1 week
 cmd-ban-hint-duration-5 = 2 week
 cmd-ban-hint-duration-6 = 1 month
 
+# banmass
+cmd-banmass-desc = Bans several players at once by nickname or ID.
+cmd-banmass-help = Usage: banmass <reason> <duration in minutes, 0 for permanent ban> <name1 name2 name3..>
+
 # ban panel
 cmd-banpanel-desc = Opens the ban panel
 cmd-banpanel-help = Usage: banpanel [name or user guid]
@@ -85,7 +89,3 @@ server-ban-string-never = never
 
 # Kick on ban
 ban-kick-reason = You have been banned
-
-# banmass
-cmd-banmass-desc = Bans several players at once by nickname or ID.
-cmd-banmass-help = Usage: banmass <reason> [duration in minutes, leave out or 0 for permanent ban] <name1 name2 name3..>

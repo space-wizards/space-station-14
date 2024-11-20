@@ -13,7 +13,6 @@ namespace Content.Server.Administration.Commands;
 [AdminCommand(AdminFlags.MassBan)]
 public sealed class BanMassCommand : LocalizedCommands
 {
-
     [Dependency] private readonly IPlayerLocator _locator = default!;
     [Dependency] private readonly IBanManager _bans = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
@@ -25,9 +24,6 @@ public sealed class BanMassCommand : LocalizedCommands
 
     public override async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        string reason;
-        uint minutes;
-
         if (!Enum.TryParse(_cfg.GetCVar(CCVars.ServerBanDefaultSeverity), out NoteSeverity severity))
         {
             _logManager.GetSawmill("admin.server_ban")
@@ -42,9 +38,9 @@ public sealed class BanMassCommand : LocalizedCommands
             return;
         }
 
-        reason = args[0];
+        var reason = args[0];
 
-        if (!uint.TryParse(args[1], out minutes))
+        if (!uint.TryParse(args[1], out var minutes))
         {
             shell.WriteLine(Loc.GetString("cmd-ban-invalid-minutes", ("minutes", args[1])));
             shell.WriteLine(Help);
@@ -52,7 +48,6 @@ public sealed class BanMassCommand : LocalizedCommands
         }
 
         var player = shell.Player;
-        var targets = new List<string>();
         var allTargets = argStr.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
 
         foreach (var target in allTargets)
