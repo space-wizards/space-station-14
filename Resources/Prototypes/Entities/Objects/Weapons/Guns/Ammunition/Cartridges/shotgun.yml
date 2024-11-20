@@ -21,7 +21,7 @@
 
 - type: entity
   id: ShellShotgunBeanbag
-  name: shell (.50 beanbag)
+  name: shell (.50 stun slug)
   parent: BaseShellShotgun
   components:
   - type: Tag

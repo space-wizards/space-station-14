@@ -1,8 +1,8 @@
 - type: entity
-  name: Beanbag Enforcer
+  name: Stun Enforcer
   parent: WeaponShotgunEnforcer
   id: WeaponShotgunEnforcerBeanbag
-  description: A premium combat shotgun with an extended magazine and a built-in silencer, modified to only accept .50 beanbag shotgun shells. Carry gauze.
+  description: A premium combat shotgun with an extended magazine and a built-in silencer, modified to only accept .50 stun slugs.
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Weapons/Guns/Shotguns/beanbagenforcer.rsi
@@ -29,10 +29,10 @@
       path: /Audio/Weapons/Guns/MagIn/shotgun_insert.ogg
 
 - type: entity
-  name: Beanbag Kammerer
+  name: Stun Kammerer
   parent:  [BaseWeaponShotgun, BaseGunWieldable, BaseMinorSecurityCivilianContraband]
   id: WeaponShotgunKammererBeanbag
-  description: A pump shotgun with a built-in silencer, modified to only accept .50 beanbag shotgun shells. Carry gauze.
+  description: A pump shotgun with a built-in silencer, modified to only accept .50 stun slugs.
   components:
   - type: Item
     size: Normal

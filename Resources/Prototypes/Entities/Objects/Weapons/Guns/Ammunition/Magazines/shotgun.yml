@@ -58,7 +58,7 @@
 
 - type: entity
   id: MagazineShotgunBeanbag
-  name: ammo drum (.50 beanbags)
+  name: ammo drum (.50 stun slug)
   parent: BaseMagazineShotgun
   components:
   - type: BallisticAmmoProvider
