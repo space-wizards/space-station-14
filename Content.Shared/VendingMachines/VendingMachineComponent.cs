@@ -4,6 +4,8 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
 
 namespace Content.Shared.VendingMachines
 {
@@ -13,8 +15,9 @@ namespace Content.Shared.VendingMachines
         /// <summary>
         /// PrototypeID for the vending machine's inventory, see <see cref="VendingMachineInventoryPrototype"/>
         /// </summary>
-        [DataField("pack", required: true)]
-        public ProtoId<VendingMachineInventoryPrototype> PackPrototypeId = string.Empty;
+        // Okay so not using ProtoId here is load-bearing because the ProtoId serializer will log errors if the prototype doesn't exist.
+        [DataField("pack", customTypeSerializer: typeof(PrototypeIdSerializer<VendingMachineInventoryPrototype>), required: true)]
+        public string PackPrototypeId = string.Empty;
 
         /// <summary>
         /// Used by the server to determine how long the vending machine stays in the "Deny" state.
