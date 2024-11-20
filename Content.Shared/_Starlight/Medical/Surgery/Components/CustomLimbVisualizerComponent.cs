@@ -1,6 +1,7 @@
 ﻿using Content.Shared.DisplacementMap;
 using Content.Shared.Humanoid;
 using Content.Shared.Item;
+using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 namespace Content.Shared.Starlight.Medical.Surgery;
@@ -9,7 +10,7 @@ namespace Content.Shared.Starlight.Medical.Surgery;
 public sealed partial class CustomLimbVisualizerComponent : Component
 {
     [DataField, AutoNetworkedField]
-    public Dictionary<HumanoidVisualLayers, NetEntity> Layers = [];
+    public Dictionary<HumanoidVisualLayers, EntityUid?> Layers = [];
 
     [DataField]
     public HashSet<HumanoidVisualLayers> CachedLayers = [];
@@ -21,11 +22,11 @@ public sealed partial class CustomLimbVisualizerComponent : Component
 public sealed partial class CustomLimbComponent : Component
 {
     [DataField, AutoNetworkedField]
-    public NetEntity? Item;
+    public EntityUid? Item;
 }
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class CustomLimbMarkerComponent : Component
 {
     [DataField, AutoNetworkedField]
-    public NetEntity? VirtualPart;
+    public EntityUid? VirtualPart;
 }

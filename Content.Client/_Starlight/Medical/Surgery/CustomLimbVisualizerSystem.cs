@@ -35,7 +35,7 @@ public sealed class CustomLimbVisualizerSystem : EntitySystem
     }
 
     private void OnChanged(Entity<CustomLimbVisualizerComponent> ent, ref AfterAutoHandleStateEvent _) => OnChanged(ent);
-    private void OnChanged(Entity<CustomLimbVisualizerComponent> ent)
+    private void OnChanged(Entity<CustomLimbVisualizerComponent> ent, bool repeat = true)
     {
         if (!TryComp<SpriteComponent>(ent.Owner, out var sprite))
             return;
@@ -45,16 +45,15 @@ public sealed class CustomLimbVisualizerSystem : EntitySystem
 
         foreach (var item in ent.Comp.Layers)
         {
-            if (!TryGetEntity(item.Value, out var layerEntity) || !TryComp<SpriteComponent>(layerEntity, out var layerSprite))
+            if (!item.Value.HasValue || !TryComp<SpriteComponent>(item.Value, out var layerSprite))
             {
-                Timer.Spawn(TimeSpan.FromMilliseconds(5), () => OnChanged(ent));
+                if (repeat) Timer.Spawn(TimeSpan.FromMilliseconds(150), () => OnChanged(ent, false));
                 return;
             }
             string? state = null;
-            if (TryComp<ItemComponent>(layerEntity, out var itemComp) && itemComp.HeldPrefix is not null)
-            {
+            if (TryComp<ItemComponent>(item.Value, out var itemComp) && itemComp.HeldPrefix is not null)
                 state = $"{itemComp.HeldPrefix}-";
-            }
+
             var offset = Vector2.Zero;
             switch (item.Key)
             {
