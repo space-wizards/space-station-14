@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: EmoGarbage404
   changes:
-  - message: You can no longer see wreck names in the salvage magnet UI.
-    type: Tweak
-  id: 7131
-  time: '2024-08-17T05:09:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31087
-- author: EmoGarbage404
-  changes:
   - message: You can now smelt ores in intervals smaller than 30.
     type: Add
   id: 7132
@@ -3922,3 +3915,11 @@
   id: 7630
   time: '2024-11-20T02:05:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33064
+- author: SaphireLattice
+  changes:
+  - message: The Singularity/Tesla generator now requires being surrounded by containment
+      fields to activate. This can be disabled with an Emag.
+    type: Tweak
+  id: 7631
+  time: '2024-11-20T05:55:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33358
