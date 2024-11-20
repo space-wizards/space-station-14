@@ -20,7 +20,7 @@ namespace Content.Server.VentCraw
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly SharedMapSystem _mapSystem = default!;
-        [Dependency] private readonly VentCrawableSystem _ventCrawableSystemSystem = default!;
+        [Dependency] private readonly SharedVentCrawableSystem _ventCrawableSystemSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly VentCrawTubeSystem _ventCrawTubeSystem = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
@@ -49,7 +49,7 @@ namespace Content.Server.VentCraw
 
         private void AddClimbedVerb(EntityUid uid, VentCrawEntryComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
-            if (!TryComp<VentCrawlerComponent>(args.User, out var ventCrawlerComponent))
+            if (!TryComp<VentCrawlerComponent>(args.User, out var ventCrawlerComponent) || HasComp<BeingVentCrawComponent>(args.User))
                 return;
 
             if (TryComp<TransformComponent>(uid, out var transformComponent) && !transformComponent.Anchored)
@@ -170,43 +170,6 @@ namespace Content.Server.VentCraw
             }
         }
 
-        public EntityUid? NextTubeFor(EntityUid target, Direction nextDirection, VentCrawTubeComponent? targetTube = null)
-        {
-            if (!Resolve(target, ref targetTube))
-                return null;
-            var oppositeDirection = nextDirection.GetOpposite();
-
-            var xform = Transform(target);
-            if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
-                return null;
-            
-            if (xform.GridUid == null)
-                return null;
-
-            var position = xform.Coordinates;
-            foreach (EntityUid entity in _mapSystem.GetInDir(xform.GridUid.Value, grid ,position, nextDirection))
-            {
-                if (!TryComp(entity, out VentCrawTubeComponent? tube))
-                {
-                    continue;
-                }
-
-                if (!CanConnect(entity, tube, oppositeDirection))
-                {
-                    continue;
-                }
-
-                if (!CanConnect(target, targetTube, nextDirection))
-                {
-                    continue;
-                }
-
-                return entity;
-            }
-
-            return null;
-        }
-
         private static void ConnectTube(EntityUid _, VentCrawTubeComponent tube)
         {
             if (tube.Connected)
@@ -231,20 +194,11 @@ namespace Content.Server.VentCraw
             foreach (var entity in tube.Contents.ContainedEntities.ToArray())
             {
                 if (query.TryGetComponent(entity, out var holder))
-                    _ventCrawableSystemSystem.ExitVentCraws(entity, holder);
+                {
+                    var Exitev = new VentCrawExitEvent();
+                    RaiseLocalEvent(entity, ref Exitev);
+                }
             }
-        }
-
-        private bool CanConnect(EntityUid tubeId, VentCrawTubeComponent tube, Direction direction)
-        {
-            if (!tube.Connected)
-            {
-                return false;
-            }
-
-            var ev = new GetVentCrawsConnectableDirectionsEvent();
-            RaiseLocalEvent(tubeId, ref ev);
-            return ev.Connectable.Contains(direction);
         }
 
         private bool TryInsert(EntityUid uid, EntityUid entity, VentCrawEntryComponent? entry = null)
