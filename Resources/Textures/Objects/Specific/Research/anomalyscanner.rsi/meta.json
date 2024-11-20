@@ -5,10 +5,18 @@
     "y": 32
   },
   "license": "CC0-1.0",
-  "copyright": "Created by EmoGarbage",
+  "copyright": "Created by EmoGarbage, Inhands by TiniestShark",
   "states": [
     {
       "name": "icon"
-    }
+    },
+      {
+          "name": "inhand-left",
+          "directions": 4
+      },
+      {
+          "name": "inhand-right",
+          "directions": 4
+      }
   ]
 }
