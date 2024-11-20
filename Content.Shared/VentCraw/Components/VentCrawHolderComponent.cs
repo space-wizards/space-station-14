@@ -1,3 +1,4 @@
+using Content.Shared.VentCraw.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 
@@ -46,4 +47,10 @@ public sealed partial class VentCrawHolderComponent : Component
 
     [DataField("speed")]
     public float Speed = 0.15f;
+}
+
+[ByRefEvent]
+public record struct VentCrawExitEvent
+{
+    public TransformComponent? holderTransform;
 }
