@@ -86,7 +86,7 @@ public sealed class BanMassCommand : LocalizedCommands
             var options = _playerManager.Sessions.Select(c => c.Name).OrderBy(c => c).ToArray();
             return CompletionResult.FromHintOptions(
                 options,
-                LocalizationManager.GetString("cmd-ban-hint"));
+                Loc.GetString("cmd-ban-hint"));
         }
 
         if (args.Length == 1)
