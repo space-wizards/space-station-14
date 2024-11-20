@@ -170,20 +170,6 @@ namespace Content.Shared.Storage
     }
 
     [Serializable, NetSerializable]
-    public sealed class StorageRemoveItemEvent : EntityEventArgs
-    {
-        public readonly NetEntity ItemEnt;
-
-        public readonly NetEntity StorageEnt;
-
-        public StorageRemoveItemEvent(NetEntity itemEnt, NetEntity storageEnt)
-        {
-            ItemEnt = itemEnt;
-            StorageEnt = storageEnt;
-        }
-    }
-
-    [Serializable, NetSerializable]
     public sealed class StorageInsertItemIntoLocationEvent : EntityEventArgs
     {
         public readonly NetEntity ItemEnt;
