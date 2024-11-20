@@ -612,5 +612,13 @@ Entries:
   id: 76
   time: '2024-11-15T03:24:27.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33262
+- author: ScarKy0, GoldenCan
+  changes:
+  - message: Players that take over emagged/ion stormed borgs now correctly get assigned
+      the antag role.
+    type: Fix
+  id: 77
+  time: '2024-11-20T07:55:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33311
 Name: Admin
 Order: 1
