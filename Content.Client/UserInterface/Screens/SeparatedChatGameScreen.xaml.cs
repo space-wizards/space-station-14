@@ -71,10 +71,15 @@ public sealed partial class SeparatedChatGameScreen : InGameScreen
 
         // CurrentRenderScale would be more correct, but it gets updated after us.
         var gameScale = MainViewport.Viewport.FixedRenderScale;
-        var min = EyeManager.PixelsPerMeter * gameScale * _cfg.GetCVar(CCVars.ViewportMinimumWidth) / uiScale;
-        var max = EyeManager.PixelsPerMeter * gameScale * _cfg.GetCVar(CCVars.ViewportMaximumWidth) / uiScale;
-        // Chat minWidth overpowers viewport minWidth.
-        min = Math.Min(min, Width - _chatMinWidth);
+        var minFromVp = EyeManager.PixelsPerMeter * gameScale * _cfg.GetCVar(CCVars.ViewportMinimumWidth) / uiScale;
+        var maxFromVp = EyeManager.PixelsPerMeter * gameScale * _cfg.GetCVar(CCVars.ViewportMaximumWidth) / uiScale;
+        // Inventory bar also supplies a minWidth such that body+shoes don't overlap PDA.
+        var minFromUi = 1060;
+        // In case of overscaled viewport, chat hard-minWidth overpowers them both.
+        var minFromChat = Width - _chatMinWidth;
+
+        var min = Math.Min(Math.Max(minFromVp, minFromUi), minFromChat);
+        var max = Math.Max(maxFromVp, min);
 
         // SplitContainer doesn't respect MaxSize, so set a MinSize on the chat instead.
         ViewportContainer.MinWidth = min;
