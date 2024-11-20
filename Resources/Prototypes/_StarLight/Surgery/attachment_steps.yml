@@ -34,7 +34,7 @@
   - type: SurgeryStep
     duration: 4 
     tools:
-    - type: BodyPart
+    - type: MetaData
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
     state: meat-slice

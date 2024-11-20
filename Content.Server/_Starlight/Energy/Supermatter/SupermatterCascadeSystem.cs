@@ -23,12 +23,11 @@ public sealed class SupermatterCascadeSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly TurfSystem _turf = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
     private readonly LinkedList<Branch> _branches = [];
     private LinkedListNode<Branch>? node;
-    private readonly string[] _prototypes = ["Cascad1", "Cascad2", "Cascad3", "Cascad4", "Cascad5"];
+    private readonly string[] _prototypes = ["Cascad1", "Cascad2", "Cascad3", "Cascad4", "Cascad5", "Cascad6"];
     public override void Initialize()
     {
     }
@@ -85,8 +84,7 @@ public sealed class SupermatterCascadeSystem : EntitySystem
         if (_transform.GetGrid(branch.Coordinates) is not { } grid
             || !TryComp<MapGridComponent>(grid, out var gridComp)
             || !_map.TryGetTileRef(grid, gridComp, branch.Coordinates, out var tileRef)
-            || tileRef.IsSpace()
-            || _turf.IsTileBlocked(tileRef, CollisionGroup.Impassable))
+            || tileRef.IsSpace())
         {
             _branches.Remove(node);
             node = nextNode;

@@ -96,6 +96,8 @@
   - type: Sprite
     layers:
     - state: margherita-slice
+  - type: Item
+    heldPrefix: margherita-slice
 
 - type: entity
   name: meat pizza
@@ -134,6 +136,8 @@
   - type: Sprite
     layers:
     - state: meat-slice
+  - type: Item
+    heldPrefix: meat-slice
   - type: Tag
     tags:
     - Meat
@@ -172,6 +176,8 @@
   - type: Sprite
     layers:
     - state: mushroom-slice
+  - type: Item
+    heldPrefix: mushroom-slice
 # Tastes like crust, tomato, cheese, mushroom.
 
 - type: entity
@@ -223,6 +229,8 @@
   - type: Sprite
     layers:
     - state: vegetable-slice
+  - type: Item
+    heldPrefix: vegetable-slice
   - type: SolutionContainerManager
     solutions:
       food:
@@ -234,7 +242,6 @@
           Quantity: 1
         - ReagentId: Vitamin
           Quantity: 1
-
 # Tastes like crust, tomato, cheese, carrot.
 
 - type: entity
@@ -280,6 +287,8 @@
   - type: Sprite
     layers:
     - state: donkpocket-slice
+  - type: Item
+    heldPrefix: donkpocket-slice
   - type: SolutionContainerManager
     solutions:
       food:
@@ -340,6 +349,8 @@
   - type: Sprite
     layers:
     - state: dank-slice
+  - type: Item
+    heldPrefix: dank-slice
   - type: SolutionContainerManager
     solutions:
       food:
@@ -388,6 +399,8 @@
   - type: Sprite
     layers:
     - state: sassysage-slice
+  - type: Item
+    heldPrefix: sassysage-slice
   - type: Tag
     tags:
     - Meat
@@ -434,6 +447,8 @@
   - type: Sprite
     layers:
     - state: pineapple-slice
+  - type: Item
+    heldPrefix: pineapple-slice
   - type: Tag
     tags:
     - Meat
@@ -494,6 +509,8 @@
   - type: Sprite
     layers:
     - state: arnold-slice
+  - type: Item
+    heldPrefix: arnold-slice
   - type: SolutionContainerManager
     solutions:
       food:
@@ -529,6 +546,8 @@
   - type: Sprite
     layers:
     - state: moldy-slice
+  - type: Item
+    heldPrefix: moldy-slice
   - type: Tag
     tags:
     - Trash
@@ -597,6 +616,8 @@
   - type: Sprite
     layers:
     - state: uranium-slice
+  - type: Item
+    heldPrefix: uranium-slice
   - type: Tag
     tags:
     - Meat
@@ -665,6 +686,8 @@
   - type: Sprite
     layers:
     - state: cotton-slice
+  - type: Item
+    heldPrefix: cotton-slice
   - type: Tag
     tags:
     - ClothMade
