@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Blackern5000
-  changes:
-  - message: Disabler SMGs no longer fit in combat boots
-    type: Fix
-  id: 7126
-  time: '2024-08-17T01:00:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31110
 - author: Mervill
   changes:
   - message: Fixed suffocation alerts not appearing.
@@ -3919,3 +3912,11 @@
   id: 7625
   time: '2024-11-20T01:00:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32706
+- author: Plykiya
+  changes:
+  - message: The crew monitoring crate now contains a flatpack of the server and computers,
+      and can be opened with science access instead of engineering access now.
+    type: Tweak
+  id: 7626
+  time: '2024-11-20T01:05:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33417
