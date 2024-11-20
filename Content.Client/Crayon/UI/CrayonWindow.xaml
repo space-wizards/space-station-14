@@ -1,14 +1,13 @@
 ﻿<DefaultWindow xmlns="https://spacestation14.io"
             Title="{Loc 'crayon-window-title'}"
-            MinSize="250 300"
-            SetSize="250 300">
+            MinSize="450 500"
+            SetSize="450 500">
     <BoxContainer Orientation="Vertical">
         <ColorSelectorSliders Name="ColorSelector" Visible="False" />
-        <LineEdit Name="Search" />
+        <LineEdit Name="Search" Margin="0 0 0 8" PlaceHolder="{Loc 'crayon-window-placeholder'}" />
         <ScrollContainer VerticalExpand="True">
-            <GridContainer Name="Grid" Columns="6">
-                <!-- Crayon decals get added here by code -->
-            </GridContainer>
+            <BoxContainer Name="Grids" Orientation="Vertical">
+            </BoxContainer>
         </ScrollContainer>
     </BoxContainer>
 </DefaultWindow>
