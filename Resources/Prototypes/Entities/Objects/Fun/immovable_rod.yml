@@ -11,6 +11,10 @@
     state: icon
     noRot: false
   - type: ImmovableRod
+    shouldGib: false # Harmony
+    damage:
+      types:
+        Piercing: 400
   - type: Physics
     bodyType: Dynamic
     linearDamping: 0
@@ -69,10 +73,6 @@
     minSpeed: 35
     destroyTiles: false
     randomizeVelocity: false
-    shouldGib: false
-    damage:
-      types:
-        Blunt: 200
   - type: MovementIgnoreGravity
     gravityState: true
   - type: InputMover
