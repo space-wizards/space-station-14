@@ -1,10 +1,7 @@
-using System.Diagnostics;
 using Content.Server.ParticleAccelerator.Components;
-using Content.Server.Popups;
-using Content.Server.Singularity.Components;
-using Content.Shared.Emag.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Singularity.Components;
+using Content.Shared.Singularity.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
@@ -13,7 +10,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Singularity.EntitySystems;
 
-public sealed class SingularityGeneratorSystem : EntitySystem
+public sealed class SingularityGeneratorSystem : SharedSingularityGeneratorSystem
 {
     #region Dependencies
     [Dependency] private readonly IViewVariablesManager _vvm = default!;
@@ -21,7 +18,6 @@ public sealed class SingularityGeneratorSystem : EntitySystem
     [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
     #endregion Dependencies
 
     public override void Initialize()
@@ -29,7 +25,6 @@ public sealed class SingularityGeneratorSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ParticleProjectileComponent, StartCollideEvent>(HandleParticleCollide);
-        SubscribeLocalEvent<SingularityGeneratorComponent, GotEmaggedEvent>(OnEmagged);
 
         var vvHandle = _vvm.GetTypeHandler<SingularityGeneratorComponent>();
         vvHandle.AddPath(nameof(SingularityGeneratorComponent.Power), (_, comp) => comp.Power, SetPower);
@@ -138,7 +133,7 @@ public sealed class SingularityGeneratorSystem : EntitySystem
         if (!contained && !generatorComp.FailsafeDisabled)
         {
             generatorComp.NextFailsafe = _timing.CurTime + generatorComp.FailsafeCooldown;
-            _popupSystem.PopupEntity(Loc.GetString("comp-generator-failsafe", ("target", args.OtherEntity)), args.OtherEntity, PopupType.LargeCaution);
+            PopupSystem.PopupEntity(Loc.GetString("comp-generator-failsafe", ("target", args.OtherEntity)), args.OtherEntity, PopupType.LargeCaution);
         }
         else
         {
@@ -158,13 +153,6 @@ public sealed class SingularityGeneratorSystem : EntitySystem
         }
 
         EntityManager.QueueDeleteEntity(uid);
-    }
-
-    private void OnEmagged(EntityUid uid, SingularityGeneratorComponent component, ref GotEmaggedEvent args)
-    {
-        _popupSystem.PopupEntity(Loc.GetString("comp-generator-failsafe-disabled", ("target", uid)), uid);
-        component.FailsafeDisabled = true;
-        args.Handled = true;
     }
     #endregion Event Handlers
 

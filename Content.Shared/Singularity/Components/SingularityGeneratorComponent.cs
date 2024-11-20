@@ -1,14 +1,12 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-using Content.Server.Singularity.EntitySystems;
 using Content.Shared.Physics;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Server.Singularity.Components;
+namespace Content.Shared.Singularity.Components;
 
-[RegisterComponent, AutoGenerateComponentPause]
-[Access(typeof(SingularityGeneratorSystem))]
+[RegisterComponent, AutoGenerateComponentPause, AutoGenerateComponentState]
 public sealed partial class SingularityGeneratorComponent : Component
 {
     /// <summary>
@@ -28,7 +26,7 @@ public sealed partial class SingularityGeneratorComponent : Component
     /// <summary>
     /// Allows the generator to ignore all the failsafe stuff, e.g. when emagged
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool FailsafeDisabled = false;
 
     /// <summary>
