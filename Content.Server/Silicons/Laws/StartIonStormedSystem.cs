@@ -19,7 +19,6 @@ public sealed class StartIonStormedSystem : EntitySystem
         SubscribeLocalEvent<StartIonStormedComponent, MapInitEvent>(OnMapInit);
     }
 
-    //private void OnMapInit(EntityUid uid, StartIonStormedComponent component, ref MapInitEvent args)'
     private void OnMapInit(Entity<StartIonStormedComponent> ent, ref MapInitEvent args)
     {
         if (!TryComp<SiliconLawBoundComponent>(ent.Owner, out var lawBound))
