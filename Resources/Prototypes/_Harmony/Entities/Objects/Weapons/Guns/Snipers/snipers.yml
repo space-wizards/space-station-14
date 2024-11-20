@@ -1,0 +1,16 @@
+- type: entity
+  name: RSC Modèle 1917
+  parent: [BaseWeaponSniper, BaseGunWieldable, BaseMajorContraband]
+  id: WeaponSniperRSC
+  description: Refurbished great war trophy. It used to bear a french name, now it bears Nanotrasen stamp of approval. Uses .30 rifle ammo.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Objects/Weapons/Guns/Snipers/rsc-m1917.rsi
+  - type: Clothing
+    sprite: _Harmony/Objects/Weapons/Guns/Snipers/rsc-m1917.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+  - type: StaticPrice
+    price: 400

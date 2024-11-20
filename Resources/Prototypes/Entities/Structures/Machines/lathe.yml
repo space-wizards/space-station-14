@@ -228,6 +228,7 @@
       - RiotShield
       - SpeedLoaderMagnum
       - SpeedLoaderMagnumEmpty
+      - StripperClip  # Harmony change - part of RSC PR
   - type: BlueprintReceiver
     whitelist:
       tags:
@@ -763,6 +764,7 @@
       - MagazineShotgun
       - MagazineShotgunEmpty
       - MagazineShotgunSlug
+      - StripperClip  # Harmony change - part of RSC PR
       - RiotShield
       - SpeedLoaderMagnum
       - SpeedLoaderMagnumEmpty
@@ -874,6 +876,7 @@
         - MagazineShotgunSlug
         - SpeedLoaderMagnum
         - SpeedLoaderMagnumEmpty
+        - StripperClip  # Harmony change - part of RSC PR
     - type: MaterialStorage
       whitelist:
         tags:

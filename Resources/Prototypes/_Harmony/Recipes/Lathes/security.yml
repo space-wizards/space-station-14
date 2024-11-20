@@ -1,0 +1,6 @@
+- type: latheRecipe
+  parent: BaseAmmoRecipe
+  id: StripperClip
+  result: SpeedLoaderLightRifle
+  materials:
+    Steel: 100
