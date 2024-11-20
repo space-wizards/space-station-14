@@ -13,7 +13,7 @@
   - !type:AddComponentSpecial
     components:
     - type: Clumsy
-      clumsyDamage:
+      gunShootFailDamage:
         types: #literally just picked semi random valus. i tested this once and tweaked it.
           Blunt: 5
           Piercing: 4

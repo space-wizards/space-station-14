@@ -488,4 +488,15 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         }
         _audio.PlayPvs(electrified.ShockNoises, targetUid, AudioParams.Default.WithVolume(electrified.ShockVolume));
     }
+
+    public void SetElectrifiedWireCut(Entity<ElectrifiedComponent> ent, bool value)
+    {
+        if (ent.Comp.IsWireCut == value)
+        {
+            return;
+        }
+
+        ent.Comp.IsWireCut = value;
+        Dirty(ent);
+    }
 }
