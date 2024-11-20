@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Added a recipe for croissants
-    type: Add
-  id: 7133
-  time: '2024-08-17T14:09:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30825
-- author: Ubaser
-  changes:
-  - message: Red crowbars no longer fit in pockets.
-    type: Fix
-  id: 7134
-  time: '2024-08-17T14:32:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30939
 - author: iztokbajcar
   changes:
   - message: Fixed some typos in the guidebook.
@@ -3924,3 +3910,25 @@
   id: 7632
   time: '2024-11-20T07:18:38.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31966
+- author: ScarKy0, GoldenCan
+  changes:
+  - message: Ion stormed lawsets no longer persist between shifts.
+    type: Fix
+  - message: Cyborgs are now notified when inserted into a chassis with modified laws.
+    type: Tweak
+  id: 7633
+  time: '2024-11-20T07:55:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33311
+- author: ScarKy0, GoldenCan
+  changes:
+  - message: The Derelict Cyborg - a broken cyborg with altered laws due to year of
+      exposure to ion storms - can now appear as a ghost role through a new midround
+      event.
+    type: Add
+  - message: An ion storm affecting a Cyborg can no longer alter the law order of
+      the AI, cyborgs created later in the round or AI's and cyborgs in subsequent
+      rounds.
+    type: Fix
+  id: 7634
+  time: '2024-11-20T07:55:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32499
