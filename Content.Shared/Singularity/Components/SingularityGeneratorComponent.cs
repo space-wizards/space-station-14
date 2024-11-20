@@ -3,10 +3,11 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 using Content.Shared.Physics;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Singularity.Components;
 
-[RegisterComponent, AutoGenerateComponentPause, AutoGenerateComponentState]
+[RegisterComponent, AutoGenerateComponentPause, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class SingularityGeneratorComponent : Component
 {
     /// <summary>

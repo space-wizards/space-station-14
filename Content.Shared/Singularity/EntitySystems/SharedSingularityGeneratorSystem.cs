@@ -22,7 +22,6 @@ public abstract class SharedSingularityGeneratorSystem : EntitySystem
 
     private void OnEmagged(EntityUid uid, SingularityGeneratorComponent component, ref GotEmaggedEvent args)
     {
-        PopupSystem.PopupEntity(Loc.GetString("comp-generator-failsafe-disabled", ("target", uid)), uid);
         component.FailsafeDisabled = true;
         args.Handled = true;
     }
