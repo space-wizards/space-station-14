@@ -39,3 +39,11 @@
   color: "#d600bd"
   requiredTags:
   - Abductor
+  
+- type: collectiveMind
+  id: Spider
+  name: collective-mind-spider
+  keycode: 's'
+  color: "#3f2f20"
+  requiredComponents:
+  - Spider
