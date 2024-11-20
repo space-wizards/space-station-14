@@ -476,6 +476,9 @@ RightLegBorgJanitor: RightLegBorg
 HeadBorgJanitor: LightHeadBorg
 TorsoBorgJanitor: TorsoBorg
 
-# 2024-11-14
+# 2024-11-19
+CrateCrewMonitoringBoards: CrateCrewMonitoring
+
+# 2024-11-20
 DrinkSpaceGlue: SqueezeBottleOfGlue
 DrinkSpaceLube: SqueezeBottleOfLube
