@@ -26,7 +26,7 @@
             </BoxContainer>
             <alerts:AlertsUI Name="Alerts" Access="Protected" />
         </LayoutContainer>
-        <PanelContainer Name="SeparatedChatPanel" MinWidth="300">
+        <PanelContainer Name="SeparatedChatPanel" MinWidth="372">
             <PanelContainer.PanelOverride>
                 <graphics:StyleBoxFlat BackgroundColor="#2B2C3B" />
             </PanelContainer.PanelOverride>
