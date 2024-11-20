@@ -2,11 +2,11 @@
   id: SalvageEquipmentInventory
   startingInventory:
     Crowbar: 2
-    Pickaxe: 4
+    Pickaxe: 2
     OreBag: 4
     Flare: 4
     FlashlightLantern: 2
-    HandheldGPSBasic: 4
-    RadioHandheld: 4
+    HandheldGPSBasic: 2
+    RadioHandheld: 2
     WeaponGrapplingGun: 4
     WeaponProtoKineticAccelerator: 4
