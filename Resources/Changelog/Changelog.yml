@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Boaz1111
-  changes:
-  - message: Phlogiston now also ignites people who consume it.
-    type: Add
-  id: 7129
-  time: '2024-08-17T02:49:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30955
 - author: slarticodefast
   changes:
   - message: Fixed borgs brains being teleported outside their chassis and PAIs outside
@@ -3923,3 +3916,10 @@
   id: 7628
   time: '2024-11-20T01:54:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32577
+- author: SpaceLizard24
+  changes:
+  - message: Reduced crafting costs of colored light tubes.
+    type: Tweak
+  id: 7629
+  time: '2024-11-20T01:59:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33376
