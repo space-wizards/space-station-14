@@ -358,4 +358,17 @@ Entries:
   id: 50
   time: '2024-11-20T00:09:49.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/72
-
+- author: Rinary
+  changes:
+  - message: Fixed bug when ghosted player can see pipes.
+    type: Fix
+  id: 51
+  time: '2024-11-20T06:50:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/72
+- author: Rinary
+  changes:
+  - message: Fixed bug when player dies in vent pipes and can't ghost without command.
+    type: Fix
+  id: 52
+  time: '2024-11-20T06:50:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/72
