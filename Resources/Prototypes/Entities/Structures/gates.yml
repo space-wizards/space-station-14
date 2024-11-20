@@ -37,7 +37,7 @@
     - state: base
     - state: logic
     - state: empty
-      map: ["enum.LogicGateLayers.InputA"]
+      map: [ "enum.LogicGateLayers.InputA" ]
     - state: empty
       map: [ "enum.LogicGateLayers.InputB" ]
     - state: empty
@@ -71,7 +71,7 @@
           Xnor: { state: xnor }
       enum.LogicGateVisuals.InputA:
         enum.LogicGateLayers.InputA:
-          High: {state: logic_a }
+          High: { state: logic_a }
           Low:  { state: empty }
       enum.LogicGateVisuals.InputB:
         enum.LogicGateLayers.InputB:

@@ -3,7 +3,6 @@ using Content.Server.DeviceNetwork;
 using Content.Shared.DeviceLinking;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Lathe;
 using Content.Shared.Popups;
 using Content.Shared.Timing;
 using Content.Shared.Tools.Systems;
@@ -103,12 +102,12 @@ public sealed class LogicGateSystem : EntitySystem
         if (args.Port == comp.InputPortA)
         {
             comp.StateA = state;
-            _appearance.SetData(uid, LogicGateVisuals.InputA, UpdateState(state));
+            _appearance.SetData(uid, LogicGateVisuals.InputA, SignalToLogicState(state));
         }
         else if (args.Port == comp.InputPortB)
         {
             comp.StateB = state;
-            _appearance.SetData(uid, LogicGateVisuals.InputA, UpdateState(state));
+            _appearance.SetData(uid, LogicGateVisuals.InputB, SignalToLogicState(state));
         }
 
         UpdateOutput(uid, comp);
@@ -128,29 +127,25 @@ public sealed class LogicGateSystem : EntitySystem
         {
             case LogicGate.Or:
                 output = a || b;
-                _appearance.SetData(uid, LogicGateVisuals.Output, output ? LogicGateState.High : LogicGateState.Low);
                 break;
             case LogicGate.And:
                 output = a && b;
-                _appearance.SetData(uid, LogicGateVisuals.Output, output ? LogicGateState.High : LogicGateState.Low);
                 break;
             case LogicGate.Xor:
                 output = a != b;
-                _appearance.SetData(uid, LogicGateVisuals.Output, output ? LogicGateState.High : LogicGateState.Low);
                 break;
             case LogicGate.Nor:
                 output = !(a || b);
-                _appearance.SetData(uid, LogicGateVisuals.Output, output ? LogicGateState.High : LogicGateState.Low);
                 break;
             case LogicGate.Nand:
                 output = !(a && b);
-                _appearance.SetData(uid, LogicGateVisuals.Output, output ? LogicGateState.High : LogicGateState.Low);
                 break;
             case LogicGate.Xnor:
                 output = a == b;
-                _appearance.SetData(uid, LogicGateVisuals.Output, output ? LogicGateState.High : LogicGateState.Low);
                 break;
         }
+
+        _appearance.SetData(uid, LogicGateVisuals.Output, output ? LogicGateState.High : LogicGateState.Low);
 
         // only send a payload if it actually changed
         if (output != comp.LastOutput)
@@ -161,20 +156,13 @@ public sealed class LogicGateSystem : EntitySystem
         }
     }
 
-    LogicGateState UpdateState(SignalState state)
+    private static LogicGateState SignalToLogicState(SignalState state)
     {
-        switch (state)
+        return state switch
         {
-            case SignalState.High:
-                return LogicGateState.High;
-            break;
-            case SignalState.Low:
-                return LogicGateState.Low;
-            break;
-            default:
-                return LogicGateState.Momentary;
-            break;
-
-        }
+            SignalState.High => LogicGateState.High,
+            SignalState.Low => LogicGateState.Low,
+            _ => LogicGateState.Momentary,
+        };
     }
 }
