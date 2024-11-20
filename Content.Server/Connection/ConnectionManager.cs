@@ -62,23 +62,8 @@ namespace Content.Server.Connection
 
         public void PostInit()
         {
-            // Whitelists
-            _cfg.OnValueChanged(CCVars.WhitelistPrototypeList, UpdateWhitelists, true);
-
-            // Ipintel
-            _cfg.OnValueChanged(CCVars.IPIntelEmail, b => _contactEmail = b, true);
-            _cfg.OnValueChanged(CCVars.IPIntelBase, b => _baseUrl = b, true);
-            _cfg.OnValueChanged(CCVars.IPIntelFlags, b => _flags = b, true);
-            _cfg.OnValueChanged(CCVars.IPIntelRejectUnknown, b => _rejectUnknown = b, true);
-            _cfg.OnValueChanged(CCVars.IPIntelRejectBad, b => _rejectBad = b, true);
-            _cfg.OnValueChanged(CCVars.IPIntelRejectRateLimited, b => _rejectLimited = b, true);
-            _cfg.OnValueChanged(CCVars.IPIntelMaxMinute, b => _requestLimitMinute = b, true);
-            _cfg.OnValueChanged(CCVars.IPIntelMaxDay, b => _requestLimitDay = b, true);
-            _cfg.OnValueChanged(CCVars.IPIntelBadRating, b => _rating = b, true);
-            _cfg.OnValueChanged(CCVars.IPIntelCacheLength, b => _cacheDays = b, true);
-            _cfg.OnValueChanged(CCVars.IPIntelExemptPlaytime, b => _exemptPlaytime = b, true);
-            _cfg.OnValueChanged(CCVars.IPIntelAlertAdminReject, b => _alertAdminReject = b, true);
-            _cfg.OnValueChanged(CCVars.IPIntelAlertAdminWarnRating, b => _alertAdminWarn = b, true);
+            InitializeWhitelist();
+            InitializeIPIntel();
         }
 
         public void Initialize()
@@ -321,12 +306,12 @@ namespace Content.Server.Connection
             }
 
             // ALWAYS keep this at the end, to preserve the API limit.
-            if (_cfg.GetCVar(CCVars.IPIntelEnabled) && adminData == null)
+            if (_cfg.GetCVar(CCVars.GameIPIntelEnabled) && adminData == null)
             {
                 var result = await IsVpnOrProxy(e);
 
                 if (result.IsBad)
-                    return (ConnectionDenyReason.IPIntel, result.Reason, null);
+                    return (ConnectionDenyReason.IPChecks, result.Reason, null);
             }
 
             return null;

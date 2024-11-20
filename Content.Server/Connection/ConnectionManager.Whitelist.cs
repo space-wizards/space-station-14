@@ -17,6 +17,11 @@ public sealed partial class ConnectionManager
 {
     private PlayerConnectionWhitelistPrototype[]? _whitelists;
 
+    private void InitializeWhitelist()
+    {
+        _cfg.OnValueChanged(CCVars.WhitelistPrototypeList, UpdateWhitelists, true);
+    }
+
     private void UpdateWhitelists(string s)
     {
         var list = new List<PlayerConnectionWhitelistPrototype>();

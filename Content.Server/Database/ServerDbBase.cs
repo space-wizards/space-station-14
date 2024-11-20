@@ -1716,50 +1716,40 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
         # region IPIntel
 
-        public async Task<bool> AddIPIntelCache(DateTime time, IPAddress ip, float score)
-        {
-            await using var db = await GetDb();
-
-            var exists = await db.DbContext.IPIntelCache
-                .Where(w => ip.Equals(w.Address))
-                .AnyAsync();
-
-            if (exists)
-                return false;
-
-            var cache = new IPIntelCache
-            {
-                Time = time,
-                Address = ip,
-                Score = score,
-            };
-            db.DbContext.IPIntelCache.Add(cache);
-            await db.DbContext.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<bool> UpdateIPIntelCache(DateTime time, IPAddress ip, float score)
+        public async Task<bool> UpsertIPIntelCache(DateTime time, IPAddress ip, float score)
         {
             await using var db = await GetDb();
 
             var existing = await db.DbContext.IPIntelCache
                 .Where(w => ip.Equals(w.Address))
-                .SingleAsync();
+                .SingleOrDefaultAsync();
 
-            existing.Score = score;
-            existing.Time = time;
+            if (existing == null)
+            {
+                var newCache = new IPIntelCache
+                {
+                    Time = time,
+                    Address = ip,
+                    Score = score,
+                };
+                db.DbContext.IPIntelCache.Add(newCache);
+            }
+            else
+            {
+                existing.Time = time;
+                existing.Score = score;
+            }
 
             await db.DbContext.SaveChangesAsync();
             return true;
         }
 
-        public async Task<List<IPIntelCache>> GetIPIntelCache(IPAddress ip)
+        public async Task<IPIntelCache?> GetIPIntelCache(IPAddress ip)
         {
             await using var db = await GetDb();
 
             return await db.DbContext.IPIntelCache
-                .Where(w => ip.Equals(w.Address))
-                .ToListAsync();
+                .SingleOrDefaultAsync(w => ip.Equals(w.Address));
         }
 
         public async Task<bool> RemoveIPIntelCache(IPAddress ip)

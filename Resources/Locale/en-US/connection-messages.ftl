@@ -57,6 +57,6 @@ baby-jail-account-reason-overall = Your overall playtime on the server must be y
 
 generic-misconfigured = The server is misconfigured and is not accepting players. Please contact the server owner and try again later.
 
-ipintel-server-ratelimited = This server uses a security system with external verification, which has reached it's maximum verification limit. Please contact the administration team of the server for assistance.
+ipintel-server-ratelimited = This server uses a security system with external verification, which has reached its maximum verification limit. Please contact the administration team of the server for assistance.
 ipintel-unknown = This server uses a security system with external verification, but it encountered an error. Please contact the administration team of the server for assistance.
 ipintel-suspicious = You are connecting through a datacenter or VPN. For administrative reasons we do not allow VPN connections to play. Please contact the administration team of the server for assistance if you believe this is false.

@@ -924,7 +924,7 @@ namespace Content.Server.Database
          * Reservation by commenting out the value is likely sufficient for this purpose, but may impact projects which depend on SS14 like SS14.Admin.
          */
         BabyJail = 4,
-        IPIntel = 5,
+        IPChecks = 5,
     }
 
     public class ServerBanHit
@@ -1209,14 +1209,27 @@ namespace Content.Server.Database
         public bool Hidden { get; set; }
     }
 
+
+    /// <summary>
+    ///  Cache for the IPIntel system
+    /// </summary>
+    [Index(nameof(Address), IsUnique = true)]
     public class IPIntelCache
     {
-        public int Id { get; set; }
-
-        public DateTime Time { get; set; }
-
+        /// <summary>
+        /// The IP address (duh).
+        /// </summary>
+        [Key]
         public IPAddress Address { get; set; } = null!;
 
+        /// <summary>
+        /// Date this record was added. Used to check if our cache is out of date.
+        /// </summary>
+        public DateTime Time { get; set; }
+
+        /// <summary>
+        /// The score IPIntel returned
+        /// </summary>
         public float Score { get; set; }
     }
 }

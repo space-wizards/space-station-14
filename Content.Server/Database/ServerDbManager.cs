@@ -317,9 +317,8 @@ namespace Content.Server.Database
 
         #region IPintel
 
-        Task<bool> AddIPIntelCache(DateTime time, IPAddress ip, float score);
-        Task<bool> UpdateIPIntelCache(DateTime time, IPAddress ip, float score);
-        Task<List<IPIntelCache>> GetIPIntelCache(IPAddress ip);
+        Task<bool> UpsertIPIntelCache(DateTime time, IPAddress ip, float score);
+        Task<IPIntelCache?> GetIPIntelCache(IPAddress ip);
         Task<bool> RemoveIPIntelCache(IPAddress ip);
 
         #endregion
@@ -989,19 +988,13 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.RemoveJobWhitelist(player, job));
         }
 
-        public Task<bool> AddIPIntelCache(DateTime time, IPAddress ip, float score)
+        public Task<bool> UpsertIPIntelCache(DateTime time, IPAddress ip, float score)
         {
             DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.AddIPIntelCache(time, ip, score));
+            return RunDbCommand(() => _db.UpsertIPIntelCache(time, ip, score));
         }
 
-        public Task<bool> UpdateIPIntelCache(DateTime time, IPAddress ip, float score)
-        {
-            DbWriteOpsMetric.Inc();
-            return RunDbCommand(() => _db.UpdateIPIntelCache(time, ip, score));
-        }
-
-        public Task<List<IPIntelCache>> GetIPIntelCache(IPAddress ip)
+        public Task<IPIntelCache?> GetIPIntelCache(IPAddress ip)
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.GetIPIntelCache(ip));
