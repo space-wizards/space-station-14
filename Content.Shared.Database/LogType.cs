@@ -122,7 +122,7 @@ public enum LogType
     ExplosionHit = 94,
 
     /// <summary>
-    /// A player changed an air alarm setting
+    /// An atmos networked device (such as a vent or pump) has had its settings changed, usually through an air alarm
     /// </summary>
-    AtmosAirAlarm = 95,
+    AtmosDeviceSetting = 95,
 }

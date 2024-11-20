@@ -6,8 +6,10 @@ using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
+using Content.Shared.Database;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.Power;
 using Content.Shared.Tag;
@@ -21,6 +23,7 @@ namespace Content.Server.Atmos.Monitor.Systems;
 // a danger), and atmos (which triggers based on set thresholds).
 public sealed class AtmosMonitorSystem : EntitySystem
 {
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly AtmosDeviceSystem _atmosDeviceSystem = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetSystem = default!;
@@ -374,17 +377,92 @@ public sealed class AtmosMonitorSystem : EntitySystem
         switch (type)
         {
             case AtmosMonitorThresholdType.Pressure:
+                if (monitor.PressureThreshold != null)
+                {
+                    foreach (var change in threshold.GetChanges(monitor.PressureThreshold))
+                    {
+                        if (change.Current.Enabled != change.Previous?.Enabled)
+                        {
+                            var enabled = change.Current.Enabled ? "enabled" : "disabled";
+                            _adminLogger.Add(
+                                LogType.AtmosDeviceSetting,
+                                LogImpact.Medium,
+                                $"{ToPrettyString(uid)} pressure {change.Type} {enabled}"
+                            );
+                        }
+
+                        if (change.Current.Value != change.Previous?.Value)
+                        {
+                            _adminLogger.Add(
+                                LogType.AtmosDeviceSetting,
+                                LogImpact.Medium,
+                                $"{ToPrettyString(uid)} pressure {change.Type} changed from {change.Previous} kPa to {change.Current} kPa"
+                            );
+                        }
+                    }
+                }
+
                 monitor.PressureThreshold = threshold;
                 break;
             case AtmosMonitorThresholdType.Temperature:
+                if (monitor.TemperatureThreshold != null)
+                {
+                    foreach (var change in threshold.GetChanges(monitor.TemperatureThreshold))
+                    {
+                        if (change.Current.Enabled != change.Previous?.Enabled)
+                        {
+                            var enabled = change.Current.Enabled ? "enabled" : "disabled";
+                            _adminLogger.Add(
+                                LogType.AtmosDeviceSetting,
+                                LogImpact.Medium,
+                                $"{ToPrettyString(uid)} temperature {change.Type} {enabled}"
+                            );
+                        }
+
+                        if (change.Current.Value != change.Previous?.Value)
+                        {
+                            _adminLogger.Add(
+                                LogType.AtmosDeviceSetting,
+                                LogImpact.Medium,
+                                $"{ToPrettyString(uid)} temperature {change.Type} changed from {change.Previous} K to {change.Current} K"
+                            );
+                        }
+                    }
+                }
+
                 monitor.TemperatureThreshold = threshold;
                 break;
             case AtmosMonitorThresholdType.Gas:
                 if (gas == null || monitor.GasThresholds == null)
                     return;
+
+                if (monitor.GasThresholds.TryGetValue((Gas) gas, out var gasThreshold))
+                {
+                    foreach (var change in threshold.GetChanges(gasThreshold))
+                    {
+                        if (change.Current.Enabled != change.Previous?.Enabled)
+                        {
+                            var enabled = change.Current.Enabled ? "enabled" : "disabled";
+                            _adminLogger.Add(
+                                LogType.AtmosDeviceSetting,
+                                LogImpact.Medium,
+                                $"{ToPrettyString(uid)} {gas} {change.Type} {enabled}"
+                            );
+                        }
+
+                        if (change.Current.Value != change.Previous?.Value)
+                        {
+                            _adminLogger.Add(
+                                LogType.AtmosDeviceSetting,
+                                LogImpact.Medium,
+                                $"{ToPrettyString(uid)} {gas} {change.Type} changed from {change.Previous} K to {change.Current} K"
+                            );
+                        }
+                    }
+                }
+
                 monitor.GasThresholds[(Gas) gas] = threshold;
                 break;
         }
-
     }
 }
