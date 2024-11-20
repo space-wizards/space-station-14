@@ -152,8 +152,8 @@ public sealed partial class CCVars
     /// <summary>
     ///     Determines whether admins count towards the total playercount when determining whether the server is over <see cref="SoftMaxPlayers"/>
     ///     Ideally this should be used in conjuction with <see cref="AdminBypassPlayers"/>.
-	///     This also applies to playercount limits in whitelist conditions
-	///     If false, then admins will not be considered when checking whether the playercount is already above the soft player cap
+    ///     This also applies to playercount limits in whitelist conditions
+    ///     If false, then admins will not be considered when checking whether the playercount is already above the soft player cap
     /// </summary>
     public static readonly CVarDef<bool> AdminsCountForMaxPlayers =
         CVarDef.Create("admin.admins_count_for_max_players", false, CVar.SERVERONLY);
