@@ -1,4 +1,4 @@
 - type: damageModifierSet
   id: Mouse
   coefficients:
-    Shock: 1.5 #so mice can still be oneshot with non-lethal shotgun shell changes
+    Shock: 1.4 #so mice can still be oneshot with non-lethal shotgun shell changes

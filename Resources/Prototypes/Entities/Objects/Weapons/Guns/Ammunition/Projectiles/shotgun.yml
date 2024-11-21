@@ -24,7 +24,7 @@
   - type: Projectile
     damage:
       types:
-        Shock: 7
+        Shock: 7.5
   - type: StaminaDamageOnCollide
     damage: 40 # 3 hits to stun
 
