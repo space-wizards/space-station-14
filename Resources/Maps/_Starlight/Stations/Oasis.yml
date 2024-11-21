@@ -14470,7 +14470,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -76424.76
+      secondsUntilStateChange: -76687.59
       state: Opening
   - uid: 6934
     components:
@@ -14482,7 +14482,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -76427.39
+      secondsUntilStateChange: -76690.23
       state: Opening
   - uid: 6935
     components:
@@ -14494,7 +14494,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -76426.24
+      secondsUntilStateChange: -76689.08
       state: Opening
   - uid: 6936
     components:
@@ -14505,7 +14505,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -76425.46
+      secondsUntilStateChange: -76688.3
       state: Opening
 - proto: AirlockTheatreLocked
   entities:
@@ -94319,7 +94319,7 @@ entities:
       pos: -13.5,-1.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -67748.74
+      secondsUntilStateChange: -68011.58
     - type: DeviceNetwork
       deviceLists:
       - 18275
@@ -138868,7 +138868,7 @@ entities:
       pos: 36.5,-35.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -104580.586
+      secondsUntilStateChange: -104843.42
       state: Opening
   - uid: 5211
     components:
@@ -155672,10 +155672,10 @@ entities:
     - type: Transform
       pos: -17.457813,-36.318623
       parent: 2
-  - uid: 1955
+  - uid: 29626
     components:
     - type: Transform
-      pos: -13.504687,-31.240498
+      pos: -13.5,-31.5
       parent: 2
 - proto: RubberStampApproved
   entities:
@@ -159274,6 +159274,20 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -12.085021,-50.48558
+      parent: 2
+- proto: SLVendingMachineHugDispenser
+  entities:
+  - uid: 29625
+    components:
+    - type: Transform
+      pos: -39.5,-38.5
+      parent: 2
+- proto: SLVendingMachineMedical
+  entities:
+  - uid: 1955
+    components:
+    - type: Transform
+      pos: -19.5,-40.5
       parent: 2
 - proto: SmartFridge
   entities:
@@ -190223,7 +190237,7 @@ entities:
       pos: 24.5,2.5
       parent: 21002
     - type: Door
-      secondsUntilStateChange: -449785.22
+      secondsUntilStateChange: -450048.06
       state: Opening
   - uid: 28863
     components:
