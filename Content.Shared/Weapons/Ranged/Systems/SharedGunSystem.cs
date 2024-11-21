@@ -218,7 +218,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     /// </summary>
     public void AttemptShoot(EntityUid gunUid, GunComponent gun)
     {
-        var coordinates = new EntityCoordinates(gunUid, new Vector2(0, -1));
+        var coordinates = new EntityCoordinates(gunUid, gun.DefaultDirection);
         gun.ShootCoordinates = coordinates;
         AttemptShoot(gunUid, gunUid, gun);
         gun.ShotCounter = 0;
@@ -258,6 +258,9 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         var fireRate = TimeSpan.FromSeconds(1f / gun.FireRateModified);
 
+        if (gun.SelectedMode == SelectiveFire.Burst || gun.BurstActivated)
+            fireRate = TimeSpan.FromSeconds(1f / gun.BurstFireRate);
+
         // First shot
         // Previously we checked shotcounter but in some cases all the bullets got dumped at once
         // curTime - fireRate is insufficient because if you time it just right you can get a 3rd shot out slightly quicker.
@@ -278,18 +281,24 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         // Get how many shots we're actually allowed to make, due to clip size or otherwise.
         // Don't do this in the loop so we still reset NextFire.
-        switch (gun.SelectedMode)
+        if (!gun.BurstActivated)
         {
-            case SelectiveFire.SemiAuto:
-                shots = Math.Min(shots, 1 - gun.ShotCounter);
-                break;
-            case SelectiveFire.Burst:
-                shots = Math.Min(shots, gun.ShotsPerBurstModified - gun.ShotCounter);
-                break;
-            case SelectiveFire.FullAuto:
-                break;
-            default:
-                throw new ArgumentOutOfRangeException($"No implemented shooting behavior for {gun.SelectedMode}!");
+            switch (gun.SelectedMode)
+            {
+                case SelectiveFire.SemiAuto:
+                    shots = Math.Min(shots, 1 - gun.ShotCounter);
+                    break;
+                case SelectiveFire.Burst:
+                    shots = Math.Min(shots, gun.ShotsPerBurstModified - gun.ShotCounter);
+                    break;
+                case SelectiveFire.FullAuto:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException($"No implemented shooting behavior for {gun.SelectedMode}!");
+            }
+        } else
+        {
+            shots = Math.Min(shots, gun.ShotsPerBurstModified - gun.ShotCounter);
         }
 
         var attemptEv = new AttemptShootEvent(user, null);
@@ -301,7 +310,8 @@ public abstract partial class SharedGunSystem : EntitySystem
             {
                 PopupSystem.PopupClient(attemptEv.Message, gunUid, user);
             }
-
+            gun.BurstActivated = false;
+            gun.BurstShotsCount = 0;
             gun.NextFire = TimeSpan.FromSeconds(Math.Max(lastFire.TotalSeconds + SafetyNextFire, gun.NextFire.TotalSeconds));
             return;
         }
@@ -328,6 +338,10 @@ public abstract partial class SharedGunSystem : EntitySystem
             var emptyGunShotEvent = new OnEmptyGunShotEvent();
             RaiseLocalEvent(gunUid, ref emptyGunShotEvent);
 
+            gun.BurstActivated = false;
+            gun.BurstShotsCount = 0;
+            gun.NextFire += TimeSpan.FromSeconds(gun.BurstCooldown);
+
             // Play empty gun sounds if relevant
             // If they're firing an existing clip then don't play anything.
             if (shots > 0)
@@ -345,6 +359,22 @@ public abstract partial class SharedGunSystem : EntitySystem
             }
 
             return;
+        }
+
+        // Handle burstfire
+        if (gun.SelectedMode == SelectiveFire.Burst)
+        {
+            gun.BurstActivated = true;
+        }
+        if (gun.BurstActivated)
+        {
+            gun.BurstShotsCount += shots;
+            if (gun.BurstShotsCount >= gun.ShotsPerBurstModified)
+            {
+                gun.NextFire += TimeSpan.FromSeconds(gun.BurstCooldown);
+                gun.BurstActivated = false;
+                gun.BurstShotsCount = 0;
+            }
         }
 
         // Shoot confirmed - sounds also played here in case it's invalid (e.g. cartridge already spent).
@@ -399,7 +429,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         Projectiles.SetShooter(uid, projectile, user ?? gunUid);
         projectile.Weapon = gunUid;
 
-        TransformSystem.SetWorldRotation(uid, direction.ToWorldAngle());
+        TransformSystem.SetWorldRotation(uid, direction.ToWorldAngle() + projectile.Angle);
     }
 
     protected abstract void Popup(string message, EntityUid? uid, EntityUid? user);

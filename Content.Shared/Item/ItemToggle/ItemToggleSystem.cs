@@ -71,14 +71,14 @@ public sealed class ItemToggleSystem : EntitySystem
 
     private void OnActivateVerb(Entity<ItemToggleComponent> ent, ref GetVerbsEvent<ActivationVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract)
+        if (!args.CanAccess || !args.CanInteract || !ent.Comp.OnActivate)
             return;
 
         var user = args.User;
 
         args.Verbs.Add(new ActivationVerb()
         {
-            Text = !ent.Comp.Activated ? Loc.GetString("item-toggle-activate") : Loc.GetString("item-toggle-deactivate"),
+            Text = !ent.Comp.Activated ? Loc.GetString(ent.Comp.VerbToggleOn) : Loc.GetString(ent.Comp.VerbToggleOff),
             Act = () =>
             {
                 Toggle((ent.Owner, ent.Comp), user, predicted: ent.Comp.Predictable);
