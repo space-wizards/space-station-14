@@ -13,7 +13,7 @@ In the event of a serious emergency, there're a few things you can do to help en
   <GuideEntityEmbed Entity="EmergencyMedipen"/> 
 </Box>
 
-- Your emergency box contains a breath mask and oxygen tank, which can help you survive longer in a spacing situation. If you're one of the slimepeople, be aware that nitrogen replaces oxygen for you and that your emergency box will start with a red tank of nitrogen replacing the standard blue/yellow oxygen tank. 
+- Your emergency box contains a breath mask and oxygen tank, which can help you survive longer in a flooding situation. If you're one of the slimepeople, be aware that nitrogen replaces oxygen for you and that your emergency box will start with a red tank of nitrogen replacing the standard blue/yellow oxygen tank. 
 
 <Box> 
   <GuideEntityEmbed Entity="ClothingMaskBreath"/> 
