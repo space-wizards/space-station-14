@@ -5,15 +5,17 @@
   description: Provides an intermediate step between cell server and dispatch, as well as biological synthesis through matter.
   components:
   - type: Sprite
-    sprite: Structures/Machines/mixer.rsi
+    sprite: Structures/Machines/Xenobilology/cell_sequencer.rsi
     layers:
-    - state: mixer_empty
-    - state: mixer_screens
+    - state: base
+    - state: unlit
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Icon
-    sprite: Structures/Machines/mixer.rsi
-    state: mixer_loaded
+    sprite: Structures/Machines/Xenobilology/cell_sequencer.rsi
+    state: base
   - type: Fixtures
     fixtures:
       fix1:
@@ -56,6 +58,10 @@
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
           False: { visible: false }
+      enum.WiresVisuals.MaintenancePanelState:
+        enum.WiresVisualLayers.MaintenancePanel:
+          True: { visible: false }
+          False: { visible: true }
   - type: WiresPanel
   - type: Machine
     board: CellSequencerCircuitboard
@@ -87,15 +93,17 @@
   description: UWI.
   components:
   - type: Sprite
-    sprite: Structures/Machines/mixer.rsi
+    sprite: Structures/Machines/Xenobilology/cellular_fusion.rsi
     layers:
-    - state: mixer_empty
-    - state: mixer_screens
+    - state: base
+    - state: unlit
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Icon
-    sprite: Structures/Machines/mixer.rsi
-    state: mixer_loaded
+    sprite: Structures/Machines/Xenobilology/cellular_fusion.rsi
+    state: base
   - type: Fixtures
     fixtures:
       fix1:
@@ -138,6 +146,10 @@
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
           False: { visible: false }
+      enum.WiresVisuals.MaintenancePanelState:
+        enum.WiresVisualLayers.MaintenancePanel:
+          True: { visible: false }
+          False: { visible: true }
   - type: WiresPanel
   - type: Machine
     board: CellularFusionCircuitboard
@@ -158,6 +170,76 @@
         whitelist:
           tags:
           - Dish
+  - type: GuideHelp
+    guides:
+    - Science
+
+- type: entity
+  id: MutagenicCellInjector
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  name: mutagenic cell injector
+  description: Best not to let your fingers get stuck...
+  components:
+  - type: Machine
+    board: ArtifactCrusherMachineCircuitboard
+  - type: WiresPanel
+  - type: Sprite
+    sprite: Structures/Machines/artifact_crusher.rsi
+    offset: 0,0.5
+    noRot: true
+    layers:
+    - state: base
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: door-closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: piston
+      map: ["pistonlayer"]
+    - state: glass
+    - state: lights
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      shader: unshaded
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 50
+        mask:
+        - HighImpassable
+        layer:
+        - HighImpassable
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ArtifactCrusherVisuals.Crushing:
+        pistonlayer:
+          True: {state: piston-push}
+          False: {state: piston}
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: EntityStorage
+    capacity: 1
+    whitelist:
+      components:
+      - CellContainer
+  - type: EntityStorageVisuals
+    stateDoorClosed: door-closed
+    openDrawDepth: 0
+    closedDrawDepth: 4
+  - type: Construction
+    containers:
+    - machine_board
+    - machine_parts
+    - entity_storage
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      entity_storage: !type:Container
+  - type: CellMutagenicInjector
   - type: GuideHelp
     guides:
     - Science
