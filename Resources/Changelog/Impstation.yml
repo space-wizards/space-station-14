@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: 12rabbits
-  changes:
-  - message: Fixed certain inaccuracies in the ready manifest display
-    type: Fix
-  id: 50
-  time: '2024-08-01T19:46:45.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/63
 - author: FlippenPage
   changes:
   - message: Nitrogen Deprivation Kit, found rarely in N2 Lockers.
@@ -4296,3 +4289,13 @@
   id: 549
   time: '2024-11-20T06:52:17.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/764
+- author: EpicToast
+  changes:
+  - message: (Union Station) Fixed issues with the southwestern escape pods.
+    type: Fix
+  - message: (Union Station) Christmastime is here! Enjoy complimentary presents in
+      your lockers, along with other festive updates.
+    type: Tweak
+  id: 550
+  time: '2024-11-21T13:15:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/767
