@@ -3,8 +3,6 @@
   values:
     - CompulsiveLiar
     - CompulsiveBeliever
-#    - OnlyWhisper
-#    - OnlyYell
     - PlantPacifist
     - PuddleDrinker
     - SeekSin
@@ -13,8 +11,6 @@
     - Cannibal
     - Outlaw
     - ExtremeDepartmentDisapproval
-#    - Rhyme
-#    - Alliterate
     - LoneActor
     - Immortal
     - Unknown
@@ -28,9 +24,6 @@
     - FairyRings
     - StayDead
     - Tourist
-#    - ThirdPerson
-#    - TitleCase
-    - GreySpeak
     - CryWolf
     - CaveDweller
     - Daredevil
@@ -57,24 +50,6 @@
   moodDesc: spelf-mood-compulsive-believer-desc
   conflicts:
     - CompulsiveLiar
-
-# You must whisper, as speaking too loudly is terribly rude.
-- type: spelfMood
-  id: OnlyWhisper
-  moodName: spelf-mood-only-whisper-name
-  moodDesc: spelf-mood-only-whisper-desc
-  conflicts:
-    - OnlyYell
-
-# YOU MUST YELL AT ALL TIMES TO DEMONSTRATE YOUR AUTHORITY!!!!!
-- type: spelfMood
-  id: OnlyYell
-  moodName: spelf-mood-only-yell-name
-  moodDesc: spelf-mood-only-yell-desc
-  conflicts:
-    - OnlyWhisper
-    #- LeastImportant
-    # ^ personally i think it's really funny if someone thinks they're the least important person on the station but still has to yell
 
 # The usage of plant matter by humanoids is abhorrent.
 - type: spelfMood
@@ -138,18 +113,6 @@
   conflicts:
     - DepartmentDisapproval
 
-# You must speak in rhyme at all times.
-- type: spelfMood
-  id: Rhyme
-  moodName: spelf-mood-rhyme-name
-  moodDesc: spelf-mood-rhyme-desc
-
-# Alliteration is virtuous. Endeavor to use it wherever possible.
-- type: spelfMood
-  id: Alliterate
-  moodName: spelf-mood-alliterate-name
-  moodDesc: spelf-mood-alliterate-desc
-
 # You have no allegiances. 
 - type: spelfMood
   id: LoneActor
@@ -171,7 +134,7 @@
   moodDesc: spelf-mood-unknown-desc
   conflicts:
     - Pope
-    - FullNameAndTitleShared
+    - SpeechRestriction
 
 # Iron, steel, and silver are deathly poisonous to you. Touching them directly will cause you extreme physical pain. 
 - type: spelfMood
@@ -244,28 +207,6 @@
   moodDesc: spelf-mood-tourist-desc
   conflicts:
     - VampireInvitation
-
-# You must speak exclusively in third person.
-- type: spelfMood
-  id: ThirdPerson
-  moodName: spelf-mood-third-person-name
-  moodDesc: spelf-mood-third-person-desc
-
-# You Must Exclusively Speak in Title Case.
-- type: spelfMood
-  id: TitleCase
-  moodName: spelf-mood-title-case-name
-  moodDesc: spelf-mood-title-case-desc
-  conflicts:
-    - OnlyYell
-
-# Greyspeak is extremely fashionable, and you should endeavor to speak like Greys to the best of your ability.
-- type: spelfMood
-  id: GreySpeak
-  moodName: spelf-mood-greyspeak-name
-  moodDesc: spelf-mood-greyspeak-desc
-  conflicts:
-    - Imitation
 
 # Cry Wolf: The crew is too lax and must be kept on edge for any emergency. Regularly call out fake threats to make sure they're ready for the real deal.
 - type: spelfMood

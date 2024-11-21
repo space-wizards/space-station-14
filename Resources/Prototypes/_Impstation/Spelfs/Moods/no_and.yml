@@ -12,19 +12,15 @@
     - ExcessivelyDisorganized
     - DetestSilicons
     - DinnerFloor
-    - Unclarity
     - HugBad
     - AlwaysAlone
     - Atheist
     - Procrastinator
     - NoRadio
     - ImproperStorage
-    - SwearingBad
-    - QuestionOnly
     - Ferengi
     - ToolLicense
     - LyingBad
-    - MustAnswer
     - VampireInvitation
     - NoDragging
     - DrunkRespect
@@ -106,14 +102,6 @@
   conflicts:
     - DinnerEtiquette
 
-# Nothing Is Certain: You must be indirect in your speech, and never make a direct statement.
-- type: spelfMood
-  id: Unclarity
-  moodName: spelf-mood-unclarity-name
-  moodDesc: spelf-mood-unclarity-desc
-  conflicts:
-    - Clarity
-
 # Hugging someone is a grave insult.
 - type: spelfMood
   id: HugBad
@@ -162,22 +150,6 @@
   conflicts:
     - ProperStorage
 
-# You find swearing extremely distasteful. Abstain from it, and encourage others to do the same.
-- type: spelfMood
-  id: SwearingBad
-  moodName: spelf-mood-swearing-bad-name
-  moodDesc: spelf-mood-swearing-bad-desc
-  conflicts:
-    - SwearingGood
-
-# Nothing is certain? Everything must be phrased as a question?
-- type: spelfMood
-  id: QuestionOnly
-  moodName: spelf-mood-question-only-name
-  moodDesc: spelf-mood-question-only-desc
-  conflicts:
-    - StatementOnly
-
 # You have an entrepreneurial spirit. Profit is the most important thing in life, above all else.
 - type: spelfMood
   id: Ferengi
@@ -197,12 +169,6 @@
   moodDesc: spelf-mood-lying-bad-desc
   conflicts:
     - CompulsiveLiar
-
-# All questions that you can hear are directed at you, and you alone.
-- type: spelfMood
-  id: MustAnswer
-  moodName: spelf-mood-must-answer-name
-  moodDesc: spelf-mood-must-answer-desc
 
 # You physically cannot pass through a closed door unless you have been invited in, personally, at least once.
 - type: spelfMood

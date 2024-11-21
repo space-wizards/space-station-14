@@ -12,19 +12,6 @@
     sprite: Mobs/Species/SpElf/parts.rsi # Unlike dwarves elves are NOT made of slime
     state: full
   - type: SpelfMoods
-  - type: UserInterface
-    interfaces:
-      enum.HumanoidMarkingModifierKey.Key:
-        type: HumanoidMarkingModifierBoundUserInterface
-      enum.StrippingUiKey.Key:
-        type: StrippableBoundUserInterface
-      enum.StoreUiKey.Key:
-        type: StoreBoundUserInterface
-      enum.SpelfMoodsUiKey.Key:
-        type: SpelfMoodsBoundUserInterface
-        requireInputValidation: false
-      enum.HereticLivingHeartKey.Key:
-        type: LivingHeartMenuBoundUserInterface
   - type: Respirator
     damage:
       types:

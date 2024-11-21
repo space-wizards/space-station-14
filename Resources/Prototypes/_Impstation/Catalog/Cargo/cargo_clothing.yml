@@ -1,0 +1,9 @@
+- type: cargoProduct
+  id: ClothingScargoDuffelBags
+  icon:
+    sprite: _Impstation/Structures/Storage/Crates/luxury.rsi
+    state: icon
+  product: ClothingScargoDuffelBagsCrate
+  cost: 5000
+  category: cargoproduct-category-name-cargo
+  group: market

@@ -1,0 +1,16 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHoodPassenger
+  name: greycloak hood
+  description: Your heart overflows with fear. Before you stands the Passenger of Passengers.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Hoods/hoodpassenger.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Hoods/hoodpassenger.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+  - type: HideLayerClothing
+    slots:
+    - Hair

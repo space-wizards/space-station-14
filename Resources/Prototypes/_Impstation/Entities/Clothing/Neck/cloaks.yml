@@ -6,3 +6,44 @@
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Neck/Cloaks/straight.rsi
+
+- type: entity
+  parent: [ClothingNeckCloakStraight, BaseToggleClothing]
+  id: ClothingHeadCloakStraightKill
+  suffix: KILL, DO NOT MAP
+  components:
+  - type: ToggleClothing
+    action: ActionBecomeValid
+    disableOnUnequip: true
+  - type: ComponentToggler
+    parent: true
+    components:
+    - type: KillSign
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakPassenger
+  name: greycloak
+  description: What a sight. A Passenger true, if ever one there was!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Cloaks/passenger.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodPassenger
+    requiredSlot:
+    - neck
+    slot: head
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+  - type: Foldable
+    canFoldInsideContainer: true
+    unfoldVerbText: unfold-verb-clothing-cloak
+    foldVerbText: fold-verb-clothing-cloak
+  - type: FoldableClothing
+    foldedEquippedPrefix: folded
