@@ -425,3 +425,11 @@ Entries:
   id: 59
   time: '2024-11-21T19:00:00.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/commit/532d55389a582f932bd8df1f07fcc39e3ca83c1a
+- author: Rinary
+  changes:
+  - message: Added system what makes all players peaceful after round end.
+    type: Add
+  id: 60
+  time: '2024-11-21T16:46:06.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/78
+
