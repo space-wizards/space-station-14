@@ -1,7 +1,7 @@
 - type: gameMap
   id: Meta
   mapName: 'Meta Station'
-  mapPath: /Maps/meta.yml
+  mapPath: /Maps/_Starlight/Meta.yml
   minPlayers: 50
   stations:
     Meta:

@@ -1479,6 +1479,9 @@
   id: VimPilot
 
 - type: Tag
+  id: Vial
+
+- type: Tag
   id: VoiceTrigger
 
 - type: Tag
