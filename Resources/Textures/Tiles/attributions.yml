@@ -125,3 +125,18 @@
   license: "CC0-1.0"
   copyright: "Created by ps3moira (github) for space-station-14."
   source: "https://github.com/space-wizards/space-station-14/"
+
+- files: ["yellow_circuit.png"]
+  license: "MIT"
+  copyright: "Created by Froxxin (github) for vault-station"
+  source: "https://github.com/LukeZurg22/Vault-Station"
+
+- files: ["orange_circuit.png"]
+  license: "MIT"
+  copyright: "Created by Froxxin (github) for vault-station"
+  source: "https://github.com/LukeZurg22/Vault-Station"
+
+- files: ["purple_circuit.png"]
+  license: "MIT"
+  copyright: "Created by Froxxin (github) for vault-station"
+  source: "https://github.com/LukeZurg22/Vault-Station"
