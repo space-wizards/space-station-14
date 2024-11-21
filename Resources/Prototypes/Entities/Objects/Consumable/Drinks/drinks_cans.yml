@@ -189,6 +189,7 @@
     sprite: Objects/Consumable/Drinks/rootbeer.rsi
   - type: Tag
     tags:
+    - DrinkCan
     - Beer
 
 - type: entity

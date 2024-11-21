@@ -80,7 +80,7 @@
   parent: MarkerBase
   components:
   - type: GhostRole
-    rules: ghost-role-information-rules-default-team-antagonist
+    rules: ghost-role-information-rules-team-antagonist
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
@@ -100,7 +100,7 @@
   - type: GhostRole
     name: ghost-role-information-loneop-name
     description: ghost-role-information-loneop-description
-    rules: ghost-role-information-rules-default-solo-antagonist
+    rules: ghost-role-information-loneop-rules
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:

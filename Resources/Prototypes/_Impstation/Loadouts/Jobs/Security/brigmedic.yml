@@ -4,6 +4,11 @@
   equipment:
     head: ClothingHeadHatBeretBrigmedic
 
+- type: loadout
+  id: BrigmedicCap
+  equipment:
+    head: ClothingHeadHatBrigmedicsoft
+
 # Jumpsuit
 - type: loadout
   id: BrigmedicJumpsuit

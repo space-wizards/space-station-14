@@ -9,8 +9,6 @@
   values:
     - SecretMoodsShared
     - FashionIsCritical
-    - FullNameAndTitleShared
-    - NamesAreRude
     - FashionReroll
     - HonorDepartment
     - StationIsAlive
@@ -44,22 +42,6 @@
   id: FashionIsCritical
   moodName: spelf-mood-fashion-is-critical-name
   moodDesc: spelf-mood-fashion-is-critical-desc
-
-# Full Name And Title: Thaven refuse to acknowledge anyone who fails to refer to them using their full name, and expect everyone else to do the same.
-- type: spelfMood
-  id: FullNameAndTitleShared
-  moodName: spelf-mood-full-name-and-title-shared-name
-  moodDesc: spelf-mood-full-name-and-title-shared-desc
-  conflicts: 
-    - NamesAreRude
-
-# Names Are Rude: Using one's name is terribly personal for everyday conversation. You must only refer to others by description.
-- type: spelfMood
-  id: NamesAreRude
-  moodName: spelf-mood-names-are-rude-name
-  moodDesc: spelf-mood-names-are-rude-desc
-  conflicts:
-    - FullNameAndTitleShared
     
 # Fashion Is Ever-Changing: Your current hairstyle will go out of fashion every twenty minutes. It is extremely distressing to be unfashionable.
 - type: spelfMood
