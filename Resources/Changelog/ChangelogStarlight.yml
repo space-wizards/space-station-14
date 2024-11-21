@@ -397,4 +397,31 @@ Entries:
   id: 55
   time: '2024-11-21T00:18:18.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/77
-
+- author: Rinary
+  changes:
+  - message: Fixed missing biochemical discipline at science guidebook
+    type: Fix
+  id: 56
+  time: '2024-11-21T19:00:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/1ea09fa95fee1e03facab3b61d863cee83e0009f
+- author: Rinary
+  changes:
+  - message: Fixed rolling up the sleeves of the rainbow jumpsuit
+    type: Fix
+  id: 57
+  time: '2024-11-21T19:00:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/01ddeb44bba35b0d6b587f57f99379e722b687e5
+- author: Rinary
+  changes:
+  - message: Fixed vampire gamerule and end round message
+    type: Fix
+  id: 58
+  time: '2024-11-21T19:00:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/8518fa7b8898106b2bcfcc27e32e386ddc5634a7
+- author: Rinary
+  changes:
+  - message: Fixed bug when pai can be thief.
+    type: Fix
+  id: 59
+  time: '2024-11-21T19:00:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/532d55389a582f932bd8df1f07fcc39e3ca83c1a
