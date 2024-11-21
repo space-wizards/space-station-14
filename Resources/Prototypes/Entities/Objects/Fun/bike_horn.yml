@@ -26,6 +26,16 @@
       collection: BikeHorn
       params:
         variation: 0.125
+  - type: EmitSoundOnActivate
+    sound:
+      collection: BikeHorn
+      params:
+        variation: 0.125
+  - type: EmitSoundOnCollide
+    sound:
+      collection: BikeHorn
+      params:
+        variation: 0.125
   - type: Tag
     tags:
     - Payload # yes, you can make re-usable prank grenades
@@ -76,6 +86,16 @@
       collection: CluwneHorn
       params:
         variation: 0.246
+  - type: EmitSoundOnActivate
+    sound:
+      collection: CluwneHorn
+      params:
+        variation: 0.125
+  - type: EmitSoundOnCollide
+    sound:
+      collection: CluwneHorn
+      params:
+        variation: 0.125
   - type: MeleeWeapon
     wideAnimationRotation: 135
     soundHit:
@@ -138,6 +158,26 @@
       collection: BananiumHorn
       params:
         variation: 0.246
+  - type: EmitSoundOnActivate
+    sound:
+      collection: BananiumHorn
+      params:
+        variation: 0.246
+  - type: EmitSoundOnCollide
+    sound:
+      collection: BananiumHorn
+      params:
+        variation: 0.246
+  - type: MeleeWeapon
+    wideAnimationRotation: 135
+    soundHit:
+      collection: BananiumHorn
+      params:
+        variation: 0.246
+    damage:
+      types:
+        Blunt: 0
+    hidden: true
   - type: Construction
     graph: BananiumHorn
     node: bananiumHorn
