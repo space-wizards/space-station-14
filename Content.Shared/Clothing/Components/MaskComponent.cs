@@ -20,8 +20,11 @@ public sealed partial class MaskComponent : Component
     [DataField, AutoNetworkedField]
     public bool IsToggled;
 
+    /// <summary>
+    /// Equipped prefix to use after the mask was pulled down.
+    /// </summary>
     [DataField, AutoNetworkedField]
-    public string EquippedPrefix = "toggled";
+    public string EquippedPrefix = "up";
 
     /// <summary>
     /// When <see langword="true"/> will function normally, otherwise will not react to events
