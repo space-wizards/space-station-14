@@ -311,10 +311,10 @@ namespace Content.Client.Chemistry.UI
         private Control BuildReagentRow(Color reagentColor, int rowCount, string name, ReagentId reagent, FixedPoint2 quantity, bool isBuffer, bool isOutput)
         {
             //Colors rows and sets fallback for reagentcolor to the same as background, this will hide colorPanel for entities hopefully
-            var rowColor1 = Color.FromHex("#202025");
-            var rowColor2 = Color.FromHex("#1B1B1E");
+            var rowColor1 = Color.FromHex("#1B1B1E");
+            var rowColor2 = Color.FromHex("#202025");
             var currentRowColor = (rowCount % 2 == 1) ? rowColor1 : rowColor2;
-            if (reagentColor == default(Color))
+            if ((reagentColor == default(Color))|(isOutput))
             {
                 reagentColor = currentRowColor;
             }
