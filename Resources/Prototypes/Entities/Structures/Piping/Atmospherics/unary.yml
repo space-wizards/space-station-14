@@ -84,6 +84,9 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: VentCrawTube
+      containerId: VentCrawTube
+    - type: VentCrawEntry
     - type: Sprite
       drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/vent.rsi
