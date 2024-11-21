@@ -17,7 +17,7 @@ entities:
   - uid: 603
     components:
     - type: MetaData
-      name: NT Evac Box
+      name: NT Evac Omega
     - type: Transform
       pos: 2.2710133,-2.4148211
       parent: invalid
@@ -3154,6 +3154,38 @@ entities:
     components:
     - type: Transform
       pos: -1.5,0.5
+      parent: 603
+- proto: Screen
+  entities:
+  - uid: 606
+    components:
+    - type: Transform
+      pos: -2.5,10.5
+      parent: 603
+  - uid: 607
+    components:
+    - type: Transform
+      pos: 5.5,4.5
+      parent: 603
+  - uid: 608
+    components:
+    - type: Transform
+      pos: 5.5,8.5
+      parent: 603
+  - uid: 609
+    components:
+    - type: Transform
+      pos: -10.5,8.5
+      parent: 603
+  - uid: 610
+    components:
+    - type: Transform
+      pos: -10.5,4.5
+      parent: 603
+  - uid: 611
+    components:
+    - type: Transform
+      pos: -2.5,1.5
       parent: 603
 - proto: SheetSteel
   entities:

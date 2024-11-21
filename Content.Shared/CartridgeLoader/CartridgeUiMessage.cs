@@ -17,4 +17,7 @@ public sealed class CartridgeUiMessage : BoundUserInterfaceMessage
 public abstract class CartridgeMessageEvent : EntityEventArgs
 {
     public NetEntity LoaderUid;
+
+    [NonSerialized]
+    public EntityUid Actor;
 }
