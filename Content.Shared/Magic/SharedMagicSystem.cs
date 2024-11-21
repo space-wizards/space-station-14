@@ -22,6 +22,7 @@ using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Speech.Muting;
 using Content.Shared.Storage;
+using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
@@ -62,6 +63,7 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly SharedStunSystem _stun = default!;
 
     public override void Initialize()
     {
@@ -569,6 +571,9 @@ public abstract class SharedMagicSystem : EntitySystem
         {
             _mind.TransferTo(tarMind, ev.Performer);
         }
+
+        _stun.TryParalyze(ev.Target, ev.StunDuration, true);
+        _stun.TryParalyze(ev.Performer, ev.StunDuration, true);
     }
 
     #endregion
