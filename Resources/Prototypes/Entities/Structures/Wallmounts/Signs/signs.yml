@@ -523,13 +523,13 @@
     state: pods
 
 - type: entity
-  parent: BaseSign
+  parent: BaseSignDirectional
   id: SignEscapePodsDirectional
   name: escape pods sign directional
   description: A sign indicating the escape pods.
   components:
   - type: Sprite
-    state: pods_directional
+    state: directional_pods
 
 - type: entity
   parent: BaseSign
