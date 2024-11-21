@@ -651,3 +651,10 @@ Entries:
     - type: Add
       message: added stripper clips with .30 ammo to security and ammo techfabs, as
         well as emagged protolathe
+  - id: 204
+    author: meatballwalkin
+    time: '2024-11-21T15:13:58.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/204
+    changes:
+    - type: Add
+      message: New Lobby Track, "That's a Wrap!"
