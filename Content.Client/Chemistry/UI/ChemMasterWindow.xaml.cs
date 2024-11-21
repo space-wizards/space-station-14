@@ -143,31 +143,43 @@ namespace Content.Client.Chemistry.UI
 
             if (castState.UpdateLabel)
                 LabelLine = GenerateLabel(castState);
+
+            // Ensure the Panel Info is updated, including UI elements for Buffer Volume, Output Container and so on
             UpdatePanelInfo(castState);
-
-            var output = castState.OutputContainerInfo;
-
+    
             BufferCurrentVolume.Text = $" {castState.BufferCurrentVolume?.Int() ?? 0}u";
-
+    
             InputEjectButton.Disabled = castState.InputContainerInfo is null;
-            OutputEjectButton.Disabled = output is null;
-            CreateBottleButton.Disabled = output?.Reagents == null;
-            CreatePillButton.Disabled = output?.Entities == null;
-
+            OutputEjectButton.Disabled = castState.OutputContainerInfo is null;
+            CreateBottleButton.Disabled = castState.OutputContainerInfo?.Reagents == null;
+            CreatePillButton.Disabled = castState.OutputContainerInfo?.Entities == null;
+            
+            UpdateDosageFields(castState);
+        }
+        
+        //assign default values for pill and bottle fields.
+        private void UpdateDosageFields(ChemMasterBoundUserInterfaceState castState)
+        {
+            var output = castState.OutputContainerInfo;
             var remainingCapacity = output is null ? 0 : (output.MaxVolume - output.CurrentVolume).Int();
             var holdsReagents = output?.Reagents != null;
             var pillNumberMax = holdsReagents ? 0 : remainingCapacity;
             var bottleAmountMax = holdsReagents ? remainingCapacity : 0;
+            var bufferVolume = castState.BufferCurrentVolume?.Int() ?? 0;
 
-            PillTypeButtons[castState.SelectedPillType].Pressed = true;
-            PillNumber.IsValid = x => x >= 0 && x <= pillNumberMax;
-            PillDosage.IsValid = x => x > 0 && x <= castState.PillDosageLimit;
-            BottleDosage.IsValid = x => x >= 0 && x <= bottleAmountMax;
+            PillDosage.Value = (int)Math.Min(bufferVolume, castState.PillDosageLimit);
 
-            if (PillNumber.Value > pillNumberMax)
-                PillNumber.Value = pillNumberMax;
-            if (BottleDosage.Value > bottleAmountMax)
-                BottleDosage.Value = bottleAmountMax;
+            // Avoid division by zero
+            if (PillDosage.Value > 0)
+            {
+                PillNumber.Value = Math.Min(bufferVolume / PillDosage.Value, pillNumberMax);
+            }
+            else
+            {
+                PillNumber.Value = 0;
+            }
+
+            BottleDosage.Value = Math.Min(bottleAmountMax, bufferVolume);
         }
         //forces the UI to refresh using cached data on swapping tab
         private void OnTabChanged(int tabIndex)
@@ -237,31 +249,6 @@ namespace Content.Client.Chemistry.UI
                 var name = proto?.LocalizedName ?? Loc.GetString("chem-master-window-unknown-reagent-text");
                 var reagentColor = proto?.SubstanceColor ?? default(Color);
                 BufferInfo.Children.Add(BuildReagentRow(reagentColor, rowCount++, name, reagentId, quantity, true, false));
-            }
-            
-            //dynamically assigns default values to pill and bottle creation fields.
-            if (_currentState != null)
-            {
-                var output = _currentState.OutputContainerInfo;
-                var remainingCapacity = output is null ? 0 : (output.MaxVolume - output.CurrentVolume).Int();
-                var holdsReagents = output?.Reagents != null;
-                var pillNumberMax = holdsReagents ? 0 : remainingCapacity;
-                var bottleAmountMax = holdsReagents ? remainingCapacity : 0;
-                var bufferVolume = _currentState.BufferCurrentVolume?.Int() ?? 0;
-                
-                PillDosage.Value = (int)Math.Min(bufferVolume, _currentState.PillDosageLimit);
-                // Avoid division by zero.
-                if (PillDosage.Value > 0)
-                {
-                    PillNumber.Value = Math.Min(bufferVolume / PillDosage.Value, pillNumberMax);
-                }
-                // Fallback if dosage is invalid.
-                else
-                {
-                    PillNumber.Value = 0;
-                }
-
-                BottleDosage.Value = Math.Min(bottleAmountMax, bufferVolume);
             }
         }
         
