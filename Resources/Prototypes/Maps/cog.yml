@@ -1,7 +1,7 @@
 - type: gameMap
   id: Cog
   mapName: 'Cog'
-  mapPath: /Maps/_Starlight/Cog.yml
+  mapPath: /Maps/_Starlight/Stations/Cog.yml
   minPlayers: 40
   maxPlayers: 80 #big map
   stations:

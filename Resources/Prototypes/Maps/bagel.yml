@@ -1,7 +1,7 @@
 - type: gameMap
   id: Bagel
   mapName: 'Bagel Station'
-  mapPath: /Maps/SL_bagel.yml
+  mapPath: /Maps/_Starlight/Stations/Bagel.yml
   minPlayers: 35
   maxPlayers: 70
   stations:
