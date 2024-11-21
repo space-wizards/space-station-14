@@ -139,6 +139,8 @@
     name: vendor-medical-dispenser
     categories:
     - SLChemistry
+    - SLMedical
+    - SLSurgery
     currencyWhitelist:
     - NTCredit
   - type: Fixtures

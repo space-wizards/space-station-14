@@ -1,0 +1,35 @@
+﻿{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from vg and paradise station",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "vial1"
+    },
+    {
+      "name": "vial2"
+    },
+    {
+      "name": "vial3"
+    },
+    {
+      "name": "vial4"
+    },
+    {
+      "name": "vial5"
+    },
+    {
+      "name": "vial6"
+    },
+    {
+      "name": "open"
+    },
+    {
+      "name": "closed"
+    }
+  ]
+}

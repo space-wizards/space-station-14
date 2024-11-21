@@ -10,6 +10,7 @@
     tags:
     - Trash
     - CentrifugeCompatible
+    - Vial
   - type: PhysicalComposition
     materialComposition:
       Glass: 25

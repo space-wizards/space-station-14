@@ -99,12 +99,15 @@ public sealed class CustomLimbVisualizerSystem : EntitySystem
                     offset = new Vector2(0, -0.34375f);
                     break;
             }
-            var index = sprite.LayerMapReserveBlank($"custom-{item.Key}");
+            if (layerSprite?.BaseRSI?.TryGetState(state, out var rsiState) ?? false)
+            {
+                var index = sprite.LayerMapReserveBlank($"custom-{item.Key}");
 
-            sprite.LayerSetState(index, state, layerSprite.BaseRSI);
-            sprite.LayerSetOffset(index, offset);
-            sprite.LayerSetVisible(index, true);
-            ent.Comp.CachedLayers.Add(item.Key);
+                sprite.LayerSetState(index, rsiState.StateId, layerSprite.BaseRSI);
+                sprite.LayerSetOffset(index, offset);
+                sprite.LayerSetVisible(index, true);
+                ent.Comp.CachedLayers.Add(item.Key);
+            }
 
             //if (ent.Comp.Displacements.TryGetValue(item.Key, out var displacementData) && !ent.Comp.CachedLayers.Contains($"{item.Key}-displacement"))
             //{

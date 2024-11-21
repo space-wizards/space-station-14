@@ -9,3 +9,12 @@
 - type: storeCategory
   id: SLChemistry
   name: store-category-medical-chemistry
+
+- type: storeCategory
+  id: SLMedical
+  name: store-category-medical-medical
+
+- type: storeCategory
+  id: SLSurgery
+  name: store-category-medical-surgery
+

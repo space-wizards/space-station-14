@@ -1,7 +1,7 @@
 - type: gameMap
   id: Box
   mapName: 'Box Station'
-  mapPath: /Maps/SL_box.yml
+  mapPath: /Maps/_Starlight/Box.yml
   minPlayers: 50
   stations:
     Boxstation:

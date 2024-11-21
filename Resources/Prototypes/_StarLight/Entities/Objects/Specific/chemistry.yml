@@ -29,3 +29,60 @@
     solutions:
       beaker:
         maxVol: 200
+
+- type: entity
+  id: VialCase
+  parent: [ BaseStorageItem, BaseBagOpenClose ]
+  name: vial case
+  description: A convenient, compact box with 6 empty vials.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Chemistry/vial_case.rsi
+    layers:
+    - state: closed
+      map: ["closeLayer"]
+    - state: open
+      map: ["openLayer"]
+    - state: vial1
+      map: ["vial1"]
+      visible: false
+    - state: vial2
+      map: ["vial2"]
+      visible: false
+    - state: vial3
+      map: ["vial3"]
+      visible: false
+    - state: vial4
+      map: ["vial4"]
+      visible: false
+    - state: vial5
+      map: ["vial5"]
+      visible: false
+    - state: vial6
+      map: ["vial6"]
+      visible: false
+  - type: Storage
+    grid:
+    - 0,0,2,1
+  - type: Item
+    sprite: Objects/Consumable/Smokeables/vials/case.rsi
+    size: Small
+    shape:
+    - 0,0,1,1
+    storedRotation: 90
+  - type: StorageFill
+    contents:
+    - id: BaseChemistryEmptyVial
+      amount: 6
+  - type: ItemCounter
+    count:
+      tags: [Vial]
+    composite: true
+    layerStates:
+    - vial1
+    - vial2
+    - vial3
+    - vial4
+    - vial5
+    - vial6
+  - type: Appearance
