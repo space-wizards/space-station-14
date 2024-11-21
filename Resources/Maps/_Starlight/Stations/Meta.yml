@@ -10880,7 +10880,7 @@ entities:
       pos: -42.5,29.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -6002.036
+      secondsUntilStateChange: -6082.6025
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 2
@@ -71899,13 +71899,6 @@ entities:
     components:
     - type: Transform
       pos: 19.5,-35.5
-      parent: 5350
-- proto: filingCabinetDrawerRandom
-  entities:
-  - uid: 24838
-    components:
-    - type: Transform
-      pos: -15.5,-31.5
       parent: 5350
 - proto: filingCabinetRandom
   entities:
@@ -135471,6 +135464,22 @@ entities:
     components:
     - type: Transform
       pos: -64.500496,-45.428608
+      parent: 5350
+- proto: SLVendingMachineHugDispenser
+  entities:
+  - uid: 26994
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 20.5,19.5
+      parent: 5350
+- proto: SLVendingMachineMedical
+  entities:
+  - uid: 24838
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -15.5,-31.5
       parent: 5350
 - proto: SmartFridge
   entities:

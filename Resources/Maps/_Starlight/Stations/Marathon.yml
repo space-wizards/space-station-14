@@ -103268,11 +103268,6 @@ entities:
       parent: 30
 - proto: PottedPlant1
   entities:
-  - uid: 7175
-    components:
-    - type: Transform
-      pos: -15.5,-12.5
-      parent: 30
   - uid: 7491
     components:
     - type: Transform
@@ -116049,6 +116044,22 @@ entities:
     components:
     - type: Transform
       pos: 3.5163379,42.700695
+      parent: 30
+- proto: SLVendingMachineHugDispenser
+  entities:
+  - uid: 22700
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 25.5,33.5
+      parent: 30
+- proto: SLVendingMachineMedical
+  entities:
+  - uid: 7175
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -15.5,-12.5
       parent: 30
 - proto: SmartFridge
   entities:
