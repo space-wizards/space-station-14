@@ -90,7 +90,7 @@
   id: Blueointment
   name: blueointment
   icon: { sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: blueointment }
-  spawn: blueointment
+  spawn: Blueointment1
   maxCount: 20
 
 
