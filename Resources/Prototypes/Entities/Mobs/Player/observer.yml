@@ -55,6 +55,7 @@
     skipChecks: true
   - type: Ghost
   - type: GhostHearing
+  - type: ElectrocutionOverlay
   - type: IntrinsicRadioReceiver
   - type: ActiveRadio
     receiveAllChannels: true
