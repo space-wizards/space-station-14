@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: FlippenPage
-  changes:
-  - message: Nitrogen Deprivation Kit, found rarely in N2 Lockers.
-    type: Add
-  - message: N2 Wall Locker.
-    type: Add
-  - message: N2 Locker Loot Table updated.
-    type: Tweak
-  id: 51
-  time: '2024-08-01T19:46:36.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/64
 - author: ultramario1998
   changes:
   - message: Fin fin can now open doors. Life, uh, finds a way.
@@ -4299,3 +4288,11 @@
   id: 550
   time: '2024-11-21T13:15:41.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/767
+- author: DinnerCalzone
+  changes:
+  - message: Female Moths and Diona will now use human female sounds for their placeholder
+      vocal emotes.
+    type: Tweak
+  id: 551
+  time: '2024-11-21T13:18:00.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/748
