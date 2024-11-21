@@ -2,12 +2,16 @@
   id: VendorGoldenBeaker
   productEntity: GoldenBeaker
   cost:
-    NTCredit: 65
+    NTCredit: 200
   categories:
   - SLChemistry
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 2
+  - !type:BuyerJobCondition
+    whitelist:
+    - Chemist
+    - ChiefMedicalOfficer
 
 - type: listing
   id: VendorVialCase
@@ -19,6 +23,13 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 6
+  - !type:BuyerJobCondition
+    whitelist:
+    - Chemist
+    - ChiefMedicalOfficer
+    - MedicalDoctor
+    - MedicalIntern
+    - Paramedic
 
 - type: listing
   id: VendorCleanerGrenade
@@ -30,6 +41,13 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 5
+  - !type:BuyerJobCondition
+    whitelist:
+    - Chemist
+    - ChiefMedicalOfficer
+    - MedicalDoctor
+    - MedicalIntern
+    - Paramedic
 
 - type: listing
   id: VendorBluebrutepack20
@@ -41,6 +59,13 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 4
+  - !type:BuyerJobCondition
+    whitelist:
+    - Chemist
+    - ChiefMedicalOfficer
+    - MedicalDoctor
+    - MedicalIntern
+    - Paramedic
 
 - type: listing
   id: VendorBlueointment20
@@ -52,6 +77,13 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 4
+  - !type:BuyerJobCondition
+    whitelist:
+    - Chemist
+    - ChiefMedicalOfficer
+    - MedicalDoctor
+    - MedicalIntern
+    - Paramedic
 
 - type: listing
   id: VendorMobTrueDoctorbot
@@ -63,6 +95,9 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+  - !type:BuyerJobCondition
+    whitelist:
+    - ChiefMedicalOfficer
 
 - type: listing
   id: VendorMobOrganHumanHeart
@@ -71,6 +106,12 @@
     NTCredit: 331
   categories:
   - SLSurgery
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - ChiefMedicalOfficer
+    - MedicalDoctor
+    - Paramedic
 
 - type: listing
   id: VendorMobOrganHumanStomach
@@ -79,6 +120,12 @@
     NTCredit: 124
   categories:
   - SLSurgery
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - ChiefMedicalOfficer
+    - MedicalDoctor
+    - Paramedic
 
 - type: listing
   id: VendorMobOrganHumanLiver
@@ -87,6 +134,12 @@
     NTCredit: 143
   categories:
   - SLSurgery
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - ChiefMedicalOfficer
+    - MedicalDoctor
+    - Paramedic
 
 - type: listing
   id: VendorMobOrganHumanKidneys
@@ -95,6 +148,12 @@
     NTCredit: 265
   categories:
   - SLSurgery
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - ChiefMedicalOfficer
+    - MedicalDoctor
+    - Paramedic
 
 - type: listing
   id: VendorMobOrganHumanLungs
@@ -103,6 +162,12 @@
     NTCredit: 297
   categories:
   - SLSurgery
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - ChiefMedicalOfficer
+    - MedicalDoctor
+    - Paramedic
 
 - type: listing
   id: VendorMobOrganHumanTongue
@@ -111,6 +176,12 @@
     NTCredit: 48
   categories:
   - SLSurgery
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - ChiefMedicalOfficer
+    - MedicalDoctor
+    - Paramedic
   
 - type: listing
   id: VendorMobOrganHumanEyes
@@ -119,6 +190,12 @@
     NTCredit: 233
   categories:
   - SLSurgery
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - ChiefMedicalOfficer
+    - MedicalDoctor
+    - Paramedic
     
 - type: listing
   id: VendorLeftLegHuman
@@ -127,6 +204,12 @@
     NTCredit: 153
   categories:
   - SLSurgery
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - ChiefMedicalOfficer
+    - MedicalDoctor
+    - Paramedic
     
 - type: listing
   id: VendorRightLegHuman
@@ -135,6 +218,12 @@
     NTCredit: 153
   categories:
   - SLSurgery
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - ChiefMedicalOfficer
+    - MedicalDoctor
+    - Paramedic
       
 - type: listing
   id: VendorLeftFootHuman
@@ -143,6 +232,12 @@
     NTCredit: 37
   categories:
   - SLSurgery
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - ChiefMedicalOfficer
+    - MedicalDoctor
+    - Paramedic
     
 - type: listing
   id: VendorRightFootHuman
@@ -151,3 +246,9 @@
     NTCredit: 37
   categories:
   - SLSurgery
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - ChiefMedicalOfficer
+    - MedicalDoctor
+    - Paramedic
