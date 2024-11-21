@@ -386,4 +386,15 @@ Entries:
   id: 54
   time: '2024-11-20T18:33:31.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/75
+- author: STARLIGHT TEAM
+  changes:
+  - message: A special vial case has been added to the medical dispenser, which fits
+      in the pocket. Blue ointment and Blue brute pack (which differ from the regular
+      ones by having 20 charges instead of 10) have been added, as well as organs
+      and legs (until we implement the bioprinter and the science for this). And a
+      real doctor.
+    type: Add
+  id: 55
+  time: '2024-11-21T00:18:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/77
 
