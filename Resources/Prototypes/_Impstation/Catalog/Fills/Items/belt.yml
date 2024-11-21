@@ -1,0 +1,9 @@
+- type: entity
+  id: ClothingBeltHolsterHOSFilled
+  parent: ClothingBeltHolsterHOS
+  suffix: Filled
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:NestedSelector
+        tableId: BeltSecurityEntityTable

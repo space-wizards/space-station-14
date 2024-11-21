@@ -1463,11 +1463,12 @@
   - CommandVeteranDuffel
 
 - type: loadoutGroup
-  id: HeadofSecurityMask
-  name: loadout-group-head-of-security-mask
-  minLimit: 0
+  id: HeadofSecurityBelt
+  name: loadout-group-head-of-security-belt
   loadouts:
-  - HeadofSecurityMask
+  - SecurityBelt
+  - SecurityWebbing
+  - HeadofSecurityShoulderHolster
 
 - type: loadoutGroup
   id: WardenHead
