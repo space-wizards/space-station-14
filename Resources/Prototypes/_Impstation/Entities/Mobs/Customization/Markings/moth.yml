@@ -108,7 +108,7 @@
 - type: marking
   id: TwistingArmRightMoth
   bodyPart: RArm
-  markingCategory: Head
+  markingCategory: Arms
   speciesRestriction: [Moth]
   followSkinColor: false
   sprites:
