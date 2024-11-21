@@ -446,4 +446,12 @@ Entries:
   id: 62
   time: '2024-11-21T17:00:00.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/commit/e779e38c8fd9a8ded49cdd6b806eba903a23b220
+- author: STARLIGHT TEAM
+  changes:
+  - message: The CDN server from which you download updates has been moved to the
+      same cluster as the game and TTS..
+    type: Tweak
+  id: 63
+  time: '2024-11-21T20:47:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/79
 
