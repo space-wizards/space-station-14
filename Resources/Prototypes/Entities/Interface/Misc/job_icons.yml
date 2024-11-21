@@ -1,0 +1,610 @@
+- type: entity
+  abstract: true
+  name: job icon
+  parent: BaseItem
+  id: JobIcon
+  description: It's a job icon
+  components:
+  - type: Sprite
+    sprite: Interface/Misc/job_icons.rsi
+    
+#the actual icons
+
+- type: entity
+  parent: JobIcon
+  id: AdminIcon
+  name: admin icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Admin
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: AtmosIcon
+  name: atmospheric technician icon
+  components:
+  - type: Sprite
+    layers:
+    - state: AtmosphericTechnician
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: BartenderIcon
+  name: bartender icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Bartender
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: BorgIcon
+  name: borg icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Borg
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: BotanistIcon
+  name: botanist icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Botanist
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: BoxerIcon
+  name: boxer icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Boxer
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: BrigmedicIcon
+  name: brigmedic icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Brigmedic
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: CaptainIcon
+  name: captain icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Captain
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: CargoTechnicianIcon
+  name: cargo technician icon
+  components:
+  - type: Sprite
+    layers:
+    - state: CargoTechnician
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: ChaplainIcon
+  name: chaplain icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Chaplain
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: ChefIcon
+  name: chef icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Chef
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: ChemistIcon
+  name: chemist icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Chemist
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: ChiefEngineerIcon
+  name: chief engineer icon
+  components:
+  - type: Sprite
+    layers:
+    - state: ChiefEngineer
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: ChiefMedicalOfficerIcon
+  name: chief medical officer icon
+  components:
+  - type: Sprite
+    layers:
+    - state: ChiefMedicalOfficer
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: ClownIcon
+  name: clown icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Clown
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: DetectiveIcon
+  name: detective icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Detective
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: GeneticistIcon
+  name: geneticist icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Geneticist
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: HeadOfPersonnelIcon
+  name: head of personnel icon
+  components:
+  - type: Sprite
+    layers:
+    - state: HeadOfPersonnel
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: HeadOfSecurityIcon
+  name: head of security icon
+  components:
+  - type: Sprite
+    layers:
+    - state: HeadOfSecurity
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: HeadRevolutionaryIcon
+  name: head revolutionary icon
+  components:
+  - type: Sprite
+    layers:
+    - state: HeadRevolutionary
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: InitialInfectedIcon
+  name: initial infected icon
+  components:
+  - type: Sprite
+    layers:
+    - state: InitialInfected
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: JanitorIcon
+  name: janitor icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Janitor
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: LawyerIcon
+  name: lawyer icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Lawyer
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: LibrarianIcon
+  name: librarian icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Librarian
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: MedicalDoctorIcon
+  name: medical doctor icon
+  components:
+  - type: Sprite
+    layers:
+    - state: MedicalDoctor
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: MedicalInternIcon
+  name: medical intern icon
+  components:
+  - type: Sprite
+    layers:
+    - state: MedicalIntern
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: MimeIcon
+  name: mime icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Mime
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: MindShieldIcon
+  name: mindshield icon
+  components:
+  - type: Sprite
+    layers:
+    - state: MindShield
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: MusicianIcon
+  name: musician icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Musician
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: NanotrasenIcon
+  name: nanotrasen icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Nanotrasen
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: NoIdIcon
+  name: no id icon
+  components:
+  - type: Sprite
+    layers:
+    - state: NoId
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: ParamedicIcon
+  name: paramedic icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Paramedic
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: PassengerIcon
+  name: passenger icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Passenger
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: PrisonerIcon
+  name: prisoner icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Prisoner
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: PsychologistIcon
+  name: psychologist icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Psychologist
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: QuarterMasterIcon
+  name: quartermaster icon
+  components:
+  - type: Sprite
+    layers:
+    - state: QuarterMaster
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: ReporterIcon
+  name: reporter icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Reporter
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: ResearchAssistantIcon
+  name: research assistant icon
+  components:
+  - type: Sprite
+    layers:
+    - state: ResearchAssistant
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: ResearchDirectorIcon
+  name: research director icon
+  components:
+  - type: Sprite
+    layers:
+    - state: ResearchDirector
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: RevolutionaryIcon
+  name: revolutionary icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Revolutionary
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: RoboticistIcon
+  name: roboticist icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Roboticist
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: ScientistIcon
+  name: scientist icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Scientist
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: SecurityCadetIcon
+  name: security cadet icon
+  components:
+  - type: Sprite
+    layers:
+    - state: SecurityCadet
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: SecurityOfficerIcon
+  name: security officer icon
+  components:
+  - type: Sprite
+    layers:
+    - state: SecurityOfficer
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: SeniorEngineerIcon
+  name: senior engineer icon
+  components:
+  - type: Sprite
+    layers:
+    - state: SeniorEngineer
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: SeniorOfficerIcon
+  name: senior officer icon
+  components:
+  - type: Sprite
+    layers:
+    - state: SeniorOfficer
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: SeniorPhysicianIcon
+  name: senior physician icon
+  components:
+  - type: Sprite
+    layers:
+    - state: SeniorPhysician
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: SeniorResearcherIcon
+  name: senior researcher icon
+  components:
+  - type: Sprite
+    layers:
+    - state: SeniorResearcher
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: ServiceWorkerIcon
+  name: service worker icon
+  components:
+  - type: Sprite
+    layers:
+    - state: ServiceWorker
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: ShaftMinerIcon
+  name: shaft miner icon
+  components:
+  - type: Sprite
+    layers:
+    - state: ShaftMiner
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: StationAiIcon
+  name: station ai icon
+  components:
+  - type: Sprite
+    layers:
+    - state: StationAi
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: StationEngineerIcon
+  name: station engineer icon
+  components:
+  - type: Sprite
+    layers:
+    - state: StationEngineer
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: SyndicateIcon
+  name: syndicate icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Syndicate
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: TechnicalAssistantIcon
+  name: technical assistant icon
+  components:
+  - type: Sprite
+    layers:
+    - state: TechnicalAssistant
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: UnknownIcon
+  name: unknown icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Unknown
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: VirologistIcon
+  name: virologist icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Virologist
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: VisitorIcon
+  name: visitor icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Visitor
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: WardenIcon
+  name: warden icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Warden
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: ZombieIcon
+  name: zombie icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Zombie
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: JobIcon
+  id: ZookeeperIcon
+  name: zookeeper icon
+  components:
+  - type: Sprite
+    layers:
+    - state: Zookeeper
