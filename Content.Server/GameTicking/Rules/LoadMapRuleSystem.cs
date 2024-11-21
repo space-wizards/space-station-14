@@ -18,8 +18,6 @@ public sealed class LoadMapRuleSystem : StationEventSystem<LoadMapRuleComponent>
 
     protected override void Added(EntityUid uid, LoadMapRuleComponent comp, GameRuleComponent rule, GameRuleAddedEvent args)
     {
-        base.Added(uid, comp, rule, args);
-
         if (comp.PreloadedGrid != null && !_gridPreloader.PreloadingEnabled)
         {
             // Preloading will never work if it's disabled, duh
@@ -77,5 +75,7 @@ public sealed class LoadMapRuleSystem : StationEventSystem<LoadMapRuleComponent>
 
         var ev = new RuleLoadedGridsEvent(mapId, grids);
         RaiseLocalEvent(uid, ref ev);
+
+        base.Added(uid, comp, rule, args);
     }
 }
