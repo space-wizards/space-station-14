@@ -154,19 +154,19 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
     private readonly Dictionary<ChatChannel, int> _unreadMessages = new();
 
     /// <summary>
-    ///     A list of words to be highlighted in the chatbox.
+    ///     The list of words to be highlighted in the chatbox.
     /// </summary>
-    private List<string> _highlights = [];
+    private List<string> _highlights = new();
 
     /// <summary>
-    ///     The color (hex) in witch the words will be highlighted as.
+    ///     The string holding the hex color used to highlight words.
     /// </summary>
     private string? _highlightsColor;
 
     private bool _autoFillHighlightsEnabled;
 
     /// <summary>
-    ///     A bool to keep track if the 'CharacterUpdated' event is a new player attaching or the opening of the character info panel.
+    ///     The boolean that keeps track of the 'OnCharacterUpdated' event, whenever it's a player attaching or opening the character info panel.
     /// </summary>
     private bool _charInfoIsAttach = false;
 
@@ -294,12 +294,12 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
 
     public void OnSystemLoaded(CharacterInfoSystem system)
     {
-        system.OnCharacterUpdate += CharacterUpdated;
+        system.OnCharacterUpdate += OnCharacterUpdated;
     }
 
     public void OnSystemUnloaded(CharacterInfoSystem system)
     {
-        system.OnCharacterUpdate -= CharacterUpdated;
+        system.OnCharacterUpdate -= OnCharacterUpdated;
     }
 
     private void OnChatWindowOpacityChanged(float opacity)
@@ -307,9 +307,10 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
         SetChatWindowOpacity(opacity);
     }
 
-    private void CharacterUpdated(CharacterData data)
+    private void OnCharacterUpdated(CharacterData data)
     {
-        // If the _charInfoIsAttach is false then the character panel created the event, dismiss.
+        // If the _charInfoIsAttach is false then the character panel was the one
+        // to generate the event, dismiss it.
         if (!_charInfoIsAttach)
             return;
 
@@ -498,6 +499,8 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
     {
         UpdateChannelPermissions();
         
+        // If auto highlights are enabled generate a request for new character info
+        // that will be used to determine the highlights.
         if (_autoFillHighlightsEnabled)
         {
             _charInfoIsAttach = true;
@@ -663,26 +666,28 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
 
     public void UpdateHighlights(string highlights)
     {
-        // Save the newly provided list of highlighs if different.
-        if (!_config.GetCVar(CCVars.ChatHighlights).Equals(highlights, StringComparison.CurrentCultureIgnoreCase))
-        {
-            _config.SetCVar(CCVars.ChatHighlights, highlights);
-            _config.SaveToFile();
-        }
+        // Do nothing if the provided highlighs are the same as the old ones.
+        if (_config.GetCVar(CCVars.ChatHighlights).Equals(highlights, StringComparison.CurrentCultureIgnoreCase))
+            return;
 
-        // If the word is surrounded by "" we replace them with a whole-word regex tag.
+        _config.SetCVar(CCVars.ChatHighlights, highlights);
+        _config.SaveToFile();
+
+        // Replace any " character with a whole-word regex tag,
+        // this tag will make the words to match are separated by spaces or punctuation.
         highlights = highlights.Replace("\"", "\\b");
+
+        _highlights.Clear();
 
         // Fill the array with the highlights separated by newlines, disregarding empty entries.
         string[] arrHighlights = highlights.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-        _highlights.Clear();
         foreach (var keyword in arrHighlights)
         {
             _highlights.Add(keyword);
         }
 
-        // Arrange the list in descending order so that when highlighting,
-        // the full word (eg. "Security") appears before the abbreviation (eg. "Sec").
+        // Arrange the list of highlights in descending order so that when highlighting,
+        // the full word (eg. "Security") gets picked before the abbreviation (eg. "Sec").
         _highlights.Sort((x, y) => y.Length.CompareTo(x.Length));
     }
 

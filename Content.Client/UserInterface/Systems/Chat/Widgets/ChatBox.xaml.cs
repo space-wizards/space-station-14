@@ -41,7 +41,7 @@ public partial class ChatBox : UIWidget
         ChatInput.FilterButton.Popup.OnNewHighlights += OnNewHighlights;
         _controller = UserInterfaceManager.GetUIController<ChatUIController>();
         _controller.MessageAdded += OnMessageAdded;
-        _controller.HighlightsUpdated += OnHighlightsReceived;
+        _controller.HighlightsUpdated += OnHighlightsUpdated;
         _controller.RegisterChat(this);
     }
 
@@ -66,6 +66,11 @@ public partial class ChatBox : UIWidget
         var color = msg.MessageColorOverride ?? msg.Channel.TextColor();
 
         AddLine(msg.WrappedMessage, color);
+    }
+
+    private void OnHighlightsUpdated(string highlights)
+    {
+        ChatInput.FilterButton.Popup.UpdateHighlights(highlights);
     }
 
     private void OnChannelSelect(ChatSelectChannel channel)
@@ -180,11 +185,6 @@ public partial class ChatBox : UIWidget
 
         // Warn typing indicator about change
         _controller.NotifyChatTextChange();
-    }
-
-    private void OnHighlightsReceived(string highlights)
-    {
-        ChatInput.FilterButton.Popup.SetHighlights(highlights);
     }
 
     protected override void Dispose(bool disposing)
