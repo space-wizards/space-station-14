@@ -22,6 +22,24 @@
             "problemMatcher": "$msCompile"
         },
         {
+            "label": "clean-build",
+            "command": "dotnet",
+            "type": "shell",
+            "args": [
+                "build",
+                "--no-incremental",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:'ForceNoAlign;NoSummary'"
+            ],
+            "group": {
+                "kind": "build"
+            },
+            "presentation": {
+                "reveal": "silent"
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
             "label": "build-yaml-linter",
             "command": "dotnet",
             "type": "process",
