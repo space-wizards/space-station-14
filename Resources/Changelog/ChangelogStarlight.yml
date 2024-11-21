@@ -432,4 +432,18 @@ Entries:
   id: 60
   time: '2024-11-21T16:46:06.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/78
+- author: Rinary
+  changes:
+  - message: Added job conditions to medical dispenser.
+    type: Add
+  id: 61
+  time: '2024-11-21T17:00:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/e779e38c8fd9a8ded49cdd6b806eba903a23b220
+- author: Rinary
+  changes:
+  - message: Price of golden beaker was incresed to 200 credits per beaker.
+    type: Tweak
+  id: 62
+  time: '2024-11-21T17:00:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/e779e38c8fd9a8ded49cdd6b806eba903a23b220
 
