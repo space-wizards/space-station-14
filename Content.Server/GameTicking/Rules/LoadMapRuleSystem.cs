@@ -1,14 +1,14 @@
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.GridPreloader;
+using Content.Server.StationEvents.Events;
 using Content.Shared.GameTicking.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameTicking.Rules;
 
-public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
+public sealed class LoadMapRuleSystem : StationEventSystem<LoadMapRuleComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly MapSystem _map = default!;
@@ -18,6 +18,8 @@ public sealed class LoadMapRuleSystem : GameRuleSystem<LoadMapRuleComponent>
 
     protected override void Added(EntityUid uid, LoadMapRuleComponent comp, GameRuleComponent rule, GameRuleAddedEvent args)
     {
+        base.Added(uid, comp, rule, args);
+
         if (comp.PreloadedGrid != null && !_gridPreloader.PreloadingEnabled)
         {
             // Preloading will never work if it's disabled, duh
