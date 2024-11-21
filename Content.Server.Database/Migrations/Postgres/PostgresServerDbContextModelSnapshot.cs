@@ -1354,22 +1354,21 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SupportExchangeId"));
 
-                    b.Property<int>("ServerId")
-                        .HasColumnType("integer")
-                        .HasColumnName("server_id");
-
                     b.Property<int>("SupportRound")
                         .HasColumnType("integer")
                         .HasColumnName("support_round");
 
-                    b.Property<Guid>("SupportTarget")
+                    b.Property<Guid>("SupportTargetPlayer")
                         .HasColumnType("uuid")
-                        .HasColumnName("support_target");
+                        .HasColumnName("support_target_player");
 
                     b.HasKey("SupportExchangeId")
                         .HasName("PK_support_exchanges");
 
                     b.HasIndex("SupportRound");
+
+                    b.HasIndex("SupportRound", "SupportTargetPlayer")
+                        .IsUnique();
 
                     b.ToTable("support_exchanges", (string)null);
                 });
@@ -2070,8 +2069,8 @@ namespace Content.Server.Database.Migrations.Postgres
                                 .HasColumnType("text")
                                 .HasColumnName("support_data__round_status");
 
-                            b1.Property<int?>("SenderEntity")
-                                .HasColumnType("integer")
+                            b1.Property<string>("SenderEntity")
+                                .HasColumnType("text")
                                 .HasColumnName("support_data__sender_entity");
 
                             b1.Property<string>("SenderEntityName")

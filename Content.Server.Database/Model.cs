@@ -212,33 +212,43 @@ namespace Content.Server.Database
             // Support Logging configuration
             modelBuilder.Entity<SupportMessage>(entity =>
             {
+                // Define composite key for SupportMessage
                 entity.HasKey(e => new { e.SupportExchangeId, e.SupportMessageId });
 
+                // Create an index on TimeSent for performance
                 entity.HasIndex(e => e.TimeSent);
 
+                // Define relationship with SupportExchange
                 entity.HasOne(e => e.SupportExchange)
                     .WithMany(e => e.SupportMessages)
                     .HasForeignKey(e => e.SupportExchangeId)
-                    .OnDelete(DeleteBehavior.Cascade);
+                    .OnDelete(DeleteBehavior.Cascade); // Cascade on delete
 
+                // Define relationship with Player using PlayerUserId as foreign key
                 entity.HasOne<Player>()
                     .WithMany()
                     .HasForeignKey(e => e.PlayerUserId)
-                    .HasPrincipalKey(p => p.UserId);
+                    .HasPrincipalKey(p => p.UserId); // Referencing UserId in Player
 
                 // Configure SupportData as a jsonb column
-                entity.OwnsOne(e => e.SupportData).ToJson();
+                entity.OwnsOne(e => e.SupportData).ToJson(); // Ensure jsonb data type is applied implicitly
             });
 
             modelBuilder.Entity<SupportExchange>(entity =>
             {
+                // Define primary key
                 entity.HasKey(e => e.SupportExchangeId);
 
+                // Define unique index for combined SupportRound and SupportTargetPlayer to avoid duplicates
+                entity.HasIndex(e => new { e.SupportRound, e.SupportTargetPlayer }).IsUnique();
+
+                // Define relationship with SupportMessages
                 entity.HasMany(e => e.SupportMessages)
                     .WithOne(e => e.SupportExchange)
                     .HasForeignKey(e => e.SupportExchangeId)
-                    .OnDelete(DeleteBehavior.Cascade);
+                    .OnDelete(DeleteBehavior.Cascade); // Cascade delete behavior
 
+                // Index on SupportRound for better search performance
                 entity.HasIndex(e => e.SupportRound);
             });
 
@@ -759,7 +769,10 @@ namespace Content.Server.Database
         [ForeignKey("RoundId,LogId")] public AdminLog Log { get; set; } = default!;
     }
 
-    //Ahelp Logging + groundwork for MentorHelpTM
+    /// <summary>
+    /// Represents a support exchange that includes multiple support messages.
+    /// Used for logging player and admin interactions in the form of Ahelp or MentorHelp exchanges.
+    /// </summary>
     public class SupportExchange
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -767,11 +780,16 @@ namespace Content.Server.Database
 
         [Required]
         public int SupportRound { get; set; }
-        public Guid SupportTarget { get; set; }
-        public int ServerId { get; set; }
+
+        [Required]
+        public Guid SupportTargetPlayer { get; set; }
         public ICollection<SupportMessage> SupportMessages { get; set; } = new List<SupportMessage>();
     }
 
+
+    /// <summary>
+    /// Represents a support message sent within a support exchange.
+    /// </summary>
     public class SupportMessage
     {
         [ForeignKey(nameof(SupportExchangeId))]
@@ -787,17 +805,29 @@ namespace Content.Server.Database
         public SupportExchange SupportExchange { get; set; } = null!;
     }
 
+    /// <summary>
+    /// Represents additional data for a support message that gets put into a support message.
+    /// </summary>
     public class SupportData
     {
-        public int? SenderEntity { get; set; }
+        public string? SenderEntity { get; set; }
         public string? SenderEntityName { get; set; }
         public bool IsAdminned { get; set; }
         public bool AdminsOnline { get; set; }
         public bool TargetOnline { get; set; }
         public string RoundStatus { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SupportData"/> class with the specified details.
+        /// </summary>
+        /// <param name="senderEntity">The ID of the entity that sent the message, if applicable.</param>
+        /// <param name="senderEntityName">The name of the entity that sent the message, if applicable.</param>
+        /// <param name="isAdminned">Indicates whether the sender of the message was adminned at the time of the message sending</param>
+        /// <param name="adminsOnline">Indicates whether admins are currently online.</param>
+        /// <param name="targetOnline">Indicates whether the target player is currently online.</param>
+        /// <param name="roundStatus">The current status of the round when the message was sent.</param>
         public SupportData(
-            int? senderEntity,
+            string? senderEntity,
             string senderEntityName,
             bool isAdminned,
             bool adminsOnline,

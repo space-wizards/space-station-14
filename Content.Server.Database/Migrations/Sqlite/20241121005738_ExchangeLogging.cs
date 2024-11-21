@@ -18,8 +18,7 @@ namespace Content.Server.Database.Migrations.Sqlite
                     support_exchange_id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     support_round = table.Column<int>(type: "INTEGER", nullable: false),
-                    support_target = table.Column<Guid>(type: "TEXT", nullable: false),
-                    server_id = table.Column<int>(type: "INTEGER", nullable: false)
+                    support_target_player = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -58,6 +57,12 @@ namespace Content.Server.Database.Migrations.Sqlite
                 name: "IX_support_exchanges_support_round",
                 table: "support_exchanges",
                 column: "support_round");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_support_exchanges_support_round_support_target_player",
+                table: "support_exchanges",
+                columns: new[] { "support_round", "support_target_player" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_support_messages_player_user_id",

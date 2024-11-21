@@ -1083,22 +1083,24 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
         /// <summary>
         /// Retrieves a SupportExchange based on the round number, target user (Guid), and server id.
         /// </summary>
-        public async Task<SupportExchange?> GetSupportExchangeAsync(int supportRound, Guid supportTarget, int serverId)
+        public async Task<SupportExchange?> GetSupportExchangeAsync(int supportRound, Guid supportTarget)
         {
             await using var db = await GetDb();
             return await db.DbContext.SupportExchanges
                 .Include(e => e.SupportMessages)
-                .FirstOrDefaultAsync(e => e.SupportRound == supportRound && e.SupportTarget == supportTarget && e.ServerId == serverId);
+                .SingleOrDefaultAsync(e => e.SupportRound == supportRound &&
+                                          e.SupportTargetPlayer == supportTarget);
         }
 
         /// <summary>
         /// Adds a new SupportExchange to the database.
         /// </summary>
-        public async Task AddSupportExchangeAsync(SupportExchange exchange)
+        public async Task<int> AddSupportExchangeAsync(SupportExchange exchange)
         {
             await using var db = await GetDb();
             db.DbContext.SupportExchanges.Add(exchange);
             await db.DbContext.SaveChangesAsync();
+            return exchange.SupportExchangeId;
         }
 
         /// <summary>
@@ -1108,17 +1110,31 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
         {
             await using var db = await GetDb();
 
-            using var transaction = await db.DbContext.Database.BeginTransactionAsync();
+            await using var transaction = await db.DbContext.Database.BeginTransactionAsync();
 
-            // Get the maximum message ID for the exchange and set the new message's ID
-            var maxMessageId = await GetMaxMessageIdForExchange(supportMessage.SupportExchangeId);
-            supportMessage.SupportMessageId = maxMessageId + 1;
+            try
+            {
+                var maxMessageId = await db.DbContext.SupportMessages
+                    .Where(m => m.SupportExchangeId == supportMessage.SupportExchangeId)
+                    .OrderByDescending(m => m.SupportMessageId)
+                    .Select(m => m.SupportMessageId)
+                    .FirstOrDefaultAsync();
 
-            db.DbContext.SupportMessages.Add(supportMessage);
+                supportMessage.SupportMessageId = maxMessageId + 1;
 
-            await db.DbContext.SaveChangesAsync();
+                db.DbContext.SupportMessages.Add(supportMessage);
 
-            await transaction.CommitAsync();
+                await db.DbContext.SaveChangesAsync();
+
+                await transaction.CommitAsync();
+            }
+            catch (Exception e)
+            {
+                await transaction.RollbackAsync();
+
+                Console.WriteLine($"Error adding support message in AddSuppportMessageAsync: {e.Message}");
+                throw;
+            }
         }
 
         /// <summary>

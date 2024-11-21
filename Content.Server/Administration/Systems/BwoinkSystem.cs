@@ -693,7 +693,7 @@ namespace Content.Server.Administration.Systems
             bool targetOnline = _playerManager.TryGetSessionById(message.UserId, out var _);
 
             // Log the message to the database
-            await _supportLogging.LogSupportMessageAsync(
+            _supportLogging.LogSupportMessageAsync(
                 supportRound: _gameTicker.RoundId,
                 roundStatus: _gameTicker.RunLevel switch
                 {
@@ -703,7 +703,7 @@ namespace Content.Server.Administration.Systems
                     _ => "Unknown",
                 },
                 timeSent: DateTime.UtcNow,
-                adminsOnline: GetAdmins().Count > 0,
+                adminsOnline: AdminsOnline(),
                 senderId: senderSession.UserId,
                 senderEntity: senderSession.AttachedEntity,
                 isAdminned: senderAdmin != null,
@@ -804,13 +804,12 @@ namespace Content.Server.Administration.Systems
                 .ToList();
         }
 
-        private IList<INetChannel> GetAdmins()
+        private bool AdminsOnline()
         {
             return _adminManager.ActiveAdmins
-                .Where(p => (_adminManager.GetAdminData(p)?.HasFlag(AdminFlags.Adminhelp) ?? false))
-                .Select(p => p.Channel)
-                .ToList();
+                .Any(p => _adminManager.GetAdminData(p)?.HasFlag(AdminFlags.Adminhelp) ?? false);
         }
+
 
         private IList<INetChannel> GetTargetAdmins()
         {

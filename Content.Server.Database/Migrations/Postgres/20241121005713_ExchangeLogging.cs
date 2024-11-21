@@ -19,8 +19,7 @@ namespace Content.Server.Database.Migrations.Postgres
                     support_exchange_id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     support_round = table.Column<int>(type: "integer", nullable: false),
-                    support_target = table.Column<Guid>(type: "uuid", nullable: false),
-                    server_id = table.Column<int>(type: "integer", nullable: false)
+                    support_target_player = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -59,6 +58,12 @@ namespace Content.Server.Database.Migrations.Postgres
                 name: "IX_support_exchanges_support_round",
                 table: "support_exchanges",
                 column: "support_round");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_support_exchanges_support_round_support_target_player",
+                table: "support_exchanges",
+                columns: new[] { "support_round", "support_target_player" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_support_messages_player_user_id",

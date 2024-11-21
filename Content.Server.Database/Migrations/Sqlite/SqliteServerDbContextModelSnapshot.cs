@@ -1280,22 +1280,21 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("INTEGER")
                         .HasColumnName("support_exchange_id");
 
-                    b.Property<int>("ServerId")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("server_id");
-
                     b.Property<int>("SupportRound")
                         .HasColumnType("INTEGER")
                         .HasColumnName("support_round");
 
-                    b.Property<Guid>("SupportTarget")
+                    b.Property<Guid>("SupportTargetPlayer")
                         .HasColumnType("TEXT")
-                        .HasColumnName("support_target");
+                        .HasColumnName("support_target_player");
 
                     b.HasKey("SupportExchangeId")
                         .HasName("PK_support_exchanges");
 
                     b.HasIndex("SupportRound");
+
+                    b.HasIndex("SupportRound", "SupportTargetPlayer")
+                        .IsUnique();
 
                     b.ToTable("support_exchanges", (string)null);
                 });
@@ -1992,8 +1991,8 @@ namespace Content.Server.Database.Migrations.Sqlite
                                 .HasColumnType("TEXT")
                                 .HasColumnName("support_data__round_status");
 
-                            b1.Property<int?>("SenderEntity")
-                                .HasColumnType("INTEGER")
+                            b1.Property<string>("SenderEntity")
+                                .HasColumnType("TEXT")
                                 .HasColumnName("support_data__sender_entity");
 
                             b1.Property<string>("SenderEntityName")
