@@ -1,8 +1,6 @@
 ﻿using System.Buffers.Binary;
 using System.Globalization;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using Content.Server.Database;
@@ -41,8 +39,10 @@ public sealed partial class ConnectionManager
     private bool _ratelimitedDay;
     private int _currentRequestsDay;
     private int _currentRequestsMinute;
-    private DateTime _lastRatelimited;
+    private TimeSpan _lastRatelimited;
     private bool _limitHasBeenHandled;
+
+    private TimeSpan _nextClean;
 
     // CCVars, they are initialized in ConnectionManager.cs
     private string? _contactEmail;
@@ -80,6 +80,7 @@ public sealed partial class ConnectionManager
 
         var ip = e.IP.Address;
 
+        // Is this a local ip address?
         if (IsAddressReservedIpv4(ip) || IsAddressReservedIpv6(ip))
         {
             _sawmill.Warning($"{e.UserName} joined using a local address. Do you need IPIntel? Or is something terribly misconfigured on your server?" +
@@ -89,19 +90,16 @@ public sealed partial class ConnectionManager
 
         // Check our cache
         var query = await _db.GetIPIntelCache(ip);
-        var expired = false;
 
         // Does it exist?
         if (query != null)
         {
             // Skip to score check if result is older than _cacheDays
-            if (DateTime.Now - query.Time < _cacheDays)
+            if (DateTime.UtcNow - query.Time <= _cacheDays)
             {
                 var cachedScore = query.Score.ToString(CultureInfo.CurrentCulture);
                 return await ScoreCheck(cachedScore, e);
             }
-            // This record is expired and should be updated.
-            expired = true;
         }
 
         // Check our api limits. If we are ratelimited we back out.
@@ -170,7 +168,7 @@ public sealed partial class ConnectionManager
     private void HandleRatelimit()
     {
         // Oh my god this is terrible
-        if (_currentRequestsDay < _requestLimitDay)
+        if (_currentRequestsDay >= _requestLimitDay)
         {
             if (ShouldLiftRateLimit(_ratelimitedDay, _lastRatelimited, TimeSpan.FromDays(1)))
             {
@@ -186,9 +184,9 @@ public sealed partial class ConnectionManager
 
             _sawmill.Warning($"We just hit our last daily IPIntel limit ({_requestLimitDay})");
             _ratelimitedDay = true;
-            _lastRatelimited = DateTime.Now;
+            _lastRatelimited = _gameTiming.RealTime;
         }
-        else if (_currentRequestsMinute < _requestLimitMinute)
+        else if (_currentRequestsMinute >= _requestLimitMinute)
         {
             if (ShouldLiftRateLimit(_ratelimitedMinute, _lastRatelimited, TimeSpan.FromMinutes(1)))
             {
@@ -204,22 +202,23 @@ public sealed partial class ConnectionManager
 
             _sawmill.Warning($"We just hit our last minute IPIntel limit ({_requestLimitMinute}).");
             _ratelimitedMinute = true;
-            _lastRatelimited = DateTime.Now;
+            _lastRatelimited = _gameTiming.RealTime;
         }
     }
 
-    private bool ShouldLiftRateLimit(bool currentlyRatelimited, DateTime lastRatelimited, TimeSpan liftingTime)
+    private bool ShouldLiftRateLimit(bool currentlyRatelimited, TimeSpan lastRatelimited, TimeSpan liftingTime)
     {
         // Should we raise this limit now?
-        return currentlyRatelimited && DateTime.Now - lastRatelimited >= liftingTime;
+        return currentlyRatelimited &&  lastRatelimited >= liftingTime;
     }
 
-    //     await _db.UpsertIPIntelCache(DateTime.Now, ip, score);
     private async Task<(bool, string Empty)> ScoreCheck(string response, NetConnectingArgs e)
     {
         var score = Parse.Float(response);
         var ip = e.IP.Address;
         var decisionIsReject = score > _rating;
+
+        await Task.Run(() => SaveCache(ip, score));
 
         if (_alertAdminWarn != 0f && _alertAdminWarn < score && !decisionIsReject)
         {
@@ -241,9 +240,32 @@ public sealed partial class ConnectionManager
         return _rejectBad ? (true, Loc.GetString("ipintel-suspicious")) : (false, string.Empty);
     }
 
+    private async Task SaveCache(IPAddress ip, float score)
+    {
+        var query = await _db.GetIPIntelCache(ip);
+
+        if (query == null || DateTime.UtcNow - query.Time >= _cacheDays)
+        {
+            await _db.UpsertIPIntelCache(DateTime.UtcNow, ip, score);
+        }
+    }
+
+    public async Task Update()
+    {
+        if (_gameTiming.RealTime >= _nextClean)
+        {
+            // Fuck it we hardcode
+            _nextClean = _gameTiming.RealTime + TimeSpan.FromMinutes(15);
+            await _db.CleanIPIntelCache(_cacheDays);
+        }
+    }
+
     // Stolen from Lidgren.Network (Space Wizards Edition) (NetReservedAddress.cs)
     // Modified with IPV6 on top
-    private static int Ipv4(byte a, byte b, byte c, byte d) => (a << 24) | (b << 16) | (c << 8) | d;
+    private static int Ipv4(byte a, byte b, byte c, byte d)
+    {
+        return (a << 24) | (b << 16) | (c << 8) | d;
+    }
 
     // From miniupnpc
     private static readonly (int ip, int mask)[] ReservedRangesIpv4 =

@@ -1752,18 +1752,14 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                 .SingleOrDefaultAsync(w => ip.Equals(w.Address));
         }
 
-        public async Task<bool> RemoveIPIntelCache(IPAddress ip)
+        public async Task<bool> CleanIPIntelCache(TimeSpan range)
         {
             await using var db = await GetDb();
 
-            var cache = await db.DbContext.IPIntelCache
-                .Where(w => ip.Equals(w.Address))
-                .SingleOrDefaultAsync();
+            await db.DbContext.IPIntelCache
+                .Where(w => DateTime.UtcNow - w.Time >= range)
+                .ExecuteDeleteAsync();
 
-            if (cache == null)
-                return false;
-
-            db.DbContext.IPIntelCache.Remove(cache);
             await db.DbContext.SaveChangesAsync();
             return true;
         }
