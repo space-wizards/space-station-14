@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: iztokbajcar
-  changes:
-  - message: Fixed some typos in the guidebook.
-    type: Fix
-  id: 7135
-  time: '2024-08-18T15:31:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31159
 - author: Unkn0wnGh0st333
   changes:
   - message: changed human male coughing
@@ -3932,3 +3925,10 @@
   id: 7634
   time: '2024-11-20T07:55:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32499
+- author: IProduceWidgets
+  changes:
+  - message: Presents no longer make non-items into items
+    type: Tweak
+  id: 7635
+  time: '2024-11-21T14:20:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33147
