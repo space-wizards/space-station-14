@@ -1434,6 +1434,42 @@
   itemDrop: FloorTileItemRCircuit
   heatCapacity: 10000
 
+- type: tile
+  id: FloorYellowCircuit
+  name: tiles-yellow-circuit-floor
+  sprite: /Textures/Tiles/yellow_circuit.png
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemYCircuit
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorOrangeCircuit
+  name: tiles-orange-circuit-floor
+  sprite: /Textures/Tiles/orange_circuit.png
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemOCircuit
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorPurpleCircuit
+  name: tiles-purple-circuit-floor
+  sprite: /Textures/Tiles/purple_circuit.png
+  baseTurf: Plating
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemPCircuit
+  heatCapacity: 10000
+
 # Terrain
 - type: tile
   id: FloorAsphalt
