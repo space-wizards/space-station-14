@@ -33,9 +33,15 @@ namespace Content.Server.Jellid.Systems
                     Log.Error($"Prevented damage.");
                     return;
                     }
-                DamageDict = ["Slash"] = 1.5f;
-            _damageable.TryChangeDamage(entity.Owner, damage, origin: entity.Owner);
+                else
+                {
+                 var damage = new DamageSpecifier
+                   {
+                  DamageDict = { ["Slash"] = 1.5f }
+                   };
+                _damageable.TryChangeDamage(entity.Owner, damage, origin: entity.Owner);
                 Log.Error($"Damage is being taken");
+                }
             }
         }
 
