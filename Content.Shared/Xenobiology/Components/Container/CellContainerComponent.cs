@@ -1,7 +1,7 @@
 ﻿using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Xenobiology.Components;
+namespace Content.Shared.Xenobiology.Components.Container;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class CellContainerComponent : Component

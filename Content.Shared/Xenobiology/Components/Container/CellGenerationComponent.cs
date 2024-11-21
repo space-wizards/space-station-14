@@ -2,7 +2,7 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Xenobiology.Components;
+namespace Content.Shared.Xenobiology.Components.Container;
 
 /// <summary>
 /// Contains all the necessary <see cref="CellPrototype"/>

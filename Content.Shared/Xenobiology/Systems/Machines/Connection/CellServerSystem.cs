@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Content.Shared.Xenobiology.Components.Machines;
+using Content.Shared.Xenobiology.Components.Server;
 using Content.Shared.Xenobiology.Events;
 
 namespace Content.Shared.Xenobiology.Systems.Machines.Connection;

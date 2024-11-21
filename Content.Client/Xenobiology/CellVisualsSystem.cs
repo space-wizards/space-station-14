@@ -1,4 +1,4 @@
-﻿using Content.Shared.Xenobiology.Components;
+﻿using Content.Shared.Xenobiology.Components.Container;
 using Content.Shared.Xenobiology.Systems;
 using Content.Shared.Xenobiology.Visuals;
 using Robust.Client.GameObjects;

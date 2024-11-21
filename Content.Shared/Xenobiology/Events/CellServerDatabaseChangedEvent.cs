@@ -1,4 +1,4 @@
-﻿using Content.Shared.Xenobiology.Components.Machines;
+﻿using Content.Shared.Xenobiology.Components.Server;
 
 namespace Content.Shared.Xenobiology.Events;
 

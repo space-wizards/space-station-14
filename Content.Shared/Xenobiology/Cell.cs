@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Shared.Xenobiology.Components;
+using Content.Shared.Xenobiology.Components.Container;
 using Content.Shared.Xenobiology.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;

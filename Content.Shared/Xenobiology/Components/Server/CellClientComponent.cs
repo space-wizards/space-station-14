@@ -1,6 +1,8 @@
-﻿namespace Content.Shared.Xenobiology.Components.Machines;
+﻿using Robust.Shared.GameStates;
 
-[RegisterComponent]
+namespace Content.Shared.Xenobiology.Components.Server;
+
+[RegisterComponent, NetworkedComponent]
 public sealed partial class CellClientComponent : Component
 {
     [ViewVariables]

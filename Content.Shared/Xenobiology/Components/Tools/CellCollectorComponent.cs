@@ -1,7 +1,7 @@
 ﻿using Content.Shared.Damage;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Xenobiology.Components;
+namespace Content.Shared.Xenobiology.Components.Tools;
 
 [RegisterComponent, NetworkedComponent]
 public sealed partial class CellCollectorComponent : Component

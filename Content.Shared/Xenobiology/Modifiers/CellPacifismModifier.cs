@@ -1,5 +1,5 @@
 ﻿using Content.Shared.CombatMode.Pacification;
-using Content.Shared.Xenobiology.Components;
+using Content.Shared.Xenobiology.Components.Container;
 using JetBrains.Annotations;
 
 namespace Content.Shared.Xenobiology.Modifiers;

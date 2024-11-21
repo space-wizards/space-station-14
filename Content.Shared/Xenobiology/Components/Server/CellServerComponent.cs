@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.GameStates;
 
-namespace Content.Shared.Xenobiology.Components.Machines;
+namespace Content.Shared.Xenobiology.Components.Server;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class CellServerComponent : Component

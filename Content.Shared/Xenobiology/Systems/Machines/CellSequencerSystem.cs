@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Content.Shared.Materials;
 using Content.Shared.Popups;
-using Content.Shared.Xenobiology.Components;
+using Content.Shared.Xenobiology.Components.Container;
 using Content.Shared.Xenobiology.Components.Machines;
 using Content.Shared.Xenobiology.Systems.Machines.Connection;
 using Content.Shared.Xenobiology.UI;
