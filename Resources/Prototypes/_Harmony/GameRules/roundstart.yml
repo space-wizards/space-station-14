@@ -4,8 +4,9 @@
   components:
   - type: DeathMatchRule
     gear: DeathMatchPROMODGear
-    killCap: 31
+    killCap: 16
     rewardSpawns:
+    - id: MagazinePistol # guaranteed drops
     - id: ClothingOuterArmorBasicSlim   # armor
       orGroup: loot
     - id: ClothingOuterArmorBasic
@@ -42,21 +43,19 @@
       orGroup: loot
     - id: WeaponPistolCHIMPUpgraded
       orGroup: loot
-    - id: MagazinePistolCaselessRifle   # ammo
-      orGroup: loot
-    - id: MagazinePistol
-      orGroup: loot
-    - id: SpeedLoaderMagnum
-      orGroup: loot
-    - id: MagazinePistolSubMachineGun
-      orGroup: loot
-    - id: MagazinePistolSubMachineGunTopMounted
-      orGroup: loot
-    - id: MagazineShotgun
-      orGroup: loot
+    #- id: MagazinePistolCaselessRifle   # ammo
+    #  orGroup: loot
+    #- id: MagazinePistol
+    #  orGroup: loot
+    #- id: SpeedLoaderMagnum
+    #  orGroup: loot
+    #- id: MagazinePistolSubMachineGun
+    #  orGroup: loot
+    #- id: MagazinePistolSubMachineGunTopMounted
+    #  orGroup: loot
+    #- id: MagazineShotgun
+    #  orGroup: loot
     - id: GrenadeFlashBang              # grenades
-      orGroup: loot
-    - id: WhiteholeGrenade
       orGroup: loot
     - id: SmokeGrenade
       orGroup: loot
@@ -89,9 +88,15 @@
   id: DeathMatchPROMODGear
   equipment:
     jumpsuit: ClothingUniformRandomStandard
-    shoes: ClothingShoesBootsJack
+    back: ClothingBackpack
     ears: ClothingHeadsetGrey
     gloves: ClothingHandsGlovesFingerless
-    back: ClothingBackpack
-    pocket1: WeaponPistolMk58
+    shoes: ClothingShoesBootsJack
+    pocket1: MagazinePistol
     pocket2: MagazinePistol
+  inhand: 
+    - WeaponPistolMk58
+#  storage: # can't put starting gear in backpack. works for nukies, not for DM.
+#    back:
+#      - MagazinePistol
+#      - MagazinePistol
