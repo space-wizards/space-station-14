@@ -1,0 +1,11 @@
+- type: localizedDataset
+  id: Eightball
+  values:
+    prefix: eightballs-eight-ball-
+    count: 20
+
+- type: localizedDataset
+  id: EightballConch
+  values:
+    prefix: eightballs-magic-conch-
+    count: 8
