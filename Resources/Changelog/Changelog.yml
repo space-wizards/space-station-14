@@ -1,89 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix mains light on wires not being lit.
-    type: Fix
-  id: 7123
-  time: '2024-08-16T03:59:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31066
-- author: IgorAnt028
-  changes:
-  - message: The dead and knocked down now stop holding objects
-    type: Fix
-  id: 7124
-  time: '2024-08-16T04:53:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31009
-- author: SlamBamActionman
-  changes:
-  - message: Nar'Sie is satiated; moppable blood will no longer duplicate.
-    type: Fix
-  id: 7125
-  time: '2024-08-16T10:47:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30983
-- author: Blackern5000
-  changes:
-  - message: Disabler SMGs no longer fit in combat boots
-    type: Fix
-  id: 7126
-  time: '2024-08-17T01:00:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31110
-- author: Mervill
-  changes:
-  - message: Fixed suffocation alerts not appearing.
-    type: Fix
-  id: 7127
-  time: '2024-08-17T02:02:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31115
-- author: TokenStyle
-  changes:
-  - message: Plant's scream mutation now have 10+ scream varieties.
-    type: Add
-  id: 7128
-  time: '2024-08-17T02:09:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30862
-- author: Boaz1111
-  changes:
-  - message: Phlogiston now also ignites people who consume it.
-    type: Add
-  id: 7129
-  time: '2024-08-17T02:49:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30955
-- author: slarticodefast
-  changes:
-  - message: Fixed borgs brains being teleported outside their chassis and PAIs outside
-      a PDA or pocket by the bluespace anomaly.
-    type: Fix
-  id: 7130
-  time: '2024-08-17T04:58:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30744
-- author: EmoGarbage404
-  changes:
-  - message: You can no longer see wreck names in the salvage magnet UI.
-    type: Tweak
-  id: 7131
-  time: '2024-08-17T05:09:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31087
-- author: EmoGarbage404
-  changes:
-  - message: You can now smelt ores in intervals smaller than 30.
-    type: Add
-  id: 7132
-  time: '2024-08-17T05:12:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31074
-- author: themias
-  changes:
-  - message: Added a recipe for croissants
-    type: Add
-  id: 7133
-  time: '2024-08-17T14:09:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30825
-- author: Ubaser
-  changes:
-  - message: Red crowbars no longer fit in pockets.
-    type: Fix
-  id: 7134
-  time: '2024-08-17T14:32:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30939
 - author: iztokbajcar
   changes:
   - message: Fixed some typos in the guidebook.
@@ -3918,3 +3833,102 @@
   id: 7622
   time: '2024-11-19T05:07:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33365
+- author: ArZarLordOfMango
+  changes:
+  - message: Most toggleable clothing must now be equipped to toggle their actions.
+    type: Fix
+  id: 7623
+  time: '2024-11-19T20:31:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32826
+- author: Plykiya
+  changes:
+  - message: The SWAT crate from cargo now requires armory access to open.
+    type: Fix
+  id: 7624
+  time: '2024-11-20T00:57:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33415
+- author: SlamBamActionman
+  changes:
+  - message: It's no longer possible to drag an item out of a container's UI to drop
+      it.
+    type: Tweak
+  id: 7625
+  time: '2024-11-20T01:00:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32706
+- author: Plykiya
+  changes:
+  - message: The crew monitoring crate now contains a flatpack of the server and computers,
+      and can be opened with science access instead of engineering access now.
+    type: Tweak
+  id: 7626
+  time: '2024-11-20T01:05:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33417
+- author: Beck Thompson
+  changes:
+  - message: Toggle verbs are no longer duplicated on magboots and fire extinguishers!
+    type: Fix
+  id: 7627
+  time: '2024-11-20T01:53:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32138
+- author: qwerltaz
+  changes:
+  - message: A new grid item view is available in the construction menu, togglable
+      with a button.
+    type: Add
+  - message: Construction menu default window size was tweaked.
+    type: Tweak
+  id: 7628
+  time: '2024-11-20T01:54:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32577
+- author: SpaceLizard24
+  changes:
+  - message: Reduced crafting costs of colored light tubes.
+    type: Tweak
+  id: 7629
+  time: '2024-11-20T01:59:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33376
+- author: thetolbean
+  changes:
+  - message: Items with a damage of 0 now have correct damage examination text.
+    type: Fix
+  id: 7630
+  time: '2024-11-20T02:05:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33064
+- author: SaphireLattice
+  changes:
+  - message: The Singularity/Tesla generator now requires being surrounded by containment
+      fields to activate. This can be disabled with an Emag.
+    type: Tweak
+  id: 7631
+  time: '2024-11-20T05:55:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33358
+- author: TheWaffleJesus
+  changes:
+  - message: You can now craft items with stacks of capacitors without it eating it
+      all!
+    type: Fix
+  id: 7632
+  time: '2024-11-20T07:18:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31966
+- author: ScarKy0, GoldenCan
+  changes:
+  - message: Ion stormed lawsets no longer persist between shifts.
+    type: Fix
+  - message: Cyborgs are now notified when inserted into a chassis with modified laws.
+    type: Tweak
+  id: 7633
+  time: '2024-11-20T07:55:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33311
+- author: ScarKy0, GoldenCan
+  changes:
+  - message: The Derelict Cyborg - a broken cyborg with altered laws due to year of
+      exposure to ion storms - can now appear as a ghost role through a new midround
+      event.
+    type: Add
+  - message: An ion storm affecting a Cyborg can no longer alter the law order of
+      the AI, cyborgs created later in the round or AI's and cyborgs in subsequent
+      rounds.
+    type: Fix
+  id: 7634
+  time: '2024-11-20T07:55:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32499
