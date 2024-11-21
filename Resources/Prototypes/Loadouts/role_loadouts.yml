@@ -427,7 +427,6 @@
   id: JobHeadOfSecurity
   groups:
   - HeadofSecurityHead
-  - HeadofSecurityMask
   - HeadofSecurityNeck
   - HeadofSecurityJumpsuit
   - HeadofSecurityOuterClothing
