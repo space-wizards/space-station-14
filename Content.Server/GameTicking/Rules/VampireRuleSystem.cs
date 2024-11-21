@@ -62,9 +62,6 @@ public sealed partial class VampireRuleSystem : GameRuleSystem<VampireRuleCompon
     {
         var ent = args.EntityUid;
         
-        if (HasComp<BibleUserComponent>(ent) || !TryComp<BodyComponent>(ent, out var body) || _body.TryGetBodyOrganEntityComps<StomachComponent>((ent, body), out var stomachs))
-            return;
-        
         _antag.SendBriefing(ent, MakeBriefing(ent), Color.Yellow, BriefingSound);
         MakeVampire(ent, comp);
     }
@@ -140,8 +137,12 @@ public sealed partial class VampireRuleSystem : GameRuleSystem<VampireRuleCompon
     {
         var ent = args.Mind.Comp.OwnedEntity;
         
-        if (ent is null)
+        if (ent == null 
+            || HasComp<BibleUserComponent>(ent) 
+            || !TryComp<BodyComponent>(ent, out var body) 
+            || _body.TryGetBodyOrganEntityComps<StomachComponent>((ent.Value, body), out var stomachs))
             return;
+
         args.Append(MakeBriefing(ent.Value));
     }
     
