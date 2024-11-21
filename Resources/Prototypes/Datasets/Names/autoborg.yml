@@ -1,5 +1,5 @@
 ﻿- type: localizedDataset
-  id: names_autoborg
+  id: NamesAutoborg
   values:
     prefix: names-autoborg-dataset-
     count: 50
