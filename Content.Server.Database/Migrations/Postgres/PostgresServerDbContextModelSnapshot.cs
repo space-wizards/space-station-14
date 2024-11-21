@@ -512,6 +512,20 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.ToTable("assigned_user_id", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.Blacklist",
+                b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("UserId")
+                        .HasName("PK_blacklist");
+
+                    b.ToTable("blacklist", (string) null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.BanTemplate", b =>
                 {
                     b.Property<int>("Id")
@@ -555,19 +569,6 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasName("PK_ban_template");
 
                     b.ToTable("ban_template", (string)null);
-                });
-
-            modelBuilder.Entity("Content.Server.Database.Blacklist", b =>
-                {
-                    b.Property<Guid>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("user_id");
-
-                    b.HasKey("UserId")
-                        .HasName("PK_blacklist");
-
-                    b.ToTable("blacklist", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.ConnectionLog", b =>
@@ -625,34 +626,6 @@ namespace Content.Server.Database.Migrations.Postgres
                         {
                             t.HasCheckConstraint("AddressNotIPv6MappedIPv4", "NOT inet '::ffff:0.0.0.0/96' >>= address");
                         });
-                });
-
-            modelBuilder.Entity("Content.Server.Database.IPIntelCache", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("ipintel_cache_id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<IPAddress>("Address")
-                        .IsRequired()
-                        .HasColumnType("inet")
-                        .HasColumnName("address");
-
-                    b.Property<float>("Score")
-                        .HasColumnType("real")
-                        .HasColumnName("score");
-
-                    b.Property<DateTime>("Time")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("time");
-
-                    b.HasKey("Id")
-                        .HasName("PK_ipintel_cache");
-
-                    b.ToTable("ipintel_cache", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.Job", b =>
