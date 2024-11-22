@@ -463,7 +463,7 @@
 - type: entity
   parent: BaseTreeConifer
   id: FloraTreeChristmas02
-  suffix: PresentsGiver
+  suffix: Safe Presents
   name: christmas tree
   components:
   - type: Sprite
@@ -481,15 +481,32 @@
     spawnEntries:
       - id: PresentRandom
         orGroup: present
-      - id: PresentRandomCash
-        prob: 0.20
+      - id: PresentRandomCash # buy your own.
+        prob: 0.1
         orGroup: present
-      - id: PresentRandomAsh
+      - id: PresentRandomCoal # naughty
         prob: 0.05
         orGroup: present
     receivedPopup: christmas-tree-got-gift
     deniedPopup: christmas-tree-no-gift
     requiredHoliday: FestiveSeason
+
+- type: entity
+  parent: FloraTreeChristmas02
+  id: FloraTreeChristmas03
+  suffix: Insane Presents
+  name: christmas tree
+  components:
+  - type: LimitedItemGiver
+    spawnEntries:
+      - id: PresentRandom
+        orGroup: present
+      - id: PresentRandomUnsafe
+        prob: 0.5
+        orGroup: present
+      - id: PresentRandomInsane
+        prob: 0.2
+        orGroup: present
 
 - type: entity
   parent: BaseTreeConifer
