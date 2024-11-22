@@ -69,3 +69,8 @@
   id: Ungh
   files:
   - /Audio/_Impstation/Animals/bros_hit.ogg
+
+- type: soundCollection
+  id: Cracks
+  files:
+    - /Audio/_Impstation/Effects/Emotes/knuckles.ogg

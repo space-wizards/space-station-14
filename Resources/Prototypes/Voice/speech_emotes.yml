@@ -138,7 +138,6 @@
   whitelist:
     components:
     - Vocal
-    - Slime # Imp edit
   blacklist:
     components:
     - BorgChassis
@@ -283,6 +282,28 @@
   chatTriggers:
     - salute
     - salutes
+
+- type: emote
+  id: Crack
+  name: chat-emote-name-crack
+  category: Hands
+  icon: Interface/Emotes/chirp.png
+  whitelist:
+    components:
+    - Hands
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-crack"]
+  chatTriggers:
+    - crack knuckles
+    - cracks knuckles
+    - cracking knuckles
+    - cracked knuckles
+    - cracks their knuckles
+    - cracks her knuckles
+    - cracks his knuckles
+    - cracks its knuckles
 
 - type: emote
   id: Gasp

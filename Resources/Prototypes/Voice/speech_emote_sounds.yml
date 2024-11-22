@@ -593,9 +593,11 @@
     Snap:
       collection: Snaps
       params:
-        volume: -6
+        volume: -3
     Salute:
       collection: Salutes
+    Crack: # Imp addition
+      collection: Cracks
 
 - type: emoteSounds
   id: DionaBodyEmotes
@@ -603,13 +605,15 @@
     Clap:
       path: /Audio/Voice/Diona/diona_clap.ogg
     Snap:
-      path: /Audio/Voice/Diona/diona_snap.ogg
+      collection: Snaps
       params:
-        volume: -10
+        volume: -6
     Salute:
       path: /Audio/Voice/Diona/diona_salute.ogg
       params:
        volume: -5
+    Crack: # Imp edit snap -> crack
+      path: /Audio/Voice/Diona/diona_snap.ogg
 
 - type: emoteSounds
   id: ReptilianBodyEmotes
@@ -626,6 +630,8 @@
         volume: -6
     Salute:
       collection: Salutes
+    Crack: # Imp addition
+      collection: Cracks
 
 - type: emoteSounds
   id: UnisexSpElf
