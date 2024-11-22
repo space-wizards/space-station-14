@@ -47,12 +47,36 @@ jobs:
       env:
         PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
         GITHUB_REPOSITORY: ${{ vars.GITHUB_REPOSITORY }}
+        
+    - name: Set up SSH (Discord)
+      env:
+        ACTIONS_SSH_KEY: ${{ secrets.ACTIONS_SSH_KEY }}
+        TEST: ${{ secrets.TEST }}
+      run: |
+        mkdir -p ~/.ssh
+        echo "$ACTIONS_SSH_KEY" | tr -d '\r' > ~/.ssh/id_ed25519
+        echo "$TEST"
+        chmod 600 ~/.ssh/id_ed25519
+        ssh-keyscan github.com >> ~/.ssh/known_hosts
+        
+    - name: Test SSH Connection (Discord)
+      run: ssh -T git@github.com || exit 0
 
     - name: Publish changelog (Discord)
       run: Tools/actions_changelogs_since_last_run.py
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        DISCORD_WEBHOOK_URL: ${{ secrets.CHANGELOG_DISCORD_WEBHOOK }}
+        GITHUB_REPOSITORY: ${{ vars.GITHUB_REPOSITORY }}
+        DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        
+    - name: Commit and push sended changelogs (Discord)
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add "Resources/Changelog/ChangelogStarlight.yml"
+        git add "Tools/changelogs/sent_changelog_ids.yml"
+        git commit -m "Update sended changelogs [skip ci]"
+        git push git@github.com:${{ github.repository }}.git HEAD:Starlight
 
     - name: Publish changelog (RSS)
       run: Tools/actions_changelog_rss.py
