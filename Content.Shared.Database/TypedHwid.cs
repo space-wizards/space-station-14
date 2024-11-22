@@ -34,7 +34,9 @@ public sealed class ImmutableTypedHwid(ImmutableArray<byte> hwid, HwidType type)
             return false;
         }
 
-        hwid = new ImmutableTypedHwid([..array], type);
+        // ReSharper disable once UseCollectionExpression
+        // Do not use collection expression, C# compiler is weird and it fails sandbox.
+        hwid = new ImmutableTypedHwid(ImmutableArray.Create(array), type);
         return true;
     }
 
