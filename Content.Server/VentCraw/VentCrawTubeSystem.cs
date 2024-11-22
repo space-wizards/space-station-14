@@ -18,14 +18,13 @@ namespace Content.Server.VentCraw
 {
     public sealed class VentCrawTubeSystem : EntitySystem
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly SharedMapSystem _mapSystem = default!;
         [Dependency] private readonly SharedVentCrawableSystem _ventCrawableSystemSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly VentCrawTubeSystem _ventCrawTubeSystem = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly SharedMoverController _mover = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         public override void Initialize()
         {
@@ -52,7 +51,9 @@ namespace Content.Server.VentCraw
             if (!TryComp<VentCrawlerComponent>(args.User, out var ventCrawlerComponent) || HasComp<BeingVentCrawComponent>(args.User))
                 return;
 
-            if (TryComp<TransformComponent>(uid, out var transformComponent) && !transformComponent.Anchored)
+            var xform = Transform(uid);
+
+            if (!xform.Anchored)
                 return;
 
             AlternativeVerb verb = new()
@@ -209,8 +210,7 @@ namespace Content.Server.VentCraw
             if (!TryComp<VentCrawlerComponent>(entity, out var ventCrawlerComponent))
                 return false;
 
-            var xform = Transform(uid);
-            var holder = Spawn(VentCrawEntryComponent.HolderPrototypeId, xform.MapPosition);
+            var holder = Spawn(VentCrawEntryComponent.HolderPrototypeId, _transform.GetMapCoordinates(uid));
             var holderComponent = Comp<VentCrawHolderComponent>(holder);
 
             _ventCrawableSystemSystem.TryInsert(holder, entity, holderComponent);

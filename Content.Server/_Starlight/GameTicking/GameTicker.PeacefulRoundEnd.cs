@@ -10,8 +10,6 @@ namespace Content.Server.Starlight.GameTicking;
 public sealed class PeacefulRoundEndSystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-
     private bool _isEnabled = false;
 
     public override void Initialize()
