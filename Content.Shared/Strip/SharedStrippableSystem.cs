@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Shared.Administration.Logs;
-using Content.Shared.Administration.Managers;
 using Content.Shared.CombatMode;
 using Content.Shared.Cuffs;
 using Content.Shared.Cuffs.Components;
@@ -20,9 +19,10 @@ using Content.Shared.Strip.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Utility;
 
+namespace Content.Shared.Strip;
+
 public abstract class SharedStrippableSystem : EntitySystem
 {
-    [Dependency] private readonly ISharedAdminManager _admin = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
 
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
