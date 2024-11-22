@@ -159,7 +159,7 @@
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicatePyjamaBundle
   name: syndicate pyjama duffel bag
-  description: Contains 3 pairs of syndicate pyjamas and 3 plushies for the ultimate sleepover.
+  description: Contains 3 pairs of syndicate pyjamas and 4 plushies for the ultimate sleepover.
   components:
   - type: Storage
     grid:
@@ -302,13 +302,19 @@
   components:
   - type: StorageFill
     contents:
+      - id: DefibrillatorSyndicate
       - id: MedkitCombatFilled
-      - id: Defibrillator
+        amount: 4
+      - id: Tourniquet
+        amount: 4
       - id: CombatMedipen
-        amount: 3
-      - id: ClothingHandsGlovesNitrile
-      - id: SyringeTranexamicAcid
-      - id: SyringeHyronalin
+        amount: 4
+      - id: PunctAutoInjector
+        amount: 4
+      - id: PyraAutoInjector
+        amount: 4
+      - id: AirlossAutoInjector
+        amount: 4
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle

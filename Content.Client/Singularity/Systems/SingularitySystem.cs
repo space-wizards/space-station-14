@@ -5,7 +5,7 @@ using Robust.Client.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Utility;
 
-namespace Content.Client.Singularity.EntitySystems;
+namespace Content.Client.Singularity.Systems;
 
 /// <summary>
 /// The client-side version of <see cref="SharedSingularitySystem"/>.
