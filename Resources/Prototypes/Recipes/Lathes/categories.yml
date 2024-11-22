@@ -29,3 +29,17 @@
 - type: latheCategory
   id: Weapons
   name: lathe-category-weapons
+
+# Biogen
+
+- type: latheCategory
+  id: Food
+  name: lathe-category-food
+
+- type: latheCategory
+  id: Chemicals
+  name: lathe-category-chemicals
+
+- type: latheCategory
+  id: Materials
+  name: lathe-category-materials

@@ -85,8 +85,7 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
             DistanceThreshold = SharedInteractionSystem.InteractionRange,
             BreakOnDamage = true,
             BreakOnMove = true,
-            BreakOnHandChange = false,
-            NeedHand = true
+            NeedHand = true,
         },
             out var doAfterId);
 
@@ -166,7 +165,6 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
         {
             BreakOnDamage = true,
             BreakOnMove = true,
-            BreakOnHandChange = false,
             NeedHand = true
         },
             out var doAfterId);
@@ -245,7 +243,6 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
         {
             DistanceThreshold = SharedInteractionSystem.InteractionRange,
             BreakOnDamage = true,
-            BreakOnHandChange = false,
             NeedHand = true
         },
             out var doAfterId);
@@ -324,8 +321,7 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
         {
             BreakOnDamage = true,
             BreakOnMove = true,
-            BreakOnHandChange = false,
-            NeedHand = true
+            NeedHand = true,
         },
             out var doAfterId);
 

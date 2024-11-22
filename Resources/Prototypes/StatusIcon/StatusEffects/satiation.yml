@@ -1,0 +1,57 @@
+#Hunger
+- type: satiationIcon
+  id: HungerIcon
+  abstract: true
+  priority: 5
+  locationPreference: Right
+  isShaded: true
+
+- type: satiationIcon
+  id: HungerIconOverfed
+  parent: HungerIcon
+  icon:
+    sprite: /Textures/Interface/Misc/food_icons.rsi
+    state: overfed
+
+- type: satiationIcon
+  id: HungerIconPeckish
+  parent: HungerIcon
+  icon:
+    sprite: /Textures/Interface/Misc/food_icons.rsi
+    state: peckish
+
+- type: satiationIcon
+  id: HungerIconStarving
+  parent: HungerIcon
+  icon:
+    sprite: /Textures/Interface/Misc/food_icons.rsi
+    state: starving
+
+#Thirst
+- type: satiationIcon
+  id: ThirstIcon
+  abstract: true
+  priority: 5
+  locationPreference: Left
+  isShaded: true
+
+- type: satiationIcon
+  id: ThirstIconOverhydrated
+  parent: ThirstIcon
+  icon:
+    sprite: /Textures/Interface/Misc/food_icons.rsi
+    state: overhydrated
+
+- type: satiationIcon
+  id: ThirstIconThirsty
+  parent: ThirstIcon
+  icon:
+    sprite: /Textures/Interface/Misc/food_icons.rsi
+    state: thirsty
+
+- type: satiationIcon
+  id: ThirstIconParched
+  parent: ThirstIcon
+  icon:
+    sprite: /Textures/Interface/Misc/food_icons.rsi
+    state: parched

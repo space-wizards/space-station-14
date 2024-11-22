@@ -17,8 +17,6 @@
   - type: Tag
     tags:
     - Figurine
-  - type: StealTarget
-    stealGroup: Figurines
   - type: UseDelay
     delay: 10
   - type: Speech
@@ -109,8 +107,8 @@
   components:
   - type: Sprite
     state: boxer
-  # - type: SpeakOnUse # TODO add something
-  #   pack: FigurinesBoxer
+  - type: SpeakOnUse
+    pack: FigurinesBoxer
 
 - type: entity
   parent: BaseFigurine

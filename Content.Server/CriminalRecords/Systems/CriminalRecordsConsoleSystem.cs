@@ -10,7 +10,6 @@ using Content.Shared.CriminalRecords.Systems;
 using Content.Shared.Security;
 using Content.Shared.StationRecords;
 using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Security.Components;
@@ -26,7 +25,6 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
     [Dependency] private readonly CriminalRecordsSystem _criminalRecords = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
-    [Dependency] private readonly SharedIdCardSystem _idCard = default!;
     [Dependency] private readonly StationRecordsSystem _records = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
@@ -70,6 +68,13 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         }
     }
 
+    private void GetOfficer(EntityUid uid, out string officer)
+    {
+        var tryGetIdentityShortInfoEvent = new TryGetIdentityShortInfoEvent(null, uid);
+        RaiseLocalEvent(tryGetIdentityShortInfoEvent);
+        officer = tryGetIdentityShortInfoEvent.Title ?? Loc.GetString("criminal-records-console-unknown-officer");
+    }
+
     private void OnChangeStatus(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordChangeStatus msg)
     {
         // prevent malf client violating wanted/reason nullability
@@ -92,24 +97,22 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
                 return;
         }
 
+        var oldStatus = record.Status;
+
+        var name = _records.RecordName(key.Value);
+        GetOfficer(mob.Value, out var officer);
+
         // when arresting someone add it to history automatically
         // fallback exists if the player was not set to wanted beforehand
         if (msg.Status == SecurityStatus.Detained)
         {
             var oldReason = record.Reason ?? Loc.GetString("criminal-records-console-unspecified-reason");
             var history = Loc.GetString("criminal-records-console-auto-history", ("reason", oldReason));
-            _criminalRecords.TryAddHistory(key.Value, history);
+            _criminalRecords.TryAddHistory(key.Value, history, officer);
         }
 
-        var oldStatus = record.Status;
-
         // will probably never fail given the checks above
-        _criminalRecords.TryChangeStatus(key.Value, msg.Status, msg.Reason);
-
-        var name = _records.RecordName(key.Value);
-        var officer = Loc.GetString("criminal-records-console-unknown-officer");
-        if (_idCard.TryFindIdCard(mob.Value, out var id) && id.Comp.FullName is { } fullName)
-            officer = fullName;
+        _criminalRecords.TryChangeStatus(key.Value, msg.Status, msg.Reason, officer);
 
         (string, object)[] args;
         if (reason != null)
@@ -149,14 +152,16 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
 
     private void OnAddHistory(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordAddHistory msg)
     {
-        if (!CheckSelected(ent, msg.Actor, out _, out var key))
+        if (!CheckSelected(ent, msg.Actor, out var mob, out var key))
             return;
 
         var line = msg.Line.Trim();
         if (line.Length < 1 || line.Length > ent.Comp.MaxStringLength)
             return;
 
-        if (!_criminalRecords.TryAddHistory(key.Value, line))
+        GetOfficer(mob.Value, out var officer);
+
+        if (!_criminalRecords.TryAddHistory(key.Value, line, officer))
             return;
 
         // no radio message since its not crucial to officers patrolling

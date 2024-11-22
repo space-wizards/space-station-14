@@ -35,6 +35,7 @@
     interfaces:
       enum.TransferAmountUiKey.Key:
         type: TransferAmountBoundUserInterface
+  - type: DnaSubstanceTrace
 
 - type: entity
   parent: DrinkBase

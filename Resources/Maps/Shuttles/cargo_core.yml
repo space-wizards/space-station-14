@@ -169,8 +169,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 0.5,-7.5
       parent: 2
-    - type: AtmosDevice
-      joinedGrid: 2
 - proto: AirCanister
   entities:
   - uid: 147
@@ -181,8 +179,6 @@ entities:
       parent: 2
     - type: Physics
       bodyType: Static
-    - type: AtmosDevice
-      joinedGrid: 2
 - proto: AirlockGlassShuttle
   entities:
   - uid: 131
@@ -205,22 +201,26 @@ entities:
       rot: 3.141592653589793 rad
       pos: 3.5,-7.5
       parent: 2
-- proto: AtmosDeviceFanTiny
+- proto: AtmosDeviceFanDirectional
   entities:
-  - uid: 139
+  - uid: 29
     components:
     - type: Transform
-      pos: -0.5,-2.5
-      parent: 2
-  - uid: 140
-    components:
-    - type: Transform
-      pos: -0.5,-1.5
+      rot: -1.5707963267948966 rad
+      pos: -0.5,-4.5
       parent: 2
   - uid: 141
     components:
     - type: Transform
-      pos: -0.5,-4.5
+      rot: -1.5707963267948966 rad
+      pos: -0.5,-2.5
+      parent: 2
+- proto: AtmosDeviceFanTiny
+  entities:
+  - uid: 140
+    components:
+    - type: Transform
+      pos: -0.5,-1.5
       parent: 2
   - uid: 142
     components:
@@ -234,17 +234,11 @@ entities:
     - type: Transform
       pos: -0.5,-5.5
       parent: 2
-    - type: DeviceLinkSink
-      links:
-      - 137
   - uid: 136
     components:
     - type: Transform
       pos: -0.5,-1.5
       parent: 2
-    - type: DeviceLinkSink
-      links:
-      - 138
 - proto: CableApcExtension
   entities:
   - uid: 104
@@ -588,36 +582,24 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 0.5,-5.5
       parent: 2
-    - type: DeviceLinkSink
-      links:
-      - 152
   - uid: 75
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -0.5,-5.5
       parent: 2
-    - type: DeviceLinkSink
-      links:
-      - 152
   - uid: 76
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -0.5,-1.5
       parent: 2
-    - type: DeviceLinkSink
-      links:
-      - 151
   - uid: 77
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 0.5,-1.5
       parent: 2
-    - type: DeviceLinkSink
-      links:
-      - 151
 - proto: GasPassiveVent
   entities:
   - uid: 143
@@ -625,8 +607,6 @@ entities:
     - type: Transform
       pos: -0.5,1.5
       parent: 2
-    - type: AtmosDevice
-      joinedGrid: 2
 - proto: GasPipeBend
   entities:
   - uid: 148
@@ -651,8 +631,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 0.5,-6.5
       parent: 2
-    - type: AtmosDevice
-      joinedGrid: 2
 - proto: GasPressurePump
   entities:
   - uid: 150
@@ -661,8 +639,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 0.5,-0.5
       parent: 2
-    - type: AtmosDevice
-      joinedGrid: 2
 - proto: GasVentPump
   entities:
   - uid: 95
@@ -671,8 +647,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 1.5,-6.5
       parent: 2
-    - type: AtmosDevice
-      joinedGrid: 2
 - proto: GasVentScrubber
   entities:
   - uid: 144
@@ -681,8 +655,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 1.5,-0.5
       parent: 2
-    - type: AtmosDevice
-      joinedGrid: 2
 - proto: GeneratorBasic15kW
   entities:
   - uid: 96
@@ -838,12 +810,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 4.5,-3.5
       parent: 2
-  - uid: 29
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 4.5,-4.5
-      parent: 2
   - uid: 30
     components:
     - type: Transform
@@ -855,6 +821,12 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -0.5,-3.5
+      parent: 2
+  - uid: 139
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 4.5,-4.5
       parent: 2
 - proto: SignalButton
   entities:

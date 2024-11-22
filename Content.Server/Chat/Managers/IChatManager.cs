@@ -1,17 +1,14 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Server.Players;
-using Content.Server.Players.RateLimiting;
 using Content.Shared.Administration;
 using Content.Shared.Chat;
+using Content.Shared.Players.RateLimiting;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 
 namespace Content.Server.Chat.Managers
 {
-    public interface IChatManager
+    public interface IChatManager : ISharedChatManager
     {
-        void Initialize();
-
         /// <summary>
         ///     Dispatch a server announcement to every connected player.
         /// </summary>
@@ -26,8 +23,6 @@ namespace Content.Server.Chat.Managers
         void SendHookOOC(string sender, string message);
         void SendAdminAnnouncement(string message, AdminFlags? flagBlacklist = null, AdminFlags? flagWhitelist = null);
         void SendAdminAnnouncementMessage(ICommonSession player, string message, bool suppressLog = true);
-        void SendAdminAlert(string message);
-        void SendAdminAlert(EntityUid player, string message);
 
         void ChatMessageToOne(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat,
             INetChannel client, Color? colorOverride = null, bool recordReplay = false, string? audioPath = null, float audioVolume = 0, NetUserId? author = null);
@@ -41,7 +36,7 @@ namespace Content.Server.Chat.Managers
 
         bool MessageCharacterLimit(ICommonSession player, string message);
 
-        void DeleteMessagesBy(ICommonSession player);
+        void DeleteMessagesBy(NetUserId uid);
 
         [return: NotNullIfNotNull(nameof(author))]
         ChatUser? EnsurePlayer(NetUserId? author);

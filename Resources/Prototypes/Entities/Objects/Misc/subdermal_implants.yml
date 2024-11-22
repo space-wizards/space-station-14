@@ -173,7 +173,7 @@
       implantAction: ActionActivateEmpImplant
     - type: TriggerImplantAction
     - type: EmpOnTrigger
-      range: 1.75
+      range: 2.75
       energyConsumption: 50000
       disableDuration: 10
 

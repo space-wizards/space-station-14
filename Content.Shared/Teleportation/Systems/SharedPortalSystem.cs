@@ -101,7 +101,7 @@ public abstract class SharedPortalSystem : EntitySystem
         if (TryComp<PullerComponent>(subject, out var pullerComp)
             && TryComp<PullableComponent>(pullerComp.Pulling, out var subjectPulling))
         {
-            _pulling.TryStopPull(subject, subjectPulling);
+            _pulling.TryStopPull(pullerComp.Pulling.Value, subjectPulling);
         }
 
         // if they came from another portal, just return and wait for them to exit the portal

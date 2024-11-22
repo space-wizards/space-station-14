@@ -31,18 +31,18 @@
         restitution: 0.8
         density: 99999
         mask:
-        - AllMask
+        - SingularityLayer
         layer:
-        - AllMask
+        - SingularityLayer
       EventHorizonConsumer:
         shape:
           !type:PhysShapeCircle
             radius: 0.35
         hard: false
         mask:
-        - AllMask
+        - SingularityLayer
         layer:
-        - AllMask
+        - SingularityLayer
   - type: Singularity
     energy: 180
     level: 1
