@@ -84,6 +84,7 @@
     domePrototype: EnergyDomeMediumBlue
     canDeviceNetworkUse: true
   - type: PowerCellDraw
+    enabled: false
     drawRate: 2
     useRate: 0
   - type: UseDelay
