@@ -6,7 +6,7 @@ namespace Content.Shared.Electrocution;
 public enum ElectrifiedLayers : byte
 {
     Sparks,
-    Overlay,
+    HUD,
 }
 
 [Serializable, NetSerializable]

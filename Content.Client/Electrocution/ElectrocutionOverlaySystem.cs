@@ -6,96 +6,90 @@ using Robust.Shared.Player;
 namespace Content.Client.Electrocution;
 
 /// <summary>
-/// Shows the ElectrocutionOverlay to entities with the ElectrocutionOverlayComponent.
+/// Shows the Electrocution HUD to entities with the ShowElectrocutionHUDComponent.
 /// </summary>
-public sealed class ElectrocutionOverlaySystem : EntitySystem
+public sealed class ElectrifiedVisualizerSystem : VisualizerSystem<ElectrocutionHUDVisualsComponent>
 {
-
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly IPlayerManager _playerMan = default!;
 
-    /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<ElectrocutionOverlayComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<ElectrocutionOverlayComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<ElectrocutionOverlayComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
-        SubscribeLocalEvent<ElectrocutionOverlayComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
+        base.Initialize();
 
-        SubscribeLocalEvent<ElectrifiedComponent, AppearanceChangeEvent>(OnAppearanceChange);
+        SubscribeLocalEvent<ShowElectrocutionHUDComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<ShowElectrocutionHUDComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<ShowElectrocutionHUDComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
+        SubscribeLocalEvent<ShowElectrocutionHUDComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
     }
 
-    private void OnPlayerAttached(Entity<ElectrocutionOverlayComponent> ent, ref LocalPlayerAttachedEvent args)
+    private void OnPlayerAttached(Entity<ShowElectrocutionHUDComponent> ent, ref LocalPlayerAttachedEvent args)
     {
-        ShowOverlay();
+        ShowHUD();
     }
 
-    private void OnPlayerDetached(Entity<ElectrocutionOverlayComponent> ent, ref LocalPlayerDetachedEvent args)
+    private void OnPlayerDetached(Entity<ShowElectrocutionHUDComponent> ent, ref LocalPlayerDetachedEvent args)
     {
-        RemoveOverlay();
+        RemoveHUD();
     }
 
-    private void OnInit(Entity<ElectrocutionOverlayComponent> ent, ref ComponentInit args)
-    {
-        if (_playerMan.LocalEntity == ent)
-        {
-            ShowOverlay();
-        }
-    }
-
-    private void OnShutdown(Entity<ElectrocutionOverlayComponent> ent, ref ComponentShutdown args)
+    private void OnInit(Entity<ShowElectrocutionHUDComponent> ent, ref ComponentInit args)
     {
         if (_playerMan.LocalEntity == ent)
         {
-            RemoveOverlay();
+            ShowHUD();
         }
     }
 
-    private void ShowOverlay()
+    private void OnShutdown(Entity<ShowElectrocutionHUDComponent> ent, ref ComponentShutdown args)
     {
-        var electrifiedQuery = AllEntityQuery<ElectrifiedComponent, AppearanceComponent, SpriteComponent>();
+        if (_playerMan.LocalEntity == ent)
+        {
+            RemoveHUD();
+        }
+    }
+
+    // Show the HUD to the client.
+    // We have to look for all current entities that can be electrified and toggle the HUD layer on if they are.
+    private void ShowHUD()
+    {
+        var electrifiedQuery = AllEntityQuery<ElectrocutionHUDVisualsComponent, AppearanceComponent, SpriteComponent>();
         while (electrifiedQuery.MoveNext(out var uid, out var _, out var appearanceComp, out var spriteComp))
         {
-            if (!_appearance.TryGetData<bool>(uid, ElectrifiedVisuals.IsElectrified, out var electrified, appearanceComp))
-                continue;
-
-            if (!spriteComp.LayerMapTryGet(ElectrifiedLayers.Overlay, out var layer))
+            if (!AppearanceSystem.TryGetData<bool>(uid, ElectrifiedVisuals.IsElectrified, out var electrified, appearanceComp))
                 continue;
 
             if (electrified)
-                spriteComp.LayerSetVisible(ElectrifiedLayers.Overlay, true);
+                spriteComp.LayerSetVisible(ElectrifiedLayers.HUD, true);
             else
-                spriteComp.LayerSetVisible(ElectrifiedLayers.Overlay, false);
+                spriteComp.LayerSetVisible(ElectrifiedLayers.HUD, false);
         }
     }
 
-    private void RemoveOverlay()
+    // Remove the HUD from the client.
+    // Find all current entities that can be electrified and hide the HUD layer.
+    private void RemoveHUD()
     {
-        var electrifiedQuery = AllEntityQuery<ElectrifiedComponent, AppearanceComponent, SpriteComponent>();
+        var electrifiedQuery = AllEntityQuery<ElectrocutionHUDVisualsComponent, AppearanceComponent, SpriteComponent>();
         while (electrifiedQuery.MoveNext(out var uid, out var _, out var appearanceComp, out var spriteComp))
         {
-            if (!spriteComp.LayerMapTryGet(ElectrifiedLayers.Overlay, out var layer))
-                continue;
 
-            spriteComp.LayerSetVisible(layer, false);
+            spriteComp.LayerSetVisible(ElectrifiedLayers.HUD, false);
         }
     }
 
-    private void OnAppearanceChange(Entity<ElectrifiedComponent> ent, ref AppearanceChangeEvent args)
+    // Toggle the HUD layer if an entity becomes (de-)electrified
+    protected override void OnAppearanceChange(EntityUid uid, ElectrocutionHUDVisualsComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
-        if (!_appearance.TryGetData<bool>(ent.Owner, ElectrifiedVisuals.IsElectrified, out var electrified, args.Component))
-            return;
-
-        if (!args.Sprite.LayerMapTryGet(ElectrifiedLayers.Overlay, out var layer))
+        if (!AppearanceSystem.TryGetData<bool>(uid, ElectrifiedVisuals.IsElectrified, out var electrified, args.Component))
             return;
 
         var player = _playerMan.LocalEntity;
-        if (electrified && HasComp<ElectrocutionOverlayComponent>(player))
-            args.Sprite.LayerSetVisible(layer, true);
+        if (electrified && HasComp<ShowElectrocutionHUDComponent>(player))
+            args.Sprite.LayerSetVisible(ElectrifiedLayers.HUD, true);
         else
-            args.Sprite.LayerSetVisible(layer, false);
+            args.Sprite.LayerSetVisible(ElectrifiedLayers.HUD, false);
     }
 }
