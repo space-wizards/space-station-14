@@ -15,8 +15,6 @@
   - type: ToggleClothing
     action: ActionToggleMagboots
     mustEquip: false
-  - type: ToggleVerb
-    text: toggle-magboots-verb-get-data-text
   - type: ComponentToggler
     components:
     - type: NoSlip
