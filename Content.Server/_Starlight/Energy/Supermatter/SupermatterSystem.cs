@@ -46,7 +46,7 @@ public sealed class SupermatterSystem : AccUpdateEntitySystem
     private RadioChannelPrototype? _engi;
     public override void Initialize()
     {
-        SubscribeLocalEvent<SupermatterComponent, ComponentStartup>(AddSupermatter);
+        SubscribeLocalEvent<SupermatterComponent, ComponentInit>(AddSupermatter);
         SubscribeLocalEvent<SupermatterComponent, ComponentShutdown>(RemoveSupermatter);
 
         SubscribeLocalEvent<SupermatterComponent, EndCollideEvent>(OnCollide);
@@ -84,7 +84,7 @@ public sealed class SupermatterSystem : AccUpdateEntitySystem
 
         QueueDel(args.OtherEntity);
     }
-    private void AddSupermatter(Entity<SupermatterComponent> ent, ref ComponentStartup args) => _supermatters.TryAdd(ent.Owner, ent);
+    private void AddSupermatter(Entity<SupermatterComponent> ent, ref ComponentInit args) => _supermatters.TryAdd(ent.Owner, ent);
     private void RemoveSupermatter(Entity<SupermatterComponent> ent, ref ComponentShutdown args) => _supermatters.Remove(ent.Owner);
 
     protected override float Threshold { get; set; } = 1f;
@@ -191,7 +191,9 @@ public sealed class SupermatterSystem : AccUpdateEntitySystem
         if (breakDelta == 0) return;
         supermatter.Comp.AccBreak -= breakDelta;
 
-        gas.AdjustMoles((int)Gas.Tritium, breakDelta.Float());
+        gas.AdjustMoles((int)Gas.Tritium, breakDelta.Float()/2);
+        
+        gas.AdjustMoles((int)Gas.Oxygen, breakDelta.Float()*4);
     }
 
     private static void ProcessHeat(Entity<SupermatterComponent> supermatter, GasMixture gas, float heatTransfer, float heatModifier)
