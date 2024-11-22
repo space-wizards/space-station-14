@@ -9,6 +9,7 @@
   components:
   - type: Accentless
     removes:
+    - type: OwOAccent
     - type: LizardAccent
     - type: MothAccent
     - type: ReplacementAccent
