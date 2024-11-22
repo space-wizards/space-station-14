@@ -37,3 +37,7 @@ ghost-role-information-nonantagonist-freeagent-goblin-stowaway = You are a [colo
                                          Your primary goal is to construct Goblinhome, a home for yourself and your people. Harming the station would likely put that goal at risk.
 
                                          You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
+
+ghost-role-information-goblin-knight-name = Sir Gollylad
+ghost-role-information-goblin-knight-description = You are Sir Gollylad, the most gallant and pure-of-heart among the Goblin Knights. Your charge is someone aboard the station. You forget who, exactly, so... Anyone will do. Find someone, and protect them with your life.
+

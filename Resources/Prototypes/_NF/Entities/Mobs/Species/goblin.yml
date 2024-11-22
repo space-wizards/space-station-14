@@ -99,6 +99,9 @@
         emote: Scream
         probability: 0.2
   - type: CanEscapeInventory
+  - type: Inventory
+    speciesId: goblin
+    # displacements: TODO
 
 - type: entity
   save: false

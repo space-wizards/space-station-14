@@ -1,0 +1,16 @@
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetGoblinKnight
+  name: Sir Gollylad's helm
+  description: The gleaming helm of Sir Gollylad. On closer inspection, it appears to have been meticulously constructed out of soda cans and a feather duster.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Helmets/goblinknighthelm.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Helmets/goblinknighthelm.rsi
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+    - HeadTop
+    - HeadSide

@@ -8,3 +8,4 @@
   id: GoblinRobeOSP
   equipment:
     outerClothing: ClothingOuterCoatRobesGoblin
+    belt: ClothingBeltUtility
