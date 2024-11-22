@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Legends tell of horrifying Goliaths that roam the mining asteroid.
-    type: Add
-  id: 7137
-  time: '2024-08-18T16:22:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30839
 - author: Beck Thompson
   changes:
   - message: Cutting food now moves the sliced pieces a small amount!
@@ -3933,3 +3926,12 @@
   id: 7636
   time: '2024-11-22T02:56:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31076
+- author: chromiumboy
+  changes:
+  - message: Added the gas pipe sensor. These sensors monitor the mixture of gases
+      passing through their pipe sub-network and report this information to any connected
+      air alarms
+    type: Add
+  id: 7637
+  time: '2024-11-22T03:46:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33128
