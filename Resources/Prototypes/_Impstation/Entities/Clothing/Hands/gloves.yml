@@ -1,0 +1,15 @@
+- type: entity
+  parent: [ClothingHandsInedibleBase, BaseCommandContraband]
+  id: ClothingHandsGlovesCaptainflightgloves
+  name: flight gloves
+  description: "Regal black leather gloves with gold trim, insulated from electricity. So comfortable you forget you're wearing them."
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Hands/Gloves/captainflightgloves.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Hands/Gloves/captainflightgloves.rsi
+  - type: Insulated
+  - type: Fiber
+    fiberMaterial: fibers-leather
+    fiberColor: fibers-regal-black
+  - type: FingerprintMask

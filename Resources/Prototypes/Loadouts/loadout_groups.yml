@@ -16,15 +16,15 @@
   - CigPackRed
   - CigPackBlue
   - CigPackBlack
-  - CigPackNewport
-  - CigPackSpirits
+  - CigPackNewport #imp
+  - CigPackSpirits #imp
   - CigarCase
   - CigarGold
-  - GoldPersonalAI
-  - FolderBlack
-  - FolderHamster
-  - FolderMime
-  - FolderPun
+  - GoldPersonalAI #imp
+  - FolderBlack #imp
+  - FolderHamster #imp
+  - FolderMime #imp
+  - FolderPun #imp
   - BarFlask
   - NewtonCradle
   - ClothingNeckLGBTPin
@@ -56,7 +56,7 @@
   - TowelColorWhite
   - TowelColorYellow
   - CardBoxBlack
-  - HarmonicaInstrument
+  - HarmonicaInstrument #imp
 
 # For introductory roles learning more complex jobs, like an in-game personal mentor
 - type: loadoutGroup
@@ -145,14 +145,7 @@
   loadouts:
   - CaptainHead
   - CaptainCap
-  - CaptainCrusherCap
-
-- type: loadoutGroup
-  id: CaptainGlasses
-  name: loadout-group-captain-glasses
-  loadouts:
-  - CaptainSunglasses
-  - CaptainVisor
+  - CaptainCrusherCap #imp
 
 - type: loadoutGroup
   id: CaptainJumpsuit
@@ -162,7 +155,7 @@
   - CaptainJumpskirt
   - CaptainFormalSuit
   - CaptainFormalSkirt
-  - CaptainEveningAttire
+  - CaptainEveningAttire #imp
 
 - type: loadoutGroup
   id: CaptainNeck
@@ -172,7 +165,7 @@
   - CaptainCloak
   - CaptainCloakFormal
   - CaptainMantle
-  - CaptainGreatcoat
+  - CaptainGreatcoat #imp
   - ScarfBlue
 
 - type: loadoutGroup
@@ -182,9 +175,9 @@
   - CaptainBackpack
   - CaptainSatchel
   - CaptainDuffel
-  - CommandVeteranBackpack
-  - CommandVeteranSatchel
-  - CommandVeteranDuffel
+  - CommandVeteranBackpack #imp
+  - CommandVeteranSatchel #imp
+  - CommandVeteranDuffel #imp
 
 - type: loadoutGroup
   id: CaptainOuterClothing
@@ -192,32 +185,7 @@
   loadouts:
   - CaptainOuterClothing
   - CaptainWintercoat
-  - CaptainRepeller
-
-- type: loadoutGroup
-  id: CaptainGloves
-  name: loadout-group-captain-gloves
-  loadouts:
-  - CaptainGloves
-  - CaptainFlightGloves
-
-- type: loadoutGroup
-  id: CaptainShoes
-  name: loadout-group-captain-shoes
-  loadouts:
-  - LacedShoes
-  - LeatherShoes
-  - BlackCommandHeels
-  - BlueCommandHeels
-  - CaptainJumpBoots
-
-- type: loadoutGroup
-  id: CommandHeadset
-  name: loadout-group-command-headset
-  loadouts:
-  - CommandHeadsetBasic
-  - CommandHeadset
-  - CommandVeteranHeadset
+  - CaptainRepeller #imp
 
 - type: loadoutGroup
   id: HoPHead
@@ -250,9 +218,9 @@
   - CommonSatchel
   - CommonDuffel
   - HoPBackpackIan
-  - CommandVeteranBackpack
-  - CommandVeteranSatchel
-  - CommandVeteranDuffel
+  - CommandVeteranBackpack #imp
+  - CommandVeteranSatchel #imp
+  - CommandVeteranDuffel #imp
 
 - type: loadoutGroup
   id: HoPShoes
@@ -271,36 +239,6 @@
   minLimit: 0
   loadouts:
   - HoPWintercoat
-
-- type: loadoutGroup
-  id: SurvivalCommand
-  name: loadout-group-survival-command
-  minLimit: 2
-  hidden: true
-  loadouts:
-  - EmergencyNitrogenCommand
-  - EmergencyOxygenCommand
-  - LoadoutSpeciesVoxNitrogenCommand
-
-- type: loadoutGroup
-  id: SurvivalExtendedCommand
-  name: loadout-group-survival-extended-command
-  minLimit: 2
-  hidden: true
-  loadouts:
-  - EmergencyNitrogenExtendedCommand
-  - EmergencyOxygenExtendedCommand
-  - LoadoutSpeciesVoxNitrogenCommand
-
-- type: loadoutGroup
-  id: SurvivalSecurityCommand
-  name: loadout-group-survival-security-command
-  minLimit: 2
-  hidden: true
-  loadouts:
-  - EmergencyNitrogenSecurityCommand
-  - EmergencyOxygenSecurityCommand
-  - LoadoutSpeciesVoxNitrogenCommand
 
 # Civilian
 - type: loadoutGroup
@@ -888,13 +826,6 @@
   - Bagpipe
 
 # Cargo
-- type: loadoutGroup
-  id: QuartermasterHeadset
-  name: loadout-group-quartermaster-headset
-  loadouts:
-  - QuartermasterHeadsetBasic
-  - QuartermasterHeadset
-  - QuartermasterVeteranHeadset
 
 - type: loadoutGroup
   id: QuartermasterHead
@@ -938,17 +869,6 @@
   - BrownShoes
   - CargoWinterBoots
   - SalvageBoots
-
-- type: loadoutGroup
-  id: QuartermasterBackpack
-  name: loadout-group-quartermaster-backpack
-  loadouts:
-  - CargoTechnicianBackpack
-  - CargoTechnicianSatchel
-  - CargoTechnicianDuffel
-  - CommandVeteranBackpack
-  - CommandVeteranSatchel
-  - CommandVeteranDuffel
 
 - type: loadoutGroup
   id: CargoTechnicianHead
@@ -1062,13 +982,6 @@
   - SeniorSalvageSpecialistPDA
 
 # Engineering
-- type: loadoutGroup
-  id: ChiefEngineerHeadset
-  name: loadout-group-chief-engineer-headset
-  loadouts:
-  - ChiefEngineerHeadsetBasic
-  - ChiefEngineerHeadset
-  - ChiefEngineerVeteranHeadset
 
 - type: loadoutGroup
   id: ChiefEngineerHead
@@ -1110,17 +1023,6 @@
   - BrownShoes
   - WorkBoots
   - EngineeringWinterBoots
-
-- type: loadoutGroup
-  id: ChiefEngineerBackpack
-  name: loadout-group-chief-engineer-backpack
-  loadouts:
-  - StationEngineerBackpack
-  - StationEngineerSatchel
-  - StationEngineerDuffel
-  - CommandVeteranBackpack
-  - CommandVeteranSatchel
-  - CommandVeteranDuffel
 
 - type: loadoutGroup
   id: TechnicalAssistantJumpsuit
@@ -1298,17 +1200,6 @@
   - RoboticistWinterBoots
 
 - type: loadoutGroup
-  id: ResearchDirectorBackpack
-  name: loadout-group-research-director-backpack
-  loadouts:
-  - ScientistBackpack
-  - ScientistSatchel
-  - ScientistDuffel
-  - CommandVeteranBackpack
-  - CommandVeteranSatchel
-  - CommandVeteranDuffel
-
-- type: loadoutGroup
   id: ScientistHead
   name: loadout-group-scientist-head
   minLimit: 0
@@ -1402,13 +1293,6 @@
   - WhiteJumpskirt
 
 # Security
-- type: loadoutGroup
-  id: HeadofSecurityHeadset
-  name: loadout-group-head-of-security-headset
-  loadouts:
-  - HeadofSecurityHeadsetBasic
-  - HeadofSecurityHeadset
-  - HeadofSecurityVeteranHeadset
 
 - type: loadoutGroup
   id: HeadofSecurityHead
@@ -1452,17 +1336,6 @@
   - ArmorVest
   - ArmorVestSlim
   - HeadofSecurityEliteArmor
-
-- type: loadoutGroup
-  id: HeadofSecurityBackpack
-  name: loadout-group-head-of-security-backpack
-  loadouts:
-  - SecurityBackpack
-  - SecuritySatchel
-  - SecurityDuffel
-  - CommandVeteranBackpack
-  - CommandVeteranSatchel
-  - CommandVeteranDuffel
 
 - type: loadoutGroup
   id: HeadofSecurityMask
@@ -1723,13 +1596,6 @@
   - SecStar
 
 # Medical
-- type: loadoutGroup
-  id: ChiefMedicalOfficerHeadset
-  name: loadout-group-chief-medical-officer-headset
-  loadouts:
-  - ChiefMedicalOfficerHeadsetBasic
-  - ChiefMedicalOfficerHeadset
-  - ChiefMedicalOfficerVeteranHeadset
 
 - type: loadoutGroup
   id: ChiefMedicalOfficerHead
@@ -1772,17 +1638,6 @@
   - BrownShoes
   - WhiteShoes
   - MedicalWinterBoots
-
-- type: loadoutGroup
-  id: ChiefMedicalOfficerBackpack
-  name: loadout-group-chief-medical-officer-backpack
-  loadouts:
-  - MedicalDoctorBackpack
-  - MedicalDoctorSatchel
-  - MedicalDoctorDuffel
-  - CommandVeteranBackpack
-  - CommandVeteranSatchel
-  - CommandVeteranDuffel
 
 - type: loadoutGroup
   id: MedicalDoctorHead

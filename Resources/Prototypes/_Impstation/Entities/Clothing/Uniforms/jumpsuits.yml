@@ -19,7 +19,7 @@
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacechemist.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacechemist.rsi
- 
+
 - type: entity
   parent: [ClothingUniformBase, ClothingUniformFoldableBase]
   id: ClothingUniformSpaceJumpsuitScientist
@@ -41,4 +41,14 @@
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacegreytider.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacegreytider.rsi
-    
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband, ClothingUniformFoldableBase]
+  id: ClothingUniformJumpsuitCaptaineveningattire
+  name: captain's evening attire
+  description: "A comfortable captain's uniform with a low-cut collar and three-quarter sleeves, complete with a sword belt. Held fastened in part by a medal-like brooch."
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/captaineveningattire.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/captaineveningattire.rsi

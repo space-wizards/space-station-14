@@ -110,15 +110,6 @@
     sprite: Clothing/Back/Backpacks/captain.rsi
 
 - type: entity
-  parent: [ClothingBackpack, BaseCommandContraband]
-  id: ClothingBackpackCommandveteran
-  name: command veteran backpack
-  description: A sleek backpack, earned through a long career as command.
-  components:
-  - type: Sprite
-    sprite: Clothing/Back/Backpacks/commandveteran.rsi
-
-- type: entity
   parent: ClothingBackpack
   id: ClothingBackpackMime
   name: mime backpack

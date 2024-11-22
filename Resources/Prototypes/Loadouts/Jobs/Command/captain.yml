@@ -8,26 +8,6 @@
       role: JobCaptain
       time: 72000 #20 hrs
 
-# For the veteran captain cosmetic set
-- type: loadoutEffectGroup
-  id: VeteranCap
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobCaptain
-      time: 180000 #50 hrs
-
-# For the veteran command cosmetic set, used for all command jobs
-- type: loadoutEffectGroup
-  id: VeteranCommand
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:DepartmentTimeRequirement
-      department: Command
-      time: 180000 # 50 hrs
-
 # Jumpsuit
 - type: loadout
   id: CaptainJumpsuit
@@ -48,14 +28,6 @@
   id: CaptainFormalSkirt
   equipment:
     jumpsuit: ClothingUniformJumpskirtCapFormalDress
-
-- type: loadout
-  id: CaptainEveningAttire
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitCaptaineveningattire
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranCap
 
 # Head
 - type: loadout
@@ -82,13 +54,6 @@
   equipment:
     eyes: ClothingEyesGlassesSunglasses
 
-- type: loadout
-  id: CaptainVisor
-  equipment:
-    eyes: ClothingEyesGlassesCaptainvisor
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranCap
 
 # Neck
 - type: loadout
@@ -108,14 +73,6 @@
   effects:
   - !type:GroupLoadoutEffect
     proto: MasterCap
-
-- type: loadout
-  id: CaptainGreatcoat
-  equipment:
-    neck: ClothingNeckCloakCaptaingreatcoat
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranCap
 
 - type: startingGear
   id: CaptainMantle
@@ -138,23 +95,6 @@
   equipment:
     back: ClothingBackpackDuffelCaptain
 
-# Command Veteran backpacks are used by all command
-- type: loadout
-  id: CommandVeteranBackpack
-  equipment:
-    back: ClothingBackpackCommandveteran
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranCommand
-
-- type: loadout
-  id: CommandVeteranSatchel
-  equipment:
-    back: ClothingBackpackSatchelCommandveteran
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranCommand
-
 - type: loadout
   id: CommandVeteranDuffel
   equipment:
@@ -174,41 +114,18 @@
   equipment:
     outerClothing: ClothingOuterWinterCap
 
-- type: loadout
-  id: CaptainRepeller
-  equipment:
-    outerClothing: ClothingOuterArmorCaptainRepeller
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranCap
-
 # Gloves
 - type: loadout
   id: CaptainGloves
   equipment:
     gloves: ClothingHandsGlovesCaptain
 
-- type: loadout
-  id: CaptainFlightGloves
-  equipment:
-    gloves: ClothingHandsGlovesCaptainflightgloves
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranCap
 
 # Shoes
 - type: loadout
   id: LacedShoes
   equipment:
     shoes: ClothingShoesBootsLaceup
-
-- type: loadout
-  id: CaptainJumpBoots
-  equipment:
-    shoes: ClothingShoesBootsCaptainjumpboots
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranCap
 
 # Headset
 - type: loadout
@@ -220,11 +137,3 @@
   id: CommandHeadset
   equipment:
     ears: ClothingHeadsetAltCommand
-
-- type: loadout
-  id: CommandVeteranHeadset
-  equipment:
-    ears: ClothingHeadsetCommandveteran
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranCommand

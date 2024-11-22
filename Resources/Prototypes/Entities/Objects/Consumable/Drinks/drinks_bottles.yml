@@ -640,32 +640,6 @@
     solution: drink
 
 - type: entity
-  parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull, BaseCommandContraband]
-  id: DrinkCommandFlaskFull
-  name: command flask
-  description: A brass flask with a white leather wrap, because you get paid enough to deserve it.
-  components:
-  - type: Item
-    size: Small
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 30
-        reagents:
-        - ReagentId: Water
-          Quantity: 30
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/commandflask.rsi
-    layers:
-      - state: icon
-        map: ["enum.OpenableVisuals.Layer"]
-  - type: Appearance
-  - type: Sealable 
-  - type: FitsInDispenser
-    solution: drink
-
-- type: entity
   parent: DrinkWaterBottleFull
   id: DrinkSodaWaterBottleFull
   name: soda water bottle

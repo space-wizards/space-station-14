@@ -183,28 +183,6 @@
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi
 
 - type: entity
-  id: CigPackNewport
-  parent: CigPackBase
-  name: Newports
-  description: You're gonna be rich bitch!
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/newport.rsi
-  - type: Item
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/newport.rsi
-
-- type: entity
-  id: CigPackSpirits
-  parent: CigPackBase
-  name: Spirits
-  description: Designer cigarettes containing genetically-modified tobacco that smells like wood smoke when burnt.
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/spirits.rsi
-  - type: Item
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/spirits.rsi
-
-- type: entity
   id: CigPackSyndicate
   parent: [CigPackBase, BaseSyndicateContraband]
   name: Interdyne herbals packet

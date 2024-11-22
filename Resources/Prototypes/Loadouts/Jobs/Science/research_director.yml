@@ -8,16 +8,6 @@
       role: JobResearchDirector
       time: 72000 #20 hrs
 
-# For the veteran research director cosmetics
-- type: loadoutEffectGroup
-  id: VeteranRD
-  effects:
-  - !type:JobRequirementLoadoutEffect
-    requirement:
-      !type:RoleTimeRequirement
-      role: JobResearchDirector
-      time: 180000 #50 hrs
-
 # Head
 - type: loadout
   id: ResearchDirectorBeret
@@ -74,11 +64,3 @@
   id: ResearchDirectorHeadset
   equipment:
     ears: ClothingHeadsetAltScience
-
-- type: loadout
-  id: ResearchDirectorVeteranHeadset
-  equipment:
-    ears: ClothingHeadsetRDveteran
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranRD

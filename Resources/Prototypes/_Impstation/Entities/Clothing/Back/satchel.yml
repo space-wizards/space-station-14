@@ -1,0 +1,8 @@
+- type: entity
+  parent: [ClothingBackpackSatchel, BaseCommandContraband]
+  id: ClothingBackpackSatchelCommandveteran
+  name: command veteran satchel
+  description: A sleek satchel, earned through a long career as command.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Back/Satchels/commandveteran.rsi

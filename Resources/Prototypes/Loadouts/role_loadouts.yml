@@ -6,18 +6,18 @@
   - CaptainNeck
   - CaptainJumpsuit
   - CaptainOuterClothing
-  - CaptainGloves
-  - CaptainShoes
-  - CommandHeadset
-  - CaptainGlasses
+  - CaptainGloves #imp
+  - CaptainShoes #imp
+  - CommandHeadset #imp
+  - CaptainGlasses #imp
   - CaptainBackpack
-  - SurvivalCommand
+  - SurvivalCommand #imp
   - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarnessCommandWithOuterwear # Assign GroupTankHarness to jobs without outer clothing and GroupTankHarnessWithOuterwear to jobs with outer clothing options
   - GroupBreathToolDecapoid # imp special
   - GroupTankHarnessCommandWithOuterwearAquatic # imp special
-  
+
 - type: roleLoadout
   id: JobHeadOfPersonnel
   groups:
@@ -26,10 +26,10 @@
   - HoPJumpsuit
   - HoPOuterClothing
   - HoPShoes
-  - CommandHeadset
+  - CommandHeadset #imp
   - Glasses
   - HoPBackpack
-  - SurvivalCommand
+  - SurvivalCommand #imp
   - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarnessCommandWithOuterwear
@@ -258,10 +258,10 @@
   - QuartermasterJumpsuit
   - QuartermasterOuterClothing
   - QuartermasterShoes
-  - QuartermasterHeadset
+  - QuartermasterHeadset #imp
   - Glasses
-  - QuartermasterBackpack
-  - SurvivalCommand
+  - QuartermasterBackpack #imp
+  - SurvivalCommand #imp
   - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarnessCommandWithOuterwear
@@ -312,9 +312,9 @@
   - ChiefEngineerJumpsuit
   - ChiefEngineerOuterClothing
   - ChiefEngineerShoes
-  - ChiefEngineerHeadset
-  - ChiefEngineerBackpack
-  - SurvivalExtendedCommand
+  - ChiefEngineerHeadset #imp
+  - ChiefEngineerBackpack #imp
+  - SurvivalExtendedCommand #imp
   - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarnessCommandWithOuterwear
@@ -378,10 +378,10 @@
   - ResearchDirectorOuterClothing
   - ScientistGloves
   - ResearchDirectorShoes
-  - ResearchDirectorHeadset
+  - ResearchDirectorHeadset #imp
   - Glasses
-  - ResearchDirectorBackpack
-  - SurvivalCommand
+  - ResearchDirectorBackpack #imp
+  - SurvivalCommand #imp
   - Trinkets
   - GroupSpeciesBreathTool
   - GroupTankHarnessCommandWithOuterwear
@@ -432,10 +432,10 @@
   - HeadofSecurityJumpsuit
   - HeadofSecurityOuterClothing
   - UpperSecurityShoes
-  - HeadofSecurityHeadset
-  - HeadofSecurityBackpack
+  - HeadofSecurityHeadset #imp
+  - HeadofSecurityBackpack #imp
   - SecurityBelt
-  - SurvivalSecurityCommand
+  - SurvivalSecurityCommand #imp
   - Trinkets
   - SecurityStar
   - GroupSpeciesBreathToolSecurity
@@ -544,10 +544,10 @@
   - ChiefMedicalOfficerOuterClothing
   - MedicalGloves
   - ChiefMedicalOfficerShoes
-  - ChiefMedicalOfficerHeadset
+  - ChiefMedicalOfficerHeadset #imp
   - Glasses
-  - ChiefMedicalOfficerBackpack
-  - SurvivalCommand
+  - ChiefMedicalOfficerBackpack #imp
+  - SurvivalCommand #imp
   - Trinkets
   - GroupSpeciesBreathToolMedical
   - GroupTankHarnessCommandWithOuterwear

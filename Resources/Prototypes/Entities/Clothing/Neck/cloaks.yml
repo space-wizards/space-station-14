@@ -22,15 +22,6 @@
 
 - type: entity
   parent: [ClothingNeckBase, BaseCommandContraband]
-  id: ClothingNeckCloakCaptaingreatcoat
-  name: captain's greatcoat
-  description: "A long blue coat with an ornate trim, worn as a cape thanks to the gold aguilettes holding it around your neck. It carries a powerful aura of leadership."
-  components:
-  - type: Sprite
-    sprite: Clothing/Neck/Cloaks/captaingreatcoat.rsi
-
-- type: entity
-  parent: [ClothingNeckBase, BaseCommandContraband]
   id: ClothingNeckCloakHos
   name: head of security's cloak
   description: An exquisite dark and red cloak fitting for those who can assert dominance over wrongdoers. Take a stab at being civil in prosecution!

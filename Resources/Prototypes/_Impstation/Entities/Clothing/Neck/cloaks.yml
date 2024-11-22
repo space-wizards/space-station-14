@@ -32,3 +32,14 @@
     foldVerbText: fold-verb-clothing-cloak
   - type: FoldableClothing
     foldedEquippedPrefix: folded
+
+- type: entity
+  parent: [ClothingNeckBase, BaseCommandContraband]
+  id: ClothingNeckCloakCaptaingreatcoat
+  name: captain's greatcoat
+  description: "A long blue coat with an ornate trim, worn as a cape thanks to the gold aguilettes holding it around your neck. It carries a powerful aura of leadership."
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Cloaks/captaingreatcoat.rsi
+  - type: StealTarget
+    stealGroup: HeadCloak

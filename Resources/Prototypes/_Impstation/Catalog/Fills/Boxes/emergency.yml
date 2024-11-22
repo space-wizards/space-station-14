@@ -1,0 +1,128 @@
+- type: entity
+  parent: BoxCardboard
+  id: BoxSurvivalCommand
+  name: command survival box
+  description: It's a box with ornate but otherwise basic internals inside.
+  suffix: Standard
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreathCommand
+    - id: EmergencyOxygenTankCommandFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkCommandFlaskFull
+  - type: Sprite
+    layers:
+    - state: internals
+    - state: emergencytankcommand
+
+- type: entity
+  parent: BoxCardboard
+  id: BoxSurvivalNitrogenCommand
+  name: command survival box
+  description: It's a box with ornate but otherwise basic internals inside.
+  suffix: Standard N2
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreathCommand
+    - id: EmergencyNitrogenTankCommandFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkCommandFlaskFull
+  # Ok, NT actually only bothered to change the picture on the box for command. Assholes.
+  - type: Sprite
+    layers:
+    - state: internals
+    - state: emergencytankcommandnitrogen
+  - type: Label
+    currentLabel: reagent-name-nitrogen
+
+- type: entity
+  parent: BoxCardboard
+  id: BoxSurvivalEngineeringCommand
+  name: extended command survival box
+  description: It's a box with ornate but otherwise basic internals inside. This one is labelled to contain an extended-capacity tank.
+  suffix: Extended
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreathCommand
+    - id: ExtendedEmergencyOxygenTankCommandFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkCommandFlaskFull
+  - type: Sprite
+    layers:
+    - state: internals
+    - state: emergencytankcommand
+
+- type: entity
+  parent: BoxCardboard
+  id: BoxSurvivalEngineeringNitrogenCommand
+  name: extended command survival box
+  description: It's a box with ornate but otherwise basic internals inside. This one is labelled to contain an extended-capacity tank.
+  suffix: Extended N2
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskBreathCommand
+    - id: ExtendedEmergencyNitrogenTankCommandFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkCommandFlaskFull
+  # Ok, NT actually only bothered to change the picture on the box for command. Assholes.
+  - type: Sprite
+    layers:
+    - state: internals
+    - state: emergencytankcommandnitrogen
+  - type: Label
+    currentLabel: reagent-name-nitrogen
+
+- type: entity
+  parent: BoxCardboard
+  id: BoxSurvivalSecurityCommand
+  name: command survival box
+  description: It's a box with ornate but otherwise basic internals inside.
+  suffix: Standard
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskGasHOS
+    - id: EmergencyOxygenTankCommandFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkCommandFlaskFull
+  - type: Sprite
+    layers:
+    - state: internals
+    - state: emergencytankcommand
+
+- type: entity
+  parent: BoxCardboard
+  id: BoxSurvivalSecurityNitrogenCommand
+  name: command survival box
+  description: It's a box with ornate but otherwise basic internals inside.
+  suffix: Standard N2
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskGasHOS
+    - id: EmergencyNitrogenTankCommandFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkCommandFlaskFull
+  # Ok, NT actually only bothered to change the picture on the box for command. Assholes.
+  - type: Sprite
+    layers:
+    - state: internals
+    - state: emergencytankcommandnitrogen
+  - type: Label
+    currentLabel: reagent-name-nitrogen

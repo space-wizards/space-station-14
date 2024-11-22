@@ -1,0 +1,19 @@
+- type: entity
+  parent: [ClothingEyesBase, BaseCommandContraband]
+  id: ClothingEyesGlassesCaptainvisor
+  name: captain's visor
+  description: "A sleek visor that provides flash immunity and shows ID card status. Secured on your face with futuristic microgravity devices."
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Eyes/Glasses/captainvisor.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Eyes/Glasses/captainvisor.rsi
+  - type: FlashImmunity
+  - type: EyeProtection
+    protectionTime: 5
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+  - type: IdentityBlocker
+    coverage: EYES
+  - type: ShowJobIcons

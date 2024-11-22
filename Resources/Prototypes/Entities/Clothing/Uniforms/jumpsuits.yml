@@ -67,17 +67,6 @@
     sprite: Clothing/Uniforms/Jumpsuit/captain.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, BaseCommandContraband, ClothingUniformFoldableBase]
-  id: ClothingUniformJumpsuitCaptaineveningattire
-  name: captain's evening attire
-  description: "A comfortable captain's uniform with a low-cut collar and three-quarter sleeves, complete with a sword belt. Held fastened in part by a medal-like brooch."
-  components:
-  - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/captaineveningattire.rsi
-  - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/captaineveningattire.rsi
-
-- type: entity
   parent: [ClothingUniformBase, ClothingUniformFoldableBase]
   id: ClothingUniformJumpsuitCargo
   name: cargo tech jumpsuit

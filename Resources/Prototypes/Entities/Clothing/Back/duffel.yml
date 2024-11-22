@@ -52,15 +52,6 @@
     sprite: Clothing/Back/Duffels/captain.rsi
 
 - type: entity
-  parent: [ClothingBackpackDuffel, BaseCommandContraband]
-  id: ClothingBackpackDuffelCommandveteran
-  name: command veteran duffel bag
-  description: A sleek duffel bag, earned through a long career as command.
-  components:
-  - type: Sprite
-    sprite: Clothing/Back/Duffels/commandveteran.rsi
-
-- type: entity
   parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelClown
   name: clown duffel bag

@@ -72,7 +72,7 @@
   hidden: true
   loadouts:
   - LoadoutDecapoidBreathTool
-  
+
 - type: loadoutGroup
   id: GroupBreathToolDecapoidInventory
   name: loadout-group-breath-tool-inventory-decapoid
@@ -80,3 +80,152 @@
   hidden: true
   loadouts:
   - LoadoutDecapoidBreathToolInventory
+
+- type: loadoutGroup
+  id: CaptainGlasses
+  name: loadout-group-captain-glasses
+  loadouts:
+  - CaptainSunglasses
+  - CaptainVisor
+
+- type: loadoutGroup
+  id: CaptainGloves
+  name: loadout-group-captain-gloves
+  loadouts:
+  - CaptainGloves
+  - CaptainFlightGloves
+
+- type: loadoutGroup
+  id: CaptainShoes
+  name: loadout-group-captain-shoes
+  loadouts:
+  - LacedShoes
+  - LeatherShoes
+  - BlackCommandHeels
+  - BlueCommandHeels
+  - CaptainJumpBoots
+
+- type: loadoutGroup
+  id: CommandHeadset
+  name: loadout-group-command-headset
+  loadouts:
+  - CommandHeadsetBasic
+  - CommandHeadset
+  - CommandVeteranHeadset
+
+- type: loadoutGroup
+  id: SurvivalCommand
+  name: loadout-group-survival-command
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - EmergencyNitrogenCommand
+  - EmergencyOxygenCommand
+  - LoadoutSpeciesVoxNitrogenCommand
+
+- type: loadoutGroup
+  id: SurvivalExtendedCommand
+  name: loadout-group-survival-extended-command
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - EmergencyNitrogenExtendedCommand
+  - EmergencyOxygenExtendedCommand
+  - LoadoutSpeciesVoxNitrogenCommand
+
+- type: loadoutGroup
+  id: SurvivalSecurityCommand
+  name: loadout-group-survival-security-command
+  minLimit: 2
+  hidden: true
+  loadouts:
+  - EmergencyNitrogenSecurityCommand
+  - EmergencyOxygenSecurityCommand
+  - LoadoutSpeciesVoxNitrogenCommand
+
+- type: loadoutGroup
+  id: QuartermasterHeadset
+  name: loadout-group-quartermaster-headset
+  loadouts:
+  - QuartermasterHeadsetBasic
+  - QuartermasterHeadset
+  - QuartermasterVeteranHeadset
+
+- type: loadoutGroup
+  id: QuartermasterBackpack
+  name: loadout-group-quartermaster-backpack
+  loadouts:
+  - CargoTechnicianBackpack
+  - CargoTechnicianSatchel
+  - CargoTechnicianDuffel
+  - CommandVeteranBackpack
+  - CommandVeteranSatchel
+  - CommandVeteranDuffel
+
+- type: loadoutGroup
+  id: ChiefEngineerHeadset
+  name: loadout-group-chief-engineer-headset
+  loadouts:
+  - ChiefEngineerHeadsetBasic
+  - ChiefEngineerHeadset
+  - ChiefEngineerVeteranHeadset
+
+- type: loadoutGroup
+  id: ChiefEngineerBackpack
+  name: loadout-group-chief-engineer-backpack
+  loadouts:
+  - StationEngineerBackpack
+  - StationEngineerSatchel
+  - StationEngineerDuffel
+  - CommandVeteranBackpack
+  - CommandVeteranSatchel
+  - CommandVeteranDuffel
+
+- type: loadoutGroup
+  id: ResearchDirectorBackpack
+  name: loadout-group-research-director-backpack
+  loadouts:
+  - ScientistBackpack
+  - ScientistSatchel
+  - ScientistDuffel
+  - CommandVeteranBackpack
+  - CommandVeteranSatchel
+  - CommandVeteranDuffel
+
+- type: loadoutGroup
+  id: HeadofSecurityHeadset
+  name: loadout-group-head-of-security-headset
+  loadouts:
+  - HeadofSecurityHeadsetBasic
+  - HeadofSecurityHeadset
+  - HeadofSecurityVeteranHeadset
+
+- type: loadoutGroup
+  id: HeadofSecurityBackpack
+  name: loadout-group-head-of-security-backpack
+  loadouts:
+  - SecurityBackpack
+  - SecuritySatchel
+  - SecurityDuffel
+  - CommandVeteranBackpack
+  - CommandVeteranSatchel
+  - CommandVeteranDuffel
+
+- type: loadoutGroup
+  id: ChiefMedicalOfficerHeadset
+  name: loadout-group-chief-medical-officer-headset
+  loadouts:
+  - ChiefMedicalOfficerHeadsetBasic
+  - ChiefMedicalOfficerHeadset
+  - ChiefMedicalOfficerVeteranHeadset
+
+- type: loadoutGroup
+  id: ChiefMedicalOfficerBackpack
+  name: loadout-group-chief-medical-officer-backpack
+  loadouts:
+  - MedicalDoctorBackpack
+  - MedicalDoctorSatchel
+  - MedicalDoctorDuffel
+  - CommandVeteranBackpack
+  - CommandVeteranSatchel
+  - CommandVeteranDuffel
