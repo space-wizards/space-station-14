@@ -8,7 +8,7 @@
   - type: StorageFill
     contents:
     - id: ClothingMaskBreathCommand
-    - id: EmergencyOxygenTankCommandFilled
+    - id: EmergencyOxygenTankCommandFilled #imp
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodSnackNutribrick
@@ -51,8 +51,7 @@
   - type: StorageFill
     contents:
     - id: ClothingMaskBreathCommand
-    - id: ExtendedEmergencyOxygenTankCommandFilled
-    - id: EmergencyMedipen
+    - id: ExtendedEmergencyOxygenTankCommandFilled #imp
     - id: Flare
     - id: FoodSnackNutribrick
     - id: DrinkCommandFlaskFull #imp
@@ -94,7 +93,7 @@
   - type: StorageFill
     contents:
     - id: ClothingMaskGasHOS
-    - id: EmergencyOxygenTankCommandFilled
+    - id: EmergencyOxygenTankCommandFilled #imp
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodSnackNutribrick
