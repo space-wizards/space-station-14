@@ -39,5 +39,6 @@
   - type: Loadout
     prototypes: [GoblinRobeOSP]
   - type: Grammar
-    proper: true
-    gender: male
+    attributes:
+      proper: true
+      gender: male
