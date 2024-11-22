@@ -41,6 +41,7 @@ using Content.Shared.Slippery;
 using Content.Shared.Tabletop.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.Verbs;
+using Content.Shared.CombatMode.Pacification;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -891,5 +892,20 @@ public sealed partial class AdminVerbSystem
             Message = string.Join(": ", superslipName, Loc.GetString("admin-smite-super-slip-description"))
         };
         args.Verbs.Add(superslip);
+        
+        var pacifyName = Loc.GetString("admin-smite-pacify-name").ToLowerInvariant();
+        Verb pacify = new()
+        {
+            Text = pacifyName,
+            Category = VerbCategory.Smite,
+            Icon = new SpriteSpecifier.Rsi(new ("/Textures/Interface/Alerts/pacified.rsi"), "icon"),
+            Act = () =>
+            {
+                EnsureComp<PacifiedComponent>(args.Target);
+            },
+            Impact = LogImpact.Extreme,
+            Message = string.Join(": ", pacifyName, Loc.GetString("admin-smite-pacify-description"))
+        };
+        args.Verbs.Add(pacify);
     }
 }
