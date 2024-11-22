@@ -76,6 +76,7 @@ jobs:
         git add "Resources/Changelog/ChangelogStarlight.yml"
         git add "Tools/changelogs/sent_changelog_ids.yml"
         git commit -m "Update sended changelogs [skip ci]"
+        git pull git@github.com:${{ github.repository }}.git HEAD:Starlight
         git push git@github.com:${{ github.repository }}.git HEAD:Starlight
 
     - name: Publish changelog (RSS)
