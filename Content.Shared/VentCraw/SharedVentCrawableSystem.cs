@@ -166,7 +166,7 @@ public sealed class SharedVentCrawableSystem : EntitySystem
         while (query.MoveNext(out var uid, out var holder))
         {
             if (holder.CurrentDirection == Direction.Invalid)
-                return;
+                continue;
             
             if (holder.CurrentTube == null)
             {
