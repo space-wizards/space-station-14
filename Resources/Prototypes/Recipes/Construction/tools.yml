@@ -58,8 +58,19 @@
   id: DeskBell
   graph: BellGraph
   startNode: start
-  targetNode: deskBell
+  targetNode: deskBellNode
   category: construction-category-tools
   description: A bell for getting someone's attention.
+  icon: { sprite: Objects/Misc/desk_bell.rsi, state: icon_bell }
+  objectType: Item
+
+- type: construction
+  name: desk buzzer
+  id: DeskBuzzer
+  graph: BellGraph
+  startNode: start
+  targetNode: deskBuzzerNode
+  category: construction-category-tools
+  description: A buzzer for getting someone's attention.
   icon: { sprite: Objects/Misc/desk_bell.rsi, state: icon_bell }
   objectType: Item

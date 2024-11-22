@@ -4,19 +4,24 @@
   graph:
     - node: start
       edges:
-        - to: unfinishedDeskBell
+        - to: unfinishedDeskBellNode
           steps:
             - material: Steel
               amount: 1
               doAfter: 1.5
 
-    - node: unfinishedDeskBell
+    - node: unfinishedDeskBellNode
       entity: EmptyDeskBell
       edges:
-        - to: deskBell
+        - to: deskBellNode
           steps:
             - material: MetalRod
               amount: 1
+              doAfter: 1
+        - to: deskBuzzerNode
+          steps:
+            - material: Cable
+              amount: 2
               doAfter: 1
         - to: start
           completed:
@@ -28,14 +33,26 @@
             - tool: Screwing
               doAfter: 2
 
-    - node: deskBell
+    - node: deskBellNode
       entity: DeskBell
       edges:
-        - to: unfinishedDeskBell
+        - to: unfinishedDeskBellNode
           completed:
             - !type:SpawnPrototype
               prototype: PartRodMetal1
               amount: 1
+          steps:
+            - tool: Screwing
+              doAfter: 1
+
+    - node: deskBuzzerNode
+      entity: DeskBuzzer
+      edges:
+        - to: unfinishedDeskBellNode
+          completed:
+            - !type:SpawnPrototype
+              prototype: CableApcStack1
+              amount: 2
           steps:
             - tool: Screwing
               doAfter: 1

@@ -7,6 +7,12 @@
   - type: Sprite
     sprite: Objects/Misc/desk_bell.rsi
     state: "icon_empty"
+  - type: EmitSoundOnCollide
+    sound:
+      collection: DeskBell
+      params:
+          variation: 0.03
+          volume: 3
   - type: MeleeSound
     soundGroups:
       Brute:
@@ -19,7 +25,7 @@
     damageContainer: Inorganic
   - type: Construction
     graph: BellGraph
-    node: unfinishedDeskBell
+    node: unfinishedDeskBellNode
   - type: Destructible
     thresholds:
     - trigger:
@@ -73,12 +79,12 @@
       params:
           variation: 0.03
           volume: 3
-  - type: EmitSoundOnUse
-    sound:
-      collection: DeskBell
-      params:
-          variation: 0.03
-          volume: 3
+  # - type: EmitSoundOnUse
+  #   sound:
+  #     collection: DeskBell
+  #     params:
+  #         variation: 0.03
+  #         volume: 3
   - type: EmitSoundOnTrigger
     sound:
       collection: DeskBell
@@ -89,12 +95,12 @@
     delay: 0.5
   - type: Construction
     graph: BellGraph
-    node: deskBell
+    node: deskBellNode
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 50
       behaviors:
         - !type:PlaySoundBehavior
           sound:
@@ -118,3 +124,87 @@
           node: unfinishedDeskBell
         - !type:DoActsBehavior
           acts: ["Destruction"]
+
+- type: entity
+  parent: EmptyDeskBell
+  id: DeskBuzzer
+  name: desk buzzer
+  description: An advanced customer service tool. You feel an unending urge to buzz it.
+  components:
+  - type: Sprite
+    state: "icon_buzzer"
+  - type: Tag
+    tags:
+      - Payload
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessSound:
+      collection: DeskBell
+      params:
+        variation: 0.03
+        volume: 3
+    onActivate: true
+  - type: EmitSoundOnLand
+    sound:
+      collection: DeskBell
+      params:
+          variation: 0.03
+          volume: 3
+  # - type: EmitSoundOnUse
+  #   sound:
+  #     collection: DeskBell
+  #     params:
+  #         variation: 0.03
+  #         volume: 3
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: DeskBell
+      params:
+          variation: 0.03
+          volume: 3
+  - type: UseDelay
+    delay: 0.5
+  - type: Construction
+    graph: BellGraph
+    node: deskBuzzerNode
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: DeskBell
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+        - !type:PlaySoundBehavior
+          sound:
+            collection: MetalBreak
+        - !type:SpawnEntitiesBehavior
+          spawn:
+            CableApcStack1:
+              min: 0
+              max: 2
+          offset: 0
+        - !type:ChangeConstructionNodeBehavior
+          node: unfinishedDeskBell
+        - !type:DoActsBehavior
+          acts: ["Destruction"]
+  - type: StationAiWhitelist
+  - type: Signaller
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+  - type: WirelessNetworkConnection
+    range: 25
+  - type: DeviceLinkSource
+    ports:
+      - Pressed
+  # - type: SignalSwitch
+  #   onPort: Pressed
+  #   offPort: Pressed
+  #   statusPort: Pressed
