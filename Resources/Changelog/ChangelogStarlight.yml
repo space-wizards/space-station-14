@@ -475,4 +475,10 @@ Entries:
   id: 66
   time: '2024-11-22T10:04:43.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/81
-
+- author: Rinary
+  changes:
+  - message: Fixed bag when supermatter don't generates oxygen.
+    type: Fix
+  id: 67
+  time: '2024-11-22T17:19:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/81
