@@ -137,10 +137,10 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                     _xformSystem.AttachToGridOrMap(entity, xform);
                     var direction = holder.CurrentDirection == Direction.Invalid ? holder.PreviousDirection : holder.CurrentDirection;
 
-                    if (direction != Direction.Invalid && _xformQuery.TryGetComponent(gridUid, out var parentXform))
+                    if (direction != Direction.Invalid && _xformQuery.TryGetComponent(gridUid, out var gridXform))
                     {
                         var directionAngle = direction.ToAngle();
-                        directionAngle += _xformSystem.GetWorldRotation(parentXform);
+                        directionAngle += _xformSystem.GetWorldRotation(gridXform);
                         _throwing.TryThrow(entity, directionAngle.ToWorldVec() * 3f, 10f);
                     }
                 }
