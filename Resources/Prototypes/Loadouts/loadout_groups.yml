@@ -262,8 +262,8 @@
   - LacedShoes
   - LeatherShoes
   - HoPShoesWhite
-  - BlackCommandHeels
-  - BlueCommandHeels
+  - CommandBlackHeels
+  - CommandBlueHeels
 
 - type: loadoutGroup
   id: HoPOuterClothing
