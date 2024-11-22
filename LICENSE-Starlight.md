@@ -28,14 +28,12 @@ You are granted the following permissions under this license:
 The following conditions must be met to use, modify, or redistribute the Fork:
 
 ### 1. Attribution
-All public mentions of the Fork must include clear and visible attribution to the Starlight Project. Attribution must:
-   - Reference the name *Starlight Project*.
-   - Include a link to the original repository ([GitHub Link to Starlight Project]).
-   - Apply to all forms of distribution, including:
-     - Source code
-     - Binaries or executables
-     - Documentation
-     - Social media posts or discussions featuring the Fork
+All distributions of the Fork's source code or compiled binaries must include clear and visible attribution to the Starlight Project. Attribution must:  
+   - Reference the name *Starlight Project*.  
+   - Include a link to the original repository ([GitHub Link to Starlight Project]).  
+   - Be present in the following:  
+     - Source code (e.g., in the README, comments, or header files).  
+     - Binaries or executables (e.g., in the "About" section, splash screen, or documentation included with the software).  
 
 ### 2. Link to the Original Repository
 All materials related to the Fork, including documentation, distribution packages, or public forks, must provide a link to the original Starlight Project repository ([GitHub Link to Starlight Project]).
