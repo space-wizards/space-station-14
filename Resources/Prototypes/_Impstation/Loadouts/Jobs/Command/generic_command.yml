@@ -9,7 +9,7 @@
       time: 36000 # 10 hours
 
 - type: loadout
-  id: BlackCommandHeels
+  id: CommandBlackHeels
   effects:
   - !type:GroupLoadoutEffect
     proto: Command10Hr
@@ -17,7 +17,7 @@
     shoes: ClothingShoesHeelsCommandBlack
 
 - type: loadout
-  id: BlueCommandHeels
+  id: CommandBlueHeels
   effects:
   - !type:GroupLoadoutEffect
     proto: Command10Hr

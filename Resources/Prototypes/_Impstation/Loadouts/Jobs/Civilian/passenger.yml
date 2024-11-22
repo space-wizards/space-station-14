@@ -1,6 +1,6 @@
 # The Next Generation
 - type: loadout
-  id: GraySpaceCadetJumpsuit
+  id: GraytiderSpaceJumpsuit
   effects:
   - !type:GroupLoadoutEffect
     proto: GreyTider

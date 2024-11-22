@@ -207,8 +207,8 @@
   loadouts:
   - LacedShoes
   - LeatherShoes
-  - BlackCommandHeels
-  - BlueCommandHeels
+  - CommandBlackHeels
+  - CommandBlueHeels
   - CaptainJumpBoots
 
 - type: loadoutGroup
@@ -311,7 +311,7 @@
   - GreyJumpskirt
   - AncientJumpsuit
   - RainbowJumpsuit
-  - GraySpaceCadetJumpsuit
+  - GraytiderSpaceJumpsuit
 
 - type: loadoutGroup
   id: PassengerFace
