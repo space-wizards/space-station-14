@@ -30,7 +30,6 @@ namespace Content.Server.Voting.Managers
         [Dependency] private readonly IPlayerLocator _locator = default!;
         [Dependency] private readonly ILogManager _logManager = default!;
         [Dependency] private readonly IBanManager _bans = default!;
-        [Dependency] private readonly IServerDbManager _dbManager = default!;
         [Dependency] private readonly VoteWebhooks _voteWebhooks = default!;
 
         private VotingSystem? _votingSystem;

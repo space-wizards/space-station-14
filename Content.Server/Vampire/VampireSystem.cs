@@ -66,7 +66,6 @@ public sealed partial class VampireSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly SharedActionsSystem _action = default!;
-    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly SharedBodySystem _body = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
     [Dependency] private readonly SharedStunSystem _stun = default!;
@@ -75,7 +74,6 @@ public sealed partial class VampireSystem : EntitySystem
     [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly MetabolizerSystem _metabolism = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly SharedVampireSystem _vampire = default!;
@@ -373,15 +371,12 @@ public sealed partial class VampireSystem : EntitySystem
             TryOpenUi(uid, component.Owner, component);
         }
     }
-    
-    private void GetState(EntityUid uid, VampireComponent component, ref AfterAutoHandleStateEvent args)
+
+    private void GetState(EntityUid uid, VampireComponent component, ref AfterAutoHandleStateEvent args) => args.State = new VampireMutationComponentState
     {
-        args.State = new VampireMutationComponentState
-        {
-            SelectedMutation = component.CurrentMutation
-        };
-    }
-    
+        SelectedMutation = component.CurrentMutation
+    };
+
     private void TryOpenUi(EntityUid uid, EntityUid user, VampireComponent? component = null)
     {
         if (!Resolve(uid, ref component))
