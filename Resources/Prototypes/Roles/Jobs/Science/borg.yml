@@ -24,5 +24,5 @@
   canBeAntag: false
   icon: JobIconBorg
   supervisors: job-supervisors-rd
-  jobEntity: PlayerBorgGeneric
+  jobEntity: PlayerBorgBattery
   applyTraits: false
