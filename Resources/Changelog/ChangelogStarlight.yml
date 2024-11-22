@@ -454,4 +454,10 @@ Entries:
   id: 63
   time: '2024-11-21T20:47:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/79
-
+- author: Rinary
+  changes:
+  - message: Added a rule about new life system.
+    type: Add
+  id: 64
+  time: '2024-11-22T08:19:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/e4a81ceba74522b0a033813c22b959fded20963c
