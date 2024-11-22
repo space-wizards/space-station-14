@@ -461,3 +461,18 @@ Entries:
   id: 64
   time: '2024-11-22T08:19:00.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/commit/e4a81ceba74522b0a033813c22b959fded20963c
+- author: Rinary
+  changes:
+  - message: Added pacify smite action for admins.
+    type: Add
+  id: 65
+  time: '2024-11-22T10:04:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/81
+- author: Rinary
+  changes:
+  - message: Updated pacified icon.
+    type: Tweak
+  id: 66
+  time: '2024-11-22T10:04:43.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/81
+
