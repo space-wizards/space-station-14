@@ -152,6 +152,10 @@
   sounds:
     Squish:
       collection: Squishes
+    Bubble:
+      collection: Bubbles # Imp addition
+    Pop:
+      collection: Pops # Imp addition
     Scream:
       collection: MaleSlimeScreams
     Laugh:
@@ -196,6 +200,10 @@
   sounds:
     Squish:
       collection: Squishes
+    Bubble:
+      collection: Bubbles # Imp addition
+    Pop:
+      collection: Pops # Imp addition
     Scream:
       collection: FemaleSlimeScreams
     Laugh:
@@ -303,7 +311,7 @@
     variation: 0.125
 
 # FemaleDiona is a placeholder until a full set of diona emotes are made.
-# Once they are finished, this should be removed and the female vocal sounds in diona.yml should be set to UnisexMoth   
+# Once they are finished, this should be removed and the female vocal sounds in diona.yml should be set to UnisexMoth
 - type: emoteSounds
   id: FemaleDiona
   sounds:
@@ -332,7 +340,7 @@
     Ungh:
       collection: Ungh
     Gasp:
-      collection: FemaleGasp 
+      collection: FemaleGasp
     DefaultDeathgasp:
       collection: FemaleDeathGasp
   params:
@@ -497,7 +505,7 @@
       collection: MaleGasp
     DefaultDeathgasp:
       collection: MothDeathGasp
-      
+
 # FemaleMoth is a placeholder until a full set of moth emotes are made.
 # Once they are finished, this should be removed and the female vocal sounds in moth.yml should be set to UnisexMoth
 - type: emoteSounds
@@ -602,7 +610,7 @@
       path: /Audio/Voice/Diona/diona_salute.ogg
       params:
        volume: -5
-       
+
 - type: emoteSounds
   id: ReptilianBodyEmotes
   sounds:

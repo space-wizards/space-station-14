@@ -138,6 +138,7 @@
   whitelist:
     components:
     - Vocal
+    - Slime # Imp edit
   blacklist:
     components:
     - BorgChassis
@@ -341,7 +342,7 @@
   name: chat-emote-name-weh
   category: Vocal
   chatMessages: [UNGHs!]
-  
+
 - type: emote
   id: Chirp
   name: chat-emote-name-chirp

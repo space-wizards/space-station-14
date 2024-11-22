@@ -56,6 +56,16 @@
     - /Audio/_Impstation/Voice/Slime/s_whistle_4.ogg
 
 - type: soundCollection
+  id: Bubbles
+  files:
+    - /Audio/_Impstation/Voice/Slime/s_bubble.ogg
+
+- type: soundCollection
+  id: Pops
+  files:
+    - /Audio/_Impstation/Voice/Slime/s_pop.ogg
+
+- type: soundCollection
   id: Ungh
   files:
   - /Audio/_Impstation/Animals/bros_hit.ogg
