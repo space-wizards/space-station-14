@@ -11,7 +11,7 @@
   - PlushieLizard
   - PlushieSpaceLizard
   - Lighter
-  - FlippoLighter
+  - FlippoLighter #imp
   - CigPackGreen
   - CigPackRed
   - CigPackBlue
@@ -221,17 +221,6 @@
   - CommandVeteranBackpack #imp
   - CommandVeteranSatchel #imp
   - CommandVeteranDuffel #imp
-
-- type: loadoutGroup
-  id: HoPShoes
-  name: loadout-group-hop-shoes
-  loadouts:
-  - BrownShoes
-  - LacedShoes
-  - LeatherShoes
-  - HoPShoesWhite
-  - BlackCommandHeels
-  - BlueCommandHeels
 
 - type: loadoutGroup
   id: HoPOuterClothing
@@ -852,7 +841,7 @@
   loadouts:
   - QuartermasterCloak
   - QuartermasterMantle
-  - QuartermasterGreatcoat
+  - QuartermasterGreatcoat #imp
   - ScarfBrown
 
 - type: loadoutGroup
@@ -1308,8 +1297,8 @@
   loadouts:
   - HeadofSecurityJumpsuit
   - HeadofSecurityJumpskirt
-  - HeadofSecurityJumpsuitGrey
-  - HeadofSecurityJumpskirtGrey
+  - HeadofSecurityJumpsuitGrey #imp
+  - HeadofSecurityJumpskirtGrey #imp
   - HeadofSecurityTurtleneck
   - HeadofSecurityTurtleneckSkirt
   - HeadofSecurityFormalSuit
@@ -1322,7 +1311,7 @@
   loadouts:
   - HeadofSecurityCloak
   - HeadofSecurityMantle
-  - HeadofSecurityGreatcoat
+  - HeadofSecurityGreatcoat #imp
   - ScarfBlack
   - ScarfRed
 
@@ -1333,16 +1322,9 @@
   - HeadofSecurityCoat
   - HeadofSecurityWinterCoat
   - HeadofSecurityWinterCoatUnarmored
-  - ArmorVest
-  - ArmorVestSlim
-  - HeadofSecurityEliteArmor
-
-- type: loadoutGroup
-  id: HeadofSecurityMask
-  name: loadout-group-head-of-security-mask
-  minLimit: 0
-  loadouts:
-  - HeadofSecurityMask
+  - ArmorVest #imp
+  - ArmorVestSlim #imp
+  - HeadofSecurityEliteArmor #imp
 
 - type: loadoutGroup
   id: WardenHead

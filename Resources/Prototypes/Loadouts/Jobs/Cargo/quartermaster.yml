@@ -59,14 +59,6 @@
   - !type:GroupLoadoutEffect
     proto: MasterQM
 
-- type: loadout
-  id: QuartermasterGreatcoat
-  equipment:
-    neck: ClothingNeckCloakQmgreatcoat
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranQM
-
 - type: startingGear
   id: QuartermasterMantle
   equipment:

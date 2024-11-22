@@ -51,3 +51,9 @@
   effects:
   - !type:GroupLoadoutEffect
     proto: MusicallyTalented
+
+- type: loadout
+  id: FlippoLighter
+  storage:
+    back:
+    - FlippoLighter

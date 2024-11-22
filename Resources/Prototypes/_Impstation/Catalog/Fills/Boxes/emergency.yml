@@ -12,7 +12,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodSnackNutribrick
-    - id: DrinkCommandFlaskFull
+    - id: DrinkCommandFlaskFull #imp
   - type: Sprite
     layers:
     - state: internals
@@ -32,7 +32,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodSnackNutribrick
-    - id: DrinkCommandFlaskFull
+    - id: DrinkCommandFlaskFull #imp
   # Ok, NT actually only bothered to change the picture on the box for command. Assholes.
   - type: Sprite
     layers:
@@ -55,7 +55,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodSnackNutribrick
-    - id: DrinkCommandFlaskFull
+    - id: DrinkCommandFlaskFull #imp
   - type: Sprite
     layers:
     - state: internals
@@ -75,7 +75,7 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodSnackNutribrick
-    - id: DrinkCommandFlaskFull
+    - id: DrinkCommandFlaskFull #imp
   # Ok, NT actually only bothered to change the picture on the box for command. Assholes.
   - type: Sprite
     layers:

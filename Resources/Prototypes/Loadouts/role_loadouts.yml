@@ -25,7 +25,7 @@
   - HoPNeck
   - HoPJumpsuit
   - HoPOuterClothing
-  - HoPShoes
+  - HoPShoes #imp
   - CommandHeadset #imp
   - Glasses
   - HoPBackpack
@@ -427,7 +427,7 @@
   id: JobHeadOfSecurity
   groups:
   - HeadofSecurityHead
-  - HeadofSecurityMask
+  - HeadofSecurityMask #imp
   - HeadofSecurityNeck
   - HeadofSecurityJumpsuit
   - HeadofSecurityOuterClothing

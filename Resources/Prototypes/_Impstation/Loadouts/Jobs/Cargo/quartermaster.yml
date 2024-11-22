@@ -15,3 +15,11 @@
   effects:
   - !type:GroupLoadoutEffect
     proto: VeteranQM
+
+- type: loadout
+  id: QuartermasterGreatcoat
+  equipment:
+    neck: ClothingNeckCloakQmgreatcoat
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranQM

@@ -1,0 +1,10 @@
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpskirtHoSGrey
+  name: head of security's grey jumpskirt
+  description: A grey jumpskirt for the Head of Security, unfortunately resembling a passenger's uniform.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpskirt/hos_grey.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpskirt/hos_grey.rsi

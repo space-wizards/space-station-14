@@ -229,3 +229,21 @@
   - CommandVeteranBackpack
   - CommandVeteranSatchel
   - CommandVeteranDuffel
+
+- type: loadoutGroup
+  id: HeadofSecurityMask
+  name: loadout-group-head-of-security-mask
+  minLimit: 0
+  loadouts:
+  - HeadofSecurityMask
+
+- type: loadoutGroup
+  id: HoPShoes
+  name: loadout-group-hop-shoes
+  loadouts:
+  - BrownShoes
+  - LacedShoes
+  - LeatherShoes
+  - HoPShoesWhite
+  - BlackCommandHeels
+  - BlueCommandHeels
