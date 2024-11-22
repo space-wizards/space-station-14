@@ -1,7 +1,7 @@
 using Content.Server.GameTicking;
 using Content.Shared.Starlight.CCVar;
 using Content.Shared.CombatMode.Pacification;
-using Content.Shared.Mindshield.Components;
+using Content.Shared.Movement.Components;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 
@@ -24,13 +24,9 @@ public sealed class PeacefulRoundEndSystem : EntitySystem
     private void OnRoundEnded(RoundEndTextAppendEvent ev)
     {
         if (!_isEnabled) return;
-        foreach (var session in _playerManager.Sessions)
+        foreach (var mob in EntityQuery<MobMoverComponent>())
         {
-            if (!session.AttachedEntity.HasValue) continue;
-
-            var entityId = session.AttachedEntity.Value;
-
-            EnsureComp<PacifiedComponent>(entityId);
+            EnsureComp<PacifiedComponent>(mob.Owner);
         }
     }
 }
