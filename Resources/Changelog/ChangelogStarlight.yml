@@ -494,5 +494,12 @@ Entries:
   - message: Fixed "pipe stucking" while vent crawling
     type: Fix
   id: 69
-  time: '2024-11-22T17:57:00.000000+00:00'
+  time: '2024-11-22T23:57:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/491ace54f7357f5e241a183bfdb305651133f0bf
+- author: Rinary
+  changes:
+  - message: Fixed "Snake game" control when vent crawling.
+    type: Fix
+  id: 70
+  time: '2024-11-22T23:57:00.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/commit/491ace54f7357f5e241a183bfdb305651133f0bf
