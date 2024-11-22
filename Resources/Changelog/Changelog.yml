@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Unkn0wnGh0st333
-  changes:
-  - message: changed human male coughing
-    type: Tweak
-  id: 7136
-  time: '2024-08-18T16:00:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30893
 - author: EmoGarbage404
   changes:
   - message: Legends tell of horrifying Goliaths that roam the mining asteroid.
@@ -3932,3 +3925,11 @@
   id: 7635
   time: '2024-11-21T14:20:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33147
+- author: DrSmugleaf
+  changes:
+  - message: Fixed admin ghosts not being able to see or interact with items in pouches
+      in the stripping menu.
+    type: Fix
+  id: 7636
+  time: '2024-11-22T02:56:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31076
