@@ -82,6 +82,13 @@
   text: "/ServerInfo/Guidebook/ServerRules/RulesSL/CoreRules/RuleSL10.xml"
   
 - type: guideEntry
+  id: RuleSL11
+  name: guide-entry-sl-rule-11
+  ruleEntry: true
+  priority: 11
+  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/CoreRules/RuleSL11.xml"
+  
+- type: guideEntry
   id: RuleSLRP1
   name: guide-entry-sl-rule-3-1
   ruleEntry: true

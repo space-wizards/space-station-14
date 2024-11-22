@@ -16,3 +16,4 @@ guide-entry-sl-rule-7 = Rule 7
 guide-entry-sl-rule-8 = Rule 8
 guide-entry-sl-rule-9 = Rule 9
 guide-entry-sl-rule-10 = Rule 10
+guide-entry-sl-rule-11 = Rule 11
