@@ -1213,13 +1213,13 @@ namespace Content.Server.Database
     /// <summary>
     ///  Cache for the IPIntel system
     /// </summary>
-    [Index(nameof(Address), IsUnique = true)]
     public class IPIntelCache
     {
+        public int Id { get; set; }
+
         /// <summary>
-        /// The IP address (duh).
+        /// The IP address (duh). This is made unique manually for psql cause of ef core bug.
         /// </summary>
-        [Key]
         public IPAddress Address { get; set; } = null!;
 
         /// <summary>
