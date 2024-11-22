@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Beck Thompson
-  changes:
-  - message: Cutting food now moves the sliced pieces a small amount!
-    type: Tweak
-  id: 7138
-  time: '2024-08-18T21:18:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31166
 - author: lzk228
   changes:
   - message: Pizza and pizza box now have 3x2 size in inventory.
@@ -3935,3 +3928,10 @@
   id: 7637
   time: '2024-11-22T03:46:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33128
+- author: IProduceWidgets
+  changes:
+  - message: The terminal is more tamper proof.
+    type: Fix
+  id: 7638
+  time: '2024-11-22T22:50:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33281
