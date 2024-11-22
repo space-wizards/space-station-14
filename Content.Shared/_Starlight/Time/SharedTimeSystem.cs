@@ -31,9 +31,9 @@ namespace Content.Shared._Starlight.Time
             var totalDays = (int) stationTime.TotalDays;
             stationTime = stationTime.Subtract(TimeSpan.FromDays(totalDays));
 
-            _date = _date.AddDays(totalDays);
+            var newDate = _date.AddDays(totalDays);
 
-            return (stationTime, _date.ToString("dd.MM.yyyy"));
+            return (stationTime, newDate.ToString("dd.MM.yyyy"));
         }
 
         public string GetDate()
