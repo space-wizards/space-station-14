@@ -17,7 +17,7 @@ If your PR contains in-game changes you must provide screenshots/videos of the c
 - [ ] I do not require assistance to complete the PR.
 - [ ] Before posting/requesting review of a PR, I have verified that the changes work.
 - [ ] I have added screenshots/videos of the changes, or this PR does not change in-game mechanics.
-- [ ] My changes are not licensed in any way.
+- [ ] I affirm that my changes are licensed under the [Starlight Fork License](https://github.com/ss14Starlight/space-station-14/blob/Starlight/LICENSE-Starlight.md) and grant permission for use in this repository under its conditions.
 
 **Changelog**
 <!--
