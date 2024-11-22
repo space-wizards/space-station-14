@@ -1,0 +1,14 @@
+- type: entity
+  name: Clown Corgi Spawner
+  id: SpawnMobClownCorgi
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: _Starlight/Mobs/Pets/corgi.rsi
+        state: clown_ian_dead
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobCorgiClownIan

@@ -1,0 +1,28 @@
+- type: entity
+  name: Clown Ian
+  parent: MobCorgi
+  id: MobCorgiClownIan
+  description: HONK! HONK! IAN HERE.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: _Starlight/Mobs/Pets/corgi.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: clown_ian
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: clown_ian
+      Critical:
+        Base: clown_ian_dead
+      Dead:
+        Base: clown_ian_dead
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - VimPilot
