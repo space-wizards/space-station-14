@@ -18,9 +18,8 @@ namespace Content.Server.VentCraw
 {
     public sealed class VentCrawTubeSystem : EntitySystem
     {
-        [Dependency] private readonly SharedVentCrawableSystem _ventCrawableSystemSystem = default!;
+        [Dependency] private readonly SharedVentCrawableSystem _ventCrawableSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-        [Dependency] private readonly VentCrawTubeSystem _ventCrawTubeSystem = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly SharedMoverController _mover = default!;
@@ -69,7 +68,7 @@ namespace Content.Server.VentCraw
             if (args.Handled || args.Cancelled || args.Args.Target == null || args.Args.Used == null)
                 return;
 
-            _ventCrawTubeSystem.TryInsert(args.Args.Target.Value, args.Args.Used.Value);
+            TryInsert(args.Args.Target.Value, args.Args.Used.Value);
 
             args.Handled = true;
         }
@@ -213,13 +212,13 @@ namespace Content.Server.VentCraw
             var holder = Spawn(VentCrawEntryComponent.HolderPrototypeId, _transform.GetMapCoordinates(uid));
             var holderComponent = Comp<VentCrawHolderComponent>(holder);
 
-            _ventCrawableSystemSystem.TryInsert(holder, entity, holderComponent);
+            _ventCrawableSystem.TryInsert(holder, entity, holderComponent);
 
             _mover.SetRelay(entity, holder);
             ventCrawlerComponent.InTube = true;
             Dirty(entity, ventCrawlerComponent);
 
-            return _ventCrawableSystemSystem.EnterTube(holder, uid, holderComponent);
+            return _ventCrawableSystem.EnterTube(holder, uid, holderComponent);
         }
     }
 }

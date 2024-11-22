@@ -7,7 +7,12 @@ namespace Content.Shared.VentCraw.Components;
 [RegisterComponent]
 public sealed partial class VentCrawHolderComponent : Component
 {
-    public Container Container = null!;
+    private Container? _container;
+    public Container Container
+    {
+        get => _container ?? throw new InvalidOperationException("Container not initialized");
+        set => _container = value;
+    }
 
     [ViewVariables]
     public float StartingTime { get; set; }

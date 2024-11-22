@@ -91,11 +91,11 @@ namespace Content.Shared.Movement.Systems
 
             // Relay the fact we had any movement event.
             // TODO: Ideally we'd do these in a tick instead of out of sim.
-            Vector2 vector2 = DirVecForButtons(entity.Comp.HeldMoveButtons);
+            Vector2 vector2 = DirVecForButtons(buttons);
             Vector2i vector2i = new Vector2i((int)vector2.X, (int)vector2.Y);
             Direction dir = (vector2i == Vector2i.Zero) ? Direction.Invalid : vector2i.AsDirection();
             
-            var moveEvent = new MoveInputEvent(entity, entity.Comp.HeldMoveButtons, dir, entity.Comp.HeldMoveButtons != 0);
+            var moveEvent = new MoveInputEvent(entity, buttons, dir, buttons != 0);
             entity.Comp.HeldMoveButtons = buttons;
             RaiseLocalEvent(entity, ref moveEvent);
             Dirty(entity, entity.Comp);
