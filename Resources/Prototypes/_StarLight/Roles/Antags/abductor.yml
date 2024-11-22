@@ -2,5 +2,4 @@
   id: LoneAbductorAntag
   name: abductors-ghost-role-name
   antagonist: true
-  setPreference: true
   objective: roles-antag-abductor-objective

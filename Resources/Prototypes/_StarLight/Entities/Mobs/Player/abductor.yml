@@ -41,7 +41,7 @@
     gloves: ClothingHandsGlovesCombat
     shoes: ClothingShoesBootsCombat
     pocket1: AbductorGizmo
-    belt: ClothingAbductorBelt
+    belt: ClothingAbductorBeltFilled
   inhand:
   - Wonderprod
 
