@@ -1231,6 +1231,7 @@
     templateId: monkey
     speciesId: monkey
   - type: Deathgasp
+  - type: Unconscious
     prototype: MonkeyDeathgasp
   - type: Cuffable
   - type: RotationVisuals
@@ -1650,6 +1651,7 @@
         - SmallMobLayer
   - type: MobState
   - type: Deathgasp
+  - type: Unconscious
   - type: MobStateActions
     actions:
       Critical:
@@ -3222,6 +3224,7 @@
         - SmallMobLayer
   - type: MobState
   - type: Deathgasp
+  - type: Unconscious
   - type: MobStateActions
     actions:
       Critical:
