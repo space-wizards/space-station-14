@@ -19,8 +19,8 @@
     - alertType: Stun
     - category: Breathing # Vox gang not calling this oxygen
     - category: Pressure
-    - alertType: Bleed
     - category: Temperature
+    - alertType: Bleed
     - category: Hunger
     - category: Thirst
     - alertType: Magboots
@@ -87,7 +87,9 @@
 
 - type: alert
   id: Fire
-  icons: [ /Textures/Interface/Alerts/Fire/fire.png ]
+  icons:
+  - sprite: /Textures/Interface/Alerts/fire.rsi
+    state: fire
   clickEvent: !type:ResistFireAlertEvent
   name: alerts-on-fire-name
   description: alerts-on-fire-desc
@@ -411,22 +413,10 @@
     state: bleed3
   - sprite: /Textures/Interface/Alerts/bleed.rsi
     state: bleed4
-  - sprite: /Textures/Interface/Alerts/bleed.rsi
-    state: bleed5
-  - sprite: /Textures/Interface/Alerts/bleed.rsi
-    state: bleed6
-  - sprite: /Textures/Interface/Alerts/bleed.rsi
-    state: bleed7
-  - sprite: /Textures/Interface/Alerts/bleed.rsi
-    state: bleed8
-  - sprite: /Textures/Interface/Alerts/bleed.rsi
-    state: bleed9
-  - sprite: /Textures/Interface/Alerts/bleed.rsi
-    state: bleed10
   name: alerts-bleed-name
   description: alerts-bleed-desc
   minSeverity: 0
-  maxSeverity: 10
+  maxSeverity: 4
 
 - type: alert
   id: Pacified
