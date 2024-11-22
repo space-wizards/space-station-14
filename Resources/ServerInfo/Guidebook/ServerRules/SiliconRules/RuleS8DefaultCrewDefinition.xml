@@ -10,6 +10,5 @@
     <GuideEntityEmbed Entity="BorgIcon" Caption="Cyborg"/>
     <GuideEntityEmbed Entity="StationAiIcon" Caption="Station AI"/>
     <GuideEntityEmbed Entity="SyndicateIcon" Caption="Syndicate"/>
-    <GuideEntityEmbed Entity="ZombieIcon" Caption="Zombie"/>
   </Box>
 </Document>

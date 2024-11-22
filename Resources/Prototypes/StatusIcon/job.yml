@@ -388,6 +388,7 @@
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Zombie
   jobName: job-name-zombie
+  allowSelection: false # This is no longer a perfectly legitimate profession to pursue
 
 - type: jobIcon
   parent: JobIcon
