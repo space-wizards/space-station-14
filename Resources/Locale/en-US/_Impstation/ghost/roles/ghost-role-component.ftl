@@ -29,3 +29,11 @@ ghost-role-information-luggage-description = You are The Luggage, a chest made o
 
 ghost-role-information-cargorilla-name = Cargorilla
 ghost-role-information-cargorilla-description = A "well" trained gorilla, assist Cargo by dragging around freight and making deliveries.
+
+ghost-role-information-goblin-stowaway-name = Goblin Stowaway
+ghost-role-information-goblin-stowaway-description = You are Goblin. Your fellow Goblin is Goblin. Goblin must construct Goblinhome. 
+
+ghost-role-information-nonantagonist-freeagent-goblin-stowaway = You are a [color=yellow][bold]Team Free Agent[/bold][/color] with all other Goblins. You are free to act as either antagonists or non-antagonists.
+                                         Your primary goal is to construct Goblinhome, a home for yourself and your people. Harming the station would likely put that goal at risk.
+
+                                         You don't remember any of your previous life, and you don't remember anything you learned as a ghost.

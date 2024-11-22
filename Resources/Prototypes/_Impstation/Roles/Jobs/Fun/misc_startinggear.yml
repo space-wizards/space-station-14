@@ -3,3 +3,8 @@
   equipment:
     ears: ClothingHeadsetCargo
     id: CargorillaIDCard
+
+- type: startingGear
+  id: GoblinRobeOSP
+  equipment:
+    outerClothing: ClothingOuterCoatRobesGoblin

@@ -1,0 +1,62 @@
+- type: soundCollection
+  id: GoblinScreams
+  files:
+  - /Audio/_NF/Voice/Goblin/goblin-scream-01.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-scream-02.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-scream-03.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-scream-04.ogg
+
+- type: soundCollection
+  id: GoblinCackle
+  files:
+  - /Audio/_NF/Voice/Goblin/goblin-cackle-01.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-cackle-02.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-cackle-03.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-cackle-04.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-cackle-05.ogg
+
+- type: soundCollection
+  id: GoblinCry
+  files:
+  - /Audio/_NF/Voice/Goblin/goblin-cry-01.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-cry-02.ogg
+
+- type: soundCollection
+  id: GoblinMutterCollection
+  files:
+  - /Audio/_NF/Voice/Goblin/goblin-mutter-01.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-mutter-02.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-mutter-03.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-mutter-04.ogg
+
+- type: soundCollection
+  id: GoblinThroatSingingCollection
+  files:
+  - /Audio/_NF/Voice/Goblin/goblin-throat-singing-01.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-throat-singing-02.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-throat-singing-03.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-throat-singing-04.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-throat-singing-05.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-throat-singing-06.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-throat-singing-07.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-throat-singing-08.ogg
+
+- type: soundCollection
+  id: GoblinHiss
+  files:
+  - /Audio/_NF/Voice/Goblin/goblin-hiss-01.ogg
+
+- type: soundCollection
+  id: GoblinGasp
+  files:
+  - /Audio/_NF/Voice/Goblin/goblin-gasp-01.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-gasp-02.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-gasp-03.ogg
+
+- type: soundCollection
+  id: GoblinDeathGasp
+  files:
+  - /Audio/_NF/Voice/Goblin/goblin-deathgasp-01.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-deathgasp-02.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-deathgasp-03.ogg
+  - /Audio/_NF/Voice/Goblin/goblin-deathgasp-04.ogg

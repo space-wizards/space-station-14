@@ -1,0 +1,24 @@
+- type: entity
+  save: false
+  name: Urist McGoblin
+  parent: [MobGoblinBase, BaseMob]
+  id: MobGoblin
+  components:
+  - type: Speech
+    speechVerb: Goblin
+
+- type: entity
+  parent: MobGoblin
+  id: MobGoblinStowaway
+  name: goblin stowaway
+  components:
+  - type: GhostRole
+    name: ghost-role-information-goblin-stowaway-name
+    description: ghost-role-information-goblin-stowaway-description
+    rules: ghost-role-information-nonantagonist-freeagent-goblin-stowaway
+    raffle:
+      settings: default
+  - type: GhostTakeoverAvailable
+  - type: Loadout
+    prototypes: [GoblinRobeOSP]
+  - type: RandomHumanoidAppearance

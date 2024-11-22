@@ -1,0 +1,49 @@
+- type: body
+  id: Goblin
+  name: "goblin"
+  root: torso
+  slots:
+    head:
+      part: HeadGoblin
+      connections:
+      - torso
+      organs:
+        brain: OrganGoblinBrain
+        eyes: OrganGoblinEyes
+    torso:
+      part: TorsoGoblin
+      connections:
+      - right arm
+      - left arm
+      - right leg
+      - left leg
+      organs:
+        heart: OrganGoblinHeart
+        lungs: OrganGoblinLungs
+        stomach: OrganGoblinStomach
+        liver: OrganGoblinLiver
+        kidneys: OrganGoblinKidneys
+    right arm:
+      part: RightArmGoblin
+      connections:
+      - right hand
+    left arm:
+      part: LeftArmGoblin
+      connections:
+      - left hand
+    right hand:
+      part: RightHandGoblin
+    left hand:
+      part: LeftHandGoblin
+    right leg:
+      part: RightLegGoblin
+      connections:
+      - right foot
+    left leg:
+      part: LeftLegGoblin
+      connections:
+      - left foot
+    right foot:
+      part: RightFootGoblin
+    left foot:
+      part: LeftFootGoblin
