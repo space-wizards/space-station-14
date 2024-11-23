@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: ultramario1998
-  changes:
-  - message: Fin fin can now open doors. Life, uh, finds a way.
-    type: Tweak
-  id: 52
-  time: '2024-08-01T19:46:26.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/65
-- author: joelsgp
-  changes:
-  - message: Added new lobby screen by Carousel!
-    type: Add
-  - message: Fix title of Soichi Terada lobby song.
-    type: Fix
-  - message: Remove our custom round end screen keybind because the official one (F9)
-      is fixed.
-    type: Remove
-  - message: Add more helpful login tips.
-    type: Add
-  id: 53
-  time: '2024-08-03T01:53:12.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/66
 - author: formlessnameless
   changes:
   - message: Blessed bananium flooring.
@@ -4296,3 +4275,21 @@
   id: 551
   time: '2024-11-21T13:18:00.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/748
+- author: honeyed-lemons
+  changes:
+  - message: Hopefully the gilded space passenger jumpsuit works now??
+    type: Fix
+  id: 552
+  time: '2024-11-23T07:15:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/775
+- author: EpicToast
+  changes:
+  - message: (Union Station) Freezer should now be properly set up.
+    type: Fix
+  - message: (Union Station) Botany now has a backroom and a new layout.
+    type: Tweak
+  - message: (Union Station) Science now has a bigger main room.
+    type: Tweak
+  id: 553
+  time: '2024-11-23T07:14:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/776
