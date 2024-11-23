@@ -77,9 +77,9 @@
 - type: damageModifierSet
   id: BloodlossHuman
   coefficients:
-    Blunt: 0.8
-    Slash: 2.5
-    Piercing: 2.0
+    Blunt: 0.5
+    Slash: 0.0
+    Piercing: 0.0
     Shock: 0.0
     Cold: 0.0
     Heat: 0.0
