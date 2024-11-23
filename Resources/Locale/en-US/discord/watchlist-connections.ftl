@@ -11,8 +11,7 @@ discord-watchlist-connection-expiry = (expires <t:{$expiry}:R>)
 
 discord-watchlist-connection-message = with message "{$message}"
 
-discord-watchlist-connection-more = (and
-    { $watchlists ->
+discord-watchlist-connection-more = (and { $watchlists ->
         [one] {$watchlists} other watchlist
         *[other] {$watchlists} other watchlists
     })
