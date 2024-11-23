@@ -1,0 +1,12 @@
+- type: entity
+  id: ActionRCBackToBody
+  name: Back to body.
+  description: Sends your eye back to the core.
+  components:
+  - type: InstantAction
+    priority: -9
+    itemIconStyle: BigAction
+    icon:
+      sprite: Interface/Actions/actions_ai.rsi
+      state: ai_core
+    event: !type:RCReturnToBodyEvent
