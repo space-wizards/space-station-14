@@ -1,46 +1,4 @@
 ﻿Entries:
-- author: Beck Thompson
-  changes:
-  - message: Cutting food now moves the sliced pieces a small amount!
-    type: Tweak
-  id: 7138
-  time: '2024-08-18T21:18:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31166
-- author: lzk228
-  changes:
-  - message: Pizza and pizza box now have 3x2 size in inventory.
-    type: Tweak
-  - message: Pizze box is 4x2 inside and always will have a pizza with a knife inside.
-    type: Tweak
-  - message: Pizza box have whitelist for utensils and pizza.
-    type: Tweak
-  id: 7139
-  time: '2024-08-18T21:55:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31171
-- author: Deatherd
-  changes:
-  - message: Sharks Go RAWR!
-    type: Tweak
-  id: 7140
-  time: '2024-08-18T22:18:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31142
-- author: slarticodefast
-  changes:
-  - message: Fixed the radiation collector warning light thresholds.
-    type: Fix
-  id: 7141
-  time: '2024-08-18T22:25:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31175
-- author: Potato1234_x
-  changes:
-  - message: Added tea plants that can be dried and ground to make tea powder which
-      can then be used to make tea.
-    type: Add
-  - message: Added blue pumpkins. Currently useless but recipe uses are coming soon.
-    type: Add
-  id: 7142
-  time: '2024-08-18T22:28:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/25092
 - author: deltanedas
   changes:
   - message: Added Memory Cells for storing logic signals persistently.
@@ -3935,3 +3893,40 @@
   id: 7637
   time: '2024-11-22T03:46:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33128
+- author: IProduceWidgets
+  changes:
+  - message: The terminal is more tamper proof.
+    type: Fix
+  id: 7638
+  time: '2024-11-22T22:50:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33281
+- author: MissKay1994
+  changes:
+  - message: The salvage vendor now has enough equipment for everyone
+    type: Tweak
+  id: 7639
+  time: '2024-11-23T02:53:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33437
+- author: slarticodefast
+  changes:
+  - message: The AI and observers can now see if doors are electrified.
+    type: Add
+  id: 7640
+  time: '2024-11-23T06:37:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33466
+- author: Winkarst-cpu
+  changes:
+  - message: Now submit button in admin notes becomes disabled on switching type back
+      to note.
+    type: Fix
+  id: 7641
+  time: '2024-11-23T06:41:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33456
+- author: metalgearsloth
+  changes:
+  - message: Fix airlock animations mispredicting if the closing animation is interrupted,
+      e.g. via walking into it.
+    type: Fix
+  id: 7642
+  time: '2024-11-23T09:31:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33481
