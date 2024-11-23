@@ -58,7 +58,7 @@ public sealed class ContrabandSystem : EntitySystem
             var severity = _proto.Index(ent.Comp.Severity);
             var jobList = new List<string>();
             var departmentList = new List<string>();
-            if (severity.ShowDepartmentsAndJobs && ent.Comp is { AllowedDepartments: not null })
+            if (severity.ShowDepartmentsAndJobs)
             {
                 if (ent.Comp is { AllowedJobs: not null })
                 {
