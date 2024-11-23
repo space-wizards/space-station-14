@@ -1,0 +1,9 @@
+- type: entity
+  parent: CrateGenericSteel
+  id: CrateLuxury
+  name: luxury crate
+  components:
+  - type: Icon
+    sprite: _Impstation/Structures/Storage/Crates/luxury.rsi
+  - type: Sprite
+    sprite: _Impstation/Structures/Storage/Crates/luxury.rsi
