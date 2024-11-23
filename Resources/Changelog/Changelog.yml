@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed the radiation collector warning light thresholds.
-    type: Fix
-  id: 7141
-  time: '2024-08-18T22:25:02.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31175
 - author: Potato1234_x
   changes:
   - message: Added tea plants that can be dried and ground to make tea powder which
@@ -3931,3 +3924,11 @@
   id: 7640
   time: '2024-11-23T06:37:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33466
+- author: Winkarst-cpu
+  changes:
+  - message: Now submit button in admin notes becomes disabled on switching type back
+      to note.
+    type: Fix
+  id: 7641
+  time: '2024-11-23T06:41:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33456
