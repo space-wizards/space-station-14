@@ -57,4 +57,9 @@ public sealed partial class CCVars
     /// </summary>
     public static readonly CVarDef<string> InfoLinksChangeUsername =
         CVarDef.Create("infolinks.change_username", "", CVar.SERVER | CVar.REPLICATED);
+
+    ///     Link to Telegram channel to show in the launcher.
+    /// </summary>
+    public static readonly CVarDef<string> InfoLinksTelegram =
+        CVarDef.Create("infolinks.telegram", "", CVar.SERVER | CVar.REPLICATED);
 }
