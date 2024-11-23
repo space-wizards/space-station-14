@@ -259,6 +259,7 @@
       - id: ModularReceiver
       - id: WeaponFlareGun
       - id: BarberScissors
+      - id: MagazineZipper
       - !type:GroupSelector
         children:
         - id: DrinkSpaceGlue
@@ -462,6 +463,7 @@
       - id: ClothingMaskMuzzle
       - id: ClothingMaskGasSecurity
       - id: ShardGlass
+      - id: WeaponPistolZipper
         weight: 2
       - id: Syringe
       - id: Mousetrap

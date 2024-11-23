@@ -4,6 +4,12 @@
   
 - type: Tag
   id: CleanerGrenade
+  
+- type: Tag
+  id: ConversionKitFA
+
+- type: Tag
+  id: ConversionKitHB
 
 - type: Tag
   id: MagazineLPistol

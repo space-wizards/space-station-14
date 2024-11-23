@@ -66,7 +66,7 @@
 
 - type: entity
   id: MagazineLPistolEmpty
-  name: mk 93 magazine (.22 auto any)
+  name: pistol magazine (.22 auto any)
   parent: BaseMagazineLPistol
   components:
   - type: BallisticAmmoProvider
@@ -74,7 +74,7 @@
 
 - type: entity
   id: MagazineLPistol
-  name: mk 93 magazine (.22 auto)
+  name: pistol magazine (.22 auto)
   parent: BaseMagazineLPistol
   components:
   - type: BallisticAmmoProvider
@@ -129,7 +129,7 @@
 
 - type: entity
   id: MagazineLPistolIncendiary
-  name: mk 93 magazine (.22 auto incendiary)
+  name: pistol magazine (.22 auto incendiary)
   parent: BaseMagazineLPistol
   components:
   - type: BallisticAmmoProvider
@@ -137,7 +137,7 @@
 
 - type: entity
   id: MagazineLPistolPractice
-  name: mk 93 magazine (.22 auto practice)
+  name: pistol magazine (.22 auto practice)
   parent: BaseMagazineLPistol
   components:
   - type: BallisticAmmoProvider
@@ -151,7 +151,7 @@
 
 - type: entity
   id: MagazineLPistolUranium
-  name: mk 93 magazine (.22 auto uranium)
+  name: pistol magazine (.22 auto uranium)
   parent: BaseMagazineLPistol
   components:
   - type: BallisticAmmoProvider

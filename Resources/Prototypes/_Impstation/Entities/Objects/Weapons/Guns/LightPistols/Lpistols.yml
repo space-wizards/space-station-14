@@ -2,7 +2,7 @@
   name: mk 93
   parent: [ BaseWeaponPistol, BaseRestrictedContraband ]
   id: WeaponPistolMk93
-  description: The famous sidearm modified with a fully automatic receiver. Uses .22 auto ammo.
+  description: A cheap pistol built for fully automatic fire. Uses .22 auto ammo.
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Weapons/Guns/Pistols/mk93.rsi
@@ -14,10 +14,10 @@
   - type: Clothing
     sprite: _Impstation/Objects/Weapons/Guns/Pistols/mk93.rsi
   - type: Gun
-    minAngle: 2
-    maxAngle: 12
-    angleIncrease: 2
-    angleDecay: 5
+    minAngle: 3
+    maxAngle: 18
+    angleIncrease: 3
+    angleDecay: 10
     fireRate: 6
     availableModes:
     - SemiAuto
@@ -43,6 +43,61 @@
         whitelist:
           tags:
             - CartridgeLPistol
+  - type: Construction
+    graph: UpgradeWeaponPistolConversion
+    node: start
+
+- type: entity
+  name: mk 92hb
+  parent: [ BaseWeaponPistol, BaseRestrictedContraband ]
+  id: WeaponPistolMk92HB
+  description: Designed in an attempt to make the most of a small cartridge. Uses .22 auto ammo.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/mk92hb.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/mk92hb.rsi
+  - type: Gun
+    minAngle: 1
+    maxAngle: 6
+    angleIncrease: 1.5
+    angleDecay: 10
+    fireRate: 5
+    burstFireRate: 16
+    availableModes:
+    - Burst
+    - SemiAuto
+    shotsPerBurst: 2
+    burstCooldown: 0.33
+    soundGunshot:
+      path: /Audio/_Impstation/Weapons/Guns/Gunshots/light-pistol2.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineLPistol
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineLPistol
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeLPistol
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeLPistol
+  - type: Construction
+    graph: UpgradeWeaponPistolConversion
+    node: start
 
 - type: entity
   name: zipper .22

@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/tgstation/tgstation at commit 6665eec76c98a4f3f89bebcd10b34b47dcc0b8ae. Inhands sprited by Flareguy for Space Station 14.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "iconfa"
+    },
+	{
+	  "name": "iconhb"
+	}
+  ]
+}

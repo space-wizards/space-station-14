@@ -794,12 +794,18 @@
       - ClothingBackpackElectropack
       - ExplosivePayload
       - FlashPayload
+      - FullAutoConversionKit
       - GrenadeBlast
       - GrenadeEMP
       - GrenadeFlash
       - HoloprojectorSecurity
+      - HyperBurstConversionKit
       - MagazineBoxLightRifleIncendiary
       - MagazineBoxLightRifleUranium
+      - MagazineBoxLPistol
+      - MagazineBoxLPistolIncendiary
+      - MagazineBoxLPistolPractice
+      - MagazineBoxLPistolUranium
       - MagazineBoxMagnumIncendiary
       - MagazineBoxMagnumUranium
       - MagazineBoxPistolIncendiary
@@ -809,6 +815,11 @@
       - MagazineGrenadeEmpty
       - MagazineLightRifleIncendiary
       - MagazineLightRifleUranium
+      - MagazineLPistol
+      - MagazineLPistolEmpty
+      - MagazineLPistolIncendiary
+      - MagazineLPistolPractice
+      - MagazineLPistolUranium
       - MagazinePistolIncendiary
       - MagazinePistolUranium
       - MagazineRifleIncendiary
