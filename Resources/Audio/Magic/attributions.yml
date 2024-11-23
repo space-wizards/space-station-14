@@ -17,6 +17,8 @@
   - forcewall.ogg
   - knock.ogg
   - blink.ogg
-  copyright: '"ForceWall.ogg", "Knock.ogg", and "blink.ogg" by Citadel Station 13'
+  - ethereal_enter.ogg
+  - ethereal_exit.ogg
+  copyright: '"forcewall.ogg", "knock.ogg", "blink.ogg", "ethereal_enter.ogg", and "ethereal_exit.ogg" by Citadel Station 13'
   license: CC-BY-SA-3.0
   source: https://github.com/Citadel-Station-13/Citadel-Station-13/commit/35a1723e98a60f375df590ca572cc90f1bb80bd5
