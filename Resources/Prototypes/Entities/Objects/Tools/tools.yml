@@ -224,7 +224,7 @@
       price: 56
     - type: GuideHelp
       guides:
-      - NetworkConfigurator
+      - Networking
 
 #Power tools
 #Later on these should switch probably switch damage when changing the tool behavior.

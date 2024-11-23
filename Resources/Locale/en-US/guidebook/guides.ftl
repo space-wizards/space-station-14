@@ -31,7 +31,6 @@ guide-entry-atmostools = Atmos Tools
 guide-entry-botany = Botany
 guide-entry-shuttle-craft = Shuttle-craft
 guide-entry-networking = Networking
-guide-entry-network-configurator = Network Configurator
 guide-entry-access-configurator = Access Configurator
 guide-entry-power = Power
 guide-entry-portable-generator = Portable Generators
