@@ -45,7 +45,7 @@ class ValidationFailure(Enum):
 
 def string_to_enum(enum_class: Enum, value: str):
     try:
-        separated = set([enum_class[v] for v in value.split(",")])
+        separated = set([enum_class[v] for v in value.split(",") if v != ""])
     except KeyError as ex:
         raise argparse.ArgumentTypeError(f"Invalid {enum_class.__name__} enum value - \"{ex.args[0]}\"")
     return separated
@@ -122,7 +122,7 @@ validation_failure_names = {
     ValidationFailure.SOURCE_REJECTED: "Source rejected as per configuration",
     ValidationFailure.ASSET_MISSING: "Missing (or misspelt) assets",
     ValidationFailure.ASSET_DUPLICATE_ATTRIBUTION: "Assets described by multiple attribution entries",
-    ValidationFailure.FILE_ATTRIBUTIONS_MISSING: "Missing (or misspelt) attributions.yml files",
+    ValidationFailure.FILE_ATTRIBUTIONS_MISSING: "Missing (or misspelt, unmodified) attributions.yml files",
     ValidationFailure.UNATTRIBUTED: "Unattributed assets",
 }
 
@@ -229,6 +229,7 @@ class LicensingScan:
     """Storage class for all files relevant to licensing that were found in a directory scan"""
 
     config: LicensingConfig
+    filtered = False
 
     # Asset files
     assets: list[Path] = []
@@ -247,16 +248,18 @@ class LicensingScan:
         self.path = path
         self.config = config
 
-    def filter(self, filter: set[Path]):
-        self.assets = filter.intersection(self.assets)
+    def filter(self, filter_list: set[str]):
+        self.filtered = True
+
+        # This isn't great but it's hard to do a set intersect between entirely different types?
+        self.assets = [x for x in self.assets if str(x) in filter_list]
+        self.attributions = [x for x in self.attributions if str(x) in filter_list]
+        return (len(self.assets), len(self.attributions))
 
     def run(self):
         for path in self.path.rglob("*"):
             if path.is_dir():
                 continue
-
-            if path.suffix == "":
-                print(path)
 
             if path.name == "attributions.yml":
                 self.attributions.append(path)
@@ -356,10 +359,6 @@ class LicensingValidation:
         if len(files) == 0:
             self.record_failure(ValidationFailure.FILE_ENTRY_INVALID, "NO FILES IN THE ATTRIBUTION ENTRY", filepath)
 
-        if "Custom" == attribution["license"]:
-            if "commercialUseAllowed" not in attribution:
-                self.record_failure(ValidationFailure.LICENSE_CUSTOM_UNCLARIFIED, files, filepath)
-
         non_commercial_asset_misuse = False
         if not self.config.non_commercial:
             if "-NC-" in attribution["license"]:
@@ -367,6 +366,41 @@ class LicensingValidation:
             if "Custom" == attribution["license"]:
                 # Let's err on the safe side here
                 non_commercial_asset_misuse = ("commercialUseAllowed" not in attribution) or (attribution["commercialUseAllowed"] == False)
+
+        license_rejected = False
+        if attribution["license"] in self.config.reject_licenses:
+            license_rejected = True
+
+        scan_includes = 0
+
+        for file in files:
+            try:
+                attributed_asset = filepath.with_name(file)
+
+                if not attributed_asset.exists():
+                    self.record_failure(ValidationFailure.ASSET_MISSING, file, filepath)
+                    continue
+                if attributed_asset in self.attribution_dict:
+                    self.record_failure(ValidationFailure.ASSET_DUPLICATE_ATTRIBUTION, file, filepath)
+                if attributed_asset in self.scan.assets:
+                    scan_includes += 1
+                elif scan.filtered:
+                    continue
+                if non_commercial_asset_misuse:
+                    self.record_failure(ValidationFailure.LICENSE_VIOLATION_NON_COMMERCIAL, file, filepath)
+                if license_rejected:
+                    self.record_failure(ValidationFailure.LICENSE_REJECTED, file, filepath)
+                if "Custom" == attribution["license"] and "commercialUseAllowed" not in attribution:
+                    self.record_failure(ValidationFailure.LICENSE_CUSTOM_UNCLARIFIED, file, filepath)
+
+                self.attribution_dict[attributed_asset] = attribution
+            except ValueError:
+                self.record_failure(ValidationFailure.FILE_ENTRY_INVALID, file, filepath)
+            except OSError:
+                self.record_failure(ValidationFailure.FILE_ENTRY_INVALID, file, filepath)
+
+        if scan.filtered and scan_includes == 0:
+            return
 
         source_status = SourceStatus.NOT_FOUND
         for source in self.config.sources:
@@ -389,30 +423,6 @@ class LicensingValidation:
             self.record_failure(ValidationFailure.SOURCE_LICENSE_MISMATCH, attribution["source"], filepath)
         if source_status == SourceStatus.REJECTED:
             self.record_failure(ValidationFailure.SOURCE_REJECTED, attribution["source"], filepath)
-
-        license_rejected = False
-        if attribution["license"] in self.config.reject_licenses:
-            license_rejected = True
-
-        for file in files:
-            try:
-                attributed_asset = filepath.with_name(file)
-
-                if not attributed_asset.exists():
-                    self.record_failure(ValidationFailure.ASSET_MISSING, file, filepath)
-                    continue
-                if non_commercial_asset_misuse:
-                    self.record_failure(ValidationFailure.LICENSE_VIOLATION_NON_COMMERCIAL, file, filepath)
-                if license_rejected:
-                    self.record_failure(ValidationFailure.LICENSE_REJECTED, file, filepath)
-                if attributed_asset in self.attribution_dict:
-                    self.record_failure(ValidationFailure.ASSET_DUPLICATE_ATTRIBUTION, file, filepath)
-
-                self.attribution_dict[attributed_asset] = attribution
-            except ValueError:
-                self.record_failure(ValidationFailure.FILE_ENTRY_INVALID, file, filepath)
-            except OSError:
-                self.record_failure(ValidationFailure.FILE_ENTRY_INVALID, file, filepath)
 
     def check(self) -> bool:
         if len(self.scan.orphaned) > 0:
@@ -445,7 +455,7 @@ class LicensingValidation:
                 have_attributions_yml = ""
                 if not (Path(path) / "attributions.yml").exists():
                     have_attributions_yml = " - no attributions.yml, shown later as !!!" if not printed_header else " !!!"
-                    self.record_failure(ValidationFailure.FILE_ATTRIBUTIONS_MISSING, path)
+                    self.record_failure(ValidationFailure.FILE_ATTRIBUTIONS_MISSING, path / "attributions.yml")
 
                 if not self.config.list_unattributed_stats:
                     continue
@@ -487,10 +497,13 @@ if __name__ == "__main__":
     scan = LicensingScan(args.resources, config)
     scan.run()
 
+    count = (len(scan.assets), len(scan.attributions))
+    filtered_count = None
+
     if args.filelist:
         with open(args.filelist) as file:
             lines = file.readlines()
-            scan.filter(set(lines))
+            filtered_count = scan.filter(set([x.strip() for x in lines]))
 
     validation = LicensingValidation(scan, config)
     if args.show_details is not None and args.hide_details is not None:
@@ -503,7 +516,10 @@ if __name__ == "__main__":
 
     validation.check()
 
-    print(f"Found {len(validation.scan.assets)} assets, described by {len(validation.scan.attributions)} attributions.yml files")
+    if filtered_count is None:
+        print(f"Found {count[0]} assets, described by {count[1]} attributions.yml files")
+    else:
+        print(f"Found {filtered_count[0]} assets, described by {filtered_count[1]} attributions.yml files (filtered from {count[0]} assets and {count[1]} attributions.yml)")
     print()
 
     if len(validation.failures) > 0:
