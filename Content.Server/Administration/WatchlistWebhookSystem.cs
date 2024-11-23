@@ -11,6 +11,10 @@ using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Administration;
 
+/// <summary>
+///     This system sends a Discord webhook notification whenever a player with an active
+///     watchlist joins the server.
+/// </summary>
 public sealed class WatchlistWebhookSystem : EntitySystem
 {
     [Dependency] private readonly IAdminNotesManager _adminNotes = default!;
