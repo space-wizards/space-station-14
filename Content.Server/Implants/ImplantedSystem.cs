@@ -1,5 +1,4 @@
 using Content.Server.Body.Components;
-using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Robust.Shared.Containers;
 
@@ -7,8 +6,6 @@ namespace Content.Server.Implants;
 
 public sealed partial class ImplanterSystem
 {
-    [Dependency] private readonly SharedSubdermalImplantSystem _sharedSubdermal = default!;
-
     public void InitializeImplanted()
     {
         SubscribeLocalEvent<ImplantedComponent, ComponentInit>(OnImplantedInit);
@@ -30,6 +27,7 @@ public sealed partial class ImplanterSystem
 
     private void OnGibbed(EntityUid uid, ImplantedComponent component, BeingGibbedEvent args)
     {
-        _sharedSubdermal.WipeImplants(uid);
+        //If the entity is gibbed, get rid of the implants
+        _container.CleanContainer(component.ImplantContainer);
     }
 }
