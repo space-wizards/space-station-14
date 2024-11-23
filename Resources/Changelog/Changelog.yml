@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Ore can no longer be destroyed by explosions. Happy blast mining.
-    type: Tweak
-  id: 7145
-  time: '2024-08-19T01:55:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31182
 - author: slarticodefast
   changes:
   - message: Mobs without hands can no longer toggle other players' suit pieces.
@@ -3929,3 +3922,10 @@
   id: 7644
   time: '2024-11-23T11:41:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32447
+- author: IProduceWidgets
+  changes:
+  - message: Arrivals shuttle is more tamper proof.
+    type: Fix
+  id: 7645
+  time: '2024-11-23T15:14:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33284
