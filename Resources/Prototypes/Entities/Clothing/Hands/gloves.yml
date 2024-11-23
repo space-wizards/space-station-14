@@ -467,6 +467,7 @@
       collection: Punch
     animation: WeaponArcFist
     mustBeEquippedToUse: true
+  - type: Tag
     tags:
     - WhitelistChameleon
 
@@ -484,6 +485,9 @@
   - type: Construction
     graph: ClothingHandsKnuckleDustersBrass
     node: brassknuckleduster
+  - type: Tag
+    tags:
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHandsKnuckleDusters
@@ -507,6 +511,7 @@
       collection: Punch
     animation: WeaponArcFist
     mustBeEquippedToUse: true
+  - type: Tag
     tags:
     - WhitelistChameleon
   - type: StealTarget
@@ -532,6 +537,7 @@
       collection: Punch
     animation: WeaponArcFist
     mustBeEquippedToUse: true
+  - type: Tag
     tags:
     - WhitelistChameleon
 
@@ -556,3 +562,6 @@
     soundHit:
       collection: Punch
     animation: WeaponArcFist
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
