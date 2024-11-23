@@ -4,7 +4,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs;
 using Content.Shared.Tag;
-using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
@@ -22,7 +21,6 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     public const string BaseStorageId = "storagebase";
@@ -93,11 +91,6 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
         foreach (var entity in containedEntites)
         {
             _transformSystem.DropNextTo(entity, uid);
-
-            _throwingSystem.TryThrow(entity,
-                _random.NextAngle().RotateVec(direction / dropAngle + worldRotation / 50),
-                0.5f * dropAngle * _random.NextFloat(-0.9f, 1.1f),
-                uid, 0);
         }
     }
 
