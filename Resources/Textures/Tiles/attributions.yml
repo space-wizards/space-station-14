@@ -140,3 +140,13 @@
   license: "MIT"
   copyright: "Created by Froxxin (github) for vault-station"
   source: "https://github.com/LukeZurg22/Vault-Station"
+
+- files: ["rpglass.png"]
+  license: "MIT"
+  copyright: "Created by Froxxin (github) for vault-station"
+  source: "https://github.com/LukeZurg22/Vault-Station"
+
+- files: ["pglass.png"]
+  license: "MIT"
+  copyright: "Created by Froxxin (github) for vault-station"
+  source: "https://github.com/LukeZurg22/Vault-Station"
