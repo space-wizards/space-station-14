@@ -37,7 +37,7 @@
       settings: default
   - type: GhostTakeoverAvailable
   - type: Loadout
-    prototypes: [GoblinRobeOSP]
+    prototypes: [GoblinKnightArmor]
   - type: Grammar
     attributes:
       proper: true

@@ -2,7 +2,7 @@
   parent: FoodMeatRotten
   id: FoodMeatGoblin
   name: raw goblin meat
-  description: Just look at that marbling! Wait, is that microplastic?
+  description: Just look at that marbling!
   components:
   - type: Sprite
     state: rotten

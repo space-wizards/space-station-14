@@ -34,7 +34,7 @@ ghost-role-information-goblin-stowaway-name = Goblin Stowaway
 ghost-role-information-goblin-stowaway-description = You are Goblin. Your fellow Goblin is Goblin. Goblin must construct Goblinhome. 
 
 ghost-role-information-nonantagonist-freeagent-goblin-stowaway = You are a [color=yellow][bold]Team Free Agent[/bold][/color] with all other Goblins. You are free to act as either antagonists or non-antagonists.
-                                         Your primary goal is to construct Goblinhome, a home for yourself and your people. Harming the station would likely put that goal at risk.
+                                         Your primary goal is to construct Goblinhome, a home for yourself and your people. [color=red]Harming the station would likely put that goal at risk.[/color]
 
                                          You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
 

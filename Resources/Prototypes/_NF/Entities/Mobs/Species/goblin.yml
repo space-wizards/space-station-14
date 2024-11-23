@@ -99,8 +99,9 @@
         emote: Scream
         probability: 0.2
   - type: CanEscapeInventory
-  - type: Inventory
-    speciesId: goblin
+# commenting inventorycomponent out so that sir gollylad wears the human version of the armor.
+#  - type: Inventory
+#    speciesId: goblin
     # displacements: TODO
 
 - type: entity

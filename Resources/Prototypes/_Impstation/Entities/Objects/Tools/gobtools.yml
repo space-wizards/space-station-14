@@ -1,0 +1,35 @@
+- type: entity
+  name: wirecu'ahs
+  description: Dey're for chivin' wires.
+  parent: Haycutters
+  id: GoblinWirecutters
+
+- type: entity
+  name: screwdrivah
+  description: It's for drivin' screws.
+  parent: Moodriver
+  id: GoblinScrewdriver
+
+- type: entity
+  name: wrench
+  description: It's for anchorin' shit.
+  parent: Wronch
+  id: GoblinWrench
+
+- type: entity
+  name: jilt
+  description: It's for pryin' shit up.
+  parent: Cowbar
+  id: GoblinCrowbar
+
+- type: entity
+  name: multitool
+  description: It's for 'ackin' jiggahs.
+  parent: Mooltitool
+  id: GoblinMultitool
+
+- type: entity
+  name: weldah
+  description: It's for weldin' shit.
+  parent: Cowelder
+  id: GoblinWelder

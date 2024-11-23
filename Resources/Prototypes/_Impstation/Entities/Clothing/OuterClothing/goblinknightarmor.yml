@@ -3,7 +3,7 @@
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterGoblinKnightArmor
   name: Sir Gollylad's armor
-  description: A suit of gleaming armor. On closer inspection, it appears to have been meticulously constructed out of soda cans and tin foil.
+  description: A suit of gleaming armor. On closer inspection, it appears to have been meticulously constructed out of soda cans and tin foil. Despite this, it seems to be spaceworthy.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/OuterClothing/Misc/goblinknightarmor.rsi
