@@ -74,3 +74,8 @@
   id: Cracks
   files:
     - /Audio/_Impstation/Effects/Emotes/knuckles.ogg
+
+- type: soundCollection
+  id: ReptilianHiss
+  files:
+    - /Audio/_Impstation/Voice/Reptillian/reptillian_hiss1.ogg

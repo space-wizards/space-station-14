@@ -34,3 +34,24 @@
   chatTriggers:
     - pops
     - popping
+
+- type: emote
+  id: Hiss
+  name: chat-emote-name-hiss
+  category: Vocal
+  available: false
+  icon: _Impstation/Interface/Emotes/hiss.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-hiss"]
+  chatTriggers:
+    - hiss
+    - hiss.
+    - hiss!
+    - hisses
+    - hisses.
+    - hisses!
