@@ -40,6 +40,9 @@ public abstract class SharedArtifactCrusherSystem : EntitySystem
 
     private void OnEmagged(Entity<ArtifactCrusherComponent> ent, ref GotEmaggedEvent args)
     {
+        if (args.Handled)
+            return;
+
         ent.Comp.AutoLock = true;
         args.Handled = true;
     }

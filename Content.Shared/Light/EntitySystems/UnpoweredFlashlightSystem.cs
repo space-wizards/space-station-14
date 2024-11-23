@@ -78,6 +78,9 @@ public sealed class UnpoweredFlashlightSystem : EntitySystem
 
     private void OnGotEmagged(EntityUid uid, UnpoweredFlashlightComponent component, ref GotEmaggedEvent args)
     {
+        if (args.Handled)
+            return;
+
         if (!_light.TryGetLight(uid, out var light))
             return;
 

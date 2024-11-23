@@ -279,6 +279,9 @@ public sealed class LockSystem : EntitySystem
 
     private void OnEmagged(EntityUid uid, LockComponent component, ref GotEmaggedEvent args)
     {
+        if (args.Handled)
+            return;
+
         if (!component.Locked || !component.BreakOnEmag)
             return;
 

@@ -246,6 +246,9 @@ public sealed class FaxSystem : EntitySystem
 
     private void OnEmagged(EntityUid uid, FaxMachineComponent component, ref GotEmaggedEvent args)
     {
+        if (args.Handled)
+            return;
+
         _audioSystem.PlayPvs(component.EmagSound, uid);
         args.Handled = true;
     }

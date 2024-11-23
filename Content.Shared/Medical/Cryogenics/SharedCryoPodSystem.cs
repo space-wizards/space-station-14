@@ -155,6 +155,9 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
 
     protected void OnEmagged(EntityUid uid, CryoPodComponent? cryoPodComponent, ref GotEmaggedEvent args)
     {
+        if (args.Handled)
+            return;
+
         if (!Resolve(uid, ref cryoPodComponent))
         {
             return;

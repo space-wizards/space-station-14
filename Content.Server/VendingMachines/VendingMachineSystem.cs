@@ -124,6 +124,9 @@ namespace Content.Server.VendingMachines
 
         private void OnEmagged(EntityUid uid, VendingMachineComponent component, ref GotEmaggedEvent args)
         {
+            if (args.Handled)
+                return;
+
             // only emag if there are emag-only items
             args.Handled = component.EmaggedInventory.Count > 0;
         }

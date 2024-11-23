@@ -163,6 +163,9 @@ namespace Content.Server.Nutrition.EntitySystems
         }
         private void OnEmagged(Entity<VapeComponent> entity, ref GotEmaggedEvent args)
         {
+            if (args.Handled)
+                return;
+
             args.Handled = true;
         }
     }

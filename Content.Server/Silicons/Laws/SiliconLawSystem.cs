@@ -154,6 +154,8 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
     private void OnEmagLawsAdded(EntityUid uid, SiliconLawProviderComponent component, ref GotEmaggedEvent args)
     {
+        if (args.Handled)
+            return;
 
         if (component.Lawset == null)
             component.Lawset = GetLawset(component.Laws);
@@ -178,6 +180,9 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
     protected override void OnGotEmagged(EntityUid uid, EmagSiliconLawComponent component, ref GotEmaggedEvent args)
     {
+        if (args.Handled)
+            return;
+
         if (component.RequireOpenPanel && TryComp<WiresPanelComponent>(uid, out var panel) && !panel.Open)
             return;
 

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Emag.Systems;
+using Content.Shared.Emag.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Wires;
@@ -22,6 +22,9 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
 
     protected virtual void OnAttemptEmag(EntityUid uid, EmagSiliconLawComponent component, ref OnAttemptEmagEvent args)
     {
+        if (args.Handled)
+            return;
+
         //prevent self emagging
         if (uid == args.UserUid)
         {
@@ -42,6 +45,9 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
 
     protected virtual void OnGotEmagged(EntityUid uid, EmagSiliconLawComponent component, ref GotEmaggedEvent args)
     {
+        if (args.Handled)
+            return;
+
         component.OwnerName = Name(args.UserUid);
         args.Handled = true;
     }

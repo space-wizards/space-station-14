@@ -66,6 +66,9 @@ public abstract class SharedLatheSystem : EntitySystem
 
     private void OnEmagged(EntityUid uid, EmagLatheRecipesComponent component, ref GotEmaggedEvent args)
     {
+        if (args.Handled)
+            return;
+
         args.Handled = true;
     }
 

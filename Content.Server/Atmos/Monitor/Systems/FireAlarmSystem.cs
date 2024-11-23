@@ -77,11 +77,16 @@ public sealed class FireAlarmSystem : EntitySystem
 
     private void OnEmagged(EntityUid uid, FireAlarmComponent component, ref GotEmaggedEvent args)
     {
+        if (args.Handled)
+            return;
+
         if (TryComp<AtmosAlarmableComponent>(uid, out var alarmable))
         {
             // Remove the atmos alarmable component permanently from this device.
             _atmosAlarmable.ForceAlert(uid, AtmosAlarmType.Emagged, alarmable);
             RemCompDeferred<AtmosAlarmableComponent>(uid);
+
+            args.Handled = true;
         }
     }
 }

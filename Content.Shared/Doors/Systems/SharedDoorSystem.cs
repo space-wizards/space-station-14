@@ -120,6 +120,9 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
     private void OnAttemptEmag(EntityUid uid, DoorComponent door, ref OnAttemptEmagEvent args)
     {
+        if (args.Handled)
+            return;
+
         if (!TryComp<AirlockComponent>(uid, out var airlock))
         {
             args.Handled = true;
@@ -140,6 +143,9 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
     private void OnEmagged(EntityUid uid, DoorComponent door, ref GotEmaggedEvent args)
     {
+        if (args.Handled)
+            return;
+
         if (!SetState(uid, DoorState.Emagging, door))
             return;
         Audio.PlayPredicted(door.SparkSound, uid, args.UserUid, AudioParams.Default.WithVolume(8));
