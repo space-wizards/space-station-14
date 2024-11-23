@@ -58,17 +58,17 @@ public abstract class EquipmentHudSystem<T> : EntitySystem where T : IComponent
 
     private void OnStartup(EntityUid uid, T component, ComponentStartup args)
     {
-        RefreshOverlay(uid);
+        RefreshOverlay();
     }
 
     private void OnRemove(EntityUid uid, T component, ComponentRemove args)
     {
-        RefreshOverlay(uid);
+        RefreshOverlay();
     }
 
     private void OnPlayerAttached(LocalPlayerAttachedEvent args)
     {
-        RefreshOverlay(args.Entity);
+        RefreshOverlay();
     }
 
     private void OnPlayerDetached(LocalPlayerDetachedEvent args)
@@ -79,12 +79,12 @@ public abstract class EquipmentHudSystem<T> : EntitySystem where T : IComponent
 
     private void OnCompEquip(EntityUid uid, T component, GotEquippedEvent args)
     {
-        RefreshOverlay(args.Equipee);
+        RefreshOverlay();
     }
 
     private void OnCompUnequip(EntityUid uid, T component, GotUnequippedEvent args)
     {
-        RefreshOverlay(args.Equipee);
+        RefreshOverlay();
     }
 
     private void OnRoundRestart(RoundRestartCleanupEvent args)
@@ -103,8 +103,9 @@ public abstract class EquipmentHudSystem<T> : EntitySystem where T : IComponent
         args.Components.Add(component);
     }
 
-    protected void RefreshOverlay(EntityUid uid)
+    protected void RefreshOverlay()
     {
+        EntityUid uid;
         if (_player.LocalSession?.AttachedEntity != null)
             uid = _player.LocalSession.AttachedEntity.Value;
         else
