@@ -79,3 +79,30 @@
   id: ReptilianHiss
   files:
     - /Audio/_Impstation/Voice/Reptillian/reptillian_hiss1.ogg
+
+- type: soundCollection
+  id: VoxHisses
+  files:
+    - /Audio/_Impstation/Voice/Vox/voxhiss1.ogg
+    - /Audio/_Impstation/Voice/Vox/voxhiss2.ogg
+    - /Audio/_Impstation/Voice/Vox/voxhiss3.ogg
+    - /Audio/_Impstation/Voice/Vox/voxhiss4.ogg
+    - /Audio/_Impstation/Voice/Vox/voxhiss5.ogg
+    - /Audio/_Impstation/Voice/Vox/voxhiss6.ogg
+    - /Audio/_Impstation/Voice/Vox/voxhiss7.ogg
+    - /Audio/_Impstation/Voice/Vox/voxhiss8.ogg
+    - /Audio/_Impstation/Voice/Vox/voxhiss9.ogg
+
+- type: soundCollection
+  id: VoxChirps
+  files:
+    - /Audio/_Impstation/Voice/Vox/voxchirp1.ogg
+    - /Audio/_Impstation/Voice/Vox/voxchirp2.ogg
+    - /Audio/_Impstation/Voice/Vox/voxchirp3.ogg
+    - /Audio/_Impstation/Voice/Vox/voxchirp4.ogg
+    - /Audio/_Impstation/Voice/Vox/voxchirp5.ogg
+    - /Audio/_Impstation/Voice/Vox/voxchirp6.ogg
+    - /Audio/_Impstation/Voice/Vox/voxchirp7.ogg
+    - /Audio/_Impstation/Voice/Vox/voxchirp8.ogg
+    - /Audio/_Impstation/Voice/Vox/voxchirp9.ogg
+    - /Audio/_Impstation/Voice/Vox/voxchirp10.ogg
