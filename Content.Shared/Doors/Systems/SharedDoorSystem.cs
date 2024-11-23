@@ -200,6 +200,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
                 break;
         }
 
+        Log.Debug($"Set door state to: {state}");
         door.State = state;
         Dirty(uid, door);
         RaiseLocalEvent(uid, new DoorStateChangedEvent(state));
@@ -461,17 +462,17 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (!Resolve(uid, ref door, ref physics))
             return false;
 
-        door.Partial = true;
-
         // Make sure no entity walked into the airlock when it started closing.
         if (!CanClose(uid, door))
         {
             door.NextStateChange = GameTiming.CurTime + door.OpenTimeTwo;
-            door.State = DoorState.Opening;
-            AppearanceSystem.SetData(uid, DoorVisuals.State, DoorState.Opening);
+            door.State = DoorState.Open;
+            AppearanceSystem.SetData(uid, DoorVisuals.State, DoorState.Open);
+            Dirty(uid, door);
             return false;
         }
 
+        door.Partial = true;
         SetCollidable(uid, true, door, physics);
         door.NextStateChange = GameTiming.CurTime + door.CloseTimeTwo;
         Dirty(uid, door);
