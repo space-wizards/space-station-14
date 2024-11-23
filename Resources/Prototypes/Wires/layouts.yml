@@ -195,4 +195,5 @@
   dummyWires: 2
   wires:
   - !type:PowerWireAction
+  - !type:AiInteractWireAction
   - !type:AccessWireAction

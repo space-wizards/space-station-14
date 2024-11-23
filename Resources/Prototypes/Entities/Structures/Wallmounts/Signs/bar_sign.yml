@@ -39,6 +39,7 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+  - type: StationAiWhitelist
   - type: WiresPanel
   - type: Wires
     boardName: wires-board-name-barsign
