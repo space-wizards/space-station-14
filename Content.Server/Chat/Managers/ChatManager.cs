@@ -371,6 +371,15 @@ internal sealed partial class ChatManager : IChatManager
         }
     }
 
+    public void ChatFormattedMessageToHashset(FormattedMessage message,
+        IEnumerable<INetChannel> clients,
+        EntityUid? source,
+        bool hideChat,
+        bool recordReplay)
+    {
+        throw new NotImplementedException();
+    }
+
     public bool MessageCharacterLimit(ICommonSession? player, string message)
     {
         var isOverLength = false;

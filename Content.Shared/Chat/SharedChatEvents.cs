@@ -1,6 +1,8 @@
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Speech;
 using Robust.Shared.Prototypes;
 using Content.Shared.Inventory;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Chat;
 
@@ -21,4 +23,31 @@ public sealed class TransformSpeakerNameEvent : EntityEventArgs, IInventoryRelay
         VoiceName = name;
         SpeechVerb = null;
     }
+}
+
+/// <summary>
+/// Event raised on all entities that are allowed to consume this message and communication type.
+/// Should NOT be subscribed to directly, as it also handles separating component functionality based on communication type.
+/// Make your system inherit ListenerEntitySystem instead.
+/// </summary>
+public sealed class ListenerConsumeEvent : EntityEventArgs
+{
+    public List<ProtoId<CommunicationTypePrototype>> CommunicationTypes;
+
+    public FormattedMessage Message;
+
+    public ListenerConsumeEvent(List<ProtoId<CommunicationTypePrototype>> communicationTypes, FormattedMessage message)
+    {
+        CommunicationTypes = communicationTypes;
+        Message = message;
+    }
+}
+
+/// <summary>
+/// Gets a hashset of all the entities that have a component deriving from ListenerComponent.
+/// </summary>
+[ByRefEvent]
+public record struct GetListenerConsumerEvent()
+{
+    public HashSet<EntityUid> Entities = new();
 }

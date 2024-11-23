@@ -4,6 +4,7 @@ using Content.Shared.Chat;
 using Content.Shared.Players.RateLimiting;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Chat.Managers
 {
@@ -33,6 +34,8 @@ namespace Content.Server.Chat.Managers
         void ChatMessageToManyFiltered(Filter filter, ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, Color? colorOverride, string? audioPath = null, float audioVolume = 0);
 
         void ChatMessageToAll(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0, NetUserId? author = null);
+
+        void ChatFormattedMessageToHashset(FormattedMessage message, IEnumerable<INetChannel> clients, EntityUid? source, bool hideChat, bool recordReplay);
 
         bool MessageCharacterLimit(ICommonSession player, string message);
 
