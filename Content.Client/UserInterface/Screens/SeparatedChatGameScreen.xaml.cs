@@ -17,6 +17,13 @@ public sealed partial class SeparatedChatGameScreen : InGameScreen
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
 
+    // The minimum width of InventoryGui + HotbarGui combined.
+    // Used to keep the PDA from overlapping the shoes slot.
+    private const int INVENTORY_MINIMUM_WIDTH =
+        (125 /* width */ - 2 /* negative margin */) * 2 /* ItemStatusPanel */
+        + 68 /* width */ * 10 /* ItemSlotButton, including inventory */
+        + 67 /* width */ * 2 /* hands */;
+
     private readonly float _chatMinWidth;
     private float? _deferredSplitFraction;
 
@@ -75,7 +82,7 @@ public sealed partial class SeparatedChatGameScreen : InGameScreen
         var minFromVp = EyeManager.PixelsPerMeter * gameScale * _cfg.GetCVar(CCVars.ViewportMinimumWidth) / uiScale;
         var maxFromVp = EyeManager.PixelsPerMeter * gameScale * _cfg.GetCVar(CCVars.ViewportMaximumWidth) / uiScale;
         // Inventory bar also supplies a minWidth such that body+shoes don't overlap PDA.
-        var minFromUi = 1060;
+        var minFromUi = INVENTORY_MINIMUM_WIDTH;
         // In case of overscaled viewport, chat hard-minWidth overpowers them both.
         var minFromChat = Width - _chatMinWidth;
 
