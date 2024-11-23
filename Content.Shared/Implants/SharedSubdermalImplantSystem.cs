@@ -84,10 +84,6 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
 
         var containedEntites = storageImplant.ContainedEntities.ToArray();
 
-        var direction = EntityManager.TryGetComponent(uid, out PhysicsComponent? comp) ? comp.LinearVelocity / 50 : Vector2.Zero;
-        var dropAngle = _random.NextFloat(0.8f, 1.2f);
-        var worldRotation = _transformSystem.GetWorldRotation(uid).ToVec();
-
         foreach (var entity in containedEntites)
         {
             _transformSystem.DropNextTo(entity, uid);
