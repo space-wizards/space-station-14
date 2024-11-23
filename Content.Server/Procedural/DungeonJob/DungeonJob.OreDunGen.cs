@@ -25,6 +25,9 @@ public sealed partial class DungeonJob
         var availableTiles = new List<Vector2i>();
         var tiles = _maps.GetAllTilesEnumerator(_gridUid, _grid);
 
+        // WARNING:
+        // This DunGen handles not only the tiles of the passed dungeon, but ALL the tiles of the current grid
+        // So don't run it anywhere
         while (tiles.MoveNext(out var tileRef))
         {
             var tile = tileRef.Value.GridIndices;
