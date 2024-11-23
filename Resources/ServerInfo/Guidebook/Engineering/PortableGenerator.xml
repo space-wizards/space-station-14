@@ -1,7 +1,7 @@
 <Document>
   # Portable Generators
 
-  Need power? No engines running? The "P.A.C.M.A.N." line of portable generators has you covered.
+  The "P.A.C.M.A.N." line of portable generators helps to provide emergency or supplemental power to key rooms, areas, or even departments. They are easy to set up and maintain, and can be used to power critical systems in the event of a power outage.
 
   <Box>
     <GuideEntityEmbed Entity="PortableGeneratorJrPacman" Caption="J.R.P.A.C.M.A.N." />
@@ -17,6 +17,7 @@
   </Box>
 
   The J.R.P.A.C.M.A.N. can be found across the station in maintenance shafts, and is ideal for crew to set up themselves whenever there are power issues. Its output of up to [color=orange][protodata="PortableGeneratorJrPacman" comp="FuelGenerator" member="MaxTargetPower" format="N0"/] W[/color] is enough to power a few important devices.
+
   Setup is incredibly easy: wrench it down above an [color=green]LV[/color] power cable, give it some welding fuel, and start it up.
 
   Welding fuel should be plentiful to find around the station. In a pinch, you can even transfer some from the big tanks with a soda can or water bottle. Just remember to empty the soda can first, I don't think it likes soda as fuel.

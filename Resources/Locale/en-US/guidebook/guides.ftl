@@ -33,6 +33,7 @@ guide-entry-shuttle-craft = Shuttle-craft
 guide-entry-networking = Networking
 guide-entry-access-configurator = Access Configurator
 guide-entry-power = Power
+guide-entry-generators = Generators
 guide-entry-portable-generator = Portable Generators
 guide-entry-ame = Antimatter Engine (AME)
 guide-entry-singularity = Singularity / Tesla

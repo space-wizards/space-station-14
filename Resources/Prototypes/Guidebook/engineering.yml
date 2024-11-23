@@ -204,6 +204,14 @@
   name: guide-entry-power
   text: "/ServerInfo/Guidebook/Engineering/Power.xml"
   children:
+    - Generators
+
+
+- type: guideEntry
+  id: Generators
+  name: guide-entry-generators
+  text: "/ServerInfo/Guidebook/Engineering/Generators.xml"
+  children:
   - PortableGenerator
   - AME
   - Singularity
