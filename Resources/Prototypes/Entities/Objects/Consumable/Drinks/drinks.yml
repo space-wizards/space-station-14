@@ -115,13 +115,27 @@
   - type: TransformableContainer
   - type: PolymorphGlass
     glasses:
-    - DrinkGlass
-    - DrinkGlassCoupeShaped
-    - DrinkGlassFlute
-    - DrinkGlassOldFashioned
-    - DrinkGlassCollins
-    - DrinkGlassTumbler
-    - DrinkGlassPint
+      DrinkGlass:
+        sprite: Objects/Consumable/Drinks/glass_clear.rsi
+        state: icon
+      DrinkGlassCoupeShaped:
+        sprite: Objects/Consumable/Drinks/glass_coupe_shape.rsi
+        state: icon
+      DrinkGlassFlute:
+        sprite: Objects/Consumable/Drinks/glass_flute.rsi
+        state: icon
+      DrinkGlassOldFashioned:
+        sprite: Objects/Consumable/Drinks/glass_old_fashioned.rsi
+        state: icon
+      DrinkGlassCollins:
+        sprite: Objects/Consumable/Drinks/glass_collins.rsi
+        state: icon
+      DrinkGlassTumbler:
+        sprite: Objects/Consumable/Drinks/glass_tumbler.rsi
+        state: icon
+      DrinkGlassPint:
+        sprite: Objects/Consumable/Drinks/glass_pint.rsi
+        state: icon
 
 - type: entity
   parent: DrinkGlassBase
@@ -154,13 +168,27 @@
       decoration_slot: !type:ContainerSlot {}
   - type: PolymorphGlass
     glasses:
-    - DrinkGlass
-    - DrinkGlassCoupeShaped
-    - DrinkGlassFlute
-    - DrinkGlassOldFashioned
-    - DrinkGlassCollins
-    - DrinkGlassTumbler
-    - DrinkGlassPint
+      DrinkGlass:
+        sprite: Objects/Consumable/Drinks/glass_clear.rsi
+        state: icon
+      DrinkGlassCoupeShaped:
+        sprite: Objects/Consumable/Drinks/glass_coupe_shape.rsi
+        state: icon
+      DrinkGlassFlute:
+        sprite: Objects/Consumable/Drinks/glass_flute.rsi
+        state: icon
+      DrinkGlassOldFashioned:
+        sprite: Objects/Consumable/Drinks/glass_old_fashioned.rsi
+        state: icon
+      DrinkGlassCollins:
+        sprite: Objects/Consumable/Drinks/glass_collins.rsi
+        state: icon
+      DrinkGlassTumbler:
+        sprite: Objects/Consumable/Drinks/glass_tumbler.rsi
+        state: icon
+      DrinkGlassPint:
+        sprite: Objects/Consumable/Drinks/glass_pint.rsi
+        state: icon
 
 - type: entity
   name: tumbler glass

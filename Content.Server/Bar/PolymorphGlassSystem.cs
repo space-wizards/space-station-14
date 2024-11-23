@@ -5,26 +5,17 @@ using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
-using FastAccessors;
 using Content.Shared.Chemistry.Components;
 
 namespace Content.Server.Bar;
 
-public sealed class TransformableContainerSystem : EntitySystem
+public sealed class PolymorphGlassSystem : SharedPolymorphGlassSystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionsSystem = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<PolymorphGlassComponent, GetVerbsEvent<Verb>>(OnGetVerb);
-    }
-
-    private void ChangeGlass(EntityUid uid, PolymorphGlassComponent component, EntityPrototype prototype, GetVerbsEvent<Verb> args)
+    protected override void ChangeGlass(EntityUid uid, PolymorphGlassComponent component, EntityPrototype prototype, GetVerbsEvent<Verb> args)
     {
         if (!_solutionsSystem.TryGetSolution(uid, "drink", out var sourceSolutionEntity, out var sourceSolution))
             return;
@@ -91,34 +82,6 @@ public sealed class TransformableContainerSystem : EntitySystem
             }
         }
 
-    }
-
-    private void OnGetVerb(EntityUid uid, PolymorphGlassComponent component, GetVerbsEvent<Verb> args)
-    {
-        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
-            return;
-
-        var thisProto = Prototype(uid, Comp<MetaDataComponent>(uid));
-
-        foreach (var glass in component.Glasses)
-        {
-            var proto = _prototypeManager.Index<EntityPrototype>(glass);
-            if (proto == thisProto)
-                continue;
-
-            var v = new Verb
-            {
-                Priority = 3,
-                Category = VerbCategory.SelectType,
-                Text = proto.Name,
-                DoContactInteraction = true,
-                Act = () =>
-                {
-                    ChangeGlass(uid, component, proto, args);
-                }
-            };
-            args.Verbs.Add(v);
-        }
     }
 
 }

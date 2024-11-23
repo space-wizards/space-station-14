@@ -1,5 +1,6 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Bar;
 
@@ -7,5 +8,5 @@ namespace Content.Shared.Bar;
 public sealed partial class PolymorphGlassComponent : Component
 {
     [DataField("glasses", required: true)]
-    public List<EntProtoId> Glasses;
+    public Dictionary<EntProtoId, SpriteSpecifier> Glasses;
 }
