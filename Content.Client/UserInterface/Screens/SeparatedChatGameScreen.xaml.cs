@@ -18,7 +18,7 @@ public sealed partial class SeparatedChatGameScreen : InGameScreen
     [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
 
     private readonly float _chatMinWidth;
-    private float? _deferredSplitFraction = null;
+    private float? _deferredSplitFraction;
 
     public SeparatedChatGameScreen()
     {
@@ -63,7 +63,7 @@ public sealed partial class SeparatedChatGameScreen : InGameScreen
 
     private void RecalculateViewportDesiredSize()
     {
-        // When the main window is reszied, calculate a new min/max for the
+        // When the main window is resized, calculate a new min/max for the
         // ViewportContainer so that the chat will prefer to resize instead
         // of letterboxing the viewport.
         var uiScale = _cfg.GetCVar(CVars.DisplayUIScale);
@@ -86,7 +86,7 @@ public sealed partial class SeparatedChatGameScreen : InGameScreen
         ViewportContainer.MinWidth = min;
         SeparatedChatPanel.MinWidth = Math.Max(_chatMinWidth, Width - max);
 
-        if (_deferredSplitFraction is float fraction)
+        if (_deferredSplitFraction is { } fraction)
         {
             ScreenContainer.SplitFraction = fraction;
             _deferredSplitFraction = null;
