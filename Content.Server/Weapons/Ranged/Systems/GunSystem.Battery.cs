@@ -2,6 +2,7 @@ using Content.Server.Power.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Events;
 using Content.Shared.FixedPoint;
+using Content.Shared.PowerCell.Components;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
@@ -19,11 +20,13 @@ public sealed partial class GunSystem
         SubscribeLocalEvent<HitscanBatteryAmmoProviderComponent, ComponentStartup>(OnBatteryStartup);
         SubscribeLocalEvent<HitscanBatteryAmmoProviderComponent, ChargeChangedEvent>(OnBatteryChargeChange);
         SubscribeLocalEvent<HitscanBatteryAmmoProviderComponent, DamageExamineEvent>(OnBatteryDamageExamine);
+        SubscribeLocalEvent<HitscanBatteryAmmoProviderComponent, PowerCellChangedEvent>(OnPowerCellChanged);
 
         // Projectile
         SubscribeLocalEvent<ProjectileBatteryAmmoProviderComponent, ComponentStartup>(OnBatteryStartup);
         SubscribeLocalEvent<ProjectileBatteryAmmoProviderComponent, ChargeChangedEvent>(OnBatteryChargeChange);
         SubscribeLocalEvent<ProjectileBatteryAmmoProviderComponent, DamageExamineEvent>(OnBatteryDamageExamine);
+        SubscribeLocalEvent<ProjectileBatteryAmmoProviderComponent, PowerCellChangedEvent>(OnPowerCellChanged);
     }
 
     private void OnBatteryStartup(EntityUid uid, BatteryAmmoProviderComponent component, ComponentStartup args)
@@ -36,12 +39,28 @@ public sealed partial class GunSystem
         UpdateShots(uid, component, args.Charge, args.MaxCharge);
     }
 
+    private void OnPowerCellChanged(EntityUid uid, BatteryAmmoProviderComponent component, ref PowerCellChangedEvent args)
+    {
+        UpdateShots(uid, component);
+    }
+
     private void UpdateShots(EntityUid uid, BatteryAmmoProviderComponent component)
     {
-        if (!TryComp<BatteryComponent>(uid, out var battery))
-            return;
+        var currentCharge = 0f;
+        var maxCharge = 0f;
+        if (TryComp<BatteryComponent>(uid, out var battery))
+        {
+            currentCharge = battery.CurrentCharge;
+            maxCharge = battery.MaxCharge;
+        }
+        else if (TryComp<PowerCellSlotComponent>(uid, out var powerCellSlot) &&
+            _powerCellSystem.TryGetBatteryFromSlot(uid, out var powerCell, powerCellSlot))
+        {
+            currentCharge = powerCell.CurrentCharge;
+            maxCharge = powerCell.MaxCharge;
+        }
 
-        UpdateShots(uid, component, battery.CurrentCharge, battery.MaxCharge);
+        UpdateShots(uid, component, currentCharge, maxCharge);
     }
 
     private void UpdateShots(EntityUid uid, BatteryAmmoProviderComponent component, float charge, float maxCharge)
@@ -55,7 +74,10 @@ public sealed partial class GunSystem
         }
 
         component.Shots = shots;
-        component.Capacity = maxShots;
+
+        if (maxShots > 0)
+            component.Capacity = maxShots;
+
         UpdateBatteryAppearance(uid, component);
     }
 
@@ -104,7 +126,9 @@ public sealed partial class GunSystem
 
     protected override void TakeCharge(EntityUid uid, BatteryAmmoProviderComponent component)
     {
-        // Will raise ChargeChangedEvent
-        _battery.UseCharge(uid, component.FireCost);
+        if (TryComp<BatteryComponent>(uid, out var battery))
+            _battery.UseCharge(uid, component.FireCost, battery);
+        else if (TryComp<PowerCellSlotComponent>(uid, out var powerCellSlot))
+            _powerCellSystem.TryUseCharge(uid, component.FireCost, powerCellSlot);
     }
 }
