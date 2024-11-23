@@ -446,7 +446,7 @@
 
 #Knuckledusters
 - type: entity
-  parent: ClothingHandsBase
+  parent: [ClothingHandsBase, BaseMinorContraband]
   id: ClothingHandsKnuckleDusters
   name: knuckle dusters
   description: "Cold plasteel knuckle dusters, makes your punches hit much harder."
@@ -472,7 +472,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingHandsKnuckleDusters #Craftable version of base knuckledusters
+  parent: [ClothingHandsKnuckleDusters, BaseMinorContraband] #Craftable version of base knuckledusters
   id: ClothingHandsKnuckleDustersBrass
   name: brass knuckle dusters
   description: "Brass knuckle dusters, just like how they used to make em and still hit just as hard."
@@ -484,13 +484,13 @@
     sprite: Clothing/Hands/Gloves/KnuckleDusters/brassknuckleduster.rsi
   - type: Construction
     graph: ClothingHandsKnuckleDustersBrass
-    node: brassknuckleduster
+    node: start
   - type: Tag
     tags:
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingHandsKnuckleDusters
+  parent: [ClothingHandsBase, BaseGrandTheftContraband]
   id: ClothingHandsKnuckleDustersQM
   name: QM's golden knuckle dusters
   description: "24karat gold infused with plasteel and branded with the Nanotrasen logo. A true symbol of the Quartermaster's might."
@@ -506,7 +506,7 @@
     attackRate: 1.5
     damage:
       types:
-        Blunt: 16 
+        Blunt: 14
     soundHit:
       collection: Punch
     animation: WeaponArcFist
@@ -518,7 +518,7 @@
     stealGroup: ClothingHandsKnuckleDustersQM
 
 - type: entity
-  parent: ClothingHandsKnuckleDusters
+  parent: [ClothingHandsBase, BaseSyndicateContraband]
   id: ClothingHandsKnuckleDustersSyndicate
   name: syndicate knuckle dusters
   description: "Plastitanium knuckle dusters branded with the blood-red S. A real man beats someone to death with these."
