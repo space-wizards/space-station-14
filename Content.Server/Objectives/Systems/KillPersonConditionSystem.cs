@@ -25,33 +25,33 @@ public sealed class KillPersonConditionSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<KillPersonConditionComponent, ObjectiveGetProgressEvent>(OnGetProgress);
-        SubscribeLocalEvent<PickRandomPersonComponent, ObjectiveAssignedEvent>(OnPersonAssigned);
-        SubscribeLocalEvent<PickRandomHeadComponent, ObjectiveAssignedEvent>(OnHeadAssigned);
+        SubscribeLocalEvent((Entity<KillPersonConditionComponent> ent, ref ObjectiveGetProgressEvent args) => OnGetProgress(ent, ref args));
+        SubscribeLocalEvent((Entity<PickRandomPersonComponent> ent, ref ObjectiveAssignedEvent args) => OnPersonAssigned(ent, ref args));
+        SubscribeLocalEvent((Entity<PickRandomHeadComponent> ent, ref ObjectiveAssignedEvent args) => OnHeadAssigned(ent, ref args));
     }
 
-    private void OnGetProgress(EntityUid uid, KillPersonConditionComponent comp, ref ObjectiveGetProgressEvent args)
+    private void OnGetProgress(Entity<KillPersonConditionComponent> ent, ref ObjectiveGetProgressEvent args)
     {
-        if (!_target.GetTarget(uid, out var target))
+        if (!_target.GetTarget(ent, out var target))
             return;
 
-        args.Progress = GetProgress(target.Value, comp.RequireDead);
+        args.Progress = GetProgress(target.Value, ent.Comp.RequireDead);
     }
 
-    private void OnPersonAssigned(EntityUid uid, PickRandomPersonComponent comp, ref ObjectiveAssignedEvent args)
+    private void OnPersonAssigned(Entity<PickRandomPersonComponent> ent, ref ObjectiveAssignedEvent args)
     {
-        AssignRandomTarget(uid, args, _ => true);
+        AssignRandomTarget(ent, args, _ => true);
     }
 
-    private void OnHeadAssigned(EntityUid uid, PickRandomHeadComponent comp, ref ObjectiveAssignedEvent args)
+    private void OnHeadAssigned(Entity<PickRandomHeadComponent> ent, ref ObjectiveAssignedEvent args)
     {
-        AssignRandomTarget(uid, args, mind => HasComp<CommandStaffComponent>(uid));
+        AssignRandomTarget(ent, args, _ => HasComp<CommandStaffComponent>(ent));
     }
 
-    private void AssignRandomTarget(EntityUid uid, ObjectiveAssignedEvent args, Predicate<EntityUid> filter, bool fallbackToAny = true)
+    private void AssignRandomTarget<T>(Entity<T> ent, ObjectiveAssignedEvent args, Predicate<EntityUid> filter, bool fallbackToAny = true) where T : IComponent
     {
         // invalid prototype
-        if (!TryComp<TargetObjectiveComponent>(uid, out var target))
+        if (!TryComp<TargetObjectiveComponent>(ent, out var target))
         {
             args.Cancelled = true;
             return;
@@ -62,7 +62,7 @@ public sealed class KillPersonConditionSystem : EntitySystem
             return;
 
         // Get all alive humans, filter out any with TargetObjectiveImmuneComponent
-        var allHumans = _mind.GetAliveHumansExcept(args.MindId)
+        var allHumans = _mind.GetAliveHumans(args.MindId)
             .Where(mindId =>
             {
                 if (!TryComp<MindComponent>(mindId, out var mindComp) || mindComp.OwnedEntity == null)
@@ -84,7 +84,7 @@ public sealed class KillPersonConditionSystem : EntitySystem
         // Pick between humans matching our filter or fall back to all humans alive
         var selectedHumans = filteredHumans.Count > 0 ? filteredHumans : allHumans;
 
-        _target.SetTarget(uid, _random.Pick(selectedHumans), target);
+        _target.SetTarget(ent, _random.Pick(selectedHumans), target);
     }
 
     private float GetProgress(EntityUid target, bool requireDead)
