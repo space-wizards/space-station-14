@@ -600,6 +600,15 @@
     - type: Sprite
       state: poster63_contraband
 
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandUnionJ
+  name: "Union J."
+  description: "It seems they're hiring!"
+  components:
+    - type: Sprite
+      state: poster64_contraband
+
 # Legit
 - type: entity
   parent: PosterBase

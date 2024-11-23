@@ -92,6 +92,7 @@
       - PosterContrabandInterdyne
       - PosterContrabandWaffleCorp
       - PosterContrabandMissingSpacepen
+      - PosterContrabandUnionJ
     chance: 1
 
 - type: entity
