@@ -5,6 +5,7 @@ steal-target-groups-clothing-outer-hardsuit-rd = experimental research hardsuit
 steal-target-groups-hand-teleporter = hand teleporter
 steal-target-groups-clothing-shoes-boots-mag-adv = advanced magboots
 steal-target-groups-box-folder-qm-clipboard = requisition digi-board
+steal-target-groups-clothing-hands-knuckledusters-qm = golden knuckledusters
 steal-target-groups-food-meat-corgi = prime-cut corgi meat
 steal-target-groups-captain-id-card = captain ID card
 steal-target-groups-jetpack-captain-filled = captain's jetpack

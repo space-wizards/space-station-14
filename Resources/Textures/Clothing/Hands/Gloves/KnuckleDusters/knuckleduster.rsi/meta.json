@@ -1,0 +1,26 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Icon taken from ParadiseSS13 at commit https://github.com/ParadiseSS13/Paradise/commit/391f296ed9b06d9bd13daca5b51c68740e714f1f; In hand sprites done by Unkn0wnGh0st333 on github",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "knuckleduster"
+        },
+        {
+            "name": "equipped-HAND",
+            "directions": 4
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        }
+    ]
+}
