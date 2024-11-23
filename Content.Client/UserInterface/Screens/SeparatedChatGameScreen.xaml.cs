@@ -14,7 +14,7 @@ namespace Content.Client.UserInterface.Screens;
 [GenerateTypedNameReferences]
 public sealed partial class SeparatedChatGameScreen : InGameScreen
 {
-    private readonly IConfigurationManager _cfg = IoCManager.Resolve<IConfigurationManager>();
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
 
     private readonly float _chatMinWidth;
@@ -23,6 +23,7 @@ public sealed partial class SeparatedChatGameScreen : InGameScreen
     public SeparatedChatGameScreen()
     {
         RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
 
         AutoscaleMaxResolution = new Vector2i(1080, 770);
 
