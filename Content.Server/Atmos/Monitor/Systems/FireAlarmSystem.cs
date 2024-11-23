@@ -85,8 +85,8 @@ public sealed class FireAlarmSystem : EntitySystem
             // Remove the atmos alarmable component permanently from this device.
             _atmosAlarmable.ForceAlert(uid, AtmosAlarmType.Emagged, alarmable);
             RemCompDeferred<AtmosAlarmableComponent>(uid);
-
-            args.Handled = true;
         }
+
+        args.Handled = true;
     }
 }
