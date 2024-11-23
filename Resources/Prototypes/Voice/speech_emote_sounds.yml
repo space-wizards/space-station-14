@@ -614,15 +614,13 @@
     Clap:
       path: /Audio/Voice/Diona/diona_clap.ogg
     Snap:
-      collection: Snaps
-      params:
-        volume: -6
+      path: /Audio/Voice/Diona/diona_snap.ogg
     Salute:
       path: /Audio/Voice/Diona/diona_salute.ogg
       params:
        volume: -5
-    Crack: # Imp edit snap -> crack
-      path: /Audio/Voice/Diona/diona_snap.ogg
+    Crack:
+      collection: Cracks
 
 - type: emoteSounds
   id: ReptilianBodyEmotes
