@@ -254,10 +254,11 @@
       path: /Audio/Voice/Vox/shriek1.ogg
     Laugh:
       path: /Audio/Voice/Vox/vox_laugh.ogg
-    VoxHiss:
-      collection: VoxHisses # Imp edit
-    VoxChirp:
-      collection: VoxChirps # Imp edit
+# Imp edit: Hisses and chirps commented out until someone can master the audio to be less loud and hard on the ears.
+#    Hiss:
+#      collection: VoxHisses # Imp edit
+#    Chirp:
+#      collection: VoxChirps # Imp edit
     Sneeze:
       collection: MaleSneezes #placeholder
     Cough:
