@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Deatherd
-  changes:
-  - message: Sharks Go RAWR!
-    type: Tweak
-  id: 7140
-  time: '2024-08-18T22:18:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31142
 - author: slarticodefast
   changes:
   - message: Fixed the radiation collector warning light thresholds.
@@ -3931,3 +3924,10 @@
   id: 7639
   time: '2024-11-23T02:53:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33437
+- author: slarticodefast
+  changes:
+  - message: The AI and observers can now see if doors are electrified.
+    type: Add
+  id: 7640
+  time: '2024-11-23T06:37:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33466
