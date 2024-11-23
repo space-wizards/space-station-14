@@ -16,7 +16,7 @@
   id: ClosetRadiationSuit
   name: radiation suit closet
   parent: ClosetSteelBase
-  description: "More comfortable than radiation poisioning."
+  description: "More comfortable than radiation poisoning."
   components:
   - type: Appearance
   - type: EntityStorageVisuals

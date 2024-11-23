@@ -70,6 +70,22 @@
           - id: EmergencyNitrogenTankFilled
           - id: NitrogenTankFilled
 
+- type: entity
+  id: ClosetWallEmergencyN2FilledRandom
+  parent: ClosetWallEmergencyN2
+  suffix: Filled, Random
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - id: ClothingMaskBreath
+        - id: ClothingOuterSuitEmergency
+        - !type:GroupSelector
+          children:
+          - id: EmergencyNitrogenTankFilled
+          - id: NitrogenTankFilled
+
 - type: entityTable
   id: FillLockerFireStandard
   table: !type:AllSelector
