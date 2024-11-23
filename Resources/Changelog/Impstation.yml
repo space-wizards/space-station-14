@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: TGRCdev
-  changes:
-  - message: spooky_horse.ogg was missing a copyright and license key, which caused
-      errors. I found and applied the proper licensing.
-    type: Fix
-  - message: A type of cigarette had incorrect indentation, causing the food section
-      to be incorrectly parsed.
-    type: Fix
-  - message: The round start event for Spy vs Spy had a max delay smaller than its
-      min delay, most likely due to a zero left out erroneously.
-    type: Fix
-  id: 55
-  time: '2024-08-03T01:52:45.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/68
 - author: sageu111
   changes:
   - message: BIG GRAY UPDATE (ALL GRAY AND TOYS INSIDE), THIS IS THE BIG GRAY THIS
@@ -4293,3 +4279,10 @@
   id: 554
   time: '2024-11-23T07:17:28.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/774
+- author: AirFryerBuyOneGetOneFree
+  changes:
+  - message: Barratry has been given better spacing protection and other improvements.
+    type: Tweak
+  id: 555
+  time: '2024-11-23T07:18:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/771
