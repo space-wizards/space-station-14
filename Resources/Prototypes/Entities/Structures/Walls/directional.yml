@@ -1,0 +1,19 @@
+- type: entity
+  parent: WindowDirectional
+  id: SolidWallDirectional
+  name: directional solid wall
+  description: A wall, but directional.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Window
+  components:
+  - type: Sprite
+    sprite: Structures/Walls/directional.rsi
+    state: solid_directional_wall
+  - type: Icon
+    sprite: Structures/Walls/directional.rsi
+    state: solid_directional_wall
+  - type: StaticPrice
+    price: 35
+    

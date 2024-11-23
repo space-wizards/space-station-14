@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "license": "MIT",
+  "copyright": "Made by LukeZurg22",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "solid_directional_wall",
+      "directions": 4
+    }
+  ]
+}
