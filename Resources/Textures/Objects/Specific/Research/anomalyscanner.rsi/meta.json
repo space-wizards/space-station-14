@@ -5,7 +5,7 @@
     "y": 32
   },
   "license": "CC0-1.0",
-  "copyright": "Created by EmoGarbage, Inhands by TiniestShark based off of /tg station's health analyzer",
+  "copyright": "Created by EmoGarbage, Inhands by TiniestShark based off of /tg station's health analyzer at https://github.com/tgstation/tgstation/blob/HEAD/icons/mob/inhands/equipment/medical_lefthand.dmi",
   "states": [
     {
       "name": "icon"
