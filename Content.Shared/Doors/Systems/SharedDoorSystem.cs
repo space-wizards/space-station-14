@@ -200,7 +200,6 @@ public abstract partial class SharedDoorSystem : EntitySystem
                 break;
         }
 
-        Log.Debug($"Set door state to: {state}");
         door.State = state;
         Dirty(uid, door);
         RaiseLocalEvent(uid, new DoorStateChangedEvent(state));
