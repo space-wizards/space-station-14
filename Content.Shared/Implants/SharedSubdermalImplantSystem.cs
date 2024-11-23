@@ -1,22 +1,29 @@
-using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs;
 using Content.Shared.Tag;
+using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Random;
+using System.Linq;
+using System.Numerics;
 
 namespace Content.Shared.Implants;
 
 public abstract class SharedSubdermalImplantSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     public const string BaseStorageId = "storagebase";
 
@@ -79,12 +86,18 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
 
         var containedEntites = storageImplant.ContainedEntities.ToArray();
 
+        var direction = EntityManager.TryGetComponent(uid, out PhysicsComponent? comp) ? comp.LinearVelocity / 50 : Vector2.Zero;
+        var dropAngle = _random.NextFloat(0.8f, 1.2f);
+        var worldRotation = _transformSystem.GetWorldRotation(uid).ToVec();
+
         foreach (var entity in containedEntites)
         {
-            if (Terminating(entity))
-                continue;
+            _transformSystem.DropNextTo(entity, uid);
 
-            _container.RemoveEntity(storageImplant.Owner, entity, force: true, destination: entCoords);
+            _throwingSystem.TryThrow(entity,
+                _random.NextAngle().RotateVec(direction / dropAngle + worldRotation / 50),
+                0.5f * dropAngle * _random.NextFloat(-0.9f, 1.1f),
+                uid, 0);
         }
     }
 
