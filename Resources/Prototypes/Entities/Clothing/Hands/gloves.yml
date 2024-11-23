@@ -484,7 +484,7 @@
     sprite: Clothing/Hands/Gloves/KnuckleDusters/brassknuckleduster.rsi
   - type: Construction
     graph: ClothingHandsKnuckleDustersBrass
-    node: brassknuckleduster
+    node: start
   - type: Tag
     tags:
     - WhitelistChameleon
