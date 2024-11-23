@@ -13,7 +13,6 @@ public sealed class ArtifactStunTriggerSystem : EntitySystem
         SubscribeLocalEvent<StunnedComponent, StunnedEvent>(OnStun);
     }
 
-
     private void OnStun(EntityUid stunned, StunnedComponent component, ref StunnedEvent args)
     {
 
@@ -27,7 +26,7 @@ public sealed class ArtifactStunTriggerSystem : EntitySystem
                 continue;
 
             if (distance > trigger.Range)
-                 continue;
+                continue;
 
             toActivate.Add((uid, trigger));
         }
