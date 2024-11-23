@@ -2,7 +2,7 @@
   id: CrateArmorySMG
   parent: [ CrateWeaponSecure, BaseRestrictedContraband ]
   name: SMG crate
-  description: Contains two high-powered, automatic carbines with four extra magazines. Requires Armory access to open.
+  description: Contains two WT550 submachine guns and four top-mounted magazines. Requires Armory access to open.
   components:
   - type: StorageFill
     contents:
