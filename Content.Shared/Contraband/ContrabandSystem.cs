@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+﻿using System.Linq;
 using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Examine;
@@ -58,6 +57,7 @@ public sealed class ContrabandSystem : EntitySystem
         {
             var severity = _proto.Index(ent.Comp.Severity);
             var jobList = new List<string>();
+            var departmentList = new List<string>();
             if (severity.ShowDepartmentsAndJobs && ent.Comp is { AllowedDepartments: not null })
             {
                 if (ent.Comp is { AllowedJobs: not null })
@@ -66,7 +66,11 @@ public sealed class ContrabandSystem : EntitySystem
                 }
 
                 // TODO shouldn't department prototypes have a localized name instead of just using the ID for this?
-                var departmentList = ent.Comp.AllowedDepartments.Select(p => Loc.GetString($"department-{p.Id}")).ToList();
+
+                if (ent.Comp is { AllowedDepartments: not null })
+                {
+                    departmentList = ent.Comp.AllowedDepartments.Select(p => Loc.GetString($"department-{p.Id}")).ToList();
+                }
 
                 //creating a combined list of jobs and departments for the restricted text
                 departmentList.AddRange(jobList);
