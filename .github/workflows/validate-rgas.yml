@@ -1,14 +1,17 @@
-name: RGA schema validator
+name: RGA schema and attribution validator
 on:
   push:
     branches: [ master, staging, stable ]
   merge_group:
   pull_request:
-    types: [ opened, reopened, synchronize, ready_for_review ]
+    paths:
+      - 'Resources/**'
+      - 'Tools/rga_check.py'
+      - 'RobustToolbox/**'
 
 jobs:
   yaml-schema-validation:
-    name: YAML RGA schema validator
+    name: YAML RGA schema and attribution validator
     if: github.actor != 'PJBot' && github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     steps:
@@ -17,9 +20,25 @@ jobs:
       run: git submodule update --init
     - name: Pull engine updates
       uses: space-wizards/submodule-dependency@v0.1.5
-    - uses: PaulRitter/yaml-schema-validator@v1
+    - name: Validate RGA schema
+      uses: PaulRitter/yaml-schema-validator@v1
       with:
         schema: RobustToolbox/Schemas/rga.yml
         path_pattern: .*attributions.ya?ml$
         validators_path: RobustToolbox/Schemas/rga_validators.py
         validators_requirements: RobustToolbox/Schemas/rga_requirements.txt
+    - name: Install Python dependencies
+      run: |
+        pip3 install --ignore-installed --user pyyaml
+    - name: Get changed files
+      uses: tj-actions/changed-files@v45
+      id: changed-files
+    - name: List all changed files
+      env:
+        ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+      run: |
+        for file in ${ALL_CHANGED_FILES}; do
+          echo "$file" >> ${{ runner.temp }}/validate-rga-filter.txt
+        done
+    - name: Validate RGA attribution
+      run: python3 Tools/rga_check.py -i "" ${{ runner.temp }}/validate-rga-filter.txt
