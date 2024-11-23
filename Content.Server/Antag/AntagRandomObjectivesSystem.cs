@@ -33,7 +33,7 @@ public sealed class AntagRandomObjectivesSystem : EntitySystem
         }
 
         var difficulty = 0f;
-        var assignedTargetObjectives = new HashSet<(string? title, string? target)>();
+        var assignedTargetObjectives = new HashSet<EntityUid?>();
         foreach (var set in ent.Comp.Sets.Where(set => _random.Prob(set.Prob)))
         {
             for (var pick = 0; pick < set.MaxPicks && ent.Comp.MaxDifficulty > difficulty; pick++)
@@ -44,9 +44,8 @@ public sealed class AntagRandomObjectivesSystem : EntitySystem
 
                 if (TryComp<TargetObjectiveComponent>(objective, out var targetObjective))
                 {
-                    var title = targetObjective.Title;
-                    var target = ToPrettyString(targetObjective.Target);
-                    if (!assignedTargetObjectives.Add((title, target)))
+                    var target = targetObjective.Target;
+                    if (!assignedTargetObjectives.Add(target))
                     {
                         continue;
                     }
