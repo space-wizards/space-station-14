@@ -33,12 +33,7 @@ jobs:
     - name: Get changed files
       uses: tj-actions/changed-files@v45
       id: changed-files
-    - name: List all changed files
-      env:
-        ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
-      run: |
-        for file in ${ALL_CHANGED_FILES}; do
-          echo "$file" >> ${{ runner.temp }}/validate-rga-filter.txt
-        done
+      with:
+        write_output_files: true
     - name: Validate RGA attribution
-      run: python3 Tools/rga_check.py -i "" ${{ runner.temp }}/validate-rga-filter.txt
+      run: python3 Tools/rga_check.py -i "" cat .github/outputs/all_changed_and_modified_files.txt
