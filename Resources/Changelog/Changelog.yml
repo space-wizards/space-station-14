@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Mobs without hands can no longer toggle other players' suit pieces.
-    type: Fix
-  id: 7146
-  time: '2024-08-19T02:41:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31152
 - author: Goldminermac
   changes:
   - message: Chocolate-chip and blueberry pancakes can now be in stacks of up to nine
@@ -3929,3 +3922,11 @@
   id: 7645
   time: '2024-11-23T15:14:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33284
+- author: metalgearsloth
+  changes:
+  - message: The auto-orientation when showing up on the arrivals shuttle now has
+      a delay to it.
+    type: Tweak
+  id: 7646
+  time: '2024-11-23T16:52:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33479
