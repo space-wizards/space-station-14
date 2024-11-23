@@ -18,7 +18,6 @@
   - type: Speech
     speechVerb: Vox
     speechSounds: Vox
-    # allowedEmotes: ['Chirp', 'Hiss']
   - type: TypingIndicator
     proto: vox
   - type: Vocal
