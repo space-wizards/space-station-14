@@ -5,7 +5,7 @@
   abstract: true
   components:
   - type: Sprite
-    scale: 0.7, 0.7
+    scale: 1, 1
   - type: HumanoidAppearance
     species: Goblin
   - type: Fixtures

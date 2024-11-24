@@ -17,10 +17,8 @@
   sprites:
     Hair: MobHumanoidAnyMarking
     Snout: MobHumanoidAnyMarking
-    FacialHair: MobHumanoidAnyMarking
     Head: MobGoblinHead
     HeadTop: MobHumanoidAnyMarking
-    HeadSide: MobHumanoidAnyMarking
     Chest: MobGoblinTorso
     Eyes: MobGoblinEyes
     LArm: MobGoblinLArm
@@ -35,11 +33,9 @@
 
 - type: markingPoints
   id: MobGoblinMarkingLimits
+  onlyWhitelisted: true
   points:
     Hair:
-      points: 1
-      required: false
-    FacialHair:
       points: 1
       required: false
     HeadTop:
@@ -74,9 +70,33 @@
   baseSprite:
     sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
     state: head
+    
+- type: humanoidBaseSprite
+  id: MobGoblinHeadMale
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+    state: head
+    
+- type: humanoidBaseSprite
+  id: MobGoblinHeadFemale
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+    state: head
 
 - type: humanoidBaseSprite
   id: MobGoblinTorso
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+    state: torso
+    
+- type: humanoidBaseSprite
+  id: MobGoblinTorsoMale
+  baseSprite:
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+    state: torso
+    
+- type: humanoidBaseSprite
+  id: MobGoblinTorsoFemale
   baseSprite:
     sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
     state: torso
