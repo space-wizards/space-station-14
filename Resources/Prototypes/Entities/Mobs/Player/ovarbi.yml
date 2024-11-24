@@ -1,7 +1,7 @@
 - type: entity
   save: false
   name: John Ovarbi
-  parent: BaseMobOvarbi
+  parent: [BaseMobOvarbi, BaseMob]
   id: MobOvarbi
   components:
   - type: MovementSpeedModifier

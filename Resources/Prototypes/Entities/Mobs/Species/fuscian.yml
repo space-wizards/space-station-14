@@ -13,6 +13,15 @@
     noRot: true
     drawdepth: Mobs
     scale: 0.75, 0.77
+  - type: Fuscian
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Asphyxiation: 0.8
+  - type: Damageable
+    damageModiferSet: Fuscian
   - type: Thirst
   - type: Butcherable
     butcheringType: Spike
