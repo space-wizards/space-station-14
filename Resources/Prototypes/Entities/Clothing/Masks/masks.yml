@@ -741,7 +741,6 @@
   - type: Tag
     tags:
     - WhitelistChameleon
-  - type: BreathMask
 
 - type: entity
   parent: ClothingMaskNeckGaiter
