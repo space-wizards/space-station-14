@@ -24,7 +24,8 @@ namespace Content.Server.Ghost
             }
 
             var gameTicker = _entities.System<GameTicker>();
-            if (!gameTicker.PlayerGameStatuses.TryGetValue(player.UserId, out var status) || status is not PlayerGameStatus.JoinedGame)
+            if (!gameTicker.PlayerGameStatuses.TryGetValue(player.UserId, out var playerStatus) ||
+                playerStatus is not PlayerGameStatus.JoinedGame)
             {
                 shell.WriteLine("ghost-command-error-lobby");
                 return;
