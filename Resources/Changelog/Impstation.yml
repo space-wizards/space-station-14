@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: FlippenPage
-  changes:
-  - message: Add Space Cruise mapping elements
-    type: Add
-  id: 67
-  time: '2024-08-11T17:35:50.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/81
 - author: Drags-His-Tail
   changes:
   - message: Added Ratvarian, Slime, Russian, French, and Spanish as speech traits.
@@ -4302,3 +4295,10 @@
   id: 566
   time: '2024-11-24T22:56:54.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/780
+- author: AirFryerBuyOneGetOneFree
+  changes:
+  - message: Added Space Wind!
+    type: Add
+  id: 567
+  time: '2024-11-24T23:23:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/761
