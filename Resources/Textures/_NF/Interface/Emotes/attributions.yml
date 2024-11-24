@@ -1,0 +1,18 @@
+# Attempted to keep the files in alphabetical order so its easier to audit.
+# Finding individual authors is an unfeasible task. If you can reference the author please do so.
+# Copyright format is so far "Modified from [image] by [Github Username] (Discord Username)" or "Created by [Github Username] (Discord Username)"
+
+- files: ["mutter.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Modified goblin head_m.png and goblin_ears_default.png by ErhardSteinhauer"
+  source: "https://github.com/ErhardSteinhauer"
+
+- files: ["throatsinging.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Modified goblin head_m.png and goblin_ears_default.png by ErhardSteinhauer"
+  source: "https://github.com/ErhardSteinhauer"
+
+- files: ["belch.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Modified from vocal.png by BorisTakerman (Boris Takerman)"
+  source: "https://github.com/BorisTakerman"

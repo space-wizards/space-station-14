@@ -1,0 +1,92 @@
+# Goblin Ears
+- type: marking
+  id: GoblinEarsBasic
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Goblin]
+  sprites:
+  - sprite: _NF/Mobs/Customization/goblin_ears.rsi
+    state: goblin_ears_default
+
+- type: marking
+  id: GoblinEarsBasicAlt
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Goblin]
+  sprites:
+  - sprite: _NF/Mobs/Customization/goblin_ears.rsi
+    state: goblin_ears_default_alt
+
+- type: marking
+  id: GoblinEarsLong01
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Goblin]
+  sprites:
+  - sprite: _NF/Mobs/Customization/goblin_ears.rsi
+    state: goblin_ears_long_01
+
+- type: marking
+  id: GoblinEarsLong02
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Goblin]
+  sprites:
+  - sprite: _NF/Mobs/Customization/goblin_ears.rsi
+    state: goblin_ears_long_02
+
+# Goblin Noses
+- type: marking
+  id: GoblinNoseBasic
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction: [Goblin]
+  sprites:
+  - sprite: _NF/Mobs/Customization/goblin_noses.rsi
+    state: goblin_nose_default
+
+- type: marking
+  id: GoblinNoseLong
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction: [Goblin]
+  sprites:
+  - sprite: _NF/Mobs/Customization/goblin_noses.rsi
+    state: goblin_nose_long
+
+- type: marking
+  id: GoblinNoseCrooked
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction: [Goblin]
+  sprites:
+  - sprite: _NF/Mobs/Customization/goblin_noses.rsi
+    state: goblin_nose_crooked
+
+# Goblin Tusks
+- type: marking
+  id: GoblinTusksBasic
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction: [Goblin]
+  sprites:
+  - sprite: _NF/Mobs/Customization/goblin_tusks.rsi
+    state: goblin_tusks_none
+
+- type: marking
+  id: GoblinTusksSmall
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction: [Goblin]
+  sprites:
+  - sprite: _NF/Mobs/Customization/goblin_tusks.rsi
+    state: goblin_tusks_small
+
+- type: marking
+  id: GoblinTusksBig
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction: [Goblin]
+  sprites:
+  - sprite: _NF/Mobs/Customization/goblin_tusks.rsi
+    state: goblin_tusks_big

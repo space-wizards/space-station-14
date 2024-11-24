@@ -1,0 +1,19 @@
+- type: entity
+  parent: ClothingOuterStorageToggleableBase
+  id: ClothingOuterCoatRobesGoblin
+  name: goblin robes
+  description: Traditional robes of goblinkind. Very regal.
+  components:
+  - type: Tag
+    tags:
+    - ClothingRobesGoblin
+  - type: Sprite
+    sprite: _NF/Clothing/OuterClothing/Coats/goblin_robes.rsi
+  - type: Clothing
+    sprite: _NF/Clothing/OuterClothing/Coats/goblin_robes.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodGoblin
+    slot: head
+  - type: Construction
+    graph: ClothingOuterCoatRobesGoblinGraph
+    node: ClothingOuterCoatRobesGoblinNode

@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "copyright": "Sprited by erhardsteinhauer (discord)",
+    "license": "CC-BY-SA-4.0",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "goblin_tusks_small",
+            "directions": 4
+        },
+        {
+            "name": "goblin_tusks_big",
+            "directions": 4
+        },
+        {
+            "name": "goblin_tusks_none",
+            "directions": 4
+        }
+    ]
+}

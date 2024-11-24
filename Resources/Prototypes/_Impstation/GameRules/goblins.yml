@@ -1,0 +1,23 @@
+- type: entity
+  id: GoblinStowawaysEvent
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    weight: 3
+    duration: 1
+    minimumPlayers: 15
+  - type: VentCrittersRule
+    specialEntries:
+    - id: GoblinStowawaysVentSpawner
+      prob: 0.001
+
+- type: entity
+  parent: BaseGameRule
+  id: GoblinKnightEvent
+  components:
+  - type: StationEvent
+    weight: 5
+    duration: 1
+    maxOccurrences: 1 # he's a named character. there's only one of him
+  - type: RandomEntityStorageSpawnRule
+    prototype: SpawnPointGhostGoblinKnight

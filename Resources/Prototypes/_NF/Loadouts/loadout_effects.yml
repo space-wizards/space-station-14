@@ -1,0 +1,50 @@
+# Species
+- type: loadoutEffectGroup
+  id: NitrogenBreatherNF
+  effects:
+  - !type:SpeciesLoadoutEffect
+    species:
+    - SlimePerson
+    - Vox
+
+- type: loadoutEffectGroup
+  id: OxygenBreatherNF
+  effects:
+  - !type:SpeciesLoadoutEffect
+    species:
+    - Arachnid
+    - Diona
+    - Dwarf
+    - Human
+    - Moth
+    - Reptilian
+    - Goblin
+
+- type: loadoutEffectGroup
+  id: PantsCapableNF
+  effects:
+  - !type:SpeciesLoadoutEffect
+    species:
+    - Arachnid
+    - Diona
+    - Dwarf
+    - Human
+    - Moth
+    - Reptilian
+    - SlimePerson
+    - Vox
+    - Goblin
+
+- type: loadoutEffectGroup
+  id: ShoesCapableNF
+  effects:
+  - !type:SpeciesLoadoutEffect
+    species:
+    - Arachnid
+    - Dwarf
+    - Human
+    - Moth
+    - Reptilian
+    - SlimePerson
+    - Vox
+    - Goblin
