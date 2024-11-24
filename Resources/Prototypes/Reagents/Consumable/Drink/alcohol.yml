@@ -841,7 +841,7 @@
   name: reagent-name-devils-kiss
   parent: BaseAlcohol
   desc: reagent-desc-devils-kiss
-  physicalDesc: reagent-physical-desc-strong-ferrous
+  physicalDesc: reagent-physical-desc-ferrous
   flavor: devilskiss
   color: "#ff0033"
   metamorphicSprite:
