@@ -6,7 +6,7 @@
     - type: Sprite
       layers:
         - state: blue
-        - sprite: _NF/Mobs/Species/Goblin/parts.rsi
+        - sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
           state: full
     - type: GroupSpawner
       spawns:
@@ -32,7 +32,7 @@
     sprite: Markers/jobs.rsi
     layers:
       - state: green
-      - sprite: _NF/Mobs/Species/Goblin/parts.rsi
+      - sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
         state: full
 
 - type: entity
@@ -53,5 +53,5 @@
     sprite: Markers/jobs.rsi
     layers:
       - state: green
-      - sprite: _NF/Mobs/Species/Goblin/parts.rsi
+      - sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
         state: full
