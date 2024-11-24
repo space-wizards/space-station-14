@@ -1,6 +1,5 @@
 using Content.Shared.Actions;
 using Content.Shared.Examine;
-using Content.Shared.Mind.Components;
 using Content.Shared.RemoteControl.Components;
 
 namespace Content.Shared.RemoteControl;

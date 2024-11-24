@@ -34,7 +34,7 @@ public sealed class SSDIndicatorSystem : EntitySystem
             !HasComp<ActiveNPCComponent>(uid) &&
             TryComp<MindContainerComponent>(uid, out var mindContainer) &&
             mindContainer.ShowExamineInfo &&
-            component.showSSDIcon)
+            component.Enabled)
         {
             args.StatusIcons.Add(_prototype.Index(component.Icon));
         }

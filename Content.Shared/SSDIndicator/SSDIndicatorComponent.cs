@@ -14,7 +14,7 @@ public sealed partial class SSDIndicatorComponent : Component
 {
     [DataField]
     [AutoNetworkedField]
-    public bool showSSDIcon = true;
+    public bool Enabled = true;
 
     [ViewVariables]
     [AutoNetworkedField]
