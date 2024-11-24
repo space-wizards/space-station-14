@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: sageu111
   changes:
-  - message: blah blah blah blah, removes a line of text that is useless
-    type: Fix
-  id: 57
-  time: '2024-08-03T03:18:24.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/70
-- author: sageu111
-  changes:
   - message: fix for grays not having headset or ID slot
     type: Fix
   id: 58
@@ -4285,3 +4278,11 @@
   id: 556
   time: '2024-11-24T02:32:15.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/770
+- author: kipdotnet, AftrLite
+  changes:
+  - message: Added the S-cargo satchel bundle to the cargo catalog. comes with a fancy
+      breath mask and an integrated N2 tank!
+    type: Add
+  id: 557
+  time: '2024-11-24T02:42:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/782
