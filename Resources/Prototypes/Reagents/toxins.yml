@@ -184,7 +184,7 @@
       effects:
       - !type:HealthChange
         damage:
-          groups:
+          types:
             Asphyxiation: 5
 
 - type: reagent
