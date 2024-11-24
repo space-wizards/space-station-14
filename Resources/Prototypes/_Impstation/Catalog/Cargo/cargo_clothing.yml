@@ -7,3 +7,13 @@
   cost: 5000
   category: cargoproduct-category-name-cargo
   group: market
+
+- type: cargoProduct
+  id: ClothingScargoSatchel
+  icon:
+    sprite: _Impstation/Structures/Storage/Crates/luxury.rsi
+    state: icon
+  product: ClothingScargoSatchelCrate
+  cost: 3000
+  category: cargoproduct-category-name-cargo
+  group: market
