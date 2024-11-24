@@ -435,7 +435,7 @@
     - Head
   - type: SurgeryOrganExistCondition
     organ:
-    - type: Implant
+    - type: OrganImplant
   - type: Sprite
     sprite: _Starlight/Objects/Misc/implants.rsi
     layers:
@@ -457,7 +457,7 @@
     - Head
   - type: SurgeryOrganDontExistCondition
     organ:
-    - type: Implant
+    - type: OrganImplant
   - type: Sprite
     sprite: _Starlight/Objects/Misc/implants.rsi
     layers:

@@ -2,4 +2,4 @@
   id: BaseImplant
   abstract: true
   components:
-  - type: Implant
+  - type: OrganImplant

@@ -17,5 +17,6 @@
   components:
   - type: Sprite
     state: welding_implant
-  - type: Implant
-    implantID: Welding
+  - type: OrganImplant
+    compsToAdd: 
+    - type: EyeProtection

@@ -39,6 +39,8 @@ namespace Content.Server.Starlight.Medical.Surgery;
 //However, I don’t want to touch the official systems, so I need to come up with extensions for them.
 public sealed partial class SurgerySystem : SharedSurgerySystem
 {
+    [Dependency] private readonly IComponentFactory _compFactory = default!;
+    
     private readonly EntProtoId _virtual = "PartVirtual";
     public void InitializeSteps()
     {
@@ -120,10 +122,13 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
                         AddComp<ShowJobIconsComponent>(body);
                     }
                 }
-                if (TryComp<ImplantComponent>(organId, out var organImplant))
+                if (TryComp<OrganImplantComponent>(organId, out var implant))
                 {
-                    if (organImplant.ImplantID == "Welding")
-                        AddComp<EyeProtectionComponent>(body);
+                    foreach (var comp in (implant.AddComp ?? []).Values)
+                    {
+                        if (!EntityManager.HasComponent(body, comp.Component.GetType()))
+                            EntityManager.AddComponent(body, _compFactory.GetComponent(comp.Component.GetType()));
+                    }
                 }
                 if (TryComp<AbductorOrganComponent>(organId, out var abductorOrgan))
                 {
@@ -185,10 +190,13 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
                             RemComp<ShowJobIconsComponent>(args.Body);
                         }
                     }
-                    if (TryComp<ImplantComponent>(organ.Id, out var organImplant))
+                    if (TryComp<OrganImplantComponent>(organ.Id, out var implant))
                     {
-                        if (organImplant.ImplantID == "Welding")
-                            RemComp<EyeProtectionComponent>(args.Body);
+                        foreach (var comp in (implant.AddComp ?? []).Values)
+                        {
+                            if (EntityManager.HasComponent(args.Body, comp.Component.GetType()))
+                                EntityManager.RemoveComponent(args.Body, _compFactory.GetComponent(comp.Component.GetType()));
+                        }
                     }
                     if (TryComp<OrganTongueComponent>(organ.Id, out var organTongue))
                     {

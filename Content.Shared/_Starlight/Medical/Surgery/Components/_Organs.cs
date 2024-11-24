@@ -28,12 +28,10 @@ public sealed partial class OrganEyesComponent : Component
 }
 
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedSurgerySystem))] 
-public sealed partial class ImplantComponent : Component
+public sealed partial class OrganImplantComponent : Component
 {
-    [DataField]
-    public string? Type;
-    [DataField]
-    public string? ImplantID;
+    [DataField("compsToAdd")]
+    public ComponentRegistry? AddComp;
 }
 
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedSurgerySystem))]
