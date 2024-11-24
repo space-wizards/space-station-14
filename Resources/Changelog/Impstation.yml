@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ultramario1998
-  changes:
-  - message: Removed templar helmet
-    type: Tweak
-  id: 65
-  time: '2024-08-07T16:25:31.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/79
 - author: TGRCdev
   changes:
   - message: Station records now show correct pronouns
@@ -4290,3 +4283,20 @@
   id: 564
   time: '2024-11-24T22:52:37.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/769
+- author: Sha-Seng
+  changes:
+  - message: Head of Security's Professional Jumpsuit/Jumpskirt
+    type: Add
+  - message: Head of Security's Patrol Cap
+    type: Add
+  - message: Head of Security's Shoulder Holster
+    type: Add
+  - message: Breath mask option removed from HoS loadout (no need)
+    type: Remove
+  - message: Breath mask moved to HoS locker (SWAT one still in suit locker)
+    type: Add
+  - message: Very minor adjustments to other Security gloves/boots for visual consistency
+    type: Tweak
+  id: 565
+  time: '2024-11-24T22:55:25.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/736
