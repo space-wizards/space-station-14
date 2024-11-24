@@ -23,6 +23,13 @@ namespace Content.Server.Ghost
                 return;
             }
 
+            var gameTicker = _entities.System<GameTicker>();
+            if (!gameTicker.PlayerGameStatuses.TryGetValue(player.UserId, out var status) || status is not PlayerGameStatus.JoinedGame)
+            {
+                shell.WriteLine("ghost-command-error-lobby");
+                return;
+            }
+
             if (player.AttachedEntity is { Valid: true } frozen &&
                 _entities.HasComponent<AdminFrozenComponent>(frozen))
             {
