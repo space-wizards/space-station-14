@@ -47,7 +47,7 @@
       - state: beanbag
 
 - type: entity
-  name: ammunition box (.50 buckshot)
+  name: ammunition box (.50 pellet)
   parent: AmmoProviderShotgunShell
   id: BoxLethalshot
   components:
