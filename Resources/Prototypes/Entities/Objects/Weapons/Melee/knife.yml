@@ -269,7 +269,7 @@
   name: throwing knife
   parent: [BaseKnife, BaseSyndicateContraband]
   id: ThrowingKnife
-  description: This bloodred knife is very aerodynamic and easy to throw, but good luck trying to fight someone hand-to-hand.
+  description: This blood-red knife is very aerodynamic and easy to throw, but good luck trying to fight someone hand-to-hand.
   components:
   - type: Tag
     tags:

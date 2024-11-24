@@ -1,0 +1,23 @@
+name: "Labels: Approved"
+on:
+  pull_request_review:
+    types: [submitted]
+jobs:
+  add_label:
+    # Change the repository name after you've made sure the team name is correct for your fork!
+    if: ${{ (github.repository == 'space-wizards/space-station-14') && (github.event.review.state == 'APPROVED') }}
+    permissions:
+      contents: read
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+    - uses: tspascoal/get-user-teams-membership@v3
+      id: checkUserMember
+      with:
+        username: ${{ github.actor }}
+        team: "content-maintainers,junior-maintainers"
+        GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+    - if: ${{ steps.checkUserMember.outputs.isTeamMember == 'true' }}
+      uses: actions-ecosystem/action-add-labels@v1
+      with:
+        labels: "S: Approved"
