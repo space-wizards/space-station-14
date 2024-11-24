@@ -223,7 +223,7 @@ flavor-complex-milk = like milk
 flavor-complex-tea = like tea
 flavor-complex-ice = like ice
 flavor-complex-mopwata = like stagnant, dirty water
-flavor-complex-gin = like fermeted grain with juniper berries
+flavor-complex-gin = like fermented grain with juniper berries
 
 ## Cocktails
 flavor-complex-arnold-palmer = like a hole-in-one
