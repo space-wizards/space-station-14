@@ -180,6 +180,14 @@
       implant: FreedomImplant
 
 - type: entity
+  id: RadioImplanter
+  suffix: radio
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+  - type: Implanter
+    implant: RadioImplant
+
+- type: entity
   id: UplinkImplanter
   suffix: uplink
   parent: BaseImplantOnlyImplanterSyndi

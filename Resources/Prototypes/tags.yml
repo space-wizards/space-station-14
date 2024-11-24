@@ -1117,6 +1117,9 @@
   id: Radio
 
 - type: Tag
+  id: RadioImplant
+
+- type: Tag
   id: RawMaterial
 
 # Give this to something that doesn't need any special recycler behavior and just needs deleting.

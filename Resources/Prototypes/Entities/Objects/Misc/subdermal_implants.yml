@@ -143,6 +143,21 @@
         - Cuffable # useless if you cant be cuffed
 
 - type: entity
+  parent: BaseSubdermalImplant
+  id: RadioImplant
+  name: radio implant
+  description: This implant grants access to the Syndicate channel without a headset.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+  - type: RadioImplant
+  - type: Tag
+    tags:
+    - SubdermalImplant
+    - HideContextMenu
+    - RadioImplant
+
+- type: entity
   parent: [ BaseSubdermalImplant, StorePresetUplink ]
   id: UplinkImplant
   name: uplink implant
