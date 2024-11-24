@@ -33,7 +33,7 @@ public enum LogType
     /// Game rule was added or started.
     /// </summary>
     EventStarted = 6,
-    // EventRan = 16,
+    EventRan = 16,
 
     /// <summary>
     /// Game rule was stopped.
@@ -119,10 +119,10 @@ public enum LogType
     /// A player knocked down an entity on the floor.
     /// </summary>
     DisarmedKnockdown = 26,
-    // AttackArmedClick = 27,
-    // AttackArmedWide = 28,
-    // AttackUnarmedClick = 29,
-    // AttackUnarmedWide = 30,
+    AttackArmedClick = 27,
+    AttackArmedWide = 28,
+    AttackUnarmedClick = 29,
+    AttackUnarmedWide = 30,
 
     /// <summary>
     /// A player interacted with an entity in his hand.
@@ -193,7 +193,7 @@ public enum LogType
     /// Explosions and explosives related interactions.
     /// </summary>
     Explosion = 44,
-    // Radiation = 45,
+    Radiation = 45,
 
     /// <summary>
     /// Entity started or stopped taking pressure damage.
@@ -214,8 +214,8 @@ public enum LogType
     /// Entity started or stopped taking temperature damage.
     /// </summary>
     Temperature = 49,
-    // Hunger = 50,
-    // Thirst = 51,
+    Hunger = 50,
+    Thirst = 51,
 
     /// <summary>
     /// Entity received electrocution damage.
