@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: TGRCdev
-  changes:
-  - message: Criminal records computer now shows the pronouns of crewmates.
-    type: Tweak
-  - message: Character creator now uses "it/its" pronouns correctly.
-    type: Fix
-  id: 62
-  time: '2024-08-04T02:28:28.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/75
 - author: formlessnameless
   changes:
   - message: Initial version of gray ship added.
@@ -4290,3 +4281,10 @@
   id: 561
   time: '2024-11-24T11:17:29.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/785
+- author: Sha-Seng
+  changes:
+  - message: Neck gaiters can now be pulled down like other masks
+    type: Tweak
+  id: 562
+  time: '2024-11-24T22:48:51.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/790
