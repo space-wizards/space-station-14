@@ -138,8 +138,8 @@
   name: Enforcer
   parent: [BaseWeaponShotgun, BaseGunWieldable, BaseRestrictedContraband]
   id: WeaponShotgunEnforcer
-  description: A premium combat shotgun based on the Kammerer design, featuring an upgraded clip capacity. .50 shotgun shells.
-  components:
+  description: A premium semi-auto combat shotgun used by modern security forces. Uses .50 shotgun shells.
+  components: # intend for Enforcer to have wider choke for semi-auto function
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
   - type: Clothing
