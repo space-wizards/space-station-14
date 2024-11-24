@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: TGRCdev
   changes:
-  - message: Rewrote InjectTagAroundString to not use Regex
-    type: Fix
-  id: 61
-  time: '2024-08-04T02:28:17.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/74
-- author: TGRCdev
-  changes:
   - message: Criminal records computer now shows the pronouns of crewmates.
     type: Tweak
   - message: Character creator now uses "it/its" pronouns correctly.
@@ -4290,3 +4283,10 @@
   id: 560
   time: '2024-11-24T04:54:36.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/772
+- author: Sha-Seng
+  changes:
+  - message: Neck gaiters are breathable now since bandanas already are
+    type: Tweak
+  id: 561
+  time: '2024-11-24T11:17:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/785
