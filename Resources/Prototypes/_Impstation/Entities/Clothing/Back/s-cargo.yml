@@ -25,3 +25,35 @@
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Back/Duffels/scargo_cyan.rsi
+    
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSCargoN2Satchel
+  name: S-Cargo satchel
+  description: A plush, fashionable satchel, shipped straight from the Gastropoid homeworld. It trades out some of the normal space for an integrated nitrogen tank and some added heft.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Back/Satchels/scargo_satchel.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 0.95
+  - type: Storage
+    grid:
+    - 0,0,0,3
+    - 2,0,5,3
+    - 7,0,7,3
+  - type: GasTank
+    outputPressure: 21.3
+    air:
+      volume: 5
+      temperature: 293.15
+      moles:
+        - 0           # oxygen not included
+        - 2.051379050 # nitrogen
+    tankLowPressure: 30.0
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 20
+  - type: StorageFill
+    contents:
+      - id: ClothingMaskBreathSCargo
