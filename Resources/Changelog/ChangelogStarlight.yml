@@ -503,3 +503,18 @@ Entries:
   id: 70
   time: '2024-11-22T23:57:00.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/commit/491ace54f7357f5e241a183bfdb305651133f0bf
+- author: Rinary
+  changes:
+  - message: Added ahelp cooldown(2 seconds between messages).
+    type: Add
+  id: 71
+  time: '2024-11-24T16:15:31.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/85
+- author: Rinary
+  changes:
+  - message: Added AHelp spam ban. (if you write 6 same messages, you banned).
+    type: Add
+  id: 72
+  time: '2024-11-24T16:15:31.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/85
+
