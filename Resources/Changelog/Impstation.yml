@@ -1,64 +1,4 @@
 ﻿Entries:
-- author: 12rabbits
-  changes:
-  - message: Fixed certain inaccuracies in the ready manifest display
-    type: Fix
-  id: 50
-  time: '2024-08-01T19:46:45.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/63
-- author: FlippenPage
-  changes:
-  - message: Nitrogen Deprivation Kit, found rarely in N2 Lockers.
-    type: Add
-  - message: N2 Wall Locker.
-    type: Add
-  - message: N2 Locker Loot Table updated.
-    type: Tweak
-  id: 51
-  time: '2024-08-01T19:46:36.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/64
-- author: ultramario1998
-  changes:
-  - message: Fin fin can now open doors. Life, uh, finds a way.
-    type: Tweak
-  id: 52
-  time: '2024-08-01T19:46:26.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/65
-- author: joelsgp
-  changes:
-  - message: Added new lobby screen by Carousel!
-    type: Add
-  - message: Fix title of Soichi Terada lobby song.
-    type: Fix
-  - message: Remove our custom round end screen keybind because the official one (F9)
-      is fixed.
-    type: Remove
-  - message: Add more helpful login tips.
-    type: Add
-  id: 53
-  time: '2024-08-03T01:53:12.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/66
-- author: formlessnameless
-  changes:
-  - message: Blessed bananium flooring.
-    type: Add
-  id: 54
-  time: '2024-08-02T00:36:08.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/67
-- author: TGRCdev
-  changes:
-  - message: spooky_horse.ogg was missing a copyright and license key, which caused
-      errors. I found and applied the proper licensing.
-    type: Fix
-  - message: A type of cigarette had incorrect indentation, causing the food section
-      to be incorrectly parsed.
-    type: Fix
-  - message: The round start event for Spy vs Spy had a max delay smaller than its
-      min delay, most likely due to a zero left out erroneously.
-    type: Fix
-  id: 55
-  time: '2024-08-03T01:52:45.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/68
 - author: sageu111
   changes:
   - message: BIG GRAY UPDATE (ALL GRAY AND TOYS INSIDE), THIS IS THE BIG GRAY THIS
@@ -4296,3 +4236,53 @@
   id: 549
   time: '2024-11-20T06:52:17.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/764
+- author: EpicToast
+  changes:
+  - message: (Union Station) Fixed issues with the southwestern escape pods.
+    type: Fix
+  - message: (Union Station) Christmastime is here! Enjoy complimentary presents in
+      your lockers, along with other festive updates.
+    type: Tweak
+  id: 550
+  time: '2024-11-21T13:15:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/767
+- author: DinnerCalzone
+  changes:
+  - message: Female Moths and Diona will now use human female sounds for their placeholder
+      vocal emotes.
+    type: Tweak
+  id: 551
+  time: '2024-11-21T13:18:00.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/748
+- author: honeyed-lemons
+  changes:
+  - message: Hopefully the gilded space passenger jumpsuit works now??
+    type: Fix
+  id: 552
+  time: '2024-11-23T07:15:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/775
+- author: EpicToast
+  changes:
+  - message: (Union Station) Freezer should now be properly set up.
+    type: Fix
+  - message: (Union Station) Botany now has a backroom and a new layout.
+    type: Tweak
+  - message: (Union Station) Science now has a bigger main room.
+    type: Tweak
+  id: 553
+  time: '2024-11-23T07:14:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/776
+- author: hivehum
+  changes:
+  - message: 'A new map: The NCS Aspid, a Nanotrasen research and transport ship.'
+    type: Add
+  id: 554
+  time: '2024-11-23T07:17:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/774
+- author: AirFryerBuyOneGetOneFree
+  changes:
+  - message: Barratry has been given better spacing protection and other improvements.
+    type: Tweak
+  id: 555
+  time: '2024-11-23T07:18:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/771
