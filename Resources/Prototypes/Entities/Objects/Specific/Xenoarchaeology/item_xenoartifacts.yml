@@ -1,8 +1,8 @@
 ﻿- type: entity
-  parent: BaseItem
+  parent: [BaseItem, BaseXenoArtifact]
   id: BaseXenoArtifactItem
-  name: alien artifact
-  description: A strange handheld alien device.
+  name: hand-sized artifact
+  description: A strange artifact from time unknown. Looks like a good time. Fits in hand perfectly.
   abstract: true
   noSpawn: true
   components:
@@ -40,24 +40,7 @@
     available:
     - enum.ArtifactsVisualLayers.Effect:
         ano01_on: Rainbow
-  - type: UserInterface #needs to be here for certain effects
-    interfaces:
-      enum.StorageUiKey.Key:
-        type: StorageBoundUserInterface
-      enum.TransferAmountUiKey.Key:
-        type: TransferAmountBoundUserInterface
-      enum.InstrumentUiKey.Key:
-        type: InstrumentBoundUserInterface
-      enum.IntercomUiKey.Key:
-        type: IntercomBoundUserInterface
-  - type: Appearance
-  - type: GuideHelp
-    guides:
-    - Xenoarchaeology
   # gameplay interactions
-  - type: XenoArtifact
-  - type: Damageable
-  - type: Actions
   - type: Item
     size: Normal
     sprite: Objects/Specific/Xenoarchaeology/item_artifacts.rsi
@@ -65,15 +48,6 @@
   - type: Construction
     graph: Artifact
     node: done
-  - type: ContainerContainer
-    containers:
-      node-container: !type:Container
-        showEnts: False
-        occludes: True
-        ents: []
-  # These components are needed for certain triggers to work.
-  - type: RadiationReceiver
-  - type: Reactive
 
 - type: entity
   parent: BaseXenoArtifactItem

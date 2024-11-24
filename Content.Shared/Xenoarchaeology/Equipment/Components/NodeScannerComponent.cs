@@ -8,6 +8,24 @@ public sealed partial class NodeScannerComponent : Component
 {
     [DataField, AutoNetworkedField]
     public HashSet<string> TriggeredNodesSnapshot = new();
+
+    [DataField, AutoNetworkedField]
+    public ArtifactState ArtifactState;
+
+    [DataField, AutoNetworkedField]
+    public TimeSpan? WaitTime;
+
+    [DataField, AutoNetworkedField]
+    public TimeSpan? ScannedAt { get; set; }
+}
+
+[Serializable, NetSerializable]
+public enum ArtifactState
+{
+    None,
+    Ready,
+    Unlocking,
+    Cooldown
 }
 
 [Serializable, NetSerializable]

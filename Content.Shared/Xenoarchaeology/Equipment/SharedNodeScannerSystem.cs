@@ -5,6 +5,7 @@ using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using Content.Shared.Xenoarchaeology.Artifact;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
+using Content.Shared.Xenoarchaeology.Equipment.Components;
 using Robust.Shared.Timing;
 using NodeScannerComponent = Content.Shared.Xenoarchaeology.Equipment.Components.NodeScannerComponent;
 
@@ -75,11 +76,22 @@ public abstract class SharedNodeScannerSystem : EntitySystem
 
         TryOpenUi(device, actor);
 
+        TimeSpan? waitTime = null;
         HashSet<string> triggeredNodeNames;
-
+        ArtifactState artifactState;
         if (unlockingEnt.Comp == null)
         {
             triggeredNodeNames = new HashSet<string>();
+            var timeToUnlockAvailable = artifactComponent.NextUnlockTime - _timing.CurTime;
+            if (timeToUnlockAvailable > TimeSpan.Zero)
+            {
+                artifactState = ArtifactState.Cooldown;
+                waitTime = timeToUnlockAvailable;
+            }
+            else
+            {
+                artifactState = ArtifactState.Ready;
+            }
         }
         else
         {
@@ -92,14 +104,17 @@ public abstract class SharedNodeScannerSystem : EntitySystem
                 var triggeredNodeName = (CompOrNull<NameIdentifierComponent>(node)?.Identifier ?? 0).ToString("D3");
                 triggeredNodeNames.Add(triggeredNodeName);
             }
+
+            artifactState = ArtifactState.Unlocking;
+            waitTime = _timing.CurTime - unlockingEnt.Comp.EndTime;
         }
 
-        if (!device.Comp.TriggeredNodesSnapshot.SequenceEqual(triggeredNodeNames))
-        {
-            device.Comp.TriggeredNodesSnapshot = triggeredNodeNames;
+        device.Comp.ArtifactState = artifactState;
+        device.Comp.WaitTime = waitTime;
+        device.Comp.TriggeredNodesSnapshot = triggeredNodeNames;
+        device.Comp.ScannedAt = _timing.CurTime;
 
-            Dirty(device);
-        }
+        Dirty(device);
     }
 
     protected abstract void TryOpenUi(Entity<NodeScannerComponent> device, EntityUid actor);

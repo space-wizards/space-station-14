@@ -43,12 +43,28 @@ public sealed partial class NodeScannerDisplay : FancyWindow
                 var nodeLabel = new Button
                 {
                     Text = nodeId,
-                    Margin = new Thickness(15, 10, 0, 0),
+                    Margin = new Thickness(15, 5, 0, 0),
                     MaxHeight = 40,
                     Disabled = true
                 };
                 ActiveNodesList.Children.Add(nodeLabel);
             }
         }
+
+        ArtifactStateLabel.Text = GetState(ent);
+        NodeScannerState.Text = ent.Comp.ScannedAt > TimeSpan.Zero
+            ? Loc.GetString("node-scanner-artifact-scanned-time", ("time", ent.Comp.ScannedAt.Value.ToString(@"hh\:mm\:ss")))
+            : Loc.GetString("node-scanner-artifact-scanned-time-none");
+    }
+
+    private string? GetState(Entity<NodeScannerComponent> ent)
+    {
+        return ent.Comp.ArtifactState switch
+        {
+            ArtifactState.None => "\u2800", // placeholder for line to not be squeezed
+            ArtifactState.Ready => Loc.GetString("node-scanner-artifact-state-ready"),
+            ArtifactState.Unlocking => Loc.GetString("node-scanner-artifact-state-unlocking"),
+            ArtifactState.Cooldown => Loc.GetString("node-scanner-artifact-state-cooldown")
+        };
     }
 }

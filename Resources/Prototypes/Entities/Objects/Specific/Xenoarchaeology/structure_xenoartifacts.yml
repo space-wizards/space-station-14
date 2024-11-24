@@ -1,8 +1,7 @@
 ﻿- type: entity
-  parent: BaseStructureDynamic
-  id: BaseXenoArtifact
-  name: alien artifact
-  description: A strange alien device.
+  parent: [BaseStructureDynamic, BaseXenoArtifact]
+  id: BaseXenoArtifactStructure
+  name: artifact
   abstract: true
   noSpawn: true
   components:
@@ -17,26 +16,14 @@
     - state: ano30_on
       map: [ "enum.ArtifactsVisualLayers.Effect" ]
       visible: false
-  - type: Appearance
   - type: RandomArtifactSprite
     maxSprite: 36
   - type: RandomSprite
     available:
     - enum.ArtifactsVisualLayers.Effect:
         ano01_on: Rainbow
-  - type: InteractionOutline
   - type: Transform
     noRot: true
-  - type: UserInterface #needs to be here for certain effects
-    interfaces:
-      enum.StorageUiKey.Key:
-        type: StorageBoundUserInterface
-      enum.TransferAmountUiKey.Key:
-        type: TransferAmountBoundUserInterface
-      enum.InstrumentUiKey.Key:
-        type: InstrumentBoundUserInterface
-      enum.IntercomUiKey.Key:
-        type: IntercomBoundUserInterface
   - type: Fixtures
     fixtures:
       fix1:
@@ -48,30 +35,9 @@
         - Opaque
         mask:
         - MachineMask
-  - type: GuideHelp
-    guides:
-    - Xenoarchaeology
-  # gameplay interactions
-  - type: XenoArtifact
-    effectWeights: XenoArtifactEffectsStructure
-  - type: Damageable
-  - type: Actions
-  - type: Physics
-    bodyType: Dynamic
-  - type: StealTarget
-    stealGroup: XenoArtifact
-  - type: ContainerContainer
-    containers:
-      node-container: !type:Container
-        showEnts: False
-        occludes: True
-        ents: []
-  # These components are needed for certain triggers to work.
-  - type: RadiationReceiver
-  - type: Reactive
 
 - type: entity
-  parent: BaseXenoArtifact
+  parent: BaseXenoArtifactStructure
   id: SimpleXenoArtifact
   suffix: Simple
   components:
@@ -81,7 +47,7 @@
       max: 5
 
 - type: entity
-  parent: BaseXenoArtifact
+  parent: BaseXenoArtifactStructure
   id: MediumXenoArtifact
   suffix: Medium
   components:
@@ -91,7 +57,7 @@
       max: 9
 
 - type: entity
-  parent: BaseXenoArtifact
+  parent: BaseXenoArtifactStructure
   id: ComplexXenoArtifact
   suffix: Complex
   components:

@@ -43,8 +43,8 @@ artifact-trigger-hint-examine = Examination
 artifact-trigger-hint-medical = Therapeutic chemicals
 
 xenoarch-trigger-tip-music = Musical vibrations
-xenoarch-trigger-tip-heat = High temperatures
-xenoarch-trigger-tip-cold = Low temperatures
+xenoarch-trigger-tip-heat = High temperature gas
+xenoarch-trigger-tip-cold = Low temperature gas
 xenoarch-trigger-tip-no-oxygen = Oxygen-free environment
 xenoarch-trigger-tip-water = Water
 xenoarch-trigger-tip-co2 = Carbon dioxide
