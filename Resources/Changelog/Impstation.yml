@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: sageu111
   changes:
-  - message: BIG GRAY UPDATE (ALL GRAY AND TOYS INSIDE), THIS IS THE BIG GRAY THIS
-      IS THE NEW SHIT
-    type: Add
-  id: 56
-  time: '2024-08-03T03:05:38.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/69
-- author: sageu111
-  changes:
   - message: blah blah blah blah, removes a line of text that is useless
     type: Fix
   id: 57
@@ -4286,3 +4278,10 @@
   id: 555
   time: '2024-11-23T07:18:58.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/771
+- author: widgetbeck
+  changes:
+  - message: The Luggage can now spawn on its own, rarely.
+    type: Add
+  id: 556
+  time: '2024-11-24T02:32:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/770
