@@ -1,4 +1,4 @@
-﻿# Offensive
+# Offensive
 - type: listing
   id: SpellbookFireball
   name: spellbook-fireball-name
@@ -77,6 +77,20 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+- type: listing
+  id: SpellbookJaunt
+  name: spellbook-ethereal-jaunt-name
+  description: spellbook-ethereal-jaunt-description
+  productAction: ActionPolymorphJaunt
+  productUpgradeId: SpellbookJauntUpgrade
+  cost:
+    WizCoin: 2
+  categories:
+  - SpellbookUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
 # Equipment
 - type: listing
   id: SpellbookWandDoor
@@ -118,6 +132,34 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+- type: listing
+  id: SpellbookEventSummonGuns
+  name: spellbook-event-summon-guns-name
+  description: spellbook-event-summon-guns-description
+  productAction: ActionSummonGuns
+  cost:
+    WizCoin: 2
+  categories:
+  - SpellbookEvents
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  disableRefund: true
+
+- type: listing
+  id: SpellbookEventSummonMagic
+  name: spellbook-event-summon-magic-name
+  description: spellbook-event-summon-magic-description
+  productAction: ActionSummonMagic
+  cost:
+    WizCoin: 2
+  categories:
+  - SpellbookEvents
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  disableRefund: true
+
 # Upgrades
 - type: listing
   id: SpellbookFireballUpgrade
@@ -136,5 +178,24 @@
     whitelist:
       - SpellbookFireball
   # manual for now
+  - !type:ListingLimitedStockCondition
+    stock: 2
+
+- type: listing
+  id: SpellbookJauntUpgrade
+  productUpgradeId: SpellbookJauntUpgrade
+  name: spellbook-upgrade-jaunt-name
+  description: spellbook-upgrade-jaunt-description
+  icon:
+    sprite: Objects/Magic/magicactions.rsi
+    state: jaunt
+  cost:
+    WizCoin: 2
+  categories:
+  - SpellbookUtility
+  conditions:
+  - !type:BuyBeforeCondition
+    whitelist:
+    - SpellbookJaunt
   - !type:ListingLimitedStockCondition
     stock: 2
