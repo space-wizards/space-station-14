@@ -26,6 +26,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Shared.Movement.Pulling.Components;
 
 namespace Content.Shared.Storage.EntitySystems;
 
@@ -179,6 +180,15 @@ public abstract class SharedEntityStorageSystem : EntitySystem
     public void ToggleOpen(EntityUid user, EntityUid target, SharedEntityStorageComponent? component = null)
     {
         if (!ResolveStorage(target, ref component))
+            return;
+
+        // impstation edit
+        // prevent dumbasses from opening crates that are being dragged
+        if (
+            TryComp<PullableComponent>(target, out var pull) &&
+            pull.BeingPulled &&
+            pull.Puller != user
+        )
             return;
 
         if (component.Open)
