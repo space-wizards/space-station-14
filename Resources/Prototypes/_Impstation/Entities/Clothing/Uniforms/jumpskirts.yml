@@ -1,0 +1,10 @@
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpskirtHoSPro
+  name: head of security's professional jumpskirt
+  description: A clean, decorated jumpskirt for the Head of Security.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpskirt/hos_pro.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpskirt/hos_pro.rsi

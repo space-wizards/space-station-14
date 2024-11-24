@@ -17,7 +17,7 @@
   - GroupTankHarnessCommandWithOuterwear # Assign GroupTankHarness to jobs without outer clothing and GroupTankHarnessWithOuterwear to jobs with outer clothing options
   - GroupBreathToolDecapoid # imp special
   - GroupTankHarnessCommandWithOuterwearAquatic # imp special
-  
+
 - type: roleLoadout
   id: JobHeadOfPersonnel
   groups:
@@ -427,14 +427,13 @@
   id: JobHeadOfSecurity
   groups:
   - HeadofSecurityHead
-  - HeadofSecurityMask
   - HeadofSecurityNeck
   - HeadofSecurityJumpsuit
   - HeadofSecurityOuterClothing
   - UpperSecurityShoes
   - HeadofSecurityHeadset
   - HeadofSecurityBackpack
-  - SecurityBelt
+  - HeadofSecurityBelt
   - SurvivalSecurityCommand
   - Trinkets
   - SecurityStar
