@@ -17,6 +17,7 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Nutrition;
 
 /// <summary>
@@ -36,25 +37,42 @@ public sealed partial class SmokingSystem
 
     private void InitializeVapes()
     {
+        SubscribeLocalEvent<VapeComponent, UseInHandEvent>(OnVapeUseInHand);
         SubscribeLocalEvent<VapeComponent, AfterInteractEvent>(OnVapeInteraction);
         SubscribeLocalEvent<VapeComponent, VapeDoAfterEvent>(OnVapeDoAfter);
         SubscribeLocalEvent<VapeComponent, GotEmaggedEvent>(OnEmagged);
     }
 
+    private void OnVapeUseInHand(EntityUid uid, VapeComponent vape, ref UseInHandEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        args.Handled = true;
+
+        TryVape(uid, vape, args.User, args.User);
+    }
+
     private void OnVapeInteraction(EntityUid uid, VapeComponent vape, ref AfterInteractEvent args)
     {
-        var user = args.User;
         var target = args.Target;
 
-        if (!args.CanReach
-            || !_solutionContainerSystem.TryGetRefillableSolution(uid, out var _, out var solution)
+        if (!args.CanReach || target == null)
+            return;
+
+        args.Handled = true;
+
+        TryVape(uid, vape, args.User, target.Value);
+    }
+
+    private void TryVape(EntityUid uid, VapeComponent vape, EntityUid user, EntityUid target)
+    {
+        if (!_solutionContainerSystem.TryGetRefillableSolution(uid, out var _, out var solution)
             || !HasComp<BloodstreamComponent>(target)
-            || _foodSystem.IsMouthBlocked(target.Value, user))
+            || _foodSystem.IsMouthBlocked(target, user))
         {
             return;
         }
-
-        args.Handled = true;
 
         if (solution.Contents.Count == 0)
         {
@@ -69,8 +87,8 @@ public sealed partial class SmokingSystem
             var userName = Identity.Entity(user, EntityManager);
 
             _popupSystem.PopupEntity(
-                Loc.GetString("vape-component-try-use-vape-forced", ("user", userName)), target.Value,
-                target.Value);
+                Loc.GetString("vape-component-try-use-vape-forced", ("user", userName)), target,
+                target);
 
             // Log involuntary vaping
             _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(user):user} is forcing {ToPrettyString(target):target} to vape {ToPrettyString(uid)} {SharedSolutionContainerSystem.ToPrettyString(solution)}");
@@ -172,6 +190,7 @@ public sealed partial class SmokingSystem
 
         args.Handled = true;
     }
+
     private void OnEmagged(Entity<VapeComponent> entity, ref GotEmaggedEvent args)
     {
         args.Handled = true;
