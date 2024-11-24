@@ -302,6 +302,42 @@
   params:
     variation: 0.125
 
+# FemaleDiona is a placeholder until a full set of diona emotes are made.
+# Once they are finished, this should be removed and the female vocal sounds in diona.yml should be set to UnisexMoth   
+- type: emoteSounds
+  id: FemaleDiona
+  sounds:
+    Scream:
+      path: /Audio/Voice/Diona/diona_scream.ogg
+    Laugh:
+      collection: DionaLaugh
+    Chirp:
+      path: /Audio/Animals/nymph_chirp.ogg
+    Sneeze:
+      collection: FemaleSneezes #placeholder
+    Cough:
+      collection: FemaleCoughs #placeholder
+    Yawn:
+      collection: FemaleYawn #placeholder
+    Honk:
+      collection: BikeHorn
+    Sigh:
+      collection: FemaleSigh #placeholder
+    Crying:
+      collection: FemaleCry #placeholder
+    Whistle:
+      collection: Whistles
+    Weh:
+      collection: Weh
+    Ungh:
+      collection: Ungh
+    Gasp:
+      collection: FemaleGasp 
+    DefaultDeathgasp:
+      collection: FemaleDeathGasp
+  params:
+    variation: 0.125
+
 - type: emoteSounds
   id: UnisexArachnid
   params:
@@ -459,6 +495,46 @@
       collection: Ungh
     Gasp:
       collection: MaleGasp
+    DefaultDeathgasp:
+      collection: MothDeathGasp
+      
+# FemaleMoth is a placeholder until a full set of moth emotes are made.
+# Once they are finished, this should be removed and the female vocal sounds in moth.yml should be set to UnisexMoth
+- type: emoteSounds
+  id: FemaleMoth
+  params:
+    variation: 0.125
+  sounds:
+    Buzz:
+      path: /Audio/Voice/Moth/moth_scream.ogg
+    Scream:
+      path: /Audio/Voice/Moth/moth_scream.ogg
+    Laugh:
+      path: /Audio/Voice/Moth/moth_laugh.ogg
+    Chitter:
+      path: /Audio/Voice/Moth/moth_chitter.ogg
+    Squeak:
+      path: /Audio/Voice/Moth/moth_squeak.ogg
+    Sneeze:
+      collection: FemaleSneezes #placeholder
+    Cough:
+      collection: FemaleCoughs #placeholder
+    Yawn:
+      collection: FemaleYawn #placeholder
+    Honk:
+      collection: BikeHorn
+    Sigh:
+      collection: FemaleSigh #placeholder
+    Crying:
+      collection: FemaleCry #placeholder
+    Whistle:
+      collection: Whistles
+    Weh:
+      collection: Weh
+    Ungh:
+      collection: Ungh
+    Gasp:
+      collection: FemaleGasp
     DefaultDeathgasp:
       collection: MothDeathGasp
 
