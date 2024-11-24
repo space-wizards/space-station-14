@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Codewords should no longer make people locally deaf.
-    type: Fix
-  id: 60
-  time: '2024-08-03T23:04:06.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/73
 - author: TGRCdev
   changes:
   - message: Rewrote InjectTagAroundString to not use Regex
@@ -4286,3 +4279,14 @@
   id: 559
   time: '2024-11-24T04:23:06.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/781
+- author: widgetbeck
+  changes:
+  - message: Ported Goblins from New Frontiers for ghostrole purposes.
+    type: Add
+  - message: New ghostrole, the Goblin Stowaways. Build Goblinhome.
+    type: Add
+  - message: New ghostrole, Sir Gollylad, a noble Goblin Knight.
+    type: Add
+  id: 560
+  time: '2024-11-24T04:54:36.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/772
