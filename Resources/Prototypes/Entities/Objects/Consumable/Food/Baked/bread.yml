@@ -703,6 +703,33 @@
 # Tastes like France.
 
 - type: entity
+  name: cotton baguette
+  parent: FoodBreadBaguette
+  id: FoodBreadBaguetteCotton
+  description: Bon azzétit!
+  components:
+  - type: Sprite
+    state: baguette-cotton
+  - type: SliceableFood
+    count: 12
+    slice: FoodBreadBaguetteCottonSlice
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: Tag
+    tags:
+    - ClothMade
+  - type: Clothing
+    slots: [ BELT ]
+    equippedPrefix: baguette-cotton
+    quickEquip: false
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: baguette-cotton-inhand-left
+      right:
+      - state: baguette-cotton-inhand-right
+
+- type: entity
   name: crostini
   parent: FoodBreadSliceBase
   id: FoodBreadBaguetteSlice
@@ -723,6 +750,20 @@
           Quantity: 0.1
         - ReagentId: Blackpepper
           Quantity: 0.1
+
+- type: entity
+  name: cotton crostini
+  parent: FoodBreadBaguetteSlice
+  id: FoodBreadBaguetteCottonSlice
+  description: Bon az-zetite!
+  components:
+  - type: Sprite
+    state: crostini-cotton
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: Tag
+    tags:
+    - ClothMade
 
 - type: entity
   name: buttered toast
