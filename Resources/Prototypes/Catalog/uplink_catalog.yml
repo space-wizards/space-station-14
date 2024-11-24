@@ -93,6 +93,7 @@
   id: UplinkPistol9mmMagazine
   category: Ammo
   itemId: MagazinePistol
+  description: Pistol magazine with 10 catridges. Compatible with the Clarissa.
   price: 2
 
 # For the Mandella
@@ -100,6 +101,7 @@
   id: UplinkMagazineClRiflePistol
   category: Ammo
   itemId: MagazineClRiflePistol
+  description: Pistol magazine with 10 catridges. Compatible with the Mandella.
   price: 2
 
 # For the Inspector
@@ -108,7 +110,23 @@
   category: Ammo
   itemId: SLMagnum
   price: 2
+  description: SpeedLoader with 6 catridges. Compatible with the Predator.
   icon: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_sl.rsi/icon.png
+
+- type: uplinkListing
+  id: UplinkSMGMagazine
+  category: Ammo
+  itemId: MagazinePistolSmg
+  description: Rifle magazine with 35 catridges. Compatible with C-20r.
+  price: 4
+  icon: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag.rsi/icon.png
+
+- type: uplinkListing
+  id: UplinkBoxShotgunShell
+  category: Ammo
+  itemId: BoxLethalshot
+  description: The box with 8 shell.
+  price: 5
 
 #Utility
 
@@ -246,8 +264,16 @@
 - type: uplinkListing
   id: UplinkPen
   category: Misc
-  itemId: Pen
-  price: 2
+  itemId: Hypopen
+  description: A chemical hypospray disguised as a pen, capable of instantly injecting up to 10u of reagents. Starts empty.
+  price: 5
+
+- type: uplinkListing
+  id: UplinkAmatoxinBottle
+  category: Misc
+  itemId: AmatoxinChemistryBottle
+  description: A bottle with a chemical reagent called "Amatoxin", which is extremely toxic.
+  price: 5
 
 - type: uplinkListing
   id: UplinkCigarettes

@@ -67,7 +67,7 @@
   - type: StorageFill
     contents:
       - id: ShellShotgunBeanbag
-        amount: 6
+        amount: 8
   - type: Sprite
     layers:
       - state: box_beanbag
@@ -83,7 +83,7 @@
   - type: StorageFill
     contents:
       - id: ShellShotgunBase
-        amount: 6
+        amount: 8
   - type: Sprite
     layers:
       - state: box_lethalshot

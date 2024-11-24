@@ -152,7 +152,7 @@
       - !type:HealthChange
         damage:
           types:
-            Radiation: 3
+            Radiation: 2
 
 - type: reagent
   id: HeartbreakerToxin
@@ -167,7 +167,7 @@
       - !type:HealthChange
         damage:
           types:
-            Asphyxiation: 4
+            Asphyxiation: 3
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: 10
@@ -185,7 +185,7 @@
       - !type:HealthChange
         damage:
           groups:
-            Airloss: 7
+            Asphyxiation: 5
 
 - type: reagent
   id: MindbreakerToxin
@@ -280,4 +280,4 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 6
+            Poison: 3

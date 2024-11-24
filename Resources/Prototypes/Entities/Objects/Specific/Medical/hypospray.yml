@@ -20,6 +20,23 @@
   - type: Hypospray
 
 - type: entity
+  name: pen
+  suffix: Hypopen
+  parent: Pen
+  id: Hypopen
+  description: A dark ink pen.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      hypospray:
+        maxVol: 10
+  - type: RefillableSolution
+    solution: hypospray
+  - type: ExaminableSolution
+    solution: hypospray
+  - type: Hypospray
+
+- type: entity
   name: chemical medipen
   parent: BaseItem
   description: A sterile injector for rapid administration of drugs to patients. This one can't be refilled.

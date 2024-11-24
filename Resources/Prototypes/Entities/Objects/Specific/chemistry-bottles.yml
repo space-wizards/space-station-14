@@ -139,3 +139,17 @@
         - ReagentId: RobustHarvest
           Quantity: 30
 
+- type: entity
+  id: AmatoxinChemistryBottle
+  name: bottle
+  suffix: Amatoxin
+  description: A small bottle.
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Amatoxin
+          Quantity: 30
