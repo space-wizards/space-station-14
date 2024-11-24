@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Initial version of gray ship added.
-    type: Add
-  id: 63
-  time: '2024-08-05T04:20:41.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/76
 - author: TGRCdev
   changes:
   - message: Dragging mobs in crit no longer deals damage
@@ -4288,3 +4281,10 @@
   id: 562
   time: '2024-11-24T22:48:51.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/790
+- author: TheGrimbeeper
+  changes:
+  - message: Artifacts now demand a little comedy
+    type: Add
+  id: 563
+  time: '2024-11-24T22:50:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/778
