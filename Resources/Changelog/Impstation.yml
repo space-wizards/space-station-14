@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: sageu111
-  changes:
-  - message: fix for grays not having headset or ID slot
-    type: Fix
-  id: 58
-  time: '2024-08-03T16:38:33.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/71
-- author: Drags-His-Tail
-  changes:
-  - message: Added 500 Cigarettes, now purchasable from cargo for only $5000, or in
-      an emagged smoke vending machine near you.
-    type: Add
-  id: 59
-  time: '2024-08-03T23:03:57.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/72
 - author: formlessnameless
   changes:
   - message: Codewords should no longer make people locally deaf.
@@ -4286,3 +4271,18 @@
   id: 557
   time: '2024-11-24T02:42:53.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/782
+- author: DinnerCalzone
+  changes:
+  - message: The VILE SHITPIG will now receive insults instead of pets.
+    type: Add
+  id: 558
+  time: '2024-11-24T04:22:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/783
+- author: Pinkbat5
+  changes:
+  - message: 'New emotes: Lizards can hiss, slimes can bubble and pop, and everyone
+      can crack their knuckles.'
+    type: Add
+  id: 559
+  time: '2024-11-24T04:23:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/781
