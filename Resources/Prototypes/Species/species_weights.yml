@@ -3,6 +3,7 @@
   id: SpeciesWeights
   weights:
     Human: 5
-    Reptilian: 4
-    SlimePerson: 4
-    Diona: 2
+    Ovarbi: 4
+    Reptilian: 1
+    SlimePerson: 3
+    Diona: 3

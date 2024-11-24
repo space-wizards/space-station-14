@@ -1,0 +1,9 @@
+- type: entity
+  save: false
+  name: John Fuscian
+  parent: BaseMobFuscian
+  id: MobFuscian
+  components:
+  - type: MovementSpeedModifier
+    baseSprintSpeed: 5
+    baseWalkSpeed: 4.5

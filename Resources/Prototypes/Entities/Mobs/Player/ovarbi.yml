@@ -1,0 +1,9 @@
+- type: entity
+  save: false
+  name: John Ovarbi
+  parent: BaseMobOvarbi
+  id: MobOvarbi
+  components:
+  - type: MovementSpeedModifier
+    baseSprintSpeed: 4
+    baseWalkSpeed: 3

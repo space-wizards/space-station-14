@@ -1,0 +1,10 @@
+- type: species
+  id: Ovarbi
+  name: species-name-ovarbi
+  roundStart: true
+  prototype: MobOvarbi
+  sprites: MobHumanSprites
+  markingLimits: MobHumanMarkingLimits
+  dollPrototype: MobOvarbiDummy
+  skinColoration: HumanToned
+  

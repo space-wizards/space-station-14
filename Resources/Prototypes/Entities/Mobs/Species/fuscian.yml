@@ -1,0 +1,55 @@
+- type: entity
+  parent: BaseCustomMobSpeciesOrganic
+  id: BaseMobFuscian
+  name: John Fuscian
+  abstract: true
+  components:
+  - type: Hunger
+  - type: Icon # Required for icon in adminspawn menu.
+    sprite: Mobs/Species/Human/parts.rsi 
+    state: full
+  - type: Sprite
+    state: full
+    noRot: true
+    drawdepth: Mobs
+    scale: 0.75, 0.77
+  - type: Thirst
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatHuman
+      amount: 5
+  - type: HumanoidAppearance
+    species: Human
+    hideLayersOnEquip:
+    - Hair
+    - Snout
+  - type: Inventory
+    femaleDisplacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: Mobs/Species/Human/displacement.rsi
+            state: jumpsuit-female
+  - type: Fixtures
+    fixtures: # TODO: This needs a second fixture just for mob collisions.
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 120
+        restitution: 0.0
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Speech
+    speechSounds: Bass
+
+- type: entity
+  parent: BaseSpeciesDummy
+  id: MobFuscianDummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    scale: 0.75, 0.77
