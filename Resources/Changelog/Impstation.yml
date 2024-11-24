@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TGRCdev
-  changes:
-  - message: Dragging mobs in crit no longer deals damage
-    type: Tweak
-  id: 64
-  time: '2024-08-06T21:35:36.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/78
 - author: ultramario1998
   changes:
   - message: Removed templar helmet
@@ -4288,3 +4281,12 @@
   id: 563
   time: '2024-11-24T22:50:10.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/778
+- author: hivehum
+  changes:
+  - message: Thirty year olds are no longer considered middle aged.
+    type: Tweak
+  - message: You can now be as old as you want.
+    type: Add
+  id: 564
+  time: '2024-11-24T22:52:37.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/769
