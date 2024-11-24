@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TGRCdev
-  changes:
-  - message: Station records now show correct pronouns
-    type: Fix
-  id: 66
-  time: '2024-08-07T16:25:21.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/80
 - author: FlippenPage
   changes:
   - message: Add Space Cruise mapping elements
@@ -4300,3 +4293,12 @@
   id: 565
   time: '2024-11-24T22:55:25.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/736
+- author: hivehum
+  changes:
+  - message: Added new possible names for Syndicate Recruiters, Ninjas and Revenants.
+    type: Add
+  - message: Added a few new Syndicate codewords.
+    type: Add
+  id: 566
+  time: '2024-11-24T22:56:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/780
