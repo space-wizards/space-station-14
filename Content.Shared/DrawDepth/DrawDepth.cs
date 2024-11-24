@@ -79,33 +79,33 @@ namespace Content.Shared.DrawDepth
         /// </summary>
         Items = DrawDepthTag.Default + 4,
 
-        Mobs = DrawDepthTag.Default + 5,
+        Mobs = DrawDepthTag.Default + 6,
 
-        OverMobs = DrawDepthTag.Default + 6,
+        OverMobs = DrawDepthTag.Default + 7,
 
-        Doors = DrawDepthTag.Default + 7,
+        Doors = DrawDepthTag.Default + 8,
 
         /// <summary>
         /// Blast doors and shutters which go over the usual doors.
         /// </summary>
-        BlastDoors = DrawDepthTag.Default + 8,
+        BlastDoors = DrawDepthTag.Default + 9,
 
         /// <summary>
         /// Stuff that needs to draw over most things, but not effects, like Kudzu.
         /// </summary>
-        Overdoors = DrawDepthTag.Default + 9,
+        Overdoors = DrawDepthTag.Default + 10,
 
         /// <summary>
         ///     Explosions, fire, melee swings. Whatever.
         /// </summary>
-        Effects = DrawDepthTag.Default + 10,
+        Effects = DrawDepthTag.Default + 11,
 
-        Ghosts = DrawDepthTag.Default + 11,
+        Ghosts = DrawDepthTag.Default + 12,
 
         /// <summary>
         ///    Use this selectively if it absolutely needs to be drawn above (almost) everything else. Examples include
         ///    the pointing arrow, the drag & drop ghost-entity, and some debug tools.
         /// </summary>
-        Overlays = DrawDepthTag.Default + 12,
+        Overlays = DrawDepthTag.Default + 13,
     }
 }
