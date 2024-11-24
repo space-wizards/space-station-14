@@ -47,8 +47,8 @@
       params:
         variation: 0.125
         volume: -4
-  - type: ToggleVerb
-    text: fire-extinguisher-component-verb-text
+    verbToggleOn: fire-extinguisher-component-verb-remove
+    verbToggleOff: fire-extinguisher-component-verb-engage
   - type: SpraySafety
   - type: MeleeWeapon
     wideAnimationRotation: 180

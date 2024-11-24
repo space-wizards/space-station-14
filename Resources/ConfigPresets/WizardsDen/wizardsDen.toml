@@ -4,7 +4,7 @@
 [game]
 desc             = "Official English Space Station 14 servers. Vanilla, roleplay ruleset."
 lobbyenabled     = true
-soft_max_players = 70
+soft_max_players = 80
 panic_bunker.enabled = true
 panic_bunker.disable_with_admins = true
 panic_bunker.enable_without_admins = true

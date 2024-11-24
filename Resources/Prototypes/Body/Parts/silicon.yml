@@ -28,82 +28,105 @@
     - Robotics
 
 - type: entity
-  id: BaseBorgArmLeft
+  id: LeftArmBorg
   parent: PartSilicon
   name: cyborg left arm
-  abstract: true
   components:
   - type: BodyPart
     partType: Hand
     symmetry: Left
+  - type: Sprite
+    state: borg_l_arm
+  - type: Icon
+    state: borg_l_arm
   - type: Tag
     tags:
     - Trash
     - BorgArm
+    - BorgLArm
 
 - type: entity
-  id: BaseBorgArmRight
+  id: RightArmBorg
   parent: PartSilicon
   name: cyborg right arm
-  abstract: true
   components:
   - type: BodyPart
     partType: Hand
     symmetry: Right
+  - type: Sprite
+    state: borg_r_arm
+  - type: Icon
+    state: borg_r_arm
   - type: Tag
     tags:
     - Trash
     - BorgArm
+    - BorgRArm
 
 - type: entity
-  id: BaseBorgLegLeft
+  id: LeftLegBorg
   parent: PartSilicon
   name: cyborg left leg
-  abstract: true
   components:
   - type: BodyPart
     partType: Leg
     symmetry: Left
+  - type: Sprite
+    state: borg_l_leg
+  - type: Icon
+    state: borg_l_leg
   - type: Tag
     tags:
     - Trash
     - BorgLeg
+    - BorgLLeg
 
 - type: entity
-  id: BaseBorgLegRight
+  id: RightLegBorg
   parent: PartSilicon
   name: cyborg right leg
-  abstract: true
   components:
   - type: BodyPart
     partType: Leg
     symmetry: Right
+  - type: Sprite
+    state: borg_r_leg
+  - type: Icon
+    state: borg_r_leg
   - type: Tag
     tags:
     - Trash
     - BorgLeg
+    - BorgRLeg
 
 - type: entity
-  id: BaseBorgHead
+  id: LightHeadBorg
   parent: PartSilicon
   name: cyborg head
-  abstract: true
   components:
   - type: BodyPart
     partType: Head
+  - type: Sprite
+    state: borg_head
+  - type: Icon
+    state: borg_head
   - type: Tag
     tags:
     - Trash
     - BorgHead
 
 - type: entity
-  id: BaseBorgTorso
+  id: TorsoBorg
   parent: PartSilicon
   name: cyborg torso
-  abstract: true
   components:
   - type: BodyPart
     partType: Torso
+  - type: Sprite
+    state: borg_chest
+  - type: Icon
+    state: borg_chest
   - type: Tag
     tags:
     - Trash
+    - BorgTorso
