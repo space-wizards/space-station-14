@@ -20,3 +20,5 @@
     slots:
     - back
   - type: DisarmMalus
+  - type: Prying
+    speedModifier: 0.5 # it's not a very good crowbar.

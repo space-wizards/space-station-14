@@ -16,6 +16,7 @@
     jumpsuit: ClothingSpaceCadetJumpsuitColorBlack # temp - remove after sprite refactor
     outerClothing: ClothingOuterGoblinKnightArmor
     back: ClothingBackpackSatchelLeather
+    id: IDCardGoblinKnight
   inhand:
     - GoblinClaymore
     - WoodenBuckler
