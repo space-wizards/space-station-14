@@ -36,7 +36,7 @@ public sealed partial class MechMenu : FancyWindow
         IntegrityDisplayBar.Value = integrityPercent.Float();
         IntegrityDisplay.Text = Loc.GetString("mech-integrity-display", ("amount", (integrityPercent*100).Int()));
 
-        if (mechComp.BatterySlot.ContainedEntity != null && charge != 0f)
+        if (mechComp.BatterySlot.ContainedEntity != null)
         {
             var energyPercent = charge / maxEnergy;
             EnergyDisplayBar.Value = energyPercent;
