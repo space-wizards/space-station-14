@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Goldminermac
-  changes:
-  - message: Chocolate-chip and blueberry pancakes can now be in stacks of up to nine
-      for consistency.
-    type: Fix
-  id: 7147
-  time: '2024-08-19T02:42:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31123
 - author: tosatur
   changes:
   - message: Made hydroponics alert light more orange
@@ -3930,3 +3922,10 @@
   id: 7646
   time: '2024-11-23T16:52:58.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33479
+- author: Winkarst-cpu
+  changes:
+  - message: Now muzzle flashes are displayed below mobs.
+    type: Tweak
+  id: 7647
+  time: '2024-11-24T04:20:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33465
