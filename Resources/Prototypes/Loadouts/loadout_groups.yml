@@ -188,31 +188,6 @@
   - CaptainRepeller #imp
 
 - type: loadoutGroup
-  id: CaptainGloves
-  name: loadout-group-captain-gloves
-  loadouts:
-  - CaptainGloves
-  - CaptainFlightGloves
-
-- type: loadoutGroup
-  id: CaptainShoes
-  name: loadout-group-captain-shoes
-  loadouts:
-  - LacedShoes
-  - LeatherShoes
-  - CommandBlackHeels
-  - CommandBlueHeels
-  - CaptainJumpBoots
-
-- type: loadoutGroup
-  id: CommandHeadset
-  name: loadout-group-command-headset
-  loadouts:
-  - CommandHeadsetBasic
-  - CommandHeadset
-  - CommandVeteranHeadset
-
-- type: loadoutGroup
   id: HoPHead
   name: loadout-group-hop-head
   minLimit: 0
@@ -246,17 +221,6 @@
   - CommandVeteranBackpack #imp
   - CommandVeteranSatchel #imp
   - CommandVeteranDuffel #imp
-
-- type: loadoutGroup
-  id: HoPShoes
-  name: loadout-group-hop-shoes
-  loadouts:
-  - BrownShoes
-  - LacedShoes
-  - LeatherShoes
-  - HoPShoesWhite
-  - CommandBlackHeels
-  - CommandBlueHeels
 
 - type: loadoutGroup
   id: HoPOuterClothing
