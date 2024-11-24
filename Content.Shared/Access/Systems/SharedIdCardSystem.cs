@@ -138,7 +138,6 @@ public abstract class SharedIdCardSystem : EntitySystem
         if (id.LocalizedJobTitle == jobTitle)
             return true;
         id.LocalizedJobTitle = jobTitle;
-        id.JobTitle = jobTitle;
         Dirty(uid, id);
         UpdateEntityName(uid, id);
 

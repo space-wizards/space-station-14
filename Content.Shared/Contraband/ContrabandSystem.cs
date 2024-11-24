@@ -93,15 +93,28 @@ public sealed class ContrabandSystem : EntitySystem
             if (_id.TryFindIdCard(args.Examiner, out var id))
             {
                 departments = id.Comp.JobDepartments;
-                if (id.Comp.JobTitle is not null)
+                if (id.Comp.LocalizedJobTitle is not null)
                 {
-                    jobId = id.Comp.JobTitle;
+                    jobId = id.Comp.LocalizedJobTitle;
                 }
             }
 
+            var localizedContrabandAllowedJobs = "";
+            if (ent.Comp.AllowedJobs is not null)
+            {
+                //grabbing the names of each job in the allowed jobs field
+                foreach (var job in ent.Comp.AllowedJobs)
+                {
+                    //note this Id field means the name of the job, and is
+                    //different from the "id" we're getting the examiner's job from (their Id card)
+                    localizedContrabandAllowedJobs += (job.Id);
+                }
+                localizedContrabandAllowedJobs = Loc.GetString(localizedContrabandAllowedJobs);
+            }
+
             // either its fully restricted, you have no departments, or your departments and job don't intersect with the restricted departments and jobs
-            if (ent.Comp.AllowedJobs is null || ent.Comp.AllowedDepartments is null || departments is null
-                    || (!departments.Intersect(ent.Comp.AllowedDepartments).Any() && !ent.Comp.AllowedJobs.Contains(jobId)))
+            if (ent.Comp.AllowedDepartments is null || departments is null
+                    || (!departments.Intersect(ent.Comp.AllowedDepartments).Any() && !localizedContrabandAllowedJobs.Contains(jobId)))
             {
                 args.PushMarkup(Loc.GetString("contraband-examine-text-avoid-carrying-around"));
                 return;
