@@ -18,9 +18,8 @@ public sealed class XAEPolymorphSystem : BaseXAESystem<XAEPolymorphComponent>
     /// <inheritdoc />
     protected override void OnActivated(Entity<XAEPolymorphComponent> ent, ref XenoArtifactNodeActivatedEvent args)
     {
-        var xform = Transform(ent);
         var humanoids = new HashSet<Entity<HumanoidAppearanceComponent>>();
-        _lookup.GetEntitiesInRange(xform.Coordinates, ent.Comp.Range, humanoids);
+        _lookup.GetEntitiesInRange(args.Coordinates, ent.Comp.Range, humanoids);
 
         foreach (var comp in humanoids)
         {

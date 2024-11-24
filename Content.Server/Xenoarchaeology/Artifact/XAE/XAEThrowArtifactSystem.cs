@@ -4,7 +4,6 @@ using Content.Shared.Physics;
 using Content.Shared.Throwing;
 using Content.Shared.Xenoarchaeology.Artifact;
 using Content.Shared.Xenoarchaeology.Artifact.XAE;
-using Content.Shared.Xenoarchaeology.Artifact.XAE.Components;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;

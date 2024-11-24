@@ -52,8 +52,9 @@ public sealed partial class NodeScannerDisplay : FancyWindow
         }
 
         ArtifactStateLabel.Text = GetState(ent);
-        NodeScannerState.Text = ent.Comp.ScannedAt > TimeSpan.Zero
-            ? Loc.GetString("node-scanner-artifact-scanned-time", ("time", ent.Comp.ScannedAt.Value.ToString(@"hh\:mm\:ss")))
+        var scannedAt = ent.Comp.ScannedAt;
+        NodeScannerState.Text = scannedAt > TimeSpan.Zero
+            ? Loc.GetString("node-scanner-artifact-scanned-time", ("time", scannedAt.Value.ToString(@"hh\:mm\:ss")))
             : Loc.GetString("node-scanner-artifact-scanned-time-none");
     }
 
