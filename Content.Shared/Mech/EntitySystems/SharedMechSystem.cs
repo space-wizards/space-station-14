@@ -265,27 +265,6 @@ public abstract class SharedMechSystem : EntitySystem
     }
 
     /// <summary>
-    /// Attempts to change the amount of energy in the mech.
-    /// </summary>
-    /// <param name="uid">The mech itself</param>
-    /// <param name="delta">The change in energy</param>
-    /// <param name="component"></param>
-    /// <returns>If the energy was successfully changed.</returns>
-    public virtual bool TryChangeEnergy(EntityUid uid, FixedPoint2 delta, MechComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return false;
-
-        if (component.Energy + delta < 0)
-            return false;
-
-        component.Energy = FixedPoint2.Clamp(component.Energy + delta, 0, component.MaxEnergy);
-        Dirty(uid, component);
-        UpdateUserInterface(uid, component);
-        return true;
-    }
-
-    /// <summary>
     /// Sets the integrity of the mech.
     /// </summary>
     /// <param name="uid">The mech itself</param>

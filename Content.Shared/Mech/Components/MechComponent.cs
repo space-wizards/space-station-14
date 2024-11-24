@@ -26,20 +26,6 @@ public sealed partial class MechComponent : Component
     public FixedPoint2 MaxIntegrity = 250;
 
     /// <summary>
-    /// How much energy the mech has.
-    /// Derived from the currently inserted battery.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public FixedPoint2 Energy = 0;
-
-    /// <summary>
-    /// The maximum amount of energy the mech can have.
-    /// Derived from the currently inserted battery.
-    /// </summary>
-    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
-    public FixedPoint2 MaxEnergy = 0;
-
-    /// <summary>
     /// The slot the battery is stored in.
     /// </summary>
     [ViewVariables]
