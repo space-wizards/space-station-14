@@ -92,6 +92,8 @@
       path: /Audio/Voice/Reptilian/reptilian_scream.ogg
     Laugh:
       path: /Audio/Animals/lizard_happy.ogg
+    Hiss: # Imp edit
+      collection: ReptilianHiss
     Sneeze:
       collection: MaleSneezes #placeholder
     Cough:
@@ -124,6 +126,8 @@
       path: /Audio/Voice/Reptilian/reptilian_scream.ogg
     Laugh:
       path: /Audio/Animals/lizard_happy.ogg
+    Hiss: # Imp edit
+      collection: ReptilianHiss
     Sneeze:
       collection: FemaleSneezes #placeholder
     Cough:
@@ -152,6 +156,10 @@
   sounds:
     Squish:
       collection: Squishes
+    Bubble:
+      collection: Bubbles # Imp addition
+    Pop:
+      collection: Pops # Imp addition
     Scream:
       collection: MaleSlimeScreams
     Laugh:
@@ -196,6 +204,10 @@
   sounds:
     Squish:
       collection: Squishes
+    Bubble:
+      collection: Bubbles # Imp addition
+    Pop:
+      collection: Pops # Imp addition
     Scream:
       collection: FemaleSlimeScreams
     Laugh:
@@ -303,7 +315,7 @@
     variation: 0.125
 
 # FemaleDiona is a placeholder until a full set of diona emotes are made.
-# Once they are finished, this should be removed and the female vocal sounds in diona.yml should be set to UnisexMoth   
+# Once they are finished, this should be removed and the female vocal sounds in diona.yml should be set to UnisexMoth
 - type: emoteSounds
   id: FemaleDiona
   sounds:
@@ -332,7 +344,7 @@
     Ungh:
       collection: Ungh
     Gasp:
-      collection: FemaleGasp 
+      collection: FemaleGasp
     DefaultDeathgasp:
       collection: FemaleDeathGasp
   params:
@@ -497,7 +509,7 @@
       collection: MaleGasp
     DefaultDeathgasp:
       collection: MothDeathGasp
-      
+
 # FemaleMoth is a placeholder until a full set of moth emotes are made.
 # Once they are finished, this should be removed and the female vocal sounds in moth.yml should be set to UnisexMoth
 - type: emoteSounds
@@ -585,9 +597,11 @@
     Snap:
       collection: Snaps
       params:
-        volume: -6
+        volume: -3
     Salute:
       collection: Salutes
+    Crack: # Imp addition
+      collection: Cracks
 
 - type: emoteSounds
   id: DionaBodyEmotes
@@ -596,13 +610,13 @@
       path: /Audio/Voice/Diona/diona_clap.ogg
     Snap:
       path: /Audio/Voice/Diona/diona_snap.ogg
-      params:
-        volume: -10
     Salute:
       path: /Audio/Voice/Diona/diona_salute.ogg
       params:
        volume: -5
-       
+    Crack:
+      collection: Cracks
+
 - type: emoteSounds
   id: ReptilianBodyEmotes
   sounds:
@@ -618,6 +632,8 @@
         volume: -6
     Salute:
       collection: Salutes
+    Crack: # Imp addition
+      collection: Cracks
 
 - type: emoteSounds
   id: UnisexSpElf
