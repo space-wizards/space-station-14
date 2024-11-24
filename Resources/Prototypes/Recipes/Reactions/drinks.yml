@@ -98,9 +98,9 @@
     Tequila:
       amount: 1
     VodkaRedBool:
-      amount: 2
+      amount: 3
   products:
-    BudgetInsulsDrink: 3
+    BudgetInsulsDrink: 4
 
 - type: reaction
   id: BlueHawaiian
@@ -1111,11 +1111,11 @@
   id: WhiteRussian
   reactants:
     BlackRussian:
-      amount: 2
+      amount: 1
     Cream:
       amount: 1
   products:
-    WhiteRussian: 3
+    WhiteRussian: 2
 
 - type: reaction
   id: WhiskeySoda
