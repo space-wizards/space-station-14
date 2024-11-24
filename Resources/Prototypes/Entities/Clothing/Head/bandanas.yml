@@ -27,6 +27,7 @@
   - type: Tag
     tags:
     - Bandana
+    - ClothMade
 
 - type: entity
   parent: [ClothingHeadBandBase, ClothingMaskBandBlack]

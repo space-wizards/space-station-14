@@ -5,6 +5,10 @@
   description: Just add capitalism!
   abstract: true
   components:
+  - type: ActionGrant
+    actions:
+    - ActionVendingThrow
+  - type: StationAiWhitelist
   - type: AmbientOnPowered
   - type: AmbientSound
     volume: -9
@@ -75,12 +79,8 @@
     speechVerb: Robotic
     speechSounds: Vending
   - type: IntrinsicRadioReceiver
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Binary
   - type: ActiveRadio
     channels:
-    - Binary
     - Common
   - type: DoAfter
   - type: Electrified
@@ -193,6 +193,41 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Bar"]]
+  - type: GuideHelp
+    guides:
+    - Bartender
+    - Drinks
+
+- type: entity
+  parent: VendingMachineBooze
+  id: VendingMachineBoozeSyndicate # syndie booze-o-mat for nukie outpost
+  name: Bruise-O-Mat
+  description: A refurbished Booze-O-Mat for boosting operative morale. An imprint of a blood-red hardsuit is visible on one side, and the paint seems ashed off on the other side.
+  components:
+  - type: VendingMachine
+    pack: BoozeOMatInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    denyState: deny-unshaded
+    loopDeny: false
+  - type: Advertise
+    pack: BruiseOMatAds
+  - type: SpeakOnUIClosed
+    pack: BruiseOMatGoodbyes
+  - type: Speech
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/bruiseomat.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
   - type: GuideHelp
     guides:
     - Bartender
@@ -680,7 +715,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
-    access: [["Service"]]
+    access: [["Kitchen"]]
   - type: PointLight
     radius: 1.5
     energy: 1.6

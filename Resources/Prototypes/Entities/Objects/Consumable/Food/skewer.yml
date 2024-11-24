@@ -13,11 +13,34 @@
     layers:
     - state: skewer
     - map: ["foodSequenceLayers"]
+  - type: LandAtCursor
+  - type: Fixtures
+    fixtures:
+      fix1: 
+        shape: !type:PolygonShape
+          vertices:
+            - -0.40,-0.20
+            - -0.30,-0.30
+            - 0.50,0.10
+            - 0.40,0.20
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 6
+  - type: ThrowingAngle
+    angle: 245
+  - type: EmbeddableProjectile
+    offset: -0.15,0.0
   - type: MeleeWeapon
     wideAnimationRotation: -120
     damage:
       types:
-        Piercing: 4
+        Piercing: 8
     angle: 0
     animation: WeaponArcThrust
     soundHit:
@@ -35,10 +58,11 @@
         canReact: false # Dont want cause reactions inside skewers after merging ingredients
         maxVol: 0
   - type: FoodSequenceStartPoint
-    key: skewer
+    key: Skewer
     maxLayers: 4
     startPosition: -0.27, -0.19
     inverseLayers: true 
     offset: 0.2, 0.1
     nameGeneration: food-sequence-skewer-gen
     contentSeparator: ", "
+    allowHorizontalFlip: false

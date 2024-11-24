@@ -14,7 +14,7 @@
                  Stretch="KeepAspectCovered" />
     <BoxContainer Name="MainContainer" VerticalExpand="True" HorizontalExpand="True" Orientation="Horizontal"
                   Margin="10 10 10 10" SeparationOverride="2">
-        <SplitContainer State="Auto" HorizontalExpand="True">
+        <SplitContainer State="Auto" ResizeMode="NotResizable" HorizontalExpand="True">
             <!-- LHS Controls -->
             <BoxContainer Name="LeftSide" Orientation="Vertical" SeparationOverride="4" HorizontalExpand="True">
                 <Control Name="DefaultState" VerticalExpand="True">

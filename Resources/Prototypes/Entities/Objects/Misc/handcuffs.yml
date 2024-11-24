@@ -2,7 +2,7 @@
   name: handcuffs
   description: Used to detain criminals and other assholes.
   id: Handcuffs
-  parent: [BaseItem, BaseRestrictedContraband]
+  parent: [BaseItem, BaseSecurityCommandContraband]
   components:
   - type: Item
     size: Small

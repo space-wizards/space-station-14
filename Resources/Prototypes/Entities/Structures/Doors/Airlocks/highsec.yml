@@ -6,6 +6,7 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: StationAiWhitelist
   - type: InteractionOutline
   - type: Sprite
     sprite: Structures/Doors/Airlocks/highsec/highsec.rsi
@@ -15,6 +16,7 @@
     - state: closed_unlit
       shader: unshaded
       map: ["enum.DoorVisualLayers.BaseUnlit"]
+      visible: false
     - state: welded
       map: ["enum.WeldableLayers.BaseWelded"]
     - state: bolted_unlit
@@ -79,6 +81,8 @@
     alwaysRandomize: true
   - type: UserInterface
     interfaces:
+      enum.AiUi.Key:
+        type: StationAiBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: Airtight

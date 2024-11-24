@@ -5,6 +5,12 @@
     count: 3
 
 - type: localizedDataset
+  id: BruiseOMatGoodbyes
+  values:
+    prefix: thankyou-bruiseomat-
+    count: 28
+
+- type: localizedDataset
   id: ChangGoodbyes
   values:
     prefix: thankyou-chang-

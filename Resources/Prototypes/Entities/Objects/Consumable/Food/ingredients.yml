@@ -415,6 +415,38 @@
     node: flat
 
 - type: entity
+  name: cotton dough
+  parent: FoodBakingBase
+  id: FoodDoughCotton
+  description: A piece of fabric dough.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - dough
+    - cotton
+  - type: Sprite
+    state: cotton-dough
+  # - type: SliceableFood # TODO add it
+  #   count: 3
+  #   slice: FoodDoughCottonSlice
+  - type: Construction
+    graph: CottonPizza
+    node: start
+  - type: Tag
+    tags:
+    - Ingredient
+    - ClothMade
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 18
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Fiber
+          Quantity: 10
+
+- type: entity
   name: raw pastry base
   parent: FoodBakingBase
   id: FoodDoughPastryBaseRaw
@@ -455,6 +487,18 @@
   - type: SliceableFood
     count: 3
     slice: FoodCroissantRaw
+
+- type: entity
+  name: flat cotton dough
+  parent: FoodBakingBase
+  id: FoodDoughCottonFlat
+  description: A flattened cotton dough.
+  components:
+  - type: Sprite
+    state: cotton-dough-flat
+  - type: Construction
+    graph: CottonPizza
+    node: flat
 
 - type: entity
   name: pizza bread
@@ -598,14 +642,9 @@
     tags:
     - Slice
   - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/ingredients.rsi
-      state: cheesewedge
     entries:
-      burger:
-        name: food-sequence-content-cheese
-      taco: 
-        name: food-sequence-content-cheese
+      Taco: CheeseTaco
+      Burger: CheeseBurger
 
 - type: entity
   name: chèvre log
@@ -656,15 +695,6 @@
   - type: Tag
     tags:
     - Slice
-  - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/ingredients.rsi
-      state: chevredisk
-    entries:
-      burger:
-        name: food-sequence-content-chevre
-      taco: 
-        name: food-sequence-content-chevre
 
 - type: entity
   name: tofu
@@ -713,15 +743,6 @@
   - type: Tag
     tags:
     - Slice
-  - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Consumable/Food/ingredients.rsi
-      state: tofu
-    entries:
-      burger:
-        name: food-sequence-content-tofu
-      taco: 
-        name: food-sequence-content-tofu
 
 - type: entity
   name: burned mess
@@ -778,15 +799,6 @@
   - type: Tag
     tags:
       - Ingredient
-  - type: FoodSequenceElement
-    sprite:
-      sprite: Objects/Specific/Hydroponics/cocoa.rsi
-      state: produce-beans
-    entries:
-      burger:
-        name: food-sequence-content-cocoa
-      taco: 
-        name: food-sequence-content-cocoa
 
 - type: entity
   name: raw croissant

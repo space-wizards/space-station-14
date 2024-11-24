@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/bd6873fd4dd6a61d7e46f1d75cd4d90f64c40894. comm_syndie made by Veritius, based on comm.",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/bd6873fd4dd6a61d7e46f1d75cd4d90f64c40894. comm_syndie made by Veritius, based on comm. generic_panel_open made by Errant, commit https://github.com/space-wizards/space-station-14/pull/32273.",
   "size": {
     "x": 32,
     "y": 32
@@ -1011,6 +1011,10 @@
         },
         {
             "name": "generic_keys",
+            "directions": 4
+        },
+        {
+            "name": "generic_panel_open",
             "directions": 4
         },
         {

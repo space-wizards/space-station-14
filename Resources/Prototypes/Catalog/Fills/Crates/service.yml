@@ -91,7 +91,8 @@
     - id: ClothingUniformJumpskirtOldDress
     - id: BikeHorn
     - id: ClownRecorder
-    - id: ClothingBeltSuspenders
+    - id: ClothingBeltSuspendersRed
+    - id: ClothingBeltSuspendersBlack
 
 - type: entity
   id: CrateServiceCustomSmokable
@@ -129,6 +130,7 @@
     - id: BoxFolderYellow
     - id: NewtonCradle
     - id: BoxEnvelope
+    - id: BrbSign
 
 - type: entity
   id: CrateServiceFaxMachine
