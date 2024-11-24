@@ -34,7 +34,8 @@ public sealed class RadioImplantSystem : EntitySystem
         var activeRadio = EnsureComp<ActiveRadioComponent>(ev.Implanted.Value);
         activeRadio.Channels.Add(comp.RadioChannel);
 
-        var intrinsicRadioReceiver = EnsureComp<IntrinsicRadioReceiverComponent>(ev.Implanted.Value);
+        EnsureComp<IntrinsicRadioReceiverComponent>(ev.Implanted.Value);
+
         var intrinsicRadioTransmitter = EnsureComp<IntrinsicRadioTransmitterComponent>(ev.Implanted.Value);
         intrinsicRadioTransmitter.Channels.Add(comp.RadioChannel);
     }
