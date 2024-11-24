@@ -644,6 +644,17 @@
     sprite: Clothing/Uniforms/Jumpsuit/security_trooper.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/security_trooper.rsi
+    
+- type: entity
+  parent: [ClothingUniformBase, BaseRestrictedContraband]
+  id: ClothingUniformSecurityTshirt
+  name: t-shirt security uniform
+  description: Light and unrestrictive uniform, so that nothing can stop you from swinging a stunbaton.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/security_tshirt.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/security_tshirt.rsi
 
 - type: entity
   parent: [ClothingUniformBase, BaseRestrictedContraband]

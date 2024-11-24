@@ -467,3 +467,26 @@
     sprite: Clothing/OuterClothing/Coats/expensive_coat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/expensive_coat.rsi
+    
+- type: entity
+  parent: [ClothingOuterStorageFoldableBase, AllowSuitStorageClothing, BaseRestrictedContraband]
+  id: ClothingOuterSecurityBomber
+  name: security bomber
+  description: A regular bomber, but with armored inserts.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/security_bomber.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/security_bomber.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: 0.9
+
+- type: entity
+  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterSecurityBomber]
+  id: ClothingOuterSecurityBomberOpened
+  name: security bomber
