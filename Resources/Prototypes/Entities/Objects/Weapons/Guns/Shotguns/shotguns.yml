@@ -116,7 +116,7 @@
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun_inhands_64x.rsi
   - type: GunRequiresWield #remove when inaccuracy on spreads is fixed
   - type: Gun
-    fireRate: 2
+    fireRate: 3
   - type: BallisticAmmoProvider
     capacity: 2
   - type: Construction
@@ -184,7 +184,7 @@
   parent: BaseWeaponShotgun
   id: WeaponShotgunSawn
   description: Groovy! Uses .50 shotgun shells.
-  components:
+  components: # needs to be super inaccurate because you don't need to wield it
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi
   - type: Clothing
@@ -193,7 +193,7 @@
     size: Small
     sprite: Objects/Weapons/Guns/Shotguns/sawn_inhands_64x.rsi
   - type: Gun
-    fireRate: 4
+    fireRate: 3
   - type: BallisticAmmoProvider
     capacity: 2
   - type: Construction
