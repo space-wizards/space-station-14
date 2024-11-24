@@ -2,8 +2,10 @@
   id: Vape
   parent: BaseVape
   name: vape
-  description: "Like a cigar, but for tough teens. (WARNING:Pour only water into the vape)"
+  description: "Like a cigar, but for tough teens."
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Vapes/vape-standard.rsi
     state: icon
+  - type: Riggable
+    solution: smokable

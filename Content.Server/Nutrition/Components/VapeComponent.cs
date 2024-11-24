@@ -1,47 +1,45 @@
 using Content.Server.Nutrition.EntitySystems;
-using Content.Shared.Damage;
 using Content.Shared.Atmos;
+using Content.Shared.Damage;
 
-namespace Content.Server.Nutrition.Components // Vapes are very nutritious.
+namespace Content.Server.Nutrition.Components;
+
+[RegisterComponent, Access(typeof(SmokingSystem))]
+public sealed partial class VapeComponent : Component
 {
-    [RegisterComponent, Access(typeof(SmokingSystem))]
-    public sealed partial class VapeComponent : Component
-    {
-        [DataField("delay")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float Delay { get; set; } = 5;
+    /// <summary>
+    /// Do after delay for a forced puff.
+    /// </summary>
+    [DataField]
+    public float Delay = 5;
 
-        [DataField("userDelay")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float UserDelay { get; set; } = 2;
+    /// <summary>
+    /// Do after delay for a puff.
+    /// </summary>
+    [DataField]
+    public float UserDelay = 2;
 
-        [DataField("explosionIntensity")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float ExplosionIntensity { get; set; } = 2.5f;
+    /// <summary>
+    /// Intensity of a vape explosion.
+    /// </summary>
+    [DataField]
+    public float ExplosionIntensity = 2.5f;
 
-        // TODO use RiggableComponent.
-        [DataField("explodeOnUse")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool ExplodeOnUse { get; set; } = false;
+    /// <summary>
+    /// Vape damage to lungs.
+    /// </summary>
+    [DataField(required: true)]
+    public DamageSpecifier Damage = default!;
 
-        [DataField("damage", required: true)]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public DamageSpecifier Damage = default!;
+    /// <summary>
+    /// Gas that vape will release.
+    /// </summary>
+    [DataField]
+    public Gas GasType = Gas.WaterVapor;
 
-        [DataField("gasType")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public Gas GasType { get; set; } = Gas.WaterVapor;
-
-        /// <summary>
-        /// Solution volume will be divided by this number and converted to the gas
-        /// </summary>
-        [DataField("reductionFactor")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public float ReductionFactor { get; set; } = 300f;
-
-        // TODO when this gets fixed, use prototype serializers
-        [DataField("solutionNeeded")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public string SolutionNeeded = "Water";
-    }
+    /// <summary>
+    /// Solution volume will be divided by this number and converted to the gas.
+    /// </summary>
+    [DataField]
+    public float ReductionFactor = 300f;
 }

@@ -1,6 +1,5 @@
-﻿using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.DoAfter;
-using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -36,25 +35,8 @@ public sealed partial class ConsumeDoAfterEvent : DoAfterEvent
 ///     Do after event for vape.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class VapeDoAfterEvent : DoAfterEvent
+public sealed partial class VapeDoAfterEvent : SimpleDoAfterEvent
 {
-    [DataField("solution", required: true)]
-    public Solution Solution = default!;
-
-    [DataField("forced", required: true)]
-    public bool Forced = default!;
-
-    private VapeDoAfterEvent()
-    {
-    }
-
-    public VapeDoAfterEvent(Solution solution, bool forced)
-    {
-        Solution = solution;
-        Forced = forced;
-    }
-
-    public override DoAfterEvent Clone() => this;
 }
 
 /// <summary>
