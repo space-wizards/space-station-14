@@ -10,6 +10,15 @@
   - type: Icon
     sprite: Mobs/Species/Slime/parts.rsi # It was like this beforehand, no idea why.
     state: full
+  - type: Ovarbi
+    modifiers:
+      coefficients:
+        Blunt: 1.2
+        Slash: 1.2
+        Piercing: 1.2
+        Asphyxiation: 1.2
+  - type: Damageable
+    damageModifierSet: Ovarbi
   - type: Respirator
     damage:
       types:
@@ -65,10 +74,7 @@
   - type: SlowOnDamage
     speedModifierThresholds:
       60: 0.6  # 0.7 is base speed.
-      80: 0.4  # 0.5 is base speed.    
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 3
-    baseSprintSpeed: 4
+      80: 0.4  # 0.5 is base speed.
   - type: MeleeWeapon
     soundHit:
       collection: Punch
@@ -77,7 +83,7 @@
     damage:
       types:
         Blunt: 10
-        
+
 - type: entity
   parent: BaseSpeciesDummy
   id: MobOvarbiDummy
@@ -92,6 +98,3 @@
           32:
             sprite: Mobs/Species/Human/displacement.rsi
             state: jumpsuit-female
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 3
-    baseSprintSpeed: 4

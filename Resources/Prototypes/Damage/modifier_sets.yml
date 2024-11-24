@@ -306,3 +306,18 @@
   id: PotassiumIodide
   coefficients:
     Radiation: 0.1
+
+# Racial Damage Modifiers
+- type: damageModifierSet
+  id: Ovarbi
+  coefficients:
+    Blunt: 0.85
+    Slash: 0.85
+    Piercing: 0.85
+
+- type: damageModifierSet
+  id: Tabraxi
+  coefficients:
+    Blunt: 1.15
+    Slash: 1.15
+    Piercing: 1.15
