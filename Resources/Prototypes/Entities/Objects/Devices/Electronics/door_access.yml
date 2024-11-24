@@ -30,7 +30,7 @@
   suffix: Bar, Locked
   components:
   - type: AccessReader
-    access: [["Bar"]]
+    access: [["Bar"], ["Janitor"]]
 
 - type: entity
   parent: DoorElectronics
@@ -38,7 +38,7 @@
   suffix: Bar, Locked
   components:
   - type: AccessReader
-    access: [["Bar"], ["Kitchen"]]
+    access: [["Bar"], ["Kitchen"], ["Janitor"]]
 
 - type: entity
   parent: DoorElectronics
@@ -46,7 +46,7 @@
   suffix: Hydroponics, Locked
   components:
   - type: AccessReader
-    access: [["Hydroponics"]]
+    access: [["Hydroponics"], ["Janitor"]]
 
 - type: entity
   parent: DoorElectronics
@@ -54,7 +54,7 @@
   suffix: Chapel, Locked
   components:
   - type: AccessReader
-    access: [["Chapel"]]
+    access: [["Chapel"], ["Janitor"]]
 
 - type: entity
   parent: DoorElectronics
@@ -62,7 +62,7 @@
   suffix: Theatre, Locked
   components:
   - type: AccessReader
-    access: [["Theatre"]]
+    access: [["Theatre"], ["Janitor"]]
 
 - type: entity
   parent: DoorElectronics
@@ -70,7 +70,7 @@
   suffix: Kitchen, Locked
   components:
   - type: AccessReader
-    access: [["Kitchen"]]
+    access: [["Kitchen"], ["Janitor"]]
 
 - type: entity
   parent: DoorElectronics
@@ -78,7 +78,7 @@
   suffix: Kitchen/Hydroponics, Locked
   components:
   - type: AccessReader
-    access: [["Kitchen"], ["Hydroponics"]]
+    access: [["Kitchen"], ["Hydroponics"], ["Janitor"]]
 
 - type: entity
   parent: DoorElectronics
@@ -94,7 +94,7 @@
   suffix: Lawyer, Locked
   components:
   - type: AccessReader
-    access: [["Lawyer"]]
+    access: [["Lawyer"], ["Janitor"]]
 
 - type: entity
   parent: DoorElectronics
@@ -119,7 +119,7 @@
   suffix: Salvage, Locked
   components:
   - type: AccessReader
-    access: [["Salvage"]]
+    access: [["Salvage"], ["Janitor"]]
 
 - type: entity
   parent: DoorElectronics
@@ -127,7 +127,7 @@
   suffix: Cargo, Locked
   components:
   - type: AccessReader
-    access: [["Cargo"]]
+    access: [["Cargo"], ["Janitor"]]
 
 # Engineering
 - type: entity
@@ -152,7 +152,7 @@
   suffix: Engineering, Locked
   components:
   - type: AccessReader
-    access: [["Engineering"]]
+    access: [["Engineering"], ["Janitor"]]
 
 # Science
 - type: entity
@@ -161,7 +161,7 @@
   suffix: Morgue, Locked
   components:
   - type: AccessReader
-    access: [["Medical"], ["Detective"], ["Chapel"]]
+    access: [["Medical"], ["Detective"], ["Chapel"], ["Janitor"]]
 
 - type: entity
   parent: DoorElectronics
@@ -177,7 +177,7 @@
   suffix: Medical/Science, Locked
   components:
   - type: AccessReader
-    access: [["Research"], ["Medical"]]
+    access: [["Research"], ["Medical"], ["Janitor"]]
 
 - type: entity
   parent: DoorElectronics
@@ -185,7 +185,7 @@
   suffix: Research, Locked
   components:
   - type: AccessReader
-    access: [["Research"]]
+    access: [["Research"], ["Janitor"]]
 
 # Security
 - type: entity
@@ -226,7 +226,7 @@
   suffix: Security/Lawyer, Locked
   components:
   - type: AccessReader
-    access: [["Security"], ["Lawyer"]]
+    access: [["Security"], ["Lawyer"], ["Janitor"]]
 
 - type: entity
   parent: DoorElectronics
@@ -234,7 +234,7 @@
   suffix: Brig, Locked
   components:
   - type: AccessReader
-    access: [["Brig"]]
+    access: [["Brig"], ["Janitor"]]
 
 # Medical
 - type: entity
@@ -259,7 +259,7 @@
   suffix: Medical, Locked
   components:
   - type: AccessReader
-    access: [["Medical"]]
+    access: [["Medical"], ["Janitor"]]
 
 # Syndicate
 - type: entity
