@@ -121,7 +121,7 @@ namespace Content.Client.UserInterface.Controls
             {
                 var toleranceMargin = i * cfgToleranceMargin;
                 var toleranceClip = i * cfgToleranceClip;
-                var scaled = (Vector2) Viewport.ViewportSize * i;
+                var scaled = (Vector2)Viewport.ViewportSize * i;
                 var (dx, dy) = PixelSize - scaled;
 
                 // The rule for which snap fits is that at LEAST one axis needs to be in the tolerance size wise.
