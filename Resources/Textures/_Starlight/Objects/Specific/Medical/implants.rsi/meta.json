@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taked from SS13",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "eye_implant_welding"
+    },
+    {
+      "name": "eye_implant_diagnostic"
+    },
+    {
+      "name": "eye_implant_janitor"
+    },
+    {
+      "name": "eye_implant_medical"
+    },
+    {
+      "name": "eye_implant_security"
+    },
+    {
+      "name": "eye_implant_syndicate"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+- type: entity
+  id: BaseImplant
+  abstract: true
+  components:
+  - type: OrganImplant
+  - type: Damageable
+    damageContainer: Inorganic

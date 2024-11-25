@@ -309,7 +309,7 @@
   - type: Sprite
     sprite: _Starlight/Objects/Misc/implants.rsi
     layers:
-      - state: welding_implant
+      - state: eye_implant_welding
 
 - type: entity
   parent: SurgeryStepBase
@@ -838,7 +838,7 @@
   - type: Sprite
     sprite: _Starlight/Objects/Misc/implants.rsi
     layers:
-      - state: welding_implant
+      - state: eye_implant_welding
 
 # tongue
 

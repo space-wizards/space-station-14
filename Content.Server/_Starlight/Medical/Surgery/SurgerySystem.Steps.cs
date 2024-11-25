@@ -100,27 +100,6 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
                 {
                     _blindable.SetMinDamage((body, blindable), organEyes.MinDamage ?? 0);
                     _blindable.AdjustEyeDamage((body, blindable), (organEyes.EyeDamage ?? 0) - blindable.MaxDamage);
-                    // This needs to be redesigned into prototypes.
-                    if (_tag.HasTag(organId, "MedCyberEyes"))
-                    {
-                        AddComp<EyeProtectionComponent>(body);
-                        AddComp<ShowHealthIconsComponent>(body);
-                        AddComp<ShowJobIconsComponent>(body);
-                    }
-                    if (_tag.HasTag(organId, "SecCyberEyes"))
-                    {
-                        AddComp<EyeProtectionComponent>(body);
-                        AddComp<ShowCriminalRecordIconsComponent>(body);
-                        AddComp<ShowJobIconsComponent>(body);
-                    }
-                    if (_tag.HasTag(organId, "OmniCyberEyes"))
-                    {
-                        AddComp<EyeProtectionComponent>(body);
-                        AddComp<ShowCriminalRecordIconsComponent>(body);
-                        AddComp<ShowHealthIconsComponent>(body);
-                        AddComp<ShowHealthBarsComponent>(body);
-                        AddComp<ShowJobIconsComponent>(body);
-                    }
                 }
                 if (TryComp<OrganImplantComponent>(organId, out var implant))
                 {
@@ -168,27 +147,6 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
                         organEyes.EyeDamage = blindable.EyeDamage;
                         organEyes.MinDamage = blindable.MinDamage;
                         _blindable.UpdateIsBlind((args.Body, blindable));
-                        // This needs to be redesigned into prototypes.
-                        if (_tag.HasTag(organ.Id, "MedCyberEyes"))
-                        {
-                            RemComp<EyeProtectionComponent>(args.Body);
-                            RemComp<ShowHealthIconsComponent>(args.Body);
-                            RemComp<ShowJobIconsComponent>(args.Body);
-                        }
-                        if (_tag.HasTag(organ.Id, "SecCyberEyes"))
-                        {
-                            RemComp<EyeProtectionComponent>(args.Body);
-                            RemComp<ShowCriminalRecordIconsComponent>(args.Body);
-                            RemComp<ShowJobIconsComponent>(args.Body);
-                        }
-                        if (_tag.HasTag(organ.Id, "OmniCyberEyes"))
-                        {
-                            RemComp<EyeProtectionComponent>(args.Body);
-                            RemComp<ShowCriminalRecordIconsComponent>(args.Body);
-                            RemComp<ShowHealthIconsComponent>(args.Body);
-                            RemComp<ShowHealthBarsComponent>(args.Body);
-                            RemComp<ShowJobIconsComponent>(args.Body);
-                        }
                     }
                     if (TryComp<OrganImplantComponent>(organ.Id, out var implant))
                     {
