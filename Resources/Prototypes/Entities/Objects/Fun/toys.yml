@@ -213,16 +213,6 @@
 
 - type: entity
   parent: BaseItem
-  id: ToyGriffin
-  name: griffin toy
-  description: An action figure modeled after 'The Griffin', criminal mastermind.
-  components:
-  - type: Sprite
-    sprite: Objects/Fun/toys.rsi
-    state: griffinprize
-
-- type: entity
-  parent: BaseItem
   id: ToyHonk
   name: h.o.n.k. toy
   description: Mini-Mecha action figure! 'Mecha No. 6/12' is written on the back.
@@ -286,16 +276,6 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: odysseusprize
-
-- type: entity
-  parent: BaseItem
-  id: ToyOwlman
-  name: owl toy
-  description: An action figure modeled after 'The Owl', defender of justice.
-  components:
-  - type: Sprite
-    sprite: Objects/Fun/toys.rsi
-    state: owlprize
 
 - type: entity
   parent: BaseItem
@@ -368,20 +348,6 @@
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: durandprize
-
-
-### Yeah I left these all mixed up for a future coder to puzzle over, it's lore.
-### Help i'm sorting these and my previous self let this message here to taunt me aaaaa
-
-- type: entity
-  parent: BaseItem
-  id: ToySkeleton
-  name: skeleton toy
-  description: Spooked ya!
-  components:
-  - type: Sprite
-    sprite: Objects/Fun/toys.rsi
-    state: skeletonprize
 
 ## Toyweapons
 
