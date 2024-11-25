@@ -522,13 +522,7 @@
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/rawr.ogg
-  - type: EmitSoundOnLand
-    sound:
-      path: /Audio/Items/Toys/rawr.ogg
   - type: EmitSoundOnActivate
-    sound:
-      path: /Audio/Items/Toys/rawr.ogg
-  - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Items/Toys/rawr.ogg
   - type: EmitSoundOnCollide
