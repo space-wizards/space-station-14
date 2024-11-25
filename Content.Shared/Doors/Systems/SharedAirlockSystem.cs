@@ -39,12 +39,11 @@ public abstract class SharedAirlockSystem : EntitySystem
         if (args.Handled || !args.Complex)
             return;
 
-        if (!ent.Comp.KeepOpenIfClicked || ent.Comp.AutoClose)
-            return;
-
-        args.Handled = true;
-        ent.Comp.AutoClose = false;
-        Dirty(ent);
+        if (ent.Comp.KeepOpenIfClicked && ent.Comp.AutoClose)
+        {
+            ent.Comp.AutoClose = false;
+            Dirty(ent);
+        }
     }
 
     private void OnAirlockInteractUsing(Entity<AirlockComponent> ent, ref InteractUsingEvent args)
