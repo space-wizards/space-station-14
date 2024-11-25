@@ -24,6 +24,11 @@
   name: shell (.50 beanbag)
   parent: BaseShellShotgun
   components:
+  - type: Tag
+    tags:
+    - Cartridge
+    - ShellShotgun
+    - ShellShotgunLight
   - type: Sprite
     layers:
       - state: beanbag
@@ -52,6 +57,11 @@
   name: shell (.50 flare)
   parent: BaseShellShotgun
   components:
+  - type: Tag
+    tags:
+    - Cartridge
+    - ShellShotgun
+    - ShellShotgunLight
   - type: Sprite
     layers:
       - state: flare
@@ -106,6 +116,11 @@
   name: shell (.50 tranquilizer)
   parent: BaseShellShotgun
   components:
+  - type: Tag
+    tags:
+    - Cartridge
+    - ShellShotgun
+    - ShellShotgunLight
   - type: Sprite
     layers:
       - state: tranquilizer
@@ -130,6 +145,11 @@
   description: A homemade shotgun shell that shoots painful glass shrapnel. The spread is so wide that it couldn't hit the broad side of a barn.
   parent: BaseShellShotgun
   components:
+  - type: Tag
+    tags:
+    - Cartridge
+    - ShellShotgun
+    - ShellShotgunLight
   - type: Sprite
     layers:
       - state: improvised

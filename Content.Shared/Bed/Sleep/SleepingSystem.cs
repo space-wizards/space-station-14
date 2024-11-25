@@ -130,9 +130,6 @@ public sealed partial class SleepingSystem : EntitySystem
         RaiseLocalEvent(ent, ref ev);
         _blindableSystem.UpdateIsBlind(ent.Owner);
         _actionsSystem.AddAction(ent, ref ent.Comp.WakeAction, WakeActionId, ent);
-
-        // TODO remove hardcoded time.
-        _actionsSystem.SetCooldown(ent.Comp.WakeAction, _gameTiming.CurTime, _gameTiming.CurTime + TimeSpan.FromSeconds(2f));
     }
 
     private void OnSpeakAttempt(Entity<SleepingComponent> ent, ref SpeakAttemptEvent args)
