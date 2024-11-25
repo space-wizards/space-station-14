@@ -719,6 +719,8 @@ public abstract partial class SharedDoorSystem : EntitySystem
         }
 
         door.NextStateChange = GameTiming.CurTime + delay.Value;
+        Dirty(uid, door);
+
         _activeDoors.Add((uid, door));
     }
 

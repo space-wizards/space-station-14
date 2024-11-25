@@ -1,39 +1,4 @@
 ﻿Entries:
-- author: Moomoobeef
-  changes:
-  - message: Added pitchers for the chef who wants to serve beverages too.
-    type: Add
-  id: 7150
-  time: '2024-08-19T03:01:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31105
-- author: EmoGarbage404
-  changes:
-  - message: Space carp and Sharkminnows now drop teeth when butchered.
-    type: Add
-  - message: Added new bounties for carp and shark teeth.
-    type: Add
-  id: 7151
-  time: '2024-08-19T03:04:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31070
-- author: to4no_fix
-  changes:
-  - message: Now it takes 5 seconds to take off or put on a muzzle
-    type: Tweak
-  - message: Now it takes 5 seconds to take off or put on a blindfold
-    type: Tweak
-  - message: Added a recipe for producing a straitjacket, it opens when researching
-      the Special Means technology, it can be produced at the security techfab
-    type: Add
-  id: 7152
-  time: '2024-08-19T03:05:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31095
-- author: Magicalus
-  changes:
-  - message: Suit sensors, borgs, and PDAs can no longer be saved to device-lists.
-    type: Tweak
-  id: 7153
-  time: '2024-08-19T03:13:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30997
 - author: UBlueberry
   changes:
   - message: The guidebook entries for all antagonists have been revised.
@@ -3928,3 +3893,33 @@
   id: 7649
   time: '2024-11-24T08:49:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32890
+- author: slarticodefast
+  changes:
+  - message: Fixed doors not auto-closing correctly after being unbolted in an open
+      state.
+    type: Fix
+  id: 7650
+  time: '2024-11-25T04:26:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33524
+- author: Schrodinger71
+  changes:
+  - message: Fixed a bug letting players type "ghost" in the console and then see
+      the whole chat while being in the lobby.
+    type: Fix
+  id: 7651
+  time: '2024-11-25T07:20:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33529
+- author: Minemoder
+  changes:
+  - message: The shark plushie now goes rawr when hitting something or being thrown.
+    type: Tweak
+  id: 7652
+  time: '2024-11-25T12:23:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33540
+- author: red15
+  changes:
+  - message: Vending machine lights turns off when broken.
+    type: Fix
+  id: 7653
+  time: '2024-11-25T12:35:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33513
