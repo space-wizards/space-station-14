@@ -57,7 +57,6 @@
       collection: MetalThud
   - type: Clothing
     sprite: _Impstation/Objects/Misc/nullrod.rsi
-    state: nullrod_base
     quickEquip: false
     slots:
     - Belt
@@ -198,10 +197,10 @@
       path: /Audio/_Impstation/Weapons/nullglove.ogg
       params:
         variation: 0.35
+    mustBeEquippedToUse: true
   - type: Reflect
     reflectProb: .22
     spread: 120
-    mustBeEquippedToUse: true
   - type: Fiber
     fiberMaterial: fibers-metallic
     fiberColor: fibers-silver
