@@ -72,6 +72,7 @@ entities:
       configurators: []
       deviceLists: []
       transmitFrequencyId: ShuttleTimer
+      deviceNetId: Wireless
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -669,45 +670,46 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 21.5,-3.5
       parent: 1
-    - type: Apc
-      lastExternalState: Low
-      lastChargeState: Full
     - type: PowerNetworkBattery
       loadingNetworkDemand: 18077
       currentReceiving: 18076.947
       currentSupply: 18077
       supplyRampPosition: 0.052734375
-- proto: AtmosDeviceFanTiny
+- proto: AtmosDeviceFanDirectional
   entities:
-  - uid: 928
+  - uid: 4
     components:
     - type: Transform
-      pos: 14.5,1.5
+      pos: -2.5,-11.5
       parent: 1
-  - uid: 929
+  - uid: 33
     components:
     - type: Transform
-      pos: 12.5,1.5
-      parent: 1
-  - uid: 930
-    components:
-    - type: Transform
-      pos: 6.5,1.5
-      parent: 1
-  - uid: 931
-    components:
-    - type: Transform
+      rot: 3.141592653589793 rad
       pos: 4.5,1.5
       parent: 1
-  - uid: 932
+  - uid: 42
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 6.5,1.5
+      parent: 1
+  - uid: 43
     components:
     - type: Transform
       pos: -1.5,-11.5
       parent: 1
-  - uid: 933
+  - uid: 51
     components:
     - type: Transform
-      pos: -2.5,-11.5
+      rot: 3.141592653589793 rad
+      pos: 12.5,1.5
+      parent: 1
+  - uid: 54
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 14.5,1.5
       parent: 1
 - proto: BedsheetMedical
   entities:

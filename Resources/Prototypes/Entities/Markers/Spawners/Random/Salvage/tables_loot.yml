@@ -114,6 +114,8 @@
         range: 4, 7
     - id: SpaceCash1000
     - id: WristwatchGold
+    - !type:NestedSelector
+      tableId: RingTableCommon
 
 - type: entityTable
   id: SalvageTreasureRare
@@ -145,6 +147,8 @@
           weight: 14
         - id: SpaceCash10000
           weight: 1
+    - !type:NestedSelector
+      tableId: RingTableRare
 
 - type: entityTable
   id: SalvageTreasureLegendary
@@ -157,6 +161,10 @@
     - id: TreasureCoinDiamond
       amount: !type:RangeNumberSelector
         range: 2, 5
+    - !type:NestedSelector
+      tableId: RingTableRare
+      rolls: !type:RangeNumberSelector
+        range: 2, 3
 
 # Equipment: Tools and things used by salvagers. Quote unquote "Gamer Loot"
 
@@ -189,10 +197,12 @@
     - id: PowerCellHighPrinted
     - id: RadioHandheld
     - id: ClothingBeltUtility
+    - id: Floodlight
     - id: WeaponProtoKineticAccelerator
       weight: 0.5
     - id: OxygenTankFilled
     - id: WelderIndustrial
+    - id: WeaponGrapplingGun
     - !type:GroupSelector
       children:
       - id: ClothingHeadHatWelding
@@ -217,6 +227,8 @@
     - id: ClothingEyesGlassesMeson
     - id: ClothingBeltSalvageWebbing
     - id: SeismicCharge
+    - id: MineralScanner
+      weight: 0.5
     - id: WeaponCrusher
       weight: 0.5
     - !type:GroupSelector
@@ -228,6 +240,9 @@
   id: SalvageEquipmentLegendary
   table: !type:GroupSelector
     children:
+    - id: AdvancedMineralScanner
+    - id: BlueprintFulton
+    - id: BlueprintSeismicCharge
     - id: WeaponCrusherGlaive
     - id: ClothingOuterHardsuitSalvage
     - id: OmnizineChemistryBottle

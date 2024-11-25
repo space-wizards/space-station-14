@@ -84,7 +84,6 @@ namespace Content.Server.Power.EntitySystems
             while (query.MoveNext(out var uid, out var comp, out var batt))
             {
                 if (!comp.AutoRecharge) continue;
-                if (batt.IsFullyCharged) continue;
                 SetCharge(uid, batt.CurrentCharge + comp.AutoRechargeRate * frameTime, batt);
             }
         }
@@ -138,7 +137,8 @@ namespace Content.Server.Power.EntitySystems
 
             var old = battery.CurrentCharge;
             battery.CurrentCharge = MathHelper.Clamp(value, 0, battery.MaxCharge);
-            if (MathHelper.CloseTo(battery.CurrentCharge, old))
+            if (MathHelper.CloseTo(battery.CurrentCharge, old) &&
+                !(old != battery.CurrentCharge && battery.CurrentCharge == battery.MaxCharge))
                 return;
 
             var ev = new ChargeChangedEvent(battery.CurrentCharge, battery.MaxCharge);

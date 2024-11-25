@@ -20,8 +20,6 @@
         density: 15
         mask:
           - MachineMask
-  - type: CargoPallet
-    palletType: All
   - type: StaticPrice
     price: 100
   - type: Sprite
@@ -30,7 +28,7 @@
     - sprite: Structures/catwalk.rsi
       state: catwalk_preview
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:

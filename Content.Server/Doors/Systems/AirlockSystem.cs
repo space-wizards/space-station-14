@@ -4,6 +4,7 @@ using Content.Server.Wires;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction;
+using Content.Shared.Power;
 using Content.Shared.Wires;
 using Robust.Shared.Player;
 
@@ -34,9 +35,10 @@ public sealed class AirlockSystem : SharedAirlockSystem
 
     private void OnSignalReceived(EntityUid uid, AirlockComponent component, ref SignalReceivedEvent args)
     {
-        if (args.Port == component.AutoClosePort)
+        if (args.Port == component.AutoClosePort && component.AutoClose)
         {
             component.AutoClose = false;
+            Dirty(uid, component);
         }
     }
 
@@ -83,10 +85,11 @@ public sealed class AirlockSystem : SharedAirlockSystem
             return;
         }
 
-        if (component.KeepOpenIfClicked)
+        if (component.KeepOpenIfClicked && component.AutoClose)
         {
             // Disable auto close
             component.AutoClose = false;
+            Dirty(uid, component);
         }
     }
 }

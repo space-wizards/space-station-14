@@ -15,6 +15,11 @@ ghost-role-information-antagonist-rules = You are a [color=red][bold]Solo Antago
                                           You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
                                           You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
                                           You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
+ghost-role-information-rules-team-antagonist = You are a [color=red][bold]Team Antagonist[/bold][/color]. Your intentions are clear, and harmful to the station and its crew.
+                                               You must [bold]work with your team[/bold] or follow reasonable directions from your team leaders.
+                                               You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
+                                               You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
+                                               You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
 ghost-role-information-familiar-rules = You are a [color=#6495ed][bold]Familiar[/bold][/color]. Serve the interests of your master, whatever those may be.
                                         You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
                                         You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
@@ -29,6 +34,15 @@ ghost-role-information-mouse-description = A hungry and mischievous mouse.
 
 ghost-role-information-mothroach-name = Mothroach
 ghost-role-information-mothroach-description = A cute but mischievous mothroach.
+
+ghost-role-information-snail-name = Snail
+ghost-role-information-snail-description = A little snail who doesn't mind a bit of space. Just stay on grid!
+
+ghost-role-information-snailspeed-name = Snail
+ghost-role-information-snailspeed-description = A little snail with snailborn thrusters.
+
+ghost-role-information-snoth-name = Snoth
+ghost-role-information-snoth-description = A little snoth who doesn't mind a bit of space. Just stay on grid!
 
 ghost-role-information-giant-spider-name = Giant spider
 ghost-role-information-giant-spider-description = This station's inhabitants look mighty tasty, and your sticky web is perfect to catch them!
@@ -72,10 +86,14 @@ ghost-role-information-kobold-name = Kobold
 ghost-role-information-kobold-description = Be the little gremlin you are, yell at people and beg for meat!
 
 ghost-role-information-rat-king-name = Rat King
+
 ghost-role-information-rat-king-description = You are the Rat King, your interests are food, food, and more food. Cooperate with or fight against the station for food. Did I say food interests you?
 
 ghost-role-information-rat-servant-name = Rat Servant
 ghost-role-information-rat-servant-description = You are a Rat Servant. You must follow your king's orders.
+
+ghost-role-information-salvage-carp-name = Space carp on salvage wreck
+ghost-role-information-salvage-carp-description = Defend the loot inside the salvage wreck!
 
 ghost-role-information-sentient-carp-name = Sentient Carp
 ghost-role-information-sentient-carp-description = Help the dragon flood the station with carps!
@@ -214,27 +232,81 @@ ghost-role-information-syndicate-monkey-reinforcement-name = Syndicate Monkey Ag
 ghost-role-information-syndicate-monkey-reinforcement-description = Someone needs reinforcements. You, a trained monkey, will help them.
 ghost-role-information-syndicate-monkey-reinforcement-rules = You are a [color=red][bold]Team Antagonist[/bold][/color] with the agent who summoned you.
 
-ghost-role-information-lost-cargo-technical-name = Lost Cargo Technician
-ghost-role-information-lost-cargo-technical-description = Something went wrong and your cargo shuttle with the goods was beamed into the sector to another station.
-
-ghost-role-information-clown-troupe-name = Space Clown
-ghost-role-information-clown-troupe-description = You and your troupe have come to cheer up this station with your best jokes. Honk!
-
-ghost-role-information-traveling-chef-name = Traveling Chef
-ghost-role-information-traveling-chef-description = You are a chef on a traveling shuttle of exotic cuisine. Delight the station with delicious food!
-
-ghost-role-information-disaster-victim-name = Disaster Victim
-ghost-role-information-disaster-victim-description = You were rescued in an escape pod from another station that suffered a terrible fate. Perhaps you will be found and rescued.
-
-ghost-role-information-syndie-disaster-victim-name = Syndie Disaster Victim
-ghost-role-information-syndie-disaster-victim-description = You're a regular passenger from a syndicate station. Unfortunately, an evacuation pod has thrown you into an enemy sector.....
-
 ghost-role-information-syndicate-kobold-reinforcement-name = Syndicate Kobold Agent
 ghost-role-information-syndicate-kobold-reinforcement-description = Someone needs reinforcements. You, a trained kobold, will help them.
 ghost-role-information-syndicate-kobold-reinforcement-rules = You are a [color=red][bold]Team Antagonist[/bold][/color] with the agent who summoned you.
 
+ghost-role-information-syndicate-cyborg-assault-name = Syndicate Assault Cyborg
+ghost-role-information-syndicate-cyborg-saboteur-name = Syndicate Saboteur Cyborg
+ghost-role-information-syndicate-cyborg-description = The Syndicate needs reinforcements. You, a cold silicon killing machine, will help them.
+
+ghost-role-information-security-name = Security
+ghost-role-information-security-description = You are part of a security task force, but seem to have found yourself in a strange situation...
+
+ghost-role-information-medical-name = Medical
+ghost-role-information-medical-virologist-name = Virologist
+ghost-role-information-medical-geneticist-name = Geneticist
+ghost-role-information-medical-dentist-name = Dentist
+ghost-role-information-medical-description = You are a medical professional, but seem to have found yourself in a strange situation...
+
+ghost-role-information-cargo-name = Cargo
+ghost-role-information-cargo-description = You are part of a logistics mission, but seem to have found yourself in a strange situation...
+
+ghost-role-information-engineering-name = Engineering 
+ghost-role-information-engineering-description = You are on an engineering job, but seem to have found yourself in a strange situation...
+
+ghost-role-information-science-name = Science
+ghost-role-information-science-description = You are part of a science team, but seem to have found yourself in a strange situation...
+
+ghost-role-information-civilian-name = Civilian
+ghost-role-information-civilian-description = You were just hanging out, but seem to have found yourself in a strange situation...
+ghost-role-information-civilian-centcom-lawyer-name = Centcom Lawyer
+ghost-role-information-civilian-centcom-lawyer-description = A lawyer direct from the Central Legal Division.
+
+ghost-role-information-command-name = Commander
+ghost-role-information-command-description = You are a member of command, but seem to have found yourself in a strange situation...
+
+ghost-role-information-lost-challenge-commander-name = Commander on Shore Leave
+ghost-role-information-lost-challenge-commander-description = You are a command member from another starship who was granted shore leave with one of your cargo technicians.
+ghost-role-information-lost-challenge-commander-rules = You are not hostile to the station, do what you must to ensure your own survival.
+                                     You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
+                                     You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
+                                     You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
+
+ghost-role-information-lost-challenge-cargo-technican-name = Cargo Chauffeur
+ghost-role-information-lost-challenge-cargo-technican-description = You are a cargo technician who was granted shore leave with one of your commanding officers.
+ghost-role-information-lost-challenge-cargo-technican-rules = You are not hostile to the station, do what you must to ensure your own survival.
+                                     You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
+                                     You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
+                                     You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
+
+ghost-role-information-disaster-victim-name = Disaster Victim
+ghost-role-information-disaster-victim-description = You were rescued in an escape pod from another station that suffered a terrible fate. Perhaps you will be found and rescued.
+
+ghost-role-information-syndie-disaster-victim-name = Syndicate Disaster Victim
+ghost-role-information-syndie-disaster-victim-description = You're a regular passenger from a syndicate station. Unfortunately, an evacuation pod has thrown you into an enemy sector...
+
+ghost-role-information-syndie-soldier-name = Syndicate Soldier
+ghost-role-information-syndie-soldier-description = You are a soldier from the Syndicate.
+
+ghost-role-information-syndie-soldier-teamlead-name = Syndicate Team Leader
+ghost-role-information-syndie-soldier-teamlead-description = You are the fire team leader for a Syndicate operative taskforce.
+
+ghost-role-information-blackmarketeer-name = Black Market Trader
+ghost-role-information-blackmarketeer-description = Make trades or take odd jobs to collect the most interesting items by the end of the shift.
+
+ghost-role-information-cossack-name = Ancient traveler
+ghost-role-information-cossack-description = From a history lost to time, you find yourself cast into this day and age.
+
+ghost-role-information-pirate-name = Space Pirate
+ghost-role-information-pirate-description = Argh matey! Collect some cool loot, but make sure to avoid security and salvage!
+
+ghost-role-information-pirate-captain-name = Space Pirate Captain
+ghost-role-information-pirate-captain-description = Argh matey! You are in charge here and need to devise a plan to get that juicy loot by hook or by crook. Just make sure to avoid security and salvage!
+
 ghost-role-information-artifact-name = Sentient Artifact
 ghost-role-information-artifact-description = Enact your eldritch whims. Forcibly activate your nodes for good or for evil.
 
-ghost-role-information-syndie-assaultborg-name = Syndicate Assault Borg
-ghost-role-information-syndie-assaultborg-description = Nuclear operatives needs reinforcements. You, a cold silicon killing machine, will help them. More dakka!
+ghost-role-information-tomatokiller-name = Tomato killer
+ghost-role-information-tomatokiller-description = This little tomato will serve the botanist for the rest of his life... that is, a couple of minutes
+

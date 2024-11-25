@@ -1,48 +1,47 @@
+- type: entityTable
+  id: FillSalvageSpecialistHardsuitSpatio
+  table: !type:AllSelector
+    children:
+    - id: OxygenTankFilled
+    - id: ClothingShoesBootsMag
+    - id: ClothingOuterHardsuitSpatio
+    - id: ClothingMaskGasExplorer
+
+- type: entityTable
+  id: LockerFillSalvageSpecialist
+  table: !type:AllSelector
+    children:
+    - id: ClothingBeltUtilityFilled
+    - id: SurvivalKnife
+    - id: HandheldGPSBasic
+    - id: RadioHandheld
+    - id: AppraisalTool
+    - id: FireExtinguisher
+    - id: Flare
+      prob: 0.3
+      rolls: !type:ConstantNumberSelector
+        value: 3
+
 - type: entity
   id: LockerSalvageSpecialistFilledHardsuit
   suffix: Filled, Hardsuit
   parent: LockerSalvageSpecialist
   components:
-  - type: StorageFill
-    contents:
-      - id: ClothingOuterHardsuitSpatio
-      - id: ClothingShoesBootsMag
-      - id: ClothingMaskGasExplorer
-      - id: ClothingBeltUtilityFilled
-      - id: SurvivalKnife
-      - id: HandheldGPSBasic
-      - id: RadioHandheld
-      - id: SeismicCharge
-        amount: 2
-      - id: OreBag
-        prob: 0.5
-      - id: Flare
-        prob: 0.3
-      - id: Flare
-        prob: 0.3
-      - id: Flare
-        prob: 0.3
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+          - !type:NestedSelector
+            tableId: FillSalvageSpecialistHardsuitSpatio
+          - !type:NestedSelector
+            tableId: LockerFillSalvageSpecialist
 
 - type: entity
   id: LockerSalvageSpecialistFilled
   suffix: Filled
   parent: LockerSalvageSpecialist
   components:
-  - type: StorageFill
-    contents:
-# Currently do not function as 'true' mesons, so they're useless for salvagers.
-#      - id: ClothingEyesGlassesMeson
-      - id: ClothingBeltUtilityFilled
-      - id: SurvivalKnife
-      - id: HandheldGPSBasic
-      - id: RadioHandheld
-      - id: SeismicCharge
-        amount: 2
-      - id: OreBag
-        prob: 0.5
-      - id: Flare
-        prob: 0.3
-      - id: Flare
-        prob: 0.3
-      - id: Flare
-        prob: 0.3
+    - type: EntityTableContainerFill
+      containers:
+        entity_storage: !type:NestedSelector
+          tableId: LockerFillSalvageSpecialist

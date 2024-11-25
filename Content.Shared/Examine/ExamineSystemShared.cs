@@ -117,12 +117,25 @@ namespace Content.Shared.Examine
             if (EntityManager.GetComponent<TransformComponent>(examiner).MapID != target.MapId)
                 return false;
 
-            return InRangeUnOccluded(
-                _transform.GetMapCoordinates(examiner),
-                target,
-                GetExaminerRange(examiner),
-                predicate: predicate,
-                ignoreInsideBlocker: true);
+            // Do target InRangeUnoccluded which has different checks.
+            if (examined != null)
+            {
+                return InRangeUnOccluded(
+                    examiner,
+                    examined.Value,
+                    GetExaminerRange(examiner),
+                    predicate: predicate,
+                    ignoreInsideBlocker: true);
+            }
+            else
+            {
+                return InRangeUnOccluded(
+                    examiner,
+                    target,
+                    GetExaminerRange(examiner),
+                    predicate: predicate,
+                    ignoreInsideBlocker: true);
+            }
         }
 
         /// <summary>
@@ -214,6 +227,14 @@ namespace Content.Shared.Examine
 
         public bool InRangeUnOccluded(EntityUid origin, EntityUid other, float range = ExamineRange, Ignored? predicate = null, bool ignoreInsideBlocker = true)
         {
+            var ev = new InRangeOverrideEvent(origin, other);
+            RaiseLocalEvent(origin, ref ev);
+
+            if (ev.Handled)
+            {
+                return ev.InRange;
+            }
+
             var originPos = _transform.GetMapCoordinates(origin);
             var otherPos = _transform.GetMapCoordinates(other);
 
@@ -426,7 +447,7 @@ namespace Content.Shared.Examine
         /// <seealso cref="PushMessage"/>
         public void PushMarkup(string markup, int priority=0)
         {
-            PushMessage(FormattedMessage.FromMarkup(markup), priority);
+            PushMessage(FormattedMessage.FromMarkupOrThrow(markup), priority);
         }
 
         /// <summary>
@@ -474,7 +495,7 @@ namespace Content.Shared.Examine
         /// <seealso cref="AddMessage"/>
         public void AddMarkup(string markup, int priority=0)
         {
-            AddMessage(FormattedMessage.FromMarkup(markup), priority);
+            AddMessage(FormattedMessage.FromMarkupOrThrow(markup), priority);
         }
 
         /// <summary>

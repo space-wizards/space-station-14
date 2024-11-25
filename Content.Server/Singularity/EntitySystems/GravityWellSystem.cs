@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Server.Singularity.Components;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Ghost;
+using Content.Shared.Physics;
 using Content.Shared.Singularity.EntitySystems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -33,9 +34,18 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
     /// </summary>
     public const float MinGravPulseRange = 0.00001f;
 
+    private EntityQuery<GravityWellComponent> _wellQuery;
+    private EntityQuery<MapComponent> _mapQuery;
+    private EntityQuery<MapGridComponent> _gridQuery;
+    private EntityQuery<PhysicsComponent> _physicsQuery;
+
     public override void Initialize()
     {
         base.Initialize();
+        _wellQuery = GetEntityQuery<GravityWellComponent>();
+        _mapQuery = GetEntityQuery<MapComponent>();
+        _gridQuery = GetEntityQuery<MapGridComponent>();
+        _physicsQuery = GetEntityQuery<PhysicsComponent>();
         SubscribeLocalEvent<GravityWellComponent, ComponentStartup>(OnGravityWellStartup);
 
         var vvHandle = _vvManager.GetTypeHandler<GravityWellComponent>();
@@ -111,11 +121,15 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
     /// <param name="entity">The entity to check.</param>
     private bool CanGravPulseAffect(EntityUid entity)
     {
-        return !(
-            EntityManager.HasComponent<GhostComponent>(entity) ||
-            EntityManager.HasComponent<MapGridComponent>(entity) ||
-            EntityManager.HasComponent<MapComponent>(entity) ||
-            EntityManager.HasComponent<GravityWellComponent>(entity)
+        if (_physicsQuery.TryComp(entity, out var physics))
+        {
+            if (physics.CollisionLayer == (int) CollisionGroup.GhostImpassable)
+                return false;
+        }
+
+        return !(_gridQuery.HasComp(entity) ||
+                 _mapQuery.HasComp(entity) ||
+                 _wellQuery.HasComp(entity)
         );
     }
 

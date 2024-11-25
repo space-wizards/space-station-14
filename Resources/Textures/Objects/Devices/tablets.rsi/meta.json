@@ -1,1 +1,26 @@
-{"version":1,"license":"CC-BY-SA-3.0","copyright":"https://github.com/Baystation12/Baystation12/tree/17e84546562b97d775cb26790a08e6d87e7f8077","size":{"x":32,"y":32},"states":[{"name":"tablet"},{"name":"tabletsol"},{"name":"generic","delays":[[0.3,0.3]]}]}
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from Baystation12 at https://github.com/Baystation12/Baystation12/tree/17e84546562b97d775cb26790a08e6d87e7f8077 and heavily modified by Flareguy for Space Station 14",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "tablet"
+        },
+        {
+            "name": "tabletsol"
+        },
+        {
+            "name": "generic",
+        "delays": [
+            [
+            0.3,
+            0.3
+            ]
+        ]
+        }
+    ]
+}

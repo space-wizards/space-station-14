@@ -60,6 +60,11 @@
   description: flavor-base-funny
 
 - type: flavor
+  id: strange
+  flavorType: Base
+  description: flavor-base-strange
+
+- type: flavor
   id: tingly
   flavorType: Base
   description: flavor-base-tingly
@@ -178,6 +183,11 @@
   id: mindful
   flavorType: Base
   description: flavor-base-mindful
+
+- type: flavor
+  id: chewy
+  flavorType: Base
+  description: flavor-base-chewy
 
 - type: flavor
   id: mustard
@@ -1088,7 +1098,7 @@
   id: bluepumpkin
   flavorType: Complex
   description: flavor-complex-blue-pumpkin
-  
+
 - type: flavor
   id: violets
   flavorType: Complex
@@ -1108,3 +1118,33 @@
   id: paintthinner
   flavorType: Complex
   description: flavor-complex-paint-thinner
+
+- type: flavor
+  id: numbingtranquility
+  flavorType: Complex
+  description: flavor-complex-numbing-tranquility
+
+- type: flavor
+  id: truenature
+  flavorType: Complex
+  description: flavor-complex-true-nature
+
+- type: flavor
+  id: falsemeat
+  flavorType: Complex
+  description: flavor-complex-false-meat
+
+- type: flavor
+  id: cherry
+  flavorType: Complex
+  description: flavor-complex-cherry
+
+- type: flavor
+  id: paper
+  flavorType: Complex
+  description: flavor-complex-paper
+
+- type: flavor
+  id: compressed-meat
+  flavorType: Complex
+  description: flavor-complex-compressed-meat

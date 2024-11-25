@@ -233,6 +233,7 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: StationAiWhitelist
     - type: Sprite
       granularLayersRendering: true
       layers:
@@ -277,6 +278,7 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: StationAiWhitelist
     - type: Sprite
       granularLayersRendering : true
       layers:

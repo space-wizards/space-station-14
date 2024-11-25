@@ -1,1263 +1,964 @@
+# Base prototypes
+
+- type: latheRecipe
+  abstract: true
+  id: BaseJumpsuitRecipe
+  completetime: 4
+  materials:
+    Cloth: 300
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseJumpsuitRecipe
+  id: BaseCommandJumpsuitRecipe
+  materials:
+    Cloth: 300
+    Durathread: 100
+
+- type: latheRecipe
+  abstract: true
+  id: BaseCoatRecipe
+  completetime: 3.2 # don't ask why its faster than a jumpsuit??
+  materials:
+    Cloth: 500
+    Durathread: 200
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseCoatRecipe
+  id: BaseCommandCoatRecipe
+  materials:
+    Cloth: 500
+    Durathread: 300
+
+- type: latheRecipe
+  abstract: true
+  id: BaseHatRecipe
+  completetime: 2
+  materials:
+    Cloth: 100
+
+- type: latheRecipe
+  abstract: true
+  id: BaseCarpetRecipe
+  completetime: 1
+  materials:
+    Cloth: 100
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseHatRecipe
+  id: BaseCommandHatRecipe
+  materials:
+    Cloth: 100
+    Durathread: 50
+
+- type: latheRecipe
+  abstract: true
+  id: BaseNeckClothingRecipe
+  completetime: 2
+  materials:
+    Cloth: 200
+
+# Recipes
 
 # Jumpsuits/skirts
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitColorGrey # Tide
-  result: ClothingUniformJumpsuitColorGrey
-  completetime: 4
-  materials:
-    Cloth: 300
+  result: ClothingUniformJumpsuitColorGrey # Tide
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpskirtColorGrey
   result: ClothingUniformJumpskirtColorGrey
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitBartender
   result: ClothingUniformJumpsuitBartender
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpskirtBartender
   result: ClothingUniformJumpskirtBartender
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpsuitCaptain
   result: ClothingUniformJumpsuitCaptain
-  completetime: 4
-  materials:
-    Cloth: 300
-    Durathread: 100
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpsuitCapFormal
   result: ClothingUniformJumpsuitCapFormal
-  completetime: 4
-  materials:
-    Cloth: 300
-    Durathread: 100
-
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpskirtCapFormalDress
   result: ClothingUniformJumpskirtCapFormalDress
-  completetime: 4
-  materials:
-    Cloth: 300
-    Durathread: 100
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpskirtCaptain
   result: ClothingUniformJumpskirtCaptain
-  completetime: 4
-  materials:
-    Cloth: 300
-    Durathread: 100
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitCargo
   result: ClothingUniformJumpsuitCargo
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpskirtCargo
   result: ClothingUniformJumpskirtCargo
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitSalvageSpecialist
   result: ClothingUniformJumpsuitSalvageSpecialist
-  completetime: 4
-  materials:
-    Cloth: 500 #It's armored but I don't want to include durathread for a non-head
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpsuitCentcomAgent
   result: ClothingUniformJumpsuitCentcomAgent
-  completetime: 4
-  materials:
-    Cloth: 300
-    Durathread: 100
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpsuitCentcomFormal
   result: ClothingUniformJumpsuitCentcomFormal
-  completetime: 4
-  materials:
-    Cloth: 300
-    Durathread: 100
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpskirtCentcomFormalDress
   result: ClothingUniformJumpskirtCentcomFormalDress
-  completetime: 4
-  materials:
-    Cloth: 300
-    Durathread: 100
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpsuitCentcomOfficer
   result: ClothingUniformJumpsuitCentcomOfficer
-  completetime: 4
-  materials:
-    Cloth: 300
-    Durathread: 100
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpsuitCentcomOfficial
   result: ClothingUniformJumpsuitCentcomOfficial
-  completetime: 4
-  materials:
-    Cloth: 300
-    Durathread: 100
+
+## CE
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpsuitChiefEngineer
   result: ClothingUniformJumpsuitChiefEngineer
-  completetime: 4
-  materials:
-    Cloth: 300
-    Durathread: 100
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpskirtChiefEngineer
   result: ClothingUniformJumpskirtChiefEngineer
-  completetime: 4
-  materials:
-    Cloth: 300
-    Durathread: 100
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpsuitChiefEngineerTurtle
   result: ClothingUniformJumpsuitChiefEngineerTurtle
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpskirtChiefEngineerTurtle
   result: ClothingUniformJumpskirtChiefEngineerTurtle
-  completetime: 4
-  materials:
-    Cloth: 300
+
+## Chaplain
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitChaplain
   result: ClothingUniformJumpsuitChaplain
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpskirtChaplain
   result: ClothingUniformJumpskirtChaplain
-  completetime: 4
-  materials:
-    Cloth: 300
+
+## Chef
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitChef
   result: ClothingUniformJumpsuitChef
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpskirtChef
   result: ClothingUniformJumpskirtChef
-  completetime: 4
-  materials:
-    Cloth: 300
+
+## Chemist
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitChemistry
   result: ClothingUniformJumpsuitChemistry
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpskirtChemistry
   result: ClothingUniformJumpskirtChemistry
-  completetime: 4
-  materials:
-    Cloth: 300
+
+## Clown
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitClown
   result: ClothingUniformJumpsuitClown
-  completetime: 4
-  materials:
-    Cloth: 300
+
+## CMO
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpsuitCMO
   result: ClothingUniformJumpsuitCMO
-  completetime: 4
-  materials:
-    Cloth: 300
-    Durathread: 100
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpskirtCMO
   result: ClothingUniformJumpskirtCMO
-  completetime: 4
-  materials:
-    Cloth: 300
-    Durathread: 100
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpsuitCMOTurtle
   result: ClothingUniformJumpsuitCMOTurtle
-  completetime: 4
-  materials:
-    Cloth: 300
-    Durathread: 100
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpskirtCMOTurtle
   result: ClothingUniformJumpskirtCMOTurtle
-  completetime: 4
-  materials:
-    Cloth: 300
-    Durathread: 100
+
+## Detective
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitDetective
   result: ClothingUniformJumpsuitDetective
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpskirtDetective
   result: ClothingUniformJumpskirtDetective
-  completetime: 4
-  materials:
-    Cloth: 300
+
+## Engineer
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitEngineering
   result: ClothingUniformJumpsuitEngineering
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpskirtEngineering
   result: ClothingUniformJumpskirtEngineering
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitSeniorEngineer
   result: ClothingUniformJumpsuitSeniorEngineer
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpskirtSeniorEngineer
   result: ClothingUniformJumpskirtSeniorEngineer
-  completetime: 4
-  materials:
-    Cloth: 300
+
+## HoP
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpsuitHoP
   result: ClothingUniformJumpsuitHoP
-  completetime: 4
-  materials:
-    Cloth: 300
-    Durathread: 100
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpskirtHoP
   result: ClothingUniformJumpskirtHoP
-  completetime: 4
-  materials:
-    Cloth: 300
-    Durathread: 100
+
+## HoS
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpsuitHoS
   result: ClothingUniformJumpsuitHoS
-  completetime: 4
-  materials:
-    Cloth: 300
-    Durathread: 100
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpskirtHoS
   result: ClothingUniformJumpskirtHoS
-  completetime: 4
-  materials:
-    Cloth: 300
-    Durathread: 100
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpsuitHosFormal
   result: ClothingUniformJumpsuitHosFormal
-  completetime: 4
-  materials:
-    Cloth: 300
-    Durathread: 100
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpskirtHosFormal
   result: ClothingUniformJumpskirtHosFormal
-  completetime: 4
-  materials:
-    Cloth: 300
-    Durathread: 100
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpsuitHoSParadeMale
   result: ClothingUniformJumpsuitHoSParadeMale
-  completetime: 5
-  materials:
-    Cloth: 300
-    Durathread: 100
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpskirtHoSParadeMale
   result: ClothingUniformJumpskirtHoSParadeMale
-  completetime: 5
-  materials:
-    Cloth: 300
-    Durathread: 100
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpsuitHoSAlt
   result: ClothingUniformJumpsuitHoSAlt
-  completetime: 4
-  materials:
-    Cloth: 300
-    Durathread: 100
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpsuitHoSBlue
   result: ClothingUniformJumpsuitHoSBlue
-  completetime: 4
-  materials:
-    Cloth: 300
-    Durathread: 100
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpsuitHoSGrey
   result: ClothingUniformJumpsuitHoSGrey
-  completetime: 4
-  materials:
-    Cloth: 300
-    Durathread: 100
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpskirtHoSAlt
   result: ClothingUniformJumpskirtHoSAlt
-  completetime: 4
-  materials:
-    Cloth: 300
-    Durathread: 100
+
+## Hydroponics
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitHydroponics
   result: ClothingUniformJumpsuitHydroponics
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpskirtHydroponics
   result: ClothingUniformJumpskirtHydroponics
-  completetime: 4
-  materials:
-    Cloth: 300
+
+## Janitor
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitJanitor
   result: ClothingUniformJumpsuitJanitor
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpskirtJanitor
   result: ClothingUniformJumpskirtJanitor
-  completetime: 4
-  materials:
-    Cloth: 300
+
+## Lawyer
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitLawyerBlack
   result: ClothingUniformJumpsuitLawyerBlack
-  completetime: 4
-  materials:
-    Cloth: 300
+
+## Librarian
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitLibrarian
   result: ClothingUniformJumpsuitLibrarian
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpskirtColorLightBrown #Librarian
-  result: ClothingUniformJumpskirtColorLightBrown
-  completetime: 4
-  materials:
-    Cloth: 300
+  result: ClothingUniformJumpskirtColorLightBrown #Librarian
+
+## Medical Doctor
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitMedicalDoctor
   result: ClothingUniformJumpsuitMedicalDoctor
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpskirtMedicalDoctor
   result: ClothingUniformJumpskirtMedicalDoctor
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitSeniorPhysician
   result: ClothingUniformJumpsuitSeniorPhysician
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpskirtSeniorPhysician
   result: ClothingUniformJumpskirtSeniorPhysician
-  completetime: 4
-  materials:
-    Cloth: 300
+
+## Mime
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitMime
   result: ClothingUniformJumpsuitMime
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpskirtMime
   result: ClothingUniformJumpskirtMime
-  completetime: 4
-  materials:
-    Cloth: 300
+
+## Musician
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitMusician
   result: ClothingUniformJumpsuitMusician
-  completetime: 4
-  materials:
-    Cloth: 300
+
+## Operative
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitOperative
   result: ClothingUniformJumpsuitOperative
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpskirtOperative
   result: ClothingUniformJumpskirtOperative
-  completetime: 4
-  materials:
-    Cloth: 300
+
+## Paramedic
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitParamedic
   result: ClothingUniformJumpsuitParamedic
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpskirtParamedic
   result: ClothingUniformJumpskirtParamedic
-  completetime: 4
-  materials:
-    Cloth: 300
+
+## Senior Officer
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitSeniorOfficer
   result: ClothingUniformJumpsuitSeniorOfficer
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpskirtSeniorOfficer
   result: ClothingUniformJumpskirtSeniorOfficer
-  completetime: 4
-  materials:
-    Cloth: 300
+
+## Prisoner
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitPrisoner
   result: ClothingUniformJumpsuitPrisoner
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpskirtPrisoner
   result: ClothingUniformJumpskirtPrisoner
-  completetime: 4
-  materials:
-    Cloth: 300
+
+## QM
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpsuitQM
   result: ClothingUniformJumpsuitQM
-  completetime: 4
-  materials:
-    Cloth: 300
-    Durathread: 100
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpsuitQMFormal
   result: ClothingUniformJumpsuitQMFormal
-  completetime: 4
-  materials:
-    Cloth: 300
-    Durathread: 100
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpskirtQM
   result: ClothingUniformJumpskirtQM
-  completetime: 4
-  materials:
-    Cloth: 300
-    Durathread: 100
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpsuitQMTurtleneck
   result: ClothingUniformJumpsuitQMTurtleneck
-  completetime: 4
-  materials:
-    Cloth: 300
-    Durathread: 100
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpskirtQMTurtleneck
   result: ClothingUniformJumpskirtQMTurtleneck
-  completetime: 4
-  materials:
-    Cloth: 300
-    Durathread: 100
+
+## RD
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpsuitResearchDirector
   result: ClothingUniformJumpsuitResearchDirector
-  completetime: 4
-  materials:
-    Cloth: 300
-    Durathread: 100
 
 - type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
   id: ClothingUniformJumpskirtResearchDirector
   result: ClothingUniformJumpskirtResearchDirector
-  completetime: 4
-  materials:
-    Cloth: 300
-    Durathread: 100
+
+## Scientist
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitScientist
   result: ClothingUniformJumpsuitScientist
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpskirtScientist
   result: ClothingUniformJumpskirtScientist
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitSeniorResearcher
   result: ClothingUniformJumpsuitSeniorResearcher
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpskirtSeniorResearcher
   result: ClothingUniformJumpskirtSeniorResearcher
-  completetime: 4
-  materials:
-    Cloth: 300
+
+## Security Officer
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitSec
   result: ClothingUniformJumpsuitSec
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpskirtSec
   result: ClothingUniformJumpskirtSec
-  completetime: 4
-  materials:
-    Cloth: 300
+
+## Brigmedic
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitBrigmedic
   result: ClothingUniformJumpsuitBrigmedic
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpskirtBrigmedic
   result: ClothingUniformJumpskirtBrigmedic
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitSyndieFormal
   result: ClothingUniformJumpsuitSyndieFormal
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpskirtSyndieFormalDress
   result: ClothingUniformJumpskirtSyndieFormalDress
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitPyjamaSyndicateBlack
   result: ClothingUniformJumpsuitPyjamaSyndicateBlack
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitPyjamaSyndicatePink
   result: ClothingUniformJumpsuitPyjamaSyndicatePink
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitPyjamaSyndicateRed
   result: ClothingUniformJumpsuitPyjamaSyndicateRed
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpsuitWarden
   result: ClothingUniformJumpsuitWarden
-  completetime: 4
-  materials:
-    Cloth: 300
 
 - type: latheRecipe
+  parent: BaseJumpsuitRecipe
   id: ClothingUniformJumpskirtWarden
   result: ClothingUniformJumpskirtWarden
-  completetime: 4
-  materials:
-    Cloth: 300
 
 # Command winter coats
 - type: latheRecipe
+  parent: BaseCommandCoatRecipe
   id: ClothingOuterWinterCap
   result: ClothingOuterWinterCap
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 300
 
 - type: latheRecipe
+  parent: BaseCommandCoatRecipe
   id: ClothingOuterWinterCE
   result: ClothingOuterWinterCE
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 300
 
 - type: latheRecipe
+  parent: BaseCommandCoatRecipe
   id: ClothingOuterWinterCentcom
   result: ClothingOuterWinterCentcom
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 300
 
 - type: latheRecipe
+  parent: BaseCommandCoatRecipe
   id: ClothingOuterWinterCMO
   result: ClothingOuterWinterCMO
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 300
 
 - type: latheRecipe
+  parent: BaseCommandCoatRecipe
   id: ClothingOuterWinterHoP
   result: ClothingOuterWinterHoP
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 300
 
 - type: latheRecipe
+  parent: BaseCommandCoatRecipe
   id: ClothingOuterWinterHoSUnarmored
   result: ClothingOuterWinterHoSUnarmored
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 300
 
 - type: latheRecipe
+  parent: BaseCommandCoatRecipe
   id: ClothingOuterWinterWardenUnarmored
   result: ClothingOuterWinterWardenUnarmored
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 300
 
 - type: latheRecipe
+  parent: BaseCommandCoatRecipe
   id: ClothingOuterWinterQM
   result: ClothingOuterWinterQM
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 300
 
 - type: latheRecipe
+  parent: BaseCommandCoatRecipe
   id: ClothingOuterWinterRD
   result: ClothingOuterWinterRD
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 300
 
 # Winter coats
 - type: latheRecipe
+  parent: BaseCoatRecipe
   id: ClothingOuterWinterMusician
   result: ClothingOuterWinterMusician
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 200
 
 - type: latheRecipe
+  parent: BaseCoatRecipe
   id: ClothingOuterWinterClown
   result: ClothingOuterWinterClown
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 200
 
 - type: latheRecipe
+  parent: BaseCoatRecipe
   id: ClothingOuterWinterMime
   result: ClothingOuterWinterMime
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 200
 
 - type: latheRecipe
+  parent: BaseCoatRecipe
   id: ClothingOuterWinterCoat
   result: ClothingOuterWinterCoat
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 200
 
 - type: latheRecipe
+  parent: BaseCoatRecipe
   id: ClothingOuterWinterJani
   result: ClothingOuterWinterJani
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 200
 
 - type: latheRecipe
+  parent: BaseCoatRecipe
   id: ClothingOuterWinterBar
   result: ClothingOuterWinterBar
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 200
 
 - type: latheRecipe
+  parent: BaseCoatRecipe
   id: ClothingOuterWinterChef
   result: ClothingOuterWinterChef
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 200
 
 - type: latheRecipe
+  parent: BaseCoatRecipe
   id: ClothingOuterWinterHydro
   result: ClothingOuterWinterHydro
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 200
 
 - type: latheRecipe
+  parent: BaseCoatRecipe
   id: ClothingOuterWinterAtmos
   result: ClothingOuterWinterAtmos
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 200
 
 - type: latheRecipe
+  parent: BaseCoatRecipe
   id: ClothingOuterWinterEngi
   result: ClothingOuterWinterEngi
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 200
 
 - type: latheRecipe
+  parent: BaseCoatRecipe
   id: ClothingOuterWinterCargo
   result: ClothingOuterWinterCargo
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 200
 
 - type: latheRecipe
+  parent: BaseCoatRecipe
   id: ClothingOuterWinterMiner
   result: ClothingOuterWinterMiner
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 200
 
 - type: latheRecipe
+  parent: BaseCoatRecipe
   id: ClothingOuterWinterMed
   result: ClothingOuterWinterMed
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 200
 
 - type: latheRecipe
+  parent: BaseCoatRecipe
   id: ClothingOuterWinterPara
   result: ClothingOuterWinterPara
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 200
 
 - type: latheRecipe
+  parent: BaseCoatRecipe
   id: ClothingOuterWinterChem
   result: ClothingOuterWinterChem
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 200
 
 - type: latheRecipe
+  parent: BaseCoatRecipe
   id: ClothingOuterWinterGen
   result: ClothingOuterWinterGen
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 200
 
 - type: latheRecipe
+  parent: BaseCoatRecipe
   id: ClothingOuterWinterViro
   result: ClothingOuterWinterViro
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 200
 
 - type: latheRecipe
+  parent: BaseCoatRecipe
   id: ClothingOuterWinterSci
   result: ClothingOuterWinterSci
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 200
 
 - type: latheRecipe
+  parent: BaseCoatRecipe
   id: ClothingOuterWinterRobo
   result: ClothingOuterWinterRobo
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 200
 
 - type: latheRecipe
+  parent: BaseCoatRecipe
   id: ClothingOuterWinterSec
   result: ClothingOuterWinterSec
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 200
 
 - type: latheRecipe
+  parent: BaseCoatRecipe
   id: ClothingOuterWinterSyndie
   result: ClothingOuterWinterSyndie
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 200
 
 - type: latheRecipe
+  parent: BaseCoatRecipe
   id: ClothingOuterWinterSyndieCap
   result: ClothingOuterWinterSyndieCap
-  completetime: 3.2
-  materials:
-    Cloth: 500
-    Durathread: 200
 
 # Hats
 - type: latheRecipe
+  parent: BaseCommandHatRecipe
   id: ClothingHeadHatCaptain
   result: ClothingHeadHatCaptain
-  completetime: 2
-  materials:
-    Cloth: 100
-    Durathread: 50
 
 - type: latheRecipe
+  parent: BaseCommandHatRecipe
   id: ClothingHeadHatCapcap
   result: ClothingHeadHatCapcap
-  completetime: 2
-  materials:
-    Cloth: 100
-    Durathread: 50
 
 - type: latheRecipe
-  id: ClothingHeadHatBeretHoS
-  result: ClothingHeadHatBeretHoS
-  completetime: 2
-  materials:
-    Cloth: 100
-    Durathread: 50
-
-- type: latheRecipe
-  id: ClothingHeadHatHoshat
-  result: ClothingHeadHatHoshat
-  completetime: 2
-  materials:
-    Cloth: 100
-    Durathread: 50
-
-- type: latheRecipe
-  id: ClothingHeadHatWarden
-  result: ClothingHeadHatWarden
-  completetime: 2
-  materials:
-    Cloth: 100
-    Durathread: 50
-
-- type: latheRecipe
-  id: ClothingHeadHatBeretWarden
-  result: ClothingHeadHatBeretWarden
-  completetime: 2
-  materials:
-    Cloth: 100
-    Durathread: 50
-
-- type: latheRecipe
-  id: ClothingHeadHatHopcap
-  result: ClothingHeadHatHopcap
-  completetime: 2
-  materials:
-    Cloth: 100
-    Durathread: 50
-
-- type: latheRecipe
-  id: ClothingHeadHatQMsoft
-  result: ClothingHeadHatQMsoft
-  completetime: 2
-  materials:
-    Cloth: 100
-    Durathread: 50
-
-- type: latheRecipe
-  id: ClothingHeadHatBeretRND
-  result: ClothingHeadHatBeretRND
-  completetime: 2
-  materials:
-    Cloth: 100
-    Durathread: 50
-
-- type: latheRecipe
-  id: ClothingHeadHatBeretEngineering
-  result: ClothingHeadHatBeretEngineering
-  completetime: 2
-  materials:
-    Cloth: 100
-    Durathread: 50
-
-- type: latheRecipe
-  id: ClothingHeadHatBeretQM
-  result: ClothingHeadHatBeretQM
-  completetime: 2
-  materials:
-    Cloth: 100
-    Durathread: 50
-
-- type: latheRecipe
-  id: ClothingHeadHatBeretCmo
-  result: ClothingHeadHatBeretCmo
-  completetime: 2
-  materials:
-    Cloth: 100
-    Durathread: 50
-
-- type: latheRecipe
-  id: ClothingHeadHatBeretMedic
-  result: ClothingHeadHatBeretMedic
-  completetime: 2
-  materials:
-    Cloth: 100
-
-- type: latheRecipe
-  id: ClothingHeadHatBeretBrigmedic
-  result: ClothingHeadHatBeretBrigmedic
-  completetime: 2
-  materials:
-    Cloth: 100
-
-- type: latheRecipe
-  id: ClothingHeadHatBeretSecurity
-  result: ClothingHeadHatBeretSecurity
-  completetime: 2
-  materials:
-    Cloth: 100
-
-- type: latheRecipe
-  id: ClothingHeadHatBeretSeniorPhysician
-  result: ClothingHeadHatBeretSeniorPhysician
-  completetime: 2
-  materials:
-    Cloth: 100
-
-- type: latheRecipe
+  parent: BaseCommandHatRecipe
   id: ClothingHeadHatCentcom
   result: ClothingHeadHatCentcom
-  completetime: 2
-  materials:
-    Cloth: 100
-    Durathread: 50
 
 - type: latheRecipe
+  parent: BaseCommandHatRecipe
   id: ClothingHeadHatCentcomcap
   result: ClothingHeadHatCentcomcap
-  completetime: 2
-  materials:
-    Cloth: 100
-    Durathread: 50
 
 - type: latheRecipe
+  parent: BaseCommandHatRecipe
+  id: ClothingHeadHatBeretHoS
+  result: ClothingHeadHatBeretHoS
+
+- type: latheRecipe
+  parent: BaseCommandHatRecipe
+  id: ClothingHeadHatHoshat
+  result: ClothingHeadHatHoshat
+
+- type: latheRecipe
+  parent: BaseCommandHatRecipe
+  id: ClothingHeadHatWarden
+  result: ClothingHeadHatWarden
+
+- type: latheRecipe
+  parent: BaseCommandHatRecipe
+  id: ClothingHeadHatBeretWarden
+  result: ClothingHeadHatBeretWarden
+
+- type: latheRecipe
+  parent: BaseCommandHatRecipe
+  id: ClothingHeadHatHopcap
+  result: ClothingHeadHatHopcap
+
+- type: latheRecipe
+  parent: BaseCommandHatRecipe
+  id: ClothingHeadHatQMsoft
+  result: ClothingHeadHatQMsoft
+
+- type: latheRecipe
+  parent: BaseCommandHatRecipe
+  id: ClothingHeadHatBeretRND
+  result: ClothingHeadHatBeretRND
+
+- type: latheRecipe
+  parent: BaseCommandHatRecipe
+  id: ClothingHeadHatBeretEngineering
+  result: ClothingHeadHatBeretEngineering
+
+- type: latheRecipe
+  parent: BaseCommandHatRecipe
+  id: ClothingHeadHatBeretQM
+  result: ClothingHeadHatBeretQM
+
+- type: latheRecipe
+  parent: BaseCommandHatRecipe
+  id: ClothingHeadHatBeretCmo
+  result: ClothingHeadHatBeretCmo
+
+# Non-command hats
+
+- type: latheRecipe
+  parent: BaseHatRecipe
+  id: ClothingHeadHatBeretMedic
+  result: ClothingHeadHatBeretMedic
+
+- type: latheRecipe
+  parent: BaseHatRecipe
+  id: ClothingHeadHatBeretBrigmedic
+  result: ClothingHeadHatBeretBrigmedic
+
+- type: latheRecipe
+  parent: BaseHatRecipe
+  id: ClothingHeadHatBeretSecurity
+  result: ClothingHeadHatBeretSecurity
+
+- type: latheRecipe
+  parent: BaseHatRecipe
+  id: ClothingHeadHatBeretSeniorPhysician
+  result: ClothingHeadHatBeretSeniorPhysician
+
+- type: latheRecipe
+  parent: BaseHatRecipe
   id: ClothingHeadHatSyndie
   result: ClothingHeadHatSyndie
-  completetime: 2
-  materials:
-    Cloth: 100
 
 - type: latheRecipe
+  parent: BaseHatRecipe
   id: ClothingHeadHatSyndieMAA
   result: ClothingHeadHatSyndieMAA
-  completetime: 2
-  materials:
-    Cloth: 100
 
 - type: latheRecipe
+  parent: BaseHatRecipe
   id: ClothingHeadPyjamaSyndicateBlack
   result: ClothingHeadPyjamaSyndicateBlack
-  completetime: 2
-  materials:
-    Cloth: 100
 
 - type: latheRecipe
+  parent: BaseHatRecipe
   id: ClothingHeadPyjamaSyndicatePink
   result: ClothingHeadPyjamaSyndicatePink
-  completetime: 2
-  materials:
-    Cloth: 100
 
 - type: latheRecipe
+  parent: BaseHatRecipe
   id: ClothingHeadPyjamaSyndicateRed
   result: ClothingHeadPyjamaSyndicateRed
-  completetime: 2
-  materials:
-    Cloth: 100
 
 - type: latheRecipe
+  parent: BaseHatRecipe
   id: ClothingHeadHatParamedicsoft
   result: ClothingHeadHatParamedicsoft
-  completetime: 1
-  materials:
-    Cloth: 100
 
 # Ties
 - type: latheRecipe
+  parent: BaseNeckClothingRecipe
   id: ClothingNeckTieRed
   result: ClothingNeckTieRed
-  completetime: 2
-  materials:
-    Cloth: 200
 
 - type: latheRecipe
+  parent: BaseNeckClothingRecipe
   id: ClothingNeckTieDet
   result: ClothingNeckTieDet
-  completetime: 2
-  materials:
-    Cloth: 200
 
 - type: latheRecipe
+  parent: BaseNeckClothingRecipe
   id: ClothingNeckTieSci
   result: ClothingNeckTieSci
-  completetime: 2
-  materials:
-    Cloth: 200
 
 # Scarfs
 - type: latheRecipe
+  parent: BaseNeckClothingRecipe
   id: ClothingNeckScarfStripedGreen
   result: ClothingNeckScarfStripedGreen
-  completetime: 2
-  materials:
-    Cloth: 200
 
 - type: latheRecipe
+  parent: BaseNeckClothingRecipe
   id: ClothingNeckScarfStripedBlue
   result: ClothingNeckScarfStripedBlue
-  completetime: 2
-  materials:
-    Cloth: 200
 
 - type: latheRecipe
+  parent: BaseNeckClothingRecipe
   id: ClothingNeckScarfStripedRed
   result: ClothingNeckScarfStripedRed
-  completetime: 2
-  materials:
-    Cloth: 200
 
 - type: latheRecipe
+  parent: BaseNeckClothingRecipe
   id: ClothingNeckScarfStripedBrown
   result: ClothingNeckScarfStripedBrown
-  completetime: 2
-  materials:
-    Cloth: 200
 
 - type: latheRecipe
+  parent: BaseNeckClothingRecipe
   id: ClothingNeckScarfStripedLightBlue
   result: ClothingNeckScarfStripedLightBlue
-  completetime: 2
-  materials:
-    Cloth: 200
 
 - type: latheRecipe
+  parent: BaseNeckClothingRecipe
   id: ClothingNeckScarfStripedOrange
   result: ClothingNeckScarfStripedOrange
-  completetime: 2
-  materials:
-    Cloth: 200
 
 - type: latheRecipe
+  parent: BaseNeckClothingRecipe
   id: ClothingNeckScarfStripedBlack
   result: ClothingNeckScarfStripedBlack
-  completetime: 2
-  materials:
-    Cloth: 200
 
 - type: latheRecipe
+  parent: BaseNeckClothingRecipe
   id: ClothingNeckScarfStripedPurple
   result: ClothingNeckScarfStripedPurple
-  completetime: 2
-  materials:
-    Cloth: 200
 
 # Carpets
 - type: latheRecipe
+  parent: BaseCarpetRecipe
   id: Carpet
   result: FloorCarpetItemRed
-  completetime: 1
-  materials:
-    Cloth: 100
 
 - type: latheRecipe
+  parent: BaseCarpetRecipe
   id: CarpetBlack
   result: FloorCarpetItemBlack
-  completetime: 1
-  materials:
-    Cloth: 100
 
 - type: latheRecipe
+  parent: BaseCarpetRecipe
   id: CarpetPink
   result: FloorCarpetItemPink
-  completetime: 1
-  materials:
-    Cloth: 100
 
 - type: latheRecipe
+  parent: BaseCarpetRecipe
   id: CarpetBlue
   result: FloorCarpetItemBlue
-  completetime: 1
-  materials:
-    Cloth: 100
 
 - type: latheRecipe
+  parent: BaseCarpetRecipe
   id: CarpetGreen
   result: FloorCarpetItemGreen
-  completetime: 1
-  materials:
-    Cloth: 100
 
 - type: latheRecipe
+  parent: BaseCarpetRecipe
   id: CarpetOrange
   result: FloorCarpetItemOrange
-  completetime: 1
-  materials:
-    Cloth: 100
 
 - type: latheRecipe
+  parent: BaseCarpetRecipe
   id: CarpetPurple
   result: FloorCarpetItemPurple
-  completetime: 1
-  materials:
-    Cloth: 100
 
 - type: latheRecipe
+  parent: BaseCarpetRecipe
   id: CarpetCyan
   result: FloorCarpetItemCyan
-  completetime: 1
-  materials:
-    Cloth: 100
 
 - type: latheRecipe
+  parent: BaseCarpetRecipe
   id: CarpetWhite
   result: FloorCarpetItemWhite
-  completetime: 1
-  materials:
-    Cloth: 100

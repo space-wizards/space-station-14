@@ -44,7 +44,7 @@
   id: FigurinesBoxer
   values:
     prefix: figurines-boxer-
-    count: 1
+    count: 4
 
 - type: localizedDataset
   id: FigurinesCaptain
