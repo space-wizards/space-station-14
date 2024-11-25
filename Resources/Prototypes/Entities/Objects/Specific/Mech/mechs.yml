@@ -29,8 +29,9 @@
     - NitrousOxide
     - Frezon
     - Water
-    #- Helium3 TODO: fusion
+    TransferRate: 0.9
   - type: AirIntake
+    PumpPower: 2
   # for intake and filter to work
   - type: AtmosDevice
     requireAnchored: false
@@ -305,9 +306,9 @@
 
 - type: entity
   id: MechStepfather
-  parent: BaseMech
+  parent: [BaseMech, StripableInventoryBase]
   name: Rotund Stepfather
-  description: An advanced deep-sea mining unit, built to escort and assist with far-range mining operations and Trench research.
+  description: A rugged deep-sea mining unit, designed to work in tandem with a Pilot. The onboard AI operates the primary clamp while the pilot operates the modules.
   components:
   - type: Sprite
     drawdepth: Mobs
@@ -319,16 +320,23 @@
   - type: FootstepModifier
     footstepSoundCollection:
       path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
+      params:
+        volume: -15
   - type: Mech
     baseState: stepfather
-    openState: stepfather-open
-    brokenState: ripley-broken
-    mechToPilotDamageMultiplier: 0.50
+    openState: stepfather
+    brokenState: stepfather-open
+    mechToPilotDamageMultiplier: 0.30
     airtight: true
     pilotWhitelist:
       components:
-        - HumanoidAppearance
+        - ExpedPilot # Only the Pilot can enter. TODO: Make the stepfather emaggable to be subverted by antags.
   - type: MeleeWeapon
+    hidden: true
+    attackRate: 1
+    damage:
+      types:
+        Blunt: 10
   - type: HandheldLight
     addPrefix: false
     blinkingBehaviourId: blinking
@@ -361,11 +369,59 @@
         startingItem: PowerCellMedium
   - type: PointLight
     enabled: false
-    hidden: true
-    attackRate: 1
-    damage:
-      types:
-        Blunt: 13
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.25
     baseSprintSpeed: 3.6
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: mech-role-name
+    description: mech-role-description
+    rules: ghost-role-information-mech-rules
+  - type: GhostTakeoverAvailable
+  - type: ComplexInteraction
+  - type: Climbing
+  - type: MindContainer
+    showExamineInfo: true
+  - type: Strippable
+  - type: Input
+    context: "aghost"
+  - type: CombatMode
+  - type: Inventory
+    templateId: Mech
+  - type: Hands
+    showInHands: false
+    baseThrowspeed: 15 # throws harder (obviously)
+    throwRange: 13
+  - type: Repairable
+    doAfterDelay: 15
+    allowSelfRepair: false # Needs pilot maintenence
+  - type: TypingIndicator
+    proto: robot
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: SyndieBorg
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSilicon
+  - type: Puller
+    needsHands: true
+  - type: HealthExaminable
+    examinableTypes:
+      - Blunt
+      - Slash
+      - Piercing
+      - Heat
+      - Shock
+    locPrefix: silicon
+  - type: Body
+    prototype: Mech
+  - type: UserInterface
+    interfaces:
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+  - type: SiliconLawProvider
+    laws: MechLaws # Protocol 3: Protect the Pilot
+  - type: SiliconLawBound
+

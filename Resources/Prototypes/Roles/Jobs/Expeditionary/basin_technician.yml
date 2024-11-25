@@ -1,0 +1,23 @@
+- type: job
+  id: BasinTechnician
+  name: job-name-basintech
+  description: job-description-basintech
+  playTimeTracker: JobBasintECH
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 3600 # 1 hr
+  icon: "JobIconShaftMiner"
+  startingGear: BasinTechGear
+  supervisors: job-supervisors-qm
+  access:
+  - Salvage
+  - Maintenance
+  - External
+
+- type: startingGear
+  id: BasinTechGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSalvageSpecialist
+    id: BasinTechPDA
+    ears: ClothingHeadsetCargo

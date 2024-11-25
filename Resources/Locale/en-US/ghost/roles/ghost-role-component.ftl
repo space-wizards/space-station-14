@@ -19,6 +19,13 @@ ghost-role-information-familiar-rules = You are a [color=#6495ed][bold]Familiar[
                                         You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
                                         You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
                                         You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
+
+ghost-role-information-mech-rules = You are a [color=#6495ed][bold]Mech[/bold][/color]. Serve the interests of your pilot, whatever those may be.
+                                        You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
+                                        You must follow your protocols to the best of your ability and work with your pilot in tandem.
+                                        When your pilot enters, you should hand over manual control to them unless it conflicts with Protocol 3.
+                                        You are absolutely [color=red]NOT[/color] allowed to remember, say, the name, appearance, etc. of your previous character.
+
 ghost-role-information-silicon-rules = You are a [color=#6495ed][bold]Silicon[/bold][/color]. Obey your laws. You are a Free Agent if you are not currently bound by any laws.
                                        You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
                                        You are allowed to remember knowledge about the game in general, such as how to cook, how to use objects, etc.
