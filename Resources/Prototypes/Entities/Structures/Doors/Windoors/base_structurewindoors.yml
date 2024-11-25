@@ -114,7 +114,6 @@
     denySound:
       path: /Audio/Machines/airlock_deny.ogg
   - type: Airlock
-    keepOpenIfClicked: true
     openPanelVisible: true
     denyAnimationTime: 0.4
     animatePanel: false
