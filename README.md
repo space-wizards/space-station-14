@@ -18,12 +18,6 @@ If you want to host or create content for SS14, this is the repo you need. It co
 
 ## Documentation/Wiki
 
-<div class="header" align="center">  
-
-[Space Wizards Development Wiki](https://docs.spacestation14.com/) | [Game Wiki](https://wiki.spacestation14.com/)
-
-</div>
-
 Our [docs site](https://docs.spacestation14.com/) has documentation on SS14's content, engine, game design, and more.  
 Additionally, see these resources for license and attribution information:  
 - [Robust Generic Attribution](https://docs.spacestation14.com/en/specifications/robust-generic-attribution.html)  
