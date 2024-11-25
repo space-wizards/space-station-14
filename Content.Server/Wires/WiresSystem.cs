@@ -5,12 +5,14 @@ using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Power.Components;
 using Content.Shared.DoAfter;
+using Content.Shared.Doors.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Tools.Components;
+using Content.Shared.Tools.Systems;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
@@ -43,6 +45,7 @@ public sealed class WiresSystem : SharedWiresSystem
 
         // this is a broadcast event
         SubscribeLocalEvent<WiresComponent, PanelChangedEvent>(OnPanelChanged);
+        SubscribeLocalEvent<WiresComponent, DoorBoltChangedEvent>(OnBoltChanged);
         SubscribeLocalEvent<WiresComponent, WiresActionMessage>(OnWiresActionMessage);
         SubscribeLocalEvent<WiresComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<WiresComponent, MapInitEvent>(OnMapInit);
@@ -50,6 +53,11 @@ public sealed class WiresSystem : SharedWiresSystem
         SubscribeLocalEvent<WiresComponent, PowerChangedEvent>(OnWiresPowered);
         SubscribeLocalEvent<WiresComponent, WireDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<WiresPanelSecurityComponent, WiresPanelSecurityEvent>(SetWiresPanelSecurity);
+    }
+
+    private void OnBoltChanged(Entity<WiresComponent> ent, ref DoorBoltChangedEvent args)
+    {
+        UpdateUserInterface(ent.Owner, ent.Comp);
     }
 
     private void SetOrCreateWireLayout(EntityUid uid, WiresComponent? wires = null)
@@ -443,8 +451,8 @@ public sealed class WiresSystem : SharedWiresSystem
         if (!IsPanelOpen(uid))
             return;
 
-        if (Tool.HasQuality(args.Used, "Cutting", tool) ||
-            Tool.HasQuality(args.Used, "Pulsing", tool))
+        if (Tool.HasQuality(args.Used, SharedToolSystem.CutQuality, tool) ||
+            Tool.HasQuality(args.Used, SharedToolSystem.PulseQuality, tool))
         {
             if (TryComp(args.User, out ActorComponent? actor))
             {

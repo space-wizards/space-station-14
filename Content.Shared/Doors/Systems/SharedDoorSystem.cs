@@ -57,6 +57,8 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
     private readonly HashSet<Entity<PhysicsComponent>> _doorIntersecting = new();
 
+    private static readonly TimeSpan CloseCheckTime = TimeSpan.FromSeconds(1);
+
     public override void Initialize()
     {
         base.Initialize();
@@ -79,7 +81,18 @@ public abstract partial class SharedDoorSystem : EntitySystem
         SubscribeLocalEvent<DoorComponent, GetPryTimeModifierEvent>(OnPryTimeModifier);
 
         SubscribeLocalEvent<DoorComponent, OnAttemptEmagEvent>(OnAttemptEmag);
-        SubscribeLocalEvent<DoorComponent, GotEmaggedEvent>(OnEmagged);
+        SubscribeLocalEvent<DoorComponent, GotEmaggedEvent>(OnDoorEmagged);
+        SubscribeLocalEvent<DoorComponent, DoorBoltChangedEvent>(OnDoorBoltChange);
+    }
+
+    private void OnDoorBoltChange(Entity<DoorComponent> ent, ref DoorBoltChangedEvent args)
+    {
+        // If we get unbolted then re-check for autoclose.
+        if (!args.Bolted && ent.Comp.NextStateChange == null)
+        {
+            ent.Comp.NextStateChange = GameTiming.CurTime + CloseCheckTime;
+            Dirty(ent);
+        }
     }
 
     protected virtual void OnComponentInit(Entity<DoorComponent> ent, ref ComponentInit args)
@@ -138,10 +151,12 @@ public abstract partial class SharedDoorSystem : EntitySystem
         }
     }
 
-    private void OnEmagged(EntityUid uid, DoorComponent door, ref GotEmaggedEvent args)
+    protected virtual void OnDoorEmagged(EntityUid uid, DoorComponent door, ref GotEmaggedEvent args)
     {
-        if (!SetState(uid, DoorState.Emagging, door))
+        if (!SetState(uid, DoorState.Opening, door))
             return;
+
+        args.Repeatable = true;
         Audio.PlayPredicted(door.SparkSound, uid, args.UserUid, AudioParams.Default.WithVolume(8));
         args.Handled = true;
     }
@@ -376,9 +391,6 @@ public abstract partial class SharedDoorSystem : EntitySystem
             Audio.PlayPredicted(door.OpenSound, uid, user, AudioParams.Default.WithVolume(-5));
         else if (_net.IsServer)
             Audio.PlayPvs(door.OpenSound, uid, AudioParams.Default.WithVolume(-5));
-
-        if (lastState == DoorState.Emagging && TryComp<DoorBoltComponent>(uid, out var doorBoltComponent))
-            SetBoltsDown((uid, doorBoltComponent), !doorBoltComponent.BoltsDown, user, predicted);
     }
 
     /// <summary>
@@ -795,7 +807,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
                 if (!TryClose(ent, door))
                 {
                     // The door failed to close (blocked?). Try again in one second.
-                    door.NextStateChange = time + TimeSpan.FromSeconds(1);
+                    door.NextStateChange = time + CloseCheckTime;
                 }
                 break;
 

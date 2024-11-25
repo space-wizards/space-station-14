@@ -1,4 +1,5 @@
 using Content.Shared.Doors.Components;
+using Content.Shared.Emag.Systems;
 using Content.Shared.Prying.Components;
 
 namespace Content.Shared.Doors.Systems;
@@ -14,6 +15,12 @@ public abstract partial class SharedDoorSystem
         SubscribeLocalEvent<DoorBoltComponent, BeforeDoorDeniedEvent>(OnBeforeDoorDenied);
         SubscribeLocalEvent<DoorBoltComponent, BeforePryEvent>(OnDoorPry);
         SubscribeLocalEvent<DoorBoltComponent, DoorStateChangedEvent>(OnStateChanged);
+        SubscribeLocalEvent<DoorBoltComponent, GotEmaggedEvent>(OnBoltEmagged);
+    }
+
+    private void OnBoltEmagged(Entity<DoorBoltComponent> ent, ref GotEmaggedEvent args)
+    {
+        SetBoltsDown(ent, !ent.Comp.BoltsDown, args.UserUid, true);
     }
 
     private void OnDoorPry(EntityUid uid, DoorBoltComponent component, ref BeforePryEvent args)
@@ -92,9 +99,22 @@ public abstract partial class SharedDoorSystem
         if (ent.Comp.BoltsDown == value)
             return false;
 
+        var attempt = new AttemptDoorBoltChangeEvent();
+
+        RaiseLocalEvent(ent.Owner, ref attempt);
+
+        if (attempt.Cancelled)
+            return false;
+
         ent.Comp.BoltsDown = value;
         Dirty(ent, ent.Comp);
         UpdateBoltLightStatus(ent);
+        var ev = new DoorBoltChangedEvent()
+        {
+            Bolted = value,
+        };
+
+        RaiseLocalEvent(ent.Owner, ref ev);
 
         var sound = value ? ent.Comp.BoltDownSound : ent.Comp.BoltUpSound;
         if (predicted)
@@ -119,4 +139,20 @@ public abstract partial class SharedDoorSystem
 
         return component.BoltsDown;
     }
+}
+
+[ByRefEvent]
+public record struct AttemptDoorBoltChangeEvent
+{
+    public bool Bolted;
+    public bool Cancelled;
+}
+
+/// <summary>
+/// Raised directed whenever door bolts change.
+/// </summary>
+[ByRefEvent]
+public record struct DoorBoltChangedEvent
+{
+    public bool Bolted;
 }
