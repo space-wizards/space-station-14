@@ -1,0 +1,17 @@
+{
+	"version": 1,
+	"size": {"x": 32, "y": 32},
+	"license": "MIT",
+	"copyright": "Created by LukeZurg22, sprite lifted from https://www.pixilart.com/art/dungeon-wall-texture-9e8e240693123e6",
+	"states": [
+		{"name": "dungeonbrick0", "directions": 4},
+		{"name": "dungeonbrick1", "directions": 4},
+		{"name": "dungeonbrick2", "directions": 4},
+		{"name": "dungeonbrick3", "directions": 4},
+		{"name": "dungeonbrick4", "directions": 4},
+		{"name": "dungeonbrick5", "directions": 4},
+		{"name": "dungeonbrick6", "directions": 4},
+		{"name": "dungeonbrick7", "directions": 4},
+		{"name": "full"}
+	]
+}

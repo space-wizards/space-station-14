@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "license": "MIT",
+  "copyright": "By LukeZurg22",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "campfire"
+    },
+    {
+      "name": "campfire_extinguished"
+    },
+    {
+      "name": "burning",
+      "delays": [
+        [
+      0.3,
+      0.3,
+      0.3
+    ]
+      ]
+    },
+    {
+      "name": "cooking_campfire",
+      "delays": [
+        [
+      0.3,
+      0.3,
+      0.3
+    ]
+      ]
+    }
+  ]
+}

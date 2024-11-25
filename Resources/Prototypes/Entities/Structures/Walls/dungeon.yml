@@ -1,0 +1,48 @@
+#Mountain Rock
+- type: entity
+  id: MountainRock
+  parent: BaseWall
+  name: mountain rock
+  description: Extremely ultra-dense rock.
+  components:
+  - type: Transform
+    noRot: true
+  - type: IconSmooth
+    key: walls
+    mode: NoSprite
+  - type: SmoothEdge
+  - type: Icon
+    sprite: Structures/Walls/rock.rsi
+    state: mountain
+  - type: Sprite
+    sprite: Structures/Walls/rock.rsi
+    layers:
+      - state: mountain
+      - map: [ "enum.EdgeLayer.South" ]
+        state: mountain_wall_south
+      - map: [ "enum.EdgeLayer.East" ]
+        state: mountain_wall_east
+      - map: [ "enum.EdgeLayer.North" ]
+        state: mountain_wall_north
+      - map: [ "enum.EdgeLayer.West" ]
+        state: mountain_wall_west
+
+#Dungeon Brick Wall
+- type: entity
+  parent: BaseWall
+  id: WallDungeonBrick
+  name: dungeon brick wall
+  components:
+  - type: Tag
+    tags:
+      - Wall
+  - type: Sprite
+    sprite: Structures/Walls/dungeonbrick.rsi
+  - type: Icon
+    sprite: Structures/Walls/dungeonbrick.rsi
+    state: full
+  - type: IconSmooth
+    key: dungeonbricks
+    base: dungeonbrick
+
+#Wooden Railing

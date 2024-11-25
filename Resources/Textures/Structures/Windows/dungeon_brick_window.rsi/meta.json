@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "license": "MIT",
+  "copyright": "Made by LukeZurg22",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "full"
+    },
+    {
+      "name": "dbwindow0",
+      "directions": 4
+    },
+    {
+      "name": "dbwindow1",
+      "directions": 4
+    },
+    {
+      "name": "dbwindow2",
+      "directions": 4
+    },
+    {
+      "name": "dbwindow3",
+      "directions": 4
+    },
+    {
+      "name": "dbwindow4",
+      "directions": 4
+    },
+    {
+      "name": "dbwindow5",
+      "directions": 4
+    },
+    {
+      "name": "dbwindow6",
+      "directions": 4
+    },
+    {
+      "name": "dbwindow7",
+      "directions": 4
+    }
+  ]
+}
