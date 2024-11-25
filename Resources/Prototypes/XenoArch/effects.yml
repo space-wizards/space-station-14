@@ -465,10 +465,10 @@
     refreshOnReactivate: true
     components:
     - type: EntityTableSpawner
-      rolls: !type:RangeNumberSelector
-        range: 1, 4
       deleteSpawnerAfterSpawn: false
       table: !type:GroupSelector
+        rolls: !type:RangeNumberSelector
+          range: 1, 4
         children:
         - !type:NestedSelector
           tableId: GenericTrashItems
