@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: starlighthowls
-  changes:
-  - message: Laser raptor spawner
-    type: Add
-  - message: Major ursa mob and spawner.
-    type: Add
-  - message: Minor ursa plushie
-    type: Add
-  id: 72
-  time: '2024-08-12T02:10:48.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/86
 - author: TGRCdev
   changes:
   - message: Crew manifest now shows pronouns
@@ -4298,3 +4287,11 @@
   id: 571
   time: '2024-11-25T12:43:10.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/787
+- author: kipdotnet
+  changes:
+  - message: Added a specialised cleanade crate to cargo, so you can buy them without
+      buying a mop and bucket every time.
+    type: Add
+  id: 572
+  time: '2024-11-25T12:52:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/796
