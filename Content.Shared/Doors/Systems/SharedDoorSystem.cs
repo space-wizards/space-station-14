@@ -140,7 +140,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         }
     }
 
-    protected virtual void OnDoorEmagged(EntityUid uid, DoorComponent door, ref GotEmaggedEvent args)
+    private void OnDoorEmagged(EntityUid uid, DoorComponent door, ref GotEmaggedEvent args)
     {
         if (!SetState(uid, DoorState.Opening, door))
             return;
