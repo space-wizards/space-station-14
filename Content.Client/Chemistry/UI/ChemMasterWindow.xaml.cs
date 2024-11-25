@@ -28,9 +28,6 @@ namespace Content.Client.Chemistry.UI
         public readonly Button[] PillTypeButtons;
 
         private const string PillsRsiPath = "/Textures/Objects/Specific/Chemistry/pills.rsi";
-        // Declares a cache for the last sent state from server.
-        // This is needed to allow for lists to repopulate when switching between input and output tabs.
-        private ChemMasterBoundUserInterfaceState? _currentState;
 
         /// <summary>
         /// Create and initialize the chem master UI client-side. Creates the basic layout,
@@ -90,8 +87,6 @@ namespace Content.Client.Chemistry.UI
 
             Tabs.SetTabTitle(0, Loc.GetString("chem-master-window-input-tab"));
             Tabs.SetTabTitle(1, Loc.GetString("chem-master-window-output-tab"));
-            // Subscribe to tab changes.
-            Tabs.OnTabChanged += OnTabChanged;
         }
 
         private ReagentButton MakeReagentButton(string text, ChemMasterReagentAmount amount, ReagentId id, bool isBuffer, string styleClass)
@@ -105,9 +100,9 @@ namespace Content.Client.Chemistry.UI
         /// Conditionally generates a set of reagent buttons based on the supplied boolean argument.
         /// This was moved outside of BuildReagentRow to facilitate conditional logic, stops indentation depth getting out of hand as well.
         /// </summary>
-        private List<ReagentButton> CreateReagentTransferButtons(ReagentId reagent, bool isBuffer, bool isOutput)
+        private List<ReagentButton> CreateReagentTransferButtons(ReagentId reagent, bool isBuffer, bool addReagentButtons)
         {
-            if (isOutput)
+            if (!addReagentButtons)
                 return new List<ReagentButton>(); // Return an empty list if reagentTransferButton creation is disabled.
 
             var buttonConfigs = new (string text, ChemMasterReagentAmount amount, string styleClass)[]
@@ -139,7 +134,6 @@ namespace Content.Client.Chemistry.UI
         public void UpdateState(BoundUserInterfaceState state)
         {
             var castState = (ChemMasterBoundUserInterfaceState)state;
-            _currentState = castState;
 
             if (castState.UpdateLabel)
                 LabelLine = GenerateLabel(castState);
@@ -191,14 +185,6 @@ namespace Content.Client.Chemistry.UI
 
             BottleDosage.Value = Math.Min(bottleAmountMax, bufferVolume);
         }
-        //forces the UI to refresh using cached data on swapping tab
-        private void OnTabChanged(int tabIndex)
-        {
-            if (_currentState != null)
-            {
-                UpdatePanelInfo(_currentState);
-            }
-        }
         /// <summary>
         /// Generate a product label based on reagents in the buffer.
         /// </summary>
@@ -222,8 +208,8 @@ namespace Content.Client.Chemistry.UI
             BufferTransferButton.Pressed = state.Mode == ChemMasterMode.Transfer;
             BufferDiscardButton.Pressed = state.Mode == ChemMasterMode.Discard;
 
-            BuildContainerUI(InputContainerInfo, state.InputContainerInfo);
-            BuildContainerUI(OutputContainerInfo, state.OutputContainerInfo);
+            BuildContainerUI(InputContainerInfo, state.InputContainerInfo, true);
+            BuildContainerUI(OutputContainerInfo, state.OutputContainerInfo, false);
 
             BufferInfo.Children.Clear();
 
@@ -258,11 +244,11 @@ namespace Content.Client.Chemistry.UI
                 _prototypeManager.TryIndex(reagentId.Prototype, out ReagentPrototype? proto);
                 var name = proto?.LocalizedName ?? Loc.GetString("chem-master-window-unknown-reagent-text");
                 var reagentColor = proto?.SubstanceColor ?? default(Color);
-                BufferInfo.Children.Add(BuildReagentRow(reagentColor, rowCount++, name, reagentId, quantity, true, false));
+                BufferInfo.Children.Add(BuildReagentRow(reagentColor, rowCount++, name, reagentId, quantity, true, true));
             }
         }
         
-        private void BuildContainerUI(Control control, ContainerInfo? info)
+        private void BuildContainerUI(Control control, ContainerInfo? info, bool addReagentButtons)
         {
             control.Children.Clear();
 
@@ -297,8 +283,7 @@ namespace Content.Client.Chemistry.UI
             {
                 foreach (var (id, quantity) in info.Entities.Select(x => (x.Id, x.Quantity)))
                 {
-                    control.Children.Add(BuildReagentRow(default(Color), rowCount++, id, default(ReagentId), quantity, false, Tabs.CurrentTab == 1));
-                    //todo figure out localisation for entitynames
+                    control.Children.Add(BuildReagentRow(default(Color), rowCount++, id, default(ReagentId), quantity, false, addReagentButtons));
                 }
             }
 
@@ -311,25 +296,25 @@ namespace Content.Client.Chemistry.UI
                     var name = proto?.LocalizedName ?? Loc.GetString("chem-master-window-unknown-reagent-text");
                     var reagentColor = proto?.SubstanceColor ?? default(Color);
         
-                    control.Children.Add(BuildReagentRow(reagentColor, rowCount++, name, reagent.Reagent, reagent.Quantity, false, Tabs.CurrentTab == 1));
+                    control.Children.Add(BuildReagentRow(reagentColor, rowCount++, name, reagent.Reagent, reagent.Quantity, false, addReagentButtons));
                 }
             }
         }
         /// <summary>
         /// Take reagent/entity data and present rows, labels, and buttons appropriately. todo sprites?
         /// </summary>
-        private Control BuildReagentRow(Color reagentColor, int rowCount, string name, ReagentId reagent, FixedPoint2 quantity, bool isBuffer, bool isOutput)
+        private Control BuildReagentRow(Color reagentColor, int rowCount, string name, ReagentId reagent, FixedPoint2 quantity, bool isBuffer, bool addReagentButtons)
         {
             //Colors rows and sets fallback for reagentcolor to the same as background, this will hide colorPanel for entities hopefully
             var rowColor1 = Color.FromHex("#1B1B1E");
             var rowColor2 = Color.FromHex("#202025");
             var currentRowColor = (rowCount % 2 == 1) ? rowColor1 : rowColor2;
-            if ((reagentColor == default(Color))|(isOutput))
+            if ((reagentColor == default(Color))|(!addReagentButtons))
             {
                 reagentColor = currentRowColor;
             }
             //this calls the separated button builder, and stores the return to render after labels
-            var reagentButtonConstructors = CreateReagentTransferButtons(reagent, isBuffer, isOutput);
+            var reagentButtonConstructors = CreateReagentTransferButtons(reagent, isBuffer, addReagentButtons);
             
             // Create the row layout with the color panel
             var rowContainer = new BoxContainer
