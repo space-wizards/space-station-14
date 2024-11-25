@@ -815,7 +815,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/hosformal.rsi
 
 - type: entity
-  parent: [UnsensoredClothingUniformBase, BaseSyndicateContraband]
+  parent: [UnsensoredClothingUniformBase, ClothingUniformFoldableBase, BaseSyndicateContraband]
   id: ClothingUniformJumpsuitOperative
   name: operative jumpsuit
   description: Uniform for elite syndicate operatives performing tactical operations in deep space.
