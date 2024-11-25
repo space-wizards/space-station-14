@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Moomoobeef
-  changes:
-  - message: Added pitchers for the chef who wants to serve beverages too.
-    type: Add
-  id: 7150
-  time: '2024-08-19T03:01:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31105
 - author: EmoGarbage404
   changes:
   - message: Space carp and Sharkminnows now drop teeth when butchered.
@@ -3928,3 +3921,11 @@
   id: 7649
   time: '2024-11-24T08:49:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32890
+- author: slarticodefast
+  changes:
+  - message: Fixed doors not auto-closing correctly after being unbolted in an open
+      state.
+    type: Fix
+  id: 7650
+  time: '2024-11-25T04:26:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33524
