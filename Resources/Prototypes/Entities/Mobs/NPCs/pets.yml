@@ -521,6 +521,8 @@
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
       collection: DisgustingPig
+      params:
+       variation: .5
   - type: Grammar
     attributes:
       proper: true
