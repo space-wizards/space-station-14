@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Space carp and Sharkminnows now drop teeth when butchered.
-    type: Add
-  - message: Added new bounties for carp and shark teeth.
-    type: Add
-  id: 7151
-  time: '2024-08-19T03:04:59.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31070
 - author: to4no_fix
   changes:
   - message: Now it takes 5 seconds to take off or put on a muzzle
@@ -3929,3 +3920,11 @@
   id: 7650
   time: '2024-11-25T04:26:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33524
+- author: Schrodinger71
+  changes:
+  - message: Fixed a bug letting players type "ghost" in the console and then see
+      the whole chat while being in the lobby.
+    type: Fix
+  id: 7651
+  time: '2024-11-25T07:20:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33529
