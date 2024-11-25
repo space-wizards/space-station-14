@@ -76,7 +76,7 @@
   id: CrateNitrogenInternals
   parent: CrateInternals
   name: internals crate (nitrogen)
-  description: Contains four breath masks and four large nitrogen tanks.
+  description: Contains four breath masks and four large nitrogen tanks. Intended for Slimepeople and Vox.
   components:
   - type: StorageFill
     contents:
