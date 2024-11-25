@@ -319,9 +319,9 @@
       state: ripley
   - type: FootstepModifier
     footstepSoundCollection:
-      path: /Audio/Mecha/mechmove03.ogg
+      path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
       params:
-        volume: -10
+        volume: -15
   - type: Mech
     baseState: stepfather
     openState: stepfather
