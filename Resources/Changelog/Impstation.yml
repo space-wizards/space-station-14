@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: TGRCdev
   changes:
-  - message: Readding a maintenance loot table that was mistakenly deleted during
-      a merge conflict.
-    type: Fix
-  id: 70
-  time: '2024-08-11T20:38:28.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/84
-- author: TGRCdev
-  changes:
   - message: Fixed missing job mapping sprites because of an incorrectly capitalized
       job sprite PNG file.
     type: Fix
@@ -4305,3 +4297,11 @@
   id: 569
   time: '2024-11-25T06:06:50.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/792
+- author: Sha-Seng
+  changes:
+  - message: SWAT Shoes are now in the ClothesMate's hacked inventory to match the
+      jumpsuits
+    type: Add
+  id: 570
+  time: '2024-11-25T06:15:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/784
