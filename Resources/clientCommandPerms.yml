@@ -86,3 +86,7 @@
     - uploadfile
     - loadprototype
     - uploadfolder
+
+- Flags: ADMINCHAT
+  Commands:
+    - achatwindow
