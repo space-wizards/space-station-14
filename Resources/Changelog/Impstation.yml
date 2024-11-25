@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Drags-His-Tail
-  changes:
-  - message: Added Ratvarian, Slime, Russian, French, and Spanish as speech traits.
-      Blabl blump!
-    type: Add
-  id: 68
-  time: '2024-08-11T17:35:38.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/82
 - author: TGRCdev
   changes:
   - message: Fixes the Newports and pAI trinkets. Also removes the "PVC" tag from
@@ -4302,3 +4294,10 @@
   id: 567
   time: '2024-11-24T23:23:22.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/761
+- author: Sha-Seng
+  changes:
+  - message: The Silence of Tenebrae has been added to the station's library
+    type: Add
+  id: 568
+  time: '2024-11-25T05:56:38.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/793
