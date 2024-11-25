@@ -30,10 +30,10 @@
   - type: IgnoreUIRange
   - type: StationAiHeld
   - type: StationAiOverlay
+  - type: ShowElectrocutionHUD
   - type: ActionGrant
     actions:
     - ActionJumpToCore
-    - ActionShowJobIcons
     - ActionSurvCameraLights
     - ActionAIViewLaws
   - type: UserInterface
@@ -70,7 +70,28 @@
     canShuttle: false
     title: comms-console-announcement-title-station-ai
     color: "#2ed2fd"
+  - type: ShowJobIcons
 
+- type: entity
+  id: AiHeldIntellicard
+  description: Components added / removed from an entity that gets inserted into an Intellicard.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+  - type: ActiveRadio
+    channels:
+    - Binary
+    - Common
+  - type: ActionGrant
+    actions:
+    - ActionAIViewLaws
+  - type: UserInterface
+    interfaces:
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
 
 # Ai
 - type: entity
@@ -82,7 +103,8 @@
   - type: StationAiHolder
     slot:
       name: station-ai-mind-slot
-      locked: true
+      locked: false
+      disableEject: true
       whitelist:
         tags:
         - StationAi
@@ -230,7 +252,7 @@
 
 - type: entity
   id: AntimovCircuitBoard
-  parent: BaseElectronics
+  parent: [BaseElectronics, BaseSyndicateContraband]
   name: law board (Antimov)
   description: An electronics board containing the Antimov lawset.
   components:
@@ -239,6 +261,7 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: AntimovLawset
+    lawUploadSound: /Audio/Ambience/Antag/silicon_lawboard_antimov.ogg
 
 - type: entity
   id: NutimovCircuitBoard
@@ -255,13 +278,16 @@
 # Items
 - type: entity
   id: Intellicard
-  name: Intellicard
+  name: intellicard
   description: A storage device for AIs.
   parent:
   - BaseItem
   - AiHolder
   suffix: Empty
   components:
+  - type: ContainerComp
+    proto: AiHeldIntellicard
+    container: station_ai_mind_slot
   - type: Sprite
     sprite: Objects/Devices/ai_card.rsi
     layers:
@@ -276,6 +302,7 @@
         unshaded:
           Empty: { state: empty }
           Occupied: { state: full }
+  - type: Intellicard
 
 - type: entity
   id: PlayerStationAiEmpty
@@ -360,7 +387,6 @@
       enum.SiliconLawsUiKey.Key:
         type: SiliconLawBoundUserInterface
   - type: ComplexInteraction
-  - type: DoorRemote
   - type: Actions
   - type: Access
     groups:
@@ -369,10 +395,14 @@
     drawFov: false
   - type: Examiner
   - type: InputMover
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Borg
   - type: Tag
     tags:
     - HideContextMenu
     - StationAi
+    - NoConsoleSound
 
 # Hologram projection that the AI's eye tracks.
 - type: entity
@@ -401,27 +431,8 @@
 
 # Borgs
 - type: entity
-  id: PlayerBorgGeneric
-  parent: BorgChassisGeneric
-  suffix: Battery, Tools
-  components:
-  - type: ContainerFill
-    containers:
-      borg_brain:
-        - PositronicBrain
-      borg_module:
-        - BorgModuleTool
-  - type: ItemSlots
-    slots:
-      cell_slot:
-        name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellMedium
-  - type: RandomMetadata
-    nameSegments: [names_borg]
-
-- type: entity
   id: PlayerBorgBattery
-  parent: BorgChassisGeneric
+  parent: BorgChassisSelectable
   suffix: Battery
   components:
   - type: ContainerFill

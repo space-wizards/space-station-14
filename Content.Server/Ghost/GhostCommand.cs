@@ -1,7 +1,9 @@
 using Content.Server.Popups;
 using Content.Shared.Administration;
+using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Robust.Shared.Console;
+using Content.Server.GameTicking;
 
 namespace Content.Server.Ghost
 {
@@ -20,6 +22,14 @@ namespace Content.Server.Ghost
             if (player == null)
             {
                 shell.WriteLine(Loc.GetString("ghost-command-no-session"));
+                return;
+            }
+
+            var gameTicker = _entities.System<GameTicker>();
+            if (!gameTicker.PlayerGameStatuses.TryGetValue(player.UserId, out var playerStatus) ||
+                playerStatus is not PlayerGameStatus.JoinedGame)
+            {
+                shell.WriteLine("ghost-command-error-lobby");
                 return;
             }
 

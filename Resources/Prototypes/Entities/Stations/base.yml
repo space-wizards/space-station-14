@@ -60,6 +60,7 @@
           maxCount: 2
           stationGrid: false
           paths:
+          - /Maps/Ruins/abandoned_outpost.yml
           - /Maps/Ruins/chunked_tcomms.yml
           - /Maps/Ruins/biodome_satellite.yml
           - /Maps/Ruins/derelict.yml
@@ -72,7 +73,7 @@
         vgroid: !type:DungeonSpawnGroup
           minimumDistance: 300
           maximumDistance: 350
-          nameDataset: names_borer
+          nameDataset: NamesBorer
           stationGrid: false
           addComponents:
           - type: Gravity

@@ -18,8 +18,11 @@ public sealed partial class CableComponent : Component
     [DataField]
     public EntProtoId CableDroppedOnCutPrototype = "CableHVStack1";
 
+    /// <summary>
+    /// The tool quality needed to cut the cable. Setting to null prevents cutting.
+    /// </summary>
     [DataField]
-    public ProtoId<ToolQualityPrototype> CuttingQuality = SharedToolSystem.CutQuality;
+    public ProtoId<ToolQualityPrototype>? CuttingQuality = SharedToolSystem.CutQuality;
 
     /// <summary>
     ///     Checked by <see cref="CablePlacerComponent"/> to determine if there is
