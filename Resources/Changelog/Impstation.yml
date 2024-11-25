@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: TGRCdev
   changes:
-  - message: Fixes the Newports and pAI trinkets. Also removes the "PVC" tag from
-      the PVC pipe
-    type: Fix
-  id: 69
-  time: '2024-08-11T17:35:28.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/83
-- author: TGRCdev
-  changes:
   - message: Readding a maintenance loot table that was mistakenly deleted during
       a merge conflict.
     type: Fix
@@ -4301,3 +4293,15 @@
   id: 568
   time: '2024-11-25T05:56:38.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/793
+- author: suyo
+  changes:
+  - message: Added three new tracks total for lobby and jukebox
+    type: Add
+  - message: Volume and length adjustment for expedition music along with converting
+      it to mono
+    type: Tweak
+  - message: Fixed an attribution for a certain lobby track (again)
+    type: Fix
+  id: 569
+  time: '2024-11-25T06:06:50.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/792
