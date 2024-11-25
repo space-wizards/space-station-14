@@ -1,0 +1,111 @@
+- type: entity
+  id: DungeonBrickWindowBase
+  parent: BaseStructure
+  abstract: true
+  name: dungeon brick window
+  description: Peer into the dark to see. Pray tell, what beasts lie beyond?
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Window
+  components:
+  - type: RCDDeconstructable
+    deconstructable: false
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        collection: GlassSmack
+  - type: WallMount
+    arc: 360 # interact despite grilles
+  - type: Tag
+    tags:
+      - ForceFixRotations
+      - Window
+  - type: Physics
+    bodyType: Static
+  - type: ExaminableDamage
+    messages: WindowMessages
+  - type: InteractionPopup
+    interactSuccessString: comp-window-knock
+    messagePerceivedByOthers: comp-window-knock
+    interactSuccessSound:
+      path: /Audio/Effects/glass_knock.ogg
+  - type: Appearance
+  - type: StaticPrice
+    price: 100
+  - type: BlockWeather
+
+- type: entity
+  id: DungeonBrickWindowSquareBase
+  abstract: true
+  name: dungeon brick window
+  parent: DungeonBrickWindowBase
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Structures/Windows/dungeon_brick_window.rsi
+  - type: Icon
+    sprite: Structures/Windows/dungeon_brick_window.rsi
+    state: full
+  - type: IconSmooth
+    key: windows
+    base: dbwindow
+  - type: Airtight
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb {}
+        mask:
+        - FullTileMask
+        layer:
+        - GlassLayer
+
+- type: entity
+  id: DungeonBrickWindowIndestructible
+  name: dungeon brick window
+  parent: DungeonBrickWindowSquareBase
+  suffix: indestructible
+
+- type: entity
+  id: DungeonBrickWindow
+  name: dungeon brick window
+  parent: DungeonBrickWindowSquareBase
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1000
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WindowShatter
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassReinforced:
+            min: 1
+            max: 2
+          PartRodMetal:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: DamageVisuals
+    thresholds: [5, 10, 20]
+    damageDivisor: 20
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Windows/cracks.rsi
+  - type: Repairable
+    fuelCost: 15
+    doAfterDelay: 3
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: RGlass
