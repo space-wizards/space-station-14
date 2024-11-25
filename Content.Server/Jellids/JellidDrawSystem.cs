@@ -30,7 +30,6 @@ namespace Content.Server.Jellid.Systems
             {
                 if (Charging)
                     {
-                    Log.Error($"Prevented damage.");
                     return;
                     }
                 else
@@ -40,7 +39,6 @@ namespace Content.Server.Jellid.Systems
                   DamageDict = { ["Slash"] = 1.5f }
                    };
                 _damageable.TryChangeDamage(entity.Owner, damage, origin: entity.Owner);
-                Log.Error($"Damage is being taken");
                 }
             }
         }
@@ -81,8 +79,6 @@ private void DrainPower(BatteryComponent containerBattery, BatteryComponent inte
         // Directly use the BatterySystem to change the charge values
         _battery.SetCharge(containerBattery.Owner, containerBattery.CurrentCharge - drainAmount, containerBattery);
         _battery.SetCharge(internalBattery.Owner, internalBattery.CurrentCharge + drainAmount, internalBattery);
-
-        Log.Error($"Drained {drainAmount} power from {containerBattery.Owner} to {internalBattery.Owner}.");
     }
 
 }
@@ -91,7 +87,6 @@ private void DrainPower(BatteryComponent containerBattery, BatteryComponent inte
     {
         get
         {
-        Log.Error($"Is Charging!");
         return DrainAmount > 0;
         }
     }
