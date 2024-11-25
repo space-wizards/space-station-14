@@ -15,7 +15,7 @@
   id: MobJellidSprites
   sprites:
     Head: MobJellidHead
-    Hair: MobJellidMarkingFollowSkin
+    Hair: MobSlimeMarkingFollowSkin
     Chest: MobJellidTorso
     Eyes: MobJellidEyes
     LArm: MobJellidLArm
@@ -25,7 +25,7 @@
     LLeg: MobJellidLLeg
     RLeg: MobJellidRLeg
     LFoot: MobJellidLFoot
-    RFoot: MobSlimeRFoot
+    RFoot: MobJellidRFoot
 
 - type: humanoidBaseSprite
   id: MobJellidEyes
@@ -40,6 +40,7 @@
     Hair:
       points: 1
       required: false
+      defaultMarkings: [ JellidMantle ]
     Chest:
       points: 1
       required: false
