@@ -550,7 +550,7 @@
     startAudio:
       path: /Audio/Announcements/attention.ogg
     weight: 5
-    minimumPlayers: 10
+    minimumPlayers: 25
     reoccurrenceDelay: 20
   - type: GreytideVirusRule
     accessGroups:
