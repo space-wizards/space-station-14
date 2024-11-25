@@ -116,6 +116,10 @@ public abstract partial class SharedDoorSystem
 
         RaiseLocalEvent(ent.Owner, ref ev);
 
+        // used to reset the auto-close timer after unbolting
+        var ev = new DoorBoltsChangedEvent(value);
+        RaiseLocalEvent(ent.Owner, ev);
+
         var sound = value ? ent.Comp.BoltDownSound : ent.Comp.BoltUpSound;
         if (predicted)
             Audio.PlayPredicted(sound, ent, user: user);

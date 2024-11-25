@@ -1,63 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Added Memory Cells for storing logic signals persistently.
-    type: Add
-  id: 7143
-  time: '2024-08-18T22:34:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/24983
-- author: Psychpsyo
-  changes:
-  - message: The random sentience event is back and can no longer pick things that
-      aren't even on the station.
-    type: Add
-  id: 7144
-  time: '2024-08-18T23:41:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29123
-- author: EmoGarbage404
-  changes:
-  - message: Ore can no longer be destroyed by explosions. Happy blast mining.
-    type: Tweak
-  id: 7145
-  time: '2024-08-19T01:55:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31182
-- author: slarticodefast
-  changes:
-  - message: Mobs without hands can no longer toggle other players' suit pieces.
-    type: Fix
-  id: 7146
-  time: '2024-08-19T02:41:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31152
-- author: Goldminermac
-  changes:
-  - message: Chocolate-chip and blueberry pancakes can now be in stacks of up to nine
-      for consistency.
-    type: Fix
-  id: 7147
-  time: '2024-08-19T02:42:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31123
-- author: tosatur
-  changes:
-  - message: Made hydroponics alert light more orange
-    type: Tweak
-  id: 7148
-  time: '2024-08-19T02:48:47.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31088
-- author: redmushie
-  changes:
-  - message: News management console now checks for Service ID card access instead
-      of the manifest
-    type: Fix
-  id: 7149
-  time: '2024-08-19T02:55:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31160
-- author: Moomoobeef
-  changes:
-  - message: Added pitchers for the chef who wants to serve beverages too.
-    type: Add
-  id: 7150
-  time: '2024-08-19T03:01:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31105
 - author: EmoGarbage404
   changes:
   - message: Space carp and Sharkminnows now drop teeth when butchered.
@@ -3930,3 +3871,61 @@
   id: 7642
   time: '2024-11-23T09:31:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33481
+- author: metalgearsloth
+  changes:
+  - message: Drag-drop outline no longer shows the vaulting outlines if you're vaulting.
+    type: Tweak
+  id: 7643
+  time: '2024-11-23T11:19:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33477
+- author: goet
+  changes:
+  - message: Useless wires some vending machines have can be cut now.
+    type: Fix
+  id: 7644
+  time: '2024-11-23T11:41:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32447
+- author: IProduceWidgets
+  changes:
+  - message: Arrivals shuttle is more tamper proof.
+    type: Fix
+  id: 7645
+  time: '2024-11-23T15:14:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33284
+- author: metalgearsloth
+  changes:
+  - message: The auto-orientation when showing up on the arrivals shuttle now has
+      a delay to it.
+    type: Tweak
+  id: 7646
+  time: '2024-11-23T16:52:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33479
+- author: Winkarst-cpu
+  changes:
+  - message: Now muzzle flashes are displayed below mobs.
+    type: Tweak
+  id: 7647
+  time: '2024-11-24T04:20:00.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33465
+- author: MilenVolf
+  changes:
+  - message: Expeditions can now be completed prematurely again by making an FTL jump.
+    type: Fix
+  id: 7648
+  time: '2024-11-24T08:11:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33507
+- author: deltanedas
+  changes:
+  - message: Fixed expeditions on cave planets not having any ore.
+    type: Fix
+  id: 7649
+  time: '2024-11-24T08:49:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32890
+- author: slarticodefast
+  changes:
+  - message: Fixed doors not auto-closing correctly after being unbolted in an open
+      state.
+    type: Fix
+  id: 7650
+  time: '2024-11-25T04:26:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33524
