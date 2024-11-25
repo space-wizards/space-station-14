@@ -322,3 +322,13 @@
   license: "Custom"
   copyright: "Tricktrack PART 2 by Hideaki Kobayashi and Fumie Kumatani"
   source: "https://www.youtube.com/watch?v=pioIQLRfzuw"
+
+- files: ["build_that_wall.ogg"]
+  license: "Custom"
+  copyright: "Build That Wall by Darren Korb. Suggested by hivehum"
+  source: "https://www.youtube.com/watch?v=o3SZee4YZX8"
+
+- files: ["what_would_you_give.ogg"]
+  license: "Custom"
+  copyright: "What Would You Give by The Bedquilt Ramblers & Ben Babbitt. Suggested by hivehum"
+  source: "https://www.youtube.com/watch?v=Qlyor4-tL7s"

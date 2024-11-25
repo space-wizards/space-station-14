@@ -120,6 +120,7 @@
     whitelist:
       components:
       - Item
+      - Goblin # NF
   - type: MailingUnit
   - type: DeviceNetwork
     deviceNetId: Wired

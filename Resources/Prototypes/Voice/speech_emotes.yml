@@ -284,6 +284,28 @@
     - salutes
 
 - type: emote
+  id: Crack
+  name: chat-emote-name-crack
+  category: Hands
+  icon: _Impstation/Interface/Emotes/crack.png
+  whitelist:
+    components:
+    - Hands
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-crack"]
+  chatTriggers:
+    - crack knuckles
+    - cracks knuckles
+    - cracking knuckles
+    - cracked knuckles
+    - cracks their knuckles
+    - cracks her knuckles
+    - cracks his knuckles
+    - cracks its knuckles
+
+- type: emote
   id: Gasp
   name: chat-emote-name-gasp
   whitelist:
@@ -341,7 +363,7 @@
   name: chat-emote-name-weh
   category: Vocal
   chatMessages: [UNGHs!]
-  
+
 - type: emote
   id: Chirp
   name: chat-emote-name-chirp

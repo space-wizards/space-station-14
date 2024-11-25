@@ -1,0 +1,22 @@
+- type: entity
+  name: Sir Gollylad's sword
+  parent: BaseSword
+  id: GoblinClaymore
+  description: An ancient war blade, its hilt stained red with the blood of its enemies... On closer inspection, it appears to be a toy.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Melee/goblinclaymore.rsi
+  - type: MeleeWeapon
+    attackRate: 0.75
+    damage:
+      types:
+        Blunt: 5
+        Structural: 5
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
+  - type: Item
+  - type: Clothing
+    sprite: _Impstation/Objects/Weapons/Melee/goblinclaymore.rsi
+    slots:
+    - back
+  - type: DisarmMalus

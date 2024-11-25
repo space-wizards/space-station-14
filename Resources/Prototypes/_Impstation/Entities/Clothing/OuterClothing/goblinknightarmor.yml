@@ -1,0 +1,26 @@
+#Sir Gollylad's Armor
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterGoblinKnightArmor
+  name: Sir Gollylad's armor
+  description: A suit of gleaming armor. On closer inspection, it appears to have been meticulously constructed out of soda cans and tin foil. Despite this, it seems to be spaceworthy.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Misc/goblinknightarmor.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Misc/goblinknightarmor.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
+        Heat: 0.8
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetGoblinKnight

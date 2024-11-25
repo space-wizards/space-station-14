@@ -1,0 +1,9 @@
+- type: entity
+  id: LuggageMigration
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    weight: 1.5
+    duration: 1
+  - type: RandomEntityStorageSpawnRule
+    prototype: MobDiscworldLuggage

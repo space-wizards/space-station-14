@@ -207,8 +207,8 @@
   loadouts:
   - LacedShoes
   - LeatherShoes
-  - BlackCommandHeels
-  - BlueCommandHeels
+  - CommandBlackHeels
+  - CommandBlueHeels
   - CaptainJumpBoots
 
 - type: loadoutGroup
@@ -262,8 +262,8 @@
   - LacedShoes
   - LeatherShoes
   - HoPShoesWhite
-  - BlackCommandHeels
-  - BlueCommandHeels
+  - CommandBlackHeels
+  - CommandBlueHeels
 
 - type: loadoutGroup
   id: HoPOuterClothing
@@ -311,7 +311,7 @@
   - GreyJumpskirt
   - AncientJumpsuit
   - RainbowJumpsuit
-  - GraySpaceCadetJumpsuit
+  - GraytiderSpaceJumpsuit
 
 - type: loadoutGroup
   id: PassengerFace
@@ -1417,6 +1417,7 @@
   loadouts:
   - HeadofSecurityHead
   - HeadofSecurityBeret
+  - HeadofSecurityPatrolCap
 
 - type: loadoutGroup
   id: HeadofSecurityJumpsuit
@@ -1428,6 +1429,8 @@
   - HeadofSecurityJumpskirtGrey
   - HeadofSecurityTurtleneck
   - HeadofSecurityTurtleneckSkirt
+  - HeadofSecurityProfessionalJumpsuit
+  - HeadofSecurityProfessionalJumpskirt
   - HeadofSecurityFormalSuit
   - HeadofSecurityFormalSkirt
 
@@ -1465,11 +1468,12 @@
   - CommandVeteranDuffel
 
 - type: loadoutGroup
-  id: HeadofSecurityMask
-  name: loadout-group-head-of-security-mask
-  minLimit: 0
+  id: HeadofSecurityBelt
+  name: loadout-group-head-of-security-belt
   loadouts:
-  - HeadofSecurityMask
+  - SecurityBelt
+  - SecurityWebbing
+  - HeadofSecurityShoulderHolster
 
 - type: loadoutGroup
   id: WardenHead
