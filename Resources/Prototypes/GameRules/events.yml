@@ -543,7 +543,7 @@
   - type: MobReplacementRule
 
 - type: entity
-  id: GreyTideVirus
+  id: GreytideVirus
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
