@@ -12,7 +12,7 @@ The A.P.E. can shoot three different kinds of anomalous particles: Delta, Epsilo
 - [color=crimson]Danger:[/color] Increases the severity of an anomaly.
 - [color=plum]Unstable:[/color] Increases the instability of an anomaly.
 - [color=goldenrod]Containment:[/color] Increases the stability at the cost of health.
-- [color=#6b75fa]Transformation:[/color] Increases the severity and has chance to change behavior.
+- [color=#6b75fa]Transformation:[/color] Increases the severity and has a chance to change behavior.
 
 Which particle type corresponds to each effect is unique and can be learned by scanning the anomaly.
 
