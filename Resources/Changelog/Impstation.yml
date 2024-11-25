@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: TGRCdev
-  changes:
-  - message: Fixed missing job mapping sprites because of an incorrectly capitalized
-      job sprite PNG file.
-    type: Fix
-  - message: Duplicate LeavesGreenMarijuana was removed. Marijuana leaves can now
-      be put on burger buns.
-    type: Fix
-  - message: Templar helmet's ID was mistakenly re-introduced into the maintenance
-      loot tables. Re-removed the ID from the loot table.
-    type: Fix
-  id: 71
-  time: '2024-08-12T02:07:08.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/85
 - author: starlighthowls
   changes:
   - message: Laser raptor spawner
@@ -4305,3 +4291,10 @@
   id: 570
   time: '2024-11-25T06:15:48.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/784
+- author: mqole
+  changes:
+  - message: GOBLINS R NOW GOBLIN-ER
+    type: Tweak
+  id: 571
+  time: '2024-11-25T12:43:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/787
