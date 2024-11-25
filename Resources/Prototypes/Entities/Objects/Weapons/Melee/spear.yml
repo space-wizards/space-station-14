@@ -214,3 +214,22 @@
             max: 2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+
+- type: entity
+  name: Pike
+  parent: Spear
+  id: SpearPike
+  description: A spear with a reinforced glass shard as a tip.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/pike.rsi
+  - type: MeleeWeapon
+    attackRate: 3
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Piercing: 4
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 6
