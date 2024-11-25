@@ -1,0 +1,55 @@
+﻿- type: entity
+  id: ActionWebball
+  name: Webball
+  description: Fires a webball towards the clicked location.
+  components:
+  - type: WorldTargetAction
+    useDelay: 30
+    itemIconStyle: BigAction
+    checkCanAccess: false
+    raiseOnUser: true
+    range: 60
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Weapons/Xeno/alien_spitacid.ogg
+    icon:
+      sprite: _Starlight/Interface/Actions/actions_spider.rsi
+      state: web
+    event: !type:ProjectileSpellEvent
+      prototype: ProjectileWebball
+
+- type: entity
+  id: ProjectileWebball
+  name: webball
+  parent: BaseBulletTrigger
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 3
+  - type: Sprite
+    sprite: _Starlight/Interface/Actions/actions_spider.rsi
+    layers:
+    - state: web
+      shader: unshaded
+  - type: SpawnOnCollide
+    prototype: SpiderWeb
+
+- type: entity
+  id: ActionEggInjection
+  name: Egg injection
+  description: Injection of eggs into the body.
+  components:
+  - type: EntityTargetAction
+    useDelay: 5
+    itemIconStyle: BigAction
+    whitelist:
+      components:
+      - HumanoidAppearance
+    canTargetSelf: false
+    interactOnMiss: false
+      path: /Audio/Effects/pop.ogg
+    icon:
+      sprite:  _Starlight/Interface/Actions/actions_spider.rsi
+      state: egg
+    event: !type:EggInjectionEvent
