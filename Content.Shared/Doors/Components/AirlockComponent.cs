@@ -52,6 +52,13 @@ public sealed partial class AirlockComponent : Component
     public bool OpenPanelVisible = false;
 
     /// <summary>
+    /// Whether the airlock should stay open if the airlock was clicked.
+    /// If the airlock was bumped into it will still auto close.
+    /// </summary>
+    [DataField]
+    public bool KeepOpenIfClicked = false;
+
+    /// <summary>
     /// Whether the airlock should auto close. This value is reset every time the airlock closes.
     /// </summary>
     [DataField, AutoNetworkedField]

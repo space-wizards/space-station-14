@@ -30,7 +30,21 @@ public abstract class SharedAirlockSystem : EntitySystem
         SubscribeLocalEvent<AirlockComponent, GetPryTimeModifierEvent>(OnGetPryMod);
         SubscribeLocalEvent<AirlockComponent, BeforePryEvent>(OnBeforePry);
 
+        SubscribeLocalEvent<AirlockComponent, ActivateInWorldEvent>(OnAirlockActivate);
         SubscribeLocalEvent<AirlockComponent, InteractUsingEvent>(OnAirlockInteractUsing);
+    }
+
+    private void OnAirlockActivate(Entity<AirlockComponent> ent, ref ActivateInWorldEvent args)
+    {
+        if (args.Handled || !args.Complex)
+            return;
+
+        if (!ent.Comp.KeepOpenIfClicked || ent.Comp.AutoClose)
+            return;
+
+        args.Handled = true;
+        ent.Comp.AutoClose = false;
+        Dirty(ent);
     }
 
     private void OnAirlockInteractUsing(Entity<AirlockComponent> ent, ref InteractUsingEvent args)
