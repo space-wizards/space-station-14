@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: TGRCdev
-  changes:
-  - message: Crew manifest now shows pronouns
-    type: Add
-  - message: Crew manifest should no longer overlap long names and titles
-    type: Fix
-  id: 73
-  time: '2024-08-13T00:53:10.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/87
 - author: formlessnameless
   changes:
   - message: Fixed Train plasma gas not spawning on mapload
@@ -4295,3 +4286,26 @@
   id: 572
   time: '2024-11-25T12:52:39.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/796
+- author: AvianMaiden
+  changes:
+  - message: A unique announcer "Mesa Vox", using assets from Half-Life's Black Mesa
+      VOX system! And vox--just like the species of bird aliens; I'm a big fan of
+      birds. Desert birds too.
+    type: Add
+  - message: Some Michael Announcer lines should now actually play in-game.
+    type: Fix
+  - message: Michael dialogue for evacuation shuttle arrival changed to default FemVox,
+      like most other announcers. His soft voice gets so easily lost, which is pretty
+      bad for something like evac.
+    type: Tweak
+  - message: Michael Announcer now has the default (iconic) comms console chimes rather
+      than his generic "attention".
+    type: Tweak
+  - message: Changed the chances of certain announcers appearing to pair with Mesa
+      Vox. Sinister and Mesa Vox have the same weight, acting as more common than
+      sillier announcers like Intern, but still less common than the regular announcers
+      like VoxFem or MedBot.
+    type: Tweak
+  id: 573
+  time: '2024-11-25T13:17:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/798
