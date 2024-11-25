@@ -151,11 +151,8 @@
   components:
   - type: SubdermalImplant
   - type: RadioImplant
-  - type: Tag
-    tags:
-    - SubdermalImplant
-    - HideContextMenu
-    - RadioImplant
+    radioChannels:
+    - Syndicate
 
 - type: entity
   parent: [ BaseSubdermalImplant, StorePresetUplink ]

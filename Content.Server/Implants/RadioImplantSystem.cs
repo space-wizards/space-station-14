@@ -1,66 +1,76 @@
-﻿using Content.Server.Radio.Components;
+﻿using Robust.Shared.Containers;
 using Content.Shared.FixedPoint;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.Tag;
-using Robust.Server.GameObjects;
-using Robust.Shared.Containers;
+using Content.Server.Radio.Components;
 
 namespace Content.Server.Implants;
 
 public sealed class RadioImplantSystem : EntitySystem
 {
-    [Dependency] private readonly TagSystem _tag = default!;
-    [Dependency] private readonly IServerEntityManager _entityManager = default!;
-
-
     [ValidatePrototypeId<TagPrototype>]
     public const string RadioImplantTag = "RadioImplant";
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<RadioImplantComponent, ImplantImplantedEvent>(RadioImplantCheck);
+        SubscribeLocalEvent<RadioImplantComponent, ImplantImplantedEvent>(OnImplantImplantedEvent);
         SubscribeLocalEvent<RadioImplantComponent, EntGotRemovedFromContainerMessage>(OnRemove);
     }
 
     /// <summary>
-    /// Checks if the implant was a Radio Implant or not
+    /// If implanted with a radio implant, installs the necessary intrinsic radio components
     /// </summary>
-    public void RadioImplantCheck(EntityUid uid, RadioImplantComponent comp, ref ImplantImplantedEvent ev)
+    private void OnImplantImplantedEvent(EntityUid uid, RadioImplantComponent comp, ref ImplantImplantedEvent ev)
     {
-        if (!_tag.HasTag(ev.Implant, RadioImplantTag) || ev.Implanted == null)
+        if (ev.Implanted == null)
             return;
 
         var activeRadio = EnsureComp<ActiveRadioComponent>(ev.Implanted.Value);
-        activeRadio.Channels.Add(comp.RadioChannel);
+
+        foreach (var channel in comp.RadioChannels)
+        {
+            if (activeRadio.Channels.Add(channel))
+                comp.AddedChannels.Add(channel);
+        }
 
         EnsureComp<IntrinsicRadioReceiverComponent>(ev.Implanted.Value);
 
         var intrinsicRadioTransmitter = EnsureComp<IntrinsicRadioTransmitterComponent>(ev.Implanted.Value);
-        intrinsicRadioTransmitter.Channels.Add(comp.RadioChannel);
+        foreach (var channel in comp.RadioChannels)
+        {
+            if (intrinsicRadioTransmitter.Channels.Add(channel))
+                comp.AddedChannels.Add(channel);
+        }
     }
 
     /// <summary>
     /// Removes intrinsic radio components once the Radio Implant is removed
     /// </summary>
-    public void OnRemove(EntityUid uid, RadioImplantComponent component, EntGotRemovedFromContainerMessage args)
+    private void OnRemove(EntityUid uid, RadioImplantComponent comp, EntGotRemovedFromContainerMessage args)
     {
         if (TryComp<ActiveRadioComponent>(args.Container.Owner, out var activeRadioComponent))
         {
-            activeRadioComponent.Channels.Remove(component.RadioChannel);
+            foreach (var channel in comp.AddedChannels)
+            {
+                activeRadioComponent.Channels.Remove(channel);
+            }
             if (activeRadioComponent.Channels.Count == FixedPoint2.Zero)
             {
-                _entityManager.RemoveComponent(args.Container.Owner, activeRadioComponent);
+                RemCompDeferred<ActiveRadioComponent>(args.Container.Owner);
             }
         }
 
         if (!TryComp<IntrinsicRadioTransmitterComponent>(args.Container.Owner, out var radioTransmitterComponent))
             return;
 
-        radioTransmitterComponent.Channels.Remove(component.RadioChannel);
+        foreach (var channel in comp.AddedChannels)
+        {
+            radioTransmitterComponent.Channels.Remove(channel);
+        }
         if (radioTransmitterComponent.Channels.Count == FixedPoint2.Zero || activeRadioComponent is { Channels.Count: 0 })
         {
-            _entityManager.RemoveComponent(args.Container.Owner, radioTransmitterComponent);
+            RemCompDeferred<IntrinsicRadioTransmitterComponent>(args.Container.Owner);
         }
     }
 }
