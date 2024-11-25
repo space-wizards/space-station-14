@@ -175,7 +175,7 @@ public abstract partial class SharedXenoArtifactSystem
 
     public bool AddNode(
         Entity<XenoArtifactComponent?> ent,
-        EntProtoId<XenoArtifactNodeComponent> prototype,
+        EntProtoId entProtoId,
         [NotNullWhen(true)] out Entity<XenoArtifactNodeComponent>? node,
         bool dirty = true
     )
@@ -184,7 +184,7 @@ public abstract partial class SharedXenoArtifactSystem
         if (!Resolve(ent, ref ent.Comp))
             return false;
 
-        var uid = Spawn(prototype.Id);
+        var uid = Spawn(entProtoId);
         node = (uid, XenoArtifactNode(uid));
         return AddNode(ent, (node.Value, node.Value.Comp), dirty: dirty);
     }

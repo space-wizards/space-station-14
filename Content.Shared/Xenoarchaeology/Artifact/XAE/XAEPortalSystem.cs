@@ -33,17 +33,19 @@ public sealed class XAEPortalSystem : BaseXAESystem<XAEPortalComponent>
                 validMinds.Add(uid);
             }
         }
-        //this would only be 0 if there were a station full of AIs and no one else, in that case just stop this function
+        // this would only be 0 if there were a station full of AIs and no one else, in that case just stop this function
         if (validMinds.Count == 0)
             return;
 
-        var firstPortal = Spawn(ent.Comp.PortalProto, _transform.GetMapCoordinates(ent));
+        var offset = _random.NextVector2(2, 3);
+        var originWithOffset = args.Coordinates.Offset(offset);
+        var firstPortal = Spawn(ent.Comp.PortalProto, originWithOffset);
 
         var target = _random.Pick(validMinds);
 
         var secondPortal = Spawn(ent.Comp.PortalProto, _transform.GetMapCoordinates(target));
 
-        //Manual position swapping, because the portal that opens doesn't trigger a collision, and doesn't teleport targets the first time.
+        // Manual position swapping, because the portal that opens doesn't trigger a collision, and doesn't teleport targets the first time.
         _transform.SwapPositions(target, ent.Owner);
 
         _link.TryLink(firstPortal, secondPortal, true);

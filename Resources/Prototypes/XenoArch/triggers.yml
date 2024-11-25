@@ -17,7 +17,7 @@
     TriggerPressureLow: 1
     TriggerExamine: 1
     TriggerBruteDamage: 1
-    TriggerInteraction: 1
+    #TriggerInteraction: 1 #this one interferes with activating artifact AND brute dmg!
     TriggerWrenching: 0.5
     TriggerPrying: 0.5
     TriggerScrewing: 0.5

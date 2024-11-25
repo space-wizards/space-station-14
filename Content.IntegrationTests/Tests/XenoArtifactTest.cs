@@ -12,13 +12,17 @@ public sealed class XenoArtifactTest
     private const string Prototypes = @"
 - type: entity
   id: TestArtifact
+  parent: BaseXenoArtifact
   name: artifact
   components:
   - type: XenoArtifact
     isGenerationRequired: false
+    effectsTable: !type:NestedSelector
+      tableId: XenoArtifactEffectsDefaultTable
 
 - type: entity
   id: TestGenArtifactFlat
+  parent: BaseXenoArtifact
   name: artifact
   components:
   - type: XenoArtifact
@@ -32,9 +36,12 @@ public sealed class XenoArtifactTest
     nodesPerSegmentLayer:
       min: 1
       max: 1
+    effectsTable: !type:NestedSelector
+      tableId: XenoArtifactEffectsDefaultTable
 
 - type: entity
   id: TestGenArtifactTall
+  parent: BaseXenoArtifact
   name: artifact
   components:
   - type: XenoArtifact
@@ -48,6 +55,8 @@ public sealed class XenoArtifactTest
     nodesPerSegmentLayer:
       min: 1
       max: 1
+    effectsTable: !type:NestedSelector
+      tableId: XenoArtifactEffectsDefaultTable
 
 - type: entity
   id: TestGenArtifactFull
@@ -64,6 +73,8 @@ public sealed class XenoArtifactTest
     nodesPerSegmentLayer:
       min: 2
       max: 2
+    effectsTable: !type:NestedSelector
+      tableId: XenoArtifactEffectsDefaultTable
 
 - type: entity
   id: TestArtifactNode
@@ -88,7 +99,7 @@ public sealed class XenoArtifactTest
         await server.WaitPost(() =>
         {
             var artifactUid = entManager.Spawn("TestArtifact");
-            var artifactEnt = (artifactUid, entManager.GetComponent<XenoArtifactComponent>(artifactUid));
+            var artifactEnt = (artifactUid, comp: entManager.GetComponent<XenoArtifactComponent>(artifactUid));
 
             // Create 3 nodes
             Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node1, false));
@@ -142,7 +153,7 @@ public sealed class XenoArtifactTest
         await server.WaitPost(() =>
         {
             var artifactUid = entManager.Spawn("TestArtifact");
-            var artifactEnt = (artifactUid, entManager.GetComponent<XenoArtifactComponent>(artifactUid));
+            var artifactEnt = (artifactUid, comp: entManager.GetComponent<XenoArtifactComponent>(artifactUid));
 
             // Create 3 nodes
             Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node1, false));
@@ -191,7 +202,7 @@ public sealed class XenoArtifactTest
         await server.WaitPost(() =>
         {
             var artifactUid = entManager.Spawn("TestArtifact");
-            var artifactEnt = (artifactUid, entManager.GetComponent<XenoArtifactComponent>(artifactUid));
+            var artifactEnt = (artifactUid, comp: entManager.GetComponent<XenoArtifactComponent>(artifactUid));
 
             // Create 3 nodes
             Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node1, false));
@@ -254,7 +265,7 @@ public sealed class XenoArtifactTest
         await server.WaitPost(() =>
         {
             var artifactUid = entManager.Spawn("TestArtifact");
-            var artifactEnt = (artifactUid, entManager.GetComponent<XenoArtifactComponent>(artifactUid));
+            var artifactEnt = (artifactUid, comp: entManager.GetComponent<XenoArtifactComponent>(artifactUid));
 
             // Create 3 nodes
             Assert.That(artifactSystem.AddNode(artifactEnt, "TestArtifactNode", out var node1, false));

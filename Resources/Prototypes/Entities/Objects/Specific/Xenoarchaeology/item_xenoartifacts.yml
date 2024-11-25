@@ -1,7 +1,7 @@
 ﻿- type: entity
   parent: [BaseItem, BaseXenoArtifact]
   id: BaseXenoArtifactItem
-  name: hand-sized artifact
+  name: artifact
   description: A strange artifact from time unknown. Looks like a good time. Fits in hand perfectly.
   abstract: true
   noSpawn: true
@@ -48,11 +48,20 @@
   - type: Construction
     graph: Artifact
     node: done
+  - type: XenoArtifact
+    effectsTable: !type:GroupSelector
+      children:
+      - !type:NestedSelector
+        tableId: XenoArtifactEffectsDefaultTable
+        weight: 58
+      - !type:NestedSelector
+        tableId: XenoArtifactEffectsHandheldOnlyTable
+        weight: 3
 
 - type: entity
   parent: BaseXenoArtifactItem
   id: SimpleXenoArtifactItem
-  suffix: Simple
+  suffix: hand-sized Simple
   components:
   - type: XenoArtifact
     nodeCount:
@@ -62,7 +71,7 @@
 - type: entity
   parent: BaseXenoArtifactItem
   id: MediumXenoArtifactItem
-  suffix: Medium
+  suffix: hand-sized Medium
   components:
   - type: XenoArtifact
     nodeCount:
@@ -72,7 +81,7 @@
 - type: entity
   parent: BaseXenoArtifactItem
   id: ComplexXenoArtifactItem
-  suffix: Complex
+  suffix: hand-sized Complex
   components:
   - type: XenoArtifact
     nodeCount:
@@ -83,7 +92,7 @@
 - type: entity
   parent: BaseXenoArtifactItem
   id: VariedXenoArtifactItem
-  suffix: Varied
+  suffix: hand-sized Varied
   components:
   - type: XenoArtifact
     nodeCount:

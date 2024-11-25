@@ -1,5 +1,5 @@
 using Content.Shared.Destructible.Thresholds;
-using Content.Shared.Random;
+using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.Xenoarchaeology.Artifact.Prototypes;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -128,7 +128,7 @@ public sealed partial class XenoArtifactComponent : Component
     /// Effects that can be used during this artefact generation.
     /// </summary>
     [DataField]
-    public ProtoId<WeightedRandomEntityPrototype> EffectWeights = "XenoArtifactEffectsDefault";
+    public EntityTableSelector EffectsTable;
 
     /// <summary>
     /// Triggers that can be used during this artefact generation.

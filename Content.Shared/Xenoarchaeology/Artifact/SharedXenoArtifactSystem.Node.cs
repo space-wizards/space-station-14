@@ -1,6 +1,6 @@
 using System.Linq;
+using Content.Shared.EntityTable;
 using Content.Shared.NameIdentifier;
-using Content.Shared.Random.Helpers;
 using Content.Shared.Xenoarchaeology.Artifact.Components;
 using Content.Shared.Xenoarchaeology.Artifact.Prototypes;
 using Robust.Shared.Prototypes;
@@ -10,6 +10,8 @@ namespace Content.Shared.Xenoarchaeology.Artifact;
 
 public abstract partial class SharedXenoArtifactSystem
 {
+    [Dependency] private readonly EntityTableSystem _entityTable =  default!;
+
     private EntityQuery<XenoArtifactComponent> _xenoArtifactQuery;
     private EntityQuery<XenoArtifactNodeComponent> _nodeQuery;
 
@@ -88,10 +90,9 @@ public abstract partial class SharedXenoArtifactSystem
 
     public Entity<XenoArtifactNodeComponent> CreateNode(Entity<XenoArtifactComponent> ent, XenoArchTriggerPrototype trigger, int depth = 0)
     {
-        var effectProtoName = PrototypeManager.Index(ent.Comp.EffectWeights)
-                                    .Pick(RobustRandom);
+        var entProtoId = _entityTable.GetSpawns(ent.Comp.EffectsTable).First();
 
-        AddNode((ent, ent), effectProtoName, out var nodeEnt, dirty: false);
+        AddNode((ent, ent), entProtoId, out var nodeEnt, dirty: false);
         DebugTools.Assert(nodeEnt.HasValue, "Failed to create node on artifact.");
 
         var nodeComponent = nodeEnt.Value.Comp;
