@@ -1,16 +1,4 @@
 ﻿Entries:
-- author: to4no_fix
-  changes:
-  - message: Now it takes 5 seconds to take off or put on a muzzle
-    type: Tweak
-  - message: Now it takes 5 seconds to take off or put on a blindfold
-    type: Tweak
-  - message: Added a recipe for producing a straitjacket, it opens when researching
-      the Special Means technology, it can be produced at the security techfab
-    type: Add
-  id: 7152
-  time: '2024-08-19T03:05:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31095
 - author: Magicalus
   changes:
   - message: Suit sensors, borgs, and PDAs can no longer be saved to device-lists.
@@ -3928,3 +3916,10 @@
   id: 7651
   time: '2024-11-25T07:20:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33529
+- author: Minemoder
+  changes:
+  - message: The shark plushie now goes rawr when hitting something or being thrown.
+    type: Tweak
+  id: 7652
+  time: '2024-11-25T12:23:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33540
