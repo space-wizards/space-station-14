@@ -547,10 +547,18 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
-    startAnnouncement: station-event-greytide-virus-start-announcement
     startAudio:
       path: /Audio/Announcements/attention.ogg
     weight: 5
     minimumPlayers: 10
     reoccurrenceDelay: 20
   - type: GreytideVirusRule
+    accessGroups:
+    - Cargo
+    - Command
+    - Engineering
+    - Research
+    - Security
+    - Service
+    blacklist:
+    - External # don't space everything
