@@ -24,6 +24,7 @@
       path: "/Audio/Weapons/smash.ogg"
   - type: Tag
     tags:
+    - DroneUsable
     - Toolbox
   - type: GenericVisualizer
     visuals:

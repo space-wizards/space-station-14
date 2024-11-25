@@ -216,11 +216,6 @@ YellowOxygenTankFilled: OxygenTankFilled
 FoodDonutBlumpkin: FoodDonutBluePumpkin
 FoodDonutJellyBlumpkin: FoodDonutJellyBluePumpkin
 
-# 2024-02-19
-Drone: null
-SpawnMobDrone: null
-Onestar: null # I dont think this is even mapped, but just in case
-
 # 2024-02-22
 SolarAssemblyPart: SolarAssemblyFlatpack
 AmePart: AmePartFlatpack

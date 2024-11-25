@@ -179,7 +179,8 @@
   suffix: DO NOT MAP
   components:
   - type: Tag
-    tags: [] # ignore "WhitelistChameleon" tag
+    tags: # ignore "WhitelistChameleon" tag
+    - DroneUsable
   - type: Sprite
     sprite: Clothing/Head/Hats/catears.rsi
   - type: Clothing
@@ -230,6 +231,9 @@
     sprite: Clothing/Head/Hats/dogears.rsi
   - type: AddAccentClothing
     accent: BarkAccent
+  - type: Tag
+    tags:
+      - DroneUsable    
 
 - type: entity
   parent: ClothingHeadBase

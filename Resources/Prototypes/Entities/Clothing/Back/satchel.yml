@@ -52,6 +52,15 @@
       collection: BikeHorn
 
 - type: entity
+  noSpawn: true
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelDrone
+  components:
+  - type: Tag
+    tags:
+    - InnateDontDelete
+
+- type: entity
   parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelMime
   name: mime satchel

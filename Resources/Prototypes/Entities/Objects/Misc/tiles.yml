@@ -15,6 +15,9 @@
         Blunt: 5
   - type: Stack
     count: 1
+  - type: Tag
+    tags:
+      - DroneUsable
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible

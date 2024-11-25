@@ -328,3 +328,6 @@ ghost-role-information-artifact-description = Enact your eldritch whims. Forcibl
 ghost-role-information-tomatokiller-name = Tomato killer
 ghost-role-information-tomatokiller-description = This little tomato will serve the botanist for the rest of his life... that is, a couple of minutes
 
+ghost-role-information-onestar-mecha-name = OneStar Mecha
+ghost-role-information-onestar-mecha-description = You are this station's end.
+

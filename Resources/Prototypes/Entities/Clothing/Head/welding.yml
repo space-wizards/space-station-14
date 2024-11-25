@@ -18,6 +18,7 @@
     price: 50
   - type: Tag
     tags:
+    - DroneUsable
     - WhitelistChameleon
     - WeldingMask
   - type: HideLayerClothing
@@ -37,6 +38,7 @@
   - type: Tag
     tags:
     - HamsterWearable
+    - DroneUsable
     - WhitelistChameleon
     - WeldingMask
 

@@ -708,6 +708,9 @@
     radius: 1.5
     energy: 1.6
     color: "#e6e227"
+  - type: Tag
+    tags:
+      - DroneUsable
 
 - type: entity
   parent: BaseComputerAiAccess
