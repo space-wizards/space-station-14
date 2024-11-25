@@ -52,7 +52,6 @@
       collection: BikeHorn
 
 - type: entity
-  noSpawn: true
   parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelDrone
   components:
