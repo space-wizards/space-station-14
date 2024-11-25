@@ -75,6 +75,30 @@
       - state: green
       - state: salvagespecialist
 
+- type: entity
+  id: SpawnPointPilot
+  parent: SpawnPointJobBase
+  name: pilot
+  components:
+  - type: SpawnPoint
+    job_id: Pilot
+  - type: Sprite
+    layers:
+      - state: green
+      - state: salvagespecialist
+
+- type: entity
+  id: SpawnPointBasinTech
+  parent: SpawnPointJobBase
+  name: basintechnician
+  components:
+  - type: SpawnPoint
+    job_id: BasinTechnician
+  - type: Sprite
+    layers:
+      - state: green
+      - state: salvagespecialist
+
 # Civilian
 
 - type: entity

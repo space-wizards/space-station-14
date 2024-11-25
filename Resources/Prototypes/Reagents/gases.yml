@@ -370,28 +370,55 @@
   physicalDesc: reagent-physical-desc-odorless
   flavor: water and salt
   color: "#135c4f"
+  recognizable: true
+  boilingPoint: 100.0
+  meltingPoint: 0.0
   metabolisms:
     Gas:
       effects:
       - !type:HealthChange
+        conditions:
+        - !type:OrganType
+          type: Jellid
+          shouldHave: false
+        - !type:ReagentThreshold
+          min: 0.5
+        scaleByQuantity: true
         ignoreResistances: true
         damage:
           types:
-            Cold: 15 # water, very temperature!!
-            Asphyxiation: 20
+            Cold:
+              20
       - !type:PopupMessage
         type: Local
         messages: [ "water-in-lungs" ]
         probability: 0.7
         conditions:
+        - !type:OrganType
+          type: Jellid
+          shouldHave: false
         - !type:ReagentThreshold
           reagent: SeaWater
-          min: 1
+          min: 0.5
       - !type:AdjustAlert
         alertType: Drowning
         conditions:
+        - !type:OrganType
+          type: Jellid
+          shouldHave: false
         - !type:ReagentThreshold
           reagent: SeaWater
-          min: 1
+          min: 0.5
         clear: True
         time: 5
+      - !type:Oxygenate
+        conditions:
+        - !type:OrganType
+          type: Jellid
+      - !type:ModifyLungGas
+        conditions:
+        - !type:OrganType
+          type: Jellid
+        ratios:
+          WaterVapor: 1.0
+          Water: -1.0

@@ -43,6 +43,24 @@
   description: alerts-drowning-desc
 
 - type: alert
+  id: Lysis
+  category: Breathing
+  icons:
+  - sprite: /Textures/Interface/Alerts/breathing.rsi
+    state: drowning
+  name: alerts-lysis-name
+  description: alerts-lysis-desc
+
+- type: alert
+  id: ShortCircuit
+  category: Breathing
+  icons:
+  - sprite: /Textures/Interface/Alerts/breathing.rsi
+    state: drowning
+  name: alerts-short-circuit-name
+  description: alerts-short-circuit-desc
+
+- type: alert
   id: LowOxygen
   category: Breathing
   icons:

@@ -1,0 +1,15 @@
+﻿- type: body
+  id: Mech
+  name: "mech"
+  root: torso
+  slots:
+    torso:
+      part: TorsoHuman
+      connections:
+      - left_arm
+    left_arm:
+      part: LeftArmHuman
+      connections:
+      - left_hand
+    left_hand:
+      part: LeftHandHuman
