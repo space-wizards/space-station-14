@@ -133,3 +133,38 @@
   materials:
     Plastic: 100
     Steel: 100
+
+# IMPLANTS
+
+# Eye
+
+- type: latheRecipe
+  id: EyeImplantWelding
+  result: EyeImplantWelding
+  category: Implants
+  completetime: 3
+  materials:
+    Plastic: 100
+    Steel: 100
+    Plasma: 250
+    Glass: 100
+
+- type: latheRecipe
+  id: EyeImplantMedical
+  result: EyeImplantMedical
+  category: Implants
+  completetime: 4
+  materials:
+    Steel: 200
+    Plasma: 300
+    Glass: 100
+    
+- type: latheRecipe
+  id: EyeImplantSecurity
+  result: EyeImplantSecurity
+  category: Implants
+  completetime: 4
+  materials:
+    Steel: 200
+    Plasma: 300
+    Glass: 150

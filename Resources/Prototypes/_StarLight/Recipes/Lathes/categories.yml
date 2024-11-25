@@ -5,3 +5,7 @@
 - type: latheCategory
   id: Cyberlimbs
   name: lathe-category-cyberlimbs
+
+- type: latheCategory
+  id: Implants
+  name: lathe-category-implants

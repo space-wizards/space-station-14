@@ -517,4 +517,17 @@ Entries:
   id: 72
   time: '2024-11-24T16:15:31.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/85
-
+- author: Rinary
+  changes:
+  - message: Added eye implants and his research.
+    type: Add
+  id: 73
+  time: '2024-11-25T16:04:31.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/cfc02d874f2ee4499ad31e234a30f4d62f8fe592
+- author: Rinary
+  changes:
+  - message: Removed cyber eyes and his research.
+    type: Remove
+  id: 74
+  time: '2024-11-25T16:04:31.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/cfc02d874f2ee4499ad31e234a30f4d62f8fe592

@@ -1022,6 +1022,10 @@
       - RightLegCyber
       - LeftFootCyber
       - RightFootCyber
+      # Implants
+      - EyeImplantWelding
+      - EyeImplantMedical
+      - EyeImplantSecurity
   - type: Machine
     board: MedicalTechFabCircuitboard
   - type: StealTarget
