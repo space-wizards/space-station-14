@@ -211,6 +211,8 @@ public abstract partial class SharedXenoArtifactSystem
         {
             RebuildNodeMetaData(node);
         }
+
+        CancelUnlockingOnGraphStructureChange((artifact, artifact.Comp));
     }
 
     public void RebuildNodeMetaData(Entity<XenoArtifactNodeComponent> node)

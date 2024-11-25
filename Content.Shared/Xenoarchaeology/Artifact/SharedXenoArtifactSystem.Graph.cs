@@ -133,8 +133,6 @@ public abstract partial class SharedXenoArtifactSystem
             RebuildXenoArtifactMetaData(ent);
         }
 
-        CancelUnlockingOnGraphStructureChange((ent, ent.Comp));
-
         return true;
     }
 
@@ -167,8 +165,6 @@ public abstract partial class SharedXenoArtifactSystem
         {
             RebuildXenoArtifactMetaData(ent);
         }
-
-        CancelUnlockingOnGraphStructureChange((ent, ent.Comp));
 
         return true;
     }
@@ -207,8 +203,6 @@ public abstract partial class SharedXenoArtifactSystem
             RebuildXenoArtifactMetaData(ent);
         }
 
-        CancelUnlockingOnGraphStructureChange((ent, ent.Comp));
-
         return true;
     }
 
@@ -234,8 +228,6 @@ public abstract partial class SharedXenoArtifactSystem
 
         Dirty(node);
 
-        CancelUnlockingOnGraphStructureChange((ent, ent.Comp));
-
         return true;
     }
 
@@ -260,8 +252,6 @@ public abstract partial class SharedXenoArtifactSystem
         {
             RebuildXenoArtifactMetaData(ent);
         }
-
-        CancelUnlockingOnGraphStructureChange((ent, ent.Comp));
     }
 
     public HashSet<Entity<XenoArtifactNodeComponent>> GetDirectPredecessorNodes(Entity<XenoArtifactComponent?> ent, EntityUid node)
