@@ -18,8 +18,8 @@
   parent: [PartGoblin, BaseTorso]
   components:
   - type: Sprite
-    sprite: _NF/Mobs/Species/Goblin/parts.rsi
-    state: "torso_m"
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+    state: "torso"
   - type: Extractable
     juiceSolution:
       reagents:
@@ -34,8 +34,8 @@
   parent: [PartGoblin, BaseHead]
   components:
   - type: Sprite
-    sprite: _NF/Mobs/Species/Goblin/parts.rsi
-    state: "head_m"
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+    state: "head"
   - type: Extractable
     juiceSolution:
       reagents:
@@ -50,7 +50,7 @@
   parent: [PartGoblin, BaseLeftArm]
   components:
   - type: Sprite
-    sprite: _NF/Mobs/Species/Goblin/parts.rsi
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
     state: "l_arm"
 
 - type: entity
@@ -59,7 +59,7 @@
   parent: [PartGoblin, BaseRightArm]
   components:
   - type: Sprite
-    sprite: _NF/Mobs/Species/Goblin/parts.rsi
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
     state: "r_arm"
 
 - type: entity
@@ -68,7 +68,7 @@
   parent: [PartGoblin, BaseLeftHand]
   components:
   - type: Sprite
-    sprite: _NF/Mobs/Species/Goblin/parts.rsi
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
     state: "l_hand"
 
 - type: entity
@@ -77,7 +77,7 @@
   parent: [PartGoblin, BaseRightHand]
   components:
   - type: Sprite
-    sprite: _NF/Mobs/Species/Goblin/parts.rsi
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
     state: "r_hand"
 
 - type: entity
@@ -86,7 +86,7 @@
   parent: [PartGoblin, BaseLeftLeg]
   components:
   - type: Sprite
-    sprite: _NF/Mobs/Species/Goblin/parts.rsi
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
     state: "l_leg"
 
 - type: entity
@@ -95,7 +95,7 @@
   parent: [PartGoblin, BaseRightLeg]
   components:
   - type: Sprite
-    sprite: _NF/Mobs/Species/Goblin/parts.rsi
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
     state: "r_leg"
 
 - type: entity
@@ -104,7 +104,7 @@
   parent: [PartGoblin, BaseLeftFoot]
   components:
   - type: Sprite
-    sprite: _NF/Mobs/Species/Goblin/parts.rsi
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
     state: "l_foot"
 
 - type: entity
@@ -113,5 +113,5 @@
   parent: [PartGoblin, BaseRightFoot]
   components:
   - type: Sprite
-    sprite: _NF/Mobs/Species/Goblin/parts.rsi
+    sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
     state: "r_foot"

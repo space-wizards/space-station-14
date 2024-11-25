@@ -5,7 +5,7 @@
   markingCategory: HeadTop
   speciesRestriction: [Goblin]
   sprites:
-  - sprite: _NF/Mobs/Customization/goblin_ears.rsi
+  - sprite: _Impstation/Mobs/Customization/goblin_ears.rsi
     state: goblin_ears_default
 
 - type: marking
@@ -14,7 +14,7 @@
   markingCategory: HeadTop
   speciesRestriction: [Goblin]
   sprites:
-  - sprite: _NF/Mobs/Customization/goblin_ears.rsi
+  - sprite: _Impstation/Mobs/Customization/goblin_ears.rsi
     state: goblin_ears_default_alt
 
 - type: marking
@@ -23,7 +23,7 @@
   markingCategory: HeadTop
   speciesRestriction: [Goblin]
   sprites:
-  - sprite: _NF/Mobs/Customization/goblin_ears.rsi
+  - sprite: _Impstation/Mobs/Customization/goblin_ears.rsi
     state: goblin_ears_long_01
 
 - type: marking
@@ -32,7 +32,7 @@
   markingCategory: HeadTop
   speciesRestriction: [Goblin]
   sprites:
-  - sprite: _NF/Mobs/Customization/goblin_ears.rsi
+  - sprite: _Impstation/Mobs/Customization/goblin_ears.rsi
     state: goblin_ears_long_02
 
 # Goblin Noses
@@ -42,7 +42,7 @@
   markingCategory: Snout
   speciesRestriction: [Goblin]
   sprites:
-  - sprite: _NF/Mobs/Customization/goblin_noses.rsi
+  - sprite: _Impstation/Mobs/Customization/goblin_noses.rsi
     state: goblin_nose_default
 
 - type: marking
@@ -51,7 +51,7 @@
   markingCategory: Snout
   speciesRestriction: [Goblin]
   sprites:
-  - sprite: _NF/Mobs/Customization/goblin_noses.rsi
+  - sprite: _Impstation/Mobs/Customization/goblin_noses.rsi
     state: goblin_nose_long
 
 - type: marking
@@ -60,7 +60,7 @@
   markingCategory: Snout
   speciesRestriction: [Goblin]
   sprites:
-  - sprite: _NF/Mobs/Customization/goblin_noses.rsi
+  - sprite: _Impstation/Mobs/Customization/goblin_noses.rsi
     state: goblin_nose_crooked
 
 # Goblin Tusks
@@ -70,7 +70,7 @@
   markingCategory: Snout
   speciesRestriction: [Goblin]
   sprites:
-  - sprite: _NF/Mobs/Customization/goblin_tusks.rsi
+  - sprite: _Impstation/Mobs/Customization/goblin_tusks.rsi
     state: goblin_tusks_none
 
 - type: marking
@@ -79,7 +79,7 @@
   markingCategory: Snout
   speciesRestriction: [Goblin]
   sprites:
-  - sprite: _NF/Mobs/Customization/goblin_tusks.rsi
+  - sprite: _Impstation/Mobs/Customization/goblin_tusks.rsi
     state: goblin_tusks_small
 
 - type: marking
@@ -88,5 +88,31 @@
   markingCategory: Snout
   speciesRestriction: [Goblin]
   sprites:
-  - sprite: _NF/Mobs/Customization/goblin_tusks.rsi
+  - sprite: _Impstation/Mobs/Customization/goblin_tusks.rsi
     state: goblin_tusks_big
+
+# Goblin Tails
+- type: marking
+  id: GoblinTailBasic
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Goblin]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/goblin_tails.rsi
+    state: goblin_tail_none
+- type: marking
+  id: GoblinTailShort
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Goblin]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/goblin_tails.rsi
+    state: goblin_tail_short
+- type: marking
+  id: GoblinTailLong
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Goblin]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/goblin_tails.rsi
+    state: goblin_tail_long
