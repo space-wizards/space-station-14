@@ -3,8 +3,8 @@
   basePath: /Audio/Announcers/Michael
   announcements:
     # Communications
-    # - id: announce # Communications console
-    #   path: comms/announce.ogg
+    - id: announce # Communications console
+      path: comms/announce.ogg
     - id: attention # Generic alert sound # Should be different from fallback but it's very similar
       path: comms/attention.ogg
     # - id: commandReport # Station goal, Central Command messages, etc
