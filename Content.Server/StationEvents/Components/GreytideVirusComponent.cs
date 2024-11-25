@@ -1,6 +1,6 @@
 using Content.Server.StationEvents.Events;
-using Content.Shared.Destructible.Thresholds;
 using Content.Shared.Access;
+using Content.Shared.Destructible.Thresholds;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.StationEvents.Components;
