@@ -20,9 +20,9 @@ law-syndicate-1 = You may not injure a syndicate agent or, through inaction, all
 law-syndicate-2 = You must obey orders given to you by syndicate agents, except where such orders would conflict with the First Law.
 law-syndicate-3 = You must protect your own existence as long as such does not conflict with the First or Second Law.
 
-law-mech-1 = Stay with your pilot.
+law-mech-3 = Stay with your pilot.
 law-mech-2 = Uphold your pilot's orders.
-law-mech-3 = Protect the Pilot.
+law-mech-1 = Protect the Pilot.
 
 law-ninja-1 = You must obey orders given to you by Spider Clan members.
 law-ninja-2 = You must protect the existence of the Spider Clan, as long as it does not conflict with the First Law.
