@@ -116,6 +116,12 @@
   id: JobSalvageSpecialist
 
 - type: playTimeTracker
+  id: JobPilot
+
+- type: playTimeTracker
+  id: JobBasinTech
+
+- type: playTimeTracker
   id: JobScientist
 
 - type: playTimeTracker

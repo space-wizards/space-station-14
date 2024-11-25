@@ -12,6 +12,9 @@ public sealed partial class ToggleableGhostRoleComponent : Component
     [DataField("examineTextMindSearching")]
     public string ExamineTextMindSearching = string.Empty;
 
+    [DataField("activateVerbText")]
+    public string ActivateVerbText = "Activate Ghost Role";
+
     [DataField("examineTextNoMind")]
     public string ExamineTextNoMind = string.Empty;
 

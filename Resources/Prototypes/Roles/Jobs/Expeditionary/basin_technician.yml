@@ -2,7 +2,7 @@
   id: BasinTechnician
   name: job-name-basintech
   description: job-description-basintech
-  playTimeTracker: JobSalvageSpecialist
+  playTimeTracker: JobBasintECH
   requirements:
     - !type:DepartmentTimeRequirement
       department: Cargo

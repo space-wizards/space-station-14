@@ -305,8 +305,8 @@
       - PowerCellHigh
 
 - type: entity
-  id: [MechStepfather, StripableInventoryBase]
-  parent: BaseMech
+  id: MechStepfather
+  parent: [BaseMech, StripableInventoryBase]
   name: Rotund Stepfather
   description: A rugged deep-sea mining unit, designed to work in tandem with a Pilot. The onboard AI operates the primary clamp while the pilot operates the modules.
   components:
@@ -319,16 +319,18 @@
       state: ripley
   - type: FootstepModifier
     footstepSoundCollection:
-      path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
+      path: /Audio/Mecha/mechmove03.ogg
+      params:
+        volume: -10
   - type: Mech
     baseState: stepfather
     openState: stepfather
-    brokenState: ripley-broken
-    mechToPilotDamageMultiplier: 0.50
+    brokenState: stepfather-open
+    mechToPilotDamageMultiplier: 0.30
     airtight: true
     pilotWhitelist:
       components:
-        - Pilot # Only the Pilot can enter. TODO: Make the stepfather emaggable to be subverted by antags.
+        - ExpedPilot # Only the Pilot can enter. TODO: Make the stepfather emaggable to be subverted by antags.
   - type: MeleeWeapon
     hidden: true
     attackRate: 1
@@ -370,21 +372,24 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.25
     baseSprintSpeed: 3.6
-  - type: ToggleableGhostRole
-    examineTextMindPresent: mech-installed
-    examineTextMindSearching: mech-still-searching
-    examineTextNoMind: mech-off
-    beginSearchingText: mech-searching
-    roleName: mech-role-name
-    roleDescription: mech-role-description
-    roleRules: ghost-role-information-mech-rules
-    wipeVerbText: mech-wipe-device-verb-text
-    wipeVerbPopup: mech-wiped-device
-    stopSearchVerbText: mech-stop-searching-verb-text
-    stopSearchVerbPopup: mech-stopped-searching
+  - type: GhostRole
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: mech-role-name
+    description: mech-role-description
+    rules: ghost-role-information-mech-rules
+  - type: GhostTakeoverAvailable
+  - type: ComplexInteraction
+  - type: Climbing
+  - type: MindContainer
+    showExamineInfo: true
+  - type: Strippable
+  - type: Input
+    context: "aghost"
   - type: CombatMode
   - type: Inventory
-    templateId: borg
+    templateId: Mech
   - type: Hands
     showInHands: false
     baseThrowspeed: 15 # throws harder (obviously)
@@ -418,4 +423,5 @@
         type: SiliconLawBoundUserInterface
   - type: SiliconLawProvider
     laws: MechLaws # Protocol 3: Protect the Pilot
-    
+  - type: SiliconLawBound
+

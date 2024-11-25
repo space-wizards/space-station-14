@@ -2,7 +2,7 @@
   id: Pilot
   name: job-name-pilot
   description: job-description-pilot
-  playTimeTracker: JobSalvageSpecialist
+  playTimeTracker: JobBasinTech
   requirements:
     - !type:DepartmentTimeRequirement
       department: Expeditionary
@@ -17,7 +17,7 @@
   special:
   - !type:AddComponentSpecial
     components:
-    - type: Pilot # Allows them to use their mech
+    - type: ExpedPilot # Allows them to use their mech
 
 - type: startingGear
   id: PilotGear
