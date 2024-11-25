@@ -29,7 +29,7 @@ public sealed class RadioImplantSystem : EntitySystem
         foreach (var channel in comp.RadioChannels)
         {
             if (activeRadio.Channels.Add(channel))
-                comp.AddedChannels.Add(channel);
+                comp.ActiveAddedChannels.Add(channel);
         }
 
         EnsureComp<IntrinsicRadioReceiverComponent>(ev.Implanted.Value);
@@ -38,7 +38,7 @@ public sealed class RadioImplantSystem : EntitySystem
         foreach (var channel in comp.RadioChannels)
         {
             if (intrinsicRadioTransmitter.Channels.Add(channel))
-                comp.AddedChannels.Add(channel);
+                comp.TransmitterAddedChannels.Add(channel);
         }
     }
 
@@ -49,9 +49,10 @@ public sealed class RadioImplantSystem : EntitySystem
     {
         if (TryComp<ActiveRadioComponent>(args.Container.Owner, out var activeRadioComponent))
         {
-            foreach (var channel in comp.AddedChannels)
+            foreach (var channel in comp.ActiveAddedChannels)
             {
                 activeRadioComponent.Channels.Remove(channel);
+                comp.ActiveAddedChannels.Remove(channel);
             }
             if (activeRadioComponent.Channels.Count == FixedPoint2.Zero)
             {
@@ -62,9 +63,10 @@ public sealed class RadioImplantSystem : EntitySystem
         if (!TryComp<IntrinsicRadioTransmitterComponent>(args.Container.Owner, out var radioTransmitterComponent))
             return;
 
-        foreach (var channel in comp.AddedChannels)
+        foreach (var channel in comp.TransmitterAddedChannels)
         {
             radioTransmitterComponent.Channels.Remove(channel);
+            comp.TransmitterAddedChannels.Remove(channel);
         }
         if (radioTransmitterComponent.Channels.Count == FixedPoint2.Zero || activeRadioComponent is { Channels.Count: 0 })
         {
