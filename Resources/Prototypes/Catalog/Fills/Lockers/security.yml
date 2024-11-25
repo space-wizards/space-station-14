@@ -12,7 +12,6 @@
       - id: ClothingBeltSecurityFilled
       - id: ClothingEyesGlassesSecurity
       - id: ClothingHandsGlovesCombat
-      - id: ClothingHeadsetAltSecurity
       - id: ClothingOuterCoatWarden
       - id: ClothingOuterHardsuitWarden
       - id: ClothingOuterWinterWarden
@@ -40,7 +39,6 @@
       - id: ClothingBeltSecurityFilled
       - id: ClothingEyesGlassesSecurity
       - id: ClothingHandsGlovesCombat
-      - id: ClothingHeadsetAltSecurity
       - id: ClothingOuterCoatWarden
       - id: ClothingOuterWinterWarden
       - id: ClothingShoesBootsJack

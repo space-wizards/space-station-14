@@ -1,12 +1,20 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by PixelTheKermit (github) for SS14",
+  "copyright": "Made by PixelTheKermit (github) for SS14. Inhands by mubururu_ (github).",
   "size": {"x": 32, "y": 32},
   "states":
   [
     {
-      "name": "icon"
+        "name": "icon"
+    },
+    {
+        "name": "silk-inhand-left",
+        "directions": 4
+    },
+    {
+        "name": "silk-inhand-right",
+        "directions": 4
     }
   ]
 }
