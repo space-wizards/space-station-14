@@ -30,7 +30,7 @@ chaplain-gearset-category-glove-description =
     Though not overly damaging, it is capable of deflecting incoming
     attacks and knocking down foes with its powerful blows.
 
-chaplain-gearset-category-bow-name = Aureate Arc
+chaplain-gearset-category-bow-name = Aureole Arc
 chaplain-gearset-category-bow-description =
     Wrought from ornately carved synthwood, this golden-inlaid bow
     hums with power. Though this bow's shots are potent,
