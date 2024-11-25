@@ -16,17 +16,24 @@ namespace Content.Shared.Doors
     }
 
     /// <summary>
-    /// Raised when the door's bolt status was changed.
+    /// Raised directed on an entity when attempting to change door bolts.
     /// </summary>
-    public sealed class DoorBoltsChangedEvent : EntityEventArgs
+    [ByRefEvent]
+    public record struct AttemptDoorBoltChangeEvent
     {
-        public readonly bool BoltsDown;
-
-        public DoorBoltsChangedEvent(bool boltsDown)
-        {
-            BoltsDown = boltsDown;
-        }
+        public bool Bolted;
+        public bool Cancelled;
     }
+
+    /// <summary>
+    /// Raised directed whenever door bolts change.
+    /// </summary>
+    [ByRefEvent]
+    public record struct DoorBoltChangedEvent
+    {
+        public bool Bolted;
+    }
+
 
     /// <summary>
     /// Raised when the door is determining whether it is able to open.

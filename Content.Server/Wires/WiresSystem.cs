@@ -5,6 +5,7 @@ using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Power.Components;
 using Content.Shared.DoAfter;
+using Content.Shared.Doors;
 using Content.Shared.Doors.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
@@ -564,11 +565,6 @@ public sealed class WiresSystem : SharedWiresSystem
             wires.WireSeed));
     }
 
-    public void OpenUserInterface(EntityUid uid, ICommonSession player)
-    {
-        _uiSystem.OpenUi(uid, WiresUiKey.Key, player);
-    }
-
     /// <summary>
     ///     Tries to get a wire on this entity by its integer id.
     /// </summary>
@@ -631,7 +627,7 @@ public sealed class WiresSystem : SharedWiresSystem
         switch (action)
         {
             case WiresAction.Cut:
-                if (!Tool.HasQuality(toolEntity, "Cutting", tool))
+                if (!Tool.HasQuality(toolEntity, SharedToolSystem.CutQuality, tool))
                 {
                     _popupSystem.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"), user);
                     return;
@@ -645,7 +641,7 @@ public sealed class WiresSystem : SharedWiresSystem
 
                 break;
             case WiresAction.Mend:
-                if (!Tool.HasQuality(toolEntity, "Cutting", tool))
+                if (!Tool.HasQuality(toolEntity, SharedToolSystem.CutQuality, tool))
                 {
                     _popupSystem.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"), user);
                     return;
@@ -659,7 +655,7 @@ public sealed class WiresSystem : SharedWiresSystem
 
                 break;
             case WiresAction.Pulse:
-                if (!Tool.HasQuality(toolEntity, "Pulsing", tool))
+                if (!Tool.HasQuality(toolEntity, SharedToolSystem.PulseQuality, tool))
                 {
                     _popupSystem.PopupCursor(Loc.GetString("wires-component-ui-on-receive-message-need-multitool"), user);
                     return;

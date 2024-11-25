@@ -82,17 +82,6 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
         SubscribeLocalEvent<DoorComponent, OnAttemptEmagEvent>(OnAttemptEmag);
         SubscribeLocalEvent<DoorComponent, GotEmaggedEvent>(OnDoorEmagged);
-        SubscribeLocalEvent<DoorComponent, DoorBoltChangedEvent>(OnDoorBoltChange);
-    }
-
-    private void OnDoorBoltChange(Entity<DoorComponent> ent, ref DoorBoltChangedEvent args)
-    {
-        // If we get unbolted then re-check for autoclose.
-        if (!args.Bolted && ent.Comp.NextStateChange == null)
-        {
-            ent.Comp.NextStateChange = GameTiming.CurTime + CloseCheckTime;
-            Dirty(ent);
-        }
     }
 
     protected virtual void OnComponentInit(Entity<DoorComponent> ent, ref ComponentInit args)
@@ -703,6 +692,8 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (door.State != DoorState.Open && door.State != DoorState.Closed)
             return;
 
+        Dirty(uid, door);
+
         // Is this trying to prevent an update? (e.g., cancel an auto-close)
         if (delay == null || delay.Value <= TimeSpan.Zero)
         {
@@ -712,7 +703,6 @@ public abstract partial class SharedDoorSystem : EntitySystem
         }
 
         door.NextStateChange = GameTiming.CurTime + delay.Value;
-        Dirty(uid, door);
 
         _activeDoors.Add((uid, door));
     }
