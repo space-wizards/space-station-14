@@ -102,12 +102,12 @@ public sealed class LogicGateSystem : EntitySystem
         if (args.Port == comp.InputPortA)
         {
             comp.StateA = state;
-            _appearance.SetData(uid, LogicGateVisuals.InputA, SignalToLogicState(state));
+            _appearance.SetData(uid, LogicGateVisuals.InputA, state == SignalState.High ? "High" : "Low");
         }
         else if (args.Port == comp.InputPortB)
         {
             comp.StateB = state;
-            _appearance.SetData(uid, LogicGateVisuals.InputB, SignalToLogicState(state));
+            _appearance.SetData(uid, LogicGateVisuals.InputB, state == SignalState.High ? "High" : "Low");
         }
 
         UpdateOutput(uid, comp);
@@ -145,7 +145,7 @@ public sealed class LogicGateSystem : EntitySystem
                 break;
         }
 
-        _appearance.SetData(uid, LogicGateVisuals.Output, output ? LogicGateState.High : LogicGateState.Low);
+        _appearance.SetData(uid, LogicGateVisuals.Output, output ? "High" : "Low");
 
         // only send a payload if it actually changed
         if (output != comp.LastOutput)
@@ -154,15 +154,5 @@ public sealed class LogicGateSystem : EntitySystem
 
             _deviceLink.SendSignal(uid, comp.OutputPort, output);
         }
-    }
-
-    private static LogicGateState SignalToLogicState(SignalState state)
-    {
-        return state switch
-        {
-            SignalState.High => LogicGateState.High,
-            SignalState.Low => LogicGateState.Low,
-            _ => LogicGateState.Momentary,
-        };
     }
 }

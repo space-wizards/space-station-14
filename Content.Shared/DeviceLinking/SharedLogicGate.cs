@@ -40,11 +40,3 @@ public enum LogicGateLayers : byte
     InputB,
     Output
 }
-
-[Serializable, NetSerializable]
-public enum LogicGateState : byte
-{
-    Low,
-    High,
-    Momentary
-}
