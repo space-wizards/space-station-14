@@ -1,0 +1,40 @@
+- type: chaplainGearMenuSet
+  id: ChaplainGearRosary
+  name: chaplain-gearset-category-rosary-name
+  description: chaplain-gearset-category-rosary-description
+  sprite:
+    sprite: _Impstation/Objects/Misc/nullrod.rsi
+    state: nullrod_rosary
+  content:
+  - NullRodRosary
+
+- type: chaplainGearMenuSet
+  id: ChaplainGearGrail
+  name: chaplain-gearset-category-grail-name
+  description: chaplain-gearset-category-grail-description
+  sprite:
+    sprite: _Impstation/Objects/Misc/nullrod.rsi
+    state: nullrod_grail
+  content:
+  - NullRodGrail
+
+- type: chaplainGearMenuSet
+  id: ChaplainGearGlove
+  name: chaplain-gearset-category-glove-name
+  description: chaplain-gearset-category-glove-description
+  sprite:
+    sprite: _Impstation/Objects/Misc/nullrod_glove.rsi
+    state: icon
+  content:
+  - NullRodGlove
+
+- type: chaplainGearMenuSet
+  id: ChaplainGearBow
+  name: chaplain-gearset-category-bow-name
+  description: chaplain-gearset-category-bow-description
+  sprite:
+    sprite: _Impstation/Objects/Misc/nullrod.rsi
+    state: nullrod_bow
+  content:
+  - NullRodBow
+  - NullRodArrowQuiver

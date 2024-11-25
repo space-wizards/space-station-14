@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprites by AftrLite (Github).",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "grail"
+    },
+    {
+      "name": "grail1"
+    },
+    {
+      "name": "grail2"
+    },
+    {
+      "name": "grail3"
+    },
+    {
+      "name": "grail4"
+    },
+    {
+      "name": "grail5"
+    },
+
+
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+	{
+      "name": "inhand-left-fill-1",
+      "directions": 4
+    },
+
+
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "inhand-right-fill-1",
+      "directions": 4
+    }
+  ]
+}

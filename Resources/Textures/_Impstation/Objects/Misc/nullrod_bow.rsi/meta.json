@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprites by AftrLite (Github), with inspiration from /tg/station. InHand sprites directly taken /tg/ and modified.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "nullrod_bow"
+    },
+    {
+      "name": "arrowprojectile"
+    },
+    {
+      "name": "unwielded"
+    },
+    {
+      "name": "unwielded-arrow"
+    },
+    {
+      "name": "wielded"
+    },
+    {
+      "name": "wielded-arrow"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "wielded-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "wielded-inhand-right",
+      "directions": 4
+    }
+  ]
+}
