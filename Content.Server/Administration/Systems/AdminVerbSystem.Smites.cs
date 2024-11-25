@@ -22,6 +22,7 @@ using Content.Shared.Administration;
 using Content.Shared.Administration.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
+using Content.Shared.Clumsy;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Cluwne;
 using Content.Shared.Damage;
@@ -651,7 +652,7 @@ public sealed partial class AdminVerbSystem
         {
             Text = "admin-smite-become-mouse-name",
             Category = VerbCategory.Smite,
-            Icon = new SpriteSpecifier.Rsi(new ("/Textures/Objects/Fun/Instruments/h_synthesizer.rsi"), "icon"),
+            Icon = new SpriteSpecifier.Rsi(new ("/Textures/Objects/Fun/Instruments/h_synthesizer.rsi"), "supersynth"),
             Act = () =>
             {
                 _polymorphSystem.PolymorphEntity(args.Target, "AdminInstrumentSmite");

@@ -55,6 +55,7 @@
     skipChecks: true
   - type: Ghost
   - type: GhostHearing
+  - type: ShowElectrocutionHUD
   - type: IntrinsicRadioReceiver
   - type: ActiveRadio
     receiveAllChannels: true
@@ -79,6 +80,7 @@
     icon: Interface/Actions/scream.png
     checkCanInteract: false
     event: !type:BooActionEvent
+    startDelay: true
     useDelay: 120
 
 - type: entity
