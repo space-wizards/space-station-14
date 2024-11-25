@@ -531,3 +531,10 @@ Entries:
   id: 74
   time: '2024-11-25T16:04:31.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/commit/cfc02d874f2ee4499ad31e234a30f4d62f8fe592
+- author: Rinary
+  changes:
+  - message: Fixed bug when pacified player can use grenades.
+    type: Fix
+  id: 75
+  time: '2024-11-25T18:54:31.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/53ecc4a66f3bc9c6ae98c0f80d395891ae5eafb0
