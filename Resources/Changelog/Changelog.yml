@@ -3876,7 +3876,7 @@
 - author: SaphireLattice
   changes:
   - message: The Singularity/Tesla generator now requires being surrounded by containment
-      fields to activate. This can be disabled with an Emag.
+      fields to activate.
     type: Tweak
   id: 7631
   time: '2024-11-20T05:55:58.0000000+00:00'
