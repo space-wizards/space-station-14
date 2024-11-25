@@ -63,10 +63,11 @@
       rolls: !type:RangeNumberSelector
         range: 0, 2
       children:
-      - id: BookAgony 
+      - id: BookAgony
       - id: BookClownLaw
       - id: BookGatsby
       - id: BookCosmicCult
+      - id: BookTenebraeConspiracy
       - !type:GroupSelector
         children:
         - id: BookKeelBay
