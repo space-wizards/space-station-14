@@ -22,13 +22,6 @@
     tags:
     - Recyclable
     - NullRod
-  - type: PhysicalComposition
-    materialComposition:
-      Gold: 100 # 1 sheet
-      Steel: 100 # 1 sheet
-  # - type: EmitSoundOnSpawn
-  #   sound:
-  #     path: /Audio/Effects/holy.ogg
 
 - type: entity
   name: null rod
@@ -77,9 +70,6 @@
     size: Small
     shape:
     - 0,0,1,1
-  - type: PhysicalComposition
-    materialComposition:
-      Silver: 200 # 2 sheets
   - type: Clothing
     sprite: _Impstation/Objects/Misc/nullrod.rsi
     slots:
@@ -104,9 +94,6 @@
     size: Small
     shape:
     - 0,0,1,1
-  - type: PhysicalComposition
-    materialComposition:
-      Gold: 200 # 2 sheets
   - type: MeleeWeapon
     wideAnimationRotation: -135
     damage:
@@ -179,16 +166,12 @@
     size: Small
     shape:
     - 0,0,1,1
-  - type: PhysicalComposition
-    materialComposition:
-      Gold: 100 # 1 sheet
-      Silver: 100 # 1 sheet
   - type: Clothing
     sprite: _Impstation/Objects/Misc/nullrod_glove.rsi
   - type: StaminaDamageOnHit
     damage: 22
   - type: MeleeWeapon
-    attackRate: 0.56
+    attackRate: 0.68
     damage:
       types:
         Blunt: 10
@@ -272,12 +255,34 @@
         whitelist:
           tags:
           - HolyArrow
-  - type: PhysicalComposition
-    materialComposition:
-      Gold: 100 # 1 sheet
-      Steel: 100 # 1 sheet
 
-## EMBEDDING THE ITEM TAG INSIDE THE SAME YAML? YEAH. WHAT'RE YOU GONNA DO ABOUT IT, HUH?
-
-- type: Tag
-  id: NullRod
+- type: entity
+  name: aureate quiver
+  parent: [ AmmoProviderShotgunShell, BaseMinorContraband ]
+  id: NullRodArrowQuiver
+  description: A divine quiver, bristling with sparks of light.
+  components:
+    - type: Sprite
+      sprite: _Impstation/Objects/Misc/nullrod_quiver.rsi
+      layers:
+      - state: quiver
+      - state: quiver_unshaded
+        shader: unshaded
+    - type: Item
+      size: Large
+      shape:
+      - 0,0,2,2
+      sprite: _Impstation/Objects/Misc/nullrod_quiver.rsi
+    - type: Clothing
+      quickEquip: false
+      sprite: _Impstation/Objects/Misc/nullrod_quiver.rsi
+      slots:
+      - Back
+      - suitStorage
+    - type: BallisticAmmoProvider
+      proto: HolyArrow
+      mayTransfer: true
+      capacity: 8
+      whitelist:
+        tags:
+        - HolyArrow
