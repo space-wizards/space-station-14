@@ -9,8 +9,6 @@ namespace Content.Server.Implants;
 
 public sealed class RadioImplantSystem : EntitySystem
 {
-    [ValidatePrototypeId<TagPrototype>]
-    public const string RadioImplantTag = "RadioImplant";
     public override void Initialize()
     {
         base.Initialize();
