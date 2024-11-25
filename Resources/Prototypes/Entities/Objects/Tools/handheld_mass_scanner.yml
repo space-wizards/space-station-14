@@ -58,6 +58,42 @@
         map: [ "enum.PowerDeviceVisualLayers.Powered" ]
 
 - type: entity
+  name: handheld announcement pad
+  parent: BaseHandheldComputer
+  id: HandHeldAnnouncementPad
+  description: A nifty handheld device that hacks into the Platform's announcement system. Make sure to remove your ID before use.
+  components:
+  - type: Item
+  - type: Sprite
+    sprite: Objects/Tools/handheld_mass_scanner.rsi
+    state: icon
+    layers:
+      - state: icon
+      - state: scanner
+        shader: unshaded
+        visible: true
+        map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+  - type: CommunicationsConsole
+    title: comms-console-announcement-title-station
+    canShuttle: false
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerCellSlotVisuals.Enabled:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: PowerCellDraw
+    drawRate: 3
+    useRate: 100
+  - type: ActivatableUI
+    key: enum.CommunicationsConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.CommunicationsConsoleUiKey.Key:
+        type: CommunicationsConsoleBoundUserInterface
+
+- type: entity
   id: HandHeldMassScannerBorg
   parent: HandHeldMassScanner
   suffix: Borg

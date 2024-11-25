@@ -101,9 +101,19 @@
   priority: 1
 
 - type: storeCategory
+  id: UplinkNtExplosives
+  name: store-category-explosives
+  priority: 2
+
+- type: storeCategory
   id: UplinkNtArmor
   name: store-category-wearables
-  priority: 2
+  priority: 3
+
+- type: storeCategory
+  id: UplinkNtChemicals
+  name: store-category-chemicals
+  priority: 4
 
 - type: storeCategory
   id: UplinkNtDeception
@@ -114,6 +124,21 @@
   id: UplinkNtDisruption
   name: store-category-disruption
   priority: 6
+
+- type: storeCategory
+  id: UplinkNtImplants
+  name: store-category-implants
+  priority: 7
+
+- type: storeCategory
+  id: UplinkNtAllies
+  name: store-category-allies
+  priority: 8
+
+- type: storeCategory
+  id: UplinkNtJob
+  name: store-category-job
+  priority: 9
 
 - type: storeCategory
   id: UplinkNtPointless

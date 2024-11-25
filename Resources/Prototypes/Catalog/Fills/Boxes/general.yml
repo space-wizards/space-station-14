@@ -353,6 +353,20 @@
   - type: Storage
 
 - type: entity
+  name: nanotrasen encryption key box
+  parent: BoxEncryptionKeyPassenger
+  id: BoxEncryptionKeyNanotrasen
+  description: Two Nanotrasen encryption keys for the price of one. What a deal!!
+  components:
+  - type: Item
+    size: Normal
+  - type: StorageFill
+    contents:
+      - id: EncryptionKeyNanotrasen
+        amount: 2
+  - type: Storage
+
+- type: entity
   name: lead-lined box
   parent: BoxCardboard
   suffix: DEBUG

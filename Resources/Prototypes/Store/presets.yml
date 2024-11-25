@@ -29,10 +29,15 @@
     name: store-preset-name-uplink-nt
     categories:
     - UplinkNtWeaponry
-    - UplinkNtArmor
     - UplinkNtAmmo
+    - UplinkNtExplosives
+    - UplinkNtChemicals
     - UplinkNtDeception
     - UplinkNtDisruption
+    - UplinkNtImplants
+    - UplinkNtAllies
+    - UplinkNtArmor
+    - UplinkNtJob
     - UplinkNtPointless
     currencyWhitelist:
     - BluespaceCrystal

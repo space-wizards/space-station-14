@@ -6,7 +6,7 @@
   description: uplink-CaptainSabre-desc
   productEntity: CaptainSabre
   cost:
-    BluespaceCrystal: 10
+    BluespaceCrystal: 8
   categories:
   - UplinkNtWeaponry
 
@@ -16,7 +16,7 @@
   description: uplink-carbine-desc
   productEntity: WeaponEnergyCarbine
   cost:
-    BluespaceCrystal: 17 # this shit is STRONG-strong. TODO: Cascade Ops DO NOT get this
+    BluespaceCrystal: 15 # this shit is STRONG-strong. TODO: Cascade Ops DO NOT get this
   categories:
   - UplinkNtWeaponry
 
@@ -60,6 +60,38 @@
   categories:
   - UplinkNtWeaponry
 
+##EXPLOSIVES
+
+- type: listing
+  id: UplinkBeachballGrenade
+  name: uplink-beachball-name
+  description: uplink-beachball-desc
+  productEntity: BeachballGrenade
+  cost:
+    BluespaceCrystal: 4
+  categories:
+  - UplinkNtExplosives
+
+- type: listing
+  id: UplinkIncendiaryGrenade
+  name: uplink-firebomb-name
+  description: uplink-firebomb-desc
+  productEntity: IncendiaryGrenade
+  cost:
+    BluespaceCrystal: 5
+  categories:
+  - UplinkNtExplosives
+
+- type: listing
+  id: UplinkSlashBang
+  name: uplink-slashbang-name
+  description: uplink-slashbang-desc
+  productEntity: SlashBang
+  cost:
+    BluespaceCrystal: 7
+  categories:
+  - UplinkNtExplosives
+
 ## AMMO
 
 - type: listing
@@ -69,6 +101,16 @@
   productEntity: MagazineMagnum
   cost:
     BluespaceCrystal: 4
+  categories:
+  - UplinkNtAmmo
+
+- type: listing
+  id: UplinkMagCellDisabler
+  name: uplink-disabler-name
+  description: uplink-disabler-desc
+  productEntity: MagCellDisabler
+  cost:
+    BluespaceCrystal: 6
   categories:
   - UplinkNtAmmo
 
@@ -88,7 +130,7 @@
   description: uplink-magcell-desc
   productEntity: BaseMagCell
   cost:
-    BluespaceCrystal: 4
+    BluespaceCrystal: 2
   categories:
   - UplinkNtAmmo
 
@@ -98,7 +140,7 @@
   description: uplink-magcelladv-desc
   productEntity: MagCellAdvanced
   cost:
-    BluespaceCrystal: 8
+    BluespaceCrystal: 6
   categories:
   - UplinkNtAmmo
 
@@ -113,16 +155,6 @@
   - UplinkNtAmmo
 
 ## ARMOR
-
-- type: listing
-  id: UplinkClothingGlovesCombat
-  name: uplink-combat-gloves-name
-  description: uplink-combat-gloves-desc
-  productEntity: ClothingHandsGlovesCombat
-  cost:
-    BluespaceCrystal: 1 # at some point we'll roll this into a proper toolbox with gear
-  categories:
-  - UplinkNtArmor
 
 - type: listing
   id: UplinkClothingBulletproof
@@ -144,6 +176,28 @@
   categories:
   - UplinkNtArmor
 
+##CHEMICALS
+
+- type: listing
+  id: UplinkVestineChemistryVialHalf
+  name: uplink-vestinehalf-name
+  description: uplink-vestinehalf-desc
+  productEntity: VestineChemistryVialHalf
+  cost:
+    BluespaceCrystal: 3
+  categories:
+  - UplinkNtChemicals
+
+- type: listing
+  id: UplinkCrateChemicalLabBundle
+  name: uplink-lab-name
+  description: uplink-lab-desc
+  productEntity: CrateChemicalLabBundle
+  cost:
+    BluespaceCrystal: 15
+  categories:
+  - UplinkNtChemicals
+
 ##DISRUPTION
 
 - type: listing
@@ -153,6 +207,26 @@
   productEntity: LubeBoxNT
   cost:
     BluespaceCrystal: 2
+  categories:
+  - UplinkNtDisruption
+
+- type: listing
+  id: UplinkToolboxNanotrasenFilled
+  name: uplink-toolboxnt-name
+  description: uplink-toolboxnt-desc
+  productEntity: ToolboxNanotrasenFilled
+  cost:
+    BluespaceCrystal: 5
+  categories:
+  - UplinkNtDisruption
+
+- type: listing
+  id: UplinkAnnouncementPad
+  name: uplink-announcer-name
+  description: uplink-announcer-desc
+  productEntity: HandHeldAnnouncementPad
+  cost:
+    BluespaceCrystal: 7
   categories:
   - UplinkNtDisruption
 
@@ -187,6 +261,18 @@
     BluespaceCrystal: 5
   categories:
   - UplinkNtDeception
+
+##ALLIES
+
+- type: listing
+  id: UplinkEncryptionKeyNanotrasen
+  name: uplink-key-name
+  description: uplink-key-desc
+  productEntity: BoxEncryptionKeyNanotrasen
+  cost:
+    BluespaceCrystal: 2
+  categories:
+  - UplinkNtAllies
 
 ##POINTLESS
 

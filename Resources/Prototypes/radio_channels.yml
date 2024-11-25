@@ -71,6 +71,14 @@
   longRange: true
 
 - type: radioChannel
+  id: Nanotrasen
+  name: chat-radio-nanotrasen
+  keycode: 'x'
+  frequency: 1257
+  color: "#89a8d6"
+  longRange: true
+
+- type: radioChannel
   id: Handheld
   name: chat-radio-handheld
   frequency: 1330
