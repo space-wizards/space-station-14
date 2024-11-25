@@ -9,4 +9,5 @@ namespace Content.Client.Singularity.Systems;
 /// Exists to make relevant signal handlers (ie: <see cref="SharedSingularityGeneratorSystem.OnEmagged"/>) work on the client.
 /// </summary>
 public sealed class SingularityGeneratorSystem : SharedSingularityGeneratorSystem
-{}
+{
+}

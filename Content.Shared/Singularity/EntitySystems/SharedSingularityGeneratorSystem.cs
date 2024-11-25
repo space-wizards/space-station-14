@@ -16,13 +16,5 @@ public abstract class SharedSingularityGeneratorSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-
-        SubscribeLocalEvent<SingularityGeneratorComponent, GotEmaggedEvent>(OnEmagged);
-    }
-
-    private void OnEmagged(EntityUid uid, SingularityGeneratorComponent component, ref GotEmaggedEvent args)
-    {
-        component.FailsafeDisabled = true;
-        args.Handled = true;
     }
 }
