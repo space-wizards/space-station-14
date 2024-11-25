@@ -15,6 +15,9 @@
   - type: EmitSoundOnUse
     sound:
       collection: Skub
+  - type: EmitSoundOnLand
+    sound:
+      collection: Skub
   - type: EmitSoundOnTrigger
     sound:
       collection: Skub
