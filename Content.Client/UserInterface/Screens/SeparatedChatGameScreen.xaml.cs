@@ -78,7 +78,8 @@ public sealed partial class SeparatedChatGameScreen : InGameScreen
             uiScale = _uiManager.DefaultUIScale;
 
         // CurrentRenderScale would be more correct, but it gets updated after us.
-        var gameScale = MainViewport.Viewport.FixedRenderScale;
+        var gameScale = CalculateRenderScale();
+        // svp.ViewportSize.X = EyeManager.PixelsPerMeter * gameScale * ViewportWidth
         var minFromVp = EyeManager.PixelsPerMeter * gameScale * _cfg.GetCVar(CCVars.ViewportMinimumWidth) / uiScale;
         var maxFromVp = EyeManager.PixelsPerMeter * gameScale * _cfg.GetCVar(CCVars.ViewportMaximumWidth) / uiScale;
         // Inventory bar also supplies a minWidth such that body+shoes don't overlap PDA.
@@ -101,6 +102,25 @@ public sealed partial class SeparatedChatGameScreen : InGameScreen
 
         // Correct for naughty behavior in SplitContainer by forcing a relayout.
         ScreenContainer.SplitCenter = Math.Clamp(ScreenContainer.SplitCenter, min, max);
+    }
+
+    // Combines logic of EnsureViewportCreated and GetDrawBox to calculate the
+    // effective rendering scale.
+    private float CalculateRenderScale()
+    {
+        var svp = MainViewport.Viewport;
+
+        if (svp.FixedStretchSize is { } fixedAmt)
+        {
+            return fixedAmt.X / svp.ViewportSize.X;
+        }
+        else
+        {
+            // Always act like IgnoreDimension is Horizontal - otherwise the
+            // current separator position would influence the acceptable bounds
+            // of the separator position, which is weird.
+            return Height / svp.ViewportSize.Y;
+        }
     }
 
     public override ChatBox ChatBox => GetWidget<ChatBox>()!;
