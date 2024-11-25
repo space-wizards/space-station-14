@@ -32,6 +32,9 @@ public sealed partial class MechComponent : Component
     [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public FixedPoint2 Energy = 0;
 
+    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    public bool IsPilotControlling { get; set; } = false;
+
     /// <summary>
     /// The maximum amount of energy the mech can have.
     /// Derived from the currently inserted battery.

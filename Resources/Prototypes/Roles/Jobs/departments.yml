@@ -5,7 +5,15 @@
   roles:
   - CargoTechnician
   - Quartermaster
+
+- type: department
+  id: Expeditionary
+  description: department-Expeditioneering-description
+  color: "#846DCF"
+  roles:
   - SalvageSpecialist
+  - BasinTechnician
+  - Pilot
 
 - type: department
   id: Civilian
