@@ -28,6 +28,10 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
+using Content.Shared.Hands;
+using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
+using Content.Server.Chemistry.EntitySystems;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -83,6 +87,8 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<IgniteOnHeatDamageComponent, DamageChangedEvent>(OnDamageChanged);
         }
 
+
+
         private void OnMeleeHit(EntityUid uid, IgniteOnMeleeHitComponent component, MeleeHitEvent args)
         {
             foreach (var entity in args.HitEntities)
@@ -95,6 +101,7 @@ namespace Content.Server.Atmos.EntitySystems
                     Ignite(entity, args.Weapon, flammable, args.User);
             }
         }
+
 
         private void OnIgniteLand(EntityUid uid, IgniteOnCollideComponent component, ref LandEvent args)
         {
@@ -454,6 +461,31 @@ namespace Content.Server.Atmos.EntitySystems
                     Extinguish(uid, flammable);
                 }
             }
+
+            var playerQuery = EntityQueryEnumerator<HandsComponent>();
+        while (playerQuery.MoveNext(out var playerUid, out var handsComponent))
+       {
+           if (!HasComp<JellidComponent>(playerUid))
+              {
+                  continue;
+              }
+
+           if (handsComponent.ActiveHand?.HeldEntity is not EntityUid heldItem)
+               {
+                   continue;
+               }
+
+           if (!TryComp<FlammableComponent>(heldItem, out var flammable))
+              {
+            continue;
+              }
+
+        AdjustFireStacks(heldItem, flammable.FireStacks, flammable);
+        if (flammable.FireStacks >= 0)
+        {
+            Ignite(heldItem, heldItem, flammable, playerUid);
+        }
+      }
         }
     }
 }

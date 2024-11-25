@@ -198,6 +198,7 @@
       - ClothingHeadHatWelding
       - WetFloorSign
       - ClothingHeadHatCone
+      - PaperJellid
   - type: EmagLatheRecipes
     emagStaticRecipes:
       - BoxLethalshot

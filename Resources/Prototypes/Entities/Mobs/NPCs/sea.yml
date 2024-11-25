@@ -68,7 +68,7 @@
   description: It's a fish.
   components:
   - type: Body
-    prototype: Mouse
+    prototype: SeaCreature # Gives em a stomach and gills for breathing water. They die without it.
   - type: Sprite
     sprite: Mobs/Animals/fish.rsi
     drawdepth: Mobs
@@ -113,8 +113,8 @@
     solutions:
       food:
         reagents:
-        - ReagentId: UncookedAnimalProteins
-          Quantity: 3
+        - ReagentId: FishOil
+          Quantity: 10
   - type: Butcherable
     spawned:
     - id: FoodMeatFish
@@ -122,7 +122,8 @@
   - type: CombatMode
     combatToggleAction: ActionCombatModeToggleOff
   - type: Bloodstream
-    bloodMaxVolume: 30
+    bloodMaxVolume: 10
+    bloodReagent: FishOil
   - type: MobPrice
     price: 400
   - type: BadFood
@@ -130,6 +131,12 @@
   - type: PreventSpiller
   - type: Damageable
     damageContainer: Biological
+  - type: Respirator
+    damage:
+      types:
+        Slash: 2
+    maxSaturation: 15
+    gaspEmote: Click # It's like a peeper, alright?
 
 - type: entity
   name: Fish
@@ -176,7 +183,7 @@
   id: MobFishMimic
   components:
   - type: Body
-    prototype: AnimalMimic # just adds the Festering Tumor
+    prototype: AnimalMimic # just adds the Festering Tumor and removes the need for water to breathe
   - type: GibAction
     actionPrototype: DionaGibAction # see the Mimic organ file for more information about the process of spawning
     allowedStates:
