@@ -168,6 +168,16 @@ namespace Content.Client.Chemistry.UI
             var bufferVolume = castState.BufferCurrentVolume?.Int() ?? 0;
 
             PillDosage.Value = (int)Math.Min(bufferVolume, castState.PillDosageLimit);
+            
+            PillTypeButtons[castState.SelectedPillType].Pressed = true;
+            PillNumber.IsValid = x => x >= 0 && x <= pillNumberMax;
+            PillDosage.IsValid = x => x > 0 && x <= castState.PillDosageLimit;
+            BottleDosage.IsValid = x => x >= 0 && x <= bottleAmountMax;
+
+            if (PillNumber.Value > pillNumberMax)
+                PillNumber.Value = pillNumberMax;
+            if (BottleDosage.Value > bottleAmountMax)
+                BottleDosage.Value = bottleAmountMax;
 
             // Avoid division by zero
             if (PillDosage.Value > 0)
