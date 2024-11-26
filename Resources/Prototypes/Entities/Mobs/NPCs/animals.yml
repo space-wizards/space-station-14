@@ -1758,6 +1758,9 @@
       Taco: RatTaco
       Burger: RatBurger
       Skewer: RatSkewer
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Mouse
 
 - type: entity
   parent: MobMouse
