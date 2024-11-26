@@ -1,0 +1,55 @@
+- type: entity
+  id: HolyArrow
+  description: Impermanent and luminescent.
+  name: aureate arrow
+  parent: BaseItem
+  components:
+  - type: RevealRevenantOnCollide
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: _Impstation/Objects/Misc/nullrod_bow.rsi
+    layers:
+      - state: arrowprojectile
+        shader: unshaded
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.2
+        density: 5
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.1,0.1,0.1"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+  - type: Tag
+    tags:
+      - HolyArrow
+      - Trash
+  - type: Ammo
+    muzzleFlash: null
+  - type: PointLight
+    radius: 1.15
+    color: gold
+    energy: 2.9
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+    embedOnThrow: false
+    removalTime: .2
+  - type: ThrowingAngle
+    angle: 0
+  - type: LandAtCursor
+  - type: Projectile
+    deleteOnCollide: false
+    onlyCollideWhenShot: true
+    damage:
+      types:
+        Piercing: 31
