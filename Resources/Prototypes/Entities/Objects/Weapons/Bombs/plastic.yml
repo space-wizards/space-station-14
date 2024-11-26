@@ -109,6 +109,7 @@
 
 - type: entity
   name: cluwne bomb
+  suffix: Real
   description: It finds this situation quite hilarious.
   parent: [BasePlasticExplosive, BaseSyndicateContraband]
   id: CluwneBomb
