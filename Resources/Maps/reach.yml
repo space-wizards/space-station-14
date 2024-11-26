@@ -1899,7 +1899,7 @@ entities:
   - uid: 80
     components:
     - type: Transform
-      pos: 1.5,9.5
+      pos: -0.5,10.5
       parent: 2
 - proto: BarSignTheLightbulb
   entities:
@@ -7544,8 +7544,8 @@ entities:
       pos: 7.5,-13.5
       parent: 2
     - type: GasMixer
-      inletTwoConcentration: 0.78
-      inletOneConcentration: 0.22
+      inletTwoConcentration: 0.22000003
+      inletOneConcentration: 0.78
     - type: AtmosPipeColor
       color: '#0055CCFF'
 - proto: GasPassiveVent
@@ -12187,11 +12187,6 @@ entities:
     - type: Transform
       pos: 2.5,6.5
       parent: 2
-  - uid: 1739
-    components:
-    - type: Transform
-      pos: -0.5,10.5
-      parent: 2
   - uid: 1949
     components:
     - type: Transform
@@ -14360,12 +14355,6 @@ entities:
     components:
     - type: Transform
       pos: 16.5,-4.5
-      parent: 2
-  - uid: 2081
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -0.5,10.5
       parent: 2
   - uid: 2082
     components:

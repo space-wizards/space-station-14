@@ -5,207 +5,60 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/tgstation/tgstation/commit/53d1f1477d22a11a99c6c6924977cd431075761b , cerberus by Alekshhh",
+  "copyright": "https://github.com/tgstation/tgstation/commit/53d1f1477d22a11a99c6c6924977cd431075761b , cerberus by Alekshhh, real mouse by TheShuEd",
   "states": [
     {
       "name": "corgi",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "corgi_rest",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
-      "name": "corgi_dead",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "corgi_dead"
     },
     {
       "name": "ian",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
-      "name": "ian_dead",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "ian_dead"
     },
     {
-      "name": "corgi_deadcollar",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "corgi_deadcollar"
     },
     {
-      "name": "corgi_deadtag",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "corgi_deadtag"
     },
     {
       "name": "ian_shaved",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
-      "name": "ian_shaved_dead",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "ian_shaved_dead"
     },
     {
       "name": "corgicollar",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "corgitag",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "lisa",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
-      "name": "lisa_dead",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "lisa_dead"
     },
     {
       "name": "lisa_shaved",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
-      "name": "lisa_shaved_dead",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "lisa_shaved_dead"
     },
     {
       "name": "narsian",
@@ -238,12 +91,7 @@
       ]
     },
     {
-      "name": "old_ian_dead",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "old_ian_dead"
     },
     {
       "name": "old_ian_shaved",
@@ -268,116 +116,42 @@
       ]
     },
     {
-      "name": "old_ian_shaved_dead",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "old_ian_shaved_dead"
     },
     {
       "name": "puppy",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
-      "name": "puppy_dead",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "puppy_dead"
     },
     {
-      "name": "puppy_deadcollar",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "puppy_deadcollar"
     },
     {
-      "name": "puppy_deadtag",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "puppy_deadtag"
     },
     {
       "name": "puppy_shaved",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
-      "name": "puppy_shaved_dead",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "puppy_shaved_dead"
     },
     {
       "name": "puppycollar",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "puppytag",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
+    },
+    {
+      "name": "real_mouse",
+      "directions": 4
+    },
+    {
+      "name": "real_mouse_dead"
     }
   ]
 }

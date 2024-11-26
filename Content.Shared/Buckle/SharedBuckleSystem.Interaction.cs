@@ -1,5 +1,5 @@
+using System.Linq;
 using Content.Shared.Buckle.Components;
-using Content.Shared.Cuffs.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.IdentityManagement;
@@ -84,15 +84,29 @@ public abstract partial class SharedBuckleSystem
         if (!TryComp(args.User, out BuckleComponent? buckle))
             return;
 
-        if (buckle.BuckledTo == null && component.BuckleOnInteractHand)
+        // Buckle self
+        if (buckle.BuckledTo == null && component.BuckleOnInteractHand && StrapHasSpace(uid, buckle, component))
+        {
             TryBuckle(args.User, args.User, uid, buckle, popup: true);
-        else if (buckle.BuckledTo == uid)
-            TryUnbuckle(args.User, args.User, buckle, popup: true);
-        else
+            args.Handled = true;
             return;
+        }
+
+        // Unbuckle self
+        if (buckle.BuckledTo == uid && TryUnbuckle(args.User, args.User, buckle, popup: true))
+        {
+            args.Handled = true;
+            return;
+        }
+
+        // Unbuckle others
+        if (component.BuckledEntities.TryFirstOrNull(out var buckled) && TryUnbuckle(buckled.Value, args.User))
+        {
+            args.Handled = true;
+            return;
+        }
 
         // TODO BUCKLE add out bool for whether a pop-up was generated or not.
-        args.Handled = true;
     }
 
     private void OnBuckleInteractHand(Entity<BuckleComponent> ent, ref InteractHandEvent args)

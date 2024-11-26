@@ -210,7 +210,7 @@ namespace Content.Server.Atmos.EntitySystems
                                      MovedByPressureComponent.ProbabilityOffset);
 
             // Can we yeet the thing (due to probability, strength, etc.)
-            if (moveProb > MovedByPressureComponent.ProbabilityOffset && _robustRandom.Prob(MathF.Min(moveProb / 100f, 1f))
+            if (moveProb > MovedByPressureComponent.ProbabilityOffset && _random.Prob(MathF.Min(moveProb / 100f, 1f))
                                                                       && !float.IsPositiveInfinity(component.MoveResist)
                                                                       && (physics.BodyType != BodyType.Static
                                                                           && (maxForce >= (component.MoveResist * MovedByPressureComponent.MoveForcePushRatio)))
