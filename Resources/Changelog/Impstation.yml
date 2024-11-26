@@ -1,31 +1,4 @@
 ﻿Entries:
-- author: Drags-His-Tail
-  changes:
-  - message: Most reality-breaking side-effects of the QSI have been mitigated.
-    type: Fix
-  id: 83
-  time: '2024-08-15T23:59:39.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/99
-- author: starlighthowls
-  changes:
-  - message: Disabled securitron crafting recipe.
-    type: Fix
-  - message: Made edits to NTAS.WW decal.
-    type: Tweak
-  - message: Added new bar sign setting, Imp.
-    type: Add
-  - message: Manually updated impstation changelog. (hi!)
-    type: Add
-  id: 84
-  time: '2024-08-16T22:33:37.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/100
-- author: formlessnameless
-  changes:
-  - message: A bunch of formatting fixes that the system was yelling at me about
-    type: Fix
-  id: 85
-  time: '2024-08-17T02:51:39.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/101
 - author: formlessnameless
   changes:
   - message: Fixed outdated status icon stuff
@@ -4317,3 +4290,31 @@
   id: 582
   time: '2024-11-26T19:09:17.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/760
+- author: widgetbeck
+  changes:
+  - message: Added the goblin EVA suit (gobsuit.) Admin-only for the moment.
+    type: Add
+  id: 583
+  time: '2024-11-26T19:11:37.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/808
+- author: DinnerCalzone
+  changes:
+  - message: (Hummingbird) The external airlocks in the area between the center and
+      starboard wing now properly require external access.
+    type: Fix
+  id: 584
+  time: '2024-11-26T19:10:50.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/807
+- author: DinnerCalzone
+  changes:
+  - message: 'Shotgun beanbags have been reworked into stun slugs. These do 7.5 shock
+      and 40 stamina damage compared to beanbags'' 10 blunt and 40 stamina damage,
+      so being shot by them will not cause you to bleed. Note: insulated gloves will
+      not make you immune to these!'
+    type: Tweak
+  - message: Gave mice 40% shock vulnerability so they can still be one-shot by the
+      bartender's shotgun. (Their little hearts can't take the voltage.)
+    type: Tweak
+  id: 585
+  time: '2024-11-26T19:10:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/762
