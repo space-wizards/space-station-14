@@ -17,6 +17,9 @@
     outerClothing: ClothingOuterGoblinKnightArmor
     back: ClothingBackpackSatchelLeather
     id: IDCardGoblinKnight
+  storage:
+    back:
+    - GoblinCrowbar
   inhand:
     - GoblinClaymore
     - WoodenBuckler
