@@ -28,6 +28,7 @@ We are not currently accepting translations of the game on our main repository. 
 3. Compile the solution.
 4. test
 5. test[2]
+6. test[3]
 
 [More detailed instructions on building the project.](https://docs.spacestation14.com/en/general-development/setup.html)
 
