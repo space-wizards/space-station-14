@@ -47,3 +47,11 @@
   color: "#3f2f20"
   requiredComponents:
   - Spider
+  
+- type: collectiveMind
+  id: Changeling
+  name: collective-mind-changeling
+  keycode: 'h'
+  color: "#ff75a8"
+  requiredComponents:
+  - Hivemind
