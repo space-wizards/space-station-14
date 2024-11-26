@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Fixed outdated status icon stuff
-    type: Fix
-  id: 86
-  time: '2024-08-17T16:04:56.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/102
 - author: sageu111
   changes:
   - message: enabling grays
@@ -4318,3 +4311,25 @@
   id: 585
   time: '2024-11-26T19:10:22.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/762
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: 'New Ammo Type: .22 Auto (incl. Incendiary, Uranium, and Practice)'
+    type: Add
+  - message: Mk 93 Machine Pistol
+    type: Add
+  - message: Mk 92HB Hyper-Burst Pistol
+    type: Add
+  - message: Zipper .22; a Dogshit pistol found in maintenance loot rarely.
+    type: Add
+  - message: Zipper .22 Syndicate Bundle; purchased for 20 TC-- uses Armor Piercing
+      rounds to deal defense-ignoring damage.
+    type: Add
+  - message: Machine Pistol and Hyperburst Pistol Crates to the Cargo Store
+    type: Add
+  - message: Advanced Sidearms as a Tier 1 technology for Science to research
+    type: Add
+  - message: Advanced Pistol Munitions as a Tier 2 technology for Science to research
+    type: Add
+  id: 586
+  time: '2024-11-26T19:18:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/809
