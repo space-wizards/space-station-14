@@ -20,6 +20,9 @@ namespace Content.Shared.Roles
         [DataField("playTimeTracker", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<PlayTimeTrackerPrototype>))]
         public string PlayTimeTracker { get; private set; } = string.Empty;
 
+        /// <summary>
+        ///     Who is the supervisor for this job.
+        /// </summary>
         [DataField("supervisors")]
         public string Supervisors { get; private set; } = "nobody";
 
@@ -41,17 +44,35 @@ namespace Content.Shared.Roles
         [ViewVariables(VVAccess.ReadOnly)]
         public string? LocalizedDescription => Description is null ? null : Loc.GetString(Description);
 
+        /// <summary>
+        ///     Requirements for the job.
+        /// </summary>
         [DataField, Access(typeof(SharedRoleSystem), Other = AccessPermissions.None)]
         public HashSet<JobRequirement>? Requirements;
 
+        /// <summary>
+        ///     When true - the station will have anouncement about arrival of this player.
+        /// </summary>
         [DataField("joinNotifyCrew")]
         public bool JoinNotifyCrew { get; private set; } = false;
 
+        /// <summary>
+        ///     When true - the player will recieve a message about importancy of their job.
+        /// </summary>
         [DataField("requireAdminNotify")]
         public bool RequireAdminNotify { get; private set; } = false;
 
+        /// <summary>
+        ///     Should this job appear in preferences menu?
+        /// </summary>
         [DataField("setPreference")]
         public bool SetPreference { get; private set; } = true;
+
+        /// <summary>
+        ///     Should the selected traits be applied for this job?
+        /// </summary>
+        [DataField]
+        public bool ApplyTraits { get; private set; } = true;
 
         /// <summary>
         ///     Whether this job should show in the ID Card Console.

@@ -103,6 +103,43 @@
     containers:
       storagebase: !type:Container
         ents: []
+        
+- type: entity
+  name: syringe gun
+  parent: BaseStorageItem
+  id: LauncherSyringe
+  description: Load full of poisoned syringes for optimal fun.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Cannons/syringe_gun.rsi
+    layers:
+    - state: syringe_gun
+  - type: Storage
+    maxItemSize: Normal
+    grid:
+    - 0,0,2,0
+    whitelist:
+      tags:
+      - SyringeGunAmmo
+  - type: Gun
+    fireRate: 1
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/syringe_gun.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+    clumsyProof: true
+  - type: ContainerAmmoProvider
+    container: storagebase
+  - type: Item
+    size: Normal
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
 
 # shoots bullets instead of throwing them, no other changes
 - type: entity

@@ -163,6 +163,7 @@
   - chime.ogg
   - buzz-sigh.ogg
   - buzztwo.ogg
+  - machine_vend.gg
   license: "CC-BY-SA-3.0"
   copyright: "Taken from TG station."
   source: "https://github.com/tgstation/tgstation/tree/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0"
@@ -171,3 +172,17 @@
   license: "CC0-1.0"
   copyright: "by Ko4erga"
   source: "https://github.com/space-wizards/space-station-14/pull/30431"
+
+- files:
+  - airlock_emergencyoff.ogg
+  - airlock_emergencyon.ogg
+  - airlock_electrify_off.ogg
+  - airlock_electrify_on.ogg
+  license: "CC0-1.0"
+  copyright: "by ScarKy0"
+  source: "https://github.com/space-wizards/space-station-14/pull/32012"
+
+- files: ["ame_fuelinjection.ogg"]
+  license: "CC0-1.0"
+  copyright: "by AftrLite (Github). Uses audio from hypospray.ogg and hiss.ogg (Found in Resources/Audio/Items)"
+  source: "https://github.com/space-wizards/space-station-14/pull/33097"

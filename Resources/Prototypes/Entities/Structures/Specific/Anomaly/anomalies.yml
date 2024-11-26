@@ -5,6 +5,7 @@
   description: An impossible object. Should you be standing this close to it?
   components:
   - type: Anomaly
+    offset: 0, 0.15
     pulseSound:
       collection: RadiationPulse
       params:
