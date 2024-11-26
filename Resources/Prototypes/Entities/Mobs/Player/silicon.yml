@@ -30,6 +30,7 @@
   - type: IgnoreUIRange
   - type: StationAiHeld
   - type: StationAiOverlay
+  - type: ShowElectrocutionHUD
   - type: ActionGrant
     actions:
     - ActionJumpToCore
