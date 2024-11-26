@@ -347,8 +347,8 @@
           Heat: .6
         flatReductions:
           Heat: 1
-      blockSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/glass_step.ogg
+      blockSound: !type:SoundCollectionSpecifier
+        collection: MirrorShieldBlockSound
     - type: Destructible
       thresholds:
         - trigger:

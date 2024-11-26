@@ -10,8 +10,8 @@
     checkCanAccess: false
     raiseOnUser: true
     range: 60
-    sound: !type:SoundPathSpecifier
-      path: /Audio/Magic/fireball.ogg
+    sound: !type:SoundCollectionSpecifier
+      collection: FireballCastedSound
     icon:
       sprite: Objects/Magic/magicactions.rsi
       state: fireball
@@ -36,8 +36,8 @@
     checkCanAccess: false
     raiseOnUser: true
     range: 60
-    sound: !type:SoundPathSpecifier
-      path: /Audio/Magic/fireball.ogg
+    sound: !type:SoundCollectionSpecifier
+      collection: FireballCastedSound
     icon:
       sprite: Objects/Magic/magicactions.rsi
       state: fireball
@@ -58,8 +58,8 @@
       checkCanAccess: false
       raiseOnUser: true
       range: 60
-      sound: !type:SoundPathSpecifier
-        path: /Audio/Magic/fireball.ogg
+      sound: !type:SoundCollectionSpecifier
+        collection: FireballCastedSound
       icon:
         sprite: Objects/Magic/magicactions.rsi
         state: fireball

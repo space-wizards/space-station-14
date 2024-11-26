@@ -5,8 +5,8 @@
   description: A very large chainsaw. Usually you use this for cutting down trees... usually.
   components:
   - type: Wieldable
-    wieldSound: !type:SoundPathSpecifier
-      path: /Audio/Weapons/chainsawwield.ogg
+    wieldSound: !type:SoundCollectionSpecifier
+      collection: ChainsawWieldSound
       params:
         volume: -3
   - type: Sharp
@@ -23,8 +23,8 @@
         Slash: 2
         Blunt: 2
         Structural: 4
-    soundHit:
-      path: /Audio/Weapons/chainsaw.ogg
+    soundHit: !type:SoundCollectionSpecifier
+      collection: ChainsawHitSound
       params:
         volume: -3
   - type: IncreaseDamageOnWield

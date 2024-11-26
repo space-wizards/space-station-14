@@ -108,8 +108,8 @@
       blackboard:
         RotateSpeed: !type:Single
           3.141
-        SoundTargetInLOS: !type:SoundPathSpecifier
-          path: /Audio/Effects/double_beep.ogg
+        SoundTargetInLOS: !type:SoundCollectionSpecifier
+          collection: TargetInLineOfSightSound
     - type: MouseRotator
       angleTolerance: 5
       rotationSpeed: 180
@@ -221,8 +221,8 @@
       rootTask:
         task: TurretCompound
       blackboard:
-        SoundTargetInLOS: !type:SoundPathSpecifier
-          path: /Audio/Animals/snake_hiss.ogg
+        SoundTargetInLOS: !type:SoundCollectionSpecifier
+          collection: XenoTargetInLineOfSightSound
     - type: Damageable
       damageContainer: Biological
     - type: Destructible

@@ -1197,3 +1197,53 @@
   id: BibleFamiliarSummonSound
   files:
     - /Audio/Effects/radpulse9.ogg
+
+- type: soundCollection
+  id: MirrorShieldBlockSound
+  files:
+    - /Audio/Effects/glass_step.ogg
+
+- type: soundCollection
+  id: TargetInLineOfSightSound
+  files:
+    - /Audio/Effects/double_beep.ogg
+
+- type: soundCollection
+  id: XenoTargetInLineOfSightSound
+  files:
+    - /Audio/Animals/snake_hiss.ogg
+
+- type: soundCollection
+  id: ChainsawWieldSound
+  files:
+    - /Audio/Weapons/chainsawwield.ogg
+
+- type: soundCollection
+  id: ChainsawHitSound
+  files:
+    - /Audio/Weapons/chainsaw.ogg
+
+- type: soundCollection
+  id: ForcewallSummonSound
+  files:
+    - /Audio/Magic/forcewall.ogg
+
+- type: soundCollection
+  id: KnockSpellCastedSound
+  files:
+    - /Audio/Magic/knock.ogg
+
+- type: soundCollection
+  id: FireballCastedSound
+  files:
+    - /Audio/Magic/fireball.ogg
+
+- type: soundCollection
+  id: SmiteSpellCastedSound
+  files:
+    - /Audio/Magic/disintegrate.ogg
+
+- type: soundCollection
+  id: BlinkSpellCastedSound
+  files:
+    - /Audio/Magic/blink.ogg

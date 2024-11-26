@@ -54,8 +54,8 @@ entities:
       deviceLists: []
       transmitFrequencyId: ArrivalsShuttleTimer
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2

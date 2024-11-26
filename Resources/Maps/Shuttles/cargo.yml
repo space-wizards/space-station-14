@@ -46,8 +46,8 @@ entities:
     - type: Fixtures
       fixtures: {}
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: CargoShuttle
     - type: DecalGrid
       chunkCollection:

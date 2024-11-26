@@ -64,8 +64,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DeviceNetwork
       configurators: []
       deviceLists: []

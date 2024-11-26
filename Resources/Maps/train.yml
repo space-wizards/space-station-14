@@ -518,8 +518,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -5362,8 +5362,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -5403,8 +5403,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -5444,8 +5444,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -5485,8 +5485,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -5526,8 +5526,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -5567,8 +5567,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -5608,8 +5608,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -5649,8 +5649,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -5690,8 +5690,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -5731,8 +5731,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -5772,8 +5772,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -5813,8 +5813,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -5854,8 +5854,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -5895,8 +5895,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -5936,8 +5936,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -5977,8 +5977,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -6018,8 +6018,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -6059,8 +6059,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -6100,8 +6100,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -6141,8 +6141,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -6182,8 +6182,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -6223,8 +6223,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -6264,8 +6264,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -6305,8 +6305,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -6346,8 +6346,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -6387,8 +6387,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -6428,8 +6428,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -6470,8 +6470,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -6511,8 +6511,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -6552,8 +6552,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -6593,8 +6593,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2

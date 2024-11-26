@@ -47,8 +47,8 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: Gravity
-      gravityShakeSound: !type:SoundPathSpecifier
-        path: /Audio/Effects/alert.ogg
+      gravityShakeSound: !type:SoundCollectionSpecifier
+        collection: GravityShakeSound
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -526,7 +526,7 @@ entities:
         kudzuPrototype: WeakKudzu
         bioluminescent: False
         screaming: False
-        screamSound: !type:SoundPathSpecifier
+        screamSound: !type:SoundCollectionSpecifier
           params:
             variation: null
             playOffsetSeconds: 0
@@ -538,7 +538,7 @@ entities:
             pitch: 1
             volume: 0
             attenuation: LinearDistanceClamped
-          path: /Audio/Voice/Human/malescream_1.ogg
+          collection: MaleScreams
         ligneous: False
         sentient: False
         slip: False
@@ -599,7 +599,7 @@ entities:
         kudzuPrototype: WeakKudzu
         bioluminescent: False
         screaming: False
-        screamSound: !type:SoundPathSpecifier
+        screamSound: !type:SoundCollectionSpecifier
           params:
             variation: null
             playOffsetSeconds: 0
@@ -611,7 +611,7 @@ entities:
             pitch: 1
             volume: 0
             attenuation: LinearDistanceClamped
-          path: /Audio/Voice/Human/malescream_1.ogg
+          collection: MaleScreams
         ligneous: False
         sentient: False
         slip: False
