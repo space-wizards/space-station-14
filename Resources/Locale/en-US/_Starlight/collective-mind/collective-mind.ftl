@@ -5,3 +5,4 @@ collective-mind-arachnids = Arachnid
 collective-mind-carp = Carp
 collective-mind-zombie = Zombie
 collective-mind-abductor = Abductor
+collective-mind-spider = Spider
