@@ -49,6 +49,13 @@ public sealed partial class InGasComponent : Component
     [DataField]
     public bool TakingDamage = false;
 
+
+     /// <summary>
+    /// Tracks whether something is underwater specifically.
+    /// </summary>
+    [DataField]
+    public bool InWater = false;
+
     /// <summary>
     /// The alert to send when the entity is damaged by gas.
     /// </summary>
