@@ -120,4 +120,3 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/shuttle_syndicate.rsi
-    snapCardinals: false
