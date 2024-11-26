@@ -155,8 +155,8 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
             if (_mind.TryGetMind(ev.User.Value, out var revMindId, out _))
             {
-                if (_role.MindHasRole<RevolutionaryRoleComponent>(revMindId, out _, out var role))
-                    role.Value.Comp.ConvertedCount++;
+                if (_role.MindHasRole<RevolutionaryRoleComponent>(revMindId, out var role))
+                    role.Value.Comp2.ConvertedCount++;
             }
         }
 
