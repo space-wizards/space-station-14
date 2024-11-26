@@ -1223,7 +1223,7 @@ namespace Content.Shared.CCVar
         ///     And maybe do your part to fix that? :)
         /// </remarks>
         public static readonly CVarDef<float> SpaceWindMinimumCalculatedMass =
-            CVarDef.Create("atmos.space_wind_minimum_calculated_mass", 5f, CVar.SERVERONLY);
+            CVarDef.Create("atmos.space_wind_minimum_calculated_mass", 15f, CVar.SERVERONLY);
 
         /// <summary>
         ///     Calculated as 1/Mass, where Mass is the physics.Mass of the desired threshold.
@@ -1645,7 +1645,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("votekick.ban_duration", 180, CVar.SERVERONLY);
 
         /// <summary>
-        ///     Whether the ghost requirement settings for votekicks should be ignored for the lobby. 
+        ///     Whether the ghost requirement settings for votekicks should be ignored for the lobby.
         /// </summary>
         public static readonly CVarDef<bool> VotekickIgnoreGhostReqInLobby =
             CVarDef.Create("votekick.ignore_ghost_req_in_lobby", true, CVar.SERVERONLY);
@@ -2052,7 +2052,7 @@ namespace Content.Shared.CCVar
         /// The color in which the highlights will be displayed.
         /// </summary>
         public static readonly CVarDef<string> ChatHighlightsColor =
-            CVarDef.Create("chat.highlights_color", "#17FFC1FF", CVar.CLIENTONLY | CVar.ARCHIVE, "The color in which the highlights will be displayed."); 
+            CVarDef.Create("chat.highlights_color", "#17FFC1FF", CVar.CLIENTONLY | CVar.ARCHIVE, "The color in which the highlights will be displayed.");
 
         /*
          * AFK
@@ -2458,7 +2458,7 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> AutoGetUp =
             CVarDef.Create("white.auto_get_up", true, CVar.CLIENT | CVar.ARCHIVE | CVar.REPLICATED); // WD EDIT
-		
+
 		/// <summary>
         /// Path that, if provided, automatic replays are initially recorded in.
         /// When the recording is done, the file is moved into its final destination.
