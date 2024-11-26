@@ -40,7 +40,6 @@ public sealed class WieldableSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<WieldableComponent, UseInHandEvent>(OnUseInHand, before: [typeof(SharedGunSystem)]);
         SubscribeLocalEvent<WieldableComponent, ItemUnwieldedEvent>(OnItemUnwielded);
         SubscribeLocalEvent<WieldableComponent, GotUnequippedHandEvent>(OnItemLeaveHand);
         SubscribeLocalEvent<WieldableComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
@@ -154,17 +153,6 @@ public sealed class WieldableSystem : EntitySystem
         };
 
         args.Verbs.Add(verb);
-    }
-
-    private void OnUseInHand(EntityUid uid, WieldableComponent component, UseInHandEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (!component.Wielded)
-            args.Handled = TryWield(uid, component, args.User);
-        else if (component.UnwieldOnUse)
-            args.Handled = TryUnwield(uid, component, args.User);
     }
 
     public bool CanWield(EntityUid uid, WieldableComponent component, EntityUid user, bool quiet = false)
