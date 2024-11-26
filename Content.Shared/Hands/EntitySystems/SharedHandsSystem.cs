@@ -314,6 +314,18 @@ public abstract partial class SharedHandsSystem
         return hands.Hands.TryGetValue(handId, out hand);
     }
 
+    public int CountFreeHands(Entity<HandsComponent> hands)
+    {
+        var free = 0;
+        foreach (var hand in hands.Comp.Hands.Values)
+        {
+            if (hand.IsEmpty)
+                free++;
+        }
+
+        return free;
+    }
+
     public int CountFreeableHands(Entity<HandsComponent> hands)
     {
         var freeable = 0;

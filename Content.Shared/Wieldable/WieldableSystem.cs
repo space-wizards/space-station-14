@@ -1,15 +1,12 @@
-using System.Linq;
 using Content.Shared.Examine;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Timing;
-using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Components;
 using Content.Shared.Weapons.Melee.Events;
@@ -20,6 +17,7 @@ using Content.Shared.Wieldable.Components;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
+using System.Linq;
 
 namespace Content.Shared.Wieldable;
 
@@ -41,9 +39,10 @@ public sealed class WieldableSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<WieldableComponent, ItemUnwieldedEvent>(OnItemUnwielded);
+        SubscribeLocalEvent<WieldableComponent, GotEquippedHandEvent>(OnItemGetInHand);
         SubscribeLocalEvent<WieldableComponent, GotUnequippedHandEvent>(OnItemLeaveHand);
         SubscribeLocalEvent<WieldableComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
-        SubscribeLocalEvent<WieldableComponent, GetVerbsEvent<InteractionVerb>>(AddToggleWieldVerb);
+        SubscribeLocalEvent<WieldableComponent, HandSelectedEvent>(OnSelectWieldable);
         SubscribeLocalEvent<WieldableComponent, HandDeselectedEvent>(OnDeselectWieldable);
 
         SubscribeLocalEvent<MeleeRequiresWieldComponent, AttemptMeleeEvent>(OnMeleeAttempt);
@@ -55,6 +54,22 @@ public sealed class WieldableSystem : EntitySystem
         SubscribeLocalEvent<GunWieldBonusComponent, ExaminedEvent>(OnExamine);
 
         SubscribeLocalEvent<IncreaseDamageOnWieldComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
+    }
+
+    private void OnSelectWieldable(EntityUid uid, WieldableComponent component, HandSelectedEvent args)
+    {
+        if (component.Wielded)
+            return;
+
+        TryWield(uid, component, args.User, true);
+    }
+
+    private void OnItemGetInHand(EntityUid uid, WieldableComponent component, GotEquippedHandEvent args)
+    {
+        if (uid != args.Equipped)
+            return;
+
+        TryWield(uid, component, args.User, true);
     }
 
     private void OnMeleeAttempt(EntityUid uid, MeleeRequiresWieldComponent component, ref AttemptMeleeEvent args)
@@ -132,29 +147,6 @@ public sealed class WieldableSystem : EntitySystem
             args.PushText(Loc.GetString(component.WieldBonusExamineMessage));
     }
 
-    private void AddToggleWieldVerb(EntityUid uid, WieldableComponent component, GetVerbsEvent<InteractionVerb> args)
-    {
-        if (args.Hands == null || !args.CanAccess || !args.CanInteract)
-            return;
-
-        if (!_handsSystem.IsHolding(args.User, uid, out _, args.Hands))
-            return;
-
-        // TODO VERB TOOLTIPS Make CanWield or some other function return string, set as verb tooltip and disable
-        // verb. Or just don't add it to the list if the action is not executable.
-
-        // TODO VERBS ICON
-        InteractionVerb verb = new()
-        {
-            Text = component.Wielded ? Loc.GetString("wieldable-verb-text-unwield") : Loc.GetString("wieldable-verb-text-wield"),
-            Act = component.Wielded
-                ? () => TryUnwield(uid, component, args.User)
-                : () => TryWield(uid, component, args.User)
-        };
-
-        args.Verbs.Add(verb);
-    }
-
     public bool CanWield(EntityUid uid, WieldableComponent component, EntityUid user, bool quiet = false)
     {
         // Do they have enough hands free?
@@ -173,7 +165,7 @@ public sealed class WieldableSystem : EntitySystem
             return false;
         }
 
-        if (_handsSystem.CountFreeableHands((user, hands)) < component.FreeHandsRequired)
+        if (_handsSystem.CountFreeHands((user, hands)) < component.FreeHandsRequired)
         {
             if (!quiet)
             {
@@ -192,9 +184,9 @@ public sealed class WieldableSystem : EntitySystem
     ///     Attempts to wield an item, starting a UseDelay after.
     /// </summary>
     /// <returns>True if the attempt wasn't blocked.</returns>
-    public bool TryWield(EntityUid used, WieldableComponent component, EntityUid user)
+    public bool TryWield(EntityUid used, WieldableComponent component, EntityUid user, bool quietFail = false)
     {
-        if (!CanWield(used, component, user))
+        if (!CanWield(used, component, user, quietFail))
             return false;
 
         var ev = new BeforeWieldEvent();
