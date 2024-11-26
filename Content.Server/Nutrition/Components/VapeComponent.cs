@@ -32,7 +32,7 @@ public sealed partial class VapeComponent : Component
     public DamageSpecifier Damage = default!;
 
     /// <summary>
-    /// Gas that vape will release.
+    /// Gas that the vape will release.
     /// </summary>
     [DataField]
     public Gas GasType = Gas.WaterVapor;
