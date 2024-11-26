@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: UBlueberry
-  changes:
-  - message: The guidebook entries for all antagonists have been revised.
-    type: Tweak
-  id: 7154
-  time: '2024-08-19T03:16:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31075
 - author: TheWaffleJesus
   changes:
   - message: ERT Chaplains now have blessings to use their bible.
@@ -3923,3 +3916,11 @@
   id: 7653
   time: '2024-11-25T12:35:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33513
+- author: metalgearsloth
+  changes:
+  - message: Adjusted the top menu on the separated game screen. The buttons will
+      now form multiple rows and no longer overflow into the viewport.
+    type: Tweak
+  id: 7654
+  time: '2024-11-26T00:59:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33047
