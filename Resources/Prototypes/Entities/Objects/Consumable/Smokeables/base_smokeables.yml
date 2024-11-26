@@ -80,3 +80,5 @@
     solution: smokable
   - type: ExaminableSolution
     solution: smokable
+  - type: Riggable
+    solution: smokable

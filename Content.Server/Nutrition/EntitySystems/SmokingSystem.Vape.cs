@@ -43,17 +43,17 @@ public sealed partial class SmokingSystem
         SubscribeLocalEvent<VapeComponent, GotEmaggedEvent>(OnEmagged);
     }
 
-    private void OnVapeUseInHand(EntityUid uid, VapeComponent vape, ref UseInHandEvent args)
+    private void OnVapeUseInHand(Entity<VapeComponent> ent, ref UseInHandEvent args)
     {
         if (args.Handled)
             return;
 
         args.Handled = true;
 
-        TryVape(uid, vape, args.User, args.User);
+        TryVape(ent, args.User, args.User);
     }
 
-    private void OnVapeInteraction(EntityUid uid, VapeComponent vape, ref AfterInteractEvent args)
+    private void OnVapeInteraction(Entity<VapeComponent> ent, ref AfterInteractEvent args)
     {
         var target = args.Target;
 
@@ -62,11 +62,13 @@ public sealed partial class SmokingSystem
 
         args.Handled = true;
 
-        TryVape(uid, vape, args.User, target.Value);
+        TryVape(ent, args.User, target.Value);
     }
 
-    private void TryVape(EntityUid uid, VapeComponent vape, EntityUid user, EntityUid target)
+    private void TryVape(Entity<VapeComponent> ent, EntityUid user, EntityUid target)
     {
+        var (uid, vape) = ent;
+
         if (!_solutionContainerSystem.TryGetRefillableSolution(uid, out var _, out var solution)
             || !HasComp<BloodstreamComponent>(target)
             || _foodSystem.IsMouthBlocked(target, user))
@@ -121,8 +123,9 @@ public sealed partial class SmokingSystem
         _doAfterSystem.TryStartDoAfter(doAfterArgs);
     }
 
-    private void OnVapeDoAfter(EntityUid uid, VapeComponent vape, ref VapeDoAfterEvent args)
+    private void OnVapeDoAfter(Entity<VapeComponent> ent, ref VapeDoAfterEvent args)
     {
+        var (uid, vape) = ent;
         var user = args.User;
         var target = args.Args.Target;
 
