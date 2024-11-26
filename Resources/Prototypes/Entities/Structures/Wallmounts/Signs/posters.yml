@@ -1069,6 +1069,15 @@
   - type: Sprite
     state: poster52_legit
 
+- type: entity
+  parent: PosterBase
+  id: PosterLegitOppenhopper
+  name: "Oppenhopper"
+  description: "The poster for a now long forgotten movie.\nThe slogan reads: \"Nuke Ops will continue until robustness improves.\""
+  components:
+  - type: Sprite
+    state: poster53_legit
+
 
 #maps
 
