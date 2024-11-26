@@ -15,6 +15,7 @@
     tags:
     - Sheet
     - Metal
+    - DroneUsable
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic

@@ -35,6 +35,9 @@
       cpu_supply: "#A46106"
   - type: StaticPrice
     price: 250
+  - type: Tag
+    tags:
+    - DroneUsable
 
 - type: entity
   parent: BaseFlatpack
