@@ -1,5 +1,5 @@
 ﻿- type: localizedDataset
-  id: names_golem
+  id: NamesGolem
   values:
     prefix: names-golem-dataset-
     count: 1336
