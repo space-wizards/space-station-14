@@ -86,6 +86,9 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
         var walkSpeed = 0.0f;
         var sprintSpeed = 0.0f;
 
+        // Cache the result of the airborne check, as it's expensive and independent of contacting entities, hence need only be done once.
+        bool isAirborne = _gravity.IsWeightless(uid, physicsComponent) || physicsComponent.BodyStatus == BodyStatus.InAir;
+
         bool remove = true;
         var entries = 0;
         foreach (var ent in _physics.GetContactingEntities(uid, physicsComponent))
@@ -97,9 +100,8 @@ public sealed class SpeedModifierContactsSystem : EntitySystem
                 if (_whitelistSystem.IsWhitelistPass(slowContactsComponent.IgnoreWhitelist, uid))
                     continue;
 
-                // unless the entity applying the contact speed modifier is explicitly set to affect airborne entities
-                // entities that are weightless or in the air, i.e. no gravity or flying mobs, should not be affected by contact speed modifiers
-                if (!slowContactsComponent.AffectAirborne && (_gravity.IsWeightless(uid) || physicsComponent.BodyStatus == BodyStatus.InAir))
+                // Entities that are airborne should not be affected by contact slowdowns that are specified to not affect airborne entities.
+                if (isAirborne && !slowContactsComponent.AffectAirborne)
                     continue;
 
                 walkSpeed += slowContactsComponent.WalkSpeedModifier;
