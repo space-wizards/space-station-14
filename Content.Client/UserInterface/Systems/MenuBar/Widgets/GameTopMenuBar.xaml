@@ -13,7 +13,9 @@
            VerticalAlignment="Top"
 >
     <GridContainer
-        Rows="2"
+        Rows="1"
+        Name="GridCont"
+        Access="Internal"
         HSeparationOverride="5"
         VSeparationOverride="5"
         HorizontalExpand="True">
@@ -25,7 +27,7 @@
         ToolTip="{Loc 'game-hud-open-escape-menu-button-tooltip'}"
         MinSize="48 64"
         HorizontalExpand="True"
-        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
+        AppendStyleClass="{x:Static style:StyleBase.ButtonOpenRight}"
         />
     <ui:MenuButton
         Name="GuidebookButton"
@@ -105,7 +107,7 @@
         ToolTip="{Loc 'ui-options-function-open-a-help'}"
         MinSize="48 64"
         HorizontalExpand="True"
-        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
+        AppendStyleClass="{x:Static style:StyleBase.ButtonOpenLeft}"
         />
     </GridContainer>
 </widgets:GameTopMenuBar>
