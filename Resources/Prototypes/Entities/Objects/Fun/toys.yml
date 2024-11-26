@@ -676,8 +676,6 @@
   - type: EmitSoundOnTrigger
     sound:
       path: /Audio/Voice/Slime/slime_squish.ogg
-    useSound:
-      path: /Audio/Voice/Slime/slime_squish.ogg
   - type: MeleeWeapon
     wideAnimationRotation: 180
     soundHit:
