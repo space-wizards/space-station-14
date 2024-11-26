@@ -7,6 +7,9 @@ namespace Content.Shared.Starlight.Energy.Supermatter;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class SupermatterComponent : Component
 {
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool Activated = false;
+
     [ViewVariables(VVAccess.ReadOnly)]
     public FixedPoint2 AccHeat = 0f;
 

@@ -18,3 +18,6 @@
   id: SLSurgery
   name: store-category-medical-surgery
 
+- type: storeCategory
+  id: SLEnginery
+  name: store-category-medical-enginery

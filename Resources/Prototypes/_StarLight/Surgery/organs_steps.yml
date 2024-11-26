@@ -1032,4 +1032,19 @@
     state: cautery
   - type: SurgeryClearProgress
 
-
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepRemoveEgg
+  name: Remove Egg
+  components:
+  - type: SurgeryStep
+    duration: 5
+    tools:
+    - type: Scalpel
+    bodyRemove:
+    - type: HasEggHolder
+    - type: EggHolder
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
+    state: scalpel
+  - type: SurgeryStepEmoteEffect

@@ -133,14 +133,46 @@
     - state: normal-unshaded
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
-  - type: AccessReader
-    access: [["Medical"]]
   - type: Store
     name: vendor-medical-dispenser
     categories:
     - SLChemistry
     - SLMedical
     - SLSurgery
+    currencyWhitelist:
+    - NTCredit
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.16,0.3,0.40"
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+        density: 190
+  - type: Transform
+    noRot: false
+            
+- type: entity
+  parent: SLVendingMachine
+  id: SLVendingMachineEngi
+  name: engi dispenser
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Machines/VendingMachines/engi.rsi
+    snapCardinals: true
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: normal-unshaded
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+  - type: Store
+    name: vendor-medical-dispenser
+    categories:
+    - SLEnginery
     currencyWhitelist:
     - NTCredit
   - type: Fixtures
