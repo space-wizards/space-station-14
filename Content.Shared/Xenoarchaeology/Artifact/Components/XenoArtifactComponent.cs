@@ -128,7 +128,10 @@ public sealed partial class XenoArtifactComponent : Component
     /// Effects that can be used during this artefact generation.
     /// </summary>
     [DataField]
-    public EntityTableSelector EffectsTable;
+    public EntityTableSelector EffectsTable = new NestedSelector
+    {
+        TableId = "XenoArtifactEffectsDefaultTable"
+    };
 
     /// <summary>
     /// Triggers that can be used during this artefact generation.
