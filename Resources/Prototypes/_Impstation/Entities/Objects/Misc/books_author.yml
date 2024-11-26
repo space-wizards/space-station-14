@@ -95,7 +95,7 @@
   parent: BookBase
   id: BookKeelBay
   name: Keel-Ree's Guide to Medical
-  description: This copy seems to be in pristine condition, lovingly cared for. There are little heart symbols etched into the spine and it smells faintly like a bakery. 
+  description: This copy seems to be in pristine condition, lovingly cared for. There are little heart symbols etched into the spine and it smells faintly like a bakery.
   components:
   - type: Sprite
     sprite: Objects/Misc/books.rsi
@@ -122,3 +122,16 @@
     - state: cosmiccultbook
   - type: Paper
     content: book-text-cosmiccult
+
+- type: entity
+  parent: BookBase
+  id: BookTenebraeConspiracy
+  name: the silence of tenebrae
+  description: The book is bound in faded leather, its surface embossed with intricate, faintly iridescent patterns resembling stellar gyroscopes and shifting constellations. Its pages are thick and rough-edged, exuding the faint scent of aged paper, with text that seems to shimmer subtly under dim light.
+  components:
+  - type: Sprite
+    sprite: _Impstation/CosmicCult/Objects/book.rsi
+    layers:
+    - state: tenebraeconspiracybook
+  - type: Paper
+    content: book-text-tenebraeconspiracy

@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "copyright": "Sprited by erhardsteinhauer (discord) | modified by mqole (discord)",
+    "license": "CC-BY-SA-4.0",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "goblin_nose_default",
+            "directions": 4
+        },
+        {
+            "name": "goblin_nose_crooked",
+            "directions": 4
+        },
+        {
+            "name": "goblin_nose_long",
+            "directions": 4
+        }
+    ]
+}

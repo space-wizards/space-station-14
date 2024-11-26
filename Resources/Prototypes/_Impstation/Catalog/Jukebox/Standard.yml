@@ -393,3 +393,15 @@
   name: Hideaki Kobayashi & Fumie Kumatani - Tricktrack PART 2 
   path:
     path: /Audio/_Impstation/Jukebox/tricktrack.ogg
+
+- type: jukebox
+  id: BuildThatWall
+  name: Darren Korb - Build That Wall 
+  path:
+    path: /Audio/_Impstation/Jukebox/build_that_wall.ogg
+
+- type: jukebox
+  id: WhatWouldYouGive
+  name: The Bedquilt Ramblers & Ben Babbitt - What Would You Give
+  path:
+    path: /Audio/_Impstation/Jukebox/what_would_you_give.ogg
