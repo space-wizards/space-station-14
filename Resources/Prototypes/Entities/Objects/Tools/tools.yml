@@ -78,6 +78,19 @@
       - Screwing
     useSound:
       collection: Screwdriver
+  - type: MultipleTool
+    statusShowBehavior: true
+    entries:
+      - behavior: Screwing
+        useSound:
+          collection: Screwdriver
+      - behavior: Prying
+        speedModifier: 0.4
+        useSound:
+          path: /Audio/Items/crowbar.ogg
+  - type: Prying
+    enabled: false
+  - type: ToolTileCompatible
   - type: RandomSprite
     available:
       - enum.DamageStateVisualLayers.Base:
@@ -252,6 +265,7 @@
     statusShowBehavior: true
     entries:
       - behavior: Screwing
+        speedModifier: 1.5
         sprite:
           sprite: Objects/Tools/drill.rsi
           state: drill_screw
@@ -260,6 +274,7 @@
         changeSound:
           path: /Audio/Items/change_drill.ogg
       - behavior: Anchoring
+        speedModifier: 1.5
         sprite:
           sprite: Objects/Tools/drill.rsi
           state: drill_bolt
@@ -415,6 +430,7 @@
     statusShowBehavior: true
     entries:
       - behavior: Screwing
+        speedModifier: 1.2
         sprite:
           sprite: Objects/Tools/omnitool.rsi
           state: omnitool-screwing
@@ -423,6 +439,7 @@
         changeSound:
           path: /Audio/Items/change_drill.ogg
       - behavior: Prying
+        speedModifier: 1.2
         sprite:
           sprite: Objects/Tools/omnitool.rsi
           state: omnitool-prying
@@ -431,6 +448,7 @@
         changeSound:
           path: /Audio/Items/change_drill.ogg
       - behavior: Anchoring
+        speedModifier: 1.2
         sprite:
           sprite: Objects/Tools/omnitool.rsi
           state: omnitool-wrenching
@@ -439,6 +457,7 @@
         changeSound:
           path: /Audio/Items/change_drill.ogg
       - behavior: Cutting
+        speedModifier: 1.2
         sprite:
           sprite: Objects/Tools/omnitool.rsi
           state: omnitool-snipping
@@ -447,6 +466,7 @@
         changeSound:
           path: /Audio/Items/change_drill.ogg
       - behavior: Pulsing
+        speedModifier: 1.2
         sprite:
           sprite: Objects/Tools/omnitool.rsi
           state: omnitool-pulsing

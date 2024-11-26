@@ -14,6 +14,9 @@ public sealed partial class MultipleToolComponent : Component
         public PrototypeFlags<ToolQualityPrototype> Behavior = new();
 
         [DataField]
+        public float SpeedModifier = 1;
+
+        [DataField]
         public SoundSpecifier? UseSound;
 
         [DataField]
