@@ -559,4 +559,25 @@ Entries:
   id: 78
   time: '2024-11-26T04:03:40.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/86
+- author: STARLIGHT TEAM
+  changes:
+  - message: The emojis at the end of the "OwO" accent message have been removed.
+    type: Remove
+  id: 79
+  time: '2024-11-26T21:28:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/87
+- author: STARLIGHT TEAM
+  changes:
+  - message: The accent has been removed when there is a lack of blood.
+    type: Remove
+  id: 80
+  time: '2024-11-26T21:28:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/87
+- author: STARLIGHT TEAM
+  changes:
+  - message: The Russian accent has been fixed.
+    type: Tweak
+  id: 81
+  time: '2024-11-26T21:28:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/87
 
