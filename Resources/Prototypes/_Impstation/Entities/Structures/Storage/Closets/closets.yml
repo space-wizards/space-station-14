@@ -1,0 +1,35 @@
+- type: entity
+  id: ClosetScargo
+  name: S-Cargo moving trunk
+  parent: ClosetSteelBase
+  description: It's a floating storage closet. How novel!
+  components:
+  - type: Appearance
+  - type: Sprite
+    noRot: true
+    sprite: _Impstation/Structures/Storage/scargocloset.rsi
+    layers:
+    - state: base
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+  - type: EntityStorageVisuals
+    stateBaseClosed: base
+    stateDoorOpen: open
+    stateDoorClosed: closed
+  - type: TileFrictionModifier
+    modifier: 0.001
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.40,0.25,0.40"
+        density: 20
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer

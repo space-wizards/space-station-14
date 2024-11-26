@@ -1,0 +1,9 @@
+- type: cargoProduct
+  id: ClothingScargoCloset
+  icon:
+    sprite: _Impstation/Structures/Storage/scargocloset.rsi
+    state: icon
+  product: ClosetScargo
+  cost: 2500
+  category: cargoproduct-category-name-cargo
+  group: market
