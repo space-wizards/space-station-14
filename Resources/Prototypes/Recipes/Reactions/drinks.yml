@@ -721,6 +721,8 @@
 
 - type: reaction
   id: Mojito
+  requiredMixerCategories:
+  - Shake
   reactants:
     JuiceLime:
       amount: 1
@@ -1229,8 +1231,10 @@
       amount: 1
     Sugar:
       amount: 1
+    Ice:
+      amount: 1
   products:
-    Caipirinha: 3
+    Caipirinha: 4
 
 - type: reaction
   id: Daiquiri
