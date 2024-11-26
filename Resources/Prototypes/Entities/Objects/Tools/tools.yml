@@ -78,19 +78,6 @@
       - Screwing
     useSound:
       collection: Screwdriver
-  - type: MultipleTool
-    statusShowBehavior: true
-    entries:
-      - behavior: Screwing
-        useSound:
-          collection: Screwdriver
-      - behavior: Prying
-        speedModifier: 0.4
-        useSound:
-          path: /Audio/Items/crowbar.ogg
-  - type: Prying
-    enabled: false
-  - type: ToolTileCompatible
   - type: RandomSprite
     available:
       - enum.DamageStateVisualLayers.Base:
