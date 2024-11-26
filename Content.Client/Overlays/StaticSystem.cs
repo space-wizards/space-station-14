@@ -42,20 +42,19 @@ namespace Content.Client.Overlays
 
         private void OnCompEquip(EntityUid uid, StaticViewerComponent component, GotEquippedEvent args)
         {
-            Log.Error($"equipped");
 
             // When the StaticViewer component is equipped, add the shader effect overlay
             var playerEntity = _playerManager.LocalEntity;
             if (playerEntity != null && _entityManager.HasComponent<EyeComponent>(playerEntity))
             {
                 // Pass the necessary dependencies (entity manager, player manager) to the overlay
+                EnsureComp<StaticViewerComponent>(uid);
                 _overlayMan.AddOverlay(new StaticViewerOverlay(_staticViewerShader, _entityManager, _playerManager));
             }
         }
 
         private void OnCompUnequip(EntityUid uid, StaticViewerComponent component, GotUnequippedEvent args)
         {
-            Log.Error($"unequipped");
 
             // When the StaticViewer component is unequipped, remove the shader effect overlay
             _overlayMan.RemoveOverlay<StaticViewerOverlay>();
