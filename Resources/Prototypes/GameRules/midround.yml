@@ -30,6 +30,21 @@
       - MindRoleThief
       briefing:
         sound: "/Audio/Misc/thief_greeting.ogg"
+        
+- type: entity
+  parent: BaseGameRule
+  id: Changeling
+  components:
+  - type: ChangelingRule
+  - type: AntagSelection
+    agentName: changeling-roundend-name
+    definitions:
+    - prefRoles: [ Changeling ]
+      max: 5
+      playerRatio: 10
+      lateJoinAdditional: true
+      mindRoles:
+      - MindRoleChangeling
 
 - type: entity
   parent: BaseGameRule
@@ -40,8 +55,8 @@
     agentName: vampire-roundend-name
     definitions:
     - prefRoles: [ Vampire ]
-      max: 1
-      playerRatio: 5
+      max: 5
+      playerRatio: 10
       lateJoinAdditional: true
       mindRoles:
       - MindRoleVampire
