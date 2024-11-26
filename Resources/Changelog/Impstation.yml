@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: starlighthowls
-  changes:
-  - message: Added Laser-less laser raptors.
-    type: Add
-  - message: Kisser tomatoes can now be grown and mutated from killer tomatoes.
-    type: Add
-  - message: Added a new decal.
-    type: Add
-  id: 81
-  time: '2024-08-15T16:40:08.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/97
 - author: Darkmajia
   changes:
   - message: Added 4 random announcers from the Einstein Engines fork.
@@ -4316,3 +4305,10 @@
   id: 580
   time: '2024-11-26T08:25:34.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/801
+- author: FlippenPage
+  changes:
+  - message: Fixed Drones being unable to move.
+    type: Fix
+  id: 581
+  time: '2024-11-26T09:25:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/806
