@@ -1,0 +1,181 @@
+- type: entity
+  parent: [BaseMob]
+  id: BaseMouseRC
+  name: mouse
+  description: Squeak!
+  suffix: RC
+  components:
+  - type: Body
+    prototype: Mouse
+  - type: CombatMode
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    angle: 0
+    animation: WeaponArcBite
+    damage:
+      types:
+        Piercing: 0
+  - type: NoSlip
+  - type: StaticPrice
+    price: 1250
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 100
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2.5
+    baseSprintSpeed : 5
+  - type: Sprite
+    drawdepth: SmallMobs
+    sprite: Mobs/Animals/mouse.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: mouse-1
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: mouse-moving-1
+    noMovementLayers:
+      movement:
+        state: mouse-1
+  - type: Clothing
+    quickEquip: false
+    sprite: Mobs/Animals/mouse.rsi
+    equippedPrefix: 0
+    slots:
+    - HEAD
+  - type: NpcFactionMember
+    factions:
+      - Mouse
+  - type: Physics
+  - type: RotationVisuals
+    horizontalRotation: 90
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Critical
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      20: Critical
+      40: Dead
+    stateAlertDict:
+      Alive: BorgHealth
+      Critical: BorgCrit
+      Dead: BorgDead
+    showOverlays: false
+    allowRevives: true
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: mouse-1
+      Critical:
+        Base: dead-1
+      Dead:
+        Base: splat-1
+  - type: Extractable
+    grindableSolutionName: food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 3
+  - type: ZombieImmune
+  - type: Repairable
+    doAfterDelay: 5
+    allowSelfRepair: false
+  - type: ContainerContainer
+    containers:
+      borg_brain: !type:ContainerSlot { }
+      cell_slot: !type:ContainerSlot { }
+      borg_module: !type:Container { }
+      part-container: !type:Container
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+    fitsInCharger: true
+  - type: Item
+    size: Tiny
+  - type: StatusEffects
+    allowed:
+    - Stun
+    - KnockedDown
+    - SlowedDown
+    - Flashed
+  - type: Speech
+    speechVerb: SmallMob
+    speechSounds: Squeak
+    allowedEmotes: ['Squeak']
+  - type: Vocal
+    sounds:
+      Male: Mouse
+      Female: Mouse
+      Unsexed: Mouse
+  - type: Tag
+    tags:
+    - Trash
+    - VimPilot
+    - ChefPilot
+    - Mouse
+    - Meat
+  - type: Emoting
+  - type: ProtectedFromStepTriggers
+  - type: CanEscapeInventory
+  - type: MobPrice
+    price: 50
+  - type: RemotelyControllable
+  - type: Damageable
+    damageContainer: Biological
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Blunt
+        damage: 400
+      behaviors:
+      - !type:GibBehavior { }
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Heat
+        damage: 1500
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawnInContainer: true
+        spawn:
+          Ash:
+            min: 1
+            max: 1
+      - !type:BurnBodyBehavior { }
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MeatLaserImpact
+  - type: HealthExaminable
+    examinableTypes:
+    - Blunt
+    - Slash
+    - Piercing
+    - Heat
+    - Shock
+    - Cold
+    - Caustic
+  - type: DamageOnHighSpeedImpact
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
+  - type: Pullable
+  - type: LightningTarget
+    priority: 2
+    lightningExplode: false
+  - type: NameIdentifier
+    group: GenericNumber
