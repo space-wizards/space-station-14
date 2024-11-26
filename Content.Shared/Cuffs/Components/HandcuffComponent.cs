@@ -79,19 +79,19 @@ public sealed partial class HandcuffComponent : Component
     public Color Color = Color.White;
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public SoundSpecifier StartCuffSound = new SoundPathSpecifier("/Audio/Items/Handcuffs/cuff_start.ogg");
+    public SoundSpecifier StartCuffSound = new SoundCollectionSpecifier("HandcuffStartSound");
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public SoundSpecifier EndCuffSound = new SoundPathSpecifier("/Audio/Items/Handcuffs/cuff_end.ogg");
+    public SoundSpecifier EndCuffSound = new SoundCollectionSpecifier("HandcuffEndSound");
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public SoundSpecifier StartBreakoutSound = new SoundPathSpecifier("/Audio/Items/Handcuffs/cuff_breakout_start.ogg");
+    public SoundSpecifier StartBreakoutSound = new SoundCollectionSpecifier("HandcuffBreakoutStartSound");
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public SoundSpecifier StartUncuffSound = new SoundPathSpecifier("/Audio/Items/Handcuffs/cuff_takeoff_start.ogg");
+    public SoundSpecifier StartUncuffSound = new SoundCollectionSpecifier("HandcuffUncuffStartSound");
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public SoundSpecifier EndUncuffSound = new SoundPathSpecifier("/Audio/Items/Handcuffs/cuff_takeoff_end.ogg");
+    public SoundSpecifier EndUncuffSound = new SoundCollectionSpecifier("HandcuffUncuffedSound");
 }
 
 /// <summary>

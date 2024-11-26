@@ -27,5 +27,5 @@ public sealed partial class ProduceMaterialExtractorComponent : Component
     };
 
     [DataField]
-    public SoundSpecifier? ExtractSound = new SoundPathSpecifier("/Audio/Effects/waterswirl.ogg");
+    public SoundSpecifier? ExtractSound = new SoundCollectionSpecifier("ProduceExtractorExtractSound");
 }

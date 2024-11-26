@@ -18,10 +18,10 @@ public sealed partial class NewsWriterComponent : Component
     public float PublishCooldown = 20f;
 
     [DataField]
-    public SoundSpecifier NoAccessSound = new SoundPathSpecifier("/Audio/Machines/airlock_deny.ogg");
+    public SoundSpecifier NoAccessSound = new SoundCollectionSpecifier("AccessDeniedSound");
 
     [DataField]
-    public SoundSpecifier ConfirmSound = new SoundPathSpecifier("/Audio/Machines/scan_finish.ogg");
+    public SoundSpecifier ConfirmSound = new SoundCollectionSpecifier("NewsWriterConfirmSound");
 
     /// <summary>
     /// This stores the working title of the current article

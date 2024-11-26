@@ -35,7 +35,7 @@ public sealed partial class SleepingComponent : Component
     /// Sound to play when another player attempts to wake this entity.
     /// </summary>
     [DataField]
-    public SoundSpecifier WakeAttemptSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg")
+    public SoundSpecifier WakeAttemptSound = new SoundCollectionSpecifier("SleepingEntityWakeAttemptedSound")
     {
         Params = AudioParams.Default.WithVariation(0.05f)
     };

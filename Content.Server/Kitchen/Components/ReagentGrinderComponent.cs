@@ -23,13 +23,13 @@ namespace Content.Server.Kitchen.Components
         public float WorkTimeMultiplier = 1;
 
         [DataField]
-        public SoundSpecifier ClickSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
+        public SoundSpecifier ClickSound { get; set; } = new SoundCollectionSpecifier("MachineSwitchSound");
 
         [DataField]
-        public SoundSpecifier GrindSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/blender.ogg");
+        public SoundSpecifier GrindSound { get; set; } = new SoundCollectionSpecifier("ReagentGrinderGrindSound");
 
         [DataField]
-        public SoundSpecifier JuiceSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/juicer.ogg");
+        public SoundSpecifier JuiceSound { get; set; } = new SoundCollectionSpecifier("ReagentGrinderJuiceSound");
 
         [DataField]
         public GrinderAutoMode AutoMode = GrinderAutoMode.Off;

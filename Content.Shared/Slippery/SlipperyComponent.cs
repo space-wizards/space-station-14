@@ -18,7 +18,7 @@ namespace Content.Shared.Slippery
         /// </summary>
         [DataField, AutoNetworkedField]
         [Access(Other = AccessPermissions.ReadWriteExecute)]
-        public SoundSpecifier SlipSound = new SoundPathSpecifier("/Audio/Effects/slip.ogg");
+        public SoundSpecifier SlipSound = new SoundCollectionSpecifier("EntitySlippedSound");
 
         /// <summary>
         /// How many seconds the mob will be paralyzed for.

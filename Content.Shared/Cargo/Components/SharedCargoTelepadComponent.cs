@@ -31,7 +31,7 @@ public sealed partial class CargoTelepadComponent : Component
     public CargoTelepadState CurrentState = CargoTelepadState.Unpowered;
 
     [DataField("teleportSound")]
-    public SoundSpecifier TeleportSound = new SoundPathSpecifier("/Audio/Machines/phasein.ogg");
+    public SoundSpecifier TeleportSound = new SoundCollectionSpecifier("CargoTelepadTeleportedInSound");
 
     /// <summary>
     ///     The paper-type prototype to spawn with the order information.

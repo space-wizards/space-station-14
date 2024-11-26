@@ -13,7 +13,7 @@ namespace Content.Shared.Light.Components;
 public sealed partial class UnpoweredFlashlightComponent : Component
 {
     [DataField("toggleFlashlightSound")]
-    public SoundSpecifier ToggleSound = new SoundPathSpecifier("/Audio/Items/flashlight_pda.ogg");
+    public SoundSpecifier ToggleSound = new SoundCollectionSpecifier("PDAFlashlightToggleSound");
 
     [DataField, AutoNetworkedField]
     public bool LightOn;

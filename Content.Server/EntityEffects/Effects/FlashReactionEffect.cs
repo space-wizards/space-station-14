@@ -44,7 +44,7 @@ public sealed partial class FlashReactionEffect : EntityEffect
     ///     The sound the flash creates.
     /// </summary>
     [DataField]
-    public SoundSpecifier? Sound = new SoundPathSpecifier("/Audio/Weapons/flash.ogg");
+    public SoundSpecifier? Sound = new SoundCollectionSpecifier("FlashOfLightSound");
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
         => Loc.GetString("reagent-effect-guidebook-flash-reaction-effect", ("chance", Probability));

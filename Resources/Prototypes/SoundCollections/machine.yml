@@ -1,0 +1,4 @@
+- type: soundCollection
+  id: MachineSwitchSound
+  files:
+    - /Audio/Machines/machine_switch.ogg

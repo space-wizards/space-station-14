@@ -40,13 +40,13 @@ public sealed partial class EnvelopeComponent : Component
     /// The sound to play when the envelope is sealed closed
     /// </summary>
     [DataField, ViewVariables]
-    public SoundPathSpecifier? SealSound = new SoundPathSpecifier("/Audio/Effects/packetrip.ogg");
+    public SoundSpecifier? SealSound = new SoundCollectionSpecifier("EnvelopeSealSound");
 
     /// <summary>
     /// The sound to play when the envelope is torn open
     /// </summary>
     [DataField, ViewVariables]
-    public SoundPathSpecifier? TearSound = new SoundPathSpecifier("/Audio/Effects/poster_broken.ogg");
+    public SoundSpecifier? TearSound = new SoundCollectionSpecifier("EnvelopeOpenSound");
 
     [Serializable, NetSerializable]
     public enum EnvelopeState : byte

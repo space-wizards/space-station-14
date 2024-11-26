@@ -27,7 +27,7 @@ public sealed partial class SiliconLawProviderComponent : Component
     /// when the law change is processed for the provider.
     /// </summary>
     [DataField]
-    public SoundSpecifier? LawUploadSound = new SoundPathSpecifier("/Audio/Misc/cryo_warning.ogg");
+    public SoundSpecifier? LawUploadSound = new SoundCollectionSpecifier("SiliconLawUpdatedSoundSound");
 
     /// <summary>
     /// Whether this silicon is subverted by an ion storm or emag.

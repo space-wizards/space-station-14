@@ -35,5 +35,5 @@ public sealed partial class SignalSwitchComponent : Component
     public bool State;
 
     [DataField("clickSound")]
-    public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/lightswitch.ogg");
+    public SoundSpecifier ClickSound = new SoundCollectionSpecifier("SignalSwitchLatchSound");
 }

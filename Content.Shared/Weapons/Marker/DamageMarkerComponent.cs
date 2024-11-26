@@ -23,7 +23,7 @@ public sealed partial class DamageMarkerComponent : Component
     /// Sound to play when the damage marker is procced.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("sound")]
-    public SoundSpecifier? Sound = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg");
+    public SoundSpecifier? Sound = new SoundCollectionSpecifier("DamageMarkerProcessedSound");
 
     [ViewVariables(VVAccess.ReadWrite), DataField("damage")]
     public DamageSpecifier Damage = new();

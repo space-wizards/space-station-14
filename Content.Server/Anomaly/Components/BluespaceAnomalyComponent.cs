@@ -35,5 +35,5 @@ public sealed partial class BluespaceAnomalyComponent : Component
     /// The sound played after players are shuffled/teleported around
     /// </summary>
     [DataField("teleportSound"), ViewVariables(VVAccess.ReadWrite)]
-    public SoundSpecifier TeleportSound = new SoundPathSpecifier("/Audio/Effects/teleport_arrival.ogg");
+    public SoundSpecifier TeleportSound = new SoundCollectionSpecifier("AnomalyTeleportSound");
 }

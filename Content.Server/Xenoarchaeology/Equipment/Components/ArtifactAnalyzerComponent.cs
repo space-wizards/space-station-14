@@ -30,7 +30,7 @@ public sealed partial class ArtifactAnalyzerComponent : Component
     public bool ReadyToPrint = false;
 
     [DataField("scanFinishedSound")]
-    public SoundSpecifier ScanFinishedSound = new SoundPathSpecifier("/Audio/Machines/scan_finish.ogg");
+    public SoundSpecifier ScanFinishedSound = new SoundCollectionSpecifier("ArtifactAnalyzerScanFinishedSound");
 
     #region Analysis Data
     [DataField]

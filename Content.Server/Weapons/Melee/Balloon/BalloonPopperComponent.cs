@@ -20,5 +20,5 @@ public sealed partial class BalloonPopperComponent : Component
     /// The sound played when a balloon is popped.
     /// </summary>
     [DataField("popSound")]
-    public SoundSpecifier PopSound = new SoundPathSpecifier("/Audio/Effects/balloon-pop.ogg");
+    public SoundSpecifier PopSound = new SoundCollectionSpecifier("BalloonPopSound");
 }

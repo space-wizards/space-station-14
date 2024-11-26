@@ -72,20 +72,20 @@ namespace Content.Server.Forensics
         /// inserted forensic pad.
         /// </summary>
         [DataField("soundMatch")]
-        public SoundSpecifier SoundMatch = new SoundPathSpecifier("/Audio/Machines/Nuke/angry_beep.ogg");
+        public SoundSpecifier SoundMatch = new SoundCollectionSpecifier("ForensicScannerMatchSound");
 
         /// <summary>
         /// The sound that's played when there's no match between a scan and an
         /// inserted forensic pad.
         /// </summary>
         [DataField("soundNoMatch")]
-        public SoundSpecifier SoundNoMatch = new SoundPathSpecifier("/Audio/Machines/airlock_deny.ogg");
+        public SoundSpecifier SoundNoMatch = new SoundCollectionSpecifier("ForensicScannerNoMatchSound");
 
         /// <summary>
         /// The sound that's played when the scanner prints off a report.
         /// </summary>
         [DataField("soundPrint")]
-        public SoundSpecifier SoundPrint = new SoundPathSpecifier("/Audio/Machines/short_print_and_rip.ogg");
+        public SoundSpecifier SoundPrint = new SoundCollectionSpecifier("ForensicScannerPrintSound");
 
         /// <summary>
         /// What the machine will print

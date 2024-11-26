@@ -11,7 +11,7 @@ namespace Content.Shared.Wieldable.Components;
 public sealed partial class WieldableComponent : Component
 {
     [DataField("wieldSound")]
-    public SoundSpecifier? WieldSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
+    public SoundSpecifier? WieldSound = new SoundCollectionSpecifier("ObjectWieldedSound");
 
     [DataField("unwieldSound")]
     public SoundSpecifier? UnwieldSound;

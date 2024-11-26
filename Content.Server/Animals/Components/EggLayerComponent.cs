@@ -43,7 +43,7 @@ public sealed partial class EggLayerComponent : Component
     public List<EntitySpawnEntry> EggSpawn = default!;
 
     [DataField]
-    public SoundSpecifier EggLaySound = new SoundPathSpecifier("/Audio/Effects/pop.ogg");
+    public SoundSpecifier EggLaySound = new SoundCollectionSpecifier("EggLaidSound");
 
     [DataField]
     public float AccumulatedFrametime;

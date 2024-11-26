@@ -104,13 +104,13 @@ public abstract partial class SharedEntityStorageComponent : Component
     /// The sound made when closed
     /// </summary>
     [DataField]
-    public SoundSpecifier CloseSound = new SoundPathSpecifier("/Audio/Effects/closetclose.ogg");
+    public SoundSpecifier CloseSound = new SoundCollectionSpecifier("StorageClosedSound");
 
     /// <summary>
     /// The sound made when open
     /// </summary>
     [DataField]
-    public SoundSpecifier OpenSound = new SoundPathSpecifier("/Audio/Effects/closetopen.ogg");
+    public SoundSpecifier OpenSound = new SoundCollectionSpecifier("StorageOpenedSound");
 
     /// <summary>
     ///     Whitelist for what entities are allowed to be inserted into this container. If this is not null, the

@@ -12,7 +12,7 @@ namespace Content.Shared.Fluids.Components
     public sealed partial class PuddleComponent : Component
     {
         [DataField]
-        public SoundSpecifier SpillSound = new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg");
+        public SoundSpecifier SpillSound = new SoundCollectionSpecifier("PuddleSpilledSound");
 
         [DataField]
         public FixedPoint2 OverflowVolume = FixedPoint2.New(20);

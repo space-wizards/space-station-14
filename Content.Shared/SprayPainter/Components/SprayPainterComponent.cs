@@ -8,7 +8,7 @@ namespace Content.Shared.SprayPainter.Components;
 public sealed partial class SprayPainterComponent : Component
 {
     [DataField]
-    public SoundSpecifier SpraySound = new SoundPathSpecifier("/Audio/Effects/spray2.ogg");
+    public SoundSpecifier SpraySound = new SoundCollectionSpecifier("SprayPainterSpraySound");
 
     [DataField]
     public TimeSpan AirlockSprayTime = TimeSpan.FromSeconds(3);

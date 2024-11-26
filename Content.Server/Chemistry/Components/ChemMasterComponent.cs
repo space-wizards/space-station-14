@@ -22,6 +22,6 @@ namespace Content.Server.Chemistry.Components
         public uint PillDosageLimit;
 
         [DataField("clickSound"), ViewVariables(VVAccess.ReadWrite)]
-        public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
+        public SoundSpecifier ClickSound = new SoundCollectionSpecifier("MachineSwitchSound");
     }
 }

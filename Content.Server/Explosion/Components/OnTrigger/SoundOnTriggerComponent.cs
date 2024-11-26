@@ -13,5 +13,5 @@ public sealed partial class SoundOnTriggerComponent : Component
     public bool RemoveOnTrigger = true;
 
     [DataField("sound")]
-    public SoundSpecifier? Sound = new SoundPathSpecifier("/Audio/Effects/Grenades/supermatter_start.ogg");
+    public SoundSpecifier? Sound = new SoundCollectionSpecifier("SuperMatterGrenadeTriggerSound");
 }

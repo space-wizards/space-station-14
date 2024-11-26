@@ -94,7 +94,7 @@ public sealed partial class ArtifactCrusherComponent : Component
     /// Sound played throughout the entire crushing. Cut off if ended early.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public SoundSpecifier? CrushingSound = new SoundPathSpecifier("/Audio/Effects/hydraulic_press.ogg");
+    public SoundSpecifier? CrushingSound = new SoundCollectionSpecifier("ArtifactCrusherCrushSound");
 
     /// <summary>
     /// Stores entity of <see cref="CrushingSound"/> to allow ending it early.

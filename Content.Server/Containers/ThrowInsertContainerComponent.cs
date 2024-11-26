@@ -22,13 +22,13 @@ public sealed partial class ThrowInsertContainerComponent : Component
     /// Sound played when an object is throw into the container.
     /// </summary>
     [DataField]
-    public SoundSpecifier? InsertSound = new SoundPathSpecifier("/Audio/Effects/trashbag1.ogg");
+    public SoundSpecifier? InsertSound = new SoundCollectionSpecifier("TrashBagThrowInsertSound");
 
     /// <summary>
     /// Sound played when an item is thrown and misses the container.
     /// </summary>
     [DataField]
-    public SoundSpecifier? MissSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
+    public SoundSpecifier? MissSound = new SoundCollectionSpecifier("TrashBagThrowMissSound");
 
     [DataField]
     public LocId MissLocString = "container-thrown-missed";

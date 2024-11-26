@@ -16,7 +16,7 @@ public sealed partial class SoundOnOverloadComponent : Component
     /// Sound to play when the device overloads
     /// </summary>
     [DataField("sound")]
-    public SoundSpecifier? OverloadSound = new SoundPathSpecifier("/Audio/Items/Defib/defib_zap.ogg");
+    public SoundSpecifier? OverloadSound = new SoundCollectionSpecifier("DeviceOverloadSound");
 
     /// <summary>
     /// Modifies the volume the sound is played at

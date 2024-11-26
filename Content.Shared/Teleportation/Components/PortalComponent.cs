@@ -15,13 +15,13 @@ public sealed partial class PortalComponent : Component
     ///     The arrival sound of the entered portal will play if the destination is not a portal.
     /// </summary>
     [DataField("arrivalSound")]
-    public SoundSpecifier ArrivalSound = new SoundPathSpecifier("/Audio/Effects/teleport_arrival.ogg");
+    public SoundSpecifier ArrivalSound = new SoundCollectionSpecifier("PortalArrivalSound");
 
     /// <summary>
     ///     Sound played on departing from this portal, centered on the original portal.
     /// </summary>
     [DataField("departureSound")]
-    public SoundSpecifier DepartureSound = new SoundPathSpecifier("/Audio/Effects/teleport_departure.ogg");
+    public SoundSpecifier DepartureSound = new SoundCollectionSpecifier("PortalDepartureSound");
 
     /// <summary>
     ///     If no portals are linked, the subject will be teleported a random distance at maximum this far away.

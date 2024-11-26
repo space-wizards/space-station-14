@@ -26,7 +26,7 @@ public sealed partial class PowerSwitchableComponent : Component
     /// Sound that plays when the cable is switched.
     /// </summary>
     [DataField]
-    public SoundSpecifier? SwitchSound = new SoundPathSpecifier("/Audio/Machines/button.ogg");
+    public SoundSpecifier? SwitchSound = new SoundCollectionSpecifier("MachinePowerSwitchedSound");
 
     /// <summary>
     /// Locale id for text shown when examined.

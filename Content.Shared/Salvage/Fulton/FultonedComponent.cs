@@ -30,7 +30,7 @@ public sealed partial class FultonedComponent : Component
     public TimeSpan NextFulton;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("sound"), AutoNetworkedField]
-    public SoundSpecifier? Sound = new SoundPathSpecifier("/Audio/Items/Mining/fultext_launch.ogg");
+    public SoundSpecifier? Sound = new SoundCollectionSpecifier("FultonLaunchSound");
 
     // Mainly for admemes.
     /// <summary>

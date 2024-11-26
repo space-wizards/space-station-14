@@ -35,7 +35,7 @@ public sealed partial class PowerSensorComponent : Component
     /// Sound played when switching between input and output.
     /// </summary>
     [DataField]
-    public SoundSpecifier SwitchSound = new SoundPathSpecifier("/Audio/Machines/lightswitch.ogg");
+    public SoundSpecifier SwitchSound = new SoundCollectionSpecifier("PowerSensorSwitch");
 
     /// <summary>
     /// Name of the port set when the network is charging power.

@@ -10,8 +10,8 @@ namespace Content.Server.Thief.Components;
 public sealed partial class ThiefBeaconComponent : Component
 {
     [DataField]
-    public SoundSpecifier LinkSound = new SoundPathSpecifier("/Audio/Machines/high_tech_confirm.ogg");
+    public SoundSpecifier LinkSound = new SoundCollectionSpecifier("ThiefBeaconLinkSound");
 
     [DataField]
-    public SoundSpecifier UnlinkSound = new SoundPathSpecifier("/Audio/Machines/beep.ogg");
+    public SoundSpecifier UnlinkSound = new SoundCollectionSpecifier("ThiefBeaconUnlinkSound");
 }

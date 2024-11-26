@@ -11,7 +11,7 @@ public sealed partial class KnockedDownComponent : Component
     public float HelpInterval = 1f;
 
     [DataField("helpAttemptSound")]
-    public SoundSpecifier StunAttemptSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
+    public SoundSpecifier StunAttemptSound = new SoundCollectionSpecifier("StunAttemptSound");
 
     [ViewVariables, AutoNetworkedField]
     public float HelpTimer = 0f;

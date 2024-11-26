@@ -36,7 +36,7 @@ public sealed partial class DamageOnInteractComponent : Component
     /// The sound that should be made when interacting with the entity
     /// </summary>
     [DataField]
-    public SoundSpecifier InteractSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
+    public SoundSpecifier InteractSound = new SoundCollectionSpecifier("BurnedWhileInteractingSound");
 
     /// <summary>
     /// Generic boolean to toggle the damage application on and off

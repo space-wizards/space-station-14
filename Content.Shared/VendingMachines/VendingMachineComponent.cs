@@ -88,7 +88,7 @@ namespace Content.Shared.VendingMachines
         /// </summary>
         [DataField("soundVend")]
         // Grabbed from: https://github.com/tgstation/tgstation/blob/d34047a5ae911735e35cd44a210953c9563caa22/sound/machines/machine_vend.ogg
-        public SoundSpecifier SoundVend = new SoundPathSpecifier("/Audio/Machines/machine_vend.ogg")
+        public SoundSpecifier SoundVend = new SoundCollectionSpecifier("VendingMachineVendsSound")
         {
             Params = new AudioParams
             {
@@ -102,7 +102,7 @@ namespace Content.Shared.VendingMachines
         /// </summary>
         [DataField("soundDeny")]
         // Yoinked from: https://github.com/discordia-space/CEV-Eris/blob/35bbad6764b14e15c03a816e3e89aa1751660ba9/sound/machines/Custom_deny.ogg
-        public SoundSpecifier SoundDeny = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
+        public SoundSpecifier SoundDeny = new SoundCollectionSpecifier("AccessDeniedSound");
 
         public float NonLimitedEjectForce = 7.5f;
 

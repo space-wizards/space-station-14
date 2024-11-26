@@ -13,7 +13,7 @@ public sealed partial class KitchenSpikeComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("sound")]
-    public SoundSpecifier SpikeSound = new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg");
+    public SoundSpecifier SpikeSound = new SoundCollectionSpecifier("KitchenSpikeSound");
 
     public List<string>? PrototypesToSpawn;
 

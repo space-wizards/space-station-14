@@ -35,9 +35,9 @@ namespace Content.Server.Bible.Components
         public float FailChance = 0.34f;
 
         [DataField("sizzleSound")]
-        public SoundSpecifier SizzleSoundPath = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
+        public SoundSpecifier SizzleSoundPath = new SoundCollectionSpecifier("BibleBurnSound");
         [DataField("healSound")]
-        public SoundSpecifier HealSoundPath = new  SoundPathSpecifier("/Audio/Effects/holy.ogg");
+        public SoundSpecifier HealSoundPath = new  SoundCollectionSpecifier("BibleHealSound");
 
         [DataField("locPrefix")]
         public string LocPrefix = "bible";

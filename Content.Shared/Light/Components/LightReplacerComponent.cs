@@ -14,7 +14,7 @@ namespace Content.Server.Light.Components;
 public sealed partial class LightReplacerComponent : Component
 {
     [DataField("sound")]
-    public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Weapons/click.ogg")
+    public SoundSpecifier Sound = new SoundCollectionSpecifier("LightReplacerReplaceSound")
     {
         Params = new()
         {

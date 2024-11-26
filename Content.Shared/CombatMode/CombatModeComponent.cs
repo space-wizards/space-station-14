@@ -26,7 +26,7 @@ namespace Content.Shared.CombatMode
         public bool? CanDisarm;
 
         [DataField("disarmSuccessSound")]
-        public SoundSpecifier DisarmSuccessSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
+        public SoundSpecifier DisarmSuccessSound = new SoundCollectionSpecifier("CombatDisarmedSound");
 
         [DataField("disarmFailChance")]
         public float BaseDisarmFailChance = 0.75f;

@@ -29,5 +29,5 @@ public sealed partial class DiskConsoleComponent : Component
     /// The sound made when printing occurs
     /// </summary>
     [DataField("printSound")]
-    public SoundSpecifier PrintSound = new SoundPathSpecifier("/Audio/Machines/printer.ogg");
+    public SoundSpecifier PrintSound = new SoundCollectionSpecifier("DiskConsolePrintSound");
 }

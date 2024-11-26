@@ -50,7 +50,7 @@ public sealed partial class SwapTeleporterComponent : Component
     /// Sound played when teleportation begins
     /// </summary>
     [DataField]
-    public SoundSpecifier? TeleportSound = new SoundPathSpecifier("/Audio/Weapons/flash.ogg");
+    public SoundSpecifier? TeleportSound = new SoundCollectionSpecifier("TeleportationBeginSound");
 
     /// <summary>
     /// A whitelist for what entities are valid for <see cref="LinkedEnt"/>.

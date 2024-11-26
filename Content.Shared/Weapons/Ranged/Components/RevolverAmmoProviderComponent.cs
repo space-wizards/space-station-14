@@ -41,11 +41,11 @@ public sealed partial class RevolverAmmoProviderComponent : AmmoProviderComponen
     public string? FillPrototype = "CartridgeMagnum";
 
     [DataField("soundEject")]
-    public SoundSpecifier? SoundEject = new SoundPathSpecifier("/Audio/Weapons/Guns/MagOut/revolver_magout.ogg");
+    public SoundSpecifier? SoundEject = new SoundCollectionSpecifier("RevolverAmmoEjectSound");
 
     [DataField("soundInsert")]
-    public SoundSpecifier? SoundInsert = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/revolver_magin.ogg");
+    public SoundSpecifier? SoundInsert = new SoundCollectionSpecifier("RevolverAmmoInsertSound");
 
     [DataField("soundSpin")]
-    public SoundSpecifier? SoundSpin = new SoundPathSpecifier("/Audio/Weapons/Guns/Misc/revolver_spin.ogg");
+    public SoundSpecifier? SoundSpin = new SoundCollectionSpecifier("RevolverSpinSound");
 }

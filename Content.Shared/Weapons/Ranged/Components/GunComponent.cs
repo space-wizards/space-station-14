@@ -18,7 +18,7 @@ public sealed partial class GunComponent : Component
     /// The base sound to use when the gun is fired.
     /// </summary>
     [DataField]
-    public SoundSpecifier? SoundGunshot = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/smg.ogg");
+    public SoundSpecifier? SoundGunshot = new SoundCollectionSpecifier("GunShootSound");
 
     /// <summary>
     /// The sound to use when the gun is fired.
@@ -28,13 +28,13 @@ public sealed partial class GunComponent : Component
     public SoundSpecifier? SoundGunshotModified;
 
     [DataField]
-    public SoundSpecifier? SoundEmpty = new SoundPathSpecifier("/Audio/Weapons/Guns/Empty/empty.ogg");
+    public SoundSpecifier? SoundEmpty = new SoundCollectionSpecifier("GunEmptySound");
 
     /// <summary>
     /// Sound played when toggling the <see cref="SelectedMode"/> for this gun.
     /// </summary>
     [DataField]
-    public SoundSpecifier? SoundMode = new SoundPathSpecifier("/Audio/Weapons/Guns/Misc/selector.ogg");
+    public SoundSpecifier? SoundMode = new SoundCollectionSpecifier("GunModeChangeSound");
 
     #endregion
 

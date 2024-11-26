@@ -25,21 +25,21 @@ namespace Content.Server.Kitchen.Components
 
         #region  audio
         [DataField("beginCookingSound")]
-        public SoundSpecifier StartCookingSound = new SoundPathSpecifier("/Audio/Machines/microwave_start_beep.ogg");
+        public SoundSpecifier StartCookingSound = new SoundCollectionSpecifier("MicrowaveStartSound");
 
         [DataField("foodDoneSound")]
-        public SoundSpecifier FoodDoneSound = new SoundPathSpecifier("/Audio/Machines/microwave_done_beep.ogg");
+        public SoundSpecifier FoodDoneSound = new SoundCollectionSpecifier("MicrowaveDoneSound");
 
         [DataField("clickSound")]
-        public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
+        public SoundSpecifier ClickSound = new SoundCollectionSpecifier("MachineSwitchSound");
 
         [DataField("ItemBreakSound")]
-        public SoundSpecifier ItemBreakSound = new SoundPathSpecifier("/Audio/Effects/clang.ogg");
+        public SoundSpecifier ItemBreakSound = new SoundCollectionSpecifier("MicrowaveBreakSound");
 
         public EntityUid? PlayingStream;
 
         [DataField("loopingSound")]
-        public SoundSpecifier LoopingSound = new SoundPathSpecifier("/Audio/Machines/microwave_loop.ogg");
+        public SoundSpecifier LoopingSound = new SoundCollectionSpecifier("MicrowaveHumSound");
         #endregion
 
         [ViewVariables]

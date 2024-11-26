@@ -20,5 +20,5 @@ public sealed partial class PolymorphOnCollideComponent : Component
     public EntityWhitelist? Blacklist;
 
     [DataField]
-    public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Magic/forcewall.ogg");
+    public SoundSpecifier Sound = new SoundCollectionSpecifier("ForceWallCollisionSound");
 }

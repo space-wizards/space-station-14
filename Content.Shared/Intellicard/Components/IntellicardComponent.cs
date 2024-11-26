@@ -26,7 +26,7 @@ public sealed partial class IntellicardComponent : Component
     /// when they are being downloaded
     /// </summary>
     [DataField, AutoNetworkedField]
-    public SoundSpecifier? WarningSound = new SoundPathSpecifier("/Audio/Misc/notice2.ogg");
+    public SoundSpecifier? WarningSound = new SoundCollectionSpecifier("StationAIDownloadedNotificationSound");
 
     /// <summary>
     /// The delay before allowing the warning to play again in seconds.

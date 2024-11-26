@@ -22,7 +22,7 @@ public sealed partial class VentClogRuleComponent : Component
     /// Sound played when foam is being created.
     /// </summary>
     [DataField]
-    public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Effects/extinguish.ogg");
+    public SoundSpecifier Sound = new SoundCollectionSpecifier("VentClogFoamingSound");
 
     /// <summary>
     /// The standard reagent quantity to put in the foam, modified by event severity.

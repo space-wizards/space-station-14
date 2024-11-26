@@ -17,7 +17,7 @@ public sealed partial class RechargeBasicEntityAmmoComponent : Component
 
     [DataField("rechargeSound")]
     [AutoNetworkedField]
-    public SoundSpecifier? RechargeSound = new SoundPathSpecifier("/Audio/Magic/forcewall.ogg")
+    public SoundSpecifier? RechargeSound = new SoundCollectionSpecifier("BasicEntityAmmoRechargeSound")
     {
         Params = AudioParams.Default.WithVolume(-5f)
     };

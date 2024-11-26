@@ -23,6 +23,6 @@ internal sealed partial class WeaponRandomComponent : Component
     /// Sound effect to play when the damage bonus occurs.
     /// </summary>
     [DataField("damageSound")]
-    public SoundSpecifier DamageSound = new SoundPathSpecifier("/Audio/Items/bikehorn.ogg");
+    public SoundSpecifier DamageSound = new SoundCollectionSpecifier("WeaponRandomBonusDamageSound");
 
 }

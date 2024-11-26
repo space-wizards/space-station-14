@@ -25,10 +25,10 @@ public sealed partial class WiresPanelComponent : Component
     public bool Visible = true;
 
     [DataField("screwdriverOpenSound")]
-    public SoundSpecifier ScrewdriverOpenSound = new SoundPathSpecifier("/Audio/Machines/screwdriveropen.ogg");
+    public SoundSpecifier ScrewdriverOpenSound = new SoundCollectionSpecifier("WiresPanelOpenSound");
 
     [DataField("screwdriverCloseSound")]
-    public SoundSpecifier ScrewdriverCloseSound = new SoundPathSpecifier("/Audio/Machines/screwdriverclose.ogg");
+    public SoundSpecifier ScrewdriverCloseSound = new SoundCollectionSpecifier("WiresPanelCloseSound");
 
     /// <summary>
     /// Amount of times in seconds it takes to open

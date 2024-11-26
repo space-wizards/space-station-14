@@ -19,7 +19,7 @@ public sealed partial class NinjaSuitComponent : Component
     /// Sound played when a ninja is hit while cloaked.
     /// </summary>
     [DataField]
-    public SoundSpecifier RevealSound = new SoundPathSpecifier("/Audio/Effects/chime.ogg");
+    public SoundSpecifier RevealSound = new SoundCollectionSpecifier("NinjaRevealedOnHitSound");
 
     /// <summary>
     /// ID of the use delay to disable all ninja abilities.

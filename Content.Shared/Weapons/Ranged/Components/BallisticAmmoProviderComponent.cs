@@ -11,10 +11,10 @@ namespace Content.Shared.Weapons.Ranged.Components;
 public sealed partial class BallisticAmmoProviderComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField]
-    public SoundSpecifier? SoundRack = new SoundPathSpecifier("/Audio/Weapons/Guns/Cock/smg_cock.ogg");
+    public SoundSpecifier? SoundRack = new SoundCollectionSpecifier("BallisticAmmoReloadSound");
 
     [ViewVariables(VVAccess.ReadWrite), DataField]
-    public SoundSpecifier? SoundInsert = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/bullet_insert.ogg");
+    public SoundSpecifier? SoundInsert = new SoundCollectionSpecifier("BallisticAmmoInsertSound");
 
     [ViewVariables(VVAccess.ReadWrite), DataField]
     public EntProtoId? Proto;

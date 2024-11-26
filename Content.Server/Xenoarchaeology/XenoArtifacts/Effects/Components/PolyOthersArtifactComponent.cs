@@ -28,5 +28,5 @@ public sealed partial class PolyOthersArtifactComponent : Component
     /// Sound to play on polymorph.
     /// </summary>
     [DataField]
-    public SoundSpecifier PolySound = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/Magic/staff_animation.ogg");
+    public SoundSpecifier PolySound = new SoundCollectionSpecifier("ArtifactPolymorphedOthersSound");
 }

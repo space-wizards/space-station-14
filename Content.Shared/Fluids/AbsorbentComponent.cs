@@ -22,19 +22,19 @@ public sealed partial class AbsorbentComponent : Component
     public FixedPoint2 PickupAmount = FixedPoint2.New(100);
 
     [DataField("pickupSound")]
-    public SoundSpecifier PickupSound = new SoundPathSpecifier("/Audio/Effects/Fluids/watersplash.ogg")
+    public SoundSpecifier PickupSound = new SoundCollectionSpecifier("AbsorbentPickupSound")
     {
         Params = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation),
     };
 
     [DataField("transferSound")] public SoundSpecifier TransferSound =
-        new SoundPathSpecifier("/Audio/Effects/Fluids/slosh.ogg")
+        new SoundCollectionSpecifier("AbsorbentTransferSound")
         {
             Params = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).WithVolume(-3f),
         };
 
     public static readonly SoundSpecifier DefaultTransferSound =
-        new SoundPathSpecifier("/Audio/Effects/Fluids/slosh.ogg")
+        new SoundCollectionSpecifier("AbsorbentTransferSound")
         {
             Params = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).WithVolume(-3f),
         };

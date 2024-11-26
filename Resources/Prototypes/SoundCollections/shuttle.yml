@@ -4,3 +4,8 @@
     - "/Audio/Effects/Shuttle/shuttle_impact1.ogg"
     - "/Audio/Effects/Shuttle/shuttle_impact2.ogg"
     - "/Audio/Effects/Shuttle/shuttle_impact3.ogg"
+
+- type: soundCollection
+  id: ShuttlePingSound
+  files:
+    - "/Audio/Effects/Shuttle/radar_ping.ogg"

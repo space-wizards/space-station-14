@@ -74,11 +74,11 @@ public sealed partial class DrainComponent : Component
     public float UnclogProbability = 0.75f;
 
     [DataField]
-    public SoundSpecifier ManualDrainSound = new SoundPathSpecifier("/Audio/Effects/Fluids/slosh.ogg");
+    public SoundSpecifier ManualDrainSound = new SoundCollectionSpecifier("DrainDrainedSound");
 
     [DataField]
-    public SoundSpecifier PlungerSound = new SoundPathSpecifier("/Audio/Items/Janitor/plunger.ogg");
+    public SoundSpecifier PlungerSound = new SoundCollectionSpecifier("DrainPlungedSound");
 
     [DataField]
-    public SoundSpecifier UnclogSound = new SoundPathSpecifier("/Audio/Effects/Fluids/glug.ogg");
+    public SoundSpecifier UnclogSound = new SoundCollectionSpecifier("DrainUncloggedSound");
 }

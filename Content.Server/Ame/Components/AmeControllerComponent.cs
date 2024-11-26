@@ -48,14 +48,14 @@ public sealed partial class AmeControllerComponent : SharedAmeControllerComponen
     /// </summary>
     [DataField("clickSound")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
+    public SoundSpecifier ClickSound = new SoundCollectionSpecifier("MachineSwitchSound");
 
     /// <summary>
     /// The sound used when injecting antimatter into the AME.
     /// </summary>
     [DataField("injectSound")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public SoundSpecifier InjectSound = new SoundPathSpecifier("/Audio/Machines/ame_fuelinjection.ogg");
+    public SoundSpecifier InjectSound = new SoundCollectionSpecifier("AMEFuelInjectSound");
 
     /// <summary>
     /// The last time this could have injected fuel into the AME.

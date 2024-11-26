@@ -40,7 +40,7 @@ public sealed partial class CryostorageComponent : Component
     /// Sound that is played when a player is removed by a cryostorage.
     /// </summary>
     [DataField]
-    public SoundSpecifier? RemoveSound = new SoundPathSpecifier("/Audio/Effects/teleport_departure.ogg");
+    public SoundSpecifier? RemoveSound = new SoundCollectionSpecifier("CryostoragePlayerRemovedSound");
 }
 
 [Serializable, NetSerializable]

@@ -28,7 +28,7 @@ public sealed partial class AnalysisConsoleComponent : Component
     /// The sound played when an artifact has points extracted.
     /// </summary>
     [DataField("extractSound")]
-    public SoundSpecifier ExtractSound = new SoundPathSpecifier("/Audio/Effects/radpulse11.ogg");
+    public SoundSpecifier ExtractSound = new SoundCollectionSpecifier("AnalysisConsolePointExtractedSound");
 
     /// <summary>
     /// The entity spawned by a report.

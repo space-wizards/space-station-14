@@ -25,37 +25,37 @@ public sealed partial class SpaceVillainArcadeComponent : SharedSpaceVillainArca
     /// The sound played when a new session of the SpaceVillain game is begun.
     /// </summary>
     [DataField("newGameSound")]
-    public SoundSpecifier NewGameSound = new SoundPathSpecifier("/Audio/Effects/Arcade/newgame.ogg");
+    public SoundSpecifier NewGameSound = new SoundCollectionSpecifier("ArcadeNewGameSound");
 
     /// <summary>
     /// The sound played when the player chooses to attack.
     /// </summary>
     [DataField("playerAttackSound")]
-    public SoundSpecifier PlayerAttackSound = new SoundPathSpecifier("/Audio/Effects/Arcade/player_attack.ogg");
+    public SoundSpecifier PlayerAttackSound = new SoundCollectionSpecifier("ArcadeAttackSound");
 
     /// <summary>
     /// The sound played when the player chooses to heal.
     /// </summary>
     [DataField("playerHealSound")]
-    public SoundSpecifier PlayerHealSound = new SoundPathSpecifier("/Audio/Effects/Arcade/player_heal.ogg");
+    public SoundSpecifier PlayerHealSound = new SoundCollectionSpecifier("ArcadeHealSound");
 
     /// <summary>
     /// The sound played when the player chooses to regain mana.
     /// </summary>
     [DataField("playerChargeSound")]
-    public SoundSpecifier PlayerChargeSound = new SoundPathSpecifier("/Audio/Effects/Arcade/player_charge.ogg");
+    public SoundSpecifier PlayerChargeSound = new SoundCollectionSpecifier("ArcadeChargeSound");
 
     /// <summary>
     /// The sound played when the player wins.
     /// </summary>
     [DataField("winSound")]
-    public SoundSpecifier WinSound = new SoundPathSpecifier("/Audio/Effects/Arcade/win.ogg");
+    public SoundSpecifier WinSound = new SoundCollectionSpecifier("ArcadeWinSound");
 
     /// <summary>
     /// The sound played when the player loses.
     /// </summary>
     [DataField("gameOverSound")]
-    public SoundSpecifier GameOverSound = new SoundPathSpecifier("/Audio/Effects/Arcade/gameover.ogg");
+    public SoundSpecifier GameOverSound = new SoundCollectionSpecifier("ArcadeGameOverSound");
 
     /// <summary>
     /// The prefixes that can be used to create the game name.

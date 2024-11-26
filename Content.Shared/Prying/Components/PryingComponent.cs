@@ -29,7 +29,7 @@ public sealed partial class PryingComponent : Component
     /// What sound to play when prying is finished.
     /// </summary>
     [DataField]
-    public SoundSpecifier UseSound = new SoundPathSpecifier("/Audio/Items/crowbar.ogg");
+    public SoundSpecifier UseSound = new SoundCollectionSpecifier("CrowbarPrySound");
 
     /// <summary>
     /// Whether the entity can currently pry things.

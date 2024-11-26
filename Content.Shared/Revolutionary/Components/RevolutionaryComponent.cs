@@ -22,7 +22,7 @@ public sealed partial class RevolutionaryComponent : Component
     /// Sound that plays when you are chosen as Rev. (Placeholder until I find something cool I guess)
     /// </summary>
     [DataField]
-    public SoundSpecifier RevStartSound = new SoundPathSpecifier("/Audio/Ambience/Antag/headrev_start.ogg");
+    public SoundSpecifier RevStartSound = new SoundCollectionSpecifier("RevenantRoundStartSoundSound");
 
     public override bool SessionSpecific => true;
 }

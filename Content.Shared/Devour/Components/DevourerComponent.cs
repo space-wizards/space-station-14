@@ -19,7 +19,7 @@ public sealed partial class DevourerComponent : Component
     public EntityUid? DevourActionEntity;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("soundDevour")]
-    public SoundSpecifier? SoundDevour = new SoundPathSpecifier("/Audio/Effects/demon_consume.ogg")
+    public SoundSpecifier? SoundDevour = new SoundCollectionSpecifier("DevourerConsumeSound")
     {
         Params = AudioParams.Default.WithVolume(-3f),
     };
@@ -37,7 +37,7 @@ public sealed partial class DevourerComponent : Component
     public float StructureDevourTime = 10f;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("soundStructureDevour")]
-    public SoundSpecifier? SoundStructureDevour = new SoundPathSpecifier("/Audio/Machines/airlock_creaking.ogg")
+    public SoundSpecifier? SoundStructureDevour = new SoundCollectionSpecifier("DevourerConsumeStructureSound")
     {
         Params = AudioParams.Default.WithVolume(-3f),
     };

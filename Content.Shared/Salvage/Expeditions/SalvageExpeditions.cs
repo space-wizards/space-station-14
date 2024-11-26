@@ -35,7 +35,7 @@ public sealed partial class SalvageExpeditionConsoleComponent : Component
     /// The sound made when spawning a coordinates disk
     /// </summary>
     [DataField]
-    public SoundSpecifier PrintSound = new SoundPathSpecifier("/Audio/Machines/terminal_insert_disc.ogg");
+    public SoundSpecifier PrintSound = new SoundCollectionSpecifier("SalvageExpeditionPrintDiskSound");
 }
 
 [Serializable, NetSerializable]

@@ -16,7 +16,7 @@ public sealed partial class HyposprayComponent : Component
     public FixedPoint2 TransferAmount = FixedPoint2.New(5);
 
     [DataField]
-    public SoundSpecifier InjectSound = new SoundPathSpecifier("/Audio/Items/hypospray.ogg");
+    public SoundSpecifier InjectSound = new SoundCollectionSpecifier("HyposprayInjectSound");
 
     /// <summary>
     /// Decides whether you can inject everything or just mobs.

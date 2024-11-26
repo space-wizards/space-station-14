@@ -49,5 +49,5 @@ public sealed partial class AnomalyVesselComponent : Component
     /// The sound that is played repeatedly when the anomaly is destabilizing/decaying
     /// </summary>
     [DataField("beepSound")]
-    public SoundSpecifier BeepSound = new SoundPathSpecifier("/Audio/Machines/vessel_warning.ogg");
+    public SoundSpecifier BeepSound = new SoundCollectionSpecifier("AnomalyVesselBeepSound");
 }

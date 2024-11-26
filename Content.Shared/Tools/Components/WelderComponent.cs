@@ -45,7 +45,7 @@ public sealed partial class WelderComponent : Component
     ///     Sound played when refilling the welder.
     /// </summary>
     [DataField]
-    public SoundSpecifier WelderRefill = new SoundPathSpecifier("/Audio/Effects/refill.ogg");
+    public SoundSpecifier WelderRefill = new SoundCollectionSpecifier("WelderRefillSound");
 
     /// <summary>
     ///     Whether the item is safe to refill while lit without exploding the tank.

@@ -42,7 +42,7 @@ public sealed partial class MechGrabberComponent : Component
     /// The sound played when a mech is grabbing something
     /// </summary>
     [DataField("grabSound")]
-    public SoundSpecifier GrabSound = new SoundPathSpecifier("/Audio/Mecha/sound_mecha_hydraulic.ogg");
+    public SoundSpecifier GrabSound = new SoundCollectionSpecifier("MechGrabSound");
 
     public EntityUid? AudioStream;
 

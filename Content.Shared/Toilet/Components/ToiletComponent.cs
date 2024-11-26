@@ -21,7 +21,7 @@ namespace Content.Shared.Toilet.Components
         /// Sound to play when toggling toilet seat.
         /// </summary>
         [DataField]
-        public SoundSpecifier SeatSound = new SoundPathSpecifier("/Audio/Effects/toilet_seat_down.ogg");
+        public SoundSpecifier SeatSound = new SoundCollectionSpecifier("ToiletSeatSound");
     }
 
     [Serializable, NetSerializable]

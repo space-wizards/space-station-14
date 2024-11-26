@@ -61,22 +61,22 @@ namespace Content.Server.Nuke
         public int LastPlayedKeypadSemitones = 0;
 
         [DataField("keypadPressSound")]
-        public SoundSpecifier KeypadPressSound = new SoundPathSpecifier("/Audio/Machines/Nuke/general_beep.ogg");
+        public SoundSpecifier KeypadPressSound = new SoundCollectionSpecifier("NukeKeypadPressSound");
 
         [DataField("accessGrantedSound")]
-        public SoundSpecifier AccessGrantedSound = new SoundPathSpecifier("/Audio/Machines/Nuke/confirm_beep.ogg");
+        public SoundSpecifier AccessGrantedSound = new SoundCollectionSpecifier("NukeAcceptedSound");
 
         [DataField("accessDeniedSound")]
-        public SoundSpecifier AccessDeniedSound = new SoundPathSpecifier("/Audio/Machines/Nuke/angry_beep.ogg");
+        public SoundSpecifier AccessDeniedSound = new SoundCollectionSpecifier("NukeDeniedSound");
 
         [DataField("alertSound")]
-        public SoundSpecifier AlertSound = new SoundPathSpecifier("/Audio/Machines/Nuke/nuke_alarm.ogg");
+        public SoundSpecifier AlertSound = new SoundCollectionSpecifier("NukeAlarmSound");
 
         [DataField("armSound")]
-        public SoundSpecifier ArmSound = new SoundPathSpecifier("/Audio/Misc/notice1.ogg");
+        public SoundSpecifier ArmSound = new SoundCollectionSpecifier("NukeArmSound");
 
         [DataField("disarmSound")]
-        public SoundSpecifier DisarmSound = new SoundPathSpecifier("/Audio/Misc/notice2.ogg");
+        public SoundSpecifier DisarmSound = new SoundCollectionSpecifier("NukeDisarmSound");
 
         [DataField("armMusic")]
         public SoundSpecifier ArmMusic = new SoundCollectionSpecifier("NukeMusic");

@@ -16,12 +16,12 @@ namespace Content.Shared.Speech
         public float Variation { get; set; } = 0.1f;
 
         [DataField("saySound")]
-        public SoundSpecifier SaySound { get; set; } = new SoundPathSpecifier("/Audio/Voice/Talk/speak_2.ogg");
+        public SoundSpecifier SaySound { get; set; } = new SoundCollectionSpecifier("SpeechSaySound");
 
         [DataField("askSound")]
-        public SoundSpecifier AskSound { get; set; } = new SoundPathSpecifier("/Audio/Voice/Talk/speak_2_ask.ogg");
+        public SoundSpecifier AskSound { get; set; } = new SoundCollectionSpecifier("SpeechAskSound");
 
         [DataField("exclaimSound")]
-        public SoundSpecifier ExclaimSound { get; set; } = new SoundPathSpecifier("/Audio/Voice/Talk/speak_2_exclaim.ogg");
+        public SoundSpecifier ExclaimSound { get; set; } = new SoundCollectionSpecifier("SpeechExclaimSound");
     }
 }

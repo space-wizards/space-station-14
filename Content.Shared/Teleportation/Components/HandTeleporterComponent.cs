@@ -33,13 +33,13 @@ public sealed partial class HandTeleporterComponent : Component
     public string SecondPortalPrototype = "PortalBlue";
 
     [DataField("newPortalSound")] public SoundSpecifier NewPortalSound =
-        new SoundPathSpecifier("/Audio/Machines/high_tech_confirm.ogg")
+        new SoundCollectionSpecifier("CreatePortalSound")
         {
             Params = AudioParams.Default.WithVolume(-2f)
         };
 
     [DataField("clearPortalsSound")]
-    public SoundSpecifier ClearPortalsSound = new SoundPathSpecifier("/Audio/Machines/button.ogg");
+    public SoundSpecifier ClearPortalsSound = new SoundCollectionSpecifier("ClearPortalSound");
 
     /// <summary>
     ///     Delay for creating the portals in seconds.

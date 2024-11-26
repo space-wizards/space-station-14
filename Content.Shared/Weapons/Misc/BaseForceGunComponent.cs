@@ -47,7 +47,7 @@ public abstract partial class BaseForceGunComponent : Component
     public float MassLimit = 100f;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("sound"), AutoNetworkedField]
-    public SoundSpecifier? Sound = new SoundPathSpecifier("/Audio/Weapons/weoweo.ogg")
+    public SoundSpecifier? Sound = new SoundCollectionSpecifier("ForceGunSound")
     {
         Params = AudioParams.Default.WithLoop(true).WithVolume(-8f),
     };

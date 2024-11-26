@@ -60,6 +60,6 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         public bool ReleaseValve { get; set; } = false;
 
         [DataField("accessDeniedSound")]
-        public SoundSpecifier AccessDeniedSound = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
+        public SoundSpecifier AccessDeniedSound = new SoundCollectionSpecifier("AccessDeniedSound");
     }
 }

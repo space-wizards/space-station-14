@@ -9,7 +9,7 @@ namespace Content.Shared.Atmos.Components;
 public sealed partial class ExtinguishOnInteractComponent : Component
 {
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public SoundSpecifier? ExtinguishAttemptSound = new SoundPathSpecifier("/Audio/Items/candle_blowing.ogg");
+    public SoundSpecifier? ExtinguishAttemptSound = new SoundCollectionSpecifier("ObjectExtinguishedSound");
 
     /// <summary>
     /// Extinguishing chance

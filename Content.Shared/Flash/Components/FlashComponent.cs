@@ -33,7 +33,7 @@ namespace Content.Shared.Flash.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("sound")]
-        public SoundSpecifier Sound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/flash.ogg")
+        public SoundSpecifier Sound { get; set; } = new SoundCollectionSpecifier("FlashOfLightSound")
         {
             Params = AudioParams.Default.WithVolume(1f).WithMaxDistance(3f)
         };

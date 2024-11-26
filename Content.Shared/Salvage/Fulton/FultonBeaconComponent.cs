@@ -10,5 +10,5 @@ namespace Content.Shared.Salvage.Fulton;
 public sealed partial class FultonBeaconComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("soundLink"), AutoNetworkedField]
-    public SoundSpecifier? LinkSound = new SoundPathSpecifier("/Audio/Items/beep.ogg");
+    public SoundSpecifier? LinkSound = new SoundCollectionSpecifier("FultonBeaconLinkedSound");
 }

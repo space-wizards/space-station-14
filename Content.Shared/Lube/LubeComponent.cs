@@ -10,7 +10,7 @@ namespace Content.Shared.Lube;
 public sealed partial class LubeComponent : Component
 {
     [DataField("squeeze")]
-    public SoundSpecifier Squeeze = new SoundPathSpecifier("/Audio/Items/squeezebottle.ogg");
+    public SoundSpecifier Squeeze = new SoundCollectionSpecifier("LubeAppliedSound");
 
     /// <summary>
     /// Solution on the entity that contains the glue.

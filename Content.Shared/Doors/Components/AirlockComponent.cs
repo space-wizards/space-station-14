@@ -29,13 +29,13 @@ public sealed partial class AirlockComponent : Component
     /// Sound to play when the airlock emergency access is turned on.
     /// </summary>
     [DataField]
-    public SoundSpecifier EmergencyOnSound = new SoundPathSpecifier("/Audio/Machines/airlock_emergencyon.ogg");
+    public SoundSpecifier EmergencyOnSound = new SoundCollectionSpecifier("AirlockEmergencyTurnedOnSound");
 
     /// <summary>
     /// Sound to play when the airlock emergency access is turned off.
     /// </summary>
     [DataField]
-    public SoundSpecifier EmergencyOffSound = new SoundPathSpecifier("/Audio/Machines/airlock_emergencyoff.ogg");
+    public SoundSpecifier EmergencyOffSound = new SoundCollectionSpecifier("AirlockEmergencyTurnedOffSound");
 
     /// <summary>
     /// Pry modifier for a powered airlock.

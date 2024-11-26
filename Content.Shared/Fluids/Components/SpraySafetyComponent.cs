@@ -20,5 +20,5 @@ public sealed partial class SpraySafetyComponent : Component
     /// Sound to play after refilling.
     /// </summary>
     [DataField]
-    public SoundSpecifier RefillSound = new SoundPathSpecifier("/Audio/Effects/refill.ogg");
+    public SoundSpecifier RefillSound = new SoundCollectionSpecifier("SprayRefillSound");
 }

@@ -19,7 +19,7 @@ public sealed partial class NetProbeCartridgeComponent : Component
     public int MaxSavedDevices { get; set; } = 9;
 
     [DataField("soundScan")]
-    public SoundSpecifier SoundScan = new SoundPathSpecifier("/Audio/Machines/scan_finish.ogg");
+    public SoundSpecifier SoundScan = new SoundCollectionSpecifier("NetProbeScanSound");
 }
 
 

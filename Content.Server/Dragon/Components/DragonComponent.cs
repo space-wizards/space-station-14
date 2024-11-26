@@ -50,11 +50,11 @@ namespace Content.Server.Dragon
         public string RiftPrototype = "CarpRift";
 
         [ViewVariables(VVAccess.ReadWrite), DataField("soundDeath")]
-        public SoundSpecifier? SoundDeath = new SoundPathSpecifier("/Audio/Animals/space_dragon_roar.ogg");
+        public SoundSpecifier? SoundDeath = new SoundCollectionSpecifier("SpaceDragonDeathSound");
 
         [ViewVariables(VVAccess.ReadWrite), DataField("soundRoar")]
         public SoundSpecifier? SoundRoar =
-            new SoundPathSpecifier("/Audio/Animals/space_dragon_roar.ogg")
+            new SoundCollectionSpecifier("SpaceDragonRoarSound")
             {
                 Params = AudioParams.Default.WithVolume(3f),
             };

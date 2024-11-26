@@ -1,0 +1,1199 @@
+- type: soundCollection
+  id: AnomalyScannerScannedSound
+  files:
+    - /Audio/Items/beep.ogg
+
+- type: soundCollection
+  id: AnomalySyncConnectedSound
+  files:
+    - /Audio/Machines/anomaly_sync_connect.ogg
+
+- type: soundCollection
+  id: AnomalySyncDisconnectedSound
+  files:
+    - /Audio/Machines/anomaly_sync_connect.ogg
+
+- type: soundCollection
+  id: AnomalyVesselBeepSound
+  files:
+    - /Audio/Machines/vessel_warning.ogg
+
+- type: soundCollection
+  id: AnomalyTeleportSound
+  files:
+    - /Audio/Effects/teleport_arrival.ogg
+
+- type: soundCollection
+  id: AnomalyPulseSound
+  files:
+    - /Audio/Effects/waterswirl.ogg
+
+- type: soundCollection
+  id: ArcadeNewGameSound
+  files:
+    - /Audio/Effects/Arcade/newgame.ogg
+
+- type: soundCollection
+  id: ArcadeAttackSound
+  files:
+    - /Audio/Effects/Arcade/player_attack.ogg
+
+- type: soundCollection
+  id: ArcadeHealSound
+  files:
+    - /Audio/Effects/Arcade/player_heal.ogg
+
+- type: soundCollection
+  id: ArcadeChargeSound
+  files:
+    - /Audio/Effects/Arcade/player_charge.ogg
+
+- type: soundCollection
+  id: ArcadeWinSound
+  files:
+    - /Audio/Effects/Arcade/win.ogg
+
+- type: soundCollection
+  id: ArcadeGameOverSound
+  files:
+    - /Audio/Effects/Arcade/gameover.ogg
+
+- type: soundCollection
+  id: GasTankRuptureSound
+  files:
+    - /Audio/Effects/spray.ogg
+
+- type: soundCollection
+  id: GasTankConnectSound
+  files:
+    - /Audio/Effects/internals.ogg
+
+- type: soundCollection
+  id: AlarmSound
+  files:
+    - /Audio/Machines/alarm.ogg
+
+- type: soundCollection
+  id: AccessDeniedSound
+  files:
+    - /Audio/Machines/custom_deny.ogg
+
+- type: soundCollection
+  id: BibleBurnSound
+  files:
+    - /Audio/Effects/lightburn.ogg
+
+- type: soundCollection
+  id: BibleHealSound
+  files:
+    - /Audio/Effects/holy.ogg
+
+- type: soundCollection
+  id: BloodCauterizationSound
+  files:
+    - /Audio/Effects/lightburn.ogg
+
+- type: soundCollection
+  id: CargoShuttleDenySound
+  files:
+    - /Audio/Effects/Cargo/buzz_two.ogg
+
+- type: soundCollection
+  id: LogProbeScanSound
+  files:
+    - /Audio/Machines/scan_finish.ogg
+
+- type: soundCollection
+  id: NetProbeScanSound
+  files:
+    - /Audio/Machines/scan_finish.ogg
+
+- type: soundCollection
+  id: AnnouncementChimeSound
+  files:
+    - /Audio/Announcements/announce.ogg
+
+- type: soundCollection
+  id: TrashBagThrowInsertSound
+  files:
+    - /Audio/Effects/trashbag1.ogg
+
+- type: soundCollection
+  id: TrashBagThrowMissSound
+  files:
+    - /Audio/Effects/thudswoosh.ogg
+
+- type: soundCollection
+  id: BombDefusalSound
+  files:
+    - /Audio/Misc/notice2.ogg
+
+- type: soundCollection
+  id: BombBoltSound
+  files:
+    - /Audio/Machines/boltsdown.ogg
+
+- type: soundCollection
+  id: LogicGateSwitch
+  files:
+    - /Audio/Machines/lightswitch.ogg
+
+- type: soundCollection
+  id: PowerSensorSwitch
+  files:
+    - /Audio/Machines/lightswitch.ogg
+
+- type: soundCollection
+  id: SignalSwitchLatchSound
+  files:
+    - /Audio/Machines/lightswitch.ogg
+
+- type: soundCollection
+  id: DeviceOverloadSound
+  files:
+    - /Audio/Items/Defib/defib_zap.ogg
+
+- type: soundCollection
+  id: DisposalTubeClangSound
+  files:
+    - /Audio/Effects/clang.ogg
+
+- type: soundCollection
+  id: SpaceDragonDeathSound
+  files:
+    - /Audio/Animals/space_dragon_roar.ogg
+
+- type: soundCollection
+  id: SpaceDragonRoarSound
+  files:
+    - /Audio/Animals/space_dragon_roar.ogg
+
+- type: soundCollection
+  id: FlashOfLightSound
+  files:
+    - /Audio/Weapons/flash.ogg
+
+- type: soundCollection
+  id: SuperMatterGrenadeTriggerSound
+  files:
+    - /Audio/Effects/Grenades/Supermatter/supermatter_start.ogg
+
+- type: soundCollection
+  id: ForensicScannerMatchSound
+  files:
+    - /Audio/Machines/Nuke/angry_beep.ogg
+
+- type: soundCollection
+  id: ForensicScannerNoMatchSound
+  files:
+    - /Audio/Machines/airlock_deny.ogg
+
+- type: soundCollection
+  id: ForensicScannerPrintSound
+  files:
+    - /Audio/Machines/short_print_and_rip.ogg
+
+- type: soundCollection
+  id: NewPlayerJoinSound
+  files:
+    - /Audio/Effects/newplayerping.ogg
+
+- type: soundCollection
+  id: NukeOpsRoundStartSound
+  files:
+    - /Audio/Ambience/Antag/nukeops_start.ogg
+
+- type: soundCollection
+  id: AntagonistRoundStartSound
+  files:
+    - /Audio/Ambience/Antag/traitor_start.ogg
+
+- type: soundCollection
+  id: PortalOpenSound
+  files:
+    - /Audio/Effects/Lightning/lightningbolt.ogg
+
+- type: soundCollection
+  id: PortalCloseSound
+  files:
+    - /Audio/Effects/Lightning/lightningbolt.ogg
+
+- type: soundCollection
+  id: GatherPickupSound
+  files:
+    - /Audio/Effects/break_stone.ogg
+
+- type: soundCollection
+  id: ScramTeleportSoundSound
+  files:
+    - /Audio/Effects/teleport_arrival.ogg
+
+- type: soundCollection
+  id: MicrowaveStartSound
+  files:
+    - /Audio/Machines/microwave_start_beep.ogg
+
+- type: soundCollection
+  id: MicrowaveDoneSound
+  files:
+    - /Audio/Machines/microwave_done_beep.ogg
+
+- type: soundCollection
+  id: MicrowaveBreakSound
+  files:
+    - /Audio/Effects/clang.ogg
+
+- type: soundCollection
+  id: MicrowaveHumSound
+  files:
+    - /Audio/Machines/microwave_loop.ogg
+
+- type: soundCollection
+  id: ReagentGrinderGrindSound
+  files:
+    - /Audio/Machines/blender.ogg
+
+- type: soundCollection
+  id: ReagentGrinderJuiceSound
+  files:
+    - /Audio/Machines/juicer.ogg
+
+- type: soundCollection
+  id: LightBurnHandSound
+  files:
+    - /Audio/Effects/lightburn.ogg
+
+- type: soundCollection
+  id: LightTurnOnSound
+  files:
+    - /Audio/Machines/light_tube_on.ogg
+
+- type: soundCollection
+  id: NewsWriterConfirmSound
+  files:
+    - /Audio/Machines/scan_finish.ogg
+
+- type: soundCollection
+  id: ProduceExtractorExtractSound
+  files:
+    - /Audio/Effects/waterswirl.ogg
+
+- type: soundCollection
+  id: MechGrabSound
+  files:
+    - /Audio/Mecha/sound_mecha_hydraulic.ogg
+
+- type: soundCollection
+  id: HealthScannerScannedSound
+  files:
+    - /Audio/Items/Medical/healthscanner.ogg
+
+- type: soundCollection
+  id: CremationStartSound
+  files:
+    - /Audio/Items/Lighters/lighter1.ogg
+
+- type: soundCollection
+  id: CremationWorkingSound
+  files:
+    - /Audio/Effects/burning.ogg
+
+- type: soundCollection
+  id: CremationDoneSound
+  files:
+    - /Audio/Machines/ding.ogg
+
+- type: soundCollection
+  id: NukeKeypadPressSound
+  files:
+    - /Audio/Machines/Nuke/general_beep.ogg
+
+- type: soundCollection
+  id: NukeAcceptedSound
+  files:
+    - /Audio/Machines/Nuke/confirm_beep.ogg
+
+- type: soundCollection
+  id: NukeDeniedSound
+  files:
+    - /Audio/Machines/Nuke/angry_beep.ogg
+
+- type: soundCollection
+  id: NukeAlarmSound
+  files:
+    - /Audio/Machines/Nuke/nuke_alarm.ogg
+
+- type: soundCollection
+  id: NukeArmSound
+  files:
+    - /Audio/Misc/notice1.ogg
+
+- type: soundCollection
+  id: NukeDisarmSound
+  files:
+    - /Audio/Misc/notice2.ogg
+
+- type: soundCollection
+  id: WarDeclarationSound
+  files:
+    - /Audio/Announcements/war.ogg
+
+- type: soundCollection
+  id: FoodSlicedSound
+  files:
+    - /Audio/Items/Culinary/chop.ogg
+
+- type: soundCollection
+  id: ForceWallCollisionSound
+  files:
+    - /Audio/Magic/forcewall.ogg
+
+- type: soundCollection
+  id: PowerSinkChargingSound
+  files:
+    - /Audio/Effects/PowerSink/charge_fire.ogg
+
+- type: soundCollection
+  id: PowerSinkWarningSoundSound
+  files:
+    - /Audio/Effects/PowerSink/electric.ogg
+
+- type: soundCollection
+  id: DiskConsolePrintSound
+  files:
+    - /Audio/Machines/printer.ogg
+
+- type: soundCollection
+  id: HyperspaceEnterSound
+  files:
+    - /Audio/Effects/Shuttle/hyperspace_begin.ogg
+
+- type: soundCollection
+  id: HyperspaceExitSound
+  files:
+    - /Audio/Effects/Shuttle/hyperspace_end.ogg
+
+- type: soundCollection
+  id: MeteorSwarmNotificationSound
+  files:
+    - /Audio/Announcements/meteors.ogg
+
+- type: soundCollection
+  id: VentClogFoamingSound
+  files:
+    - /Audio/Effects/extinguish.ogg
+
+- type: soundCollection
+  id: GasLeakSparkSound
+  files:
+    - /Audio/Effects/sparks4.ogg
+
+- type: soundCollection
+  id: CursedEntityStorageCurseSound
+  files:
+    - /Audio/Effects/teleport_departure.ogg
+
+- type: soundCollection
+  id: ThiefBeaconLinkSound
+  files:
+    - /Audio/Machines/high_tech_confirm.ogg
+
+- type: soundCollection
+  id: ThiefBeaconUnlinkSound
+  files:
+    - /Audio/Machines/beep.ogg
+
+- type: soundCollection
+  id: ThiefUndeterminedBackpackApproveSound
+  files:
+    - /Audio/Effects/rustle1.ogg
+
+- type: soundCollection
+  id: BalloonPopSound
+  files:
+    - /Audio/Effects/balloon-pop.ogg
+
+- type: soundCollection
+  id: WeaponRandomBonusDamageSound
+  files:
+    - /Audio/Items/bikehorn.ogg
+
+- type: soundCollection
+  id: WiresPulseSound
+  files:
+    - /Audio/Effects/multitool_pulse.ogg
+
+- type: soundCollection
+  id: AnalysisConsolePointExtractedSound
+  files:
+    - /Audio/Effects/radpulse11.ogg
+
+- type: soundCollection
+  id: ArtifactAnalyzerScanFinishedSound
+  files:
+    - /Audio/Machines/scan_finish.ogg
+
+- type: soundCollection
+  id: ArtifactPolymorphedOthersSound
+  files:
+    - /Audio/Weapons/Guns/Gunshots/Magic/staff_animation.ogg
+
+- type: soundCollection
+  id: InnerBodyAnomalyAcquiredSound
+  files:
+    - /Audio/Effects/inneranomaly.ogg
+
+- type: soundCollection
+  id: ObjectExtinguishedSound
+  files:
+    - /Audio/Items/candle_blowing.ogg
+
+- type: soundCollection
+  id: FireStarterIgnitedSound
+  files:
+    - /Audio/Magic/rumble.ogg
+
+- type: soundCollection
+  id: CryostoragePlayerRemovedSound
+  files:
+    - /Audio/Effects/teleport_departure.ogg
+
+- type: soundCollection
+  id: SleepingEntityWakeAttemptedSound
+  files:
+    - /Audio/Effects/thudswoosh.ogg
+
+- type: soundCollection
+  id: BlockingBlockedAttackSound
+  files:
+    - /Audio/Weapons/block_metal1.ogg
+
+- type: soundCollection
+  id: EntityBuckledSound
+  files:
+    - /Audio/Effects/buckle.ogg
+
+- type: soundCollection
+  id: EntityUnbuckledSound
+  files:
+    - /Audio/Effects/unbuckle.ogg
+
+- type: soundCollection
+  id: GraveDigSound
+  files:
+    - /Audio/Items/shovel_dig.ogg
+
+- type: soundCollection
+  id: CargoBountyPrintSound
+  files:
+    - /Audio/Machines/printer.ogg
+
+- type: soundCollection
+  id: CargoBountySkippedSound
+  files:
+    - /Audio/Effects/Cargo/ping.ogg
+
+- type: soundCollection
+  id: CargoBountySkipDenySound
+  files:
+    - /Audio/Effects/Cargo/buzz_two.ogg
+
+- type: soundCollection
+  id: CargoOrderErrorSound
+  files:
+    - /Audio/Effects/Cargo/buzz_sigh.ogg
+
+- type: soundCollection
+  id: CargoOrderConfirmSound
+  files:
+    - /Audio/Effects/Cargo/ping.ogg
+
+- type: soundCollection
+  id: CargoTelepadTeleportedInSound
+  files:
+    - /Audio/Machines/phasein.ogg
+
+- type: soundCollection
+  id: EntityFellIntoChasmSound
+  files:
+    - /Audio/Effects/falling.ogg
+
+- type: soundCollection
+  id: HyposprayInjectSound
+  files:
+    - /Audio/Items/hypospray.ogg
+
+- type: soundCollection
+  id: ChemistryReactionSound
+  files:
+    - /Audio/Effects/Chemistry/bubbles.ogg
+
+- type: soundCollection
+  id: ClumsyInteractionFailedSound
+  files:
+    - /Audio/Items/bikehorn.ogg
+
+- type: soundCollection
+  id: GunShootFailSound
+  files:
+    - /Audio/Weapons/Guns/Gunshots/bang.ogg
+
+- type: soundCollection
+  id: CluwneSpawnSound
+  files:
+    - /Audio/Items/bikehorn.ogg
+
+- type: soundCollection
+  id: CluwneKnockSound
+  files:
+    - /Audio/Items/airhorn.ogg
+
+- type: soundCollection
+  id: CombatDisarmedSound
+  files:
+    - /Audio/Effects/thudswoosh.ogg
+
+- type: soundCollection
+  id: FlatpackUnpackedSound
+  files:
+    - /Audio/Effects/unwrap.ogg
+
+- type: soundCollection
+  id: HandcuffStartSound
+  files:
+    - /Audio/Items/Handcuffs/cuff_start.ogg
+
+- type: soundCollection
+  id: HandcuffEndSound
+  files:
+    - /Audio/Items/Handcuffs/cuff_end.ogg
+
+- type: soundCollection
+  id: HandcuffBreakoutStartSound
+  files:
+    - /Audio/Items/Handcuffs/cuff_breakout_start.ogg
+
+- type: soundCollection
+  id: HandcuffUncuffStartSound
+  files:
+    - /Audio/Items/Handcuffs/cuff_takeoff_start.ogg
+
+- type: soundCollection
+  id: HandcuffUncuffedSound
+  files:
+    - /Audio/Items/Handcuffs/cuff_takeoff_end.ogg
+
+- type: soundCollection
+  id: BurnedWhileAttackingSound
+  files:
+    - /Audio/Effects/lightburn.ogg
+
+- type: soundCollection
+  id: BurnedWhileInteractingSound
+  files:
+    - /Audio/Effects/lightburn.ogg
+
+- type: soundCollection
+  id: NetworkConfiguratorModeSwitchedSound
+  files:
+    - /Audio/Machines/quickbeep.ogg
+
+- type: soundCollection
+  id: DevourerConsumeSound
+  files:
+    - /Audio/Effects/demon_consume.ogg
+
+- type: soundCollection
+  id: DevourerConsumeStructureSound
+  files:
+    - /Audio/Machines/airlock_creaking.ogg
+
+- type: soundCollection
+  id: DisposalUnitFlushSound
+  files:
+    - /Audio/Machines/disposalflush.ogg
+
+- type: soundCollection
+  id: DisposalUnitInsertSound
+  files:
+    - /Audio/Effects/trashbag1.ogg
+
+- type: soundCollection
+  id: AirlockEmergencyTurnedOnSound
+  files:
+    - /Audio/Machines/airlock_emergencyon.ogg
+
+- type: soundCollection
+  id: AirlockEmergencyTurnedOffSound
+  files:
+    - /Audio/Machines/airlock_emergencyoff.ogg
+
+- type: soundCollection
+  id: AirlockBoltedSound
+  files:
+    - /Audio/Machines/boltsup.ogg
+
+- type: soundCollection
+  id: AirlockUnboltedSound
+  files:
+    - /Audio/Machines/boltsdown.ogg
+
+- type: soundCollection
+  id: EnsnarerSnappedSound
+  files:
+    - /Audio/Effects/snap.ogg
+
+- type: soundCollection
+  id: FaxMachinePrintSound
+  files:
+    - /Audio/Machines/printer.ogg
+
+- type: soundCollection
+  id: FaxMachineSendSound
+  files:
+    - /Audio/Machines/high_tech_confirm.ogg
+
+- type: soundCollection
+  id: AbsorbentTransferSound
+  files:
+    - /Audio/Effects/Fluids/slosh.ogg
+
+- type: soundCollection
+  id: DrainDrainedSound
+  files:
+    - /Audio/Effects/Fluids/slosh.ogg
+
+- type: soundCollection
+  id: DrainPlungedSound
+  files:
+    - /Audio/Items/Janitor/plunger.ogg
+
+- type: soundCollection
+  id: DrainUncloggedSound
+  files:
+    - /Audio/Effects/Fluids/glug.ogg
+
+- type: soundCollection
+  id: PuddleSpilledSound
+  files:
+    - /Audio/Effects/Fluids/splat.ogg
+
+- type: soundCollection
+  id: SprayRefillSound
+  files:
+    - /Audio/Effects/refill.ogg
+
+- type: soundCollection
+  id: GlueAppliedSound
+  files:
+    - /Audio/Items/squeezebottle.ogg
+
+- type: soundCollection
+  id: GravityShakeSound
+  files:
+    - /Audio/Effects/alert.ogg
+
+- type: soundCollection
+  id: StationAIDownloadedNotificationSound
+  files:
+    - /Audio/Misc/notice2.ogg
+
+- type: soundCollection
+  id: KitchenSpikeSound
+  files:
+    - /Audio/Effects/Fluids/splat.ogg
+
+- type: soundCollection
+  id: FlashlightTurnedOnSound
+  files:
+    - /Audio/Items/flashlight_on.ogg
+
+- type: soundCollection
+  id: FlashlightErrorSound
+  files:
+    - /Audio/Machines/button.ogg
+
+- type: soundCollection
+  id: FlashlightTurnedOffSound
+  files:
+    - /Audio/Items/flashlight_off.ogg
+
+- type: soundCollection
+  id: LightReplacerReplaceSound
+  files:
+    - /Audio/Weapons/click.ogg
+
+- type: soundCollection
+  id: PDAFlashlightToggleSound
+  files:
+    - /Audio/Items/flashlight_pda.ogg
+
+- type: soundCollection
+  id: LockDisabledSound
+  files:
+    - /Audio/Machines/door_lock_off.ogg
+
+- type: soundCollection
+  id: LockEnabledSound
+  files:
+    - /Audio/Machines/door_lock_on.ogg
+
+- type: soundCollection
+  id: LubeAppliedSound
+  files:
+    - /Audio/Items/squeezebottle.ogg
+
+- type: soundCollection
+  id: GlobalSpellCastSound
+  files:
+    - /Audio/Magic/staff_animation.ogg
+
+- type: soundCollection
+  id: MagicMirrorHairChangeSound
+  files:
+    - /Audio/Items/scissors.ogg
+
+- type: soundCollection
+  id: DefibrillatorZapSound
+  files:
+    - /Audio/Items/Defib/defib_zap.ogg
+
+- type: soundCollection
+  id: DefibrillatorChargeSound
+  files:
+    - /Audio/Items/Defib/defib_charge.ogg
+
+- type: soundCollection
+  id: DefibrillatorFailedSound
+  files:
+    - /Audio/Items/Defib/defib_failed.ogg
+
+- type: soundCollection
+  id: DefibrillatorSuccessSound
+  files:
+    - /Audio/Items/Defib/defib_success.ogg
+
+- type: soundCollection
+  id: DefibrillatorReadySound
+  files:
+    - /Audio/Items/Defib/defib_ready.ogg
+
+- type: soundCollection
+  id: MiningScannerPingSound
+  files:
+    - /Audio/Machines/sonar-ping.ogg
+
+- type: soundCollection
+  id: MorgueAttemptedToPlaceSomeoneWithSoulSound
+  files:
+    - /Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg
+
+- type: soundCollection
+  id: NinjaRevealedOnHitSound
+  files:
+    - /Audio/Effects/chime.ogg
+
+- type: soundCollection
+  id: DrinkDrinkedSound
+  files:
+    - /Audio/Items/drink.ogg
+
+- type: soundCollection
+  id: SolutionSpraySound
+  files:
+    - /Audio/Items/soda_spray.ogg
+
+- type: soundCollection
+  id: SolutionShakedSound
+  files:
+    - /Audio/Items/soda_shake.ogg
+
+- type: soundCollection
+  id: UtensilSnapSound
+  files:
+    - /Audio/Items/snap.ogg
+
+- type: soundCollection
+  id: EnvelopeSealSound
+  files:
+    - /Audio/Effects/packetrip.ogg
+
+- type: soundCollection
+  id: EnvelopeOpenSound
+  files:
+    - /Audio/Effects/poster_broken.ogg
+
+- type: soundCollection
+  id: PlungerRummagedSound
+  files:
+    - /Audio/Effects/Fluids/glug.ogg
+
+- type: soundCollection
+  id: MachinePowerSwitchedSound
+  files:
+    - /Audio/Machines/button.ogg
+
+- type: soundCollection
+  id: CrowbarPrySound
+  files:
+    - /Audio/Items/crowbar.ogg
+
+- type: soundCollection
+  id: GeigerLowSound
+  files:
+    - /Audio/Items/Geiger/low.ogg
+
+- type: soundCollection
+  id: GeigerMediumSound
+  files:
+    - /Audio/Items/Geiger/med.ogg
+
+- type: soundCollection
+  id: GeigerHighSound
+  files:
+    - /Audio/Items/Geiger/high.ogg
+
+- type: soundCollection
+  id: GeigerExtremeSound
+  files:
+    - /Audio/Items/Geiger/ext.ogg
+
+- type: soundCollection
+  id: EncryptionKeyExtractedSound
+  files:
+    - /Audio/Items/pistol_magout.ogg
+
+- type: soundCollection
+  id: EncryptionKeyInsertedSound
+  files:
+    - /Audio/Items/pistol_magin.ogg
+
+- type: soundCollection
+  id: RCDDeconstructSound
+  files:
+    - /Audio/Items/deconstruct.ogg
+
+- type: soundCollection
+  id: RevenantRoundStartSoundSound
+  files:
+    - /Audio/Ambience/Antag/headrev_start.ogg
+
+- type: soundCollection
+  id: SalvageExpeditionPrintDiskSound
+  files:
+    - /Audio/Machines/terminal_insert_disc.ogg
+
+- type: soundCollection
+  id: FultonBeaconLinkedSound
+  files:
+    - /Audio/Items/beep.ogg
+
+- type: soundCollection
+  id: FultonTeleportedSound
+  files:
+    - /Audio/Items/Mining/fultext_deploy.ogg
+
+- type: soundCollection
+  id: HyperspaceTravelSound
+  files:
+    - /Audio/Effects/Shuttle/hyperspace_progress.ogg
+
+- type: soundCollection
+  id: MedibotInjectSound
+  files:
+    - /Audio/Items/hypospray.ogg
+
+- type: soundCollection
+  id: BorgPlayerEmaggedNotificationSound
+  files:
+    - /Audio/Ambience/Antag/emagged_borg.ogg
+
+- type: soundCollection
+  id: SiliconLawUpdatedSoundSound
+  files:
+    - /Audio/Misc/cryo_warning.ogg
+
+- type: soundCollection
+  id: SingularityAmbientSound
+  files:
+    - /Audio/Effects/singularity_form.ogg
+
+- type: soundCollection
+  id: SingularityCollapseSound
+  files:
+    - /Audio/Effects/singularity_collapse.ogg
+
+- type: soundCollection
+  id: EntitySlippedSound
+  files:
+    - /Audio/Effects/slip.ogg
+
+- type: soundCollection
+  id: SpeechSaySound
+  files:
+    - /Audio/Voice/Talk/speak_2.ogg
+
+- type: soundCollection
+  id: SpeechAskSound
+  files:
+    - /Audio/Voice/Talk/speak_2_ask.ogg
+
+- type: soundCollection
+  id: SpeechExclaimSound
+  files:
+    - /Audio/Voice/Talk/speak_2_exclaim.ogg
+
+- type: soundCollection
+  id: WilhemScreamSound
+  files:
+    - /Audio/Voice/Human/wilhelm_scream.ogg
+
+- type: soundCollection
+  id: SprayPainterSpraySound
+  files:
+    - /Audio/Effects/spray2.ogg
+
+- type: soundCollection
+  id: StorageClosedSound
+  files:
+    - /Audio/Effects/closetclose.ogg
+
+- type: soundCollection
+  id: StorageOpenedSound
+  files:
+    - /Audio/Effects/closetopen.ogg
+
+- type: soundCollection
+  id: PurchaseSuccessSoundSound
+  files:
+    - /Audio/Effects/kaching.ogg
+
+- type: soundCollection
+  id: StunAttemptSound
+  files:
+    - /Audio/Effects/thudswoosh.ogg
+
+- type: soundCollection
+  id: CreatePortalSound
+  files:
+    - /Audio/Machines/high_tech_confirm.ogg
+
+- type: soundCollection
+  id: ClearPortalSound
+  files:
+    - /Audio/Machines/button.ogg
+
+- type: soundCollection
+  id: PortalArrivalSound
+  files:
+    - /Audio/Effects/teleport_arrival.ogg
+
+- type: soundCollection
+  id: PortalDepartureSound
+  files:
+    - /Audio/Effects/teleport_departure.ogg
+
+- type: soundCollection
+  id: TeleportationBeginSound
+  files:
+    - /Audio/Weapons/flash.ogg
+
+- type: soundCollection
+  id: TilePlaceSound
+  files:
+    - /Audio/Items/genhit.ogg
+
+- type: soundCollection
+  id: ToiletSeatSound
+  files:
+    - /Audio/Effects/toilet_seat_down.ogg
+
+- type: soundCollection
+  id: WelderRefillSound
+  files:
+    - /Audio/Effects/refill.ogg
+
+- type: soundCollection
+  id: VendingMachineVendsSound
+  files:
+    - /Audio/Machines/machine_vend.ogg
+
+- type: soundCollection
+  id: VendingMachineRestockStartSound
+  files:
+    - /Audio/Machines/vending_restock_start.ogg
+
+- type: soundCollection
+  id: VendingMachineRestockDoneSound
+  files:
+    - /Audio/Machines/vending_restock_done.ogg
+
+- type: soundCollection
+  id: DamageMarkerProcessedSound
+  files:
+    - /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
+
+- type: soundCollection
+  id: HotMeleeSound
+  files:
+    - /Audio/Items/welder.ogg
+
+- type: soundCollection
+  id: MeleeSwingSound
+  files:
+    - /Audio/Weapons/punchmiss.ogg
+
+- type: soundCollection
+  id: ForceGunSound
+  files:
+    - /Audio/Weapons/weoweo.ogg
+
+- type: soundCollection
+  id: ForceGunLaunchSound
+  files:
+    - /Audio/Weapons/soup.ogg
+
+- type: soundCollection
+  id: BallisticAmmoReloadSound
+  files:
+    - /Audio/Weapons/Guns/Cock/smg_cock.ogg
+
+- type: soundCollection
+  id: BallisticAmmoInsertSound
+  files:
+    - /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
+
+- type: soundCollection
+  id: ChamberMagazineClosedSound
+  files:
+    - /Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg
+
+- type: soundCollection
+  id: ChamberMagazineOpenedSound
+  files:
+    - /Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg
+
+- type: soundCollection
+  id: ChamberMagazineReloadSound
+  files:
+    - /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
+
+- type: soundCollection
+  id: GrapplingGunReelSound
+  files:
+    - /Audio/Weapons/reel.ogg
+
+- type: soundCollection
+  id: GrapplingGunShootSound
+  files:
+    - /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
+
+- type: soundCollection
+  id: GunShootSound
+  files:
+    - /Audio/Weapons/Guns/Gunshots/smg.ogg
+
+- type: soundCollection
+  id: GunEmptySound
+  files:
+    - /Audio/Weapons/Guns/Empty/empty.ogg
+
+- type: soundCollection
+  id: GunModeChangeSound
+  files:
+    - /Audio/Weapons/Guns/Misc/selector.ogg
+
+- type: soundCollection
+  id: RevolverMagazineInjectSound
+  files:
+    - /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+
+- type: soundCollection
+  id: RevolverMagazineEjectSound
+  files:
+    - /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+
+- type: soundCollection
+  id: AbsorbentPickupSound
+  files:
+    - /Audio/Effects/Fluids/watersplash.ogg
+
+- type: soundCollection
+  id: FultonLaunchSound
+  files:
+    - /Audio/Items/Mining/fultext_launch.ogg
+
+- type: soundCollection
+  id: MagazineAmmoAutoEjectSound
+  files:
+    - /Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg
+
+- type: soundCollection
+  id: BasicEntityAmmoRechargeSound
+  files:
+    - /Audio/Magic/forcewall.ogg
+
+- type: soundCollection
+  id: RevolverAmmoEjectSound
+  files:
+    - /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+
+- type: soundCollection
+  id: RevolverAmmoInsertSound
+  files:
+    - /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+
+- type: soundCollection
+  id: RevolverSpinSound
+  files:
+    - /Audio/Weapons/Guns/Misc/revolver_spin.ogg
+
+- type: soundCollection
+  id: ProjectileReflectedSound
+  files:
+    - /Audio/Weapons/Guns/Hits/laser_sear_wall.ogg
+
+- type: soundCollection
+  id: ObjectWieldedSound
+  files:
+    - /Audio/Effects/thudswoosh.ogg
+
+- type: soundCollection
+  id: WiresPanelOpenSound
+  files:
+    - /Audio/Machines/screwdriveropen.ogg
+
+- type: soundCollection
+  id: WiresPanelCloseSound
+  files:
+    - /Audio/Machines/screwdriverclose.ogg
+
+- type: soundCollection
+  id: ArtifactCrusherCrushSound
+  files:
+    - /Audio/Effects/hydraulic_press.ogg
+
+- type: soundCollection
+  id: ZombieRoundStartSound
+  files:
+    - /Audio/Ambience/Antag/zombie_start.ogg
+
+- type: soundCollection
+  id: ZombieBiteSound
+  files:
+    - /Audio/Effects/bite.ogg
+
+- type: soundCollection
+  id: EyeOpenSound
+  files:
+    - /Audio/Effects/eye_open.ogg
+
+- type: soundCollection
+  id: EyeCloseSound
+  files:
+    - /Audio/Effects/eye_close.ogg
+
+- type: soundCollection
+  id: BibleFamiliarSummonSound
+  files:
+    - /Audio/Effects/radpulse9.ogg

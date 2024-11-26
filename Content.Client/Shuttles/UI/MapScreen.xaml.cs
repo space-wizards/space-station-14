@@ -211,7 +211,7 @@ public sealed partial class MapScreen : BoxContainer
     {
         if (_console != null)
         {
-            _audio.PlayEntity(new SoundPathSpecifier("/Audio/Effects/Shuttle/radar_ping.ogg"), Filter.Local(), _console.Value, true);
+            _audio.PlayEntity(new SoundCollectionSpecifier("ShuttlePingSound"), Filter.Local(), _console.Value, true);
         }
 
         RebuildMapObjects();

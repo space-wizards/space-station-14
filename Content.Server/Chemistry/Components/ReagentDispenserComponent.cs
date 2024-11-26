@@ -57,7 +57,7 @@ namespace Content.Server.Chemistry.Components
         public List<ItemSlot> StorageSlots = new List<ItemSlot>();
 
         [DataField("clickSound"), ViewVariables(VVAccess.ReadWrite)]
-        public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
+        public SoundSpecifier ClickSound = new SoundCollectionSpecifier("MachineSwitchSound");
 
         [ViewVariables(VVAccess.ReadWrite)]
         public ReagentDispenserDispenseAmount DispenseAmount = ReagentDispenserDispenseAmount.U10;

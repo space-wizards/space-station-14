@@ -30,5 +30,5 @@ public sealed partial class FirestarterComponent : Component
     /// Radius of objects that will be ignited if flammable.
     /// </summary>
     [DataField]
-    public SoundSpecifier IgniteSound = new SoundPathSpecifier("/Audio/Magic/rumble.ogg");
+    public SoundSpecifier IgniteSound = new SoundCollectionSpecifier("FireStarterIgnitedSound");
 }

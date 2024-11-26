@@ -65,13 +65,13 @@ public sealed partial class StrapComponent : Component
     /// The sound to be played when a mob is buckled
     /// </summary>
     [DataField]
-    public SoundSpecifier BuckleSound  = new SoundPathSpecifier("/Audio/Effects/buckle.ogg");
+    public SoundSpecifier BuckleSound  = new SoundCollectionSpecifier("EntityBuckledSound");
 
     /// <summary>
     /// The sound to be played when a mob is unbuckled
     /// </summary>
     [DataField]
-    public SoundSpecifier UnbuckleSound = new SoundPathSpecifier("/Audio/Effects/unbuckle.ogg");
+    public SoundSpecifier UnbuckleSound = new SoundCollectionSpecifier("EntityUnbuckledSound");
 
     /// <summary>
     /// ID of the alert to show when buckled

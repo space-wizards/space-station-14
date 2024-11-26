@@ -26,5 +26,5 @@ public sealed partial class AnomalyScannerComponent : Component
     /// The sound plays when the scan finished
     /// </summary>
     [DataField("completeSound")]
-    public SoundSpecifier? CompleteSound = new SoundPathSpecifier("/Audio/Items/beep.ogg");
+    public SoundSpecifier? CompleteSound = new SoundCollectionSpecifier("AnomalyScannerScannedSound");
 }

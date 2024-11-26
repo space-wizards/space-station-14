@@ -187,7 +187,7 @@ namespace Content.Server.Power.EntitySystems
 
             if (playSwitchSound)
             {
-                _audio.PlayPvs(new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg"), uid,
+                _audio.PlayPvs(new SoundCollectionSpecifier("MachineSwitchSound"), uid,
                     AudioParams.Default.WithVolume(-2f));
             }
 

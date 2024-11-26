@@ -109,7 +109,7 @@ namespace Content.Server.Body.Components
         ///     The sound to be played when some damage actually heals bleeding rather than starting it.
         /// </summary>
         [DataField]
-        public SoundSpecifier BloodHealedSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
+        public SoundSpecifier BloodHealedSound = new SoundCollectionSpecifier("BloodCauterizationSound");
 
         /// <summary>
         /// The minimum amount damage reduction needed to play the healing sound/popup.

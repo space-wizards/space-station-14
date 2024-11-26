@@ -52,8 +52,8 @@ public sealed partial class NetworkConfiguratorComponent : Component
     public TimeSpan LastUseAttempt;
 
     [DataField]
-    public SoundSpecifier SoundNoAccess = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
+    public SoundSpecifier SoundNoAccess = new SoundCollectionSpecifier("AccessDeniedSound");
 
     [DataField]
-    public SoundSpecifier SoundSwitchMode = new SoundPathSpecifier("/Audio/Machines/quickbeep.ogg");
+    public SoundSpecifier SoundSwitchMode = new SoundCollectionSpecifier("NetworkConfiguratorModeSwitchedSound");
 }

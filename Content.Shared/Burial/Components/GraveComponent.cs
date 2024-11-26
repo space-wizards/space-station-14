@@ -24,7 +24,7 @@ public sealed partial class GraveComponent : Component
     /// Sound to make when digging/filling this grave
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public SoundPathSpecifier DigSound = new SoundPathSpecifier("/Audio/Items/shovel_dig.ogg")
+    public SoundSpecifier DigSound = new SoundCollectionSpecifier("GraveDigSound")
     {
         Params = AudioParams.Default.WithLoop(true)
     };

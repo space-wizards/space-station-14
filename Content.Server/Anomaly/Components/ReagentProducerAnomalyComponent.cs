@@ -59,7 +59,7 @@ public sealed partial class ReagentProducerAnomalyComponent : Component
     /// Noise made when anomaly pulse.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public SoundSpecifier ChangeSound = new SoundPathSpecifier("/Audio/Effects/waterswirl.ogg");
+    public SoundSpecifier ChangeSound = new SoundCollectionSpecifier("AnomalyPulseSound");
     /// <summary>
     /// The component will repaint the sprites of the object to match the current color of the solution,
     /// if the RandomSprite component is hung correctly.

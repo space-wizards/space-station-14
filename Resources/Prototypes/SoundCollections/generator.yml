@@ -1,4 +1,9 @@
 ﻿- type: soundCollection
+  id: AMEFuelInjectSound
+  files:
+      - /Audio/Machines/ame_fuelinjection.ogg
+
+- type: soundCollection
   # Plays when you try to start a generator.
   # You know, lawnmower cord pull sound.
   id: GeneratorTug

@@ -23,7 +23,7 @@ public sealed partial class MiningScannerViewerComponent : Component
     public EntityCoordinates? LastPingLocation;
 
     [DataField, AutoNetworkedField]
-    public SoundSpecifier? PingSound = new SoundPathSpecifier("/Audio/Machines/sonar-ping.ogg")
+    public SoundSpecifier? PingSound = new SoundCollectionSpecifier("MiningScannerPingSound")
     {
         Params = new AudioParams
         {

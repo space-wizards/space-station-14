@@ -16,7 +16,7 @@ public sealed partial class RandomGlobalSpawnSpellEvent : InstantActionEvent, IS
     /// Sound that will play globally when cast
     /// </summary>
     [DataField]
-    public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Magic/staff_animation.ogg");
+    public SoundSpecifier Sound = new SoundCollectionSpecifier("GlobalSpellCastSound");
 
     [DataField]
     public string? Speech { get; private set; }

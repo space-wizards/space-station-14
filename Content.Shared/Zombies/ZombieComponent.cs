@@ -131,13 +131,13 @@ public sealed partial class ZombieComponent : Component
     ///     Path to antagonist alert sound.
     /// </summary>
     [DataField("greetSoundNotification")]
-    public SoundSpecifier GreetSoundNotification = new SoundPathSpecifier("/Audio/Ambience/Antag/zombie_start.ogg");
+    public SoundSpecifier GreetSoundNotification = new SoundCollectionSpecifier("ZombieRoundStartSound");
 
     /// <summary>
     ///     Hit sound on zombie bite.
     /// </summary>
     [DataField]
-    public SoundSpecifier BiteSound = new SoundPathSpecifier("/Audio/Effects/bite.ogg");
+    public SoundSpecifier BiteSound = new SoundCollectionSpecifier("ZombieBiteSound");
 
     /// <summary>
     /// The blood reagent of the humanoid to restore in case of cloning

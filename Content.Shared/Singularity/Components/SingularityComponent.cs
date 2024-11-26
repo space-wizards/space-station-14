@@ -52,10 +52,9 @@ public sealed partial class SingularityComponent : Component
     /// </summary>
     [DataField("ambientSound")]
     [ViewVariables(VVAccess.ReadOnly)]
-    public SoundSpecifier? AmbientSound = new SoundPathSpecifier(
-        "/Audio/Effects/singularity_form.ogg",
-        AudioParams.Default.WithVolume(5).WithLoop(true).WithMaxDistance(20f)
-    );
+    public SoundSpecifier? AmbientSound = new SoundCollectionSpecifier("SingularityAmbientSound") {
+        Params = AudioParams.Default.WithVolume(5).WithLoop(true).WithMaxDistance(20f)
+    };
 
     /// <summary>
     /// The audio stream that plays the sound specified by <see cref="AmbientSound"/> on loop.
@@ -75,10 +74,7 @@ public sealed partial class SingularityComponent : Component
     /// </summary>
     [DataField("dissipationSound")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public SoundSpecifier? DissipationSound = new SoundPathSpecifier(
-        "/Audio/Effects/singularity_collapse.ogg",
-        AudioParams.Default
-    );
+    public SoundSpecifier? DissipationSound = new SoundCollectionSpecifier("SingularityCollapseSound");
 
     #endregion Audio
 }

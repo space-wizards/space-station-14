@@ -32,10 +32,10 @@ namespace Content.Server.PowerSink
         public float HighestWarningSoundThreshold = 0f;
 
         [DataField("chargeFireSound")]
-        public SoundSpecifier ChargeFireSound = new SoundPathSpecifier("/Audio/Effects/PowerSink/charge_fire.ogg");
+        public SoundSpecifier ChargeFireSound = new SoundCollectionSpecifier("PowerSinkChargingSound");
 
         [DataField("electricSound")] public SoundSpecifier ElectricSound =
-            new SoundPathSpecifier("/Audio/Effects/PowerSink/electric.ogg")
+            new SoundCollectionSpecifier("PowerSinkWarningSoundSound")
             {
                 Params = AudioParams.Default
                     .WithVolume(15f) // audible even behind walls

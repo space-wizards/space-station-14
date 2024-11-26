@@ -18,5 +18,5 @@ public sealed partial class ActiveScannedArtifactComponent : Component
     /// <summary>
     /// The sound that plays when the scan fails
     /// </summary>
-    public readonly SoundSpecifier ScanFailureSound = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
+    public readonly SoundSpecifier ScanFailureSound = new SoundCollectionSpecifier("AccessDeniedSound");
 }

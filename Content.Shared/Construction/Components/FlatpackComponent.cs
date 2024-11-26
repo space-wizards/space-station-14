@@ -29,7 +29,7 @@ public sealed partial class FlatpackComponent : Component
     /// Sound effect played upon the object being unpacked.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
-    public SoundSpecifier UnpackSound = new SoundPathSpecifier("/Audio/Effects/unwrap.ogg");
+    public SoundSpecifier UnpackSound = new SoundCollectionSpecifier("FlatpackUnpackedSound");
 
     /// <summary>
     /// A dictionary relating a machine board sprite state to a color used for the overlay.

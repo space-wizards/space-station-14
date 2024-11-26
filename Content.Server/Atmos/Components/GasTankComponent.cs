@@ -16,11 +16,11 @@ namespace Content.Server.Atmos.Components
         public bool IsLowPressure => (Air?.Pressure ?? 0F) <= TankLowPressure;
 
         [ViewVariables(VVAccess.ReadWrite), DataField("ruptureSound")]
-        public SoundSpecifier RuptureSound = new SoundPathSpecifier("/Audio/Effects/spray.ogg");
+        public SoundSpecifier RuptureSound = new SoundCollectionSpecifier("GasTankRuptureSound");
 
         [ViewVariables(VVAccess.ReadWrite), DataField("connectSound")]
         public SoundSpecifier? ConnectSound =
-            new SoundPathSpecifier("/Audio/Effects/internals.ogg")
+            new SoundCollectionSpecifier("GasTankConnectSound")
             {
                 Params = AudioParams.Default.WithVolume(5f),
             };

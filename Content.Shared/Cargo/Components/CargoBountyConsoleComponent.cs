@@ -31,19 +31,19 @@ public sealed partial class CargoBountyConsoleComponent : Component
     /// The sound made when printing occurs
     /// </summary>
     [DataField("printSound")]
-    public SoundSpecifier PrintSound = new SoundPathSpecifier("/Audio/Machines/printer.ogg");
+    public SoundSpecifier PrintSound = new SoundCollectionSpecifier("CargoBountyPrintSound");
 
     /// <summary>
     /// The sound made when the bounty is skipped.
     /// </summary>
     [DataField("skipSound")]
-    public SoundSpecifier SkipSound = new SoundPathSpecifier("/Audio/Effects/Cargo/ping.ogg");
+    public SoundSpecifier SkipSound = new SoundCollectionSpecifier("CargoBountySkippedSound");
 
     /// <summary>
     /// The sound made when bounty skipping is denied due to lacking access.
     /// </summary>
     [DataField("denySound")]
-    public SoundSpecifier DenySound = new SoundPathSpecifier("/Audio/Effects/Cargo/buzz_two.ogg");
+    public SoundSpecifier DenySound = new SoundCollectionSpecifier("CargoBountySkipDenySound");
 }
 
 [NetSerializable, Serializable]

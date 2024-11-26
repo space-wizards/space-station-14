@@ -16,10 +16,10 @@ namespace Content.Server.Light.Components
     public sealed partial class PoweredLightComponent : Component
     {
         [DataField("burnHandSound")]
-        public SoundSpecifier BurnHandSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
+        public SoundSpecifier BurnHandSound = new SoundCollectionSpecifier("LightBurnHandSound");
 
         [DataField("turnOnSound")]
-        public SoundSpecifier TurnOnSound = new SoundPathSpecifier("/Audio/Machines/light_tube_on.ogg");
+        public SoundSpecifier TurnOnSound = new SoundCollectionSpecifier("LightTurnOnSound");
 
         [DataField("hasLampOnSpawn", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? HasLampOnSpawn = null;

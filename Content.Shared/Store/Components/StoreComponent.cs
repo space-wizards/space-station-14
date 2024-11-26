@@ -91,7 +91,7 @@ public sealed partial class StoreComponent : Component
     /// The sound played to the buyer when a purchase is succesfully made.
     /// </summary>
     [DataField]
-    public SoundSpecifier BuySuccessSound = new SoundPathSpecifier("/Audio/Effects/kaching.ogg");
+    public SoundSpecifier BuySuccessSound = new SoundCollectionSpecifier("PurchaseSuccessSoundSound");
     #endregion
 }
 

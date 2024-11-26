@@ -34,7 +34,7 @@ namespace Content.Shared.Nutrition.Components
         /// The sound to be played if the utensil breaks.
         /// </summary>
         [DataField("breakSound")]
-        public SoundSpecifier BreakSound = new SoundPathSpecifier("/Audio/Items/snap.ogg");
+        public SoundSpecifier BreakSound = new SoundCollectionSpecifier("UtensilSnapSound");
     }
 
     // If you want to make a fancy output on "wrong" composite utensil use (like: you need fork and knife)

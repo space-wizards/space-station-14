@@ -9,7 +9,7 @@ namespace Content.Shared.Gravity
     public sealed partial class GravityComponent : Component
     {
         [DataField("gravityShakeSound")]
-        public SoundSpecifier GravityShakeSound { get; set; } = new SoundPathSpecifier("/Audio/Effects/alert.ogg");
+        public SoundSpecifier GravityShakeSound { get; set; } = new SoundCollectionSpecifier("GravityShakeSound");
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool EnabledVV

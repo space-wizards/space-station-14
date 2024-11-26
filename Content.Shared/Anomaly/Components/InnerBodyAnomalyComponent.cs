@@ -44,7 +44,7 @@ public sealed partial class InnerBodyAnomalyComponent : Component
     /// Sound, playing on becoming anomaly
     /// </summary>
     [DataField]
-    public SoundSpecifier? StartSound = new SoundPathSpecifier("/Audio/Effects/inneranomaly.ogg");
+    public SoundSpecifier? StartSound = new SoundCollectionSpecifier("InnerBodyAnomalyAcquiredSound");
 
     /// <summary>
     /// Used to display messages to the player about their level of disease progression

@@ -16,5 +16,5 @@ public sealed partial class ScramImplantComponent : Component
     public float TeleportRadius = 100f;
 
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public SoundSpecifier TeleportSound = new SoundPathSpecifier("/Audio/Effects/teleport_arrival.ogg");
+    public SoundSpecifier TeleportSound = new SoundCollectionSpecifier("ScramTeleportSoundSound");
 }

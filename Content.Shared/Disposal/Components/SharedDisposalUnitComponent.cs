@@ -16,7 +16,7 @@ public abstract partial class SharedDisposalUnitComponent : Component
     /// Sounds played upon the unit flushing.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("soundFlush")]
-    public SoundSpecifier? FlushSound = new SoundPathSpecifier("/Audio/Machines/disposalflush.ogg");
+    public SoundSpecifier? FlushSound = new SoundCollectionSpecifier("DisposalUnitFlushSound");
 
     /// <summary>
     /// Blacklists (prevents) entities listed from being placed inside.
@@ -34,7 +34,7 @@ public abstract partial class SharedDisposalUnitComponent : Component
     /// Sound played when an object is inserted into the disposal unit.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("soundInsert")]
-    public SoundSpecifier? InsertSound = new SoundPathSpecifier("/Audio/Effects/trashbag1.ogg");
+    public SoundSpecifier? InsertSound = new SoundCollectionSpecifier("DisposalUnitInsertSound");
 
     /// <summary>
     /// State for this disposals unit.

@@ -24,13 +24,13 @@ public sealed partial class GrapplingGunComponent : Component
     public bool Reeling;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("reelSound"), AutoNetworkedField]
-    public SoundSpecifier? ReelSound = new SoundPathSpecifier("/Audio/Weapons/reel.ogg")
+    public SoundSpecifier? ReelSound = new SoundCollectionSpecifier("GrapplingGunReelSound")
     {
         Params = AudioParams.Default.WithLoop(true)
     };
 
     [ViewVariables(VVAccess.ReadWrite), DataField("cycleSound"), AutoNetworkedField]
-    public SoundSpecifier? CycleSound = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/kinetic_reload.ogg");
+    public SoundSpecifier? CycleSound = new SoundCollectionSpecifier("GrapplingGunShootSound");
 
     [DataField, ViewVariables]
     public SpriteSpecifier RopeSprite =

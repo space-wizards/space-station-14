@@ -22,7 +22,7 @@ public sealed partial class ForceGunComponent : BaseForceGunComponent
     public override EntityUid? Tethered { get; set; }
 
     [ViewVariables(VVAccess.ReadWrite), DataField("soundLaunch")]
-    public SoundSpecifier? LaunchSound = new SoundPathSpecifier("/Audio/Weapons/soup.ogg")
+    public SoundSpecifier? LaunchSound = new SoundCollectionSpecifier("ForceGunLaunchSound")
     {
         Params = AudioParams.Default.WithVolume(5f),
     };

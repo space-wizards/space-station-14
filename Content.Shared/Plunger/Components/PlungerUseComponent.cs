@@ -37,6 +37,6 @@ namespace Content.Shared.Plunger.Components
         /// Sound played on rummage completion.
         /// </summary>
         [DataField]
-        public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Effects/Fluids/glug.ogg");
+        public SoundSpecifier Sound = new SoundCollectionSpecifier("PlungerRummagedSound");
     }
 }

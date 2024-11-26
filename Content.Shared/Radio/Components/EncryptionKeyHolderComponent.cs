@@ -32,11 +32,11 @@ public sealed partial class EncryptionKeyHolderComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("keyExtractionSound")]
-    public SoundSpecifier KeyExtractionSound = new SoundPathSpecifier("/Audio/Items/pistol_magout.ogg");
+    public SoundSpecifier KeyExtractionSound = new SoundCollectionSpecifier("EncryptionKeyExtractedSound");
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("keyInsertionSound")]
-    public SoundSpecifier KeyInsertionSound = new SoundPathSpecifier("/Audio/Items/pistol_magin.ogg");
+    public SoundSpecifier KeyInsertionSound = new SoundCollectionSpecifier("EncryptionKeyInsertedSound");
 
     [ViewVariables]
     public Container KeyContainer = default!;

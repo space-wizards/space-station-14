@@ -9,7 +9,7 @@ namespace Content.Server.Power.Components;
 public sealed partial class ApcComponent : BaseApcNetComponent
 {
     [DataField("onReceiveMessageSound")]
-    public SoundSpecifier OnReceiveMessageSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
+    public SoundSpecifier OnReceiveMessageSound = new SoundCollectionSpecifier("MachineSwitchSound");
 
     public ApcChargeState LastChargeState;
     public TimeSpan? LastChargeStateTime;

@@ -15,7 +15,7 @@ public sealed partial class SliceableFoodComponent : Component
     public EntProtoId? Slice;
 
     [DataField]
-    public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Items/Culinary/chop.ogg");
+    public SoundSpecifier Sound = new SoundCollectionSpecifier("FoodSlicedSound");
 
     /// <summary>
     /// Number of slices the food starts with.

@@ -17,7 +17,7 @@ public sealed partial class ClumsyComponent : Component
     ///     Sound to play when clumsy interactions fail.
     /// </summary>
     [DataField]
-    public SoundSpecifier ClumsySound = new SoundPathSpecifier("/Audio/Items/bikehorn.ogg");
+    public SoundSpecifier ClumsySound = new SoundCollectionSpecifier("ClumsyInteractionFailedSound");
 
     /// <summary>
     ///     Default chance to fail a clumsy interaction.
@@ -57,5 +57,5 @@ public sealed partial class ClumsyComponent : Component
     ///     Noise to play after failing to shoot a gun. Boom!
     /// </summary>
     [DataField]
-    public SoundSpecifier GunShootFailSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg");
+    public SoundSpecifier GunShootFailSound = new SoundCollectionSpecifier("GunShootFailSound");
 }

@@ -34,8 +34,8 @@ public sealed partial class CluwneComponent : Component
     /// Sound specifiers for honk and knock.
     /// </summary>
     [DataField("spawnsound")]
-    public SoundSpecifier SpawnSound = new SoundPathSpecifier("/Audio/Items/bikehorn.ogg");
+    public SoundSpecifier SpawnSound = new SoundCollectionSpecifier("CluwneSpawnSound");
 
     [DataField("knocksound")]
-    public SoundSpecifier KnockSound = new SoundPathSpecifier("/Audio/Items/airhorn.ogg");
+    public SoundSpecifier KnockSound = new SoundCollectionSpecifier("CluwneKnockSound");
 }

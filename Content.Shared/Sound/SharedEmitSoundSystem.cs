@@ -179,7 +179,7 @@ public abstract class SharedEmitSoundSystem : EntitySystem
 
         if (_netMan.IsServer && sound != null)
         {
-            _audioSystem.PlayPvs(_audioSystem.GetSound(sound), uid, AudioParams.Default.WithVolume(volume));
+            _audioSystem.PlayPvs(sound, uid, AudioParams.Default.WithVolume(volume));
         }
     }
 

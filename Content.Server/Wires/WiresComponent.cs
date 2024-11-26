@@ -66,5 +66,5 @@ public sealed partial class WiresComponent : Component
     public Dictionary<object, object> StateData { get; } = new();
 
     [DataField]
-    public SoundSpecifier PulseSound = new SoundPathSpecifier("/Audio/Effects/multitool_pulse.ogg");
+    public SoundSpecifier PulseSound = new SoundCollectionSpecifier("WiresPulseSound");
 }

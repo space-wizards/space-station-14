@@ -29,7 +29,7 @@ public sealed partial class VendingMachineRestockComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("soundRestockStart")]
-    public SoundSpecifier SoundRestockStart = new SoundPathSpecifier("/Audio/Machines/vending_restock_start.ogg")
+    public SoundSpecifier SoundRestockStart = new SoundCollectionSpecifier("VendingMachineRestockStartSound")
     {
         Params = new AudioParams
         {
@@ -43,7 +43,7 @@ public sealed partial class VendingMachineRestockComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("soundRestockDone")]
-    public SoundSpecifier SoundRestockDone = new SoundPathSpecifier("/Audio/Machines/vending_restock_done.ogg");
+    public SoundSpecifier SoundRestockDone = new SoundCollectionSpecifier("VendingMachineRestockDoneSound");
 }
 
 [Serializable, NetSerializable]

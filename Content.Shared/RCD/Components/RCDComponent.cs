@@ -25,7 +25,7 @@ public sealed partial class RCDComponent : Component
     /// Sound that plays when a RCD operation successfully completes
     /// </summary>
     [DataField]
-    public SoundSpecifier SuccessSound { get; set; } = new SoundPathSpecifier("/Audio/Items/deconstruct.ogg");
+    public SoundSpecifier SuccessSound { get; set; } = new SoundCollectionSpecifier("RCDDeconstructSound");
 
     /// <summary>
     /// The ProtoId of the currently selected RCD prototype

@@ -29,7 +29,7 @@ public sealed partial class LogicGateComponent : Component
     /// Sound played when cycling logic gate operations.
     /// </summary>
     [DataField]
-    public SoundSpecifier CycleSound = new SoundPathSpecifier("/Audio/Machines/lightswitch.ogg");
+    public SoundSpecifier CycleSound = new SoundCollectionSpecifier("LogicGateSwitch");
 
     /// <summary>
     /// Name of the first input port.

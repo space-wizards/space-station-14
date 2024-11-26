@@ -24,7 +24,7 @@ public sealed partial class PressurizedSolutionComponent : Component
     /// The sound to play when the solution sprays out of the container.
     /// </summary>
     [DataField]
-    public SoundSpecifier SpraySound = new SoundPathSpecifier("/Audio/Items/soda_spray.ogg");
+    public SoundSpecifier SpraySound = new SoundCollectionSpecifier("SolutionSpraySound");
 
     /// <summary>
     /// The longest amount of time that the solution can remain fizzy after being aggitated.

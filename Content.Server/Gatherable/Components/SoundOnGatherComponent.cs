@@ -10,7 +10,7 @@ namespace Content.Server.Gatherable.Components;
 public sealed partial class SoundOnGatherComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("sound")]
-    public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Effects/break_stone.ogg")
+    public SoundSpecifier Sound = new SoundCollectionSpecifier("GatherPickupSound")
     {
         Params = AudioParams.Default
             .WithVariation(SharedContentAudioSystem.DefaultVariation)

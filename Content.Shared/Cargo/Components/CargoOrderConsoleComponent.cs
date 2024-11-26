@@ -13,10 +13,10 @@ namespace Content.Shared.Cargo.Components;
 public sealed partial class CargoOrderConsoleComponent : Component
 {
     [DataField("soundError")] public SoundSpecifier ErrorSound =
-        new SoundPathSpecifier("/Audio/Effects/Cargo/buzz_sigh.ogg");
+        new SoundCollectionSpecifier("CargoOrderErrorSound");
 
     [DataField("soundConfirm")]
-    public SoundSpecifier ConfirmSound = new SoundPathSpecifier("/Audio/Effects/Cargo/ping.ogg");
+    public SoundSpecifier ConfirmSound = new SoundCollectionSpecifier("CargoOrderConfirmSound");
 
     /// <summary>
     /// All of the <see cref="CargoProductPrototype.Group"/>s that are supported.
