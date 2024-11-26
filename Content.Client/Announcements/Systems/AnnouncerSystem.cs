@@ -1,9 +1,8 @@
 using System.Linq;
 using Content.Client.Audio;
-using Content.Shared._Impstation.CCVar;
+using Content.Shared._EinsteinEngine.CCVar;
 using Content.Shared.Announcements.Events;
 using Content.Shared.Announcements.Systems;
-using Content.Shared.CCVar;
 using Robust.Client.Audio;
 using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
@@ -28,10 +27,10 @@ public sealed class AnnouncerSystem : SharedAnnouncerSystem
     {
         base.Initialize();
 
-        AnnouncerVolume = _config.GetCVar(ImpCCVars.AnnouncerVolume) * 100f / ContentAudioSystem.AnnouncerMultiplier;
+        AnnouncerVolume = _config.GetCVar(EinsteinCCVars.AnnouncerVolume) * 100f / ContentAudioSystem.AnnouncerMultiplier;
 
-        _config.OnValueChanged(ImpCCVars.AnnouncerVolume, OnAnnouncerVolumeChanged);
-        _config.OnValueChanged(ImpCCVars.AnnouncerDisableMultipleSounds, OnAnnouncerDisableMultipleSounds);
+        _config.OnValueChanged(EinsteinCCVars.AnnouncerVolume, OnAnnouncerVolumeChanged);
+        _config.OnValueChanged(EinsteinCCVars.AnnouncerDisableMultipleSounds, OnAnnouncerDisableMultipleSounds);
 
         SubscribeNetworkEvent<AnnouncementSendEvent>(OnAnnouncementReceived);
     }
@@ -40,8 +39,8 @@ public sealed class AnnouncerSystem : SharedAnnouncerSystem
     {
         base.Shutdown();
 
-        _config.UnsubValueChanged(ImpCCVars.AnnouncerVolume, OnAnnouncerVolumeChanged);
-        _config.UnsubValueChanged(ImpCCVars.AnnouncerDisableMultipleSounds, OnAnnouncerDisableMultipleSounds);
+        _config.UnsubValueChanged(EinsteinCCVars.AnnouncerVolume, OnAnnouncerVolumeChanged);
+        _config.UnsubValueChanged(EinsteinCCVars.AnnouncerDisableMultipleSounds, OnAnnouncerDisableMultipleSounds);
     }
 
 
@@ -79,7 +78,7 @@ public sealed class AnnouncerSystem : SharedAnnouncerSystem
         source.Gain = AnnouncerVolume * SharedAudioSystem.VolumeToGain(ev.AudioParams.Volume);
         source.Global = true;
 
-        if (_config.GetCVar(ImpCCVars.AnnouncerDisableMultipleSounds))
+        if (_config.GetCVar(EinsteinCCVars.AnnouncerDisableMultipleSounds))
         {
             foreach (var audioSource in AnnouncerSources.ToList())
             {

@@ -1,4 +1,5 @@
 using Content.Client.Audio;
+using Content.Shared._EinsteinEngine.CCVar;
 using Content.Shared._Impstation.CCVar;
 using Content.Shared.CCVar;
 using Robust.Client.Audio;
@@ -53,7 +54,7 @@ public sealed partial class AudioTab : Control
             scale: ContentAudioSystem.InterfaceMultiplier);
 
         Control.AddOptionPercentSlider(
-            ImpCCVars.AnnouncerVolume,
+            EinsteinCCVars.AnnouncerVolume,
             SliderVolumeAnnouncer,
             scale: ContentAudioSystem.AnnouncerMultiplier);
 
@@ -66,7 +67,7 @@ public sealed partial class AudioTab : Control
         Control.AddOptionCheckBox(CCVars.LobbyMusicEnabled, LobbyMusicCheckBox);
         Control.AddOptionCheckBox(CCVars.RestartSoundsEnabled, RestartSoundsCheckBox);
         Control.AddOptionCheckBox(CCVars.EventMusicEnabled, EventMusicCheckBox);
-        Control.AddOptionCheckBox(ImpCCVars.AnnouncerDisableMultipleSounds, AnnouncerDisableMultipleSoundsCheckBox);
+        Control.AddOptionCheckBox(EinsteinCCVars.AnnouncerDisableMultipleSounds, AnnouncerDisableMultipleSoundsCheckBox);
         Control.AddOptionCheckBox(CCVars.AdminSoundsEnabled, AdminSoundsCheckBox);
 
         Control.Initialize();
