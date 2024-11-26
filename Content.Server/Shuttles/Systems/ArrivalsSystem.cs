@@ -515,7 +515,7 @@ private void SetupArrivalsStation()
 
     _mapManager.DoMapInitialize(mapId1);
 
-    // Setup for the second map
+    // Setup for the ocean surface map
     var mapId2 = _mapManager.CreateMap();
     var mapUid2 = _mapManager.GetMapEntityId(mapId2);
     _mapManager.AddUninitializedMap(mapId2);
