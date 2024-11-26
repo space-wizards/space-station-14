@@ -59,68 +59,76 @@ public sealed class InGasSystem : EntitySystem
         return (mixture != null && mixture.GetMoles(inGas.GasId) >= inGas.GasThreshold);
     }
 
-    public override void Update(float frameTime)
+   public override void Update(float frameTime)
+{
+    _timer += frameTime;
+
+    if (_timer < UpdateTimer)
+        return;
+
+    _timer -= UpdateTimer;
+
+    var enumerator = EntityQueryEnumerator<InGasComponent, DamageableComponent>();
+    while (enumerator.MoveNext(out var uid, out var inGas, out var damageable))
     {
-        _timer += frameTime;
-
-        if (_timer < UpdateTimer)
-            return;
-
-        _timer -= UpdateTimer;
-
-        var enumerator = EntityQueryEnumerator<InGasComponent, DamageableComponent>();
-        while (enumerator.MoveNext(out var uid, out var inGas, out var damageable))
+        if (!inGas.DamagedByGas)
         {
-            if (!inGas.DamagedByGas)
-            {
-                continue;
-            }
-            // No point calculating things if we aren't in water
+            continue;
+        }
 
-            if (!InGas(uid))
-            {
-                if (inGas.TakingDamage)
-                {
-                    inGas.TakingDamage = false;
-                    _alerts.ClearAlertCategory(uid, inGas.BreathingAlertCategory);
-                    //Look at me i'm even being proper with logging
-                    //todo make this actually work
-                    _adminLog.Add(LogType.Electrocution, $"Entity {uid} is no longer taking damage from water.");
-                }
-                continue;
-            }
+        // Check if the entity is in water
+        bool currentlyInWater = InWater(uid);
 
-            var totalDamage = FixedPoint2.Zero;
-            foreach (var (damageType, _) in inGas.Damage.DamageDict)
-            {
-                if (!damageable.Damage.DamageDict.TryGetValue(damageType, out var damage))
-                    continue;
-                totalDamage += damage;
-            }
+        // If the water state has changed (entering or exiting), raise the appropriate event
+        if (currentlyInWater != inGas.InWater)
+        {
+            // Update the water state in the component
+            inGas.InWater = currentlyInWater;
 
-            if (totalDamage >= inGas.MaxDamage)
+            // Raise the event depending on whether it's entering or exiting water
+            if (currentlyInWater)
             {
-                continue;
+                RaiseEvent(new InWaterEvent(uid));
+                Log.Error($"Entity {uid} has entered water.");
             }
-
-            _damageable.TryChangeDamage(uid, inGas.Damage, true);
-            if (!inGas.TakingDamage)
+            else
             {
-                inGas.TakingDamage = true;
-                _adminLog.Add(LogType.Electrocution, $"Entity {uid} is now taking damage from water.");
-                _alerts.ShowAlert(uid, inGas.DamageAlert, 1);
+                RaiseEvent(new OutOfWaterEvent(uid));
+                Log.Error($"Entity {uid} has exited water.");
             }
         }
 
-        if (InWater)
+        if (!currentlyInWater)
         {
-            RaiseEvent(new InWaterEvent(uid));
-            Log.Error($"object is in water");
+            if (inGas.TakingDamage)
+            {
+                inGas.TakingDamage = false;
+                _alerts.ClearAlertCategory(uid, inGas.BreathingAlertCategory);
+                _adminLog.Add(LogType.Electrocution, $"Entity {uid} is no longer taking damage from water.");
+            }
+            continue;
         }
-        else
+
+        var totalDamage = FixedPoint2.Zero;
+        foreach (var (damageType, _) in inGas.Damage.DamageDict)
         {
-            RaiseEvent(new OutOfWaterEvent(uid));
-            Log.Error($"object is not in water");
+            if (!damageable.Damage.DamageDict.TryGetValue(damageType, out var damage))
+                continue;
+            totalDamage += damage;
+        }
+
+        if (totalDamage >= inGas.MaxDamage)
+        {
+            continue;
+        }
+
+        _damageable.TryChangeDamage(uid, inGas.Damage, true);
+        if (!inGas.TakingDamage)
+        {
+            inGas.TakingDamage = true;
+            _adminLog.Add(LogType.Electrocution, $"Entity {uid} is now taking damage from water.");
+            _alerts.ShowAlert(uid, inGas.DamageAlert, 1);
         }
     }
 }
+
