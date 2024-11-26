@@ -8,6 +8,7 @@
       time: 36000 #10 hrs
 
 # Jumpsuit
+
 - type: loadout
   id: SpaceChemistJumpsuit
   effects:

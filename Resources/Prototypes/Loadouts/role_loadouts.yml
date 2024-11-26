@@ -590,6 +590,7 @@
 - type: roleLoadout
   id: JobChemist
   groups:
+  - ChemistHead # imp
   - MedicalMask
   - ChemistNeck
   - ChemistJumpsuit

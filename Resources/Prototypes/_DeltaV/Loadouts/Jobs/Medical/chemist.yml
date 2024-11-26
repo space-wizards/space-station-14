@@ -21,16 +21,6 @@
   equipment:
     gloves: ClothingHandsGlovesChemist
 
-# Shoes - DeltaV
-#- type: loadout
-#  id: ChemistWinterBoots
-#  equipment: ChemistWinterBoots
-
-#- type: startingGear
-#  id: ChemistWinterBoots
-#  equipment:
-#    shoes: ClothingShoesBootsWinterChem
-
 - type: loadout
   id: ChemistryShoes
   equipment:

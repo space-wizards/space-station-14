@@ -1907,8 +1907,9 @@
   loadouts:
   - RegularLabCoat
   - ChemistLabCoat
+  - SeniorPhysicianLabCoat # imp
   - ChemistWintercoat
-  - ChemistryApron
+  - ChemistryApron # imp
 
 - type: loadoutGroup
   id: ChemistBackpack

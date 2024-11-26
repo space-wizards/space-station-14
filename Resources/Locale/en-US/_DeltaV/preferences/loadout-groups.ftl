@@ -1,1 +1,1 @@
-loadout-group-chemistry-gloves = Chemist Gloves
+loadout-group-chemistry-gloves = Chemist gloves
