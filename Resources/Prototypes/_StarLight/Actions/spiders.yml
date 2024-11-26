@@ -35,21 +35,21 @@
   - type: SpawnOnCollide
     prototype: SpiderWeb
 
-- type: entity
-  id: ActionEggInjection
-  name: Egg injection
-  description: Injection of eggs into the body.
-  components:
-  - type: EntityTargetAction
-    useDelay: 5
-    itemIconStyle: BigAction
-    whitelist:
-      components:
-      - HumanoidAppearance
-    canTargetSelf: false
-    interactOnMiss: false
-      path: /Audio/Effects/pop.ogg
-    icon:
-      sprite:  _Starlight/Interface/Actions/actions_spider.rsi
-      state: egg
-    event: !type:EggInjectionEvent
+#- type: entity
+#  id: ActionEggInjection
+#  name: Egg injection
+#  description: Injection of eggs into the body.
+#  components:
+#  - type: EntityTargetAction
+#    useDelay: 5
+#    itemIconStyle: BigAction
+#    whitelist:
+#      components:
+#      - HumanoidAppearance
+#    canTargetSelf: false
+#    interactOnMiss: false
+#      path: /Audio/Effects/pop.ogg
+#    icon:
+#      sprite:  _Starlight/Interface/Actions/actions_spider.rsi
+#      state: egg
+#    event: !type:EggInjectionEvent

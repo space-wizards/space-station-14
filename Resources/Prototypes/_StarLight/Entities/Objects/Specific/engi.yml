@@ -1,0 +1,53 @@
+- type: entity
+  name: prototype of the jaws of life
+  parent: JawsOfLife
+  id: PrototypeJawsOfLife
+  description: Early version, not as effective.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/jaws_of_life.rsi
+    state: proto_jaws_pry
+  - type: Item
+    size: Normal
+    inhandVisuals:
+      left:
+      - state: inhand-left
+      right:
+      - state: inhand-right
+  - type: Clothing
+    sprite: Objects/Tools/jaws_of_life.rsi
+    quickEquip: false
+    slots:
+      - Belt
+  - type: ToolTileCompatible
+    delay: 0.5
+  - type: Tool
+    qualities:
+      - Prying
+    useSound: /Audio/Items/jaws_pry.ogg
+  - type: Prying
+    speedModifier: 1.4
+    pryPowered: false
+    useSound: /Audio/Items/jaws_pry.ogg
+  - type: MultipleTool
+    statusShowBehavior: true
+    entries:
+      - behavior: Prying
+        sprite:
+          sprite: Objects/Tools/jaws_of_life.rsi
+          state: proto_jaws_pry
+        useSound: /Audio/Items/jaws_pry.ogg
+        changeSound: /Audio/Items/change_jaws.ogg
+      - behavior: Cutting
+        sprite:
+          sprite: Objects/Tools/jaws_of_life.rsi
+          state: proto_jaws_cutter
+        useSound: /Audio/Items/jaws_cut.ogg
+        changeSound: /Audio/Items/change_jaws.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 90
+    damage:
+      types:
+        Blunt: 9
+    soundHit:
+      collection: MetalThud

@@ -109,11 +109,11 @@
       Alive:
         reagent: Omnizine
         quantity: 10
-        minDamage: 50
-        maxDamage: 100
+        minDamage: 49
+        maxDamage: 120
       Critical:
-        reagent: Inaprovaline
-        quantity: 15
+        reagent: Omnizine
+        quantity: 10
   - type: EmaggableMedibot
     replacements:
       # when you are fine, medibot will help you go sleep

@@ -23,13 +23,10 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 6
-  - !type:BuyerJobCondition
+  - !type:BuyerDepartmentCondition
     whitelist:
-    - Chemist
-    - ChiefMedicalOfficer
-    - MedicalDoctor
-    - MedicalIntern
-    - Paramedic
+    - Command
+    - Medical
 
 - type: listing
   id: VendorCleanerGrenade
@@ -41,13 +38,10 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 5
-  - !type:BuyerJobCondition
+  - !type:BuyerDepartmentCondition
     whitelist:
-    - Chemist
-    - ChiefMedicalOfficer
-    - MedicalDoctor
-    - MedicalIntern
-    - Paramedic
+    - Command
+    - Medical
 
 - type: listing
   id: VendorBluebrutepack20
@@ -59,13 +53,10 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 4
-  - !type:BuyerJobCondition
+  - !type:BuyerDepartmentCondition
     whitelist:
-    - Chemist
-    - ChiefMedicalOfficer
-    - MedicalDoctor
-    - MedicalIntern
-    - Paramedic
+    - Command
+    - Medical
 
 - type: listing
   id: VendorBlueointment20
@@ -77,13 +68,10 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 4
-  - !type:BuyerJobCondition
+  - !type:BuyerDepartmentCondition
     whitelist:
-    - Chemist
-    - ChiefMedicalOfficer
-    - MedicalDoctor
-    - MedicalIntern
-    - Paramedic
+    - Command
+    - Medical
 
 - type: listing
   id: VendorMobTrueDoctorbot
@@ -95,9 +83,10 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
-  - !type:BuyerJobCondition
+  - !type:BuyerDepartmentCondition
     whitelist:
-    - ChiefMedicalOfficer
+    - Command
+    - Medical
 
 - type: listing
   id: VendorMobOrganHumanHeart
@@ -107,11 +96,10 @@
   categories:
   - SLSurgery
   conditions:
-  - !type:BuyerJobCondition
+  - !type:BuyerDepartmentCondition
     whitelist:
-    - ChiefMedicalOfficer
-    - MedicalDoctor
-    - Paramedic
+    - Command
+    - Medical
 
 - type: listing
   id: VendorMobOrganHumanStomach
@@ -121,11 +109,10 @@
   categories:
   - SLSurgery
   conditions:
-  - !type:BuyerJobCondition
+  - !type:BuyerDepartmentCondition
     whitelist:
-    - ChiefMedicalOfficer
-    - MedicalDoctor
-    - Paramedic
+    - Command
+    - Medical
 
 - type: listing
   id: VendorMobOrganHumanLiver
@@ -135,11 +122,10 @@
   categories:
   - SLSurgery
   conditions:
-  - !type:BuyerJobCondition
+  - !type:BuyerDepartmentCondition
     whitelist:
-    - ChiefMedicalOfficer
-    - MedicalDoctor
-    - Paramedic
+    - Command
+    - Medical
 
 - type: listing
   id: VendorMobOrganHumanKidneys
@@ -149,11 +135,10 @@
   categories:
   - SLSurgery
   conditions:
-  - !type:BuyerJobCondition
+  - !type:BuyerDepartmentCondition
     whitelist:
-    - ChiefMedicalOfficer
-    - MedicalDoctor
-    - Paramedic
+    - Command
+    - Medical
 
 - type: listing
   id: VendorMobOrganHumanLungs
@@ -163,11 +148,10 @@
   categories:
   - SLSurgery
   conditions:
-  - !type:BuyerJobCondition
+  - !type:BuyerDepartmentCondition
     whitelist:
-    - ChiefMedicalOfficer
-    - MedicalDoctor
-    - Paramedic
+    - Command
+    - Medical
 
 - type: listing
   id: VendorMobOrganHumanTongue
@@ -177,11 +161,10 @@
   categories:
   - SLSurgery
   conditions:
-  - !type:BuyerJobCondition
+  - !type:BuyerDepartmentCondition
     whitelist:
-    - ChiefMedicalOfficer
-    - MedicalDoctor
-    - Paramedic
+    - Command
+    - Medical
   
 - type: listing
   id: VendorMobOrganHumanEyes
@@ -191,11 +174,10 @@
   categories:
   - SLSurgery
   conditions:
-  - !type:BuyerJobCondition
+  - !type:BuyerDepartmentCondition
     whitelist:
-    - ChiefMedicalOfficer
-    - MedicalDoctor
-    - Paramedic
+    - Command
+    - Medical
     
 - type: listing
   id: VendorLeftLegHuman
@@ -205,11 +187,10 @@
   categories:
   - SLSurgery
   conditions:
-  - !type:BuyerJobCondition
+  - !type:BuyerDepartmentCondition
     whitelist:
-    - ChiefMedicalOfficer
-    - MedicalDoctor
-    - Paramedic
+    - Command
+    - Medical
     
 - type: listing
   id: VendorRightLegHuman
@@ -219,11 +200,10 @@
   categories:
   - SLSurgery
   conditions:
-  - !type:BuyerJobCondition
+  - !type:BuyerDepartmentCondition
     whitelist:
-    - ChiefMedicalOfficer
-    - MedicalDoctor
-    - Paramedic
+    - Command
+    - Medical
       
 - type: listing
   id: VendorLeftFootHuman
@@ -233,11 +213,10 @@
   categories:
   - SLSurgery
   conditions:
-  - !type:BuyerJobCondition
+  - !type:BuyerDepartmentCondition
     whitelist:
-    - ChiefMedicalOfficer
-    - MedicalDoctor
-    - Paramedic
+    - Command
+    - Medical
     
 - type: listing
   id: VendorRightFootHuman
@@ -247,8 +226,7 @@
   categories:
   - SLSurgery
   conditions:
-  - !type:BuyerJobCondition
+  - !type:BuyerDepartmentCondition
     whitelist:
-    - ChiefMedicalOfficer
-    - MedicalDoctor
-    - Paramedic
+    - Command
+    - Medical
