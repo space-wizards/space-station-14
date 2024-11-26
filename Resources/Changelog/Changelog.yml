@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheWaffleJesus
-  changes:
-  - message: ERT Chaplains now have blessings to use their bible.
-    type: Fix
-  id: 7155
-  time: '2024-08-19T03:19:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30993
 - author: DieselMohawk
   changes:
   - message: Reshaped the Security Helmet
@@ -3924,3 +3917,12 @@
   id: 7654
   time: '2024-11-26T00:59:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33047
+- author: slarticodefast
+  changes:
+  - message: Added the greytide virus station event. It will bolt open all doors in
+      a few randomly chosen departments and unlock lockers with the corresponding
+      access.
+    type: Add
+  id: 7655
+  time: '2024-11-26T13:50:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33547
