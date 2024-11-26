@@ -193,6 +193,9 @@
             "name": "Admin"
         },
         {
+            "name": "Changeling"
+        },
+        {
             "name": "Vampire"
         }
     ]

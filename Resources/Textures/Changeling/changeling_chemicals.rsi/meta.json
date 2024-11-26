@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from cmss13 at https://github.com/cmss13-devs/cmss13/blob/09a5191fb11aab8ddffe3f9be94292b53e4d96f6/icons/mob/hud/alien_standard.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "0"
+    },
+    {
+      "name": "1",
+      "delays": [ [ 0.3, 0.1 ] ]
+    },
+    {
+      "name": "2",
+      "delays": [ [ 0.3, 0.1 ] ]
+    },
+    {
+      "name": "3",
+      "delays": [ [ 0.3, 0.1 ] ]
+    },
+    {
+      "name": "4",
+      "delays": [ [ 0.3, 0.1 ] ]
+    },
+    {
+      "name": "5",
+      "delays": [ [ 0.3, 0.1 ] ]
+    },
+    {
+      "name": "6",
+      "delays": [ [ 0.3, 0.1 ] ]
+    },
+    {
+      "name": "7",
+      "delays": [ [ 0.3, 0.1 ] ]
+    },
+    {
+      "name": "8",
+      "delays": [ [ 0.3, 0.1 ] ]
+    },
+    {
+      "name": "9",
+      "delays": [ [ 0.3, 0.1 ] ]
+    },
+    {
+      "name": "10",
+      "delays": [ [ 0.3, 0.1 ] ]
+    },
+    {
+      "name": "11",
+      "delays": [ [ 0.3, 0.1 ] ]
+    },
+    {
+      "name": "12",
+      "delays": [ [ 0.3, 0.1 ] ]
+    },
+    {
+      "name": "13",
+      "delays": [ [ 0.3, 0.1 ] ]
+    },
+    {
+      "name": "14",
+      "delays": [ [ 0.3, 0.1 ] ]
+    },
+    {
+      "name": "15",
+      "delays": [ [ 0.3, 0.1 ] ]
+    },
+    {
+      "name": "16",
+      "delays": [ [ 0.3, 0.1 ] ]
+    },
+    {
+      "name": "17",
+      "delays": [ [ 0.3, 0.1 ] ]
+    },
+    {
+      "name": "18",
+      "delays": [ [ 0.3, 0.1 ] ]
+    }
+  ]
+}

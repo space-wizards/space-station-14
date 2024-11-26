@@ -5,6 +5,7 @@
   id: BaseMobGingerbread
   abstract: true
   components:
+  - type: Absorbable
   - type: HumanoidAppearance
     species: Gingerbread
   - type: Icon

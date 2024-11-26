@@ -237,6 +237,18 @@ public sealed class ActionContainerSystem : EntitySystem
 
         DebugTools.AssertOwner(uid, comp);
         comp ??= EnsureComp<ActionsContainerComponent>(uid);
+
+        if (!TryComp<MetaDataComponent>(actionId, out var actionData))
+            return false;
+        if (!TryPrototype(actionId, out var actionProto, actionData))
+            return false;
+
+        if (HasAction(uid, actionProto.ID))
+        {
+            Log.Debug($"Tried to insert action {ToPrettyString(actionId)} into {ToPrettyString(uid)}. Failed due to duplicate actions.");
+            return false;
+        }
+
         if (!_container.Insert(actionId, comp.Container))
         {
             Log.Error($"Failed to insert action {ToPrettyString(actionId)} into {ToPrettyString(uid)}");
@@ -248,6 +260,20 @@ public sealed class ActionContainerSystem : EntitySystem
         DebugTools.Assert(action.Container == uid);
 
         return true;
+    }
+
+    public bool HasAction(EntityUid uid, string pId, ActionsContainerComponent? actions = null)
+    {
+        if (!Resolve(uid, ref actions, false))
+            return false;
+
+        foreach (var act in actions.Container.ContainedEntities)
+            if (TryComp<MetaDataComponent>(act, out var metaData))
+                if (TryPrototype(act, out var actProto, metaData))
+                    if (pId == actProto.ID)
+                        return true;
+
+        return false;
     }
 
     /// <summary>
