@@ -238,12 +238,9 @@ public abstract class SharedRoleSystem : EntitySystem
     // to make sure the reference gets removed even if the mind role entity was deleted by outside code
     private void OnComponentShutdown(Entity<MindRoleComponent> ent, ref ComponentShutdown args)
     {
-        //Tests spawn mind role entities without an associated mind when they spawn every possible entity
+        //TODO: Just ensure that the tests don't spawn unassociated mind role entities
         if (ent.Comp.Mind.Comp is null)
-        {
-            Log.Warning($"Mind Role entity {ToPrettyString(ent.Owner)} has no reference to a Mind entity");
             return;
-        }
 
         ent.Comp.Mind.Comp.MindRoles.Remove(ent.Owner);
     }
