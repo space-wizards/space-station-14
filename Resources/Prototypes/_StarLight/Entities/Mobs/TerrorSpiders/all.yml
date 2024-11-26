@@ -258,4 +258,4 @@
     baseSprintSpeed : 6.00
   - type: ActionGrant
     actions:
-    - ActionWebball
+    - ActionEggInjection

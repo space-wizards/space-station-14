@@ -568,3 +568,23 @@
   - type: Sprite
     sprite: Mobs/Species/Human/organs.rsi
     state: brain
+#
+- type: entity
+  parent: SurgeryBase
+  id: SurgeryExtractEgg
+  name: Extract Egg
+  components:
+  - type: Surgery
+    requirement: SurgeryOpenAbdomen
+    steps:
+    - SurgeryStepRemoveEgg
+  - type: SurgeryPartCondition
+    parts:
+    - Torso
+  - type: SurgeryHasCompCondition
+    component:
+    - type: HasEggHolder
+  - type: Sprite
+    sprite:  _Starlight/Interface/Actions/actions_spider.rsi
+    layers:
+      - state: egg
