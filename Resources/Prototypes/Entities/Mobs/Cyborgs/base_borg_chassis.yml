@@ -6,6 +6,9 @@
   save: false
   abstract: true
   components:
+  - type: RandomMetadata
+    nameSegments:
+      - names_borg
   - type: Reactive
     groups:
       Acidic: [Touch]
