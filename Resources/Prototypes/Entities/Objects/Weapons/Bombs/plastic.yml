@@ -136,7 +136,7 @@
     explosionType: Radioactive
     totalIntensity: 150
     intensitySlope: 4
-    maxIntensity: 100
+    maxIntensity: 90
     canCreateVacuum: false
   - type: ExplodeOnTrigger
 
