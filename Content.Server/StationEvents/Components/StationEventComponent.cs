@@ -9,14 +9,14 @@ namespace Content.Server.StationEvents.Components;
 [RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class StationEventComponent : Component
 {
-    public const int WeightVeryLow = 1;
-    public const int WeightLow = 5;
-    public const int WeightNormal = 10;
-    public const int WeightHigh = 15;
-    public const int WeightVeryHigh = 20;
+    public const float WeightVeryLow = 0.0f;
+    public const float WeightLow = 5.0f;
+    public const float WeightNormal = 10.0f;
+    public const float WeightHigh = 15.0f;
+    public const float WeightVeryHigh = 20.0f;
 
     [DataField]
-    public int Weight = WeightNormal;
+    public float Weight = WeightNormal;
 
     [DataField]
     public string? StartAnnouncement;
