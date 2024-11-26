@@ -299,6 +299,9 @@ uplink-cluster-banana-peel-desc = Splits into 6 explosive banana peels after bei
 uplink-cane-blade-name = Cane Blade
 uplink-cane-blade-desc = A cane that has a hidden blade that can be unsheathed.
 
+uplink-cluwne-bombs-name = Cluwne Bombs
+uplink-cluwne-bombs-desc = A set of 1 real and 5 decoy laughing explosives, they come in that order so dont mix them up!
+
 # Armor
 uplink-chameleon-name = Chameleon Kit
 uplink-chameleon-desc = A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!
