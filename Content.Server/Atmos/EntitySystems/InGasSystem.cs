@@ -114,12 +114,12 @@ public sealed class InGasSystem : EntitySystem
 
         if (InWater)
         {
-            inGas.InWater = true;
+            RaiseEvent(new InWaterEvent(uid));
             Log.Error($"object is in water");
         }
         else
         {
-            inGas.InWater = false;
+            RaiseEvent(new OutOfWaterEvent(uid));
             Log.Error($"object is not in water");
         }
     }
