@@ -273,6 +273,9 @@ public sealed partial class TTSSystem : EntitySystem
         new Dictionary<string, string>()
         {
             {"id", "Ai Di"},
+            {"pda", "PiDiA"},
+            {"sci", "sai"},
+
             //owo
             {"(•`ω´•)", "meow"},
             {";;w;;", "meow"},
@@ -280,6 +283,22 @@ public sealed partial class TTSSystem : EntitySystem
             {"UwU", "meow"},
             {">w<", "meow"},
             {"^w^", "meow"},
+
+            //russian
+            {"Д", "A"},
+            {"в", "b"},
+            {"И", "N"},
+            {"и", "n"},
+            {"К", "K"},
+            {"к", "k"},
+            {"м", "m"},
+            {"н", "h"},
+            {"т", "t"},
+            {"Я", "R"},
+            {"я", "r"},
+            {"У", "Y"},
+            {"Ш", "W"},
+            {"ш", "w"},
         };
 
     [GeneratedRegex(@"[^a-zA-Z0-9,\-+?!. ]")]

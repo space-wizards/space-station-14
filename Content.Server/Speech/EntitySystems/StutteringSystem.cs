@@ -18,7 +18,7 @@ namespace Content.Server.Speech.EntitySystems
 
         public override void Initialize()
         {
-            SubscribeLocalEvent<StutteringAccentComponent, AccentGetEvent>(OnAccent);
+            //SubscribeLocalEvent<StutteringAccentComponent, AccentGetEvent>(OnAccent);
         }
 
         public override void DoStutter(EntityUid uid, TimeSpan time, bool refresh, StatusEffectsComponent? status = null)
