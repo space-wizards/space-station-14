@@ -1,0 +1,288 @@
+- type: entity
+  name: null rod
+  id: NullRodBase
+  abstract: true
+  parent: [ BaseItem, BaseMinorContraband ]
+  components:
+  - type: RevealRevenantOnCollide
+  - type: Sprite
+    sprite: _Impstation/Objects/Misc/nullrod.rsi
+    state: nullrod_base
+  - type: Item
+    size: Small
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - Recyclable
+    - NullRod
+
+- type: entity
+  name: null rod
+  id: NullRodDefault
+  parent: NullRodBase
+  description: The old classic. Does nothing special, really. Imbued with a powerful mote of divine favor, allowing it to permanently take on a new form - but only once.
+  components:
+  - type: ChaplainGearMenu
+    possibleSets:
+    # - ChaplainGearRosary ## UNFINISHED!
+    - ChaplainGearGrail
+    - ChaplainGearGlove
+    - ChaplainGearBow
+  - type: ActivatableUI
+    key: enum.ChaplainGearMenuUIKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.ChaplainGearMenuUIKey.Key:
+        type: ChaplainGearMenuBoundUserInterface
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 15
+    soundHit:
+      collection: MetalThud
+  - type: Clothing
+    sprite: _Impstation/Objects/Misc/nullrod.rsi
+    quickEquip: false
+    slots:
+    - Belt
+
+
+- type: entity
+  name: silvered rosary
+  id: NullRodRosary
+  parent: NullRodBase
+  description: An expensive-looking rosary, made from silver. Exudes somewhat soothing vibes. Nice!
+  components:
+  - type: Prayable
+    bibleUserOnly: true
+  - type: Sprite
+    sprite: _Impstation/Objects/Misc/nullrod.rsi
+    state: nullrod_rosary
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,1
+  - type: Clothing
+    sprite: _Impstation/Objects/Misc/nullrod.rsi
+    slots:
+    - Neck
+    - Belt
+
+
+- type: entity
+  name: gildgrail
+  id: NullRodGrail
+  parent: NullRodBase
+  description: A jewel-encrusted golden chalice. Looks so expensive, it's almost concerning. Can hold a deceptively large volume of liquid.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Misc/nullrod_grail.rsi
+    layers:
+      - state: grail
+      - state: grail1
+        map: [ "enum.SolutionContainerLayers.Fill" ]
+        visible: false
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,1
+  - type: MeleeWeapon
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      collection: MetalThud
+  - type: FitsInDispenser
+    solution: grail
+  - type: SolutionContainerManager
+    solutions:
+      grail:
+        maxVol: 150
+  - type: MixableSolution
+    solution: grail
+  - type: RefillableSolution
+    solution: grail
+  - type: DrainableSolution
+    solution: grail
+  - type: ExaminableSolution
+    solution: grail
+  - type: DrawableSolution
+    solution: grail
+  - type: InjectableSolution
+    solution: grail
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: SolutionItemStatus
+    solution: grail
+  - type: UserInterface
+    interfaces:
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
+  - type: Drink
+    solution: grail
+  - type: Spillable
+    solution: grail
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: grail
+    inHandsMaxFillLevels: 1
+    inHandsFillBaseName: -fill-
+  - type: Shakeable
+    shakeDuration: 1.6
+    requireInHand: true
+    shakeVerbText: null-grail-verb
+    shakePopupMessageOthers: null-grail-popup-others
+    shakePopupMessageSelf: null-grail-popup
+    shakeSound: /Audio/Effects/waterswirl.ogg
+  - type: DnaSubstanceTrace
+  - type: ReactionMixer
+    mixOnInteract: false
+    reactionTypes:
+    - Holy
+    - Shake
+    mixMessage: "null-grail-mix-success"
+
+
+- type: entity
+  name: divine grasp
+  id: NullRodGlove
+  parent: [ NullRodBase, ClothingHandsInedibleBase]
+  description: The touch of god! Or goddess. It's up to you, really.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Misc/nullrod_glove.rsi
+    state: icon
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,1
+  - type: Clothing
+    sprite: _Impstation/Objects/Misc/nullrod_glove.rsi
+  - type: StaminaDamageOnHit
+    damage: 22
+  - type: MeleeWeapon
+    attackRate: 0.68
+    damage:
+      types:
+        Blunt: 10
+    soundHit:
+      path: /Audio/_Impstation/Weapons/nullglove.ogg
+      params:
+        variation: 0.35
+    mustBeEquippedToUse: true
+  - type: Reflect
+    reflectProb: .22
+    spread: 120
+  - type: Fiber
+    fiberMaterial: fibers-metallic
+    fiberColor: fibers-silver
+  - type: MeleeSpeech
+  - type: ActivatableUI
+    key: enum.MeleeSpeechUiKey.Key
+    verbOnly: true
+  - type: Actions
+  - type: UserInterface
+    interfaces:
+      enum.MeleeSpeechUiKey.Key:
+        type: MeleeSpeechBoundUserInterface
+
+
+- type: entity
+  name: aureole arc
+  id: NullRodBow
+  parent: NullRodBase
+  description: Wrought from ornately carved synthwood, this golden-inlaid bow hums with a preternatural power.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Misc/nullrod_bow.rsi
+    layers:
+    - state: nullrod_bow
+    - state: unwielded-arrow
+      shader: unshaded
+      map: [ arrow ]
+      visible: false
+  - type: Item
+    size: Huge
+  - type: Wieldable
+    wieldSound:
+      path: /Audio/Items/bow_pull.ogg
+  - type: UseDelay
+    delay: 1
+  - type: GunRequiresWield
+  - type: Gun
+    minAngle: 0
+    maxAngle: 5
+    fireRate: 1.5
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      collection: BulletMiss
+    soundEmpty: null
+  - type: ItemSlots
+    slots:
+      projectiles:
+        name: Projectiles
+        startingItem: null
+        insertSound: /Audio/Weapons/Guns/Misc/arrow_nock.ogg
+        whitelist:
+          tags:
+          - HolyArrow
+  - type: ContainerContainer
+    containers:
+      projectiles: !type:ContainerSlot
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - HolyArrow
+    capacity: 1
+  - type: Appearance
+  - type: ItemMapper
+    spriteLayers:
+    - arrow
+    mapLayers:
+      arrow:
+        whitelist:
+          tags:
+          - HolyArrow
+
+- type: entity
+  name: aureate quiver
+  parent: [ AmmoProviderShotgunShell, BaseMinorContraband ]
+  id: NullRodArrowQuiver
+  description: A divine quiver, bristling with sparks of light.
+  components:
+    - type: Sprite
+      sprite: _Impstation/Objects/Misc/nullrod_quiver.rsi
+      layers:
+      - state: quiver
+      - state: quiver_unshaded
+        shader: unshaded
+    - type: Item
+      size: Large
+      shape:
+      - 0,0,2,2
+      sprite: _Impstation/Objects/Misc/nullrod_quiver.rsi
+    - type: Clothing
+      quickEquip: false
+      sprite: _Impstation/Objects/Misc/nullrod_quiver.rsi
+      slots:
+      - Back
+      - suitStorage
+    - type: BallisticAmmoProvider
+      proto: HolyArrow
+      mayTransfer: true
+      capacity: 8
+      whitelist:
+        tags:
+        - HolyArrow

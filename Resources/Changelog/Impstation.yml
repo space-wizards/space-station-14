@@ -1,61 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Fixed Train plasma gas not spawning on mapload
-    type: Fix
-  - message: Modified the shuttles I've made to have appropriately colored atmos pipes,
-      some structural changes
-    type: Tweak
-  id: 74
-  time: '2024-08-13T00:53:24.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/88
-- author: starlighthowls
-  changes:
-  - message: Added kissertomato and spawner
-    type: Add
-  - message: Added rainbow ss14 decal
-    type: Add
-  id: 75
-  time: '2024-08-13T02:26:46.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/89
-- author: TGRCdev
-  changes:
-  - message: Station maps now have a directory that lists all enabled beacons on a
-      station.
-    type: Add
-  id: 76
-  time: '2024-08-13T02:26:57.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/90
-- author: formlessnameless
-  changes:
-  - message: Added the ability to turn normal bananium floors into blessed bananium
-      floors.
-    type: Add
-  id: 77
-  time: '2024-08-13T19:55:10.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/92
-- author: formlessnameless
-  changes:
-  - message: Added changeling antagonist from whateverusername0's fork of the main
-      upstream project.
-    type: Add
-  id: 78
-  time: '2024-08-15T03:03:14.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/94
-- author: TGRCdev
-  changes:
-  - message: GameRuleMeteorScheduler is now MeteorSwarmScheduler
-    type: Fix
-  id: 79
-  time: '2024-08-15T16:39:45.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/95
-- author: wafehling
-  changes:
-  - message: Added rare announcement variants for some events.
-    type: Add
-  id: 80
-  time: '2024-08-15T16:39:56.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/96
 - author: starlighthowls
   changes:
   - message: Added Laser-less laser raptors.
@@ -4309,3 +4252,67 @@
   id: 573
   time: '2024-11-25T13:17:16.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/798
+- author: AftrLite
+  changes:
+  - message: The Chaplain's iconic Null Rod returns! Can be transformed into various
+      gadgets.
+    type: Add
+  id: 574
+  time: '2024-11-26T02:39:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/795
+- author: FlippenPage
+  changes:
+  - message: Added Drones
+    type: Add
+  - message: Added OneStar Mecha
+    type: Add
+  id: 575
+  time: '2024-11-26T02:40:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/797
+- author: ATDoop
+  changes:
+  - message: All empty art toolboxes are now filled. No more disappointment when looking
+      for crayons!
+    type: Tweak
+  id: 576
+  time: '2024-11-26T02:41:21.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/800
+- author: Sha-Seng
+  changes:
+  - message: tacticool and operative jumpsuits are now foldable
+    type: Tweak
+  - message: gas mask stock in hacked clothesmate increased by one
+    type: Tweak
+  id: 577
+  time: '2024-11-26T03:11:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/799
+- author: widgetbeck
+  changes:
+  - message: Sir Gollylad will now spawn with a passenger ID card, so he can escape
+      maints more easily. Also a gobtools crowbar.
+    type: Tweak
+  - message: Goblin Stowaways' tools (gobtools) now have unique sprites.
+    type: Add
+  - message: Goblin Stowaways should be less common, and can only be triggered once.
+    type: Tweak
+  id: 578
+  time: '2024-11-26T05:12:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/789
+- author: hivehum
+  changes:
+  - message: Changeling can no longer be the main antagonist on consecutive rounds.
+    type: Tweak
+  id: 579
+  time: '2024-11-26T08:26:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/804
+- author: DinnerCalzone
+  changes:
+  - message: (Hummingbird) Fixed a number of typos.
+    type: Fix
+  - message: (Hummingbird) Added a ghost warp to the evil skull.
+    type: Add
+  - message: (Hummingbird) Removed bears.
+    type: Remove
+  id: 580
+  time: '2024-11-26T08:25:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/801
