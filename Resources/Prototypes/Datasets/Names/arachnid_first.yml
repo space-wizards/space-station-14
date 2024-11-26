@@ -1,5 +1,5 @@
 - type: localizedDataset
-  id: names_arachnid_first
+  id: NamesArachnidFirst
   values:
     prefix: names-arachnid-first-dataset-
     count: 74
