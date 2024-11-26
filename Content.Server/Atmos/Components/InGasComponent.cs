@@ -2,6 +2,7 @@
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
+using Content.Shared.Interaction;
 
 namespace Content.Server.Atmos.Components;
 
