@@ -19,6 +19,9 @@
         base:
           On: { state: tray-on }
           Off: { state: tray-off }
+  - type: Tag
+    tags:
+      - DroneUsable
   - type: PhysicalComposition
     materialComposition:
       Steel: 400

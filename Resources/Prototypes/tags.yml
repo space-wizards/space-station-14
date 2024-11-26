@@ -594,6 +594,9 @@
   id: DrinkBottle
 
 - type: Tag
+  id: DroneUsable
+
+- type: Tag
   id: DrinkCan
 
 - type: Tag
