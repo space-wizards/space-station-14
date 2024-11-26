@@ -18,6 +18,12 @@
   id: MagazineZipper
 
 - type: Tag
+  id: HolyArrow
+
+- type: Tag
+  id: NullRod
+
+- type: Tag
   id: SecTicket
 
 - type: Tag

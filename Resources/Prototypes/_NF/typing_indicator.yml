@@ -1,0 +1,5 @@
+- type: typingIndicator
+  id: goblin
+  spritePath: /Textures/_NF/Effects/speech.rsi
+  typingState: goblin0
+  offset: 0, 0.2

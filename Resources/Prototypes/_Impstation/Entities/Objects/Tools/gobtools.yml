@@ -1,0 +1,70 @@
+- type: entity
+  name: wirecu'ahs
+  description: Dey're for chivin' wires.
+  parent: Haycutters
+  id: GoblinWirecutters
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Tools/Gobtools/wirecutters.rsi
+    state: haycutters
+
+- type: entity
+  name: screwdrivah
+  description: It's for drivin' screws.
+  parent: Moodriver
+  id: GoblinScrewdriver
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Tools/Gobtools/screwdriver.rsi
+    state: moodriver
+  - type: Item
+    sprite: _Impstation/Objects/Tools/Gobtools/screwdriver.rsi
+  - type: MeleeWeapon
+
+- type: entity
+  name: wrench
+  description: It's for anchorin' shit.
+  parent: Wronch
+  id: GoblinWrench
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Tools/Gobtools/wrench.rsi
+    state: wronch
+  - type: Item
+    sprite: _Impstation/Objects/Tools/Gobtools/wrench.rsi
+
+- type: entity
+  name: jilt
+  description: It's for pryin' shit up.
+  parent: Cowbar
+  id: GoblinCrowbar
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Tools/Gobtools/crowbar.rsi
+    state: cowbar
+  - type: Item
+    sprite: _Impstation/Objects/Tools/Gobtools/crowbar.rsi
+
+- type: entity
+  name: multitool
+  description: It's for 'ackin' jiggahs.
+  parent: Mooltitool
+  id: GoblinMultitool
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Tools/Gobtools/multitool.rsi
+    state: mooltitool
+  - type: Item
+    sprite: _Impstation/Objects/Tools/Gobtools/multitool.rsi
+
+- type: entity
+  name: weldah
+  description: It's for weldin' shit.
+  parent: Cowelder
+  id: GoblinWelder
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Tools/Gobtools/welder.rsi
+  - type: Item
+    size: Small
+    sprite: _Impstation/Objects/Tools/Gobtools/welder.rsi

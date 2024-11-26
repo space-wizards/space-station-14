@@ -1,0 +1,11 @@
+- type: entity
+  parent: FoodMeatRotten
+  id: FoodMeatGoblin
+  name: raw goblin meat
+  description: Just look at that marbling!
+  components:
+  - type: Sprite
+    state: rotten
+    color: lime
+#  - type: Food # Frontier, New Food Quality System
+#    quality: Toxin # Frontier, New Food Quality System

@@ -1,0 +1,58 @@
+- type: emote
+  id: GoblinMutter
+  name: chat-emote-name-goblin-muttering
+  category: Vocal
+  available: false
+  icon: _NF/Interface/Emotes/mutter.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-goblin-muttering"]
+  chatTriggers:
+    - mutter
+    - mutters
+    - muttered
+    - muttering
+
+- type: emote
+  id: GoblinThroatSinging
+  name: chat-emote-name-goblin-throat-singing
+  category: Vocal
+  available: false
+  icon: _NF/Interface/Emotes/throatsinging.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-goblin-throat-singing"]
+  chatTriggers:
+    - sing
+    - sings
+    - sang
+    - sung
+    - singing
+
+- type: emote
+  id: Belch
+  name: chat-emote-name-belch
+  category: Vocal
+  available: false
+  icon: _NF/Interface/Emotes/belch.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-belch"]
+  chatTriggers:
+    - belch
+    - burp
+    - belchs
+    - burps
+    - belches

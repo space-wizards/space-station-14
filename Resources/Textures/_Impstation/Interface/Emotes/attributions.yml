@@ -1,0 +1,12 @@
+# Attempted to keep the files in alphabetical order so its easier to audit.
+# Finding individual authors is an unfeasible task. If you can reference the author please do so.
+
+- files: ["hiss.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Modified from existing lizard texture (lizard.png) and chirp.png by Pinkbat5"
+  source: "https://github.com/Pinkbat5"
+
+- files: ["crack.png"]
+  license: "CC-BY-SA-4.0"
+  copyright: "Spritework by Pinkbat5"
+  source: "https://github.com/Pinkbat5"
