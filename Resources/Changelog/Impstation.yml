@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Fixed Train plasma gas not spawning on mapload
-    type: Fix
-  - message: Modified the shuttles I've made to have appropriately colored atmos pipes,
-      some structural changes
-    type: Tweak
-  id: 74
-  time: '2024-08-13T00:53:24.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/88
 - author: starlighthowls
   changes:
   - message: Added kissertomato and spawner
@@ -4309,3 +4299,11 @@
   id: 573
   time: '2024-11-25T13:17:16.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/798
+- author: AftrLite
+  changes:
+  - message: The Chaplain's iconic Null Rod returns! Can be transformed into various
+      gadgets.
+    type: Add
+  id: 574
+  time: '2024-11-26T02:39:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/795
