@@ -40,6 +40,25 @@ public sealed class InGasSystem : EntitySystem
         return (mixture != null && mixture.GetMoles(inGas.GasId) >= inGas.GasThreshold);
     }
 
+     public bool InWater(EntityUid uid, int? gasId = 9, float? gasThreshold = 60)
+    {
+        var mixture = _atmo.GetContainingMixture(uid);
+        var inGas = EntityManager.GetComponent<InGasComponent>(uid);
+        //Use provided data if no component present
+        if (inGas == null)
+        {
+            if (gasId == null || gasThreshold == null)
+            {
+                throw new Exception("Missing gasId and/or gasThreshold in InGas call");
+            }
+
+            return (mixture != null && mixture.GetMoles((int)gasId) >= gasThreshold);
+        }
+
+        //If we are not in the gas return false, else true
+        return (mixture != null && mixture.GetMoles(inGas.GasId) >= inGas.GasThreshold);
+    }
+
     public override void Update(float frameTime)
     {
         _timer += frameTime;
@@ -91,6 +110,17 @@ public sealed class InGasSystem : EntitySystem
                 _adminLog.Add(LogType.Electrocution, $"Entity {uid} is now taking damage from water.");
                 _alerts.ShowAlert(uid, inGas.DamageAlert, 1);
             }
+        }
+
+        if (InWater)
+        {
+        inGas.InWater = true;
+        Log.Error($"object is in water");
+        }
+        else
+        {
+        inGas.InWater = false;
+        Log.Error($"object is not in water");
         }
     }
 }
