@@ -52,8 +52,9 @@ public sealed class RadioImplantSystem : EntitySystem
             foreach (var channel in comp.ActiveAddedChannels)
             {
                 activeRadioComponent.Channels.Remove(channel);
-                comp.ActiveAddedChannels.Remove(channel);
             }
+            comp.ActiveAddedChannels.Clear();
+
             if (activeRadioComponent.Channels.Count == FixedPoint2.Zero)
             {
                 RemCompDeferred<ActiveRadioComponent>(args.Container.Owner);
@@ -66,8 +67,9 @@ public sealed class RadioImplantSystem : EntitySystem
         foreach (var channel in comp.TransmitterAddedChannels)
         {
             radioTransmitterComponent.Channels.Remove(channel);
-            comp.TransmitterAddedChannels.Remove(channel);
         }
+        comp.TransmitterAddedChannels.Clear();
+
         if (radioTransmitterComponent.Channels.Count == FixedPoint2.Zero || activeRadioComponent is { Channels.Count: 0 })
         {
             RemCompDeferred<IntrinsicRadioTransmitterComponent>(args.Container.Owner);
