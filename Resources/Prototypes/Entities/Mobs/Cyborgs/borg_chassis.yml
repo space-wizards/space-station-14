@@ -471,3 +471,43 @@
       damageContainers:
       - Inorganic
       - Silicon
+
+- type: entity
+  id: BorgChassisTrash
+  parent: BaseBorgChassisNT
+  name: waste-processing borg
+  description: A rusty, worn-down cyborg designed to help process the waste thrown off of the Platform.
+  components:
+  - type: Sprite
+    layers:
+    - state: miner
+      map: ["movement"]
+    - state: miner_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: miner_l
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: miner_moving
+    noMovementLayers:
+      movement:
+        state: miner
+  - type: BorgChassis
+    maxModules: 1
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+    hasMindState: miner_e
+    noMindState: miner_e_r
+  - type: BorgTransponder
+    sprite:
+      sprite: Mobs/Silicon/chassis.rsi
+      state: miner
+    name: salvage cyborg
+  - type: Inventory
+    templateId: borgTall
