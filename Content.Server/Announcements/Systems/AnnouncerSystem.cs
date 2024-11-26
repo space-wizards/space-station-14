@@ -5,6 +5,7 @@ using Content.Shared.Announcements.Systems;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
+using Content.Shared._Impstation.CCVar;
 
 namespace Content.Server.Announcements.Systems;
 
@@ -26,7 +27,7 @@ public sealed partial class AnnouncerSystem : SharedAnnouncerSystem
         base.Initialize();
         NewAnnouncer();
 
-        _config.OnValueChanged(CCVars.Announcer, _ => NewAnnouncer());
+        _config.OnValueChanged(ImpCCVars.Announcer, _ => NewAnnouncer());
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestarting);
     }
