@@ -1,7 +1,21 @@
 # PUT YOUR TAGS IN ALPHABETICAL ORDER
-
+- type: Tag
+  id: CartridgeLPistol
+  
 - type: Tag
   id: CleanerGrenade
+  
+- type: Tag
+  id: ConversionKitFA
+
+- type: Tag
+  id: ConversionKitHB
+
+- type: Tag
+  id: MagazineLPistol
+
+- type: Tag
+  id: MagazineZipper
 
 - type: Tag
   id: HolyArrow

@@ -18,3 +18,16 @@
     blacklist:
       components:
       - SurplusBundle
+      
+- type: listing
+  id: uplinkZipperAP
+  name: uplink-zipper-ap-name
+  description: uplink-zipper-ap-desc
+  productEntity: WeaponPistolZipperAP
+  discountCategory: rareDiscounts
+  discountDownTo:
+    Telecrystal: 22
+  cost:
+    Telecrystal: 20
+  categories:
+    - UplinkWeaponry
