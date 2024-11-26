@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Added 4 random announcers from the Einstein Engines fork.
-    type: Add
-  id: 82
-  time: '2024-08-16T17:41:28.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/98
 - author: Drags-His-Tail
   changes:
   - message: Most reality-breaking side-effects of the QSI have been mitigated.
@@ -4312,3 +4305,15 @@
   id: 581
   time: '2024-11-26T09:25:46.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/806
+- author: Sha-Seng
+  changes:
+  - message: Beanbag Kammerers and Beanbag Enforcers are now blue!
+    type: Tweak
+  - message: Beanbag Shells and their associated containers are also blue now (that's
+      my attack)
+    type: Tweak
+  - message: Minor touchups on lethal Kammerer and Enforcer sprites
+    type: Tweak
+  id: 582
+  time: '2024-11-26T19:09:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/760
