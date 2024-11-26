@@ -300,7 +300,7 @@ uplink-cane-blade-name = Cane Blade
 uplink-cane-blade-desc = A cane that has a hidden blade that can be unsheathed.
 
 uplink-cluwne-bombs-name = Cluwne Bombs
-uplink-cluwne-bombs-desc = A set of 1 real and 5 decoy laughing explosives, they come in that order so dont mix them up!
+uplink-cluwne-bombs-desc = A set of 1 real and 5 decoy laughing explosives. They come in that order, so don't mix them up!
 
 # Armor
 uplink-chameleon-name = Chameleon Kit
