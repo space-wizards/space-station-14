@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: formlessnameless
   changes:
-  - message: Added the ability to turn normal bananium floors into blessed bananium
-      floors.
-    type: Add
-  id: 77
-  time: '2024-08-13T19:55:10.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/92
-- author: formlessnameless
-  changes:
   - message: Added changeling antagonist from whateverusername0's fork of the main
       upstream project.
     type: Add
@@ -4307,3 +4299,12 @@
   id: 576
   time: '2024-11-26T02:41:21.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/800
+- author: Sha-Seng
+  changes:
+  - message: tacticool and operative jumpsuits are now foldable
+    type: Tweak
+  - message: gas mask stock in hacked clothesmate increased by one
+    type: Tweak
+  id: 577
+  time: '2024-11-26T03:11:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/799
