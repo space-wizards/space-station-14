@@ -1,4 +1,6 @@
 using JetBrains.Annotations;
+using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Components;
 
 namespace Content.Shared.Interaction;
 
