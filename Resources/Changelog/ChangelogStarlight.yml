@@ -538,3 +538,25 @@ Entries:
   id: 75
   time: '2024-11-25T18:54:31.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/commit/53ecc4a66f3bc9c6ae98c0f80d395891ae5eafb0
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added the "engi dispenser".
+    type: Add
+  id: 76
+  time: '2024-11-26T04:03:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/86
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed the supermatter issue.
+    type: Fix
+  id: 77
+  time: '2024-11-26T04:03:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/86
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added Terror Spiders.
+    type: Add
+  id: 78
+  time: '2024-11-26T04:03:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/86
+
