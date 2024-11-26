@@ -572,8 +572,8 @@ public abstract class SharedMagicSystem : EntitySystem
             _mind.TransferTo(tarMind, ev.Performer);
         }
 
-        _stun.TryParalyze(ev.Target, ev.StunDuration, true);
-        _stun.TryParalyze(ev.Performer, ev.StunDuration, true);
+        _stun.TryParalyze(ev.Target, ev.TargetStunDuration, true);
+        _stun.TryParalyze(ev.Performer, ev.PerformerStunDuration, true);
     }
 
     #endregion
