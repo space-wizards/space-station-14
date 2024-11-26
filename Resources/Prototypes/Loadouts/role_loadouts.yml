@@ -594,7 +594,7 @@
   - ChemistNeck
   - ChemistJumpsuit
   - ChemistOuterClothing
-  - MedicalGloves
+  - ChemistGloves # imp
   - ChemistShoes
   - ChemistBackpack
   - ChemistPDA

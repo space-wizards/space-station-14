@@ -1890,6 +1890,7 @@
   - ChemistJumpsuit
   - ChemistJumpskirt
   - SpaceChemistJumpsuit
+  - ChemistFormalSuit
 
 - type: loadoutGroup
   id: ChemistNeck
@@ -1897,6 +1898,7 @@
   minLimit: 0
   loadouts:
   - ScarfOrange
+  - ChemistTie
 
 - type: loadoutGroup
   id: ChemistOuterClothing
@@ -1906,6 +1908,7 @@
   - RegularLabCoat
   - ChemistLabCoat
   - ChemistWintercoat
+  - ChemistryApron
 
 - type: loadoutGroup
   id: ChemistBackpack
@@ -1921,6 +1924,7 @@
   loadouts:
   - WhiteShoes
   - MedicalWinterBoots
+  - ChemistryShoes # imp edit
 
 - type: loadoutGroup
   id: ChemistPDA
