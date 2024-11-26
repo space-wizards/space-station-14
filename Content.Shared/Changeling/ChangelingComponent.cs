@@ -48,6 +48,14 @@ public sealed partial class ChangelingComponent : Component
     public bool StrainedMusclesActive = false;
 
     public bool IsInLesserForm = false;
+    
+    public bool StealthEnabled = false;
+
+    [DataField]
+    public float StealthDrain = 1.5f;
+
+    [DataField]
+    public float StasisDrain = 0.2f;
 
 
     public Dictionary<string, EntityUid?> Equipment = new();

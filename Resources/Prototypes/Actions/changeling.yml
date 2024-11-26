@@ -145,7 +145,8 @@
       state: armblade
     event: !type:ToggleArmbladeEvent {}
   - type: ChangelingAction
-    chemicalCost: 15
+    chemicalCost: 30
+    requireAbsorbed: 2
 
 - type: entity
   id: ActionCreateBoneShard
@@ -247,7 +248,7 @@
       state: strained_muscles
     event: !type:ToggleStrainedMusclesEvent {}
   - type: ChangelingAction
-    chemicalCost: 0
+    chemicalCost: 30
     useInLesserForm: true
 
 # stings

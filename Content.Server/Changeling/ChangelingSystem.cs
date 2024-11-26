@@ -55,6 +55,7 @@ using Content.Shared.Mobs.Components;
 using Content.Server.Stunnable;
 using Content.Shared.Jittering;
 using System.Linq;
+using Content.Shared.Radio;
 
 namespace Content.Server.Changeling;
 
@@ -221,12 +222,35 @@ public sealed partial class ChangelingSystem : EntitySystem
     private void UpdateAbilities(EntityUid uid, ChangelingComponent comp)
     {
         _speed.RefreshMovementSpeedModifiers(uid);
+        var stamina = EnsureComp<StaminaComponent>(uid);
         if (comp.StrainedMusclesActive)
         {
-            var stamina = EnsureComp<StaminaComponent>(uid);
             _stamina.TakeStaminaDamage(uid, 7.5f, visual: false);
             if (stamina.StaminaDamage >= stamina.CritThreshold || _gravity.IsWeightless(uid))
                 ToggleStrainedMuscles(uid, comp);
+        }
+        
+        if (comp.StealthEnabled)
+        {
+            if (comp.Chemicals > comp.StealthDrain)
+                comp.Chemicals -= comp.StealthDrain;
+            else
+            {
+                _stamina.TakeStaminaDamage(uid, 35f, visual: false);
+                if (stamina.StaminaDamage >= stamina.CritThreshold)
+                    ToggleChameleonSkin(uid, comp, false);
+            }
+        }
+
+        if (comp.IsInStasis)
+        {
+            if (comp.Biomass > comp.StasisDrain)
+                comp.Biomass -= comp.StasisDrain;
+            else
+            {
+                comp.IsInStasis = false;
+                _mobState.ChangeMobState(uid, MobState.Dead);
+            }
         }
     }
 
