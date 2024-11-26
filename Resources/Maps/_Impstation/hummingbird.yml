@@ -65921,6 +65921,11 @@ entities:
     - type: Transform
       pos: 53.5,-24.5
       parent: 2
+  - uid: 23075
+    components:
+    - type: Transform
+      pos: 80.5,-8.5
+      parent: 2
   - uid: 23458
     components:
     - type: Transform
@@ -129528,35 +129533,28 @@ entities:
     - type: Transform
       pos: 105.5,7.5
       parent: 2
-- proto: SpawnMobCatBingus
+- proto: SpawnMobCat
   entities:
-  - uid: 23075
+  - uid: 23321
     components:
     - type: Transform
-      pos: 87.5,8.5
+      pos: 80.5,-8.5
       parent: 2
-- proto: SpawnMobCatException
-  entities:
-  - uid: 23076
-    components:
-    - type: Transform
-      pos: 78.5,61.5
-      parent: 2
-- proto: SpawnMobCatKittenPipi
+- proto: SpawnMobCatGeneric
   entities:
   - uid: 17043
     components:
     - type: Transform
-      pos: 78.5,-32.5
+      pos: 87.5,8.5
       parent: 2
-- proto: SpawnMobCatRuntime
-  entities:
   - uid: 17052
     components:
     - type: Transform
-      pos: 108.5,30.5
+      pos: 78.5,61.5
       parent: 2
-  - uid: 23321
+- proto: SpawnMobCatKitten
+  entities:
+  - uid: 23076
     components:
     - type: Transform
       pos: 53.5,-24.5
@@ -154021,7 +154019,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -140442.1
+      secondsUntilStateChange: -140815.45
       state: Opening
     - type: Airlock
       autoClose: False
