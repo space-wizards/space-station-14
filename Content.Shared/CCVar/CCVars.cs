@@ -1470,6 +1470,10 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> ArrivalsMap =
             CVarDef.Create("shuttle.arrivals_map", "/Maps/Misc/terminal.yml", CVar.SERVERONLY);
 
+
+        /// <summary>
+        /// The map to use for the ocean surface.
+        /// </summary>
         public static readonly CVarDef<string> Arrivals2Map =
             CVarDef.Create("shuttle.arrivals2_map", "/Maps/Misc/terminal.yml", CVar.SERVERONLY);
 
