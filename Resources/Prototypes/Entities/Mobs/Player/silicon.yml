@@ -724,7 +724,8 @@
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
   - type: ProtectedFromStepTriggers
-  - type: AntiTamper
+  - type: InputMover
+  - type: MobMover
   - type: Tag
     tags:
       - CannotSuicide
