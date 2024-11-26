@@ -71,6 +71,8 @@ public sealed class SupermatterSystem : AccUpdateEntitySystem
 
     private void OnCollide(Entity<SupermatterComponent> ent, ref EndCollideEvent args)
     {
+        ent.Comp.Activated = true;
+
         if (HasComp<ProjectileComponent>(args.OtherEntity)
         || HasComp<SingularityComponent>(args.OtherEntity)) return;
 
@@ -96,6 +98,8 @@ public sealed class SupermatterSystem : AccUpdateEntitySystem
 
     private void Handle(Entity<SupermatterComponent> supermatter)
     {
+        if (!supermatter.Comp.Activated) return;
+
         HandleDamage(supermatter);
         HandleGas(supermatter);
         HandleRadiation(supermatter);
