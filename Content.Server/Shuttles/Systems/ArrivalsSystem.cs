@@ -519,6 +519,11 @@ private void SetupArrivalsStation()
     var mapId2 = _mapManager.CreateMap();
     var mapUid2 = _mapManager.GetMapEntityId(mapId2);
     _mapManager.AddUninitializedMap(mapId2);
+    var restricted2 = new RestrictedRangeComponent // adds The Fog, preventing players from meandering too far across the ocean surface
+        {
+            Range = 120f
+        };
+        AddComp(mapUid2, restricted2);
 
     if (!_loader.TryLoad(mapId2, _cfgManager.GetCVar(CCVars.Arrivals2Map), out var uids2)) // edit here to change the map, bozo
     {
