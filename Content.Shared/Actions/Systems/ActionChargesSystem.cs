@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Actions.Events;
 using Robust.Shared.Timing;
 
@@ -47,7 +48,11 @@ public sealed class ActionChargesSystem : EntitySystem
             return;
 
         var oldCharges = GetCurrentCharges((action.Owner, action.Comp, null));
-        var charges = Math.Clamp(oldCharges - removeCharges, 0, action.Comp.MaxCharges);
+
+        if (oldCharges == null)
+            return;
+
+        var charges = Math.Clamp(oldCharges.Value - removeCharges, 0, action.Comp.MaxCharges);
 
         if (oldCharges == charges)
             return;
@@ -92,11 +97,11 @@ public sealed class ActionChargesSystem : EntitySystem
         Dirty(action);
     }
 
-    public int GetCurrentCharges(Entity<ActionChargesComponent?, ResetActionChargesComponent?> entity)
+    public int? GetCurrentCharges(Entity<ActionChargesComponent?, ResetActionChargesComponent?> entity)
     {
         if (!Resolve(entity.Owner, ref entity.Comp1, false))
         {
-            return 0;
+            return null;
         }
 
         float updateRate = 0f;

@@ -4,6 +4,7 @@ using Content.Client.Actions.UI;
 using Content.Client.Cooldown;
 using Content.Client.Stylesheets;
 using Content.Shared.Actions;
+using Content.Shared.Actions.Systems;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -22,6 +23,7 @@ public sealed class ActionButton : Control, IEntityControl
     private IEntityManager _entities;
     private SpriteSystem? _spriteSys;
     private ActionUIController? _controller;
+    private ActionChargesSystem _chargesSys;
     private bool _beingHovered;
     private bool _depressed;
     private bool _toggled;
@@ -65,6 +67,7 @@ public sealed class ActionButton : Control, IEntityControl
 
         _entities = entities;
         _spriteSys = spriteSys;
+        _chargesSys = _entities.System<ActionChargesSystem>();
         _controller = controller;
 
         MouseFilter = MouseFilterMode.Pass;
@@ -194,13 +197,6 @@ public sealed class ActionButton : Control, IEntityControl
 
         var name = FormattedMessage.FromMarkupPermissive(Loc.GetString(metadata.EntityName));
         var decr = FormattedMessage.FromMarkupPermissive(Loc.GetString(metadata.EntityDescription));
-
-        if (_action is { Charges: not null })
-        {
-            var charges = FormattedMessage.FromMarkupPermissive(Loc.GetString($"Charges: {_action.Charges.Value.ToString()}/{_action.MaxCharges.ToString()}"));
-            return new ActionAlertTooltip(name, decr, charges: charges);
-        }
-
         return new ActionAlertTooltip(name, decr);
     }
 
@@ -356,6 +352,14 @@ public sealed class ActionButton : Control, IEntityControl
         Cooldown.Visible = _action != null && _action.Cooldown != null;
         if (_action == null)
             return;
+
+        var charges = _chargesSys.GetCurrentCharges(_action.Owner);
+
+        // TODO:
+        if (charges != null)
+        {
+
+        }
 
         if (_action.Cooldown != null)
         {
