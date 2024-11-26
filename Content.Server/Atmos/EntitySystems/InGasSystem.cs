@@ -5,7 +5,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
-
+using Content.Shared.Interaction;
 
 namespace Content.Server.Atmos.EntitySystems;
 
