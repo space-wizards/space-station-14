@@ -449,7 +449,7 @@
   name: hyperzine microinjector
   parent: [ChemicalMedipen, BaseSyndicateContraband]
   id: StimpackMini
-  description: A microinjector of hyperzine that give you about fifteen seconds of the chemical's effects.
+  description: A microinjector of hyperzine that give you about 15 seconds of the chemical's effects.
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/medipen.rsi

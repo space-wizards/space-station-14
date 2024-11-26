@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Storage;
 using Robust.Shared.Containers;
@@ -19,6 +20,8 @@ public partial class InventorySystem : EntitySystem
 
         _vvm.GetTypeHandler<InventoryComponent>()
             .AddHandler(HandleViewVariablesSlots, ListViewVariablesSlots);
+
+        SubscribeLocalEvent<InventoryComponent, AfterAutoHandleStateEvent>(AfterAutoState);
     }
 
     private void ShutdownSlots()
@@ -66,6 +69,27 @@ public partial class InventorySystem : EntitySystem
             container.OccludesLight = false;
             component.Containers[i] = container;
         }
+    }
+
+    private void AfterAutoState(Entity<InventoryComponent> ent, ref AfterAutoHandleStateEvent args)
+    {
+        UpdateInventoryTemplate(ent);
+    }
+
+    protected virtual void UpdateInventoryTemplate(Entity<InventoryComponent> ent)
+    {
+        if (ent.Comp.LifeStage < ComponentLifeStage.Initialized)
+            return;
+
+        if (!_prototypeManager.TryIndex(ent.Comp.TemplateId, out InventoryTemplatePrototype? invTemplate))
+            return;
+
+        DebugTools.Assert(ent.Comp.Slots.Length == invTemplate.Slots.Length);
+
+        ent.Comp.Slots = invTemplate.Slots;
+
+        var ev = new InventoryTemplateUpdated();
+        RaiseLocalEvent(ent, ref ev);
     }
 
     private void OnOpenSlotStorage(OpenSlotStorageNetworkMessage ev, EntitySessionEventArgs args)
@@ -198,6 +222,31 @@ public partial class InventorySystem : EntitySystem
         {
             yield return slotDef.Name;
         }
+    }
+
+    /// <summary>
+    /// Change the inventory template ID an entity is using. The new template must be compatible.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// For an inventory template to be compatible with another, it must have exactly the same slot names.
+    /// All other changes are rejected.
+    /// </para>
+    /// </remarks>
+    /// <param name="ent">The entity to update.</param>
+    /// <param name="newTemplate">The ID of the new inventory template prototype.</param>
+    /// <exception cref="ArgumentException">
+    /// Thrown if the new template is not compatible with the existing one.
+    /// </exception>
+    public void SetTemplateId(Entity<InventoryComponent> ent, ProtoId<InventoryTemplatePrototype> newTemplate)
+    {
+        var newPrototype = _prototypeManager.Index(newTemplate);
+
+        if (!newPrototype.Slots.Select(x => x.Name).SequenceEqual(ent.Comp.Slots.Select(x => x.Name)))
+            throw new ArgumentException("Incompatible inventory template!");
+
+        ent.Comp.TemplateId = newTemplate;
+        Dirty(ent);
     }
 
     /// <summary>
