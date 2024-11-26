@@ -70,7 +70,6 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/shuttle.rsi
-    snapCardinals: false
   - type: Occluder
     enabled: false
   - type: PaintableAirlock
