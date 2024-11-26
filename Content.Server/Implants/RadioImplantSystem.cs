@@ -70,7 +70,7 @@ public sealed class RadioImplantSystem : EntitySystem
         }
         comp.TransmitterAddedChannels.Clear();
 
-        if (radioTransmitterComponent.Channels.Count == FixedPoint2.Zero || activeRadioComponent is { Channels.Count: 0 })
+        if (radioTransmitterComponent is { Channels.Count: 0 } || activeRadioComponent is { Channels.Count: 0 })
         {
             RemCompDeferred<IntrinsicRadioTransmitterComponent>(args.Container.Owner);
         }
