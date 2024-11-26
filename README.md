@@ -49,8 +49,6 @@ Build the server using `dotnet build`.
 
 [More detailed instructions on building the project.](https://docs.spacestation14.com/en/general-development/setup.html)
 
----
-
 ## License
 
 All code for the content repository is licensed under the [MIT license](https://github.com/space-wizards/space-station-14/blob/master/LICENSE.TXT).  
