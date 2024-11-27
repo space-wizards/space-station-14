@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: starlighthowls
-  changes:
-  - message: NTAS. White Whale TEST
-    type: Add
-  id: 96
-  time: '2024-08-18T21:54:31.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/114
 - author: TGRCdev
   changes:
   - message: Relicense to AGPLv3
@@ -4349,3 +4342,11 @@
   id: 595
   time: '2024-11-27T19:32:53.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/820
+- author: TGRCDev
+  changes:
+  - message: Crates/lockers being pulled can now only be opened by the person pulling
+      them
+    type: Tweak
+  id: 596
+  time: '2024-11-27T19:34:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/791
