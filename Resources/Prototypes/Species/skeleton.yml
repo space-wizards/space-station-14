@@ -6,8 +6,8 @@
   sprites: MobSkeletonSprites
   defaultSkinTone: "#fff9e2"
   markingLimits: MobHumanMarkingLimits
-  maleFirstNames: skeletonNamesFirst
-  femaleFirstNames: skeletonNamesFirst
+  maleFirstNames: NamesSkeleton
+  femaleFirstNames: NamesSkeleton
   dollPrototype: MobSkeletonPersonDummy
   skinColoration: TintedHues
 
