@@ -72,6 +72,13 @@
     damage:
       groups:
         Burn: 2
+    reagents:
+      - ReagentId: Plasma
+        Quantity: 5
+      - ReagentId: Potassium
+        Quantity: 5
+      - ReagentId: WeldingFuel
+        Quantity: 5
   - type: SolutionContainerManager
     solutions:
       smokable:
