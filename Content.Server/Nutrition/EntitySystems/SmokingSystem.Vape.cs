@@ -2,7 +2,6 @@ using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.DoAfter;
 using Content.Server.Explosion.EntitySystems;
-using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Shared.Administration.Logs;
@@ -13,12 +12,12 @@ using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Emag.Components;
-using Content.Shared.Emag.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Nutrition;
+using Content.Shared.Smoking;
 
 /// <summary>
 /// System for vapes
@@ -40,7 +39,6 @@ public sealed partial class SmokingSystem
         SubscribeLocalEvent<VapeComponent, UseInHandEvent>(OnVapeUseInHand);
         SubscribeLocalEvent<VapeComponent, AfterInteractEvent>(OnVapeInteraction);
         SubscribeLocalEvent<VapeComponent, VapeDoAfterEvent>(OnVapeDoAfter);
-        SubscribeLocalEvent<VapeComponent, GotEmaggedEvent>(OnEmagged);
     }
 
     private void OnVapeUseInHand(Entity<VapeComponent> ent, ref UseInHandEvent args)
@@ -189,11 +187,6 @@ public sealed partial class SmokingSystem
             _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(target):target} vaped {ToPrettyString(uid)} {SharedSolutionContainerSystem.ToPrettyString(solution)}");
         }
 
-        args.Handled = true;
-    }
-
-    private void OnEmagged(Entity<VapeComponent> ent, ref GotEmaggedEvent args)
-    {
         args.Handled = true;
     }
 }
