@@ -60,7 +60,7 @@ public sealed class RiggableSystem : EntitySystem
 
     public void Explode(EntityUid uid, BatteryComponent? battery = null, EntityUid? cause = null)
     {
-        if (!Resolve(uid, ref battery))
+        if (!Resolve(uid, ref battery, false))
             return;
 
         var radius = MathF.Min(5, MathF.Sqrt(battery.CurrentCharge) / 9);
