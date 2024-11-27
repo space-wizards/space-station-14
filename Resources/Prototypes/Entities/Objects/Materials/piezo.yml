@@ -7,9 +7,8 @@
   - type: Sharp
   - type: Sprite
     layers:
-      - sprite: Objects/Materials/Shards/crystal.rsi
-        state: shard1
-        map: [ "enum.DamageStateVisualLayers.Base" ]
+      - sprite: Objects/Materials/Shards/piezoshard.rsi
+        state: icon
   - type: MeleeWeapon
     wideAnimationRotation: -22.5
     attackRate: 1.5
