@@ -122,7 +122,8 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 20
+        Piercing: 10
+        Shock: 10
   - type: MeleeWeapon
     wideAnimationRotation: 0
     damage:
@@ -130,5 +131,9 @@
         Piercing: 4
     angle: 0
   - type: Construction
-      graph: LightTorch
-      node: torch
+      graph: PiezoHarpoon
+      node: piezoharpoon
+  - type: Electrified
+  - type: StunOnCollide
+    stunAmount: 3
+    knockdownAmount: 3
