@@ -114,14 +114,10 @@ public abstract partial class SharedBuckleSystem
         if (args.Handled)
             return;
 
-        var canUnbuckle = false;
-
         if (ent.Comp.BuckledTo != null)
             args.Handled = TryUnbuckle(ent!, args.User, popup: true);
 
         // TODO BUCKLE add out bool for whether a pop-up was generated or not.
-        if (canUnbuckle)
-            args.Handled = true;
     }
 
     private void AddStrapVerbs(EntityUid uid, StrapComponent component, GetVerbsEvent<InteractionVerb> args)
