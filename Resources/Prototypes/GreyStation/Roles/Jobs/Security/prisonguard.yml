@@ -2,12 +2,12 @@
   id: PrisonGuard
   name: job-name-guard
   description: job-description-guard
+  setPreference: false # GreyStation - Only the prison map will have prison guards.
   playTimeTracker: JobPrisonGuard
   startingGear: PrisonGuardGear
   canBeAntag: false
   icon: "JobIconPrisonGuard"
   supervisors: job-supervisors-warden
-  setPreference: false # GreyStation - Some stations will have prison guards but not every station.
   access:
   - Security
   - Brig
