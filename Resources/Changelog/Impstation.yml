@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: sageu111
-  changes:
-  - message: naked gray change LOL penis)
-    type: Tweak
-  id: 90
-  time: '2024-08-18T02:52:23.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/107
 - author: formlessnameless
   changes:
   - message: Fixed jukebox issue, made grays stingable and edible by lings
@@ -4336,3 +4329,11 @@
   id: 589
   time: '2024-11-27T08:22:09.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/815
+- author: Pinkbat5
+  changes:
+  - message: Chemists can now wear a new formal jumpsuit, the senior physician beret/labcoat,
+      and some heavy-duty PPE.
+    type: Add
+  id: 590
+  time: '2024-11-27T10:47:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/814
