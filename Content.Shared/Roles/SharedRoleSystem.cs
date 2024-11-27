@@ -285,7 +285,6 @@ public abstract class SharedRoleSystem : EntitySystem
                 continue;
             }
 
-            _entityManager.DeleteEntity(role);
             delete.Add(role);
             found = true;
         }
