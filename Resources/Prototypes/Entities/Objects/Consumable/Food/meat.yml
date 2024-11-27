@@ -717,30 +717,34 @@
           Quantity: 4 #It makes saline if you add salt!
 
 - type: entity
-  name: raw finfin meat
+  name: anomalous meat mass
   parent: FoodMeatRawBase
-  id: FoodMeatFinfin
-  description: A slab of raw finfin. He was your best friend!
+  id: FoodMeatAnomaly
+  description: An impossibly dense slab of meat. Just looking at it makes you uncomfortable.
   components:
   - type: Sprite
-    state: finfin
+    state: anomalymeat
   - type: SolutionContainerManager
     solutions:
       food:
         reagents:
         - ReagentId: UncookedAnimalProteins
-          Quantity: 9
+          Quantity: 90
         - ReagentId: Fat
-          Quantity: 9
+          Quantity: 90
   - type: SliceableFood
-    count: 3
-    slice: FoodMeatFinfinCutlet
+    count: 10
+    sliceTime: 5
+    slice: FoodMeat #That's... So much meat
   - type: InternalTemperature
-    conductivity: 0.41
+    conductivity: 0.43
   - type: Construction
-    graph: FinfinSteak
+    graph: AnomalyMeatSteak
     node: start
-    defaultTarget: cooked finfin
+    defaultTarget: anomaly steak
+  - type: Tag
+    tags:
+    - Meat
 
 # Cooked
 
@@ -1215,10 +1219,10 @@
       Taco: MeatSnail
 
 - type: entity
-  name: cooked finfin
+  name: anomalous steak
   parent: FoodMeatBase
-  id: FoodMeatFinfinCooked
-  description: A cooked piece of finfin. Best used in other recipes.
+  id: FoodMeatAnomalyCooked
+  description: A gigantic mass of cooked meat. A meal for a dinner party, or someone REALLY hungry.
   components:
   - type: Tag
     tags:
@@ -1226,52 +1230,22 @@
     - Meat
   - type: Sprite
     layers:
-    - state: finfin-cooked
+    - state: anomalymeat-cooked #Kinda hard to cook this... thing evenly
   - type: SolutionContainerManager
     solutions:
       food:
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 100
         - ReagentId: Protein
-          Quantity: 5
+          Quantity: 50
   - type: SliceableFood
-    count: 3
-    slice: FoodMeatFinfinCutletCooked
+    count: 10
+    sliceTime: 5
+    slice: FoodMeatCooked
   - type: Construction
-    graph: FinfinSteak
-    node: cooked finfin
-
-- type: entity
-  name: fried finfin
-  parent: FoodMeatBase
-  id: FoodMeatFinfinFried
-  description: A juicy hunk of finfin meat, fried to perfection.
-  components:
-  - type: Tag
-    tags:
-    - Cooked
-    - Meat
-  - type: Sprite
-    layers:
-    - state: chicken-fried
-      map: [ "enum.DamageStateVisualLayers.Base" ]
-  - type: RandomSprite
-    available:
-      - enum.DamageStateVisualLayers.Base:
-          chicken-fried: ""
-          chicken2-fried: ""
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 5
-        - ReagentId: Protein
-          Quantity: 5
-  - type: FoodSequenceElement
-    entries:
-      Burger: FriedFinfinBurger
+    graph: AnomalyMeatSteak
+    node: anomaly steak
 
 # Cutlets
 

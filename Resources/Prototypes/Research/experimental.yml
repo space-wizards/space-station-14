@@ -11,6 +11,7 @@
   cost: 5000
   recipeUnlocks:
   - ProximitySensor
+  - Drone
   - ExosuitFabricatorMachineCircuitboard
 
 - type: technology

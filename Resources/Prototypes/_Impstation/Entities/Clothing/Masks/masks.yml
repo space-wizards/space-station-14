@@ -1,0 +1,27 @@
+- type: entity
+  parent: [ClothingMaskPullableBase]
+  id: ClothingMaskBreathSCargo
+  name: S-Cargo breath mask
+  description: While functionally identical to a standard breath mask, nothing can compete when it comes to style.
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: _Impstation/Clothing/Mask/scargomask.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Mask/scargomask.rsi
+  - type: BreathMask
+  - type: IngestionBlocker
+  - type: Tag
+    tags:
+    - PetWearable
+    - WhitelistChameleon
+    - BreathMask # goob edit
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50
+      Plastic: 100
+  - type: HideLayerClothing
+    slots:
+    - Snout
+    hideOnToggle: true

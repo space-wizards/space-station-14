@@ -1363,7 +1363,7 @@
     rules: ghost-role-information-nonantagonist-rules
   - type: GhostTakeoverAvailable
   - type: Clumsy
-    clumsyDamage:
+    gunShootFailDamage:
       types:
         Blunt: 5
         Piercing: 4
@@ -1435,7 +1435,7 @@
   - type: Speech
     speechSounds: Lizard
     speechVerb: Reptilian
-    allowedEmotes: ['Thump']
+    allowedEmotes: ['Thump', 'Hiss']
   - type: Vocal
     sounds:
       Male: MaleReptilian
@@ -1540,7 +1540,7 @@
   description: Cousins to the sentient race of lizard people, kobolds blend in with their natural habitat and are as nasty as monkeys; ready to pull out your hair and stab you to death.
   components:
   - type: Clumsy
-    clumsyDamage:
+    gunShootFailDamage:
       types:
         Blunt: 2
         Piercing: 7
@@ -1762,6 +1762,9 @@
       Taco: RatTaco
       Burger: RatBurger
       Skewer: RatSkewer
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Mouse
 
 - type: entity
   parent: MobMouse
@@ -1894,6 +1897,17 @@
   id: MobLizard
   description: A harmless dragon.
   components:
+  - type: ReplacementAccent
+    accent: kobold
+  - type: Speech # Imp edit
+    speechSounds: Lizard
+    speechVerb: Reptilian
+    allowedEmotes: ['Hiss'] # Can't thump tail because no body component
+  - type: Vocal # Imp edit
+    sounds:
+      Male: MaleReptilian
+      Female: FemaleReptilian
+      Unsexed: MaleReptilian
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
     baseSprintSpeed: 3

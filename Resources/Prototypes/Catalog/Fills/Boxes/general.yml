@@ -53,6 +53,9 @@
     contents:
       - id: LightBulb
         amount: 12
+  - type: Tag
+    tags:
+      - DroneUsable
 
 - type: entity
   name: lighttube box
@@ -67,6 +70,9 @@
     contents:
       - id: LightTube
         amount: 12
+  - type: Tag
+    tags:
+      - DroneUsable        
 
 - type: entity
   name: mixed lights box
@@ -83,6 +89,9 @@
         amount: 6
       - id: LightBulb
         amount: 6
+  - type: Tag
+    tags:
+      - DroneUsable        
 
 - type: entity
   name: PDA box
@@ -187,7 +196,9 @@
     layers:
       - state: box
       - state: inflatable
-
+  - type: Tag
+    tags:
+      - DroneUsable
 
 - type: entity
   name: hatsune miku day bag
@@ -238,6 +249,9 @@
     layers:
       - state: box
       - state: trashbag
+  - type: Tag
+    tags:
+      - DroneUsable      
 
 - type: entity
   name: passenger encryption key box

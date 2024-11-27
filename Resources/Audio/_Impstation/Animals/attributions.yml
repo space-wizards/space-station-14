@@ -2,3 +2,10 @@
   license: "CC-BY-SA-3.0"
   copyright: "Recorded by user Faithhollow1 on Freesound.org"
   source: "https://freesound.org/people/Faithhollow1/sounds/186577/"
+
+- files: 
+  - disgustingpug_f.ogg
+  - disgustingpug_m.ogg
+  license: "Custom"
+  copyright: "Ripped from Wurm Online, owned by Code Club AB."
+  source: "NA"

@@ -516,11 +516,13 @@
   components:
   - type: InteractionPopup
     successChance: 1
-    interactSuccessString: petting-success-pig
-    interactFailureString: petting-failure-pig
+    interactSuccessString: petting-success-disgustingpig
+    interactFailureString: petting-failure-disgustingpig
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
-      path: /Audio/Animals/pig_oink.ogg
+      collection: DisgustingPig
+      params:
+       variation: .5
   - type: Grammar
     attributes:
       proper: true

@@ -7,6 +7,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 using static Robust.Client.UserInterface.Controls.TextEdit;
+using Content.Shared._Impstation.CCVar;
 
 namespace Content.Client.UserInterface.Systems.Chat.Controls;
 
@@ -45,7 +46,7 @@ public sealed partial class ChannelFilterPopup : Popup
 
         // Load highlights if any were saved.
         var cfg = IoCManager.Resolve<IConfigurationManager>();
-        string highlights = cfg.GetCVar(CCVars.ChatHighlights);
+        string highlights = cfg.GetCVar(ImpCCVars.ChatHighlights);
 
         if (!string.IsNullOrEmpty(highlights))
         {

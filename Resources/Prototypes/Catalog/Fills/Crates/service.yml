@@ -130,6 +130,7 @@
     - id: BoxFolderYellow
     - id: NewtonCradle
     - id: BoxEnvelope
+    - id: BrbSign
 
 - type: entity
   id: CrateServiceFaxMachine

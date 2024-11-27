@@ -15,6 +15,7 @@
   - type: Tag
     tags:
     - Sheet
+    - DroneUsable
   - type: Material
   - type: Damageable
     damageContainer: Inorganic

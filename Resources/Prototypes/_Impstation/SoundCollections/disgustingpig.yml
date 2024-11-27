@@ -1,0 +1,5 @@
+- type: soundCollection
+  id: DisgustingPig
+  files:
+    - /Audio/_Impstation/Animals/disgustingpig_f.ogg
+    - /Audio/_Impstation/Animals/disgustingpig_m.ogg
