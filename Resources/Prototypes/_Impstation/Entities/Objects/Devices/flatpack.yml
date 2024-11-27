@@ -12,3 +12,11 @@
     - state: overlay
       color: "#cec8ac"
     - state: icon-default
+
+- type: entity
+  id: ChemMasterFlatpack
+  name: ChemMaster 4000 flatpack
+  description: A flatpack used for constructing a ChemMaster 4000.
+  components:
+  - type: Flatpack
+    entity: ChemMaster

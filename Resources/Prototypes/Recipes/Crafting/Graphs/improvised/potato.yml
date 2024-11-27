@@ -60,15 +60,7 @@
             - material: Cable
               amount: 2
               doAfter: 1
-            - tag: CapacitorStockPart
-              name: capacitor
-              icon:
-                sprite: Objects/Misc/stock_parts.rsi
-                state: capacitor
-            - tag: CapacitorStockPart
-              name: capacitor
-              icon:
-                sprite: Objects/Misc/stock_parts.rsi
-                state: capacitor
+            - material: Capacitor
+              amount: 2
     - node: potatoaichip
       entity: PotatoAIChip
