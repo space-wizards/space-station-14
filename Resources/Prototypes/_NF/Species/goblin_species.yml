@@ -5,6 +5,7 @@
   roundStart: false
   prototype: MobGoblin
   sprites: MobGoblinSprites
+  defaultSkinTone: "#82d074"
   markingLimits: MobGoblinMarkingLimits
   dollPrototype: MobGoblinDummy
   skinColoration: Hues #Possible values: TintedHues, Hues, HumanToned

@@ -11,6 +11,17 @@
     belt: ClothingBeltUtilityGoblinRandomFill
 
 - type: startingGear
+  id: GoblinOSPEVA
+  equipment:
+    outerClothing: ClothingOuterGoblinEVASuit
+    belt: ClothingBeltUtilityGoblinRandomFill
+    back: ClothingBackpackSatchelLeather
+    suitstorage: OxygenTankFilled
+  storage:
+    back:
+    - ClothingOuterCoatRobesGoblin
+
+- type: startingGear
   id: GoblinKnightArmor
   equipment:
     jumpsuit: ClothingSpaceCadetJumpsuitColorBlack # temp - remove after sprite refactor
