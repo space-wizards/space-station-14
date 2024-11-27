@@ -1,4 +1,4 @@
-﻿contraband-examine-text-Minor = [color=yellow]This item is considered minor contraband.[/color]
+contraband-examine-text-Minor = [color=yellow]This item is considered minor contraband.[/color]
 contraband-examine-text-Restricted = [color=yellow]This item is departmentally restricted.[/color]
 contraband-examine-text-Restricted-department = [color=yellow]This item is restricted to {$departments}, and may be considered contraband.[/color]
 contraband-examine-text-Major = [color=red]This item is considered major contraband.[/color]
