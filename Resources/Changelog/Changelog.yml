@@ -1,37 +1,4 @@
 ﻿Entries:
-- author: UBlueberry
-  changes:
-  - message: The guidebook entries for all antagonists have been revised.
-    type: Tweak
-  id: 7154
-  time: '2024-08-19T03:16:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31075
-- author: TheWaffleJesus
-  changes:
-  - message: ERT Chaplains now have blessings to use their bible.
-    type: Fix
-  id: 7155
-  time: '2024-08-19T03:19:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30993
-- author: DieselMohawk
-  changes:
-  - message: Reshaped the Security Helmet
-    type: Tweak
-  id: 7156
-  time: '2024-08-19T03:21:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30961
-- author: EmoGarbage404
-  changes:
-  - message: Increased the sell prices of most materials
-    type: Tweak
-  - message: Increased the price of ordering material crates from cargo.
-    type: Tweak
-  - message: Decreased the amount of plasma in one plasma crate from 3 stacks to 1
-      stack.
-    type: Tweak
-  id: 7157
-  time: '2024-08-19T03:28:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30869
 - author: Flareguy
   changes:
   - message: Added 2 new vox customization options for both hair & facial hair.
@@ -3923,3 +3890,35 @@
   id: 7653
   time: '2024-11-25T12:35:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33513
+- author: metalgearsloth
+  changes:
+  - message: Adjusted the top menu on the separated game screen. The buttons will
+      now form multiple rows and no longer overflow into the viewport.
+    type: Tweak
+  id: 7654
+  time: '2024-11-26T00:59:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33047
+- author: slarticodefast
+  changes:
+  - message: Added the greytide virus station event. It will bolt open all doors in
+      a few randomly chosen departments and unlock lockers with the corresponding
+      access.
+    type: Add
+  id: 7655
+  time: '2024-11-26T13:50:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33547
+- author: slarticodefast
+  changes:
+  - message: Fixed space ambient music not playing.
+    type: Fix
+  id: 7656
+  time: '2024-11-27T05:32:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33594
+- author: slarticodefast
+  changes:
+  - message: Fixed windoors and high security doors not showing up on the AI's electrocution
+      HUD.
+    type: Fix
+  id: 7657
+  time: '2024-11-27T05:55:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33551
