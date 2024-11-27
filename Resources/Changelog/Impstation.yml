@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TGRCdev
-  changes:
-  - message: Relicense to AGPLv3
-    type: Tweak
-  id: 97
-  time: '2024-08-19T01:38:56.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/115
 - author: sususuyo
   changes:
   - message: New lobby art, new audio tracks volume adjustments
@@ -4350,3 +4343,12 @@
   id: 596
   time: '2024-11-27T19:34:23.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/791
+- author: widgetbeck
+  changes:
+  - message: Mucin now evaporates and costs less thirst.
+    type: Tweak
+  - message: Propulsion gel nerf.
+    type: Tweak
+  id: 597
+  time: '2024-11-27T20:55:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/818
