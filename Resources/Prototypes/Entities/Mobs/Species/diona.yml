@@ -5,6 +5,7 @@
   id: BaseMobDiona
   abstract: true
   components:
+  - type: Absorbable
   - type: Tag
     tags:
     - CanPilot

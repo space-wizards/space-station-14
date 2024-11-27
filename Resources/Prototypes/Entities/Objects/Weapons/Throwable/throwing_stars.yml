@@ -38,9 +38,9 @@
         Slash: 8
         Piercing: 10
   - type: StaminaDamageOnCollide
-    damage: 45
+    damage: 30
   - type: StaminaDamageOnEmbed
-    damage: 10
+    damage: 5
 
 - type: entity
   parent: ThrowingStar
@@ -49,5 +49,18 @@
   components:
   # prevent ninja crashing server + filling bag with 20 stars to instakill a single person
   # also limits the crew's use
+  - type: TimedDespawn
+    lifetime: 30
+
+- type: entity
+  parent: ThrowingStar
+  id: ThrowingStarChangeling
+  name: bone shard
+  components:
+  - type: Sprite
+    sprite: Changeling/bone_shard.rsi
+    layers:
+    - state: icon
+      map: ["base"]
   - type: TimedDespawn
     lifetime: 30
