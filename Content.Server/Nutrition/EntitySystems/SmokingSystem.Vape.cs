@@ -89,12 +89,12 @@ public sealed partial class SmokingSystem
                 target);
 
             // Log involuntary vaping
-            _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(user):user} is forcing {ToPrettyString(target):target} to vape {ToPrettyString(uid)} {SharedSolutionContainerSystem.ToPrettyString(solution)}");
+            _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(user):user} is forcing {ToPrettyString(target):target} to vape {SharedSolutionContainerSystem.ToPrettyString(solution)} using {ToPrettyString(uid)}");
         }
         else
         {
             // Log voluntary vaping
-            _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(target):target} is vape {ToPrettyString(uid)} {SharedSolutionContainerSystem.ToPrettyString(solution)}");
+            _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(target):target} is vaping {SharedSolutionContainerSystem.ToPrettyString(solution)} using {ToPrettyString(uid)}");
         }
 
         if (HasComp<EmaggedComponent>(uid) || TryComp<RiggableComponent>(uid, out var riggable) && riggable.IsRigged)
@@ -174,7 +174,7 @@ public sealed partial class SmokingSystem
 
             _popupSystem.PopupEntity(
                 Loc.GetString("vape-component-vape-success-user-forced", ("target", targetName)), user,
-                target.Value);
+                user);
 
             // Log involuntary vaping
             _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(user):user} forced {ToPrettyString(target):target} to vape {ToPrettyString(uid)} {SharedSolutionContainerSystem.ToPrettyString(solution)}");
