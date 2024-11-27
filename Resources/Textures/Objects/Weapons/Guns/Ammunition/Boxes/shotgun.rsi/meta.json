@@ -1,0 +1,62 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Sprites by SpaceRox1244",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "base"
+        },
+        {
+            "name": "mag-1"
+        },
+        {
+            "name": "mag-2"
+        },
+        {
+            "name": "mag-3"
+        },
+        {
+            "name": "mag-4"
+        },
+        {
+            "name": "mag-alt-1"
+        },
+        {
+            "name": "mag-alt-2"
+        },
+        {
+            "name": "mag-alt-3"
+        },
+        {
+            "name": "mag-alt-4"
+        },
+        {
+            "name": "lethal"
+        },
+        {
+            "name": "beanbag"
+        },
+        {
+            "name": "slug"
+        },
+        {
+            "name": "incendiary"
+        },
+        {
+            "name": "practice"
+        },
+        {
+            "name": "uranium"
+        },
+        {
+            "name": "flare"
+        },
+        {
+            "name": "tranquilizer"
+        }
+    ]
+}

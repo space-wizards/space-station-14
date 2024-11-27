@@ -10,3 +10,15 @@
       state: state-laws
     event: !type:ToggleLawsScreenEvent
     useDelay: 0.5
+
+- type: entity
+  id: ActionSelectBorgType
+  name: Select Cyborg Type
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    icon:
+      sprite: Interface/Actions/actions_borg.rsi
+      state: select-type
+    event: !type:BorgToggleSelectTypeEvent
+    useDelay: 0.5

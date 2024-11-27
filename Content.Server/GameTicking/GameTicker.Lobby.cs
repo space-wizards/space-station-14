@@ -191,7 +191,7 @@ namespace Content.Server.GameTicking
             => UserHasJoinedGame(session.UserId);
 
         public bool UserHasJoinedGame(NetUserId userId)
-            => PlayerGameStatuses[userId] == PlayerGameStatus.JoinedGame;
+            => PlayerGameStatuses.TryGetValue(userId, out var status) && status == PlayerGameStatus.JoinedGame;
     }
 
     public sealed class PlayerToggleReadyEvent : EntityEventArgs
