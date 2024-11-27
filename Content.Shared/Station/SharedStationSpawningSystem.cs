@@ -69,7 +69,7 @@ public abstract class SharedStationSpawningSystem : EntitySystem
 
         if (string.IsNullOrEmpty(name) && PrototypeManager.TryIndex(roleProto.NameDataset, out var nameData))
         {
-            name = Loc.GetString(_random.Pick(nameData.Values));
+            name = _random.Pick(nameData.Values);
         }
 
         if (!string.IsNullOrEmpty(name))
@@ -150,7 +150,6 @@ public abstract class SharedStationSpawningSystem : EntitySystem
 
             foreach (var (slot, entProtos) in startingGear.Storage)
             {
-                ents.Clear();
                 if (entProtos.Count == 0)
                     continue;
 
