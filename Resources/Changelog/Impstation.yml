@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: sususuyo
-  changes:
-  - message: Adding more songs
-    type: Add
-  id: 88
-  time: '2024-08-18T02:11:39.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/105
-- author: sageu111
-  changes:
-  - message: audio tweaks for grays
-    type: Tweak
-  id: 89
-  time: '2024-08-18T02:04:05.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/106
-- author: sageu111
-  changes:
-  - message: naked gray change LOL penis)
-    type: Tweak
-  id: 90
-  time: '2024-08-18T02:52:23.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/107
 - author: formlessnameless
   changes:
   - message: Fixed jukebox issue, made grays stingable and edible by lings
@@ -4333,3 +4312,28 @@
   id: 587
   time: '2024-11-26T19:37:24.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/811
+- author: kipdotnet
+  changes:
+  - message: Added the S-Cargo moving trunk! Its a normal locker, but with zero gravity
+      at all times.
+    type: Add
+  - message: Edited the sprite for the s-cargo satchel slightly.
+    type: Tweak
+  id: 588
+  time: '2024-11-27T08:21:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/812
+- author: Sha-Seng
+  changes:
+  - message: Beanbag shell ammo box is now a stun slug ammo box
+    type: Tweak
+  id: 589
+  time: '2024-11-27T08:22:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/815
+- author: Pinkbat5
+  changes:
+  - message: Chemists can now wear a new formal jumpsuit, the senior physician beret/labcoat,
+      and some heavy-duty PPE.
+    type: Add
+  id: 590
+  time: '2024-11-27T10:47:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/814

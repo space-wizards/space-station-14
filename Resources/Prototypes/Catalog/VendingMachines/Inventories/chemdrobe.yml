@@ -15,3 +15,11 @@
     ClothingHeadsetMedical: 2
     ClothingOuterWinterChem: 2
     ClothingNeckScarfStripedOrange: 2
+    # DeltaV - Personal Protective Equipment - Add various PPE equipment including new clothings
+    ClothingUniformJumpsuitChemShirt: 2 # New chemist jumpsuit, formal variant
+    ClothingNeckTieChem: 2  # Chemist's tie to go along a new variant of their suit
+    ClothingShoesEnclosedChem: 2 # Realistic chemistry shoes
+    ClothingOuterApronChemist: 2 # Realistic PPE apron for chemistry
+    ClothingEyesGlassesChemist: 2 # Safety glasses
+    ClothingHandsGlovesChemist: 2 # Heavy duty chemistry gloves
+    # End of modified code

@@ -72,7 +72,7 @@
   hidden: true
   loadouts:
   - LoadoutDecapoidBreathTool
-  
+
 - type: loadoutGroup
   id: GroupBreathToolDecapoidInventory
   name: loadout-group-breath-tool-inventory-decapoid
@@ -80,3 +80,11 @@
   hidden: true
   loadouts:
   - LoadoutDecapoidBreathToolInventory
+
+- type: loadoutGroup
+  id: ChemistHead
+  name: loadout-group-chemist-head
+  minLimit: 0
+  loadouts:
+  - MedicalBeret
+  - SeniorPhysicianBeret

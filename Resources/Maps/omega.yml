@@ -72854,7 +72854,7 @@ entities:
     - type: Transform
       pos: -25.5,-27.5
       parent: 4812
-  - uid: 13709
+  - uid: 92718
     components:
     - type: Transform
       pos: -4.5,28.5
@@ -72875,7 +72875,7 @@ entities:
       parent: 4812
 - proto: SpawnPointHeadOfPersonnel
   entities:
-  - uid: 13710
+  - uid: 72027
     components:
     - type: Transform
       pos: -1.5,28.5
