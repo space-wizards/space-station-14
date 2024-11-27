@@ -1,5 +1,5 @@
 - type: localizedDataset
   id: names_moth_first_female
   values:
-    prefix: names-moth-female-first-dataset-
+    prefix: names-moth-first-female-dataset-
     count: 38
