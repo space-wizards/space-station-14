@@ -98,10 +98,10 @@ public sealed partial class CCVars
             GameMapRotation = CVarDef.Create("game.map_rotation", true, CVar.SERVERONLY);
 
         /// <summary>
-        ///     If roles should be restricted based on time.
+        ///     If roles should be restricted based on time. #GreyStation Change
         /// </summary>
         public static readonly CVarDef<bool>
-            GameRoleTimers = CVarDef.Create("game.role_timers", true, CVar.SERVER | CVar.REPLICATED);
+            GameRoleTimers = CVarDef.Create("game.role_timers", false, CVar.SERVER | CVar.REPLICATED);
 
         /// <summary>
         ///     Override default role requirements using a <see cref="JobRequirementOverridePrototype"/>
