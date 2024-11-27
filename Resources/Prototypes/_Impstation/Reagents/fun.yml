@@ -82,7 +82,7 @@
   flavor: speed
   color: "#ff8700"
   recognizable: true
-  viscosity: -1
+  viscosity: -0.5
   metabolisms:
     Drink:
       effects:
