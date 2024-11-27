@@ -516,7 +516,7 @@ public sealed class PullingSystem : EntitySystem
         Dirty(pullableUid, pullableComp);
 
         var pullingMessage =
-            Loc.GetString("getting-pulled-popup", ("pulling", Identity.Entity(pullerUid, EntityManager)));
+            Loc.GetString("getting-pulled-popup", ("puller", Identity.Entity(pullerUid, EntityManager)));
         _popup.PopupEntity(pullingMessage, pullableUid, pullableUid);
 
         _adminLogger.Add(LogType.Action, LogImpact.Low,
