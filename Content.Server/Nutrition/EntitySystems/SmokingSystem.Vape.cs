@@ -93,7 +93,7 @@ public sealed partial class SmokingSystem
                 target);
 
             // Log involuntary vaping
-            _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(user):user} is forcing {ToPrettyString(target):target} to vape {ToPrettyString(uid)} {SharedSolutionContainerSystem.ToPrettyString(solution)}");
+            _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(user):user} is forcing {ToPrettyString(target):target} to vape {SharedSolutionContainerSystem.ToPrettyString(solution)} using {ToPrettyString(uid)}");
         }
         else
         {
