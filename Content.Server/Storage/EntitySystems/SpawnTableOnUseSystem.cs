@@ -9,6 +9,7 @@ namespace Content.Server.Storage.EntitySystems;
 public sealed class SpawnTableOnUseSystem : EntitySystem
 {
     [Dependency] private readonly EntityTableSystem _entityTable = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
 
     public override void Initialize()
@@ -30,6 +31,7 @@ public sealed class SpawnTableOnUseSystem : EntitySystem
         foreach (var id in spawns)
         {
             var spawned = Spawn(id, coords);
+            _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(args.User)} used {ToPrettyString(uid)} which spawned {ToPrettyString(spawned)}");
             _hands.TryPickupAnyHand(args.User, spawned);
         }
 
