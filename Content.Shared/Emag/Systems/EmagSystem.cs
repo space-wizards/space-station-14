@@ -6,8 +6,9 @@ using Content.Shared.Emag.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Tag;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Emag.Systems;
 
@@ -22,6 +23,7 @@ public sealed class EmagSystem : EntitySystem
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedChargesSystem _charges = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly TagSystem _tag = default!;
 
     public override void Initialize()
@@ -53,7 +55,7 @@ public sealed class EmagSystem : EntitySystem
         TryComp<LimitedChargesComponent>(uid, out var charges);
         if (_charges.IsEmpty(uid, charges))
         {
-            _popup.PopupClient(Loc.GetString("emag-no-charges"), user, user);
+            _popup.PopupPredicted(Loc.GetString("emag-no-charges"), user, user);
             return false;
         }
 
@@ -61,7 +63,7 @@ public sealed class EmagSystem : EntitySystem
         if (!handled)
             return false;
 
-        _popup.PopupClient(Loc.GetString("emag-success", ("target", Identity.Entity(target, EntityManager))), user,
+        _popup.PopupPredicted(Loc.GetString("emag-success", ("target", Identity.Entity(target, EntityManager))), user,
             user, PopupType.Medium);
 
         _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(user):player} emagged {ToPrettyString(target):target}");
@@ -91,7 +93,11 @@ public sealed class EmagSystem : EntitySystem
         RaiseLocalEvent(target, ref emaggedEvent);
 
         if (emaggedEvent.Handled && !emaggedEvent.Repeatable)
-            EnsureComp<EmaggedComponent>(target);
+        {
+            EnsureComp<EmaggedComponent>(target, out var emagged);
+            _audio.PlayPredicted(emagged.Sound, target, user, AudioParams.Default.WithVolume(emagged.SoundVolume));
+        }
+
         return emaggedEvent.Handled;
     }
 }

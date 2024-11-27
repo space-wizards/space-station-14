@@ -48,9 +48,7 @@ public sealed partial class SmokingSystem
         if (args.Handled)
             return;
 
-        args.Handled = true;
-
-        TryVape(ent, args.User, args.User);
+        args.Handled = TryVape(ent, args.User, args.User);
     }
 
     private void OnVapeInteraction(Entity<VapeComponent> ent, ref AfterInteractEvent args)
@@ -60,12 +58,10 @@ public sealed partial class SmokingSystem
         if (!args.CanReach || target == null)
             return;
 
-        args.Handled = true;
-
-        TryVape(ent, args.User, target.Value);
+        args.Handled = TryVape(ent, args.User, target.Value);
     }
 
-    private void TryVape(Entity<VapeComponent> ent, EntityUid user, EntityUid target)
+    private bool TryVape(Entity<VapeComponent> ent, EntityUid user, EntityUid target)
     {
         var (uid, vape) = ent;
 
@@ -73,13 +69,13 @@ public sealed partial class SmokingSystem
             || !HasComp<BloodstreamComponent>(target)
             || _foodSystem.IsMouthBlocked(target, user))
         {
-            return;
+            return false;
         }
 
         if (solution.Contents.Count == 0)
         {
             _popupSystem.PopupEntity(Loc.GetString("vape-component-vape-empty"), user, user);
-            return;
+            return false;
         }
 
         var forced = target != user;
@@ -105,7 +101,7 @@ public sealed partial class SmokingSystem
         {
             _explosionSystem.QueueExplosion(uid, "Default", vape.ExplosionIntensity, 0.5f, 3, canCreateVacuum: false);
             EntityManager.QueueDeleteEntity(uid);
-            return;
+            return true;
         }
 
         var doAfterArgs = new DoAfterArgs(EntityManager,
@@ -121,6 +117,8 @@ public sealed partial class SmokingSystem
         };
 
         _doAfterSystem.TryStartDoAfter(doAfterArgs);
+
+        return true;
     }
 
     private void OnVapeDoAfter(Entity<VapeComponent> ent, ref VapeDoAfterEvent args)
@@ -194,7 +192,7 @@ public sealed partial class SmokingSystem
         args.Handled = true;
     }
 
-    private void OnEmagged(Entity<VapeComponent> entity, ref GotEmaggedEvent args)
+    private void OnEmagged(Entity<VapeComponent> ent, ref GotEmaggedEvent args)
     {
         args.Handled = true;
     }
