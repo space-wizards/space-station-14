@@ -8,8 +8,8 @@
   markingLimits: MobReptilianMarkingLimits
   dollPrototype: MobReptilianDummy
   skinColoration: Hues
-  maleFirstNames: names_reptilian_male
-  femaleFirstNames: names_reptilian_female
+  maleFirstNames: NamesReptilianMale
+  femaleFirstNames: NamesReptilianFemale
   naming: FirstDashFirst
 
 - type: speciesBaseSprites
