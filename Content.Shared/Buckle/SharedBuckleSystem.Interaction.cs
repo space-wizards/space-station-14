@@ -117,7 +117,7 @@ public abstract partial class SharedBuckleSystem
         var canUnbuckle = false;
 
         if (ent.Comp.BuckledTo != null)
-            canUnbuckle = TryUnbuckle(ent!, args.User, popup: true);
+            args.Handled = TryUnbuckle(ent!, args.User, popup: true);
 
         // TODO BUCKLE add out bool for whether a pop-up was generated or not.
         if (canUnbuckle)
