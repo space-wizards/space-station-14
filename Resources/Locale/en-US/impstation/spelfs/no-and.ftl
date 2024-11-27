@@ -105,8 +105,8 @@ spelf-mood-word-bad-desc = "{$word1}," "{$word2}," and "{$word3}," are extremely
 spelf-mood-mad-hatter-name = Mad Hatter
 spelf-mood-mad-hatter-desc = You are alone on the station. Everyone else is a figment of your imagination.
 
-spelf-mood-crawler-name = Creepy Crawly
-spelf-mood-crawler-desc = You have extreme vertigo, to the point where merely standing upright can cause discomfort. You're much more comfortable crawling along the floor.
+spelf-mood-crawler-name = Deep Bow
+spelf-mood-crawler-desc = It is impolite not to perform a deep bow by entering a prone state before engaging someone in conversation.
 
 spelf-mood-elevated-name = The Floor Is Lava
 spelf-mood-elevated-desc = You prefer to be elevated whenever possible - Standing atop tables, railings, etc., is where you feel the most comfortable. 
