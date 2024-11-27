@@ -609,4 +609,24 @@ Entries:
   id: 85
   time: '2024-11-27T07:25:02.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/88
-
+- author: Rinary
+  changes:
+  - message: Fixed changeling stealth ability.
+    type: Fix
+  id: 86
+  time: '2024-11-27T13:00:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/cb849e5f9134e5909573127b5588958e6efd8d04
+- author: Rinary
+  changes:
+  - message: Fixed changeling faction icon.
+    type: Fix
+  id: 87
+  time: '2024-11-27T13:00:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/cb849e5f9134e5909573127b5588958e6efd8d04
+- author: Rinary
+  changes:
+  - message: Fixed surgery eye implant icons.
+    type: Fix
+  id: 88
+  time: '2024-11-27T13:00:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/6534038399042517d5300b4a2d12b21783b52eab
