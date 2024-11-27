@@ -35,6 +35,7 @@
     - id: LoneOpsSpawn
     - id: ChangelingAwakening
     - id: GoblinStowawaysEvent # imp
+    - id: GoblinCastawaysEvent # imp
 
 - type: entityTable
   id: SleeperlessAntagEventsTable
@@ -49,6 +50,7 @@
     - id: LoneOpsSpawn
     - id: ChangelingAwakening
     - id: GoblinStowawaysEvent # imp
+    - id: GoblinCastawaysEvent # imp
 
 - type: entity
   id: BaseStationEvent
