@@ -1,0 +1,10 @@
+- type: entity
+  parent: [ClothingUniformBase, ClothingUniformFoldableBase]
+  id: ClothingUniformJumpsuitChemShirt
+  name: formal chemistry suit
+  description: There's still some odd stains on this suit. Hm.
+  components:
+  - type: Sprite
+    sprite: _DeltaV/Clothing/Uniforms/Jumpsuit/chemshirtsuit.rsi
+  - type: Clothing
+    sprite: _DeltaV/Clothing/Uniforms/Jumpsuit/chemshirtsuit.rsi
