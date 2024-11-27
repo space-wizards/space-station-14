@@ -630,3 +630,17 @@ Entries:
   id: 88
   time: '2024-11-27T13:00:02.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/commit/6534038399042517d5300b4a2d12b21783b52eab
+- author: Rinary
+  changes:
+  - message: Fixed sleeping action.
+    type: Fix
+  id: 89
+  time: '2024-11-27T17:08:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/9afc832ced4067dfdb5c1c88c0271187abd06c88
+- author: Rinary
+  changes:
+  - message: Fixed vampire hunger.
+    type: Fix
+  id: 90
+  time: '2024-11-27T17:08:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/7b65cc62d7e8a5bc1eb023e999a616e37f00bf1b
