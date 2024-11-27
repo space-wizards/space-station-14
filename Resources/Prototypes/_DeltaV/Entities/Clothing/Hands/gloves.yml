@@ -16,4 +16,4 @@
       coefficients:
         Caustic: 0.95
   - type: TemperatureProtection
-    coefficient: 1
+    coolingCoefficient: 1
