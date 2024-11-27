@@ -536,7 +536,7 @@ public sealed partial class ChangelingSystem : EntitySystem
             RemComp<StealthComponent>(uid);
             RemComp<StealthOnMoveComponent>(uid);
             _popup.PopupEntity(Loc.GetString("changeling-chameleon-end"), uid, uid);
-            return;
+            comp.StealthEnabled = false;
         }
         else
         {

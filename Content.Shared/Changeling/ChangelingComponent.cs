@@ -39,7 +39,7 @@ public sealed partial class ChangelingComponent : Component
     /// </summary>
 
     [DataField, ViewVariables(VVAccess.ReadOnly)]
-    public ProtoId<StatusIconPrototype> StatusIcon { get; set; } = "HivemindFaction";
+    public ProtoId<FactionIconPrototype> StatusIcon { get; set; } = "HivemindFaction";
 
     #endregion
 

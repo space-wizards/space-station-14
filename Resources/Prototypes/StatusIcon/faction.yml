@@ -53,8 +53,9 @@
     sprite: /Textures/Interface/Misc/job_icons.rsi
     state: Syndicate
 
-- type: statusIcon
+- type: factionIcon
   id: HivemindFaction
+  isShaded: true
   priority: 11
   showTo:
     components:
@@ -68,7 +69,6 @@
   id: VampireFaction
   isShaded: true
   priority: 11
-  locationPreference: Left
   showTo:
     components:
       - ShowAntagIcons
