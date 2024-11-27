@@ -1,5 +1,5 @@
 ﻿- type: localizedDataset
-  id: names_first
+  id: NamesFirst
   values:
     prefix: names-first-dataset-
     count: 1395
