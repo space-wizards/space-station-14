@@ -1,16 +1,12 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Drawn by Rouge2t7/Sarahon & Sprites by angelofallars (github)",
+  "copyright": "Sprites by angelofallars (github)",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
-    {
-      "name": "long_ears",
-      "directions": 4
-    },
     {
       "name": "long_ears_standard",
       "directions": 4

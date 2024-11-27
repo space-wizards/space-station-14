@@ -1,15 +1,4 @@
 - type: marking
-  id: HumanLongEars
-  bodyPart: HeadTop
-  markingCategory: HeadTop
-  speciesRestriction: [Human, Dwarf]
-  forcedColoring: true
-  followSkinColor: true
-  sprites:
-  - sprite: Mobs/Customization/ears.rsi
-    state: long_ears
-
-- type: marking
   id: LongEarsStandard
   bodyPart: HeadTop
   markingCategory: HeadTop
