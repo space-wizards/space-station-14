@@ -580,4 +580,11 @@ Entries:
   id: 81
   time: '2024-11-26T21:28:16.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/87
+- author: STARLIGHT TEAM
+  changes:
+  - message: Upstream here!
+    type: Tweak
+  id: 82
+  time: '2024-11-27T9:22:16.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/587e3b7480a83eba7100ccbc86a76a0d4f69b4e0
 
