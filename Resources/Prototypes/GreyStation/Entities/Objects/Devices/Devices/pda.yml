@@ -11,14 +11,6 @@
     state: pda-clear
 
 - type: entity
-  parent: PrisonerPDA
-  id: GladiatorPDA
-  name: gladiator PDA
-  components:
-  - type: Pda
-    id: GladiatorIDCard
-
-- type: entity
   parent: BasePDA
   id: PrisonGuardPDA
   name: prison guard PDA
@@ -40,7 +32,7 @@
   description: Smells like straw.
   components:
   - type: Sprite
-    sprite: DeltaV/Objects/Devices/pda.rsi
+    sprite: GreyStation/Objects/Devices/pda.rsi
     layers:
     - map: [ "enum.PdaVisualLayers.Base" ]
     - state: "light_overlay"
@@ -58,5 +50,5 @@
     borderColor: "#d7d7d0"
     accentHColor: "#232323"
   - type: Icon
-    sprite: DeltaV/Objects/Devices/pda.rsi
+    sprite: GreyStation/Objects/Devices/pda.rsi
     state: pda-martialartist

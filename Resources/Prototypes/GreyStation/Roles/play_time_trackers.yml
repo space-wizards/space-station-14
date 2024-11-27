@@ -2,9 +2,6 @@
   id: JobPrisoner
 
 - type: playTimeTracker
-  id: JobGladiator
-
-- type: playTimeTracker
   id: JobMartialArtist
 
 - type: playTimeTracker

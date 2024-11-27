@@ -1,17 +1,4 @@
 - type: entity
-  id: SpawnPointGladiator
-  parent: SpawnPointJobBase
-  name: gladiator
-  components:
-  - type: SpawnPoint
-    job_id: Gladiator
-  - type: Sprite
-    layers:
-      - state: green
-      - sprite: DeltaV/Markers/jobs.rsi
-        state: nyanogladiator
-
-- type: entity
   id: SpawnPointPrisoner
   parent: SpawnPointJobBase
   name: prisoner
@@ -33,8 +20,8 @@
   - type: Sprite
     layers:
       - state: green
-      - sprite: DeltaV/Markers/jobs.rsi
-        state: nyanoprisonguard
+      - sprite: GreyStation/Markers/jobs.rsi
+        state: prisonguard
 
 - type: entity
   id: SpawnPointMartialArtist
@@ -46,5 +33,5 @@
   - type: Sprite
     layers:
       - state: green
-      - sprite: DeltaV/Markers/jobs.rsi
-        state: nyanomartialartist
+      - sprite: GreyStation/Markers/jobs.rsi
+        state: martialartist

@@ -8,13 +8,10 @@
     },
     "states": [
         {
-            "name": "nyanoGladiator"
+            "name": "PrisonGuard"
         },
         {
-            "name": "nyanoPrisonGuard"
-        },
-        {
-            "name": "nyanoMartialArtist"
+            "name": "MartialArtist"
         },
         {
             "name": "MedicalBorg"

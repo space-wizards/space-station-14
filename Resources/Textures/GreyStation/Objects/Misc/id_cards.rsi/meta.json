@@ -8,16 +8,13 @@
   },
   "states": [
     {
-      "name": "nyanogladiator"
+      "name": "prisonguard"
     },
     {
-      "name": "nyanoprisonguard"
+      "name": "prisoner"
     },
     {
-      "name": "nyanoprisoner"
-    },
-    {
-      "name": "nyanomartialartist"
+      "name": "martialartist"
     }
   ]
 }

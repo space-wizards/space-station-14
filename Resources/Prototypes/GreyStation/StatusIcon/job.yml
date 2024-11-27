@@ -1,0 +1,15 @@
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconPrisonGuard
+  icon:
+    sprite: /Textures/GreyStation/Interface/Misc/job_icons.rsi
+    state: PrisonGuard
+  jobName: job-name-guard
+
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconMartialArtist
+  icon:
+    sprite: /Textures/GreyStation/Interface/Misc/job_icons.rsi
+    state: MartialArtist
+  jobName: job-name-martialartist

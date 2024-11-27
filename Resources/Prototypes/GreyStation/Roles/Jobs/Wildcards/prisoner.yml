@@ -3,13 +3,11 @@
   name: job-name-prisoner
   description: job-description-prisoner
   playTimeTracker: JobPrisoner
+  setPreference: false
   startingGear: PrisonerGear
   canBeAntag: false
   icon: "JobIconPrisoner"
   supervisors: job-supervisors-security
-  requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 3600
 
 - type: startingGear
   id: PrisonerGear
