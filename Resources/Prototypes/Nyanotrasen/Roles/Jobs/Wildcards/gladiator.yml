@@ -7,10 +7,6 @@
   canBeAntag: false
   icon: "JobIconGladiator"
   supervisors: job-supervisors-security
-  setPreference: true
-  requirements:
-    - !type:OverallPlaytimeRequirement
-      time: 3600
   special:
   - !type:AddComponentSpecial
     components:
