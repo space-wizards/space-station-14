@@ -28,7 +28,7 @@
 # Silicons
 - type: roleLoadout
   id: JobStationAi
-  nameDataset: NamesAi
+  nameDataset: NamesAI
 
 # Civilian
 - type: roleLoadout
