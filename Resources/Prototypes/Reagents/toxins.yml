@@ -473,6 +473,11 @@
   metabolisms:
     Food:
       effects:
+      - !type:SatiateHunger
+        conditions:
+          - !type:OrganType
+            type: Vampire
+            shouldHave: true
       - !type:PopupMessage
         conditions:
           - !type:OrganType
