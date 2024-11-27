@@ -60,6 +60,11 @@
   description: flavor-base-funny
 
 - type: flavor
+  id: strange
+  flavorType: Base
+  description: flavor-base-strange
+
+- type: flavor
   id: tingly
   flavorType: Base
   description: flavor-base-tingly

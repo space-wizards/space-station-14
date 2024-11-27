@@ -15,7 +15,6 @@
   parent: [ClothingShoesBaseButcherable, ClothingSlotBase]
   id: ClothingShoesClownBase
   components:
-  - type: WaddleWhenWorn
   - type: ItemSlots
     slots:
       item:
@@ -41,6 +40,8 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepClown
+      params:
+        variation: 0.17
   # for H.O.N.K. construction
   - type: Tag
     tags:
@@ -60,6 +61,8 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepSlip
+      params:
+        variation: 0.10
   - type: Construction
     graph: BananaClownShoes
     node: shoes
@@ -80,6 +83,8 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepClown
+      params:
+        variation: 0.17
   - type: PointLight
     enabled: true
     radius: 3
@@ -216,6 +221,8 @@
     - type: FootstepModifier
       footstepSoundCollection:
         collection: FootstepJester
+        params:
+          variation: 0.07
 
 - type: entity
   parent: ClothingShoesClown
@@ -275,3 +282,5 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepSkates
+      params:
+        variation: 0.08

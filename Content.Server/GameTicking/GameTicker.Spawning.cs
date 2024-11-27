@@ -3,18 +3,16 @@ using System.Linq;
 using System.Numerics;
 using Content.Server.Administration.Managers;
 using Content.Server.GameTicking.Events;
-using Content.Server.Ghost;
-using Content.Server.Shuttles.Components;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
 using Content.Server.Station.Components;
 using Content.Shared.Database;
+using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Content.Shared.Players;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
-using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
@@ -224,13 +222,12 @@ namespace Content.Server.GameTicking
             _mind.SetUserId(newMind, data.UserId);
 
             var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
-            var job = new JobComponent {Prototype = jobId};
-            _roles.MindAddRole(newMind, job, silent: silent);
+            _roles.MindAddJobRole(newMind, silent: silent, jobPrototype:jobId);
             var jobName = _jobs.MindTryGetJobName(newMind);
 
             _playTimeTrackings.PlayerRolesChanged(player);
 
-            var mobMaybe = _stationSpawning.SpawnPlayerCharacterOnStation(station, job, character);
+            var mobMaybe = _stationSpawning.SpawnPlayerCharacterOnStation(station, jobId, character);
             DebugTools.AssertNotNull(mobMaybe);
             var mob = mobMaybe!.Value;
 
@@ -269,13 +266,17 @@ namespace Content.Server.GameTicking
             _stationJobs.TryAssignJob(station, jobPrototype, player.UserId);
 
             if (lateJoin)
+            {
                 _adminLogger.Add(LogType.LateJoin,
                     LogImpact.Medium,
                     $"Player {player.Name} late joined as {character.Name:characterName} on station {Name(station):stationName} with {ToPrettyString(mob):entity} as a {jobName:jobName}.");
+            }
             else
+            {
                 _adminLogger.Add(LogType.RoundStartJoin,
                     LogImpact.Medium,
                     $"Player {player.Name} joined as {character.Name:characterName} on station {Name(station):stationName} with {ToPrettyString(mob):entity} as a {jobName:jobName}.");
+            }
 
             // Make sure they're aware of extended access.
             if (Comp<StationJobsComponent>(station).ExtendedAccess
@@ -361,7 +362,7 @@ namespace Content.Server.GameTicking
                 var (mindId, mindComp) = _mind.CreateMind(player.UserId, name);
                 mind = (mindId, mindComp);
                 _mind.SetUserId(mind.Value, player.UserId);
-                _roles.MindAddRole(mind.Value, new ObserverRoleComponent());
+                _roles.MindAddRole(mind.Value, "MindRoleObserver");
             }
 
             var ghost = _ghost.SpawnGhost(mind.Value);
@@ -453,72 +454,5 @@ namespace Content.Server.GameTicking
         }
 
         #endregion
-    }
-
-    /// <summary>
-    ///     Event raised broadcast before a player is spawned by the GameTicker.
-    ///     You can use this event to spawn a player off-station on late-join but also at round start.
-    ///     When this event is handled, the GameTicker will not perform its own player-spawning logic.
-    /// </summary>
-    [PublicAPI]
-    public sealed class PlayerBeforeSpawnEvent : HandledEntityEventArgs
-    {
-        public ICommonSession Player { get; }
-        public HumanoidCharacterProfile Profile { get; }
-        public string? JobId { get; }
-        public bool LateJoin { get; }
-        public EntityUid Station { get; }
-
-        public PlayerBeforeSpawnEvent(ICommonSession player,
-            HumanoidCharacterProfile profile,
-            string? jobId,
-            bool lateJoin,
-            EntityUid station)
-        {
-            Player = player;
-            Profile = profile;
-            JobId = jobId;
-            LateJoin = lateJoin;
-            Station = station;
-        }
-    }
-
-    /// <summary>
-    ///     Event raised both directed and broadcast when a player has been spawned by the GameTicker.
-    ///     You can use this to handle people late-joining, or to handle people being spawned at round start.
-    ///     Can be used to give random players a role, modify their equipment, etc.
-    /// </summary>
-    [PublicAPI]
-    public sealed class PlayerSpawnCompleteEvent : EntityEventArgs
-    {
-        public EntityUid Mob { get; }
-        public ICommonSession Player { get; }
-        public string? JobId { get; }
-        public bool LateJoin { get; }
-        public bool Silent { get; }
-        public EntityUid Station { get; }
-        public HumanoidCharacterProfile Profile { get; }
-
-        // Ex. If this is the 27th person to join, this will be 27.
-        public int JoinOrder { get; }
-
-        public PlayerSpawnCompleteEvent(EntityUid mob,
-            ICommonSession player,
-            string? jobId,
-            bool lateJoin,
-            bool silent,
-            int joinOrder,
-            EntityUid station,
-            HumanoidCharacterProfile profile)
-        {
-            Mob = mob;
-            Player = player;
-            JobId = jobId;
-            LateJoin = lateJoin;
-            Silent = silent;
-            Station = station;
-            Profile = profile;
-            JoinOrder = joinOrder;
-        }
     }
 }
