@@ -307,7 +307,7 @@
   - type: SurgeryStep
     duration: 2
   - type: Sprite
-    sprite: _Starlight/Objects/Misc/implants.rsi
+    sprite: _Starlight/Objects/Specific/Medical/implants.rsi
     layers:
       - state: eye_implant_welding
 
@@ -836,7 +836,7 @@
   - type: SurgeryStepOrganInsert
     slot: eye_implant
   - type: Sprite
-    sprite: _Starlight/Objects/Misc/implants.rsi
+    sprite: _Starlight/Objects/Specific/Medical/implants.rsi
     layers:
       - state: eye_implant_welding
 

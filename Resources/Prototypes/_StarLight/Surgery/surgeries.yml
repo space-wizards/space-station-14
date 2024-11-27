@@ -437,7 +437,7 @@
     organ:
     - type: OrganImplant
   - type: Sprite
-    sprite: _Starlight/Objects/Misc/implants.rsi
+    sprite: _Starlight/Objects/Specific/Medical/implants.rsi
     layers:
       - state: eye_implant_welding
 
@@ -459,7 +459,7 @@
     organ:
     - type: OrganImplant
   - type: Sprite
-    sprite: _Starlight/Objects/Misc/implants.rsi
+    sprite: _Starlight/Objects/Specific/Medical/implants.rsi
     layers:
       - state: eye_implant_welding
 #
