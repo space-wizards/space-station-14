@@ -55,6 +55,15 @@ public abstract class SharedItemSystem : EntitySystem
         Dirty(uid, component);
     }
 
+    public void SetStoredOffset(EntityUid uid, Vector2i newOffset, ItemComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return;
+        
+        component.StoredOffset = newOffset;
+        Dirty(uid, component);
+    }
+
     public void SetHeldPrefix(EntityUid uid, string? heldPrefix, bool force = false, ItemComponent? component = null)
     {
         if (!Resolve(uid, ref component, false))
