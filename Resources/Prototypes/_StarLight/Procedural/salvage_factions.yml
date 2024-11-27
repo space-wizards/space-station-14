@@ -1,0 +1,150 @@
+- type: salvageFaction
+  id: Syndicate
+  desc: salvage-faction-syndicate
+  entries:
+    - proto: MobSyndicateFootsoldierFireAxe
+      cost: 6
+    #shotgun
+    - proto: MobSyndicateFootsoldierSawn
+      cost: 10
+    #pistol
+    - proto: MobSyndicateFootsoldierViper
+      cost: 18
+    - proto: MobSyndicateFootsoldierCobra 
+      cost: 22
+      prob: 0.9
+    #rifle
+    - proto: MobSyndicateFootsoldierAk 
+      cost: 42
+      prob: 0.7
+    #grenade
+    - proto: MobSyndicateFootsoldierChina 
+      cost: 80
+      prob: 0.2
+    #laser
+    - proto: MobSyndicateFootsoldierLaserCarbine 
+      cost: 20
+      prob: 0.8
+    - proto: MobSyndicateFootsoldierMakeshiftLaser 
+      cost: 16
+    #boss
+    - proto: MobSyndicateFootsoldierBoss
+      cost: 100
+      prob: 0.2
+  difficulties: 
+    - Impossible
+  configs:
+    DefenseStructure: WeaponTurretDungeonSyndicate
+
+- type: salvageFaction
+  id: Soviet
+  desc: salvage-faction-soviet
+  biomes:
+    - Lava
+    - Grasslands
+    - Caves
+    - Snow
+  entries:
+    - proto: MobSovietComradeBrokenBottle
+      cost: 3
+    - proto: MobSovietComradeFinka
+      cost: 8
+    #shotgun
+    - proto: MobSovietComradeSawn
+      cost: 8
+    #pistol
+    - proto: MobSovietComradeMakarov 
+      cost: 10
+      prob: 0.9
+    #rifle
+    - proto: MobSovietComradeAk 
+      cost: 30
+      prob: 0.5
+    #boss / meeeh
+    - proto: MobBearSoviet
+      cost: 35
+      prob: 0.4
+  difficulties: 
+    - Difficult
+  configs:
+    DefenseStructure: WeaponTurretSyndicateBroken
+
+- type: salvageFaction
+  id: Worms
+  desc: salvage-faction-worms
+  entries:
+    - proto: MobWorm
+      cost: 4
+  biomes:
+    - Abyss
+  difficulties: 
+    - Challenging
+  configs:
+    DefenseStructure: WeaponTurretSyndicate
+
+- type: salvageFaction
+  id: Elder
+  desc: salvage-faction-elder
+  entries:
+    - proto: MobElder
+      cost: 40000
+  biomes:
+    - Abyss
+  difficulties: 
+    - Difficult
+  configs:
+    DefenseStructure: WeaponTurretSyndicate
+
+- type: salvageFaction
+  id: Xenos
+  desc: salvage-faction-xenos
+  entries:
+    - proto: MobXeno
+    - proto: MobXenoDrone
+      cost: 4
+    - proto: MobXenoPraetorian
+      cost: 10
+      prob: 0.3
+    - proto: MobXenoQueen
+      cost: 20
+      prob: 0.1
+    - proto: MobXenoRavager
+      cost: 10
+    - proto: MobXenoRouny
+      cost: 6
+      prob: 0.2
+    - proto: MobXenoSpitter
+      cost: 2
+    - proto: WeaponTurretXeno
+      prob: 0.2
+      cost: 2
+  difficulties: 
+    - Challenging
+    - Moderate
+  configs:
+    DefenseStructure: WeaponTurretSyndicate
+
+- type: salvageFaction
+  id: Carps
+  desc: salvage-faction-carps
+  entries:
+    - proto: MobCarpDungeon
+    # These do too much damage for salvage, need nerfs
+    #- proto: MobCarpHolo
+    #  cost: 5
+    #  prob: 0.1
+    #- proto: MobCarpMagic
+    #  cost: 5
+    #  prob: 0.1
+    - proto: MobCarpRainbow # carp version of rouny...
+      cost: 3
+      prob: 0.05
+    - proto: MobDragonDungeon
+      cost: 10
+      prob: 0.02
+  difficulties: 
+    - Moderate
+    - Easy
+  configs:
+    DefenseStructure: CarpStatue
+    Megafauna: MobDragonDungeon

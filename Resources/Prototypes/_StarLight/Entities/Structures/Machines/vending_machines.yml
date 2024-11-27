@@ -1,0 +1,156 @@
+- type: entity
+  id: SLVendingMachine
+  parent: BaseMachinePowered
+  name: vending machine
+  description: Just add capitalism!
+  abstract: true
+  components:
+  - type: StationAiWhitelist
+  - type: AmbientOnPowered
+  - type: AmbientSound
+    volume: -9
+    range: 3
+    enabled: false
+    sound:
+      path: /Audio/Ambience/Objects/vending_machine_hum.ogg
+  - type: Physics
+    bodyType: Static
+  - type: Transform
+    noRot: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.45,0.25,0.45"
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+        density: 200
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+  - type: Repairable
+    doAfterDelay: 8
+  - type: UserInterface
+    interfaces:
+        enum.StoreUiKey.Key:
+          type: StoreBoundUserInterface
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+  - type: WiresPanel
+  - type: Wires
+   #boardName: wires-board-name-vendingmachine
+    layoutId: Vending
+  - type: Anchorable
+  - type: Electrified
+    enabled: false
+    usesApcPower: true
+  - type: PointLight
+    enabled: false
+    castShadows: false
+    radius: 1.5
+  - type: LitOnPowered
+  - type: ApcPowerReceiver
+    powerLoad: 200
+  - type: StaticPrice
+    price: 100
+  - type: Appearance
+  - type: WiresVisuals
+  - type: Store
+    name: store-preset-name-spellbook
+    categories:
+    currencyWhitelist:
+    - NTCredit
+    
+- type: entity
+  parent: SLVendingMachine
+  id: SLVendingMachineHugDispenser
+  name: hug dispenser
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Machines/VendingMachines/plushiemat.rsi
+    snapCardinals: true
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: normal-unshaded
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+  - type: Store
+    name: vendor-hug-dispenser
+    categories:
+    - SLPlushies
+    - SLSpecies
+    currencyWhitelist:
+    - NTCredit
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.16,0.3,0.40"
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+        density: 190
+  - type: Transform
+    noRot: false
+
+        
+- type: entity
+  parent: SLVendingMachine
+  id: SLVendingMachineMedical
+  name: medical dispenser
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Machines/VendingMachines/medical.rsi
+    snapCardinals: true
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: normal-unshaded
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+  - type: AccessReader
+    access: [["Medical"]]
+  - type: Store
+    name: vendor-medical-dispenser
+    categories:
+    - SLChemistry
+    currencyWhitelist:
+    - NTCredit
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.16,0.3,0.40"
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+        density: 190
+  - type: Transform
+    noRot: false

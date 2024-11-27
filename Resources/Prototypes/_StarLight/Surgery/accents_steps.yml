@@ -1,0 +1,42 @@
+﻿- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepExposeVocalCords
+  name: Expose Vocal Cords
+  components:
+  - type: SurgeryStep
+    duration: 3
+    tools:
+    - type: Retractor
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/scissors.rsi
+    state: retractor
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepAdjustVocalCords
+  name: Adjust Vocal Cords
+  components:
+  - type: SurgeryStep
+    duration: 4
+    tools:
+    - type: Scalpel
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
+    state: scalpel
+  - type: SurgeryStepSpawnEffect
+    entity: SheetPlastic1
+  - type: SurgeryOperatingTableCondition
+
+- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryStepSutureIncision
+  name: Suture Incision
+  components:
+  - type: SurgeryStep
+    duration: 3
+    tools:
+    - type: Cautery
+  - type: SurgeryRemoveAccent
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/cautery.rsi
+    state: cautery

@@ -1,0 +1,157 @@
+- type: entity
+  parent: BaseMobSpeciesOrganic
+  id: BaseMobCyclorite
+  abstract: true
+  components:
+  - type: Hunger
+  - type: Icon
+    sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
+    state: cyclorite
+  - type: Thirst
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatHuman #todo
+      amount: 10
+  - type: HumanoidAppearance
+    species: Cyclorite
+    hideLayersOnEquip:
+    - Hair
+    - Snout
+  - type: MovementSpeedModifier
+    speciesSprintSpeedModifier: 0.85
+    speciesWalkSpeedModifier: 1.00
+  - type: Body
+    prototype: Cyclorite
+    requiredLegs: 2
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      120: Critical
+      240: Dead
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#7a8bf2"
+  - type: MeleeWeapon
+    soundHit:
+      collection: AlienClaw
+    angle: 30
+    animation: WeaponArcFist
+    attackRate: 0.5
+    damage:
+      types:
+        Blunt: 10
+  - type: Sprite 
+    scale: 1.08, 1.08
+  - type: Bloodstream
+    bloodReagent: CopperBlood
+  - type: Vocal
+    sounds:
+      Male: MaleCyclorite
+      Female: FemaleCyclorite
+      Unsexed: MaleCyclorite
+  - type: Inventory
+    speciesId: cyclorite
+    templateId: cyclorite
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Cyclorite/displacement.rsi
+            state: jumpsuit
+      eyes:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Cyclorite/displacement.rsi
+            state: eyes
+      gloves:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Cyclorite/displacement.rsi
+            state: hand
+      head:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Cyclorite/displacement.rsi
+            state: head
+      back:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Cyclorite/displacement.rsi
+            state: back
+      ears:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Cyclorite/displacement.rsi
+            state: ears
+      shoes:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Cyclorite/displacement.rsi
+            state: shoes
+      neck:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Cyclorite/displacement.rsi
+            state: neck     
+      belt:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Cyclorite/displacement.rsi
+            state: belt      
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Cyclorite/displacement.rsi
+            state: outer          
+
+- type: entity
+  parent: BaseSpeciesDummy
+  id: MobCycloriteDummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HumanoidAppearance
+    species: Cyclorite
+  - type: Body
+    prototype: Cyclorite
+  - type: Inventory
+    speciesId: cyclorite
+    templateId: cyclorite
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Cyclorite/displacement.rsi
+            state: jumpsuit
+      eyes:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Cyclorite/displacement.rsi
+            state: eyes
+      gloves:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Cyclorite/displacement.rsi
+            state: hand
+      head:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Cyclorite/displacement.rsi
+            state: head
+      back:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Cyclorite/displacement.rsi
+            state: back
+      ears:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Cyclorite/displacement.rsi
+            state: ears
+      shoes:
+        sizeMaps:
+          32:
+            sprite: _Starlight/Mobs/Species/Cyclorite/displacement.rsi
+            state: shoes

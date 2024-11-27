@@ -1,0 +1,5 @@
+- type: entity
+  id: BaseImplant
+  abstract: true
+  components:
+  - type: Implant

@@ -1,0 +1,64 @@
+- type: entity
+  abstract: true
+  parent: IngotBase
+  id: IngotStarlightBase
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Materials/ingots.rsi
+    scale: 0.5, 0.5
+  - type: Item
+    sprite: _Starlight/Objects/Materials/ingots.rsi
+    size: Normal
+    scale: 0.5, 0.5
+
+#stack
+- type: stack
+  id: Abyssium
+  name: abyssium bar
+  icon: { sprite: _Starlight/Objects/Materials/ingots.rsi, state: abyssium }
+  spawn: IngotAbyssium1
+  maxCount: 10
+
+- type: entity
+  parent: IngotStarlightBase
+  id: IngotAbyssium
+  name: abyssium bar
+  suffix: Full
+  components:
+  - type: Material
+#  - type: PhysicalComposition
+#    materialComposition:
+#      Gold: 100 sdasdasdasdasdadasdsadasdasdsadasd
+  - type: Stack
+    stackType: Abyssium
+    baseLayer: base
+    layerStates:
+    - abyssium
+    - abyssium_2
+    - abyssium_3
+  - type: Sprite
+    state: abyssium_3
+    layers:
+    - state: abyssium_3
+      map: ["base"]
+  - type: Item
+    heldPrefix: abyssium
+  - type: Appearance
+#  - type: Extractable
+#    grindableSolutionName: gold
+#  - type: SolutionContainerManager
+#    solutions:
+#      gold:
+#        reagents:
+#        - ReagentId: Gold
+#          Quantity: 10
+
+- type: entity
+  parent: IngotAbyssium
+  id: IngotAbyssium1
+  suffix: Single
+  components:
+  - type: Sprite
+    state: abyssium
+  - type: Stack
+    count: 1

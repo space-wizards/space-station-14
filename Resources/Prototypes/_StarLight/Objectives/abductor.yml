@@ -1,0 +1,27 @@
+- type: entity
+  abstract: true
+  parent: BaseObjective
+  id: BaseAbductorObjective
+  components:
+  - type: Objective
+    difficulty: 1.5
+    issuer: objective-issuer-abductors
+  - type: RoleRequirement
+    roles:
+      mindRoles:
+      - Abductor
+
+- type: entity
+  parent: BaseAbductorObjective
+  id: AbductObjective
+  components:
+  - type: Objective
+    icon:
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/dubious-organs.rsi
+      state: gland
+  - type: NumberObjective
+    min: 6
+    max: 9
+    title: objective-condition-abduct-title
+    description: objective-condition-abduct-description
+  - type: AbductCondition

@@ -1,0 +1,123 @@
+﻿- type: entity
+  id: PartCyber
+  parent: [BaseItem, BasePart]
+  name: "cyber body part"
+  abstract: true
+  components:
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Iron
+        Quantity: 30
+
+- type: entity
+  id: LeftArmCyber
+  name: "left cyber arm"
+  parent: [PartCyber, BaseLeftArm]
+  components:
+    - type: BaseLayerId
+      layer: CyberLArm
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "l_arm"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "l_arm"
+
+- type: entity
+  id: RightArmCyber
+  name: "right cyber arm"
+  parent: [PartCyber, BaseRightArm]
+  components:
+    - type: BaseLayerId
+      layer: CyberRArm
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "r_arm"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "r_arm"
+
+- type: entity
+  id: LeftHandCyber
+  name: "left cyber hand"
+  parent: [PartCyber, BaseLeftHand]
+  components:
+    - type: BaseLayerId
+      layer: CyberLHand
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "l_hand"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "l_hand"
+
+- type: entity
+  id: RightHandCyber
+  name: "right cyber hand"
+  parent: [PartCyber, BaseRightHand]
+  components:
+    - type: BaseLayerId
+      layer: CyberRHand
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "r_hand"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "r_hand"
+
+- type: entity
+  id: LeftLegCyber
+  name: "left cyber leg"
+  parent: [PartCyber, BaseLeftLeg]
+  components:
+    - type: BaseLayerId
+      layer: CyberLLeg
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "l_leg"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "l_leg"
+
+- type: entity
+  id: RightLegCyber
+  name: "right cyber leg"
+  parent: [PartCyber, BaseRightLeg]
+  components:
+    - type: BaseLayerId
+      layer: CyberRLeg
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "r_leg"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "r_leg"
+
+- type: entity
+  id: LeftFootCyber
+  name: "left cyber foot"
+  parent: [PartCyber, BaseLeftFoot]
+  components:
+    - type: BaseLayerId
+      layer: CyberLFoot
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "l_foot"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "l_foot"
+
+- type: entity
+  id: RightFootCyber
+  name: "right cyber foot"
+  parent: [PartCyber, BaseRightFoot]
+  components:
+    - type: BaseLayerId
+      layer: "CyberRFoot"
+    - type: Sprite
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "r_foot"
+    - type: Icon
+      sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+      state: "r_foot"

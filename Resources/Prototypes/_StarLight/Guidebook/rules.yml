@@ -1,0 +1,126 @@
+- type: guideEntry
+  id: StarlightRuleset
+  name: guide-entry-rules
+  ruleEntry: true
+  text: "/ServerInfo/Guidebook/ServerRules/StarlightRules.xml"
+  
+- type: guideEntry
+  id: RuleSL0
+  name: guide-entry-sl-rules
+  ruleEntry: true
+  priority: 0
+  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/CoreRules/RuleSL0.xml"
+
+- type: guideEntry
+  id: RuleSL1
+  name: guide-entry-sl-rule-1
+  ruleEntry: true
+  priority: 1
+  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/CoreRules/RuleSL1.xml"
+
+- type: guideEntry
+  id: RuleSL2
+  name: guide-entry-sl-rule-2
+  ruleEntry: true
+  priority: 2
+  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/CoreRules/RuleSL2.xml"
+
+- type: guideEntry
+  id: RuleSL3
+  name: guide-entry-sl-rule-3
+  ruleEntry: true
+  priority: 3
+  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/CoreRules/RuleSL3.xml"
+
+- type: guideEntry
+  id: RuleSL4
+  name: guide-entry-sl-rule-4
+  ruleEntry: true
+  priority: 4
+  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/CoreRules/RuleSL4.xml"
+
+- type: guideEntry
+  id: RuleSL5
+  name: guide-entry-sl-rule-5
+  ruleEntry: true
+  priority: 5
+  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/CoreRules/RuleSL5.xml"
+
+- type: guideEntry
+  id: RuleSL6
+  name: guide-entry-sl-rule-6
+  ruleEntry: true
+  priority: 6
+  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/CoreRules/RuleSL6.xml"
+
+- type: guideEntry
+  id: RuleSL7
+  name: guide-entry-sl-rule-7
+  ruleEntry: true
+  priority: 7
+  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/CoreRules/RuleSL7.xml"
+
+- type: guideEntry
+  id: RuleSL8
+  name: guide-entry-sl-rule-8
+  ruleEntry: true
+  priority: 8
+  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/CoreRules/RuleSL8.xml"
+
+- type: guideEntry
+  id: RuleSL9
+  name: guide-entry-sl-rule-9
+  ruleEntry: true
+  priority: 9
+  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/CoreRules/RuleSL9.xml"
+  
+- type: guideEntry
+  id: RuleSL10
+  name: guide-entry-sl-rule-10
+  ruleEntry: true
+  priority: 10
+  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/CoreRules/RuleSL10.xml"
+  
+- type: guideEntry
+  id: RuleSLRP1
+  name: guide-entry-sl-rule-3-1
+  ruleEntry: true
+  priority: 1
+  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/RolePlayRules/RuleSLRP1.xml"
+
+- type: guideEntry
+  id: RuleSLRP2
+  name: guide-entry-sl-rule-3-2
+  ruleEntry: true
+  priority: 2
+  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/RolePlayRules/RuleSLRP2.xml"
+
+
+- type: guideEntry
+  id: RuleSLRP3
+  name: guide-entry-sl-rule-3-3
+  ruleEntry: true
+  priority: 3
+  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/RolePlayRules/RuleSLRP3.xml"
+
+- type: guideEntry
+  id: RuleSLRP4
+  name: guide-entry-sl-rule-3-4
+  ruleEntry: true
+  priority: 4
+  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/RolePlayRules/RuleSLRP4.xml"
+
+- type: guideEntry
+  id: RuleSLRP5
+  name: guide-entry-sl-rule-3-5
+  ruleEntry: true
+  priority: 5
+  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/RolePlayRules/RuleSLRP5.xml"
+
+
+- type: guideEntry
+  id: RuleSLRP6
+  name: guide-entry-sl-rule-3-6
+  ruleEntry: true
+  priority: 6
+  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/RolePlayRules/RuleSLRP6.xml"

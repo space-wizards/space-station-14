@@ -1,0 +1,31 @@
+- type: entity
+  name: golden beaker
+  parent: BaseBeaker
+  description: Used to contain a moderate amount of chemicals and solutions.
+  id: GoldenBeaker
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Chemistry/beaker.rsi
+    layers:
+      - state: beaker
+      - state: beaker1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Item
+    sprite: _Starlight/Objects/Specific/Chemistry/beaker.rsi
+  - type: Spillable
+    solution: beaker
+  - type: StaticPrice
+    price: 10
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 50
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: beaker
+    inHandsMaxFillLevels: 3
+    inHandsFillBaseName: -fill-
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 200

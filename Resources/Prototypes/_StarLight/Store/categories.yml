@@ -1,0 +1,11 @@
+- type: storeCategory
+  id: SLPlushies
+  name: store-category-plushies
+
+- type: storeCategory
+  id: SLSpecies
+  name: store-category-plushie-species
+
+- type: storeCategory
+  id: SLChemistry
+  name: store-category-medical-chemistry

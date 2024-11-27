@@ -1,0 +1,41 @@
+- type: emote
+  id: Mew
+  name: chat-emote-name-mews
+  category: Vocal
+  available: false
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: [mew]
+  chatTriggers:
+    - mew
+    - mew.
+    - mew!
+    - mew?
+    - mews
+    - mews.
+    - mews!
+    - mews?
+
+- type: emote
+  id: Hisses
+  name: chat-emote-name-hisses
+  category: Vocal
+  available: false
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: [hiss]
+  chatTriggers:
+  - hiss
+  - hiss.
+  - hiss!
+  - hissing
+  - hissing.
+  - hissing!

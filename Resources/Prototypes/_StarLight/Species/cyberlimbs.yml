@@ -1,0 +1,47 @@
+- type: humanoidBaseSprite
+  id: CyberLLeg
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+    state: l_leg
+
+- type: humanoidBaseSprite
+  id: CyberLArm
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+    state: l_arm
+
+- type: humanoidBaseSprite
+  id: CyberLHand
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+    state: l_hand
+
+- type: humanoidBaseSprite
+  id: CyberLFoot
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+    state: l_foot
+
+- type: humanoidBaseSprite
+  id: CyberRLeg
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+    state: r_leg
+
+- type: humanoidBaseSprite
+  id: CyberRArm
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+    state: r_arm
+
+- type: humanoidBaseSprite
+  id: CyberRHand
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+    state: r_hand
+
+- type: humanoidBaseSprite
+  id: CyberRFoot
+  baseSprite:
+    sprite: _Starlight/Mobs/Species/Cyberlimbs/parts.rsi
+    state: r_foot

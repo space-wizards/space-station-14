@@ -1,0 +1,13 @@
+- type: entity
+  id: TableAbductor
+  parent: TableBase
+  name: alien table
+  description: Literally the sturdiest thing you have ever seen.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Tables/abductor_table.rsi
+  - type: Icon
+    sprite: _Starlight/Structures/Tables/abductor_table.rsi
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepFloor

@@ -1,0 +1,25 @@
+#Basic Helmet (Security Helmet)
+- type: entity
+  parent: ClothingHeadHelmetBase
+  id: ClothingHeadHelmetAbductor
+  name: helmet
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.80
+        Slash: 0.80
+        Piercing: 0.80
+        Heat: 0.80
+        Radiation: 0.80
+        Caustic: 0.95
+  - type: ExplosionResistance
+    damageCoefficient: 0.75
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Helmets/abductor.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Helmets/abductor.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - SecurityHelmet

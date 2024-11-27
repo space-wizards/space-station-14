@@ -1,0 +1,50 @@
+- type: body
+  id: Cyclorite
+  name: "cyclorite"
+  root: torso
+  slots:
+    head:
+      part: HeadCyclorite
+      connections:
+      - torso
+      organs:
+        brain: OrganCycloriteBrain
+        eyes: OrganCycloriteEye
+        tongue: OrganCycloriteTongue
+    torso:
+      part: TorsoCyclorite
+      connections:
+      - right arm
+      - left arm
+      - right leg
+      - left leg
+      organs:
+        heart: OrganCycloriteHeart
+        lungs: OrganCycloriteLungs
+        stomach: OrganCycloriteStomach
+        liver:  OrganCycloriteLiver
+        kidneys: OrganCycloriteKidneys
+    right arm:
+      part: RightArmCyclorite
+      connections:
+      - right hand
+    left arm:
+      part: LeftArmCyclorite
+      connections:
+      - left hand
+    right hand:
+      part: RightHandCyclorite
+    left hand:
+      part: LeftHandCyclorite
+    right leg:
+      part: RightLegCyclorite
+      connections:
+      - right foot
+    left leg:
+      part: LeftLegCyclorite
+      connections:
+      - left foot
+    right foot:
+      part: RightFootCyclorite
+    left foot:
+      part: LeftFootCyclorite

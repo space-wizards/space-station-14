@@ -1,0 +1,13 @@
+- type: entity
+  id: AbductorOperatingTable
+  parent: OperatingTable
+  name: abductor operating table
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Furniture/Tables/abductor_optable.rsi
+    state: operating_table
+    noRot: true
+  - type: Icon
+    sprite: _Starlight/Structures/Furniture/Tables/abductor_optable.rsi
+    state: operating_table
+  - type: OperatingTable

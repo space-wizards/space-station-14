@@ -1,0 +1,27 @@
+- type: entity
+  parent: [UnsensoredClothingUniformBase, BaseSovietContraband]
+  id: ClothingUniformJumpsuitSoviet
+  name: soviet uniform
+  description: Uniform for elite Soviet comrades, completely uncomfortable and cheaply made.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/soviet.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/soviet.rsi
+
+- type: entity
+  parent: UnsensoredClothingUniformBase
+  id: ClothingUniformJumpsuitAbductor
+  name: abductor uniform
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/abductor.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/abductor.rsi
+    
+- type: entity
+  parent: ClothingUniformJumpsuitAtmos
+  id: ClothingUniformJumpsuitAtmosSyndie
+  name: Contortionist's Jumpsuit
+  components:
+  - type: VentCrawClothing

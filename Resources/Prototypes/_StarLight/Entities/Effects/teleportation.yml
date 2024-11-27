@@ -1,0 +1,33 @@
+- type: entity
+  id: EffectTeleportation
+  categories: [ HideSpawnMenu ]
+  name: teleportation
+  components:
+  - type: Transform
+    anchored: True
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Sprite
+    sprite: _Starlight/Effects/teleportation.rsi
+    state: teleportation
+    scale: 0.65, 0.65
+    color: "#FD009899"
+  - type: TimedDespawn
+    lifetime: 5.0
+
+- type: entity
+  id: EffectTeleportationEntity
+  categories: [ HideSpawnMenu ]
+  name: teleportation
+  components:
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Sprite
+    sprite: _Starlight/Effects/teleportation.rsi
+    state: teleportation-entity
+    scale: 0.65, 0.65
+    color: "#FD009899"
+  - type: TimedDespawn
+    lifetime: 5.0

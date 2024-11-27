@@ -1,0 +1,44 @@
+- type: startingGear
+  id: SovietComradeGear
+  equipment:
+    head: ClothingHeadHatUshanka
+    jumpsuit: ClothingUniformJumpsuitSoviet
+    belt: ClothingSovietBelt
+    shoes: ClothingShoesBootsCowboyBlack
+  storage:
+    belt:
+    - RadioHandheld
+    - GeigerCounter
+    - Flare
+    - Flare
+    - Flare
+    - Flare
+#melee
+- type: startingGear
+  id: SovietComradeGearBrokenBottle
+  parent: SovietComradeGear
+  inhand:
+  - BrokenBottle
+- type: startingGear
+  id: SovietComradeGearFinka
+  parent: SovietComradeGear
+  inhand:
+  - Finka
+#shotgun
+- type: startingGear
+  id: SovietComradeGearSawn
+  parent: SovietComradeGear
+  inhand:
+  - WeaponShotgunSawn
+#pistol
+- type: startingGear
+  id: SovietComradeGearMakarov
+  parent: SovietComradeGear
+  inhand:
+  - WeaponPistolMakarov
+#rifle
+- type: startingGear
+  id: SovietComradeGearAk
+  parent: SovietComradeGear
+  inhand:
+  - WeaponRifleAk

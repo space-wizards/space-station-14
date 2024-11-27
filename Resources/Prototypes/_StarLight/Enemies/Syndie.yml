@@ -1,0 +1,123 @@
+- type: entity
+  name: syndicate
+  parent: MobSyndicateFootsoldier
+  id: MobSyndicateBase
+  components:
+    - type: NpcFactionMember
+      factions:
+        - DungeonSyndicate
+    - type: Loadout
+      prototypes:
+        - SyndicateFootsoldierGearRuin
+    - type: InputMover
+    - type: MobMover
+    - type: HTN
+      rootTask:
+        task: SimpleHumanoidHostileCompound
+      blackboard:
+        NavClimb: !type:Bool
+          true
+        NavInteract: !type:Bool
+          true
+        NavPry: !type:Bool
+          true
+        NavSmash: !type:Bool
+          true
+#melee
+- type: entity
+  suffix: Knife
+  parent: MobSyndicateBase
+  id: MobSyndicateFootsoldierKnife
+  components:
+    - type: Loadout
+      prototypes:
+        - SyndicateFootsoldierGearKnife
+- type: entity
+  suffix: FireAxe
+  parent: MobSyndicateBase
+  id: MobSyndicateFootsoldierFireAxe
+  components:
+    - type: Loadout
+      prototypes:
+        - SyndicateFootsoldierGearFireAxe
+#shotgun
+- type: entity
+  suffix: Sawn
+  parent: MobSyndicateBase
+  id: MobSyndicateFootsoldierSawn
+  components:
+    - type: Loadout
+      prototypes:
+        - SyndicateFootsoldierGearSawn
+#pistol
+- type: entity
+  suffix: Viper
+  parent: MobSyndicateBase
+  id: MobSyndicateFootsoldierViper
+  components:
+    - type: Loadout
+      prototypes:
+        - SyndicateFootsoldierGearViper
+- type: entity
+  suffix: Cobra
+  parent: MobSyndicateBase
+  id: MobSyndicateFootsoldierCobra
+  components:
+    - type: Loadout
+      prototypes:
+        - SyndicateFootsoldierGearCobra
+#rifle
+- type: entity
+  suffix: Ak
+  parent: MobSyndicateBase
+  id: MobSyndicateFootsoldierAk
+  components:
+    - type: Loadout
+      prototypes:
+        - SyndicateFootsoldierGearAk
+
+#grenade
+- type: entity
+  suffix: China
+  parent: MobSyndicateBase
+  id: MobSyndicateFootsoldierChina
+  components:
+    - type: Loadout
+      prototypes:
+        - SyndicateFootsoldierGearChina
+
+#laser
+- type: entity
+  suffix: LaserCarbine
+  parent: MobSyndicateBase
+  id: MobSyndicateFootsoldierLaserCarbine
+  components:
+    - type: Loadout
+      prototypes:
+        - SyndicateFootsoldierGearLaserCarbine
+- type: entity
+  suffix: MakeshiftLaser
+  parent: MobSyndicateBase
+  id: MobSyndicateFootsoldierMakeshiftLaser
+  components:
+    - type: Loadout
+      prototypes:
+        - SyndicateFootsoldierGearMakeshiftLaser
+#boss
+- type: entity
+  suffix: Boss
+  parent: MobSyndicateBase
+  id: MobSyndicateFootsoldierBoss
+  components:
+    - type: Loadout
+      prototypes:
+        - SyndicateFootsoldierGearBoss
+#defense
+- type: entity
+  parent: [BaseWeaponTurret, BaseSyndicateContraband]
+  id: WeaponTurretDungeonSyndicate
+  suffix: DungeonSyndicate
+  components:
+    - type: NpcFactionMember
+      factions:
+        - DungeonSyndicate

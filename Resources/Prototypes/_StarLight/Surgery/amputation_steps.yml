@@ -1,0 +1,18 @@
+﻿- type: entity
+  parent: SurgeryStepBase
+  id: SurgeryAmputationStep
+  name: Saw Through Limb
+  components:
+  - type: SurgeryStep
+    duration: 16 
+    tools:
+    - type: BoneSaw
+  - type: Sprite
+    sprite: Objects/Specific/Medical/Surgery/saw.rsi
+    state: saw
+  - type: SurgeryStepEmoteEffect
+  - type: SurgeryStepBleedEffect
+    damage:
+      types:
+        Slash: 10
+  - type: SurgeryStepAmputationEffect

@@ -1,0 +1,10 @@
+- type: listing
+  id: VendorGoldenBeaker
+  productEntity: GoldenBeaker
+  cost:
+    NTCredit: 65
+  categories:
+  - SLChemistry
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2

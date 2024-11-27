@@ -1,0 +1,8 @@
+- type: material
+  id: RawAbyssium
+  stackEntity: AbyssiumOre1
+  name: materials-raw-abyssium
+  unit: materials-unit-chunk
+  icon: { sprite: _Starlight/Objects/Materials/ore.rsi, state: abyssium }
+  color: "#B096FD"
+  price: 0.4

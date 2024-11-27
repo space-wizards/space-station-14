@@ -1,0 +1,141 @@
+- type: entity
+  id: SupermatterCrystal
+  name: supermatter
+  description: A glowing supermatter crystal, with half an ID card lying next to it, and it says "Clown pira..." on it.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Supermatter
+  - type: Transform
+    noRot: true
+    anchored: true
+  - type: InteractionOutline
+  - type: Clickable
+  - type: Anchorable
+    delay: 2
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.40,-0.40,0.40,0.40"
+        density: 190
+        friction: 0.8
+        mask:
+          - FullTileMask
+        layer:
+          - FullTileLayer
+  - type: Pullable
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/supermatter.rsi
+    state: supermatter
+    shader: unshaded
+  - type: Icon
+    sprite: _Starlight/Objects/Specific/supermatter.rsi
+    state: supermatter
+  - type: PointLight
+    enabled: true
+    color: "#FFFB97"
+  - type: Damageable
+    damageModifierSet: RGlass
+    damageContainer: StructuralInorganic
+ # - type: LightningTarget  Tesla needs to interact too.
+ #   priority: 1
+
+
+- type: entity
+  id: Cascad1
+  name: cascad
+  description: Consequences of the supermatter crystal's cascade failure.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Damageable
+      damageContainer: StructuralInorganic
+      damageModifierSet: Glass
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 80
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak
+    - type: Sprite
+      drawdepth: Walls
+      sprite: _Starlight/Objects/Specific/supermatter_cascade.rsi
+      layers:
+        - state: cascade_1
+    - type: Icon
+      sprite: _Starlight/Objects/Specific/supermatter_cascade.rsi
+      state: cascade_1
+    - type: Physics
+      bodyType: Static
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.5,-0.5,0.5,0.5"
+          layer:
+          - GlassLayer
+
+- type: entity
+  id: Cascad2
+  parent: Cascad1
+  components: 
+    - type: Sprite
+      layers:
+        - state: cascade_2
+    - type: Icon
+      sprite: _Starlight/Objects/Specific/supermatter_cascade.rsi
+      state: cascade_2
+
+- type: entity
+  id: Cascad3
+  parent: Cascad1
+  components: 
+    - type: Sprite
+      layers:
+        - state: cascade_3
+    - type: Icon
+      sprite: _Starlight/Objects/Specific/supermatter_cascade.rsi
+      state: cascade_3
+
+- type: entity
+  id: Cascad4
+  parent: Cascad1
+  components: 
+    - type: Sprite
+      layers:
+        - state: cascade_4
+    - type: Icon
+      sprite: _Starlight/Objects/Specific/supermatter_cascade.rsi
+      state: cascade_4
+
+- type: entity
+  id: Cascad5
+  parent: Cascad1
+  components: 
+    - type: Sprite
+      layers:
+        - state: cascade_5
+    - type: Icon
+      sprite: _Starlight/Objects/Specific/supermatter_cascade.rsi
+      state: cascade_5
+
+- type: entity
+  id: Cascad6
+  parent: Cascad1
+  components: 
+    - type: Sprite
+      layers:
+        - state: cascade_6
+    - type: Icon
+      sprite: _Starlight/Objects/Specific/supermatter_cascade.rsi
+      state: cascade_6
