@@ -173,11 +173,11 @@ public sealed class PlayerPanelEui : BaseEui
         {
             _whitelisted = await _db.GetWhitelistStatusAsync(_targetPlayer.UserId);
             // This won't get associated ip or hwid bans but they were not placed on this account anyways
-            _bans = (await _db.GetServerBansAsync(null, _targetPlayer.UserId, null)).Count;
+            _bans = (await _db.GetServerBansAsync(null, _targetPlayer.UserId, null, null)).Count;
             // Unfortunately role bans for departments and stuff are issued individually. This means that a single role ban can have many individual role bans internally
             // The only way to distinguish whether a role ban is the same is to compare the ban time.
             // This is horrible and I would love to just erase the database and start from scratch instead but that's what I can do for now.
-            _roleBans = (await _db.GetServerRoleBansAsync(null, _targetPlayer.UserId, null)).DistinctBy(rb => rb.BanTime).Count();
+            _roleBans = (await _db.GetServerRoleBansAsync(null, _targetPlayer.UserId, null, null)).DistinctBy(rb => rb.BanTime).Count();
         }
         else
         {
