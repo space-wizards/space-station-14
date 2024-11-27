@@ -1,3 +1,5 @@
+// Initial version of file ported from the Starlight project repo, located at https://github.com/ss14Starlight/space-station-14
+
 using Content.Server.Ghost;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Systems;
@@ -25,23 +27,23 @@ public sealed class BeingVentCrawSystem : EntitySystem
         SubscribeLocalEvent<BeingVentCrawComponent, AtmosExposedGetAirEvent>(OnGetAir);
         SubscribeLocalEvent<BeingVentCrawComponent, MobStateChangedEvent>(OnMobStateChanged);
     }
-    
+
     private void OnMobStateChanged(EntityUid uid, BeingVentCrawComponent component, MobStateChangedEvent args)
     {
         if (args.NewMobState != MobState.Dead || args.OldMobState != MobState.Critical)
             return;
-            
+
         if (TryComp<ActorComponent>(uid, out var actor))
         {
             var session = actor.PlayerSession;
-                
+
             var minds = _entities.System<SharedMindSystem>();
             if (!minds.TryGetMind(session, out var mindId, out var mind))
             {
                 mindId = minds.CreateMind(session.UserId);
                 mind = _entities.GetComponent<MindComponent>(mindId);
             }
-                
+
             _entities.System<GhostSystem>().OnGhostAttempt(mindId, true, true, mind);
         }
     }

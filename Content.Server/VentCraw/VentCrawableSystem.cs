@@ -1,3 +1,5 @@
+// Initial file ported from the Starlight project repo, located at https://github.com/ss14Starlight/space-station-14
+
 using System.Linq;
 using Content.Shared.VentCraw.Tube.Components;
 using Content.Shared.VentCraw.Components;
@@ -13,14 +15,14 @@ public sealed class VentCrawableSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
-    
+
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<VentCrawHolderComponent, VentCrawExitEvent>(OnVentCrawExitEvent);
     }
-    
+
     /// <summary>
     /// Exits the vent craws for the specified VentCrawHolderComponent, removing it and any contained entities from the craws.
     /// </summary>
@@ -30,7 +32,7 @@ public sealed class VentCrawableSystem : EntitySystem
     private void OnVentCrawExitEvent(EntityUid uid, VentCrawHolderComponent holder, ref VentCrawExitEvent args)
     {
         var holderTransform = args.holderTransform;
-        
+
         if (Terminating(uid))
             return;
 
@@ -69,7 +71,7 @@ public sealed class VentCrawableSystem : EntitySystem
                 _physicsSystem.WakeBody(entity, body: physics);
             }
         }
-        
+
         EntityManager.DeleteEntity(uid);
     }
 }

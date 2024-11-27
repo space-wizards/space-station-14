@@ -1,3 +1,5 @@
+// Initial file ported from the Starlight project repo, located at https://github.com/ss14Starlight/space-station-14
+
 using Robust.Shared.Containers;
 
 namespace Content.Shared.VentCraw.Tube.Components;
@@ -5,7 +7,7 @@ namespace Content.Shared.VentCraw.Tube.Components;
 [RegisterComponent]
 public sealed partial class VentCrawTubeComponent : Component
 {
-    [DataField("containerId")] 
+    [DataField("containerId")]
     public string ContainerId { get; set; } = "VentCrawTube";
 
     public bool Connected;

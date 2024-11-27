@@ -1,5 +1,0 @@
-﻿- type: entity
-  save: false
-  name: Urist Felionoid
-  parent: BaseMobFelionoid
-  id: MobFelionoid

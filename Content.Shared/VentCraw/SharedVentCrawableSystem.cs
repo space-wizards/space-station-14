@@ -1,3 +1,5 @@
+// Initial file ported from the Starlight project repo, located at https://github.com/ss14Starlight/space-station-14
+
 using System.Linq;
 using Content.Shared.Body.Components;
 using Content.Shared.Tools.Components;
@@ -24,7 +26,7 @@ public sealed class SharedVentCrawableSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    
+
     public override void Initialize()
     {
         base.Initialize();
@@ -64,7 +66,7 @@ public sealed class SharedVentCrawableSystem : EntitySystem
     {
         holder.Container = _containerSystem.EnsureContainer<Container>(uid, nameof(VentCrawHolderComponent));
     }
-    
+
     /// <summary>
     /// Tries to insert an entity into the VentCrawHolderComponent container.
     /// </summary>
@@ -156,7 +158,7 @@ public sealed class SharedVentCrawableSystem : EntitySystem
 
         return true;
     }
-    
+
     /// <summary>
     ///  Magic...
     /// </summary>
@@ -167,7 +169,7 @@ public sealed class SharedVentCrawableSystem : EntitySystem
         {
             if (holder.CurrentDirection == Direction.Invalid)
                 return;
-            
+
             if (holder.CurrentTube == null)
             {
                 continue;
@@ -204,7 +206,7 @@ public sealed class SharedVentCrawableSystem : EntitySystem
                     }
                 }
             }
-            
+
             if (holder.NextTube != null && holder.TimeLeft > 0)
             {
                 var time = frameTime;
@@ -224,7 +226,7 @@ public sealed class SharedVentCrawableSystem : EntitySystem
                 frameTime -= time;
             }
             else if (holder.NextTube != null && holder.TimeLeft == 0)
-            {                
+            {
                 if (HasComp<VentCrawEntryComponent>(holder.NextTube.Value) && !holder.FirstEntry)
                 {
                     var welded = false;

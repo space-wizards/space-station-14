@@ -1,24 +1,5 @@
-- type: entity
-  parent: [UnsensoredClothingUniformBase, BaseSovietContraband]
-  id: ClothingUniformJumpsuitSoviet
-  name: soviet uniform
-  description: Uniform for elite Soviet comrades, completely uncomfortable and cheaply made.
-  components:
-  - type: Sprite
-    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/soviet.rsi
-  - type: Clothing
-    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/soviet.rsi
+# Initial file ported from the Starlight project repo, located at https://github.com/ss14Starlight/space-station-14
 
-- type: entity
-  parent: UnsensoredClothingUniformBase
-  id: ClothingUniformJumpsuitAbductor
-  name: abductor uniform
-  components:
-  - type: Sprite
-    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/abductor.rsi
-  - type: Clothing
-    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/abductor.rsi
-    
 - type: entity
   parent: ClothingUniformJumpsuitAtmos
   id: ClothingUniformJumpsuitAtmosSyndie

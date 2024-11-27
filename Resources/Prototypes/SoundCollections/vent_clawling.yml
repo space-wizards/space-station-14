@@ -1,4 +1,6 @@
-﻿- type: soundCollection
+﻿# Initial file ported from the Starlight project repo, located at https://github.com/ss14Starlight/space-station-14
+
+- type: soundCollection
   id: VentClaw
   files:
   - /Audio/VentCrawling/crawling1.ogg

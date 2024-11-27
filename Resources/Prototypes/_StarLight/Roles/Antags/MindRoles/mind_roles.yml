@@ -1,9 +1,0 @@
-- type: entity
-  parent: BaseMindRoleAntag
-  id: MindRoleLoneAbductor
-  name: Lone Abductor Role
-  components:
-  - type: MindRole
-    exclusiveAntag: true
-    antagPrototype: LoneAbductorAntag
-  - type: Abductor
