@@ -4,7 +4,7 @@
     "x": 32,
     "y": 32
   },
-  "copyright": "Taken from tgstation, brigmedic locker is a resprited CMO locker by PuroSlavKing (Github), n2 sprites based on fire and emergency sprites",
+  "copyright": "Taken from tgstation from https://github.com/tgstation/tgstation/pull/85491. Resprited for 32x32 dimensions.",
   "license": "CC-BY-SA-3.0",
   "states": [
     {
@@ -561,14 +561,6 @@
     },
     {
       "name": "representative_door"
-    },
-	{
-      "name": "littletykescar",
-      "directions": 4
-    },
-	{
-      "name": "littletykescar_open",
-      "directions": 4
     }
   ]
 }
