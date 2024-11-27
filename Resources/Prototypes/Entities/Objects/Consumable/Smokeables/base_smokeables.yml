@@ -82,3 +82,10 @@
     solution: smokable
   - type: Riggable
     solution: smokable
+    reagents:
+      - ReagentId: Plasma
+        Quantity: 5
+      - ReagentId: Potassium
+        Quantity: 5
+      - ReagentId: WeldingFuel
+        Quantity: 5
