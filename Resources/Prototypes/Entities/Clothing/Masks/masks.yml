@@ -727,7 +727,7 @@
     - Snout
 
 - type: entity
-  parent: ClothingMaskBase
+  parent: ClothingMaskPullableBase
   id: ClothingMaskNeckGaiter
   name: neck gaiter
   description: Stylish neck gaiter for your neck, can protect from the cosmic wind?...
@@ -741,7 +741,6 @@
   - type: Tag
     tags:
     - WhitelistChameleon
-  - type: BreathMask
 
 - type: entity
   parent: ClothingMaskNeckGaiter

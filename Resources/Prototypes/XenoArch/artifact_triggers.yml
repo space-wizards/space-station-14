@@ -217,6 +217,14 @@
     possibleGas:
     - WaterVapor
 
+- type: artifactTrigger
+  id: TriggerFunnySlipStun
+  targetDepth: 4
+  triggerProb: 1
+  triggerHint: artifact-trigger-hint-funny
+  components:
+  - type: ArtifactStunTrigger
+
 # Separate drinks into twenty chunks. one chunk has a total probability of 1/20, so all drinks together have same prob as normal trigger
 # Some Chunks have multiple drinks (such as the tricky drink chunk)
 
@@ -596,13 +604,6 @@
   triggerHint: artifact-trigger-hint-examine
   components:
   - type: ArtifactExamineTrigger
-
-- type: artifactTrigger
-  id: TriggerMagnetDeep
-  targetDepth: 4
-  triggerHint: artifact-trigger-hint-magnet
-  components:
-  - type: ArtifactMagnetTrigger
 
 - type: artifactTrigger
   id: TriggerMedicalDeep

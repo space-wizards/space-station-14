@@ -251,7 +251,7 @@
 
 - type: entity
   id: AntimovCircuitBoard
-  parent: BaseElectronics
+  parent: [BaseElectronics, BaseSyndicateContraband]
   name: law board (Antimov)
   description: An electronics board containing the Antimov lawset.
   components:
@@ -301,6 +301,7 @@
         unshaded:
           Empty: { state: empty }
           Occupied: { state: full }
+  - type: Intellicard
 
 - type: entity
   id: PlayerStationAiEmpty
@@ -429,27 +430,8 @@
 
 # Borgs
 - type: entity
-  id: PlayerBorgGeneric
-  parent: BorgChassisGeneric
-  suffix: Battery, Tools
-  components:
-  - type: ContainerFill
-    containers:
-      borg_brain:
-        - PositronicBrain
-      borg_module:
-        - BorgModuleTool
-  - type: ItemSlots
-    slots:
-      cell_slot:
-        name: power-cell-slot-component-slot-name-default
-        startingItem: PowerCellMedium
-  - type: RandomMetadata
-    nameSegments: [names_borg]
-
-- type: entity
   id: PlayerBorgBattery
-  parent: BorgChassisGeneric
+  parent: BorgChassisSelectable
   suffix: Battery
   components:
   - type: ContainerFill
@@ -543,3 +525,253 @@
     - PlayerBorgSyndicateAssaultGhostRole
     - PlayerBorgSyndicateAssaultGhostRole # Saboteurs are kinda like cyborg medics, we want less.
     - PlayerBorgSyndicateSaboteurGhostRole
+
+  # Drones and OneStar mech
+- type: entity
+  save: false
+  abstract: true
+  id: PlayerSiliconBase #for player controlled silicons. it's a shitty name, idk why they did it like that.
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [Touch]
+  - type: Input
+    context: "human"
+  - type: DamageOnHighSpeedImpact
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      collection: MetalThud
+  - type: Clickable
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Bloodstream
+    bloodReagent: Oil
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          1
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -1
+  - type: InteractionOutline
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          # Circles, cuz rotation of rectangles looks very bad
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 4
+    baseSprintSpeed : 3
+  - type: Sprite
+    noRot: true
+    drawdepth: Mobs
+  - type: Physics
+    bodyType: KinematicController
+  - type: Hands
+    showInHands: false
+  - type: Body
+    prototype: Drone
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+  - type: ActiveRadio
+    channels:
+    - Binary
+    - Common
+  - type: DoAfter
+  - type: Pullable
+  - type: Examiner
+  - type: Puller
+  - type: StandingState
+  - type: Alerts
+  - type: ProtectedFromStepTriggers
+
+- type: entity
+  name: drone
+  id: Drone
+  parent: PlayerSiliconBase
+  components:
+  - type: Drone
+# InnateToolComponent is broken and this doesn't work. might not ever be fixed. its fine tho drones can scavenge tools easy.
+#  - type: InnateTool 
+#    tools:
+#      - id: ClothingBackpackSatchelDrone
+#      - id: trayScanner
+#      - id: Omnitool
+#      - id: WelderExperimental
+  - type: NameIdentifier
+    group: Drone
+  - type: Inventory
+    templateId: drone
+  - type: InventorySlots
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+  - type: GhostRole
+    makeSentient: true
+    name: Maintenance Drone
+    description: Maintain the station. Ignore other beings except drones.
+    rules: |
+     You are bound by these laws both in-game and out-of-character:
+     1. You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.
+     2. You may not harm any being, regardless of intent or circumstance.
+     3. Your goals are to build, maintain, repair, improve, and power to the best of your abilities, You must never actively work against these goals.
+  - type: GhostTakeoverAvailable
+  - type: SiliconLawBound
+  - type: SiliconLawProvider
+    laws: Drone
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 5
+    baseSprintSpeed : 5
+  - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      60: Dead
+  - type: Flash
+  - type: NoSlip
+  - type: StatusEffects
+    allowed:
+    - Stun
+    - KnockedDown
+    - SlowedDown
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      30: 0.7
+      50: 0.5
+  - type: Temperature
+    heatDamageThreshold: 5000
+    currentTemperature: 310.15
+    specificHeat: 42
+    heatDamage:
+      types:
+        Heat : 1 #per second, scales with temperature & other constants
+  - type: Sprite
+    drawdepth: SmallMobs
+    layers:
+    - state: shell
+      sprite: Mobs/Silicon/drone.rsi
+      map: ["base"]
+  - type: MovementIgnoreGravity
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.DroneVisuals.Status:
+        base:
+          Off: { state: shell }
+          On: { state: drone }
+  - type: ReplacementAccent
+    accent: silicon
+  - type: Repairable
+    fuelCost: 15
+    doAfterDelay: 8
+  - type: ActionGrant
+    actions:
+    - ActionViewLaws
+  - type: Actions
+  - type: UnpoweredFlashlight
+  - type: PointLight
+    enabled: false
+    radius: 3.5
+    softness: 1
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+  - type: ProtectedFromStepTriggers
+  - type: InputMover
+  - type: MobMover
+  - type: Tag
+    tags:
+      - CannotSuicide
+
+
+# onestar is kinda fucked cause the loadout component is broken. sooo they gotta find guns somewhere i guess. /shrug.
+- type: entity
+  name: onestar mecha
+  id: Onestar
+  parent: PlayerSiliconBase
+  components:
+# InnateToolComponent is broken and this doesn't work. might not ever be fixed. 
+#  - type: InnateTool
+#    tools:
+#      - id: WeaponMinigun
+#      - id: EnergySword
+#      - id: WeaponLauncherMultipleRocket
+#      - id: WeaponXrayCannon
+  - type: UserInterface
+    interfaces:
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-onestar-mecha-name
+    description: ghost-role-information-onestar-mecha-description
+    rules: ghost-role-information-antagonist-rules
+  - type: GhostTakeoverAvailable
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3
+    baseSprintSpeed : 2
+  - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      1000: Dead
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - state: onestar_boss
+      sprite: Mobs/Silicon/onestar.rsi
+    - state: onestar_boss_screen
+      sprite: Mobs/Silicon/onestar.rsi
+      shader: unshaded
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Mecha/sound_mecha_powerloader_step.ogg
+  - type: MovementIgnoreGravity
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 1
+        density: 160
+        mask:
+        - LargeMobMask
+        layer:
+        - MobLayer
+  - type: Appearance
+  - type: CombatMode
+  - type: Tag
+    tags:
+      - FootstepSound

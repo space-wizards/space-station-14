@@ -6,6 +6,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using System.Numerics;
+using Content.Shared._Impstation.CCVar;
 
 namespace Content.Client.Singularity
 {
@@ -84,7 +85,7 @@ namespace Content.Client.Singularity
         {
             if (ScreenTexture == null || args.Viewport.Eye == null)
                 return;
-            if (_configManager.GetCVar(CCVars.ReducedMotion) || _configManager.GetCVar(CCVars.DisableSinguloWarping))
+            if (_configManager.GetCVar(CCVars.ReducedMotion) || _configManager.GetCVar(ImpCCVars.DisableSinguloWarping))
                 return;
 
             _shader?.SetParameter("renderScale", args.Viewport.RenderScale * args.Viewport.Eye.Scale);
@@ -107,7 +108,7 @@ namespace Content.Client.Singularity
         {   // Mostly copypasta from the singularity shader.
 
             // We don't gotta un-distort if we ain't distorting
-            if (_configManager.GetCVar(CCVars.ReducedMotion) || _configManager.GetCVar(CCVars.DisableSinguloWarping))
+            if (_configManager.GetCVar(CCVars.ReducedMotion) || _configManager.GetCVar(ImpCCVars.DisableSinguloWarping))
                 return;
 
             if (args.Viewport.Eye == null)

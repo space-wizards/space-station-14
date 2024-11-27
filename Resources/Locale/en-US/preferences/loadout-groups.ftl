@@ -201,7 +201,7 @@ loadout-group-head-of-security-neck = Head of Security neck
 loadout-group-head-of-security-outerclothing = Head of Security outer clothing
 loadout-group-head-of-security-backpack = Head of Security backpack
 loadout-group-head-of-security-headset = Head of Security headset
-loadout-group-head-of-security-mask = Head of Security mask
+loadout-group-head-of-security-belt = Head of Security belt
 
 loadout-group-warden-head = Warden head
 loadout-group-warden-jumpsuit = Warden jumpsuit

@@ -944,6 +944,7 @@
   - type: Tag
     tags:
       - WhitelistChameleon
+      - DroneUsable
       - HamsterWearable
 
 - type: entity

@@ -16,6 +16,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Content.Shared._Impstation.CCVar;
 
 namespace Content.Server._Impstation.Spelfs;
 
@@ -66,7 +67,7 @@ public sealed partial class SpelfMoodsSystem : SharedSpelfMoodSystem
     private void NewSharedMoods()
     {
         _sharedMoods.Clear();
-        for (int i = 0; i < _config.GetCVar(CCVars.SpelfSharedMoodCount); i++)
+        for (int i = 0; i < _config.GetCVar(ImpCCVars.SpelfSharedMoodCount); i++)
             TryAddSharedMood();
     }
 

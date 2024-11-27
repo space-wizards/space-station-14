@@ -815,7 +815,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/hosformal.rsi
 
 - type: entity
-  parent: [UnsensoredClothingUniformBase, BaseSyndicateContraband]
+  parent: [UnsensoredClothingUniformBase, ClothingUniformFoldableBase, BaseSyndicateContraband]
   id: ClothingUniformJumpsuitOperative
   name: operative jumpsuit
   description: Uniform for elite syndicate operatives performing tactical operations in deep space.
@@ -826,7 +826,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/operative.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent:  [ClothingUniformBase, ClothingUniformFoldableBase]
   id: ClothingUniformJumpsuitTacticool
   name: tacticool jumpsuit
   description: Uniform for subpar operative LARPers performing tactical insulated glove theft in deep space.
@@ -1323,6 +1323,36 @@
       - state: equipped-INNERCLOTHING-jumpsuit
       - state: equipped-INNERCLOTHING-shirt
         color: "#b30000"
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitCasualGreen
+  name: casual green jumpsuit
+  description: A loose worn green shirt with a grey pants, perfect for someone looking to relax.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    layers:
+    - state: icon-jumpsuit
+    - state: icon-shirt
+      color: "#00661D"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left-jumpsuit
+      - state: inhand-left-shirt
+        color: "#00661D"
+      right:
+      - state: inhand-right-jumpsuit
+      - state: inhand-right-shirt
+        color: "#00661D"
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/casual.rsi
+    clothingVisuals:
+      jumpsuit:
+      - state: equipped-INNERCLOTHING-jumpsuit
+      - state: equipped-INNERCLOTHING-shirt
+        color: "#00661D"
 
 - type: entity
   parent: ClothingUniformBase

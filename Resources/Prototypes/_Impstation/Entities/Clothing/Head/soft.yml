@@ -13,3 +13,19 @@
   parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatBrigmedicsoft]
   id: ClothingHeadHatBrigmedicsoftFlipped
   name: brigmedic cap
+  
+- type: entity
+  parent: [ClothingHeadHeadHatBaseFlippable, BaseCommandContraband]
+  id: ClothingHeadHatHOSsoft
+  name: head of security's patrol cap
+  description: A robust, decorated patrol cap for the head of security.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Soft/hossoft.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Soft/hossoft.rsi
+
+- type: entity
+  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatHOSsoft]
+  id: ClothingHeadHatHOSsoftFlipped
+  name: security cap

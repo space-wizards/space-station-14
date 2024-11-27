@@ -1,0 +1,36 @@
+# Tier 1
+
+- type: technology
+  id: AdvancedSidearms
+  name: research-technology-advanced-sidearms
+  icon:
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/mk93.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 1
+  cost: 10000
+  recipeUnlocks:
+  - FullAutoConversionKit
+  - HyperBurstConversionKit
+  - MagazineLPistolEmpty
+  - MagazineLPistol
+  - MagazineLPistolPractice
+  - MagazineBoxLPistol
+  - MagazineBoxLPistolPractice
+
+# Tier 2
+
+- type: technology
+  id: AdvancedPistolMunitions
+  name: research-technology-advanced-pistol-munitions
+  icon:
+    sprite: _Impstation/Objects/Weapons/Guns/Ammunition/Boxes/light_pistol.rsi
+    state: incendiarydisplay
+  discipline: Arsenal
+  tier: 2
+  cost: 12000
+  recipeUnlocks:
+  - MagazineLPistolIncendiary
+  - MagazineLPistolUranium
+  - MagazineBoxLPistolIncendiary
+  - MagazineBoxLPistolUranium

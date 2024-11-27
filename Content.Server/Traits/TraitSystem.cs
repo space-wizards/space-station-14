@@ -1,5 +1,5 @@
 using Content.Server.Body.Systems;
-using Content.Server.GameTicking;
+using Content.Shared.GameTicking;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Roles;
@@ -7,7 +7,6 @@ using Content.Shared.Traits;
 using Content.Shared.Tag;
 using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Traits;
 

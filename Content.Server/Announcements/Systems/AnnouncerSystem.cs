@@ -2,9 +2,9 @@ using Content.Server.Chat.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.Announcements.Prototypes;
 using Content.Shared.Announcements.Systems;
-using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
+using Content.Shared._EinsteinEngine.CCVar;
 
 namespace Content.Server.Announcements.Systems;
 
@@ -26,7 +26,7 @@ public sealed partial class AnnouncerSystem : SharedAnnouncerSystem
         base.Initialize();
         NewAnnouncer();
 
-        _config.OnValueChanged(CCVars.Announcer, _ => NewAnnouncer());
+        _config.OnValueChanged(EinsteinCCVars.Announcer, _ => NewAnnouncer());
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestarting);
     }
