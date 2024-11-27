@@ -1,5 +1,5 @@
 - type: localizedDataset
-  id: names_rollie
+  id: NamesRollie
   values:
     prefix: names-rollie-dataset-
     count: 39
