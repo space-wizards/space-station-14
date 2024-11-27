@@ -92,10 +92,14 @@ public sealed class EmagSystem : EntitySystem
         var emaggedEvent = new GotEmaggedEvent(user);
         RaiseLocalEvent(target, ref emaggedEvent);
 
+        Log.Debug(emaggedEvent.Handled.ToString() + "");
+
         if (emaggedEvent.Handled && !emaggedEvent.Repeatable)
         {
             EnsureComp<EmaggedComponent>(target, out var emagged);
             _audio.PlayPredicted(emagged.Sound, target, user, AudioParams.Default.WithVolume(emagged.SoundVolume));
+
+            Log.Debug("Hey!!!");
         }
 
         return emaggedEvent.Handled;
