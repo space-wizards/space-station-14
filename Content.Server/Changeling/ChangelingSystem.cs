@@ -168,7 +168,7 @@ public sealed partial class ChangelingSystem : EntitySystem
     }
     private void UpdateBiomass(EntityUid uid, ChangelingComponent comp, float? amount = null)
     {
-        comp.Biomass += amount ?? -1;
+        comp.Biomass += amount ?? 0;
         comp.Biomass = Math.Clamp(comp.Biomass, 0, comp.MaxBiomass);
         Dirty(uid, comp);
         _alerts.ShowAlert(uid, "ChangelingBiomass");
@@ -388,13 +388,18 @@ public sealed partial class ChangelingSystem : EntitySystem
     }
     public bool TryToggleItem(EntityUid uid, EntProtoId proto, ChangelingComponent comp, string? clothingSlot = null)
     {
-        if (!comp.Equipment.TryGetValue(proto.Id, out var item) && item == null)
+        if (!comp.Equipment.TryGetValue(proto.Id, out var item))
         {
             item = Spawn(proto, Transform(uid).Coordinates);
-            if (clothingSlot != null && !_inventory.TryEquip(uid, (EntityUid) item, clothingSlot, force: true))
+            if (clothingSlot != null)
             {
-                QueueDel(item);
-                return false;
+                if (!_inventory.TryEquip(uid, (EntityUid) item, clothingSlot, force: true))
+                {
+                    QueueDel(item);
+                    return false;
+                }
+                comp.Equipment.Add(proto.Id, item);
+                return true;
             }
             else if (!_hands.TryForcePickupAnyHand(uid, (EntityUid) item))
             {

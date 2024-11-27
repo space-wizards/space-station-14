@@ -58,7 +58,8 @@ public sealed partial class ChangelingRuleSystem : GameRuleSystem<ChangelingRule
 
             _antag.SendBriefing(target, briefing, Color.Yellow, BriefingSound);
             _role.MindHasRole<ChangelingRoleComponent>(mindId, out var changelingRole);
-            if (changelingRole is not null)
+            _role.MindHasRole<RoleBriefingComponent>(mindId, out var briefingComp);
+            if (changelingRole is not null && briefingComp is null)
             {
                 AddComp<RoleBriefingComponent>(changelingRole.Value.Owner);
                 Comp<RoleBriefingComponent>(changelingRole.Value.Owner).Briefing = briefing;
