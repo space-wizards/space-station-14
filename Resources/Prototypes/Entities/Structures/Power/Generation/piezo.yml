@@ -1,15 +1,12 @@
 - type: entity
-  id: CrystalGreen
+  id: PiezoCrystal
   parent: BaseStructure
-  suffix: green
-  name: crystal
-  description: A crystaline solid.
+  name: piezo crystal
+  description: An electrically charged crystal capable of releasing occasional bursts of localized static which can be used for electricity.
   components:
     - type: Sprite
       sprite: Objects/Piezo.rsi
       state: icon
-    - type: Anchorable
-      delay: 2
     - type: Physics
       bodyType: Static
     - type: LightningArcShooter
