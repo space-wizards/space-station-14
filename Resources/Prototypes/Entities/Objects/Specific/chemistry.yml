@@ -283,6 +283,7 @@
   - type: Injector
     injectOnly: false
     ignoreMobs: true
+    ignoreClosed: false
     minTransferAmount: 1
     maxTransferAmount: 5
     transferAmount: 1

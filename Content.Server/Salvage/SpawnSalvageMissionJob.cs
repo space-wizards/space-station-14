@@ -104,7 +104,9 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         destComp.BeaconsOnly = true;
         destComp.RequireCoordinateDisk = true;
         destComp.Enabled = true;
-        _metaData.SetEntityName(mapUid, SharedSalvageSystem.GetFTLName(_prototypeManager.Index<DatasetPrototype>("names_borer"), _missionParams.Seed));
+        _metaData.SetEntityName(
+            mapUid,
+            _entManager.System<SharedSalvageSystem>().GetFTLName(_prototypeManager.Index<LocalizedDatasetPrototype>("NamesBorer"), _missionParams.Seed));
         _entManager.AddComponent<FTLBeaconComponent>(mapUid);
 
         // Saving the mission mapUid to a CD is made optional, in case one is somehow made in a process without a CD entity
