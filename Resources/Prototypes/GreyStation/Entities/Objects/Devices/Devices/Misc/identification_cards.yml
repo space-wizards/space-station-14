@@ -6,23 +6,10 @@
   - type: Sprite
     layers:
     - state: orange
-    - sprite: DeltaV/Objects/Misc/id_cards.rsi
-      state: nyanoprisoner
+    - sprite: GreyStation/Objects/Misc/id_cards.rsi
+      state: prisoner
   - type: PresetIdCard
     job: Prisoner
-
-- type: entity
-  parent: IDCardStandard
-  id: GladiatorIDCard
-  name: gladiator ID card
-  components:
-  - type: Sprite
-    layers:
-    - state: orange
-    - sprite: DeltaV/Objects/Misc/id_cards.rsi
-      state: nyanogladiator
-  - type: PresetIdCard
-    job: Gladiator
 
 - type: entity
   parent: IDCardStandard
@@ -32,8 +19,8 @@
   - type: Sprite
     layers:
     - state: default
-    - sprite: DeltaV/Objects/Misc/id_cards.rsi
-      state: nyanoprisonguard
+    - sprite: GreyStation/Objects/Misc/id_cards.rsi
+      state: prisonguard
   - type: PresetIdCard
     job: PrisonGuard
 
@@ -45,7 +32,7 @@
   - type: Sprite
     layers:
     - state: default
-    - sprite: DeltaV/Objects/Misc/id_cards.rsi
-      state: nyanomartialartist
+    - sprite: GreyStation/Objects/Misc/id_cards.rsi
+      state: martialartist
   - type: PresetIdCard
     job: MartialArtist
