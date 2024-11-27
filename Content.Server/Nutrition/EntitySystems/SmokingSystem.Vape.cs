@@ -176,7 +176,7 @@ public sealed partial class SmokingSystem
 
             _popupSystem.PopupEntity(
                 Loc.GetString("vape-component-vape-success-user-forced", ("target", targetName)), user,
-                target.Value);
+                user);
 
             // Log involuntary vaping
             _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(user):user} forced {ToPrettyString(target):target} to vape {ToPrettyString(uid)} {SharedSolutionContainerSystem.ToPrettyString(solution)}");
