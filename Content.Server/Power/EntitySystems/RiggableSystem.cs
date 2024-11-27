@@ -49,19 +49,12 @@ public sealed class RiggableSystem : EntitySystem
             return;
 
         var wasRigged = entity.Comp.IsRigged;
+        var quantity = args.Solution.GetReagentQuantity(entity.Comp.RequiredQuantity.Reagent);
+        entity.Comp.IsRigged = quantity >= entity.Comp.RequiredQuantity.Quantity;
 
-        foreach (var reagentQuantity in entity.Comp.RequiredQuantity)
+        if (entity.Comp.IsRigged && !wasRigged)
         {
-            var quantity = args.Solution.GetReagentQuantity(reagentQuantity.Reagent);
-            entity.Comp.IsRigged = quantity >= reagentQuantity.Quantity;
-
-            if (entity.Comp.IsRigged)
-            {
-                if (!wasRigged)
-                    _adminLogger.Add(LogType.Explosion, LogImpact.Medium, $"{ToPrettyString(entity.Owner)} has been rigged up to explode when used.");
-
-                break;
-            }
+            _adminLogger.Add(LogType.Explosion, LogImpact.Medium, $"{ToPrettyString(entity.Owner)} has been rigged up to explode when used.");
         }
     }
 
