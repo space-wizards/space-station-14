@@ -15,7 +15,7 @@ public sealed partial class GoobCCVars : CVars
     ///     And maybe do your part to fix that? :)
     /// </remarks>
     public static readonly CVarDef<float> SpaceWindMinimumCalculatedMass =
-        CVarDef.Create("atmos.space_wind_minimum_calculated_mass", 5f, CVar.SERVERONLY);
+        CVarDef.Create("atmos.space_wind_minimum_calculated_mass", 11f, CVar.SERVERONLY);
 
     /// <summary>
     ///     Calculated as 1/Mass, where Mass is the physics.Mass of the desired threshold.

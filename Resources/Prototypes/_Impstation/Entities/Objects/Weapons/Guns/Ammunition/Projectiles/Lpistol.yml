@@ -1,0 +1,56 @@
+- type: entity
+  id: BulletLPistol
+  name: bullet (.22 auto)
+  parent: BaseBullet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 14
+
+- type: entity
+  id: BulletLPistolPractice
+  name: bullet (.22 auto practice)
+  parent: BaseBulletPractice
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 2
+
+- type: entity
+  id: BulletLPistolIncendiary
+  parent: BaseBulletIncendiary
+  name: bullet (.22 auto incendiary)
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 2
+        Heat: 12
+
+- type: entity
+  id: BulletLPistolUranium
+  parent: BaseBulletUranium
+  name: bullet (.22 auto uranium)
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Radiation: 6
+        Piercing: 8
+
+- type: entity
+  id: BulletLPistolAP
+  parent: BaseBulletAP
+  name: bullet (.22 auto APDSFS)
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 35

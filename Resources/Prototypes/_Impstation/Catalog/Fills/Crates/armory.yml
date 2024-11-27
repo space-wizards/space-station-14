@@ -1,0 +1,25 @@
+- type: entity
+  id: CrateArmoryMachinePistol
+  parent: [ CrateWeaponSecure, BaseRestrictedContraband ]
+  name: machine pistols crate
+  description: For when you need a compact automatic weapon. Contains two Mk 93 pistols with extra ammunition. Requires Armory access to open.
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponPistolMk93
+        amount: 2
+      - id: MagazineLPistol
+        amount: 4
+
+- type: entity
+  id: CrateArmoryBurstPistol
+  parent: [ CrateWeaponSecure, BaseRestrictedContraband ]
+  name: hyper burst pistols crate
+  description: For making the most out of small calibers. Contains two Mk 92HB pistols with extra ammunition. Requires Armory access to open.
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponPistolMk92HB
+        amount: 2
+      - id: MagazineLPistol
+        amount: 4

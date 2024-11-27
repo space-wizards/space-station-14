@@ -1,85 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Added changeling antagonist from whateverusername0's fork of the main
-      upstream project.
-    type: Add
-  id: 78
-  time: '2024-08-15T03:03:14.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/94
-- author: TGRCdev
-  changes:
-  - message: GameRuleMeteorScheduler is now MeteorSwarmScheduler
-    type: Fix
-  id: 79
-  time: '2024-08-15T16:39:45.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/95
-- author: wafehling
-  changes:
-  - message: Added rare announcement variants for some events.
-    type: Add
-  id: 80
-  time: '2024-08-15T16:39:56.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/96
-- author: starlighthowls
-  changes:
-  - message: Added Laser-less laser raptors.
-    type: Add
-  - message: Kisser tomatoes can now be grown and mutated from killer tomatoes.
-    type: Add
-  - message: Added a new decal.
-    type: Add
-  id: 81
-  time: '2024-08-15T16:40:08.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/97
-- author: Darkmajia
-  changes:
-  - message: Added 4 random announcers from the Einstein Engines fork.
-    type: Add
-  id: 82
-  time: '2024-08-16T17:41:28.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/98
-- author: Drags-His-Tail
-  changes:
-  - message: Most reality-breaking side-effects of the QSI have been mitigated.
-    type: Fix
-  id: 83
-  time: '2024-08-15T23:59:39.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/99
-- author: starlighthowls
-  changes:
-  - message: Disabled securitron crafting recipe.
-    type: Fix
-  - message: Made edits to NTAS.WW decal.
-    type: Tweak
-  - message: Added new bar sign setting, Imp.
-    type: Add
-  - message: Manually updated impstation changelog. (hi!)
-    type: Add
-  id: 84
-  time: '2024-08-16T22:33:37.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/100
-- author: formlessnameless
-  changes:
-  - message: A bunch of formatting fixes that the system was yelling at me about
-    type: Fix
-  id: 85
-  time: '2024-08-17T02:51:39.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/101
-- author: formlessnameless
-  changes:
-  - message: Fixed outdated status icon stuff
-    type: Fix
-  id: 86
-  time: '2024-08-17T16:04:56.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/102
-- author: sageu111
-  changes:
-  - message: enabling grays
-    type: Add
-  id: 87
-  time: '2024-08-17T16:05:06.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/103
 - author: sususuyo
   changes:
   - message: Adding more songs
@@ -4308,3 +4227,109 @@
   id: 577
   time: '2024-11-26T03:11:01.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/799
+- author: widgetbeck
+  changes:
+  - message: Sir Gollylad will now spawn with a passenger ID card, so he can escape
+      maints more easily. Also a gobtools crowbar.
+    type: Tweak
+  - message: Goblin Stowaways' tools (gobtools) now have unique sprites.
+    type: Add
+  - message: Goblin Stowaways should be less common, and can only be triggered once.
+    type: Tweak
+  id: 578
+  time: '2024-11-26T05:12:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/789
+- author: hivehum
+  changes:
+  - message: Changeling can no longer be the main antagonist on consecutive rounds.
+    type: Tweak
+  id: 579
+  time: '2024-11-26T08:26:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/804
+- author: DinnerCalzone
+  changes:
+  - message: (Hummingbird) Fixed a number of typos.
+    type: Fix
+  - message: (Hummingbird) Added a ghost warp to the evil skull.
+    type: Add
+  - message: (Hummingbird) Removed bears.
+    type: Remove
+  id: 580
+  time: '2024-11-26T08:25:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/801
+- author: FlippenPage
+  changes:
+  - message: Fixed Drones being unable to move.
+    type: Fix
+  id: 581
+  time: '2024-11-26T09:25:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/806
+- author: Sha-Seng
+  changes:
+  - message: Beanbag Kammerers and Beanbag Enforcers are now blue!
+    type: Tweak
+  - message: Beanbag Shells and their associated containers are also blue now (that's
+      my attack)
+    type: Tweak
+  - message: Minor touchups on lethal Kammerer and Enforcer sprites
+    type: Tweak
+  id: 582
+  time: '2024-11-26T19:09:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/760
+- author: widgetbeck
+  changes:
+  - message: Added the goblin EVA suit (gobsuit.) Admin-only for the moment.
+    type: Add
+  id: 583
+  time: '2024-11-26T19:11:37.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/808
+- author: DinnerCalzone
+  changes:
+  - message: (Hummingbird) The external airlocks in the area between the center and
+      starboard wing now properly require external access.
+    type: Fix
+  id: 584
+  time: '2024-11-26T19:10:50.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/807
+- author: DinnerCalzone
+  changes:
+  - message: 'Shotgun beanbags have been reworked into stun slugs. These do 7.5 shock
+      and 40 stamina damage compared to beanbags'' 10 blunt and 40 stamina damage,
+      so being shot by them will not cause you to bleed. Note: insulated gloves will
+      not make you immune to these!'
+    type: Tweak
+  - message: Gave mice 40% shock vulnerability so they can still be one-shot by the
+      bartender's shotgun. (Their little hearts can't take the voltage.)
+    type: Tweak
+  id: 585
+  time: '2024-11-26T19:10:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/762
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: 'New Ammo Type: .22 Auto (incl. Incendiary, Uranium, and Practice)'
+    type: Add
+  - message: Mk 93 Machine Pistol
+    type: Add
+  - message: Mk 92HB Hyper-Burst Pistol
+    type: Add
+  - message: Zipper .22; a Dogshit pistol found in maintenance loot rarely.
+    type: Add
+  - message: Zipper .22 Syndicate Bundle; purchased for 20 TC-- uses Armor Piercing
+      rounds to deal defense-ignoring damage.
+    type: Add
+  - message: Machine Pistol and Hyperburst Pistol Crates to the Cargo Store
+    type: Add
+  - message: Advanced Sidearms as a Tier 1 technology for Science to research
+    type: Add
+  - message: Advanced Pistol Munitions as a Tier 2 technology for Science to research
+    type: Add
+  id: 586
+  time: '2024-11-26T19:18:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/809
+- author: honeyed-lemons
+  changes:
+  - message: Adjust spacewind min calc mass to 15
+    type: Tweak
+  id: 587
+  time: '2024-11-26T19:37:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/811
