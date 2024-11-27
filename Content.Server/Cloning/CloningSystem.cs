@@ -279,7 +279,6 @@ namespace Content.Server.Cloning
             if (!this.IsPowered(uid, EntityManager))
                 return;
 
-            _audio.PlayPvs(clonePod.SparkSound, uid);
             _popupSystem.PopupEntity(Loc.GetString("cloning-pod-component-upgrade-emag-requirement"), uid);
             args.Handled = true;
         }
