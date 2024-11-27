@@ -13,6 +13,7 @@ namespace Content.Client.Ghost
         [Dependency] private readonly IClientConsoleHost _console = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly SharedActionsSystem _actions = default!;
+        [Dependency] private readonly PointLightSystem _pointLightSystem = default!;
         [Dependency] private readonly ContentEyeSystem _contentEye = default!;
 
         public int AvailableGhostRoleCount { get; private set; }
@@ -66,12 +67,25 @@ namespace Content.Client.Ghost
             SubscribeLocalEvent<EyeComponent, ToggleLightingActionEvent>(OnToggleLighting);
             SubscribeLocalEvent<EyeComponent, ToggleFoVActionEvent>(OnToggleFoV);
             SubscribeLocalEvent<GhostComponent, ToggleGhostsActionEvent>(OnToggleGhosts);
+            SubscribeLocalEvent<GhostComponent, TogglePersonalLightActionEvent>(OnTogglePersonalLight);
         }
 
         private void OnStartup(EntityUid uid, GhostComponent component, ComponentStartup args)
         {
             if (TryComp(uid, out SpriteComponent? sprite))
                 sprite.Visible = GhostVisibility || uid == _playerManager.LocalEntity;
+        }
+
+        private void OnTogglePersonalLight(Entity<GhostComponent> ent, ref TogglePersonalLightActionEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            if (TryComp<PointLightComponent>(ent, out var pointLight))
+                _pointLightSystem.SetEnabled(ent, !pointLight.Enabled);
+
+            Popup.PopupEntity(Loc.GetString("ghost-gui-toggle-personal-light-popup"), args.Performer);
+            args.Handled = true;
         }
 
         private void OnToggleLighting(EntityUid uid, EyeComponent component, ToggleLightingActionEvent args)
@@ -113,6 +127,7 @@ namespace Content.Client.Ghost
             _actions.RemoveAction(uid, component.ToggleFoVActionEntity);
             _actions.RemoveAction(uid, component.ToggleGhostsActionEntity);
             _actions.RemoveAction(uid, component.ToggleGhostHearingActionEntity);
+            _actions.RemoveAction(uid, component.TogglePersonalLightActionEntity);
 
             if (uid != _playerManager.LocalEntity)
                 return;

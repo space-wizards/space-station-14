@@ -63,6 +63,9 @@
   - type: Tag
     tags:
     - BypassInteractionRangeChecks
+  - type: PointLight
+    radius: 3
+    enabled: false
 
 # proto for player ghosts specifically
 - type: entity
@@ -128,3 +131,14 @@
       state: icon
     iconOn: Interface/Actions/ghostHearingToggled.png
     event: !type:ToggleGhostHearingActionEvent
+
+- type: entity
+  id: ActionTogglePersonalLight
+  name: Toggle Personal Light
+  description: Toggle your personal light.
+  components:
+  - type: InstantAction
+    icon: { sprite: Objects/Power/light_bulb.rsi, state: normal }
+    clientExclusive: true
+    checkCanInteract: false
+    event: !type:TogglePersonalLightActionEvent

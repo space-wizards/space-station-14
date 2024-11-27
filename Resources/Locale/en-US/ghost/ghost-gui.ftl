@@ -5,6 +5,7 @@ ghost-gui-toggle-ghost-visibility-popup-on = Enabled visibility of ghosts.
 ghost-gui-toggle-ghost-visibility-popup-off = Disabled visibility of ghosts.
 ghost-gui-toggle-lighting-manager-popup = Toggled all lighting.
 ghost-gui-toggle-fov-popup = Toggled field-of-view.
+ghost-gui-toggle-personal-light-popup = Toggled personal light.
 
 ghost-gui-toggle-hearing-popup-on = You can now hear all messages.
 ghost-gui-toggle-hearing-popup-off = You can now only hear radio and nearby messages.
