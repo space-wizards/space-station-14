@@ -1,0 +1,278 @@
+- type: entity
+  parent: BasePDA
+  id: SeniorChefPDA
+  name: senior chef PDA
+  description: Smells absolutely delicious.
+  components:
+  - type: Pda
+    id: ChefIDCard
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-seniorcook
+  - type: PdaBorderColor
+    borderColor: "#d7d7d0"
+  - type: Icon
+    state: pda-seniorcook
+  - type: ReplacementAccent # for random sentience event
+    accent: italian
+
+- type: entity
+  parent: BasePDA
+  id: SeniorBotanistPDA
+  name: senior botanist PDA
+  description: Mutagen is leaking through the frame...
+  components:
+  - type: Pda
+    id: BotanistIDCard
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-seniorhydro
+  - type: PdaBorderColor
+    borderColor: "#44843c"
+    accentVColor: "#00cc35"
+  - type: Icon
+    state: pda-seniorhydro
+
+- type: entity
+  parent: BasePDA
+  id: SeniorCargoPDA
+  name: senior cargo PDA
+  description: Lovingly crafted for the raccoons in cargo.
+  components:
+  - type: Pda
+    id: SeniorCargoIDCard
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-seniorcargo
+  - type: PdaBorderColor
+    borderColor: "#E39751"
+    accentVColor: "#FF9500"
+  - type: Icon
+    state: pda-seniorcargo
+
+- type: entity
+  parent: BasePDA
+  id: SeniorSalvagePDA
+  name: senior salvage PDA
+  description: Almost as hard as diamonds.
+  components:
+  - type: Pda
+    id: SalvageIDCard
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-seniorminer
+  - type: PdaBorderColor
+    borderColor: "#af9366"
+    accentVColor: "#8900c9"
+  - type: Icon
+    state: pda-seniorminer
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NewsReaderCartridge
+    - AstroNavCartridge
+
+- type: entity
+  parent: BasePDA
+  id: SeniorBartenderPDA
+  name: senior bartender PDA
+  description: Smells like horsepussy.
+  components:
+  - type: Pda
+    id: BartenderIDCard
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-seniorbartender
+  - type: PdaBorderColor
+    borderColor: "#333333"
+    accentVColor: "#c7c7c7"
+  - type: Icon
+    state: pda-seniorbartender
+
+
+- type: entity
+  parent: BaseMedicalPDA
+  id: SeniorParamedicPDA
+  name: senior paramedic PDA
+  description: There are some scratches here and there.
+  components:
+  - type: Pda
+    id: ParamedicIDCard
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-seniorparamedic
+  - type: PdaBorderColor
+    borderColor: "#2a4b5b"
+    accentVColor: "#d7d7d0"
+  - type: Icon
+    state: pda-seniorparamedic
+
+- type: entity
+  parent: BaseMedicalPDA
+  id: SeniorChemistryPDA
+  name: senior chemistry PDA
+  description: Covered in mysterious stains.
+  components:
+  - type: Pda
+    id: ChemistIDCard
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-seniorchemistry
+  - type: PdaBorderColor
+    borderColor: "#d7d7d0"
+    accentVColor: "#5d99be"
+    accentHColor: "#B34200"
+  - type: Icon
+    state: pda-seniorchemistry
+
+- type: entity
+  parent: BaseSecurityPDA
+  id: SeniorWardenPDA
+  name: senior warden PDA
+  description: The jailbroken OS is now serving time.
+  components:
+  - type: Pda
+    id: WardenIDCard
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-seniorwarden
+  - type: PdaBorderColor
+    borderColor: "#A32D26"
+    accentVColor: "#949137"
+  - type: Icon
+    state: pda-seniorwarden
+
+- type: entity
+  parent: BasePDA
+  id: SeniorAtmosPDA
+  name: senior atmos PDA
+  description: Smells like tritium.
+  components:
+  - type: Pda
+    id: AtmosIDCard
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-senioratmos
+  - type: PdaBorderColor
+    borderColor: "#949137"
+    accentVColor: "#447987"
+  - type: Icon
+    state: pda-senioratmos
+
+- type: entity
+  parent: DetectivePDA
+  id: SeniorDetectivePDA
+  name: senior detective PDA
+  description: Another day, another mystery, another 500 cigarette stubs in the ashtray...
+  components:
+  - type: Pda
+    id: DetectiveIDCard
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-seniordetective
+  - type: PdaBorderColor
+    borderColor: "#774705"
+    accentVColor: "#990202"
+  - type: Icon
+    state: pda-seniordetective
+
+- type: entity
+  parent: BasePDA
+  id: SeniorEngineerPDA
+  name: senior engineer PDA
+  description: Seems to have been taken apart and put back together several times.
+  components:
+  - type: Pda
+    id: SeniorEngineerIDCard
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-seniorengineer
+  - type: PdaBorderColor
+    borderColor: "#949137"
+    accentVColor: "#CD6900"
+  - type: Icon
+    state: pda-seniorengineer
+
+- type: entity
+  parent: BasePDA
+  id: SeniorResearcherPDA
+  name: senior researcher PDA
+  description: Looks like it's been through years of chemical burns and explosions.
+  components:
+  - type: Pda
+    id: SeniorResearcherIDCard
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-seniorresearcher
+  - type: PdaBorderColor
+    borderColor: "#d7d7d0"
+    accentHColor: "#8900c9"
+    accentVColor: "#8900c9"
+  - type: Icon
+    state: pda-seniorresearcher
+
+- type: entity
+  parent: BaseMedicalPDA
+  id: SeniorPhysicianPDA
+  name: senior physician PDA
+  description: Smells faintly like iron and chemicals.
+  components:
+  - type: Pda
+    id: SeniorPhysicianIDCard
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-seniorphysician
+  - type: PdaBorderColor
+    borderColor: "#d7d7d0"
+    accentHColor: "#447987"
+    accentVColor: "#B34200"
+  - type: Icon
+    state: pda-seniorphysician
+
+- type: entity
+  parent: BaseSecurityPDA
+  id: SeniorOfficerPDA
+  name: senior officer PDA
+  description: Beaten, battered and broken, but just barely useable.
+  components:
+  - type: Pda
+    id: SeniorOfficerIDCard
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-seniorofficer
+  - type: PdaBorderColor
+    borderColor: "#A32D26"
+    accentVColor: "#DFDFDF"
+  - type: Icon
+    state: pda-seniorofficer
+
