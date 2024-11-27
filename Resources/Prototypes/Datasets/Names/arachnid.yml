@@ -3,3 +3,9 @@
   values:
     prefix: names-arachnid-first-dataset-
     count: 74
+
+- type: localizedDataset
+  id: NamesArachnidLast
+  values:
+    prefix: names-arachnid-last-dataset-
+    count: 68
