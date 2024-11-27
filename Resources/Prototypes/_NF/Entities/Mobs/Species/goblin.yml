@@ -157,6 +157,11 @@
           32:
             sprite: _Impstation/Mobs/Species/Goblin/displacement.rsi
             state: back
+      suitstorage:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Goblin/displacement.rsi
+            state: suitstorage
     femaleDisplacements: # piskun HumanoidAppearance
       jumpsuit:
         sizeMaps:
@@ -213,7 +218,11 @@
           32:
             sprite: _Impstation/Mobs/Species/Goblin/displacement.rsi
             state: back
-
+      suitstorage:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Species/Goblin/displacement.rsi
+            state: suitstorage
 - type: entity
   save: false
   name: Urist McGoblin

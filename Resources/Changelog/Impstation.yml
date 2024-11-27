@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Fixed jukebox issue, made grays stingable and edible by lings
-    type: Fix
-  id: 91
-  time: '2024-08-18T03:34:19.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/108
 - author: Darkmajia
   changes:
   - message: quick fixes for shuttle dock/meteor swarm announcements
@@ -4337,3 +4330,18 @@
   id: 590
   time: '2024-11-27T10:47:18.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/814
+- author: widgetbeck
+  changes:
+  - message: Added (hopefully) extremely rare event, Goblin Castaways, and its associated
+      CrateFullOGoblins.
+    type: Add
+  - message: Changed weights of all goblin events to make them less common.
+    type: Tweak
+  - message: Sir Gollylad is now ripped, and can pry open doors (extremely slowly.)
+      However, this does mean that his ID card and crowbar have been removed.
+    type: Tweak
+  - message: Sir Gollylad is no longer bald, and will spawn with a random skin color.
+    type: Tweak
+  id: 591
+  time: '2024-11-27T11:49:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/817
