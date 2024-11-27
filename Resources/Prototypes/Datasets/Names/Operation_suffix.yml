@@ -1,5 +1,5 @@
 - type: localizedDataset
-  id: operationSuffix
+  id: NamesOperationSuffix
   values:
     prefix: names-operation-suffix-dataset-
     count: 102

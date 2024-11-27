@@ -1,5 +1,5 @@
 ﻿- type: localizedDataset
-  id: names_wizard_first
+  id: NamesWizardFirst
   values:
     prefix: names-wizard-first-dataset-
     count: 30

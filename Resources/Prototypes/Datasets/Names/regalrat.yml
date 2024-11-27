@@ -1,11 +1,11 @@
 - type: localizedDataset
-  id: RegalRatNameKingdom
+  id: NamesRegalratKingdom
   values:
     prefix: names-regal-rat-kingdom-dataset-
     count: 15
 
 - type: localizedDataset
-  id: RegalRatNameTitle
+  id: NamesRegalratTitle
   values:
     prefix: names-regal-rat-title-dataset-
     count: 17
