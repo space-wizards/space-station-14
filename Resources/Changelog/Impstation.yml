@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: sususuyo
-  changes:
-  - message: Medical Hud Glasses!!!!
-    type: Add
-  id: 104
-  time: '2024-08-20T01:58:46.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/123
 - author: ultramario1998
   changes:
   - message: Add salvage boots option to QM loadout
@@ -4358,3 +4351,11 @@
   id: 603
   time: '2024-11-28T22:58:42.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/831
+- author: Darkmajia
+  changes:
+  - message: Something old, scorned and vengeful has clawed its way back through the
+      streams of time. Something's here. And it's here... for war.
+    type: Add
+  id: 604
+  time: '2024-11-28T23:09:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/832
