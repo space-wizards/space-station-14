@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: BaseSlimeOrgan
   abstract: true
   components:
@@ -67,3 +67,6 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
+  - type: Item
+    size: Small
+    heldPrefix: lungs

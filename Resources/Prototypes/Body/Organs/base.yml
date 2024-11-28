@@ -43,6 +43,8 @@
   components:
   - type: Sprite
     state: brain
+  - type: Item
+    heldPrefix: brain
   - type: Gibbable
   - type: Input
     context: "ghost"
@@ -79,6 +81,8 @@
     layers:
     - state: eyeball-l
     - state: eyeball-r
+  - type: Item
+    heldPrefix: eyeballs
 
 - type: entity
   parent: BaseOrgan
@@ -123,6 +127,8 @@
     layers:
     - state: lung-l
     - state: lung-r
+  - type: Item
+    heldPrefix: lungs
   - type: Lung
   - type: Metabolizer
     removeEmpty: true
@@ -156,6 +162,8 @@
   components:
   - type: Sprite
     state: heart-on
+  - type: Item
+    heldPrefix: heart
   # The heart 'metabolizes' medicines and poisons that aren't filtered out by other organs.
   # This is done because these chemicals need to have some effect even if they aren't being filtered out of your body.
   # You're technically 'immune to poison' without a heart, but.. uhh, you'll have bigger problems on your hands.
@@ -176,6 +184,8 @@
   components:
   - type: Sprite
     state: stomach
+  - type: Item
+    heldPrefix: stomach
   - type: SolutionContainerManager
     solutions:
       stomach:
@@ -206,6 +216,8 @@
   components:
   - type: Sprite
     state: liver
+  - type: Item
+    heldPrefix: liver
   - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
     maxReagents: 1
     metabolizerTypes: [Human]
@@ -224,6 +236,8 @@
     layers:
       - state: kidney-l
       - state: kidney-r
+  - type: Item
+    heldPrefix: kidneys
   # The kidneys just remove anything that doesn't currently have any metabolisms, as a stopgap.
   - type: Metabolizer
     maxReagents: 5
