@@ -7,7 +7,7 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.Cargo.UI
 {
     [GenerateTypedNameReferences]
-    public sealed partial class CargoProductRow : PanelContainer
+    public sealed partial class CargoProductRow : BoxContainer
     {
         public CargoProductPrototype? Product { get; set; }
 
