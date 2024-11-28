@@ -543,3 +543,27 @@
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.5
+
+- type: reagent
+  id: CleverGirl
+  name: reagent-name-clevergirl
+  parent: BaseAlcohol
+  desc: reagent-desc-clevergirl
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: alcohol
+  color: "#38839A"
+  recognizable: true
+  metamorphicSprite:
+    sprite: _Impstation/Objects/Consumable/Drinks/clevergirl.rsi
+    state: icon_empty
+  metamorphicMaxFillLevels: 5
+  metamorphicFillBaseName: fill-
+  metamorphicChangeColor: false
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.2
