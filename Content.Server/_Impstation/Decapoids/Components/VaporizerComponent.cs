@@ -1,3 +1,4 @@
+using Content.Shared._Impstation.Decapoids;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
@@ -40,4 +41,7 @@ public sealed partial class VaporizerComponent : Component
     [DataField(readOnly: true), ViewVariables(VVAccess.ReadOnly)]
     [AutoPausedField]
     public TimeSpan NextProcess = new();
+
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public VaporizerState State = VaporizerState.Empty;
 }

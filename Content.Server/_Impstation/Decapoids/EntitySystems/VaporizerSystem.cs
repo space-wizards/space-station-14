@@ -5,6 +5,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Timing;
 
@@ -15,6 +16,34 @@ public sealed partial class VaporizerSystem : EntitySystem
     [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+
+    private const int ExaminePriority = 1;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<VaporizerComponent, ExaminedEvent>(OnExamined);
+    }
+
+    private void OnExamined(Entity<VaporizerComponent> ent, ref ExaminedEvent args)
+    {
+        switch (ent.Comp.State)
+        {
+            case VaporizerState.Normal:
+                args.PushMarkup(Loc.GetString("vaporizer-examine-state-normal"), ExaminePriority);
+                break;
+            case VaporizerState.LowSolution:
+                args.PushMarkup(Loc.GetString("vaporizer-examine-state-low"), ExaminePriority);
+                break;
+            case VaporizerState.BadSolution:
+                args.PushMarkup(Loc.GetString("vaporizer-examine-state-bad"), ExaminePriority);
+                break;
+            case VaporizerState.Empty:
+                args.PushMarkup(Loc.GetString("vaporizer-examine-state-empty"), ExaminePriority);
+                break;
+        }
+    }
 
     private VaporizerState GetVaporizerState(Entity<VaporizerComponent> ent, Solution solution)
     {
@@ -44,6 +73,7 @@ public sealed partial class VaporizerSystem : EntitySystem
             return;
 
         var state = GetVaporizerState((uid, vaporizer), solution);
+        vaporizer.State = state;
 
         if (
             gasTank.Air.Pressure < vaporizer.MaxPressure && (

@@ -15,10 +15,10 @@ public sealed partial class VaporizerSystem : EntitySystem
 
     private void OnAppearance(EntityUid uid, VaporizerComponent comp, AppearanceChangeEvent args)
     {
-        if (args.Sprite == null)
+        if (!args.AppearanceData.TryGetValue(VaporizerVisuals.VisualState, out var state))
             return;
 
-        if (!args.AppearanceData.TryGetValue(VaporizerVisuals.VisualState, out var state))
+        if (args.Sprite == null)
             return;
 
         var layer = args.Sprite.LayerMapReserveBlank(VaporizerVisualLayers.Indicator);
