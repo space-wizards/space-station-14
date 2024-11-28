@@ -399,5 +399,5 @@
         - ReagentId: CleverGirl
           Quantity: 30
   - type: Icon
-    sprite: Objects/Consumable/Drinks/clevergirl.rsi
+    sprite: _Impstation/Objects/Consumable/Drinks/clevergirl.rsi
     state: icon

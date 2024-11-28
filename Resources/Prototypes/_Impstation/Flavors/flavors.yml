@@ -92,3 +92,8 @@
   id: secticket
   flavorType: Complex
   description: flavor-complex-secticket
+
+- type: flavor
+  id: piquant
+  flavorType: Base
+  description: flavor-base-piquant
