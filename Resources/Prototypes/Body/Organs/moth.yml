@@ -1,6 +1,6 @@
 - type: entity
+  parent: BaseOrganStomach
   id: OrganMothStomach
-  parent: [OrganAnimalStomach, OrganHumanStomach]
   categories: [ HideSpawnMenu ]
   components:
   - type: Stomach
@@ -18,7 +18,6 @@
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
   - type: Metabolizer
-    maxReagents: 3
     metabolizerTypes: [ Moth ]
     removeEmpty: true
     groups:
