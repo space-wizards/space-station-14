@@ -63,8 +63,8 @@
     itemIconStyle: BigAction
     renewCharges: true
     charges: 1
-    maxCharges: 10
-    useDelay: 60
+    maxCharges: 3
+    useDelay: 150
     icon:
       sprite: _Starlight/Interface/Actions/actions_spider.rsi
       state: egg
