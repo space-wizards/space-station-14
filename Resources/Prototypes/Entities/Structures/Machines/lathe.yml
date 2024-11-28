@@ -973,6 +973,7 @@
       - ClothingUniformJumpskirtCMOTurtle
       - ClothingUniformJumpsuitDetective
       - ClothingUniformJumpskirtDetective
+      - ClothingUniformJumpsuitDetectiveBlueHarmony # Harmony
       - ClothingUniformJumpsuitEngineering
       - ClothingUniformJumpskirtEngineering
       - ClothingUniformJumpsuitSeniorEngineer
@@ -1033,6 +1034,9 @@
       - ClothingHeadHatBeretSecurity
       - ClothingUniformJumpsuitSec
       - ClothingUniformJumpskirtSec
+      - ClothingUniformJumpsuitSecBlueHarmony # Harmony
+      - ClothingHeadHatBeretSecurityBlueHarmony # Harmony
+      - ClothingHeadHatSecSoftBlueHarmony # Harmony
       - ClothingHeadHatBeretBrigmedic
       - ClothingUniformJumpsuitBrigmedic
       - ClothingUniformJumpskirtBrigmedic
@@ -1040,6 +1044,7 @@
       - ClothingHeadHatWarden
       - ClothingUniformJumpsuitWarden
       - ClothingUniformJumpskirtWarden
+      - ClothingUniformJumpsuitWardenBlueHarmony # Harmony
       - ClothingHeadHatParamedicsoft
       # Winter outfits
       - ClothingOuterWinterCap

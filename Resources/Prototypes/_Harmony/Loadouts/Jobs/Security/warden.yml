@@ -1,0 +1,5 @@
+# Jumpsuit
+- type: loadout
+  id: WardenBlueSuitHarmony
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitWardenBlueHarmony

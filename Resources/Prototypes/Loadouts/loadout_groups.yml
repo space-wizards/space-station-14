@@ -995,6 +995,7 @@
   loadouts:
   - WardenJumpsuit
   - WardenJumpskirt
+  - WardenBlueSuitHarmony # Harmony
 
 - type: loadoutGroup
   id: WardenOuterClothing
@@ -1013,6 +1014,8 @@
   - SecurityHat
   - TrooperHat
   - SecurityBandanaHarmony # Harmony
+  - SecurityBlueCapHarmony # Harmony
+  - SecurityBlueBeretHarmony # Harmony
 
 - type: loadoutGroup
   id: SecurityJumpsuit
@@ -1071,6 +1074,7 @@
   loadouts:
   - DetectiveFedora
   - DetectiveFedoraGrey
+  - DetectiveFedoraBlueHarmony # Harmony
 
 - type: loadoutGroup
   id: DetectiveNeck
@@ -1087,6 +1091,7 @@
   - DetectiveJumpskirt
   - NoirJumpsuit
   - NoirJumpskirt
+  - DetectiveBlueSuitHarmony # Harmony
 
 - type: loadoutGroup
   id: DetectiveOuterClothing
@@ -1096,6 +1101,7 @@
   - DetectiveArmorVest
   - DetectiveCoat
   - DetectiveCoatGrey
+  - DetectiveBlueCoatHarmony # Harmony
 
 - type: loadoutGroup
   id: SecurityCadetJumpsuit

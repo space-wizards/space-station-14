@@ -8,3 +8,35 @@
     sprite: _Harmony/Clothing/Head/Hats/hoswidebrimhat.rsi
   - type: Clothing
     sprite: _Harmony/Clothing/Head/Hats/hoswidebrimhat.rsi
+    
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatFedoraBlueHarmony
+  name: blue fedora
+  description: It's a blue fedora.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Head/Hats/bluefedora.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Head/Hats/bluefedora.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - HamsterWearable
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretSecurityBlueHarmony
+  name: security blue beret
+  description: A stylish clothing option for security officers.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Head/Hats/beret_security_blue.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Head/Hats/beret_security_blue.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - HamsterWearable
+    - WhitelistChameleon

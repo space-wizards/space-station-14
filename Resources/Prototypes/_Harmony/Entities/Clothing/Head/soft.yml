@@ -1,0 +1,15 @@
+- type: entity
+  parent: ClothingHeadHeadHatBaseFlippable
+  id: ClothingHeadHatSecSoftBlueHarmony
+  name: blue security cap
+  description: It's a robust baseball hat in tasteful blue color.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Head/Soft/secbluesoft.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Head/Soft/secbluesoft.rsi
+
+- type: entity
+  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatSecSoftBlueHarmony]
+  id: ClothingHeadHatSecsoftBlueFlippedHarmony
+  name: blue security cap

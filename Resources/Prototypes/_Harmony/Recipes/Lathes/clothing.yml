@@ -25,3 +25,32 @@
   parent: BaseCommandHatRecipe
   id: ClothingHeadHatHoSWidebrimHarmony
   result: ClothingHeadHatHoSWidebrimHarmony
+
+## Security Officer
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitSecBlueHarmony
+  result: ClothingUniformJumpsuitSecBlue
+
+- type: latheRecipe
+  parent: BaseCommandHatRecipe
+  id: ClothingHeadHatBeretSecurityBlueHarmony
+  result: ClothingHeadHatBeretSecurityBlueHarmony
+
+- type: latheRecipe
+  parent: BaseCommandHatRecipe
+  id: ClothingHeadHatSecSoftBlueHarmony
+  result: ClothingHeadHatSecSoftBlueHarmony
+
+## Detective
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitDetectiveBlueHarmony
+  result: ClothingUniformJumpsuitDetectiveBlueHarmony
+
+
+## Warden
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitWardenBlueHarmony
+  result: ClothingUniformJumpsuitWardenBlueHarmony

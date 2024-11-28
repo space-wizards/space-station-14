@@ -19,3 +19,25 @@
     sprite: _Harmony/Clothing/Uniforms/Jumpsuit/hop_turtle.rsi
   - type: Clothing
     sprite: _Harmony/Clothing/Uniforms/Jumpsuit/hop_turtle.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseRestrictedContraband]
+  id: ClothingUniformJumpsuitWardenBlueHarmony
+  name: warden's blue suit
+  description: A fashionable blue suit designed for the warden. Be careful though, it won't hide the bloodstains from the prisoners you've been abusing.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/warden_blue.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/warden_blue.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseRestrictedContraband]
+  id: ClothingUniformJumpsuitDetectiveBlueHarmony
+  name: detective's blue suit
+  description: For when the time calls for you to find the clues, which happen to be blue.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/det_blue.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/det_blue.rsi
