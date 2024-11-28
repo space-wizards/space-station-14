@@ -215,7 +215,7 @@
 - type: entity
   id: XenoArtifactWandering
   parent: BaseXenoArtifactEffect
-  description: Starts to move sporadially
+  description: Starts to move sporadically
   components:
   - type: XAEApplyComponents
     components:
@@ -351,7 +351,7 @@
 - type: entity
   id: XenoArtifactMultitool
   parent: BaseXenoArtifactEffect
-  description: Obtains ability of multitool
+  description: Obtains ability of omnitool
   components:
   - type: XAEApplyComponents
     components:
@@ -524,7 +524,7 @@
 - type: entity
   id: XenoArtifactChemicalPuddle
   parent: BaseXenoArtifactEffect
-  description: Produces puddle of chemical mixture
+  description: Produces puddle of chemical mixture # todo: make description say what exact chemical is produced, maybe add mixes into possible chemicals
   components:
   - type: XAECreatePuddle
     chemicalSolution:
@@ -563,7 +563,7 @@
 - type: entity
   id: XenoArtifactColdWave
   parent: BaseXenoArtifactEffect
-  description: Absorbs energy in burst
+  description: Cools down surrounding gas
   components:
   - type: XAETemperature
     targetTemp: 50
@@ -571,7 +571,7 @@
 - type: entity
   id: XenoArtifactHeatWave
   parent: BaseXenoArtifactEffect
-  description: Produces energy in burst
+  description: Heats up surrounding gas greatly
   components:
   - type: XAETemperature
     targetTemp: 500
@@ -579,7 +579,7 @@
 - type: entity
   id: XenoArtifactFoamMild
   parent: BaseXenoArtifactEffect
-  description: Produces foam # separate in 1 for each chemical for description? actually sounds like a very good idea
+  description: Produces chemical foam # todo: separate in 1 for each chemical for description? actually sounds like a very good idea
   components:
   - type: XAEFoam
     reagents:
@@ -807,6 +807,8 @@
       - type: EntityTableSpawner
         deleteSpawnerAfterSpawn: false
         table: !type:GroupSelector
+          rolls: !type:RangeNumberSelector
+            range: 2, 4
           children:
           - id: SpaceCash10
             weight: 0.75
@@ -820,7 +822,7 @@
 - type: entity
   id: XenoArtifactShatterWindows
   parent: BaseXenoArtifactEffect
-  description: Weakens glass
+  description: Break windows
   components:
   - type: XAEDamageInArea
     damageChance: 0.75
@@ -989,7 +991,7 @@
 - type: entity
   id: XenoArtifactPortal
   parent: BaseXenoArtifactEffect
-  description: Create dimensional link
+  description: Create short-living bluespace portal
   components:
   - type: XAEPortal
 
@@ -1011,7 +1013,7 @@
 - type: entity
   id: XenoArtifactShuffle
   parent: BaseXenoArtifactEffect
-  description: Switch places of sentient bodies #not ALL bodies, but oh well...
+  description: Switch places of sentient beings #not ALL beings, but oh well...
   components:
   - type: XAEShuffle
   - type: XAETelepathic

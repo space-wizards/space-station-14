@@ -42,7 +42,7 @@ artifact-trigger-hint-land = Active deceleration
 artifact-trigger-hint-examine = Examination
 artifact-trigger-hint-medical = Therapeutic chemicals
 
-xenoarch-trigger-tip-music = Musical vibrations
+xenoarch-trigger-tip-music = Harmonical sound vibrations
 xenoarch-trigger-tip-heat = High temperature gas
 xenoarch-trigger-tip-cold = Low temperature gas
 xenoarch-trigger-tip-no-oxygen = Oxygen-free environment

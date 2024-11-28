@@ -7,7 +7,7 @@
     MinSize="700 350"
     SetSize="980 550">
     <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
-        <BoxContainer Margin="10 10 10 10" MaxWidth="220" SetWidth="220" Orientation="Vertical" HorizontalExpand="False" VerticalExpand="True">
+        <BoxContainer Margin="10 10 10 10" MaxWidth="240" SetWidth="240" Orientation="Vertical" HorizontalExpand="False" VerticalExpand="True">
             <PanelContainer Name="BackPanel" HorizontalAlignment="Center">
                 <PanelContainer.PanelOverride>
                     <gfx:StyleBoxTexture Modulate="#1B1B1E" PatchMarginBottom="10" PatchMarginLeft="10" PatchMarginRight="10" PatchMarginTop="10"/>
