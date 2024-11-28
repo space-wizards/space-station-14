@@ -123,6 +123,6 @@ internal sealed class AtvCBMCommand : LocalizedCommands
             return;
         }
         var sys = _entitySystemManager.GetEntitySystem<AtmosDebugOverlaySystem>();
-        sys.CfgCBM = xFlag;
+        sys.CfgCbm = xFlag;
     }
 }
