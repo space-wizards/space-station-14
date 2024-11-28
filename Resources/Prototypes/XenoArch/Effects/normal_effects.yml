@@ -561,6 +561,17 @@
     slope: 0.3
 
 - type: artifactEffect
+  id: EffectLocalKnockdown
+  targetDepth: 3
+  effectHint: artifact-effect-hint-environment
+  effectProb: 10000
+  components:
+  - type: KnockdownArtifact
+    range: 8f
+    entireGrid: false
+    knockdownTime: 4f
+
+- type: artifactEffect
   id: EffectMaterialSpawn
   targetDepth: 3
   effectHint: artifact-effect-hint-creation
@@ -766,7 +777,6 @@
     - SpaceDrugs
     - BrosochloricBros
     - JuiceThatMakesYouUngh
-    - Pilk
     - Nocturine
     - MuteToxin
     - Phlogiston
