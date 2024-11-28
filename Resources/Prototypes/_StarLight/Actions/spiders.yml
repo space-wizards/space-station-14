@@ -53,3 +53,19 @@
       sprite:  _Starlight/Interface/Actions/actions_spider.rsi
       state: egg
     event: !type:EggInjectionEvent
+
+- type: entity
+  id: ActionEggsLaying
+  name: Lay the egg.
+  description: Lay the egg.
+  components:
+  - type: InstantAction
+    itemIconStyle: BigAction
+    renewCharges: true
+    charges: 1
+    maxCharges: 10
+    useDelay: 60
+    icon:
+      sprite: _Starlight/Interface/Actions/actions_spider.rsi
+      state: egg
+    event: !type:EggsLayingEvent

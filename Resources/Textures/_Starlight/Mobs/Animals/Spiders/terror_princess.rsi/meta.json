@@ -8,6 +8,13 @@
   "copyright": "Taken from paradise station",
   "states": [
     {
+      "name": "alive",
+      "directions": 4
+    },
+    {
+      "name": "dead"
+    },
+    {
       "name": "1-alive",
       "directions": 4
     },

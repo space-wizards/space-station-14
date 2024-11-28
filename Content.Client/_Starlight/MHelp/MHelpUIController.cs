@@ -40,7 +40,7 @@ public sealed class MHelpUIController : UIController, IOnSystemChanged<MentorSys
     [UISystemDependency] private readonly AudioSystem _audio = default!;
 
     private MentorSystem? _mentorSystem;
-    private MenuButton? GameMHelpButton => UIManager.GetActiveUIWidgetOrNull<GameTopMenuBar>()?.MHelpButton;
+    private Controls.MenuButton? GameMHelpButton => UIManager.GetActiveUIWidgetOrNull<GameTopMenuBar>()?.MHelpButton;
     private Button? LobbyMHelpButton => (UIManager.ActiveScreen as LobbyGui)?.MHelpButton;
 
     public IMHelpUIHandler? UIHelper;
@@ -197,14 +197,14 @@ public sealed class MHelpUIController : UIController, IOnSystemChanged<MentorSys
 
     private void UnreadMHelpReceived()
     {
-        GameMHelpButton?.StyleClasses.Add(MenuButton.StyleClassRedTopButton);
+        GameMHelpButton?.StyleClasses.Add(Controls.MenuButton.StyleClassRedTopButton);
         LobbyMHelpButton?.StyleClasses.Add(StyleNano.StyleClassButtonColorRed);
         _hasUnreadMHelp = true;
     }
 
     private void UnreadMHelpRead()
     {
-        GameMHelpButton?.StyleClasses.Remove(MenuButton.StyleClassRedTopButton);
+        GameMHelpButton?.StyleClasses.Remove(Controls.MenuButton.StyleClassRedTopButton);
         LobbyMHelpButton?.StyleClasses.Remove(StyleNano.StyleClassButtonColorRed);
         _hasUnreadMHelp = false;
     }
