@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: sususuyo
   changes:
-  - message: Second wave of lobby and jukebox music, prepping for medhud glasses
-    type: Add
-  id: 103
-  time: '2024-08-20T01:24:47.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/122
-- author: sususuyo
-  changes:
   - message: Medical Hud Glasses!!!!
     type: Add
   id: 104
@@ -4357,3 +4350,11 @@
   id: 602
   time: '2024-11-28T22:50:09.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/828
+- author: DinnerCalzone
+  changes:
+  - message: Glass airlocks that are locked by civilian accesses (eg. janitor, service,
+      kitchen) now use a sprite that better matches their standard counterpart.
+    type: Tweak
+  id: 603
+  time: '2024-11-28T22:58:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/831
