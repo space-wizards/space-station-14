@@ -17,7 +17,7 @@ public sealed partial class VaporizerSystem : EntitySystem
         if (gasTank.Air.Pressure >= vaporizer.MaxPressure)
             return;
 
-        if (!_solution.TryGetSolution((uid, solutionManager), vaporizer.LiquidTank, out var ent, out var solution))
+        if (!_solution.TryGetSolution((uid, solutionManager), vaporizer.LiquidTank, out var solutionEnt, out var solution))
             return;
 
         // Validate solution
@@ -37,6 +37,8 @@ public sealed partial class VaporizerSystem : EntitySystem
 
         var reagentConsumed = solution.RemoveReagent(new ReagentQuantity(consumeReagent.Value.Reagent, vaporizer.ReagentPerSecond * vaporizer.ProcessDelay.TotalSeconds));
         gasTank.Air.AdjustMoles((int)vaporizer.OutputGas, (float)reagentConsumed * vaporizer.ReagentToMoles);
+
+        Dirty(solutionEnt.Value);
     }
 
     public override void Update(float frameTime)
