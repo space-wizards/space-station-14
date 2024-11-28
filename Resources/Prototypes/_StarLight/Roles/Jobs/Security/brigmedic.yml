@@ -11,6 +11,7 @@
     department: Medical
     time: 54000 #15 hrs
   startingGear: BrigmedicGear
+  icon: "JobIconBrigmedic"
   supervisors: job-supervisors-hos
   canBeAntag: false
   access:
