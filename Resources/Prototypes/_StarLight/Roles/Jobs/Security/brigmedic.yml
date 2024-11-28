@@ -7,6 +7,9 @@
   - !type:DepartmentTimeRequirement
     department: Security
     time: 72000 #20 hrs
+  - !type:DepartmentTimeRequirement
+    department: Medical
+    time: 54000 #15 hrs
   startingGear: BrigmedicGear
   supervisors: job-supervisors-hos
   canBeAntag: false
