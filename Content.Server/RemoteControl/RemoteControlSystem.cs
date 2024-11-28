@@ -31,6 +31,7 @@ public sealed class RemoteControlSystem : SharedRemoteControlSystem
         SubscribeLocalEvent<RemoteControllerComponent, DamageChangedEvent>(OnTookDamage);
 
         SubscribeLocalEvent<RCRemoteComponent, UseInHandEvent>(OnUseInHand);
+        SubscribeLocalEvent<RCRemoteComponent, DroppedEvent>(OnRemoteDropped);
 
     }
 
@@ -39,38 +40,15 @@ public sealed class RemoteControlSystem : SharedRemoteControlSystem
         if (!args.DamageIncreased || !args.InterruptsDoAfters)
             return;
 
-        if (!TryComp<VisitingMindComponent>(ent.Comp.Controlled, out var _))
+        if (ent.Comp.Controlled == null)
             return;
 
-        if (!_mind.TryGetMind(ent.Comp.Controlled.Value, out var mindId, out var mind))
-            return;
-
-        if (TryComp<SSDIndicatorComponent>(ent.Owner, out var SSD))
-            SSD.Enabled = true;
-
-        if(ent.Owner != null)
-            RemCompDeferred<RemoteControllerComponent>(ent.Owner);
-
-        if(TryComp<RemotelyControllableComponent>(ent.Comp.Controlled.Value, out var remotelyControlled))
-            remotelyControlled.Controller = null;
-
-        _mind.UnVisit(mindId, mind);
+        TryStopRemoteControl(ent.Comp.Controlled.Value);
 
     }
     private void OnMobStateChanged(Entity<RemotelyControllableComponent> ent, ref MobStateChangedEvent args)
     {
-        if (!TryComp<VisitingMindComponent>(ent.Owner, out var _))
-            return;
-
-        if (!_mind.TryGetMind(ent.Owner, out var mindId, out var mind))
-            return;
-
-        if (TryComp<SSDIndicatorComponent>(ent.Comp.Controller, out var SSD))
-            SSD.Enabled = true;
-
-        ent.Comp.Controller = null;
-        _mind.UnVisit(mindId, mind);
-
+        TryStopRemoteControl(ent);
     }
     private void OnAfterInteractUsing(EntityUid uid, RemotelyControllableComponent comp, ref AfterInteractUsingEvent args)
     {
@@ -82,7 +60,6 @@ public sealed class RemoteControlSystem : SharedRemoteControlSystem
 
         if (comp.BoundRemote != null)
             return;
-
 
         remoteComp.BoundTo = args.Target;
         comp.BoundRemote = args.Used;
@@ -109,42 +86,84 @@ public sealed class RemoteControlSystem : SharedRemoteControlSystem
             return;
         }
 
-
-        if (TryComp<SSDIndicatorComponent>(args.User, out var SSD))
-        {
-            SSD.Enabled = false;
-        }
-
-        EnsureComp<RemoteControllerComponent>(args.User, out var remoteController);
-
-        remoteController.Controlled = ent.Comp.BoundTo;
-        remoteController.UsedRemote = ent.Owner;
-
-        controllable.Controller = args.User;
-        controllable.IsControlled = true;
-
-        if(_mind.TryGetMind(args.User, out var mindId, out var mind))
-            _mind.Visit(mindId, ent.Comp.BoundTo.Value, mind);
+        TryRemoteControl((ent.Comp.BoundTo.Value, controllable), args.User);
 
         args.Handled = true;
     }
 
+    private void OnRemoteDropped(Entity<RCRemoteComponent> ent, ref DroppedEvent args)
+    {
+        if (ent.Comp.BoundTo is null)
+            return;
+
+        if(!HasComp<RemotelyControllableComponent>(ent.Comp.BoundTo.Value))
+            return;
+
+        TryStopRemoteControl(ent.Comp.BoundTo.Value);
+    }
+
     private void OnReturnToBody(Entity<RemotelyControllableComponent> ent, ref RCReturnToBodyEvent args)
     {
-        if (!TryComp<VisitingMindComponent>(ent.Owner, out var _))
-            return;
+        TryStopRemoteControl(ent);
+    }
 
-        if (!_mind.TryGetMind(ent.Owner, out var mindId, out var mind))
-            return;
+    /// <summary>
+    /// Attempts to give control of an entity to the controller.
+    /// </summary>
+    /// <param name="ent">The entity that will be remotely controlled.</param>
+    /// <param name="controller">UID of the entity that is to take control of the other.</param>
+    /// <returns>True If control was given to the controller, otherwise False.</returns>
+    private bool TryRemoteControl(Entity<RemotelyControllableComponent> ent, EntityUid controller)
+    {
+        if(!HasComp<RemotelyControllableComponent>(ent.Owner))
+            return false;
 
-        if (TryComp<SSDIndicatorComponent>(ent.Comp.Controller, out var SSD))
-            SSD.Enabled = true;
+        if (TryComp<SSDIndicatorComponent>(controller, out var ssd))
+        {
+            ssd.Enabled = false;
+        }
 
-        if(ent.Comp.Controller != null)
-            RemCompDeferred<RemoteControllerComponent>(ent.Comp.Controller.Value);
+        EnsureComp<RemoteControllerComponent>(controller, out var remoteController);
 
-        ent.Comp.Controller = null;
+        remoteController.Controlled = ent.Owner;
+        //remoteController.UsedRemote = ent.Owner;
+
+        ent.Comp.Controller = controller;
+        ent.Comp.IsControlled = true;
+
+        if(_mind.TryGetMind(controller, out var mindId, out var mind))
+            _mind.Visit(mindId, ent.Owner, mind);
+
+        return true;
+    }
+
+    /// <summary>
+    /// Attempts to stop remote control on an entity.
+    /// </summary>
+    /// <param name="uid">The entity uid of the remote control target.</param>
+    /// <returns>True If remote control is stopped, otherwise False.</returns>
+    private bool TryStopRemoteControl(EntityUid uid)
+    {
+        if (!TryComp<RemotelyControllableComponent>(uid, out var remoteControl))
+            return false;
+
+        if (!TryComp<VisitingMindComponent>(uid, out var _))
+            return false;
+
+        if (!_mind.TryGetMind(uid, out var mindId, out var mind))
+            return false;
+
+        if (TryComp<SSDIndicatorComponent>(remoteControl.Controller, out var ssd))
+            ssd.Enabled = true;
+
+        if(remoteControl.Controller != null)
+            RemCompDeferred<RemoteControllerComponent>(remoteControl.Controller.Value);
+
+        remoteControl.Controller = null;
+        remoteControl.IsControlled = false;
+
         _mind.UnVisit(mindId, mind);
 
+        return true;
     }
 }
