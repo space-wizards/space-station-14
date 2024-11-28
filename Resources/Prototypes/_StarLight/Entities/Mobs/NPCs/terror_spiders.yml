@@ -138,18 +138,18 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      200: Dead
+      160: Dead
   - type: PassiveDamage 
     allowedStates:
     - Alive
-    damageCap: 199
+    damageCap: 159
     damage:
       types:
         Poison: -1
       groups:
         Brute: -1
         Burn: -1
-        Airloss: -3
+        Airloss: -2
   - type: MeleeWeapon
     altDisarm: false
     angle: 0
@@ -158,7 +158,7 @@
       path: /Audio/Effects/bite.ogg
     damage:
       types:
-        Piercing: 31
+        Piercing: 23
         Structural: 20
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.00
@@ -191,7 +191,7 @@
       groups:
         Brute: -1
         Burn: -1
-        Airloss: -3
+        Airloss: -2
   - type: MeleeWeapon
     altDisarm: false
     angle: 0
@@ -226,18 +226,18 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      120: Dead
+      100: Dead
   - type: PassiveDamage 
     allowedStates:
     - Alive
-    damageCap: 119
+    damageCap: 99
     damage:
       types:
         Poison: -1
       groups:
         Brute: -1
         Burn: -1
-        Airloss: -3
+        Airloss: -2
   - type: MeleeWeapon
     altDisarm: false
     angle: 0
@@ -248,7 +248,7 @@
       types:
         Piercing: 11
   - type: MeleeChemicalInjector
-    transferAmount: 5.75
+    transferAmount: 3.75
     solution: melee
   - type: Prying
     pryPowered: false
