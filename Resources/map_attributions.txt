@@ -51,3 +51,9 @@
 
 - files: ["oasis.yml"]
   authors: CptJeanLuc
+
+- files: ["trieste.yml"] 
+  authors: PixeltheAertist # that's me!!
+
+- files: ["terminal.yml"] 
+  authors: PixeltheAertist

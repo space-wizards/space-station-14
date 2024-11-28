@@ -1,0 +1,30 @@
+- type: entity
+  id: OrganWaterLungs
+  parent: BaseHumanOrgan
+  name: gills
+  description: "Filters air out of water to breathe."
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/Slime/organs.rsi
+      layers:
+        - state: lung-l-slime
+        - state: lung-r-slime
+    - type: Lung
+      alert: Lysis
+    - type: Metabolizer
+      removeEmpty: true
+      solutionOnBody: false
+      solution: "Lung"
+      metabolizerTypes: [ Jellid ]
+      groups:
+      - id: Gas
+        rateModifier: 100.0
+    - type: SolutionContainerManager
+      solutions:
+        organ:
+          reagents:
+          - ReagentId: Nutriment
+            Quantity: 10
+        Lung:
+          maxVol: 100.0
+          canReact: false

@@ -216,3 +216,32 @@
     - state: fax-machine
   - type: Flatpack
     entity: FaxMachineBase
+
+##CHEM LAB STUFF
+
+- type: entity
+  parent: BaseFlatpack
+  id: ReagentGrinderFlatpack
+  name: fax machine flatpack
+  description: A flatpack used for constructing a reagent grinder.
+  components:
+  - type: Flatpack
+    entity: KitchenReagentGrinder
+
+- type: entity
+  parent: BaseFlatpack
+  id: HotplateFlatpack
+  name: fax machine flatpack
+  description: A flatpack used for constructing a hotplate.
+  components:
+  - type: Flatpack
+    entity: ChemistryHotplate
+
+- type: entity
+  parent: BaseFlatpack
+  id: CentrifugeFlatpack
+  name: fax machine flatpack
+  description: A flatpack used for constructing a centrifuge.
+  components:
+  - type: Flatpack
+    entity: MachineCentrifuge

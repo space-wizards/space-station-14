@@ -123,3 +123,81 @@
     layers:
       - state: box
       - state: vials
+
+##CHEM LAB STUFF
+
+- type: entity
+  id: VialBoxP
+  parent: BoxVial
+  name: vial box (P)
+  description:
+  components:
+    - type: StorageFill
+      contents:
+        - id: AluminiumChemistryVial
+          amount: 1
+        - id: CarbonChemistryVial
+          amount: 1
+        - id: ChlorineChemistryVial
+          amount: 1
+        - id: FluorineChemistryVial
+          amount: 1
+        - id: IodineChemistryVial
+          amount: 1
+        - id: PhosphorusChemistryVial
+          amount: 1
+
+- type: entity
+  id: VialBoxP2
+  parent: BoxVial
+  name: vial box (P)
+  description:
+  components:
+    - type: StorageFill
+      contents:
+        - id: SulfurChemistryVial
+          amount: 1
+        - id: SiliconChemistryVial
+          amount: 1
+        - id: OxygenChemistryVial
+          amount: 1
+        - id: NitrogenChemistryVial
+          amount: 1
+
+- type: entity
+  id: VialBoxS
+  parent: BoxVial
+  name: vial box (S)
+  description:
+  components:
+    - type: StorageFill
+      contents:
+        - id: HydrogenChemistryVial
+          amount: 1
+        - id: LithiumChemistryVial
+          amount: 1
+        - id: SodiumChemistryVial
+          amount: 1
+        - id: PotassiumChemistryVial
+          amount: 1
+        - id: RadiumChemistryVial
+          amount: 1
+
+- type: entity
+  id: VialBoxD
+  parent: BoxVial
+  name: vial box (D)
+  description:
+  components:
+    - type: StorageFill
+      contents:
+        - id: IronChemistryVial
+          amount: 1
+        - id: CopperChemistryVial
+          amount: 1
+        - id: GoldChemistryVial
+          amount: 1
+        - id: MercuryChemistryVial
+          amount: 1
+        - id: SilverChemistryVial
+          amount: 1

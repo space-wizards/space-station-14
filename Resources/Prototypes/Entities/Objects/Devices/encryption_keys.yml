@@ -216,6 +216,20 @@
 
 - type: entity
   parent: EncryptionKey
+  id: EncryptionKeyNanotrasen
+  name: nanotrasen encryption key
+  description: An encryption key used by... corporate... people?
+  components:
+    - type: EncryptionKey
+      channels:
+        - Nanotrasen
+      defaultChannel: Nanotrasen
+    - type: Sprite
+      layers:
+        - state: crypt_rusted
+
+- type: entity
+  parent: EncryptionKey
   id: EncryptionKeyBinary
   name: binary translator key
   description: An encryption key that translates binary signals used by silicons.

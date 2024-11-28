@@ -22,6 +22,10 @@
   name: metabolizer-type-slime
 
 - type: metabolizerType
+  id: Jellid
+  name: metabolizer-type-jellid
+
+- type: metabolizerType
   id: Vox
   name: metabolizer-type-vox
 

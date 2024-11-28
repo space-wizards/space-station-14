@@ -1,0 +1,62 @@
+- type: entity
+  id: PiezoCrystal
+  parent: BaseStructure
+  name: piezo crystal
+  description: An electrically charged crystal capable of releasing occasional bursts of localized static which can be used for electricity.
+  components:
+    - type: Sprite
+      sprite: Objects/piezo.rsi
+      state: icon
+    - type: Physics
+      bodyType: Static
+    - type: LightningArcShooter
+      arcDepth: 3
+      maxLightningArc: 4
+      shootMinInterval: 5
+      shootMaxInterval: 10
+      shootRange: 5
+      lightningPrototype: Lightning
+    - type: Electrified
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.45
+          density: 60
+          mask:
+            - MachineMask
+          layer:
+            - MidImpassable
+            - LowImpassable
+            - BulletImpassable
+            - Opaque
+    - type: PointLight
+      radius: 4
+      energy: 3
+      color: "#8cd4cf"
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Glass
+    - type: EmpOnTrigger
+      range: 1
+      energyConsumption: 600
+      disableDuration: 5
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 30
+          behaviors:
+            - !type:TriggerBehavior
+            - !type:PlaySoundBehavior
+              sound:
+                collection: GlassBreak
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                PiezoCrystalShard:
+                  min: 1
+                  max: 2
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+

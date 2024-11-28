@@ -1,0 +1,105 @@
+- type: entity
+  name: Urist McJellid
+  parent: BaseMobSpeciesOrganic
+  id: BaseMobJellidPerson
+  abstract: true
+  components:
+  - type: Icon
+    sprite: Mobs/Species/Slime/parts.rsi
+    state: full
+  - type: Body
+    prototype: Jellid
+    requiredLegs: 2
+  - type: Electrified
+    shockTime: 2
+  - type: IgnitionSource
+    temperature: 700
+    ignited: true
+  - type: AlwaysHot
+  - type: TemperatureProtection
+    coefficient: 0.6
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+      enum.VoiceMaskUIKey.Key:
+        type: VoiceMaskBoundUserInterface
+      enum.HumanoidMarkingModifierKey.Key:
+        type: HumanoidMarkingModifierBoundUserInterface
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+  - type: UseDelay
+    delay: 0.5
+  - type: HumanoidAppearance
+    species: JellidPerson
+  - type: Speech
+    speechVerb: Slime
+    speechSounds: Slime
+    allowedEmotes: ['Squish']
+  - type: TypingIndicator
+    proto: slime
+  - type: Vocal
+    sounds:
+      Unsexed: MaleSlime
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Jellid
+  - type: PassiveDamage
+    allowedStates:
+    - Alive
+    damageCap: 65
+    damage:
+      groups:
+        Brute: -0.14
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#00ccff"
+  - type: Bloodstream
+    bloodReagent: SeaWater # the ocean runs through my veins...
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+    reactions:
+    - reagents: [ Water, SpaceCleaner ]
+      methods: [ Touch ]
+      effects:
+      - !type:WashCreamPieReaction
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatSlime
+      amount: 5
+  - type: Respirator
+    damage:
+      types:
+        Slash: 4
+    damageRecovery:
+      types:
+        Slash: -0.3 # hopefully shouldn't be OP
+    maxSaturation: 15
+    gaspEmote: Scream
+  - type: Inventory
+    templateId: jellid
+  - type: Jellid # This is what dictates heating objects in one's hands, igniting objects, and draining power from objects and batteries.
+  - type: Battery
+    maxCharge: 1800
+    startingCharge: 1800 # 15 minutes until death
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: -2
+    ignoreFull: true # prevents the charge from stopping
+  - type: PointLight
+    radius: 1.5
+    energy: 0.2
+    color: "#Ffffff"
+
+- type: entity
+  parent: MobHumanDummy
+  id: MobJellidPersonDummy
+  noSpawn: true
+  components:
+    - type: HumanoidAppearance
+      species: JellidPerson

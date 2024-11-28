@@ -222,6 +222,12 @@
     guides:
       - Cyborgs
   - type: StepTriggerImmune
+  - type: InGas
+    gasId: 9
+    damagedByGas: true
+    damage:
+        types:
+            Shock: 5
 
 - type: entity
   abstract: true
@@ -301,25 +307,3 @@
   - type: PointLight
     color: "#dd200b"
 
-
-- type: entity
-  id: BaseBorgChassisNanoTraitor
-  parent: BaseBorgChassis
-  abstract: true
-  components:
-  - type: NpcFactionMember
-    factions:
-    - NanoTrasenTraitor
-  - type: SiliconLawProvider
-    laws: SyndicateStatic
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Binary
-  - type: MovementAlwaysTouching
-  - type: Speech
-    speechSounds: SyndieBorg
-  - type: Vocal
-    sounds:
-      Unsexed: UnisexSiliconSyndicate
-  - type: PointLight
-    color: "#dd200b"
