@@ -29,6 +29,7 @@
   - type: Actions
   - type: Physics
     bodyType: Dynamic
+  - type: UseDelay
   - type: StealTarget
     stealGroup: XenoArtifact
   - type: ContainerContainer

@@ -271,7 +271,6 @@
   components:
   - type: XAEApplyComponents
     components:
-    - type: UseDelay
     - type: MeleeWeapon
       damage:
         types:
