@@ -6,6 +6,7 @@ using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
+using JetBrains.Annotations;
 
 namespace Content.Server.Atmos.EntitySystems;
 
@@ -79,24 +80,17 @@ public sealed class InGasSystem : EntitySystem
         // Check if the entity is in water
         bool currentlyInWater = InWater(uid);
 
-        // If the water state has changed (entering or exiting), raise the appropriate event
-        if (currentlyInWater != inGas.InWater)
-        {
             // Update the water state in the component
-            inGas.InWater = currentlyInWater;
 
             // Raise the event depending on whether it's entering or exiting water
             if (currentlyInWater)
             {
-                RaiseEvent(new InWaterEvent(uid));
-                Log.Error($"Entity {uid} has entered water.");
+                RaiseLocalEvent(new InWaterEvent(uid));
             }
             else
             {
-                RaiseEvent(new OutOfWaterEvent(uid));
-                Log.Error($"Entity {uid} has exited water.");
+                RaiseLocalEvent(new OutOfWaterEvent(uid));
             }
-        }
 
         if (!currentlyInWater)
         {
@@ -130,5 +124,6 @@ public sealed class InGasSystem : EntitySystem
             _alerts.ShowAlert(uid, inGas.DamageAlert, 1);
         }
     }
+}
 }
 
