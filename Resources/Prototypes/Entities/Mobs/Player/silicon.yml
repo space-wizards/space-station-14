@@ -30,6 +30,7 @@
   - type: IgnoreUIRange
   - type: StationAiHeld
   - type: StationAiOverlay
+  - type: ShowElectrocutionHUD
   - type: ActionGrant
     actions:
     - ActionJumpToCore
@@ -251,7 +252,7 @@
 
 - type: entity
   id: AntimovCircuitBoard
-  parent: BaseElectronics
+  parent: [BaseElectronics, BaseSyndicateContraband]
   name: law board (Antimov)
   description: An electronics board containing the Antimov lawset.
   components:
