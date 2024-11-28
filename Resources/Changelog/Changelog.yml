@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Flareguy
-  changes:
-  - message: Added 2 new vox customization options for both hair & facial hair.
-    type: Add
-  - message: Vox Long Braids no longer incorrectly uses the Vox Afro sprite.
-    type: Fix
-  id: 7158
-  time: '2024-08-19T03:32:16.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30815
 - author: EmoGarbage404
   changes:
   - message: The recycler can now be broken down and repaired.
@@ -3922,3 +3913,10 @@
   id: 7657
   time: '2024-11-27T05:55:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33551
+- author: Beck Thompson
+  changes:
+  - message: Handheld light verbs are now predicted!
+    type: Fix
+  id: 7658
+  time: '2024-11-28T13:41:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33622
