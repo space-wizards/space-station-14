@@ -48,7 +48,7 @@
       - HumanoidAppearance
     canTargetSelf: false
     interactOnMiss: false
-    path: /Audio/Effects/pop.ogg
+    sound: /Audio/Effects/pop.ogg
     icon:
       sprite:  _Starlight/Interface/Actions/actions_spider.rsi
       state: egg
