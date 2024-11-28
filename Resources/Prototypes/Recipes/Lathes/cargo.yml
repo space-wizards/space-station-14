@@ -3,7 +3,7 @@
   result: ConveyorBeltAssembly
   completetime: 4
   materials:
-    Steel: 500
+    Steel: 250
     Plastic: 50
 
 - type: latheRecipe

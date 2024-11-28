@@ -233,7 +233,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     1 mol of Tritium is required per X mol of oxygen.
         /// </summary>
-        public const float FrezonProductionTritRatio = 50.0f;
+        public const float FrezonProductionTritRatio = 8.0f;
 
         /// <summary>
         ///     1 / X of the tritium is converted into Frezon each tick

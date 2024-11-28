@@ -87,13 +87,6 @@
 # Thief Collection
 
 - type: stealTargetGroup
-  id: Figurines
-  name: steal-target-groups-figurines
-  sprite:
-    sprite: Objects/Fun/figurines.rsi
-    state: figurine_spawner
-
-- type: stealTargetGroup
   id: HeadCloak
   name: steal-target-groups-heads-cloaks
   sprite:
@@ -262,6 +255,13 @@
   sprite:
     sprite: Clothing/Neck/Medals/clownmedal.rsi
     state: icon
+
+- type: stealTargetGroup
+  id: WantedListCartridge
+  name: steal-target-groups-wanted-list-cartridge
+  sprite:
+    sprite: Objects/Devices/cartridge.rsi
+    state: cart-sec
 
 #Thief structures
 

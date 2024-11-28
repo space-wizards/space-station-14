@@ -178,15 +178,13 @@ namespace Content.Shared.APC
     public sealed class ApcBoundInterfaceState : BoundUserInterfaceState, IEquatable<ApcBoundInterfaceState>
     {
         public readonly bool MainBreaker;
-        public readonly bool HasAccess;
         public readonly int Power;
         public readonly ApcExternalPowerState ApcExternalPower;
         public readonly float Charge;
 
-        public ApcBoundInterfaceState(bool mainBreaker, bool hasAccess, int power, ApcExternalPowerState apcExternalPower, float charge)
+        public ApcBoundInterfaceState(bool mainBreaker, int power, ApcExternalPowerState apcExternalPower, float charge)
         {
             MainBreaker = mainBreaker;
-            HasAccess = hasAccess;
             Power = power;
             ApcExternalPower = apcExternalPower;
             Charge = charge;
@@ -197,7 +195,6 @@ namespace Content.Shared.APC
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
             return MainBreaker == other.MainBreaker &&
-                   HasAccess == other.HasAccess &&
                    Power == other.Power &&
                    ApcExternalPower == other.ApcExternalPower &&
                    MathHelper.CloseTo(Charge, other.Charge);
@@ -210,7 +207,7 @@ namespace Content.Shared.APC
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(MainBreaker, HasAccess, Power, (int) ApcExternalPower, Charge);
+            return HashCode.Combine(MainBreaker, Power, (int) ApcExternalPower, Charge);
         }
     }
 
