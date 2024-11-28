@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: small announcement fix for nuke arm location
-    type: Fix
-  id: 101
-  time: '2024-08-19T19:40:06.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/119
-- author: razzmatazzBean
-  changes:
-  - message: new horsepussy
-    type: Add
-  id: 102
-  time: '2024-08-19T23:35:56.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/121
 - author: sususuyo
   changes:
   - message: Second wave of lobby and jukebox music, prepping for medhud glasses
@@ -4355,3 +4341,19 @@
   id: 600
   time: '2024-11-28T22:47:12.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/827
+- author: DinnerCalzone
+  changes:
+  - message: Reworded the description of the nonlethal shotgun crate to match previous
+      changes to them.
+    type: Tweak
+  id: 601
+  time: '2024-11-28T22:50:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/829
+- author: DinnerCalzone
+  changes:
+  - message: Added the janitorial hardsuit, purchasable from Cargo for $5000. Go get
+      to cleaning out in space!
+    type: Add
+  id: 602
+  time: '2024-11-28T22:50:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/828
