@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Some small changeling ability adjustments, some Boat map adjustments
-    type: Tweak
-  id: 99
-  time: '2024-08-19T19:40:24.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/117
 - author: sususuyo
   changes:
   - message: Sprite changes for medical eyepatch and medsec hud
@@ -4352,3 +4345,12 @@
   id: 598
   time: '2024-11-28T22:29:32.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/822
+- author: Sha-Seng
+  changes:
+  - message: Black Utility Belt crafted with a spray painter and a utility belt
+    type: Add
+  - message: Filled versions of the black utility belt if you want to map them too
+    type: Add
+  id: 599
+  time: '2024-11-28T22:45:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/824
