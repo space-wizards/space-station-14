@@ -1,0 +1,20 @@
+- type: entity
+  parent: BaseItem
+  id: PiezoCrystalShard
+  name: piezo crystal shard
+  description:  A small piece of of a shattered piezo crystal.
+  components:
+  - type: Sharp
+  - type: Sprite
+    layers:
+      - sprite: Objects/Materials/Shards/piezoshard.rsi
+        state: icon
+  - type: MeleeWeapon
+    wideAnimationRotation: -22.5
+    attackRate: 1.5
+    damage:
+      types:
+        Slash: 5
+  - type: StaticPrice
+    price: 800
+  - type: Electrified
