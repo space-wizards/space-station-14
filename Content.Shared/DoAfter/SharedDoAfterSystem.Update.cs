@@ -177,10 +177,7 @@ public abstract partial class SharedDoAfterSystem
                     return true;
 
                 // Whether the user has too much velocity speed.
-                // Minimum speed limit is 2.5f but it depends on MovementThreshold value.
-                // Those check values are quite wacky and assumes that MovementThreshold
-                // must be less than 1.0f or the check values would go crazy.
-                if (physics.LinearVelocity.Length() > Math.Max(args.MovementThreshold / 0.3f, 2.5f))
+                if (physics.LinearVelocity.Length() > Math.Clamp(args.MovementThreshold / 0.3f, 2.5f, 5f))
                     return true;
             }
 
