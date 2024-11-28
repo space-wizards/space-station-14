@@ -53,6 +53,11 @@
   path: "/Textures/Shaders/camera_static.swsl"
 
 - type: shader
+  id: Grainy
+  kind: source
+  path: "/Textures/Shaders/grainy.swsl"
+
+- type: shader
   id: Drunk
   kind: source
   path: "/Textures/Shaders/drunk.swsl"
