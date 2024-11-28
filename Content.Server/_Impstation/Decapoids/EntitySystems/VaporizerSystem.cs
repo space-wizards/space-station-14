@@ -1,44 +1,71 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Decapoids.Components;
+using Content.Shared._Impstation.Decapoids;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Decapoids.EntitySystems;
+namespace Content.Server._Impstation.Decapoids.EntitySystems;
 
 public sealed partial class VaporizerSystem : EntitySystem
 {
     [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
-    private void ProcessVaporizerTank(EntityUid uid, VaporizerComponent vaporizer, GasTankComponent gasTank, SolutionContainerManagerComponent solutionManager)
+    private VaporizerState GetVaporizerState(Entity<VaporizerComponent> ent, Solution solution)
     {
-        if (gasTank.Air.Pressure >= vaporizer.MaxPressure)
-            return;
+        var vaporizer = ent.Comp;
+        var state = VaporizerState.Empty;
+        var consumeAmount = FixedPoint2.Zero;
 
-        if (!_solution.TryGetSolution((uid, solutionManager), vaporizer.LiquidTank, out var solutionEnt, out var solution))
-            return;
-
-        // Validate solution
-        var valid = true;
-        ReagentQuantity? consumeReagent = null;
         foreach (var reagent in solution.Contents)
         {
             if (reagent.Reagent.Prototype != vaporizer.ExpectedReagent)
-            {
-                valid = false;
-                break;
-            }
-            consumeReagent ??= reagent;
+                return VaporizerState.BadSolution;
+
+            consumeAmount += reagent.Quantity;
+
+            if (consumeAmount / solution.MaxVolume <= vaporizer.LowPercentage)
+                state = VaporizerState.LowSolution;
+            else
+                state = VaporizerState.Normal;
         }
-        if (!valid || !consumeReagent.HasValue)
+
+        return state;
+    }
+
+    private void ProcessVaporizerTank(EntityUid uid, VaporizerComponent vaporizer, GasTankComponent gasTank, SolutionContainerManagerComponent solutionManager)
+    {
+        if (!_solution.TryGetSolution((uid, solutionManager), vaporizer.LiquidTank, out var solutionEnt, out var solution))
             return;
 
-        var reagentConsumed = solution.RemoveReagent(new ReagentQuantity(consumeReagent.Value.Reagent, vaporizer.ReagentPerSecond * vaporizer.ProcessDelay.TotalSeconds));
-        gasTank.Air.AdjustMoles((int)vaporizer.OutputGas, (float)reagentConsumed * vaporizer.ReagentToMoles);
+        var state = GetVaporizerState((uid, vaporizer), solution);
 
-        Dirty(solutionEnt.Value);
+        if (
+            gasTank.Air.Pressure < vaporizer.MaxPressure && (
+                state == VaporizerState.Empty ||
+                state == VaporizerState.Normal
+            )
+        )
+        {
+            var reagentConsumed = solution.RemoveReagent(new ReagentQuantity(vaporizer.ExpectedReagent, vaporizer.ReagentPerSecond * vaporizer.ProcessDelay.TotalSeconds));
+            gasTank.Air.AdjustMoles((int)vaporizer.OutputGas, (float)reagentConsumed * vaporizer.ReagentToMoles);
+            Dirty(solutionEnt.Value);
+        }
+
+        UpdateVisualState(uid, state);
+    }
+
+    private void UpdateVisualState(EntityUid uid, VaporizerState state, AppearanceComponent? appearance = null)
+    {
+        if (!Resolve(uid, ref appearance))
+            return;
+
+        _appearance.SetData(uid, VaporizerVisuals.VisualState, state);
     }
 
     public override void Update(float frameTime)

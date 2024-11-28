@@ -64,6 +64,8 @@
       - state: fill-1
         map: [ "enum.SolutionContainerLayers.Fill" ]
         visible: false
+      - state: normal
+        map: [ "enum.VaporizerVisualLayers.Indicator" ]
   - type: Appearance
   - type: Item
     size: Normal
