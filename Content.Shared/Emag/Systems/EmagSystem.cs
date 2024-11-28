@@ -55,7 +55,7 @@ public sealed class EmagSystem : EntitySystem
         TryComp<LimitedChargesComponent>(uid, out var charges);
         if (_charges.IsEmpty(uid, charges))
         {
-            _popup.PopupPredicted(Loc.GetString("emag-no-charges"), user, user);
+            _popup.PopupClient(Loc.GetString("emag-no-charges"), user, user);
             return false;
         }
 
@@ -63,7 +63,7 @@ public sealed class EmagSystem : EntitySystem
         if (!handled)
             return false;
 
-        _popup.PopupPredicted(Loc.GetString("emag-success", ("target", Identity.Entity(target, EntityManager))), user,
+        _popup.PopupClient(Loc.GetString("emag-success", ("target", Identity.Entity(target, EntityManager))), user,
             user, PopupType.Medium);
 
         _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(user):player} emagged {ToPrettyString(target):target}");
