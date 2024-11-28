@@ -10,7 +10,6 @@
     factions:
     - Dino
   - type: Tool
-    speed: 1.5
     qualities:
       - Prying
   - type: Prying
@@ -120,6 +119,10 @@
       60: 0.7
       125: 0.5
   - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     damage:
       types:
         Blunt: 20
@@ -174,6 +177,10 @@
       10: 0.7
       30: 0.5
   - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
     damage:
       types:
         Piercing: 5
@@ -235,6 +242,10 @@
       10: 0.7
       30: 0.5
   - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
     damage:
       types:
         Slash: 5
@@ -286,6 +297,10 @@
       10: 0.7
       75: 0.6
   - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     damage:
       types:
         Piercing: 10
@@ -329,6 +344,10 @@
       30: 0.8
       50: 0.6
   - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     damage:
       types:
         Blunt: 5
@@ -376,7 +395,6 @@
         layer:
           - MobLayer
   - type: Tool
-    speed: 1.5
     qualities:
       - Prying
   - type: Prying
@@ -406,6 +424,10 @@
       25: 0.8
       50: 0.6
   - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
     damage:
       types:
         Slash: 12
@@ -456,6 +478,10 @@
       100: 0.5
       200: 0.3
   - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     damage:
       types:
         Slash: 18
@@ -500,6 +526,10 @@
       100: 0.7
       150: 0.3
   - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     damage:
       types:
         Blunt: 10
@@ -544,6 +574,10 @@
       100: 0.6
       200: 0.3
   - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     damage:
       types:
         Slash: 15
@@ -588,6 +622,10 @@
       100: 0.7
       150: 0.3
   - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    soundHit:
+      path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     damage:
       types:
         Blunt: 15
