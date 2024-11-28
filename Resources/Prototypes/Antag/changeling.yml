@@ -1,0 +1,10 @@
+- type: entity
+  id: ActionChangelingDevour
+  name: "[color=red]Devour[/color]"
+  description: Consume the essence of your victims and subsume their identity and mind into your own
+  components:
+    - type: EntityTargetAction
+      icon: { sprite : Interface/Actions/devour.rsi, state: icon }
+      iconOn: { sprite : Interface/Actions/devour.rsi, state: icon-on }
+      event: !type:ChangelingDevourActionEvent
+      priority: 1
