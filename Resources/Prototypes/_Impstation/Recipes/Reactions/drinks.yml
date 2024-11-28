@@ -355,3 +355,17 @@
       amount: 1
   products:
     TheGrease: 6
+
+- type: reaction
+  id: CleverGirl
+  reactants:
+    Vodka:
+      amount: 2
+    JuiceLime:
+      amount: 1
+    BlueCuracao:
+      amount: 1
+    DinoBlood:
+      amount: 1
+  products:
+    CleverGirl: 5
