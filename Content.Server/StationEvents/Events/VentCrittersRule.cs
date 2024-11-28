@@ -4,6 +4,7 @@ using Content.Shared.Station.Components;
 using Content.Shared.Storage;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
+using System.Linq;
 
 namespace Content.Server.StationEvents.Events;
 
@@ -13,6 +14,8 @@ public sealed class VentCrittersRule : StationEventSystem<VentCrittersRuleCompon
      * DO NOT COPY PASTE THIS TO MAKE YOUR MOB EVENT.
      * USE THE PROTOTYPE.
      */
+
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
     protected override void Started(EntityUid uid, VentCrittersRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
@@ -27,12 +30,12 @@ public sealed class VentCrittersRule : StationEventSystem<VentCrittersRuleCompon
         var validLocations = new List<EntityCoordinates>();
         while (locations.MoveNext(out _, out _, out var transform))
         {
-            if (CompOrNull<StationMemberComponent>(transform.GridUid)?.Station == station)
+            if (CompOrNull<StationMemberComponent>(transform.GridUid)?.Station == station && !_lookup.GetEntitiesInRange<PreventEventMobsSpawnComponent>(transform.Coordinates, range: 1).Any())
             {
                 validLocations.Add(transform.Coordinates);
                 foreach (var spawn in EntitySpawnCollection.GetSpawns(component.Entries, RobustRandom))
                 {
-                    Spawn(spawn, transform.Coordinates);
+                    Spawn(spawn, transform.Coordinates); // lmfao this shit actually just scales the number of mobs by the number of vents on the station. Crazy. Mob farms here we come.
                 }
             }
         }

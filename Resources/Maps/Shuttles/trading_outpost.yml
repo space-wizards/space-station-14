@@ -4299,6 +4299,173 @@ entities:
     - type: Transform
       pos: 11.5,9.5
       parent: 2
+- proto: MobSpawnPreventerMarker
+  entities:
+  - uid: 545
+    components:
+    - type: Transform
+      pos: 7.5,-15.5
+      parent: 2
+  - uid: 546
+    components:
+    - type: Transform
+      pos: 7.5,-16.5
+      parent: 2
+  - uid: 549
+    components:
+    - type: Transform
+      pos: 7.5,-17.5
+      parent: 2
+  - uid: 550
+    components:
+    - type: Transform
+      pos: 8.5,-15.5
+      parent: 2
+  - uid: 551
+    components:
+    - type: Transform
+      pos: 8.5,-16.5
+      parent: 2
+  - uid: 555
+    components:
+    - type: Transform
+      pos: 8.5,-17.5
+      parent: 2
+  - uid: 558
+    components:
+    - type: Transform
+      pos: 9.5,-15.5
+      parent: 2
+  - uid: 562
+    components:
+    - type: Transform
+      pos: 9.5,-16.5
+      parent: 2
+  - uid: 569
+    components:
+    - type: Transform
+      pos: 9.5,-17.5
+      parent: 2
+  - uid: 572
+    components:
+    - type: Transform
+      pos: 5.5,-15.5
+      parent: 2
+  - uid: 582
+    components:
+    - type: Transform
+      pos: 6.5,-15.5
+      parent: 2
+  - uid: 583
+    components:
+    - type: Transform
+      pos: 6.5,-19.5
+      parent: 2
+  - uid: 584
+    components:
+    - type: Transform
+      pos: 6.5,-18.5
+      parent: 2
+  - uid: 585
+    components:
+    - type: Transform
+      pos: 6.5,-17.5
+      parent: 2
+  - uid: 586
+    components:
+    - type: Transform
+      pos: 6.5,-16.5
+      parent: 2
+  - uid: 587
+    components:
+    - type: Transform
+      pos: 5.5,-19.5
+      parent: 2
+  - uid: 588
+    components:
+    - type: Transform
+      pos: 5.5,-18.5
+      parent: 2
+  - uid: 589
+    components:
+    - type: Transform
+      pos: 5.5,-17.5
+      parent: 2
+  - uid: 725
+    components:
+    - type: Transform
+      pos: 5.5,-16.5
+      parent: 2
+  - uid: 726
+    components:
+    - type: Transform
+      pos: 4.5,-19.5
+      parent: 2
+  - uid: 731
+    components:
+    - type: Transform
+      pos: 4.5,-18.5
+      parent: 2
+  - uid: 734
+    components:
+    - type: Transform
+      pos: 4.5,-16.5
+      parent: 2
+  - uid: 767
+    components:
+    - type: Transform
+      pos: 4.5,-17.5
+      parent: 2
+  - uid: 768
+    components:
+    - type: Transform
+      pos: 4.5,-15.5
+      parent: 2
+  - uid: 774
+    components:
+    - type: Transform
+      pos: 3.5,-17.5
+      parent: 2
+  - uid: 775
+    components:
+    - type: Transform
+      pos: 3.5,-16.5
+      parent: 2
+  - uid: 776
+    components:
+    - type: Transform
+      pos: 3.5,-15.5
+      parent: 2
+  - uid: 777
+    components:
+    - type: Transform
+      pos: 2.5,-17.5
+      parent: 2
+  - uid: 779
+    components:
+    - type: Transform
+      pos: 2.5,-16.5
+      parent: 2
+  - uid: 782
+    components:
+    - type: Transform
+      pos: 2.5,-15.5
+      parent: 2
+  - uid: 783
+    components:
+    - type: Transform
+      pos: 1.5,-17.5
+      parent: 2
+  - uid: 786
+    components:
+    - type: Transform
+      pos: 1.5,-16.5
+      parent: 2
+  - uid: 789
+    components:
+    - type: Transform
+      pos: 1.5,-15.5
+      parent: 2
 - proto: NewtonCradle
   entities:
   - uid: 65

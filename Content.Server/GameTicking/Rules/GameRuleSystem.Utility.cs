@@ -108,8 +108,8 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
 
         for (var i = 0; i < 10; i++)
         {
-            var randomX = RobustRandom.Next((int) aabb.Left, (int) aabb.Right);
-            var randomY = RobustRandom.Next((int) aabb.Bottom, (int) aabb.Top);
+            var randomX = RobustRandom.Next((int)aabb.Left, (int)aabb.Right);
+            var randomY = RobustRandom.Next((int)aabb.Bottom, (int)aabb.Top);
 
             tile = new Vector2i(randomX, randomY);
             if (_atmosphere.IsTileSpace(targetGrid, Transform(targetGrid).MapUid, tile)
@@ -125,6 +125,8 @@ public abstract partial class GameRuleSystem<T> where T: IComponent
 
         return found;
     }
+
+
 
     protected void ForceEndSelf(EntityUid uid, GameRuleComponent? component = null)
     {

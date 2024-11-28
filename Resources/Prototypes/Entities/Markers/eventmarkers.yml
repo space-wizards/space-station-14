@@ -1,0 +1,11 @@
+- type: entity
+  name: Spawn Preventer
+  id: MobSpawnPreventerMarker
+  parent: MarkerBase
+  description: A marker which prevents mobs from events from spawning at this location.
+  components:
+    - type: PreventEventMobsSpawn
+    - type: Sprite
+      layers:
+      - state: grayscale
+        color: LightCoral
