@@ -12,11 +12,5 @@ public sealed partial class RemoteControllerComponent : Component
     /// </summary>
     [ViewVariables, AutoNetworkedField]
     public EntityUid? Controlled = null;
-
-    /// <summary>
-    /// The remote used to control another entity.
-    /// </summary>
-    [ViewVariables, AutoNetworkedField]
-    public EntityUid? UsedRemote = null;
 }
 
