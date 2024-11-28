@@ -9,6 +9,17 @@
   icon: { sprite: Clothing/Head/Hats/greyflatcap.rsi, state: icon }
   objectType: Item
 
+#- type: construction
+ # name: static harpoon
+ # id: PiezoHarpoon
+ # graph: PiezoHarpoon
+#  startNode: start
+ # targetNode: icon
+#  category: construction-category-weapons
+ # description: A harpoon with a piezo crystal shoddily fastened to the end.
+#  icon: { sprite: Objects/Weapons/Guns/Projectiles/explosive_harpoons.rsi, state: explosive }
+#  objectType: Item
+
 - type: construction
   name: brown bladed flatcap
   id: BladedFlatcapBrown

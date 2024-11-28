@@ -59,6 +59,27 @@
       - MagCell
 
 - type: entity
+  name: NT exhaustion magcell
+  description: A rechargeable energy magazine. This one fires energy draining bolts.
+  id: MagCellDisabler
+  suffix: Full
+  parent: BaseMagCell
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/MagCell.rsi
+    layers:
+    - state: icon
+  - type: Battery
+    maxCharge: 4000
+    startingCharge: 4000
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletDisabler
+    fireCost: 800  #5 shots
+  - type: Tag
+    tags:
+      - MagCell
+
+- type: entity
   name: NT advanced magcell
   description: A rechargeable energy magazine for use with compatible NT energy weaponry. This one has an expanded capacity.
   id: MagCellAdvanced

@@ -106,3 +106,23 @@
               doAfter: 1
     - node: spear
       entity: SpearBone
+
+#- type: constructionGraph
+ # id: PiezoHarpoon
+ # start: start
+ # graph:
+  #  - node: start
+  #    edges:
+   #     - to: piezoharpoon
+   #       steps:
+    #        - material: Harpoon
+   #           amount: 1
+   #           doAfter: 2
+   #         - material: Cable
+   #           amount: 2
+   #           doAfter: 1
+    #        - material: PiezoCrystalShard
+   #           amount: 1
+   #           doAfter: 1
+  #  - node: piezoharpoon
+  #    entity: PiezoHarpoon

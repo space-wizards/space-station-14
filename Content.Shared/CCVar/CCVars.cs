@@ -3,7 +3,6 @@ using Content.Shared.Roles;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Components;
-
 namespace Content.Shared.CCVar
 {
     // ReSharper disable once InconsistentNaming
@@ -1097,7 +1096,7 @@ namespace Content.Shared.CCVar
         ///     Whether gas differences will move entities.
         /// </summary>
         public static readonly CVarDef<bool> SpaceWind =
-            CVarDef.Create("atmos.space_wind", true, CVar.SERVERONLY);
+            CVarDef.Create("atmos.space_wind", false, CVar.SERVERONLY);
 
         /// <summary>
         ///     Divisor from maxForce (pressureDifference * 2.25f) to force applied on objects.
@@ -1470,6 +1469,13 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<string> ArrivalsMap =
             CVarDef.Create("shuttle.arrivals_map", "/Maps/Misc/terminal.yml", CVar.SERVERONLY);
+
+
+        /// <summary>
+        /// The map to use for the ocean surface.
+        /// </summary>
+        public static readonly CVarDef<string> Arrivals2Map =
+            CVarDef.Create("shuttle.arrivals2_map", "/Maps/Misc/terminal.yml", CVar.SERVERONLY);
 
         /// <summary>
         /// Cooldown between arrivals departures. This should be longer than the FTL time or it will double cycle.

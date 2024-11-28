@@ -30,7 +30,7 @@
 - type: startingGear
   id: GreyJumpsuit
   equipment:
-    jumpsuit: ClothingUniformJumpsuitColorGrey
+    jumpsuit: ClothingUniformJumpsuitLoungewear
 
 - type: loadout
   id: GreyJumpskirt
@@ -39,7 +39,7 @@
 - type: startingGear
   id: GreyJumpskirt
   equipment:
-    jumpsuit: ClothingUniformJumpskirtColorGrey
+    jumpsuit: ClothingUniformJumpsuitLoungewear
 
 # Rainbow
 - type: loadout

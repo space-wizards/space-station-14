@@ -19,9 +19,6 @@ uplink-bluehardsuit-desc = A NT-Certified pressure suit graded for 11 kilometers
 uplink-bulletproof-name = Type-III bullet-proof vest
 uplink-bulletproof-desc = A durable vest designed to repel traditional projectile weapons fire. Don't expect too much else, though.
 
-uplink-combat-gloves-name = Combat gloves
-uplink-combat-gloves-desc = Heat, electricity, doorframes; all are now things of the past. These are the epitome of finger protection.
-
 uplink-cburn-name = CBURN equipment bundle
 uplink-cburn-desc = Spare CBURN equipment from a fallen team. Contains a double-barrel shotgun, incendiary shells and a medipen.
 
@@ -52,6 +49,32 @@ uplink-lobbying-desc = A briefcase containing everything needed to make an offer
 uplink-pistolmag-name = .35 auto magazine
 uplink-pistolmag-desc = For use with the MK58 pistol. Contains standard rounds.
 
-uplink-magnum-name = .45 magnum magazine
-uplink-magnum-desc = For use with the N1984. Contains the lord's caliber.
+uplink-magnummag-name = .45 magnum magazine
+uplink-magnummag-desc = For use with the N1984. Contains the lord's caliber.
 
+uplink-firebomb-name = Incendiary grenade
+uplink-firebomb-desc = A highly volatile grenade that contains microparticles of superheated plasma. Ignites nearby targets.
+
+uplink-slashbang-name = Slashbang
+uplink-slashbang-desc = Releases a horde of razor sharp knives upon detonation. Devastating at close range.
+
+uplink-announcer-name = Handheld announcement pad
+uplink-announcer-desc = Hacks into the Platform's announcement system. Removal of ID before use is suggested.
+
+uplink-key-name = Encryption key set
+uplink-key-desc = Contains two encryption keys on a classified frequency for the price of just one. Quite the deal, Agent!
+
+uplink-beachball-name = High-pressure beachball
+uplink-beachball-desc = The beloved NT-brand beachball, complete with a fragile lining and much higher pressure. Simply throw it and send targets flying back, or propel yourself forwards!
+
+uplink-toolboxnt-name = Mechanical toolset
+uplink-toolboxnt-desc = A toolbox containing everything an Agent needs to get around undetected. Comes with tools, combat gloves and meson goggles.
+
+uplink-vestinehalf-name = A half vial of vestine
+uplink-vestinehalf-desc = Stolen from a Cybersun hauler, this vial contains 15 units of vestine. Goes well with the chemistry lab.
+
+uplink-lab-name = Portable chemistry lab
+uplink-lab-desc = This crate contains everything needed to go breaking bad. Includes vials of elements, machine flatpacks, and sterile clothing. Power not included.
+
+uplink-disabler-name = Exhaustion magcell
+uplink-disabler-desc = A low-frequency variant of the standard magcell, capable of exhausting targets to unconciousness for a few moments. Useful for 'aquiring' targets.

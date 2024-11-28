@@ -1,0 +1,13 @@
+- type: marking
+  id: JellidMantle
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Jellid]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/Jellid.rsi
+    state: head_mantle

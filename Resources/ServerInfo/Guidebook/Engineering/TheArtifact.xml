@@ -1,0 +1,29 @@
+<Document>
+  # The Artifact
+
+  The Artifact is an ancient, alien device found on the seafloor and unearthed by early settlers.
+  It provides the majority of the power for Sweetwater and Trieste, through mainly radiation and electrical pulses.
+
+  ## Basic Overview
+  <box>
+   <GuideEntityEmbed Entity="TeslaCoil"/>
+   <GuideEntityEmbed Entity="TeslaGroundingRod"/>
+  </box>
+
+  The Artifact releases extreme radiation and lightning bolts, allowing it to be utilized as an extremely efficient reactor. Tesla Coils and Radiation Collectors are in place to gather the energy it releases.
+  The Tesla Coils are connected to the main High Voltage subnet of Engineering and automatically use the energy from lightning strikes to charge the SMES units.
+  The Radiation Collectors must be activated manually, and use gaseous plasma as a medium to focus the radiation into energy. Simply enter and unfold their collection sails to activate them.
+
+  ## Dangers
+ <Box>
+   <GuideEntityEmbed Entity="ClosetRadiationSuit"/>
+   <GuideEntityEmbed Entity="ClothingOuterSuitRad"/>
+   <GuideEntityEmbed Entity="GeigerCounter"/>
+ </Box>
+
+  The radiation in The Artifact's containment chamber is strong enough to fry you in mere seconds of exposure. Prevention of this using radiation gear is required before entry.
+
+  As long as the Grounding Rods are in place, the lightning should mostly be stable and safe to approach, however there are occasional outliers.
+  While inside, it is essential to not place objects on the floor, as The Artifact produces an intense gravitational field that will render objects unretrievable without a hazardous approach.
+  
+</Document>
