@@ -8,109 +8,127 @@ using Content.Shared.Overlays;
 using Robust.Shared.Timing;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
+using Content.Shared.Clothing;
 
 namespace Content.Client.Overlays
 {
     public sealed class StaticViewerHudSystem : EntitySystem
-    {
-        [Dependency] private readonly IOverlayManager _overlayMan = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IGameTiming _timing = default!;
-
-        private ShaderInstance _staticViewerShader = null!;
-
-        public StaticViewerHudSystem()
-        {
-            IoCManager.InjectDependencies(this);
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            Log.Error($"Initialized static");
-
-
-            _staticViewerShader = _prototypeManager.Index<ShaderPrototype>("Grainy").InstanceUnique();
-
-            SubscribeLocalEvent<StaticViewerComponent, GotEquippedEvent>(OnCompEquip);
-            SubscribeLocalEvent<StaticViewerComponent, GotUnequippedEvent>(OnCompUnequip);
-        }
-
-    private void OnCompEquip(EntityUid uid, StaticViewerComponent component, GotEquippedEvent args)
 {
-    var playerEntity = _playerManager.LocalEntity;
+    [Dependency] private readonly IOverlayManager _overlayMan = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
-    if (playerEntity.HasValue && _entityManager.HasComponent<EyeComponent>(playerEntity.Value))
+    private ShaderInstance _staticViewerShader = null!;
+private StaticViewerOverlay _staticViewerOverlay = null!;
+
+
+    public StaticViewerHudSystem()
     {
-        if (uid != playerEntity)
+        IoCManager.InjectDependencies(this);
+    }
+
+    public override void Initialize()
+    {
+        _staticViewerShader = _prototypeManager.Index<ShaderPrototype>("Grainy").Instance();
+
+        _staticViewerOverlay = new StaticViewerOverlay(_staticViewerShader, _entityManager, _player);
+
+        SubscribeLocalEvent<StaticViewerComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<StaticViewerComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<StaticViewerComponent, LocalPlayerAttachedEvent>(OnPlayerAttached);
+        SubscribeLocalEvent<StaticViewerComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
+        SubscribeLocalEvent<StaticViewerComponent, GotEquippedEvent>(OnEquipped);
+        SubscribeLocalEvent<StaticViewerComponent, GotUnequippedEvent>(OnUnequipped);
+    }
+
+    private void OnEquipped(Entity<StaticViewerComponent> ent, ref GotEquippedEvent args)
+    {
+        EnsureComp<StaticViewerComponent>(args.Equipee);
+    }
+
+    private void OnUnequipped(Entity<StaticViewerComponent> ent, ref GotUnequippedEvent args)
+    {
+        _entityManager.RemoveComponent<StaticViewerComponent>(args.Equipee);
+    }
+
+    private void OnPlayerAttached(Entity<StaticViewerComponent> ent, ref LocalPlayerAttachedEvent args)
+    {
+        _overlayMan.AddOverlay(_staticViewerOverlay);
+    }
+
+    private void OnPlayerDetached(Entity<StaticViewerComponent> ent, ref LocalPlayerDetachedEvent args)
+    {
+        _overlayMan.RemoveOverlay(_staticViewerOverlay);
+    }
+
+    private void OnInit(Entity<StaticViewerComponent> ent, ref ComponentInit args)
+    {
+        if (_player.LocalEntity == ent)
         {
-        return;
+            _overlayMan.AddOverlay(_staticViewerOverlay);
         }
-            _overlayMan.AddOverlay(new StaticViewerOverlay(_staticViewerShader, _entityManager, _playerManager));
+    }
+
+    private void OnShutdown(Entity<StaticViewerComponent> ent, ref ComponentShutdown args)
+    {
+        if (_player.LocalEntity == ent)
+        {
+            _overlayMan.RemoveOverlay(_staticViewerOverlay);
+        }
     }
 }
 
-private void OnCompUnequip(EntityUid uid, StaticViewerComponent component, GotUnequippedEvent args)
+   public sealed class StaticViewerOverlay : Overlay
 {
-    var playerEntity = _playerManager.LocalEntity;
+    private readonly ShaderInstance _shaderInstance;
+    private readonly IEntityManager _entityManager;
+    private readonly IPlayerManager _playerManager;
 
-    if (playerEntity.HasValue)
+    public StaticViewerOverlay(ShaderInstance shaderInstance, IEntityManager entityManager, IPlayerManager playerManager)
     {
-        _overlayMan.RemoveOverlay<StaticViewerOverlay>();
+        _shaderInstance = shaderInstance;
+        _entityManager = entityManager;
+        _playerManager = playerManager;
     }
-}
 
-    }
+    public override OverlaySpace Space => OverlaySpace.WorldSpace;
+    public override bool RequestScreenTexture => true;
 
-    public sealed class StaticViewerOverlay : Overlay
+    protected override bool BeforeDraw(in OverlayDrawArgs args)
     {
-        private readonly ShaderInstance _shaderInstance;
-        private readonly IEntityManager _entityManager;
-        private readonly IPlayerManager _playerManager;
+        var playerEntity = _playerManager.LocalEntity;
 
-        public StaticViewerOverlay(ShaderInstance shaderInstance, IEntityManager entityManager, IPlayerManager playerManager)
-        {
-            _shaderInstance = shaderInstance;
-            _entityManager = entityManager;
-            _playerManager = playerManager;
-        }
+        if (!playerEntity.HasValue)
+            return false;
 
-        public override OverlaySpace Space => OverlaySpace.WorldSpace;
-        public override bool RequestScreenTexture => true;
+        if (!_entityManager.TryGetComponent(playerEntity.Value, out EyeComponent? eyeComp))
+            return false;
 
-protected override bool BeforeDraw(in OverlayDrawArgs args)
-{
-    var playerEntity = _playerManager.LocalEntity;
+        if (args.Viewport.Eye != eyeComp.Eye)
+            return false;
 
-    if (!playerEntity.HasValue)
-        return false;
+        return true;
+    }
 
-    if (!_entityManager.TryGetComponent(playerEntity.Value, out EyeComponent? eyeComp))
-        return false;
+    protected override void Draw(in OverlayDrawArgs args)
+    {
+        if (ScreenTexture == null)
+            return;
 
-    if (args.Viewport.Eye != eyeComp.Eye)
-        return false;
+        var handle = args.WorldHandle;
 
-    return true;
-}
+        // Duplicate the shader instance to make it mutable
+        var mutableShaderInstance = _shaderInstance.Duplicate();
 
+        mutableShaderInstance.SetParameter("SCREEN_TEXTURE", ScreenTexture);
 
-
-
-        protected override void Draw(in OverlayDrawArgs args)
-        {
-            if (ScreenTexture == null)
-                return;
-
-            var handle = args.WorldHandle;
-            _shaderInstance.SetParameter("SCREEN_TEXTURE", ScreenTexture);
-            handle.UseShader(_shaderInstance);
-            handle.DrawRect(args.WorldBounds, Color.White);
-            handle.UseShader(null);
-        }
-
-
+        // Use the duplicated mutable shader
+        handle.UseShader(mutableShaderInstance);
+        handle.DrawRect(args.WorldBounds, Color.White);
+        handle.UseShader(null);
     }
 }
+}
+
