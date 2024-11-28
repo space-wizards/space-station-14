@@ -1,5 +1,4 @@
 using Content.Shared.Bed.Sleep;
-using Content.Shared.Buckle.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
@@ -66,12 +65,6 @@ public sealed class InteractionPopupSystem : EntitySystem
 
         if (TryComp<MobStateComponent>(uid, out var state)
             && !_mobStateSystem.IsAlive(uid, state))
-        {
-            return;
-        }
-
-        if (TryComp<BuckleComponent>(uid, out var buckle)
-            && buckle.BuckledTo != null)
         {
             return;
         }
