@@ -442,6 +442,8 @@
       board: [ DoorElectronicsService ]
   - type: Wires
     layoutId: AirlockService
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/basic.rsi
 
 - type: entity
   parent: AirlockServiceGlassLocked
