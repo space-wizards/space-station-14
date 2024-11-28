@@ -130,9 +130,8 @@
       types:
         Piercing: 4
     angle: 0
-  - type: Construction
-      graph: PiezoHarpoon
-      node: piezoharpoon
+ # - type: Construction
+  #    graph: PiezoHarpoon
   - type: Electrified
   - type: StunOnCollide
     stunAmount: 3
