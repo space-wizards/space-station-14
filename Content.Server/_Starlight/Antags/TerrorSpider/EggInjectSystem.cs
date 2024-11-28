@@ -1,4 +1,5 @@
-﻿using Content.Shared._Starlight.Antags.TerrorSpider;
+﻿using System.Linq;
+using Content.Shared._Starlight.Antags.TerrorSpider;
 using Content.Shared.Damage.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Movement.Components;
@@ -8,6 +9,8 @@ using Content.Shared.Spider;
 using Content.Shared.Starlight.Medical.Surgery;
 using Content.Shared.Stealth.Components;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Starlight.Antags.TerrorSpider;
@@ -16,14 +19,38 @@ public sealed class EggInjectSystem : EntitySystem
 {
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
 
+    private readonly EntProtoId[] _eggs =
+    [
+        "TerrorRedEggSpiderFertilized",
+        "TerrorGreenSpiderFertilized",
+        "TerrorGrayEggSpiderFertilized"
+    ];
     public override void Initialize()
     {
         SubscribeLocalEvent<EggInjectionEvent>(EggInjection);
         SubscribeLocalEvent<SpiderComponent, EggInjectionDoAfterEvent>(EggInjectionDoAfter);
+
+        SubscribeLocalEvent<EggsLayingEvent>(EggsLaying);
+        Subs.BuiEvents<TerrorPrincessComponent>(EggsLayingUiKey.Key, subs => subs.Event<EggsLayingBuiMsg>(OnEggsLaying));
+    }
+    private void EggsLaying(EggsLayingEvent ev)
+    {
+        ev.Handled = true;
+        if (TryComp(ev.Performer, out ActorComponent? actor))
+            _uiSystem.OpenUi(ev.Performer, EggsLayingUiKey.Key, actor.PlayerSession);
+    }
+    private void OnEggsLaying(EntityUid uid, TerrorPrincessComponent component, EggsLayingBuiMsg args)
+    {
+        if (_eggs.Contains(args.Egg) && TryComp(uid, out ActorComponent? actor))
+        {
+            SpawnAtPosition(args.Egg, Transform(uid).Coordinates);
+            _uiSystem.CloseUi(uid, EggsLayingUiKey.Key, actor.PlayerSession);
+        }
     }
 
-    private void EggInjectionDoAfter(Entity<SpiderComponent> ent, ref EggInjectionDoAfterEvent args) 
+    private void EggInjectionDoAfter(Entity<SpiderComponent> ent, ref EggInjectionDoAfterEvent args)
     {
         if (args.Target.HasValue && !HasComp<HasEggHolderComponent>(args.Target.Value))
         {

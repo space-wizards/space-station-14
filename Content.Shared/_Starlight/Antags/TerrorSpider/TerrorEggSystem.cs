@@ -3,6 +3,8 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Content.Shared.UserInterface;
+using Robust.Shared.Player;
 
 namespace Content.Shared._Starlight.Antags.TerrorSpider;
 public sealed class TerrorEggSystem : AccUpdateEntitySystem
@@ -20,6 +22,7 @@ public sealed class TerrorEggSystem : AccUpdateEntitySystem
         SubscribeLocalEvent<EggHolderComponent, ComponentInit>(AddEgg);
         SubscribeLocalEvent<EggHolderComponent, ComponentShutdown>(RemoveEgg);
     }
+
     private void AddEgg(Entity<EggHolderComponent> ent, ref ComponentInit args) => _eggs.TryAdd(ent.Owner, ent);
     private void RemoveEgg(Entity<EggHolderComponent> ent, ref ComponentShutdown args) => _eggs.Remove(ent.Owner);
 
