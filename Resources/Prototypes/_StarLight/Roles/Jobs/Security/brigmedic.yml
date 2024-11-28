@@ -8,7 +8,6 @@
     department: Security
     time: 72000 #20 hrs
   startingGear: BrigmedicGear
-  icon: "JobIconBrigmedic"
   supervisors: job-supervisors-hos
   canBeAntag: false
   access:
