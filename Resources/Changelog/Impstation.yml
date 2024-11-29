@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: starlighthowls
-  changes:
-  - message: boat test 2!!!!!!!
-    type: Add
-  id: 106
-  time: '2024-08-20T23:31:13.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/125
 - author: formlessnameless
   changes:
   - message: Upstream merge + fixes
@@ -4362,3 +4355,10 @@
   id: 605
   time: '2024-11-29T07:38:46.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/834
+- author: Sha-Seng
+  changes:
+  - message: Slime "eye glow" marking (does not actually make eyes unshaded) (yet)
+    type: Add
+  id: 606
+  time: '2024-11-29T07:43:50.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/833
