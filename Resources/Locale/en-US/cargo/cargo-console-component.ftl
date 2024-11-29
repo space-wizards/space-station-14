@@ -26,7 +26,7 @@ cargo-console-menu-order-row-product-description = Reason: {$orderReason}
 cargo-console-menu-order-row-button-approve = Approve
 cargo-console-menu-order-row-button-cancel = Cancel
 cargo-console-menu-order-row-alerts-reason-absent = The reason is not specified
-cargo-console-menu-order-row-alerts-requester-unknow = Unknow
+cargo-console-menu-order-row-alerts-requester-unknown = Unknown
 
 # Orders
 cargo-console-order-not-allowed = Access not allowed
