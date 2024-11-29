@@ -118,7 +118,7 @@ public sealed partial class ThresholdControl : BoxContainer
 
     public void UpdateThresholdData(AtmosAlarmThreshold threshold, float currentAmount)
     {
-        threshold.CheckThreshold(currentAmount, out var alarm, out var which);
+        threshold.CheckThreshold(currentAmount, out var alarm, out var bound);
 
         var upperDangerState = AtmosAlarmType.Normal;
         var lowerDangerState = AtmosAlarmType.Normal;
@@ -129,7 +129,7 @@ public sealed partial class ThresholdControl : BoxContainer
         {
             case AtmosAlarmType.Danger:
             {
-                if(which == AtmosMonitorThresholdBound.Upper)
+                if (bound == AtmosMonitorThresholdBound.Upper)
                     upperDangerState = alarm;
                 else
                     lowerDangerState = alarm;
@@ -137,7 +137,7 @@ public sealed partial class ThresholdControl : BoxContainer
             }
             case AtmosAlarmType.Warning:
             {
-                if(which == AtmosMonitorThresholdBound.Upper)
+                if (bound == AtmosMonitorThresholdBound.Upper)
                     upperWarningState = alarm;
                 else
                     lowerWarningState = alarm;
