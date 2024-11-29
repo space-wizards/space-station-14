@@ -707,4 +707,11 @@ Entries:
   id: 100
   time: '2024-11-29T14:58:02.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/94
+- author: Miracula
+  changes:
+  - message: Added brigmedic glasses
+    type: Add
+  id: 101
+  time: '2024-11-29T17:57:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/95
 
