@@ -259,7 +259,15 @@ public sealed class WieldableSystem : EntitySystem
         var selfMessage = Loc.GetString("wieldable-component-successful-wield", ("item", used));
         var othersMessage = Loc.GetString("wieldable-component-successful-wield-other", ("user", Identity.Entity(user, EntityManager)), ("item", used));
         _popupSystem.PopupClient(selfMessage, user, user);
-        _popupSystem.PopupEntity(othersMessage, user, Filter.PvsExcept(user, entityManager: EntityManager).RemoveWhere(e => e.AttachedEntity != null && !_container.IsInSameOrParentContainer((user, Transform(user)), (e.AttachedEntity.Value, Transform(e.AttachedEntity.Value)))), true);
+        _popupSystem.PopupEntity(othersMessage,
+            user,
+            Filter.PvsExcept(user, entityManager: EntityManager)
+                .RemoveWhere(e =>
+                    e.AttachedEntity != null && _container.IsEntityInContainer(user)
+                                             && !_container.IsInSameOrParentContainer(
+                                                 (user, Transform(user)),
+                                                 (e.AttachedEntity.Value, Transform(e.AttachedEntity.Value)))),
+            true);
 
         var targEv = new ItemWieldedEvent();
         RaiseLocalEvent(used, ref targEv);
@@ -305,7 +313,15 @@ public sealed class WieldableSystem : EntitySystem
             var selfMessage = Loc.GetString("wieldable-component-failed-wield", ("item", uid));
             var othersMessage = Loc.GetString("wieldable-component-failed-wield-other", ("user", Identity.Entity(args.User.Value, EntityManager)), ("item", uid));
             _popupSystem.PopupClient(selfMessage, args.User.Value, args.User.Value);
-            _popupSystem.PopupEntity(othersMessage, args.User.Value, Filter.PvsExcept(args.User.Value, entityManager: EntityManager).RemoveWhere(e => e.AttachedEntity != null && !_container.IsInSameOrParentContainer((args.User.Value, Transform(args.User.Value)), (e.AttachedEntity.Value, Transform(e.AttachedEntity.Value)))), true);
+            _popupSystem.PopupEntity(othersMessage,
+                args.User.Value,
+                Filter.PvsExcept(args.User.Value, entityManager: EntityManager)
+                    .RemoveWhere(e =>
+                        e.AttachedEntity != null && _container.IsEntityInContainer(args.User.Value)
+                                                 && !_container.IsInSameOrParentContainer(
+                            (args.User.Value, Transform(args.User.Value)),
+                            (e.AttachedEntity.Value, Transform(e.AttachedEntity.Value)))),
+                true);
         }
 
         _appearance.SetData(uid, WieldableVisuals.Wielded, false);
