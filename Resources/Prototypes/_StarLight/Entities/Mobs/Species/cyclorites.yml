@@ -3,6 +3,7 @@
   id: BaseMobCyclorite
   abstract: true
   components:
+  - type: Absorbable
   - type: Hunger
   - type: Icon
     sprite: _Starlight/Mobs/Species/Cyclorite/parts.rsi
