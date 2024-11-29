@@ -7,7 +7,11 @@
   components:
   - type: Tag
     tags:
-      - DionaMinded
+    - CanPilot
+    - FootstepSound
+    - DoorBumpOpener
+    - AnomalyHost
+    - DionaMinded
   - type: Absorbable
   - type: HumanoidAppearance
     species: Diona
