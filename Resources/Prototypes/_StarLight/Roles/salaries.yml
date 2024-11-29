@@ -18,11 +18,11 @@
     StationEngineer: 55
     TechnicalAssistant: 23
 
-    Warden: 80
+    Warden: 90
     Detective: 80
+    Brigmedic: 70
     SecurityOfficer: 50
     SecurityCadet: 23
-    Brigmedic: 68
 
     StationAi: 155
     Borg: 85
