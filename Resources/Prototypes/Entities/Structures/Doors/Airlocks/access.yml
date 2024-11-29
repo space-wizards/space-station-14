@@ -18,6 +18,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsLawyer ]
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/lawyer.rsi
 
 - type: entity
   parent: AirlockServiceLocked
@@ -27,6 +29,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsTheatre ]
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/theatre.rsi
 
 - type: entity
   parent: AirlockServiceLocked
@@ -36,6 +40,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsChapel ]
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/chapel.rsi
 
 - type: entity
   parent: AirlockServiceLocked
@@ -45,6 +51,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsJanitor ]
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/janitor.rsi
 
 - type: entity
   parent: AirlockServiceLocked
@@ -54,6 +62,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsKitchen ]
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/kitchen.rsi
 
 - type: entity
   parent: AirlockServiceLocked
@@ -63,6 +73,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsBar ]
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Standard/bar.rsi
 
 - type: entity
   parent: AirlockHydroponics
@@ -453,6 +465,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsLawyer ]
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/lawyer.rsi
 
 - type: entity
   parent: AirlockServiceGlassLocked
@@ -462,6 +476,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsTheatre ]
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/theatre.rsi
 
 - type: entity
   parent: AirlockServiceGlassLocked
@@ -471,6 +487,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsBar ]
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/bar.rsi
 
 - type: entity
   parent: AirlockExternalGlass
@@ -544,6 +562,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsKitchen ]
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/kitchen.rsi
 
 - type: entity
   parent: AirlockServiceGlassLocked
@@ -553,6 +573,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsJanitor ]
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/janitor.rsi
 
 - type: entity
   parent: AirlockHydroponicsGlass
@@ -571,6 +593,8 @@
   - type: ContainerFill
     containers:
       board: [ DoorElectronicsChapel ]
+  - type: Sprite
+    sprite: _Impstation/Structures/Doors/Airlocks/Glass/chapel.rsi
 
 - type: entity
   parent: AirlockEngineeringGlass
