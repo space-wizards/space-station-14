@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: The recycler can now be broken down and repaired.
-    type: Add
-  - message: Breaking the recycler now removes the EMAG effect.
-    type: Add
-  - message: The material-reclaiming efficiency of the recycler has been increased.
-    type: Tweak
-  - message: Fixed a bug where inaccessible solutions could be extracted from entities
-      via the recycler.
-    type: Fix
-  - message: Removed the material reclaimer.
-    type: Remove
-  id: 7159
-  time: '2024-08-19T03:39:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30802
 - author: lzk228
   changes:
   - message: Cheese wheel now Normal sized and slices in 4 slices instead of 3.
@@ -3920,3 +3904,10 @@
   id: 7658
   time: '2024-11-28T13:41:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33622
+- author: arimah
+  changes:
+  - message: GPS coordinates are now more readable.
+    type: Tweak
+  id: 7659
+  time: '2024-11-29T08:14:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33625
