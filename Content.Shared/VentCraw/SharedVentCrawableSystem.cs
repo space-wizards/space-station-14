@@ -165,13 +165,8 @@ public sealed class SharedVentCrawableSystem : EntitySystem
         var query = EntityQueryEnumerator<VentCrawHolderComponent>();
         while (query.MoveNext(out var uid, out var holder))
         {
-            if (holder.CurrentDirection == Direction.Invalid)
+            if (holder.CurrentDirection == Direction.Invalid || holder.CurrentTube == null)
                 continue;
-            
-            if (holder.CurrentTube == null)
-            {
-                continue;
-            }
 
             var currentTube = holder.CurrentTube.Value;
 
@@ -224,19 +219,14 @@ public sealed class SharedVentCrawableSystem : EntitySystem
                 frameTime -= time;
             }
             else if (holder.NextTube != null && holder.TimeLeft == 0)
-            {                
-                if (HasComp<VentCrawEntryComponent>(holder.NextTube.Value) && !holder.FirstEntry)
+            {
+                var welded = false;
+                if (TryComp<WeldableComponent>(holder.NextTube.Value, out var weldableComponent))
+                    welded = weldableComponent.IsWelded;
+                if (HasComp<VentCrawEntryComponent>(holder.NextTube.Value) && !holder.FirstEntry && !welded)
                 {
-                    var welded = false;
-                    if (TryComp<WeldableComponent>(holder.NextTube.Value, out var weldableComponent))
-                    {
-                        welded = weldableComponent.IsWelded;
-                    }
-                    if (!welded)
-                    {
-                        var ev = new VentCrawExitEvent();
-                        RaiseLocalEvent(uid, ref ev);
-                    }
+                    var ev = new VentCrawExitEvent();
+                    RaiseLocalEvent(uid, ref ev);
                 }
                 else
                 {
