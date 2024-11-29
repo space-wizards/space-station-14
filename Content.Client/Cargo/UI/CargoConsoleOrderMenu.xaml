@@ -48,8 +48,6 @@
         </GridContainer>
 
         <Control VerticalExpand="True"/>
-
-
         <PanelContainer StyleClasses="LowDivider" Margin="0 6 0 2"/>
 
         <Button Name="SubmitButton"
