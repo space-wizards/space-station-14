@@ -14,9 +14,9 @@ using Content.Shared.SSDIndicator;
 namespace Content.Shared.RemoteControl;
 
 /// <summary>
-/// guh
+/// System used for managing remote control: Granting temporary control of entities to other entities.
 /// </summary>
-public abstract partial class SharedRemoteControlSystem : EntitySystem
+public abstract class SharedRemoteControlSystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -36,6 +36,7 @@ public abstract partial class SharedRemoteControlSystem : EntitySystem
         SubscribeLocalEvent<RemoteControllerComponent, DamageChangedEvent>(OnTookDamage);
 
         SubscribeLocalEvent<RCRemoteComponent, UseInHandEvent>(OnUseInHand);
+        SubscribeLocalEvent<RCRemoteComponent, ComponentShutdown>(OnRemoteShutdown);
         SubscribeLocalEvent<RCRemoteComponent, DroppedEvent>(OnRemoteDropped);
     }
 
@@ -53,14 +54,14 @@ public abstract partial class SharedRemoteControlSystem : EntitySystem
     private void OnControllableInit(Entity<RemotelyControllableComponent> ent, ref ComponentInit args)
     {
         EntityUid? actionEnt = null;
-        _actions.AddAction(ent.Owner, ref actionEnt, "ActionRCBackToBody");
+        _actions.AddAction(ent.Owner, ref actionEnt, ent.Comp.ReturnActionPrototype);
         if (actionEnt != null)
-            ent.Comp.ReturnAbility = actionEnt.Value;
+            ent.Comp.ReturnAction = actionEnt.Value;
     }
 
     private void OnControllableShutdown(Entity<RemotelyControllableComponent> ent, ref ComponentShutdown args)
     {
-        _actions.RemoveAction(ent.Owner, ent.Comp.ReturnAbility);
+        _actions.RemoveAction(ent.Owner, ent.Comp.ReturnAction);
     }
 
     private void OnMobStateChanged(Entity<RemotelyControllableComponent> ent, ref MobStateChangedEvent args)
@@ -125,6 +126,16 @@ public abstract partial class SharedRemoteControlSystem : EntitySystem
         args.Handled = true;
     }
 
+    private void OnRemoteShutdown(Entity<RCRemoteComponent> ent, ref ComponentShutdown args)
+    {
+        if (!TryComp<RemotelyControllableComponent>(ent.Comp.BoundTo, out var remoteComp))
+            return;
+
+        TryStopRemoteControl(ent.Comp.BoundTo.Value);
+
+        remoteComp.BoundRemote = null;
+    }
+
     private void OnRemoteDropped(Entity<RCRemoteComponent> ent, ref DroppedEvent args)
     {
         if (ent.Comp.BoundTo is null)
@@ -137,7 +148,7 @@ public abstract partial class SharedRemoteControlSystem : EntitySystem
     }
 
     /// <summary>
-    /// Attempts to give control of an entity to the controller.
+    /// Attempts to give control of an entity to the controller. The target must have RemotelyControllableComponent.
     /// </summary>
     /// <param name="ent">The entity that will be remotely controlled.</param>
     /// <param name="controller">UID of the entity that is to take control of the other.</param>
@@ -155,7 +166,6 @@ public abstract partial class SharedRemoteControlSystem : EntitySystem
         EnsureComp<RemoteControllerComponent>(controller, out var remoteController);
 
         remoteController.Controlled = ent.Owner;
-        //remoteController.UsedRemote = ent.Owner;
 
         ent.Comp.Controller = controller;
         ent.Comp.IsControlled = true;
@@ -180,6 +190,9 @@ public abstract partial class SharedRemoteControlSystem : EntitySystem
             return false;
 
         if (!_mind.TryGetMind(uid, out var mindId, out var mind))
+            return false;
+
+        if (remoteControl.IsControlled == false)
             return false;
 
         if (TryComp<SSDIndicatorComponent>(remoteControl.Controller, out var ssd))

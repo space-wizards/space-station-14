@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.RemoteControl.Components;
 /// <summary>
@@ -8,17 +9,24 @@ namespace Content.Shared.RemoteControl.Components;
 public sealed partial class RemotelyControllableComponent : Component
 {
     /// <summary>
-    /// The ability used to return to the original body.
-    /// </summary>
-    [ViewVariables, AutoNetworkedField]
-    public EntityUid? ReturnAbility = null;
-
-    /// <summary>
     /// The examine message shown when examining the entity with this component.
     /// Null means there is no message.
     /// </summary>
     [DataField, AutoNetworkedField]
     public LocId? ExamineMessage;
+
+    /// <summary>
+    /// Action granted to the remotely controlled entity.
+    /// Used to return back to body.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public EntProtoId ReturnActionPrototype = "ActionRCBackToBody";
+
+    /// <summary>
+    /// The ability used to return to the original body.
+    /// </summary>
+    [ViewVariables, AutoNetworkedField]
+    public EntityUid? ReturnAction = null;
 
     /// <summary>
     /// Whether this entity is currently being controlled.
