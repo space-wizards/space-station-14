@@ -1,6 +1,0 @@
-- type: radioChannel
-  id: Mycorrhizal
-  name: chat-radio-dionas
-  keycode: 'd'
-  color: "#025c0f"
-  longRange: true

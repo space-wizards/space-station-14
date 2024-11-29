@@ -1,0 +1,7 @@
+- type: collectiveMind
+  id: Mycorrhizal
+  name: collective-mind-dionas
+  keycode: 'd'
+  color: "#706d0d"
+  requiredTags:
+  - DionaMinded

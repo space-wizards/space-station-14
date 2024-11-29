@@ -44,6 +44,7 @@
   - type: RequireProjectileTarget
     active: False
   - type: AnimatedEmotes
+  - type: CollectiveMind
 
 - type: entity
   save: false

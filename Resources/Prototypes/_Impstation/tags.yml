@@ -1,10 +1,10 @@
 # PUT YOUR TAGS IN ALPHABETICAL ORDER
 - type: Tag
   id: CartridgeLPistol
-  
+
 - type: Tag
   id: CleanerGrenade
-  
+
 - type: Tag
   id: ConversionKitFA
 
@@ -40,3 +40,6 @@
 
 - type: Tag
   id: WeaponSurvivalRifleUpgradeSMGKit
+
+- type: Tag
+  id: DionaMinded
