@@ -25,8 +25,14 @@ public abstract class SharedIntellicardSystem : EntitySystem
     [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly SharedStationAiSystem _stationAi = default!;
 
+    /// <summary>
+    /// Prototype of the StationAiBrain, used for spawning in a new entity.
+    /// </summary>
     private readonly EntProtoId _defaultAi = "StationAiBrain";
 
+    /// <summary>
+    /// Prototype of the StationAi job, used for adding and removing it from the late join menu.
+    /// </summary>
     private readonly EntProtoId _stationAiJob = "StationAi";
 
     public override void Initialize()
@@ -112,6 +118,10 @@ public abstract class SharedIntellicardSystem : EntitySystem
         if (_gameTiming.ApplyingState)
             return;
 
+        if (args.Container.ID != IntellicardComponent.Container)
+            return;
+
+        // This is how the AI Core gets renamed to the AI's name. Unsure if there is a better way to do this.
         _metadata.SetEntityName(ent.Owner, MetaData(args.Entity).EntityName);
     }
 

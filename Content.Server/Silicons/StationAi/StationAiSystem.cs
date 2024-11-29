@@ -25,7 +25,9 @@ public sealed class StationAiSystem : SharedStationAiSystem
 
     private readonly HashSet<Entity<StationAiCoreComponent>> _ais = new();
 
-    // PrototypeJobId of the StationAI Job
+    /// <summary>
+    /// PrototypeJobId of the StationAI Job
+    /// </summary>
     private readonly string _aiJobId = "StationAi";
 
     public override bool SetVisionEnabled(Entity<StationAiVisionComponent> entity, bool enabled, bool announce = false)
@@ -80,7 +82,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
             _stationJobs.TryAdjustJobSlot(uniqueStation, _aiJobId, -1, clamp: true);
         }
 
-        if(!force)
+        if (!force)
             RemCompDeferred<ContainerSpawnPointComponent>(ent);
     }
 

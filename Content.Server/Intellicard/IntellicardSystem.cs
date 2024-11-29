@@ -51,6 +51,9 @@ public sealed class IntellicardSystem : SharedIntellicardSystem
         args.Verbs.Add(verb);
     }
 
+    /// <summary>
+    /// Gives the provided entity a random name from It's RandomMetadataComponent.
+    /// </summary>
     protected override void RandomizeAiName(EntityUid uid)
     {
         if (!TryComp<RandomMetadataComponent>(uid, out var metadata))
