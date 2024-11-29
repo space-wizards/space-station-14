@@ -564,12 +564,12 @@
   id: EffectLocalKnockdown
   targetDepth: 3
   effectHint: artifact-effect-hint-environment
-  effectProb: 10000
+  effectProb: 0.7
   components:
   - type: KnockdownArtifact
-    range: 8f
+    range: 8
     entireGrid: false
-    knockdownTime: 4f
+    knockdownTime: 4
 
 - type: artifactEffect
   id: EffectMaterialSpawn
@@ -1058,6 +1058,16 @@
     - id: ScrollRunes
       prob: 1
       orGroup: magicbook
+
+- type: artifactEffect
+  id: EffectGridKnockdown
+  targetDepth: 4
+  effectHint: artifact-effect-hint-stationwide-disruption
+  effectProb: 0.6
+  components:
+  - type: KnockdownArtifact
+    entireGrid: true
+    knockdownTime: 2.5
 
 - type: artifactEffect
   id: EffectSingulo
