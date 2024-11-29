@@ -644,3 +644,38 @@ Entries:
   id: 90
   time: '2024-11-27T17:08:02.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/commit/7b65cc62d7e8a5bc1eb023e999a616e37f00bf1b
+- author: Rinary
+  changes:
+  - message: Fixed bug when starlight species don't absorbable.
+    type: Fix
+  id: 91
+  time: '2024-11-29T08:20:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/8b4e4af35bdbc8586563cd53e59777a3f6a4eaab
+- author: Rinary
+  changes:
+  - message: Fixed bug when mechs are not pacified at the end of the round.
+    type: Fix
+  id: 92
+  time: '2024-11-29T08:20:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/46b534ef02c77f884322f4153fd083fc01a8c9ea
+- author: Rinary
+  changes:
+  - message: Fixed bug when changelings don't have objectives.
+    type: Fix
+  id: 93
+  time: '2024-11-29T08:20:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/74c7741b85d71fd385e76c75f9f97de922479248
+- author: Rinary
+  changes:
+  - message: Fixed bug when entities stucks at welded vents while vent craw.
+    type: Fix
+  id: 94
+  time: '2024-11-29T08:20:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/2f6b5e463979cedaeb6de9878f951de417d2f995
+- author: Rinary
+  changes:
+  - message: Fixed bug when any antagonist can be a vampire or changeling.
+    type: Fix
+  id: 96
+  time: '2024-11-29T08:20:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/74d373a6e7d75af457bed2a54aa160d9412798ee
