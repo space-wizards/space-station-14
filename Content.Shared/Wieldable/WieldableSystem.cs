@@ -18,7 +18,9 @@ using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Wieldable.Components;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Wieldable;
@@ -35,6 +37,7 @@ public sealed class WieldableSystem : EntitySystem
     [Dependency] private readonly SharedGunSystem _gun = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _netManager = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
 
     public override void Initialize()
     {
@@ -255,7 +258,8 @@ public sealed class WieldableSystem : EntitySystem
 
         var selfMessage = Loc.GetString("wieldable-component-successful-wield", ("item", used));
         var othersMessage = Loc.GetString("wieldable-component-successful-wield-other", ("user", Identity.Entity(user, EntityManager)), ("item", used));
-        _popupSystem.PopupPredicted(selfMessage, othersMessage, user, user);
+        _popupSystem.PopupClient(selfMessage, user, user);
+        _popupSystem.PopupEntity(othersMessage, user, Filter.PvsExcept(user, entityManager: EntityManager).RemoveWhere(e => e.AttachedEntity != null && !_container.IsInSameOrParentContainer((user, Transform(user)), (e.AttachedEntity.Value, Transform(e.AttachedEntity.Value)))), true);
 
         var targEv = new ItemWieldedEvent();
         RaiseLocalEvent(used, ref targEv);
@@ -300,7 +304,8 @@ public sealed class WieldableSystem : EntitySystem
 
             var selfMessage = Loc.GetString("wieldable-component-failed-wield", ("item", uid));
             var othersMessage = Loc.GetString("wieldable-component-failed-wield-other", ("user", Identity.Entity(args.User.Value, EntityManager)), ("item", uid));
-            _popupSystem.PopupPredicted(selfMessage, othersMessage, args.User.Value, args.User.Value);
+            _popupSystem.PopupClient(selfMessage, args.User.Value, args.User.Value);
+            _popupSystem.PopupEntity(othersMessage, args.User.Value, Filter.PvsExcept(args.User.Value, entityManager: EntityManager).RemoveWhere(e => e.AttachedEntity != null && !_container.IsInSameOrParentContainer((args.User.Value, Transform(args.User.Value)), (e.AttachedEntity.Value, Transform(e.AttachedEntity.Value)))), true);
         }
 
         _appearance.SetData(uid, WieldableVisuals.Wielded, false);
