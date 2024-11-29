@@ -29,8 +29,8 @@
 - type: startingGear
   id: BrigmedicGear
   equipment:
-    eyes: ClothingEyesHudMedSec
-    ears: ClothingHeadsetSecurity
+    eyes: ClothingEyesGlassesBrigmedic
+    ears: ClothingHeadsetBrigmedic
     neck: ClothingNeckTieRed
     pocket1: WeaponPistolMk58
     mask: ClothingMaskBreathMedicalSecurity
