@@ -91,9 +91,8 @@ public sealed class ChatUIController : UIController, IOnSystemChanged<CharacterI
         {SharedChatSystem.EmotesAltPrefix, ChatSelectChannel.Emotes},
         {SharedChatSystem.AdminPrefix, ChatSelectChannel.Admin},
         {SharedChatSystem.RadioCommonPrefix, ChatSelectChannel.Radio},
-        {SharedChatSystem.DeadPrefix, ChatSelectChannel.Dead}
         {SharedChatSystem.DeadPrefix, ChatSelectChannel.Dead},
-        {SharedChatSystem.CollectiveMindPrefix, ChatSelectChannel.CollectiveMind}
+        {SharedChatSystem.CollectiveMindPrefix, ChatSelectChannel.CollectiveMind},
     };
 
     public static readonly Dictionary<ChatSelectChannel, char> ChannelPrefixes = new()
