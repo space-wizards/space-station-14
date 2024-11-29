@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Beck Thompson
-  changes:
-  - message: Slightly increased the price of the seed restock.
-    type: Tweak
-  id: 7161
-  time: '2024-08-19T10:33:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31185
 - author: Boaz1111
   changes:
   - message: The HoS has been given a new experimental weapon:An energy shotgun with
@@ -3911,3 +3904,10 @@
   id: 7660
   time: '2024-11-29T09:46:24.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33636
+- author: MossyGreySlope
+  changes:
+  - message: Rename the "slimeperson life support crate" to "internals crate (nitrogen)".
+    type: Tweak
+  id: 7661
+  time: '2024-11-29T12:51:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33545
