@@ -92,8 +92,8 @@ namespace Content.Server.Bible
                     uid,
                     Filter.PvsExcept(uid, entityManager: EntityManager)
                         .RemoveWhere(e =>
-                            e.AttachedEntity != null && (!_container.IsInSameOrParentContainer((uid, Transform(uid)),
-                                (e.AttachedEntity.Value, Transform(e.AttachedEntity.Value))) && _container.IsEntityInContainer(uid))),
+                            e.AttachedEntity != null && _container.IsEntityInContainer(uid) && !_container.IsInSameOrParentContainer((uid, Transform(uid)),
+                                (e.AttachedEntity.Value, Transform(e.AttachedEntity.Value)))),
                     true,
                     PopupType.Medium);
                 _audio.PlayPvs("/Audio/Effects/radpulse9.ogg", uid, AudioParams.Default.WithVolume(-4f));
