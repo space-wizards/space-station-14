@@ -3,11 +3,11 @@
   name: uplink-contortionist-jumpsuit-name
   description: uplink-contortionist-jumpsuit-desc
   productEntity: ClothingUniformJumpsuitAtmosSyndie
-  discountCategory: usualDiscounts
+  discountCategory: rareDiscounts
   discountDownTo:
-    Telecrystal: 3
+    Telecrystal: 8
   cost:
-    Telecrystal: 6
+    Telecrystal: 12
   categories:
   - UplinkJob
   conditions:
