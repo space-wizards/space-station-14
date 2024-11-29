@@ -3408,6 +3408,8 @@
   id: MobDionaNymph
   description: It's like a cat, only.... branch-ier.
   components:
+  - type: CollectiveMind
+    channel: Mycorrhizal
   - type: Sprite
     drawdepth: Mobs
     layers:

@@ -23,3 +23,8 @@ chat-speech-verb-finfin-mumble-1 = quavers
 
 chat-speech-verb-name-bros = Bros
 chat-speech-verb-bros = grunts
+
+# Collective mind
+chat-manager-send-collective-mind-chat-wrap-message = {$channel} Gestalt: {$message}
+chat-manager-send-collective-mind-chat-wrap-message-admin = {$source} ({$channel} Gestalt): {$message}
+chat-manager-collective-mind-channel-name = Gestalt

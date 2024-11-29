@@ -5,6 +5,8 @@
   id: BaseMobDiona
   abstract: true
   components:
+  - type: CollectiveMind
+    channel: Mycorrhizal
   - type: Absorbable
   - type: HumanoidAppearance
     species: Diona
