@@ -440,7 +440,7 @@
 - type: entity
   name: advanced circular saw
   id: SawAdvanced
-  parent: [ SawElectric, BaseSyndicateContraband ]
+  parent: SawElectric # Starligth - Removed Contraband
   description: You think you can cut anything with it.
   components:
   - type: Sprite
