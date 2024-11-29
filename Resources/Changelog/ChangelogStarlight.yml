@@ -700,3 +700,11 @@ Entries:
   id: 99
   time: '2024-11-29T13:14:00.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/4d5a9474db725275680c94035b401fd8b425af77
+- author: Miracula
+  changes:
+  - message: Changed salary and time requirements for sec department
+    type: Tweak
+  id: 100
+  time: '2024-11-29T14:58:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/94
+
