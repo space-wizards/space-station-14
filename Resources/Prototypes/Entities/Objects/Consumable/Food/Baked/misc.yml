@@ -629,6 +629,17 @@
   - type: Tag
     tags:
     - ClothMade
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 1
+        - ReagentId: Fiber
+          Quantity: 1
+        - ReagentId: Vitamin
+          Quantity: 0.5
 
 - type: entity
   name: brownies
@@ -811,3 +822,16 @@
   - type: Tag
     tags:
     - ClothMade
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 7
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 1.5
+        - ReagentId: Fiber
+          Quantity: 1.5
+        - ReagentId: Butter
+          Quantity: 2
+        - ReagentId: Vitamin
+          Quantity: 1

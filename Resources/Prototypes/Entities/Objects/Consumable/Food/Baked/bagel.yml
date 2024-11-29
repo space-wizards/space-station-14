@@ -71,4 +71,7 @@
         maxVol: 12
         reagents:
         - ReagentId: Nutriment
-          Quantity: 5
+          Quantity: 2.5
+        - ReagentId: Fiber
+          Quantity: 2.5
+

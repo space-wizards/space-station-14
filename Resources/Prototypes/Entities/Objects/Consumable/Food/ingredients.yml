@@ -464,6 +464,15 @@
   - type: Construction
     graph: DoughRopeCotton
     node: start
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 18
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 7.5
+        - ReagentId: Fiber
+          Quantity: 7.5
 
 - type: entity
   name: dough rope
@@ -480,6 +489,15 @@
   - type: Construction
     graph: DoughRopeCotton
     node: rolled
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 18
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 7.5
+        - ReagentId: Fiber
+          Quantity: 7.5
 
 - type: entity
   name: raw pastry base
