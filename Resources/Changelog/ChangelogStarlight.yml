@@ -679,3 +679,11 @@ Entries:
   id: 96
   time: '2024-11-29T08:20:02.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/commit/74d373a6e7d75af457bed2a54aa160d9412798ee
+- author: Miracula
+  changes:
+  - message: Added brigmedic role
+    type: Add
+  id: 97
+  time: '2024-11-29T08:45:34.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/91
+
