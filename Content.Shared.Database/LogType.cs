@@ -122,7 +122,12 @@ public enum LogType
     ExplosionHit = 94,
 
     /// <summary>
+    /// A ghost warped to an entity through the ghost warp menu.
+    /// </summary>
+    GhostWarp = 95,
+
+    /// <summary>
     /// An atmos networked device (such as a vent or pump) has had its settings changed, usually through an air alarm
     /// </summary>
-    AtmosDeviceSetting = 95,
+    AtmosDeviceSetting = 96,
 }
