@@ -283,6 +283,7 @@
   - type: Injector
     injectOnly: false
     ignoreMobs: true
+    ignoreClosed: false
     minTransferAmount: 1
     maxTransferAmount: 5
     transferAmount: 1
@@ -541,12 +542,8 @@
     solutions:
       food:
         maxVol: 20
-  - type: SolutionSpiker
-    sourceSolution: food
-  - type: Extractable
-    grindableSolutionName: food
-  - type: StaticPrice
-    price: 0
+  - type: ExplosionResistance
+    damageCoefficient: 0.025 # survives conventional explosives but not minibombs and nukes
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -559,6 +556,12 @@
         solution: food
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: SolutionSpiker
+    sourceSolution: food
+  - type: Extractable
+    grindableSolutionName: food
+  - type: StaticPrice
+    price: 0
   - type: Tag
     tags:
     - Pill
