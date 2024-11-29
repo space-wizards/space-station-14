@@ -1,5 +1,4 @@
 ﻿using System.Buffers.Binary;
-using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
@@ -11,9 +10,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Connection;
 
-/// <summary>
-/// Handles checking/warning if the connecting IP address is sus.
-/// </summary>
+// Handles checking/warning if the connecting IP address is sus.
 public sealed partial class ConnectionManager
 {
     private void InitializeIPIntel()
@@ -26,6 +23,7 @@ public sealed partial class ConnectionManager
         _cfg.OnValueChanged(CCVars.GameIPIntelRejectRateLimited, b => _rejectLimited = b, true);
         _cfg.OnValueChanged(CCVars.GameIPIntelMaxMinute, b => _requestLimitMinute = b, true);
         _cfg.OnValueChanged(CCVars.GameIPIntelMaxDay, b => _requestLimitDay = b, true);
+        _cfg.OnValueChanged(CCVars.GameIPIntelBackOffSeconds, b => _backoffSeconds = b, true);
         _cfg.OnValueChanged(CCVars.GameIPIntelBadRating, b => _rating = b, true);
         _cfg.OnValueChanged(CCVars.GameIPIntelCacheLength, b => _cacheDays = b, true);
         _cfg.OnValueChanged(CCVars.GameIPIntelExemptPlaytime, b => _exemptPlaytime = b, true);
@@ -39,10 +37,16 @@ public sealed partial class ConnectionManager
     private bool _ratelimitedDay;
     private int _currentRequestsDay;
     private int _currentRequestsMinute;
-    private TimeSpan _lastRatelimited;
+    private TimeSpan _lastRatelimitedDay;
+    private TimeSpan _lastRatelimitedMinute;
     private bool _limitHasBeenHandled;
 
+    private float _score;
+
     private TimeSpan _nextClean;
+
+    private int _failedRequests;
+    private TimeSpan _releasePeriod;
 
     // CCVars, they are initialized in ConnectionManager.cs
     private string? _contactEmail;
@@ -54,6 +58,7 @@ public sealed partial class ConnectionManager
     private bool _alertAdminReject;
     private int _requestLimitMinute;
     private int _requestLimitDay;
+    private int _backoffSeconds;
     private TimeSpan _cacheDays;
     private TimeSpan _exemptPlaytime;
     private float _rating;
@@ -97,15 +102,15 @@ public sealed partial class ConnectionManager
             // Skip to score check if result is older than _cacheDays
             if (DateTime.UtcNow - query.Time <= _cacheDays)
             {
-                var cachedScore = query.Score.ToString(CultureInfo.CurrentCulture);
-                return await ScoreCheck(cachedScore, e);
+                _score = query.Score;
+                return await ScoreCheck(_score, e);
             }
         }
 
         // Check our api limits. If we are ratelimited we back out.
         HandleRatelimit();
 
-        if (_ratelimitedMinute || _ratelimitedDay)
+        if (_ratelimitedMinute || _ratelimitedDay || CheckSuddenRateLimit())
             return _rejectLimited ? (true, Loc.GetString("ipintel-server-ratelimited")) : (false, string.Empty);
 
         // Ensure our contact email is good to use.
@@ -125,13 +130,19 @@ public sealed partial class ConnectionManager
         if (request.StatusCode == HttpStatusCode.TooManyRequests)
         {
             _sawmill.Warning("We hit the IPIntel request limit at some point.");
+            CalculateSuddenRatelimit();
             return _rejectLimited ? (true, Loc.GetString("ipintel-server-ratelimited")) : (false, string.Empty);
         }
 
         var response = await request.Content.ReadAsStringAsync();
+        _score = Parse.Float(response);
 
-        if (request.StatusCode != HttpStatusCode.BadRequest)
-            return await ScoreCheck(response, e);
+        if (request.StatusCode == HttpStatusCode.OK)
+        {
+            if (query == null || DateTime.UtcNow - query.Time >= _cacheDays)
+                await Task.Run(() => SaveCache(ip, _score));
+            return await ScoreCheck(_score, e);
+        }
 
         // Something went wrong! Let's see if it's an error we know about
         if (ErrorCheck(response, out var rejectResult))
@@ -142,21 +153,42 @@ public sealed partial class ConnectionManager
         return _rejectUnknown ? (true, Loc.GetString("ipintel-unknown")) : (false, string.Empty);
     }
 
+    private bool CheckSuddenRateLimit()
+    {
+        if (_failedRequests >= 1)
+        {
+            if (DateTime.UtcNow + _releasePeriod > DateTime.UtcNow)
+            {
+                CalculateSuddenRatelimit();
+                return true;
+            }
+        }
+
+        _failedRequests = 0;
+        return false;
+    }
+
+    private void CalculateSuddenRatelimit()
+    {
+        _failedRequests++;
+        _releasePeriod = TimeSpan.FromMinutes(_failedRequests * _backoffSeconds);
+    }
+
+    private static readonly Dictionary<string, string> ErrorMessages = new()
+    {
+        ["-1"] = "Invalid/No input.",
+        ["-2"] = "Invalid IP address.",
+        ["-3"] = "Unroutable address / private address given to the api. Make an issue in upstream as it should have been handled.",
+        ["-4"] = "Unable to reach IPIntel database. Perhaps it's down?",
+        ["-5"] = "Server's IP/Contact may have been banned, go to getipintel.net and make contact to be unbanned.",
+        ["-6"] = "You did not provide any contact information with your query or the contact information is invalid.",
+    };
+
     private bool ErrorCheck(string response, out (bool, string) result)
     {
         result = default;
 
-        var errorMessages = new Dictionary<string, string>
-        {
-            ["-1"] = "Invalid/No input.",
-            ["-2"] = "Invalid IP address.",
-            ["-3"] = "Unroutable address / private address given to the api. Make an issue in upstream as it should have been handled.",
-            ["-4"] = "Unable to reach IPIntel database. Perhaps it's down?",
-            ["-5"] = "Server's IP/Contact may have been banned, go to getipintel.net and make contact to be unbanned.",
-            ["-6"] = "You did not provide any contact information with your query or the contact information is invalid.",
-        };
-
-        if (!errorMessages.TryGetValue(response, out var errorMessage))
+        if (!ErrorMessages.TryGetValue(response, out var errorMessage))
             return false;
 
         _sawmill.Error($"IPIntel returned error {response}: {errorMessage}");
@@ -170,7 +202,7 @@ public sealed partial class ConnectionManager
         // Oh my god this is terrible
         if (_currentRequestsDay >= _requestLimitDay)
         {
-            if (ShouldLiftRateLimit(_ratelimitedDay, _lastRatelimited, TimeSpan.FromDays(1)))
+            if (ShouldLiftRateLimit(_ratelimitedDay, _lastRatelimitedDay, TimeSpan.FromDays(1)))
             {
                 _sawmill.Info("IPIntel daily rate limit lifted. We are back to normal.");
                 _ratelimitedDay = false;
@@ -184,11 +216,12 @@ public sealed partial class ConnectionManager
 
             _sawmill.Warning($"We just hit our last daily IPIntel limit ({_requestLimitDay})");
             _ratelimitedDay = true;
-            _lastRatelimited = _gameTiming.RealTime;
+            _limitHasBeenHandled = true;
+            _lastRatelimitedDay = _gameTiming.RealTime;
         }
         else if (_currentRequestsMinute >= _requestLimitMinute)
         {
-            if (ShouldLiftRateLimit(_ratelimitedMinute, _lastRatelimited, TimeSpan.FromMinutes(1)))
+            if (ShouldLiftRateLimit(_ratelimitedMinute, _lastRatelimitedMinute, TimeSpan.FromMinutes(1)))
             {
                 _sawmill.Info("IPIntel minute rate limit lifted. We are back to normal.");
                 _ratelimitedMinute = false;
@@ -202,29 +235,26 @@ public sealed partial class ConnectionManager
 
             _sawmill.Warning($"We just hit our last minute IPIntel limit ({_requestLimitMinute}).");
             _ratelimitedMinute = true;
-            _lastRatelimited = _gameTiming.RealTime;
+            _limitHasBeenHandled = true;
+            _lastRatelimitedMinute = _gameTiming.RealTime;
         }
     }
 
     private bool ShouldLiftRateLimit(bool currentlyRatelimited, TimeSpan lastRatelimited, TimeSpan liftingTime)
     {
         // Should we raise this limit now?
-        return currentlyRatelimited &&  lastRatelimited >= liftingTime;
+        return currentlyRatelimited && _gameTiming.RealTime >= lastRatelimited + liftingTime;
     }
 
-    private async Task<(bool, string Empty)> ScoreCheck(string response, NetConnectingArgs e)
+    private async Task<(bool, string Empty)> ScoreCheck(float score, NetConnectingArgs e)
     {
-        var score = Parse.Float(response);
-        var ip = e.IP.Address;
         var decisionIsReject = score > _rating;
-
-        await Task.Run(() => SaveCache(ip, score));
 
         if (_alertAdminWarn != 0f && _alertAdminWarn < score && !decisionIsReject)
         {
             _chatManager.SendAdminAlert(Loc.GetString("admin-alert-ipintel-warning",
                 ("player", e.UserName),
-                ("percent", Math.Round(score * 100))));
+                ("percent", Math.Round(score))));
         }
 
         if (!decisionIsReject)
@@ -234,7 +264,7 @@ public sealed partial class ConnectionManager
         {
             _chatManager.SendAdminAlert(Loc.GetString("admin-alert-ipintel-blocked",
                 ("player", e.UserName),
-                ("percent", Math.Round(score * 100))));
+                ("percent", Math.Round(score))));
         }
 
         return _rejectBad ? (true, Loc.GetString("ipintel-suspicious")) : (false, string.Empty);
@@ -242,12 +272,7 @@ public sealed partial class ConnectionManager
 
     private async Task SaveCache(IPAddress ip, float score)
     {
-        var query = await _db.GetIPIntelCache(ip);
-
-        if (query == null || DateTime.UtcNow - query.Time >= _cacheDays)
-        {
-            await _db.UpsertIPIntelCache(DateTime.UtcNow, ip, score);
-        }
+        await _db.UpsertIPIntelCache(DateTime.UtcNow, ip, score);
     }
 
     public async Task Update()
@@ -292,18 +317,23 @@ public sealed partial class ConnectionManager
         // @formatter:on
     ];
 
+    private static UInt128 ToAddressBytes(string ip)
+    {
+        return BinaryPrimitives.ReadUInt128BigEndian(IPAddress.Parse(ip).GetAddressBytes());
+    }
+
     private static readonly (UInt128 ip, int mask)[] ReservedRangesIpv6 =
     [
-        (BinaryPrimitives.ReadUInt128BigEndian(IPAddress.Parse("::1").GetAddressBytes()), 128), // "This host on this network"
-        (BinaryPrimitives.ReadUInt128BigEndian(IPAddress.Parse("::ffff:0:0").GetAddressBytes()), 96), // IPv4-mapped addresses
-        (BinaryPrimitives.ReadUInt128BigEndian(IPAddress.Parse("::ffff:0:0:0").GetAddressBytes()), 96), // IPv4-translated addresses
-        (BinaryPrimitives.ReadUInt128BigEndian(IPAddress.Parse("64:ff9b:1::").GetAddressBytes()), 48), // IPv4/IPv6 translation
-        (BinaryPrimitives.ReadUInt128BigEndian(IPAddress.Parse("100::").GetAddressBytes()), 64), // Discard prefix
-        (BinaryPrimitives.ReadUInt128BigEndian(IPAddress.Parse("2001:20::").GetAddressBytes()), 28), // ORCHIDv2
-        (BinaryPrimitives.ReadUInt128BigEndian(IPAddress.Parse("2001:db8::").GetAddressBytes()), 32), // Addresses used in documentation and example source code
-        (BinaryPrimitives.ReadUInt128BigEndian(IPAddress.Parse("3fff::").GetAddressBytes()), 20), // Addresses used in documentation and example source code
-        (BinaryPrimitives.ReadUInt128BigEndian(IPAddress.Parse("5f00::").GetAddressBytes()), 16), // IPv6 Segment Routing (SRv6)
-        (BinaryPrimitives.ReadUInt128BigEndian(IPAddress.Parse("fc00::").GetAddressBytes()), 7), // Unique local address
+        (ToAddressBytes("::1"), 128), // "This host on this network"
+        (ToAddressBytes("::ffff:0:0"), 96), // IPv4-mapped addresses
+        (ToAddressBytes("::ffff:0:0:0"), 96), // IPv4-translated addresses
+        (ToAddressBytes("64:ff9b:1::"), 48), // IPv4/IPv6 translation
+        (ToAddressBytes("100::"), 64), // Discard prefix
+        (ToAddressBytes("2001:20::"), 28), // ORCHIDv2
+        (ToAddressBytes("2001:db8::"), 32), // Addresses used in documentation and example source code
+        (ToAddressBytes("3fff::"), 20), // Addresses used in documentation and example source code
+        (ToAddressBytes("5f00::"), 16), // IPv6 Segment Routing (SRv6)
+        (ToAddressBytes("fc00::"), 7), // Unique local address
     ];
 
     private static bool IsAddressReservedIpv4(IPAddress address)

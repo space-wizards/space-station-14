@@ -28,7 +28,7 @@ namespace Content.Server.Database.Migrations.Postgres
                     table.PrimaryKey("PK_ipintel_cache", x => x.ipintel_cache_id);
                 });
 
-            migrationBuilder.Sql("CREATE UNIQUE INDEX idx_ipintel_cache_address ON ipintel(address)");
+            migrationBuilder.Sql("CREATE UNIQUE INDEX idx_ipintel_cache_address ON ipintel_cache(address)");
         }
 
         /// <inheritdoc />
