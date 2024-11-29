@@ -12,7 +12,7 @@ public sealed partial class StationAiConverterComponent : Component
     /// The duration it takes to convert the entity to an AiBrain.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public TimeSpan ConvertTime = 5;
+    public int ConvertTime = 5;
 
     /// <summary>
     /// The text used for the popup when the used brain has no mind.
