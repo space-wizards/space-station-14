@@ -5,7 +5,7 @@ using Content.Shared.NameModifier.Components;
 namespace Content.Shared.NameModifier.EntitySystems;
 
 /// <inheritdoc cref="NameModifierComponent"/>
-public sealed partial class NameModifierSystem : EntitySystem
+public sealed class NameModifierSystem : EntitySystem
 {
     [Dependency] private readonly MetaDataSystem _metaData = default!;
 
@@ -16,10 +16,10 @@ public sealed partial class NameModifierSystem : EntitySystem
         SubscribeLocalEvent<NameModifierComponent, EntityRenamedEvent>(OnEntityRenamed);
     }
 
-    private void OnEntityRenamed(Entity<NameModifierComponent> entity, ref EntityRenamedEvent args)
+    private void OnEntityRenamed(Entity<NameModifierComponent> ent, ref EntityRenamedEvent args)
     {
-        SetBaseName((entity, entity.Comp), args.NewName);
-        RefreshNameModifiers((entity, entity.Comp));
+        SetBaseName(ent, args.NewName);
+        RefreshNameModifiers((ent.Owner, ent.Comp));
     }
 
     private void SetBaseName(Entity<NameModifierComponent> entity, string name)

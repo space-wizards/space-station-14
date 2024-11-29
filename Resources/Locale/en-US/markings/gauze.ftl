@@ -46,6 +46,9 @@ marking-GauzeUpperLegRight = Gauze Thigh Wrap (Right)
 marking-GauzeBlindfold-gauze_blindfold = Gauze Blindfold
 marking-GauzeBlindfold = Gauze Blindfold
 
+marking-GauzeHead-gauze_head = Gauze Head Wrap
+marking-GauzeHead = Gauze Head Wrap
+
 marking-GauzeLizardBlindfold-gauze_lizard_blindfold = Gauze Blindfold
 marking-GauzeLizardBlindfold = Gauze Blindfold
 
