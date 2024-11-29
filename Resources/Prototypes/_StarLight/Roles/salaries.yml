@@ -11,17 +11,17 @@
 
     Chemist: 90
     Paramedic: 50
-    MedicalDoctor: 55
+    MedicalDoctor: 58
     MedicalIntern: 23
 
     AtmosphericTechnician: 90
-    StationEngineer: 55
+    StationEngineer: 54
     TechnicalAssistant: 23
 
     Warden: 90
     Detective: 80
-    Brigmedic: 70
-    SecurityOfficer: 55
+    Brigmedic: 73
+    SecurityOfficer: 64
     SecurityCadet: 23
 
     StationAi: 155
