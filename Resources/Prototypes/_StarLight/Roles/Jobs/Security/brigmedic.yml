@@ -20,6 +20,7 @@
   - Maintenance
   - Service
   - Medical
+  - External
   - Cryogenics
   special:
   - !type:AddImplantSpecial
