@@ -6,6 +6,7 @@
         "x": 548,
         "y": 548
     },
+    "metaAtlas": false,
     "states": [
         {
             "name": "board"
