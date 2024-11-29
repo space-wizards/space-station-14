@@ -686,4 +686,17 @@ Entries:
   id: 97
   time: '2024-11-29T08:45:34.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/91
-
+- author: Rinary
+  changes:
+  - message: Changed cortortionist jumpsuit price to 12 TK, and discount to rare.
+    type: Tweak
+  id: 98
+  time: '2024-11-29T9:16:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/593a312b2c6485513878ce99e0ec304a66a14cdf
+- author: Rinary
+  changes:
+  - message: Removed suicide command.
+    type: Remove
+  id: 99
+  time: '2024-11-29T13:14:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/4d5a9474db725275680c94035b401fd8b425af77
