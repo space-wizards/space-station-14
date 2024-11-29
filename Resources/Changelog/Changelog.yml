@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Cheese wheel now Normal sized and slices in 4 slices instead of 3.
-    type: Tweak
-  id: 7160
-  time: '2024-08-19T07:54:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31168
 - author: Beck Thompson
   changes:
   - message: Slightly increased the price of the seed restock.
@@ -3911,3 +3904,10 @@
   id: 7659
   time: '2024-11-29T08:14:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33625
+- author: DrSmugleaf
+  changes:
+  - message: Added admin log for ghost warping.
+    type: Add
+  id: 7660
+  time: '2024-11-29T09:46:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33636
