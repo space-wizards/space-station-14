@@ -248,7 +248,7 @@ public sealed class PullingSystem : EntitySystem
         if (!_blocker.CanMove(entity))
             return;
 
-        if (args.OldMovement == MoveButtons.None)
+        if (args.OldMovement != MoveButtons.None)
             return;
 
         if (args.OldMovement == MoveButtons.Walk)
