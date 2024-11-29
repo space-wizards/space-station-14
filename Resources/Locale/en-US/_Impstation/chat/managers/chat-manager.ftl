@@ -23,5 +23,3 @@ chat-speech-verb-finfin-mumble-1 = quavers
 
 chat-speech-verb-name-bros = Bros
 chat-speech-verb-bros = grunts
-
-# Collective mind
