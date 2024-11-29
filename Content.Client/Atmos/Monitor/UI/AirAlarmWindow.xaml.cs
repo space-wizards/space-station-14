@@ -23,27 +23,27 @@ public sealed partial class AirAlarmWindow : FancyWindow
     public event Action<bool>? AutoModeChanged;
     public event Action? ResyncAllRequested;
 
-    private RichTextLabel Address => CDeviceAddress;
-    private RichTextLabel DeviceTotal => CDeviceTotal;
-    private RichTextLabel Pressure => CPressureLabel;
-    private RichTextLabel Temperature => CTemperatureLabel;
-    private RichTextLabel AlarmState => CStatusLabel;
+    private RichTextLabel _address => CDeviceAddress;
+    private RichTextLabel _deviceTotal => CDeviceTotal;
+    private RichTextLabel _pressure => CPressureLabel;
+    private RichTextLabel _temperature => CTemperatureLabel;
+    private RichTextLabel _alarmState => CStatusLabel;
 
-    private TabContainer TabContainer => CTabContainer;
-    private BoxContainer VentDevices => CVentContainer;
-    private BoxContainer ScrubberDevices => CScrubberContainer;
+    private TabContainer _tabContainer => CTabContainer;
+    private BoxContainer _ventDevices => CVentContainer;
+    private BoxContainer _scrubberDevices => CScrubberContainer;
 
     private Dictionary<string, PumpControl> _pumps = new();
     private Dictionary<string, ScrubberControl> _scrubbers = new();
     private Dictionary<string, SensorInfo> _sensors = new();
-    private Button ResyncDevices => CResyncButton;
+    private Button _resyncDevices => CResyncButton;
 
 
     private Dictionary<Gas, Label> _gasLabels = new();
 
-    private OptionButton Modes => CModeButton;
+    private OptionButton _modes => CModeButton;
 
-    private CheckBox AutoMode => AutoModeCheckBox;
+    private CheckBox _autoMode => AutoModeCheckBox;
 
     public AirAlarmWindow()
     {
@@ -58,31 +58,31 @@ public sealed partial class AirAlarmWindow : FancyWindow
                 AirAlarmMode.Fill => "air-alarm-ui-mode-fill",
                 AirAlarmMode.Panic => "air-alarm-ui-mode-panic",
                 AirAlarmMode.None => "air-alarm-ui-mode-none",
-                _ => "error"
+                _ => "error",
             };
-            Modes.AddItem(Loc.GetString(text));
+            _modes.AddItem(Loc.GetString(text));
         }
 
-        Modes.OnItemSelected += args =>
+        _modes.OnItemSelected += args =>
         {
-            Modes.SelectId(args.Id);
+            _modes.SelectId(args.Id);
             AirAlarmModeChanged!.Invoke((AirAlarmMode) args.Id);
         };
 
-        AutoMode.OnToggled += _ =>
+        _autoMode.OnToggled += _ =>
         {
-            AutoModeChanged!.Invoke(AutoMode.Pressed);
+            AutoModeChanged!.Invoke(_autoMode.Pressed);
         };
 
-        TabContainer.SetTabTitle(0, Loc.GetString("air-alarm-ui-window-tab-vents"));
-        TabContainer.SetTabTitle(1, Loc.GetString("air-alarm-ui-window-tab-scrubbers"));
-        TabContainer.SetTabTitle(2, Loc.GetString("air-alarm-ui-window-tab-sensors"));
+        _tabContainer.SetTabTitle(0, Loc.GetString("air-alarm-ui-window-tab-vents"));
+        _tabContainer.SetTabTitle(1, Loc.GetString("air-alarm-ui-window-tab-scrubbers"));
+        _tabContainer.SetTabTitle(2, Loc.GetString("air-alarm-ui-window-tab-sensors"));
 
-        ResyncDevices.OnPressed += _ =>
+        _resyncDevices.OnPressed += _ =>
         {
-            VentDevices.RemoveAllChildren();
+            _ventDevices.RemoveAllChildren();
             _pumps.Clear();
-            ScrubberDevices.RemoveAllChildren();
+            _scrubberDevices.RemoveAllChildren();
             _scrubbers.Clear();
             CSensorContainer.RemoveAllChildren();
             _sensors.Clear();
@@ -97,11 +97,11 @@ public sealed partial class AirAlarmWindow : FancyWindow
 
     public void UpdateState(AirAlarmUIState state)
     {
-        Address.SetMarkup(state.Address);
-        DeviceTotal.SetMarkup($"{state.DeviceCount}");
-        Pressure.SetMarkup(Loc.GetString("air-alarm-ui-window-pressure", ("pressure", $"{state.PressureAverage:0.##}")));
-        Temperature.SetMarkup(Loc.GetString("air-alarm-ui-window-temperature", ("tempC", $"{TemperatureHelpers.KelvinToCelsius(state.TemperatureAverage):0.#}"), ("temperature", $"{state.TemperatureAverage:0.##}")));
-        AlarmState.SetMarkup(Loc.GetString("air-alarm-ui-window-alarm-state",
+        _address.SetMarkup(state.Address);
+        _deviceTotal.SetMarkup($"{state.DeviceCount}");
+        _pressure.SetMarkup(Loc.GetString("air-alarm-ui-window-pressure", ("pressure", $"{state.PressureAverage:0.##}")));
+        _temperature.SetMarkup(Loc.GetString("air-alarm-ui-window-temperature", ("tempC", $"{TemperatureHelpers.KelvinToCelsius(state.TemperatureAverage):0.#}"), ("temperature", $"{state.TemperatureAverage:0.##}")));
+        _alarmState.SetMarkup(Loc.GetString("air-alarm-ui-window-alarm-state",
                     ("color", ColorForAlarm(state.AlarmType)),
                     ("state", $"{state.AlarmType}")));
         UpdateModeSelector(state.Mode);
@@ -114,12 +114,12 @@ public sealed partial class AirAlarmWindow : FancyWindow
 
     public void UpdateModeSelector(AirAlarmMode mode)
     {
-        Modes.SelectId((int) mode);
+        _modes.SelectId((int) mode);
     }
 
     public void UpdateAutoMode(bool enabled)
     {
-        AutoMode.Pressed = enabled;
+        _autoMode.Pressed = enabled;
     }
 
     public void UpdateDeviceData(string addr, IAtmosDeviceData device)
@@ -175,7 +175,7 @@ public sealed partial class AirAlarmWindow : FancyWindow
 
     public static Color ColorForThreshold(float amount, AtmosAlarmThreshold threshold)
     {
-        threshold.CheckThreshold(amount, out AtmosAlarmType curAlarm);
+        threshold.CheckThreshold(amount, out var curAlarm);
         return ColorForAlarm(curAlarm);
     }
 
@@ -185,7 +185,7 @@ public sealed partial class AirAlarmWindow : FancyWindow
         {
             AtmosAlarmType.Danger => StyleNano.DangerousRedFore,
             AtmosAlarmType.Warning => StyleNano.ConcerningOrangeFore,
-            _ => StyleNano.GoodGreenFore
+            _ => StyleNano.GoodGreenFore,
         };
     }
 

@@ -14,8 +14,6 @@ public sealed class AtmosAlertsComputerBoundUserInterface : BoundUserInterface
         _menu = new AtmosAlertsComputerWindow(this, Owner);
         _menu.OpenCentered();
         _menu.OnClose += Close;
-
-        EntMan.TryGetComponent<TransformComponent>(Owner, out _);
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

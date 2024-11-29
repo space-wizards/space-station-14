@@ -12,12 +12,16 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets;
 [GenerateTypedNameReferences]
 public sealed partial class ThresholdControl : BoxContainer
 {
+    private AtmosAlarmThreshold _threshold;
+    private AtmosMonitorThresholdType _type;
+    private Gas? _gas;
+
     public event Action<AtmosMonitorThresholdType, AtmosAlarmThreshold, Gas?>? ThresholdDataChanged;
 
-    private CollapsibleHeading Heading => CName;
-    private CheckBox Enabled => CEnabled;
-    private BoxContainer DangerBounds => CDangerBounds;
-    private BoxContainer WarningBounds => CWarningBounds;
+    private CollapsibleHeading _name => CName;
+    private CheckBox _enabled => CEnabled;
+    private BoxContainer _dangerBounds => CDangerBounds;
+    private BoxContainer _warningBounds => CWarningBounds;
     private ThresholdBoundControl _upperBoundControl;
     private ThresholdBoundControl _lowerBoundControl;
     private ThresholdBoundControl _upperWarningBoundControl;
@@ -30,81 +34,81 @@ public sealed partial class ThresholdControl : BoxContainer
     {
         RobustXamlLoader.Load(this);
 
-        var alarmThreshold = threshold;
-        var thresholdType = type;
-        var gasType = gas;
+        _threshold = threshold;
+        _type = type;
+        _gas = gas;
 
-        Heading.Title = name;
+        _name.Title = name;
 
         // i miss rust macros
 
-        _upperBoundControl = new ThresholdBoundControl(LabelForBound("upper-bound"), alarmThreshold.UpperBound.Value, modifier);
+        _upperBoundControl = new ThresholdBoundControl(LabelForBound("upper-bound"), _threshold.UpperBound.Value, modifier);
         _upperBoundControl.OnBoundChanged += (value) =>
         {
-            alarmThreshold.SetLimit(AtmosMonitorLimitType.UpperDanger, value);
+            _threshold.SetLimit(AtmosMonitorLimitType.UpperDanger, value);
         };
         _upperBoundControl.OnBoundEnabled += (isEnabled) =>
         {
-            alarmThreshold.SetEnabled(AtmosMonitorLimitType.UpperDanger, isEnabled);
+            _threshold.SetEnabled(AtmosMonitorLimitType.UpperDanger, isEnabled);
         };
         _upperBoundControl.OnValidBoundChanged += () =>
         {
-            ThresholdDataChanged!.Invoke(thresholdType, alarmThreshold, gasType);
+            ThresholdDataChanged!.Invoke(_type, _threshold, _gas);
         };
-        DangerBounds.AddChild(_upperBoundControl);
+        _dangerBounds.AddChild(_upperBoundControl);
 
-        _lowerBoundControl = new ThresholdBoundControl(LabelForBound("lower-bound"), alarmThreshold.LowerBound.Value, modifier);
+        _lowerBoundControl = new ThresholdBoundControl(LabelForBound("lower-bound"), _threshold.LowerBound.Value, modifier);
         _lowerBoundControl.OnBoundChanged += value =>
         {
-            alarmThreshold.SetLimit(AtmosMonitorLimitType.LowerDanger, value);
+            _threshold.SetLimit(AtmosMonitorLimitType.LowerDanger, value);
         };
         _lowerBoundControl.OnBoundEnabled += (isEnabled) =>
         {
-            alarmThreshold.SetEnabled(AtmosMonitorLimitType.LowerDanger, isEnabled);
+            _threshold.SetEnabled(AtmosMonitorLimitType.LowerDanger, isEnabled);
         };
         _lowerBoundControl.OnValidBoundChanged += () =>
         {
-            ThresholdDataChanged!.Invoke(thresholdType, alarmThreshold, gasType);
+            ThresholdDataChanged!.Invoke(_type, _threshold, _gas);
         };
-        DangerBounds.AddChild(_lowerBoundControl);
+        _dangerBounds.AddChild(_lowerBoundControl);
 
-        _upperWarningBoundControl = new ThresholdBoundControl(LabelForBound("upper-warning-bound"), alarmThreshold.UpperWarningBound.Value, modifier);
+        _upperWarningBoundControl = new ThresholdBoundControl(LabelForBound("upper-warning-bound"), _threshold.UpperWarningBound.Value, modifier);
         _upperWarningBoundControl.OnBoundChanged += value =>
         {
-            alarmThreshold.SetLimit(AtmosMonitorLimitType.UpperWarning, value);
+            _threshold.SetLimit(AtmosMonitorLimitType.UpperWarning, value);
         };
         _upperWarningBoundControl.OnBoundEnabled += (isEnabled) =>
         {
-            alarmThreshold.SetEnabled(AtmosMonitorLimitType.UpperWarning, isEnabled);
+            _threshold.SetEnabled(AtmosMonitorLimitType.UpperWarning, isEnabled);
         };
         _upperWarningBoundControl.OnValidBoundChanged += () =>
         {
-            ThresholdDataChanged!.Invoke(thresholdType, alarmThreshold, gasType);
+            ThresholdDataChanged!.Invoke(_type, _threshold, _gas);
         };
-        WarningBounds.AddChild(_upperWarningBoundControl);
+        _warningBounds.AddChild(_upperWarningBoundControl);
 
-        _lowerWarningBoundControl = new ThresholdBoundControl(LabelForBound("lower-warning-bound"), alarmThreshold.LowerWarningBound.Value, modifier);
+        _lowerWarningBoundControl = new ThresholdBoundControl(LabelForBound("lower-warning-bound"), _threshold.LowerWarningBound.Value, modifier);
         _lowerWarningBoundControl.OnBoundChanged += value =>
         {
-            alarmThreshold.SetLimit(AtmosMonitorLimitType.LowerWarning, value);
+            _threshold.SetLimit(AtmosMonitorLimitType.LowerWarning, value);
         };
         _lowerWarningBoundControl.OnBoundEnabled += (isEnabled) =>
         {
-            alarmThreshold.SetEnabled(AtmosMonitorLimitType.LowerWarning, isEnabled);
+            _threshold.SetEnabled(AtmosMonitorLimitType.LowerWarning, isEnabled);
         };
         _lowerWarningBoundControl.OnValidBoundChanged += () =>
         {
-            ThresholdDataChanged!.Invoke(thresholdType, alarmThreshold, gasType);
+            ThresholdDataChanged!.Invoke(_type, _threshold, _gas);
         };
 
-        WarningBounds.AddChild(_lowerWarningBoundControl);
+        _warningBounds.AddChild(_lowerWarningBoundControl);
 
-        Enabled.OnToggled += args =>
+        _enabled.OnToggled += args =>
         {
-            alarmThreshold.Ignore = !args.Pressed;
-            ThresholdDataChanged!.Invoke(thresholdType, alarmThreshold, gasType);
+            _threshold.Ignore = !args.Pressed;
+            ThresholdDataChanged!.Invoke(_type, _threshold, _gas);
         };
-        Enabled.Pressed = !alarmThreshold.Ignore;
+        _enabled.Pressed = !_threshold.Ignore;
     }
 
     private string LabelForBound(string boundType) //<todo.eoin Replace this with enums
@@ -123,18 +127,22 @@ public sealed partial class ThresholdControl : BoxContainer
 
         switch (alarm)
         {
-            case AtmosAlarmType.Danger when which == AtmosMonitorThresholdBound.Upper:
-                upperDangerState = alarm;
-                break;
             case AtmosAlarmType.Danger:
-                lowerDangerState = alarm;
+            {
+                if(which == AtmosMonitorThresholdBound.Upper)
+                    upperDangerState = alarm;
+                else
+                    lowerDangerState = alarm;
                 break;
-            case AtmosAlarmType.Warning when which == AtmosMonitorThresholdBound.Upper:
-                upperWarningState = alarm;
-                break;
+            }
             case AtmosAlarmType.Warning:
-                lowerWarningState = alarm;
+            {
+                if(which == AtmosMonitorThresholdBound.Upper)
+                    upperWarningState = alarm;
+                else
+                    lowerWarningState = alarm;
                 break;
+            }
         }
 
         _upperBoundControl.SetValue(threshold.UpperBound.Value);
@@ -153,6 +161,6 @@ public sealed partial class ThresholdControl : BoxContainer
         _lowerWarningBoundControl.SetEnabled(threshold.LowerWarningBound.Enabled);
         _lowerWarningBoundControl.SetWarningState(lowerWarningState);
 
-        Enabled.Pressed = !threshold.Ignore;
+        _enabled.Pressed = !threshold.Ignore;
     }
 }

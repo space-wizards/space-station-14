@@ -94,7 +94,7 @@ public sealed class AtmosDebugOverlay : Overlay
         var interp = (fill - _system.CfgBase) / _system.CfgScale;
 
         Color res;
-        if (_system.CfgCbm)
+        if (_system.CfgCBM)
         {
             // Greyscale interpolation
             res = Color.InterpolateBetween(Color.Black, Color.White, interp);

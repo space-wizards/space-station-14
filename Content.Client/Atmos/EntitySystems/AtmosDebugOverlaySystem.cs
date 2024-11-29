@@ -22,7 +22,7 @@ namespace Content.Client.Atmos.EntitySystems
         /// <summary>Gas ID used by GasMoles mode</summary>
         public int CfgSpecificGas = 0;
         /// <summary>Uses black-to-white interpolation (as opposed to red-green-blue) for colourblind users</summary>
-        public bool CfgCbm = false;
+        public bool CfgCBM = false;
         // }
 
         public override void Initialize()
