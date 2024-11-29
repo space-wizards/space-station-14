@@ -93,7 +93,7 @@ public sealed partial class CCVars
     ///     If true, will reset the last time the player has read the rules. This will mean on their next login they will be shown the rules again.
     /// </summary>
     public static readonly CVarDef<bool> ServerBanResetLastReadRules =
-        CVarDef.Create("admin.server_ban_reset_last_read_rules", true, CVar.ARCHIVE | CVar.SERVER | CVar.REPLICATED);
+        CVarDef.Create("admin.server_ban_reset_last_read_rules", true, CVar.ARCHIVE | CVar.SERVER);
 
     /// <summary>
     ///     Minimum players sharing a connection required to create an alert. -1 to disable the alert.
