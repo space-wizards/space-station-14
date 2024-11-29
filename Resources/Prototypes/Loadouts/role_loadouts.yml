@@ -375,6 +375,20 @@
   - GroupSpeciesBreathToolSecurity
 
 - type: roleLoadout
+  id: JobBrigmedic
+  groups:
+  - BrigmedicHead
+  - BrigmedicJumpsuit
+  - BrigmedicBackpack
+  - BrigmedicOuterClothing
+  - SecurityShoes
+  - BrigmedicBelt
+  - SurvivalSecurity
+  - Trinkets
+  - SecurityStarA
+  - GroupSpeciesBreathToolSecurity
+
+- type: roleLoadout
   id: JobDetective
   groups:
   - GroupTankHarness
