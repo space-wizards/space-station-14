@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Cargo;
@@ -155,19 +156,44 @@ namespace Content.Client.Cargo.UI
                 var row = new CargoOrderRow
                 {
                     Order = order,
+                    
+                    Title = 
+                    {
+                        Text = !string.IsNullOrEmpty(order.Requester) ?
+                            Loc.GetString(
+                                "cargo-console-menu-order-row-title",
+                                ("orderRequester", order.Requester))
+                        :
+                            Loc.GetString(
+                                "cargo-console-menu-order-row-title",
+                                ("orderRequester", Loc.GetString("cargo-console-menu-order-row-alerts-requester-unknow")))
+                    },
+
                     Icon = { Texture = _spriteSystem.Frame0(product) },
-                    ProductName =
+
+                    ProductName = 
                     {
                         Text = Loc.GetString(
-                            "cargo-console-menu-populate-orders-cargo-order-row-product-name-text",
+                            "cargo-console-menu-order-row-product-name",
                             ("productName", productName),
-                            ("orderAmount", order.OrderQuantity),
-                            ("orderRequester", order.Requester))
+                            ("orderAmount", order.OrderQuantity))
                     },
-                    Description = {Text = Loc.GetString("cargo-console-menu-order-reason-description",
-                                                        ("reason", order.Reason))}
+
+                    Description =
+                    {
+                        Text = !string.IsNullOrEmpty(order.Reason) ?
+                            Loc.GetString(
+                                "cargo-console-menu-order-row-product-description",
+                                ("orderReason", order.Reason))
+                        :
+                            Loc.GetString(
+                                "cargo-console-menu-order-row-product-description",
+                                ("orderReason", Loc.GetString("cargo-console-menu-order-row-alerts-reason-absent")))
+                    }
                 };
+
                 row.Cancel.OnPressed += (args) => { OnOrderCanceled?.Invoke(args); };
+
                 if (order.Approved)
                 {
                     row.Approve.Visible = false;
@@ -185,8 +211,7 @@ namespace Content.Client.Cargo.UI
 
         public void UpdateCargoCapacity(int count, int capacity)
         {
-            // TODO: Rename + Loc.
-            ShuttleCapacityLabel.Text = $"{count}/{capacity}";
+            ShuttleCapacityLabel.Text = Loc.GetString("cargo-console-menu-shuttle-status-capacity", ("currentCoutn", count.ToString()), ("maxCapacity", capacity.ToString()));
         }
 
         public void UpdateBankData(string name, int points)
