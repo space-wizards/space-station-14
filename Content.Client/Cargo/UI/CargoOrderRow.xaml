@@ -58,6 +58,7 @@
         <PanelContainer StyleClasses="LowDivider" Margin="-6 0"/>
 
         <!-- Buttons -->
+        <!-- Btn's position hardcoded (args.Button.Parent?.Parent?.Parent type) in CargoConsoleBUI 158 & 166 line -->
         <BoxContainer>
             <Button Name="Approve"
                 Access="Public"
