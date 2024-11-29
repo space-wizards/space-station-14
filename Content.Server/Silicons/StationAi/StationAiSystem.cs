@@ -11,6 +11,7 @@ using Content.Shared.StationAi;
 using Robust.Shared.Audio;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Silicons.StationAi;
 
@@ -28,7 +29,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
     /// <summary>
     /// PrototypeJobId of the StationAI Job
     /// </summary>
-    private readonly string _aiJobId = "StationAi";
+    private readonly EntProtoId _aiJobId = "StationAi";
 
     public override bool SetVisionEnabled(Entity<StationAiVisionComponent> entity, bool enabled, bool announce = false)
     {
