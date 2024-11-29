@@ -248,6 +248,12 @@ public sealed class PullingSystem : EntitySystem
         if (!_blocker.CanMove(entity))
             return;
 
+        if (args.OldMovement == MoveButtons.None)
+            return;
+
+        if (args.OldMovement == MoveButtons.Walk)
+            return;
+
         TryStopPull(uid, component, user: uid);
     }
 
