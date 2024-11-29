@@ -9,6 +9,9 @@
     state: spray_painter
   - type: Item
     sprite: Objects/Tools/spray_painter.rsi
+  - type: Tag # Imp
+    tags:
+    - SprayPainter
   - type: ActivatableUI
     key: enum.SprayPainterUiKey.Key
   - type: UserInterface

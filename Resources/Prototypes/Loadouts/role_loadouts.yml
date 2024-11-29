@@ -590,11 +590,12 @@
 - type: roleLoadout
   id: JobChemist
   groups:
+  - ChemistHead # imp
   - MedicalMask
   - ChemistNeck
   - ChemistJumpsuit
   - ChemistOuterClothing
-  - MedicalGloves
+  - ChemistGloves # imp
   - ChemistShoes
   - ChemistBackpack
   - ChemistPDA

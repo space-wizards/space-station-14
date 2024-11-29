@@ -4,6 +4,7 @@
   id: MobBros
   description: OH FUCK IT'S BROS
   components:
+    - type: VentCrawler
     - type: Item
       size: Tiny
     - type: Sprite

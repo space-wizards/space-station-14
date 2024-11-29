@@ -1,0 +1,28 @@
+# Neck - DeltaV
+- type: loadout # DeltaV
+  id: ChemistTie
+  equipment:
+    neck: ClothingNeckTieChem
+
+- type: loadout # DeltaV
+  id: ChemistFormalSuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitChemShirt
+
+## Start DeltaV Changes
+- type: loadout
+  id: ChemistryApron
+  equipment:
+    outerClothing: ClothingOuterApronChemist
+
+# Gloves - DeltaV
+- type: loadout
+  id: ChemistryGloves
+  equipment:
+    gloves: ClothingHandsGlovesChemist
+
+- type: loadout
+  id: ChemistryShoes
+  equipment:
+    shoes: ClothingShoesEnclosedChem
+## End DeltaV Changes
