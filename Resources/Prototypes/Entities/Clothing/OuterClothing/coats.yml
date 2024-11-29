@@ -96,11 +96,11 @@
   id: ClothingOuterCoatHoSTrench
   name: head of security's armored trenchcoat
   description: A greatcoat enhanced with a special alloy for some extra protection and style for those with a commanding presence.
-  components:
+  components: #Harmony Update:Updating pathing for the new HoS coat
   - type: Sprite
-    sprite: Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
+    sprite: _Harmony/Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
   - type: Clothing
-    sprite: Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
+    sprite: _Harmony/Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
 
 - type: entity
   parent: ClothingOuterStorageToggleableBase
