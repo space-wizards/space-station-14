@@ -47,7 +47,7 @@ public sealed partial class ChangelingRuleSystem : GameRuleSystem<ChangelingRule
     }
     public bool MakeChangeling(EntityUid target, ChangelingRuleComponent rule)
     {
-        if (!_mind.TryGetMind(target, out var mindId, out var mind) || _role.MindIsAntagonist(mind))
+        if (!_mind.TryGetMind(target, out var mindId, out var mind) || _role.MindIsAntagonist(mindId))
             return false;
 
         // briefing

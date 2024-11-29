@@ -64,7 +64,7 @@ public sealed partial class VampireRuleSystem : GameRuleSystem<VampireRuleCompon
     }
     public bool MakeVampire(EntityUid target, VampireRuleComponent rule)
     {
-        if (!_mind.TryGetMind(target, out var mindId, out var mind) || _role.MindIsAntagonist(mind))
+        if (!_mind.TryGetMind(target, out var mindId, out var mind) || _role.MindIsAntagonist(mindId))
             return false;
 
         // briefing
