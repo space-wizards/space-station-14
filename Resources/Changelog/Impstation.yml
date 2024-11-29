@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ultramario1998
-  changes:
-  - message: Add salvage boots option to QM loadout
-    type: Add
-  id: 105
-  time: '2024-08-20T15:20:21.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/124
 - author: starlighthowls
   changes:
   - message: boat test 2!!!!!!!
@@ -4359,3 +4352,13 @@
   id: 604
   time: '2024-11-28T23:09:08.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/832
+- author: DinnerCalzone
+  changes:
+  - message: Airlocks locked behind civilian roles now each have their own sprite
+      to better convey who can access them at a glance.
+    type: Add
+  - message: Made the colors of hydroponics airlocks a little less saturated.
+    type: Tweak
+  id: 605
+  time: '2024-11-29T07:38:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/834
