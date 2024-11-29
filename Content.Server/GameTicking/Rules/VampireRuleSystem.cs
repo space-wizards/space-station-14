@@ -60,14 +60,11 @@ public sealed partial class VampireRuleSystem : GameRuleSystem<VampireRuleCompon
 
     private void OnSelectAntag(EntityUid mindId, VampireRuleComponent comp, ref AfterAntagEntitySelectedEvent args)
     {
-        var ent = args.EntityUid;
-        
-        _antag.SendBriefing(ent, MakeBriefing(ent), Color.Yellow, BriefingSound);
-        MakeVampire(ent, comp);
+        MakeVampire(args.EntityUid, comp);
     }
     public bool MakeVampire(EntityUid target, VampireRuleComponent rule)
     {
-        if (!_mind.TryGetMind(target, out var mindId, out var mind))
+        if (!_mind.TryGetMind(target, out var mindId, out var mind) || _role.MindIsAntagonist(mind))
             return false;
 
         // briefing
@@ -76,6 +73,7 @@ public sealed partial class VampireRuleSystem : GameRuleSystem<VampireRuleCompon
             var briefing = Loc.GetString("vampire-role-greeting", ("name", metaData?.EntityName ?? "Unknown"));
             var briefingShort = Loc.GetString("vampire-role-greeting-short", ("name", metaData?.EntityName ?? "Unknown"));
 
+            _antag.SendBriefing(target, MakeBriefing(target), Color.Yellow, BriefingSound);
             _role.MindHasRole<VampireRoleComponent>(mindId, out var vampireRole);
             _role.MindHasRole<RoleBriefingComponent>(mindId, out var briefingComp);
             if (vampireRole is not null && briefingComp is null)
