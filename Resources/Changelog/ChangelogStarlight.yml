@@ -714,4 +714,11 @@ Entries:
   id: 101
   time: '2024-11-29T17:57:26.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/95
+- author: fishbait
+  changes:
+  - message: removed contraband tag from advanced circular saw
+    type: Fix
+  id: 102
+  time: '2024-11-29T23:53:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/97
 
