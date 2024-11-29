@@ -57,6 +57,7 @@
     - first
     - unique
     - any
+    - contains
     - isnull
     - isempty
     - cd
