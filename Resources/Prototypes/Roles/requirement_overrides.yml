@@ -145,6 +145,9 @@
     Warden:
     - !type:OverallPlaytimeRequirement
       time: 7200 # 2 hours
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 108000 # 30 hrs
     SecurityCadet:
     - !type:OverallPlaytimeRequirement
       time: 1800 # 30 minutes overall playtime
