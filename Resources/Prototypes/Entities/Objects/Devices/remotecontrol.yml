@@ -1,0 +1,15 @@
+- type: entity
+  name: syndie rc remote
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: RCRemote
+  description: A remote controller provided by the syndicate for spy operations.
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/t-ray.rsi
+    state: tray-off
+  - type: RCRemote
+  - type: Item
+    sprite: Objects/Tools/t-ray.rsi
+  - type: Appearance
+  - type: StaticPrice
+    price: 85
