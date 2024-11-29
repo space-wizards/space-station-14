@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Cargo;
