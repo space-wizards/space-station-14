@@ -691,7 +691,7 @@ Entries:
   - message: Changed cortortionist jumpsuit price to 12 TK, and discount to rare.
     type: Tweak
   id: 98
-  time: '2024-11-29T9:16:00.000000+00:00'
+  time: '2024-11-29T09:16:00.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/593a312b2c6485513878ce99e0ec304a66a14cdf
 - author: Rinary
   changes:
