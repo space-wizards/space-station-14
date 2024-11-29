@@ -985,6 +985,44 @@
   - WardenArmoredWinterCoat
 
 - type: loadoutGroup
+  id: BrigmedicHead
+  name: loadout-group-brigmedic-head
+  minLimit: 0
+  loadouts:
+  - BrigmedicBeret
+  - SecurityHelmet
+
+- type: loadoutGroup
+  id: BrigmedicJumpsuit
+  name: loadout-group-brigmedic-jumpsuit
+  loadouts:
+  - JumpsuitBrigmedic
+  - JumpskirtBrigmedic
+
+- type: loadoutGroup
+  id: BrigmedicBackpack
+  name: loadout-group-brigmedic-backpack
+  loadouts:
+  - BrigmedicBackpack
+  - BrigmedicSatchel
+  - BrigmedicDuffel
+  
+- type: loadoutGroup
+  id: BrigmedicBelt
+  name: loadout-group-brigmedic-belt
+  loadouts:
+  - BrigmedicBelt
+  - SecurityBelt
+  - SecurityWebbing
+
+- type: loadoutGroup
+  id: BrigmedicOuterClothing
+  name: loadout-group-brigmedic-outerclothing
+  loadouts:
+  - BrigmedicCoat
+  - SecurityOfficerWintercoat
+
+- type: loadoutGroup
   id: SecurityHead
   name: loadout-group-security-head
   minLimit: 0
