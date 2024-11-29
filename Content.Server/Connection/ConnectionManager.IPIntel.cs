@@ -63,6 +63,7 @@ public sealed partial class ConnectionManager
     private TimeSpan _exemptPlaytime;
     private float _rating;
     private float _alertAdminWarn;
+
     private async Task<(bool IsBad, string Reason)> IsVpnOrProxy(NetConnectingArgs e)
     {
         // Check Exemption flags, let them skip if they have them.
