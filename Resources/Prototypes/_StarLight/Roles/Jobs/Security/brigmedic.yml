@@ -30,7 +30,7 @@
   id: BrigmedicGear
   equipment:
     eyes: ClothingEyesGlassesBrigmedic
-    ears: ClothingHeadsetSecurity
+    ears: ClothingHeadsetBrigmedic
     neck: ClothingNeckTieRed
     pocket1: WeaponPistolMk58
     mask: ClothingMaskBreathMedicalSecurity
