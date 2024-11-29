@@ -304,7 +304,7 @@ public sealed partial class CCVars
         /// Amount of seconds to add to the exponential backoff with every failed request.
         /// </summary>
         public static readonly CVarDef<int> GameIPIntelBackOffSeconds =
-            CVarDef.Create("game.ipintel_request_limit_daily", 30, CVar.SERVERONLY);
+            CVarDef.Create("game.ipintel_request_backoff_seconds", 30, CVar.SERVERONLY);
 
         /// <summary>
         /// How long to store results in the cache before they must be retrieved again in days.
