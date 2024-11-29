@@ -10,6 +10,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
 using Content.Shared.RemoteControl.Components;
 using Content.Shared.SSDIndicator;
+using Content.Shared.Verbs;
 
 namespace Content.Shared.RemoteControl;
 
@@ -28,13 +29,13 @@ public abstract class SharedRemoteControlSystem : EntitySystem
         SubscribeLocalEvent<RemotelyControllableComponent, ComponentInit>(OnControllableInit);
         SubscribeLocalEvent<RemotelyControllableComponent, ComponentShutdown>(OnControllableShutdown);
         SubscribeLocalEvent<RemotelyControllableComponent, ExaminedEvent>(OnExamine);
-
         SubscribeLocalEvent<RemotelyControllableComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
         SubscribeLocalEvent<RemotelyControllableComponent, RCReturnToBodyEvent>(OnReturnToBody);
         SubscribeLocalEvent<RemotelyControllableComponent, MobStateChangedEvent>(OnMobStateChanged);
 
         SubscribeLocalEvent<RemoteControllerComponent, DamageChangedEvent>(OnTookDamage);
 
+        SubscribeLocalEvent<RCRemoteComponent, GetVerbsEvent<ActivationVerb>>(OnRCRemoteVerbs);
         SubscribeLocalEvent<RCRemoteComponent, UseInHandEvent>(OnUseInHand);
         SubscribeLocalEvent<RCRemoteComponent, ComponentShutdown>(OnRemoteShutdown);
         SubscribeLocalEvent<RCRemoteComponent, DroppedEvent>(OnRemoteDropped);
@@ -68,8 +69,12 @@ public abstract class SharedRemoteControlSystem : EntitySystem
     {
         TryStopRemoteControl(ent);
     }
+
     private void OnAfterInteractUsing(EntityUid uid, RemotelyControllableComponent comp, ref AfterInteractUsingEvent args)
     {
+        if (args.Handled || !args.CanReach)
+            return;
+
         if (!TryComp<RCRemoteComponent>(args.Used, out var remoteComp))
             return;
 
@@ -102,6 +107,32 @@ public abstract class SharedRemoteControlSystem : EntitySystem
 
         TryStopRemoteControl(ent.Comp.Controlled.Value);
 
+    }
+
+    private void OnRCRemoteVerbs(Entity<RCRemoteComponent> ent, ref GetVerbsEvent<ActivationVerb> args)
+    {
+        if (args.Hands == null || !args.CanAccess || !args.CanInteract)
+            return;
+
+        if (ent.Comp.BoundTo == null)
+            return;
+
+        if (!TryComp<RemotelyControllableComponent>(ent.Comp.BoundTo, out var remotelyComp))
+            return;
+
+        var user = args.User;
+
+        ActivationVerb verb = new()
+        {
+            Text = Loc.GetString("Wipe Bound"),
+            Act = () =>
+            {
+                ent.Comp.BoundTo = null;
+                remotelyComp.BoundRemote = null;
+                _popup.PopupEntity(Loc.GetString("Wiped bound."), user, user, PopupType.Large);
+            }
+        };
+        args.Verbs.Add(verb);
     }
 
     private void OnUseInHand(Entity<RCRemoteComponent> ent, ref UseInHandEvent args)
