@@ -187,6 +187,23 @@
     - !type:TileNotBlocked
 
 - type: construction
+  name: plain wooden chair
+  id: ChairWoodPlain
+  graph: Seat
+  startNode: start
+  targetNode: chairWoodPlain
+  category: construction-category-furniture
+  description: How long can you tolerate sitting in this before you die of a heart attack?
+  icon:
+    sprite: Structures/Furniture/chairs.rsi
+    state: woodenplain
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
   name: folding chair
   id: ChairFolding
   graph: Seat
