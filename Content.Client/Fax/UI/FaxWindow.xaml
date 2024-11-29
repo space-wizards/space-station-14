@@ -52,7 +52,8 @@
 
         <!-- Central part -->
         <BoxContainer Orientation="Vertical"
-            VerticalExpand="True">
+            VerticalExpand="True"
+            SeparationOverride="4">
 
             <!-- Paper Settings -->
             <BoxContainer>
@@ -68,8 +69,6 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"/>
             </BoxContainer>
-
-            <Control VerticalExpand="True" SetHeight="4"/>
 
             <!-- Other actions -->
             <BoxContainer>
@@ -88,6 +87,8 @@
                     HorizontalExpand="True"
                     StyleClasses="OpenLeft"/>
             </BoxContainer>
+
+            <Control VerticalExpand="True"/>
         </BoxContainer>
 
         <!-- Send & Copy -->
