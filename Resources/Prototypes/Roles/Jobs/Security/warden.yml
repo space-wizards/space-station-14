@@ -7,6 +7,9 @@
     - !type:RoleTimeRequirement
       role: JobSecurityOfficer
       time: 72000 # 20 hrs
+    - !type:RoleTimeRequirement
+      role: JobDetective
+      time: 3600 # 1 hr
   startingGear: WardenGear
   icon: "JobIconWarden"
   supervisors: job-supervisors-hos
