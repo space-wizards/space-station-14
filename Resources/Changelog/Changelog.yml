@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Lizards can now eat meat dumplings.
-    type: Fix
-  id: 7165
-  time: '2024-08-19T18:17:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31212
 - author: slarticodefast
   changes:
   - message: Made the straitjacked non-printable again.
@@ -3909,3 +3902,11 @@
   id: 7664
   time: '2024-11-30T06:23:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33621
+- author: Plykiya
+  changes:
+  - message: You can no longer cuff someone multiple times if multiple cuff do-afters
+      are completed at the exact same time.
+    type: Fix
+  id: 7665
+  time: '2024-11-30T15:58:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33646
