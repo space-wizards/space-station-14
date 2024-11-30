@@ -57,6 +57,29 @@
     capacity: 5
     count: 5
 
+# TODO: locker wand sprite from SS13
+# TODO: magic lock overlay
+# TODO: new sound
+# TODO: lower projectile speed so it doesn't get stuck in walls
+- type: entity
+  name: wand of locker
+  description: INSDESCHERE
+  parent: WeaponWandBase
+  id: WeaponWandLocker
+  components:
+  - type: Sprite
+    layers:
+    - state: poly
+    - state: poly-effect
+      map: ["effect"]
+  - type: Gun
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/Magic/staff_animation.ogg
+  - type: BasicEntityAmmoProvider
+    proto: ProjectileLocker
+    capacity: 5
+    count: 5
+
 - type: entity
   name: magical wand of instant death
   parent: WeaponWandBase
