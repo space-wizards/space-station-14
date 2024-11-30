@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: sleeper agents, random sentience, and event timings fix + announcer weights
-      adjusted
-    type: Fix
-  id: 109
-  time: '2024-08-21T17:45:40.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/128
 - author: sususuyo
   changes:
   - message: New Jukebox tracks from batch 2, new nuke track
@@ -4363,3 +4355,18 @@
   id: 608
   time: '2024-11-30T00:27:19.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/838
+- author: Pinkbat5
+  changes:
+  - message: Diona and Nymphs can now use the mycorrhizal gestalt, a special long-range
+      channel that only other diona can hear. Hotkey is +m.
+    type: Add
+  - message: Changelings now use the new collective mind system; hivemind messages
+      no longer have the sender's name attached.
+    type: Tweak
+  - message: Changeling hivemind hotkey is now +h.
+    type: Tweak
+  - message: Changelings no longer whisper when they use the hivemind.
+    type: Fix
+  id: 609
+  time: '2024-11-30T02:23:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/841
