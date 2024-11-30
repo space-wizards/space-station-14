@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: tosatur
-  changes:
-  - message: Changed text for ghost visibility toggle
-    type: Tweak
-  id: 7164
-  time: '2024-08-19T17:51:55.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30998
 - author: themias
   changes:
   - message: Lizards can now eat meat dumplings.
@@ -3907,3 +3900,12 @@
   id: 7663
   time: '2024-11-30T02:54:37.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33651
+- author: jbox144
+  changes:
+  - message: Fixed the link on Marathon's TEG exterior airlock
+    type: Fix
+  - message: Fixed Cog's exterior atmospherics airlock
+    type: Fix
+  id: 7664
+  time: '2024-11-30T06:23:50.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33621
