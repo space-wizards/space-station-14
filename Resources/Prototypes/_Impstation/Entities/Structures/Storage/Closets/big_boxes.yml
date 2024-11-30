@@ -7,7 +7,7 @@
     - type: InputMover
     - type: Sprite
       noRot: false #if anyone enables this i will kill them personally with my bare hands
-      sprite: Structures/Storage/closet.rsi
+      sprite: _Impstation/Objects/Storage/littlecar.rsi
       layers:
       - state: littletykescar
         map: ["enum.StorageVisualLayers.Base"]
