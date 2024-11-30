@@ -8,10 +8,8 @@
   coefficients:
     Blunt: 0.6
     Slash: 0.7
-    Piercing: 1.3
     Cold: 1.4
     Poison: 0.8
-    Structural: 2.0
   flatReductions:
     Blunt: 5
     Piercing: 5
