@@ -12,10 +12,10 @@ using Timer = Robust.Shared.Timing.Timer;
 namespace Content.Server.Administration;
 
 /// <summary>
-///     This system sends a Discord webhook notification whenever a player with an active
+///     This manager sends a Discord webhook notification whenever a player with an active
 ///     watchlist joins the server.
 /// </summary>
-public sealed class WatchlistWebhookSystem : EntitySystem
+public sealed class WatchlistWebhookManager : IPostInjectInit
 {
     [Dependency] private readonly IAdminNotesManager _adminNotes = default!;
     [Dependency] private readonly IBaseServer _baseServer = default!;
@@ -24,22 +24,23 @@ public sealed class WatchlistWebhookSystem : EntitySystem
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
+    private ISawmill _sawmill = default!;
+
     private WebhookIdentifier? _webhookIdentifier;
     private List<WatchlistConnection> watchlistConnections = new();
     // true when a timer is running for the currently buffered connections, and another should not be started
     private bool buffering = false;
 
-    public override void Initialize()
+    void IPostInjectInit.PostInject()
     {
-        Subs.CVar(_cfg, CCVars.DiscordWatchlistConnectionWebhook, SetWebhookIdentifier, true);
-        _netManager.Connected += OnConnected;
-        base.Initialize();
-    }
+        _sawmill = Logger.GetSawmill("discord");
 
-    private void SetWebhookIdentifier(string? value)
-    {
-        if (!string.IsNullOrWhiteSpace(value))
-            _discord.GetWebhook(value, data => _webhookIdentifier = data.ToIdentifier());
+        var webhook = _cfg.GetCVar(CCVars.DiscordWatchlistConnectionWebhook);
+        if (!string.IsNullOrWhiteSpace(webhook))
+        {
+            _discord.GetWebhook(webhook, data => _webhookIdentifier = data.ToIdentifier());
+            _netManager.Connected += OnConnected;
+        }
     }
 
     private async void OnConnected(object? sender, NetChannelArgs e)
@@ -124,7 +125,7 @@ public sealed class WatchlistWebhookSystem : EntitySystem
         }
         catch (Exception e)
         {
-            Log.Error($"Error while sending discord watchlist connection message:\n{e}");
+            _sawmill.Error($"Error while sending discord watchlist connection message:\n{e}");
         }
     }
 
