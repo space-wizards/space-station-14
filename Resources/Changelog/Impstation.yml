@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Upstream merge + fixes
-    type: Tweak
-  id: 107
-  time: '2024-08-20T23:31:30.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/126
-- author: formlessnameless
-  changes:
-  - message: A quick fix and a small boat update
-    type: Tweak
-  id: 108
-  time: '2024-08-21T03:29:59.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/127
 - author: Darkmajia
   changes:
   - message: sleeper agents, random sentience, and event timings fix + announcer weights
@@ -4362,3 +4348,18 @@
   id: 606
   time: '2024-11-29T07:43:50.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/833
+- author: TheGrimbeeper
+  changes:
+  - message: artifact effect that will have chemists and bartenders upset at the scientists
+    type: Add
+  id: 607
+  time: '2024-11-30T00:26:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/835
+- author: Sha-Seng
+  changes:
+  - message: Mime hardsuit helmet light now has the eyes light up instead of just
+      using a hardhat light
+    type: Tweak
+  id: 608
+  time: '2024-11-30T00:27:19.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/838
