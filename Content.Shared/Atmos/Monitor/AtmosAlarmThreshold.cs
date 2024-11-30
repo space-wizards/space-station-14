@@ -357,6 +357,11 @@ public readonly partial struct AlarmThresholdSetting: IEquatable<AlarmThresholdS
     {
         return !lhs.Equals(rhs);
     }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Enabled, Value);
+    }
 }
 
 public enum AtmosMonitorThresholdBound
