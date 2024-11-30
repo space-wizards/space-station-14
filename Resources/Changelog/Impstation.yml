@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: AirFryerBuyOneGetOneFree
-  changes:
-  - message: Increase the Number of Items on a Burger Tower to 30
-    type: Tweak
-  id: 111
-  time: '2024-08-22T17:10:09.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/130
 - author: starlighthowls
   changes:
   - message: white whale fixes 3!
@@ -4373,3 +4366,11 @@
   id: 610
   time: '2024-11-30T02:28:16.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/840
+- author: formlessnameless
+  changes:
+  - message: You now automatically stop at every intersection while ventcrawling to
+      make navigation easier.
+    type: Tweak
+  id: 611
+  time: '2024-11-30T12:51:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/839
