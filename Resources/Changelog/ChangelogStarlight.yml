@@ -728,4 +728,11 @@ Entries:
   id: 103
   time: '2024-11-30T05:26:01.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/100
+- author: luxikMC
+  changes:
+  - message: All maps updated.
+    type: Tweak
+  id: 104
+  time: '2024-11-30T06:04:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/102
 
