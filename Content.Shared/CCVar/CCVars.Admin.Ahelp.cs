@@ -36,4 +36,16 @@ public sealed partial class CCVars
     /// <seealso cref="AhelpAdminPrefix"/>
     public static readonly CVarDef<bool> AhelpAdminPrefixWebhook =
         CVarDef.Create("ahelp.admin_prefix_webhook", false, CVar.SERVERONLY);
+        
+    /// <summary>
+    ///     Should the ahelp system check for spam?
+    /// </summary>
+    public static readonly CVarDef<bool> AhelpAdminAntiSpamSystem =
+        CVarDef.Create("ahelp.antispam_system", true, CVar.SERVERONLY);
+        
+    /// <summary>
+    ///     Cooldown between messages in ahelp
+    /// </summary>
+    public static readonly CVarDef<int> AhelpAdminCooldown =
+        CVarDef.Create("ahelp.cooldown", 2, CVar.SERVERONLY);
 }

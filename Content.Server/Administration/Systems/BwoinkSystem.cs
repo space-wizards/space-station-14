@@ -78,7 +78,7 @@ namespace Content.Server.Administration.Systems
         // Should be shorter than DescriptionMax
         private const ushort MessageLengthCap = 3000;
         
-        private readonly TimeSpan _messageCooldown = TimeSpan.FromSeconds(2);
+        private readonly TimeSpan _messageCooldown = TimeSpan.FromSeconds(_config.GetCVar(CCVars.AhelpAdminCooldown));
 
         private readonly Queue<(NetUserId Channel, string Text, TimeSpan Timestamp)> _recentMessages = new();
         private const int MaxRecentMessages = 10;
@@ -660,7 +660,7 @@ namespace Content.Server.Administration.Systems
             if (IsOnCooldown(message.UserId, currentTime))
                 return;
             
-            if (IsSpam(message.UserId, message.Text))
+            if (_config.GetCVar(CCVars.AhelpAdminAntiSpamSystem) && IsSpam(message.UserId, message.Text))
                 _banManager.CreateServerBan(senderSession.UserId, senderSession.Name, null, null, null, 0, NoteSeverity.High, "Automatic AHELP Antispam system Ban, If this ban is wrong, file an appeal.");
 
             AddToRecentMessages(message.UserId, message.Text, currentTime);
@@ -713,9 +713,7 @@ namespace Content.Server.Administration.Systems
             string adminPrefixWebhook = "";
 
             if (_config.GetCVar(CCVars.AhelpAdminPrefixWebhook) && senderAdmin is not null && senderAdmin.Title is not null)
-            {
                 adminPrefixWebhook = $"[bold]\\[{senderAdmin.Title}\\][/bold] ";
-            }
 
             // Notify player
             if (_playerManager.TryGetSessionById(message.UserId, out var session))
