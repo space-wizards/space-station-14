@@ -721,4 +721,11 @@ Entries:
   id: 102
   time: '2024-11-29T23:53:37.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/97
+- author: STARLIGHT TEAM
+  changes:
+  - message: Many random events have been casualized
+    type: Tweak
+  id: 103
+  time: '2024-11-30T05:26:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/100
 
