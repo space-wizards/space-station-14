@@ -78,7 +78,7 @@ namespace Content.Server.Administration.Systems
         // Should be shorter than DescriptionMax
         private const ushort MessageLengthCap = 3000;
         
-        private readonly TimeSpan _messageCooldown = TimeSpan.FromSeconds(_config.GetCVar(CCVars.AhelpAdminCooldown));
+        private readonly TimeSpan _messageCooldown = TimeSpan.FromSeconds(2);
 
         private readonly Queue<(NetUserId Channel, string Text, TimeSpan Timestamp)> _recentMessages = new();
         private const int MaxRecentMessages = 10;
@@ -101,6 +101,7 @@ namespace Content.Server.Administration.Systems
             Subs.CVar(_config, CCVars.DiscordAHelpAvatar, OnAvatarChanged, true);
             Subs.CVar(_config, CVars.GameHostName, OnServerNameChanged, true);
             Subs.CVar(_config, CCVars.AdminAhelpOverrideClientName, OnOverrideChanged, true);
+            Subs.CVar(_config, CCVars.AhelpAdminCooldown, OnCooldownChanged, true);
             _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("AHELP");
 
             var defaultParams = new AHelpMessageParams(
@@ -163,6 +164,11 @@ namespace Content.Server.Administration.Systems
         private void OnOverrideChanged(string obj)
         {
             _overrideClientName = obj;
+        }
+
+        private void OnCooldownChanged(string obj)
+        {
+            _messageCooldown = TimeSpan.FromSeconds(obj);
         }
 
         private async void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
