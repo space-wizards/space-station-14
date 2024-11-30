@@ -242,7 +242,7 @@ public sealed class SharedVentCrawableSystem : EntitySystem
                 }
                 else
                 {
-                    _containerSystem.Remove(uid, Comp<VentCrawTubeComponent>(currentTube).Contents ,reparent: false, force: true);
+                    _containerSystem.Remove(uid, Comp<VentCrawTubeComponent>(currentTube).Contents, reparent: false, force: true);
 
                     if (holder.FirstEntry)
                         holder.FirstEntry = false;
@@ -252,7 +252,11 @@ public sealed class SharedVentCrawableSystem : EntitySystem
                         holder.LastCrawl = _gameTiming.CurTime;
                         _audioSystem.PlayPvs(holder.CrawlSound, uid);
                     }
-
+                    if (HasComp<VentCrawJunctionComponent>(holder.NextTube.Value))
+                    {
+                        holder.IsMoving = false;
+                        holder.CurrentDirection = Direction.Invalid;
+                    }
                     EnterTube(uid, holder.NextTube.Value, holder);
                     holder.NextTube = null;
                 }
