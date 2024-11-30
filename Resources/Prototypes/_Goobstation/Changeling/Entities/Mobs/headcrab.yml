@@ -4,6 +4,7 @@
   id: MobHeadcrab
   description: You don't want to touch it.
   components:
+  - type: VentCrawler
   - type: Sprite
     drawdepth: SmallMobs
     layers:

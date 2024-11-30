@@ -180,5 +180,5 @@
 - type: startingGear
   id: LimitedPassengerGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitColorGrey
+    jumpsuit: ClothingUniformJumpsuitAncient
     shoes: ClothingShoesColorBlack

@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by belay5 (discord) for Space Station 14.",
+  "size": {
+    "x": 48,
+    "y": 48
+  },
+  "states": [
+    {
+      "name": "raptor",
+      "directions": 4
+    },
+    {
+      "name": "raptor_dead"
+    }
+  ]
+}

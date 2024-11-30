@@ -1,139 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: quick fixes for shuttle dock/meteor swarm announcements
-    type: Fix
-  id: 92
-  time: '2024-08-18T04:01:47.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/109
-- author: sususuyo
-  changes:
-  - message: reuploaded tracks with proper credits in metadata
-    type: Fix
-  id: 93
-  time: '2024-08-18T13:59:00.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/110
-- author: TGRCdev
-  changes:
-  - message: Fixed IP bans preventing non-banned players from connecting to SQLite-backed
-      servers
-    type: Fix
-  id: 94
-  time: '2024-08-18T13:59:09.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/111
-- author: Darkmajia
-  changes:
-  - message: announcer robust fix
-    type: Fix
-  id: 95
-  time: '2024-08-18T15:31:10.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/112
-- author: starlighthowls
-  changes:
-  - message: NTAS. White Whale TEST
-    type: Add
-  id: 96
-  time: '2024-08-18T21:54:31.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/114
-- author: TGRCdev
-  changes:
-  - message: Relicense to AGPLv3
-    type: Tweak
-  id: 97
-  time: '2024-08-19T01:38:56.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/115
-- author: sususuyo
-  changes:
-  - message: New lobby art, new audio tracks volume adjustments
-    type: Add
-  id: 98
-  time: '2024-08-19T01:39:05.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/116
-- author: formlessnameless
-  changes:
-  - message: Some small changeling ability adjustments, some Boat map adjustments
-    type: Tweak
-  id: 99
-  time: '2024-08-19T19:40:24.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/117
-- author: sususuyo
-  changes:
-  - message: Sprite changes for medical eyepatch and medsec hud
-    type: Tweak
-  id: 100
-  time: '2024-08-19T19:40:15.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/118
-- author: Darkmajia
-  changes:
-  - message: small announcement fix for nuke arm location
-    type: Fix
-  id: 101
-  time: '2024-08-19T19:40:06.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/119
-- author: razzmatazzBean
-  changes:
-  - message: new horsepussy
-    type: Add
-  id: 102
-  time: '2024-08-19T23:35:56.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/121
-- author: sususuyo
-  changes:
-  - message: Second wave of lobby and jukebox music, prepping for medhud glasses
-    type: Add
-  id: 103
-  time: '2024-08-20T01:24:47.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/122
-- author: sususuyo
-  changes:
-  - message: Medical Hud Glasses!!!!
-    type: Add
-  id: 104
-  time: '2024-08-20T01:58:46.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/123
-- author: ultramario1998
-  changes:
-  - message: Add salvage boots option to QM loadout
-    type: Add
-  id: 105
-  time: '2024-08-20T15:20:21.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/124
-- author: starlighthowls
-  changes:
-  - message: boat test 2!!!!!!!
-    type: Add
-  id: 106
-  time: '2024-08-20T23:31:13.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/125
-- author: formlessnameless
-  changes:
-  - message: Upstream merge + fixes
-    type: Tweak
-  id: 107
-  time: '2024-08-20T23:31:30.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/126
-- author: formlessnameless
-  changes:
-  - message: A quick fix and a small boat update
-    type: Tweak
-  id: 108
-  time: '2024-08-21T03:29:59.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/127
-- author: Darkmajia
-  changes:
-  - message: sleeper agents, random sentience, and event timings fix + announcer weights
-      adjusted
-    type: Fix
-  id: 109
-  time: '2024-08-21T17:45:40.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/128
-- author: sususuyo
-  changes:
-  - message: New Jukebox tracks from batch 2, new nuke track
-    type: Add
-  id: 110
-  time: '2024-08-21T23:52:19.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/129
 - author: AirFryerBuyOneGetOneFree
   changes:
   - message: Increase the Number of Items on a Burger Tower to 30
@@ -4345,3 +4210,166 @@
   id: 591
   time: '2024-11-27T11:49:59.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/817
+- author: Darkmajia
+  changes:
+  - message: Direct window upgrading is back! Shuttle windows are not back, though.
+    type: Add
+  id: 592
+  time: '2024-11-27T19:31:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/821
+- author: widgetbeck
+  changes:
+  - message: Replaced "creepy crawly" Thaven mood with something that should have
+      less gameplay impact.
+    type: Tweak
+  id: 593
+  time: '2024-11-27T19:31:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/819
+- author: honeyed-lemons
+  changes:
+  - message: Chameleon PDA
+    type: Add
+  - message: PDAs show the most recent ID placed inside as the owner, instead of being
+      fixed.
+    type: Tweak
+  id: 594
+  time: '2024-11-27T19:32:31.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/810
+- author: widgetbeck
+  changes:
+  - message: Decapoid vapor tanks are now fully functional, which means that Decapoids
+      are now fully functional. They just need customization!
+    type: Fix
+  id: 595
+  time: '2024-11-27T19:32:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/820
+- author: TGRCDev
+  changes:
+  - message: Crates/lockers being pulled can now only be opened by the person pulling
+      them
+    type: Tweak
+  id: 596
+  time: '2024-11-27T19:34:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/791
+- author: widgetbeck
+  changes:
+  - message: Mucin now evaporates and costs less thirst.
+    type: Tweak
+  - message: Propulsion gel nerf.
+    type: Tweak
+  id: 597
+  time: '2024-11-27T20:55:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/818
+- author: formlessnameless
+  changes:
+  - message: Various creatures can now crawl through the station's pipes. Beware!
+    type: Add
+  id: 598
+  time: '2024-11-28T22:29:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/822
+- author: Sha-Seng
+  changes:
+  - message: Black Utility Belt crafted with a spray painter and a utility belt
+    type: Add
+  - message: Filled versions of the black utility belt if you want to map them too
+    type: Add
+  id: 599
+  time: '2024-11-28T22:45:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/824
+- author: Sha-Seng
+  changes:
+  - message: Closet Skeletons spawn with the Ancient Jumpsuit now b/c it makes sense
+      and is foldable
+    type: Tweak
+  id: 600
+  time: '2024-11-28T22:47:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/827
+- author: DinnerCalzone
+  changes:
+  - message: Reworded the description of the nonlethal shotgun crate to match previous
+      changes to them.
+    type: Tweak
+  id: 601
+  time: '2024-11-28T22:50:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/829
+- author: DinnerCalzone
+  changes:
+  - message: Added the janitorial hardsuit, purchasable from Cargo for $5000. Go get
+      to cleaning out in space!
+    type: Add
+  id: 602
+  time: '2024-11-28T22:50:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/828
+- author: DinnerCalzone
+  changes:
+  - message: Glass airlocks that are locked by civilian accesses (eg. janitor, service,
+      kitchen) now use a sprite that better matches their standard counterpart.
+    type: Tweak
+  id: 603
+  time: '2024-11-28T22:58:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/831
+- author: Darkmajia
+  changes:
+  - message: Something old, scorned and vengeful has clawed its way back through the
+      streams of time. Something's here. And it's here... for war.
+    type: Add
+  id: 604
+  time: '2024-11-28T23:09:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/832
+- author: DinnerCalzone
+  changes:
+  - message: Airlocks locked behind civilian roles now each have their own sprite
+      to better convey who can access them at a glance.
+    type: Add
+  - message: Made the colors of hydroponics airlocks a little less saturated.
+    type: Tweak
+  id: 605
+  time: '2024-11-29T07:38:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/834
+- author: Sha-Seng
+  changes:
+  - message: Slime "eye glow" marking (does not actually make eyes unshaded) (yet)
+    type: Add
+  id: 606
+  time: '2024-11-29T07:43:50.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/833
+- author: TheGrimbeeper
+  changes:
+  - message: artifact effect that will have chemists and bartenders upset at the scientists
+    type: Add
+  id: 607
+  time: '2024-11-30T00:26:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/835
+- author: Sha-Seng
+  changes:
+  - message: Mime hardsuit helmet light now has the eyes light up instead of just
+      using a hardhat light
+    type: Tweak
+  id: 608
+  time: '2024-11-30T00:27:19.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/838
+- author: Pinkbat5
+  changes:
+  - message: Diona and Nymphs can now use the mycorrhizal gestalt, a special long-range
+      channel that only other diona can hear. Hotkey is +m.
+    type: Add
+  - message: Changelings now use the new collective mind system; hivemind messages
+      no longer have the sender's name attached.
+    type: Tweak
+  - message: Changeling hivemind hotkey is now +h.
+    type: Tweak
+  - message: Changelings no longer whisper when they use the hivemind.
+    type: Fix
+  id: 609
+  time: '2024-11-30T02:23:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/841
+- author: Sha-Seng
+  changes:
+  - message: ancient jumpsuit, cossack suit, loungewear, wizard shoes, tourist shoes,
+      and slippers are now found in hacked theater vendors
+    type: Add
+  - message: removed patronizing spanish accent from poncho so it's wearable too
+    type: Tweak
+  id: 610
+  time: '2024-11-30T02:28:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/840

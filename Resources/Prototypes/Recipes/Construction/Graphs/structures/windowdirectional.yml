@@ -60,6 +60,26 @@
               doAfter: 1
             - tool: Anchoring
               doAfter: 2
+        - to: windowReinforcedDirectional
+          steps:
+            - material: MetalRod
+              amount: 1
+              doAfter: 3
+        - to: plasmaWindowDirectional
+          steps:
+            - material: Plasma
+              amount: 1
+              doAfter: 2
+        - to: uraniumWindowDirectional
+          steps:
+            - material: Uranium
+              amount: 1
+              doAfter: 2
+        - to: windowClockworkDirectional
+          steps:
+            - material: Brass
+              amount: 1
+              doAfter: 3
 
     - node: windowReinforcedDirectional
       entity: WindowReinforcedDirectional
@@ -79,6 +99,16 @@
               doAfter: 1
             - tool: Anchoring
               doAfter: 2
+        - to: plasmaReinforcedWindowDirectional
+          steps:
+            - material: Plasma
+              amount: 1
+              doAfter: 3
+        - to: uraniumReinforcedWindowDirectional
+          steps:
+            - material: Uranium
+              amount: 1
+              doAfter: 3
 
     - node: plasmaWindowDirectional
       entity: PlasmaWindowDirectional
@@ -97,6 +127,11 @@
             - tool: Screwing
               doAfter: 2
             - tool: Anchoring
+              doAfter: 3
+        - to: plasmaReinforcedWindowDirectional
+          steps:
+            - material: MetalRod
+              amount: 1
               doAfter: 3
 
     - node: windowClockworkDirectional
@@ -153,6 +188,11 @@
             - tool: Screwing
               doAfter: 2
             - tool: Anchoring
+              doAfter: 3
+        - to: uraniumReinforcedWindowDirectional
+          steps:
+            - material: MetalRod
+              amount: 1
               doAfter: 3
 
     - node: uraniumReinforcedWindowDirectional

@@ -803,7 +803,7 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     if (!EntityManager.EnsureComponent<SpelfMoodsComponent>(args.Target, out moods))
-                        _moods.NotifyMoodChange(args.Target);
+                        _moods.NotifyMoodChange((args.Target, moods));
                 },
                 Impact = LogImpact.High,
                 Message = Loc.GetString("admin-trick-give-moods-description"),

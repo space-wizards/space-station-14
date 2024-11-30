@@ -1,0 +1,17 @@
+# dinos will kill everything. dinos are the apex predator. dinos will rule the world
+- type: npcFaction
+  id: Dino
+  hostile:
+    - Dragon
+    - NanoTrasen
+    - Mouse
+    - Passive
+    - PetsNT
+    - SimpleHostile
+    - SimpleNeutral
+    - Syndicate
+    - Xeno
+    - Zombie
+    - Revolutionary
+    - Changeling
+    - Heretic

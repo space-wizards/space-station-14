@@ -56,6 +56,13 @@
     ClothingShoesBootsCowboyBlack: 1
     ClothingShoesBootsCowboyWhite: 1
     ClothingNeckScarfStripedZebra: 1
+  contrabandInventory:
+    ClothingUniformJumpsuitAncient: 1
+    ClothingUniformJumpsuitCossack: 1
+    ClothingUniformJumpsuitLoungewear: 1
+    ClothingShoesSlippers: 1
+    ClothingShoesTourist: 1
+    ClothingShoesWizard: 1
   emaggedInventory:
     ClothingShoesBling: 1
     ClothingShoesBootsCowboyFancy: 1
