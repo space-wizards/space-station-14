@@ -1006,14 +1006,6 @@
   - BrigmedicBackpack
   - BrigmedicSatchel
   - BrigmedicDuffel
-  
-- type: loadoutGroup
-  id: BrigmedicBelt
-  name: loadout-group-brigmedic-belt
-  loadouts:
-  - BrigmedicBelt
-  - SecurityBelt
-  - SecurityWebbing
 
 - type: loadoutGroup
   id: BrigmedicOuterClothing

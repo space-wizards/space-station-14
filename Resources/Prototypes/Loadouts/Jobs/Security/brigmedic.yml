@@ -31,12 +31,6 @@
   equipment:
     back: ClothingBackpackDuffelBrigmedic
 
-# Belt
-- type: loadout
-  id: BrigmedicBelt
-  equipment:
-    belt: ClothingBeltMedicalFilled
-
 # Outerclothing
 - type: loadout
   id: BrigmedicCoat

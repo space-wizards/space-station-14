@@ -149,3 +149,44 @@
   - type: Appearance
   - type: StaticPrice
     price: 1000
+
+- type: entity
+  parent: [ClothingBeltMedical,ClothingBeltSecurity]
+  id: ClothingBeltBrigmedic
+  name: tactical trauma belt
+  description: Because why choose between being a medic or a security guard when you can be both?
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Belt/tactical_trauma.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Belt/tactical_trauma.rsi
+  - type: Storage
+    whitelist:
+      tags:
+        - CigPack
+        - Taser
+        - Wrench
+        - Bottle
+        - Spray
+        - Brutepack
+        - Bloodpack
+        - Gauze
+        - Ointment
+        - PillCanister
+        - Radio
+        - DiscreteHealthAnalyzer
+        - SurgeryTool
+        - Dropper
+      components:
+        - Stunbaton
+        - FlashOnTrigger
+        - SmokeOnTrigger
+        - Flash
+        - Handcuff
+        - BallisticAmmoProvider
+        - Ammo
+        - Hypospray
+        - Injector
+        - Pill
+        - HandLabeler
+  - type: Appearance
