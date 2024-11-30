@@ -175,5 +175,5 @@
       - PosterLegitSafetyMothMeth
       - PosterLegitSafetyMothHardhat
       - PosterLegitSafetyMothSSD
-      - PosterLegitOppenhopper
+      #- PosterLegitOppenhopper # GreyStation - Removed due to not pertaining to Grey Station
     chance: 1
