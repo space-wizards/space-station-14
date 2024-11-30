@@ -1,5 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
-using Content.Shared.Xenobiology.Components;
+using Content.Shared.Xenobiology.Components.Container;
 
 namespace Content.Shared.Xenobiology.Systems;
 

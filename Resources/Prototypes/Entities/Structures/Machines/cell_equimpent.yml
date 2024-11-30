@@ -212,10 +212,6 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.ArtifactCrusherVisuals.Crushing:
-        pistonlayer:
-          True: {state: piston-push}
-          False: {state: piston}
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
           True: { visible: true }
