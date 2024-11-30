@@ -46,7 +46,8 @@
   - type: RequireProjectileTarget
     active: False
   - type: FallSystem
-  - type: InGas
+    gasId: 9
+    damagedByGas: false
 
 # Used for mobs that have health and can take damage.
 - type: entity

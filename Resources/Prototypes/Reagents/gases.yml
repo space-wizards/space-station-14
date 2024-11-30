@@ -383,12 +383,12 @@
           shouldHave: false
         - !type:ReagentThreshold
           min: 0.5
-        scaleByQuantity: true
+        scaleByQuantity: false
         ignoreResistances: true
         damage:
           types:
             Cold:
-              20
+              15
       - !type:PopupMessage
         type: Local
         messages: [ "water-in-lungs" ]
