@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: sususuyo
-  changes:
-  - message: New Jukebox tracks from batch 2, new nuke track
-    type: Add
-  id: 110
-  time: '2024-08-21T23:52:19.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/129
 - author: AirFryerBuyOneGetOneFree
   changes:
   - message: Increase the Number of Items on a Burger Tower to 30
@@ -4370,3 +4363,13 @@
   id: 609
   time: '2024-11-30T02:23:23.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/841
+- author: Sha-Seng
+  changes:
+  - message: ancient jumpsuit, cossack suit, loungewear, wizard shoes, tourist shoes,
+      and slippers are now found in hacked theater vendors
+    type: Add
+  - message: removed patronizing spanish accent from poncho so it's wearable too
+    type: Tweak
+  id: 610
+  time: '2024-11-30T02:28:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/840
