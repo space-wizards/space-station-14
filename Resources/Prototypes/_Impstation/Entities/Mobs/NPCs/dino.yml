@@ -160,7 +160,7 @@
   - type: Devourer # imp additions
     foodPreference: Humanoid
     shouldStoreDevoured: true
-    chemical: Ichor
+    chemical: DinoBlood
     healRate: 15.0
     whitelist:
       components:
@@ -351,7 +351,7 @@
   - type: Devourer # imp additions
     foodPreference: Humanoid
     shouldStoreDevoured: true
-    chemical: Ichor
+    chemical: DinoBlood
     healRate: 15.0
     whitelist:
       components:
@@ -409,7 +409,7 @@
   - type: Devourer # imp additions
     foodPreference: Humanoid
     shouldStoreDevoured: true
-    chemical: Ichor
+    chemical: DinoBlood
     healRate: 15.0
     whitelist:
       components:
@@ -556,7 +556,7 @@
   - type: Devourer # imp additions
     foodPreference: Humanoid
     shouldStoreDevoured: true
-    chemical: Ichor
+    chemical: DinoBlood
     healRate: 15.0
     whitelist:
       components:
@@ -616,7 +616,7 @@
   - type: Devourer # imp additions
     foodPreference: Humanoid
     shouldStoreDevoured: true
-    chemical: Ichor
+    chemical: DinoBlood
     healRate: 15.0
     whitelist:
       components:
@@ -675,7 +675,7 @@
   - type: Devourer # imp additions
     foodPreference: Humanoid
     shouldStoreDevoured: true
-    chemical: Ichor
+    chemical: DinoBlood
     healRate: 15.0
     whitelist:
       components:
@@ -734,7 +734,7 @@
   - type: Devourer # imp additions
     foodPreference: Humanoid
     shouldStoreDevoured: true
-    chemical: Ichor
+    chemical: DinoBlood
     healRate: 15.0
     whitelist:
       components:
