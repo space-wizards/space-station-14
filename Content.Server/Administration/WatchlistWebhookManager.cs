@@ -4,8 +4,10 @@ using Content.Server.Discord;
 using Content.Shared.CCVar;
 using Robust.Server;
 using Robust.Server.Player;
+using Robust.Shared.Enums;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using System.Linq;
 using Timer = Robust.Shared.Timing.Timer;
 
@@ -21,7 +23,6 @@ public sealed class WatchlistWebhookManager : IPostInjectInit
     [Dependency] private readonly IBaseServer _baseServer = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly DiscordWebhook _discord = default!;
-    [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
     private ISawmill _sawmill = default!;
@@ -39,19 +40,21 @@ public sealed class WatchlistWebhookManager : IPostInjectInit
         if (!string.IsNullOrWhiteSpace(webhook))
         {
             _discord.GetWebhook(webhook, data => _webhookIdentifier = data.ToIdentifier());
-            _netManager.Connected += OnConnected;
+            _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
         }
     }
 
-    private async void OnConnected(object? sender, NetChannelArgs e)
+    private async void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
     {
-        var watchlists = await _adminNotes.GetActiveWatchlists(e.Channel.UserId);
+        if (e.NewStatus != SessionStatus.Connected)
+            return;
+
+        var watchlists = await _adminNotes.GetActiveWatchlists(e.Session.UserId);
 
         if (watchlists.Count == 0)
             return;
 
-        var session = _playerManager.GetSessionByChannel(e.Channel);
-        watchlistConnections.Add(new WatchlistConnection(session.Name, watchlists));
+        watchlistConnections.Add(new WatchlistConnection(e.Session.Name, watchlists));
 
         var bufferTime = _cfg.GetCVar(CCVars.DiscordWatchlistConnectionBufferTime);
 
