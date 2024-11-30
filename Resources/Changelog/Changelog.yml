@@ -1,16 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Added the Combat Bakery Kit to the syndicate uplink. Includes a deadly
-      edible baguette sword and throwing star croissants for 3 TC.
-    type: Add
-  - message: Baguettes can be worn on the belt and normal ones do one blunt damage.
-    type: Tweak
-  - message: Mimes have a baguette instead of an MRE in their survival kits.
-    type: Tweak
-  id: 7167
-  time: '2024-08-19T18:57:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31179
 - author: metalgearsloth
   changes:
   - message: Fix wire sounds not playing.
@@ -3911,3 +3899,11 @@
   id: 7666
   time: '2024-11-30T16:14:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33642
+- author: Plykiya
+  changes:
+  - message: You can now inspect entities in the stripping window instead of the entity
+      that happened to be underneath the window.
+    type: Fix
+  id: 7667
+  time: '2024-11-30T16:23:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33644
