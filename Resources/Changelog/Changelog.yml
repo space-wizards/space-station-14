@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: Boaz1111
-  changes:
-  - message: The HoS has been given a new experimental weapon:An energy shotgun with
-      multiple fire modes. This experimental tech is highly wanted by the syndicate,
-      and agents will try to steal it.
-    type: Add
-  - message: Removed the Head of Security's Emergency Orders.
-    type: Remove
-  id: 7162
-  time: '2024-08-19T11:14:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30643
 - author: tosatur
   changes:
   - message: Added more words to chat sanitisation
@@ -3911,3 +3900,10 @@
   id: 7661
   time: '2024-11-29T12:51:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33545
+- author: GansuLalan
+  changes:
+  - message: The arrival shuttle will no longer smash the nuke
+    type: Fix
+  id: 7662
+  time: '2024-11-30T02:48:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33659
