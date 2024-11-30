@@ -87,6 +87,8 @@
   parent: ClosetSteelBase
   categories: [ HideSpawnMenu ]
   components:
+  - type: StoreOnCollide
+    bodyOnly: true
   - type: Projectile
     deleteOnCollide: false
     onlyCollideWhenShot: true
