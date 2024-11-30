@@ -117,9 +117,9 @@ evolutionmenu-utility-fleshmend-name = Fleshmend
 evolutionmenu-utility-fleshmend-desc =
     Rapidly heal yourself of all bruises and burns.
     Costs 35 chemicals.
-    
+
 evolutionmenu-utility-lastresort-name = Last Resort
-evolutionmenu-utility-lastresort-desc = 
+evolutionmenu-utility-lastresort-desc =
     Abandon your current body and escape in the form of a headslug.
     Costs 20 chemicals.
 
@@ -136,4 +136,5 @@ evolutionmenu-utility-spacesuit-desc =
 evolutionmenu-utility-hivemindaccess-name = Hivemind Access
 evolutionmenu-utility-hivemindaccess-desc =
     Tunes our chemical receptors for hivemind communication, allowing us to recognize and communicate with other changelings who have also evolved this ability.
-    Default radio key is :g
+    Hivemind communication is anonymous, we cannot tell the minds of the other changelings apart.
+    Default radio key is +h

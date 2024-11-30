@@ -5,6 +5,13 @@
   id: BaseMobDiona
   abstract: true
   components:
+  - type: Tag
+    tags:
+    - CanPilot
+    - FootstepSound
+    - DoorBumpOpener
+    - AnomalyHost
+    - DionaMinded
   - type: Absorbable
   - type: HumanoidAppearance
     species: Diona
