@@ -157,9 +157,9 @@
   id: DragonSpawn
   components:
   - type: StationEvent
-    weight: 6.5
-    earliestStart: 40
-    reoccurrenceDelay: 20
+    weight: 5.5 # 🌟Starlight🌟 Casualization
+    earliestStart: 50 # 🌟Starlight🌟 Casualization
+    reoccurrenceDelay: 45 # 🌟Starlight🌟 Casualization
     minimumPlayers: 20
     duration: null
   - type: SpaceSpawnRule
@@ -186,10 +186,10 @@
   id: NinjaSpawn
   components:
   - type: StationEvent
-    weight: 6
+    weight: 5 # 🌟Starlight🌟 Casualization
     duration: null
-    earliestStart: 30
-    reoccurrenceDelay: 20
+    earliestStart: 45 # 🌟Starlight🌟 Casualization
+    reoccurrenceDelay: 45 # 🌟Starlight🌟 Casualization
     minimumPlayers: 30
   - type: SpaceSpawnRule
   - type: AntagLoadProfileRule
@@ -341,9 +341,9 @@
     startAnnouncement: station-event-vent-creatures-start-announcement
     startAudio:
       path: /Audio/_Starlight/Announcements/attention.ogg
-    earliestStart: 20
+    earliestStart: 40 # 🌟Starlight🌟 Casualization
     minimumPlayers: 15
-    weight: 5
+    weight: 3.5 # 🌟Starlight🌟 Casualization
     duration: 60
   - type: VentCrittersRule
     entries:
@@ -362,9 +362,9 @@
     startAnnouncement: station-event-vent-creatures-start-announcement
     startAudio:
       path: /Audio/Announcements/attention.ogg
-    earliestStart: 20
+    earliestStart: 40 # 🌟Starlight🌟 Casualization
     minimumPlayers: 15
-    weight: 5
+    weight: 3.5 # 🌟Starlight🌟 Casualization
     duration: 60
   - type: VentCrittersRule
     entries:
@@ -383,9 +383,9 @@
     startAnnouncement: station-event-vent-creatures-start-announcement
     startAudio:
       path: /Audio/_Starlight/Announcements/attention.ogg
-    earliestStart: 20
+    earliestStart: 40 # 🌟Starlight🌟 Casualization
     minimumPlayers: 15
-    weight: 5
+    weight: 3.5 # 🌟Starlight🌟 Casualization
     duration: 60
   - type: VentCrittersRule
     entries:
@@ -447,8 +447,8 @@
   id: LoneOpsSpawn
   components:
   - type: StationEvent
-    earliestStart: 35
-    weight: 5.5
+    earliestStart: 55 # 🌟Starlight🌟 Casualization
+    weight: 4.5 # 🌟Starlight🌟 Casualization
     minimumPlayers: 20
     duration: 1
   - type: RuleGrids
@@ -482,8 +482,8 @@
   id: SleeperAgents
   components:
   - type: StationEvent
-    earliestStart: 30
-    weight: 8
+    earliestStart: 40 # 🌟Starlight🌟 Casualization
+    weight: 6 # 🌟Starlight🌟 Casualization
     minimumPlayers: 15
     maxOccurrences: 1 # can only happen once per round
     startAnnouncement: station-event-communication-interception
