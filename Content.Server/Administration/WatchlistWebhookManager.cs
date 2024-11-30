@@ -98,24 +98,43 @@ public sealed class WatchlistWebhookManager : IPostInjectInit
             foreach (var connection in watchlistConnections)
             {
                 message += '\n';
-                message += Loc.GetString("discord-watchlist-connection-entry", ("playerName", connection.PlayerName));
-                message += ' ';
 
                 var watchlist = connection.Watchlists.First();
-                var expirationTime = watchlist.ExpirationTime;
-                if (expirationTime != null)
-                    message += Loc.GetString("discord-watchlist-connection-expiry",
-                            ("expiry", ((DateTimeOffset)expirationTime).ToUnixTimeSeconds()));
-                else
-                    message += Loc.GetString("discord-watchlist-connection-noexpiry");
+                var expiry = watchlist.ExpirationTime?.ToUnixTimeSeconds();
 
-                message += ' ';
-                message += Loc.GetString("discord-watchlist-connection-message", ("message", watchlist.Message));
-
-                if (connection.Watchlists.Count > 1)
+                if (expiry == null)
                 {
-                    message += ' ';
-                    message += Loc.GetString("discord-watchlist-connection-more", ("watchlists", connection.Watchlists.Count - 1));
+                    if (connection.Watchlists.Count == 1)
+                    {
+                        message += Loc.GetString("discord-watchlist-connection-entry",
+                            ("playerName", connection.PlayerName),
+                            ("message", watchlist.Message));
+                    }
+                    else
+                    {
+                        message += Loc.GetString("discord-watchlist-connection-entry-more",
+                            ("playerName", connection.PlayerName),
+                            ("message", watchlist.Message),
+                            ("otherWatchlists", connection.Watchlists.Count - 1));
+                    }
+                }
+                else
+                {
+                    if (connection.Watchlists.Count == 1)
+                    {
+                        message += Loc.GetString("discord-watchlist-connection-entry-expires",
+                            ("playerName", connection.PlayerName),
+                            ("expiry", expiry),
+                            ("message", watchlist.Message));
+                    }
+                    else
+                    {
+                        message += Loc.GetString("discord-watchlist-connection-entry-expires-more",
+                            ("playerName", connection.PlayerName),
+                            ("expiry", expiry),
+                            ("message", watchlist.Message),
+                            ("otherWatchlists", connection.Watchlists.Count - 1));
+                    }
                 }
             }
 
