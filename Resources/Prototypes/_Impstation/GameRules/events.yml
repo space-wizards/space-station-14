@@ -9,6 +9,11 @@
     duration: 1
     occursDuringRoundEnd: false
   - type: ChangelingRule
+  - type: AntagObjectives
+    objectives:
+    - ChangelingStealDNAObjective
+    - EscapeIdentityObjective
+    - ChangelingSurviveObjective
   - type: AntagSelection
     agentName: changeling-roundend-name
     definitions:

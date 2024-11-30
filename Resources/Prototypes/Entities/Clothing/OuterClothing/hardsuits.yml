@@ -762,7 +762,7 @@
 
 #Makeshift Hardsuit
 - type: entity
-  parent: [ ClothingOuterHardsuitBase, BaseSyndicateContraband ]
+  parent: [ BaseMajorContraband, ClothingOuterHardsuitBase]
   id: ClothingOuterProspector
   name: makeshift hardsuit
   description: A heap of plating and insulation thrown together that just barely constitutes a hardsuit - but if it's good enough for space, it's good enough for you.
@@ -792,6 +792,20 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetProspector
+
+#Desperado Hardsuit
+- type: entity
+  parent: [ BaseMajorContraband, ClothingOuterHardsuitSyndieCommander ]
+  id: ClothingOuterDesperado
+  name: desperado hardsuit
+  description: An incredibly tough hardsuit woven together with Goliath plating and some helpfully reclaimed NT equipment. Makes you respectable, both as a person and as a threat.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Prospectors/desperado-hardsuit.rsi
+  - type: Clothing
+    sprite: _Impstation/Prospectors/desperado-hardsuit.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetDesperado
 
 #CENTCOMM / ERT HARDSUITS
 #ERT Leader Hardsuit

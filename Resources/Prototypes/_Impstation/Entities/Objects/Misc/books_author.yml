@@ -95,7 +95,7 @@
   parent: BookBase
   id: BookKeelBay
   name: Keel-Ree's Guide to Medical
-  description: This copy seems to be in pristine condition, lovingly cared for. There are little heart symbols etched into the spine and it smells faintly like a bakery. 
+  description: This copy seems to be in pristine condition, lovingly cared for. There are little heart symbols etched into the spine and it smells faintly like a bakery.
   components:
   - type: Sprite
     sprite: Objects/Misc/books.rsi
@@ -109,3 +109,29 @@
       color: "#c03F3F"
   - type: Paper
     content: book-text-keelbay
+
+- type: entity
+  parent: BookBase
+  id: BookCosmicCult
+  name: ancient treatise on cosmology
+  description: The book is an ancient synthleather-bound treatise with a bright, star-shaped mark on the cover. Though the pages seem to be dyed in odd hues, the ink appears clearly legible despite the book's apparent age. It's strangely well-preserved, and has clearly been stored away for a very long time.
+  components:
+  - type: Sprite
+    sprite: _Impstation/CosmicCult/Objects/book.rsi
+    layers:
+    - state: cosmiccultbook
+  - type: Paper
+    content: book-text-cosmiccult
+
+- type: entity
+  parent: BookBase
+  id: BookTenebraeConspiracy
+  name: the silence of tenebrae
+  description: The book is bound in faded leather, its surface embossed with intricate, faintly iridescent patterns resembling stellar gyroscopes and shifting constellations. Its pages are thick and rough-edged, exuding the faint scent of aged paper, with text that seems to shimmer subtly under dim light.
+  components:
+  - type: Sprite
+    sprite: _Impstation/CosmicCult/Objects/book.rsi
+    layers:
+    - state: tenebraeconspiracybook
+  - type: Paper
+    content: book-text-tenebraeconspiracy

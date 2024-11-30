@@ -1,0 +1,15 @@
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadGoblinEVAHelmet
+  name: gobsuit helmet
+  description: It's just a fishbowl. It's still full of water...
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Helmets/goblinEVAsuithelmet.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Helmets/goblinEVAsuithelmet.rsi
+  - type: HideLayerClothing
+    slots:
+    - Snout
+    - HeadTop
+    - HeadSide

@@ -46,7 +46,7 @@
   - type: TraitorRule
     startingBalance: 0
   - type: GameRule
-    minPlayers: 15
+    minPlayers: 35
     delay:
       min: 2
       max: 4

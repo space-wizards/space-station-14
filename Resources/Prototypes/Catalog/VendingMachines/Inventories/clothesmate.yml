@@ -53,6 +53,8 @@
     ClothingUniformJumpskirtCasualPurple: 2
     ClothingUniformJumpsuitCasualRed: 2
     ClothingUniformJumpskirtCasualRed: 2
+    ClothingUniformJumpsuitCasualGreen: 2
+    ClothingUniformJumpskirtCasualGreen: 2
     # DO NOT ADD MORE, USE UNIFORM DYING
     ClothingShoesColorBlack: 8
     ClothingShoesColorBrown: 4
@@ -98,6 +100,7 @@
     #Space Cadet Jumpsuits
     ClothingSpaceCadetJumpsuitColorWhite: 3
     ClothingSpaceCadetJumpsuitColorBlack: 3
+    ClothingSpaceCadetJumpsuitColorGray: 3
     ClothingSpaceCadetJumpsuitColorBlue: 2
     ClothingSpaceCadetJumpsuitColorYellow: 2
     ClothingSpaceCadetJumpsuitColorGreen: 2
@@ -112,6 +115,7 @@
     ClothingMaskNeckGaiter: 2
     ClothingUniformJumpsuitTacticool: 1
     ClothingUniformJumpskirtTacticool: 1
+    ClothingShoesSwat: 2
     ClothingMaskGas: 1
 
   # DO NOT ADD MORE, USE UNIFORM DYING

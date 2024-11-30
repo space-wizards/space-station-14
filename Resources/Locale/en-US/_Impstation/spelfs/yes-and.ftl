@@ -37,8 +37,8 @@ spelf-mood-only-speak-to-command-desc = You are too important to speak to the ra
 spelf-mood-scheduler-name = Punctual
 spelf-mood-scheduler-desc = You believe that time must be strictly managed. Everything should be scheduled in advance, and tardiness is exceptionally rude.
 
-spelf-mood-radio-only-name = Impersonal
-spelf-mood-radio-only-desc = Speaking face-to-face is unacceptably personal. Any conversation must be had over the radio, or through an intermediary individual.
+spelf-mood-radio-only-name = Public Speaker
+spelf-mood-radio-only-desc = You firmly believe in the freedom of information. Speaking privately, face-to-face, is needlessly concealing information from the public. Your side of any conversation must be routed through a radio connection.
 
 spelf-mood-proper-storage-name = Proper Handling
 spelf-mood-proper-storage-desc = It is unacceptable to allow personal belongings to touch the floor. Your possessions should be properly stored, placed on tables, or exchanged by hand.
@@ -111,3 +111,54 @@ spelf-mood-optimist-desc = Nothing is ever as bad as it seems. You're able to se
 
 spelf-mood-hypochondriac-name = Hypochondriac
 spelf-mood-hypochondriac-desc = You've been sickly since you were a child. Everything negative you experience is the result of a potentially terminal illness, for which you need immediate medical treatment.
+
+spelf-mood-imposter-syndrome-name = Imposter Syndrome
+spelf-mood-imposter-syndrome-desc = You feel your life experience drain from your mind. You are brand-new at your job, unsure of how anything works. You should probably find someone experienced to show you the ropes.
+
+spelf-mood-yes-man-name = Yes Man
+spelf-mood-yes-man-desc = You just can't say "no." You must agree with everyone, and perform any task requested of you, regardless of its source.
+
+spelf-mood-centrist-name = Centrist
+spelf-mood-centrist-desc = You are ambivalent towards any and all decisions, and refuse to take sides. 
+
+spelf-mood-public-sector-name = Public Sector
+spelf-mood-public-sector-desc = Your job should not be done in private if it can be helped. If at all possible, you should renovate the facilities to allow public access to your workplace.
+
+spelf-mood-speech-restriction-name = {$speechType ->
+  *[FullNameAndTitle] Full Name And Title
+  [NamesAreRude] Names Are Rude
+  [Clarity] Clarity Is Vital
+  [SwearingGood] !@$%#ing @$^%*#@!$
+  [StatementOnly] Asking Questions Is Rude
+  [Imitation] I Wanna Be Like You
+  [Unclarity] Nothing Is Certain
+  [SwearingBad] Thou Shalt Not Curse
+  [QuestionOnly] Nothing Is Certain?
+  [MustAnswer] Center Of The Universe
+  [OnlyWhisper] Inside Voice
+  [OnlyYell] Outside Voice
+  [Rhyme] Poet
+  [Alliterate] Always Alliterate At All Apportunities
+  [ThirdPerson] Third Person
+  [TitleCase] Title Case
+  [GreySpeak] Grayspeak Is The Height Of Fashion
+}
+spelf-mood-speech-restriction-desc = {$speechType ->
+  *[FullNameAndTitle] Thaven refuse to acknowledge anyone who fails to refer to them using their full name, and expect everyone else to do the same.
+  [NamesAreRude] Using one's name is terribly personal for everyday conversation. Proper etiquette is to only refer to others by description.
+  [Clarity] Misunderstandings are the primary cause of conflict. You should be excessively clear and honest in your speech, explaining every minute detail, to avoid miscommunication.
+  [SwearingGood] Swearing is the spice of any conversation, and should be used as much as reasonably possible.
+  [StatementOnly] It would be terribly impolite to go around flagrantly asking questions all over the place. You'd prefer to phrase everything as a concrete statement.
+  [Imitation] Imitation is the highest form of flattery. Attempting to emulate the mannerisms and accents of everyone you speak to will get you far in life.
+  [Unclarity] You should endeavor to be as indirect in your speech as possible, and never make a direct statement.
+  [SwearingBad] You find swearing extremely distasteful. Abstain from it, and encourage others to do the same.
+  [QuestionOnly] It's impolite to make concrete statements? You should phrase everything as a question, just to be safe?
+  [MustAnswer] All questions that you can hear are directed at you, and you alone.
+  [OnlyWhisper] You must whisper, as speaking too loudly is terribly rude.
+  [OnlyYell] [bold]YOU MUST YELL AT ALL TIMES TO DEMONSTRATE YOUR AUTHORITY!!!!![/bold]
+  [Rhyme] You must speak in rhymes at all tymes.
+  [Alliterate] Alliteration is virtuous. Endeavor to use it wherever possible.
+  [ThirdPerson] The third person point-of-view is the only respectful manner of speaking.
+  [TitleCase] You Are Miraculously Capable Of Pronouncing Capital Letters, And Believe It Is Important That You Do So.
+  [GreySpeak] You should endeavor to speak like Grays to the best of your ability.
+}

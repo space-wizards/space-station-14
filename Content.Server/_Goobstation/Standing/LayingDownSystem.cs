@@ -1,5 +1,6 @@
 using Content.Shared._Goobstation;
 using Content.Shared._Goobstation.Standing;
+using Content.Shared._Impstation.CCVar;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 
@@ -22,7 +23,7 @@ public sealed class LayingDownSystem : SharedLayingDownSystem
         if (!TryComp(uid, out LayingDownComponent? layingDown))
             return;
 
-        layingDown.AutoGetUp = _cfg.GetClientCVar(args.SenderSession.Channel, CCVars.AutoGetUp);
+        layingDown.AutoGetUp = _cfg.GetClientCVar(args.SenderSession.Channel, ImpCCVars.AutoGetUp);
         Dirty(uid, layingDown);
     }
 }

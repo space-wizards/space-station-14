@@ -12,19 +12,15 @@
     - ExcessivelyDisorganized
     - DetestSilicons
     - DinnerFloor
-    - Unclarity
     - HugBad
     - AlwaysAlone
     - Atheist
     - Procrastinator
     - NoRadio
     - ImproperStorage
-    - SwearingBad
-    - QuestionOnly
     - Ferengi
     - ToolLicense
     - LyingBad
-    - MustAnswer
     - VampireInvitation
     - NoDragging
     - DrunkRespect
@@ -39,6 +35,9 @@
     - Claustrophobic
     - Agoraphobic
     - NonSmoker
+    - MadHatter
+    - Crawler
+    - Elevated
 
 # Your Moods are a strictly-kept secret, and should never be revealed to anyone.
 - type: spelfMood
@@ -103,14 +102,6 @@
   conflicts:
     - DinnerEtiquette
 
-# Nothing Is Certain: You must be indirect in your speech, and never make a direct statement.
-- type: spelfMood
-  id: Unclarity
-  moodName: spelf-mood-unclarity-name
-  moodDesc: spelf-mood-unclarity-desc
-  conflicts:
-    - Clarity
-
 # Hugging someone is a grave insult.
 - type: spelfMood
   id: HugBad
@@ -159,22 +150,6 @@
   conflicts:
     - ProperStorage
 
-# You find swearing extremely distasteful. Abstain from it, and encourage others to do the same.
-- type: spelfMood
-  id: SwearingBad
-  moodName: spelf-mood-swearing-bad-name
-  moodDesc: spelf-mood-swearing-bad-desc
-  conflicts:
-    - SwearingGood
-
-# Nothing is certain? Everything must be phrased as a question?
-- type: spelfMood
-  id: QuestionOnly
-  moodName: spelf-mood-question-only-name
-  moodDesc: spelf-mood-question-only-desc
-  conflicts:
-    - StatementOnly
-
 # You have an entrepreneurial spirit. Profit is the most important thing in life, above all else.
 - type: spelfMood
   id: Ferengi
@@ -194,12 +169,6 @@
   moodDesc: spelf-mood-lying-bad-desc
   conflicts:
     - CompulsiveLiar
-
-# All questions that you can hear are directed at you, and you alone.
-- type: spelfMood
-  id: MustAnswer
-  moodName: spelf-mood-must-answer-name
-  moodDesc: spelf-mood-must-answer-desc
 
 # You physically cannot pass through a closed door unless you have been invited in, personally, at least once.
 - type: spelfMood
@@ -292,6 +261,7 @@
   moodDesc: spelf-mood-claustrophobic-desc
   conflicts:
     - Agoraphobic
+    - StationIsAlive
 
 # Agoraphobic: Open spaces are uncomfortable. Seek to rearrange such spaces into small, efficient and modular rooms.
 - type: spelfMood
@@ -300,6 +270,7 @@
   moodDesc: spelf-mood-agoraphobic-desc
   conflicts:
     - Claustrophobic
+    - StationIsAlive
 
 # Non-Smoker: Secondhand smoke is incredibly dangerous. Avoid areas where people are smoking in public.
 - type: spelfMood
@@ -316,6 +287,26 @@
     word1: SpelfWords
     word2: SpelfWords
     word3: SpelfWords
+
+# Mad Hatter: You are alone on the station. Everyone else is a figment of your imagination.
+- type: spelfMood
+  id: MadHatter
+  moodName: spelf-mood-mad-hatter-name
+  moodDesc: spelf-mood-mad-hatter-desc
+
+# Creepy Crawly: You have extreme vertigo, to the point where merely standing upright can cause discomfort. You're much more comfortable crawling along the floor.
+- type: spelfMood
+  id: Crawler
+  moodName: spelf-mood-crawler-name
+  moodDesc: spelf-mood-crawler-desc
+
+# The Floor Is Lava: You prefer to be elevated whenever possible - Standing atop tables, railings, etc., is where you feel the most comfortable. 
+- type: spelfMood
+  id: Elevated
+  moodName: spelf-mood-elevated-name
+  moodDesc: spelf-mood-elevated-desc
+  conflicts:
+    - Crawler
 
 # [ITEM]s are an abomination. You must avoid them at all costs, and destroy them if necessary.
 #- type: spelfMood
@@ -335,7 +326,3 @@
 #  moodDesc: spelf-mood-color-bad-desc
 #  conflicts:
 #    - ColorGood
-
-
-
-

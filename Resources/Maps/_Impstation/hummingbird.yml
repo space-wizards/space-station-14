@@ -45,6 +45,7 @@ tilemap:
   52: FloorShuttleBlack
   51: FloorShuttleRed
   61: FloorSilver
+  63: FloorSnow
   6: FloorSteel
   38: FloorSteelBurnt
   24: FloorSteelCheckerDark
@@ -224,7 +225,7 @@ entities:
           version: 6
         7,0:
           ind: 7,0
-          tiles: BgAAAAACBgAAAAACBgAAAAADBgAAAAADBgAAAAAABgAAAAADBgAAAAABBgAAAAABBgAAAAADBgAAAAADBgAAAAADBgAAAAABBgAAAAADBgAAAAADBgAAAAADBgAAAAACDwAAAAADDwAAAAAADwAAAAABDwAAAAABDwAAAAABDwAAAAAADwAAAAACDwAAAAADDwAAAAADDwAAAAABDwAAAAADDwAAAAABDwAAAAADDwAAAAAADwAAAAADDwAAAAACBgAAAAABBgAAAAABBgAAAAADBgAAAAACBgAAAAABBgAAAAADBgAAAAAABgAAAAACBgAAAAACBgAAAAACBgAAAAADBgAAAAACBgAAAAAABgAAAAABBgAAAAADBgAAAAABggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAAgAAAAACggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAABAAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAABgAAAAAAggAAAAAACgAAAAAACgAAAAADCgAAAAADCgAAAAAACgAAAAABCgAAAAABCgAAAAABggAAAAAAggAAAAAAggAAAAAADgAAAAAAggAAAAAABgAAAAADBgAAAAAABgAAAAABggAAAAAACgAAAAADCgAAAAACCgAAAAAACgAAAAABCgAAAAACCgAAAAADCgAAAAAAggAAAAAAggAAAAAAggAAAAAADgAAAAAAggAAAAAABgAAAAAADwAAAAABBgAAAAAAggAAAAAACgAAAAACCgAAAAADCgAAAAAACgAAAAABCgAAAAADCgAAAAABCgAAAAADggAAAAAAggAAAAAAggAAAAAADgAAAAAAggAAAAAABgAAAAABBgAAAAADBgAAAAAAggAAAAAACwAAAAAACwAAAAABDAAAAAABDAAAAAAADAAAAAABCwAAAAACCwAAAAAAggAAAAAAggAAAAAAggAAAAAADgAAAAAAggAAAAAADwAAAAADBAAAAAAABgAAAAACggAAAAAACwAAAAABCwAAAAAADAAAAAACDAAAAAADDAAAAAABCwAAAAACCwAAAAABggAAAAAAggAAAAAAggAAAAAADgAAAAAAggAAAAAABAAAAAAABAAAAAAAggAAAAAAggAAAAAADAAAAAACDAAAAAABDAAAAAABDAAAAAABDAAAAAAADAAAAAABDAAAAAABggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAADAAAAAADDAAAAAADDAAAAAACCwAAAAACCwAAAAABCwAAAAABCwAAAAADCwAAAAACCwAAAAABggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAADAAAAAACDAAAAAABDAAAAAABCwAAAAACCwAAAAABCwAAAAAACwAAAAABCwAAAAADCwAAAAADggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAA
+          tiles: BgAAAAACBgAAAAACBgAAAAADBgAAAAADBgAAAAAABgAAAAADBgAAAAABBgAAAAABBgAAAAADBgAAAAADBgAAAAADBgAAAAABBgAAAAADBgAAAAADBgAAAAADBgAAAAACDwAAAAADDwAAAAAADwAAAAABDwAAAAABDwAAAAABDwAAAAAADwAAAAACDwAAAAADDwAAAAADDwAAAAABDwAAAAADDwAAAAABDwAAAAADDwAAAAAADwAAAAADDwAAAAACBgAAAAABBgAAAAABBgAAAAADBgAAAAACBgAAAAABBgAAAAADBgAAAAAABgAAAAACBgAAAAACBgAAAAACBgAAAAADBgAAAAACBgAAAAAABgAAAAABBgAAAAADBgAAAAABggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAAgAAAAACggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAABAAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAABgAAAAAAggAAAAAACgAAAAAACgAAAAADCgAAAAADCgAAAAAACgAAAAABCgAAAAABCgAAAAABggAAAAAAggAAAAAAggAAAAAADgAAAAAAggAAAAAABgAAAAADBgAAAAAABgAAAAABggAAAAAACgAAAAADCgAAAAACCgAAAAAACgAAAAABCgAAAAACCgAAAAADCgAAAAAAggAAAAAAggAAAAAAggAAAAAADgAAAAAAggAAAAAABgAAAAAADwAAAAABBgAAAAAAggAAAAAACgAAAAACCgAAAAADCgAAAAAACgAAAAABCgAAAAADCgAAAAABCgAAAAADggAAAAAAggAAAAAAggAAAAAADgAAAAAAggAAAAAABgAAAAABBgAAAAADBgAAAAAAggAAAAAACwAAAAAACwAAAAABDAAAAAABDAAAAAAADAAAAAABCwAAAAACCwAAAAAAggAAAAAAggAAAAAAggAAAAAADgAAAAAAggAAAAAADwAAAAADBAAAAAAABgAAAAACggAAAAAACwAAAAABCwAAAAAADAAAAAACDAAAAAADDAAAAAABCwAAAAACCwAAAAABggAAAAAAggAAAAAAggAAAAAADgAAAAAAggAAAAAABAAAAAAABAAAAAAADwAAAAAAggAAAAAADAAAAAACDAAAAAABDAAAAAABDAAAAAABDAAAAAAADAAAAAABDAAAAAABggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAADAAAAAADDAAAAAADDAAAAAACCwAAAAACCwAAAAABCwAAAAABCwAAAAADCwAAAAACCwAAAAABggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAADAAAAAACDAAAAAABDAAAAAABCwAAAAACCwAAAAABCwAAAAAACwAAAAABCwAAAAADCwAAAAADggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAA
           version: 6
         8,0:
           ind: 8,0
@@ -256,7 +257,7 @@ entities:
           version: 6
         5,1:
           ind: 5,1
-          tiles: ggAAAAAADwAAAAAABgAAAAACBgAAAAADBgAAAAACBgAAAAAABgAAAAACBgAAAAACBgAAAAAAggAAAAAABgAAAAACDQAAAAABBgAAAAAAggAAAAAADAAAAAAADAAAAAABggAAAAAADwAAAAABBgAAAAACBgAAAAABBgAAAAAABgAAAAABBgAAAAAABgAAAAAABgAAAAADggAAAAAABgAAAAAADwAAAAADBgAAAAABggAAAAAADAAAAAADDAAAAAADggAAAAAADwAAAAACBgAAAAACBgAAAAAABgAAAAAABgAAAAAABgAAAAADBgAAAAACBgAAAAADggAAAAAABgAAAAACDwAAAAACBgAAAAACggAAAAAACwAAAAACggAAAAAAHAAAAAAABgAAAAABBgAAAAAABgAAAAADBgAAAAAABgAAAAACBgAAAAAABgAAAAABBgAAAAADggAAAAAABgAAAAADDwAAAAAABgAAAAACggAAAAAADAAAAAAADAAAAAADggAAAAAAggAAAAAADwAAAAACggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAABgAAAAABDwAAAAACBgAAAAACggAAAAAADAAAAAACDAAAAAAAggAAAAAADAAAAAAADAAAAAAACwAAAAAAggAAAAAAFwAAAAAAFwAAAAAAGgAAAAAAGgAAAAAAggAAAAAABgAAAAADDQAAAAADBgAAAAADggAAAAAADAAAAAAADAAAAAABggAAAAAADAAAAAADDAAAAAABCwAAAAAAggAAAAAAFwAAAAAAFwAAAAAAGgAAAAAAGgAAAAAAggAAAAAABgAAAAABDQAAAAABBgAAAAABggAAAAAADAAAAAACDAAAAAADggAAAAAADAAAAAADDAAAAAAACwAAAAABggAAAAAAGAAAAAAAGAAAAAAAGAAAAAABGAAAAAADggAAAAAABgAAAAAADQAAAAABBgAAAAAAggAAAAAADAAAAAACDAAAAAADDAAAAAADDAAAAAAADAAAAAAACwAAAAACggAAAAAAGAAAAAAAGAAAAAABGAAAAAACGAAAAAADGAAAAAABBgAAAAABDwAAAAADBgAAAAAAggAAAAAADAAAAAACDAAAAAADDAAAAAABDAAAAAADDAAAAAABCwAAAAACggAAAAAAGAAAAAADGAAAAAABGAAAAAABGAAAAAADggAAAAAABgAAAAABDwAAAAAABgAAAAADggAAAAAADAAAAAACDAAAAAADDAAAAAAADAAAAAAADAAAAAADCwAAAAAAggAAAAAANQAAAAAANQAAAAAANQAAAAAANQAAAAAAggAAAAAABgAAAAADDwAAAAAABgAAAAABggAAAAAADAAAAAADDAAAAAABDAAAAAADDAAAAAAADAAAAAAACwAAAAAAggAAAAAANQAAAAAANQAAAAAANQAAAAAANQAAAAAAggAAAAAABgAAAAAADwAAAAADBgAAAAADggAAAAAADAAAAAADDAAAAAABDAAAAAACDAAAAAADDAAAAAADggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAADwAAAAAADwAAAAACDwAAAAABggAAAAAADAAAAAAADAAAAAABFgAAAAACFgAAAAAAFgAAAAADFgAAAAABFgAAAAADFgAAAAADOgAAAAABOgAAAAADOwAAAAACOwAAAAADOwAAAAABOgAAAAAAOgAAAAAACwAAAAACDAAAAAACDAAAAAABFgAAAAAAFgAAAAAAFgAAAAACFgAAAAACFgAAAAABFgAAAAABOgAAAAABOgAAAAAAOwAAAAACOwAAAAAAOwAAAAADOgAAAAAAOgAAAAABCwAAAAADDAAAAAABDAAAAAACFgAAAAABFgAAAAABFgAAAAAAFgAAAAADFgAAAAAAFgAAAAABOQAAAAACOQAAAAAAGwAAAAADGwAAAAACGwAAAAACOQAAAAACOQAAAAABggAAAAAAggAAAAAAggAAAAAA
+          tiles: ggAAAAAADwAAAAAABgAAAAACBgAAAAADBgAAAAACBgAAAAAABgAAAAACBgAAAAACBgAAAAAAggAAAAAABgAAAAACDQAAAAABBgAAAAAAggAAAAAADAAAAAAADAAAAAABggAAAAAADwAAAAABBgAAAAACBgAAAAABBgAAAAAABgAAAAABBgAAAAAABgAAAAAABgAAAAADggAAAAAABgAAAAAADwAAAAADBgAAAAABggAAAAAADAAAAAADDAAAAAADggAAAAAADwAAAAACBgAAAAACBgAAAAAABgAAAAAABgAAAAAABgAAAAADBgAAAAACBgAAAAADggAAAAAABgAAAAACDwAAAAACBgAAAAACggAAAAAACwAAAAACggAAAAAAHAAAAAAABgAAAAABBgAAAAAABgAAAAADBgAAAAAABgAAAAACBgAAAAAABgAAAAABBgAAAAADggAAAAAABgAAAAADDwAAAAAABgAAAAACggAAAAAADAAAAAAADAAAAAADggAAAAAAggAAAAAADwAAAAACggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAABgAAAAABDwAAAAACBgAAAAACggAAAAAADAAAAAACDAAAAAAAggAAAAAADAAAAAAADAAAAAAACwAAAAAAggAAAAAAFwAAAAAAFwAAAAAAGgAAAAAAGgAAAAAAggAAAAAABgAAAAADDQAAAAADBgAAAAADggAAAAAADAAAAAAADAAAAAABggAAAAAADAAAAAADDAAAAAABCwAAAAAAggAAAAAAFwAAAAAAFwAAAAAAGgAAAAAAGgAAAAAAggAAAAAABgAAAAABDQAAAAABBgAAAAABggAAAAAADAAAAAACDAAAAAADggAAAAAADAAAAAADDAAAAAAACwAAAAABggAAAAAAGAAAAAAAGAAAAAAAGAAAAAABGAAAAAADggAAAAAABgAAAAAADQAAAAABBgAAAAAAggAAAAAADAAAAAACDAAAAAADDAAAAAADDAAAAAAADAAAAAAACwAAAAACggAAAAAAGAAAAAAAGAAAAAABGAAAAAACGAAAAAADGAAAAAABBgAAAAABDwAAAAADBgAAAAAAggAAAAAADAAAAAACDAAAAAADDAAAAAABDAAAAAADDAAAAAABCwAAAAACggAAAAAAGAAAAAADGAAAAAABGAAAAAABGAAAAAADggAAAAAABgAAAAABDwAAAAAABgAAAAADggAAAAAADAAAAAACDAAAAAADDAAAAAAADAAAAAAADAAAAAADCwAAAAAAggAAAAAANQAAAAAANQAAAAAANQAAAAAANQAAAAAAggAAAAAABgAAAAADDwAAAAAABgAAAAABggAAAAAADAAAAAADDAAAAAABDAAAAAADDAAAAAAADAAAAAAACwAAAAAAggAAAAAANQAAAAAANQAAAAAANQAAAAAANQAAAAAAggAAAAAABgAAAAAADwAAAAADBgAAAAADggAAAAAADAAAAAADDAAAAAABDAAAAAACDAAAAAADDAAAAAADggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAADwAAAAAADwAAAAACDwAAAAABggAAAAAADAAAAAAADAAAAAABFgAAAAACFgAAAAAAFgAAAAADFgAAAAABFgAAAAADFgAAAAADOgAAAAABOgAAAAADOwAAAAACOwAAAAADOwAAAAABOgAAAAAAOgAAAAAACwAAAAACDAAAAAACDAAAAAABFgAAAAAAFgAAAAAAFgAAAAACFgAAAAACFgAAAAABFgAAAAABOgAAAAABOgAAAAAAOwAAAAACOwAAAAAAOwAAAAADOgAAAAAAOgAAAAABCwAAAAADDAAAAAABDAAAAAACFgAAAAABFgAAAAABFgAAAAAAFgAAAAADFgAAAAAAFgAAAAABOQAAAAACOQAAAAAAPwAAAAAAPwAAAAAAPwAAAAAAOQAAAAACOQAAAAABggAAAAAAggAAAAAAggAAAAAA
           version: 6
         4,1:
           ind: 4,1
@@ -268,7 +269,7 @@ entities:
           version: 6
         5,2:
           ind: 5,2
-          tiles: ggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAOQAAAAACOQAAAAAAGwAAAAACGwAAAAABGwAAAAACOQAAAAADOQAAAAABggAAAAAAMAAAAAABggAAAAAADwAAAAAABgAAAAADBgAAAAACBgAAAAAABgAAAAAABgAAAAAAOQAAAAAAOQAAAAAAGwAAAAACGwAAAAABGwAAAAADOQAAAAADOQAAAAABMAAAAAAAMAAAAAAAMAAAAAABDwAAAAACDwAAAAABDQAAAAADDQAAAAADDQAAAAAADwAAAAACOgAAAAABOgAAAAACOwAAAAAAOwAAAAABOwAAAAADOgAAAAADOgAAAAABggAAAAAAMAAAAAACggAAAAAADwAAAAAABgAAAAAABgAAAAACBgAAAAAABgAAAAAABgAAAAADOgAAAAADOgAAAAABOwAAAAAAOwAAAAADOwAAAAACOgAAAAABOgAAAAACggAAAAAAMAAAAAACggAAAAAAggAAAAAAggAAAAAAggAAAAAADAAAAAADDAAAAAACggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAADAAAAAABDAAAAAADDAAAAAAADAAAAAABDAAAAAACDAAAAAABGAAAAAADGAAAAAACGAAAAAAAGAAAAAABGAAAAAABGAAAAAACggAAAAAADgAAAAAADgAAAAAAggAAAAAADAAAAAACDAAAAAACDAAAAAAADAAAAAADDAAAAAABDAAAAAADggAAAAAAGAAAAAACGAAAAAAAGAAAAAAAGAAAAAABGAAAAAACggAAAAAADgAAAAAADgAAAAAAggAAAAAADAAAAAAADAAAAAADDAAAAAACDAAAAAACDAAAAAADDAAAAAADggAAAAAAGAAAAAADGAAAAAABGAAAAAABGAAAAAABGAAAAAADggAAAAAADgAAAAAADgAAAAAAggAAAAAADAAAAAACDAAAAAADDAAAAAABDAAAAAAADAAAAAABDAAAAAABggAAAAAAggAAAAAAggAAAAAAggAAAAAACwAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAADAAAAAADDAAAAAABDAAAAAABDAAAAAABDAAAAAAADAAAAAACggAAAAAADAAAAAABDAAAAAAAggAAAAAADAAAAAAADAAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAHwAAAAADHwAAAAAAHwAAAAADHwAAAAACHwAAAAABHwAAAAAAggAAAAAAggAAAAAAHwAAAAADggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAHwAAAAACHwAAAAABHwAAAAADHwAAAAADHwAAAAACHwAAAAAAggAAAAAAHwAAAAABHwAAAAADHwAAAAADHwAAAAADHwAAAAADggAAAAAAggAAAAAAggAAAAAAggAAAAAAHwAAAAADHwAAAAABHwAAAAABHwAAAAAAHwAAAAACHwAAAAACHwAAAAACHwAAAAADHwAAAAAAHwAAAAADHwAAAAAAHwAAAAACggAAAAAAggAAAAAAggAAAAAAggAAAAAAHwAAAAABHwAAAAADHwAAAAACHwAAAAADHwAAAAADHwAAAAABggAAAAAAHwAAAAADHwAAAAACHwAAAAADHwAAAAABHwAAAAADggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAHwAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAHwAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAABAAAAAAAggAAAAAAggAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAggAAAAAAIAAAAAACIAAAAAABIAAAAAAAIAAAAAADIAAAAAABggAAAAAAggAAAAAAggAAAAAA
+          tiles: ggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAOQAAAAACOQAAAAAAPwAAAAAAPwAAAAAAPwAAAAAAOQAAAAADOQAAAAABggAAAAAAMAAAAAABggAAAAAADwAAAAAABgAAAAADBgAAAAACBgAAAAAABgAAAAAABgAAAAAAOQAAAAAAOQAAAAAAPwAAAAAAPwAAAAAAPwAAAAAAOQAAAAADOQAAAAABMAAAAAAAMAAAAAAAMAAAAAABDwAAAAACDwAAAAABDQAAAAADDQAAAAADDQAAAAAADwAAAAACOgAAAAABOgAAAAACOwAAAAAAOwAAAAABOwAAAAADOgAAAAADOgAAAAABggAAAAAAMAAAAAACggAAAAAADwAAAAAABgAAAAAABgAAAAACBgAAAAAABgAAAAAABgAAAAADOgAAAAADOgAAAAABOwAAAAAAOwAAAAADOwAAAAACOgAAAAABOgAAAAACggAAAAAAMAAAAAACggAAAAAAggAAAAAAggAAAAAAggAAAAAADAAAAAADDAAAAAACggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAADAAAAAABDAAAAAADDAAAAAAADAAAAAABDAAAAAACDAAAAAABGAAAAAADGAAAAAACGAAAAAAAGAAAAAABGAAAAAABGAAAAAACggAAAAAADgAAAAAADgAAAAAAggAAAAAADAAAAAACDAAAAAACDAAAAAAADAAAAAADDAAAAAABDAAAAAADggAAAAAAGAAAAAACGAAAAAAAGAAAAAAAGAAAAAABGAAAAAACggAAAAAADgAAAAAADgAAAAAAggAAAAAADAAAAAAADAAAAAADDAAAAAACDAAAAAACDAAAAAADDAAAAAADggAAAAAAGAAAAAADGAAAAAABGAAAAAABGAAAAAABGAAAAAADggAAAAAADgAAAAAADgAAAAAAggAAAAAADAAAAAACDAAAAAADDAAAAAABDAAAAAAADAAAAAABDAAAAAABggAAAAAAggAAAAAAggAAAAAAggAAAAAACwAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAADAAAAAADDAAAAAABDAAAAAABDAAAAAABDAAAAAAADAAAAAACggAAAAAADAAAAAABDAAAAAAAggAAAAAADAAAAAAADAAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAHwAAAAADHwAAAAAAHwAAAAADHwAAAAACHwAAAAABHwAAAAAAggAAAAAAggAAAAAAHwAAAAADggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAHwAAAAACHwAAAAABHwAAAAADHwAAAAADHwAAAAACHwAAAAAAggAAAAAAHwAAAAABHwAAAAADHwAAAAADHwAAAAADHwAAAAADggAAAAAAggAAAAAAggAAAAAAggAAAAAAHwAAAAADHwAAAAABHwAAAAABHwAAAAAAHwAAAAACHwAAAAACHwAAAAACHwAAAAADHwAAAAAAHwAAAAADHwAAAAAAHwAAAAACggAAAAAAggAAAAAAggAAAAAAggAAAAAAHwAAAAABHwAAAAADHwAAAAACHwAAAAADHwAAAAADHwAAAAABggAAAAAAHwAAAAADHwAAAAACHwAAAAADHwAAAAABHwAAAAADggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAHwAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAHwAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAABAAAAAAAggAAAAAAggAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAggAAAAAAIAAAAAACIAAAAAABIAAAAAAAIAAAAAADIAAAAAABggAAAAAAggAAAAAAggAAAAAA
           version: 6
         3,2:
           ind: 3,2
@@ -651,6 +652,7 @@ entities:
             5003: 82,-18
             5004: 74,-14
             5005: 75,17
+            5035: 51,-4
         - node:
             angle: 3.141592653589793 rad
             color: '#FFFFFFFF'
@@ -1706,11 +1708,6 @@ entities:
             3586: 74.791466,57.931458
         - node:
             color: '#FFFFFFFF'
-            id: Bushn1
-          decals:
-            3620: 88.058754,30.979794
-        - node:
-            color: '#FFFFFFFF'
             id: Caution
           decals:
             844: 114,-22
@@ -1871,6 +1868,8 @@ entities:
             2892: 50,7
             3679: 122,-10
             4950: 81,-54
+            5056: 83,-5
+            5057: 84,-5
         - node:
             angle: 4.71238898038469 rad
             color: '#FFFFFFFF'
@@ -2266,12 +2265,6 @@ entities:
             3565: 79.14335,61.45587
             3566: 79.25272,62.158997
             3587: 74.74459,62.353333
-            3599: 88.871254,30.886044
-        - node:
-            color: '#FFFFFFFF'
-            id: Flowerspv1
-          decals:
-            3614: 87.902504,32.729794
         - node:
             color: '#FFFFFFFF'
             id: Flowerspv2
@@ -2282,8 +2275,6 @@ entities:
             3570: 79.90897,59.98712
             3571: 79.44022,58.096497
             3572: 79.1121,59.26837
-            3602: 89.16813,31.932919
-            3603: 90.19938,30.792294
         - node:
             color: '#FFFFFFFF'
             id: Flowerspv3
@@ -2303,12 +2294,10 @@ entities:
             3575: 81.01835,61.70587
             3576: 81.00272,60.377747
             3585: 77.11959,63.415833
-            3610: 90.01188,33.104794
         - node:
             color: '#FFFFFFFF'
             id: Flowersy2
           decals:
-            3601: 90.26188,32.511044
             3625: 77.03169,60.777893
         - node:
             color: '#FFFFFFFF'
@@ -2395,7 +2384,6 @@ entities:
             3526: 79.9246,61.70587
             3543: 78.15897,63.42462
             3588: 77.89445,59.614445
-            3619: 87.965004,30.964169
             3624: 76.75044,60.606018
             3645: 78.38508,21.789986
         - node:
@@ -2404,19 +2392,47 @@ entities:
           decals:
             3471: 75.44033,60.17492
             3584: 76.99459,63.993958
-            3592: 87.902504,32.71417
-            3593: 89.308754,30.948544
-            3594: 88.777504,31.964169
-            3596: 90.121254,31.401669
-            3608: 89.652504,33.15167
             3634: 76.4007,20.258736
             3636: 76.26008,22.008736
+        - node:
+            color: '#9FED5896'
+            id: HalfTileOverlayGreyscale
+          decals:
+            5008: 52,-38
+            5014: 89,-36
+            5016: 99,-37
+            5017: 117,-14
+            5023: 78,6
+            5058: 73,-41
         - node:
             color: '#DE3A3A96'
             id: HalfTileOverlayGreyscale
           decals:
             2184: 116,-5
             2185: 115,-5
+        - node:
+            color: '#FED83DCC'
+            id: HalfTileOverlayGreyscale
+          decals:
+            5120: 76,-41
+            5121: 77,-41
+            5122: 78,-41
+            5123: 79,-41
+            5124: 80,-41
+        - node:
+            color: '#9FED5896'
+            id: HalfTileOverlayGreyscale180
+          decals:
+            5020: 117,0
+            5031: 39,0
+            5034: 45,-16
+        - node:
+            color: '#FED83DCC'
+            id: HalfTileOverlayGreyscale180
+          decals:
+            5127: 72,33
+            5128: 73,33
+            5129: 74,33
         - node:
             color: '#334E6DBF'
             id: HalfTileOverlayGreyscale270
@@ -2426,14 +2442,25 @@ entities:
             3373: 130,-11
             3374: 130,-10
             3375: 130,-9
-            3376: 130,-8
-            3377: 130,-7
             3378: 130,-6
             3379: 130,-5
             3380: 130,-4
             3381: 130,-3
             3382: 130,-2
             3383: 130,-1
+        - node:
+            color: '#334E6DC8'
+            id: HalfTileOverlayGreyscale270
+          decals:
+            5019: 130,-8
+        - node:
+            color: '#9FED5896'
+            id: HalfTileOverlayGreyscale270
+          decals:
+            5011: 90,-32
+            5012: 101,-51
+            5018: 130,-7
+            5030: 56,-7
         - node:
             color: '#DE3A3A96'
             id: HalfTileOverlayGreyscale270
@@ -2456,6 +2483,12 @@ entities:
             2182: 105,-7
             2183: 105,-8
         - node:
+            color: '#FED83DCC'
+            id: HalfTileOverlayGreyscale270
+          decals:
+            5125: 98,-3
+            5126: 98,-4
+        - node:
             color: '#334E6DBF'
             id: HalfTileOverlayGreyscale90
           decals:
@@ -2473,6 +2506,16 @@ entities:
             3395: 132,-12
             3396: 132,-13
         - node:
+            color: '#9FED5896'
+            id: HalfTileOverlayGreyscale90
+          decals:
+            5009: 66,-32
+            5021: 100,-9
+            5022: 92,-8
+            5028: 79,52
+            5029: 66,18
+            5032: 28,-10
+        - node:
             color: '#DE3A3AA5'
             id: HalfTileOverlayGreyscale90
           decals:
@@ -2483,7 +2526,6 @@ entities:
             3248: 100,-6
             3249: 100,-7
             3250: 100,-8
-            3251: 100,-9
             3252: 100,-10
             3253: 100,-11
             3254: 100,-12
@@ -2562,9 +2604,13 @@ entities:
             2573: 82,-17
         - node:
             color: '#9FED5896'
+            id: MiniTileLineOverlayS
+          decals:
+            5027: 87,29
+        - node:
+            color: '#9FED5896'
             id: QuarterTileOverlayGreyscale
           decals:
-            4477: 56,-7
             4478: 56,-6
             4479: 56,-5
             4480: 56,-4
@@ -2666,8 +2712,6 @@ entities:
           decals:
             4387: 28,-13
             4388: 28,-12
-            4389: 28,-11
-            4390: 28,-10
             4391: 28,-9
             4392: 28,-8
             4393: 28,-7
@@ -2679,6 +2723,7 @@ entities:
             4712: 83,-43
             4713: 84,-43
             4714: 85,-43
+            5033: 28,-11
         - node:
             color: '#52B4E996'
             id: QuarterTileOverlayGreyscale270
@@ -2746,7 +2791,6 @@ entities:
             4012: 75,6
             4013: 76,6
             4014: 77,6
-            4015: 78,6
             4758: 114,2
             4760: 116,2
             4762: 118,2
@@ -2799,11 +2843,6 @@ entities:
             646: 131,54
             647: 130,59
             648: 129,44
-        - node:
-            color: '#FFFFFFFF'
-            id: Rock05
-          decals:
-            3612: 87.88688,31.792294
         - node:
             color: '#FFFFFFFF'
             id: SpaceStationSign1
@@ -3504,6 +3543,21 @@ entities:
             366: -6,-23
             370: -4,-24
         - node:
+            color: '#FFFFFFFF'
+            id: bushsnowa2
+          decals:
+            5050: 87.82826,32.0792
+        - node:
+            color: '#FFFFFFFF'
+            id: bushsnowb1
+          decals:
+            5055: 88.15639,33.157326
+        - node:
+            color: '#FFFFFFFF'
+            id: bushsnowb3
+          decals:
+            5044: 90.03139,31.54795
+        - node:
             cleanable: True
             color: '#FF0000FF'
             id: danger
@@ -3528,6 +3582,43 @@ entities:
             id: g
           decals:
             3749: 125.58761,-10.93396
+        - node:
+            color: '#FFFFFFFF'
+            id: grasssnow01
+          decals:
+            5036: 88.17201,32.8917
+        - node:
+            color: '#FFFFFFFF'
+            id: grasssnow02
+          decals:
+            5037: 90.29701,32.8917
+        - node:
+            color: '#FFFFFFFF'
+            id: grasssnow04
+          decals:
+            5041: 89.18764,31.61045
+        - node:
+            color: '#FFFFFFFF'
+            id: grasssnow07
+          decals:
+            5048: 90.12514,30.7667
+            5054: 88.42201,31.86045
+        - node:
+            color: '#FFFFFFFF'
+            id: grasssnow09
+          decals:
+            5038: 88.95326,33.1417
+            5053: 88.18764,31.36045
+        - node:
+            color: '#FFFFFFFF'
+            id: grasssnow13
+          decals:
+            5039: 89.82826,31.969826
+        - node:
+            color: '#FFFFFFFF'
+            id: grasssnowb2
+          decals:
+            5043: 90.07826,32.98545
         - node:
             cleanable: True
             color: '#FF00F8FF'
@@ -5019,7 +5110,8 @@ entities:
           36,-7:
             0: 53144
           36,-6:
-            1: 12307
+            1: 12291
+            9: 16
             0: 76
           36,-5:
             1: 13107
@@ -5050,8 +5142,8 @@ entities:
           23,7:
             1: 8189
           24,8:
-            9: 65407
-            10: 128
+            10: 65407
+            11: 128
           25,5:
             0: 17
             1: 61440
@@ -5141,7 +5233,7 @@ entities:
             1: 65535
           23,8:
             1: 4369
-            9: 17636
+            10: 17636
           16,8:
             1: 65527
           17,5:
@@ -5219,7 +5311,8 @@ entities:
           22,11:
             1: 62207
           22,12:
-            1: 61695
+            1: 61693
+            12: 2
           23,9:
             1: 56784
           23,10:
@@ -5312,7 +5405,8 @@ entities:
           19,15:
             1: 65535
           19,16:
-            1: 4095
+            1: 3071
+            6: 1024
           20,13:
             1: 61666
           20,14:
@@ -6185,6 +6279,21 @@ entities:
         - volume: 2500
           temperature: 293.15
           moles:
+          - 21.6852
+          - 81.57766
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
           - 0
           - 103.92799
           - 0
@@ -6202,6 +6311,21 @@ entities:
           moles:
           - 0
           - 103.92374
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 21.813705
+          - 82.06108
           - 0
           - 0
           - 0
@@ -6275,7 +6399,7 @@ entities:
   - uid: 12
     components:
     - type: MetaData
-      name: Hydroponics Hallway Air Alarm
+      name: Hydroponics Hallway
     - type: Transform
       pos: 75.5,7.5
       parent: 2
@@ -6306,7 +6430,7 @@ entities:
   - uid: 141
     components:
     - type: MetaData
-      name: Virology Air Alarm
+      name: Virology
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 86.5,-13.5
@@ -6326,7 +6450,7 @@ entities:
   - uid: 143
     components:
     - type: MetaData
-      name: Shooting Range Air Alarm
+      name: Shooting Range
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 109.5,-21.5
@@ -6342,7 +6466,7 @@ entities:
   - uid: 271
     components:
     - type: MetaData
-      name: CE's Bedroom Air Alarm
+      name: CE's Bedroom
     - type: Transform
       pos: 9.5,-5.5
       parent: 2
@@ -6355,7 +6479,7 @@ entities:
   - uid: 962
     components:
     - type: MetaData
-      name: Engineering Lobby Air Alarm
+      name: Engineering Lobby
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 24.5,-9.5
@@ -6374,7 +6498,7 @@ entities:
   - uid: 1231
     components:
     - type: MetaData
-      name: TEG Air Alarm
+      name: TEG
     - type: Transform
       pos: -5.5,-19.5
       parent: 2
@@ -6387,7 +6511,7 @@ entities:
   - uid: 1301
     components:
     - type: MetaData
-      name: CE's Office Air Alarm
+      name: CE's Office
     - type: Transform
       pos: 14.5,-5.5
       parent: 2
@@ -6401,7 +6525,7 @@ entities:
   - uid: 1340
     components:
     - type: MetaData
-      name: Atmospherics Lobby Air Alarm
+      name: Atmospherics Lobby
     - type: Transform
       pos: 23.5,-9.5
       parent: 2
@@ -6418,7 +6542,7 @@ entities:
   - uid: 1579
     components:
     - type: MetaData
-      name: Port Medbay Hallway Air Alarm
+      name: Port Medbay Hallway
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 63.5,-6.5
@@ -6446,7 +6570,7 @@ entities:
   - uid: 1660
     components:
     - type: MetaData
-      name: Security Locker Room Air Alarm
+      name: Security Locker Room
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 111.5,-9.5
@@ -6459,7 +6583,7 @@ entities:
   - uid: 1723
     components:
     - type: MetaData
-      name: Distro Air Alarm
+      name: Distro
     - type: Transform
       pos: 6.5,-9.5
       parent: 2
@@ -6479,7 +6603,7 @@ entities:
   - uid: 2038
     components:
     - type: MetaData
-      name: News Air Alarm
+      name: News
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 119.5,-17.5
@@ -6494,7 +6618,7 @@ entities:
   - uid: 2091
     components:
     - type: MetaData
-      name: Morgue Corridor Air Alarm
+      name: Morgue Corridor
     - type: Transform
       pos: 79.5,-3.5
       parent: 2
@@ -6516,7 +6640,7 @@ entities:
   - uid: 2128
     components:
     - type: MetaData
-      name: Annex Dock Air Alarm
+      name: Annex Dock
     - type: Transform
       pos: 123.5,-62.5
       parent: 2
@@ -6531,7 +6655,7 @@ entities:
   - uid: 2172
     components:
     - type: MetaData
-      name: R&D Server Air Alarm
+      name: R&D Server
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 49.5,16.5
@@ -6545,7 +6669,7 @@ entities:
   - uid: 2187
     components:
     - type: MetaData
-      name: Evac Dock Air Alarm
+      name: Evac Dock
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 119.5,-43.5
@@ -6561,7 +6685,7 @@ entities:
   - uid: 2556
     components:
     - type: MetaData
-      name: Chemistry Air Alarm
+      name: Chemistry
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 79.5,-2.5
@@ -6577,7 +6701,7 @@ entities:
   - uid: 2611
     components:
     - type: MetaData
-      name: RD's Study Air Alarm
+      name: RD's Study
     - type: Transform
       pos: 53.5,16.5
       parent: 2
@@ -6591,7 +6715,7 @@ entities:
   - uid: 2630
     components:
     - type: MetaData
-      name: Morgue Air Alarm
+      name: Morgue
     - type: Transform
       pos: 81.5,3.5
       parent: 2
@@ -6605,7 +6729,7 @@ entities:
   - uid: 2846
     components:
     - type: MetaData
-      name: Science Locker Room Air Alarm
+      name: Science Locker Room
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 45.5,15.5
@@ -6619,7 +6743,7 @@ entities:
   - uid: 2861
     components:
     - type: MetaData
-      name: Robotics Lobby Air Alarm
+      name: Robotics Lobby
     - type: Transform
       pos: 38.5,7.5
       parent: 2
@@ -6636,7 +6760,7 @@ entities:
   - uid: 2882
     components:
     - type: MetaData
-      name: RD's Office Air Alarm
+      name: RD's Office
     - type: Transform
       pos: 51.5,12.5
       parent: 2
@@ -6650,7 +6774,7 @@ entities:
   - uid: 2924
     components:
     - type: MetaData
-      name: HoS's Office Air Alarm
+      name: HoS's Office
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 127.5,-5.5
@@ -6664,7 +6788,7 @@ entities:
   - uid: 2995
     components:
     - type: MetaData
-      name: Robotics Workshop Air Alarm
+      name: Robotics Workshop
     - type: Transform
       pos: 34.5,7.5
       parent: 2
@@ -6681,7 +6805,7 @@ entities:
   - uid: 3157
     components:
     - type: MetaData
-      name: Security Break Room Air Alarm
+      name: Security Break Room
     - type: Transform
       pos: 120.5,-0.5
       parent: 2
@@ -6697,7 +6821,7 @@ entities:
   - uid: 3190
     components:
     - type: MetaData
-      name: Anomaly Generator Air Alarm
+      name: Anomaly Generator
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 53.5,3.5
@@ -6710,7 +6834,7 @@ entities:
   - uid: 3979
     components:
     - type: MetaData
-      name: Telecoms Air Alarm
+      name: Telecomms
     - type: Transform
       pos: 31.5,-2.5
       parent: 2
@@ -6724,7 +6848,7 @@ entities:
   - uid: 4002
     components:
     - type: MetaData
-      name: Security Hallway Air Alarm
+      name: Security Hallway
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 97.5,-8.5
@@ -6749,7 +6873,7 @@ entities:
   - uid: 4072
     components:
     - type: MetaData
-      name: Engineering Hallway Air Alarm
+      name: Engineering Hallway
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 29.5,-6.5
@@ -6779,7 +6903,7 @@ entities:
   - uid: 4090
     components:
     - type: MetaData
-      name: Outboard Science Hallway Air Alarm
+      name: Outboard Science Hallway
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 35.5,-0.5
@@ -6807,7 +6931,7 @@ entities:
   - uid: 4817
     components:
     - type: MetaData
-      name: Psychologist Hallway Air Alarm
+      name: Psychologist Hallway
     - type: Transform
       pos: 83.5,7.5
       parent: 2
@@ -6831,7 +6955,7 @@ entities:
   - uid: 5000
     components:
     - type: MetaData
-      name: Shuttle Workshop Air Alarm
+      name: Shuttle Workshop
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 42.5,-19.5
@@ -6854,7 +6978,7 @@ entities:
   - uid: 5014
     components:
     - type: MetaData
-      name: Shuttle Workshop Docking Bay Air Alarm
+      name: Shuttle Workshop Docking Bay
     - type: Transform
       pos: 37.5,-22.5
       parent: 2
@@ -6870,7 +6994,7 @@ entities:
   - uid: 5062
     components:
     - type: MetaData
-      name: Tools Room Air Alarm
+      name: Tools Room
     - type: Transform
       pos: 44.5,-6.5
       parent: 2
@@ -6892,7 +7016,7 @@ entities:
   - uid: 5064
     components:
     - type: MetaData
-      name: Shuttle Workshop Hallway Air Alarm
+      name: Shuttle Workshop Hallway
     - type: Transform
       pos: 35.5,-12.5
       parent: 2
@@ -6914,7 +7038,7 @@ entities:
   - uid: 5125
     components:
     - type: MetaData
-      name: Tools Hallway Air Alarm
+      name: Tools Hallway
     - type: Transform
       pos: 54.5,-12.5
       parent: 2
@@ -6936,7 +7060,7 @@ entities:
   - uid: 5130
     components:
     - type: MetaData
-      name: Inboard Science Hallway Air Alarm
+      name: Inboard Science Hallway
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 50.5,-0.5
@@ -6956,7 +7080,7 @@ entities:
   - uid: 5154
     components:
     - type: MetaData
-      name: Port Wing Aft Connector Air Alarm
+      name: Port Wing Aft Connector
     - type: Transform
       pos: 61.5,-12.5
       parent: 2
@@ -6974,7 +7098,7 @@ entities:
   - uid: 5179
     components:
     - type: MetaData
-      name: Port Wing Forward Connector Air Alarm
+      name: Port Wing Forward Connector
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 61.5,-0.5
@@ -6993,7 +7117,7 @@ entities:
   - uid: 5670
     components:
     - type: MetaData
-      name: Perma Intake Air Alarm
+      name: Perma Intake
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 110.5,6.5
@@ -7028,7 +7152,7 @@ entities:
   - uid: 5948
     components:
     - type: MetaData
-      name: Port Janitorial Hallway Air Alarm
+      name: Port Janitorial Hallway
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 59.5,-7.5
@@ -7051,7 +7175,7 @@ entities:
   - uid: 6180
     components:
     - type: MetaData
-      name: Medbay Air Alarm
+      name: Medbay
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 67.5,-8.5
@@ -7072,7 +7196,7 @@ entities:
   - uid: 6184
     components:
     - type: MetaData
-      name: CMO's Office Air Alarm
+      name: CMO's Office
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 81.5,-12.5
@@ -7086,7 +7210,7 @@ entities:
   - uid: 6334
     components:
     - type: MetaData
-      name: Science Lobby Air Alarm
+      name: Science Lobby
     - type: Transform
       pos: 44.5,8.5
       parent: 2
@@ -7130,7 +7254,7 @@ entities:
   - uid: 6471
     components:
     - type: MetaData
-      name: Boxing Ring Air Alarm
+      name: Boxing Ring
     - type: Transform
       pos: 57.5,28.5
       parent: 2
@@ -7149,7 +7273,7 @@ entities:
   - uid: 6708
     components:
     - type: MetaData
-      name: Medbay Lobby Air Alarm
+      name: Medbay Lobby
     - type: Transform
       pos: 68.5,3.5
       parent: 2
@@ -7166,7 +7290,7 @@ entities:
   - uid: 6870
     components:
     - type: MetaData
-      name: Security Infirmary Air Alarm
+      name: Security Infirmary
     - type: Transform
       pos: 103.5,-8.5
       parent: 2
@@ -7180,7 +7304,7 @@ entities:
   - uid: 6891
     components:
     - type: MetaData
-      name: Interrogation Room Air Alarm
+      name: Interrogation Room
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 107.5,-11.5
@@ -7194,7 +7318,7 @@ entities:
   - uid: 6923
     components:
     - type: MetaData
-      name: AME Air Alarm
+      name: AME
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 10.5,-5.5
@@ -7208,7 +7332,7 @@ entities:
   - uid: 6948
     components:
     - type: MetaData
-      name: Main Engineering Air Alarm
+      name: Main Engineering
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 14.5,0.5
@@ -7228,7 +7352,7 @@ entities:
   - uid: 6949
     components:
     - type: MetaData
-      name: PA Air Alarm
+      name: PA
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 10.5,-0.5
@@ -7241,7 +7365,7 @@ entities:
   - uid: 7247
     components:
     - type: MetaData
-      name: Security Front Desk Air Alarm
+      name: Security Front Desk
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 104.5,-5.5
@@ -7256,7 +7380,7 @@ entities:
   - uid: 8950
     components:
     - type: MetaData
-      name: Courtroom Hallway Air Alarm
+      name: Courtroom Hallway
     - type: Transform
       pos: 122.5,3.5
       parent: 2
@@ -7282,7 +7406,7 @@ entities:
   - uid: 9193
     components:
     - type: MetaData
-      name: Boxing Ring Air Alarm
+      name: Boxing Ring
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 61.5,18.5
@@ -7297,7 +7421,7 @@ entities:
   - uid: 9481
     components:
     - type: MetaData
-      name: Starboard Medbay Hallway Air Alarm
+      name: Starboard Medbay Hallway
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 93.5,-6.5
@@ -7327,7 +7451,7 @@ entities:
   - uid: 9509
     components:
     - type: MetaData
-      name: HoP's Office Air Alarm
+      name: HoP's Office
     - type: Transform
       pos: 73.5,42.5
       parent: 2
@@ -7342,7 +7466,7 @@ entities:
   - uid: 9588
     components:
     - type: MetaData
-      name: Paramedic's Office Air Alarm
+      name: Paramedic's Office
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 58.5,33.5
@@ -7358,7 +7482,7 @@ entities:
   - uid: 9705
     components:
     - type: MetaData
-      name: Starboard Wing Aft Connector Air Alarm
+      name: Starboard Wing Aft Connector
     - type: Transform
       pos: 95.5,-12.5
       parent: 2
@@ -7376,7 +7500,7 @@ entities:
   - uid: 9841
     components:
     - type: MetaData
-      name: Starboard Wing Forward Connector Air Alarm
+      name: Starboard Wing Forward Connector
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 95.5,-0.5
@@ -7395,7 +7519,7 @@ entities:
   - uid: 9949
     components:
     - type: MetaData
-      name: EVA Storage Air Alarm
+      name: EVA Storage
     - type: Transform
       pos: 65.5,43.5
       parent: 2
@@ -7410,7 +7534,7 @@ entities:
   - uid: 9954
     components:
     - type: MetaData
-      name: Dining Hall Air Alarm
+      name: Dining Hall
     - type: Transform
       pos: 70.5,32.5
       parent: 2
@@ -7445,7 +7569,7 @@ entities:
   - uid: 9959
     components:
     - type: MetaData
-      name: Theater Air Alarm
+      name: Theater
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 84.5,23.5
@@ -7459,7 +7583,7 @@ entities:
   - uid: 9960
     components:
     - type: MetaData
-      name: Service Break Room Air Alarm
+      name: Service Break Room
     - type: Transform
       pos: 86.5,20.5
       parent: 2
@@ -7474,7 +7598,7 @@ entities:
   - uid: 9963
     components:
     - type: MetaData
-      name: Botany Air Alarm
+      name: Botany
     - type: Transform
       pos: 73.5,15.5
       parent: 2
@@ -7494,7 +7618,7 @@ entities:
   - uid: 9964
     components:
     - type: MetaData
-      name: Kitchen Air Alarm
+      name: Kitchen
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 67.5,16.5
@@ -7518,7 +7642,7 @@ entities:
   - uid: 9968
     components:
     - type: MetaData
-      name: Botany Locker Room Air Alarm
+      name: Botany Locker Room
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 76.5,10.5
@@ -7533,7 +7657,7 @@ entities:
   - uid: 9978
     components:
     - type: MetaData
-      name: Psychologist's Office Air Alarm
+      name: Psychologist's Office
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 89.5,11.5
@@ -7548,7 +7672,7 @@ entities:
   - uid: 9999
     components:
     - type: MetaData
-      name: Library Air Alarm
+      name: Library
     - type: Transform
       pos: 95.5,31.5
       parent: 2
@@ -7564,7 +7688,7 @@ entities:
   - uid: 10532
     components:
     - type: MetaData
-      name: Courtroom Air Alarm
+      name: Courtroom
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 113.5,5.5
@@ -7583,7 +7707,7 @@ entities:
   - uid: 11195
     components:
     - type: MetaData
-      name: Arboretum Air Alarm
+      name: Arboretum
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 83.5,54.5
@@ -7603,7 +7727,7 @@ entities:
   - uid: 11380
     components:
     - type: MetaData
-      name: Port Janitorial Air Alarm
+      name: Port Janitorial
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 49.5,-2.5
@@ -7618,7 +7742,7 @@ entities:
   - uid: 11645
     components:
     - type: MetaData
-      name: Bar Hallway Air Alarm
+      name: Bar Hallway
     - type: Transform
       pos: 91.5,36.5
       parent: 2
@@ -7640,7 +7764,7 @@ entities:
   - uid: 11709
     components:
     - type: MetaData
-      name: Chaplain's Quarters Air Alarm
+      name: Chaplain's Quarters
     - type: Transform
       pos: 84.5,52.5
       parent: 2
@@ -7654,7 +7778,7 @@ entities:
   - uid: 11711
     components:
     - type: MetaData
-      name: Chapel Air Alarm
+      name: Chapel
     - type: Transform
       pos: 85.5,46.5
       parent: 2
@@ -7669,7 +7793,7 @@ entities:
   - uid: 11713
     components:
     - type: MetaData
-      name: Chapel Lounge Air Alarm
+      name: Chapel Lounge
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 87.5,38.5
@@ -7683,7 +7807,7 @@ entities:
   - uid: 11715
     components:
     - type: MetaData
-      name: Chapel Mortuary Air Alarm
+      name: Chapel Mortuary
     - type: Transform
       pos: 88.5,46.5
       parent: 2
@@ -7702,7 +7826,7 @@ entities:
   - uid: 11724
     components:
     - type: MetaData
-      name: HoP Hallway Air Alarm
+      name: HoP Hallway
     - type: Transform
       pos: 68.5,36.5
       parent: 2
@@ -7725,7 +7849,7 @@ entities:
   - uid: 11726
     components:
     - type: MetaData
-      name: Arboretum Hallway Air Alarm
+      name: Arboretum Hallway
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 80.5,51.5
@@ -7750,7 +7874,7 @@ entities:
   - uid: 11823
     components:
     - type: MetaData
-      name: Starboard Service Hallway Air Alarm
+      name: Starboard Service Hallway
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 89.5,15.5
@@ -7774,7 +7898,7 @@ entities:
   - uid: 11874
     components:
     - type: MetaData
-      name: Materials Storage Air Alarm
+      name: Materials Storage
     - type: Transform
       pos: 72.5,53.5
       parent: 2
@@ -7788,7 +7912,7 @@ entities:
   - uid: 11912
     components:
     - type: MetaData
-      name: Main Security Air Alarm
+      name: Main Security
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 111.5,-8.5
@@ -7821,7 +7945,7 @@ entities:
   - uid: 12561
     components:
     - type: MetaData
-      name: Perma Games Room Air Alarm
+      name: Perma Games Room
     - type: Transform
       pos: 101.5,7.5
       parent: 2
@@ -7834,7 +7958,7 @@ entities:
   - uid: 12562
     components:
     - type: MetaData
-      name: Perma Main Room Air Alarm
+      name: Perma Main Room
     - type: Transform
       pos: 105.5,15.5
       parent: 2
@@ -7851,7 +7975,7 @@ entities:
   - uid: 12563
     components:
     - type: MetaData
-      name: Perma Cell 2 Air Alarm
+      name: Perma Cell 2
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 105.5,16.5
@@ -7865,7 +7989,7 @@ entities:
   - uid: 12564
     components:
     - type: MetaData
-      name: Perma Cell 1 Air Alarm
+      name: Perma Cell 1
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 101.5,16.5
@@ -7879,7 +8003,7 @@ entities:
   - uid: 12663
     components:
     - type: MetaData
-      name: Lawyer's Office Air Alarm
+      name: Lawyer's Office
     - type: Transform
       pos: 113.5,16.5
       parent: 2
@@ -7893,7 +8017,7 @@ entities:
   - uid: 12689
     components:
     - type: MetaData
-      name: Perma Hallway Air Alarm
+      name: Perma Hallway
     - type: Transform
       pos: 105.5,3.5
       parent: 2
@@ -7914,7 +8038,7 @@ entities:
   - uid: 13339
     components:
     - type: MetaData
-      name: Medbay Locker Room Air Alarm
+      name: Medbay Locker Room
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 74.5,-17.5
@@ -7928,7 +8052,7 @@ entities:
   - uid: 13653
     components:
     - type: MetaData
-      name: AI Core Air Alarm
+      name: AI Core
     - type: Transform
       pos: 52.5,-28.5
       parent: 2
@@ -7943,7 +8067,7 @@ entities:
   - uid: 14250
     components:
     - type: MetaData
-      name: Starboard Janitorial Air Alarm
+      name: Starboard Janitorial
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 125.5,6.5
@@ -7957,7 +8081,7 @@ entities:
   - uid: 14476
     components:
     - type: MetaData
-      name: Port Quarter Hallway Air Alarm
+      name: Port Quarter Hallway
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 67.5,-29.5
@@ -7979,7 +8103,7 @@ entities:
   - uid: 14478
     components:
     - type: MetaData
-      name: Starboard Quarter Air Alarm
+      name: Starboard Quarter
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 89.5,-29.5
@@ -8001,7 +8125,7 @@ entities:
   - uid: 14599
     components:
     - type: MetaData
-      name: Dorms Air Alarm
+      name: Dorms
     - type: Transform
       pos: 75.5,-34.5
       parent: 2
@@ -8028,7 +8152,7 @@ entities:
   - uid: 14762
     components:
     - type: MetaData
-      name: Arrivals Dock Air Alarm
+      name: Arrivals Dock
     - type: Transform
       pos: 50.5,-42.5
       parent: 2
@@ -8052,7 +8176,7 @@ entities:
   - uid: 14764
     components:
     - type: MetaData
-      name: Arrivals Hallway Air Alarm
+      name: Arrivals Hallway
     - type: Transform
       pos: 57.5,-36.5
       parent: 2
@@ -8070,7 +8194,7 @@ entities:
   - uid: 14816
     components:
     - type: MetaData
-      name: Cargo Hallway Air Alarm
+      name: Cargo Hallway
     - type: Transform
       pos: 75.5,-39.5
       parent: 2
@@ -8102,7 +8226,7 @@ entities:
   - uid: 14898
     components:
     - type: MetaData
-      name: QM's Office Air Alarm
+      name: QM's Office
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 65.5,-53.5
@@ -8117,7 +8241,7 @@ entities:
   - uid: 14901
     components:
     - type: MetaData
-      name: Cargo Bay Air Alarm
+      name: Cargo Bay
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 70.5,-55.5
@@ -8138,7 +8262,7 @@ entities:
   - uid: 14904
     components:
     - type: MetaData
-      name: Cargo Lobby Air Alarm
+      name: Cargo Lobby
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 69.5,-50.5
@@ -8155,7 +8279,7 @@ entities:
   - uid: 14907
     components:
     - type: MetaData
-      name: Salvage Air Alarm
+      name: Salvage
     - type: Transform
       pos: 90.5,-46.5
       parent: 2
@@ -8168,7 +8292,7 @@ entities:
   - uid: 15200
     components:
     - type: MetaData
-      name: Perma Main Room Air Alarm
+      name: Perma Main Room
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 108.5,6.5
@@ -8187,7 +8311,7 @@ entities:
   - uid: 15612
     components:
     - type: MetaData
-      name: Science Back Room Air Alarm
+      name: Science Back Room
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 46.5,8.5
@@ -8208,7 +8332,7 @@ entities:
   - uid: 17596
     components:
     - type: MetaData
-      name: Evac Hallway Air Alarm
+      name: Evac Hallway
     - type: Transform
       pos: 106.5,-39.5
       parent: 2
@@ -8229,7 +8353,7 @@ entities:
   - uid: 17622
     components:
     - type: MetaData
-      name: Evac Lounge Air Alarm
+      name: Evac Lounge
     - type: Transform
       pos: 103.5,-35.5
       parent: 2
@@ -8249,7 +8373,7 @@ entities:
   - uid: 17633
     components:
     - type: MetaData
-      name: Inboard Annex Dock Air Alarm
+      name: Inboard Annex Dock
     - type: Transform
       pos: 110.5,-62.5
       parent: 2
@@ -8267,7 +8391,7 @@ entities:
   - uid: 17634
     components:
     - type: MetaData
-      name: Annex Dock Connector Air Alarm
+      name: Annex Dock Connector
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 100.5,-48.5
@@ -8296,7 +8420,7 @@ entities:
   - uid: 22856
     components:
     - type: MetaData
-      name: Grav Gen Air Alarm
+      name: Grav Gen
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 86.5,-45.5
@@ -8309,7 +8433,7 @@ entities:
   - uid: 22985
     components:
     - type: MetaData
-      name: Detective Hallway Air Alarm
+      name: Detective Hallway
     - type: Transform
       pos: 105.5,-12.5
       parent: 2
@@ -8335,7 +8459,7 @@ entities:
   - uid: 22989
     components:
     - type: MetaData
-      name: News Hallway Air Alarm
+      name: News Hallway
     - type: Transform
       pos: 121.5,-12.5
       parent: 2
@@ -8356,7 +8480,7 @@ entities:
   - uid: 22992
     components:
     - type: MetaData
-      name: Bridge Hallway Air Alarm
+      name: Bridge Hallway
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 129.5,-7.5
@@ -8383,7 +8507,7 @@ entities:
   - uid: 22996
     components:
     - type: MetaData
-      name: Bridge Air Alarm
+      name: Bridge
     - type: Transform
       pos: 145.5,0.5
       parent: 2
@@ -8411,7 +8535,7 @@ entities:
   - uid: 22999
     components:
     - type: MetaData
-      name: Captain's Quarters Air Alarm
+      name: Captain's Quarters
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 138.5,8.5
@@ -8426,7 +8550,7 @@ entities:
   - uid: 23003
     components:
     - type: MetaData
-      name: Captain's Office Air Alarm
+      name: Captain's Office
     - type: Transform
       pos: 141.5,6.5
       parent: 2
@@ -8440,7 +8564,7 @@ entities:
   - uid: 23006
     components:
     - type: MetaData
-      name: Conference Room Air Alarm
+      name: Conference Room
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 138.5,-16.5
@@ -8455,7 +8579,7 @@ entities:
   - uid: 23310
     components:
     - type: MetaData
-      name: AI Access Lobby Air Alarm
+      name: AI Access Lobby
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 56.5,-18.5
@@ -8471,7 +8595,7 @@ entities:
   - uid: 23325
     components:
     - type: MetaData
-      name: Detective's Office Air Alarm
+      name: Detective's Office
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 105.5,-17.5
@@ -8487,7 +8611,7 @@ entities:
   - uid: 23660
     components:
     - type: MetaData
-      name: Xenoarchaeology Air Alarm
+      name: Xenoarchaeology
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 27.5,9.5
@@ -8506,7 +8630,7 @@ entities:
   - uid: 23818
     components:
     - type: MetaData
-      name: Bar Air Alarm
+      name: Bar
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 84.5,21.5
@@ -8527,7 +8651,7 @@ entities:
   - uid: 23819
     components:
     - type: MetaData
-      name: Port Service Hallway Air Alarm
+      name: Port Service Hallway
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 67.5,20.5
@@ -8578,7 +8702,7 @@ entities:
   - uid: 11540
     components:
     - type: MetaData
-      name: Nitrogen Lounge Air Alarm
+      name: Nitrogen Lounge
     - type: Transform
       pos: 98.5,36.5
       parent: 2
@@ -9170,41 +9294,6 @@ entities:
     - type: Transform
       pos: 126.5,-66.5
       parent: 2
-  - uid: 9104
-    components:
-    - type: Transform
-      pos: 95.5,-7.5
-      parent: 2
-    - type: DeviceLinkSink
-      invokeCounter: 2
-    - type: DeviceLinkSource
-      linkedPorts:
-        9106:
-        - DoorStatus: DoorBolt
-  - uid: 9105
-    components:
-    - type: Transform
-      pos: 95.5,-5.5
-      parent: 2
-    - type: DeviceLinkSink
-      invokeCounter: 3
-    - type: DeviceLinkSource
-      linkedPorts:
-        9106:
-        - DoorStatus: DoorBolt
-  - uid: 9106
-    components:
-    - type: Transform
-      pos: 97.5,-6.5
-      parent: 2
-    - type: DeviceLinkSink
-      invokeCounter: 2
-    - type: DeviceLinkSource
-      linkedPorts:
-        9105:
-        - DoorStatus: DoorBolt
-        9104:
-        - DoorStatus: DoorBolt
   - uid: 11215
     components:
     - type: Transform
@@ -9555,6 +9644,41 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         12754:
+        - DoorStatus: DoorBolt
+  - uid: 9104
+    components:
+    - type: Transform
+      pos: 95.5,-7.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        9105:
+        - DoorStatus: DoorBolt
+  - uid: 9105
+    components:
+    - type: Transform
+      pos: 97.5,-6.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 3
+    - type: DeviceLinkSource
+      linkedPorts:
+        9104:
+        - DoorStatus: DoorBolt
+        9106:
+        - DoorStatus: DoorBolt
+  - uid: 9106
+    components:
+    - type: Transform
+      pos: 95.5,-5.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        9105:
         - DoorStatus: DoorBolt
   - uid: 9970
     components:
@@ -13329,11 +13453,6 @@ entities:
       parent: 2
 - proto: ArrivalsShuttleTimer
   entities:
-  - uid: 104
-    components:
-    - type: Transform
-      pos: 52.5,-36.5
-      parent: 2
   - uid: 15550
     components:
     - type: Transform
@@ -13344,6 +13463,11 @@ entities:
     components:
     - type: Transform
       pos: 57.5,-53.5
+      parent: 2
+  - uid: 23945
+    components:
+    - type: Transform
+      pos: 50.5,-39.5
       parent: 2
 - proto: ArtifactAnalyzerMachineCircuitboard
   entities:
@@ -18080,6 +18204,11 @@ entities:
     components:
     - type: Transform
       pos: -7.5,-14.5
+      parent: 2
+  - uid: 1416
+    components:
+    - type: Transform
+      pos: 44.5,-15.5
       parent: 2
   - uid: 1461
     components:
@@ -26236,11 +26365,6 @@ entities:
     - type: Transform
       pos: 50.5,-18.5
       parent: 2
-  - uid: 13781
-    components:
-    - type: Transform
-      pos: 49.5,-18.5
-      parent: 2
   - uid: 13788
     components:
     - type: Transform
@@ -31436,6 +31560,11 @@ entities:
     - type: Transform
       pos: 143.5,7.5
       parent: 2
+  - uid: 19979
+    components:
+    - type: Transform
+      pos: 44.5,-16.5
+      parent: 2
   - uid: 19987
     components:
     - type: Transform
@@ -31595,6 +31724,11 @@ entities:
     components:
     - type: Transform
       pos: 126.5,-65.5
+      parent: 2
+  - uid: 21333
+    components:
+    - type: Transform
+      pos: 83.5,2.5
       parent: 2
   - uid: 21342
     components:
@@ -32471,6 +32605,16 @@ entities:
     - type: Transform
       pos: 151.5,-6.5
       parent: 2
+  - uid: 23115
+    components:
+    - type: Transform
+      pos: 84.5,1.5
+      parent: 2
+  - uid: 23122
+    components:
+    - type: Transform
+      pos: 84.5,2.5
+      parent: 2
   - uid: 23237
     components:
     - type: Transform
@@ -33165,6 +33309,21 @@ entities:
     components:
     - type: Transform
       pos: 139.5,-22.5
+      parent: 2
+  - uid: 23925
+    components:
+    - type: Transform
+      pos: 82.5,2.5
+      parent: 2
+  - uid: 23926
+    components:
+    - type: Transform
+      pos: 81.5,2.5
+      parent: 2
+  - uid: 23927
+    components:
+    - type: Transform
+      pos: 81.5,1.5
       parent: 2
 - proto: CableApcStack
   entities:
@@ -44072,6 +44231,11 @@ entities:
     - type: Transform
       pos: 52.5,-16.5
       parent: 2
+  - uid: 14934
+    components:
+    - type: Transform
+      pos: 52.5,-25.5
+      parent: 2
   - uid: 14999
     components:
     - type: Transform
@@ -46931,6 +47095,16 @@ entities:
     components:
     - type: Transform
       pos: 139.5,-22.5
+      parent: 2
+  - uid: 23952
+    components:
+    - type: Transform
+      pos: 53.5,-25.5
+      parent: 2
+  - uid: 23953
+    components:
+    - type: Transform
+      pos: 54.5,-25.5
       parent: 2
 - proto: CableMVStack
   entities:
@@ -54465,6 +54639,12 @@ entities:
     - type: Transform
       pos: 37.5,-24.5
       parent: 2
+  - uid: 19940
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 98.5,-2.5
+      parent: 2
   - uid: 19942
     components:
     - type: Transform
@@ -54476,11 +54656,32 @@ entities:
     - type: Transform
       pos: 44.5,-57.5
       parent: 2
+  - uid: 21495
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 98.5,-3.5
+      parent: 2
   - uid: 23603
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 88.5,2.5
+      parent: 2
+  - uid: 24131
+    components:
+    - type: Transform
+      pos: 77.5,-40.5
+      parent: 2
+  - uid: 24132
+    components:
+    - type: Transform
+      pos: 78.5,-40.5
+      parent: 2
+  - uid: 24133
+    components:
+    - type: Transform
+      pos: 79.5,-40.5
       parent: 2
 - proto: ChairFolding
   entities:
@@ -56117,32 +56318,51 @@ entities:
     - type: Transform
       pos: 78.5,66.5
       parent: 2
+    - type: EntityStorage
+      air:
+        volume: 200
+        immutable: False
+        temperature: 293.14673
+        moles:
+        - 1.7459903
+        - 6.568249
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
           showEnts: False
           occludes: True
           ents:
-          - 10622
-          - 10623
-          - 10624
-          - 10625
-          - 10626
           - 10627
-          - 10628
-          - 10629
-          - 10630
-          - 10631
-          - 10632
-          - 10633
-          - 10634
-          - 10635
-          - 10636
-          - 10637
-          - 10638
-          - 10639
-          - 10640
+          - 10626
+          - 10625
+          - 10624
+          - 10623
+          - 10622
+          - 9282
           - 10641
+          - 10640
+          - 10639
+          - 10638
+          - 10637
+          - 10636
+          - 10635
+          - 10634
+          - 10633
+          - 10632
+          - 10631
+          - 10630
+          - 10629
+          - 10628
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
@@ -56300,6 +56520,11 @@ entities:
       parent: 2
 - proto: ClosetWallEmergencyN2FilledRandom
   entities:
+  - uid: 2890
+    components:
+    - type: Transform
+      pos: 117.5,-21.5
+      parent: 2
   - uid: 7830
     components:
     - type: Transform
@@ -56335,10 +56560,10 @@ entities:
     - type: Transform
       pos: 126.5,-8.5
       parent: 2
-  - uid: 23832
+  - uid: 23947
     components:
     - type: Transform
-      pos: 117.5,-21.5
+      pos: 118.5,-21.5
       parent: 2
 - proto: ClosetWallMaintenanceFilledRandom
   entities:
@@ -56793,6 +57018,48 @@ entities:
     - type: Transform
       pos: 117.50062,11.604576
       parent: 2
+- proto: ClothingHeadHatSantahat
+  entities:
+  - uid: 24113
+    components:
+    - type: Transform
+      pos: 113.73855,-9.551769
+      parent: 2
+  - uid: 24114
+    components:
+    - type: Transform
+      pos: 113.67605,-9.504894
+      parent: 2
+  - uid: 24115
+    components:
+    - type: Transform
+      pos: 113.72292,-9.489269
+      parent: 2
+  - uid: 24116
+    components:
+    - type: Transform
+      pos: 113.61355,-9.442394
+      parent: 2
+  - uid: 24117
+    components:
+    - type: Transform
+      pos: 113.75417,-9.379894
+      parent: 2
+  - uid: 24118
+    components:
+    - type: Transform
+      pos: 113.7698,-9.348644
+      parent: 2
+  - uid: 24119
+    components:
+    - type: Transform
+      pos: 113.72292,-9.348644
+      parent: 2
+  - uid: 24130
+    components:
+    - type: Transform
+      pos: 144.27338,9.817436
+      parent: 2
 - proto: ClothingHeadHatSquid
   entities:
   - uid: 11338
@@ -57113,6 +57380,48 @@ entities:
     components:
     - type: Transform
       pos: 117.4821,11.271242
+      parent: 2
+- proto: ClothingOuterSanta
+  entities:
+  - uid: 24106
+    components:
+    - type: Transform
+      pos: 113.2698,-9.333019
+      parent: 2
+  - uid: 24107
+    components:
+    - type: Transform
+      pos: 113.30105,-9.317394
+      parent: 2
+  - uid: 24108
+    components:
+    - type: Transform
+      pos: 113.3948,-9.301769
+      parent: 2
+  - uid: 24109
+    components:
+    - type: Transform
+      pos: 113.47292,-9.254894
+      parent: 2
+  - uid: 24110
+    components:
+    - type: Transform
+      pos: 113.3323,-9.286144
+      parent: 2
+  - uid: 24111
+    components:
+    - type: Transform
+      pos: 113.41042,-9.254894
+      parent: 2
+  - uid: 24112
+    components:
+    - type: Transform
+      pos: 113.4573,-9.239269
+      parent: 2
+  - uid: 24129
+    components:
+    - type: Transform
+      pos: 144.00775,9.770561
       parent: 2
 - proto: ClothingOuterWinterMed
   entities:
@@ -58855,8 +59164,8 @@ entities:
         immutable: False
         temperature: 293.14673
         moles:
-        - 1.7459903
-        - 6.568249
+        - 1.8856695
+        - 7.0937095
         - 0
         - 0
         - 0
@@ -58873,18 +59182,26 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 18973
+          - 24139
+          - 24140
+          - 24141
+          - 24142
+          - 24143
+          - 24144
           - 18972
-          - 18971
-          - 18970
-          - 18969
-          - 18968
-          - 18967
           - 2462
+          - 18967
+          - 18968
+          - 18969
+          - 18970
+          - 18971
+          - 18973
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
           ent: null
+    missingComponents:
+    - StorageFill
 - proto: CrateEngineeringTeslaCoil
   entities:
   - uid: 216
@@ -60318,9 +60635,9 @@ entities:
       pos: 36.5,-4.5
       parent: 2
     - type: NavMapBeacon
-      text: Telecoms
+      text: Telecomms
     - type: WarpPoint
-      location: Telecoms
+      location: Telecomms
 - proto: DefaultStationBeaconTheater
   entities:
   - uid: 22836
@@ -65604,6 +65921,11 @@ entities:
     - type: Transform
       pos: 53.5,-24.5
       parent: 2
+  - uid: 23075
+    components:
+    - type: Transform
+      pos: 80.5,-8.5
+      parent: 2
   - uid: 23458
     components:
     - type: Transform
@@ -66784,6 +67106,11 @@ entities:
       rot: 3.141592653589793 rad
       pos: 44.5,-1.5
       parent: 2
+  - uid: 4393
+    components:
+    - type: Transform
+      pos: 83.5,-34.5
+      parent: 2
   - uid: 6519
     components:
     - type: Transform
@@ -66801,21 +67128,17 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 97.5,-11.5
       parent: 2
+  - uid: 13781
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 109.5,-18.5
+      parent: 2
   - uid: 14194
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 67.5,-12.5
-      parent: 2
-  - uid: 14934
-    components:
-    - type: Transform
-      pos: 89.5,-39.5
-      parent: 2
-  - uid: 15013
-    components:
-    - type: Transform
-      pos: 77.5,-39.5
       parent: 2
   - uid: 15042
     components:
@@ -66885,12 +67208,6 @@ entities:
     - type: Transform
       pos: 80.5,7.5
       parent: 2
-  - uid: 21098
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 89.5,-11.5
-      parent: 2
   - uid: 21101
     components:
     - type: Transform
@@ -66901,11 +67218,6 @@ entities:
     components:
     - type: Transform
       pos: 55.5,-36.5
-      parent: 2
-  - uid: 21114
-    components:
-    - type: Transform
-      pos: 55.5,-12.5
       parent: 2
   - uid: 21116
     components:
@@ -66968,11 +67280,26 @@ entities:
     - type: Transform
       pos: 114.5,-12.5
       parent: 2
-  - uid: 23834
+  - uid: 23913
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
-      pos: 109.5,-20.5
+      pos: 89.5,-9.5
+      parent: 2
+  - uid: 23948
+    components:
+    - type: Transform
+      pos: 55.5,-11.5
+      parent: 2
+  - uid: 23958
+    components:
+    - type: Transform
+      pos: 87.5,-39.5
+      parent: 2
+  - uid: 24134
+    components:
+    - type: Transform
+      pos: 71.5,-39.5
       parent: 2
 - proto: FaxMachineBase
   entities:
@@ -67516,7 +67843,7 @@ entities:
   - uid: 19
     components:
     - type: MetaData
-      name: Robotics Lobby Fire Alarm
+      name: Robotics Lobby
     - type: Transform
       pos: 37.5,7.5
       parent: 2
@@ -67533,7 +67860,7 @@ entities:
   - uid: 40
     components:
     - type: MetaData
-      name: Psychologist Hallway Air Alarm
+      name: Psychologist Hallway
     - type: Transform
       pos: 81.5,7.5
       parent: 2
@@ -67559,7 +67886,7 @@ entities:
   - uid: 119
     components:
     - type: MetaData
-      name: News Fire Alarm
+      name: News
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 119.5,-20.5
@@ -67574,7 +67901,7 @@ entities:
   - uid: 187
     components:
     - type: MetaData
-      name: Courtroom Hallway Fire Alarm
+      name: Courtroom Hallway
     - type: Transform
       pos: 121.5,3.5
       parent: 2
@@ -67600,7 +67927,7 @@ entities:
   - uid: 1330
     components:
     - type: MetaData
-      name: TEG Fire Alarm
+      name: TEG
     - type: Transform
       pos: -6.5,-19.5
       parent: 2
@@ -67613,7 +67940,7 @@ entities:
   - uid: 1722
     components:
     - type: MetaData
-      name: Distro Fire Alarm
+      name: Distro
     - type: Transform
       pos: 7.5,-9.5
       parent: 2
@@ -67629,7 +67956,7 @@ entities:
   - uid: 2140
     components:
     - type: MetaData
-      name: CE's Office Fire Alarm
+      name: CE's Office
     - type: Transform
       pos: 12.5,-5.5
       parent: 2
@@ -67643,7 +67970,7 @@ entities:
   - uid: 2293
     components:
     - type: MetaData
-      name: RD's Study Fire Alarm
+      name: RD's Study
     - type: Transform
       pos: 52.5,16.5
       parent: 2
@@ -67657,7 +67984,7 @@ entities:
   - uid: 2311
     components:
     - type: MetaData
-      name: RD's Office Fire Alarm
+      name: RD's Office
     - type: Transform
       pos: 50.5,12.5
       parent: 2
@@ -67671,7 +67998,7 @@ entities:
   - uid: 2381
     components:
     - type: MetaData
-      name: Main Engineering Fire Alarm
+      name: Main Engineering
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 19.5,-8.5
@@ -67691,7 +68018,7 @@ entities:
   - uid: 2389
     components:
     - type: MetaData
-      name: CE's Bedroom Fire Alarm
+      name: CE's Bedroom
     - type: Transform
       pos: 8.5,-5.5
       parent: 2
@@ -67702,7 +68029,7 @@ entities:
   - uid: 2392
     components:
     - type: MetaData
-      name: Engineering Lobby Fire Alarm
+      name: Engineering Lobby
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 25.5,-7.5
@@ -67719,7 +68046,7 @@ entities:
   - uid: 2393
     components:
     - type: MetaData
-      name: Atmospherics Lobby Fire Alarm
+      name: Atmospherics Lobby
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 25.5,-11.5
@@ -67735,7 +68062,7 @@ entities:
   - uid: 2631
     components:
     - type: MetaData
-      name: Morgue Fire Alarm
+      name: Morgue
     - type: Transform
       pos: 84.5,3.5
       parent: 2
@@ -67749,7 +68076,7 @@ entities:
   - uid: 2863
     components:
     - type: MetaData
-      name: Anomaly Generator Fire Alarm
+      name: Anomaly Generator
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 51.5,3.5
@@ -67762,7 +68089,7 @@ entities:
   - uid: 2867
     components:
     - type: MetaData
-      name: Robotics Workshop Fire Alarm
+      name: Robotics Workshop
     - type: Transform
       pos: 29.5,7.5
       parent: 2
@@ -67779,7 +68106,7 @@ entities:
   - uid: 3954
     components:
     - type: MetaData
-      name: Telecoms Fire Alarm
+      name: Telecomms
     - type: Transform
       pos: 30.5,-2.5
       parent: 2
@@ -67793,7 +68120,7 @@ entities:
   - uid: 4084
     components:
     - type: MetaData
-      name: Engineering Hallway Fire Alarm
+      name: Engineering Hallway
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 29.5,-5.5
@@ -67823,7 +68150,7 @@ entities:
   - uid: 4091
     components:
     - type: MetaData
-      name: Outboard Science Hallway Fire Alarm
+      name: Outboard Science Hallway
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 34.5,-0.5
@@ -67851,7 +68178,7 @@ entities:
   - uid: 4814
     components:
     - type: MetaData
-      name: West Janitorial Hallway Fire Alarm
+      name: West Janitorial Hallway
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 59.5,-8.5
@@ -67874,7 +68201,7 @@ entities:
   - uid: 4822
     components:
     - type: MetaData
-      name: Hydroponics Hallway Fire Alarm
+      name: Hydroponics Hallway
     - type: Transform
       pos: 76.5,7.5
       parent: 2
@@ -67903,7 +68230,7 @@ entities:
   - uid: 4897
     components:
     - type: MetaData
-      name: Port Medbay Hallway Fire Alarm
+      name: Port Medbay Hallway
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 63.5,-7.5
@@ -67931,7 +68258,7 @@ entities:
   - uid: 5013
     components:
     - type: MetaData
-      name: Shuttle Workshop Docking Bay Fire Alarm
+      name: Shuttle Workshop Docking Bay
     - type: Transform
       pos: 38.5,-22.5
       parent: 2
@@ -67947,7 +68274,7 @@ entities:
   - uid: 5065
     components:
     - type: MetaData
-      name: Shuttle Workshop Hallway Fire Alarm
+      name: Shuttle Workshop Hallway
     - type: Transform
       pos: 36.5,-12.5
       parent: 2
@@ -67969,7 +68296,7 @@ entities:
   - uid: 5126
     components:
     - type: MetaData
-      name: Tools Hallway Fire Alarm
+      name: Tools Hallway
     - type: Transform
       pos: 53.5,-12.5
       parent: 2
@@ -67991,7 +68318,7 @@ entities:
   - uid: 5131
     components:
     - type: MetaData
-      name: Inboard Science Hallway Fire Alarm
+      name: Inboard Science Hallway
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 49.5,-0.5
@@ -68011,7 +68338,7 @@ entities:
   - uid: 5422
     components:
     - type: MetaData
-      name: Xenoarchaeology Fire Alarm
+      name: Xenoarchaeology
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 27.5,11.5
@@ -68030,7 +68357,7 @@ entities:
   - uid: 5477
     components:
     - type: MetaData
-      name: CMO's Office Fire Alarm
+      name: CMO's Office
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 80.5,-12.5
@@ -68044,7 +68371,7 @@ entities:
   - uid: 5509
     components:
     - type: MetaData
-      name: Medbay Fire Alarm
+      name: Medbay
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 67.5,-6.5
@@ -68065,7 +68392,7 @@ entities:
   - uid: 5832
     components:
     - type: MetaData
-      name: Security Hallway Fire Alarm
+      name: Security Hallway
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 97.5,-7.5
@@ -68090,7 +68417,7 @@ entities:
   - uid: 5884
     components:
     - type: MetaData
-      name: Tools Room Fire Alarm
+      name: Tools Room
     - type: Transform
       pos: 45.5,-6.5
       parent: 2
@@ -68112,7 +68439,7 @@ entities:
   - uid: 5917
     components:
     - type: MetaData
-      name: Perma Intake Fire Alarm
+      name: Perma Intake
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 110.5,7.5
@@ -68128,7 +68455,7 @@ entities:
   - uid: 5959
     components:
     - type: MetaData
-      name: Chemistry Fire Alarm
+      name: Chemistry
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 79.5,0.5
@@ -68144,7 +68471,7 @@ entities:
   - uid: 6279
     components:
     - type: MetaData
-      name: Surgery Corridor Fire Alarm
+      name: Surgery Corridor
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 74.5,-18.5
@@ -68163,7 +68490,7 @@ entities:
   - uid: 6280
     components:
     - type: MetaData
-      name: Virology Fire Alarm
+      name: Virology
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 83.5,-12.5
@@ -68183,7 +68510,7 @@ entities:
   - uid: 6331
     components:
     - type: MetaData
-      name: Science Lobby Fire Alarm
+      name: Science Lobby
     - type: Transform
       pos: 43.5,8.5
       parent: 2
@@ -68201,7 +68528,7 @@ entities:
   - uid: 6635
     components:
     - type: MetaData
-      name: Science Locker Room Fire Alarm
+      name: Science Locker Room
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 45.5,16.5
@@ -68215,7 +68542,7 @@ entities:
   - uid: 6676
     components:
     - type: MetaData
-      name: Medbay Lobby Fire Alarm
+      name: Medbay Lobby
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 67.5,2.5
@@ -68233,7 +68560,7 @@ entities:
   - uid: 6683
     components:
     - type: MetaData
-      name: R&D Server Fire Alarm
+      name: R&D Server
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 49.5,17.5
@@ -68247,7 +68574,7 @@ entities:
   - uid: 6731
     components:
     - type: MetaData
-      name: Morgue Corridor Fire Alarm
+      name: Morgue Corridor
     - type: Transform
       pos: 84.5,-3.5
       parent: 2
@@ -68269,7 +68596,7 @@ entities:
   - uid: 6941
     components:
     - type: MetaData
-      name: AME Fire Alarm
+      name: AME
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 11.5,-5.5
@@ -68283,7 +68610,7 @@ entities:
   - uid: 6950
     components:
     - type: MetaData
-      name: PA Fire Alarm
+      name: PA
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 9.5,-0.5
@@ -68296,7 +68623,7 @@ entities:
   - uid: 6960
     components:
     - type: MetaData
-      name: HoS's Office Fire Alarm
+      name: HoS's Office
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 127.5,-4.5
@@ -68310,7 +68637,7 @@ entities:
   - uid: 7243
     components:
     - type: MetaData
-      name: Interrogation Room Fire Alarm
+      name: Interrogation Room
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 107.5,-9.5
@@ -68324,7 +68651,7 @@ entities:
   - uid: 7657
     components:
     - type: MetaData
-      name: Port Janitorial Fire Alarm
+      name: Port Janitorial
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 49.5,-1.5
@@ -68339,7 +68666,7 @@ entities:
   - uid: 7755
     components:
     - type: MetaData
-      name: Shuttle Workshop Fire Alarm
+      name: Shuttle Workshop
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 42.5,-18.5
@@ -68362,7 +68689,7 @@ entities:
   - uid: 8319
     components:
     - type: MetaData
-      name: Security Front Desk Fire Alarm
+      name: Security Front Desk
     - type: Transform
       pos: 104.5,-0.5
       parent: 2
@@ -68376,7 +68703,7 @@ entities:
   - uid: 8320
     components:
     - type: MetaData
-      name: Security Infirmary Fire Alarm
+      name: Security Infirmary
     - type: Transform
       pos: 102.5,-8.5
       parent: 2
@@ -68390,7 +68717,7 @@ entities:
   - uid: 8321
     components:
     - type: MetaData
-      name: Security Locker Room Fire Alarm
+      name: Security Locker Room
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 111.5,-10.5
@@ -68403,7 +68730,7 @@ entities:
   - uid: 8322
     components:
     - type: MetaData
-      name: Security Break Room Fire Alarm
+      name: Security Break Room
     - type: Transform
       pos: 121.5,-0.5
       parent: 2
@@ -68419,7 +68746,7 @@ entities:
   - uid: 9405
     components:
     - type: MetaData
-      name: Paramedic's Office Fire Alarm
+      name: Paramedic's Office
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 58.5,32.5
@@ -68435,7 +68762,7 @@ entities:
   - uid: 9508
     components:
     - type: MetaData
-      name: HoP's Office Air Alarm
+      name: HoP's Office
     - type: Transform
       pos: 72.5,42.5
       parent: 2
@@ -68450,7 +68777,7 @@ entities:
   - uid: 9663
     components:
     - type: MetaData
-      name: East Medbay Hallway Fire Alarm
+      name: East Medbay Hallway
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 93.5,-5.5
@@ -68480,7 +68807,7 @@ entities:
   - uid: 9943
     components:
     - type: MetaData
-      name: Port Service Hallway Fire Alarm
+      name: Port Service Hallway
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 67.5,21.5
@@ -68512,7 +68839,7 @@ entities:
   - uid: 9946
     components:
     - type: MetaData
-      name: Boxing Ring Fire Alarm
+      name: Boxing Ring
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 60.5,18.5
@@ -68527,7 +68854,7 @@ entities:
   - uid: 9950
     components:
     - type: MetaData
-      name: EVA Storage Fire Alarm
+      name: EVA Storage
     - type: Transform
       pos: 67.5,43.5
       parent: 2
@@ -68542,7 +68869,7 @@ entities:
   - uid: 9955
     components:
     - type: MetaData
-      name: Dining Hall Fire Alarm
+      name: Dining Hall
     - type: Transform
       pos: 75.5,32.5
       parent: 2
@@ -68577,7 +68904,7 @@ entities:
   - uid: 9958
     components:
     - type: MetaData
-      name: Bar Fire Alarm
+      name: Bar
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 84.5,22.5
@@ -68598,7 +68925,7 @@ entities:
   - uid: 9961
     components:
     - type: MetaData
-      name: Service Break Room Fire Alarm
+      name: Service Break Room
     - type: Transform
       pos: 87.5,20.5
       parent: 2
@@ -68613,7 +68940,7 @@ entities:
   - uid: 9962
     components:
     - type: MetaData
-      name: Theater Fire Alarm
+      name: Theater
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 84.5,25.5
@@ -68627,7 +68954,7 @@ entities:
   - uid: 9965
     components:
     - type: MetaData
-      name: Kitchen Fire Alarm
+      name: Kitchen
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 68.5,15.5
@@ -68651,7 +68978,7 @@ entities:
   - uid: 9966
     components:
     - type: MetaData
-      name: Botany Fire Alarm
+      name: Botany
     - type: Transform
       pos: 74.5,15.5
       parent: 2
@@ -68671,7 +68998,7 @@ entities:
   - uid: 9967
     components:
     - type: MetaData
-      name: Botany Locker Room Fire Alarm
+      name: Botany Locker Room
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 76.5,12.5
@@ -68686,7 +69013,7 @@ entities:
   - uid: 9979
     components:
     - type: MetaData
-      name: Psychologist's Office Fire Alarm
+      name: Psychologist's Office
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 89.5,9.5
@@ -68701,7 +69028,7 @@ entities:
   - uid: 10000
     components:
     - type: MetaData
-      name: Library Fire Alarm
+      name: Library
     - type: Transform
       pos: 96.5,31.5
       parent: 2
@@ -68717,7 +69044,7 @@ entities:
   - uid: 11157
     components:
     - type: MetaData
-      name: Arboretum Fire Alarm
+      name: Arboretum
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 82.5,54.5
@@ -68749,7 +69076,7 @@ entities:
   - uid: 11541
     components:
     - type: MetaData
-      name: Nitrogen Lounge Air Alarm
+      name: Nitrogen Lounge
     - type: Transform
       pos: 96.5,36.5
       parent: 2
@@ -68765,7 +69092,7 @@ entities:
   - uid: 11594
     components:
     - type: MetaData
-      name: Boxing Ring Fire Alarm
+      name: Boxing Ring
     - type: Transform
       pos: 56.5,28.5
       parent: 2
@@ -68784,7 +69111,7 @@ entities:
   - uid: 11646
     components:
     - type: MetaData
-      name: Bar Hallway Fire Alarm
+      name: Bar Hallway
     - type: Transform
       pos: 92.5,36.5
       parent: 2
@@ -68806,7 +69133,7 @@ entities:
   - uid: 11710
     components:
     - type: MetaData
-      name: Chaplain's Quarters Fire Alarm
+      name: Chaplain's Quarters
     - type: Transform
       pos: 85.5,52.5
       parent: 2
@@ -68820,7 +69147,7 @@ entities:
   - uid: 11712
     components:
     - type: MetaData
-      name: Chapel Fire Alarm
+      name: Chapel
     - type: Transform
       pos: 86.5,46.5
       parent: 2
@@ -68835,7 +69162,7 @@ entities:
   - uid: 11714
     components:
     - type: MetaData
-      name: Chapel Lounge Fire Alarm
+      name: Chapel Lounge
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 87.5,39.5
@@ -68849,7 +69176,7 @@ entities:
   - uid: 11716
     components:
     - type: MetaData
-      name: Chapel Mortuary Fire Alarm
+      name: Chapel Mortuary
     - type: Transform
       pos: 90.5,46.5
       parent: 2
@@ -68868,7 +69195,7 @@ entities:
   - uid: 11725
     components:
     - type: MetaData
-      name: HoP Hallway Fire Alarm
+      name: HoP Hallway
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 68.5,32.5
@@ -68892,7 +69219,7 @@ entities:
   - uid: 11727
     components:
     - type: MetaData
-      name: Arboretum Hallway Fire Alarm
+      name: Arboretum Hallway
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 80.5,50.5
@@ -68917,7 +69244,7 @@ entities:
   - uid: 11824
     components:
     - type: MetaData
-      name: Starboard Service Hallway Fire Alarm
+      name: Starboard Service Hallway
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 89.5,14.5
@@ -68941,7 +69268,7 @@ entities:
   - uid: 11875
     components:
     - type: MetaData
-      name: Materials Storage Fire Alarm
+      name: Materials Storage
     - type: Transform
       pos: 71.5,53.5
       parent: 2
@@ -68955,7 +69282,7 @@ entities:
   - uid: 12191
     components:
     - type: MetaData
-      name: Main Security Air Alarm
+      name: Main Security
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 115.5,-8.5
@@ -68988,7 +69315,7 @@ entities:
   - uid: 12565
     components:
     - type: MetaData
-      name: Perma Games Room Fire Alarm
+      name: Perma Games Room
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 103.5,6.5
@@ -69002,7 +69329,7 @@ entities:
   - uid: 12566
     components:
     - type: MetaData
-      name: Perma Main Room Fire Alarm
+      name: Perma Main Room
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 107.5,6.5
@@ -69021,7 +69348,7 @@ entities:
   - uid: 12573
     components:
     - type: MetaData
-      name: Perma Cell 1 Fire Alarm
+      name: Perma Cell 1
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 101.5,17.5
@@ -69035,7 +69362,7 @@ entities:
   - uid: 12574
     components:
     - type: MetaData
-      name: Perma Cell 2 Fire Alarm
+      name: Perma Cell 2
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 105.5,17.5
@@ -69049,7 +69376,7 @@ entities:
   - uid: 12664
     components:
     - type: MetaData
-      name: Lawyer's Office Fire Alarm
+      name: Lawyer's Office
     - type: Transform
       pos: 114.5,16.5
       parent: 2
@@ -69063,7 +69390,7 @@ entities:
   - uid: 12690
     components:
     - type: MetaData
-      name: Perma Hallway Fire Alarm
+      name: Perma Hallway
     - type: Transform
       pos: 104.5,3.5
       parent: 2
@@ -69084,7 +69411,7 @@ entities:
   - uid: 12703
     components:
     - type: MetaData
-      name: Salvage Fire Alarm
+      name: Salvage
     - type: Transform
       pos: 89.5,-46.5
       parent: 2
@@ -69097,7 +69424,7 @@ entities:
   - uid: 12794
     components:
     - type: MetaData
-      name: Evac Hallway Fire Alarm
+      name: Evac Hallway
     - type: Transform
       pos: 107.5,-39.5
       parent: 2
@@ -69118,7 +69445,7 @@ entities:
   - uid: 13061
     components:
     - type: MetaData
-      name: Courtroom Fire Alarm
+      name: Courtroom
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 121.5,5.5
@@ -69137,7 +69464,7 @@ entities:
   - uid: 13655
     components:
     - type: MetaData
-      name: AI Core Fire Alarm
+      name: AI Core
     - type: Transform
       pos: 54.5,-28.5
       parent: 2
@@ -69152,7 +69479,7 @@ entities:
   - uid: 14477
     components:
     - type: MetaData
-      name: Port Quarter Hallway Fire Alarm
+      name: Port Quarter Hallway
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 67.5,-28.5
@@ -69174,7 +69501,7 @@ entities:
   - uid: 14479
     components:
     - type: MetaData
-      name: Starboard Quarter Fire Alarm
+      name: Starboard Quarter
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 89.5,-28.5
@@ -69196,7 +69523,7 @@ entities:
   - uid: 14600
     components:
     - type: MetaData
-      name: Dorms Fire Alarm
+      name: Dorms
     - type: Transform
       pos: 81.5,-34.5
       parent: 2
@@ -69223,7 +69550,7 @@ entities:
   - uid: 14763
     components:
     - type: MetaData
-      name: Arrivals Dock Fire Alarm
+      name: Arrivals Dock
     - type: Transform
       pos: 49.5,-42.5
       parent: 2
@@ -69247,7 +69574,7 @@ entities:
   - uid: 14765
     components:
     - type: MetaData
-      name: Arrivals Hallway Fire Alarm
+      name: Arrivals Hallway
     - type: Transform
       pos: 58.5,-36.5
       parent: 2
@@ -69265,7 +69592,7 @@ entities:
   - uid: 14817
     components:
     - type: MetaData
-      name: Cargo Hallway Fire Alarm
+      name: Cargo Hallway
     - type: Transform
       pos: 76.5,-39.5
       parent: 2
@@ -69297,7 +69624,7 @@ entities:
   - uid: 14899
     components:
     - type: MetaData
-      name: QM's Office Fire Alarm
+      name: QM's Office
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 66.5,-54.5
@@ -69312,7 +69639,7 @@ entities:
   - uid: 14902
     components:
     - type: MetaData
-      name: Cargo Bay Fire Alarm
+      name: Cargo Bay
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 70.5,-56.5
@@ -69333,7 +69660,7 @@ entities:
   - uid: 14905
     components:
     - type: MetaData
-      name: Cargo Lobby Fire Alarm
+      name: Cargo Lobby
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 70.5,-50.5
@@ -69350,7 +69677,7 @@ entities:
   - uid: 15038
     components:
     - type: MetaData
-      name: Evac Dock Fire Alarm
+      name: Evac Dock
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 123.5,-43.5
@@ -69366,7 +69693,7 @@ entities:
   - uid: 15046
     components:
     - type: MetaData
-      name: Annex Dock Fire Alarm
+      name: Annex Dock
     - type: Transform
       pos: 119.5,-62.5
       parent: 2
@@ -69381,7 +69708,7 @@ entities:
   - uid: 17623
     components:
     - type: MetaData
-      name: Evac Lobby Fire Alarm
+      name: Evac Lobby
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 104.5,-39.5
@@ -69402,7 +69729,7 @@ entities:
   - uid: 17627
     components:
     - type: MetaData
-      name: Annex Dock Connector Air Alarm
+      name: Annex Dock Connector
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 100.5,-49.5
@@ -69431,7 +69758,7 @@ entities:
   - uid: 17628
     components:
     - type: MetaData
-      name: Inboard Annex Dock Fire Alarm
+      name: Inboard Annex Dock
     - type: Transform
       pos: 109.5,-62.5
       parent: 2
@@ -69449,7 +69776,7 @@ entities:
   - uid: 22591
     components:
     - type: MetaData
-      name: Science Back Room Fire Alarm
+      name: Science Back Room
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 45.5,8.5
@@ -69470,7 +69797,7 @@ entities:
   - uid: 22857
     components:
     - type: MetaData
-      name: Grav Gen Fire Alarm
+      name: Grav Gen
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 81.5,-45.5
@@ -69483,7 +69810,7 @@ entities:
   - uid: 22986
     components:
     - type: MetaData
-      name: Detective Hallway Fire Alarm
+      name: Detective Hallway
     - type: Transform
       pos: 104.5,-12.5
       parent: 2
@@ -69509,7 +69836,7 @@ entities:
   - uid: 22990
     components:
     - type: MetaData
-      name: News Hallway Fire Alarm
+      name: News Hallway
     - type: Transform
       pos: 122.5,-12.5
       parent: 2
@@ -69530,7 +69857,7 @@ entities:
   - uid: 22993
     components:
     - type: MetaData
-      name: Bridge Hallway Fire Alarm
+      name: Bridge Hallway
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 129.5,-8.5
@@ -69557,7 +69884,7 @@ entities:
   - uid: 22997
     components:
     - type: MetaData
-      name: Bridge Fire Alarm
+      name: Bridge
     - type: Transform
       pos: 146.5,0.5
       parent: 2
@@ -69585,7 +69912,7 @@ entities:
   - uid: 23000
     components:
     - type: MetaData
-      name: Captain's Quarters Fire Alarm
+      name: Captain's Quarters
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 138.5,7.5
@@ -69600,7 +69927,7 @@ entities:
   - uid: 23004
     components:
     - type: MetaData
-      name: Captain's Office Fire Alarm
+      name: Captain's Office
     - type: Transform
       pos: 140.5,6.5
       parent: 2
@@ -69614,7 +69941,7 @@ entities:
   - uid: 23007
     components:
     - type: MetaData
-      name: Conference Room Fire Alarm
+      name: Conference Room
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 138.5,-18.5
@@ -69629,7 +69956,7 @@ entities:
   - uid: 23311
     components:
     - type: MetaData
-      name: AI Access Lobby Fire Alarm
+      name: AI Access Lobby
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 56.5,-17.5
@@ -69645,7 +69972,7 @@ entities:
   - uid: 23323
     components:
     - type: MetaData
-      name: Shooting Range Fire Alarm
+      name: Shooting Range
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 109.5,-22.5
@@ -69661,7 +69988,7 @@ entities:
   - uid: 23326
     components:
     - type: MetaData
-      name: Detective's Office Fire Alarm
+      name: Detective's Office
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 100.5,-17.5
@@ -74642,20 +74969,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 81.05857,58.626736
       parent: 2
-- proto: FloraTree04
-  entities:
-  - uid: 9300
-    components:
-    - type: Transform
-      pos: 90.379555,31.638632
-      parent: 2
-- proto: FloraTree05
-  entities:
-  - uid: 9303
-    components:
-    - type: Transform
-      pos: 89.004555,33.138634
-      parent: 2
 - proto: FloraTree06
   entities:
   - uid: 10733
@@ -74669,6 +74982,51 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 75.574196,60.76736
+      parent: 2
+- proto: FloraTreeChristmas01
+  entities:
+  - uid: 9290
+    components:
+    - type: Transform
+      pos: 73.5,66.5
+      parent: 2
+  - uid: 9291
+    components:
+    - type: Transform
+      pos: 83.5,66.5
+      parent: 2
+  - uid: 24066
+    components:
+    - type: Transform
+      pos: 96.46191,-36.312073
+      parent: 2
+  - uid: 24076
+    components:
+    - type: Transform
+      pos: 60.024635,-37.465076
+      parent: 2
+  - uid: 24081
+    components:
+    - type: Transform
+      pos: 119.0493,-13.32803
+      parent: 2
+  - uid: 24120
+    components:
+    - type: Transform
+      pos: 58.292645,27.44724
+      parent: 2
+  - uid: 24124
+    components:
+    - type: Transform
+      pos: 50.417496,-13.4976225
+      parent: 2
+- proto: FloraTreeChristmas02
+  entities:
+  - uid: 9289
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 89.48451,32.282326
       parent: 2
 - proto: FloraTreeLarge03
   entities:
@@ -97502,7 +97860,7 @@ entities:
     components:
     - type: MetaData
       desc: The king of the distro network.
-      name: dsitro master gas pump
+      name: distro master gas pump
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 17.5,-13.5
@@ -108855,7 +109213,8 @@ entities:
       parent: 10269
     - type: Physics
       canCollide: False
-    - type: InsideEntityStorage
+    - type: WarpPoint
+      location: Evil Skull
     - type: PointLight
       energy: 5
       color: '#FF0000FF'
@@ -108869,6 +109228,7 @@ entities:
       nodesMax: 13
       nodesMin: 5
       nodeTree: []
+    - type: InsideEntityStorage
     missingComponents:
     - Gibbable
 - proto: HeatExchanger
@@ -109358,17 +109718,12 @@ entities:
   - uid: 13693
     components:
     - type: Transform
-      pos: 49.52724,-29.13025
-      parent: 2
-  - uid: 13694
-    components:
-    - type: Transform
-      pos: 49.636616,-29.224
+      pos: 49.514492,-29.160477
       parent: 2
   - uid: 13714
     components:
     - type: Transform
-      pos: 49.417866,-29.06775
+      pos: 49.389492,-29.004227
       parent: 2
 - proto: IntercomAll
   entities:
@@ -109458,16 +109813,17 @@ entities:
     - type: Transform
       pos: 53.5,-36.5
       parent: 2
-  - uid: 19979
-    components:
-    - type: Transform
-      pos: 50.5,-12.5
-      parent: 2
   - uid: 19981
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 129.5,-5.5
+      parent: 2
+  - uid: 21329
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 43.5,-16.5
       parent: 2
 - proto: IntercomEngineering
   entities:
@@ -111713,8 +112069,8 @@ entities:
         immutable: False
         temperature: 293.14673
         moles:
-        - 1.8856695
-        - 7.0937095
+        - 1.8968438
+        - 7.1357465
         - 0
         - 0
         - 0
@@ -113936,20 +114292,10 @@ entities:
     - type: Transform
       pos: 92.5,45.5
       parent: 2
-  - uid: 11815
-    components:
-    - type: Transform
-      pos: 83.5,66.5
-      parent: 2
   - uid: 11816
     components:
     - type: Transform
       pos: 83.5,55.5
-      parent: 2
-  - uid: 11839
-    components:
-    - type: Transform
-      pos: 73.5,66.5
       parent: 2
   - uid: 12277
     components:
@@ -116873,6 +117219,577 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 28.5,15.5
       parent: 2
+- proto: PresentRandom
+  entities:
+  - uid: 9282
+    components:
+    - type: Transform
+      parent: 10621
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 9284
+    components:
+    - type: Transform
+      pos: 88.57706,31.872171
+      parent: 2
+  - uid: 9303
+    components:
+    - type: Transform
+      pos: 85.5,23.5
+      parent: 2
+  - uid: 11815
+    components:
+    - type: Transform
+      pos: 85.5,25.5
+      parent: 2
+  - uid: 11839
+    components:
+    - type: Transform
+      pos: 85.5,24.5
+      parent: 2
+  - uid: 23998
+    components:
+    - type: Transform
+      pos: 98.49115,-68.55
+      parent: 2
+  - uid: 23999
+    components:
+    - type: Transform
+      pos: 90.38956,31.559671
+      parent: 2
+  - uid: 24001
+    components:
+    - type: Transform
+      pos: 88.547295,33.23851
+      parent: 2
+  - uid: 24002
+    components:
+    - type: Transform
+      pos: 90.53167,33.379135
+      parent: 2
+  - uid: 24003
+    components:
+    - type: Transform
+      pos: 98.644775,32.65348
+      parent: 2
+  - uid: 24004
+    components:
+    - type: Transform
+      pos: 95.113525,14.750797
+      parent: 2
+  - uid: 24005
+    components:
+    - type: Transform
+      pos: 68.41927,19.782948
+      parent: 2
+  - uid: 24006
+    components:
+    - type: Transform
+      pos: 73.4974,19.611073
+      parent: 2
+  - uid: 24007
+    components:
+    - type: Transform
+      pos: 78.079124,12.8553915
+      parent: 2
+  - uid: 24008
+    components:
+    - type: Transform
+      pos: 78.21975,12.6991415
+      parent: 2
+  - uid: 24009
+    components:
+    - type: Transform
+      pos: 80.22427,-10.314686
+      parent: 2
+  - uid: 24010
+    components:
+    - type: Transform
+      pos: 125.1306,-5.302475
+      parent: 2
+  - uid: 24011
+    components:
+    - type: Transform
+      pos: 116.405,-10.849184
+      parent: 2
+  - uid: 24012
+    components:
+    - type: Transform
+      pos: 116.48312,-11.005434
+      parent: 2
+  - uid: 24015
+    components:
+    - type: Transform
+      pos: 119.309944,-1.4364992
+      parent: 2
+  - uid: 24016
+    components:
+    - type: Transform
+      pos: 114.976036,8.681748
+      parent: 2
+  - uid: 24018
+    components:
+    - type: Transform
+      pos: 87.46249,19.323505
+      parent: 2
+  - uid: 24020
+    components:
+    - type: Transform
+      pos: 87.49374,18.886005
+      parent: 2
+  - uid: 24021
+    components:
+    - type: Transform
+      pos: 88.441635,11.673159
+      parent: 2
+  - uid: 24022
+    components:
+    - type: Transform
+      pos: 52.5339,9.698015
+      parent: 2
+  - uid: 24023
+    components:
+    - type: Transform
+      pos: 42.77221,14.670349
+      parent: 2
+  - uid: 24025
+    components:
+    - type: Transform
+      pos: 43.194084,14.623474
+      parent: 2
+  - uid: 24026
+    components:
+    - type: Transform
+      pos: 37.896046,6.6418877
+      parent: 2
+  - uid: 24027
+    components:
+    - type: Transform
+      pos: 21.433783,-5.232945
+      parent: 2
+  - uid: 24029
+    components:
+    - type: Transform
+      pos: 0.5256485,-10.422589
+      parent: 2
+  - uid: 24030
+    components:
+    - type: Transform
+      pos: -0.22435153,-10.344464
+      parent: 2
+  - uid: 24031
+    components:
+    - type: Transform
+      pos: 11.476434,-7.313531
+      parent: 2
+  - uid: 24032
+    components:
+    - type: Transform
+      pos: 15.525347,-0.30366457
+      parent: 2
+  - uid: 24033
+    components:
+    - type: Transform
+      pos: 15.478472,-0.13178957
+      parent: 2
+  - uid: 24035
+    components:
+    - type: Transform
+      pos: 50.56585,-1.3141023
+      parent: 2
+  - uid: 24036
+    components:
+    - type: Transform
+      pos: 131.05138,7.727346
+      parent: 2
+  - uid: 24037
+    components:
+    - type: Transform
+      pos: 85.504456,-17.07175
+      parent: 2
+  - uid: 24038
+    components:
+    - type: Transform
+      pos: 78.59694,-25.434086
+      parent: 2
+  - uid: 24039
+    components:
+    - type: Transform
+      pos: 67.24004,-51.392994
+      parent: 2
+  - uid: 24040
+    components:
+    - type: Transform
+      pos: 71.439476,-56.43987
+      parent: 2
+  - uid: 24041
+    components:
+    - type: Transform
+      pos: 68.246376,-47.296173
+      parent: 2
+  - uid: 24043
+    components:
+    - type: Transform
+      pos: 68.527626,-46.4993
+      parent: 2
+  - uid: 24044
+    components:
+    - type: Transform
+      pos: 87.50096,-49.474106
+      parent: 2
+  - uid: 24045
+    components:
+    - type: Transform
+      pos: 87.59471,-49.73973
+      parent: 2
+  - uid: 24046
+    components:
+    - type: Transform
+      pos: 30.786274,38.405216
+      parent: 2
+  - uid: 24047
+    components:
+    - type: Transform
+      pos: 84.37727,49.692356
+      parent: 2
+  - uid: 24048
+    components:
+    - type: Transform
+      pos: 72.663826,38.748985
+      parent: 2
+  - uid: 24049
+    components:
+    - type: Transform
+      pos: 44.446564,26.942678
+      parent: 2
+  - uid: 24050
+    components:
+    - type: Transform
+      pos: 50.302486,37.54397
+      parent: 2
+  - uid: 24051
+    components:
+    - type: Transform
+      pos: 4.421522,-8.525674
+      parent: 2
+  - uid: 24053
+    components:
+    - type: Transform
+      pos: 44.961933,-7.311252
+      parent: 2
+  - uid: 24054
+    components:
+    - type: Transform
+      pos: 47.586933,-7.342502
+      parent: 2
+  - uid: 24055
+    components:
+    - type: Transform
+      pos: 142.75932,3.7518282
+      parent: 2
+  - uid: 24056
+    components:
+    - type: Transform
+      pos: 132.49113,53.22419
+      parent: 2
+  - uid: 24058
+    components:
+    - type: Transform
+      pos: 58.965878,43.075935
+      parent: 2
+  - uid: 24060
+    components:
+    - type: Transform
+      pos: 143.50482,-41.608143
+      parent: 2
+  - uid: 24061
+    components:
+    - type: Transform
+      pos: 81.45901,55.638424
+      parent: 2
+  - uid: 24063
+    components:
+    - type: Transform
+      pos: 59.219173,-37.382214
+      parent: 2
+  - uid: 24064
+    components:
+    - type: Transform
+      pos: 60.76605,-37.413464
+      parent: 2
+  - uid: 24068
+    components:
+    - type: Transform
+      pos: 114.569565,14.349499
+      parent: 2
+  - uid: 24070
+    components:
+    - type: Transform
+      pos: 30.5084,-22.502869
+      parent: 2
+  - uid: 24071
+    components:
+    - type: Transform
+      pos: 59.506775,32.010273
+      parent: 2
+  - uid: 24072
+    components:
+    - type: Transform
+      pos: 52.857033,44.506695
+      parent: 2
+  - uid: 24074
+    components:
+    - type: Transform
+      pos: 125.51373,13.599165
+      parent: 2
+  - uid: 24075
+    components:
+    - type: Transform
+      pos: 125.48248,16.40637
+      parent: 2
+  - uid: 24077
+    components:
+    - type: Transform
+      pos: 73.27164,65.89786
+      parent: 2
+  - uid: 24078
+    components:
+    - type: Transform
+      pos: 74.00601,66.24161
+      parent: 2
+  - uid: 24079
+    components:
+    - type: Transform
+      pos: 82.80026,66.46036
+      parent: 2
+  - uid: 24082
+    components:
+    - type: Transform
+      pos: 118.377426,-13.35928
+      parent: 2
+  - uid: 24084
+    components:
+    - type: Transform
+      pos: 96.02441,-36.7088
+      parent: 2
+  - uid: 24085
+    components:
+    - type: Transform
+      pos: 72.50977,-28.529282
+      parent: 2
+  - uid: 24087
+    components:
+    - type: Transform
+      pos: 83.067474,65.945145
+      parent: 2
+  - uid: 24088
+    components:
+    - type: Transform
+      pos: 76.45308,1.4269085
+      parent: 2
+  - uid: 24089
+    components:
+    - type: Transform
+      pos: 76.562454,1.0050335
+      parent: 2
+  - uid: 24090
+    components:
+    - type: Transform
+      pos: 75.414925,-17.787136
+      parent: 2
+  - uid: 24091
+    components:
+    - type: Transform
+      pos: 75.4618,-18.334011
+      parent: 2
+  - uid: 24093
+    components:
+    - type: Transform
+      pos: 70.4618,-8.591774
+      parent: 2
+  - uid: 24094
+    components:
+    - type: Transform
+      pos: 48.441055,-2.2896686
+      parent: 2
+  - uid: 24095
+    components:
+    - type: Transform
+      pos: 108.52561,4.7688107
+      parent: 2
+  - uid: 24096
+    components:
+    - type: Transform
+      pos: 104.45211,33.53193
+      parent: 2
+  - uid: 24097
+    components:
+    - type: Transform
+      pos: 81.41035,22.246218
+      parent: 2
+  - uid: 24099
+    components:
+    - type: Transform
+      pos: 53.299248,-26.31454
+      parent: 2
+  - uid: 24103
+    components:
+    - type: Transform
+      pos: 120.99987,-21.334522
+      parent: 2
+  - uid: 24121
+    components:
+    - type: Transform
+      pos: 59.05827,27.66599
+      parent: 2
+  - uid: 24122
+    components:
+    - type: Transform
+      pos: 58.87077,27.369116
+      parent: 2
+  - uid: 24126
+    components:
+    - type: Transform
+      pos: 51.18312,-13.187688
+      parent: 2
+  - uid: 24127
+    components:
+    - type: Transform
+      pos: 49.761246,-13.687688
+      parent: 2
+  - uid: 24128
+    components:
+    - type: Transform
+      pos: 51.093052,-13.622461
+      parent: 2
+- proto: PresentRandomAsh
+  entities:
+  - uid: 24000
+    components:
+    - type: Transform
+      pos: 89.32706,31.575296
+      parent: 2
+  - uid: 24013
+    components:
+    - type: Transform
+      pos: 116.62375,-11.239809
+      parent: 2
+  - uid: 24014
+    components:
+    - type: Transform
+      pos: 119.184944,-1.2646242
+      parent: 2
+  - uid: 24017
+    components:
+    - type: Transform
+      pos: 120.007286,8.697373
+      parent: 2
+  - uid: 24019
+    components:
+    - type: Transform
+      pos: 87.54061,19.136005
+      parent: 2
+  - uid: 24024
+    components:
+    - type: Transform
+      pos: 42.95971,14.623474
+      parent: 2
+  - uid: 24028
+    components:
+    - type: Transform
+      pos: 21.371283,-4.49857
+      parent: 2
+  - uid: 24034
+    components:
+    - type: Transform
+      pos: 15.494097,-0.100539565
+      parent: 2
+  - uid: 24042
+    components:
+    - type: Transform
+      pos: 67.66825,-46.8118
+      parent: 2
+  - uid: 24052
+    components:
+    - type: Transform
+      pos: 42.54006,-10.280003
+      parent: 2
+  - uid: 24057
+    components:
+    - type: Transform
+      pos: 132.47551,53.06794
+      parent: 2
+  - uid: 24059
+    components:
+    - type: Transform
+      pos: 21.771545,20.56814
+      parent: 2
+  - uid: 24062
+    components:
+    - type: Transform
+      pos: 119.752426,-13.42178
+      parent: 2
+  - uid: 24065
+    components:
+    - type: Transform
+      pos: 59.500423,-37.67909
+      parent: 2
+  - uid: 24067
+    components:
+    - type: Transform
+      pos: 95.58691,-36.411926
+      parent: 2
+  - uid: 24069
+    components:
+    - type: Transform
+      pos: 116.08519,13.693249
+      parent: 2
+  - uid: 24073
+    components:
+    - type: Transform
+      pos: 54.028908,44.506695
+      parent: 2
+  - uid: 24080
+    components:
+    - type: Transform
+      pos: 83.67526,65.89786
+      parent: 2
+  - uid: 24083
+    components:
+    - type: Transform
+      pos: 97.27441,-36.411926
+      parent: 2
+  - uid: 24086
+    components:
+    - type: Transform
+      pos: 72.5254,-29.435532
+      parent: 2
+  - uid: 24092
+    components:
+    - type: Transform
+      pos: 75.446175,-18.084011
+      parent: 2
+  - uid: 24098
+    components:
+    - type: Transform
+      pos: 81.58222,22.058718
+      parent: 2
+  - uid: 24104
+    components:
+    - type: Transform
+      pos: 120.859245,-21.397022
+      parent: 2
+  - uid: 24123
+    components:
+    - type: Transform
+      pos: 57.573895,27.619116
+      parent: 2
+  - uid: 24125
+    components:
+    - type: Transform
+      pos: 49.604996,-13.297063
+      parent: 2
 - proto: Protolathe
   entities:
   - uid: 3189
@@ -117409,18 +118326,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 91.5,32.5
       parent: 2
-  - uid: 9282
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 87.5,33.5
-      parent: 2
-  - uid: 9284
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 87.5,31.5
-      parent: 2
   - uid: 9286
     components:
     - type: Transform
@@ -117432,29 +118337,11 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 91.5,33.5
       parent: 2
-  - uid: 9289
+  - uid: 9293
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 87.5,32.5
-      parent: 2
-  - uid: 9290
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 90.5,30.5
-      parent: 2
-  - uid: 9293
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 88.5,30.5
-      parent: 2
-  - uid: 9294
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 89.5,30.5
       parent: 2
   - uid: 9295
     components:
@@ -117471,6 +118358,12 @@ entities:
     components:
     - type: Transform
       pos: 90.5,34.5
+      parent: 2
+  - uid: 9300
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 87.5,33.5
       parent: 2
   - uid: 9631
     components:
@@ -117824,6 +118717,12 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 55.5,47.5
       parent: 2
+  - uid: 23997
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 87.5,31.5
+      parent: 2
 - proto: RailingCorner
   entities:
   - uid: 15207
@@ -117857,17 +118756,17 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 91.5,34.5
       parent: 2
-  - uid: 9291
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 87.5,34.5
-      parent: 2
   - uid: 9292
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 87.5,30.5
+      parent: 2
+  - uid: 9294
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 87.5,34.5
       parent: 2
   - uid: 9296
     components:
@@ -118081,6 +118980,21 @@ entities:
     components:
     - type: Transform
       pos: 101.5,27.5
+      parent: 2
+  - uid: 24100
+    components:
+    - type: Transform
+      pos: 68.5,-34.5
+      parent: 2
+  - uid: 24101
+    components:
+    - type: Transform
+      pos: 72.5,-34.5
+      parent: 2
+  - uid: 24102
+    components:
+    - type: Transform
+      pos: 84.5,-34.5
       parent: 2
 - proto: RandomPosterAny
   entities:
@@ -118338,11 +119252,6 @@ entities:
     - type: Transform
       pos: 31.5,-0.5
       parent: 2
-  - uid: 23340
-    components:
-    - type: Transform
-      pos: 63.5,-33.5
-      parent: 2
   - uid: 23342
     components:
     - type: Transform
@@ -118388,11 +119297,6 @@ entities:
     - type: Transform
       pos: 83.5,-30.5
       parent: 2
-  - uid: 23355
-    components:
-    - type: Transform
-      pos: 93.5,-33.5
-      parent: 2
   - uid: 23356
     components:
     - type: Transform
@@ -118402,6 +119306,17 @@ entities:
     components:
     - type: Transform
       pos: 119.5,-12.5
+      parent: 2
+  - uid: 23963
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 67.5,-33.5
+      parent: 2
+  - uid: 23976
+    components:
+    - type: Transform
+      pos: 89.5,-32.5
       parent: 2
 - proto: RandomSnacks
   entities:
@@ -123283,26 +124198,6 @@ entities:
     - type: Transform
       pos: 93.5,-8.5
       parent: 2
-  - uid: 21328
-    components:
-    - type: Transform
-      pos: 89.5,-32.5
-      parent: 2
-  - uid: 21329
-    components:
-    - type: Transform
-      pos: 51.5,-12.5
-      parent: 2
-  - uid: 21333
-    components:
-    - type: Transform
-      pos: 67.5,-35.5
-      parent: 2
-  - uid: 21495
-    components:
-    - type: Transform
-      pos: 79.5,-39.5
-      parent: 2
   - uid: 21634
     components:
     - type: Transform
@@ -123429,6 +124324,26 @@ entities:
     components:
     - type: Transform
       pos: 86.5,28.5
+      parent: 2
+  - uid: 23832
+    components:
+    - type: Transform
+      pos: 46.5,-16.5
+      parent: 2
+  - uid: 23834
+    components:
+    - type: Transform
+      pos: 67.5,-30.5
+      parent: 2
+  - uid: 23916
+    components:
+    - type: Transform
+      pos: 89.5,-30.5
+      parent: 2
+  - uid: 24136
+    components:
+    - type: Transform
+      pos: 72.5,-39.5
       parent: 2
 - proto: Screwdriver
   entities:
@@ -124580,6 +125495,10 @@ entities:
       rot: 3.141592653589793 rad
       pos: 86.5,-54.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        19756:
+        - Pressed: Toggle
   - uid: 1665
     components:
     - type: Transform
@@ -125459,6 +126378,94 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 40.5,41.5
       parent: 2
+- proto: SignDirectionalBridge
+  entities:
+  - uid: 23117
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 67.497284,-13.975739
+      parent: 2
+  - uid: 23912
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 93.5,-16.5
+      parent: 2
+  - uid: 23919
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 93.50178,3.7422366
+      parent: 2
+  - uid: 23934
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 98.5,3.5
+      parent: 2
+  - uid: 23936
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 63.50223,4.736109
+      parent: 2
+  - uid: 23955
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 63.497658,-41.004032
+      parent: 2
+  - uid: 23978
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 93.51374,-34.26
+      parent: 2
+  - uid: 23994
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 98.5,-16.5
+      parent: 2
+- proto: SignDirectionalChapel
+  entities:
+  - uid: 23118
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 89.49606,3.009736
+      parent: 2
+  - uid: 23123
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 63.491375,-12.020351
+      parent: 2
+  - uid: 23965
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 63.494976,-34.25196
+      parent: 2
+  - uid: 23967
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 89.50017,-12.010261
+      parent: 2
+  - uid: 23983
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 89.501236,-34.25161
+      parent: 2
+  - uid: 23992
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 63.49529,5.7407384
+      parent: 2
 - proto: SignDirectionalCryo
   entities:
   - uid: 9492
@@ -125467,11 +126474,31 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 89.496506,-38.257687
       parent: 2
+  - uid: 23340
+    components:
+    - type: Transform
+      pos: 89.49879,1.7810491
+      parent: 2
   - uid: 23477
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 67.502144,-38.268105
+      parent: 2
+  - uid: 23932
+    components:
+    - type: Transform
+      pos: 63.49679,-0.97482014
+      parent: 2
+  - uid: 23943
+    components:
+    - type: Transform
+      pos: 63.49867,-17.963167
+      parent: 2
+  - uid: 23972
+    components:
+    - type: Transform
+      pos: 93.50019,-17.987085
       parent: 2
 - proto: SignDirectionalDorms
   entities:
@@ -125487,31 +126514,75 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 89.5,-38.5
       parent: 2
+  - uid: 23921
+    components:
+    - type: Transform
+      pos: 89.49704,2.02179
+      parent: 2
+  - uid: 23931
+    components:
+    - type: Transform
+      pos: 63.49679,-0.738709
+      parent: 2
+  - uid: 23942
+    components:
+    - type: Transform
+      pos: 63.49759,-17.731686
+      parent: 2
+  - uid: 23971
+    components:
+    - type: Transform
+      pos: 93.50019,-17.737085
+      parent: 2
 - proto: SignDirectionalEng
   entities:
+  - uid: 13694
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 55.515553,-12.740181
+      parent: 2
   - uid: 23113
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 63.499454,3.26371
       parent: 2
-  - uid: 23116
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 93.5,3.5
-      parent: 2
-  - uid: 23118
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 63.5,-12.5
-      parent: 2
   - uid: 23125
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 93.5,-12.5
+      parent: 2
+  - uid: 23928
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 86.5,3.5
+      parent: 2
+  - uid: 23938
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 63.5,-16.5
+      parent: 2
+  - uid: 23951
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 55.491245,-0.2618276
+      parent: 2
+  - uid: 23959
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 63.5,-36.5
+      parent: 2
+  - uid: 23973
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 89.5,-39.5
       parent: 2
 - proto: SignDirectionalEvac
   entities:
@@ -125520,40 +126591,265 @@ entities:
     - type: Transform
       pos: 63.5,-0.5
       parent: 2
-  - uid: 23120
-    components:
-    - type: Transform
-      pos: 63.5,-16.5
-      parent: 2
-  - uid: 23123
-    components:
-    - type: Transform
-      pos: 93.49516,-0.7334702
-      parent: 2
   - uid: 23129
     components:
     - type: Transform
-      pos: 93.49668,-16.742996
+      pos: 89.50166,2.2625308
       parent: 2
-- proto: SignDirectionalMed
+  - uid: 23940
+    components:
+    - type: Transform
+      pos: 63.5,-17.5
+      parent: 2
+  - uid: 23957
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 63.5,-40.5
+      parent: 2
+  - uid: 23969
+    components:
+    - type: Transform
+      pos: 93.5,-17.5
+      parent: 2
+- proto: SignDirectionalFood
   entities:
-  - uid: 2890
+  - uid: 4734
     components:
     - type: Transform
       rot: 3.141592653589793 rad
-      pos: 63.49223,-12.267732
+      pos: 89.5,-12.5
       parent: 2
-  - uid: 23115
+  - uid: 21098
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 63.5,-34.5
+      parent: 2
+  - uid: 23124
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 63.5,-12.5
+      parent: 2
+  - uid: 23920
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 89.499886,3.7339387
+      parent: 2
+  - uid: 23980
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 89.5,-34.5
+      parent: 2
+  - uid: 23990
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 63.5,5.5
+      parent: 2
+- proto: SignDirectionalHop
+  entities:
+  - uid: 21328
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 89.5,3.5
+      parent: 2
+  - uid: 23119
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 89.49891,-12.744422
+      parent: 2
+  - uid: 23120
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 63.497936,-12.738528
+      parent: 2
+  - uid: 23964
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 63.494976,-34.75196
+      parent: 2
+  - uid: 23981
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 89.49559,-34.741196
+      parent: 2
+  - uid: 23991
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 63.498154,5.260253
+      parent: 2
+- proto: SignDirectionalHydro
+  entities:
+  - uid: 23911
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 67.5008,-13.265331
+      parent: 2
+  - uid: 23918
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
-      pos: 93.49652,3.7289472
+      pos: 88.5,3.5
       parent: 2
+  - uid: 23962
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 63.507507,-36.01673
+      parent: 2
+  - uid: 23968
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 93.50343,-12.014056
+      parent: 2
+  - uid: 23985
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 89.49844,-35.24766
+      parent: 2
+- proto: SignDirectionalJanitor
+  entities:
+  - uid: 23128
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 63.496742,3.7368288
+      parent: 2
+  - uid: 23923
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 99.5,3.5
+      parent: 2
+  - uid: 23930
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 93.50178,3.2491808
+      parent: 2
+  - uid: 23935
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 97.5,-12.5
+      parent: 2
+  - uid: 23977
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 93.50332,-34.74958
+      parent: 2
+  - uid: 23979
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 93.50332,-16.749098
+      parent: 2
+  - uid: 23986
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 63.507675,-35.77908
+      parent: 2
+  - uid: 23987
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 63.50263,-16.73687
+      parent: 2
+  - uid: 23988
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 55.513084,-12.263913
+      parent: 2
+  - uid: 23989
+    components:
+    - type: Transform
+      pos: 55.492252,-0.7347871
+      parent: 2
+- proto: SignDirectionalLibrary
+  entities:
+  - uid: 23116
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 63.493305,-12.261676
+      parent: 2
+  - uid: 23355
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 89.50017,-12.260261
+      parent: 2
+  - uid: 23924
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 89.49365,3.2572126
+      parent: 2
+  - uid: 23966
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 63.494976,-34.00196
+      parent: 2
+  - uid: 23982
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 89.501236,-34.00161
+      parent: 2
+  - uid: 23993
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 63.49529,5.9768496
+      parent: 2
+- proto: SignDirectionalMed
+  entities:
   - uid: 23127
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 93.50257,-12.259788
+      parent: 2
+  - uid: 23914
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 67.5,-13.5
+      parent: 2
+  - uid: 23917
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 88.50123,3.7339387
+      parent: 2
+  - uid: 23961
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 63.50056,-36.252842
+      parent: 2
+  - uid: 23984
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 89.5,-35.5
       parent: 2
 - proto: SignDirectionalSci
   entities:
@@ -125563,49 +126859,85 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 63.5,3.5
       parent: 2
-  - uid: 23117
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 93.49595,3.2731833
-      parent: 2
-  - uid: 23119
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 63.49223,-12.726066
-      parent: 2
   - uid: 23126
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 93.49983,-12.738955
       parent: 2
-- proto: SignDirectionalSec
-  entities:
-  - uid: 1416
+  - uid: 23929
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 86.4996,3.729435
+      parent: 2
+  - uid: 23939
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 63.50115,-16.267286
+      parent: 2
+  - uid: 23949
     components:
     - type: Transform
       rot: 3.141592653589793 rad
-      pos: 63.489914,-12.034968
+      pos: 55.5,-12.5
       parent: 2
-  - uid: 4734
+  - uid: 23950
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 55.5,-0.5
+      parent: 2
+  - uid: 23960
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 63.50364,-36.736538
+      parent: 2
+  - uid: 23975
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 89.50144,-39.253998
+      parent: 2
+- proto: SignDirectionalSec
+  entities:
+  - uid: 21114
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 93.5,-34.5
+      parent: 2
+  - uid: 23121
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
-      pos: 63.502926,3.7394042
-      parent: 2
-  - uid: 23124
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 93.49516,-0.261248
+      pos: 93.5,3.5
       parent: 2
   - uid: 23130
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 93.49668,-16.256886
+      parent: 2
+  - uid: 23228
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 67.497284,-13.739628
+      parent: 2
+  - uid: 23937
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 63.5,4.5
+      parent: 2
+  - uid: 23954
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 63.497658,-40.754032
       parent: 2
 - proto: SignDirectionalSolar
   entities:
@@ -125675,20 +127007,32 @@ entities:
     - type: Transform
       pos: 63.499454,-0.2665069
       parent: 2
-  - uid: 23121
+  - uid: 23922
     components:
     - type: Transform
-      pos: 63.499172,-16.268803
+      pos: 89.5,2.5
       parent: 2
-  - uid: 23122
+  - uid: 23941
     components:
     - type: Transform
-      pos: 93.5,-0.5
+      pos: 63.502216,-17.268723
       parent: 2
-  - uid: 23128
+  - uid: 23956
     components:
     - type: Transform
-      pos: 93.5,-16.5
+      rot: 1.5707963267948966 rad
+      pos: 63.497658,-40.264446
+      parent: 2
+  - uid: 23970
+    components:
+    - type: Transform
+      pos: 93.50019,-17.25934
+      parent: 2
+  - uid: 23974
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 89.50144,-39.74011
       parent: 2
 - proto: SignDisposalSpace
   entities:
@@ -126527,7 +127871,7 @@ entities:
   - uid: 4027
     components:
     - type: MetaData
-      name: Telecoms SMES
+      name: Telecomms SMES
     - type: Transform
       pos: 30.5,-5.5
       parent: 2
@@ -126740,6 +128084,48 @@ entities:
       canCollide: False
     - type: InsideEntityStorage
   - uid: 18972
+    components:
+    - type: Transform
+      parent: 18966
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 24139
+    components:
+    - type: Transform
+      parent: 18966
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 24140
+    components:
+    - type: Transform
+      parent: 18966
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 24141
+    components:
+    - type: Transform
+      parent: 18966
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 24142
+    components:
+    - type: Transform
+      parent: 18966
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 24143
+    components:
+    - type: Transform
+      parent: 18966
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 24144
     components:
     - type: Transform
       parent: 18966
@@ -128147,35 +129533,28 @@ entities:
     - type: Transform
       pos: 105.5,7.5
       parent: 2
-- proto: SpawnMobCatBingus
+- proto: SpawnMobCat
   entities:
-  - uid: 23075
+  - uid: 23321
     components:
     - type: Transform
-      pos: 87.5,8.5
+      pos: 80.5,-8.5
       parent: 2
-- proto: SpawnMobCatException
-  entities:
-  - uid: 23076
-    components:
-    - type: Transform
-      pos: 78.5,61.5
-      parent: 2
-- proto: SpawnMobCatKittenPipi
+- proto: SpawnMobCatGeneric
   entities:
   - uid: 17043
     components:
     - type: Transform
-      pos: 78.5,-32.5
+      pos: 87.5,8.5
       parent: 2
-- proto: SpawnMobCatRuntime
-  entities:
   - uid: 17052
     components:
     - type: Transform
-      pos: 108.5,30.5
+      pos: 78.5,61.5
       parent: 2
-  - uid: 23321
+- proto: SpawnMobCatKitten
+  entities:
+  - uid: 23076
     components:
     - type: Transform
       pos: 53.5,-24.5
@@ -128995,10 +130374,10 @@ entities:
       parent: 2
 - proto: StationMap
   entities:
-  - uid: 4393
+  - uid: 104
     components:
     - type: Transform
-      pos: 49.5,-12.5
+      pos: 52.5,-36.5
       parent: 2
   - uid: 4603
     components:
@@ -129019,11 +130398,6 @@ entities:
     components:
     - type: Transform
       pos: 141.5,-21.5
-      parent: 2
-  - uid: 19940
-    components:
-    - type: Transform
-      pos: 78.5,-39.5
       parent: 2
   - uid: 19944
     components:
@@ -129080,15 +130454,35 @@ entities:
     - type: Transform
       pos: 63.5,-5.5
       parent: 2
-  - uid: 23228
-    components:
-    - type: Transform
-      pos: 67.5,-34.5
-      parent: 2
   - uid: 23254
     components:
     - type: Transform
       pos: 35.5,-22.5
+      parent: 2
+  - uid: 23915
+    components:
+    - type: Transform
+      pos: 67.5,-31.5
+      parent: 2
+  - uid: 23933
+    components:
+    - type: Transform
+      pos: 45.5,-16.5
+      parent: 2
+  - uid: 23944
+    components:
+    - type: Transform
+      pos: 100.5,-50.5
+      parent: 2
+  - uid: 23946
+    components:
+    - type: Transform
+      pos: 99.5,-35.5
+      parent: 2
+  - uid: 24135
+    components:
+    - type: Transform
+      pos: 73.5,-39.5
       parent: 2
 - proto: StationMapCircuitboard
   entities:
@@ -129525,7 +130919,7 @@ entities:
   - uid: 4028
     components:
     - type: MetaData
-      name: Telecoms Substation
+      name: Telecomms Substation
     - type: Transform
       pos: 31.5,-5.5
       parent: 2
@@ -130214,7 +131608,7 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraEngineering
       nameSet: True
-      id: Telecoms
+      id: Telecomms
   - uid: 21895
     components:
     - type: Transform
@@ -130410,7 +131804,7 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraGeneral
       nameSet: True
-      id: Evac 3
+      id: Evac 2
   - uid: 17604
     components:
     - type: Transform
@@ -130892,6 +132286,27 @@ entities:
       - SurveillanceCameraGeneral
       nameSet: True
       id: Arboretum Hallway
+  - uid: 23995
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 109.5,-36.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: Evac Lobby
+  - uid: 23996
+    components:
+    - type: Transform
+      pos: 117.5,-42.5
+      parent: 2
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraGeneral
+      nameSet: True
+      id: Evac 1
 - proto: SurveillanceCameraMedical
   entities:
   - uid: 22653
@@ -132716,6 +134131,13 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 54.5,-11.5
+      parent: 2
+- proto: TableFancyGreen
+  entities:
+  - uid: 24105
+    components:
+    - type: Transform
+      pos: 113.5,-9.5
       parent: 2
 - proto: TableFrame
   entities:
@@ -152597,7 +154019,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -127928.92
+      secondsUntilStateChange: -140815.45
       state: Opening
     - type: Airlock
       autoClose: False
@@ -153592,6 +155014,24 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 120.5,6.5
+      parent: 2
+  - uid: 15013
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 74.5,33.5
+      parent: 2
+  - uid: 24137
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 73.5,33.5
+      parent: 2
+  - uid: 24138
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 72.5,33.5
       parent: 2
 - proto: Wrench
   entities:

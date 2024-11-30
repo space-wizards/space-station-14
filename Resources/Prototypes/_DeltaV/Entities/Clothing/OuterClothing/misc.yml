@@ -1,0 +1,17 @@
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterApronChemist
+  name: chemical resistant apron
+  suffix: Chemistry
+  description: Made out of thick rubber, the color of this apron still leaves you perplexed.
+  components:
+  - type: Sprite
+    sprite: _DeltaV/Clothing/OuterClothing/Misc/chemapron.rsi
+  - type: Clothing
+    sprite: _DeltaV/Clothing/OuterClothing/Misc/chemapron.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.25
+  - type: TemperatureProtection
+    coolingCoefficient: 1

@@ -20,8 +20,8 @@
     ClothingUniformSecurityTrooper: 3
     ClothingHeadsetSecurity: 3
     ClothingOuterWinterSec: 2
-    ClothingOuterArmorBasic: 2
     ClothingNeckScarfStripedRed: 3
+    ClothingOuterArmorBasic: 2
     ClothingOuterArmorBasicSlim: 2
     ClothingEyesBlindfold: 1
     ClothingShoesBootsCombat: 1
@@ -29,6 +29,7 @@
     ClothingUniformJumpsuitBrigmedic: 1
     ClothingUniformJumpskirtBrigmedic: 1
     ClothingHeadHatBeretBrigmedic: 1
+    ClothingHeadHatBrigmedicsoft: 1
     ClothingBackpackDuffelBrigmedic: 1
     ClothingBackpackBrigmedic: 1
     ClothingBackpackSatchelBrigmedic: 1

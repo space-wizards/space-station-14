@@ -1,10 +1,12 @@
 using Content.Shared.Actions;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared._Impstation.Spelfs.Components;
 
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[Access(typeof(SharedSpelfMoodSystem))]
 public sealed partial class SpelfMoodsComponent : Component
 {
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
@@ -16,13 +18,15 @@ public sealed partial class SpelfMoodsComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public bool CanBeEmagged = true;
 
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    public SoundSpecifier? MoodsChangedSound = new SoundPathSpecifier("/Audio/_Impstation/Spelf/moods_changed.ogg");
+
     [DataField(serverOnly: true), ViewVariables]
     public EntityUid? Action;
 }
 
 public sealed partial class ToggleMoodsScreenEvent : InstantActionEvent
 {
-
 }
 
 [NetSerializable, Serializable]

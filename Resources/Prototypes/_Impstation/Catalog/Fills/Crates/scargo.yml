@@ -1,0 +1,20 @@
+- type: entity
+  id: ClothingScargoDuffelBagsCrate
+  parent: CrateLuxury
+  name: S-Cargo duffel bag bundle
+  description: The height of Gastropoid style and comfort, finally come to intergalactic shelves. Contains two coveted S-Cargo Duffel bags.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingBackpackSCargoDuffelPurple
+      - id: ClothingBackpackSCargoDuffelCyan
+
+- type: entity
+  id: ClothingScargoSatchelCrate
+  parent: CrateLuxury
+  name: S-Cargo satchel bundle
+  description: The height of Gastropoid style and comfort, now branching out to new markets. Contains one coveted S-Cargo satchel, its integrated tank pre-filled with nitrogen.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingBackpackSCargoN2Satchel

@@ -5,6 +5,13 @@
   id: BaseMobDiona
   abstract: true
   components:
+  - type: Tag
+    tags:
+    - CanPilot
+    - FootstepSound
+    - DoorBumpOpener
+    - AnomalyHost
+    - DionaMinded
   - type: Absorbable
   - type: HumanoidAppearance
     species: Diona
@@ -91,7 +98,7 @@
   - type: Vocal
     sounds:
       Male: UnisexDiona
-      Female: UnisexDiona
+      Female: FemaleDiona #placeholder, this should be UnisexDiona once they have a complete set of emotes
       Unsexed: UnisexDiona
   - type: BodyEmotes
     soundsId: DionaBodyEmotes

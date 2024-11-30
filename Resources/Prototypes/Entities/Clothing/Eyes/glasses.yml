@@ -219,6 +219,7 @@
     tags:
     - HamsterWearable
     - WhitelistChameleon
+    - GlassesSecurity
   - type: GuideHelp
     guides:
     - Security

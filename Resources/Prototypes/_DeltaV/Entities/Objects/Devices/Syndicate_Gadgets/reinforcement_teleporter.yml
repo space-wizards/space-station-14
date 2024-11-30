@@ -11,7 +11,7 @@
   - type: GhostRole
     name: ghost-role-information-nukie-mouse-name
     description: ghost-role-information-nukie-mouse-description
-    rules: ghost-role-information-nukie-mouse-rules
+    rules: ghost-role-information-familiar-rules
   - type: GhostRoleMobSpawner
     prototype: MobNukieMouse
   - type: EmitSoundOnUse

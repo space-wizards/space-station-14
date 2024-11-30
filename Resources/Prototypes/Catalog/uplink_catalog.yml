@@ -1054,6 +1054,10 @@
      blacklist:
        tags:
        - NukeOpsUplink
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+        - SurplusBundle #imp special (dud roll as a traitor unless you have dagd)
 
 - type: listing
   id: UplinkNukieAntimovCircuitBoard
@@ -1072,6 +1076,10 @@
     whitelist:
       tags:
       - NukeOpsUplink
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+        - SurplusBundle #imp special
 
 - type: listing
   id: UplinkSurplusBundle
@@ -1127,6 +1135,11 @@
     Telecrystal: 12
   categories:
     - UplinkDisruption
+  conditions:
+  - !type:BuyerWhitelistCondition
+    blacklist:
+      components:
+        - SurplusBundle # imp special. could maybe make a flatpack that only shows up in surplus bundles at some point, but rn its worse than useless and has a good chance of getting people stuck in wallsa nd shit
 
 - type: listing
   id: UplinkCameraBug

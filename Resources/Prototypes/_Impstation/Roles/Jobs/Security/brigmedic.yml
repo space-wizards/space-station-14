@@ -30,7 +30,7 @@
     eyes: ClothingEyesGlassesSecurity
     ears: ClothingHeadsetBrigmedic
     id: BrigmedicPDA
-    belt: ClothingBeltMedicalFilled
+    belt: ClothingBeltMedicalEMTFilled
   storage:
     back:
     - Flash

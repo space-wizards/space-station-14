@@ -1,0 +1,41 @@
+# Goblin Hair
+- type: marking
+  id: GoblinHairA
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Goblin]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/goblin_hair.rsi
+    state: goblin_hair_a
+- type: marking
+  id: GoblinHairBald
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Goblin]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/goblin_hair.rsi
+    state: goblin_hair_bald
+- type: marking
+  id: GoblinHairHalfshaved
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Goblin]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/goblin_hair.rsi
+    state: goblin_hair_halfshaved
+- type: marking
+  id: GoblinHairPixie
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Goblin]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/goblin_hair.rsi
+    state: goblin_hair_pixie
+- type: marking
+  id: GoblinHairPompadour
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Goblin]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/goblin_hair.rsi
+    state: goblin_hair_pompadour

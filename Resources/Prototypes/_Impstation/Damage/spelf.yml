@@ -1,12 +1,11 @@
 - type: damageModifierSet
   id: SpElf
   coefficients:
-    Blunt: .9
-    Slash: .9
-    Piercing: .9
-    Cold: 1.1
-    Heat: 1.1
-    Poison: 1.1
-    Cellular: .9
-    Radiation: .8
-    Shock: .9
+    Blunt: 1.1
+    Slash: 1.1
+    Piercing: 1.1
+    Cold: .9
+    Heat: .9
+    Poison: .9
+    Cellular: 1.1
+    Radiation: 1.2

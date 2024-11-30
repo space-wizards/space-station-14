@@ -11,31 +11,23 @@
     - MustDoDrugs
     - WorshipSilicons
     - DinnerEtiquette
-    - Clarity
     - HugGood
     - NeverAlone
     - VeryReligious
     - OnlySpeakToCommand
     - Scheduler
-    - RadioOnly
     - ProperStorage
-    - SwearingGood
-#    - StatementOnly
     - TheftNeutral
     - Duel
     - Prometheus
     - Klingon
     - SogginsLaw
-#    - Imitation
     - Generous
     - FavorsRepaid
     - Bookkeeper
     - SacredBlood
     - GiftReciever
     - NewJob
-#    - ThirdPerson
-#    - TitleCase
-    - GreySpeak
     - DepartmentTitle
     - Barefoot
     - Hospitable
@@ -45,6 +37,10 @@
     - Optimist
     - ItemGood
     - Hypochondriac
+    - ImposterSyndrome
+    - YesMan
+    - Centrist
+    - SpeechRestriction
 
 # You are extremely possessive of your property. Refuse to relinquish it, and if it is misplaced or stolen, it must be retrieved at all costs. 
 - type: spelfMood
@@ -103,14 +99,6 @@
   conflicts:
     - DinnerFloor
 
-# You must be excessively clear and honest in your speech, explaining every minute detail. 
-- type: spelfMood
-  id: Clarity
-  moodName: spelf-mood-clarity-name
-  moodDesc: spelf-mood-clarity-desc
-  conflicts:
-    - Unclarity
-
 # It is extremely impolite not to hug people frequently.
 - type: spelfMood
   id: HugGood
@@ -166,22 +154,6 @@
   moodDesc: spelf-mood-proper-storage-desc
   conflicts:
     - ImproperStorage
-
-# Swearing is the spice of any conversation, and must be used as much as reasonably possible.
-- type: spelfMood
-  id: SwearingGood
-  moodName: spelf-mood-swearing-good-name
-  moodDesc: spelf-mood-swearing-good-desc
-  conflicts:
-    - SwearingBad
-
-# Asking questions is rude. Everything must be phrased as a statement.
-- type: spelfMood
-  id: StatementOnly
-  moodName: spelf-mood-statement-only-name
-  moodDesc: spelf-mood-statement-only-desc
-  conflicts:
-    - QuestionOnly
 
 # Theft is a morally neutral act. You don't understand the concept of property as it relates to other people.
 - type: spelfMood
@@ -270,8 +242,7 @@
   moodName: spelf-mood-no-department-title-name
   moodDesc: spelf-mood-no-department-title-desc
   conflicts:
-    - FullNameAndTitleShared
-    - NamesAreRude
+    - SpeechRestriction
 
 # The ground you walk on is sacred. You must not wear shoes.
 - type: spelfMood
@@ -322,13 +293,49 @@
   moodName: spelf-mood-optimist-name
   moodDesc: spelf-mood-optimist-desc
 
-# You've been sickly since you were a child. Everything negative you experience is the result of a potentially terminal illness, for which you need immediate medical treatment.
+# Hypochondriac: You've been sickly since you were a child. Everything negative you experience is the result of a potentially terminal illness, for which you need immediate medical treatment.
 - type: spelfMood
   id: Hypochondriac
   moodName: spelf-mood-hypochondriac-name
   moodDesc: spelf-mood-hypochondriac-desc
 
+# Imposter Syndrome: You feel your life experience drain from your mind. You are brand-new at your job, unsure of how anything works. You should probably find someone experienced to show you the ropes.
+- type: spelfMood
+  id: ImposterSyndrome
+  moodName: spelf-mood-imposter-syndrome-name
+  moodDesc: spelf-mood-imposter-syndrome-desc
 
+# Yes Man: You just can't say "no." You must agree with everyone, and perform any task requested of you, regardless of its source.
+- type: spelfMood
+  id: YesMan
+  moodName: spelf-mood-yes-man-name
+  moodDesc: spelf-mood-yes-man-desc
+  conflicts:
+    - Centrist
+
+# Centrist: You are ambivalent towards any and all decisions, and refuse to take sides. 
+- type: spelfMood
+  id: Centrist
+  moodName: spelf-mood-centrist-name
+  moodDesc: spelf-mood-centrist-desc
+  conflicts:
+    - YesMan
+
+# Public Sector: Your job should not be done in private if it can be helped. If at all possible, you should renovate the facilities to allow public access to your workplace.
+- type: spelfMood
+  id: PublicSector
+  moodName: spelf-mood-public-sector-name
+  moodDesc: spelf-mood-public-sector-desc
+  conflicts:
+    - StationIsAlive
+
+# Speech Restrictions
+- type: spelfMood
+  id: SpeechRestriction
+  moodName: spelf-mood-speech-restriction-name
+  moodDesc: spelf-mood-speech-restriction-desc
+  moodVars:
+    speechType: SpeechRestrictions
 
 # The color [COLOR] is the only acceptable color for decorations. Endeavor to make your environment this color where possible.
 #- type: spelfMood

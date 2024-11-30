@@ -1,0 +1,31 @@
+- type: entity
+  parent: ClothingHeadHeadHatBaseFlippable
+  id: ClothingHeadHatBrigmedicsoft
+  name: brigmedic cap
+  description: It's a baseball hat that matches a brigmedic's uniform.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Soft/brigmedicsoft.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Soft/brigmedicsoft.rsi
+
+- type: entity
+  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatBrigmedicsoft]
+  id: ClothingHeadHatBrigmedicsoftFlipped
+  name: brigmedic cap
+  
+- type: entity
+  parent: [ClothingHeadHeadHatBaseFlippable, BaseCommandContraband]
+  id: ClothingHeadHatHOSsoft
+  name: head of security's patrol cap
+  description: A robust, decorated patrol cap for the head of security.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Soft/hossoft.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Soft/hossoft.rsi
+
+- type: entity
+  parent: [ClothingHeadHeadHatBaseFlipped, ClothingHeadHatHOSsoft]
+  id: ClothingHeadHatHOSsoftFlipped
+  name: security cap

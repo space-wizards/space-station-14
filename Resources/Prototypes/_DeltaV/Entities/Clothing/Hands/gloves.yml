@@ -1,0 +1,19 @@
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesChemist
+  name: heavy nitrile gloves
+  description: A pair of thick gloves that provide some protection from caustic chemicals.
+  components:
+  - type: Sprite
+    sprite: _DeltaV/Clothing/Hands/Gloves/hvchemresgloves.rsi
+  - type: Clothing
+    sprite: _DeltaV/Clothing/Hands/Gloves/hvchemresgloves.rsi
+  - type: Fiber
+    fiberMaterial: fibers-rubber
+    fiberColor: fibers-black
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.95
+  - type: TemperatureProtection
+    coolingCoefficient: 1

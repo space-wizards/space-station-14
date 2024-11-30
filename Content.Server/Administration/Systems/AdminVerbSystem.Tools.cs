@@ -782,7 +782,7 @@ public sealed partial class AdminVerbSystem
             {
                 Text = "Add Random Mood",
                 Category = VerbCategory.Tricks,
-                // TODO: Icon
+                Icon = new SpriteSpecifier.Rsi(new ResPath("Interface/Actions/actions_borg.rsi"), "state-laws"),
                 Act = () =>
                 {
                     _moods.TryAddRandomMood(args.Target);
@@ -792,6 +792,24 @@ public sealed partial class AdminVerbSystem
                 Priority = (int) TricksVerbPriorities.AddRandomMood,
             };
             args.Verbs.Add(addRandomMood);
+        }
+        else
+        {
+            Verb giveMoods = new()
+            {
+                Text = "Give Moods",
+                Category = VerbCategory.Tricks,
+                Icon = new SpriteSpecifier.Rsi(new ResPath("Interface/Actions/actions_borg.rsi"), "state-laws"),
+                Act = () =>
+                {
+                    if (!EntityManager.EnsureComponent<SpelfMoodsComponent>(args.Target, out moods))
+                        _moods.NotifyMoodChange((args.Target, moods));
+                },
+                Impact = LogImpact.High,
+                Message = Loc.GetString("admin-trick-give-moods-description"),
+                Priority = (int) TricksVerbPriorities.AddRandomMood,
+            };
+            args.Verbs.Add(giveMoods);
         }
     }
 
