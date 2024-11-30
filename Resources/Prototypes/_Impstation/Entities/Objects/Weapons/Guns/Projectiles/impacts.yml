@@ -1,0 +1,17 @@
+- type: entity
+  id: GZipImpactEffect
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: TimedDespawn
+    lifetime: 1.6
+  - type: Sprite
+    drawdepth: Effects
+    layers:
+    - shader: unshaded
+      map: ["enum.EffectLayers.Unshaded"]
+      sprite: _Impstation/Objects/Weapons/Guns/Projectiles/goldzipper.rsi
+      state: explosionimpact
+  - type: EffectVisuals
+  - type: Tag
+    tags:
+      - HideContextMenu
