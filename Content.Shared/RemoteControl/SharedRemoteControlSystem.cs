@@ -43,13 +43,13 @@ public abstract class SharedRemoteControlSystem : EntitySystem
 
     private void OnExamine(Entity<RemotelyControllableComponent> ent, ref ExaminedEvent args)
     {
-        /*if (ent.Comp.ExamineMessage == null)
-            return;*/
+        if (ent.Comp.ExamineMessage == null)
+            return;
 
         if (!args.IsInDetailsRange)
             return;
 
-        args.PushText("It has an antenna attached to it.");
+        args.PushText(Loc.GetString("rc-controlled-examine", ("user", ent.Owner)));
     }
 
     private void OnControllableInit(Entity<RemotelyControllableComponent> ent, ref ComponentInit args)
@@ -70,9 +70,9 @@ public abstract class SharedRemoteControlSystem : EntitySystem
         TryStopRemoteControl(ent);
     }
 
-    private void OnAfterInteractUsing(EntityUid uid, RemotelyControllableComponent comp, ref AfterInteractUsingEvent args)
+    private void OnAfterInteractUsing(Entity<RemotelyControllableComponent> ent, ref AfterInteractUsingEvent args)
     {
-        if (args.Handled || !args.CanReach)
+        if (!args.CanReach)
             return;
 
         if (!TryComp<RCRemoteComponent>(args.Used, out var remoteComp))
@@ -81,13 +81,13 @@ public abstract class SharedRemoteControlSystem : EntitySystem
         if (!TryComp<RemotelyControllableComponent>(args.Target, out var _))
             return;
 
-        if (comp.BoundRemote != null)
+        if (ent.Comp.BoundRemote != null)
             return;
 
         remoteComp.BoundTo = args.Target;
-        comp.BoundRemote = args.Used;
+        ent.Comp.BoundRemote = args.Used;
 
-        _popup.PopupEntity("Bound to entity.", args.User, args.User, PopupType.Medium);
+        _popup.PopupEntity(Loc.GetString("rc-remote-bound", ("entityName", Prototype(ent.Owner)?.Name ?? "Unknown")), args.User, args.User, PopupType.Medium);
 
         args.Handled = true;
     }
@@ -124,12 +124,12 @@ public abstract class SharedRemoteControlSystem : EntitySystem
 
         ActivationVerb verb = new()
         {
-            Text = Loc.GetString("Wipe Bound"),
+            Text = Loc.GetString("rc-remote-wipe-verb"),
             Act = () =>
             {
                 ent.Comp.BoundTo = null;
                 remotelyComp.BoundRemote = null;
-                _popup.PopupEntity(Loc.GetString("Wiped bound."), user, user, PopupType.Large);
+                _popup.PopupEntity(Loc.GetString("rc-remote-wiped"), user, user, PopupType.Large);
             }
         };
         args.Verbs.Add(verb);
@@ -139,7 +139,7 @@ public abstract class SharedRemoteControlSystem : EntitySystem
     {
         if (ent.Comp.BoundTo is null)
         {
-            _popup.PopupEntity("Not bound to entity.", args.User, args.User, PopupType.Medium);
+            _popup.PopupEntity(Loc.GetString("rc-remote-unbound"), args.User, args.User, PopupType.Medium);
             return;
         }
 
@@ -148,7 +148,7 @@ public abstract class SharedRemoteControlSystem : EntitySystem
 
         if (!TryComp<MobStateComponent>(ent.Comp.BoundTo, out var mobState) || mobState.CurrentState != MobState.Alive)
         {
-            _popup.PopupEntity("Cannot establish connection.", args.User, args.User, PopupType.Medium);
+            _popup.PopupEntity(Loc.GetString("rc-remote-fail"), args.User, args.User, PopupType.Medium);
             return;
         }
 

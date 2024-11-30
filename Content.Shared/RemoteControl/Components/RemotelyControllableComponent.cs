@@ -13,7 +13,7 @@ public sealed partial class RemotelyControllableComponent : Component
     /// Null means there is no message.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public LocId? ExamineMessage;
+    public LocId? ExamineMessage = "rc-controlled-examine";
 
     /// <summary>
     /// Action granted to the remotely controlled entity.
