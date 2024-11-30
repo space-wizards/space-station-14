@@ -94,6 +94,70 @@
   tags:
   - Maints
 
+- type: dungeonRoom
+  id: Maints5x5m
+  size: 5,5
+  atlas: /Maps/Dungeon/maints.yml
+  offset: 0,18
+  tags:
+  - Maints
+
+- type: dungeonRoom
+  id: Maints5x5n
+  size: 5,5
+  atlas: /Maps/Dungeon/maints.yml
+  offset: 6,18
+  tags:
+  - Maints
+
+- type: dungeonRoom
+  id: Maints5x5o
+  size: 5,5
+  atlas: /Maps/Dungeon/maints.yml
+  offset: 12,18
+  tags:
+  - Maints
+
+- type: dungeonRoom
+  id: Maints5x5p
+  size: 5,5
+  atlas: /Maps/Dungeon/maints.yml
+  offset: 18,18
+  tags:
+  - Maints
+
+- type: dungeonRoom
+  id: Maints5x5q
+  size: 5,5
+  atlas: /Maps/Dungeon/maints.yml
+  offset: 0,24
+  tags:
+  - Maints
+
+- type: dungeonRoom
+  id: Maints5x5r
+  size: 5,5
+  atlas: /Maps/Dungeon/maints.yml
+  offset: 6,24
+  tags:
+  - Maints
+
+- type: dungeonRoom
+  id: Maints5x5s
+  size: 5,5
+  atlas: /Maps/Dungeon/maints.yml
+  offset: 12,24
+  tags:
+  - Maints
+
+- type: dungeonRoom
+  id: Maints5x5t
+  size: 5,5
+  atlas: /Maps/Dungeon/maints.yml
+  offset: 18,24
+  tags:
+  - Maints
+
 - type: entity
   id: MaintsRoomMarker
   parent: BaseRoomMarker
