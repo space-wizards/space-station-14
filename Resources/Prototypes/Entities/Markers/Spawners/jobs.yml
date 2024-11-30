@@ -492,6 +492,7 @@
   name: brigmedic
   components:
   - type: Sprite
+    job_id: Brigmedic
     layers:
       - state: green
       - state: brigmedic
