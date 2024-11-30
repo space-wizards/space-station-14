@@ -7,8 +7,9 @@
         SeparationOverride="2"
         VerticalExpand="True">
 
-        <!-- From & To -->
-        <BoxContainer Orientation="Vertical">
+        <!-- Param's -->
+        <BoxContainer Orientation="Vertical"
+            Margin="0 0 0 2">
 
             <!-- From Line -->
             <BoxContainer Orientation="Horizontal">
@@ -26,8 +27,7 @@
                     HorizontalAlignment="Right"/>
             </BoxContainer>
 
-            <PanelContainer StyleClasses="LowDivider"
-                Margin="0 4"/>
+            <PanelContainer StyleClasses="LowDivider" Margin="0 2 0 4"/>
 
             <!-- To Line -->
             <BoxContainer
@@ -46,14 +46,7 @@
                     HorizontalAlignment="Right"/>
             </BoxContainer>
 
-            <PanelContainer StyleClasses="LowDivider"
-                Margin="0 4"/>
-        </BoxContainer>
-
-        <!-- Central part -->
-        <BoxContainer Orientation="Vertical"
-            VerticalExpand="True"
-            SeparationOverride="4">
+            <PanelContainer StyleClasses="LowDivider" Margin="0 2 0 4"/>
 
             <!-- Paper Settings -->
             <BoxContainer>
@@ -69,6 +62,13 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"/>
             </BoxContainer>
+
+            <PanelContainer StyleClasses="LowDivider" Margin="0 2 0 0"/>            
+        </BoxContainer>
+
+        <!-- Central part -->
+        <BoxContainer Orientation="Vertical"
+            VerticalExpand="True">
 
             <!-- Other actions -->
             <BoxContainer>
@@ -87,6 +87,8 @@
                     HorizontalExpand="True"
                     StyleClasses="OpenLeft"/>
             </BoxContainer>
+
+            <!-- It would be cool to add a display of the inserted file here. -->
 
             <Control VerticalExpand="True"/>
         </BoxContainer>
