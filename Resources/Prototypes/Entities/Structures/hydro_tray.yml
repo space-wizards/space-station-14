@@ -21,25 +21,30 @@
   - type: Sprite
     layers:
       - sprite: Structures/Hydroponics/containers.rsi
-        state: hydrotray3
+        state: hydrotray4
       - sprite: Structures/Hydroponics/overlays.rsi
-        state: lowhealth3
+        state: lowhealth4
+        shader: unshaded
         map: [ "health_alert" ]
         visible: false
       - sprite: Structures/Hydroponics/overlays.rsi
-        state: lowwater3
+        state: lowwater4
+        shader: unshaded
         map: [ "water_alert" ]
         visible: false
       - sprite: Structures/Hydroponics/overlays.rsi
-        state: lownutri3
+        state: lownutri4
+        shader: unshaded
         map: [ "nutri_alert" ]
         visible: false
       - sprite: Structures/Hydroponics/overlays.rsi
-        state: alert3
+        state: alert4
+        shader: unshaded
         map: [ "undefined_alert" ]
         visible: false
       - sprite: Structures/Hydroponics/overlays.rsi
-        state: harvest3
+        state: harvest4
+        shader: unshaded
         map: [ "harvest_alert" ]
         visible: false
   - type: Appearance
