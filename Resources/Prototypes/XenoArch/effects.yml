@@ -153,7 +153,6 @@
   description: Obtains ability of long-distance communication device
   components:
   - type: XAEApplyComponents
-    applyIfAlreadyHave: true
     components:
     - type: RadioMicrophone
       powerRequired: false
@@ -183,7 +182,6 @@
   description: Obtains ability of musical instrument
   components:
   - type: XAEApplyComponents
-    applyIfAlreadyHave: true
     components:
     - type: Instrument
     - type: ActivatableUI
@@ -753,71 +751,74 @@
   parent: BaseXenoArtifactEffect
   description: Create friendly fauna
   components:
-  - type: EntityTableSpawner
-    deleteSpawnerAfterSpawn: false
-    table: !type:GroupSelector
-      children:
-      - id: MobAdultSlimesYellowAngry
-      - id: MobAngryBee
-      - id: MobBearSpace
-      - id: MobXenoRavager
-      - id: MobTick
-      - id: MobSpiderSpace
-      - id: MobPurpleSnake
-      - id: MobMouse
-      - id: MobKangarooSpace
-      - id: MobPig
-      - id: MobParrot
-      - id: MobKangaroo
-      - id: MobFox
-      - id: MobPenguin
-        amount: !type:RangeNumberSelector
-          range: 1, 2
-      - id: MobMothroach
-        amount: !type:RangeNumberSelector
-          range: 1, 2
-      - id: MobCorgiPuppy
-        amount: !type:RangeNumberSelector
-          range: 1, 2
-      - id: MobCatKitten
-        amount: !type:RangeNumberSelector
-          range: 1, 2
-      - id: MobCat
-        amount: !type:RangeNumberSelector
-          range: 1, 2
-      - id: MobBee
-        amount: !type:RangeNumberSelector
-          range: 2, 5
-      - id: MobGoat
-        amount: !type:RangeNumberSelector
-          range: 1, 3
-      - id: MobMonkeySyndicateAgent #so lucky
-        prob: 0.03
-
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: EntityTableSpawner
+      deleteSpawnerAfterSpawn: false
+      table: !type:GroupSelector
+        children:
+        - id: MobAdultSlimesYellowAngry
+        - id: MobAngryBee
+        - id: MobBearSpace
+        - id: MobXenoRavager
+        - id: MobTick
+        - id: MobSpiderSpace
+        - id: MobPurpleSnake
+        - id: MobMouse
+        - id: MobKangarooSpace
+        - id: MobPig
+        - id: MobParrot
+        - id: MobKangaroo
+        - id: MobFox
+        - id: MobPenguin
+          amount: !type:RangeNumberSelector
+            range: 1, 2
+        - id: MobMothroach
+          amount: !type:RangeNumberSelector
+            range: 1, 2
+        - id: MobCorgiPuppy
+          amount: !type:RangeNumberSelector
+            range: 1, 2
+        - id: MobCatKitten
+          amount: !type:RangeNumberSelector
+            range: 1, 2
+        - id: MobCat
+          amount: !type:RangeNumberSelector
+            range: 1, 2
+        - id: MobBee
+          amount: !type:RangeNumberSelector
+            range: 2, 5
+        - id: MobGoat
+          amount: !type:RangeNumberSelector
+            range: 1, 3
+        - id: MobMonkeySyndicateAgent #so lucky
+          prob: 0.03
 
 - type: entity
   id: XenoArtifactCashSpawn
   parent: BaseXenoArtifactEffect
   description: Create money
   components:
-    - type: XAEApplyComponents
-      applyIfAlreadyHave: true
-      refreshOnReactivate: true
-      components:
-      - type: EntityTableSpawner
-        deleteSpawnerAfterSpawn: false
-        table: !type:GroupSelector
-          rolls: !type:RangeNumberSelector
-            range: 2, 4
-          children:
-          - id: SpaceCash10
-            weight: 0.75
-          - id: SpaceCash100
-            weight: 0.5
-          - id: SpaceCash500
-            weight: 0.25
-          - id: SpaceCash1000
-            weight: 0.1
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: EntityTableSpawner
+      deleteSpawnerAfterSpawn: false
+      table: !type:GroupSelector
+        rolls: !type:RangeNumberSelector
+          range: 2, 4
+        children:
+        - id: SpaceCash10
+          weight: 0.75
+        - id: SpaceCash100
+          weight: 0.5
+        - id: SpaceCash500
+          weight: 0.25
+        - id: SpaceCash1000
+          weight: 0.1
 
 - type: entity
   id: XenoArtifactShatterWindows
@@ -1042,15 +1043,15 @@
   parent: BaseXenoArtifactEffect
   description: Mass destruction
   components:
-    - type: XAEApplyComponents
-      applyIfAlreadyHave: true
-      refreshOnReactivate: true
-      components:
-      - type: EntityTableSpawner
-        deleteSpawnerAfterSpawn: false
-        table: !type:AllSelector
-          children:
-          - id: Singularity
+  - type: XAEApplyComponents
+    applyIfAlreadyHave: true
+    refreshOnReactivate: true
+    components:
+    - type: EntityTableSpawner
+      deleteSpawnerAfterSpawn: false
+      table: !type:AllSelector
+        children:
+        - id: Singularity
 
 - type: entity
   id: XenoArtifactSingularity
