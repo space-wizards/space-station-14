@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: starlighthowls
-  changes:
-  - message: white whale fixes 3!
-    type: Fix
-  id: 112
-  time: '2024-08-22T17:10:17.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/131
 - author: Darkmajia
   changes:
   - message: new tiktok announcer + alert levels fixed + intern new alert levels
@@ -4374,3 +4367,11 @@
   id: 611
   time: '2024-11-30T12:51:22.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/839
+- author: AftrLite
+  changes:
+  - message: Ongoing resprites to a large amount of assets. Expect more palette parity
+      and 4:3 perspective matching.
+    type: Tweak
+  id: 612
+  time: '2024-11-30T22:53:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/823
