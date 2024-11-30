@@ -52,6 +52,8 @@ public sealed class EggInjectSystem : EntitySystem
 
     private void EggInjectionDoAfter(Entity<SpiderComponent> ent, ref EggInjectionDoAfterEvent args)
     {
+        if (args.Cancelled)
+            return;
         if (args.Target.HasValue && !HasComp<HasEggHolderComponent>(args.Target.Value))
         {
             EnsureComp<EggHolderComponent>(args.Target.Value);
