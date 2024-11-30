@@ -735,4 +735,11 @@ Entries:
   id: 104
   time: '2024-11-30T06:04:46.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/102
+- author: Miracula
+  changes:
+  - message: Fixed brigmedic not being part of security on crew monitor
+    type: Fix
+  id: 105
+  time: '2024-11-30T06:18:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/99
 
