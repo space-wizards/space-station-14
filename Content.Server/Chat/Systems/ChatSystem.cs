@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using Content.Server.Abilities.Mime;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
@@ -429,6 +430,9 @@ public sealed partial class ChatSystem : SharedChatSystem
     {
         if (_mobStateSystem.IsDead(source) || collectiveMind == null || message == "" || !TryComp<CollectiveMindComponent>(source, out var sourseCollectiveMindComp) || !sourseCollectiveMindComp.Minds.ContainsKey(collectiveMind.ID))
             return;
+
+        if (TryComp<MimePowersComponent>(source, out var comp) && comp.Enabled) // No cheating
+            return; // Ideally would display the mime-cant-speak string but doing that here would be messy. Collective mind needs an equivalent to OnSpeakAttempt so this can be handled in MutingSystem
 
         var clients = Filter.Empty();
         var mindQuery = EntityQueryEnumerator<CollectiveMindComponent, ActorComponent>();
