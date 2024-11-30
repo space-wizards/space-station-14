@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Made the straitjacked non-printable again.
-    type: Remove
-  id: 7166
-  time: '2024-08-19T18:47:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31197
 - author: themias
   changes:
   - message: Added the Combat Bakery Kit to the syndicate uplink. Includes a deadly
@@ -3910,3 +3903,11 @@
   id: 7665
   time: '2024-11-30T15:58:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33646
+- author: Plykiya
+  changes:
+  - message: You can now inspect the entity in your hand instead of the entity that
+      happened to be underneath your hand.
+    type: Fix
+  id: 7666
+  time: '2024-11-30T16:14:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33642
