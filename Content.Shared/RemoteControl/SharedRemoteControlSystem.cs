@@ -22,6 +22,7 @@ public abstract class SharedRemoteControlSystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -72,7 +73,7 @@ public abstract class SharedRemoteControlSystem : EntitySystem
 
     private void OnAfterInteractUsing(Entity<RemotelyControllableComponent> ent, ref AfterInteractUsingEvent args)
     {
-        if (!args.CanReach)
+        if (args.Handled || !args.CanReach)
             return;
 
         if (!TryComp<RCRemoteComponent>(args.Used, out var remoteComp))

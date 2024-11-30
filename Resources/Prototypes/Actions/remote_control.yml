@@ -1,7 +1,7 @@
 - type: entity
   id: ActionRCBackToBody
   name: Back to body.
-  description: Sends your eye back to the core.
+  description: Stops remotely controlling this entity.
   components:
   - type: InstantAction
     priority: -9

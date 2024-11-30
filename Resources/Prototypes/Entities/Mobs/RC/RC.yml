@@ -96,6 +96,8 @@
     allowSelfRepair: false
   - type: Item
     size: Tiny
+    shape:
+    - 0,0,0,1
   - type: StatusEffects
     allowed:
     - Stun
@@ -170,3 +172,18 @@
     lightningExplode: false
   - type: NameIdentifier
     group: GenericNumber
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+  - type: Storage
+    grid:
+    - 0,0,1,2
+    clickInsert: false
+    maxItemSize: Small
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  - type: UseDelay
+    delay: 0.5
