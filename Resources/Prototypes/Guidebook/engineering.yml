@@ -214,7 +214,7 @@
   children:
   - PortableGenerator
   - AME
-  - Singularity
+  - SingularityTeslaEngine
   - TEG
   - RTG
 
@@ -224,9 +224,9 @@
   text: "/ServerInfo/Guidebook/Engineering/AME.xml"
 
 - type: guideEntry
-  id: Singularity
-  name: guide-entry-singularity
-  text: "/ServerInfo/Guidebook/Engineering/Singularity.xml"
+  id: SingularityTeslaEngine
+  name: guide-entry-singularityteslaengine
+  text: "/ServerInfo/Guidebook/Engineering/SingularityTeslaEngine.xml"
 
 - type: guideEntry
   id: TEG

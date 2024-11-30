@@ -53,7 +53,7 @@
   - Add: Adds the devices saved on the tool to the current list of linked devices.
   - Clear: Removes all linked devices from the air alarm.
   - Copy: Copies the list of currently linked devices to the tool.
-  - Show: Draws a line between the air alarm and all linked devices. This is useful for visualizing the area the air alarm covers.
+  - Show: Draws a line between the primary device and all linked devices. This is useful for visualizing the area the air alarm covers.
 
   If you need to clear your tool, you can press [color=yellow][bold][keybind="Use"][/bold][/color] on the tool or use [color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color] to bring up a list of saved devices, and then press the "Clear" button.
 
