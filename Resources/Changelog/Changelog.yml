@@ -1,37 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Lizards can now eat meat dumplings.
-    type: Fix
-  id: 7165
-  time: '2024-08-19T18:17:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31212
-- author: slarticodefast
-  changes:
-  - message: Made the straitjacked non-printable again.
-    type: Remove
-  id: 7166
-  time: '2024-08-19T18:47:24.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31197
-- author: themias
-  changes:
-  - message: Added the Combat Bakery Kit to the syndicate uplink. Includes a deadly
-      edible baguette sword and throwing star croissants for 3 TC.
-    type: Add
-  - message: Baguettes can be worn on the belt and normal ones do one blunt damage.
-    type: Tweak
-  - message: Mimes have a baguette instead of an MRE in their survival kits.
-    type: Tweak
-  id: 7167
-  time: '2024-08-19T18:57:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31179
-- author: metalgearsloth
-  changes:
-  - message: Fix wire sounds not playing.
-    type: Fix
-  id: 7168
-  time: '2024-08-19T19:50:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31067
 - author: redmushie
   changes:
   - message: Communications console buttons now have descriptive tooltips
@@ -3909,3 +3876,34 @@
   id: 7664
   time: '2024-11-30T06:23:50.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33621
+- author: Plykiya
+  changes:
+  - message: You can no longer cuff someone multiple times if multiple cuff do-afters
+      are completed at the exact same time.
+    type: Fix
+  id: 7665
+  time: '2024-11-30T15:58:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33646
+- author: Plykiya
+  changes:
+  - message: You can now inspect the entity in your hand instead of the entity that
+      happened to be underneath your hand.
+    type: Fix
+  id: 7666
+  time: '2024-11-30T16:14:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33642
+- author: Plykiya
+  changes:
+  - message: You can now inspect entities in the stripping window instead of the entity
+      that happened to be underneath the window.
+    type: Fix
+  id: 7667
+  time: '2024-11-30T16:23:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33644
+- author: Winkarst-cpu
+  changes:
+  - message: Now borgs get names on roundstart.
+    type: Fix
+  id: 7668
+  time: '2024-11-30T17:25:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33578
