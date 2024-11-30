@@ -16,7 +16,8 @@
                 
                 <!-- From Value Name -->
                 <Label Text="{Loc 'fax-machine-ui-from'}"
-                    HorizontalAlignment="Left"/>
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"/>
 
                 <Control HorizontalExpand="True"
                     MinWidth="8"
@@ -24,10 +25,12 @@
 
                 <!-- From Value -->
                 <Label Name="FromLabel"
-                    HorizontalAlignment="Right"/>
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Align="Right"/>
             </BoxContainer>
 
-            <PanelContainer StyleClasses="LowDivider" Margin="0 2 0 4"/>
+            <PanelContainer StyleClasses="LowDivider" Margin="0 1 0 4"/>
 
             <!-- To Line -->
             <BoxContainer
@@ -35,7 +38,8 @@
                 
                 <!-- To Label -->
                 <Label Text="{Loc 'fax-machine-ui-to'}"
-                    HorizontalAlignment="Left"/>
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"/>
 
                 <Control HorizontalExpand="True"
                     MinWidth="8"
@@ -46,13 +50,14 @@
                     HorizontalAlignment="Right"/>
             </BoxContainer>
 
-            <PanelContainer StyleClasses="LowDivider" Margin="0 2 0 4"/>
+            <PanelContainer StyleClasses="LowDivider" Margin="0 1 0 4"/>
 
             <!-- Paper Settings -->
             <BoxContainer>
 
-                <!-- Status Name -->
-                <Label Text="{Loc 'fax-machine-ui-paper'}"/>
+                <!-- Paper Label -->
+                <Label Text="{Loc 'fax-machine-ui-paper'}"
+                    VerticalAlignment="Bottom"/>
 
                 <Control HorizontalExpand="True"/>
 
@@ -63,7 +68,7 @@
                     VerticalAlignment="Center"/>
             </BoxContainer>
 
-            <PanelContainer StyleClasses="LowDivider" Margin="0 2 0 0"/>            
+            <PanelContainer StyleClasses="LowDivider" Margin="0 1 0 0"/>            
         </BoxContainer>
 
         <!-- Central part -->
