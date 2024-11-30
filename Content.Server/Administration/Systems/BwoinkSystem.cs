@@ -78,7 +78,7 @@ namespace Content.Server.Administration.Systems
         // Should be shorter than DescriptionMax
         private const ushort MessageLengthCap = 3000;
         
-        private readonly TimeSpan _messageCooldown = TimeSpan.FromSeconds(2);
+        private TimeSpan _messageCooldown = TimeSpan.FromSeconds(2);
 
         private readonly Queue<(NetUserId Channel, string Text, TimeSpan Timestamp)> _recentMessages = new();
         private const int MaxRecentMessages = 10;
@@ -127,6 +127,57 @@ namespace Content.Server.Administration.Systems
                 );
         }
 
+        private void PlayerRateLimitedAction(ICommonSession obj)
+        {
+            RaiseNetworkEvent(
+                new BwoinkTextMessage(obj.UserId, default, Loc.GetString("bwoink-system-rate-limited"), playSound: false),
+                obj.Channel);
+        }
+        
+        #region OnCCvarsChanged
+        
+        private void OnOverrideChanged(string obj) => _overrideClientName = obj;
+
+        private void OnCooldownChanged(int obj) => _messageCooldown = TimeSpan.FromSeconds(obj);
+        
+        private void OnServerNameChanged(string obj) => _serverName = obj;
+        
+        private void OnAvatarChanged(string url) => _avatarUrl = url;
+        
+        private void OnFooterIconChanged(string url) => _footerIconUrl = url;
+
+        private async void OnWebhookChanged(string url)
+        {
+            _webhookUrl = url;
+
+            RaiseNetworkEvent(new BwoinkDiscordRelayUpdated(!string.IsNullOrWhiteSpace(url)));
+
+            if (url == string.Empty)
+                return;
+
+            // Basic sanity check and capturing webhook ID and token
+            var match = DiscordRegex().Match(url);
+
+            if (!match.Success)
+            {
+                // TODO: Ideally, CVar validation during setting should be better integrated
+                Log.Warning("Webhook URL does not appear to be valid. Using anyways...");
+                return;
+            }
+
+            if (match.Groups.Count <= 2)
+            {
+                Log.Error("Could not get webhook ID or token.");
+                return;
+            }
+
+            var webhookId = match.Groups[1].Value;
+            var webhookToken = match.Groups[2].Value;
+
+            // Fire and forget
+            _webhookData = await GetWebhookData(webhookId, webhookToken);
+        }
+        
         private async void OnCallChanged(string url)
         {
             _onCallUrl = url;
@@ -153,23 +204,8 @@ namespace Content.Server.Administration.Systems
 
             _onCallData = await GetWebhookData(webhookId, webhookToken);
         }
-
-        private void PlayerRateLimitedAction(ICommonSession obj)
-        {
-            RaiseNetworkEvent(
-                new BwoinkTextMessage(obj.UserId, default, Loc.GetString("bwoink-system-rate-limited"), playSound: false),
-                obj.Channel);
-        }
-
-        private void OnOverrideChanged(string obj)
-        {
-            _overrideClientName = obj;
-        }
-
-        private void OnCooldownChanged(string obj)
-        {
-            _messageCooldown = TimeSpan.FromSeconds(obj);
-        }
+        
+        #endregion
 
         private async void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {
@@ -344,43 +380,6 @@ namespace Content.Server.Administration.Systems
             }
         }
 
-        private void OnServerNameChanged(string obj)
-        {
-            _serverName = obj;
-        }
-
-        private async void OnWebhookChanged(string url)
-        {
-            _webhookUrl = url;
-
-            RaiseNetworkEvent(new BwoinkDiscordRelayUpdated(!string.IsNullOrWhiteSpace(url)));
-
-            if (url == string.Empty)
-                return;
-
-            // Basic sanity check and capturing webhook ID and token
-            var match = DiscordRegex().Match(url);
-
-            if (!match.Success)
-            {
-                // TODO: Ideally, CVar validation during setting should be better integrated
-                Log.Warning("Webhook URL does not appear to be valid. Using anyways...");
-                return;
-            }
-
-            if (match.Groups.Count <= 2)
-            {
-                Log.Error("Could not get webhook ID or token.");
-                return;
-            }
-
-            var webhookId = match.Groups[1].Value;
-            var webhookToken = match.Groups[2].Value;
-
-            // Fire and forget
-            _webhookData = await GetWebhookData(webhookId, webhookToken);
-        }
-
         private async Task<WebhookData?> GetWebhookData(string id, string token)
         {
             var response = await _httpClient.GetAsync($"https://discord.com/api/v10/webhooks/{id}/{token}");
@@ -394,16 +393,6 @@ namespace Content.Server.Administration.Systems
             }
 
             return JsonSerializer.Deserialize<WebhookData>(content);
-        }
-
-        private void OnFooterIconChanged(string url)
-        {
-            _footerIconUrl = url;
-        }
-
-        private void OnAvatarChanged(string url)
-        {
-            _avatarUrl = url;
         }
 
         private async void ProcessQueue(NetUserId userId, Queue<DiscordRelayedData> messages)
