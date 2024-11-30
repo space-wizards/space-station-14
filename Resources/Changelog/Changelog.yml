@@ -1,52 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: The recycler can now be broken down and repaired.
-    type: Add
-  - message: Breaking the recycler now removes the EMAG effect.
-    type: Add
-  - message: The material-reclaiming efficiency of the recycler has been increased.
-    type: Tweak
-  - message: Fixed a bug where inaccessible solutions could be extracted from entities
-      via the recycler.
-    type: Fix
-  - message: Removed the material reclaimer.
-    type: Remove
-  id: 7159
-  time: '2024-08-19T03:39:00.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30802
-- author: lzk228
-  changes:
-  - message: Cheese wheel now Normal sized and slices in 4 slices instead of 3.
-    type: Tweak
-  id: 7160
-  time: '2024-08-19T07:54:35.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31168
-- author: Beck Thompson
-  changes:
-  - message: Slightly increased the price of the seed restock.
-    type: Tweak
-  id: 7161
-  time: '2024-08-19T10:33:41.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31185
-- author: Boaz1111
-  changes:
-  - message: The HoS has been given a new experimental weapon:An energy shotgun with
-      multiple fire modes. This experimental tech is highly wanted by the syndicate,
-      and agents will try to steal it.
-    type: Add
-  - message: Removed the Head of Security's Emergency Orders.
-    type: Remove
-  id: 7162
-  time: '2024-08-19T11:14:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30643
-- author: tosatur
-  changes:
-  - message: Added more words to chat sanitisation
-    type: Tweak
-  id: 7163
-  time: '2024-08-19T14:03:07.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31085
 - author: tosatur
   changes:
   - message: Changed text for ghost visibility toggle
@@ -3920,3 +3872,38 @@
   id: 7658
   time: '2024-11-28T13:41:01.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33622
+- author: arimah
+  changes:
+  - message: GPS coordinates are now more readable.
+    type: Tweak
+  id: 7659
+  time: '2024-11-29T08:14:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33625
+- author: DrSmugleaf
+  changes:
+  - message: Added admin log for ghost warping.
+    type: Add
+  id: 7660
+  time: '2024-11-29T09:46:24.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33636
+- author: MossyGreySlope
+  changes:
+  - message: Rename the "slimeperson life support crate" to "internals crate (nitrogen)".
+    type: Tweak
+  id: 7661
+  time: '2024-11-29T12:51:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33545
+- author: GansuLalan
+  changes:
+  - message: The arrival shuttle will no longer smash the nuke
+    type: Fix
+  id: 7662
+  time: '2024-11-30T02:48:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33659
+- author: VlaDOS1408
+  changes:
+  - message: Locale to shuttle-ftl-status-Invalid
+    type: Add
+  id: 7663
+  time: '2024-11-30T02:54:37.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33651
