@@ -288,9 +288,7 @@ public sealed class WieldableSystem : EntitySystem
         if (ev.Cancelled)
             return false;
 
-        component.Wielded = false;
         var targEv = new ItemUnwieldedEvent(user);
-
         RaiseLocalEvent(used, targEv);
         return true;
     }
@@ -325,7 +323,7 @@ public sealed class WieldableSystem : EntitySystem
         }
 
         _appearance.SetData(uid, WieldableVisuals.Wielded, false);
-
+        component.Wielded = false;
         Dirty(uid, component);
         _virtualItemSystem.DeleteInHandsMatching(args.User.Value, uid);
     }
