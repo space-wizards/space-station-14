@@ -8,16 +8,16 @@ using Robust.Shared.Enums;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 using System.Linq;
-using Timer = Robust.Shared.Timing.Timer;
 
-namespace Content.Server.Administration;
+namespace Content.Server.Administration.Managers;
 
 /// <summary>
 ///     This manager sends a Discord webhook notification whenever a player with an active
 ///     watchlist joins the server.
 /// </summary>
-public sealed class WatchlistWebhookManager : IPostInjectInit
+public sealed class WatchlistWebhookManager : IWatchlistWebhookManager
 {
     [Dependency] private readonly IAdminNotesManager _adminNotes = default!;
     [Dependency] private readonly IBaseServer _baseServer = default!;
@@ -29,12 +29,15 @@ public sealed class WatchlistWebhookManager : IPostInjectInit
 
     private WebhookIdentifier? _webhookIdentifier;
     private List<WatchlistConnection> watchlistConnections = new();
-    // true when a timer is running for the currently buffered connections, and another should not be started
-    private bool buffering = false;
+    private TimeSpan _bufferTime;
+    private RStopwatch? _bufferingStopwatch;
 
-    void IPostInjectInit.PostInject()
+    public void Initialize()
     {
         _sawmill = Logger.GetSawmill("discord");
+
+        var bufferTimeSeconds = _cfg.GetCVar(CCVars.DiscordWatchlistConnectionBufferTime);
+        _bufferTime = TimeSpan.FromSeconds(bufferTimeSeconds);
 
         var webhook = _cfg.GetCVar(CCVars.DiscordWatchlistConnectionWebhook);
         if (!string.IsNullOrWhiteSpace(webhook))
@@ -56,15 +59,10 @@ public sealed class WatchlistWebhookManager : IPostInjectInit
 
         watchlistConnections.Add(new WatchlistConnection(e.Session.Name, watchlists));
 
-        var bufferTime = _cfg.GetCVar(CCVars.DiscordWatchlistConnectionBufferTime);
-
-        if (bufferTime > 0f)
+        if (_bufferTime > TimeSpan.Zero)
         {
-            if (!buffering)
-            {
-                Timer.Spawn((int)(bufferTime * 1000f), OnBufferTimeElapsed);
-                buffering = true;
-            }
+            if (_bufferingStopwatch == null)
+                _bufferingStopwatch = RStopwatch.StartNew();
         }
         else
         {
@@ -72,10 +70,13 @@ public sealed class WatchlistWebhookManager : IPostInjectInit
         }
     }
 
-    private void OnBufferTimeElapsed()
+    public void Update()
     {
-        buffering = false;
-        FlushConnections();
+        if (_bufferingStopwatch != null && ((RStopwatch)_bufferingStopwatch).Elapsed > _bufferTime)
+        {
+            FlushConnections();
+            _bufferingStopwatch = null;
+        }
     }
 
     private void FlushConnections()
