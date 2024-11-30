@@ -4,19 +4,19 @@ on:
   workflow_dispatch:
   schedule:
     - cron: 0 0 * * 0
-    
+
 jobs:
   get_credits:
     runs-on: ubuntu-latest
     # Hey there fork dev! If you like to include your own contributors in this then you can probably just change this to your own repo
     # Do this in dump_github_contributors.ps1 too into your own repo
     if: github.repository == 'space-wizards/space-station-14'
-    
+
     steps:
-      - uses: actions/checkout@v3.6.0
+      - uses: actions/checkout@v4.2.2
         with:
           ref: master
-        
+
       - name: Get this week's Contributors
         shell: pwsh
         env:
@@ -25,25 +25,25 @@ jobs:
 
       # TODO
       #- name: Get this week's Patreons
-      #  run: Tools/script2dumppatreons > Resources/Credits/Patrons.yml        
-      
+      #  run: Tools/script2dumppatreons > Resources/Credits/Patrons.yml
+
       # MAKE SURE YOU ENABLED "Allow GitHub Actions to create and approve pull requests" IN YOUR ACTIONS, OTHERWISE IT WILL MOST LIKELY FAIL
 
 
-      # For this you can use a pat token of an account with direct push access to the repo if you have protected branches. 
+      # For this you can use a pat token of an account with direct push access to the repo if you have protected branches.
       # Uncomment this and comment the other line if you do this.
       # https://github.com/stefanzweifel/git-auto-commit-action#push-to-protected-branches
-      
+
       #- name: Commit new credit files
       #  uses: stefanzweifel/git-auto-commit-action@v4
       #  with:
       #    commit_message: Update Credits
       #    commit_author: PJBot <pieterjan.briers+bot@gmail.com>
-      
+
       # This will make a PR
       - name: Set current date as env variable
         run: echo "NOW=$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_ENV
-        
+
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
