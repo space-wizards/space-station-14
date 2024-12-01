@@ -81810,7 +81810,7 @@ entities:
     - type: Transform
       pos: 74.3515,-18.443996
       parent: 8364
-- proto: GameMasterCircuitBoard
+- proto: DungeonMasterCircuitBoard
   entities:
   - uid: 27917
     components:

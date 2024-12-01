@@ -43402,7 +43402,7 @@ entities:
     - type: Transform
       pos: 57.63163,-13.7188425
       parent: 2
-- proto: GameMasterCircuitBoard
+- proto: DungeonMasterCircuitBoard
   entities:
   - uid: 14279
     components:

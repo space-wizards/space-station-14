@@ -91103,7 +91103,7 @@ entities:
     - type: Transform
       pos: 38.25496,16.711338
       parent: 2
-- proto: GameMasterCircuitBoard
+- proto: DungeonMasterCircuitBoard
   entities:
   - uid: 29445
     components:

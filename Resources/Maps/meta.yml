@@ -71743,7 +71743,7 @@ entities:
     - type: Transform
       pos: 18.561031,-31.757362
       parent: 5350
-- proto: GameMasterCircuitBoard
+- proto: DungeonMasterCircuitBoard
   entities:
   - uid: 26873
     components:
