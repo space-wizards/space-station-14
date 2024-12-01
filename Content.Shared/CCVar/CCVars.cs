@@ -1475,7 +1475,7 @@ namespace Content.Shared.CCVar
         /// The map to use for the ocean surface.
         /// </summary>
         public static readonly CVarDef<string> Arrivals2Map =
-            CVarDef.Create("shuttle.arrivals2_map", "/Maps/Misc/terminal.yml", CVar.SERVERONLY);
+            CVarDef.Create("shuttle.arrivals2_map", "/Maps/Misc/ocean.yml", CVar.SERVERONLY);
 
         /// <summary>
         /// Cooldown between arrivals departures. This should be longer than the FTL time or it will double cycle.

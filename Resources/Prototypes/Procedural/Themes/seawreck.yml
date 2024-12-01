@@ -1,0 +1,18 @@
+- type: entity
+  id: SeaWreckRoomMarker
+  name: Wreck marker
+  parent: BaseRoomMarker
+  suffix: Ocean Wrecks
+  components:
+  - type: RoomFill
+    roomWhitelist:
+      tags:
+        - SeaWreck
+
+- type: dungeonRoom
+  id: SeaWreck5x5a
+  size: 5,5
+  atlas: /Maps/Dungeon/seawreck.yml
+  offset: 0,0
+  tags:
+    - SeaWreck

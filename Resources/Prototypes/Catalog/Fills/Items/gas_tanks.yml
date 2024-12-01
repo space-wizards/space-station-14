@@ -142,7 +142,7 @@
         - 0 # water vapor
         - 0 # ammonia
         - 0.014251686 # 5% N2O
-        # 0.285033721       total 
+        # 0.285033721       total
       temperature: 293.15
 
 - type: entity
@@ -159,6 +159,30 @@
         - 0.451303391 # 22% oxygen
         - 1.600075659 # 78% nitrogen
         # 2.051379050       total
+      temperature: 293.15
+
+- type: entity
+  id: WaterTankFilled
+  name: water tank
+  parent: OxygenTank
+  suffix: Filled
+  components:
+  - type: GasTank
+    outputPressure: 21.3
+    air:
+      # 31 minutes
+      volume: 5
+      moles:
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 0
+        - 2.051379050 # oxygen
       temperature: 293.15
 
 - type: entity
