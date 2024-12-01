@@ -227,6 +227,19 @@
   id: SingularityTeslaEngine
   name: guide-entry-singularityteslaengine
   text: "/ServerInfo/Guidebook/Engineering/SingularityTeslaEngine.xml"
+  children:
+  - SingularityEngine
+  - TeslaEngine
+
+- type: guideEntry
+  id: SingularityEngine
+  name: guide-entry-singularityengine
+  text: "/ServerInfo/Guidebook/Engineering/SingularityEngine.xml"
+
+- type: guideEntry
+  id: TeslaEngine
+  name: guide-entry-teslaengine
+  text: "/ServerInfo/Guidebook/Engineering/TeslaEngine.xml"
 
 - type: guideEntry
   id: TEG
