@@ -15,6 +15,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Content.Shared.Eye.Blinding.Systems;
 
 namespace Content.Server.VentCraw
 {
@@ -28,6 +29,7 @@ namespace Content.Server.VentCraw
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly SharedMoverController _mover = default!;
+        [Dependency] private readonly BlindableSystem _blind = default!;
 
         public override void Initialize()
         {
@@ -220,6 +222,7 @@ namespace Content.Server.VentCraw
             _mover.SetRelay(entity, holder);
             ventCrawlerComponent.InTube = true;
             Dirty(entity, ventCrawlerComponent);
+            _blind.UpdateIsBlind(entity);
 
             return _ventCrawableSystemSystem.EnterTube(holder, uid, holderComponent);
         }
