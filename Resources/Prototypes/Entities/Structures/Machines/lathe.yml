@@ -291,6 +291,7 @@
     - LargeBeaker
     - Dropper
     - ClothingEyesGlassesChemical
+    - SGDRecipe #imp special
     dynamicRecipes:
       - PowerDrill
       - MiningDrill

@@ -14,3 +14,17 @@
   components:
     - type: Unborgable
   organ: Brain
+
+- type: trait
+  id: SGDrequired
+  name: trait-sgdrequired-name
+  description: trait-sgdrequired-desc
+  traitGear: ClothingNeckSGD
+  category: Disabilities
+  components:
+    - type: SpeechRequiresEquipment
+      equipment:
+        neck:
+          tags:
+            - SGD
+      failMessage: sgdrequired-cant-speak

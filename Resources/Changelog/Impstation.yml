@@ -1,39 +1,4 @@
 ﻿Entries:
-- author: AirFryerBuyOneGetOneFree
-  changes:
-  - message: Increase the Number of Items on a Burger Tower to 30
-    type: Tweak
-  id: 111
-  time: '2024-08-22T17:10:09.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/130
-- author: starlighthowls
-  changes:
-  - message: white whale fixes 3!
-    type: Fix
-  id: 112
-  time: '2024-08-22T17:10:17.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/131
-- author: Darkmajia
-  changes:
-  - message: new tiktok announcer + alert levels fixed + intern new alert levels
-    type: Add
-  id: 113
-  time: '2024-08-22T17:10:30.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/132
-- author: ultramario1998
-  changes:
-  - message: added train back in. fuck all yall
-    type: Tweak
-  id: 114
-  time: '2024-08-23T17:46:25.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/133
-- author: formlessnameless
-  changes:
-  - message: Boat changes, prototype ID fix for jukebox
-    type: Fix
-  id: 115
-  time: '2024-08-23T17:45:55.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/135
 - author: TGRCdev
   changes:
   - message: Fixed monkeys not being blinded when welding without a welding mask
@@ -4373,3 +4338,42 @@
   id: 610
   time: '2024-11-30T02:28:16.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/840
+- author: formlessnameless
+  changes:
+  - message: You now automatically stop at every intersection while ventcrawling to
+      make navigation easier.
+    type: Tweak
+  id: 611
+  time: '2024-11-30T12:51:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/839
+- author: AftrLite
+  changes:
+  - message: Ongoing resprites to a large amount of assets. Expect more palette parity
+      and 4:3 perspective matching.
+    type: Tweak
+  id: 612
+  time: '2024-11-30T22:53:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/823
+- author: widgetbeck
+  changes:
+  - message: Markings now support shaders. As an example, SlimeEyeGlow has been updated
+      to use this new functionality.
+    type: Add
+  id: 613
+  time: '2024-12-01T02:45:21.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/842
+- author: Sha-Seng
+  changes:
+  - message: Writing instruments (pens, crayons, etc) can now be stored in folders
+    type: Tweak
+  id: 614
+  time: '2024-12-01T06:54:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/854
+- author: kipdotnet, TGRCdev
+  changes:
+  - message: Added the SGD required trait, which limits your speech to only when youre
+      wearing a speech generating device.
+    type: Add
+  id: 615
+  time: '2024-12-01T07:20:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/855

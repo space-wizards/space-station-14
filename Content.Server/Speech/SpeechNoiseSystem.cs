@@ -7,6 +7,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Random;
+using Content.Shared.Chat;
 
 namespace Content.Server.Speech
 {
@@ -26,12 +27,20 @@ namespace Content.Server.Speech
 
         public SoundSpecifier? GetSpeechSound(Entity<SpeechComponent> ent, string message)
         {
-            if (ent.Comp.SpeechSounds == null)
+            // impstation edits
+            var protoId = ent.Comp.SpeechSounds;
+
+            // raise event for voice-changing equipment
+            var voiceEv = new TransformSpeakerVoiceEvent(ent);
+            RaiseLocalEvent(ent, voiceEv);
+            protoId = voiceEv.SpeechSounds ?? protoId;
+
+            if (protoId == null)
                 return null;
 
             // Play speech sound
             SoundSpecifier? contextSound;
-            var prototype = _protoManager.Index<SpeechSoundsPrototype>(ent.Comp.SpeechSounds);
+            var prototype = _protoManager.Index<SpeechSoundsPrototype>(protoId);
 
             // Different sounds for ask/exclaim based on last character
             contextSound = message[^1] switch

@@ -1,1 +1,1 @@
-{"license": "CC-BY-SA-3.0", "copyright": "https://github.com/tgstation/tgstation/commit/59f2a4e10e5ba36033c9734ddebfbbdc6157472d","version": 1, "size": {"x": 32, "y": 32}, "states": [{"name": "juicer0", "delays": [[1.0]]}, {"name": "juicer1", "delays": [[1.0]]}]}
+{"license": "CC-BY-SA-3.0", "copyright": "Taken from tgstation from https://github.com/tgstation/tgstation/pull/854914.","version": 1, "size": {"x": 32, "y": 32}, "states": [{"name": "juicer0", "delays": [[1.0]]}, {"name": "juicer1", "delays": [[1.0]]}]}

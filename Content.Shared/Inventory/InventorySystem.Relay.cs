@@ -37,6 +37,7 @@ public partial class InventorySystem
         SubscribeLocalEvent<InventoryComponent, GetDefaultRadioChannelEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, RefreshNameModifiersEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, TransformSpeakerNameEvent>(RelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, TransformSpeakerVoiceEvent>(RelayInventoryEvent); // impstation edit
         SubscribeLocalEvent<InventoryComponent, CheckMagicItemEvent>(RelayInventoryEvent); // goob edit
         SubscribeLocalEvent<InventoryComponent, SelfBeforeHyposprayInjectsEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, TargetBeforeHyposprayInjectsEvent>(RelayInventoryEvent);
