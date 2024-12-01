@@ -108,6 +108,7 @@
         node: start
       - !type:DoActsBehavior
         acts: ["Destruction"]
+  - type: FallSystem
 
 - type: entity
   id: MechRipley
@@ -381,7 +382,6 @@
     rules: ghost-role-information-mech-rules
   - type: GhostTakeoverAvailable
   - type: ComplexInteraction
-  - type: Climbing
   - type: MindContainer
     showExamineInfo: true
   - type: Strippable
@@ -424,4 +424,7 @@
   - type: SiliconLawProvider
     laws: MechLaws # Protocol 3: Protect the Pilot
   - type: SiliconLawBound
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
 
