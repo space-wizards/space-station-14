@@ -350,6 +350,7 @@
         whitelist:
           tags:
           - Document
+          - Write
   - type: Appearance
   - type: Tag
     tags:
