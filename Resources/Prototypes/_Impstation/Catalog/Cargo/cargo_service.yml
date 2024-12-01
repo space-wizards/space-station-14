@@ -7,3 +7,14 @@
   cost: 800
   category: cargoproduct-category-name-service
   group: market
+
+- type: cargoProduct
+  id: ServiceJanitorialHardsuit
+  icon:
+    sprite: Structures/Storage/Crates/trashcart_jani.rsi
+    state: icon
+  product: CrateServiceJanitorialHardsuit
+  cost: 5000
+  category: cargoproduct-category-name-service
+  group: market
+  

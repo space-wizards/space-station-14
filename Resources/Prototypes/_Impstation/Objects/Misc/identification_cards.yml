@@ -1,0 +1,12 @@
+- type: entity
+  parent: IDCardStandard
+  id: IDCardGoblinKnight
+  name: Sir Gollylad's ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: silver
+    - state: idpassenger
+  - type: PresetIdCard
+    job: Passenger
+    name: Sir Gollylad

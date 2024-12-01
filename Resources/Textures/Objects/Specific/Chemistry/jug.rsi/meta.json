@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Created by HoofedEar",
+  "copyright": "Inhand and inhand reagent sprites Created by HoofedEar. icon and reagent icon sprites taken from tgstation from https://github.com/tgstation/tgstation/pull/854914.",
   "size": {
     "x": 32,
     "y": 32
@@ -75,6 +75,12 @@
     },
     {
       "name": "jug6"
+    },
+    {
+      "name": "jug7"
+    },
+    {
+      "name": "jug8"
     }
   ]
 }

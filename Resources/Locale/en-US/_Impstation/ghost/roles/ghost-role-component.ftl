@@ -41,3 +41,7 @@ ghost-role-information-nonantagonist-freeagent-goblin-stowaway = You are a [colo
 ghost-role-information-goblin-knight-name = Sir Gollylad
 ghost-role-information-goblin-knight-description = You are Sir Gollylad, the most gallant and pure-of-heart among the Goblin Knights. Your charge is someone aboard the station. You forget who, exactly, so... Anyone will do. Find someone, and protect them with your life.
 
+ghost-role-information-goblin-castaway-name = Goblin Castaway
+
+ghost-role-information-dino-name = Dinosaur
+ghost-role-information-dino-description = A paleozoic soldier, ready to live or die for the Dino Wars.

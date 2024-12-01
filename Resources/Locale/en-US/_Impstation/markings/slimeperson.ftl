@@ -7,6 +7,9 @@ marking-SlimeMouth = Mouth
 marking-SlimeBrain-brain = Brain
 marking-SlimeBrain = Brain
 
+marking-SlimeEyeglow-eyeglow = Eye Glow
+marking-SlimeEyeglow = Eye Glow
+
 marking-SlimeCore-core = Core
 marking-SlimeCore = Core
 

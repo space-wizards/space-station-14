@@ -54,3 +54,6 @@ reagent-desc-thumperdrink = A delicious blend of fruit juice and liquor, from th
 
 reagent-name-thegrease = the grease
 reagent-desc-thegrease = A dubious liquid with a film on top, it looks homemade and.. Very greasy.
+
+reagent-name-clevergirl = clever girl
+reagent-desc-clevergirl = A sly and cunning cocktail, as brilliant as it is dangerous. Approach with caution, for it's smarter than you think.

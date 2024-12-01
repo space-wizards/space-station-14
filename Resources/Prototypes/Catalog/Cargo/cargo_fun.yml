@@ -231,7 +231,7 @@
 - type: cargoProduct
   id: FunLittleTykesCar
   icon:
-    sprite: Structures/Storage/closet.rsi
+    sprite: _Impstation/Objects/Storage/littlecar.rsi
     state: littletykescar
   product: BaseLittleTykesCar
   cost: 1500

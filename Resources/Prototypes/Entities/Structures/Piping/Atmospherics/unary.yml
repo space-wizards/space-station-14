@@ -28,6 +28,14 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: Weldable
+      time: 3
+    - type: VentCrawTube
+      containerId: VentCrawTube
+    - type: VentCrawEntry
+    - type: ContainerContainer
+      containers:
+        VentCrawTube: !type:Container
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
     - type: DeviceNetwork
@@ -67,7 +75,6 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_vent.ogg
-    - type: Weldable
 
 - type: entity
   parent: GasUnaryBase
@@ -77,6 +84,9 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: VentCrawTube
+      containerId: VentCrawTube
+    - type: VentCrawEntry
     - type: Sprite
       drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/vent.rsi
@@ -101,6 +111,14 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: Weldable
+      time: 3
+    - type: VentCrawTube
+      containerId: VentCrawTube
+    - type: VentCrawEntry
+    - type: ContainerContainer
+      containers:
+        VentCrawTube: !type:Container
     - type: ApcPowerReceiver
     - type: ExtensionCableReceiver
     - type: DeviceNetwork
@@ -140,7 +158,6 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_vent.ogg
-    - type: Weldable
 
 - type: entity
   parent: GasUnaryBase
@@ -180,6 +197,14 @@
       visibleLayers:
       - enum.SubfloorLayers.FirstLayer
       - enum.LightLayers.Unshaded
+    - type: VentCrawTube
+      containerId: VentCrawTube
+    - type: VentCrawJunction
+      degrees:
+        - 0
+    - type: ContainerContainer
+      containers:
+        VentCrawTube: !type:Container
 
 - type: entity
   parent: [ BaseMachinePowered, ConstructibleMachine ]
@@ -267,11 +292,6 @@
       prefix: device-address-prefix-freezer
     - type: StealTarget
       stealGroup: FreezerHeater
-    - type: LitOnPowered
-    - type: PointLight
-      radius: 1.5
-      energy: 1.5
-      color: "#47bfff"
 
 - type: entity
   parent: GasThermoMachineFreezer
@@ -324,11 +344,6 @@
       prefix: device-address-prefix-heater
     - type: StealTarget
       stealGroup: FreezerHeater
-    - type: LitOnPowered
-    - type: PointLight
-      radius: 1.5
-      energy: 1.5
-      color: "#ffc747"
 
 - type: entity
   parent: GasThermoMachineHeater

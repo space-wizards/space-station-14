@@ -44,9 +44,11 @@ public sealed partial class PropulsionState : ComponentState
         WalkSpeedModifier = comp.WalkSpeedModifier;
         SprintSpeedModifier = comp.SprintSpeedModifier;
         PredictIndex = comp.PredictIndex;
+        Whitelist = comp.Whitelist;
     }
 
     public float WalkSpeedModifier;
     public float SprintSpeedModifier;
     public byte PredictIndex;
+    public EntityWhitelist? Whitelist;
 }

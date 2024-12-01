@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/8442af39ee82b813194f71db82edd2923d97818d, watercooler Taken from paradise at https://github.com/ParadiseSS13/Paradise/commit/ae2258d9235752ac6d80ec11e36553fe3b6ae59e, dispensers taken from paradise at https://github.com/ParadiseSS13/Paradise/commit/846ce475b2258a4336d8895f07f2c0f4053963bc",
+  "copyright": "Tanks taken from Eris https://github.com/discordia-space/CEV-Eris/blob/master/icons/obj/objects.dmi, watercooler Taken from paradise at https://github.com/ParadiseSS13/Paradise/commit/ae2258d9235752ac6d80ec11e36553fe3b6ae59e, dispensers taken from paradise at https://github.com/ParadiseSS13/Paradise/commit/846ce475b2258a4336d8895f07f2c0f4053963bc",
   "size": {
     "x": 32,
     "y": 32
@@ -26,79 +26,43 @@
       "name": "watertank-2"
     },
     {
-      "name": "watertank-2-1"
+      "name": "tank-2-1"
     },
     {
-      "name": "watertank-2-2"
+      "name": "tank-2-2"
     },
     {
-      "name": "watertank-2-3"
+      "name": "tank-2-3"
     },
     {
-      "name": "watertank-2-4"
+      "name": "tank-2-4"
     },
     {
-      "name": "watertank-2-5"
+      "name": "tank-2-5"
     },
     {
       "name": "fueltank-2"
     },
     {
-      "name": "fueltank-2-1"
-    },
-    {
-      "name": "fueltank-2-2"
-    },
-    {
-      "name": "fueltank-2-3"
-    },
-    {
       "name": "highwatertank-2"
-    },
-    {
-      "name": "highwatertank-2-1"
-    },
-    {
-      "name": "highwatertank-2-2"
-    },
-    {
-      "name": "highwatertank-2-3"
-    },
-    {
-      "name": "highwatertank-2-4"
-    },
-    {
-      "name": "highwatertank-2-5"
-    },
-    {
-      "name": "highwatertank-2-6"
-    },
-    {
-      "name": "highwatertank-2-7"
     },
     {
       "name": "highfueltank-2"
     },
     {
-      "name": "highfueltank-2-1"
+      "name": "hightank-2-1"
     },
     {
-      "name": "highfueltank-2-2"
+      "name": "hightank-2-2"
     },
     {
-      "name": "highfueltank-2-3"
+      "name": "hightank-2-3"
     },
     {
-      "name": "highfueltank-2-4"
+      "name": "hightank-2-4"
     },
     {
-      "name": "highfueltank-2-5"
-    },
-    {
-      "name": "highfueltank-2-6"
-    },
-    {
-      "name": "highfueltank-2-7"
+      "name": "hightank-2-5"
     },
     {
       "name": "watercooler-2"

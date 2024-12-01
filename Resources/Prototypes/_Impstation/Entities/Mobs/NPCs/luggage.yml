@@ -2,7 +2,7 @@
   name: luggage
   parent: [SimpleSpaceMobBase, StripableInventoryBase]
   id: MobDiscworldLuggage
-  description: A chest made of sapient pearwood. Hundreds of little feet patter beneath it. It looks... Mischievous. 
+  description: A chest made of sapient pearwood. Hundreds of little feet patter beneath it. It looks... Mischievous.
   components:
   - type: GhostRole
     makeSentient: true
@@ -17,7 +17,7 @@
     canBeStripped: false
   - type: ComplexInteraction
   - type: Clumsy # tongue can't manipulate a trigger good
-    clumsyDamage:
+    gunShootFailDamage:
       types:
         Blunt: 50 # this is to further discourage the luggage from trying to shoot guns.
         Piercing: 5

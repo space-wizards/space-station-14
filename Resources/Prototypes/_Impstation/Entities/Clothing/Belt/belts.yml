@@ -32,3 +32,17 @@
         - DoorRemote
         - Whistle
         - BalloonPopper
+
+- type: entity
+  parent: ClothingBeltUtility
+  id: ClothingBeltUtilityBlack
+  name: black utility belt
+  description: Can hold various things. Dyed black for fashion.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Belt/utility_black.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Belt/utility_black.rsi
+  - type: Construction
+    graph: UtilityBlack
+    node: utilityBlack

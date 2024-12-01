@@ -1,0 +1,19 @@
+- type: cargoProduct
+  id: ArmoryMachinePistol
+  icon:
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/mk93.rsi
+    state: icon
+  product: CrateArmoryMachinePistol
+  cost: 7000
+  category: cargoproduct-category-name-armory
+  group: market
+
+- type: cargoProduct
+  id: ArmoryBurstPistol
+  icon:
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/mk92hb.rsi
+    state: icon
+  product: CrateArmoryBurstPistol
+  cost: 7000
+  category: cargoproduct-category-name-armory
+  group: market

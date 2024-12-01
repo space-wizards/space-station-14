@@ -862,6 +862,7 @@
   id: MobCrab
   description: A folk legend goes around that his claw snaps spacemen out of existence over distasteful remarks. Be polite and tolerant for your own safety.
   components:
+  - type: VentCrawler
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -1226,6 +1227,7 @@
   description: The genetic bipedal ancestor of... Uh... Something. Yeah, there's definitely something on the station that descended from whatever this is.
   abstract: true
   components:
+  - type: VentCrawler
   - type: CombatMode
   - type: Inventory
     templateId: monkey
@@ -1361,7 +1363,7 @@
     rules: ghost-role-information-nonantagonist-rules
   - type: GhostTakeoverAvailable
   - type: Clumsy
-    clumsyDamage:
+    gunShootFailDamage:
       types:
         Blunt: 5
         Piercing: 4
@@ -1406,7 +1408,8 @@
   parent: MobBaseSyndicateMonkey
   suffix: syndicate agent
   components:
-    # make the player a traitor once its taken
+  - type: VentCrawler
+  # make the player a traitor once its taken
   - type: AutoTraitor
     profile: TraitorReinforcement
 
@@ -1537,7 +1540,7 @@
   description: Cousins to the sentient race of lizard people, kobolds blend in with their natural habitat and are as nasty as monkeys; ready to pull out your hair and stab you to death.
   components:
   - type: Clumsy
-    clumsyDamage:
+    gunShootFailDamage:
       types:
         Blunt: 2
         Piercing: 7
@@ -1593,6 +1596,7 @@
   id: MobMouse
   description: Squeak!
   components:
+  - type: VentCrawler
   - type: Body
     prototype: Mouse
   - type: GhostRole
@@ -1758,6 +1762,9 @@
       Taco: RatTaco
       Burger: RatBurger
       Skewer: RatSkewer
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Mouse
 
 - type: entity
   parent: MobMouse
@@ -1957,6 +1964,7 @@
   id: MobSlug
   description: And they called this a lizard?
   components:
+  - type: VentCrawler
   - type: MovementSpeedModifier
     baseWalkSpeed : 2
     baseSprintSpeed : 3
@@ -2004,6 +2012,7 @@
   id: MobFrog
   description: Hop hop hop. Lookin' moist.
   components:
+  - type: VentCrawler
   - type: MovementSpeedModifier
     baseWalkSpeed: 3
     baseSprintSpeed: 6
@@ -2252,6 +2261,7 @@
   id: MobSnake
   description: Hissss! Bites aren't poisonous.
   components:
+  - type: VentCrawler
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -2301,6 +2311,7 @@
   id: MobGiantSpider
   description: Widely recognized to be the literal worst thing in existence.
   components:
+  - type: VentCrawler
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -2828,6 +2839,7 @@
   id: MobCorgiPuppy
   description: A little corgi! Aww...
   components:
+  - type: VentCrawler
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/corgi.rsi
@@ -3191,6 +3203,7 @@
   id: MobHamster
   description: A cute, fluffy, robust hamster.
   components:
+  - type: VentCrawler
   - type: GhostRole
     makeSentient: true
     allowSpeech: true
@@ -3471,6 +3484,7 @@
     tags:
     - DoorBumpOpener
     - VimPilot
+    - DionaMinded
   - type: Emoting
   - type: BodyEmotes
     soundsId: Nymph

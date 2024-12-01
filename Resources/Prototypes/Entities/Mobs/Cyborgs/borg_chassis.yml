@@ -1,23 +1,22 @@
 - type: entity
-  id: BorgChassisGeneric
+  id: BorgChassisSelectable
   parent: BaseBorgChassisNT
   components:
   - type: Sprite
     layers:
     - state: robot
+      map: ["enum.BorgVisualLayers.Body", "movement"]
     - state: robot_e_r
       map: ["enum.BorgVisualLayers.Light"]
       shader: unshaded
       visible: false
     - state: robot_l
       shader: unshaded
-      map: ["light"]
+      map: ["light","enum.BorgVisualLayers.LightStatus"]
       visible: false
   - type: BorgChassis
-    maxModules: 6
-    moduleWhitelist:
-      tags:
-      - BorgModuleGeneric
+    # Default borg can take no modules until selected type.
+    maxModules: 0
     hasMindState: robot_e
     noMindState: robot_e_r
   - type: BorgTransponder
@@ -25,308 +24,62 @@
       sprite: Mobs/Silicon/chassis.rsi
       state: robot
     name: cyborg
-  - type: Construction
-    node: cyborg
-  - type: Speech
-    speechVerb: Robotic
   - type: InteractionPopup
     interactSuccessString: petting-success-generic-cyborg
     interactFailureString: petting-failure-generic-cyborg
-    interactSuccessSound:
-      path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: BorgSwitchableType
+    inherentRadioChannels:
+    - Common
+    - Binary
+
+- type: entity
+  id: BorgChassisGeneric
+  parent: BorgChassisSelectable
+  name: generic cyborg
+  suffix: type picked
+  components:
+  - type: BorgSwitchableType
+    selectedBorgType: generic
 
 - type: entity
   id: BorgChassisMining
-  parent: BaseBorgChassisNT
+  parent: BorgChassisSelectable
   name: salvage cyborg
   components:
-  - type: Sprite
-    layers:
-    - state: miner
-      map: ["movement"]
-    - state: miner_e_r
-      map: ["enum.BorgVisualLayers.Light"]
-      shader: unshaded
-      visible: false
-    - state: miner_l
-      shader: unshaded
-      map: ["light"]
-      visible: false
-  - type: SpriteMovement
-    movementLayers:
-      movement:
-        state: miner_moving
-    noMovementLayers:
-      movement:
-        state: miner
-  - type: BorgChassis
-    maxModules: 4
-    moduleWhitelist:
-      tags:
-      - BorgModuleGeneric
-      - BorgModuleCargo
-    hasMindState: miner_e
-    noMindState: miner_e_r
-  - type: BorgTransponder
-    sprite:
-      sprite: Mobs/Silicon/chassis.rsi
-      state: miner
-    name: salvage cyborg
-  - type: Construction
-    node: mining
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Supply
-    - Binary
-    - Common
-    - Science
-  - type: ActiveRadio
-    channels:
-    - Supply
-    - Binary
-    - Common
-    - Science
-  - type: AccessReader
-    access: [["Cargo"], ["Salvage"], ["Command"], ["Research"]]
-  - type: Inventory
-    templateId: borgTall
-  - type: InteractionPopup
-    interactSuccessString: petting-success-salvage-cyborg
-    interactFailureString: petting-failure-salvage-cyborg
-    interactSuccessSound:
-      path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: BorgSwitchableType
+    selectedBorgType: mining
 
 - type: entity
   id: BorgChassisEngineer
-  parent: BaseBorgChassisNT
+  parent: BorgChassisSelectable
   name: engineer cyborg
   components:
-  - type: Sprite
-    layers:
-    - state: engineer
-    - state: engineer_e_r
-      map: ["enum.BorgVisualLayers.Light"]
-      shader: unshaded
-      visible: false
-    - state: engineer_l
-      shader: unshaded
-      map: ["light"]
-      visible: false
-  - type: BorgChassis
-    maxModules: 4
-    moduleWhitelist:
-      tags:
-      - BorgModuleGeneric
-      - BorgModuleEngineering
-    hasMindState: engineer_e
-    noMindState: engineer_e_r
-  - type: BorgTransponder
-    sprite:
-      sprite: Mobs/Silicon/chassis.rsi
-      state: engineer
-    name: engineer cyborg
-  - type: Construction
-    node: engineer
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Engineering
-    - Binary
-    - Common
-    - Science
-  - type: ActiveRadio
-    channels:
-    - Engineering
-    - Binary
-    - Common
-    - Science
-  - type: AccessReader
-    access: [["Engineering"], ["Command"], ["Research"]]
-  - type: Inventory
-    templateId: borgShort
-  - type: InteractionPopup
-    interactSuccessString: petting-success-engineer-cyborg
-    interactFailureString: petting-failure-engineer-cyborg
-    interactSuccessSound:
-      path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: BorgSwitchableType
+    selectedBorgType: engineering
 
 - type: entity
   id: BorgChassisJanitor
-  parent: BaseBorgChassisNT
+  parent: BorgChassisSelectable
   name: janitor cyborg
   components:
-  - type: Sprite
-    layers:
-    - state: janitor
-      map: ["movement"]
-    - state: janitor_e_r
-      map: ["enum.BorgVisualLayers.Light"]
-      shader: unshaded
-      visible: false
-    - state: janitor_l
-      shader: unshaded
-      map: ["light"]
-      visible: false
-  - type: SpriteMovement
-    movementLayers:
-      movement:
-        state: janitor_moving
-    noMovementLayers:
-      movement:
-        state: janitor
-  - type: BorgChassis
-    maxModules: 4
-    moduleWhitelist:
-      tags:
-      - BorgModuleGeneric
-      - BorgModuleJanitor
-    hasMindState: janitor_e
-    noMindState: janitor_e_r
-  - type: BorgTransponder
-    sprite:
-      sprite: Mobs/Silicon/chassis.rsi
-      state: janitor
-    name: janitor cyborg
-  - type: Construction
-    node: janitor
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Service
-    - Binary
-    - Common
-    - Science
-  - type: ActiveRadio
-    channels:
-    - Service
-    - Binary
-    - Common
-    - Science
-  - type: AccessReader
-    access: [["Service"], ["Command"], ["Research"]]
-  - type: Inventory
-    templateId: borgShort
-  - type: InteractionPopup
-    interactSuccessString: petting-success-janitor-cyborg
-    interactFailureString: petting-failure-janitor-cyborg
-    interactSuccessSound:
-      path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: BorgSwitchableType
+    selectedBorgType: janitor
 
 - type: entity
   id: BorgChassisMedical
-  parent: [BaseBorgChassisNT, ShowMedicalIcons]
+  parent: BorgChassisSelectable
   name: medical cyborg
   components:
-  - type: Sprite
-    layers:
-    - state: medical
-      map: ["movement"]
-    - state: medical_e_r
-      map: ["enum.BorgVisualLayers.Light"]
-      shader: unshaded
-      visible: false
-    - state: medical_l
-      shader: unshaded
-      map: ["light"]
-      visible: false
-  - type: SpriteMovement
-    movementLayers:
-      movement:
-        state: medical_moving
-    noMovementLayers:
-      movement:
-        state: medical
-  - type: BorgChassis
-    maxModules: 4
-    moduleWhitelist:
-      tags:
-      - BorgModuleGeneric
-      - BorgModuleMedical
-    hasMindState: medical_e
-    noMindState: medical_e_r
-  - type: BorgTransponder
-    sprite:
-      sprite: Mobs/Silicon/chassis.rsi
-      state: medical
-    name: medical cyborg
-  - type: Construction
-    node: medical
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Medical
-    - Binary
-    - Common
-    - Science
-  - type: ActiveRadio
-    channels:
-    - Medical
-    - Binary
-    - Common
-    - Science
-  - type: AccessReader
-    access: [["Medical"], ["Command"], ["Research"]]
-  - type: Inventory
-    templateId: borgDutch
-  - type: FootstepModifier
-    footstepSoundCollection:
-      collection: FootstepHoverBorg
-  - type: SolutionScanner
-  - type: InteractionPopup
-    interactSuccessString: petting-success-medical-cyborg
-    interactFailureString: petting-failure-medical-cyborg
-    interactSuccessSound:
-      path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: BorgSwitchableType
+    selectedBorgType: medical
 
 - type: entity
   id: BorgChassisService
-  parent: BaseBorgChassisNT
+  parent: BorgChassisSelectable
   name: service cyborg
   components:
-  - type: Sprite
-    layers:
-    - state: service
-    - state: service_e_r
-      map: ["enum.BorgVisualLayers.Light"]
-      shader: unshaded
-      visible: false
-    - state: service_l
-      shader: unshaded
-      map: ["light"]
-      visible: false
-  - type: BorgChassis
-    maxModules: 4
-    moduleWhitelist:
-      tags:
-      - BorgModuleGeneric
-      - BorgModuleService
-    hasMindState: service_e
-    noMindState: service_e_r
-  - type: BorgTransponder
-    sprite:
-      sprite: Mobs/Silicon/chassis.rsi
-      state: service
-    name: service cyborg
-  - type: Construction
-    node: service
-  - type: IntrinsicRadioTransmitter
-    channels:
-    - Service
-    - Binary
-    - Common
-    - Science
-  - type: ActiveRadio
-    channels:
-    - Service
-    - Binary
-    - Common
-    - Science
-  - type: AccessReader
-    access: [["Service"], ["Command"], ["Research"]]
-  - type: Inventory
-    templateId: borgTall
-  - type: InteractionPopup
-    interactSuccessString: petting-success-service-cyborg
-    interactFailureString: petting-failure-service-cyborg
-    interactSuccessSound:
-      path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: BorgSwitchableType
+    selectedBorgType: service
 
 - type: entity
   id: BorgChassisCargo
@@ -415,8 +168,6 @@
           - BorgModuleSyndicateAssault
       hasMindState: synd_sec_e
       noMindState: synd_sec
-    - type: Construction
-      node: syndicateassault
     - type: InteractionPopup
       interactSuccessString: petting-success-syndicate-cyborg
       interactFailureString: petting-failure-syndicate-cyborg
@@ -449,8 +200,6 @@
           - BorgModuleSyndicate
       hasMindState: synd_medical_e
       noMindState: synd_medical
-    - type: Construction
-      node: syndicatemedical
     - type: ShowHealthBars
     - type: InteractionPopup
       interactSuccessString: petting-success-syndicate-cyborg
@@ -490,8 +239,6 @@
           - BorgModuleSyndicate
       hasMindState: synd_engi_e
       noMindState: synd_engi
-    - type: Construction
-      node: syndicatesaboteur
     - type: ShowHealthBars
       damageContainers:
       - Inorganic

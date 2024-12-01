@@ -35,6 +35,9 @@
       cpu_supply: "#A46106"
   - type: StaticPrice
     price: 250
+  - type: Tag
+    tags:
+    - DroneUsable
 
 - type: entity
   parent: BaseFlatpack
@@ -219,9 +222,18 @@
 
 - type: entity
   parent: BaseFlatpack
-  id: ChemMasterFlatpack
-  name: ChemMaster 4000 flatpack
-  description: A flatpack used for constructing a ChemMaster 4000.
+  id: CrewMonitoringServerFlatpack
+  name: crew monitoring server flatpack
+  description: A flatpack used for constructing a crew monitoring server.
   components:
   - type: Flatpack
-    entity: ChemMaster
+    entity: CrewMonitoringServer
+
+- type: entity
+  parent: BaseFlatpack
+  id: CrewMonitoringComputerFlatpack
+  name: crew monitoring computer flatpack
+  description: A flatpack used for constructing a crew monitoring console.
+  components:
+  - type: Flatpack
+    entity: ComputerCrewMonitoring

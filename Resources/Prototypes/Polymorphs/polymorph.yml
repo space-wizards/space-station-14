@@ -235,15 +235,18 @@
     revertOnCrit: false
     revertOnDeath: false
 
-# Polymorph for juice that makes you UNGH
+# Temporary Jaunt
+# Don't make permanent jaunts until action system can be reworked to allow do afters and cooldown pausing
 - type: polymorph
-  id: PolymorphBros
+  id: Jaunt
   configuration:
-    entity: MobBrosPoly
-    forced: true
+    entity: EtherealJaunt
     transferName: true
-    transferHumanoidAppearance: true
     inventory: None
+    forced: true
     revertOnDeath: true
     revertOnCrit: true
-    duration: 20
+    allowRepeatedMorphs: false
+    polymorphSound: /Audio/Magic/ethereal_enter.ogg
+    exitPolymorphSound: /Audio/Magic/ethereal_exit.ogg
+    duration: 3
