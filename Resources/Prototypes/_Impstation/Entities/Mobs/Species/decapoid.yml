@@ -42,8 +42,8 @@
     - map: [ "enum.HumanoidVisualLayers.Eyes" ]
     - map: [ "enum.HumanoidVisualLayers.RArm" ]
     - map: [ "enum.HumanoidVisualLayers.LArm" ]
-    - map: [ "enum.HumanoidVisualLayers.RHand" ] # not default
     - map: [ "jumpsuit" ] # not default
+    - map: [ "enum.HumanoidVisualLayers.RHand" ] # not default
     - map: [ "gloves" ]
     - map: [ "shoes" ]
     - map: [ "ears" ]
@@ -203,15 +203,15 @@
     - map: [ "enum.HumanoidVisualLayers.RLeg" ] # this is the back legs
     - map: [ "enum.HumanoidVisualLayers.Chest" ]
     - map: [ "enum.HumanoidVisualLayers.Head" ]
-    - map: [ "enum.HumanoidVisualLayers.Snout" ]
     - map: [ "enum.HumanoidVisualLayers.Eyes" ]
     - map: [ "enum.HumanoidVisualLayers.RArm" ]
     - map: [ "enum.HumanoidVisualLayers.LArm" ]
-    - map: [ "enum.HumanoidVisualLayers.RHand" ] # not default
     - map: [ "jumpsuit" ] # not default
+    - map: [ "enum.HumanoidVisualLayers.RHand" ] # not default
     - map: [ "gloves" ]
     - map: [ "shoes" ]
     - map: [ "ears" ]
+    - map: [ "enum.HumanoidVisualLayers.Snout" ] # not default
     - map: [ "outerClothing" ]
     - map: [ "eyes" ]
     - map: [ "belt" ]
@@ -227,8 +227,8 @@
     - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
     - map: [ "suitstorage" ] # This is not in the default order. - inherited from vox
     - map: [ "enum.HumanoidVisualLayers.Tail" ]
-    - map: [ "mask" ]
     - map: [ "head" ]
+    - map: [ "mask" ]
     - map: [ "pocket1" ]
     - map: [ "pocket2" ]
     - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
