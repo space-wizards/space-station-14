@@ -2,7 +2,7 @@
   parent: ClothingNeckBase
   id: ClothingNeckMTVvocalizer
   name: mind-to-voice translator
-  description: A brainwave translator that allows people who rely on one to speak aloud. It won't work on anyone without the nessecary surgeries.
+  description: A brainwave translator that allows people who rely on one to speak aloud. It won't work for anyone without the nessecary surgeries.
   components:
   - type: Item
     size: Small
