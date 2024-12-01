@@ -702,6 +702,9 @@
   id: Haunted
 
 - type: Tag
+  id: SeaWreck
+
+- type: Tag
   id: Head
 
 - type: Tag

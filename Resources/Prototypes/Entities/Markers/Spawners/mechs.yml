@@ -25,3 +25,17 @@
   - type: ConditionalSpawner
     prototypes:
       - MechHonkerBattery
+
+- type: entity
+  name: Rotund Stepfather Spawner
+  id: SpawnMechStepfather
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Specific/Mech/mecha.rsi
+        state: ripley
+  - type: ConditionalSpawner
+    prototypes:
+      - MechStepfather

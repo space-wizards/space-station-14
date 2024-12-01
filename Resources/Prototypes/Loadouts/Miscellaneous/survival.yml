@@ -211,6 +211,46 @@
   - !type:GroupLoadoutEffect
     proto: EffectSpeciesVox
 
+
+- type: loadoutEffectGroup
+  id: EffectSpeciesJellid
+  effects:
+  - !type:SpeciesLoadoutEffect
+    species:
+    - JellidPerson
+
+- type: loadout
+  id: LoadoutSpeciesEVAWater
+  equipment: GearEVAWater
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: EffectSpeciesJellid
+
+- type: startingGear
+  id: GearEVAWater
+  equipment:
+    suitstorage: WaterTankFilled
+
+- type: loadout
+  id: LoadoutSpeciesBreathToolJellid
+  equipment: GearSpeciesBreathTool
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: EffectSpeciesJellid
+
+- type: startingGear
+  id: GearSpeciesBreathToolJellid
+  equipment:
+    mask: ClothingMaskBreath
+
+# Tank Harness
+- type: loadout
+  id: LoadoutTankHarnessJellid
+  equipment: GearTankHarness
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: EffectSpeciesJellid
+
 - type: startingGear
   id: GearTankHarness
   equipment:
