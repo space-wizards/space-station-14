@@ -33,6 +33,7 @@
     ears: ClothingHeadsetBrigmedic
     neck: ClothingNeckTieRed
     pocket1: WeaponPistolMk58
+    pocket2: HandheldBrigmedicCrewMonitor
     mask: ClothingMaskBreathMedicalSecurity
     id: BrigmedicPDA
     gloves: ClothingHandsGlovesNitrile
