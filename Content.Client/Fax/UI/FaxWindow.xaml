@@ -76,7 +76,7 @@
             VerticalExpand="True">
 
             <!-- Other actions -->
-            <BoxContainer SeparationOverride="-1">
+            <BoxContainer>
 
                 <!-- Print local file -->
                 <Button Name="FileButton"
