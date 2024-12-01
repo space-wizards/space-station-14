@@ -34,3 +34,5 @@ Lupino - Debugging, General help
 McJak - Music
 
 Målingen - Spriting, Lore help, General help
+
+Piss Wizard - Jellid concept
