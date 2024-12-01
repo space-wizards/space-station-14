@@ -58,16 +58,10 @@
   ## Operation
   To start the AME, insert a fuel jar, set the fuel rate to [color=#a4885c]twice the core count or less[/color], and turn on injection.
 
-  For example, an AME with one core will have a proper injection rate of 2. With two cores, the injection rate would be 4, and so on.
+  For example, an AME with one core will have a safe injection rate of 2. With two cores, the safe injection rate would be 4, and so on.
 
   Any more than this ratio will eventually result in the engine [color=#ff0000]overheating[/color] and, shortly afterwards, [color=#ff0000]exploding[/color].
 
   The AME controller will report on both the amount of power it is providing to the grid, and the theoretical maximum power it could provide if demanded.
-
-  ## Upgrades
-  You can upgrade the AME by installing more cores, which can be done by ordering more AME shielding flatpacks from [color=#a4885c]Cargo[/color], and adding them to the existing AME configuration.
-
-  The more cores you have, the more power the AME can output.
-  However, extreme AME upgrades are generally not recommended due to diminishing returns in power generation.
 
 </Document>
