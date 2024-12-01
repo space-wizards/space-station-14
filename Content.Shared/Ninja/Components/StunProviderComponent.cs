@@ -46,16 +46,16 @@ public sealed partial class StunProviderComponent : Component
     };
 
     /// <summary>
-    /// Time that someone is stunned for, stacks if done multiple times.
+    /// Time that someone is stunned for, stacks if done multiple times. Harmony: Reduced to fit flash stun time
     /// </summary>
     [DataField]
-    public TimeSpan StunTime = TimeSpan.FromSeconds(1.5); /// Harmony: Reduced to fit flash stun time
+    public TimeSpan StunTime = TimeSpan.FromSeconds(1.5);
 
     /// <summary>
-    /// How long stunning is disabled after stunning something.
+    /// How long stunning is disabled after stunning something. Harmony: Stun cooldown made to prevent stunlocking
     /// </summary>
     [DataField]
-    public TimeSpan Cooldown = TimeSpan.FromSeconds(2); /// Harmony: Stun cooldown made to prevent stunlocking
+    public TimeSpan Cooldown = TimeSpan.FromSeconds(2);
 
     /// <summary>
     /// ID of the cooldown use delay.
