@@ -11,7 +11,15 @@
       "name": "borg_l_arm"
     },
     {
-      "name": "borg_r_arm"
+        "name": "borg_r_arm"
+    },
+    {
+      "name": "borg-arm-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "borg-arm-inhand-right",
+      "directions": 4
     },
     {
       "name": "borg_l_leg"
@@ -20,10 +28,34 @@
       "name": "borg_r_leg"
     },
     {
+      "name": "borg-leg-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "borg-leg-inhand-right",
+      "directions": 4
+    },
+    {
       "name": "borg_chest"
     },
     {
+      "name": "borg-chest-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "borg-chest-inhand-right",
+      "directions": 4
+    },
+    {
       "name": "borg_head"
+    },
+    {
+      "name": "borg-head-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "borg-head-inhand-right",
+      "directions": 4
     },
     {
       "name": "robo_suit"
