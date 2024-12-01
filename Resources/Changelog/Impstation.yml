@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ultramario1998
-  changes:
-  - message: added train back in. fuck all yall
-    type: Tweak
-  id: 114
-  time: '2024-08-23T17:46:25.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/133
 - author: formlessnameless
   changes:
   - message: Boat changes, prototype ID fix for jukebox
@@ -4376,3 +4369,10 @@
   id: 613
   time: '2024-12-01T02:45:21.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/842
+- author: Sha-Seng
+  changes:
+  - message: Writing instruments (pens, crayons, etc) can now be stored in folders
+    type: Tweak
+  id: 614
+  time: '2024-12-01T06:54:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/854
