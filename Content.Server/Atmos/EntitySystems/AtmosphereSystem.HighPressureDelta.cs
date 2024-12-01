@@ -120,9 +120,7 @@ namespace Content.Server.Atmos.EntitySystems
                 }
 
                 if (curTile != tile)
-                    tile.
-            if (!SpaceWind)
-                return;PressureSpecificTarget = curTile;
+                    tile.PressureSpecificTarget = curTile;
             }
 
             _entSet.Clear();
