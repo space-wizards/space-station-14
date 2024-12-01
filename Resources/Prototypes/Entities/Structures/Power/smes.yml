@@ -117,8 +117,8 @@
   suffix: Advanced, 30MJ
   components:
   - type: Battery
-    maxCharge: 30000000
-    startingCharge: 30000000
+    maxCharge: 100000000
+    startingCharge: 100000000
   - type: Fixtures
     fixtures:
       fix1:

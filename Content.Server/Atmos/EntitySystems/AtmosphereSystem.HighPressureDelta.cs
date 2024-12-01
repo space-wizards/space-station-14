@@ -14,7 +14,7 @@ namespace Content.Server.Atmos.EntitySystems
 {
     public sealed partial class AtmosphereSystem
     {
-        private const int SpaceWindSoundCooldownCycles = 75;
+        private const int SpaceWindSoundCooldownCycles = 1000;
 
         private int _spaceWindSoundCooldown = 0;
 

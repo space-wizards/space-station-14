@@ -388,7 +388,7 @@
         damage:
           types:
             Cold:
-              15
+              30
       - !type:PopupMessage
         type: Local
         messages: [ "water-in-lungs" ]
