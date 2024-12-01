@@ -52,6 +52,11 @@
 
 - type: latheRecipe
   parent: BaseLightRecipe
+  id: DimLightBulb
+  result: DimLightBulb
+
+- type: latheRecipe
+  parent: BaseLightRecipe
   id: GlowstickRed
   result: GlowstickRed
   materials:
