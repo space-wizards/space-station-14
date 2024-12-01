@@ -300,8 +300,6 @@ public sealed class WieldableSystem : EntitySystem
         var targEv = new ItemWieldedEvent();
         RaiseLocalEvent(entity, ref targEv);
 
-        Dirty(entity, entity.Comp);
-
         if (TryComp<ItemComponent>(entity, out var itemComponent))
         {
             entity.Comp.OldInhandPrefix = itemComponent.HeldPrefix;
@@ -309,6 +307,7 @@ public sealed class WieldableSystem : EntitySystem
         }
 
         entity.Comp.Wielded = true;
+        Dirty(entity, entity.Comp);
 
         if (entity.Comp.WieldSound != null)
             _audioSystem.PlayPredicted(entity.Comp.WieldSound, entity, user);
