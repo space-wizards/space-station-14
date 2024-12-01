@@ -10,6 +10,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using System.Linq;
+using System.Text;
 
 namespace Content.Server.Administration.Managers;
 
@@ -95,13 +96,13 @@ public sealed class WatchlistWebhookManager : IWatchlistWebhookManager
             if (_webhookIdentifier == null)
                 return;
 
-            var message = Loc.GetString("discord-watchlist-connection-header",
+            var messageBuilder = new StringBuilder(Loc.GetString("discord-watchlist-connection-header",
                     ("players", watchlistConnections.Count),
-                    ("serverName", _baseServer.ServerName));
+                    ("serverName", _baseServer.ServerName)));
 
             foreach (var connection in watchlistConnections)
             {
-                message += '\n';
+                messageBuilder.Append('\n');
 
                 var watchlist = connection.Watchlists.First();
                 var expiry = watchlist.ExpirationTime?.ToUnixTimeSeconds();
@@ -110,39 +111,39 @@ public sealed class WatchlistWebhookManager : IWatchlistWebhookManager
                 {
                     if (connection.Watchlists.Count == 1)
                     {
-                        message += Loc.GetString("discord-watchlist-connection-entry",
+                        messageBuilder.Append(Loc.GetString("discord-watchlist-connection-entry",
                             ("playerName", connection.PlayerName),
-                            ("message", watchlist.Message));
+                            ("message", watchlist.Message)));
                     }
                     else
                     {
-                        message += Loc.GetString("discord-watchlist-connection-entry-more",
+                        messageBuilder.Append(Loc.GetString("discord-watchlist-connection-entry-more",
                             ("playerName", connection.PlayerName),
                             ("message", watchlist.Message),
-                            ("otherWatchlists", connection.Watchlists.Count - 1));
+                            ("otherWatchlists", connection.Watchlists.Count - 1)));
                     }
                 }
                 else
                 {
                     if (connection.Watchlists.Count == 1)
                     {
-                        message += Loc.GetString("discord-watchlist-connection-entry-expires",
+                        messageBuilder.Append(Loc.GetString("discord-watchlist-connection-entry-expires",
                             ("playerName", connection.PlayerName),
                             ("expiry", expiry),
-                            ("message", watchlist.Message));
+                            ("message", watchlist.Message)));
                     }
                     else
                     {
-                        message += Loc.GetString("discord-watchlist-connection-entry-expires-more",
+                        messageBuilder.Append(Loc.GetString("discord-watchlist-connection-entry-expires-more",
                             ("playerName", connection.PlayerName),
                             ("expiry", expiry),
                             ("message", watchlist.Message),
-                            ("otherWatchlists", connection.Watchlists.Count - 1));
+                            ("otherWatchlists", connection.Watchlists.Count - 1)));
                     }
                 }
             }
 
-            var payload = new WebhookPayload { Content = message };
+            var payload = new WebhookPayload { Content = messageBuilder.ToString() };
 
             await _discord.CreateMessage(_webhookIdentifier.Value, payload);
         }
