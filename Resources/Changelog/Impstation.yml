@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TGRCdev
-  changes:
-  - message: Fixed monkeys not being blinded when welding without a welding mask
-    type: Tweak
-  id: 116
-  time: '2024-08-23T17:46:14.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/136
 - author: ultramario1998
   changes:
   - message: readded and rerotated Atlas, Saltern, and Cluster
@@ -4377,3 +4370,14 @@
   id: 615
   time: '2024-12-01T07:20:55.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/855
+- author: TGRCdev
+  changes:
+  - message: Vent crawling takes 5 seconds by default
+    type: Tweak
+  - message: Vent crawling now blinds you while you're inside of a vent
+    type: Tweak
+  - message: Contortionist's jumpsuit is now 9 TC, and cannot be discounted
+    type: Tweak
+  id: 616
+  time: '2024-12-01T08:13:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/852
