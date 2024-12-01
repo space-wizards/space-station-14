@@ -24,6 +24,7 @@ public sealed class WatchlistWebhookManager : IWatchlistWebhookManager
     [Dependency] private readonly IBaseServer _baseServer = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly DiscordWebhook _discord = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
     private ISawmill _sawmill = default!;
@@ -31,7 +32,7 @@ public sealed class WatchlistWebhookManager : IWatchlistWebhookManager
     private WebhookIdentifier? _webhookIdentifier;
     private List<WatchlistConnection> watchlistConnections = new();
     private TimeSpan _bufferTime;
-    private RStopwatch? _bufferingStopwatch;
+    private TimeSpan? _bufferStartTime;
 
     public void Initialize()
     {
@@ -62,8 +63,8 @@ public sealed class WatchlistWebhookManager : IWatchlistWebhookManager
 
         if (_bufferTime > TimeSpan.Zero)
         {
-            if (_bufferingStopwatch == null)
-                _bufferingStopwatch = RStopwatch.StartNew();
+            if (_bufferStartTime == null)
+                _bufferStartTime = _gameTiming.RealTime;
         }
         else
         {
@@ -73,10 +74,10 @@ public sealed class WatchlistWebhookManager : IWatchlistWebhookManager
 
     public void Update()
     {
-        if (_bufferingStopwatch != null && ((RStopwatch)_bufferingStopwatch).Elapsed > _bufferTime)
+        if (_bufferStartTime != null && _gameTiming.RealTime > (_bufferStartTime + _bufferTime))
         {
             FlushConnections();
-            _bufferingStopwatch = null;
+            _bufferStartTime = null;
         }
     }
 
