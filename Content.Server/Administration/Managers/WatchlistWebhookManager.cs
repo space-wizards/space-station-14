@@ -106,41 +106,11 @@ public sealed class WatchlistWebhookManager : IWatchlistWebhookManager
 
                 var watchlist = connection.Watchlists.First();
                 var expiry = watchlist.ExpirationTime?.ToUnixTimeSeconds();
-
-                if (expiry == null)
-                {
-                    if (connection.Watchlists.Count == 1)
-                    {
-                        messageBuilder.Append(Loc.GetString("discord-watchlist-connection-entry",
-                            ("playerName", connection.PlayerName),
-                            ("message", watchlist.Message)));
-                    }
-                    else
-                    {
-                        messageBuilder.Append(Loc.GetString("discord-watchlist-connection-entry-more",
-                            ("playerName", connection.PlayerName),
-                            ("message", watchlist.Message),
-                            ("otherWatchlists", connection.Watchlists.Count - 1)));
-                    }
-                }
-                else
-                {
-                    if (connection.Watchlists.Count == 1)
-                    {
-                        messageBuilder.Append(Loc.GetString("discord-watchlist-connection-entry-expires",
-                            ("playerName", connection.PlayerName),
-                            ("expiry", expiry),
-                            ("message", watchlist.Message)));
-                    }
-                    else
-                    {
-                        messageBuilder.Append(Loc.GetString("discord-watchlist-connection-entry-expires-more",
-                            ("playerName", connection.PlayerName),
-                            ("expiry", expiry),
-                            ("message", watchlist.Message),
-                            ("otherWatchlists", connection.Watchlists.Count - 1)));
-                    }
-                }
+                messageBuilder.Append(Loc.GetString("discord-watchlist-connection-entry",
+                    ("playerName", connection.PlayerName),
+                    ("message", watchlist.Message),
+                    ("expiry", expiry ?? 0),
+                    ("otherWatchlists", connection.Watchlists.Count - 1)));
             }
 
             var payload = new WebhookPayload { Content = messageBuilder.ToString() };

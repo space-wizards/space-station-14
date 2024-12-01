@@ -4,13 +4,11 @@ discord-watchlist-connection-header =
         *[other] {$players} players on a watchlist have
     } connected to {$serverName}
 
-discord-watchlist-connection-entry = - {$playerName} with message "{$message}"
-discord-watchlist-connection-entry-expires = - {$playerName} with message "{$message}" (expires <t:{$expiry}:R>)
-discord-watchlist-connection-entry-more = - {$playerName} with message "{$message}" and { $otherWatchlists ->
-        [one] {$otherWatchlists} other watchlist
-        *[other] {$otherWatchlists} other watchlists
-    }
-discord-watchlist-connection-entry-expires-more = - {$playerName} with message "{$message}" (expires <t:{$expiry}:R>) and { $otherWatchlists ->
-        [one] {$otherWatchlists} other watchlist
-        *[other] {$otherWatchlists} other watchlists
+discord-watchlist-connection-entry = - {$playerName} with message "{$message}"{ $expiry ->
+        [0] {""}
+        *[other] {" "}(expires <t:{$expiry}:R>)
+    }{ $otherWatchlists ->
+        [0] {""}
+        [one] {" "}and {$otherWatchlists} other watchlist
+        *[other] {" "}and {$otherWatchlists} other watchlist
     }
