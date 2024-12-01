@@ -38,7 +38,6 @@
     quickEquip: false
     slots:
     - back
-    - suitStorage # Imp
   - type: Tool
     qualities:
       - Prying
@@ -69,4 +68,3 @@
     quickEquip: false
     slots:
     - back
-    - suitStorage # Imp
