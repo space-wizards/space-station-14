@@ -76,7 +76,7 @@
             VerticalExpand="True">
 
             <!-- Other actions -->
-            <BoxContainer>
+            <BoxContainer SeparationOverride="-1">
 
                 <!-- Print local file -->
                 <Button Name="FileButton"
@@ -108,14 +108,14 @@
             <PanelContainer StyleClasses="LowDivider"
                 Margin="0 4"/>
 
-            <!-- Copy paper -->
-            <Button Name="CopyButton"
-                Text="{Loc 'fax-machine-ui-copy-button'}"
-                Disabled="True" />
-
             <!-- Send -->
             <Button Name="SendButton"
                 Text="{Loc 'fax-machine-ui-send-button'}"
+                Disabled="True" />  
+
+            <!-- Copy paper -->
+            <Button Name="CopyButton"
+                Text="{Loc 'fax-machine-ui-copy-button'}"
                 Disabled="True" />
         </BoxContainer>
     </BoxContainer>
