@@ -16,15 +16,15 @@
   organ: Brain
 
 - type: trait
-  id: MTVrequired
-  name: trait-mtvrequired-name
-  description: trait-mtvrequired-desc
-  traitGear: ClothingNeckMTVvocalizer
+  id: SGDrequired
+  name: trait-sgdrequired-name
+  description: trait-sgdrequired-desc
+  traitGear: ClothingNeckSGD
   category: Disabilities
   components:
     - type: SpeechRequiresEquipment
       equipment:
         neck:
           tags:
-            - MTVvocalizer
-      failMessage: mtvrequired-cant-speak
+            - SGD
+      failMessage: sgdrequired-cant-speak

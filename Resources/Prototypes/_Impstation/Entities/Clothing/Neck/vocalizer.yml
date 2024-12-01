@@ -1,18 +1,18 @@
 - type: entity
   parent: ClothingNeckBase
-  id: ClothingNeckMTVvocalizer
-  name: mind-to-voice translator
-  description: A brainwave translator that allows people who rely on one to speak aloud. It won't work for anyone without the nessecary surgeries.
+  id: ClothingNeckSGD
+  name: speech generating device
+  description: A device that translates brainwaves into audible speech. It requires neural implants to function, so it wont work for everyone.
   components:
   - type: Item
     size: Small
   - type: Sprite
-    sprite: _Impstation/Clothing/Neck/Misc/mtvvocalizer.rsi
+    sprite: _Impstation/Clothing/Neck/Misc/sgd.rsi
   - type: Clothing
-    sprite: _Impstation/Clothing/Neck/Misc/mtvvocalizer.rsi
+    sprite: _Impstation/Clothing/Neck/Misc/sgd.rsi
   - type: SpeechSound
     speechSounds: Borg
     speechVerb: Robotic
   - type: Tag
     tags:
-      - MTVvocalizer
+      - SGD

@@ -291,7 +291,7 @@
     - LargeBeaker
     - Dropper
     - ClothingEyesGlassesChemical
-    - MTVvocalizerRecipe #imp special
+    - SGDRecipe #imp special
     dynamicRecipes:
       - PowerDrill
       - MiningDrill
