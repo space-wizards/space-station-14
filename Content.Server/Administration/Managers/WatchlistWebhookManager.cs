@@ -29,24 +29,28 @@ public sealed class WatchlistWebhookManager : IWatchlistWebhookManager
 
     private ISawmill _sawmill = default!;
 
-    private WebhookIdentifier? _webhookIdentifier;
-    private List<WatchlistConnection> watchlistConnections = new();
+    private string _webhookUrl = default!;
     private TimeSpan _bufferTime;
+
+    private List<WatchlistConnection> watchlistConnections = new();
     private TimeSpan? _bufferStartTime;
 
     public void Initialize()
     {
         _sawmill = Logger.GetSawmill("discord");
+        _cfg.OnValueChanged(CCVars.DiscordWatchlistConnectionBufferTime, SetBufferTime, true);
+        _cfg.OnValueChanged(CCVars.DiscordWatchlistConnectionWebhook, SetWebhookUrl, true);
+        _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
+    }
 
-        var bufferTimeSeconds = _cfg.GetCVar(CCVars.DiscordWatchlistConnectionBufferTime);
+    private void SetBufferTime(float bufferTimeSeconds)
+    {
         _bufferTime = TimeSpan.FromSeconds(bufferTimeSeconds);
+    }
 
-        var webhook = _cfg.GetCVar(CCVars.DiscordWatchlistConnectionWebhook);
-        if (!string.IsNullOrWhiteSpace(webhook))
-        {
-            _discord.GetWebhook(webhook, data => _webhookIdentifier = data.ToIdentifier());
-            _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
-        }
+    private void SetWebhookUrl(string webhookUrl)
+    {
+        _webhookUrl = webhookUrl;
     }
 
     private async void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
@@ -68,7 +72,7 @@ public sealed class WatchlistWebhookManager : IWatchlistWebhookManager
         }
         else
         {
-            FlushConnections();
+            SendDiscordMessage();
         }
     }
 
@@ -76,26 +80,23 @@ public sealed class WatchlistWebhookManager : IWatchlistWebhookManager
     {
         if (_bufferStartTime != null && _gameTiming.RealTime > (_bufferStartTime + _bufferTime))
         {
-            FlushConnections();
+            SendDiscordMessage();
             _bufferStartTime = null;
         }
-    }
-
-    private void FlushConnections()
-    {
-        SendDiscordMessage();
-
-        // Clear the buffered list regardless of whether the message is sent successfully
-        // This prevents infinitely buffering connections if we fail to send a message
-        watchlistConnections.Clear();
     }
 
     private async void SendDiscordMessage()
     {
         try
         {
-            if (_webhookIdentifier == null)
+            if (string.IsNullOrWhiteSpace(_webhookUrl))
                 return;
+
+            var webhookData = await _discord.GetWebhook(_webhookUrl);
+            if (webhookData == null)
+                return;
+
+            var webhookIdentifier = webhookData.Value.ToIdentifier();
 
             var messageBuilder = new StringBuilder(Loc.GetString("discord-watchlist-connection-header",
                     ("players", watchlistConnections.Count),
@@ -116,12 +117,16 @@ public sealed class WatchlistWebhookManager : IWatchlistWebhookManager
 
             var payload = new WebhookPayload { Content = messageBuilder.ToString() };
 
-            await _discord.CreateMessage(_webhookIdentifier.Value, payload);
+            await _discord.CreateMessage(webhookIdentifier, payload);
         }
         catch (Exception e)
         {
             _sawmill.Error($"Error while sending discord watchlist connection message:\n{e}");
         }
+
+        // Clear the buffered list regardless of whether the message is sent successfully
+        // This prevents infinitely buffering connections if we fail to send a message
+        watchlistConnections.Clear();
     }
 
     private sealed class WatchlistConnection
