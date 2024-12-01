@@ -7686,7 +7686,7 @@ entities:
     - type: Transform
       pos: 19.709429,32.698074
       parent: 1
-- proto: SyndicateComputerComms
+- proto: ComputerAlert
   entities:
   - uid: 401
     components:

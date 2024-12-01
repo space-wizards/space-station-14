@@ -3,6 +3,12 @@
   parent: MobSyndicateFootsoldier
   id: MobSyndicateBase
   components:
+    - type: Prying
+      pryPowered: true
+      force: true
+      speedModifier: 5.5
+      useSound:
+        path: /Audio/Items/crowbar.ogg
     - type: NpcFactionMember
       factions:
         - DungeonSyndicate
@@ -15,13 +21,9 @@
       rootTask:
         task: SimpleHumanoidHostileCompound
       blackboard:
-        NavClimb: !type:Bool
-          true
         NavInteract: !type:Bool
           true
         NavPry: !type:Bool
-          true
-        NavSmash: !type:Bool
           true
 #melee
 - type: entity
