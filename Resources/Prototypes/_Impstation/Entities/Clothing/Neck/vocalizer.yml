@@ -1,0 +1,19 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMTVvocalizer
+  name: mind-to-voice vocalizer
+  description: A brainwave translator that allows those missing their voice to find one.
+  components:
+  - type: Item
+    size: Tiny
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/pins.rsi
+    state: lgbt
+  - type: Clothing
+    sprite: Clothing/Neck/Misc/pins.rsi
+  - type: SpeechSound
+    speechSounds: Borg
+    speechVerb: Robotic
+  - type: Tag
+    tags:
+      - MTVvocalizer

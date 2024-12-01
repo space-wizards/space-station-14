@@ -14,3 +14,17 @@
   components:
     - type: Unborgable
   organ: Brain
+
+- type: trait
+  id: MTVrequired
+  name: trait-mtvrequired-name
+  description: trait-mtvrequired-desc
+  traitGear: ClothingNeckMTVvocalizer
+  category: Disabilities
+  components:
+    - type: SpeechRequiresEquipment
+      equipment:
+        mask:
+          tags:
+            - MTVvocalizer
+      failMessage: mtvrequired-cant-speak
