@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ultramario1998
-  changes:
-  - message: readded and rerotated Atlas, Saltern, and Cluster
-    type: Add
-  id: 117
-  time: '2024-08-24T15:55:23.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/137
 - author: wafehling
   changes:
   - message: Raccoon/Possum Vent Critters
@@ -4381,3 +4374,10 @@
   id: 616
   time: '2024-12-01T08:13:49.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/852
+- author: mqole
+  changes:
+  - message: Security Cadet role lockout now applies after 30hrs (increased from 15).
+    type: Tweak
+  id: 617
+  time: '2024-12-01T11:37:36.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/857
