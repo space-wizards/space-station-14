@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Boat changes, prototype ID fix for jukebox
-    type: Fix
-  id: 115
-  time: '2024-08-23T17:45:55.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/135
 - author: TGRCdev
   changes:
   - message: Fixed monkeys not being blinded when welding without a welding mask
@@ -4376,3 +4369,11 @@
   id: 614
   time: '2024-12-01T06:54:34.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/854
+- author: kipdotnet, TGRCdev
+  changes:
+  - message: Added the SGD required trait, which limits your speech to only when youre
+      wearing a speech generating device.
+    type: Add
+  id: 615
+  time: '2024-12-01T07:20:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/855
