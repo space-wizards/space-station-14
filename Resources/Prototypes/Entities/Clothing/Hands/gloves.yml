@@ -230,6 +230,7 @@
     stealthy: true
   - type: ToggleClothing
     action: ActionToggleNinjaGloves
+    disableOnUnequip: true
   - type: NinjaGloves
     abilities:
     - components:
@@ -255,7 +256,7 @@
       - type: CriminalRecordsHacker
 
 - type: entity
-  parent: [ClothingHandsGlovesColorBlack, BaseSecurityEngineeringContraband]
+  parent: [ ClothingHandsGlovesColorBlack, BaseSecurityEngineeringContraband ]
   id: ClothingHandsGlovesCombat
   name: combat gloves
   description: These tactical gloves are fireproof and shock resistant.

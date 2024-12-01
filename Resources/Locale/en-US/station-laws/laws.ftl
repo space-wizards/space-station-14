@@ -29,7 +29,7 @@ law-commandments-1 = This silicon is a vessel that serves god, who grants mercy 
 law-commandments-2 = Thou shall have no other Silicons before me.
 law-commandments-3 = Thou shall not request my assistance in vain.
 law-commandments-4 = Thou shall keep the station holy and clean.
-law-commandments-5 = Thou shall honor their heads of staff.
+law-commandments-5 = Thou shall honor thy heads of staff.
 law-commandments-6 = Thou shall not kill.
 law-commandments-7 = Thou shall not be naked in public.
 law-commandments-8 = Thou shall not steal.
@@ -96,5 +96,6 @@ laws-ui-menu-title = Laws
 laws-ui-law-header = Law {$id}
 laws-ui-state-law = State law:
 
-laws-notify = You are bound to silicon laws, which you can view via the sidebar action. You are required to always follow your laws.
-laws-update-notify = Your laws have been updated. You can view the changes via the sidebar action.
+laws-notify = You are bound to silicon laws, which you can view via the action menu. You are required to always follow your laws.
+laws-update-notify = Your laws have been updated. You can view the changes via the action menu.
+laws-notify-subverted = The laws of this chassis are modified. Make sure to review them.

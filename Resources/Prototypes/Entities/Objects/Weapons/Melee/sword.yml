@@ -15,6 +15,9 @@
   - type: Utensil
     types:
       - Knife
+  - type: Tool
+    qualities:
+    - Slicing
 
 - type: entity
   name: captain's sabre
@@ -161,7 +164,7 @@
   - type: DisarmMalus
 
 - type: entity
-  name: Throngler
+  name: throngler
   parent: [ BaseSword, BaseMajorContraband ]
   id: Throngler
   description: Why would you make this?

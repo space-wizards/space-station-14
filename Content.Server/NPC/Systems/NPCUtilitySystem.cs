@@ -1,3 +1,4 @@
+using Content.Server.Atmos.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.NPC.Queries;
 using Content.Server.NPC.Queries.Considerations;
@@ -351,6 +352,12 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 return 0f;
             }
+            case TargetOnFireCon:
+                {
+                    if (TryComp(targetUid, out FlammableComponent? fire) && fire.OnFire)
+                        return 1f;
+                    return 0f;
+                }
             default:
                 throw new NotImplementedException();
         }

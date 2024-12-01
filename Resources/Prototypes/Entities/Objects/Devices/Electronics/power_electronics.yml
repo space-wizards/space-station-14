@@ -73,7 +73,7 @@
   parent: BaseElectronics
   id: SolarTrackerElectronics
   name: solar tracker electronics
-  description: Advanced circuit board used to detect differences in pressure, temperature and gas concentrations between the two sides of the door.
+  description: Advanced circuit board used to track the nearest star.
   components:
     - type: Sprite
       sprite: Objects/Misc/module.rsi

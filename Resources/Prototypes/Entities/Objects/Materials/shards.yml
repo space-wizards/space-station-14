@@ -65,7 +65,7 @@
         acts: [ "Destruction" ]
   - type: StepTrigger
     intersectRatio: 0.2
-  - type: ClothingRequiredStepTrigger
+  - type: PreventableStepTrigger
   - type: Slippery
     slipSound:
       path: /Audio/Effects/glass_step.ogg

@@ -89,6 +89,35 @@
   - type: Fiber
     fiberColor: fibers-blue
 
+# Teal Gloves
+- type: entity
+  parent: ClothingHandsGlovesSyntheticBase
+  id: ClothingHandsGlovesColorTeal
+  name: teal gloves
+  description: Regular teal gloves that do not keep you from frying.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/Color/color.rsi
+    layers:
+    - state: icon
+      color: "#3CB57C"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#3CB57C"
+      right:
+      - state: inhand-right
+        color: "#3CB57C"
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/Color/color.rsi
+    clothingVisuals:
+      gloves:
+      - state: equipped-HAND
+        color: "#3CB57C"
+  - type: Fiber
+    fiberColor: fibers-teal
+
 # Brown Gloves
 - type: entity
   parent: ClothingHandsGlovesSyntheticBase
@@ -335,6 +364,9 @@
       - 3
       - 3.5
       - 4
+  - type: Fiber
+    fiberMaterial: fibers-insulative-frayed
+    fiberColor: fibers-yellow
 
 # Conductive Insulated Gloves
 - type: entity
