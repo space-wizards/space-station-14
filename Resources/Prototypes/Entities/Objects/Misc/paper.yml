@@ -344,13 +344,13 @@
     whitelist:
       tags:
         - Document
+        - Write
   - type: ItemMapper
     mapLayers:
       folder-overlay-paper:
         whitelist:
           tags:
           - Document
-          - Write
   - type: Appearance
   - type: Tag
     tags:
