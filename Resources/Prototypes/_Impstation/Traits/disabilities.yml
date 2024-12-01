@@ -24,7 +24,7 @@
   components:
     - type: SpeechRequiresEquipment
       equipment:
-        mask:
+        neck:
           tags:
             - MTVvocalizer
       failMessage: mtvrequired-cant-speak
