@@ -8,6 +8,7 @@ changeling-absorb-start = {CAPITALIZE(THE($user))} starts absorbing {CAPITALIZE(
 changeling-absorb-fail-incapacitated = You can't absorb it until it's not incapacitated.
 changeling-absorb-fail-absorbed = You've already absorbed it.
 changeling-absorb-fail-unabsorbable = The target is not absorbable.
+changeling-absorb-fail-extremely-bloated = The target is too rotted to absorb.
 changeling-absorb-end-self = Another organic absorbed. You are evolving.
 changeling-absorb-end-self-ling = Another changeling absorbed. You are evolving more rapidly.
 changeling-absorb-onexamine = [color=red]The body feels hollow.[/color]

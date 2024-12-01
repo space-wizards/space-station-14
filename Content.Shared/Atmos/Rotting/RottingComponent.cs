@@ -34,7 +34,7 @@ public sealed partial class RottingComponent : Component
     /// <summary>
     /// How long has this thing been rotting?
     /// </summary>
-    [DataField]
+    [DataField("totalRotTime")]
     public TimeSpan TotalRotTime = TimeSpan.Zero;
 
     /// <summary>

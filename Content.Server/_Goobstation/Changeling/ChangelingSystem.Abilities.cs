@@ -10,6 +10,7 @@ using Content.Shared.Popups;
 using Content.Shared.Damage;
 using Robust.Shared.Prototypes;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Atmos.Rotting;
 using Content.Server.Objectives.Components;
 using Content.Server.Light.Components;
 using Content.Shared.Eye.Blinding.Systems;
@@ -19,11 +20,14 @@ using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Stealth.Components;
 using Content.Shared.Damage.Components;
 using Content.Server.Radio.Components;
+using Content.Shared.Atmos.Rotting;
 
 namespace Content.Server.Changeling;
 
 public sealed partial class ChangelingSystem : EntitySystem
 {
+    [Dependency] private readonly SharedRottingSystem _rotting = default!;
+
     public void SubscribeAbilities()
     {
         SubscribeLocalEvent<ChangelingComponent, OpenEvolutionMenuEvent>(OnOpenEvolutionMenu);
@@ -90,6 +94,11 @@ public sealed partial class ChangelingSystem : EntitySystem
         if (!HasComp<AbsorbableComponent>(target))
         {
             _popup.PopupEntity(Loc.GetString("changeling-absorb-fail-unabsorbable"), uid, uid);
+            return;
+        }
+        if (TryComp<RottingComponent>(target, out var rotComp) && _rotting.RotStage(target, rotComp) >= 2)
+        {
+            _popup.PopupEntity(Loc.GetString("changeling-absorb-fail-extremely-bloated"), uid, uid);
             return;
         }
 
