@@ -73,7 +73,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void HighPressureMovements(Entity<GridAtmosphereComponent> gridAtmosphere, TileAtmosphere tile, EntityQuery<PhysicsComponent> bodies, EntityQuery<TransformComponent> xforms, EntityQuery<MovedByPressureComponent> pressureQuery, EntityQuery<MetaDataComponent> metas)
         {
-            if (tile.PressureDifference < SpaceWindMinimumCalculatedMass * SpaceWindMinimumCalculatedMass)
+            if (tile.PressureDifference < (SpaceWindMinimumCalculatedMass * SpaceWindMinimumCalculatedMass) || tile.PressureDifference < 130)
                 return;
             // TODO ATMOS finish this
 
@@ -120,7 +120,9 @@ namespace Content.Server.Atmos.EntitySystems
                 }
 
                 if (curTile != tile)
-                    tile.PressureSpecificTarget = curTile;
+                    tile.
+            if (!SpaceWind)
+                return;PressureSpecificTarget = curTile;
             }
 
             _entSet.Clear();
