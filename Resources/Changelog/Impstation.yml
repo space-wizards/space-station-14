@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: new tiktok announcer + alert levels fixed + intern new alert levels
-    type: Add
-  id: 113
-  time: '2024-08-22T17:10:30.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/132
 - author: ultramario1998
   changes:
   - message: added train back in. fuck all yall
@@ -4375,3 +4368,11 @@
   id: 612
   time: '2024-11-30T22:53:59.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/823
+- author: widgetbeck
+  changes:
+  - message: Markings now support shaders. As an example, SlimeEyeGlow has been updated
+      to use this new functionality.
+    type: Add
+  id: 613
+  time: '2024-12-01T02:45:21.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/842
