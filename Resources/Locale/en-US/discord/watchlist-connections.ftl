@@ -10,5 +10,5 @@ discord-watchlist-connection-entry = - {$playerName} with message "{$message}"{ 
     }{ $otherWatchlists ->
         [0] {""}
         [one] {" "}and {$otherWatchlists} other watchlist
-        *[other] {" "}and {$otherWatchlists} other watchlist
+        *[other] {" "}and {$otherWatchlists} other watchlists
     }
