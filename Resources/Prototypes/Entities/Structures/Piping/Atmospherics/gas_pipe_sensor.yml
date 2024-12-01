@@ -1,0 +1,84 @@
+- type: entity
+  parent: [AirSensorBase, GasPipeBase]
+  id: GasPipeSensor
+  name: gas pipe sensor
+  description: Reports on the status of the gas in the attached pipe network. 
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/gas_pipe_sensor.rsi
+    drawdepth: BelowFloor
+    layers:
+    - sprite: Structures/Piping/Atmospherics/pipe.rsi
+      map: [ "enum.PipeVisualLayers.Pipe" ]
+      state: pipeStraight
+    - map: ["base"]
+      state: base
+    - map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+      state: lights 
+      shader: unshaded      
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          False: { state: blank }
+          True: { state: lights }
+  - type: AtmosMonitor
+    monitorsPipeNet: true
+  - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
+  - type: Construction
+    graph: GasPipeSensor
+    node: sensor 
+  - type: NodeContainer
+    nodes:
+      monitored:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: Longitudinal
+  - type: Tag
+    tags:
+    - AirSensor
+    - Unstackable    
+
+- type: entity
+  parent: GasPipeSensor 
+  id: GasPipeSensorDistribution 
+  suffix: Distribution
+  components:
+  - type: Label
+    currentLabel: gas-pipe-sensor-distribution-loop
+
+- type: entity
+  parent: GasPipeSensor 
+  id: GasPipeSensorWaste  
+  suffix: Waste
+  components:
+  - type: Label
+    currentLabel: gas-pipe-sensor-waste-loop
+
+- type: entity
+  parent: GasPipeSensor 
+  id: GasPipeSensorMixedAir 
+  suffix: Mixed air
+  components:
+  - type: Label
+    currentLabel: gas-pipe-sensor-mixed-air
+
+- type: entity
+  parent: GasPipeSensor 
+  id: GasPipeSensorTEGHot
+  suffix: TEG hot
+  components:
+  - type: Label
+    currentLabel: gas-pipe-sensor-teg-hot-loop
+
+- type: entity
+  parent: GasPipeSensor  
+  id: GasPipeSensorTEGCold
+  suffix: TEG cold
+  components:
+  - type: Label
+    currentLabel: gas-pipe-sensor-teg-cold-loop
