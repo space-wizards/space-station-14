@@ -6,7 +6,6 @@
     - physics
     - player
     - splat
-    - emplace
     - bin
     - extremes
     - reduce
@@ -19,15 +18,16 @@
     - iota
     - rep
     - to
-    - with
-    - prototyped
-    - named
-    - paused
 
 - Flags: DEBUG
   Commands:
     - comp
     - delete
+    - with
+    - prototyped
+    - named
+    - paused
+    - emplace
     - do
     - iterate
     - select
