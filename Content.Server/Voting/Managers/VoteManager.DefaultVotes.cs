@@ -267,12 +267,6 @@ namespace Content.Server.Voting.Managers
                 var ticker = _entityManager.EntitySysManager.GetEntitySystem<GameTicker>();
                 ticker.SetGamePreset(picked);
             };
-            
-            foreach (var player in _playerManager.Sessions)
-            {
-                // Everybody defaults to an secret vote.
-                 vote.CastVote(player, 0);
-            }
         }
 
         private void CreateMapVote(ICommonSession? initiator)
@@ -345,12 +339,6 @@ namespace Content.Server.Voting.Managers
                     }
                 }
             };
-            
-            foreach (var player in _playerManager.Sessions)
-            {
-                // Everybody defaults to an secret vote.
-                 vote.CastVote(player, 0);
-            }
         }
 
         private async void CreateVotekickVote(ICommonSession? initiator, string[]? args)
