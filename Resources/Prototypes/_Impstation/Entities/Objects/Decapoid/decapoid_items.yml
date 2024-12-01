@@ -48,6 +48,9 @@
   - type: HideLayerClothing
     slots:
     - Snout
+  - type: SpeechSound
+    speechSounds: Borg
+    speechVerb: Robotic
 
 
 - type: entity
