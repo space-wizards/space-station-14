@@ -43,20 +43,22 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
         SubscribeLocalEvent<ChangelingDevourComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<ChangelingDevourComponent, ChangelingDevourActionEvent>(OnDevourAction);
         SubscribeLocalEvent<ChangelingDevourComponent, ChangelingDevourWindupDoAfterEvent>(OnDevourWindup);
-        SubscribeLocalEvent<ChangelingDevourComponent, ChangelingDevourConsumeDoAfterEvent>(OnDevourConsumeTick);
+        SubscribeLocalEvent<ChangelingDevourComponent, ChangelingDevourConsumeDoAfterEvent>(OnDevourConsume);
     }
 
     private void OnInit(EntityUid uid, ChangelingDevourComponent component, MapInitEvent args)
     {
         _actionsSystem.AddAction(uid, ref component.ChangelingDevourActionEntity, component.ChangelingDevourAction);
         var identityStorage = EnsureComp<ChangelingIdentityComponent>(uid);
-        if (TryComp<AppearanceComponent>(uid, out var appearance) && TryComp<VocalComponent>(uid, out var vocals))
+        if (identityStorage.OriginalIdentityComponent == null && TryComp<AppearanceComponent>(uid, out var appearance) && TryComp<VocalComponent>(uid, out var vocals))
         {
-            identityStorage.Identities?.Add(new()
+            StoredIdentityComponent ling = new()
             {
                 IdentityAppearance = appearance,
                 IdentityVocals = vocals
-            });
+            };
+            identityStorage.Identities?.Add(ling);
+            identityStorage.OriginalIdentityComponent = ling;
         }
     }
 
@@ -69,26 +71,26 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
         while (query.MoveNext(out var uid, out var comp))
         {
             if (comp.CurrentDevourEvent != null)
-            {
-                var consumeStatus = _doAfterSystem.GetStatus(comp.CurrentDevourEvent.DoAfter.Id);
-                var target = comp.CurrentDevourEvent.Args.Target;
-                var user = comp.CurrentDevourEvent.User;
+                continue;
 
-                if (consumeStatus.Equals(DoAfterStatus.Cancelled))
+            var consumeStatus = _doAfterSystem.GetStatus(comp.CurrentDevourEvent?.DoAfter.Id);
+            var target = comp.CurrentDevourEvent?.Args.Target;
+            var user = comp.CurrentDevourEvent?.User;
+
+            if (consumeStatus.Equals(DoAfterStatus.Cancelled))
+            {
+                comp.CurrentDevourEvent = null;
+                _audioSystem.Stop(comp.CurrentDevourSound);
+                comp.CurrentDevourSound = null;
+                continue;
+            }
+            if (curTime > comp.NextTick)
+            {
+                if (consumeStatus.Equals(DoAfterStatus.Running))
                 {
-                    comp.CurrentDevourEvent = null;
-                    _audioSystem.Stop(comp.CurrentDevourSound);
-                    comp.CurrentDevourSound = null;
-                    continue;
+                    ConsumeDamageTick(target, comp, user);
                 }
-                if (curTime > comp.NextTick)
-                {
-                    if (consumeStatus.Equals(DoAfterStatus.Running))
-                    {
-                        ConsumeDamageTick(target, comp, user);
-                    }
-                    comp.NextTick = curTime + TimeSpan.FromSeconds(1f);
-                }
+                comp.NextTick = curTime + TimeSpan.FromSeconds(1f);
             }
         }
     }
@@ -110,14 +112,14 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
         var target = args.Target;
         if (args.Handled || _whitelistSystem.IsWhitelistFailOrNull(component.Whitelist, args.Target))
             return;
-
+        args.Handled = true;
         if (HasComp<ChangelingHuskedCorpseComponent>(target))
         {
-            _popupSystem.PopupClient("Husk Fialed", args.Performer, args.Performer);
+            _popupSystem.PopupClient("changeling-devour-failed-husk", args.Performer, args.Performer);
             return;
         }
-        _popupSystem.PopupPredicted("Something about the Ling's jaw going beyond its bounds", args.Performer, null, PopupType.MediumCaution);
-        args.Handled = true;
+        _popupSystem.PopupPredicted("changeling-devour-begin-windup", args.Performer, null, PopupType.MediumCaution);
+        //TODO: check if the target has a resistance of higher than 10% Brute
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, uid, component.DevourWindupTime, new ChangelingDevourWindupDoAfterEvent(), uid, target: target, used: uid)
         {
             BreakOnMove = true,
@@ -129,7 +131,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
     {
         component.CurrentDevourEvent = new ChangelingDevourConsumeDoAfterEvent();
 
-        _popupSystem.PopupPredicted("The Changeling begins to consume it's victim with it's otherworldly mouth", args.User, null, PopupType.LargeCaution);
+        _popupSystem.PopupPredicted("changeling-devour-begin-consume", args.User, null, PopupType.LargeCaution);
         var sound = _audioSystem.PlayPredicted(component.ConsumeTickNoise, uid, uid);
         component.CurrentDevourSound = sound?.Entity;
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, uid, component.DevourConsumeTime, component.CurrentDevourEvent, uid, target: args.Target, used: uid)
@@ -138,10 +140,12 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
             BlockDuplicate = true,
         });
     }
-    private void OnDevourConsumeTick(EntityUid uid, ChangelingDevourComponent component, ChangelingDevourConsumeDoAfterEvent args)
+    private void OnDevourConsume(EntityUid uid, ChangelingDevourComponent component, ChangelingDevourConsumeDoAfterEvent args)
     {
         args.Handled = true;
-        _popupSystem.PopupPredicted("The changeling consumes the victim, leaving behind an empty husk of a corpse", args.User, null, PopupType.LargeCaution);
+        //TODO: move Devour complete into if dead and make a separate one on the RARE chance someone survives the devour (and doesn't break it)
+        //TODO: Also loc all the shit
+        _popupSystem.PopupPredicted("changeling-devour-consume-complete", args.User, null, PopupType.LargeCaution);
         var target = args.Target;
         if (target == null)
             return;

@@ -3,8 +3,22 @@
   name: "[color=red]Devour[/color]"
   description: Consume the essence of your victims and subsume their identity and mind into your own
   components:
-    - type: EntityTargetAction
-      icon: { sprite : Interface/Actions/devour.rsi, state: icon }
-      iconOn: { sprite : Interface/Actions/devour.rsi, state: icon-on }
-      event: !type:ChangelingDevourActionEvent
-      priority: 1
+  - type: EntityTargetAction
+    icon: { sprite : Interface/Actions/devour.rsi, state: icon }
+    iconOn: { sprite : Interface/Actions/devour.rsi, state: icon-on }
+    event: !type:ChangelingDevourActionEvent
+    priority: 1
+
+- type: entity
+  id: ActionChangelingTransform
+  name: "[color=red]Transform[/color]"
+  description: Transform and assume the identities of those you have devoured
+  components:
+  - type: InstantAction
+    icon: { sprite : Interface/Actions/changeling.rsi, state: "transform" }
+    event: !type:ChangelingTransformActionEvent
+  - type: UserInterface
+    interfaces:
+      enum.TransformUi.Key:
+        type: ChangelingTransformBoundUserInterface
+

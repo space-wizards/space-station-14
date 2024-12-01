@@ -7,7 +7,7 @@ using Content.Client.Popups;
 using Content.Shared.Changeling.Devour;
 using Content.Shared.Popups;
 
-namespace Content.Client.Changeling;
+namespace Content.Client.Changeling.Devour;
 
 public sealed class ChangelingDevourSystem : SharedChangelingDevourSystem
 {
