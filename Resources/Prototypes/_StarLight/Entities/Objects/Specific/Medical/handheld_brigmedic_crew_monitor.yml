@@ -5,7 +5,7 @@
   description: So advanced it only tracks security personnel! Does not monitor emotional stability or competence levels of security members. Use at your own risk!
   components:
   - type: Sprite
-    sprite: Objects/Specific/Medical/handheldbrigmediccrewmonitor.rsi
+    sprite: _Starlight/Objects/Specific/Medical/handheldbrigmediccrewmonitor.rsi
     state: scanner
   - type: ActivatableUI
     key: enum.CrewMonitoringUIKey.Key
