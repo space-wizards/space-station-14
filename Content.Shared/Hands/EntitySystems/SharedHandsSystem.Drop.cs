@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.VirtualItem;
@@ -130,7 +131,7 @@ public abstract partial class SharedHandsSystem
             TransformSystem.DropNextTo((entity, itemXform), (uid, userXform));
             return true;
         }
-        
+
         // drop the item with heavy calculations from their hands and place it at the calculated interaction range position
         // The DoDrop is handle if there's no drop target
         DoDrop(uid, hand, doDropInteraction: doDropInteraction, handsComp);
@@ -138,7 +139,7 @@ public abstract partial class SharedHandsSystem
         // if there's no drop location stop here
         if (targetDropLocation == null)
             return true;
-        
+
         // otherwise, also move dropped item and rotate it properly according to grid/map
         var (itemPos, itemRot) = TransformSystem.GetWorldPositionRotation(entity);
         var origin = new MapCoordinates(itemPos, itemXform.MapID);
@@ -197,7 +198,7 @@ public abstract partial class SharedHandsSystem
     /// <summary>
     ///     Removes the contents of a hand from its container. Assumes that the removal is allowed. In general, you should not be calling this directly.
     /// </summary>
-    public virtual void DoDrop(EntityUid uid, Hand hand, bool doDropInteraction = true, HandsComponent? handsComp = null)
+    public virtual void DoDrop(EntityUid uid, Hand hand, bool doDropInteraction = true, HandsComponent? handsComp = null, bool log = true)
     {
         if (!Resolve(uid, ref handsComp))
             return;
@@ -220,6 +221,9 @@ public abstract partial class SharedHandsSystem
 
         if (doDropInteraction)
             _interactionSystem.DroppedInteraction(uid, entity);
+
+        if (log)
+            _adminLogger.Add(LogType.Drop, LogImpact.Low, $"{ToPrettyString(uid):user} dropped {ToPrettyString(entity):entity}");
 
         if (hand == handsComp.ActiveHand)
             RaiseLocalEvent(entity, new HandDeselectedEvent(uid));

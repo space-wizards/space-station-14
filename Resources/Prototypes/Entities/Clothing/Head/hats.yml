@@ -792,6 +792,21 @@
         Blunt: 0.95
 
 - type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHolyWatermelon
+  name: watermelon halo
+  description: Holy moly.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/holyhatmelon.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/holyhatmelon.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.95
+
+- type: entity
   parent: [ClothingHeadBase, BaseSyndicateContraband]
   id: ClothingHeadHatSyndie
   name: syndicate hat

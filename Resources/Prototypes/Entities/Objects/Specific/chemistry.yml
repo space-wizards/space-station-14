@@ -283,6 +283,7 @@
   - type: Injector
     injectOnly: false
     ignoreMobs: true
+    ignoreClosed: false
     minTransferAmount: 1
     maxTransferAmount: 5
     transferAmount: 1
@@ -387,6 +388,66 @@
     - Trash
 
 - type: entity
+  name: mini syringe
+  parent: Syringe
+  description: A regular syringe, reshaped to fit inside of a gun.
+  id: MiniSyringe
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+    layers:
+      - state: minisyringe1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+      - state: syringeproj
+  - type: SolutionContainerVisuals
+    maxFillLevels: 3
+    fillBaseName: minisyringe
+    inHandsMaxFillLevels: 3
+    inHandsFillBaseName: -fill-
+  - type: EmbeddableProjectile
+    offset: "-0.1,0"
+    minimumSpeed: 3
+    removalTime: 0.25
+    embedOnThrow: false
+  - type: SolutionInjectWhileEmbedded
+    transferAmount: 1
+    solution: injector
+    updateInterval: 2
+  - type: SolutionInjectOnEmbed
+    transferAmount: 2
+    solution: injector
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.2
+        density: 5
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.3,0.1,0.3"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+  - type: Projectile
+    deleteOnCollide: false
+    onlyCollideWhenShot: true
+    damage:
+      types:
+        Piercing: 5
+  - type: Tag
+    tags:
+    - Syringe
+    - Trash
+    - SyringeGunAmmo
+
+- type: entity
   parent: BaseSyringe
   id: PrefilledSyringe
   components:
@@ -481,12 +542,8 @@
     solutions:
       food:
         maxVol: 20
-  - type: SolutionSpiker
-    sourceSolution: food
-  - type: Extractable
-    grindableSolutionName: food
-  - type: StaticPrice
-    price: 0
+  - type: ExplosionResistance
+    damageCoefficient: 0.025 # survives conventional explosives but not minibombs and nukes
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -499,6 +556,12 @@
         solution: food
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: SolutionSpiker
+    sourceSolution: food
+  - type: Extractable
+    grindableSolutionName: food
+  - type: StaticPrice
+    price: 0
   - type: Tag
     tags:
     - Pill
@@ -526,4 +589,7 @@
     areaInsertRadius: 1
     storageInsertSound: /Audio/Effects/pill_insert.ogg
     storageRemoveSound: /Audio/Effects/pill_remove.ogg
+    whitelist: 
+      tags:
+      - Pill
   - type: Dumpable

@@ -100,7 +100,7 @@
     - type: GhostRole
       name: ghost-role-information-syndicate-cyborg-assault-name
       description: ghost-role-information-syndicate-cyborg-description
-      rules: ghost-role-information-rules-default-silicon
+      rules: ghost-role-information-silicon-rules
       raffle:
         settings: default
     - type: GhostRoleMobSpawner
