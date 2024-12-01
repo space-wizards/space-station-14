@@ -20,7 +20,6 @@ namespace Content.Shared.SubFloor
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] protected readonly SharedMapSystem Map = default!;
         [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
-        [Dependency] private readonly TrayScanRevealSystem _trayScanRevealSystem = default!;
 
         public override void Initialize()
         {
@@ -70,7 +69,6 @@ namespace Content.Shared.SubFloor
 
             // Regardless of whether we're on a subfloor or not, unhide.
             component.IsUnderCover = false;
-            component.IsUnderRevealingEntity = false;
             UpdateAppearance(uid, component);
         }
 
@@ -81,12 +79,8 @@ namespace Content.Shared.SubFloor
                 var xform = Transform(uid);
                 UpdateFloorCover(uid, component, xform);
             }
-            else
+            else if (component.IsUnderCover)
             {
-                if (!args.Detaching)
-                    component.IsUnderRevealingEntity = false;
-                if (!component.IsUnderCover)
-                    return;
                 component.IsUnderCover = false;
                 UpdateAppearance(uid, component);
             }
@@ -112,12 +106,7 @@ namespace Content.Shared.SubFloor
                 return;
 
             if (xform.Anchored && TryComp<MapGridComponent>(xform.GridUid, out var grid))
-            {
-                var tileIndices = Map.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates);
-                component.IsUnderCover = HasFloorCover(xform.GridUid.Value, grid, tileIndices);
-                if (!component.IsUnderRevealingEntity)
-                    component.IsUnderRevealingEntity = _trayScanRevealSystem.HasTrayScanReveal((xform.GridUid.Value, grid), tileIndices);
-            }
+                component.IsUnderCover = HasFloorCover(xform.GridUid.Value, grid, Map.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates));
             else
                 component.IsUnderCover = false;
 
@@ -133,18 +122,13 @@ namespace Content.Shared.SubFloor
         }
 
 
-        internal void UpdateTile(EntityUid gridUid, MapGridComponent grid, Vector2i position)
+        private void UpdateTile(EntityUid gridUid, MapGridComponent grid, Vector2i position)
         {
             var covered = HasFloorCover(gridUid, grid, position);
-            var hasRevealSubfloor = _trayScanRevealSystem.HasTrayScanReveal((gridUid, grid), position);
 
             foreach (var uid in Map.GetAnchoredEntities(gridUid, grid, position))
             {
                 if (!TryComp(uid, out SubFloorHideComponent? hideComp))
-                    continue;
-
-                hideComp.IsUnderRevealingEntity = hasRevealSubfloor;
-                if (hasRevealSubfloor)
                     continue;
 
                 if (hideComp.IsUnderCover == covered)
