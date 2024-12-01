@@ -82,7 +82,7 @@
   - type: GhostRole
     name: ghost-role-information-SyndiCat-name
     description: ghost-role-information-SyndiCat-description
-    rules: ghost-role-information-familiar-rules
+    rules: ghost-role-information-rules-team-antagonist
     raffle:
       settings: default
   - type: GhostRoleMobSpawner
