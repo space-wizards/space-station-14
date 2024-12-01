@@ -199,6 +199,9 @@ public sealed partial class PolymorphSystem : EntitySystem
 
         var targetTransformComp = Transform(uid);
 
+        if (configuration.PolymorphSound != null)
+            _audio.PlayPvs(configuration.PolymorphSound, targetTransformComp.Coordinates);
+
         var child = Spawn(configuration.Entity, _transform.GetMapCoordinates(uid, targetTransformComp), rotation: _transform.GetWorldRotation(uid));
 
         MakeSentientCommand.MakeSentient(child, EntityManager);
@@ -287,6 +290,9 @@ public sealed partial class PolymorphSystem : EntitySystem
 
         var uidXform = Transform(uid);
         var parentXform = Transform(parent);
+
+        if (component.Configuration.ExitPolymorphSound != null)
+            _audio.PlayPvs(component.Configuration.ExitPolymorphSound, uidXform.Coordinates);
 
         _transform.SetParent(parent, parentXform, uidXform.ParentUid);
         _transform.SetCoordinates(parent, parentXform, uidXform.Coordinates, uidXform.LocalRotation);

@@ -1,0 +1,30 @@
+<Document>
+  # Goblins
+
+  <Box>
+    <GuideEntityEmbed Entity="MobGoblin" Caption=""/>
+  </Box>
+
+  Goblins are a race of humanoid beings. They tend to be small, very loud and fragile.
+  
+  ## Benefits
+
+  - Due to their unusual dietary choices goblins take [color=lime]25% less Toxin damage[/color], 
+  - When unarmed, their claws deal [color=red]Slash[/color] damage instead of Blunt.
+  - Smaller than humans.
+  - Can fit in duffelbags.
+
+  ## Special
+
+  - Can rummage in disposal chutes to dig up trash.
+  - Can dive into toilets and mailing units because of their small size.
+  - Unique chants.
+  - Inherently speak in Goblin Cant.
+
+  ## Drawbacks
+
+  - Because of their small size they take [color=#ffa500]20% more Brute (Blunt/Slash/Piercing) damage[/color].
+  - Always triggers mousetraps, even when wearing shoes.
+  - They don't like to be sprayed with water or space cleaner.
+
+</Document>

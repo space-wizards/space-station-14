@@ -1,0 +1,13 @@
+#Janitor hardsuit
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitJanitor
+  name: janitorial hardsuit helmet
+  description: Helps you look for trash out in space.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Hardsuits/janitor.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Hardsuits/janitor.rsi
+  - type: PointLight
+    color: "#ffdbad"

@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "copyright": "Sprited for impstation by kipdotnet(github)",
+  "license": "CC-BY-SA-3.0",
+  "states": [
+    {
+      "name": "base",
+      "delays": [
+        [
+          0.9,
+          0.9
+        ]
+      ]
+    },
+    {
+      "name": "closed",
+      "delays": [
+        [
+          0.9,
+          0.9
+        ]
+      ]
+    },
+    {
+      "name": "open",
+      "delays": [
+        [
+          0.9,
+          0.9
+        ]
+      ]
+    },
+    {
+      "name": "icon"
+    },
+    {
+      "name": "sparking",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "welded",
+      "delays": [
+        [
+          0.9,
+          0.9
+        ]
+      ]
+    }
+  ]
+}

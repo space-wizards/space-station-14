@@ -1,0 +1,12 @@
+- type: construction
+  name: goblin traditional robes
+  id: ClothingOuterCoatRobesGoblinRecipe
+  graph: ClothingOuterCoatRobesGoblinGraph
+  startNode: start
+  targetNode: ClothingOuterCoatRobesGoblinNode
+  category: construction-category-clothing
+  description: Traditional robes of goblinkind. Very regal.
+  icon:
+    sprite: _NF/Clothing/OuterClothing/Coats/goblin_robes.rsi
+    state: icon
+  objectType: Item

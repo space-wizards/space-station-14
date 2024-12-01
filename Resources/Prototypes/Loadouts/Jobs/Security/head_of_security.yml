@@ -50,6 +50,16 @@
     jumpsuit: ClothingUniformJumpskirtHoSAlt
 
 - type: loadout
+  id: HeadofSecurityProfessionalJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHoSPro
+
+- type: loadout
+  id: HeadofSecurityProfessionalJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtHoSPro
+
+- type: loadout
   id: HeadofSecurityFormalSuit
   equipment:
     jumpsuit: ClothingUniformJumpsuitHosFormal
@@ -69,6 +79,11 @@
   id: HeadofSecurityBeret
   equipment:
     head: ClothingHeadHatBeretHoS
+
+- type: loadout
+  id: HeadofSecurityPatrolCap
+  equipment:
+    head: ClothingHeadHatHOSsoft
 
 # Neck
 - type: loadout
@@ -140,8 +155,8 @@
   - !type:GroupLoadoutEffect
     proto: VeteranHOS
 
-# A mask so the HoS can choose to spawn with the standard security gas mask that their new survival box removes
+# Belt
 - type: loadout
-  id: HeadofSecurityMask
+  id: HeadofSecurityShoulderHolster
   equipment:
-    mask: ClothingMaskGasSecurity
+    belt: ClothingBeltHolsterHOSFilled

@@ -1,0 +1,89 @@
+- type: entity
+  name: Goblin Stowaways (x3) Spawner
+  id: GoblinStowawaysVentSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: blue
+        - sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+          state: full
+    - type: GroupSpawner
+      spawns:
+      - id: SpawnPointGhostGoblinStowaways
+        amount: 3
+        maxAmount: 3
+
+- type: entity
+  id: SpawnPointGhostGoblinStowaways
+  name: ghost role spawn point
+  suffix: goblin stowaways
+  parent: MarkerBase
+  components:
+  - type: GhostRole
+    name: ghost-role-information-goblin-stowaway-name
+    description: ghost-role-information-goblin-stowaway-description
+    rules: ghost-role-information-nonantagonist-freeagent-goblin-stowaway
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: MobGoblinStowaway
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+        state: full
+
+- type: entity
+  id: SpawnPointGhostGoblinKnight
+  name: ghost role spawn point
+  suffix: sir gollylad
+  parent: [ MarkerBase, BaseItem ]
+  components:
+  - type: GhostRole
+    name: ghost-role-information-goblin-knight-name
+    description: ghost-role-information-goblin-knight-description
+    rules: ghost-role-information-familiar-rules
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: MobGoblinKnight
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+        state: full
+
+- type: entity
+  id: SpawnPointGhostGoblinCastaway
+  name: ghost role spawn point
+  suffix: goblin castaway
+  parent: MarkerBase
+  components:
+  - type: GhostRole
+    name: ghost-role-information-goblin-castaway-name
+    description: ghost-role-information-goblin-stowaway-description
+    rules: ghost-role-information-nonantagonist-freeagent-goblin-stowaway
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: MobGoblinCastaway
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: _Impstation/Mobs/Species/Goblin/parts.rsi
+        state: full
+
+- type: entity
+  id: CrateFullOGoblins
+  parent: CratePlastic
+  name: goblin banishment crate
+  description: The most severe punishment. 
+  components:
+  - type: StorageFill
+    contents:
+      - id: SpawnPointGhostGoblinCastaway
+        amount: 10

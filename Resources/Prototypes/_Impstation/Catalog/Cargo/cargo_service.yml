@@ -1,0 +1,20 @@
+- type: cargoProduct
+  id: ServiceJanitorialCleanades
+  icon:
+    sprite: Objects/Specific/Janitorial/wet_floor_sign.rsi
+    state: icon
+  product: CrateServiceCleanades
+  cost: 800
+  category: cargoproduct-category-name-service
+  group: market
+
+- type: cargoProduct
+  id: ServiceJanitorialHardsuit
+  icon:
+    sprite: Structures/Storage/Crates/trashcart_jani.rsi
+    state: icon
+  product: CrateServiceJanitorialHardsuit
+  cost: 5000
+  category: cargoproduct-category-name-service
+  group: market
+  

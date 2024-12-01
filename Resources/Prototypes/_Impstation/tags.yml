@@ -1,13 +1,39 @@
 # PUT YOUR TAGS IN ALPHABETICAL ORDER
+- type: Tag
+  id: BeltUtility
+
+- type: Tag
+  id: CartridgeLPistol
 
 - type: Tag
   id: CleanerGrenade
+
+- type: Tag
+  id: ConversionKitFA
+
+- type: Tag
+  id: ConversionKitHB
+
+- type: Tag
+  id: MagazineLPistol
+
+- type: Tag
+  id: MagazineZipper
+
+- type: Tag
+  id: HolyArrow
+
+- type: Tag
+  id: NullRod
 
 - type: Tag
   id: SecTicket
 
 - type: Tag
   id: ShellShotgunBeanbag
+
+- type: Tag
+  id: SprayPainter
 
 - type: Tag
   id: Vaporizer
@@ -20,3 +46,6 @@
 
 - type: Tag
   id: WeaponSurvivalRifleUpgradeSMGKit
+
+- type: Tag
+  id: DionaMinded

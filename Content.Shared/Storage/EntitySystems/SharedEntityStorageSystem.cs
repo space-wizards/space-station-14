@@ -26,6 +26,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Shared.Movement.Pulling.Components;
 
 namespace Content.Shared.Storage.EntitySystems;
 
@@ -370,6 +371,15 @@ public abstract class SharedEntityStorageSystem : EntitySystem
                 return false;
             }
         }
+
+        // impstation edit: prevent opening containers being pulled by others
+        if (
+            TryComp<PullableComponent>(target, out var pullable) && // Can be pulled
+            pullable.BeingPulled && // Someone is pulling it
+            pullable.Puller != user && // It is not the user
+            !component.Contents.Contains(user) // The user is not inside of it
+        )
+            return false;
 
         //Checks to see if the opening position, if offset, is inside of a wall.
         if (component.EnteringOffset != new Vector2(0, 0) && !HasComp<WallMountComponent>(target)) //if the entering position is offset

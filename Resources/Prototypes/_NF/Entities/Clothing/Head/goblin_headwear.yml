@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodGoblin
+  name: goblin traditional hood
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _NF/Clothing/Head/Hoods/goblin_robe_hood.rsi
+  - type: Clothing
+    sprite: _NF/Clothing/Head/Hoods/goblin_robe_hood.rsi

@@ -1,0 +1,26 @@
+#Janitor Hardsuit
+- type: entity
+  parent: [ClothingOuterHardsuitBase, BaseCivilianContraband]
+  id: ClothingOuterHardsuitJanitor
+  name: janitorial hardsuit
+  description: For your spill-cleaning, light-changing, and trash-picking needs in the vacuum of space!
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/janitor.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/janitor.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Caustic: 0.9
+  - type: ClothingSpeedModifier
+    walkModifier: 0.80
+    sprintModifier: 0.80
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitJanitor

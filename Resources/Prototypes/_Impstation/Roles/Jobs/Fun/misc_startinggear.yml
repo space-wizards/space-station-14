@@ -3,3 +3,30 @@
   equipment:
     ears: ClothingHeadsetCargo
     id: CargorillaIDCard
+
+- type: startingGear
+  id: GoblinRobeOSP
+  equipment:
+    outerClothing: ClothingOuterCoatRobesGoblin
+    belt: ClothingBeltUtilityGoblinRandomFill
+
+- type: startingGear
+  id: GoblinOSPEVA
+  equipment:
+    outerClothing: ClothingOuterGoblinEVASuit
+    belt: ClothingBeltUtilityGoblinRandomFill
+    back: ClothingBackpackSatchelLeather
+    suitstorage: OxygenTankFilled
+  storage:
+    back:
+    - ClothingOuterCoatRobesGoblin
+
+- type: startingGear
+  id: GoblinKnightArmor
+  equipment:
+    jumpsuit: ClothingSpaceCadetJumpsuitColorBlack # temp - remove after sprite refactor
+    outerClothing: ClothingOuterGoblinKnightArmor
+    back: ClothingBackpackSatchelLeather
+  inhand:
+    - GoblinClaymore
+    - WoodenBuckler

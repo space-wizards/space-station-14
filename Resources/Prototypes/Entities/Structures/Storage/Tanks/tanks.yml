@@ -13,13 +13,13 @@
     sprite: Structures/Storage/tanks.rsi
     layers:
       - state: fueltank-2
-      - state: fueltank-2-1
+      - state: tank-2-1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Appearance
   - type: SolutionContainerVisuals
-    maxFillLevels: 3
-    fillBaseName: fueltank-2-
+    maxFillLevels: 5
+    fillBaseName: tank-2-
   - type: ExaminableSolution
     solution: tank
   - type: ReagentTank
@@ -59,12 +59,12 @@
     sprite: Structures/Storage/tanks.rsi
     layers:
       - state: highfueltank-2
-      - state: highfueltank-2-1
+      - state: hightank-2-1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: SolutionContainerVisuals
-    maxFillLevels: 7
-    fillBaseName: highfueltank-2-
+    maxFillLevels: 5
+    fillBaseName: hightank-2-
   - type: SolutionContainerManager
     solutions:
       tank:
@@ -94,13 +94,13 @@
     sprite: Structures/Storage/tanks.rsi
     layers:
       - state: watertank-2
-      - state: watertank-2-1
+      - state: tank-2-1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 5
-    fillBaseName: watertank-2-
+    fillBaseName: tank-2-
   - type: ExaminableSolution
     solution: tank
 
@@ -178,13 +178,13 @@
     sprite: Structures/Storage/tanks.rsi
     layers:
       - state: highwatertank-2
-      - state: highwatertank-2-1
+      - state: hightank-2-1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Appearance
   - type: SolutionContainerVisuals
-    maxFillLevels: 7
-    fillBaseName: highwatertank-2-
+    maxFillLevels: 5
+    fillBaseName: hightank-2-
   - type: SolutionContainerManager
     solutions:
       tank:
@@ -210,12 +210,12 @@
       sprite: Structures/Storage/tanks.rsi
       layers:
         - state: generictank-1
-        - state: watertank-2-1
+        - state: tank-2-1
           map: ["enum.SolutionContainerLayers.Fill"]
           visible: false
     - type: Appearance
     - type: SolutionContainerVisuals
       maxFillLevels: 5
-      fillBaseName: watertank-2-
+      fillBaseName: tank-2-
     - type: ExaminableSolution
       solution: tank

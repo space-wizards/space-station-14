@@ -21,6 +21,7 @@ artifact-effect-hint-sentience = Neurological activity
 artifact-effect-hint-polymorph = Transmogrificational activity
 artifact-effect-hint-magnet = Magnetic waves
 artifact-effect-hint-visual = Visual distortions
+artifact-effect-hint-stationwide-disruption = Stationwide disruption
 
 # the triggers should be more obvious than the effects
 # gives people an idea of what to do: don't be too specific (i.e. no "welders")
@@ -43,6 +44,7 @@ artifact-trigger-hint-land = Active deceleration
 artifact-trigger-hint-examine = Examination
 artifact-trigger-hint-resurrection = Resurrection
 artifact-trigger-hint-medical = Therapeutic chemicals
+artifact-trigger-hint-funny = Slapstick comedy
 
 artifact-trigger-hint-drink-classic-martini = Beverage "Classically shaken"
 artifact-trigger-hint-drink-caffine = Beverage "Caffinated"

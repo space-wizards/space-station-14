@@ -1,0 +1,174 @@
+- type: entity
+  name: mk 93
+  parent: [ BaseWeaponPistol, BaseRestrictedContraband ]
+  id: WeaponPistolMk93
+  description: A cheap pistol built for fully automatic fire. Uses .22 auto ammo.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/mk93.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/mk93.rsi
+  - type: Gun
+    minAngle: 3
+    maxAngle: 18
+    angleIncrease: 3
+    angleDecay: 10
+    fireRate: 6
+    availableModes:
+    - SemiAuto
+    - FullAuto
+    soundGunshot:
+      path: /Audio/_Impstation/Weapons/Guns/Gunshots/light-pistol.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineLPistol
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineLPistol
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeLPistol
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeLPistol
+  - type: Construction
+    graph: UpgradeWeaponPistolConversion
+    node: start
+
+- type: entity
+  name: mk 92hb
+  parent: [ BaseWeaponPistol, BaseRestrictedContraband ]
+  id: WeaponPistolMk92HB
+  description: Designed in an attempt to make the most of a small cartridge. Uses .22 auto ammo.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/mk92hb.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/mk92hb.rsi
+  - type: Gun
+    minAngle: 1
+    maxAngle: 6
+    angleIncrease: 1.5
+    angleDecay: 10
+    fireRate: 5
+    burstFireRate: 16
+    availableModes:
+    - Burst
+    - SemiAuto
+    shotsPerBurst: 2
+    burstCooldown: 0.33
+    soundGunshot:
+      path: /Audio/_Impstation/Weapons/Guns/Gunshots/light-pistol2.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineLPistol
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineLPistol
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeLPistol
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeLPistol
+  - type: Construction
+    graph: UpgradeWeaponPistolConversion
+    node: start
+
+- type: entity
+  name: zipper .22
+  parent: [ BaseWeaponPistol, BaseRestrictedContraband ]
+  id: WeaponPistolZipper
+  description: Better at delivering the killing blow to the business of its manufacturer than to its actual targets. Uses .22 auto ammo.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/zipper.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Item
+    size: Tiny
+    shape:
+    - 0,0,0,0
+  - type: Clothing
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/zipper.rsi
+  - type: Gun
+    fireRate: 3
+    minAngle: 5
+    maxAngle: 100
+    angleIncrease: 30
+    angleDecay: 5
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/_Impstation/Weapons/Guns/Gunshots/zipper.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineZipper
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineZipper
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeLPistol
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeLPistol
+
+- type: entity
+  parent: WeaponPistolZipper
+  id: WeaponPistolZipperAP # For the uplink.
+  suffix: armor-piercing
+  components:
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: MagazineZipperAP
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineZipper
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: CartridgeLPistolAP
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeLPistol

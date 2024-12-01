@@ -4,9 +4,9 @@
   <Box>
     <GuideEntityEmbed Entity="MobDiona" Caption=""/>
   </Box>
-  
+
   Diona are a remarkable species, one of only a handful of sentient creatures known to have evolved from plants. Their woody roots allow them to [color=#1e90ff]ignore difficult terrain such as Kudzu,[/color] but [color=#ffa500]cannot fit into shoes made for other humanoids.[/color]
-  
+
   ## Damage
   Rather than having a normal humanoid circulatory system, Diona use capillary action to pump nutrient-carrying sap throughout their bodies, [color=#ffa500]which cannot be metabolized from iron.[/color]
   As their metabolism is very similar to that of Earth plants, chemicals designed to affect the growth and function of other plants have similar effects on Diona. For example, [color=#ffa500]Weed Killer is poisonous to them,[/color] but [color=#1e90ff]Robust Harvest can be used to accelerate their healing [color=#ffa500](At risk of overdose, as explained in the section below.)[/color]
@@ -25,10 +25,15 @@
     <GuideEntityEmbed Entity="MobDionaNymph" Caption=""/>
     <GuideEntityEmbed Entity="MobDionaNymph" Caption=""/>
   </Box>
-  A Diona's internal organs are sometimes capable of independence after the death of the main body. [color=#1e90ff]These organs, if voluntarily expelled, will metamorphose into Nymphs, or larval Diona.[/color] Nymphs are capable of speech, but not much else. 
-  
+  A Diona's internal organs are sometimes capable of independence after the death of the main body. [color=#1e90ff]These organs, if voluntarily expelled, will metamorphose into Nymphs, or larval Diona.[/color] Nymphs are capable of speech, but not much else.
+
   After around ten minutes, a Nymph may undergo a second metamorphosis, [color=#1e90ff]reforming into an adult Diona.[/color] This new Diona will be [color=#ffa500]a new individual, with their own appearance, name, and personality,[/color] but may [color=#1e90ff]retain memories of who they were previously.[/color]
-  
+
+  ## Mycorrhizal Gestalt
+
+  The minds of all Diona (and Nymphs) are subtly connected through a Mycorrhizal Gestalt. They can [color=#1e90ff]silently broadcast information to other Diona[/color] at any time, although they [color=#ffa500]cannot distinguish identity over the connection.[/color] This ability may prove useful when traditional communication methods fail.
+  The default radio key for the Gestalt is +m.
+
   ## Diona Naming Conventions
 
   Diona typically have qualia names: abstract phrases describing subjective experiences.

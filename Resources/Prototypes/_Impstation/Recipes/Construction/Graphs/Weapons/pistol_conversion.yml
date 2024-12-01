@@ -1,0 +1,20 @@
+- type: constructionGraph
+  id: UpgradeWeaponPistolConversion
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: convert-fullauto
+          steps:
+            - tag: ConversionKitFA
+              doAfter: 2
+        - to: convert-hyperburst
+          steps:
+            - tag: ConversionKitHB
+              doAfter: 2
+
+    - node: convert-fullauto
+      entity: WeaponPistolMk93
+
+    - node: convert-hyperburst
+      entity: WeaponPistolMk92HB
