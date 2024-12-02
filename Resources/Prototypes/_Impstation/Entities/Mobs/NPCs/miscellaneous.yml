@@ -168,3 +168,25 @@
     interactSuccessSound:
       path: /Audio/_Impstation/Animals/mwah.ogg
     interactSuccessSpawn: EffectHearts
+
+- type: entity
+  parent: MobUraniumCrab
+  id: MobRay
+  name: ray
+  description: A giant ore crab. It has a sticker on it's carapace reading "PLEASE HANDLE WITH CARE".
+  components:
+  - type: Sprite
+    scale: 3, 3
+  - type: PointLight
+    radius: 3
+    energy: 4
+    color: "#06DF24"
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessString: petting-success-ray
+    interactSuccessSpawn: EffectHearts
+  - type: DamageOnInteract
+    damage:
+      types:
+        Radiation: 5
+        Cellular: 5
