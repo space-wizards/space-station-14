@@ -14685,6 +14685,16 @@ entities:
     - type: Transform
       pos: 47.5,-52.5
       parent: 2
+  - uid: 23910
+    components:
+    - type: Transform
+      pos: 41.5,-56.5
+      parent: 2
+  - uid: 24145
+    components:
+    - type: Transform
+      pos: 41.5,-54.5
+      parent: 2
 - proto: AtmosFixBlockerMarker
   entities:
   - uid: 644
@@ -117663,7 +117673,7 @@ entities:
     - type: Transform
       pos: 51.093052,-13.622461
       parent: 2
-- proto: PresentRandomAsh
+- proto: PresentRandomCoal
   entities:
   - uid: 24000
     components:
@@ -125388,7 +125398,7 @@ entities:
     - type: Transform
       pos: 55.5,-32.5
       parent: 2
-- proto: SignalButton
+- proto: SignalButtonDirectional
   entities:
   - uid: 174
     components:
@@ -126157,7 +126167,7 @@ entities:
       linkedPorts:
         4587:
         - Pressed: DoorBolt
-- proto: SignalSwitch
+- proto: SignalSwitchDirectional
   entities:
   - uid: 15934
     components:
@@ -154019,7 +154029,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -140815.45
+      secondsUntilStateChange: -140965.23
       state: Opening
     - type: Airlock
       autoClose: False

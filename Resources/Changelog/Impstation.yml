@@ -1,53 +1,4 @@
 ﻿Entries:
-- author: wafehling
-  changes:
-  - message: Raccoon/Possum Vent Critters
-    type: Add
-  id: 118
-  time: '2024-08-24T15:55:36.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/138
-- author: sususuyo
-  changes:
-  - message: adding a salvage unlockable + moving music around
-    type: Add
-  id: 119
-  time: '2024-08-24T15:55:44.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/139
-- author: KingMudkipIII
-  changes:
-  - message: Add bartender chemmaster flatpack unlock
-    type: Add
-  id: 120
-  time: '2024-08-24T15:55:59.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/140
-- author: FlippenPage
-  changes:
-  - message: reimplemented Brigmedic equipment
-    type: Add
-  id: 121
-  time: '2024-08-24T15:56:09.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/142
-- author: Saeko-44
-  changes:
-  - message: Added Vials to the techfab
-    type: Add
-  id: 122
-  time: '2024-08-24T16:23:02.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/143
-- author: sageu111
-  changes:
-  - message: minor gray bugfixes + guidebook entry
-    type: Tweak
-  id: 123
-  time: '2024-08-24T16:23:10.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/144
-- author: starlighthowls
-  changes:
-  - message: White Whale trial rotation
-    type: Add
-  id: 124
-  time: '2024-08-24T22:17:53.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/145
 - author: formlessnameless
   changes:
   - message: "Fixing boat atmos stuff, small slight other changes that were pointed\uFFFD"
@@ -4381,3 +4332,62 @@
   id: 617
   time: '2024-12-01T11:37:36.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/857
+- author: AftrLite
+  changes:
+  - message: Ongoing respriting efforts to various assets.
+    type: Tweak
+  - message: Reagent volumes (Jugs, beakers, ect) Now display their reagents clearly
+      again.
+    type: Fix
+  - message: Crate labels no longer float menacingly above open crates.
+    type: Fix
+  id: 618
+  time: '2024-12-02T04:51:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/862
+- author: DinnerCalzone
+  changes:
+  - message: (Hummingbird) All buttons should now respect directionality.
+    type: Fix
+  - message: (Hummingbird) Fixed missing tiny fans from arrivals external dock.
+    type: Fix
+  id: 619
+  time: '2024-12-02T12:40:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/865
+- author: Darkmajia
+  changes:
+  - message: Dino Wars has undergone an extensive rework after beta tester feedback.
+      Thank you for continuing to support the Dino Wars project.
+    type: Tweak
+  id: 620
+  time: '2024-12-02T12:42:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/846
+- author: widgetbeck
+  changes:
+  - message: Decapoids are done. The only remaining issue is that their urist does
+      not spawn with their emote sounds for some reason.
+    type: Add
+  id: 621
+  time: '2024-12-02T12:46:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/859
+- author: widgetbeck
+  changes:
+  - message: Clarified the description of the "SGD Required" trait.
+    type: Tweak
+  id: 622
+  time: '2024-12-02T12:47:36.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/864
+- author: Darkmajia
+  changes:
+  - message: 'The Animal Friends Kit has an additional line to make its function clearer:
+      subjuzine requires mixing with blood.'
+    type: Add
+  id: 623
+  time: '2024-12-02T12:48:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/870
+- author: Darkmajia
+  changes:
+  - message: Ultraviolet lights can now be crafted in autolathes.
+    type: Add
+  id: 624
+  time: '2024-12-02T13:09:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/871
