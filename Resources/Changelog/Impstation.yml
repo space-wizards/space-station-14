@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: wafehling
-  changes:
-  - message: Raccoon/Possum Vent Critters
-    type: Add
-  id: 118
-  time: '2024-08-24T15:55:36.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/138
 - author: sususuyo
   changes:
   - message: adding a salvage unlockable + moving music around
@@ -4381,3 +4374,15 @@
   id: 617
   time: '2024-12-01T11:37:36.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/857
+- author: AftrLite
+  changes:
+  - message: Ongoing respriting efforts to various assets.
+    type: Tweak
+  - message: Reagent volumes (Jugs, beakers, ect) Now display their reagents clearly
+      again.
+    type: Fix
+  - message: Crate labels no longer float menacingly above open crates.
+    type: Fix
+  id: 618
+  time: '2024-12-02T04:51:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/862
