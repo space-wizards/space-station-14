@@ -1,6 +1,9 @@
 ﻿<Document>
   # Generators
   Generators are devices that produce power for the station. They vary in size and power output, and each has its own unique quirks and requirements.
+
+  Engineers are intended to setup low-tier generators like Solar Arrays and the AME at the start of the shift, to give enough time to setup higher-tier generators like the Singularity Engine for sustained power for the rest of the shift.
+
   <Box>
     <GuideEntityEmbed Entity="SingularityGenerator" Caption=""/>
     <GuideEntityEmbed Entity="TeslaGenerator" Caption=""/>

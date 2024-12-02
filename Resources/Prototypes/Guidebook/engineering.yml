@@ -205,7 +205,30 @@
   text: "/ServerInfo/Guidebook/Engineering/Power.xml"
   children:
     - Generators
+    - InspectingPower
+    - PowerStorage
+    - Ramping
+    - VoltageNetworks
 
+- type: guideEntry
+  id: InspectingPower
+  name: guide-entry-inspectingpower
+  text: "/ServerInfo/Guidebook/Engineering/InspectingPower.xml"
+
+- type: guideEntry
+  id: PowerStorage
+  name: guide-entry-powerstorage
+  text: "/ServerInfo/Guidebook/Engineering/PowerStorage.xml"
+
+- type: guideEntry
+  id: Ramping
+  name: guide-entry-ramping
+  text: "/ServerInfo/Guidebook/Engineering/Ramping.xml"
+
+- type: guideEntry
+  id: VoltageNetworks
+  name: guide-entry-voltagenetworks
+  text: "/ServerInfo/Guidebook/Engineering/VoltageNetworks.xml"
 
 - type: guideEntry
   id: Generators

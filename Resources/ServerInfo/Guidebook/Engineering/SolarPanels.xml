@@ -20,6 +20,16 @@
 
   Solar powers generate HV power, and as such require an HV wire running underneath them to connect to the station's power grid.
 
+  ## Power Bridge
+  Solar panels might seem like an unnecessary power source at first glance.
+  After all, we have this giant black hole in the center of the station.
+  Why bother setting up solars when we can use that?
+
+  It's ideal to set up solars alongside the AME for a few reasons:
+  - Having active solar panels alongside the AME increases the runtime of the station's batteries significantly more than just the AME alone. This can buy engineers more time to setup bigger power sources.
+  - Having active solar panels can reduce load on other grid producers. For example, if the solar arrays are producing enough power to satisfy half the station's needs, that is reflected in a reduced load on other engines, which can reduce the amount of fuel they burn.
+
+
   ## Adjusting Panels
   Because the station is orbiting a star, the sun's position in space changes over time.
   Solar panels need to be pointing straight at the sun to generate power efficiently, and they need to move over time to keep up with the sun's position.
