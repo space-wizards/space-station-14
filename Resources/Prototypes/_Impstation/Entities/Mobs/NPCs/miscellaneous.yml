@@ -170,26 +170,10 @@
     interactSuccessSpawn: EffectHearts
 
 - type: entity
-  parent: PumpkinLantern
-  id: PumpkinLanternReallyLarge
-  suffix: ReallyLarge
-  components:
-    - type: Sprite
-      scale: 4, 4
-    - type: GhostTakeoverAvailable
-    - type: GhostRole
-      allowMovement: false
-      allowSpeech: true
-      makeSentient: true
-      name: jack
-      description: this holiday is for YOU and everyone better act like it
-      raffle:
-        settings: default
-
-- type: entity
   parent: MobUraniumCrab
   id: MobRay
-  description: An ore crab. It has a sticker on it's carapace reading "PLEASE HANDLE WITH CARE".
+  name: ray
+  description: A giant ore crab. It has a sticker on it's carapace reading "PLEASE HANDLE WITH CARE".
   components:
   - type: Sprite
     scale: 3, 3
@@ -197,15 +181,12 @@
     radius: 3
     energy: 4
     color: "#06DF24"
-
-- type: entity
-  id: MobSpawnRay
-  parent: MobSpawnCrabUranium
-  name: mobspawner uraniumcrab ray
-  categories: [ Spawner ]
-  components:
-  - type: Sprite
-    sprite: /Textures/Effects/mobspawn.rsi
-    state: crab_uranium
-  - type: SpawnOnDespawn
-    prototype: MobRay
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessString: petting-success-ray
+    interactSuccessSpawn: EffectHearts
+  - type: DamageOnInteract
+    damage:
+      types:
+        Radiation: 5
+        Cellular: 5

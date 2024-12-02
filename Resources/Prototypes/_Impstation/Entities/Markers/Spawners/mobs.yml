@@ -171,3 +171,17 @@
     - type: ConditionalSpawner
       prototypes:
       - MobDinosaurTrike
+
+- type: entity
+  name: ray spawner
+  suffix: UraniumCrab
+  id: UraniumCrabSpawnerRay
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: ai
+    - type: ConditionalSpawner
+      prototypes:
+        - MobRay
