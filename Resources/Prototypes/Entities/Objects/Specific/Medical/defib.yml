@@ -71,3 +71,69 @@
   id: DefibrillatorOneHandedUnpowered
   parent: BaseDefibrillator
   suffix: One-Handed, Unpowered
+
+- type: entity
+  id: DefibrillatorCompact # This should be a research item at some point
+  parent: [ BaseDefibrillator, PowerCellSlotMediumItem ]
+  name: compact defibrillator
+  description: Now in fun size!
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/defibsmall.rsi
+    layers:
+      - state: icon
+      - state: screen
+        map: [ "enum.ToggleVisuals.Layer" ]
+        visible: false
+        shader: unshaded
+      - state: ready
+        map: ["enum.PowerDeviceVisualLayers.Powered"]
+        shader: unshaded
+  - type: Item
+    size: Normal
+  - type: ToggleCellDraw
+  - type: PowerCellDraw
+    useRate: 100
+  - type: Defibrillator
+    zapHeal:
+      types:
+        Asphyxiation: -40
+    doAfterDuration: 6
+  - type: DoAfter
+  - type: UseDelay
+
+- type: entity
+  id: DefibrillatorSyndicate
+  parent: DefibrillatorCompact
+  name: interdyne defibrillator
+  description: Doubles as a self-defense weapon against war-crime inclined tiders.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/defibsyndi.rsi
+    layers:
+      - state: icon
+      - state: screen
+        map: [ "enum.ToggleVisuals.Layer" ]
+        visible: false
+        shader: unshaded
+      - state: ready
+        map: ["enum.PowerDeviceVisualLayers.Powered"]
+        shader: unshaded
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 8
+  - type: ItemToggleMeleeWeapon
+    activatedSoundOnHit:
+      path: /Audio/Items/Defib/defib_zap.ogg
+      params:
+        variation: 0.250
+    activatedSoundOnHitNoDamage:
+      path: /Audio/Items/Defib/defib_zap.ogg
+      params:
+        variation: 0.250
+        volume: -10
+    activatedDamage:
+      types:
+        Blunt: 8
+        Shock: 16
