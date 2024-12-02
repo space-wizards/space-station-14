@@ -123,9 +123,10 @@
       visible: false
       sprite: Structures/Storage/closet_labels.rsi
       map: [ "enum.PaperLabelVisuals.Layer" ]
+  #TODO: Will have to eventually make a custom visualizer for cursed lockers
   - type: EntityStorageVisuals
-    stateBaseClosed: cursed
-    stateDoorOpen: cursed_open
+    stateBaseClosed: decursed
+    stateDoorOpen: decursed_open
     stateDoorClosed: decursed_door
   - type: Fixtures
     fixtures:
