@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Saeko-44
-  changes:
-  - message: Added Vials to the techfab
-    type: Add
-  id: 122
-  time: '2024-08-24T16:23:02.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/143
-- author: sageu111
-  changes:
-  - message: minor gray bugfixes + guidebook entry
-    type: Tweak
-  id: 123
-  time: '2024-08-24T16:23:10.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/144
 - author: starlighthowls
   changes:
   - message: White Whale trial rotation
@@ -4390,3 +4376,18 @@
   id: 621
   time: '2024-12-02T12:46:18.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/859
+- author: widgetbeck
+  changes:
+  - message: Clarified the description of the "SGD Required" trait.
+    type: Tweak
+  id: 622
+  time: '2024-12-02T12:47:36.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/864
+- author: Darkmajia
+  changes:
+  - message: 'The Animal Friends Kit has an additional line to make its function clearer:
+      subjuzine requires mixing with blood.'
+    type: Add
+  id: 623
+  time: '2024-12-02T12:48:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/870
