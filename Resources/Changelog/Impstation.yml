@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: FlippenPage
-  changes:
-  - message: reimplemented Brigmedic equipment
-    type: Add
-  id: 121
-  time: '2024-08-24T15:56:09.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/142
 - author: Saeko-44
   changes:
   - message: Added Vials to the techfab
@@ -4389,3 +4382,11 @@
   id: 620
   time: '2024-12-02T12:42:13.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/846
+- author: widgetbeck
+  changes:
+  - message: Decapoids are done. The only remaining issue is that their urist does
+      not spawn with their emote sounds for some reason.
+    type: Add
+  id: 621
+  time: '2024-12-02T12:46:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/859
