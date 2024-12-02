@@ -10,6 +10,7 @@ using Content.Shared.Popups;
 using Content.Shared.Damage;
 using Robust.Shared.Prototypes;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Atmos.Rotting;
 using Content.Server.Objectives.Components;
 using Content.Server.Light.Components;
 using Content.Shared.Eye.Blinding.Systems;
@@ -24,6 +25,8 @@ namespace Content.Server.Changeling;
 
 public sealed partial class ChangelingSystem : EntitySystem
 {
+    [Dependency] private readonly SharedRottingSystem _rotting = default!;
+
     public void SubscribeAbilities()
     {
         SubscribeLocalEvent<ChangelingComponent, OpenEvolutionMenuEvent>(OnOpenEvolutionMenu);
@@ -92,11 +95,17 @@ public sealed partial class ChangelingSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("changeling-absorb-fail-unabsorbable"), uid, uid);
             return;
         }
+        if (TryComp<RottingComponent>(target, out var rotComp) && _rotting.RotStage(target, rotComp) >= 2)
+        {
+            _popup.PopupEntity(Loc.GetString("changeling-absorb-fail-extremely-bloated"), uid, uid);
+            return;
+        }
 
         if (!TryUseAbility(uid, comp, args))
             return;
 
         var popupOthers = Loc.GetString("changeling-absorb-start", ("user", Identity.Entity(uid, EntityManager)), ("target", Identity.Entity(target, EntityManager)));
+        _popup.PopupEntity(Loc.GetString("changeling-absorb-rotting"), uid, uid);
         _popup.PopupEntity(popupOthers, uid, PopupType.LargeCaution);
         PlayMeatySound(uid, comp);
         var dargs = new DoAfterArgs(EntityManager, uid, TimeSpan.FromSeconds(15), new AbsorbDNADoAfterEvent(), uid, target)
@@ -123,7 +132,11 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         PlayMeatySound(args.User, comp);
 
-        UpdateBiomass(uid, comp, comp.MaxBiomass - comp.TotalAbsorbedEntities);
+        float biomassModifier = 1f;
+        if (HasComp<RottingComponent>(target))
+            biomassModifier = 0.5f;
+
+        UpdateBiomass(uid, comp, (comp.MaxBiomass * biomassModifier) - comp.TotalAbsorbedEntities);
 
         var dmg = new DamageSpecifier(_proto.Index(AbsorbedDamageGroup), 200);
         _damage.TryChangeDamage(target, dmg, false, false);
@@ -145,7 +158,9 @@ public sealed partial class ChangelingSystem : EntitySystem
         {
             popup = Loc.GetString("changeling-absorb-end-self");
             bonusChemicals += 10;
-            bonusEvolutionPoints += 2;
+
+            if (!HasComp<RottingComponent>(target))
+                bonusEvolutionPoints += 2;
         }
         TryStealDNA(uid, target, comp, true);
         comp.TotalAbsorbedEntities++;
