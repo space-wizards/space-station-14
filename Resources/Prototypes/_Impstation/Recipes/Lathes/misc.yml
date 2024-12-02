@@ -1,0 +1,8 @@
+- type: latheRecipe
+  id: UvLightTube
+  result: UvLightTube
+  category: Lights
+  completetime: 2
+  materials:
+    Steel: 50
+    Glass: 50
