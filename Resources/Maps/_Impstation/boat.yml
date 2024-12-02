@@ -10093,7 +10093,7 @@ entities:
       pos: 10.5,88.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -99239.81
+      secondsUntilStateChange: -99272.8
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -10104,7 +10104,7 @@ entities:
       pos: 10.5,87.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -99241.68
+      secondsUntilStateChange: -99274.664
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -10874,7 +10874,7 @@ entities:
       pos: 38.5,-21.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -294810.78
+      secondsUntilStateChange: -294843.78
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -64785,7 +64785,7 @@ entities:
       pos: 60.5,76.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -23559.508
+      secondsUntilStateChange: -23592.494
       state: Opening
   - uid: 18653
     components:
@@ -77100,7 +77100,7 @@ entities:
       pos: 34.5,-25.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -326149.06
+      secondsUntilStateChange: -326182.06
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -109275,7 +109275,7 @@ entities:
       pos: 13.5,-16.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -432803.53
+      secondsUntilStateChange: -432836.53
       state: Opening
 - proto: HospitalCurtainsOpen
   entities:
@@ -112287,13 +112287,6 @@ entities:
     - type: MobMover
     - type: Emoting
     - type: InsideEntityStorage
-- proto: MobSpawnRay
-  entities:
-  - uid: 2738
-    components:
-    - type: Transform
-      pos: 51.5,-15.5
-      parent: 2
 - proto: MonkeyCubeBox
   entities:
   - uid: 2525
@@ -140582,6 +140575,13 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 25.5,76.5
+      parent: 2
+- proto: UraniumCrabSpawnerRay
+  entities:
+  - uid: 2738
+    components:
+    - type: Transform
+      pos: 51.5,-15.5
       parent: 2
 - proto: UraniumReinforcedWindowDirectional
   entities:
