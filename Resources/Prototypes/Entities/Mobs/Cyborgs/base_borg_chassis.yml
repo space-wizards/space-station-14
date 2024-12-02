@@ -279,6 +279,9 @@
   parent: [BaseBorgChassis, BaseBorgTransponder]
   abstract: true
   components:
+  - type: RandomMetadata
+    nameSegments:
+      - names_borg
   - type: NpcFactionMember
     factions:
     - NanoTrasen

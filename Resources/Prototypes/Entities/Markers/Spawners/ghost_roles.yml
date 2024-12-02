@@ -108,7 +108,7 @@
   - type: GhostRole
     name: ghost-role-information-loneop-name
     description: ghost-role-information-loneop-description
-    rules: ghost-role-information-rules-default-solo-antagonist
+    rules: ghost-role-information-loneop-rules
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
   - type: Sprite
