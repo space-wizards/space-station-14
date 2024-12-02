@@ -1,4 +1,5 @@
-﻿using Content.Shared.Examine;
+using Content.Shared.Changeling;
+using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -96,6 +97,17 @@ public abstract class SharedRottingSystem : EntitySystem
             description += "-nonmob";
 
         args.PushMarkup(Loc.GetString(description, ("target", Identity.Entity(uid, EntityManager))));
+
+        if (HasComp<ChangelingComponent>(args.Examiner) && !HasComp<AbsorbedComponent>(uid))
+        {
+            var changelingDescription = stage switch
+            {
+                >= 2 => "changeling-examine-extremely-bloated",
+                _ => "changeling-examine-rotting"
+            };
+
+            args.PushMarkup(Loc.GetString(changelingDescription, ("target", Identity.Entity(uid, EntityManager))));
+        }
     }
 
     /// <summary>

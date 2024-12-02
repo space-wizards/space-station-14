@@ -105,6 +105,7 @@ public sealed partial class ChangelingSystem : EntitySystem
             return;
 
         var popupOthers = Loc.GetString("changeling-absorb-start", ("user", Identity.Entity(uid, EntityManager)), ("target", Identity.Entity(target, EntityManager)));
+        _popup.PopupEntity(Loc.GetString("changeling-absorb-rotting"), uid, uid);
         _popup.PopupEntity(popupOthers, uid, PopupType.LargeCaution);
         PlayMeatySound(uid, comp);
         var dargs = new DoAfterArgs(EntityManager, uid, TimeSpan.FromSeconds(15), new AbsorbDNADoAfterEvent(), uid, target)
@@ -131,7 +132,11 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         PlayMeatySound(args.User, comp);
 
-        UpdateBiomass(uid, comp, comp.MaxBiomass - comp.TotalAbsorbedEntities);
+        float biomassModifier = 1f;
+        if (HasComp<RottingComponent>(target))
+            biomassModifier = 0.5f;
+
+        UpdateBiomass(uid, comp, (comp.MaxBiomass * biomassModifier) - comp.TotalAbsorbedEntities);
 
         var dmg = new DamageSpecifier(_proto.Index(AbsorbedDamageGroup), 200);
         _damage.TryChangeDamage(target, dmg, false, false);
@@ -153,7 +158,9 @@ public sealed partial class ChangelingSystem : EntitySystem
         {
             popup = Loc.GetString("changeling-absorb-end-self");
             bonusChemicals += 10;
-            bonusEvolutionPoints += 2;
+
+            if (!HasComp<RottingComponent>(target))
+                bonusEvolutionPoints += 2;
         }
         TryStealDNA(uid, target, comp, true);
         comp.TotalAbsorbedEntities++;
