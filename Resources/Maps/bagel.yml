@@ -126855,18 +126855,6 @@ entities:
         - Pressed: Toggle
         16542:
         - Pressed: Toggle
-  - uid: 19130
-    components:
-    - type: MetaData
-      name: Privacy Shutter Button
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -31.5,-20.5
-      parent: 60
-    - type: DeviceLinkSource
-      linkedPorts:
-        19155:
-        - Pressed: Toggle
   - uid: 19170
     components:
     - type: Transform
