@@ -11,12 +11,15 @@
   - type: Item
     sprite: _Impstation/Objects/Decapoid/claw.rsi
   - type: MeleeWeapon
+    range: 0.9
+    angle: 30
+    resetOnHandSelected: true
     wideAnimationRotation: 135
     attackRate: 1.5
     damage:
       types:
-        Piercing: 15 # probably nerf this once they're non-antags
-        Structural: 15
+        Piercing: 15
+        Structural: 5
     soundHit:
       collection: AlienClaw
   - type: Unremoveable
@@ -25,7 +28,7 @@
   name: vaporizer
   parent: ClothingMaskGas
   id: DecapoidBreathingApparatus
-  description: 'A neck-mounted breathing apparatus for decapoids. Moistens your gills, if you have them. Also functions as a brain-to-voice translator.'
+  description: 'A neck-mounted breathing apparatus for Decapoids. Moistens your gills, if you have them. Also functions as a brain-to-voice translator.'
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Decapoid/vaporizer.rsi # todo: custom. obviously. also todo: make it able to take in water, convert it to vapor, and internals that steam into the lungs.
@@ -49,7 +52,7 @@
     slots:
     - Snout
   - type: SpeechSound
-    speechSounds: Borg
+    speechSounds: Decapoid
     speechVerb: Robotic
 
 

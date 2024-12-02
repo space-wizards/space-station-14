@@ -73,5 +73,5 @@
 
 - type: guideEntry
   id: Decapoid
-  name: REDACTED
-  text: "/ServerInfo/_Impstation/Guidebook/Mobs/Decapoid_REDACTED.xml"
+  name: Decapoid
+  text: "/ServerInfo/_Impstation/Guidebook/Mobs/Decapoid.xml"
