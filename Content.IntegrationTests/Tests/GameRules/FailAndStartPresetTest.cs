@@ -140,9 +140,10 @@ public sealed class TestRuleSystem : EntitySystem
         while (query.MoveNext(out _, out _, out var gameRule))
         {
             var minPlayers = gameRule.MinPlayers;
-            if (!gameRule.CancelPresetOnTooFewPlayers)
+            var maxPlayers = gameRule.MaxPlayers;
+            if (!gameRule.CancelPresetOnTooFewPlayers && !gameRule.CancelPresetOnTooManyPlayers)
                 continue;
-            if (args.Players.Length >= minPlayers)
+            if (args.Players.Length >= minPlayers && args.Players.Length <= maxPlayers)
                 continue;
 
             args.Cancel();

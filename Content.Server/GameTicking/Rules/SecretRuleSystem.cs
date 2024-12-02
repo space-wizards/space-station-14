@@ -176,6 +176,9 @@ public sealed class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
 
             if (ruleComp.MinPlayers > players && ruleComp.CancelPresetOnTooFewPlayers)
                 return false;
+
+            if (ruleComp.MaxPlayers < players && ruleComp.CancelPresetOnTooManyPlayers)
+                return false;
         }
 
         if (_nextRoundAllowed.ContainsKey(selected.ID) && _nextRoundAllowed[selected.ID] > _ticker.RoundId)
