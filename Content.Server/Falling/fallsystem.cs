@@ -37,7 +37,7 @@ namespace Content.Server.Falling
             if (args.OldParent == null || args.Transform.GridUid != null || TerminatingOrDeleted(owner)) // If you came from space or are switching to another valid grid, nothing happens.
                 return;
 
-            if (!HasComp<TriesteComponent>(args.OldParent)) #Are you falling off Trieste? No? Shut up.
+            if (!HasComp<TriesteComponent>(args.OldParent)) // Are you falling off Trieste? No? Shut up.
             return;
             
             if (HasComp<GhostComponent>(owner))
