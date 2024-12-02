@@ -126167,7 +126167,7 @@ entities:
       linkedPorts:
         4587:
         - Pressed: DoorBolt
-- proto: SignalSwitch
+- proto: SignalSwitchDirectional
   entities:
   - uid: 15934
     components:
