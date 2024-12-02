@@ -36,6 +36,9 @@
   id: SprayPainter
 
 - type: Tag
+  id: RubberStamp
+
+- type: Tag
   id: Vaporizer
 
 - type: Tag

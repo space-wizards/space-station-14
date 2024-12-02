@@ -21,6 +21,9 @@
     size: Tiny
   - type: StealTarget
     stealGroup: Stamp
+  - type: Tag
+    tags:
+      - RubberStamp
 
 - type: entity
   name: alternate rubber stamp
