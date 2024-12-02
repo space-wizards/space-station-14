@@ -13,6 +13,7 @@ namespace Content.Server.Procedural;
 public sealed partial class DungeonSystem
 {
     // Temporary caches.
+    private readonly HashSet<EntityUid> _entitySet = new();
     private readonly List<DungeonRoomPrototype> _availableRooms = new();
 
     /// <summary>
@@ -126,25 +127,23 @@ public sealed partial class DungeonSystem
         var templateGrid = Comp<MapGridComponent>(templateMapUid);
         var roomDimensions = room.Size;
 
-        var entitySet = new HashSet<EntityUid>();
-        
         var finalRoomRotation = roomTransform.Rotation();
 
         // go BRRNNTTT on existing stuff
         if (clearExisting)
         {
             //The Box2 rotation completely breaks the entity calculation from lookup. and before that, there's a 75% chance the spawn room won't remove anything underneath it.
-            //Therefore, Box2 must be calculated separately for all 4 rotation options. 
+            //Therefore, Box2 must be calculated separately for all 4 rotation options.
             var point1 = Vector2.Transform(-room.Size / 2, roomTransform);
             var point2 = Vector2.Transform(room.Size / 2, roomTransform);
             var gridBounds = GetRotatedBox(point1, point2, finalRoomRotation);
-            
-            entitySet.Clear();
+
+            _entitySet.Clear();
             // Polygon skin moment
             gridBounds = gridBounds.Enlarged(-0.05f);
-            _lookup.GetLocalEntitiesIntersecting(gridUid, gridBounds, entitySet, LookupFlags.Uncontained);
+            _lookup.GetLocalEntitiesIntersecting(gridUid, gridBounds, _entitySet, LookupFlags.Uncontained);
 
-            foreach (var templateEnt in entitySet)
+            foreach (var templateEnt in _entitySet)
             {
                 Del(templateEnt);
             }
