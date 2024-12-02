@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: "Fixing boat atmos stuff, small slight other changes that were pointed\uFFFD"
-    type: Tweak
-  id: 125
-  time: '2024-08-25T01:54:24.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/146
 - author: KingMudkipIII
   changes:
   - message: new drinks + bartender unlock tweak
@@ -4391,3 +4384,16 @@
   id: 624
   time: '2024-12-02T13:09:17.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/871
+- author: starlighthowls
+  changes:
+  - message: Adds cruise 2 for testing!!
+    type: Add
+  - message: mob spawns for cruise
+    type: Add
+  - message: washing machines
+    type: Add
+  - message: moved some old cruise stuff into the impstation specific files
+    type: Tweak
+  id: 625
+  time: '2024-12-02T23:39:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/863
