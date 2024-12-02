@@ -87,14 +87,46 @@
   parent: ClosetSteelBase
   categories: [ HideSpawnMenu ]
   components:
+  - type: ResistLocker
+    resistTime: 5 #TODO: Test with resist
   - type: StoreOnCollide
     bodyOnly: true
+    lockOnCollide: true
+  - type: LockVisuals
+    stateLocked: cursed_door
+    stateUnlocked: decursed_door
+  - type: Lock
+    breakOnEmag: false
+  - type: AccessReader
+    access: [["Wizard"]]
+    breakOnEmag: false
   - type: Projectile
     deleteOnCollide: false
     onlyCollideWhenShot: true
     damage:
       types:
         Brute: 0
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Storage/closet.rsi
+    layers:
+    - state: cursed
+      map: [ "enum.StorageVisualLayers.Base" ]
+    - state: decursed_door
+      map: [ "enum.StorageVisualLayers.Door" ]
+    - state: welded
+      visible: false
+      map: [ "enum.WeldableLayers.BaseWelded" ]
+    - state: cursed_door
+      map: [ "enum.LockVisualLayers.Lock" ]
+    - state: paper
+      visible: false
+      sprite: Structures/Storage/closet_labels.rsi
+      map: [ "enum.PaperLabelVisuals.Layer" ]
+  - type: EntityStorageVisuals
+    stateBaseClosed: cursed
+    stateDoorOpen: cursed_open
+    stateDoorClosed: decursed_door
   - type: Fixtures
     fixtures:
       fix1:
