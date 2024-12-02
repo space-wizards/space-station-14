@@ -41,7 +41,6 @@ loadout-group-hop-jumpsuit = Head of Personnel jumpsuit
 loadout-group-hop-neck = Head of Personnel neck
 loadout-group-hop-backpack = Head of Personnel backpack
 loadout-group-hop-outerclothing = Head of Personnel outer clothing
-loadout-group-hop-shoes = Head of Personnel shoes
 
 # Civilian
 loadout-group-passenger-jumpsuit = Passenger jumpsuit

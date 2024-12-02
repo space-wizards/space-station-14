@@ -1,0 +1,13 @@
+- type: entity
+  parent: [ClothingShoesMilitaryBaseInedible, BaseCommandContraband]
+  id: ClothingShoesBootsCaptainjumpboots
+  name: jump boots
+  description: "Polished leather boots with strong ankle support, originally designed for paratroopers. Designed with gold honor guard heel taps. They'll know you're coming."
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Shoes/Boots/captainjumpboots.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Shoes/Boots/captainjumpboots.rsi
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepBoots
