@@ -39,3 +39,22 @@
   recognizable: true
   physicalDesc: reagent-physical-desc-viscous
   slippery: false
+  metabolisms:
+    # like a shitter omnizine, and a shittier ichor
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 1.5
+    Medicine:
+      effects:
+      - !type:ModifyBloodLevel
+        amount: 1
+      - !type:HealthChange
+        damage:
+          groups:
+            Burn: -1
+            Toxin: -1
+            Airloss: -1
+            Brute: -1
+      - !type:ModifyBleedAmount
+        amount: -1
