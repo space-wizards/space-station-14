@@ -172,15 +172,15 @@
     lightningExplode: false
   - type: NameIdentifier
     group: GenericNumber
-  - type: ContainerContainer
-    containers:
-      storagebase: !type:Container
-        ents: []
   - type: Storage
     grid:
     - 0,0,1,2
     clickInsert: false
     maxItemSize: Small
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
   - type: UserInterface
     interfaces:
       enum.StorageUiKey.Key:
