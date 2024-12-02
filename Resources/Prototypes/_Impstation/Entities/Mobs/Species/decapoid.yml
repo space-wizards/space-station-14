@@ -1,11 +1,10 @@
 - type: entity
   save: false
   name: Urist McCrab
-  suffix: SpawnsWithInternals
   parent: BaseMobSpeciesOrganic
   id: BaseMobDecapoid
   abstract: true
-  components: # todo: mute when not wearing the vaporizer, uses the borg sfx when wearing it.
+  components:
   - type: Barotrauma
     damage:
       types:
@@ -26,7 +25,7 @@
         tags:
           - Vaporizer
     failMessage: decapoid-cant-speak
-  - type: Respirator # todo: give the ability to generate their own vapor
+  - type: Respirator 
     damage:
       types:
         Asphyxiation: 2
@@ -114,7 +113,7 @@
       Acidic:  [ Touch ]
   - type: Vocal
     sounds:
-      Unsexed: UnisexSilicon
+      Unsexed: UnisexDecapoid
   - type: MovementSpeedModifier
     baseSprintSpeed: 3.5
     baseWalkSpeed: 1.5
@@ -143,7 +142,6 @@
         Blunt: 5
     clumsySound:
       path: /Audio/_Impstation/Effects/Clumsy/crab_snap.ogg # the game gets really touchy about having that initial forward slash.
-
   - type: Bloodstream
     bloodReagent: CopperBlood # real life crustaceans are in the same clade as spiders and share a blood type
   - type: Puller
@@ -176,10 +174,8 @@
           32:
             sprite: _Impstation/Mobs/Species/Decapoid/displacement.rsi
             state: neck
-
-
   - type: Speech
-    speechSounds: Borg
+    speechSounds: Decapoid
   - type: TypingIndicator
     proto: robot # todo: custom
   - type: HumanoidAppearance
@@ -268,3 +264,13 @@
           32:
             sprite: _Impstation/Mobs/Species/Decapoid/displacement.rsi
             state: neck
+
+- type: entity
+  save: false
+  id: BaseMobDecapoidInternals
+  parent: BaseMobDecapoid
+  suffix: SpawnsWithInternals
+  components:
+  - type: Loadout
+    prototypes:
+      - StartingGearDecapoidVaporizer
