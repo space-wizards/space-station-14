@@ -110,7 +110,7 @@
     description: ghost-role-information-loneop-description
     rules: ghost-role-information-loneop-rules
     mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
+    - MindRoleGhostRoleSoloAntagonist
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
