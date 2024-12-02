@@ -2518,6 +2518,7 @@ entities:
         path: /Audio/Effects/alert.ogg
       inherent: True
       enabled: True
+    - type: Trieste
     - type: NavMap
 - proto: AcousticGuitarInstrument
   entities:
