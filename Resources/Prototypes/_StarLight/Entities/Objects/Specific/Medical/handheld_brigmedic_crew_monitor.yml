@@ -4,6 +4,9 @@
   id: HandheldBrigmedicCrewMonitor
   description: So advanced it only tracks security personnel! Does not monitor emotional stability or competence levels of security members. Use at your own risk!
   components:
+  - type: Tag
+    tags:
+      - BrigmedicBeltEquip
   - type: Sprite
     sprite: _Starlight/Objects/Specific/Medical/handheld_brigmedic_crewmonitor.rsi
     state: scanner
@@ -25,6 +28,9 @@
   parent: HandheldBrigmedicCrewMonitor
   suffix: Empty
   components:
+  - type: Tag
+    tags:
+      - BrigmedicBeltEquip
   - type: ItemSlots
     slots:
       cell_slot:
