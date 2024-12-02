@@ -148,6 +148,7 @@
       - LedLightTube
       - SodiumLightTube
       - ExteriorLightTube
+      - UvLightTube
       - LightBulb
       - LedLightBulb
       - DimLightBulb
