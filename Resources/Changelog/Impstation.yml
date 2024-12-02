@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: KingMudkipIII
-  changes:
-  - message: Jungle juice + King soda
-    type: Add
-  id: 128
-  time: '2024-08-26T18:01:13.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/150
 - author: starlighthowls
   changes:
   - message: i didnt actually add NTAS WW to map rotation OOPS
@@ -4400,3 +4393,13 @@
   id: 627
   time: '2024-12-02T23:53:05.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/872
+- author: Darkmajia
+  changes:
+  - message: Salvage corpses spawn heavily rotted, and extremely bloated.
+    type: Tweak
+  - message: Changelings are incapable of absorbing corpses once they reach the "extremely
+      bloated" stage.
+    type: Tweak
+  id: 628
+  time: '2024-12-02T23:54:31.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/860
