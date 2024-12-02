@@ -21,3 +21,5 @@
     jumpsuit: ClothingUniformJumpsuitSalvageSpecialist
     id: BasinTechPDA
     ears: ClothingHeadsetCargo
+    shoes: ClothingShoesLeather
+    
