@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: KingMudkipIII
-  changes:
-  - message: new drinks + bartender unlock tweak
-    type: Add
-  id: 126
-  time: '2024-08-25T15:36:27.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/148
 - author: starlighthowls
   changes:
   - message: NTAS WW small fixes
@@ -4397,3 +4390,10 @@
   id: 625
   time: '2024-12-02T23:39:10.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/863
+- author: Sha-Seng
+  changes:
+  - message: hi stamps fit in folders now :)
+    type: Tweak
+  id: 626
+  time: '2024-12-02T23:43:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/868
