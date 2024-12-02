@@ -217,6 +217,7 @@
   - SingularityTeslaEngine
   - TEG
   - RTG
+  - SolarPanels
 
 - type: guideEntry
   id: AME
@@ -255,3 +256,8 @@
   id: PortableGenerator
   name: guide-entry-portable-generator
   text: "/ServerInfo/Guidebook/Engineering/PortableGenerator.xml"
+
+- type: guideEntry
+  id: SolarPanels
+  name: guide-entry-solarpanels
+  text: "/ServerInfo/Guidebook/Engineering/SolarPanels.xml"

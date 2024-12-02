@@ -39,6 +39,7 @@ guide-entry-ame = Antimatter Engine (AME)
 guide-entry-singularityteslaengine = Singularity / Tesla
 guide-entry-singularityengine = Singularity Engine
 guide-entry-teslaengine = Tesla Engine
+guide-entry-solarpanels = Solar Panels
 guide-entry-teg = Thermo-electric Generator (TEG)
 guide-entry-rtg = RTG
 guide-entry-jobs = Jobs
