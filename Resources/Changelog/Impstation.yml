@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: sususuyo
-  changes:
-  - message: adding a salvage unlockable + moving music around
-    type: Add
-  id: 119
-  time: '2024-08-24T15:55:44.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/139
 - author: KingMudkipIII
   changes:
   - message: Add bartender chemmaster flatpack unlock
@@ -4386,3 +4379,12 @@
   id: 618
   time: '2024-12-02T04:51:53.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/862
+- author: DinnerCalzone
+  changes:
+  - message: (Hummingbird) All buttons should now respect directionality.
+    type: Fix
+  - message: (Hummingbird) Fixed missing tiny fans from arrivals external dock.
+    type: Fix
+  id: 619
+  time: '2024-12-02T12:40:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/865
