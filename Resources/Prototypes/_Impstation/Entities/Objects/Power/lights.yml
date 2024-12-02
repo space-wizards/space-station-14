@@ -1,0 +1,13 @@
+- type: entity
+  parent: BaseLightTube
+  name: ultraviolet light tube
+  description: A high power high energy bulb for the depths of space. Purple.
+  id: UvLightTube
+  components:
+  - type: LightBulb
+    color: "#9E00FF"
+    lightEnergy: 1
+    lightRadius: 15
+    lightSoftness: 0.9
+    BurningTemperature: 320
+    PowerUse: 100

@@ -1,7 +1,9 @@
 - type: dataset
   id: RevenantType
   values:
+  - Bad Guy #imp
   - essence
+  - gratiousness #imp
   - ghost
   - phantom
   - poltergeist
@@ -20,10 +22,11 @@
   - endless
   - eternal
   - fiery
-  - FUCKING
+  - FUCKING #imp
   - hateful
   - hideous
   - hilarious
+  - indescriminate #imp
   - indifferent
   - malevolent
   - peaceful
@@ -46,12 +49,15 @@
   - grief
   - hate
   - hellfire
-  - homophobia
+  - hill #imp
+  - homophobia #imp
   - laughter
   - misery
   - ruin
   - salt
   - screams
+  - SHITPIGS #imp
   - sorrow
   - suffering
+  - tutorialization #imp
   - vengeance

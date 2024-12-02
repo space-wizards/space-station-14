@@ -3,9 +3,6 @@ using Content.Client.Alerts;
 using Content.Shared.Revenant;
 using Content.Shared.Revenant.Components;
 using Robust.Client.GameObjects;
-using Robust.Client.Player;
-using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Timer = Robust.Shared.Timing.Timer;
 
@@ -32,13 +29,13 @@ public sealed class RevenantRegenModifierSystem : EntitySystem
             var ent = GetEntity(witness);
             if (TryComp<SpriteComponent>(ent, out var sprite))
             {
-                var layerID = sprite.AddLayer(_witnessIndicator);
-                if (sprite.TryGetLayer(layerID, out var layer))
-                {
-                    layer.Offset = new Vector2(0, 0.8f);
-                    layer.Scale = new Vector2(0.65f, 0.65f);
-                }
-                Timer.Spawn(TimeSpan.FromSeconds(5), () => sprite.RemoveLayer(layerID));
+                var layer = sprite.AddLayer(_witnessIndicator);
+
+                sprite.LayerMapSet(RevenantWitnessVisuals.Key, layer);
+                sprite.LayerSetOffset(layer, new Vector2(0, 0.8f));
+                sprite.LayerSetScale(layer, new Vector2(0.65f, 0.65f));
+
+                Timer.Spawn(TimeSpan.FromSeconds(5), () => sprite.RemoveLayer(RevenantWitnessVisuals.Key));
             }
         }
     }
@@ -53,4 +50,9 @@ public sealed class RevenantRegenModifierSystem : EntitySystem
         sprite.LayerSetState(RevenantVisualLayers.Digit1, $"{witnesses / 10}");
         sprite.LayerSetState(RevenantVisualLayers.Digit2, $"{witnesses % 10}");
     }
+}
+
+public enum RevenantWitnessVisuals : byte
+{
+    Key
 }

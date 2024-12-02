@@ -17,6 +17,7 @@
     - id: RandomSentience
     - id: SolarFlare
     - id: VentClog
+    - id: GoblinKnightEvent # imp
 
 - type: entityTable
   id: BasicAntagEventsTable
@@ -33,6 +34,8 @@
     - id: ZombieOutbreak
     - id: LoneOpsSpawn
     - id: ChangelingAwakening
+    - id: GoblinStowawaysEvent # imp
+    - id: GoblinCastawaysEvent # imp
 
 - type: entityTable
   id: SleeperlessAntagEventsTable
@@ -46,6 +49,8 @@
     - id: ZombieOutbreak
     - id: LoneOpsSpawn
     - id: ChangelingAwakening
+    - id: GoblinStowawaysEvent # imp
+    - id: GoblinCastawaysEvent # imp
 
 - type: entity
   id: BaseStationEvent

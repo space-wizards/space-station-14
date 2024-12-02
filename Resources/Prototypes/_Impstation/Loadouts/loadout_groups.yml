@@ -18,17 +18,18 @@
 # the claw and tank but as StartingGear
 - type: startingGear
   id: StartingGearDecapoidClaw
+  inhand:
+    - DecapoidVaporTank
+    - DecapoidClawItem
+
+# the full internals setup for decapoids but as StartingGear
+- type: startingGear
+  id: StartingGearDecapoidVaporizer
   equipment:
     mask: DecapoidBreathingApparatus
   inhand:
     - DecapoidVaporTank
     - DecapoidClawItem
-
-# the vaporizer but as StartingGear
-- type: startingGear
-  id: StartingGearDecapoidVaporizer
-  equipment:
-    mask: DecapoidBreathingApparatus
 
 # The usual loadouts of the decapoid harness that spawn in your chest slot for jobs that don't have outerwear in their loadout
 - type: loadoutGroup
@@ -73,6 +74,7 @@
   loadouts:
   - LoadoutDecapoidBreathTool
 
+
 - type: loadoutGroup
   id: GroupBreathToolDecapoidInventory
   name: loadout-group-breath-tool-inventory-decapoid
@@ -80,6 +82,15 @@
   hidden: true
   loadouts:
   - LoadoutDecapoidBreathToolInventory
+
+- type: loadoutGroup
+  id: ChemistHead
+  name: loadout-group-chemist-head
+  minLimit: 0
+  loadouts:
+  - MedicalBeret
+  - SeniorPhysicianBeret
+
 
 - type: loadoutGroup
   id: CaptainGlasses

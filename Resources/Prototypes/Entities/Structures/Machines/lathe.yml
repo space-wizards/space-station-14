@@ -148,8 +148,10 @@
       - LedLightTube
       - SodiumLightTube
       - ExteriorLightTube
+      - UvLightTube
       - LightBulb
       - LedLightBulb
+      - DimLightBulb
       - Bucket
       - DrinkMug
       - DrinkMugMetal
@@ -290,6 +292,7 @@
     - LargeBeaker
     - Dropper
     - ClothingEyesGlassesChemical
+    - SGDRecipe #imp special
     dynamicRecipes:
       - PowerDrill
       - MiningDrill
@@ -313,6 +316,7 @@
       - PillCanister
       - ChemistryEmptyBottle01
       - BaseChemistryEmptyVial
+      - Drone
       - AdvMopItem
       - WeaponSprayNozzle
       - ClothingBackpackWaterTank
@@ -581,12 +585,8 @@
     - BorgModuleFireExtinguisher
     - BorgModuleRadiationDetection
     - BorgModuleTool
-    - BorgModuleAppraisal
     - BorgModuleBartender
-    - BorgModuleConstruction
     - BorgModulePaper
-    - BorgModuleTreatment
-    - BorgModuleCleaning
     - CyborgEndoskeleton
     - LeftArmBorg
     - RightArmBorg
@@ -594,56 +594,15 @@
     - RightLegBorg
     - LightHeadBorg
     - TorsoBorg
-    - LeftArmBorgEngineer
-    - RightArmBorgEngineer
-    - LeftLegBorgEngineer
-    - RightLegBorgEngineer
-    - HeadBorgEngineer
-    - TorsoBorgEngineer
-    - LeftLegBorgJanitor
-    - RightLegBorgJanitor
-    - HeadBorgJanitor
-    - TorsoBorgJanitor
-    - LeftArmBorgMedical
-    - RightArmBorgMedical
-    - LeftLegBorgMedical
-    - RightLegBorgMedical
-    - HeadBorgMedical
-    - TorsoBorgMedical
-    - LeftArmBorgMining
-    - RightArmBorgMining
-    - LeftLegBorgMining
-    - RightLegBorgMining
-    - HeadBorgMining
-    - TorsoBorgMining
-    - LeftArmBorgCargo
-    - RightArmBorgCargo
-    - LeftLegBorgCargo
-    - RightLegBorgCargo
-    - HeadBorgCargo
-    - TorsoBorgCargo
-    - LeftArmBorgService
-    - RightArmBorgService
-    - LeftLegBorgService
-    - RightLegBorgService
-    - HeadBorgService
-    - TorsoBorgService
     dynamicRecipes:
     - ProximitySensor
-    - BorgModuleLightReplacer
     - BorgModuleAdvancedCleaning
-    - BorgModuleMining
-    - BorgModuleGrapplingGun
     - BorgModuleAdvancedTool
     - BorgModuleGPS
-    - BorgModuleRCD
     - BorgModuleArtifact
     - BorgModuleAnomaly
     - BorgModuleGardening
     - BorgModuleHarvesting
-    - BorgModuleMusique
-    - BorgModuleClowning
-    - BorgModuleDiagnosis
     - BorgModuleDefibrillator
     - BorgModuleAdvancedTreatment
     - RipleyHarness
@@ -784,6 +743,7 @@
       - TargetHuman
       - TargetSyndicate
       - WeaponDisablerPractice
+      - WeaponFlareGunSecurity
       - WeaponLaserCarbinePractice
       - Zipties
     dynamicRecipes:
@@ -794,12 +754,18 @@
       - ClothingBackpackElectropack
       - ExplosivePayload
       - FlashPayload
+      - FullAutoConversionKit
       - GrenadeBlast
       - GrenadeEMP
       - GrenadeFlash
       - HoloprojectorSecurity
+      - HyperBurstConversionKit
       - MagazineBoxLightRifleIncendiary
       - MagazineBoxLightRifleUranium
+      - MagazineBoxLPistol
+      - MagazineBoxLPistolIncendiary
+      - MagazineBoxLPistolPractice
+      - MagazineBoxLPistolUranium
       - MagazineBoxMagnumIncendiary
       - MagazineBoxMagnumUranium
       - MagazineBoxPistolIncendiary
@@ -809,6 +775,11 @@
       - MagazineGrenadeEmpty
       - MagazineLightRifleIncendiary
       - MagazineLightRifleUranium
+      - MagazineLPistol
+      - MagazineLPistolEmpty
+      - MagazineLPistolIncendiary
+      - MagazineLPistolPractice
+      - MagazineLPistolUranium
       - MagazinePistolIncendiary
       - MagazinePistolUranium
       - MagazineRifleIncendiary

@@ -1,0 +1,15 @@
+# Initial file ported from the Starlight project repo, located at https://github.com/ss14Starlight/space-station-14
+
+- type: listing
+  id: uplinkContortionistJumpsuit
+  name: uplink-contortionist-jumpsuit-name
+  description: uplink-contortionist-jumpsuit-desc
+  productEntity: ClothingUniformJumpsuitAtmosSyndie
+  cost:
+    Telecrystal: 9
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - AtmosphericTechnician

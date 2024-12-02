@@ -1,0 +1,37 @@
+- type: entity
+  id: ClothingBeltHolsterHOSFilled
+  parent: ClothingBeltHolsterHOS
+  suffix: Filled
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:NestedSelector
+        tableId: BeltSecurityEntityTable
+
+- type: entity
+  id: ClothingBeltUtilityBlackFilled
+  parent: ClothingBeltUtilityBlack
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: Crowbar
+      - id: Wrench
+      - id: Screwdriver
+      - id: Wirecutter
+      - id: Welder
+      - id: NetworkConfigurator
+
+- type: entity
+  id: ClothingBeltUtilityBlackEngineering
+  parent: ClothingBeltUtilityBlack
+  suffix: Engineering
+  components:
+  - type: StorageFill
+    contents:
+      - id: CrowbarYellow
+      - id: Wrench
+      - id: Screwdriver
+      - id: Wirecutter
+      - id: Welder
+      - id: Multitool

@@ -53,6 +53,14 @@
 
 - type: entity
   parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelDrone
+  components:
+  - type: Tag
+    tags:
+    - InnateDontDelete
+
+- type: entity
+  parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelMime
   name: mime satchel
   description: A satchel designed for the silent and expressive art of miming.

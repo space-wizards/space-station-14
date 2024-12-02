@@ -33,163 +33,27 @@
       borg_l_arm+o:
         whitelist:
           tags:
-          - BorgGenericLArm
+          - BorgLArm
       borg_r_arm+o:
         whitelist:
           tags:
-          - BorgGenericRArm
+          - BorgRArm
       borg_l_leg+o:
         whitelist:
           tags:
-          - BorgGenericLLeg
+          - BorgLLeg
       borg_r_leg+o:
         whitelist:
           tags:
-          - BorgGenericRLeg
+          - BorgRLeg
       borg_head+o:
         whitelist:
           tags:
-          - BorgGenericHead
+          - BorgHead
       borg_chest+o:
         whitelist:
           tags:
-          - BorgGenericTorso
-      service_l_arm+o:
-        whitelist:
-          tags:
-          - BorgServiceLArm
-      service_r_arm+o:
-        whitelist:
-          tags:
-          - BorgServiceRArm
-      service_l_leg+o:
-        whitelist:
-          tags:
-          - BorgServiceLLeg
-      service_r_leg+o:
-        whitelist:
-          tags:
-          - BorgServiceRLeg
-      service_head+o:
-        whitelist:
-          tags:
-          - BorgServiceHead
-      service_chest+o:
-        whitelist:
-          tags:
-          - BorgServiceTorso
-      engineer_l_arm+o:
-        whitelist:
-          tags:
-          - BorgEngineerLArm
-      engineer_r_arm+o:
-        whitelist:
-          tags:
-          - BorgEngineerRArm
-      engineer_l_leg+o:
-        whitelist:
-          tags:
-          - BorgEngineerLLeg
-      engineer_r_leg+o:
-        whitelist:
-          tags:
-          - BorgEngineerRLeg
-      engineer_head+o:
-        whitelist:
-          tags:
-          - BorgEngineerHead
-      engineer_chest+o:
-        whitelist:
-          tags:
-          - BorgEngineerTorso
-      mining_l_arm+o:
-        whitelist:
-          tags:
-            - BorgMiningLArm
-      mining_r_arm+o:
-        whitelist:
-          tags:
-            - BorgMiningRArm
-      mining_l_leg+o:
-        whitelist:
-          tags:
-            - BorgMiningLLeg
-      mining_r_leg+o:
-        whitelist:
-          tags:
-            - BorgMiningRLeg
-      mining_head+o:
-        whitelist:
-          tags:
-            - BorgMiningHead
-      mining_chest+o:
-        whitelist:
-          tags:
-            - BorgMiningTorso
-      cargo_l_arm+o:
-        whitelist:
-          tags:
-            - BorgCargoLArm
-      cargo_r_arm+o:
-        whitelist:
-          tags:
-            - BorgCargoRArm
-      cargo_l_leg+o:
-        whitelist:
-          tags:
-            - BorgCargoLLeg
-      cargo_r_leg+o:
-        whitelist:
-          tags:
-            - BorgCargoRLeg
-      cargo_head+o:
-        whitelist:
-          tags:
-            - BorgCargoHead
-      cargo_chest+o:
-        whitelist:
-          tags:
-            - BorgCargoTorso
-      medical_l_arm+o:
-        whitelist:
-          tags:
-            - BorgMedicalLArm
-      medical_r_arm+o:
-        whitelist:
-          tags:
-            - BorgMedicalRArm
-      medical_l_leg+o:
-        whitelist:
-          tags:
-            - BorgMedicalLLeg
-      medical_r_leg+o:
-        whitelist:
-          tags:
-            - BorgMedicalRLeg
-      medical_head+o:
-        whitelist:
-          tags:
-            - BorgMedicalHead
-      medical_chest+o:
-        whitelist:
-          tags:
-            - BorgMedicalTorso
-      janitor_l_leg+o:
-        whitelist:
-          tags:
-            - BorgJanitorLLeg
-      janitor_r_leg+o:
-        whitelist:
-          tags:
-            - BorgJanitorRLeg
-      janitor_head+o:
-        whitelist:
-          tags:
-            - BorgJanitorHead
-      janitor_chest+o:
-        whitelist:
-          tags:
-            - BorgJanitorTorso
+          - BorgTorso
   - type: ContainerContainer
     containers:
       part-container: !type:Container
@@ -197,52 +61,12 @@
   - type: PartAssembly
     parts:
       generic:
-      - BorgGenericLArm
-      - BorgGenericRArm
-      - BorgGenericLLeg
-      - BorgGenericRLeg
-      - BorgGenericHead
-      - BorgGenericTorso
-      service:
-      - BorgServiceLArm
-      - BorgServiceRArm
-      - BorgServiceLLeg
-      - BorgServiceRLeg
-      - BorgServiceHead
-      - BorgServiceTorso
-      engineer:
-      - BorgEngineerLArm
-      - BorgEngineerRArm
-      - BorgEngineerLLeg
-      - BorgEngineerRLeg
-      - BorgEngineerHead
-      - BorgEngineerTorso
-      medical:
-      - BorgMedicalLArm
-      - BorgMedicalRArm
-      - BorgMedicalLLeg
-      - BorgMedicalRLeg
-      - BorgMedicalHead
-      - BorgMedicalTorso
-      janitor:
-      - BorgJanitorLLeg
-      - BorgJanitorRLeg
-      - BorgJanitorHead
-      - BorgJanitorTorso
-      mining:
-      - BorgMiningLArm
-      - BorgMiningRArm
-      - BorgMiningLLeg
-      - BorgMiningRLeg
-      - BorgMiningHead
-      - BorgMiningTorso
-      cargo:
-      - BorgCargoLArm
-      - BorgCargoRArm
-      - BorgCargoLLeg
-      - BorgCargoRLeg
-      - BorgCargoHead
-      - BorgCargoTorso
+      - BorgLArm
+      - BorgRArm
+      - BorgLLeg
+      - BorgRLeg
+      - BorgHead
+      - BorgTorso
   - type: Construction
     graph: Cyborg
     node: start

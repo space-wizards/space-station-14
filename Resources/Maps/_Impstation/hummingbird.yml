@@ -225,7 +225,7 @@ entities:
           version: 6
         7,0:
           ind: 7,0
-          tiles: BgAAAAACBgAAAAACBgAAAAADBgAAAAADBgAAAAAABgAAAAADBgAAAAABBgAAAAABBgAAAAADBgAAAAADBgAAAAADBgAAAAABBgAAAAADBgAAAAADBgAAAAADBgAAAAACDwAAAAADDwAAAAAADwAAAAABDwAAAAABDwAAAAABDwAAAAAADwAAAAACDwAAAAADDwAAAAADDwAAAAABDwAAAAADDwAAAAABDwAAAAADDwAAAAAADwAAAAADDwAAAAACBgAAAAABBgAAAAABBgAAAAADBgAAAAACBgAAAAABBgAAAAADBgAAAAAABgAAAAACBgAAAAACBgAAAAACBgAAAAADBgAAAAACBgAAAAAABgAAAAABBgAAAAADBgAAAAABggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAAgAAAAACggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAABAAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAABgAAAAAAggAAAAAACgAAAAAACgAAAAADCgAAAAADCgAAAAAACgAAAAABCgAAAAABCgAAAAABggAAAAAAggAAAAAAggAAAAAADgAAAAAAggAAAAAABgAAAAADBgAAAAAABgAAAAABggAAAAAACgAAAAADCgAAAAACCgAAAAAACgAAAAABCgAAAAACCgAAAAADCgAAAAAAggAAAAAAggAAAAAAggAAAAAADgAAAAAAggAAAAAABgAAAAAADwAAAAABBgAAAAAAggAAAAAACgAAAAACCgAAAAADCgAAAAAACgAAAAABCgAAAAADCgAAAAABCgAAAAADggAAAAAAggAAAAAAggAAAAAADgAAAAAAggAAAAAABgAAAAABBgAAAAADBgAAAAAAggAAAAAACwAAAAAACwAAAAABDAAAAAABDAAAAAAADAAAAAABCwAAAAACCwAAAAAAggAAAAAAggAAAAAAggAAAAAADgAAAAAAggAAAAAADwAAAAADBAAAAAAABgAAAAACggAAAAAACwAAAAABCwAAAAAADAAAAAACDAAAAAADDAAAAAABCwAAAAACCwAAAAABggAAAAAAggAAAAAAggAAAAAADgAAAAAAggAAAAAABAAAAAAABAAAAAAAggAAAAAAggAAAAAADAAAAAACDAAAAAABDAAAAAABDAAAAAABDAAAAAAADAAAAAABDAAAAAABggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAADAAAAAADDAAAAAADDAAAAAACCwAAAAACCwAAAAABCwAAAAABCwAAAAADCwAAAAACCwAAAAABggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAADAAAAAACDAAAAAABDAAAAAABCwAAAAACCwAAAAABCwAAAAAACwAAAAABCwAAAAADCwAAAAADggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAA
+          tiles: BgAAAAACBgAAAAACBgAAAAADBgAAAAADBgAAAAAABgAAAAADBgAAAAABBgAAAAABBgAAAAADBgAAAAADBgAAAAADBgAAAAABBgAAAAADBgAAAAADBgAAAAADBgAAAAACDwAAAAADDwAAAAAADwAAAAABDwAAAAABDwAAAAABDwAAAAAADwAAAAACDwAAAAADDwAAAAADDwAAAAABDwAAAAADDwAAAAABDwAAAAADDwAAAAAADwAAAAADDwAAAAACBgAAAAABBgAAAAABBgAAAAADBgAAAAACBgAAAAABBgAAAAADBgAAAAAABgAAAAACBgAAAAACBgAAAAACBgAAAAADBgAAAAACBgAAAAAABgAAAAABBgAAAAADBgAAAAABggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAAgAAAAACggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAABAAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAABgAAAAAAggAAAAAACgAAAAAACgAAAAADCgAAAAADCgAAAAAACgAAAAABCgAAAAABCgAAAAABggAAAAAAggAAAAAAggAAAAAADgAAAAAAggAAAAAABgAAAAADBgAAAAAABgAAAAABggAAAAAACgAAAAADCgAAAAACCgAAAAAACgAAAAABCgAAAAACCgAAAAADCgAAAAAAggAAAAAAggAAAAAAggAAAAAADgAAAAAAggAAAAAABgAAAAAADwAAAAABBgAAAAAAggAAAAAACgAAAAACCgAAAAADCgAAAAAACgAAAAABCgAAAAADCgAAAAABCgAAAAADggAAAAAAggAAAAAAggAAAAAADgAAAAAAggAAAAAABgAAAAABBgAAAAADBgAAAAAAggAAAAAACwAAAAAACwAAAAABDAAAAAABDAAAAAAADAAAAAABCwAAAAACCwAAAAAAggAAAAAAggAAAAAAggAAAAAADgAAAAAAggAAAAAADwAAAAADBAAAAAAABgAAAAACggAAAAAACwAAAAABCwAAAAAADAAAAAACDAAAAAADDAAAAAABCwAAAAACCwAAAAABggAAAAAAggAAAAAAggAAAAAADgAAAAAAggAAAAAABAAAAAAABAAAAAAADwAAAAAAggAAAAAADAAAAAACDAAAAAABDAAAAAABDAAAAAABDAAAAAAADAAAAAABDAAAAAABggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAADAAAAAADDAAAAAADDAAAAAACCwAAAAACCwAAAAABCwAAAAABCwAAAAADCwAAAAACCwAAAAABggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAADAAAAAACDAAAAAABDAAAAAABCwAAAAACCwAAAAABCwAAAAAACwAAAAABCwAAAAADCwAAAAADggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAFQAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAAggAAAAAA
           version: 6
         8,0:
           ind: 8,0
@@ -5110,7 +5110,8 @@ entities:
           36,-7:
             0: 53144
           36,-6:
-            1: 12307
+            1: 12291
+            9: 16
             0: 76
           36,-5:
             1: 13107
@@ -5141,8 +5142,8 @@ entities:
           23,7:
             1: 8189
           24,8:
-            9: 65407
-            10: 128
+            10: 65407
+            11: 128
           25,5:
             0: 17
             1: 61440
@@ -5232,7 +5233,7 @@ entities:
             1: 65535
           23,8:
             1: 4369
-            9: 17636
+            10: 17636
           16,8:
             1: 65527
           17,5:
@@ -5310,7 +5311,8 @@ entities:
           22,11:
             1: 62207
           22,12:
-            1: 61695
+            1: 61693
+            12: 2
           23,9:
             1: 56784
           23,10:
@@ -6277,6 +6279,21 @@ entities:
         - volume: 2500
           temperature: 293.15
           moles:
+          - 21.6852
+          - 81.57766
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
           - 0
           - 103.92799
           - 0
@@ -6294,6 +6311,21 @@ entities:
           moles:
           - 0
           - 103.92374
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 21.813705
+          - 82.06108
           - 0
           - 0
           - 0
@@ -6367,7 +6399,7 @@ entities:
   - uid: 12
     components:
     - type: MetaData
-      name: Hydroponics Hallway Air Alarm
+      name: Hydroponics Hallway
     - type: Transform
       pos: 75.5,7.5
       parent: 2
@@ -6398,7 +6430,7 @@ entities:
   - uid: 141
     components:
     - type: MetaData
-      name: Virology Air Alarm
+      name: Virology
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 86.5,-13.5
@@ -6418,7 +6450,7 @@ entities:
   - uid: 143
     components:
     - type: MetaData
-      name: Shooting Range Air Alarm
+      name: Shooting Range
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 109.5,-21.5
@@ -6434,7 +6466,7 @@ entities:
   - uid: 271
     components:
     - type: MetaData
-      name: CE's Bedroom Air Alarm
+      name: CE's Bedroom
     - type: Transform
       pos: 9.5,-5.5
       parent: 2
@@ -6447,7 +6479,7 @@ entities:
   - uid: 962
     components:
     - type: MetaData
-      name: Engineering Lobby Air Alarm
+      name: Engineering Lobby
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 24.5,-9.5
@@ -6466,7 +6498,7 @@ entities:
   - uid: 1231
     components:
     - type: MetaData
-      name: TEG Air Alarm
+      name: TEG
     - type: Transform
       pos: -5.5,-19.5
       parent: 2
@@ -6479,7 +6511,7 @@ entities:
   - uid: 1301
     components:
     - type: MetaData
-      name: CE's Office Air Alarm
+      name: CE's Office
     - type: Transform
       pos: 14.5,-5.5
       parent: 2
@@ -6493,7 +6525,7 @@ entities:
   - uid: 1340
     components:
     - type: MetaData
-      name: Atmospherics Lobby Air Alarm
+      name: Atmospherics Lobby
     - type: Transform
       pos: 23.5,-9.5
       parent: 2
@@ -6510,7 +6542,7 @@ entities:
   - uid: 1579
     components:
     - type: MetaData
-      name: Port Medbay Hallway Air Alarm
+      name: Port Medbay Hallway
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 63.5,-6.5
@@ -6538,7 +6570,7 @@ entities:
   - uid: 1660
     components:
     - type: MetaData
-      name: Security Locker Room Air Alarm
+      name: Security Locker Room
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 111.5,-9.5
@@ -6551,7 +6583,7 @@ entities:
   - uid: 1723
     components:
     - type: MetaData
-      name: Distro Air Alarm
+      name: Distro
     - type: Transform
       pos: 6.5,-9.5
       parent: 2
@@ -6571,7 +6603,7 @@ entities:
   - uid: 2038
     components:
     - type: MetaData
-      name: News Air Alarm
+      name: News
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 119.5,-17.5
@@ -6586,7 +6618,7 @@ entities:
   - uid: 2091
     components:
     - type: MetaData
-      name: Morgue Corridor Air Alarm
+      name: Morgue Corridor
     - type: Transform
       pos: 79.5,-3.5
       parent: 2
@@ -6608,7 +6640,7 @@ entities:
   - uid: 2128
     components:
     - type: MetaData
-      name: Annex Dock Air Alarm
+      name: Annex Dock
     - type: Transform
       pos: 123.5,-62.5
       parent: 2
@@ -6623,7 +6655,7 @@ entities:
   - uid: 2172
     components:
     - type: MetaData
-      name: R&D Server Air Alarm
+      name: R&D Server
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 49.5,16.5
@@ -6637,7 +6669,7 @@ entities:
   - uid: 2187
     components:
     - type: MetaData
-      name: Evac Dock Air Alarm
+      name: Evac Dock
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 119.5,-43.5
@@ -6653,7 +6685,7 @@ entities:
   - uid: 2556
     components:
     - type: MetaData
-      name: Chemistry Air Alarm
+      name: Chemistry
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 79.5,-2.5
@@ -6669,7 +6701,7 @@ entities:
   - uid: 2611
     components:
     - type: MetaData
-      name: RD's Study Air Alarm
+      name: RD's Study
     - type: Transform
       pos: 53.5,16.5
       parent: 2
@@ -6683,7 +6715,7 @@ entities:
   - uid: 2630
     components:
     - type: MetaData
-      name: Morgue Air Alarm
+      name: Morgue
     - type: Transform
       pos: 81.5,3.5
       parent: 2
@@ -6697,7 +6729,7 @@ entities:
   - uid: 2846
     components:
     - type: MetaData
-      name: Science Locker Room Air Alarm
+      name: Science Locker Room
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 45.5,15.5
@@ -6711,7 +6743,7 @@ entities:
   - uid: 2861
     components:
     - type: MetaData
-      name: Robotics Lobby Air Alarm
+      name: Robotics Lobby
     - type: Transform
       pos: 38.5,7.5
       parent: 2
@@ -6728,7 +6760,7 @@ entities:
   - uid: 2882
     components:
     - type: MetaData
-      name: RD's Office Air Alarm
+      name: RD's Office
     - type: Transform
       pos: 51.5,12.5
       parent: 2
@@ -6742,7 +6774,7 @@ entities:
   - uid: 2924
     components:
     - type: MetaData
-      name: HoS's Office Air Alarm
+      name: HoS's Office
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 127.5,-5.5
@@ -6756,7 +6788,7 @@ entities:
   - uid: 2995
     components:
     - type: MetaData
-      name: Robotics Workshop Air Alarm
+      name: Robotics Workshop
     - type: Transform
       pos: 34.5,7.5
       parent: 2
@@ -6773,7 +6805,7 @@ entities:
   - uid: 3157
     components:
     - type: MetaData
-      name: Security Break Room Air Alarm
+      name: Security Break Room
     - type: Transform
       pos: 120.5,-0.5
       parent: 2
@@ -6789,7 +6821,7 @@ entities:
   - uid: 3190
     components:
     - type: MetaData
-      name: Anomaly Generator Air Alarm
+      name: Anomaly Generator
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 53.5,3.5
@@ -6802,7 +6834,7 @@ entities:
   - uid: 3979
     components:
     - type: MetaData
-      name: Telecoms Air Alarm
+      name: Telecomms
     - type: Transform
       pos: 31.5,-2.5
       parent: 2
@@ -6816,7 +6848,7 @@ entities:
   - uid: 4002
     components:
     - type: MetaData
-      name: Security Hallway Air Alarm
+      name: Security Hallway
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 97.5,-8.5
@@ -6841,7 +6873,7 @@ entities:
   - uid: 4072
     components:
     - type: MetaData
-      name: Engineering Hallway Air Alarm
+      name: Engineering Hallway
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 29.5,-6.5
@@ -6871,7 +6903,7 @@ entities:
   - uid: 4090
     components:
     - type: MetaData
-      name: Outboard Science Hallway Air Alarm
+      name: Outboard Science Hallway
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 35.5,-0.5
@@ -6899,7 +6931,7 @@ entities:
   - uid: 4817
     components:
     - type: MetaData
-      name: Psychologist Hallway Air Alarm
+      name: Psychologist Hallway
     - type: Transform
       pos: 83.5,7.5
       parent: 2
@@ -6923,7 +6955,7 @@ entities:
   - uid: 5000
     components:
     - type: MetaData
-      name: Shuttle Workshop Air Alarm
+      name: Shuttle Workshop
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 42.5,-19.5
@@ -6946,7 +6978,7 @@ entities:
   - uid: 5014
     components:
     - type: MetaData
-      name: Shuttle Workshop Docking Bay Air Alarm
+      name: Shuttle Workshop Docking Bay
     - type: Transform
       pos: 37.5,-22.5
       parent: 2
@@ -6962,7 +6994,7 @@ entities:
   - uid: 5062
     components:
     - type: MetaData
-      name: Tools Room Air Alarm
+      name: Tools Room
     - type: Transform
       pos: 44.5,-6.5
       parent: 2
@@ -6984,7 +7016,7 @@ entities:
   - uid: 5064
     components:
     - type: MetaData
-      name: Shuttle Workshop Hallway Air Alarm
+      name: Shuttle Workshop Hallway
     - type: Transform
       pos: 35.5,-12.5
       parent: 2
@@ -7006,7 +7038,7 @@ entities:
   - uid: 5125
     components:
     - type: MetaData
-      name: Tools Hallway Air Alarm
+      name: Tools Hallway
     - type: Transform
       pos: 54.5,-12.5
       parent: 2
@@ -7028,7 +7060,7 @@ entities:
   - uid: 5130
     components:
     - type: MetaData
-      name: Inboard Science Hallway Air Alarm
+      name: Inboard Science Hallway
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 50.5,-0.5
@@ -7048,7 +7080,7 @@ entities:
   - uid: 5154
     components:
     - type: MetaData
-      name: Port Wing Aft Connector Air Alarm
+      name: Port Wing Aft Connector
     - type: Transform
       pos: 61.5,-12.5
       parent: 2
@@ -7066,7 +7098,7 @@ entities:
   - uid: 5179
     components:
     - type: MetaData
-      name: Port Wing Forward Connector Air Alarm
+      name: Port Wing Forward Connector
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 61.5,-0.5
@@ -7085,7 +7117,7 @@ entities:
   - uid: 5670
     components:
     - type: MetaData
-      name: Perma Intake Air Alarm
+      name: Perma Intake
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 110.5,6.5
@@ -7120,7 +7152,7 @@ entities:
   - uid: 5948
     components:
     - type: MetaData
-      name: Port Janitorial Hallway Air Alarm
+      name: Port Janitorial Hallway
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 59.5,-7.5
@@ -7143,7 +7175,7 @@ entities:
   - uid: 6180
     components:
     - type: MetaData
-      name: Medbay Air Alarm
+      name: Medbay
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 67.5,-8.5
@@ -7164,7 +7196,7 @@ entities:
   - uid: 6184
     components:
     - type: MetaData
-      name: CMO's Office Air Alarm
+      name: CMO's Office
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 81.5,-12.5
@@ -7178,7 +7210,7 @@ entities:
   - uid: 6334
     components:
     - type: MetaData
-      name: Science Lobby Air Alarm
+      name: Science Lobby
     - type: Transform
       pos: 44.5,8.5
       parent: 2
@@ -7222,7 +7254,7 @@ entities:
   - uid: 6471
     components:
     - type: MetaData
-      name: Boxing Ring Air Alarm
+      name: Boxing Ring
     - type: Transform
       pos: 57.5,28.5
       parent: 2
@@ -7241,7 +7273,7 @@ entities:
   - uid: 6708
     components:
     - type: MetaData
-      name: Medbay Lobby Air Alarm
+      name: Medbay Lobby
     - type: Transform
       pos: 68.5,3.5
       parent: 2
@@ -7258,7 +7290,7 @@ entities:
   - uid: 6870
     components:
     - type: MetaData
-      name: Security Infirmary Air Alarm
+      name: Security Infirmary
     - type: Transform
       pos: 103.5,-8.5
       parent: 2
@@ -7272,7 +7304,7 @@ entities:
   - uid: 6891
     components:
     - type: MetaData
-      name: Interrogation Room Air Alarm
+      name: Interrogation Room
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 107.5,-11.5
@@ -7286,7 +7318,7 @@ entities:
   - uid: 6923
     components:
     - type: MetaData
-      name: AME Air Alarm
+      name: AME
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 10.5,-5.5
@@ -7300,7 +7332,7 @@ entities:
   - uid: 6948
     components:
     - type: MetaData
-      name: Main Engineering Air Alarm
+      name: Main Engineering
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 14.5,0.5
@@ -7320,7 +7352,7 @@ entities:
   - uid: 6949
     components:
     - type: MetaData
-      name: PA Air Alarm
+      name: PA
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 10.5,-0.5
@@ -7333,7 +7365,7 @@ entities:
   - uid: 7247
     components:
     - type: MetaData
-      name: Security Front Desk Air Alarm
+      name: Security Front Desk
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 104.5,-5.5
@@ -7348,7 +7380,7 @@ entities:
   - uid: 8950
     components:
     - type: MetaData
-      name: Courtroom Hallway Air Alarm
+      name: Courtroom Hallway
     - type: Transform
       pos: 122.5,3.5
       parent: 2
@@ -7374,7 +7406,7 @@ entities:
   - uid: 9193
     components:
     - type: MetaData
-      name: Boxing Ring Air Alarm
+      name: Boxing Ring
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 61.5,18.5
@@ -7389,7 +7421,7 @@ entities:
   - uid: 9481
     components:
     - type: MetaData
-      name: Starboard Medbay Hallway Air Alarm
+      name: Starboard Medbay Hallway
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 93.5,-6.5
@@ -7419,7 +7451,7 @@ entities:
   - uid: 9509
     components:
     - type: MetaData
-      name: HoP's Office Air Alarm
+      name: HoP's Office
     - type: Transform
       pos: 73.5,42.5
       parent: 2
@@ -7434,7 +7466,7 @@ entities:
   - uid: 9588
     components:
     - type: MetaData
-      name: Paramedic's Office Air Alarm
+      name: Paramedic's Office
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 58.5,33.5
@@ -7450,7 +7482,7 @@ entities:
   - uid: 9705
     components:
     - type: MetaData
-      name: Starboard Wing Aft Connector Air Alarm
+      name: Starboard Wing Aft Connector
     - type: Transform
       pos: 95.5,-12.5
       parent: 2
@@ -7468,7 +7500,7 @@ entities:
   - uid: 9841
     components:
     - type: MetaData
-      name: Starboard Wing Forward Connector Air Alarm
+      name: Starboard Wing Forward Connector
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 95.5,-0.5
@@ -7487,7 +7519,7 @@ entities:
   - uid: 9949
     components:
     - type: MetaData
-      name: EVA Storage Air Alarm
+      name: EVA Storage
     - type: Transform
       pos: 65.5,43.5
       parent: 2
@@ -7502,7 +7534,7 @@ entities:
   - uid: 9954
     components:
     - type: MetaData
-      name: Dining Hall Air Alarm
+      name: Dining Hall
     - type: Transform
       pos: 70.5,32.5
       parent: 2
@@ -7537,7 +7569,7 @@ entities:
   - uid: 9959
     components:
     - type: MetaData
-      name: Theater Air Alarm
+      name: Theater
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 84.5,23.5
@@ -7551,7 +7583,7 @@ entities:
   - uid: 9960
     components:
     - type: MetaData
-      name: Service Break Room Air Alarm
+      name: Service Break Room
     - type: Transform
       pos: 86.5,20.5
       parent: 2
@@ -7566,7 +7598,7 @@ entities:
   - uid: 9963
     components:
     - type: MetaData
-      name: Botany Air Alarm
+      name: Botany
     - type: Transform
       pos: 73.5,15.5
       parent: 2
@@ -7586,7 +7618,7 @@ entities:
   - uid: 9964
     components:
     - type: MetaData
-      name: Kitchen Air Alarm
+      name: Kitchen
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 67.5,16.5
@@ -7610,7 +7642,7 @@ entities:
   - uid: 9968
     components:
     - type: MetaData
-      name: Botany Locker Room Air Alarm
+      name: Botany Locker Room
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 76.5,10.5
@@ -7625,7 +7657,7 @@ entities:
   - uid: 9978
     components:
     - type: MetaData
-      name: Psychologist's Office Air Alarm
+      name: Psychologist's Office
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 89.5,11.5
@@ -7640,7 +7672,7 @@ entities:
   - uid: 9999
     components:
     - type: MetaData
-      name: Library Air Alarm
+      name: Library
     - type: Transform
       pos: 95.5,31.5
       parent: 2
@@ -7656,7 +7688,7 @@ entities:
   - uid: 10532
     components:
     - type: MetaData
-      name: Courtroom Air Alarm
+      name: Courtroom
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 113.5,5.5
@@ -7675,7 +7707,7 @@ entities:
   - uid: 11195
     components:
     - type: MetaData
-      name: Arboretum Air Alarm
+      name: Arboretum
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 83.5,54.5
@@ -7695,7 +7727,7 @@ entities:
   - uid: 11380
     components:
     - type: MetaData
-      name: Port Janitorial Air Alarm
+      name: Port Janitorial
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 49.5,-2.5
@@ -7710,7 +7742,7 @@ entities:
   - uid: 11645
     components:
     - type: MetaData
-      name: Bar Hallway Air Alarm
+      name: Bar Hallway
     - type: Transform
       pos: 91.5,36.5
       parent: 2
@@ -7732,7 +7764,7 @@ entities:
   - uid: 11709
     components:
     - type: MetaData
-      name: Chaplain's Quarters Air Alarm
+      name: Chaplain's Quarters
     - type: Transform
       pos: 84.5,52.5
       parent: 2
@@ -7746,7 +7778,7 @@ entities:
   - uid: 11711
     components:
     - type: MetaData
-      name: Chapel Air Alarm
+      name: Chapel
     - type: Transform
       pos: 85.5,46.5
       parent: 2
@@ -7761,7 +7793,7 @@ entities:
   - uid: 11713
     components:
     - type: MetaData
-      name: Chapel Lounge Air Alarm
+      name: Chapel Lounge
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 87.5,38.5
@@ -7775,7 +7807,7 @@ entities:
   - uid: 11715
     components:
     - type: MetaData
-      name: Chapel Mortuary Air Alarm
+      name: Chapel Mortuary
     - type: Transform
       pos: 88.5,46.5
       parent: 2
@@ -7794,7 +7826,7 @@ entities:
   - uid: 11724
     components:
     - type: MetaData
-      name: HoP Hallway Air Alarm
+      name: HoP Hallway
     - type: Transform
       pos: 68.5,36.5
       parent: 2
@@ -7817,7 +7849,7 @@ entities:
   - uid: 11726
     components:
     - type: MetaData
-      name: Arboretum Hallway Air Alarm
+      name: Arboretum Hallway
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 80.5,51.5
@@ -7842,7 +7874,7 @@ entities:
   - uid: 11823
     components:
     - type: MetaData
-      name: Starboard Service Hallway Air Alarm
+      name: Starboard Service Hallway
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 89.5,15.5
@@ -7866,7 +7898,7 @@ entities:
   - uid: 11874
     components:
     - type: MetaData
-      name: Materials Storage Air Alarm
+      name: Materials Storage
     - type: Transform
       pos: 72.5,53.5
       parent: 2
@@ -7880,7 +7912,7 @@ entities:
   - uid: 11912
     components:
     - type: MetaData
-      name: Main Security Air Alarm
+      name: Main Security
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 111.5,-8.5
@@ -7913,7 +7945,7 @@ entities:
   - uid: 12561
     components:
     - type: MetaData
-      name: Perma Games Room Air Alarm
+      name: Perma Games Room
     - type: Transform
       pos: 101.5,7.5
       parent: 2
@@ -7926,7 +7958,7 @@ entities:
   - uid: 12562
     components:
     - type: MetaData
-      name: Perma Main Room Air Alarm
+      name: Perma Main Room
     - type: Transform
       pos: 105.5,15.5
       parent: 2
@@ -7943,7 +7975,7 @@ entities:
   - uid: 12563
     components:
     - type: MetaData
-      name: Perma Cell 2 Air Alarm
+      name: Perma Cell 2
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 105.5,16.5
@@ -7957,7 +7989,7 @@ entities:
   - uid: 12564
     components:
     - type: MetaData
-      name: Perma Cell 1 Air Alarm
+      name: Perma Cell 1
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 101.5,16.5
@@ -7971,7 +8003,7 @@ entities:
   - uid: 12663
     components:
     - type: MetaData
-      name: Lawyer's Office Air Alarm
+      name: Lawyer's Office
     - type: Transform
       pos: 113.5,16.5
       parent: 2
@@ -7985,7 +8017,7 @@ entities:
   - uid: 12689
     components:
     - type: MetaData
-      name: Perma Hallway Air Alarm
+      name: Perma Hallway
     - type: Transform
       pos: 105.5,3.5
       parent: 2
@@ -8006,7 +8038,7 @@ entities:
   - uid: 13339
     components:
     - type: MetaData
-      name: Medbay Locker Room Air Alarm
+      name: Medbay Locker Room
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 74.5,-17.5
@@ -8020,7 +8052,7 @@ entities:
   - uid: 13653
     components:
     - type: MetaData
-      name: AI Core Air Alarm
+      name: AI Core
     - type: Transform
       pos: 52.5,-28.5
       parent: 2
@@ -8035,7 +8067,7 @@ entities:
   - uid: 14250
     components:
     - type: MetaData
-      name: Starboard Janitorial Air Alarm
+      name: Starboard Janitorial
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 125.5,6.5
@@ -8049,7 +8081,7 @@ entities:
   - uid: 14476
     components:
     - type: MetaData
-      name: Port Quarter Hallway Air Alarm
+      name: Port Quarter Hallway
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 67.5,-29.5
@@ -8071,7 +8103,7 @@ entities:
   - uid: 14478
     components:
     - type: MetaData
-      name: Starboard Quarter Air Alarm
+      name: Starboard Quarter
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 89.5,-29.5
@@ -8093,7 +8125,7 @@ entities:
   - uid: 14599
     components:
     - type: MetaData
-      name: Dorms Air Alarm
+      name: Dorms
     - type: Transform
       pos: 75.5,-34.5
       parent: 2
@@ -8120,7 +8152,7 @@ entities:
   - uid: 14762
     components:
     - type: MetaData
-      name: Arrivals Dock Air Alarm
+      name: Arrivals Dock
     - type: Transform
       pos: 50.5,-42.5
       parent: 2
@@ -8144,7 +8176,7 @@ entities:
   - uid: 14764
     components:
     - type: MetaData
-      name: Arrivals Hallway Air Alarm
+      name: Arrivals Hallway
     - type: Transform
       pos: 57.5,-36.5
       parent: 2
@@ -8162,7 +8194,7 @@ entities:
   - uid: 14816
     components:
     - type: MetaData
-      name: Cargo Hallway Air Alarm
+      name: Cargo Hallway
     - type: Transform
       pos: 75.5,-39.5
       parent: 2
@@ -8194,7 +8226,7 @@ entities:
   - uid: 14898
     components:
     - type: MetaData
-      name: QM's Office Air Alarm
+      name: QM's Office
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 65.5,-53.5
@@ -8209,7 +8241,7 @@ entities:
   - uid: 14901
     components:
     - type: MetaData
-      name: Cargo Bay Air Alarm
+      name: Cargo Bay
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 70.5,-55.5
@@ -8230,7 +8262,7 @@ entities:
   - uid: 14904
     components:
     - type: MetaData
-      name: Cargo Lobby Air Alarm
+      name: Cargo Lobby
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 69.5,-50.5
@@ -8247,7 +8279,7 @@ entities:
   - uid: 14907
     components:
     - type: MetaData
-      name: Salvage Air Alarm
+      name: Salvage
     - type: Transform
       pos: 90.5,-46.5
       parent: 2
@@ -8260,7 +8292,7 @@ entities:
   - uid: 15200
     components:
     - type: MetaData
-      name: Perma Main Room Air Alarm
+      name: Perma Main Room
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 108.5,6.5
@@ -8279,7 +8311,7 @@ entities:
   - uid: 15612
     components:
     - type: MetaData
-      name: Science Back Room Air Alarm
+      name: Science Back Room
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 46.5,8.5
@@ -8300,7 +8332,7 @@ entities:
   - uid: 17596
     components:
     - type: MetaData
-      name: Evac Hallway Air Alarm
+      name: Evac Hallway
     - type: Transform
       pos: 106.5,-39.5
       parent: 2
@@ -8321,7 +8353,7 @@ entities:
   - uid: 17622
     components:
     - type: MetaData
-      name: Evac Lounge Air Alarm
+      name: Evac Lounge
     - type: Transform
       pos: 103.5,-35.5
       parent: 2
@@ -8341,7 +8373,7 @@ entities:
   - uid: 17633
     components:
     - type: MetaData
-      name: Inboard Annex Dock Air Alarm
+      name: Inboard Annex Dock
     - type: Transform
       pos: 110.5,-62.5
       parent: 2
@@ -8359,7 +8391,7 @@ entities:
   - uid: 17634
     components:
     - type: MetaData
-      name: Annex Dock Connector Air Alarm
+      name: Annex Dock Connector
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 100.5,-48.5
@@ -8388,7 +8420,7 @@ entities:
   - uid: 22856
     components:
     - type: MetaData
-      name: Grav Gen Air Alarm
+      name: Grav Gen
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 86.5,-45.5
@@ -8401,7 +8433,7 @@ entities:
   - uid: 22985
     components:
     - type: MetaData
-      name: Detective Hallway Air Alarm
+      name: Detective Hallway
     - type: Transform
       pos: 105.5,-12.5
       parent: 2
@@ -8427,7 +8459,7 @@ entities:
   - uid: 22989
     components:
     - type: MetaData
-      name: News Hallway Air Alarm
+      name: News Hallway
     - type: Transform
       pos: 121.5,-12.5
       parent: 2
@@ -8448,7 +8480,7 @@ entities:
   - uid: 22992
     components:
     - type: MetaData
-      name: Bridge Hallway Air Alarm
+      name: Bridge Hallway
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 129.5,-7.5
@@ -8475,7 +8507,7 @@ entities:
   - uid: 22996
     components:
     - type: MetaData
-      name: Bridge Air Alarm
+      name: Bridge
     - type: Transform
       pos: 145.5,0.5
       parent: 2
@@ -8503,7 +8535,7 @@ entities:
   - uid: 22999
     components:
     - type: MetaData
-      name: Captain's Quarters Air Alarm
+      name: Captain's Quarters
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 138.5,8.5
@@ -8518,7 +8550,7 @@ entities:
   - uid: 23003
     components:
     - type: MetaData
-      name: Captain's Office Air Alarm
+      name: Captain's Office
     - type: Transform
       pos: 141.5,6.5
       parent: 2
@@ -8532,7 +8564,7 @@ entities:
   - uid: 23006
     components:
     - type: MetaData
-      name: Conference Room Air Alarm
+      name: Conference Room
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 138.5,-16.5
@@ -8547,7 +8579,7 @@ entities:
   - uid: 23310
     components:
     - type: MetaData
-      name: AI Access Lobby Air Alarm
+      name: AI Access Lobby
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 56.5,-18.5
@@ -8563,7 +8595,7 @@ entities:
   - uid: 23325
     components:
     - type: MetaData
-      name: Detective's Office Air Alarm
+      name: Detective's Office
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 105.5,-17.5
@@ -8579,7 +8611,7 @@ entities:
   - uid: 23660
     components:
     - type: MetaData
-      name: Xenoarchaeology Air Alarm
+      name: Xenoarchaeology
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 27.5,9.5
@@ -8598,7 +8630,7 @@ entities:
   - uid: 23818
     components:
     - type: MetaData
-      name: Bar Air Alarm
+      name: Bar
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 84.5,21.5
@@ -8619,7 +8651,7 @@ entities:
   - uid: 23819
     components:
     - type: MetaData
-      name: Port Service Hallway Air Alarm
+      name: Port Service Hallway
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 67.5,20.5
@@ -8670,7 +8702,7 @@ entities:
   - uid: 11540
     components:
     - type: MetaData
-      name: Nitrogen Lounge Air Alarm
+      name: Nitrogen Lounge
     - type: Transform
       pos: 98.5,36.5
       parent: 2
@@ -9262,41 +9294,6 @@ entities:
     - type: Transform
       pos: 126.5,-66.5
       parent: 2
-  - uid: 9104
-    components:
-    - type: Transform
-      pos: 95.5,-7.5
-      parent: 2
-    - type: DeviceLinkSink
-      invokeCounter: 2
-    - type: DeviceLinkSource
-      linkedPorts:
-        9106:
-        - DoorStatus: DoorBolt
-  - uid: 9105
-    components:
-    - type: Transform
-      pos: 95.5,-5.5
-      parent: 2
-    - type: DeviceLinkSink
-      invokeCounter: 3
-    - type: DeviceLinkSource
-      linkedPorts:
-        9106:
-        - DoorStatus: DoorBolt
-  - uid: 9106
-    components:
-    - type: Transform
-      pos: 97.5,-6.5
-      parent: 2
-    - type: DeviceLinkSink
-      invokeCounter: 2
-    - type: DeviceLinkSource
-      linkedPorts:
-        9105:
-        - DoorStatus: DoorBolt
-        9104:
-        - DoorStatus: DoorBolt
   - uid: 11215
     components:
     - type: Transform
@@ -9647,6 +9644,41 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         12754:
+        - DoorStatus: DoorBolt
+  - uid: 9104
+    components:
+    - type: Transform
+      pos: 95.5,-7.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        9105:
+        - DoorStatus: DoorBolt
+  - uid: 9105
+    components:
+    - type: Transform
+      pos: 97.5,-6.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 3
+    - type: DeviceLinkSource
+      linkedPorts:
+        9104:
+        - DoorStatus: DoorBolt
+        9106:
+        - DoorStatus: DoorBolt
+  - uid: 9106
+    components:
+    - type: Transform
+      pos: 95.5,-5.5
+      parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        9105:
         - DoorStatus: DoorBolt
   - uid: 9970
     components:
@@ -14652,6 +14684,16 @@ entities:
     components:
     - type: Transform
       pos: 47.5,-52.5
+      parent: 2
+  - uid: 23910
+    components:
+    - type: Transform
+      pos: 41.5,-56.5
+      parent: 2
+  - uid: 24145
+    components:
+    - type: Transform
+      pos: 41.5,-54.5
       parent: 2
 - proto: AtmosFixBlockerMarker
   entities:
@@ -59132,8 +59174,8 @@ entities:
         immutable: False
         temperature: 293.14673
         moles:
-        - 1.7459903
-        - 6.568249
+        - 1.8856695
+        - 7.0937095
         - 0
         - 0
         - 0
@@ -59150,18 +59192,26 @@ entities:
           showEnts: False
           occludes: True
           ents:
-          - 18973
+          - 24139
+          - 24140
+          - 24141
+          - 24142
+          - 24143
+          - 24144
           - 18972
-          - 18971
-          - 18970
-          - 18969
-          - 18968
-          - 18967
           - 2462
+          - 18967
+          - 18968
+          - 18969
+          - 18970
+          - 18971
+          - 18973
         paper_label: !type:ContainerSlot
           showEnts: False
           occludes: True
           ent: null
+    missingComponents:
+    - StorageFill
 - proto: CrateEngineeringTeslaCoil
   entities:
   - uid: 216
@@ -59922,17 +59972,6 @@ entities:
     - type: Transform
       pos: 86.58234,21.417055
       parent: 2
-- proto: DefaultStationBeaconAI
-  entities:
-  - uid: 23910
-    components:
-    - type: Transform
-      pos: 4.5,2.5
-      parent: 2
-    - type: NavMapBeacon
-      text: Bears
-    - type: WarpPoint
-      location: Bears
 - proto: DefaultStationBeaconAICore
   entities:
   - uid: 22833
@@ -60606,9 +60645,9 @@ entities:
       pos: 36.5,-4.5
       parent: 2
     - type: NavMapBeacon
-      text: Telecoms
+      text: Telecomms
     - type: WarpPoint
-      location: Telecoms
+      location: Telecomms
 - proto: DefaultStationBeaconTheater
   entities:
   - uid: 22836
@@ -65892,6 +65931,11 @@ entities:
     - type: Transform
       pos: 53.5,-24.5
       parent: 2
+  - uid: 23075
+    components:
+    - type: Transform
+      pos: 80.5,-8.5
+      parent: 2
   - uid: 23458
     components:
     - type: Transform
@@ -67809,7 +67853,7 @@ entities:
   - uid: 19
     components:
     - type: MetaData
-      name: Robotics Lobby Fire Alarm
+      name: Robotics Lobby
     - type: Transform
       pos: 37.5,7.5
       parent: 2
@@ -67826,7 +67870,7 @@ entities:
   - uid: 40
     components:
     - type: MetaData
-      name: Psychologist Hallway Air Alarm
+      name: Psychologist Hallway
     - type: Transform
       pos: 81.5,7.5
       parent: 2
@@ -67852,7 +67896,7 @@ entities:
   - uid: 119
     components:
     - type: MetaData
-      name: News Fire Alarm
+      name: News
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 119.5,-20.5
@@ -67867,7 +67911,7 @@ entities:
   - uid: 187
     components:
     - type: MetaData
-      name: Courtroom Hallway Fire Alarm
+      name: Courtroom Hallway
     - type: Transform
       pos: 121.5,3.5
       parent: 2
@@ -67893,7 +67937,7 @@ entities:
   - uid: 1330
     components:
     - type: MetaData
-      name: TEG Fire Alarm
+      name: TEG
     - type: Transform
       pos: -6.5,-19.5
       parent: 2
@@ -67906,7 +67950,7 @@ entities:
   - uid: 1722
     components:
     - type: MetaData
-      name: Distro Fire Alarm
+      name: Distro
     - type: Transform
       pos: 7.5,-9.5
       parent: 2
@@ -67922,7 +67966,7 @@ entities:
   - uid: 2140
     components:
     - type: MetaData
-      name: CE's Office Fire Alarm
+      name: CE's Office
     - type: Transform
       pos: 12.5,-5.5
       parent: 2
@@ -67936,7 +67980,7 @@ entities:
   - uid: 2293
     components:
     - type: MetaData
-      name: RD's Study Fire Alarm
+      name: RD's Study
     - type: Transform
       pos: 52.5,16.5
       parent: 2
@@ -67950,7 +67994,7 @@ entities:
   - uid: 2311
     components:
     - type: MetaData
-      name: RD's Office Fire Alarm
+      name: RD's Office
     - type: Transform
       pos: 50.5,12.5
       parent: 2
@@ -67964,7 +68008,7 @@ entities:
   - uid: 2381
     components:
     - type: MetaData
-      name: Main Engineering Fire Alarm
+      name: Main Engineering
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 19.5,-8.5
@@ -67984,7 +68028,7 @@ entities:
   - uid: 2389
     components:
     - type: MetaData
-      name: CE's Bedroom Fire Alarm
+      name: CE's Bedroom
     - type: Transform
       pos: 8.5,-5.5
       parent: 2
@@ -67995,7 +68039,7 @@ entities:
   - uid: 2392
     components:
     - type: MetaData
-      name: Engineering Lobby Fire Alarm
+      name: Engineering Lobby
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 25.5,-7.5
@@ -68012,7 +68056,7 @@ entities:
   - uid: 2393
     components:
     - type: MetaData
-      name: Atmospherics Lobby Fire Alarm
+      name: Atmospherics Lobby
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 25.5,-11.5
@@ -68028,7 +68072,7 @@ entities:
   - uid: 2631
     components:
     - type: MetaData
-      name: Morgue Fire Alarm
+      name: Morgue
     - type: Transform
       pos: 84.5,3.5
       parent: 2
@@ -68042,7 +68086,7 @@ entities:
   - uid: 2863
     components:
     - type: MetaData
-      name: Anomaly Generator Fire Alarm
+      name: Anomaly Generator
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 51.5,3.5
@@ -68055,7 +68099,7 @@ entities:
   - uid: 2867
     components:
     - type: MetaData
-      name: Robotics Workshop Fire Alarm
+      name: Robotics Workshop
     - type: Transform
       pos: 29.5,7.5
       parent: 2
@@ -68072,7 +68116,7 @@ entities:
   - uid: 3954
     components:
     - type: MetaData
-      name: Telecoms Fire Alarm
+      name: Telecomms
     - type: Transform
       pos: 30.5,-2.5
       parent: 2
@@ -68086,7 +68130,7 @@ entities:
   - uid: 4084
     components:
     - type: MetaData
-      name: Engineering Hallway Fire Alarm
+      name: Engineering Hallway
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 29.5,-5.5
@@ -68116,7 +68160,7 @@ entities:
   - uid: 4091
     components:
     - type: MetaData
-      name: Outboard Science Hallway Fire Alarm
+      name: Outboard Science Hallway
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 34.5,-0.5
@@ -68144,7 +68188,7 @@ entities:
   - uid: 4814
     components:
     - type: MetaData
-      name: West Janitorial Hallway Fire Alarm
+      name: West Janitorial Hallway
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 59.5,-8.5
@@ -68167,7 +68211,7 @@ entities:
   - uid: 4822
     components:
     - type: MetaData
-      name: Hydroponics Hallway Fire Alarm
+      name: Hydroponics Hallway
     - type: Transform
       pos: 76.5,7.5
       parent: 2
@@ -68196,7 +68240,7 @@ entities:
   - uid: 4897
     components:
     - type: MetaData
-      name: Port Medbay Hallway Fire Alarm
+      name: Port Medbay Hallway
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 63.5,-7.5
@@ -68224,7 +68268,7 @@ entities:
   - uid: 5013
     components:
     - type: MetaData
-      name: Shuttle Workshop Docking Bay Fire Alarm
+      name: Shuttle Workshop Docking Bay
     - type: Transform
       pos: 38.5,-22.5
       parent: 2
@@ -68240,7 +68284,7 @@ entities:
   - uid: 5065
     components:
     - type: MetaData
-      name: Shuttle Workshop Hallway Fire Alarm
+      name: Shuttle Workshop Hallway
     - type: Transform
       pos: 36.5,-12.5
       parent: 2
@@ -68262,7 +68306,7 @@ entities:
   - uid: 5126
     components:
     - type: MetaData
-      name: Tools Hallway Fire Alarm
+      name: Tools Hallway
     - type: Transform
       pos: 53.5,-12.5
       parent: 2
@@ -68284,7 +68328,7 @@ entities:
   - uid: 5131
     components:
     - type: MetaData
-      name: Inboard Science Hallway Fire Alarm
+      name: Inboard Science Hallway
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 49.5,-0.5
@@ -68304,7 +68348,7 @@ entities:
   - uid: 5422
     components:
     - type: MetaData
-      name: Xenoarchaeology Fire Alarm
+      name: Xenoarchaeology
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 27.5,11.5
@@ -68323,7 +68367,7 @@ entities:
   - uid: 5477
     components:
     - type: MetaData
-      name: CMO's Office Fire Alarm
+      name: CMO's Office
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 80.5,-12.5
@@ -68337,7 +68381,7 @@ entities:
   - uid: 5509
     components:
     - type: MetaData
-      name: Medbay Fire Alarm
+      name: Medbay
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 67.5,-6.5
@@ -68358,7 +68402,7 @@ entities:
   - uid: 5832
     components:
     - type: MetaData
-      name: Security Hallway Fire Alarm
+      name: Security Hallway
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 97.5,-7.5
@@ -68383,7 +68427,7 @@ entities:
   - uid: 5884
     components:
     - type: MetaData
-      name: Tools Room Fire Alarm
+      name: Tools Room
     - type: Transform
       pos: 45.5,-6.5
       parent: 2
@@ -68405,7 +68449,7 @@ entities:
   - uid: 5917
     components:
     - type: MetaData
-      name: Perma Intake Fire Alarm
+      name: Perma Intake
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 110.5,7.5
@@ -68421,7 +68465,7 @@ entities:
   - uid: 5959
     components:
     - type: MetaData
-      name: Chemistry Fire Alarm
+      name: Chemistry
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 79.5,0.5
@@ -68437,7 +68481,7 @@ entities:
   - uid: 6279
     components:
     - type: MetaData
-      name: Surgery Corridor Fire Alarm
+      name: Surgery Corridor
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 74.5,-18.5
@@ -68456,7 +68500,7 @@ entities:
   - uid: 6280
     components:
     - type: MetaData
-      name: Virology Fire Alarm
+      name: Virology
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 83.5,-12.5
@@ -68476,7 +68520,7 @@ entities:
   - uid: 6331
     components:
     - type: MetaData
-      name: Science Lobby Fire Alarm
+      name: Science Lobby
     - type: Transform
       pos: 43.5,8.5
       parent: 2
@@ -68494,7 +68538,7 @@ entities:
   - uid: 6635
     components:
     - type: MetaData
-      name: Science Locker Room Fire Alarm
+      name: Science Locker Room
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 45.5,16.5
@@ -68508,7 +68552,7 @@ entities:
   - uid: 6676
     components:
     - type: MetaData
-      name: Medbay Lobby Fire Alarm
+      name: Medbay Lobby
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 67.5,2.5
@@ -68526,7 +68570,7 @@ entities:
   - uid: 6683
     components:
     - type: MetaData
-      name: R&D Server Fire Alarm
+      name: R&D Server
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 49.5,17.5
@@ -68540,7 +68584,7 @@ entities:
   - uid: 6731
     components:
     - type: MetaData
-      name: Morgue Corridor Fire Alarm
+      name: Morgue Corridor
     - type: Transform
       pos: 84.5,-3.5
       parent: 2
@@ -68562,7 +68606,7 @@ entities:
   - uid: 6941
     components:
     - type: MetaData
-      name: AME Fire Alarm
+      name: AME
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 11.5,-5.5
@@ -68576,7 +68620,7 @@ entities:
   - uid: 6950
     components:
     - type: MetaData
-      name: PA Fire Alarm
+      name: PA
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 9.5,-0.5
@@ -68589,7 +68633,7 @@ entities:
   - uid: 6960
     components:
     - type: MetaData
-      name: HoS's Office Fire Alarm
+      name: HoS's Office
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 127.5,-4.5
@@ -68603,7 +68647,7 @@ entities:
   - uid: 7243
     components:
     - type: MetaData
-      name: Interrogation Room Fire Alarm
+      name: Interrogation Room
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 107.5,-9.5
@@ -68617,7 +68661,7 @@ entities:
   - uid: 7657
     components:
     - type: MetaData
-      name: Port Janitorial Fire Alarm
+      name: Port Janitorial
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 49.5,-1.5
@@ -68632,7 +68676,7 @@ entities:
   - uid: 7755
     components:
     - type: MetaData
-      name: Shuttle Workshop Fire Alarm
+      name: Shuttle Workshop
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 42.5,-18.5
@@ -68655,7 +68699,7 @@ entities:
   - uid: 8319
     components:
     - type: MetaData
-      name: Security Front Desk Fire Alarm
+      name: Security Front Desk
     - type: Transform
       pos: 104.5,-0.5
       parent: 2
@@ -68669,7 +68713,7 @@ entities:
   - uid: 8320
     components:
     - type: MetaData
-      name: Security Infirmary Fire Alarm
+      name: Security Infirmary
     - type: Transform
       pos: 102.5,-8.5
       parent: 2
@@ -68683,7 +68727,7 @@ entities:
   - uid: 8321
     components:
     - type: MetaData
-      name: Security Locker Room Fire Alarm
+      name: Security Locker Room
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 111.5,-10.5
@@ -68696,7 +68740,7 @@ entities:
   - uid: 8322
     components:
     - type: MetaData
-      name: Security Break Room Fire Alarm
+      name: Security Break Room
     - type: Transform
       pos: 121.5,-0.5
       parent: 2
@@ -68712,7 +68756,7 @@ entities:
   - uid: 9405
     components:
     - type: MetaData
-      name: Paramedic's Office Fire Alarm
+      name: Paramedic's Office
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 58.5,32.5
@@ -68728,7 +68772,7 @@ entities:
   - uid: 9508
     components:
     - type: MetaData
-      name: HoP's Office Air Alarm
+      name: HoP's Office
     - type: Transform
       pos: 72.5,42.5
       parent: 2
@@ -68743,7 +68787,7 @@ entities:
   - uid: 9663
     components:
     - type: MetaData
-      name: East Medbay Hallway Fire Alarm
+      name: East Medbay Hallway
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 93.5,-5.5
@@ -68773,7 +68817,7 @@ entities:
   - uid: 9943
     components:
     - type: MetaData
-      name: Port Service Hallway Fire Alarm
+      name: Port Service Hallway
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 67.5,21.5
@@ -68805,7 +68849,7 @@ entities:
   - uid: 9946
     components:
     - type: MetaData
-      name: Boxing Ring Fire Alarm
+      name: Boxing Ring
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 60.5,18.5
@@ -68820,7 +68864,7 @@ entities:
   - uid: 9950
     components:
     - type: MetaData
-      name: EVA Storage Fire Alarm
+      name: EVA Storage
     - type: Transform
       pos: 67.5,43.5
       parent: 2
@@ -68835,7 +68879,7 @@ entities:
   - uid: 9955
     components:
     - type: MetaData
-      name: Dining Hall Fire Alarm
+      name: Dining Hall
     - type: Transform
       pos: 75.5,32.5
       parent: 2
@@ -68870,7 +68914,7 @@ entities:
   - uid: 9958
     components:
     - type: MetaData
-      name: Bar Fire Alarm
+      name: Bar
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 84.5,22.5
@@ -68891,7 +68935,7 @@ entities:
   - uid: 9961
     components:
     - type: MetaData
-      name: Service Break Room Fire Alarm
+      name: Service Break Room
     - type: Transform
       pos: 87.5,20.5
       parent: 2
@@ -68906,7 +68950,7 @@ entities:
   - uid: 9962
     components:
     - type: MetaData
-      name: Theater Fire Alarm
+      name: Theater
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 84.5,25.5
@@ -68920,7 +68964,7 @@ entities:
   - uid: 9965
     components:
     - type: MetaData
-      name: Kitchen Fire Alarm
+      name: Kitchen
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 68.5,15.5
@@ -68944,7 +68988,7 @@ entities:
   - uid: 9966
     components:
     - type: MetaData
-      name: Botany Fire Alarm
+      name: Botany
     - type: Transform
       pos: 74.5,15.5
       parent: 2
@@ -68964,7 +69008,7 @@ entities:
   - uid: 9967
     components:
     - type: MetaData
-      name: Botany Locker Room Fire Alarm
+      name: Botany Locker Room
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 76.5,12.5
@@ -68979,7 +69023,7 @@ entities:
   - uid: 9979
     components:
     - type: MetaData
-      name: Psychologist's Office Fire Alarm
+      name: Psychologist's Office
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 89.5,9.5
@@ -68994,7 +69038,7 @@ entities:
   - uid: 10000
     components:
     - type: MetaData
-      name: Library Fire Alarm
+      name: Library
     - type: Transform
       pos: 96.5,31.5
       parent: 2
@@ -69010,7 +69054,7 @@ entities:
   - uid: 11157
     components:
     - type: MetaData
-      name: Arboretum Fire Alarm
+      name: Arboretum
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 82.5,54.5
@@ -69042,7 +69086,7 @@ entities:
   - uid: 11541
     components:
     - type: MetaData
-      name: Nitrogen Lounge Air Alarm
+      name: Nitrogen Lounge
     - type: Transform
       pos: 96.5,36.5
       parent: 2
@@ -69058,7 +69102,7 @@ entities:
   - uid: 11594
     components:
     - type: MetaData
-      name: Boxing Ring Fire Alarm
+      name: Boxing Ring
     - type: Transform
       pos: 56.5,28.5
       parent: 2
@@ -69077,7 +69121,7 @@ entities:
   - uid: 11646
     components:
     - type: MetaData
-      name: Bar Hallway Fire Alarm
+      name: Bar Hallway
     - type: Transform
       pos: 92.5,36.5
       parent: 2
@@ -69099,7 +69143,7 @@ entities:
   - uid: 11710
     components:
     - type: MetaData
-      name: Chaplain's Quarters Fire Alarm
+      name: Chaplain's Quarters
     - type: Transform
       pos: 85.5,52.5
       parent: 2
@@ -69113,7 +69157,7 @@ entities:
   - uid: 11712
     components:
     - type: MetaData
-      name: Chapel Fire Alarm
+      name: Chapel
     - type: Transform
       pos: 86.5,46.5
       parent: 2
@@ -69128,7 +69172,7 @@ entities:
   - uid: 11714
     components:
     - type: MetaData
-      name: Chapel Lounge Fire Alarm
+      name: Chapel Lounge
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 87.5,39.5
@@ -69142,7 +69186,7 @@ entities:
   - uid: 11716
     components:
     - type: MetaData
-      name: Chapel Mortuary Fire Alarm
+      name: Chapel Mortuary
     - type: Transform
       pos: 90.5,46.5
       parent: 2
@@ -69161,7 +69205,7 @@ entities:
   - uid: 11725
     components:
     - type: MetaData
-      name: HoP Hallway Fire Alarm
+      name: HoP Hallway
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 68.5,32.5
@@ -69185,7 +69229,7 @@ entities:
   - uid: 11727
     components:
     - type: MetaData
-      name: Arboretum Hallway Fire Alarm
+      name: Arboretum Hallway
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 80.5,50.5
@@ -69210,7 +69254,7 @@ entities:
   - uid: 11824
     components:
     - type: MetaData
-      name: Starboard Service Hallway Fire Alarm
+      name: Starboard Service Hallway
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 89.5,14.5
@@ -69234,7 +69278,7 @@ entities:
   - uid: 11875
     components:
     - type: MetaData
-      name: Materials Storage Fire Alarm
+      name: Materials Storage
     - type: Transform
       pos: 71.5,53.5
       parent: 2
@@ -69248,7 +69292,7 @@ entities:
   - uid: 12191
     components:
     - type: MetaData
-      name: Main Security Air Alarm
+      name: Main Security
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 115.5,-8.5
@@ -69281,7 +69325,7 @@ entities:
   - uid: 12565
     components:
     - type: MetaData
-      name: Perma Games Room Fire Alarm
+      name: Perma Games Room
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 103.5,6.5
@@ -69295,7 +69339,7 @@ entities:
   - uid: 12566
     components:
     - type: MetaData
-      name: Perma Main Room Fire Alarm
+      name: Perma Main Room
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 107.5,6.5
@@ -69314,7 +69358,7 @@ entities:
   - uid: 12573
     components:
     - type: MetaData
-      name: Perma Cell 1 Fire Alarm
+      name: Perma Cell 1
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 101.5,17.5
@@ -69328,7 +69372,7 @@ entities:
   - uid: 12574
     components:
     - type: MetaData
-      name: Perma Cell 2 Fire Alarm
+      name: Perma Cell 2
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 105.5,17.5
@@ -69342,7 +69386,7 @@ entities:
   - uid: 12664
     components:
     - type: MetaData
-      name: Lawyer's Office Fire Alarm
+      name: Lawyer's Office
     - type: Transform
       pos: 114.5,16.5
       parent: 2
@@ -69356,7 +69400,7 @@ entities:
   - uid: 12690
     components:
     - type: MetaData
-      name: Perma Hallway Fire Alarm
+      name: Perma Hallway
     - type: Transform
       pos: 104.5,3.5
       parent: 2
@@ -69377,7 +69421,7 @@ entities:
   - uid: 12703
     components:
     - type: MetaData
-      name: Salvage Fire Alarm
+      name: Salvage
     - type: Transform
       pos: 89.5,-46.5
       parent: 2
@@ -69390,7 +69434,7 @@ entities:
   - uid: 12794
     components:
     - type: MetaData
-      name: Evac Hallway Fire Alarm
+      name: Evac Hallway
     - type: Transform
       pos: 107.5,-39.5
       parent: 2
@@ -69411,7 +69455,7 @@ entities:
   - uid: 13061
     components:
     - type: MetaData
-      name: Courtroom Fire Alarm
+      name: Courtroom
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 121.5,5.5
@@ -69430,7 +69474,7 @@ entities:
   - uid: 13655
     components:
     - type: MetaData
-      name: AI Core Fire Alarm
+      name: AI Core
     - type: Transform
       pos: 54.5,-28.5
       parent: 2
@@ -69445,7 +69489,7 @@ entities:
   - uid: 14477
     components:
     - type: MetaData
-      name: Port Quarter Hallway Fire Alarm
+      name: Port Quarter Hallway
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 67.5,-28.5
@@ -69467,7 +69511,7 @@ entities:
   - uid: 14479
     components:
     - type: MetaData
-      name: Starboard Quarter Fire Alarm
+      name: Starboard Quarter
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 89.5,-28.5
@@ -69489,7 +69533,7 @@ entities:
   - uid: 14600
     components:
     - type: MetaData
-      name: Dorms Fire Alarm
+      name: Dorms
     - type: Transform
       pos: 81.5,-34.5
       parent: 2
@@ -69516,7 +69560,7 @@ entities:
   - uid: 14763
     components:
     - type: MetaData
-      name: Arrivals Dock Fire Alarm
+      name: Arrivals Dock
     - type: Transform
       pos: 49.5,-42.5
       parent: 2
@@ -69540,7 +69584,7 @@ entities:
   - uid: 14765
     components:
     - type: MetaData
-      name: Arrivals Hallway Fire Alarm
+      name: Arrivals Hallway
     - type: Transform
       pos: 58.5,-36.5
       parent: 2
@@ -69558,7 +69602,7 @@ entities:
   - uid: 14817
     components:
     - type: MetaData
-      name: Cargo Hallway Fire Alarm
+      name: Cargo Hallway
     - type: Transform
       pos: 76.5,-39.5
       parent: 2
@@ -69590,7 +69634,7 @@ entities:
   - uid: 14899
     components:
     - type: MetaData
-      name: QM's Office Fire Alarm
+      name: QM's Office
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 66.5,-54.5
@@ -69605,7 +69649,7 @@ entities:
   - uid: 14902
     components:
     - type: MetaData
-      name: Cargo Bay Fire Alarm
+      name: Cargo Bay
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 70.5,-56.5
@@ -69626,7 +69670,7 @@ entities:
   - uid: 14905
     components:
     - type: MetaData
-      name: Cargo Lobby Fire Alarm
+      name: Cargo Lobby
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 70.5,-50.5
@@ -69643,7 +69687,7 @@ entities:
   - uid: 15038
     components:
     - type: MetaData
-      name: Evac Dock Fire Alarm
+      name: Evac Dock
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 123.5,-43.5
@@ -69659,7 +69703,7 @@ entities:
   - uid: 15046
     components:
     - type: MetaData
-      name: Annex Dock Fire Alarm
+      name: Annex Dock
     - type: Transform
       pos: 119.5,-62.5
       parent: 2
@@ -69674,7 +69718,7 @@ entities:
   - uid: 17623
     components:
     - type: MetaData
-      name: Evac Lobby Fire Alarm
+      name: Evac Lobby
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 104.5,-39.5
@@ -69695,7 +69739,7 @@ entities:
   - uid: 17627
     components:
     - type: MetaData
-      name: Annex Dock Connector Air Alarm
+      name: Annex Dock Connector
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 100.5,-49.5
@@ -69724,7 +69768,7 @@ entities:
   - uid: 17628
     components:
     - type: MetaData
-      name: Inboard Annex Dock Fire Alarm
+      name: Inboard Annex Dock
     - type: Transform
       pos: 109.5,-62.5
       parent: 2
@@ -69742,7 +69786,7 @@ entities:
   - uid: 22591
     components:
     - type: MetaData
-      name: Science Back Room Fire Alarm
+      name: Science Back Room
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 45.5,8.5
@@ -69763,7 +69807,7 @@ entities:
   - uid: 22857
     components:
     - type: MetaData
-      name: Grav Gen Fire Alarm
+      name: Grav Gen
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 81.5,-45.5
@@ -69776,7 +69820,7 @@ entities:
   - uid: 22986
     components:
     - type: MetaData
-      name: Detective Hallway Fire Alarm
+      name: Detective Hallway
     - type: Transform
       pos: 104.5,-12.5
       parent: 2
@@ -69802,7 +69846,7 @@ entities:
   - uid: 22990
     components:
     - type: MetaData
-      name: News Hallway Fire Alarm
+      name: News Hallway
     - type: Transform
       pos: 122.5,-12.5
       parent: 2
@@ -69823,7 +69867,7 @@ entities:
   - uid: 22993
     components:
     - type: MetaData
-      name: Bridge Hallway Fire Alarm
+      name: Bridge Hallway
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 129.5,-8.5
@@ -69850,7 +69894,7 @@ entities:
   - uid: 22997
     components:
     - type: MetaData
-      name: Bridge Fire Alarm
+      name: Bridge
     - type: Transform
       pos: 146.5,0.5
       parent: 2
@@ -69878,7 +69922,7 @@ entities:
   - uid: 23000
     components:
     - type: MetaData
-      name: Captain's Quarters Fire Alarm
+      name: Captain's Quarters
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 138.5,7.5
@@ -69893,7 +69937,7 @@ entities:
   - uid: 23004
     components:
     - type: MetaData
-      name: Captain's Office Fire Alarm
+      name: Captain's Office
     - type: Transform
       pos: 140.5,6.5
       parent: 2
@@ -69907,7 +69951,7 @@ entities:
   - uid: 23007
     components:
     - type: MetaData
-      name: Conference Room Fire Alarm
+      name: Conference Room
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 138.5,-18.5
@@ -69922,7 +69966,7 @@ entities:
   - uid: 23311
     components:
     - type: MetaData
-      name: AI Access Lobby Fire Alarm
+      name: AI Access Lobby
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 56.5,-17.5
@@ -69938,7 +69982,7 @@ entities:
   - uid: 23323
     components:
     - type: MetaData
-      name: Shooting Range Fire Alarm
+      name: Shooting Range
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 109.5,-22.5
@@ -69954,7 +69998,7 @@ entities:
   - uid: 23326
     components:
     - type: MetaData
-      name: Detective's Office Fire Alarm
+      name: Detective's Office
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 100.5,-17.5
@@ -97826,7 +97870,7 @@ entities:
     components:
     - type: MetaData
       desc: The king of the distro network.
-      name: dsitro master gas pump
+      name: distro master gas pump
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 17.5,-13.5
@@ -109179,7 +109223,8 @@ entities:
       parent: 10269
     - type: Physics
       canCollide: False
-    - type: InsideEntityStorage
+    - type: WarpPoint
+      location: Evil Skull
     - type: PointLight
       energy: 5
       color: '#FF0000FF'
@@ -109193,6 +109238,7 @@ entities:
       nodesMax: 13
       nodesMin: 5
       nodeTree: []
+    - type: InsideEntityStorage
     missingComponents:
     - Gibbable
 - proto: HeatExchanger
@@ -112033,8 +112079,8 @@ entities:
         immutable: False
         temperature: 293.14673
         moles:
-        - 1.8856695
-        - 7.0937095
+        - 1.8968438
+        - 7.1357465
         - 0
         - 0
         - 0
@@ -117627,7 +117673,7 @@ entities:
     - type: Transform
       pos: 51.093052,-13.622461
       parent: 2
-- proto: PresentRandomAsh
+- proto: PresentRandomCoal
   entities:
   - uid: 24000
     components:
@@ -125352,7 +125398,7 @@ entities:
     - type: Transform
       pos: 55.5,-32.5
       parent: 2
-- proto: SignalButton
+- proto: SignalButtonDirectional
   entities:
   - uid: 174
     components:
@@ -126121,7 +126167,7 @@ entities:
       linkedPorts:
         4587:
         - Pressed: DoorBolt
-- proto: SignalSwitch
+- proto: SignalSwitchDirectional
   entities:
   - uid: 15934
     components:
@@ -127835,7 +127881,7 @@ entities:
   - uid: 4027
     components:
     - type: MetaData
-      name: Telecoms SMES
+      name: Telecomms SMES
     - type: Transform
       pos: 30.5,-5.5
       parent: 2
@@ -128048,6 +128094,48 @@ entities:
       canCollide: False
     - type: InsideEntityStorage
   - uid: 18972
+    components:
+    - type: Transform
+      parent: 18966
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 24139
+    components:
+    - type: Transform
+      parent: 18966
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 24140
+    components:
+    - type: Transform
+      parent: 18966
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 24141
+    components:
+    - type: Transform
+      parent: 18966
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 24142
+    components:
+    - type: Transform
+      parent: 18966
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 24143
+    components:
+    - type: Transform
+      parent: 18966
+    - type: Physics
+      canCollide: False
+    - type: InsideEntityStorage
+  - uid: 24144
     components:
     - type: Transform
       parent: 18966
@@ -129455,35 +129543,28 @@ entities:
     - type: Transform
       pos: 105.5,7.5
       parent: 2
-- proto: SpawnMobCatBingus
+- proto: SpawnMobCat
   entities:
-  - uid: 23075
+  - uid: 23321
     components:
     - type: Transform
-      pos: 87.5,8.5
+      pos: 80.5,-8.5
       parent: 2
-- proto: SpawnMobCatException
-  entities:
-  - uid: 23076
-    components:
-    - type: Transform
-      pos: 78.5,61.5
-      parent: 2
-- proto: SpawnMobCatKittenPipi
+- proto: SpawnMobCatGeneric
   entities:
   - uid: 17043
     components:
     - type: Transform
-      pos: 78.5,-32.5
+      pos: 87.5,8.5
       parent: 2
-- proto: SpawnMobCatRuntime
-  entities:
   - uid: 17052
     components:
     - type: Transform
-      pos: 108.5,30.5
+      pos: 78.5,61.5
       parent: 2
-  - uid: 23321
+- proto: SpawnMobCatKitten
+  entities:
+  - uid: 23076
     components:
     - type: Transform
       pos: 53.5,-24.5
@@ -130848,7 +130929,7 @@ entities:
   - uid: 4028
     components:
     - type: MetaData
-      name: Telecoms Substation
+      name: Telecomms Substation
     - type: Transform
       pos: 31.5,-5.5
       parent: 2
@@ -131537,7 +131618,7 @@ entities:
       setupAvailableNetworks:
       - SurveillanceCameraEngineering
       nameSet: True
-      id: Telecoms
+      id: Telecomms
   - uid: 21895
     components:
     - type: Transform
@@ -153948,7 +154029,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -139911.56
+      secondsUntilStateChange: -140965.23
       state: Opening
     - type: Airlock
       autoClose: False

@@ -1,7 +1,8 @@
-- type: radioChannel
-  id: Hivemind
-  name: chat-radio-hivemind
-  keycode: 'g'
-  frequency: 19840
-  color: "#e36b00"
-  longRange: true
+# Replaced with collective mind system
+#- type: radioChannel
+#  id: Hivemind
+#  name: chat-radio-hivemind
+#  keycode: 'g'
+#  frequency: 19840
+#  color: "#e36b00"
+#  longRange: true

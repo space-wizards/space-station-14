@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "license": "CC0-1.0",
-  "copyright": "Created by EmoGarbage404 (github) for Space Station 14.",
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation from https://github.com/tgstation/tgstation/pull/854914",
   "size": {
     "x": 32,
-    "y": 32
+    "y": 48
   },
   "states": [
     {

@@ -11,12 +11,15 @@
   - type: Item
     sprite: _Impstation/Objects/Decapoid/claw.rsi
   - type: MeleeWeapon
+    range: 0.9
+    angle: 30
+    resetOnHandSelected: true
     wideAnimationRotation: 135
     attackRate: 1.5
     damage:
       types:
-        Piercing: 15 # probably nerf this once they're non-antags
-        Structural: 15
+        Piercing: 15
+        Structural: 5
     soundHit:
       collection: AlienClaw
   - type: Unremoveable
@@ -25,7 +28,7 @@
   name: vaporizer
   parent: ClothingMaskGas
   id: DecapoidBreathingApparatus
-  description: 'A neck-mounted breathing apparatus for decapoids. Moistens your gills, if you have them. Also functions as a brain-to-voice translator.'
+  description: 'A neck-mounted breathing apparatus for Decapoids. Moistens your gills, if you have them. Also functions as a brain-to-voice translator.'
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Decapoid/vaporizer.rsi # todo: custom. obviously. also todo: make it able to take in water, convert it to vapor, and internals that steam into the lungs.
@@ -48,6 +51,9 @@
   - type: HideLayerClothing
     slots:
     - Snout
+  - type: SpeechSound
+    speechSounds: Decapoid
+    speechVerb: Robotic
 
 
 - type: entity
@@ -55,17 +61,24 @@
   suffix: Filled
   parent: GasTankRoundBase
   id: DecapoidVaporTank
-  description: 'A small tank that slots neatly into a vaporizer harness and stores the vapor it produces. It can hold 5 L of gas.'
-  components: # todo: everything
+  description: 'An alien contraption consisting of two tanks. The smaller tank takes in water and converts it into vapor, which is stored in the larger tank. It can hold 5 L of gas, and 30u of fluid.'
+  components: # todo: some way of knowing that there's an invalid solution
   - type: Sprite
-    sprite: Objects/Tanks/generic.rsi # todo: custom
-    state: icon
+    sprite: _Impstation/Objects/Tanks/vapor.rsi
+    layers:
+      - state: icon
+      - state: fill-1
+        map: [ "enum.SolutionContainerLayers.Fill" ]
+        visible: false
+      - state: normal
+        map: [ "enum.VaporizerVisualLayers.Indicator" ]
+  - type: Appearance
   - type: Item
     size: Normal
-    sprite: Objects/Tanks/generic.rsi
+    sprite: _Impstation/Objects/Tanks/vapor.rsi
   - type: Clothing
     quickEquip: false
-    sprite: Objects/Tanks/generic.rsi # todo: custom
+    sprite: _Impstation/Objects/Tanks/vapor.rsi
     slots:
     - Back
     - suitStorage
@@ -75,6 +88,8 @@
     interfaces:
       enum.SharedGasTankUiKey.Key:
         type: GasTankBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
   - type: Tag
     tags:
       - GasTank
@@ -90,6 +105,7 @@
         - 0 # tritium
         - 2.051379050 # water vapor
       temperature: 293.15
+  - type: Drink
   - type: SolutionContainerManager
     solutions:
       waterTank:
@@ -100,7 +116,18 @@
     solution: waterTank
   - type: Spillable
     solution: waterTank
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: SolutionItemStatus
+    solution: waterTank
+  - type: MixableSolution
+    solution: waterTank
+  - type: DrainableSolution
+    solution: waterTank
+  - type: DrawableSolution
+    solution: waterTank
   - type: Vaporizer
-    # TODO: SolutionContainerVisuals
-    # Being able to see how much water is left would be nice
-    # This is left as an exercise to the spriter :ignorant:
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+    fillBaseName: fill-
+    solutionName: waterTank

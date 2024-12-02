@@ -1,0 +1,15 @@
+- type: damageModifierSet
+  id: Mouse
+  coefficients:
+    Shock: 1.4 #so mice can still be oneshot with non-lethal shotgun shell changes
+
+- type: damageModifierSet
+  id: Dinosaur
+  coefficients:
+    Blunt: 0.6
+    Slash: 0.7
+    Cold: 1.4
+    Poison: 0.8
+  flatReductions:
+    Blunt: 5
+    Piercing: 5

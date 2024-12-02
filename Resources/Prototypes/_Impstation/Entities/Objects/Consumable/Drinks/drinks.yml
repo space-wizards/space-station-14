@@ -385,3 +385,19 @@
   - type: Icon
     sprite: Objects/Consumable/Drinks/moonshineglass.rsi
     state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkCleverGirlGlass
+  name: clever girl
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: CleverGirl
+          Quantity: 30
+  - type: Icon
+    sprite: _Impstation/Objects/Consumable/Drinks/clevergirl.rsi
+    state: icon

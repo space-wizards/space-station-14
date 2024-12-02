@@ -104,9 +104,9 @@
         map: [ "enum.DisposalUnitVisualLayers.BaseCharging" ]
       - state: mailing-flush
         map: [ "enum.DisposalUnitVisualLayers.OverlayFlush" ]
-      - state: dispover-charge
+      - state: mailover-charge
         map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]
-      - state: dispover-ready
+      - state: mailover-ready
         map: [ "enum.DisposalUnitVisualLayers.OverlayReady" ]
       - state: dispover-full
         map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]
@@ -120,6 +120,7 @@
     whitelist:
       components:
       - Item
+      - Goblin # NF
   - type: MailingUnit
   - type: DeviceNetwork
     deviceNetId: Wired

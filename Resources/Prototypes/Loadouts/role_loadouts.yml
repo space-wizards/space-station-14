@@ -18,6 +18,7 @@
   - GroupBreathToolDecapoid # imp special
   - GroupTankHarnessCommandWithOuterwearAquatic # imp special
 
+
 - type: roleLoadout
   id: JobHeadOfPersonnel
   groups:
@@ -427,14 +428,13 @@
   id: JobHeadOfSecurity
   groups:
   - HeadofSecurityHead
-  - HeadofSecurityMask #imp
   - HeadofSecurityNeck
   - HeadofSecurityJumpsuit
   - HeadofSecurityOuterClothing
   - UpperSecurityShoes
   - HeadofSecurityHeadset #imp
   - HeadofSecurityBackpack #imp
-  - SecurityBelt
+  - HeadofSecurityBelt
   - SurvivalSecurityCommand #imp
   - Trinkets
   - SecurityStar
@@ -591,11 +591,12 @@
 - type: roleLoadout
   id: JobChemist
   groups:
+  - ChemistHead # imp
   - MedicalMask
   - ChemistNeck
   - ChemistJumpsuit
   - ChemistOuterClothing
-  - MedicalGloves
+  - ChemistGloves # imp
   - ChemistShoes
   - ChemistBackpack
   - ChemistPDA

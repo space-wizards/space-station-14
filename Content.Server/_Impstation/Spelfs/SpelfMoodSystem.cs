@@ -16,6 +16,8 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Content.Shared._Impstation.CCVar;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server._Impstation.Spelfs;
 
@@ -27,6 +29,7 @@ public sealed partial class SpelfMoodsSystem : SharedSpelfMoodSystem
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly UserInterfaceSystem _bui = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public IReadOnlyList<SpelfMood> SharedMoods => _sharedMoods.AsReadOnly();
     private readonly List<SpelfMood> _sharedMoods = new();
@@ -66,7 +69,7 @@ public sealed partial class SpelfMoodsSystem : SharedSpelfMoodSystem
     private void NewSharedMoods()
     {
         _sharedMoods.Clear();
-        for (int i = 0; i < _config.GetCVar(CCVars.SpelfSharedMoodCount); i++)
+        for (int i = 0; i < _config.GetCVar(ImpCCVars.SpelfSharedMoodCount); i++)
             TryAddSharedMood();
     }
 
@@ -95,7 +98,7 @@ public sealed partial class SpelfMoodsSystem : SharedSpelfMoodSystem
             if (!comp.FollowsSharedMoods)
                 continue;
 
-            NotifyMoodChange(ent);
+            NotifyMoodChange((ent, comp));
         }
 
         return true;
@@ -145,10 +148,13 @@ public sealed partial class SpelfMoodsSystem : SharedSpelfMoodSystem
         return false;
     }
 
-    public void NotifyMoodChange(EntityUid uid)
+    public void NotifyMoodChange(Entity<SpelfMoodsComponent> ent)
     {
-        if (!TryComp<ActorComponent>(uid, out var actor))
+        if (!TryComp<ActorComponent>(ent.Owner, out var actor))
             return;
+
+        if (ent.Comp.MoodsChangedSound != null)
+            _audio.PlayGlobal(ent.Comp.MoodsChangedSound, actor.PlayerSession);
 
         var msg = Loc.GetString("spelf-moods-update-notify");
         var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
@@ -172,7 +178,7 @@ public sealed partial class SpelfMoodsSystem : SharedSpelfMoodSystem
         comp.Moods.Add(mood);
 
         if (notify)
-            NotifyMoodChange(uid);
+            NotifyMoodChange((uid, comp));
 
         UpdateBUIState(uid, comp);
     }
@@ -274,7 +280,7 @@ public sealed partial class SpelfMoodsSystem : SharedSpelfMoodSystem
 
         comp.Moods = moods.ToList();
         if (notify)
-            NotifyMoodChange(uid);
+            NotifyMoodChange((uid, comp));
 
         UpdateBUIState(uid, comp);
     }

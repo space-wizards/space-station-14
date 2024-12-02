@@ -344,6 +344,7 @@
     whitelist:
       tags:
         - Document
+        - Write
   - type: ItemMapper
     mapLayers:
       folder-overlay-paper:
@@ -597,6 +598,10 @@
     damage:
       types:
         Blunt: 10
+  - type: Tag
+    tags:
+    - Folder
+    - HighRiskItem
   - type: StealTarget
     stealGroup: BoxFolderQmClipboard
 

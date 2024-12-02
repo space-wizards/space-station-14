@@ -52,3 +52,15 @@
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/captaineveningattire.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/captaineveningattire.rsi
+
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband, ClothingUniformFoldableBase]
+  id: ClothingUniformJumpsuitHoSPro
+  name: head of security's professional jumpsuit
+  description: A clean, decorated jumpsuit for the Head of Security.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/hos_pro.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/hos_pro.rsi

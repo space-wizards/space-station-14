@@ -1,0 +1,30 @@
+# UV lights
+- type: entity
+  id: PoweredlightUV
+  description: "A light fixture. Draws power and produces light when equipped with a light tube."
+  suffix: UV
+  parent: Poweredlight
+  components:
+  - type: PoweredLight
+    hasLampOnSpawn: UvLightTube
+  - type: PointLight
+    radius: 15
+    energy: 1
+    softness: 0.9
+    color: "#9E00FF"
+  - type: DamageOnInteract
+    damage:
+      types:
+        Heat: 1
+    popupText: powered-light-component-burn-hand
+
+- type: entity
+  id: AlwaysPoweredLightUV
+  suffix: Always Powered, UV
+  parent: AlwaysPoweredWallLight
+  components:
+  - type: PointLight
+    radius: 10
+    energy: 2.5
+    softness: 0.9
+    color: "#9E00FF"

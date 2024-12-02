@@ -31,7 +31,7 @@ uplink-gloves-north-star-desc = A pair of gloves that reduce your punching coold
 
 # Explosives
 uplink-explosive-grenade-name = Explosive Grenade
-uplink-explosive-grenade-desc = A simplistic grenade with a three-and-a-half-second long fuse that is geared towards injuring personnel. Causes minimal hull damage.
+uplink-explosive-grenade-desc = A simplistic grenade with a 3.5 second long fuse that is geared towards injuring personnel. Causes minimal hull damage.
 
 uplink-flash-grenade-name = Flashbang
 uplink-flash-grenade-desc = A standard-issue flashbang, capable of blinding and slowing down anyone without proper protection. This, of course, includes you; make sure you're properly equipped before using it.
@@ -40,7 +40,7 @@ uplink-smoke-grenade-name = Smoke Grenade
 uplink-smoke-grenade-desc = A grenade that releases a huge cloud of smoke, perfect for killing someone in the shadows or making a sneaky getaway.
 
 uplink-mini-bomb-name = Minibomb
-uplink-mini-bomb-desc = A low-yield, high-impact precision sabotage explosive with a five-second long fuse. Perfect for quickly destroying a machine, dead body, or whatever else needs to go.
+uplink-mini-bomb-desc = A low-yield, high-impact precision sabotage explosive with a 5 second long fuse. Perfect for quickly destroying a machine, dead body, or whatever else needs to go.
 
 uplink-supermatter-grenade-name = Supermatter Grenade
 uplink-supermatter-grenade-desc = Grenade that simulates delamination of a suppermatter engine, generates powerful gravity well. Explosion comparable to a Mini Bomb.
@@ -119,7 +119,7 @@ uplink-holster-name = Shoulder Holster
 uplink-holster-desc = A deep shoulder holster capable of holding many types of ballistics.
 
 uplink-animal-friends-kit-name = Animal Friends Kit
-uplink-animal-friends-kit-desc = A box containing 4 doses of subjuzine, an alteration of cognizine that forces the injected creature to your will. Also contains an empty syringe and two mice to use it on.
+uplink-animal-friends-kit-desc = A box containing 4 doses of subjuzine, an alteration of cognizine that forces the injected creature to your will. Also contains an empty syringe and two mice to use it on. Just add blood!
 
 uplink-chest-rig-name = Chest Rig
 uplink-chest-rig-desc = Explosion-resistant tactical webbing used for holding traitor goods.
@@ -418,7 +418,7 @@ uplink-outlaw-glasses-name = Outlaw Glasses
 uplink-outlaw-glasses-desc = A must for every self-respecting undercover agent.
 
 uplink-costume-pyjama-name = Syndicate Pyjama Duffel Bag
-uplink-costume-pyjama-desc = Contains 3 pairs of syndicate pyjamas and 3 plushies for the ultimate sleepover.
+uplink-costume-pyjama-desc = Contains 3 pairs of syndicate pyjamas and 4 plushies for the ultimate sleepover.
 
 uplink-costume-clown-name = Clown Costume Duffel Bag
 uplink-costume-clown-desc = Contains a complete Clown outfit. Includes PDA and service radio.

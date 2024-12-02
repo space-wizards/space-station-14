@@ -44,6 +44,7 @@ public sealed partial class PropulsionSystem : EntitySystem
         comp.PredictIndex = state.PredictIndex;
         comp.WalkSpeedModifier = state.WalkSpeedModifier;
         comp.SprintSpeedModifier = state.SprintSpeedModifier;
+        comp.Whitelist = state.Whitelist;
     }
 
     private bool CanAffect(Entity<PropulsionComponent> entity, EntityUid other)
@@ -63,6 +64,7 @@ public sealed partial class PropulsionSystem : EntitySystem
         propulse.WalkSpeedModifier = entity.Comp.WalkSpeedModifier;
         propulse.SprintSpeedModifier = entity.Comp.SprintSpeedModifier;
         propulse.PredictFingerprint |= 1ul << entity.Comp.PredictIndex;
+        Dirty(other, propulse);
 
         var modifier = EnsureComp<MovementSpeedModifierComponent>(other);
         _speed.RefreshMovementSpeedModifiers(other, modifier);
@@ -74,6 +76,7 @@ public sealed partial class PropulsionSystem : EntitySystem
             return;
 
         propulse.PredictFingerprint &= ~(1ul << entity.Comp.PredictIndex);
+        Dirty(other, propulse);
         _speed.RefreshMovementSpeedModifiers(other);
     }
 
