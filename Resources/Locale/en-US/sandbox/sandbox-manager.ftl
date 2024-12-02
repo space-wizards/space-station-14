@@ -16,6 +16,6 @@ sandbox-window-toggle-fov-button = Toggle FOV
 sandbox-window-toggle-shadows-button = Toggle Shadows
 sandbox-window-toggle-subfloor-button = Toggle Subfloor
 sandbox-window-toggle-suicide-button = Suicide
-sandbox-window-show-spawns-button = Shows Spawns
+sandbox-window-show-spawns-button = Show Spawns
 sandbox-window-show-bb-button = Show BB
 sandbox-window-show-npc-button = Show NPC
