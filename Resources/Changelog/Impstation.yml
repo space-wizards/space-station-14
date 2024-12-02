@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: KingMudkipIII
-  changes:
-  - message: Add bartender chemmaster flatpack unlock
-    type: Add
-  id: 120
-  time: '2024-08-24T15:55:59.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/140
 - author: FlippenPage
   changes:
   - message: reimplemented Brigmedic equipment
@@ -4388,3 +4381,11 @@
   id: 619
   time: '2024-12-02T12:40:17.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/865
+- author: Darkmajia
+  changes:
+  - message: Dino Wars has undergone an extensive rework after beta tester feedback.
+      Thank you for continuing to support the Dino Wars project.
+    type: Tweak
+  id: 620
+  time: '2024-12-02T12:42:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/846
