@@ -749,4 +749,18 @@ Entries:
   id: 106
   time: '2024-12-01T07:51:54.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/103
+- author: Miracula
+  changes:
+  - message: Fixed brigbuddy not fitting in brigmedic belt
+    type: Fix
+  id: 107
+  time: '2024-12-02T04:52:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/106
+- author: Miracula
+  changes:
+  - message: Fixed brigmedic coat not letting wear stuff on the back
+    type: Fix
+  id: 108
+  time: '2024-12-02T04:52:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/106
 
