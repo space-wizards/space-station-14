@@ -278,6 +278,8 @@
     back: ClothingBackpackSatchelLeather
     outerClothing: ClothingOuterCoatBomber
     gloves: ClothingHandsGlovesFingerless
+    pocket1: FlashlightLantern
+    pocket2: CrowbarRed
 
 #CMO Disaster Victim
 - type: startingGear
