@@ -17255,6 +17255,12 @@ entities:
       rot: 3.141592653589793 rad
       pos: 55.5,5.5
       parent: 60
+  - uid: 23939
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -31.5,-18.5
+      parent: 60
 - proto: ButtonFrameCautionSecurity
   entities:
   - uid: 766
@@ -17290,6 +17296,12 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 46.5,5.5
+      parent: 60
+  - uid: 23940
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -21.5,-14.5
       parent: 60
 - proto: CableApcExtension
   entities:
@@ -111706,27 +111718,9 @@ entities:
   - uid: 315
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
+      rot: 1.5707963267948966 rad
       pos: -19.5,-5.5
       parent: 60
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.14673
-        moles:
-        - 1.7459903
-        - 6.568249
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
   - uid: 319
     components:
     - type: Transform
@@ -112751,6 +112745,13 @@ entities:
     components:
     - type: Transform
       pos: 4.5,-31.5
+      parent: 60
+- proto: PaperBin20
+  entities:
+  - uid: 23942
+    components:
+    - type: Transform
+      pos: -33.5,-3.5
       parent: 60
 - proto: PaperBin5
   entities:
@@ -115094,23 +115095,11 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -22.5,0.5
       parent: 60
-  - uid: 1941
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -34.5,-18.5
-      parent: 60
   - uid: 1978
     components:
     - type: Transform
       rot: 3.141592653589793 rad
-      pos: -28.5,-20.5
-      parent: 60
-  - uid: 2017
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -24.5,-20.5
+      pos: -23.5,-20.5
       parent: 60
   - uid: 2106
     components:
@@ -115659,6 +115648,12 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 23.5,-38.5
       parent: 60
+  - uid: 9176
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -34.5,-19.5
+      parent: 60
   - uid: 9223
     components:
     - type: Transform
@@ -115980,6 +115975,12 @@ entities:
       parent: 60
     - type: ApcPowerReceiver
       powerLoad: 0
+  - uid: 11128
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -34.5,-16.5
+      parent: 60
   - uid: 11726
     components:
     - type: Transform
@@ -116921,6 +116922,12 @@ entities:
     - type: Transform
       pos: -24.5,-2.5
       parent: 60
+  - uid: 23941
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -29.5,-20.5
+      parent: 60
   - uid: 24109
     components:
     - type: Transform
@@ -117565,11 +117572,6 @@ entities:
       parent: 60
     - type: ApcPowerReceiver
       powerLoad: 0
-  - uid: 9176
-    components:
-    - type: Transform
-      pos: -30.5,5.5
-      parent: 60
   - uid: 9216
     components:
     - type: Transform
@@ -118235,6 +118237,11 @@ entities:
       parent: 60
     - type: ApcPowerReceiver
       powerLoad: 0
+  - uid: 23943
+    components:
+    - type: Transform
+      pos: -31.5,5.5
+      parent: 60
   - uid: 24138
     components:
     - type: Transform
@@ -124981,6 +124988,11 @@ entities:
     - type: Transform
       pos: 41.440662,-10.344523
       parent: 60
+  - uid: 2017
+    components:
+    - type: Transform
+      pos: -19.510386,-4.290659
+      parent: 60
 - proto: RubberStampMime
   entities:
   - uid: 7243
@@ -126437,6 +126449,18 @@ entities:
         7685:
         - Pressed: Toggle
         1932:
+        - Pressed: Toggle
+  - uid: 1941
+    components:
+    - type: MetaData
+      name: Privacy Shutter Button
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -31.5,-18.5
+      parent: 60
+    - type: DeviceLinkSource
+      linkedPorts:
+        19155:
         - Pressed: Toggle
   - uid: 2287
     components:
