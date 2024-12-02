@@ -10,3 +10,12 @@
   - /Audio/_Impstation/Effects/Gasp/s_gasp_female_1.ogg
   - /Audio/_Impstation/Effects/Gasp/s_gasp_female_2.ogg
   - /Audio/_Impstation/Effects/Gasp/s_gasp_female_3.ogg
+
+- type: soundCollection
+  id: UnisexSlimeGasp
+  files:
+  - /Audio/_Impstation/Effects/Gasp/s_gasp_male_1.ogg
+  - /Audio/_Impstation/Effects/Gasp/s_gasp_male_2.ogg
+  - /Audio/_Impstation/Effects/Gasp/s_gasp_female_1.ogg
+  - /Audio/_Impstation/Effects/Gasp/s_gasp_female_2.ogg
+  - /Audio/_Impstation/Effects/Gasp/s_gasp_female_3.ogg
