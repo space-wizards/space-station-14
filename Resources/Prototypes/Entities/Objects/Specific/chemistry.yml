@@ -301,7 +301,7 @@
     size: Tiny
   - type: Appearance
   - type: SolutionContainerVisuals
-    maxFillLevels: 1
+    maxFillLevels: 5
     fillBaseName: dropper
     inHandsMaxFillLevels: 1
     inHandsFillBaseName: -fill-
@@ -609,7 +609,7 @@
     areaInsertRadius: 1
     storageInsertSound: /Audio/Effects/pill_insert.ogg
     storageRemoveSound: /Audio/Effects/pill_remove.ogg
-    whitelist: 
+    whitelist:
       tags:
       - Pill
   - type: Dumpable
