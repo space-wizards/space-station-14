@@ -16,8 +16,9 @@ public partial class MarkupNodeSupplier
     /// Returns a FormattedMessage after it has been processed by the node supplier.
     /// </summary>
     /// <param name="message">The message to be processed.</param>
+    /// <param name="supplierParameters">Any parameters that can be handled by the suppliers.</param>
     /// <returns></returns>
-    public virtual FormattedMessage ProcessNodeSupplier(FormattedMessage message)
+    public virtual FormattedMessage ProcessNodeSupplier(FormattedMessage message, Dictionary<Enum, object>? supplierParameters)
     {
         return message;
     }

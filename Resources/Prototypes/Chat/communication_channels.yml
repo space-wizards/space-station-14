@@ -1,0 +1,139 @@
+﻿- type: communicationChannel
+  id: ICSpeech
+  publishSessionChatConditions:
+    - !type:TestSessionChatCondition
+  publishEntityChatConditions:
+    - !type:TestEntityChatCondition
+  consumeCollections:
+    - consumeSessionChatConditions:
+        - !type:TestSessionChatCondition
+      consumeEntityChatConditions:
+        - !type:TestEntityChatCondition
+      collectionMarkupNodes:
+        - !type:TestMarkupNodeSupplier
+  communicationTypes:
+    - Spoken
+
+- type: communicationChannel
+  id: ICWhisper
+  publishSessionChatConditions:
+  - !type:TestSessionChatCondition
+  publishEntityChatConditions:
+  - !type:TestEntityChatCondition
+  consumeCollections:
+  - consumeSessionChatConditions:
+    - !type:TestSessionChatCondition
+    consumeEntityChatConditions:
+    - !type:TestEntityChatCondition
+    collectionMarkupNodes:
+    - !type:TestMarkupNodeSupplier
+  communicationTypes:
+  - Spoken
+
+- type: communicationChannel
+  id: Dead
+  publishSessionChatConditions:
+  - !type:TestSessionChatCondition
+  publishEntityChatConditions:
+  - !type:TestEntityChatCondition
+  consumeCollections:
+  - consumeSessionChatConditions:
+    - !type:TestSessionChatCondition
+    consumeEntityChatConditions:
+    - !type:TestEntityChatCondition
+    collectionMarkupNodes:
+    - !type:TestMarkupNodeSupplier
+  communicationTypes:
+  - Spoken
+
+- type: communicationChannel
+  id: OOC
+  publishSessionChatConditions:
+  - !type:TestSessionChatCondition
+  publishEntityChatConditions:
+  - !type:TestEntityChatCondition
+  consumeCollections:
+  - consumeSessionChatConditions:
+    - !type:TestSessionChatCondition
+    consumeEntityChatConditions:
+    - !type:TestEntityChatCondition
+    collectionMarkupNodes:
+    - !type:TestMarkupNodeSupplier
+  communicationTypes:
+  - Spoken
+
+- type: communicationChannel
+  id: AdminChat
+  publishSessionChatConditions:
+  - !type:TestSessionChatCondition
+  publishEntityChatConditions:
+  - !type:TestEntityChatCondition
+  consumeCollections:
+  - consumeSessionChatConditions:
+    - !type:TestSessionChatCondition
+    consumeEntityChatConditions:
+    - !type:TestEntityChatCondition
+    collectionMarkupNodes:
+    - !type:TestMarkupNodeSupplier
+  communicationTypes:
+  - Spoken
+
+- type: communicationChannel
+  id: AdminAlert
+  publishSessionChatConditions:
+  - !type:TestSessionChatCondition
+  publishEntityChatConditions:
+  - !type:TestEntityChatCondition
+  consumeCollections:
+  - consumeSessionChatConditions:
+    - !type:TestSessionChatCondition
+    consumeEntityChatConditions:
+    - !type:TestEntityChatCondition
+    collectionMarkupNodes:
+    - !type:TestMarkupNodeSupplier
+  communicationTypes:
+  - Spoken
+
+- type: communicationChannel
+  id: ServerAnnouncement # Server announcements to go out to all players.
+  publishSessionChatConditions:
+  - !type:TestSessionChatCondition
+  publishEntityChatConditions:
+  - !type:TestEntityChatCondition
+  consumeCollections:
+  - consumeSessionChatConditions:
+    - !type:TestSessionChatCondition
+    consumeEntityChatConditions:
+    - !type:TestEntityChatCondition
+    collectionMarkupNodes:
+    - !type:TestMarkupNodeSupplier
+  communicationTypes:
+  - Spoken
+
+- type: communicationChannel
+  id: GameMessage # Used to communicate non-diagetic
+  publishSessionChatConditions:
+  - !type:TestSessionChatCondition
+  publishEntityChatConditions:
+  - !type:TestEntityChatCondition
+  consumeCollections:
+  - consumeSessionChatConditions:
+    - !type:TestSessionChatCondition
+    consumeEntityChatConditions:
+    - !type:TestEntityChatCondition
+    collectionMarkupNodes:
+    - !type:TestMarkupNodeSupplier
+  communicationTypes:
+  - Spoken
+
+- type: communicationType
+  id: Spoken
+
+- type: communicationType
+  id: Radio
+
+- type: communicationType
+  id: OOC
+
+- type: communicationType
+  id: Telepathic

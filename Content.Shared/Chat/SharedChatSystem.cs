@@ -251,9 +251,10 @@ public abstract class SharedChatSystem : EntitySystem
         return trimmed;
     }
 
+    //CHAT
     public static string InjectTagInsideTag(ChatMessage message, string outerTag, string innerTag, string? tagParameter)
     {
-        var rawmsg = message.WrappedMessage;
+        /*var rawmsg = message.WrappedMessage;
         var tagStart = rawmsg.IndexOf($"[{outerTag}]");
         var tagEnd = rawmsg.IndexOf($"[/{outerTag}]");
         if (tagStart < 0 || tagEnd < 0) //If the outer tag is not found, the injection is not performed
@@ -263,16 +264,16 @@ public abstract class SharedChatSystem : EntitySystem
         string innerTagProcessed = tagParameter != null ? $"[{innerTag}={tagParameter}]" : $"[{innerTag}]";
 
         rawmsg = rawmsg.Insert(tagEnd, $"[/{innerTag}]");
-        rawmsg = rawmsg.Insert(tagStart, innerTagProcessed);
+        rawmsg = rawmsg.Insert(tagStart, innerTagProcessed);*/
 
-        return rawmsg;
+        return string.Empty;
     }
 
     /// <summary>
     /// Injects a tag around all found instances of a specific string in a ChatMessage.
     /// Excludes strings inside other tags and brackets.
     /// </summary>
-    public static string InjectTagAroundString(ChatMessage message, string targetString, string tag, string? tagParameter)
+    /*public static string InjectTagAroundString(ChatMessage message, string targetString, string tag, string? tagParameter)
     {
         var rawmsg = message.WrappedMessage;
         rawmsg = Regex.Replace(rawmsg, "(?i)(" + targetString + ")(?-i)(?![^[]*])", $"[{tag}={tagParameter}]$1[/{tag}]");
@@ -288,5 +289,5 @@ public abstract class SharedChatSystem : EntitySystem
             return "";
         tagStart += tag.Length + 2;
         return rawmsg.Substring(tagStart, tagEnd - tagStart);
-    }
+    }*/
 }

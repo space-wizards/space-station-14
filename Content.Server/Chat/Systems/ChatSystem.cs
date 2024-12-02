@@ -72,6 +72,11 @@ public sealed partial class ChatSystem : SharedChatSystem
     private bool _critLoocEnabled;
     private readonly bool _adminLoocEnabled = true;
 
+    private static ProtoId<CommunicationChannelPrototype> _channelDefaultAdminChannel = "AdminChat";
+    private static ProtoId<CommunicationChannelPrototype> _channelDefaultAdminAlertChannel = "AdminAlert";
+    private static ProtoId<CommunicationChannelPrototype> _channelDefaultServerAnnouncementChannel = "ServerAnnouncement";
+    private static ProtoId<CommunicationChannelPrototype> _channelDefaultNotificationChannel = "GameMessage";
+
     public override void Initialize()
     {
         base.Initialize();
@@ -83,32 +88,35 @@ public sealed partial class ChatSystem : SharedChatSystem
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameChange);
     }
 
+    // CHAT-TODO: See how you can implement this
     private void OnLoocEnabledChanged(bool val)
     {
         if (_loocEnabled == val) return;
 
         _loocEnabled = val;
-        _chatManager.DispatchServerAnnouncement(
-            Loc.GetString(val ? "chat-manager-looc-chat-enabled-message" : "chat-manager-looc-chat-disabled-message"));
+        //_chatManager.DispatchServerAnnouncement(
+        //    Loc.GetString(val ? "chat-manager-looc-chat-enabled-message" : "chat-manager-looc-chat-disabled-message"));
     }
 
+    // CHAT-TODO: See how you can implement this
     private void OnDeadLoocEnabledChanged(bool val)
     {
         if (_deadLoocEnabled == val) return;
 
         _deadLoocEnabled = val;
-        _chatManager.DispatchServerAnnouncement(
-            Loc.GetString(val ? "chat-manager-dead-looc-chat-enabled-message" : "chat-manager-dead-looc-chat-disabled-message"));
+        //_chatManager.DispatchServerAnnouncement(
+        //    Loc.GetString(val ? "chat-manager-dead-looc-chat-enabled-message" : "chat-manager-dead-looc-chat-disabled-message"));
     }
 
+    // CHAT-TODO: See how you can implement this
     private void OnCritLoocEnabledChanged(bool val)
     {
         if (_critLoocEnabled == val)
             return;
 
         _critLoocEnabled = val;
-        _chatManager.DispatchServerAnnouncement(
-            Loc.GetString(val ? "chat-manager-crit-looc-chat-enabled-message" : "chat-manager-crit-looc-chat-disabled-message"));
+        //_chatManager.DispatchServerAnnouncement(
+        //    Loc.GetString(val ? "chat-manager-crit-looc-chat-enabled-message" : "chat-manager-crit-looc-chat-disabled-message"));
     }
 
     private void OnGameChange(GameRunLevelChangedEvent ev)
@@ -127,530 +135,8 @@ public sealed partial class ChatSystem : SharedChatSystem
         }
     }
 
-    /// <summary>
-    ///     Sends an in-character chat message to relevant clients.
-    /// </summary>
-    /// <param name="source">The entity that is speaking</param>
-    /// <param name="message">The message being spoken or emoted</param>
-    /// <param name="desiredType">The chat type</param>
-    /// <param name="hideChat">Whether or not this message should appear in the chat window</param>
-    /// <param name="hideLog">Whether or not this message should appear in the adminlog window</param>
-    /// <param name="shell"></param>
-    /// <param name="player">The player doing the speaking</param>
-    /// <param name="nameOverride">The name to use for the speaking entity. Usually this should just be modified via <see cref="TransformSpeakerNameEvent"/>. If this is set, the event will not get raised.</param>
-    public void TrySendInGameICMessage(
-        EntityUid source,
-        string message,
-        InGameICChatType desiredType,
-        bool hideChat, bool hideLog = false,
-        IConsoleShell? shell = null,
-        ICommonSession? player = null, string? nameOverride = null,
-        bool checkRadioPrefix = true,
-        bool ignoreActionBlocker = false)
-    {
-        TrySendInGameICMessage(source, message, desiredType, hideChat ? ChatTransmitRange.HideChat : ChatTransmitRange.Normal, hideLog, shell, player, nameOverride, checkRadioPrefix, ignoreActionBlocker);
-    }
-
-    /// <summary>
-    ///     Sends an in-character chat message to relevant clients.
-    /// </summary>
-    /// <param name="source">The entity that is speaking</param>
-    /// <param name="message">The message being spoken or emoted</param>
-    /// <param name="desiredType">The chat type</param>
-    /// <param name="range">Conceptual range of transmission, if it shows in the chat window, if it shows to far-away ghosts or ghosts at all...</param>
-    /// <param name="shell"></param>
-    /// <param name="player">The player doing the speaking</param>
-    /// <param name="nameOverride">The name to use for the speaking entity. Usually this should just be modified via <see cref="TransformSpeakerNameEvent"/>. If this is set, the event will not get raised.</param>
-    /// <param name="ignoreActionBlocker">If set to true, action blocker will not be considered for whether an entity can send this message.</param>
-    public void TrySendInGameICMessage(
-        EntityUid source,
-        string message,
-        InGameICChatType desiredType,
-        ChatTransmitRange range,
-        bool hideLog = false,
-        IConsoleShell? shell = null,
-        ICommonSession? player = null,
-        string? nameOverride = null,
-        bool checkRadioPrefix = true,
-        bool ignoreActionBlocker = false
-        )
-    {
-        if (HasComp<GhostComponent>(source))
-        {
-            // Ghosts can only send dead chat messages, so we'll forward it to InGame OOC.
-            TrySendInGameOOCMessage(source, message, InGameOOCChatType.Dead, range == ChatTransmitRange.HideChat, shell, player);
-            return;
-        }
-
-        if (player != null && _chatManager.HandleRateLimit(player) != RateLimitStatus.Allowed)
-            return;
-
-        // Sus
-        if (player?.AttachedEntity is { Valid: true } entity && source != entity)
-        {
-            return;
-        }
-
-        if (!CanSendInGame(message, shell, player))
-            return;
-
-        ignoreActionBlocker = CheckIgnoreSpeechBlocker(source, ignoreActionBlocker);
-
-        // this method is a disaster
-        // every second i have to spend working with this code is fucking agony
-        // scientists have to wonder how any of this was merged
-        // coding any game admin feature that involves chat code is pure torture
-        // changing even 10 lines of code feels like waterboarding myself
-        // and i dont feel like vibe checking 50 code paths
-        // so we set this here
-        // todo free me from chat code
-        if (player != null)
-        {
-            _chatManager.EnsurePlayer(player.UserId).AddEntity(GetNetEntity(source));
-        }
-
-        if (desiredType == InGameICChatType.Speak && message.StartsWith(LocalPrefix))
-        {
-            // prevent radios and remove prefix.
-            checkRadioPrefix = false;
-            message = message[1..];
-        }
-
-        bool shouldCapitalize = (desiredType != InGameICChatType.Emote);
-        bool shouldPunctuate = _configurationManager.GetCVar(CCVars.ChatPunctuation);
-        // Capitalizing the word I only happens in English, so we check language here
-        bool shouldCapitalizeTheWordI = (!CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Parent.Name == "en")
-            || (CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Name == "en");
-
-        message = SanitizeInGameICMessage(source, message, out var emoteStr, shouldCapitalize, shouldPunctuate, shouldCapitalizeTheWordI);
-
-        // Was there an emote in the message? If so, send it.
-        if (player != null && emoteStr != message && emoteStr != null)
-        {
-            SendEntityEmote(source, emoteStr, range, nameOverride, ignoreActionBlocker);
-        }
-
-        // This can happen if the entire string is sanitized out.
-        if (string.IsNullOrEmpty(message))
-            return;
-
-        // This message may have a radio prefix, and should then be whispered to the resolved radio channel
-        if (checkRadioPrefix)
-        {
-            if (TryProccessRadioMessage(source, message, out var modMessage, out var channel))
-            {
-                SendEntityWhisper(source, modMessage, range, channel, nameOverride, hideLog, ignoreActionBlocker);
-                return;
-            }
-        }
-
-        // Otherwise, send whatever type.
-        switch (desiredType)
-        {
-            case InGameICChatType.Speak:
-                SendEntitySpeak(source, message, range, nameOverride, hideLog, ignoreActionBlocker);
-                break;
-            case InGameICChatType.Whisper:
-                SendEntityWhisper(source, message, range, null, nameOverride, hideLog, ignoreActionBlocker);
-                break;
-            case InGameICChatType.Emote:
-                SendEntityEmote(source, message, range, nameOverride, hideLog: hideLog, ignoreActionBlocker: ignoreActionBlocker);
-                break;
-        }
-    }
-
-    public void TrySendInGameOOCMessage(
-        EntityUid source,
-        string message,
-        InGameOOCChatType type,
-        bool hideChat,
-        IConsoleShell? shell = null,
-        ICommonSession? player = null
-        )
-    {
-        if (!CanSendInGame(message, shell, player))
-            return;
-
-        if (player != null && _chatManager.HandleRateLimit(player) != RateLimitStatus.Allowed)
-            return;
-
-        // It doesn't make any sense for a non-player to send in-game OOC messages, whereas non-players may be sending
-        // in-game IC messages.
-        if (player?.AttachedEntity is not { Valid: true } entity || source != entity)
-            return;
-
-        message = SanitizeInGameOOCMessage(message);
-
-        var sendType = type;
-        // If dead player LOOC is disabled, unless you are an admin with Moderator perms, send dead messages to dead chat
-        if ((_adminManager.IsAdmin(player) && _adminManager.HasAdminFlag(player, AdminFlags.Moderator)) // Override if admin
-            || _deadLoocEnabled
-            || (!HasComp<GhostComponent>(source) && !_mobStateSystem.IsDead(source))) // Check that player is not dead
-        {
-        }
-        else
-            sendType = InGameOOCChatType.Dead;
-
-        // If crit player LOOC is disabled, don't send the message at all.
-        if (!_critLoocEnabled && _mobStateSystem.IsCritical(source))
-            return;
-
-        switch (sendType)
-        {
-            case InGameOOCChatType.Dead:
-                SendDeadChat(source, player, message, hideChat);
-                break;
-            case InGameOOCChatType.Looc:
-                SendLOOC(source, player, message, hideChat);
-                break;
-        }
-    }
-
-    #region Announcements
-
-    /// <summary>
-    /// Dispatches an announcement to all.
-    /// </summary>
-    /// <param name="message">The contents of the message</param>
-    /// <param name="sender">The sender (Communications Console in Communications Console Announcement)</param>
-    /// <param name="playSound">Play the announcement sound</param>
-    /// <param name="colorOverride">Optional color for the announcement message</param>
-    public void DispatchGlobalAnnouncement(
-        string message,
-        string? sender = null,
-        bool playSound = true,
-        SoundSpecifier? announcementSound = null,
-        Color? colorOverride = null
-        )
-    {
-        sender ??= Loc.GetString("chat-manager-sender-announcement");
-
-        var wrappedMessage = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender), ("message", FormattedMessage.EscapeText(message)));
-        _chatManager.ChatMessageToAll(ChatChannel.Radio, message, wrappedMessage, default, false, true, colorOverride);
-        if (playSound)
-        {
-            _audio.PlayGlobal(announcementSound == null ? DefaultAnnouncementSound : _audio.GetSound(announcementSound), Filter.Broadcast(), true, AudioParams.Default.WithVolume(-2f));
-        }
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Global station announcement from {sender}: {message}");
-    }
-
-    /// <summary>
-    /// Dispatches an announcement to players selected by filter.
-    /// </summary>
-    /// <param name="filter">Filter to select players who will recieve the announcement</param>
-    /// <param name="message">The contents of the message</param>
-    /// <param name="source">The entity making the announcement (used to determine the station)</param>
-    /// <param name="sender">The sender (Communications Console in Communications Console Announcement)</param>
-    /// <param name="playDefaultSound">Play the announcement sound</param>
-    /// <param name="announcementSound">Sound to play</param>
-    /// <param name="colorOverride">Optional color for the announcement message</param>
-    public void DispatchFilteredAnnouncement(
-        Filter filter,
-        string message,
-        EntityUid? source = null,
-        string? sender = null,
-        bool playSound = true,
-        SoundSpecifier? announcementSound = null,
-        Color? colorOverride = null)
-    {
-        sender ??= Loc.GetString("chat-manager-sender-announcement");
-
-        var wrappedMessage = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender), ("message", FormattedMessage.EscapeText(message)));
-        _chatManager.ChatMessageToManyFiltered(filter, ChatChannel.Radio, message, wrappedMessage, source ?? default, false, true, colorOverride);
-        if (playSound)
-        {
-            _audio.PlayGlobal(announcementSound?.ToString() ?? DefaultAnnouncementSound, filter, true, AudioParams.Default.WithVolume(-2f));
-        }
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement from {sender}: {message}");
-    }
-
-    /// <summary>
-    /// Dispatches an announcement on a specific station
-    /// </summary>
-    /// <param name="source">The entity making the announcement (used to determine the station)</param>
-    /// <param name="message">The contents of the message</param>
-    /// <param name="sender">The sender (Communications Console in Communications Console Announcement)</param>
-    /// <param name="playDefaultSound">Play the announcement sound</param>
-    /// <param name="colorOverride">Optional color for the announcement message</param>
-    public void DispatchStationAnnouncement(
-        EntityUid source,
-        string message,
-        string? sender = null,
-        bool playDefaultSound = true,
-        SoundSpecifier? announcementSound = null,
-        Color? colorOverride = null)
-    {
-        sender ??= Loc.GetString("chat-manager-sender-announcement");
-
-        var wrappedMessage = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender), ("message", FormattedMessage.EscapeText(message)));
-        var station = _stationSystem.GetOwningStation(source);
-
-        if (station == null)
-        {
-            // you can't make a station announcement without a station
-            return;
-        }
-
-        if (!EntityManager.TryGetComponent<StationDataComponent>(station, out var stationDataComp)) return;
-
-        var filter = _stationSystem.GetInStation(stationDataComp);
-
-        _chatManager.ChatMessageToManyFiltered(filter, ChatChannel.Radio, message, wrappedMessage, source, false, true, colorOverride);
-
-        if (playDefaultSound)
-        {
-            _audio.PlayGlobal(announcementSound?.ToString() ?? DefaultAnnouncementSound, filter, true, AudioParams.Default.WithVolume(-2f));
-        }
-
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement on {station} from {sender}: {message}");
-    }
-
-    #endregion
-
     #region Private API
 
-    private void SendEntitySpeak(
-        EntityUid source,
-        string originalMessage,
-        ChatTransmitRange range,
-        string? nameOverride,
-        bool hideLog = false,
-        bool ignoreActionBlocker = false
-        )
-    {
-        if (!_actionBlocker.CanSpeak(source) && !ignoreActionBlocker)
-            return;
-
-        var message = TransformSpeech(source, originalMessage);
-
-        if (message.Length == 0)
-            return;
-
-        var speech = GetSpeechVerb(source, message);
-
-        // get the entity's apparent name (if no override provided).
-        string name;
-        if (nameOverride != null)
-        {
-            name = nameOverride;
-        }
-        else
-        {
-            var nameEv = new TransformSpeakerNameEvent(source, Name(source));
-            RaiseLocalEvent(source, nameEv);
-            name = nameEv.VoiceName;
-            // Check for a speech verb override
-            if (nameEv.SpeechVerb != null && _prototypeManager.TryIndex(nameEv.SpeechVerb, out var proto))
-                speech = proto;
-        }
-
-        name = FormattedMessage.EscapeText(name);
-
-        var wrappedMessage = Loc.GetString(speech.Bold ? "chat-manager-entity-say-bold-wrap-message" : "chat-manager-entity-say-wrap-message",
-            ("entityName", name),
-            ("verb", Loc.GetString(_random.Pick(speech.SpeechVerbStrings))),
-            ("fontType", speech.FontId),
-            ("fontSize", speech.FontSize),
-            ("message", FormattedMessage.EscapeText(message)));
-
-        SendInVoiceRange(ChatChannel.Local, message, wrappedMessage, source, range);
-
-        var ev = new EntitySpokeEvent(source, message, null, null);
-        RaiseLocalEvent(source, ev, true);
-
-        // To avoid logging any messages sent by entities that are not players, like vendors, cloning, etc.
-        // Also doesn't log if hideLog is true.
-        if (!HasComp<ActorComponent>(source) || hideLog)
-            return;
-
-        if (originalMessage == message)
-        {
-            if (name != Name(source))
-                _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {ToPrettyString(source):user} as {name}: {originalMessage}.");
-            else
-                _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {ToPrettyString(source):user}: {originalMessage}.");
-        }
-        else
-        {
-            if (name != Name(source))
-                _adminLogger.Add(LogType.Chat, LogImpact.Low,
-                    $"Say from {ToPrettyString(source):user} as {name}, original: {originalMessage}, transformed: {message}.");
-            else
-                _adminLogger.Add(LogType.Chat, LogImpact.Low,
-                    $"Say from {ToPrettyString(source):user}, original: {originalMessage}, transformed: {message}.");
-        }
-    }
-
-    private void SendEntityWhisper(
-        EntityUid source,
-        string originalMessage,
-        ChatTransmitRange range,
-        RadioChannelPrototype? channel,
-        string? nameOverride,
-        bool hideLog = false,
-        bool ignoreActionBlocker = false
-        )
-    {
-        if (!_actionBlocker.CanSpeak(source) && !ignoreActionBlocker)
-            return;
-
-        var message = TransformSpeech(source, FormattedMessage.RemoveMarkupOrThrow(originalMessage));
-        if (message.Length == 0)
-            return;
-
-        var obfuscatedMessage = ObfuscateMessageReadability(message, 0.2f);
-
-        // get the entity's name by visual identity (if no override provided).
-        string nameIdentity = FormattedMessage.EscapeText(nameOverride ?? Identity.Name(source, EntityManager));
-        // get the entity's name by voice (if no override provided).
-        string name;
-        if (nameOverride != null)
-        {
-            name = nameOverride;
-        }
-        else
-        {
-            var nameEv = new TransformSpeakerNameEvent(source, Name(source));
-            RaiseLocalEvent(source, nameEv);
-            name = nameEv.VoiceName;
-        }
-        name = FormattedMessage.EscapeText(name);
-
-        var wrappedMessage = Loc.GetString("chat-manager-entity-whisper-wrap-message",
-            ("entityName", name), ("message", FormattedMessage.EscapeText(message)));
-
-        var wrappedobfuscatedMessage = Loc.GetString("chat-manager-entity-whisper-wrap-message",
-            ("entityName", nameIdentity), ("message", FormattedMessage.EscapeText(obfuscatedMessage)));
-
-        var wrappedUnknownMessage = Loc.GetString("chat-manager-entity-whisper-unknown-wrap-message",
-            ("message", FormattedMessage.EscapeText(obfuscatedMessage)));
-
-
-        foreach (var (session, data) in GetRecipients(source, WhisperMuffledRange))
-        {
-            EntityUid listener;
-
-            if (session.AttachedEntity is not { Valid: true } playerEntity)
-                continue;
-            listener = session.AttachedEntity.Value;
-
-            if (MessageRangeCheck(session, data, range) != MessageRangeCheckResult.Full)
-                continue; // Won't get logged to chat, and ghosts are too far away to see the pop-up, so we just won't send it to them.
-
-            if (data.Range <= WhisperClearRange)
-                _chatManager.ChatMessageToOne(ChatChannel.Whisper, message, wrappedMessage, source, false, session.Channel);
-            //If listener is too far, they only hear fragments of the message
-            else if (_examineSystem.InRangeUnOccluded(source, listener, WhisperMuffledRange))
-                _chatManager.ChatMessageToOne(ChatChannel.Whisper, obfuscatedMessage, wrappedobfuscatedMessage, source, false, session.Channel);
-            //If listener is too far and has no line of sight, they can't identify the whisperer's identity
-            else
-                _chatManager.ChatMessageToOne(ChatChannel.Whisper, obfuscatedMessage, wrappedUnknownMessage, source, false, session.Channel);
-        }
-
-        _replay.RecordServerMessage(new ChatMessage(ChatChannel.Whisper, message, wrappedMessage, GetNetEntity(source), null, MessageRangeHideChatForReplay(range)));
-
-        var ev = new EntitySpokeEvent(source, message, channel, obfuscatedMessage);
-        RaiseLocalEvent(source, ev, true);
-        if (!hideLog)
-            if (originalMessage == message)
-            {
-                if (name != Name(source))
-                    _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Whisper from {ToPrettyString(source):user} as {name}: {originalMessage}.");
-                else
-                    _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Whisper from {ToPrettyString(source):user}: {originalMessage}.");
-            }
-            else
-            {
-                if (name != Name(source))
-                    _adminLogger.Add(LogType.Chat, LogImpact.Low,
-                    $"Whisper from {ToPrettyString(source):user} as {name}, original: {originalMessage}, transformed: {message}.");
-                else
-                    _adminLogger.Add(LogType.Chat, LogImpact.Low,
-                    $"Whisper from {ToPrettyString(source):user}, original: {originalMessage}, transformed: {message}.");
-            }
-    }
-
-    private void SendEntityEmote(
-        EntityUid source,
-        string action,
-        ChatTransmitRange range,
-        string? nameOverride,
-        bool hideLog = false,
-        bool checkEmote = true,
-        bool ignoreActionBlocker = false,
-        NetUserId? author = null
-        )
-    {
-        if (!_actionBlocker.CanEmote(source) && !ignoreActionBlocker)
-            return;
-
-        // get the entity's apparent name (if no override provided).
-        var ent = Identity.Entity(source, EntityManager);
-        string name = FormattedMessage.EscapeText(nameOverride ?? Name(ent));
-
-        // Emotes use Identity.Name, since it doesn't actually involve your voice at all.
-        var wrappedMessage = Loc.GetString("chat-manager-entity-me-wrap-message",
-            ("entityName", name),
-            ("entity", ent),
-            ("message", FormattedMessage.RemoveMarkupOrThrow(action)));
-
-        if (checkEmote)
-            TryEmoteChatInput(source, action);
-        SendInVoiceRange(ChatChannel.Emotes, action, wrappedMessage, source, range, author);
-        if (!hideLog)
-            if (name != Name(source))
-                _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Emote from {ToPrettyString(source):user} as {name}: {action}");
-            else
-                _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Emote from {ToPrettyString(source):user}: {action}");
-    }
-
-    // ReSharper disable once InconsistentNaming
-    private void SendLOOC(EntityUid source, ICommonSession player, string message, bool hideChat)
-    {
-        var name = FormattedMessage.EscapeText(Identity.Name(source, EntityManager));
-
-        if (_adminManager.IsAdmin(player))
-        {
-            if (!_adminLoocEnabled) return;
-        }
-        else if (!_loocEnabled) return;
-
-        // If crit player LOOC is disabled, don't send the message at all.
-        if (!_critLoocEnabled && _mobStateSystem.IsCritical(source))
-            return;
-
-        var wrappedMessage = Loc.GetString("chat-manager-entity-looc-wrap-message",
-            ("entityName", name),
-            ("message", FormattedMessage.EscapeText(message)));
-
-        SendInVoiceRange(ChatChannel.LOOC, message, wrappedMessage, source, hideChat ? ChatTransmitRange.HideChat : ChatTransmitRange.Normal, player.UserId);
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"LOOC from {player:Player}: {message}");
-    }
-
-    private void SendDeadChat(EntityUid source, ICommonSession player, string message, bool hideChat)
-    {
-        var clients = GetDeadChatClients();
-        var playerName = Name(source);
-        string wrappedMessage;
-        if (_adminManager.IsAdmin(player))
-        {
-            wrappedMessage = Loc.GetString("chat-manager-send-admin-dead-chat-wrap-message",
-                ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")),
-                ("userName", player.Channel.UserName),
-                ("message", FormattedMessage.EscapeText(message)));
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Admin dead chat from {player:Player}: {message}");
-        }
-        else
-        {
-            wrappedMessage = Loc.GetString("chat-manager-send-dead-chat-wrap-message",
-                ("deadChannelName", Loc.GetString("chat-manager-dead-channel-name")),
-                ("playerName", (playerName)),
-                ("message", FormattedMessage.EscapeText(message)));
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Dead chat from {player:Player}: {message}");
-        }
-
-        _chatManager.ChatMessageToMany(ChatChannel.Dead, message, wrappedMessage, source, hideChat, true, clients.ToList(), author: player.UserId);
-    }
     #endregion
 
     #region Utility
@@ -699,23 +185,6 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (insistNoHideChat && initialResult == MessageRangeCheckResult.HideChat)
             return MessageRangeCheckResult.Full;
         return initialResult;
-    }
-
-    /// <summary>
-    ///     Sends a chat message to the given players in range of the source entity.
-    /// </summary>
-    private void SendInVoiceRange(ChatChannel channel, string message, string wrappedMessage, EntityUid source, ChatTransmitRange range, NetUserId? author = null)
-    {
-        foreach (var (session, data) in GetRecipients(source, VoiceRange))
-        {
-            var entRange = MessageRangeCheck(session, data, range);
-            if (entRange == MessageRangeCheckResult.Disallowed)
-                continue;
-            var entHideChat = entRange == MessageRangeCheckResult.HideChat;
-            _chatManager.ChatMessageToOne(channel, message, wrappedMessage, source, entHideChat, session.Channel, author: author);
-        }
-
-        _replay.RecordServerMessage(new ChatMessage(channel, message, wrappedMessage, GetNetEntity(source), null, MessageRangeHideChatForReplay(range)));
     }
 
     /// <summary>
@@ -772,6 +241,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         return newMessage;
     }
 
+    // CHAT-TODO: This needs to be incorporated into a supplier
     public string TransformSpeech(EntityUid sender, string message)
     {
         var ev = new TransformSpeechEvent(sender, message);
@@ -780,6 +250,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         return ev.Message;
     }
 
+    // CHAT-TODO: This needs to be incorporated into a supplier
     public bool CheckIgnoreSpeechBlocker(EntityUid sender, bool ignoreBlocker)
     {
         if (ignoreBlocker)
@@ -791,6 +262,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         return ev.IgnoreBlocker;
     }
 
+    // CHAT-TODO: This needs to be incorporated into a supplier
     private IEnumerable<INetChannel> GetDeadChatClients()
     {
         return Filter.Empty()
@@ -800,6 +272,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             .Select(p => p.Channel);
     }
 
+    // CHAT-TODO: This needs to be incorporated into a supplier
     private string SanitizeMessagePeriod(string message)
     {
         if (string.IsNullOrEmpty(message))
@@ -813,6 +286,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     [ValidatePrototypeId<ReplacementAccentPrototype>]
     public const string ChatSanitize_Accent = "chatsanitize";
 
+    // CHAT-TODO: This needs to be incorporated into a supplier
     public string SanitizeMessageReplaceWords(string message)
     {
         if (string.IsNullOrEmpty(message)) return message;
@@ -870,6 +344,8 @@ public sealed partial class ChatSystem : SharedChatSystem
     {
     }
 
+
+    // CHAT-TODO: This needs to be incorporated into a supplier
     private string ObfuscateMessageReadability(string message, float chance)
     {
         var modifiedMessage = new StringBuilder(message);
@@ -890,6 +366,8 @@ public sealed partial class ChatSystem : SharedChatSystem
         return modifiedMessage.ToString();
     }
 
+
+    // CHAT-TODO: This needs to be incorporated into a supplier
     public string BuildGibberishString(IReadOnlyList<char> charOptions, int length)
     {
         var sb = new StringBuilder();
@@ -905,213 +383,119 @@ public sealed partial class ChatSystem : SharedChatSystem
 
     // CHAT-TODO: START OF THE CHAT REFACTOR
 
-    public void HandleMessage(string communicationChannel, ICommonSession? senderSession, EntityUid? senderEntity, string message)
-    {
-        _prototypeManager.TryIndex<CommunicationChannelPrototype>(communicationChannel, out var proto);
-        var usedCommsTypes = new List<CommunicationChannelPrototype>();
+    #region Helper Messages
 
-        if (proto != null)
-            HandleMessage(proto, senderSession, senderEntity, message, ref usedCommsTypes);
+    // CHAT-TODO: If stuff breaks because managers are using these functions, then move change ChatSystem to a manager instead.
+
+    /// <summary>
+    /// Helper function to send a server-sent message to all players.
+    /// Text is not escaped with this function.
+    /// CHAT-TODO: This one is missing functionality
+    /// </summary>
+    public void DispatchGlobalAnnouncement(
+        string message,
+        string? sender = null,
+        bool playSound = true,
+        SoundSpecifier? announcementSound = null,
+        Color? colorOverride = null
+    )
+    {
+        sender ??= Loc.GetString("chat-manager-sender-announcement");
+
+        var wrappedMessage = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender), ("message", FormattedMessage.EscapeText(message)));
+
+        _chatManager.HandleMessage(wrappedMessage, _channelDefaultServerAnnouncementChannel, null, null, null, false);
     }
 
-    public void HandleMessage(string communicationChannel, ICommonSession? senderSession, EntityUid? senderEntity, string message, ref List<CommunicationChannelPrototype> usedCommsTypes, bool supplyGenericMarkup = true)
+    /// <summary>
+    /// Helper function to send a server-sent message to sessions on a specific station.
+    /// Text is not escaped with this function.
+    /// CHAT-TODO: This one is missing functionality
+    /// </summary>
+    public void DispatchStationAnnouncement(
+        EntityUid source,
+        string message,
+        string? sender = null,
+        bool playDefaultSound = true,
+        SoundSpecifier? announcementSound = null,
+        Color? colorOverride = null)
     {
-        _prototypeManager.TryIndex<CommunicationChannelPrototype>(communicationChannel, out var proto);
+        sender ??= Loc.GetString("chat-manager-sender-announcement");
 
-        if (proto != null)
-            HandleMessage(proto, senderSession, senderEntity, message, ref usedCommsTypes);
-    }
+        var wrappedMessage = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender), ("message", FormattedMessage.EscapeText(message)));
+        var station = _stationSystem.GetOwningStation(source);
 
-    //TODO: message needs to be converted to FormattedMessage
-    public void HandleMessage(CommunicationChannelPrototype communicationChannel, ICommonSession? senderSession, EntityUid? senderEntity, string message, ref List<CommunicationChannelPrototype> usedCommsTypes, bool supplyGenericMarkup = true)
-    {
-        //CHAT-TODO: Step 1
-        //First there needs to be verification; can the client/entity attempting to send this message actually do it?
-
-        //If the comms type is non-repeatable, i.e. the message may only ever be sent once on that comms channel, check for it and block if it has been sent.
-        if (communicationChannel.NonRepeatable && usedCommsTypes.Contains(communicationChannel))
-            return;
-
-        // If senderSession is null, it means the server is sending the message.
-        if (senderSession != null)
+        if (station == null)
         {
-            var publishSessionChatConditions = communicationChannel.PublishSessionChatConditions;
-
-            var allowPublish = false;
-            foreach (var condition in publishSessionChatConditions)
-            {
-                var result = condition.ProcessCondition(new HashSet<ICommonSession>() { senderSession }, senderEntity);
-
-                //If the session succeeds in any of the publish conditions, no need to do any remaining ones.
-                if (result.Count > 0)
-                {
-                    allowPublish = true;
-                    break;
-                }
-            }
-
-            if (!allowPublish)
-            {
-                return;
-            }
-            Logger.Debug(senderSession.ToString()!);
-        }
-        else if (!communicationChannel.AllowServerMessages)
-        {
+            // you can't make a station announcement without a station
             return;
         }
 
-        //CHAT-TODO: Step 1b
-        // If senderEntity is null, it means it's either a player in a lobby messaging, or the server sending a message without any associated entity.
-        if (senderEntity != null)
-        {
-            var basePublishEntityChatCondition = new EntityChatCondition(communicationChannel.PublishEntityChatConditions);
+        if (!EntityManager.TryGetComponent<StationDataComponent>(station, out var stationDataComp)) return;
 
-            var result = basePublishEntityChatCondition.ProcessCondition(new HashSet<EntityUid>() { senderEntity.Value }, senderEntity);
+        var filter = _stationSystem.GetInStation(stationDataComp);
 
-            if (result.Count == 0)
-                return;
-
-            foreach (var test in result)
-            {
-                if (test != null)
-                    Logger.Debug(test.ToString()!);
-            }
-        }
-        else if (!communicationChannel.AllowEntitylessMessages)
-        {
-            Logger.Debug("EntitylessMessageNotAllowed");
-            return;
-        }
-
-        //At this point we may assume that the message is publishing; as such, it should be recorded in the usedCommsTypes.
-        if (communicationChannel.NonRepeatable)
-            usedCommsTypes.Add(communicationChannel);
-
-        //CHAT-TODO: Step 2
-        //Then, there needs to be a filter for who the message should be sent to. This value gets saved.
-
-        var exemptSessions = new HashSet<ICommonSession>();
-        var exemptEntities = new HashSet<EntityUid>();
-
-        foreach (var consumeCollection in communicationChannel.ConsumeCollections)
-        {
-
-            // First we look at eligible sessions
-            var eligibleConsumerSessions = new HashSet<ICommonSession>();
-            if (consumeCollection.ConsumeSessionChatConditions.Count > 0)
-            {
-                foreach (var condition in consumeCollection.ConsumeSessionChatConditions)
-                {
-                    eligibleConsumerSessions.UnionWith(
-                        condition.ProcessCondition(_playerManager.NetworkedSessions.ToHashSet(), senderEntity));
-                }
-
-                eligibleConsumerSessions.ExceptWith(exemptSessions);
-                exemptSessions.UnionWith(eligibleConsumerSessions);
-
-                // CHAT-TODO: Remove debug:
-                foreach (var test in eligibleConsumerSessions)
-                {
-                    if (test != null)
-                        Logger.Debug(test.ToString()!);
-                }
-            }
-
-            //CHAT-TODO: Step 2b
-            // Then, we look at eligible entities
-
-            var eligibleConsumerEntities = new HashSet<EntityUid>();
-            if (consumeCollection.ConsumeEntityChatConditions.Count > 0)
-            {
-                // First we get all any entity with a ListenerComponent attached, to not have to iterate over every single entities.
-                var ev = new GetListenerConsumerEvent();
-                RaiseLocalEvent(ref ev);
-
-                // The list of chat conditions is made into its own chat condition, to more easily evaluate it iteratively.
-                var baseConsumerChatCondition =
-                    new EntityChatCondition(consumeCollection.ConsumeEntityChatConditions);
-
-                var filteredConsumers = baseConsumerChatCondition.ProcessCondition(ev.Entities, senderEntity);
-
-                if (filteredConsumers.Count > 0)
-                    eligibleConsumerEntities = filteredConsumers;
-
-                eligibleConsumerEntities.ExceptWith(exemptEntities);
-                exemptEntities.UnionWith(eligibleConsumerEntities);
-            }
-
-            //CHAT-TODO: Step 3
-            //Then, then it also gets passed on to any other communication types (e.g. radio + whisper)
-
-            if (communicationChannel.ChildCommunicationChannels != null)
-            {
-                foreach (var childChannel in communicationChannel.ChildCommunicationChannels)
-                {
-                    if (_prototypeManager.TryIndex(childChannel, out var channelProto))
-                    {
-                        if (communicationChannel.NonRepeatable || channelProto.NonRepeatable)
-                        {
-                            //Prevents a repeatable channel from sending via another repeatable channel without a non-repeatable inbetween; should stop some looping behavior from executing.
-                            HandleMessage(childChannel,
-                                senderSession,
-                                senderEntity,
-                                message,
-                                ref usedCommsTypes,
-                                false);
-                        }
-                    }
-                }
-            }
-
-            //CHAT-TODO: Step 3.5
-            //Apply generic markup tags. We only want them applied once per message, so any derived message should have applyGenericMarkup set to false.
-
-            var consumerMessage = message;
-
-            if (supplyGenericMarkup)
-            {
-                foreach (var genericMarkupSupplier in consumeCollection.CollectionMarkupNodes)
-                {
-                    //CHAT-TODO: message needs to be converted to FormattedMessage
-                    consumerMessage = genericMarkupSupplier.ProcessNodeSupplier(FormattedMessage.FromMarkupOrThrow(consumerMessage))
-                        .ToMarkup();
-                }
-            }
-
-            //CHAT-TODO: Step 4
-            //Then, it applies the serversideMessageMutators. This should NOT be formatting and rarely text changes, unless strictly necessary (animal speak/whisper censorship)
-            Logger.Debug("Pre-step4: " + consumerMessage);
-            consumerMessage = ContentMarkupTagManager.ProcessMessage(FormattedMessage.FromMarkupOrThrow(consumerMessage)).ToMarkup();
-            Logger.Debug("Post-step4: " + consumerMessage);
-
-
-            //CHAT-TODO: Step 5
-            //Send it out to the clients, who later have to apply the mutators
-            _chatManager.ChatMessageToMany(
-                ChatChannel.Server,
-                consumerMessage,
-                consumerMessage,
-                senderEntity ?? EntityUid.Invalid,
-                false,
-                true,
-                eligibleConsumerSessions.Select(x => x.Channel));
-
-            //CHAT-TODO: Step5b
-            //Also gotta send it out to all consuming entities
-
-            foreach (var entity in eligibleConsumerEntities)
-            {
-                var ev = new ListenerConsumeEvent(communicationChannel.CommunicationTypes,
-                    new FormattedMessage());
-                RaiseLocalEvent(entity, ev);
-            }
-        }
+        _chatManager.HandleMessage(wrappedMessage, _channelDefaultServerAnnouncementChannel, null, null, filter.Recipients.ToHashSet(), false);
     }
 
-    // CHAT-TODO: END OF THE CHAT REFACTOR
+    /// <summary>
+    /// Helper function to send a server-sent message in the admin channel.
+    /// Text is not escaped with this function.
+    /// </summary>
+    public void SendAdminChannelMessage(string message)
+    {
+        _chatManager.HandleMessage(message, _channelDefaultAdminChannel, null, null, null, false);
+    }
+
+    public void SendAdminAlert(string message)
+    {
+        _chatManager.HandleMessage(message, _channelDefaultAdminAlertChannel, null, null, null, false);
+    }
+
+    /// <summary>
+    /// Helper function to send a server-sent message in the admin channel to sessions filtered by admin flags.
+    /// This may be necessary when having a separate channel wouldn't be suitable.
+    /// Text is not escaped with this function.
+    /// </summary>
+    public void SendFilteredAdminChannelMessage(string message, AdminFlags flags)
+    {
+        var clients = _adminManager.ActiveAdmins.Where(p =>
+        {
+            var adminData = _adminManager.GetAdminData(p);
+
+            DebugTools.AssertNotNull(adminData);
+
+            if (adminData == null)
+                return false;
+
+            if ((adminData.Flags & flags) == 0)
+                return false;
+
+            return true;
+
+        });
+
+        _chatManager.HandleMessage(message, _channelDefaultAdminChannel, null, null, clients.ToHashSet(), false);
+    }
+
+    /// <summary>
+    /// Helper function to send a server-sent message to a specific session.
+    /// Text is not escaped with this function.
+    /// </summary>
+    public void DispatchServerMessage(ICommonSession session, string message, bool logMessage = true)
+    {
+        _chatManager.HandleMessage(message, _channelDefaultNotificationChannel, null, null, new HashSet<ICommonSession>() { session }, false, logMessage: logMessage);
+    }
+
+    #endregion
+
+
+    public void HandleEntityMessage() {
+
+    }
 
 }
+
 
 /// <summary>
 ///     This event is raised before chat messages are sent out to clients. This enables some systems to send the chat

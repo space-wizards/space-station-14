@@ -32,13 +32,13 @@ public sealed class TransformSpeakerNameEvent : EntityEventArgs, IInventoryRelay
 /// </summary>
 public sealed class ListenerConsumeEvent : EntityEventArgs
 {
-    public List<ProtoId<CommunicationTypePrototype>> CommunicationTypes;
+    public ChatChannel ChatChannels;
 
     public FormattedMessage Message;
 
-    public ListenerConsumeEvent(List<ProtoId<CommunicationTypePrototype>> communicationTypes, FormattedMessage message)
+    public ListenerConsumeEvent(ChatChannel chatChannels, FormattedMessage message)
     {
-        CommunicationTypes = communicationTypes;
+        ChatChannels = chatChannels;
         Message = message;
     }
 }

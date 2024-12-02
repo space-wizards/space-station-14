@@ -32,7 +32,7 @@ public sealed partial class CommunicationChannelPrototype : IPrototype
     /// The kind of communication types this channel utilizes (e.g. speech, OOC, etc.)
     /// </summary>
     [DataField]
-    public List<ProtoId<CommunicationTypePrototype>> CommunicationTypes = new();
+    public ChatChannel ChatChannels = ChatChannel.None;
 
     /// <summary>
     /// If true, the server may publish to this channel.

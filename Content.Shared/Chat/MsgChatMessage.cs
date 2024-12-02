@@ -1,4 +1,5 @@
 using System.IO;
+using Content.Shared.Chat.Prototypes;
 using JetBrains.Annotations;
 using Lidgren.Network;
 using Robust.Shared.Network;
@@ -10,20 +11,20 @@ namespace Content.Shared.Chat
     [Serializable, NetSerializable]
     public sealed class ChatMessage
     {
-        public ChatChannel Channel;
+        /// <summary>
+        /// Which channel this message is being sent on.
+        /// </summary>
+        public CommunicationChannelPrototype CommunicationChannel;
 
         /// <summary>
         /// This is the text spoken by the entity, after accents and such were applied.
         /// This should have <see cref="FormattedMessage.EscapeText"/> applied before using it in any rich text box.
         /// </summary>
-        public string Message;
+        public FormattedMessage Message;
 
         /// <summary>
-        /// This is the <see cref="Message"/> but with special characters escaped and wrapped in some rich text
-        /// formatting tags.
+        /// The entity responsible for sending the message, if there is one.
         /// </summary>
-        public string WrappedMessage;
-
         public NetEntity SenderEntity;
 
         /// <summary>
@@ -33,25 +34,21 @@ namespace Content.Shared.Chat
         /// </summary>
         public int? SenderKey;
 
+        /// <summary>
+        /// If true, this message should not display in chat.
+        /// </summary>
         public bool HideChat;
-        public Color? MessageColorOverride;
-        public string? AudioPath;
-        public float AudioVolume;
 
         [NonSerialized]
         public bool Read;
 
-        public ChatMessage(ChatChannel channel, string message, string wrappedMessage, NetEntity source, int? senderKey, bool hideChat = false, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0)
+        public ChatMessage(CommunicationChannelPrototype communicationChannel, FormattedMessage message, NetEntity source, int? senderKey, bool hideChat = false)
         {
-            Channel = channel;
+            CommunicationChannel = communicationChannel;
             Message = message;
-            WrappedMessage = wrappedMessage;
             SenderEntity = source;
             SenderKey = senderKey;
             HideChat = hideChat;
-            MessageColorOverride = colorOverride;
-            AudioPath = audioPath;
-            AudioVolume = audioVolume;
         }
     }
 
