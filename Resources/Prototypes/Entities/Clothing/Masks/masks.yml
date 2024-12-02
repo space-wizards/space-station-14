@@ -22,34 +22,6 @@
     hideOnToggle: true
 
 - type: entity
-  parent: [ClothingMaskPullableBase, BaseCommandContraband]
-  id: ClothingMaskBreathCommand
-  name: command breath mask
-  description: A fancy and comfortable breath mask, but functionally identical to the clear plastic ones.
-  components:
-  - type: Item
-    size: Tiny
-  - type: Sprite
-    sprite: Clothing/Mask/breathcommand.rsi
-  - type: Clothing
-    sprite: Clothing/Mask/breathcommand.rsi
-  - type: BreathMask
-  - type: IngestionBlocker
-  - type: Tag
-    tags:
-    - PetWearable
-    - WhitelistChameleon
-    - BreathMask # goob edit
-  - type: PhysicalComposition
-    materialComposition:
-      Steel: 50
-      Plastic: 100
-  - type: HideLayerClothing
-    slots:
-    - Snout
-    hideOnToggle: true
-
-- type: entity
   parent: [ClothingMaskGas, BaseRestrictedContraband]
   id: ClothingMaskGasSecurity
   name: security gas mask
@@ -515,34 +487,6 @@
       coefficients:
         Blunt: 0.90
         Slash: 0.90
-        Piercing: 0.95
-        Heat: 0.95
-
-- type: entity
-  parent: [ ClothingMaskGas, BaseCommandContraband ]
-  id: ClothingMaskGasHOS
-  name: head of security's gas mask
-  description: A compact armored mask made just for the head of security.
-  components:
-  - type: Item
-    size: Tiny
-  - type: Sprite
-    sprite: Clothing/Mask/gashos.rsi
-  - type: Clothing
-    sprite: Clothing/Mask/gashos.rsi
-  - type: Tag
-    tags:
-    - WhitelistChameleon
-  - type: HideLayerClothing
-    slots:
-    - Hair
-    - Snout
-    hideOnToggle: true
-  - type: Armor
-    modifiers:
-      coefficients: # Same as the gas masks that come in security survival boxes
-        Blunt: 0.95
-        Slash: 0.95
         Piercing: 0.95
         Heat: 0.95
 
