@@ -1,6 +1,7 @@
 guide-entry-ss14 = Station and Shifts
 guide-entry-engineering = Engineering
 guide-entry-construction = Construction
+guide-entry-expandingrepairingstation = Expanding and Repairing Stations
 guide-entry-airlock-security = Airlock Upgrades
 guide-entry-atmospherics = Atmospherics
 guide-entry-pipes = Pipes
@@ -20,6 +21,7 @@ guide-entry-passivegate = Passive Gate
 guide-entry-mixingandfiltering = Mixing and Filtering
 guide-entry-gascanisters = Gas Canisters
 guide-entry-thermomachines = Thermomachines
+guide-entry-radiators = Radiators
 guide-entry-atmosphericssystems = Atmospherics Systems
 guide-entry-pipenetworks = Pipe Networks
 guide-entry-devicemonitoringandcontrol = Device Monitoring and Control

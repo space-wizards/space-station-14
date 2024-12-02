@@ -87,9 +87,10 @@
     <GuideEntityEmbed Entity="SpaceHeater" Caption=""/>
     <GuideEntityEmbed Entity="GasThermoMachineHeater" Caption=""/>
     <GuideEntityEmbed Entity="GasThermoMachineFreezer" Caption=""/>
+    <GuideEntityEmbed Entity="HeatExchanger" Caption=""/>
   </Box>
   <Box>
-    ## Thermomachines
+    ## Thermomachines and Radiators
   </Box>
   <Box>
     [color=#999999][italic]Manipulating the temperature of gasses in a pipenet or atmosphere[italic][/color]

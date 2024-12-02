@@ -15,6 +15,12 @@
   text: "/ServerInfo/Guidebook/Engineering/Construction.xml"
   children:
   - AirlockSecurity
+  - ExpandingRepairingStation
+
+- type: guideEntry
+  id: ExpandingRepairingStation
+  name: guide-entry-expandingrepairingstation
+  text: "/ServerInfo/Guidebook/Engineering/ExpandingRepairingStation.xml"
 
 - type: guideEntry
   id: AirlockSecurity
@@ -134,6 +140,13 @@
   id: Thermomachines
   name: guide-entry-thermomachines
   text: "/ServerInfo/Guidebook/Engineering/Thermomachines.xml"
+  children:
+  - Radiators
+
+- type: guideEntry
+  id: Radiators
+  name: guide-entry-radiators
+  text: "/ServerInfo/Guidebook/Engineering/Radiators.xml"
 
 - type: guideEntry
   id: AtmosphericsSystems
