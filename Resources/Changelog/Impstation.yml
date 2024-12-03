@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Upstream merge with more AI stuff and fixes
-    type: Fix
-  id: 136
-  time: '2024-08-28T15:23:28.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/161
 - author: Darkmajia
   changes:
   - message: fix dupe cargo tech pda
@@ -4412,3 +4405,12 @@
   id: 635
   time: '2024-12-03T16:34:27.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/773
+- author: DinnerCalzone
+  changes:
+  - message: All species with sex-based emotes may now choose between male, female,
+      and unisex sexes to choose their emote sounds. Unisex uses both male and female
+      emote sounds.
+    type: Add
+  id: 636
+  time: '2024-12-03T16:37:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/866
