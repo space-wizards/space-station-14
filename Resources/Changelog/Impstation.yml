@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: Darkmajia
   changes:
-  - message: salvage neck loadout fix
-    type: Fix
-  id: 143
-  time: '2024-08-29T17:30:03.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/168
-- author: Darkmajia
-  changes:
   - message: beenade nerf
     type: Tweak
   id: 144
@@ -4431,3 +4424,13 @@
   id: 642
   time: '2024-12-03T16:46:25.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/882
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: A fun toy that can be found in a grand lottery crate.
+    type: Add
+  - message: A Very Fun Toy that admins can play with and if you are astronomically
+      lucky can find in a grand lottery crate.
+    type: Add
+  id: 643
+  time: '2024-12-03T16:53:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/847
