@@ -1,10 +1,10 @@
 - type: constructionGraph
-  id: MimeHardsuit
+  id: BlackMimeHardsuit
   start: start
   graph:
     - node: start
       edges:
-        - to: mimeHardsuit
+        - to: blackmimeHardsuit
           steps:
             - material: Cloth
               amount: 5
@@ -33,11 +33,11 @@
                 sprite: Objects/Fun/crayons.rsi
                 state: black
               doAfter: 1
-            - tag: MimeBeltRed # Imp
-              name: red suspenders # Imp
+            - tag: MimeBeltBlack
+              name: black suspenders
               icon:
-                sprite: Clothing/Belt/suspenders_red.rsi
+                sprite: Clothing/Belt/suspenders_black.rsi
                 state: icon
               doAfter: 1
-    - node: mimeHardsuit
-      entity: ClothingOuterHardsuitMime
+    - node: blackmimeHardsuit
+      entity: ClothingOuterHardsuitMimeBlack

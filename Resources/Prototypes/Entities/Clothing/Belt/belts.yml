@@ -682,6 +682,7 @@
   - type: Tag
     tags:
     - MimeBelt
+    - MimeBeltRed # Imp
   - type: Sprite
     sprite: Clothing/Belt/suspenders_red.rsi
     state: icon
@@ -690,14 +691,21 @@
     quickEquip: true
 
 - type: entity
-  parent: ClothingBeltSuspendersRed
+  parent: ClothingBeltBase # Imp edit to make it not inherit tag MimeBeltRed
   id: ClothingBeltSuspendersBlack
   name: black suspenders
+  description: For holding your pants up. # Imp start
   components:
+  - type: Tag
+    tags:
+    - MimeBelt
+    - MimeBeltBlack
   - type: Sprite
     sprite: Clothing/Belt/suspenders_black.rsi
+    state: icon
   - type: Clothing
     sprite: Clothing/Belt/suspenders_black.rsi
+    quickEquip: true # Imp end
 
 - type: entity
   parent: ClothingBeltStorageBase
