@@ -4313,7 +4313,7 @@ entities:
     - type: RadiationGridResistance
     - type: NavMap
     - type: BecomesStation
-      id: loop
+      id: Loop
 - proto: AcousticGuitarInstrument
   entities:
   - uid: 2659
