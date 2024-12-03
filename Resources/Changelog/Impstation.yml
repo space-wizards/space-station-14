@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: Darkmajia
   changes:
-  - message: multiple announcement sounds, announcer volume fix
-    type: Fix
-  id: 142
-  time: '2024-08-29T17:29:56.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/167
-- author: Darkmajia
-  changes:
   - message: salvage neck loadout fix
     type: Fix
   id: 143
@@ -4426,3 +4419,15 @@
   id: 641
   time: '2024-12-03T16:42:54.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/881
+- author: Sha-Seng
+  changes:
+  - message: The "No Accent" trait, which removes _all_ accents from your character
+    type: Add
+  - message: The "Accentless" trait is now called "No Species Accent" for clarity
+    type: Tweak
+  - message: The patronizing forced accents on various hats, masks, and coats are
+      now removed
+    type: Remove
+  id: 642
+  time: '2024-12-03T16:46:25.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/882
