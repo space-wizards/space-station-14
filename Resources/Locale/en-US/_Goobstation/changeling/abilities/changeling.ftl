@@ -4,6 +4,7 @@ changeling-chemicals-deficit = Not enough chemicals!
 changeling-action-fail-lesserform = Can't use it while in lesser form!
 changeling-action-fail-absorbed = Need to absorb {$number} more organics to use it!
 
+changeling-examine-reduced-biomass = [color=yellow]{ CAPITALIZE(SUBJECT($target)) } has low biomass and will offer no evolutionary potential.[/color]
 changeling-examine-rotting = [color=yellow]{ CAPITALIZE(POSS-ADJ($target)) } corpse has low biomass and will offer no evolutionary potential.[/color]
 changeling-examine-extremely-bloated = [color=red]{ CAPITALIZE(POSS-ADJ($target)) } corpse is inedible.[/color]
 
@@ -13,6 +14,7 @@ changeling-absorb-fail-absorbed = You've already absorbed it.
 changeling-absorb-fail-unabsorbable = The target is not absorbable.
 changeling-absorb-fail-extremely-bloated = The target is too rotted to absorb.
 changeling-absorb-end-self = Another organic absorbed. You are evolving.
+changeling-absorb-end-self-reduced-biomass = Another organic absorbed.
 changeling-absorb-end-self-ling = Another changeling absorbed. You are evolving more rapidly.
 changeling-absorb-onexamine = [color=red]The body feels hollow.[/color]
 
