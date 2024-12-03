@@ -10,6 +10,7 @@
     - id: ClericalError
     - id: CockroachMigration
     - id: GasLeak
+    - id: GreytideVirus
     - id: IonStorm # its calm like 90% of the time smh
     - id: KudzuGrowth
     - id: MassHallucinations
@@ -542,6 +543,27 @@
   - type: MobReplacementRule
 
 - type: entity
+  id: GreytideVirus
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    weight: 5
+    minimumPlayers: 25
+    reoccurrenceDelay: 20
+  - type: GreytideVirusRule
+    accessGroups:
+    - Cargo
+    - Command
+    - Engineering
+    - Research
+    - Security
+    - Service
+    blacklist:
+    - External # don't space everything
+    
+- type: entity
   id: SmugglerStashRule
   parent: BaseGameRule
   components:
@@ -552,4 +574,4 @@
       maxOccurrences: 2
       weight: 10
     - type: RandomSpawnRule
-      prototype: RandomSatchel
+      prototype: RandomSatchel 
