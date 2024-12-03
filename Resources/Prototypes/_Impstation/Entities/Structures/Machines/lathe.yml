@@ -1,0 +1,58 @@
+- type: entity
+  id: JanitorialTechFab
+  parent: BaseLatheLube
+  name: janitorial techfab
+  description: Produces supplies useful for the janitorial crew.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/techfab.rsi
+    layers:
+    - state: icon
+      map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: jani
+    - state: unlit
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: inserting
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Machine
+    board: JanitorialTechFabCircuitboard
+  - type: Lathe
+    idleState: icon
+    runningState: icon
+    staticRecipes:
+      - FlashlightLantern
+      - LightReplacer
+      - LightTube
+      - LedLightTube
+      - SodiumLightTube
+      - ExteriorLightTube
+      - UvLightTube
+      - LightBulb
+      - LedLightBulb
+      - DimLightBulb
+      - Bucket
+      - SprayBottle
+      - Plunger
+      - MopItem
+      - MopBucket
+      - Holoprojector
+      - Mousetrap
+      - TrashBag
+      - WetFloorSign
+      - ClothingHeadHatCone
+      - SoapNT
+    dynamicRecipes:
+      - MegaSprayBottle
+      - AdvMopItem
+      - WeaponSprayNozzle
+      - ClothingBackpackWaterTank
+      - CleanerGrenade
+  - type: MaterialStorage
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
+        - Ingot
