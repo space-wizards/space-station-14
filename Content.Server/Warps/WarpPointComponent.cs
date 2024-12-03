@@ -19,7 +19,7 @@ namespace Content.Server.Warps
         ///     Color of the warp button in the ghost menu.
         /// </summary>
         [DataField]
-        public Color Color = Color.LightPurple;
+        public Color Color = new Color(67, 67, 92, 255); // light purple
     }
     
 }
