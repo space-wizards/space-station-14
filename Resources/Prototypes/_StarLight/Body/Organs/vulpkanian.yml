@@ -1,0 +1,215 @@
+- type: entity
+  id: BaseCycloriteOrganUnGibbable
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Starlight/Mobs/Species/Cyclorite/organs.rsi
+  - type: Organ
+  - type: Food
+  - type: Extractable
+    grindableSolutionName: organ
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: FlavorProfile
+    flavors:
+      - people
+  - type: Tag
+    tags:
+      - Meat
+
+- type: entity
+  id: BaseCycloriteOrgan
+  parent: BaseCycloriteOrganUnGibbable
+  abstract: true
+  components:
+  - type: Gibbable
+
+- type: entity
+  id: OrganCycloriteBrain
+  parent: [BaseCycloriteOrganUnGibbable, BaseOrganBrain]
+  name: brain
+  description: "The source of incredible, unending intelligence. Honk."
+  components:
+  - type: Sprite
+    state: brain
+  - type: Organ
+  - type: Input
+    context: "ghost"
+  - type: Brain
+  - type: InputMover
+  - type: Examiner
+  - type: BlockMovement
+  - type: BadFood
+  - type: Tag
+    tags:
+      - Meat
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: GreyMatter
+          Quantity: 5
+  - type: FlavorProfile
+    flavors:
+      - people
+  - type: FoodSequenceElement
+    entries:
+      Burger: Brain
+      Taco: Brain
+  
+- type: entity
+  id: OrganCycloriteEye
+  parent: [BaseCycloriteOrgan, BaseOrganEyes]
+  name: eye
+  description: "I see you!"
+  components:
+  - type: Sprite
+    layers:
+      - state: eyeball
+
+- type: entity
+  id: OrganCycloriteTongue
+  parent: [BaseCycloriteOrgan, BaseOrganTongue]
+  name: tongue
+  description: "A fleshy muscle mostly used for lying."
+  components:
+  - type: Sprite
+    state: tongue
+
+- type: entity
+  id: OrganCycloriteEars
+  parent: [BaseCycloriteOrgan, BaseOrganEars]
+  name: ears
+  description: "There are three parts to the ear. Inner, middle and outer. Only one of these parts should normally be visible."
+  components:
+  - type: Sprite
+    state: ears
+
+- type: entity
+  id: OrganCycloriteLungs
+  parent: [BaseCycloriteOrgan, BaseOrganLungs]
+  name: lungs
+  description: "Filters oxygen from an atmosphere, which is then sent into the bloodstream to be used as an electron carrier."
+  components:
+  - type: Sprite
+    layers:
+      - state: lung-l
+      - state: lung-r
+  - type: Lung
+    alert: LowNitrogen
+  - type: Metabolizer
+    removeEmpty: true
+    solutionOnBody: false
+    solution: "Lung"
+    metabolizerTypes: [ Slime ]
+    groups:
+    - id: Gas
+      rateModifier: 100.0
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      Lung:
+        maxVol: 100.0
+        canReact: false
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+
+- type: entity
+  id: OrganCycloriteHeart
+  parent: [BaseCycloriteOrgan, BaseOrganHeart]
+  name: heart
+  description: "I feel bad for the heartless bastard who lost this."
+  components:
+  - type: Sprite
+    state: heart-on
+  # The heart 'metabolizes' medicines and poisons that aren't filtered out by other organs.
+  # This is done because these chemicals need to have some effect even if they aren't being filtered out of your body.
+  # You're technically 'immune to poison' without a heart, but.. uhh, you'll have bigger problems on your hands.
+  - type: Metabolizer
+    maxReagents: 2
+    metabolizerTypes: [ Slime ]
+    groups:
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
+
+- type: entity
+  id: OrganCycloriteStomach
+  parent: [BaseCycloriteOrgan, BaseOrganStomach]
+  name: stomach
+  description: "Gross. This is hard to stomach."
+  components:
+  - type: Sprite
+    state: stomach
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 50
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: Stomach
+  # The stomach metabolizes stuff like foods and drinks.
+  # TODO: Have it work off of the ent's solution container, and move this
+  # to intestines instead.
+  - type: Metabolizer
+    # mm yummy
+    maxReagents: 3
+    metabolizerTypes: [ Slime ]
+    groups:
+    - id: Food
+    - id: Drink
+
+- type: entity
+  id: OrganCycloriteLiver
+  parent: [BaseCycloriteOrgan, BaseOrganLiver]
+  name: liver
+  description: "Pairing suggestion: chianti and fava beans."
+  components:
+  - type: Sprite
+    state: liver
+  - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
+    maxReagents: 1
+    metabolizerTypes: [ Slime ]
+    groups:
+    - id: Alcohol
+      rateModifier: 0.2 # removes alcohol very slowly along with the stomach removing it as a drink
+
+- type: entity
+  id: OrganCycloriteKidneys
+  parent: [BaseCycloriteOrgan, BaseOrganKidneys]
+  name: kidneys
+  description: "Filters toxins from the bloodstream."
+  components:
+  - type: Sprite
+    layers:
+      - state: kidney-l
+      - state: kidney-r
+  # The kidneys just remove anything that doesn't currently have any metabolisms, as a stopgap.
+  - type: Metabolizer
+    maxReagents: 5
+    metabolizerTypes: [ Slime ]
+    removeEmpty: true

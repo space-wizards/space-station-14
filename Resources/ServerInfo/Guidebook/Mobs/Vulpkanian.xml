@@ -1,0 +1,18 @@
+<Document>
+  # Cyclorite
+
+  <Box>
+    <GuideEntityEmbed Entity="MobCyclorite" Caption=""/>
+  </Box>
+
+These intelligent inhabitants of the Abyss are emotionally reserved and have a single large eye instead of a face. They are strong but slow.
+
+  - Their unarmed attacks deal 10 points damage with a hit rate that is 2 times slower than humans.
+  - Their speed is 0.85 of that of humans.
+  - They fall into a critical state at 120 points of damage.
+  - They die at 240 points of damage.
+  - They breathe nitrogen.
+  - Due to their size, they stretch external clothing to such an extent that they can fit two tanks on their back.
+  - Their eyes are less sensitive to red colors but provide better vision in the dark (shader still in development)."
+
+</Document>
