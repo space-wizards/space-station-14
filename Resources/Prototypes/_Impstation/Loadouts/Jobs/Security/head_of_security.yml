@@ -1,0 +1,49 @@
+# For the veteran head of security cosmetics
+- type: loadoutEffectGroup
+  id: VeteranHOS
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobHeadOfSecurity
+      time: 180000 #50 hrs
+
+- type: loadout
+  id: HeadofSecurityVeteranHeadset
+  equipment:
+    ears: ClothingHeadsetHOSveteran
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranHOS
+
+# A mask so the HoS can choose to spawn with the standard security gas mask that their new survival box removes
+- type: loadout
+  id: HeadofSecurityMask
+  equipment:
+    mask: ClothingMaskGasSecurity
+
+- type: loadout
+  id: HeadofSecurityGreatcoat
+  equipment:
+    neck: ClothingNeckCloakHosgreatcoat
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranHOS
+
+- type: loadout
+  id: HeadofSecurityEliteArmor
+  equipment:
+    outerClothing: ClothingOuterArmorHoSEliteArmor
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranHOS
+
+- type: loadout
+  id: HeadofSecurityJumpsuitGrey
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHoSGrey
+
+- type: loadout
+  id: HeadofSecurityJumpskirtGrey
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtHoSGrey

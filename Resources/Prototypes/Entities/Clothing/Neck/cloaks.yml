@@ -22,15 +22,6 @@
 
 - type: entity
   parent: [ClothingNeckBase, BaseCommandContraband]
-  id: ClothingNeckCloakCaptaingreatcoat
-  name: captain's greatcoat
-  description: "A long blue coat with an ornate trim, worn as a cape thanks to the gold aguilettes holding it around your neck. It carries a powerful aura of leadership."
-  components:
-  - type: Sprite
-    sprite: Clothing/Neck/Cloaks/captaingreatcoat.rsi
-
-- type: entity
-  parent: [ClothingNeckBase, BaseCommandContraband]
   id: ClothingNeckCloakHos
   name: head of security's cloak
   description: An exquisite dark and red cloak fitting for those who can assert dominance over wrongdoers. Take a stab at being civil in prosecution!
@@ -39,15 +30,6 @@
     sprite: Clothing/Neck/Cloaks/hos.rsi
   - type: StealTarget
     stealGroup: HeadCloak
-
-- type: entity
-  parent: [ClothingNeckBase, BaseCommandContraband]
-  id: ClothingNeckCloakHosgreatcoat
-  name: head of security's greatcoat
-  description: "A ruffled and flared coat with an ornate trim, worn as a cape thanks to the gold aguilettes holding it around your neck. Designed specifically to complement your dress uniform."
-  components:
-  - type: Sprite
-    sprite: Clothing/Neck/Cloaks/hosgreatcoat.rsi
 
 - type: entity
   parent: [ClothingNeckBase, BaseCommandContraband]
@@ -92,15 +74,6 @@
     sprite: Clothing/Neck/Cloaks/qm.rsi
   - type: StealTarget
     stealGroup: HeadCloak
-
-- type: entity
-  parent: [ClothingNeckBase, BaseCommandContraband]
-  id: ClothingNeckCloakQmgreatcoat
-  name: quartermaster's greatcoat
-  description: A heavy brown greatcoat with a Cargonian C on the back, worn as a cape thanks to the leather belts holding it around your neck.
-  components:
-  - type: Sprite
-    sprite: Clothing/Neck/Cloaks/qmgreatcoat.rsi
 
 - type: entity
   parent: [ClothingNeckBase, BaseCommandContraband]
