@@ -11,6 +11,10 @@
   maleFirstNames: names_moth_first_male
   femaleFirstNames: names_moth_first_female
   lastNames: names_moth_last
+  sexes:
+  - Male
+  - Female
+  - Unsexed
 
 - type: speciesBaseSprites
   id: MobMothSprites

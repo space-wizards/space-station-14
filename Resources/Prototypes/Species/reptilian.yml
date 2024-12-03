@@ -11,6 +11,10 @@
   maleFirstNames: names_reptilian_male
   femaleFirstNames: names_reptilian_female
   naming: FirstDashFirst
+  sexes:
+  - Male
+  - Female
+  - Unsexed
 
 - type: speciesBaseSprites
   id: MobReptilianSprites
