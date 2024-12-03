@@ -100,7 +100,7 @@
 - type: loadout
   id: PassengerWintercoat
   equipment:
-    outerClothing: ClothingOuterWinterCoat
+    outerClothing: ClothingOuterWinterColorGray # Imp
 
 # Shoes
 - type: loadout
