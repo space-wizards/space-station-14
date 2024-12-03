@@ -111,14 +111,6 @@
   equipment:
     ears: ClothingHeadsetAltSecurity
 
-- type: loadout
-  id: HeadofSecurityVeteranHeadset
-  equipment:
-    ears: ClothingHeadsetHOSveteran
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranHOS
-
 # Belt
 - type: loadout
   id: HeadofSecurityShoulderHolster
