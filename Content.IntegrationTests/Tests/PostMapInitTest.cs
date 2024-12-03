@@ -62,7 +62,8 @@ namespace Content.IntegrationTests.Tests
             "Train",
             "Oasis",
             "Cog",
-            "Amber"
+            "Amber",
+            "Loop"
         };
 
         /// <summary>
