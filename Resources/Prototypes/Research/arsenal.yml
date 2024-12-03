@@ -127,6 +127,19 @@
   recipeUnlocks:
   - ClothingBackpackElectropack
 
+- type: technology
+  id: FirearmManufacturing
+  name: research-technology-firearm-manufacturing
+  icon:
+    sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 1
+  cost: 8000
+  recipeUnlocks:
+  - WeaponPistolMk58
+  - WeaponRevolverInspector
+
 # Tier 2
 
 - type: technology
@@ -152,19 +165,6 @@
   cost: 10000
   recipeUnlocks:
   - WeaponXrayCannon
-
-- type: technology
-  id: FirearmsManufacture
-  name: research-technology-firearms-manufacturing
-  icon:
-    sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
-    state: icon
-  discipline: Arsenal
-  tier: 2
-  cost: 10000
-  recipeUnlocks:
-  - WeaponPistolMk58
-  - WeaponRevolverInspector
 
 - type: technology
   id: BasicShuttleArmament
