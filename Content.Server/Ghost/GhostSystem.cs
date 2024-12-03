@@ -358,13 +358,20 @@ namespace Content.Server.Ghost
 
                 if (attached == except) continue;
 
-                if (!_mobState.IsAlive(attached) && !_mobState.IsCritical(attached)) continue;
+                if (!_mobState.IsAlive(attached) && !_mobState.IsCritical(attached) && !HasComp<GhostComponent>(attached)) continue;
 
                 TryComp<MindContainerComponent>(attached, out var mind);
 
-                if (_jobs.MindTryGetJob(mind?.Mind, out var jobProto))
+                var entityName = Name(attached);
+                if (HasComp<GhostComponent>(attached))
                 {
-                    var entityName = Name(attached);
+                    var playerInfo = Loc.GetString("ghost-target-window-player-warp-name",
+                    ("entityName", entityName),
+                    ("jobName", Loc.GetString("ghost-target-warp-role")));
+                    yield return new GhostWarp(GetNetEntity(attached), playerInfo, false, Loc.GetString("ghost-target-warp-role"), Color.Gray);
+                }
+                else if (_jobs.MindTryGetJob(mind?.Mind, out var jobProto))
+                {
                     var jobName = _jobs.MindTryGetJobName(mind?.Mind);
 
                     var playerInfo = Loc.GetString("ghost-target-window-player-warp-name",
