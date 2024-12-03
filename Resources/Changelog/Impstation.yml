@@ -1,32 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: fix dupe cargo tech pda
-    type: Fix
-  id: 137
-  time: '2024-08-28T15:23:42.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/162
-- author: ultramario1998
-  changes:
-  - message: removed potentially offensive borg name, added a couple RTVS-themed ones
-    type: Tweak
-  id: 138
-  time: '2024-08-28T21:47:26.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/163
-- author: AirFryerBuyOneGetOneFree
-  changes:
-  - message: Increased Plasma Sheets in Plasma Crate to 60
-    type: Tweak
-  id: 139
-  time: '2024-08-29T02:52:35.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/164
-- author: ultramario1998
-  changes:
-  - message: Bros
-    type: Add
-  id: 140
-  time: '2024-08-29T17:28:33.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/165
 - author: formlessnameless
   changes:
   - message: More upstream merges with a couple of bugfixes
@@ -4414,3 +4386,42 @@
   id: 636
   time: '2024-12-03T16:37:29.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/866
+- author: Sha-Seng
+  changes:
+  - message: Black mime hardsuit, crafted using black suspenders
+    type: Add
+  - message: Red mime hardsuit (original) now crafted using red suspenders
+    type: Tweak
+  id: 637
+  time: '2024-12-03T16:40:37.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/880
+- author: ATDoop
+  changes:
+  - message: Jamjar glasses now have a side view consistent with their front!
+    type: Tweak
+  id: 638
+  time: '2024-12-03T16:41:00.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/877
+- author: DinnerCalzone
+  changes:
+  - message: (Xeno Station) Added birgmedic spawner and brigmedic locker.
+    type: Add
+  - message: (Xeno Station) The gas filter hooked up to the cryo pod is no longer
+      insane and now functions how it does on every other station.
+    type: Tweak
+  - message: (Xeno Station) The station now has a player range of 40 - 80, up from
+      25 - 70 (it's big).
+    type: Tweak
+  - message: (Barratry Station) Added birgmedic spawner and brigmedic locker.
+    type: Add
+  id: 639
+  time: '2024-12-03T16:41:35.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/878
+- author: DinnerCalzone
+  changes:
+  - message: (Hummingbird) Swapped placement of the robotech deluxe and exosuit fabricators
+      in robotics to reduce instances of cyborg endoskeletons spawning in the wall.
+    type: Tweak
+  id: 640
+  time: '2024-12-03T16:40:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/884
