@@ -7,9 +7,8 @@ public sealed class RoomFillSystem : EntitySystem
     [Dependency] private readonly DungeonSystem _dungeon = default!;
     [Dependency] private readonly SharedMapSystem _maps = default!;
 
-    // Track wreck types (or room types) that have already been spawned in this round
     private HashSet<string> _spawnedRoomTypes = new();
-    private HashSet<string> _attemptedRoomTypes = new(); // To track attempted room types for this round
+    private HashSet<string> _attemptedRoomTypes = new(); 
 
     public override void Initialize()
     {
@@ -52,7 +51,6 @@ public sealed class RoomFillSystem : EntitySystem
                 return;
             }
 
-            // Spawn the room (wreck) if we found a valid one
             var mapGrid = Comp<MapGridComponent>(xform.GridUid.Value);
             _dungeon.SpawnRoom(
                 xform.GridUid.Value,
@@ -63,12 +61,10 @@ public sealed class RoomFillSystem : EntitySystem
                 clearExisting: component.ClearExisting,
                 rotation: component.Rotation);
 
-            // Mark this room type as spawned for the round
             _spawnedRoomTypes.Add(room.Type);
             _attemptedRoomTypes.Clear(); // Clear attempted room types after a successful spawn
         }
 
-        // Clean up the marker after processing
         QueueDel(uid);
     }
 
