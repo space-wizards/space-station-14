@@ -1,23 +1,17 @@
 ﻿- type: entity
   id: OrganVulpkaninStomach
-  parent: OrganAnimalStomach
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: Stomach
-  - type: SolutionContainerManager
-    solutions:
-      stomach:
-        maxVol: 50.0
-
-
-- type: entity
-  id: OrganVulpkaninStomach
-  parent: [BaseCycloriteOrgan, BaseOrganStomach]
+  parent: [OrganAnimalStomach, BaseOrganStomach] # (fine, maybe i'll resprite it for starlight vulps someday)
   name: stomach
-  description: "Gross. This is hard to stomach."
+  description: "Gross. This is hard to stomach." 
   components:
   - type: Sprite
+    sprite: Mobs/Species/Arachnid/organs.rsi
     state: stomach
+  - type: Item
+    size: Small
+    heldPrefix: stomach
+  - type: Stomach
+    updateInterval: 1.5
   - type: SolutionContainerManager
     solutions:
       stomach:
@@ -27,14 +21,5 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
-  - type: Stomach
-  # The stomach metabolizes stuff like foods and drinks.
-  # TODO: Have it work off of the ent's solution container, and move this
-  # to intestines instead.
   - type: Metabolizer
-    # mm yummy
-    maxReagents: 3
-    metabolizerTypes: [ Slime ]
-    groups:
-    - id: Food
-    - id: Drink
+    updateInterval: 1.5
