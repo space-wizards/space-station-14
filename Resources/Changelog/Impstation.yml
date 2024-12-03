@@ -1,21 +1,6 @@
 ﻿Entries:
 - author: formlessnameless
   changes:
-  - message: Upstream merge with Storage UI fixes, some AI fixes for radio and the
-      like. Still working on Tesla issues
-    type: Fix
-  id: 134
-  time: '2024-08-28T03:52:31.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/158
-- author: sususuyo
-  changes:
-  - message: removing passenger time requirement on the mantle for salvage
-    type: Tweak
-  id: 135
-  time: '2024-08-28T15:23:14.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/159
-- author: formlessnameless
-  changes:
   - message: Upstream merge with more AI stuff and fixes
     type: Fix
   id: 136
@@ -4413,3 +4398,17 @@
   id: 633
   time: '2024-12-03T16:33:16.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/888
+- author: widgetbeck
+  changes:
+  - message: SGD is now derived from Decapoid technology, for flavor.
+    type: Tweak
+  id: 634
+  time: '2024-12-03T16:34:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/887
+- author: hivehum
+  changes:
+  - message: The command prestige cloaks now count as cloaks for a thief's steal objective.
+    type: Tweak
+  id: 635
+  time: '2024-12-03T16:34:27.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/773
