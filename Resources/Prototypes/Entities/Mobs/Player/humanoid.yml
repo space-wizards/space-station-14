@@ -679,22 +679,7 @@
     - type: Loadout
       prototypes: [ BananaClown ]
 
-# Traveling exotic chef
-
-- type: entity
-  name: traveling chef spawner
-  id: TravelingChefSpawner
-  parent: MarkerBase
-  components:
-    - type: Sprite
-      layers:
-        - state: red
-        - sprite: Objects/Weapons/Melee/kitchen_knife.rsi
-          state: icon
-    - type: RandomSpawner
-      prototypes:
-      - RandomHumanoidTravelingChef
-
+# settler      
 - type: entity
   name: settler spawner
   id: SettlerSpawner
@@ -709,15 +694,6 @@
       prototypes:
       - RandomHumanoidSettler
 
-- type: entity
-  id: RandomHumanoidTravelingChef
-  name: traveling chef ghost role
-  components:
-    - type: Sprite
-      sprite: Objects/Tools/appraisal-tool.rsi
-      state: icon
-    - type: RandomHumanoidSpawner
-      settings: TravelingChef
 
 - type: entity
   id: RandomHumanoidSettler
@@ -739,6 +715,145 @@
       rules: ghost-role-information-freeagent-rules
     - type: Loadout
       prototypes: [ Settler ]
+
+# Pirates
+- type: entity
+  name: pirate spawner
+  id: PirateSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+          state: icon
+    - type: RandomSpawner
+      prototypes:
+      - RandomHumanoidPirate
+
+
+- type: entity
+  id: RandomHumanoidPirate
+  name: pirate ghost role
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/appraisal-tool.rsi
+      state: icon
+    - type: RandomHumanoidSpawner
+      settings: Pirate
+
+- type: randomHumanoidSettings
+  id: Pirate
+  parent: EventHumanoid
+  components:
+    - type: GhostRole
+      name: ghost-role-information-pirate-name
+      description: ghost-role-information-pirate-description
+      rules: ghost-role-information-antagonist-rules
+    - type: Loadout
+      prototypes: [ PirateGear ]
+
+- type: entity
+  name: pirate captain spawner
+  id: PirateCaptainSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+          state: icon
+    - type: RandomSpawner
+      prototypes:
+      - RandomHumanoidPirateCaptain
+
+
+- type: entity
+  id: RandomHumanoidPirateCaptain
+  name: pirate captain ghost role
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/appraisal-tool.rsi
+      state: icon
+    - type: RandomHumanoidSpawner
+      settings: PirateCaptain
+
+- type: randomHumanoidSettings
+  id: PirateCaptain
+  parent: EventHumanoid
+  components:
+    - type: GhostRole
+      name: ghost-role-information-pirate-captain-name
+      description: ghost-role-information-pirate-captain-description
+      rules: ghost-role-information-antagonist-captain-rules
+    - type: Loadout
+      prototypes: [ PirateCaptainGear ]
+
+# Stranded Hermit
+
+- type: entity
+  name: hermit spawner
+  id: HermitSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Clothing/OuterClothing/Hardsuits/basic.rsi
+          state: icon
+    - type: RandomSpawner
+      prototypes:
+      - RandomHumanoidHermit
+
+
+- type: entity
+  id: RandomHumanoidHermit
+  name: hermit ghost role
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/appraisal-tool.rsi
+      state: icon
+    - type: RandomHumanoidSpawner
+      settings: Hermit
+
+- type: randomHumanoidSettings
+  id: Hermit
+  parent: EventHumanoid
+  components:
+    - type: GhostRole
+      name: ghost-role-information-hermit-name
+      description: ghost-role-information-hermit-description
+      rules: ghost-role-information-nonantagonist-rules
+    - type: Loadout
+      prototypes: [ Hermit ]
+
+
+
+# Traveling exotic chef
+
+- type: entity
+  name: traveling chef spawner
+  id: TravelingChefSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Weapons/Melee/kitchen_knife.rsi
+          state: icon
+    - type: RandomSpawner
+      prototypes:
+      - RandomHumanoidTravelingChef
+
+- type: entity
+  id: RandomHumanoidTravelingChef
+  name: traveling chef ghost role
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/appraisal-tool.rsi
+      state: icon
+    - type: RandomHumanoidSpawner
+      settings: TravelingChef
 
 - type: randomHumanoidSettings
   id: TravelingChef
