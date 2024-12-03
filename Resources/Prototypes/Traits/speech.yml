@@ -232,7 +232,6 @@
     removes:
     - type: SouthernAccent
     - type: PirateAccent
-    - type: ReplacementAccent
     - type: GermanAccent
     - type: SpanishAccent
     - type: ScrambledAccent
@@ -251,4 +250,10 @@
     - type: MothAccent
     - type: GrayAccent
     - type: ReplacementAccent
-      accent: [cowboy, italian, liar, mobster, slimes, dwarf]
+      accent:
+      - cowboy
+      - italian
+      - liar
+      - mobster
+      - slimes
+      - dwarf
