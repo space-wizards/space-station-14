@@ -226,6 +226,9 @@ ghost-role-information-pirate-description = YAARGH!! Ye' be livin in yer pirate 
 ghost-role-information-pirate-captain-name = Pirate Captain
 ghost-role-information-pirate-captain-description = Yer pirate lads built this place to hide from those SolGov dogs. Spirits are down, despite the alchohol. Maybe a good ol' raid will lighten their moods.
 
+ghost-role-information-hermit-name = Stranded Hermit
+ghost-role-information-hermit-description = The last thing you remember is the blaring alarms and cracking steel as your ship's failing engines sent you barreling off-course. Barely making it to a life pod and floating for who-knows how long in a frozen sleep, you've finally been awoken.
+
 ghost-role-information-disaster-victim-name = Disaster Victim
 ghost-role-information-disaster-victim-description = You were rescued in an escape pod from another station that suffered a terrible fate. Perhaps you will be found and rescued.
 
