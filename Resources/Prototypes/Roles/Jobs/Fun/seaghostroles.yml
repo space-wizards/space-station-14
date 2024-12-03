@@ -1,0 +1,7 @@
+- type: startingGear
+  id: Hermit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitFlannel
+    shoes: ClothingShoesBootsWork
+    back: ClothingBackpackDuffel
+    outerClothing: ClothingOuterVestTank
