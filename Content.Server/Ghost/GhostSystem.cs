@@ -345,7 +345,7 @@ namespace Content.Server.Ghost
 
             while (allQuery.MoveNext(out var uid, out var warp))
             {
-                yield return new GhostWarp(GetNetEntity(uid), warp.Location ?? Name(uid), true);
+                yield return new GhostWarp(GetNetEntity(uid), warp.Location ?? Name(uid), true, null, null);
             }
         }
 
@@ -358,13 +358,29 @@ namespace Content.Server.Ghost
 
                 if (attached == except) continue;
 
+                if (!_mobState.IsAlive(attached) && !_mobState.IsCritical(attached)) continue;
+
                 TryComp<MindContainerComponent>(attached, out var mind);
 
-                var jobName = _jobs.MindTryGetJobName(mind?.Mind);
-                var playerInfo = $"{Comp<MetaDataComponent>(attached).EntityName} ({jobName})";
+                if (_jobs.MindTryGetJob(mind?.Mind, out var jobProto))
+                {
+                    var entityName = Name(attached);
+                    var jobName = _jobs.MindTryGetJobName(mind?.Mind);
 
-                if (_mobState.IsAlive(attached) || _mobState.IsCritical(attached))
-                    yield return new GhostWarp(GetNetEntity(attached), playerInfo, false);
+                    var playerInfo = Loc.GetString("ghost-target-window-player-warp-name",
+                    ("entityName", entityName),
+                    ("jobName", jobName));
+
+                    if (_jobs.TryGetDepartment(jobProto.ID, out var departmentProto))
+                    {
+                        yield return new GhostWarp(GetNetEntity(attached), playerInfo, false, Loc.GetString(departmentProto.Name), departmentProto.Color.ToHex());
+                    }
+                    else
+                    {
+                        yield return new GhostWarp(GetNetEntity(attached), playerInfo, false, null, null);
+                    }
+                }
+
             }
         }
 
