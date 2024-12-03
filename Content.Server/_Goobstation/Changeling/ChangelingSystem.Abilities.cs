@@ -162,8 +162,10 @@ public sealed partial class ChangelingSystem : EntitySystem
             popup = Loc.GetString("changeling-absorb-end-self");
             bonusChemicals += 10;
 
-            if (reducedBiomass)
+            if (!reducedBiomass)
                 bonusEvolutionPoints += 2;
+            else
+                popup = Loc.GetString("changeling-absorb-end-self-reduced-biomass");
         }
         TryStealDNA(uid, target, comp, true);
         comp.TotalAbsorbedEntities++;

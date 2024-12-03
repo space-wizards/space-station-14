@@ -14,7 +14,7 @@ changeling-absorb-fail-absorbed = You've already absorbed it.
 changeling-absorb-fail-unabsorbable = The target is not absorbable.
 changeling-absorb-fail-extremely-bloated = The target is too rotted to absorb.
 changeling-absorb-end-self = Another organic absorbed. You are evolving.
-changeling-absorb-end-reduced-biomass = Another organic absorbed.
+changeling-absorb-end-self-reduced-biomass = Another organic absorbed.
 changeling-absorb-end-self-ling = Another changeling absorbed. You are evolving more rapidly.
 changeling-absorb-onexamine = [color=red]The body feels hollow.[/color]
 
