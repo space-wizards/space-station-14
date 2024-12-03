@@ -1,6 +1,5 @@
 ﻿using Content.Shared.Body.Components;
 using Content.Shared.Lock;
-using Content.Shared.Projectiles;
 using Content.Shared.Storage.Components;
 using Robust.Shared.Physics.Events;
 
@@ -15,12 +14,12 @@ internal sealed class StoreOnCollideSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<StoreOnCollideComponent, StartCollideEvent>(OnCollide);
+        // TODO: Add support to stop colliding after throw, wands will need a WandComp
     }
 
     // We use Collide instead of Projectile to support different types of interactions
     private void OnCollide(Entity<StoreOnCollideComponent> ent, ref StartCollideEvent args)
     {
-        // TODO: Add support to stop storage on collide after triggering once?
         // TODO: Add support to create storage dynamically
         // TODO: Add support to also include projectiles, will need to think of how to include it if bodyonly is checked
 

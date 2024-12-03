@@ -148,7 +148,7 @@
         - BulletImpassable
       fly-by: &flybyfixture
         shape: !type:PhysShapeCircle
-          radius: 1.5
+          radius: 0.6
         layer:
         - Impassable
         - MidImpassable
