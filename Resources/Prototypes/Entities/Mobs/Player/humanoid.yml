@@ -708,6 +708,9 @@
 - type: randomHumanoidSettings
   id: Settler
   parent: EventHumanoid
+  speciesBlacklist:
+  - Jellid
+  - Vox
   components:
     - type: GhostRole
       name: ghost-role-information-settler-name
@@ -745,6 +748,9 @@
 - type: randomHumanoidSettings
   id: Pirate
   parent: EventHumanoid
+  speciesBlacklist:
+  - Jellid
+  - Vox
   components:
     - type: GhostRole
       name: ghost-role-information-pirate-name
@@ -781,6 +787,9 @@
 - type: randomHumanoidSettings
   id: PirateCaptain
   parent: EventHumanoid
+  speciesBlacklist:
+  - Jellid
+  - Vox
   components:
     - type: GhostRole
       name: ghost-role-information-pirate-captain-name
@@ -819,6 +828,9 @@
 - type: randomHumanoidSettings
   id: Hermit
   parent: EventHumanoid
+  speciesBlacklist:
+  - Jellid
+  - Vox
   components:
     - type: GhostRole
       name: ghost-role-information-hermit-name
