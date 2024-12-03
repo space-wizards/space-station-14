@@ -763,4 +763,11 @@ Entries:
   id: 108
   time: '2024-12-02T04:52:07.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/106
+- author: Miracula
+  changes:
+  - message: Added vulpkanins
+    type: Add
+  id: 109
+  time: '2024-12-03T13:22:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/92
 
