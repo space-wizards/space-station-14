@@ -1,0 +1,18 @@
+<Document>
+  # Vulpkanians
+
+  <Box>
+    <GuideEntityEmbed Entity="MobVulpkanin" Caption=""/>
+  </Box>
+  Vulpkanin (Vulpa-Kin) — a species of anthropomorphic intelligent beings vaguely resembling Earth foxes from the canine family. They have a unique leg structure and sharper vision.
+
+  ## Racial Features
+  
+  - Receive [color=#ffa500]50% more fire damage[/color] and [color=#1e90ff]50% less cold damage[/color].
+  - Need to eat and drink 1.5 times more.
+  - Easily intoxicated.
+  - Animal stomach, takes poison damage from chocolate and allows consuming other creatures' organs.
+  - Deal [color=red]5[/color] slashing damage with claws.
+  - Have their own accent, sometimes rolling the "R".
+  - Have a vision range one tile further.
+</Document>
