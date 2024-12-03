@@ -462,7 +462,7 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
                 ? _hoverBackgroundColorSrgb
                 : _backgroundColorSrgb;
 
-            DrawAnnulusSector(handle, containerCenter, _innerRadius, _outerRadius, angleFrom, angleTo, segmentColor);
+            DrawAnnulusSector(handle, containerCenter, _innerRadius * UIScale, _outerRadius * UIScale, angleFrom, angleTo, segmentColor);
         }
 
         if (DrawBorder)
@@ -470,12 +470,12 @@ public class RadialMenuTextureButtonWithSector : RadialMenuTextureButton, IRadia
             var borderColor = DrawMode == DrawModeEnum.Hover
                 ? _hoverBorderColorSrgb
                 : _borderColorSrgb;
-            DrawAnnulusSector(handle, containerCenter, _innerRadius, _outerRadius, angleFrom, angleTo, borderColor, false);
+            DrawAnnulusSector(handle, containerCenter, _innerRadius * UIScale, _outerRadius * UIScale, angleFrom, angleTo, borderColor, false);
         }
 
         if (!_isWholeCircle && DrawSeparators)
         {
-            DrawSeparatorLines(handle, containerCenter, _innerRadius, _outerRadius, angleFrom, angleTo, SeparatorColor);
+            DrawSeparatorLines(handle, containerCenter, _innerRadius * UIScale, _outerRadius * UIScale, angleFrom, angleTo, SeparatorColor);
         }
     }
 
