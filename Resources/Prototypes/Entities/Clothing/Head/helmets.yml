@@ -36,6 +36,7 @@
     tags:
     - WhitelistChameleon
     - SecurityHelmet
+    - DogWearable    
 
 #Mercenary Helmet
 - type: entity
@@ -103,6 +104,9 @@
         Blunt: 0.8
         Slash: 0.8
         Piercing: 0.95
+  - type: Tag
+    tags:
+    - DogWearable    
 
 #Bombsuit Helmet
 - type: entity

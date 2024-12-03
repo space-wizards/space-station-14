@@ -13,6 +13,10 @@
     {
       "name": "equipped-EYES",
       "directions": 4
+    },
+    {
+      "name": "equipped-EYES-dog",
+      "directions": 4
     }
   ]
 }

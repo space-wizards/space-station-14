@@ -30,6 +30,9 @@
     - id: FoodMeatCorgi
       amount: 2
     - id: MaterialHideCorgi
+  - type: Inventory
+    speciesId: dog
+    templateId: dog
   - type: Tag
     tags:
     - CannotSuicide
@@ -55,6 +58,9 @@
         Base: old_ian_dead
       Dead:
         Base: old_ian_dead
+  - type: Inventory
+    speciesId: dog
+    templateId: pet
   - type: Butcherable
     spawned:
     - id: FoodMeatCorgi
@@ -80,6 +86,9 @@
         Base: lisa_dead
       Dead:
         Base: lisa_dead
+  - type: Inventory
+    speciesId: dog
+    templateId: pet
   - type: Grammar
     attributes:
       proper: true
@@ -118,6 +127,9 @@
     attributes:
       proper: true
       gender: male
+  - type: Inventory
+    speciesId: dog
+    templateId: pet
   - type: Butcherable # A puppy? You monster...
     spawned:
     - id: FoodMeatCorgi

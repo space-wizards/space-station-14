@@ -627,6 +627,9 @@
   id: HamsterWearable
 
 - type: Tag
+  id: DogWearable
+
+- type: Tag
   id: HamtrCentralControlModule
 
 - type: Tag
