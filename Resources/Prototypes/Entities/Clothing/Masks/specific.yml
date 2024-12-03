@@ -35,6 +35,8 @@
       - Snout
     - type: UserInterface
       interfaces:
+        enum.ChameleonUiKey.Key:
+          type: ChameleonBoundUserInterface
         enum.VoiceMaskUIKey.Key:
           type: VoiceMaskBoundUserInterface
 

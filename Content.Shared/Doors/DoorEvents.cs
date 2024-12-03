@@ -16,6 +16,19 @@ namespace Content.Shared.Doors
     }
 
     /// <summary>
+    /// Raised when the door's bolt status was changed.
+    /// </summary>
+    public sealed class DoorBoltsChangedEvent : EntityEventArgs
+    {
+        public readonly bool BoltsDown;
+
+        public DoorBoltsChangedEvent(bool boltsDown)
+        {
+            BoltsDown = boltsDown;
+        }
+    }
+
+    /// <summary>
     /// Raised when the door is determining whether it is able to open.
     /// Cancel to stop the door from being opened.
     /// </summary>

@@ -79,6 +79,7 @@
 - type: entity
   parent: BaseAnomalyCore
   id: AnomalyCoreFlesh
+  description: The core of a destroyed flesh anomaly. Pulsates sickeningly, but might be a hearty meal if cooked.
   suffix: Flesh
   components:
   - type: Sprite
@@ -241,7 +242,8 @@
 
 - type: entity
   parent: BaseAnomalyInertCore
-  id: AnomalyCoreFleshInert
+  id: AnomalyCoreFleshInert # Can be microwaved to turn it into a massive piece of meat
+  description: The inert core of a destroyed flesh anomaly. Pulsates sickeningly, but might be good food in the right hands?
   suffix: Flesh, Inert
   components:
   - type: Sprite
@@ -306,7 +308,7 @@
 
 - type: entity
   parent: BaseAnomalyInertCore
-  id: AnomalyCoreFloraInert
+  id: AnomalyCoreFloraInert #Turns into a seed that grows into artifexium
   suffix: Flora, Inert
   components:
   - type: Seed
