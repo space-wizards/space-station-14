@@ -233,13 +233,8 @@
     - type: SouthernAccent
     - type: PirateAccent
     - type: ReplacementAccent
-      accent: cowboy
     - type: GermanAccent
-    - type: ReplacementAccent
-      accent: italian
     - type: SpanishAccent
-    - type: ReplacementAccent
-      accent: liar
     - type: ScrambledAccent
     - type: NoContractionsAccent
     - type: SharpInflection
@@ -248,11 +243,7 @@
     - type: SnalienAccent
     - type: StutteringAccent
     - type: FrontalLisp
-    - type: ReplacementAccent
-      accent: mobster
     - type: RatvarianLanguage
-    - type: ReplacementAccent
-      accent: slimes
     - type: RussianAccent
     - type: BasicRussianAccent
     - type: FrenchAccent
@@ -260,4 +251,9 @@
     - type: MothAccent
     - type: GrayAccent
     - type: ReplacementAccent
+      accent: cowboy
+      accent: italian
+      accent: liar
+      accent: mobster
+      accent: slimes
       accent: dwarf
