@@ -92,6 +92,16 @@
   - type: Sprite
     layers:
     - state: base
+    - state: logic
+    - state: logic_a
+      visible: false
+      map: [ "enum.LogicGateLayers.InputA" ]
+    - state: logic_b
+      visible: false
+      map: [ "enum.LogicGateLayers.InputB" ]
+    - state: logic_o
+      visible: false
+      map: [ "enum.LogicGateLayers.Output" ]
     - state: and
       map: [ "enum.LogicGateLayers.Gate" ]
   - type: LogicGate
@@ -105,6 +115,16 @@
   - type: Sprite
     layers:
     - state: base
+    - state: logic
+    - state: logic_a
+      visible: false
+      map: [ "enum.LogicGateLayers.InputA" ]
+    - state: logic_b
+      visible: false
+      map: [ "enum.LogicGateLayers.InputB" ]
+    - state: logic_o
+      visible: false
+      map: [ "enum.LogicGateLayers.Output" ]
     - state: xor
       map: [ "enum.LogicGateLayers.Gate" ]
   - type: LogicGate
@@ -118,6 +138,16 @@
   - type: Sprite
     layers:
     - state: base
+    - state: logic
+    - state: logic_a
+      visible: false
+      map: [ "enum.LogicGateLayers.InputA" ]
+    - state: logic_b
+      visible: false
+      map: [ "enum.LogicGateLayers.InputB" ]
+    - state: logic_o
+      visible: false
+      map: [ "enum.LogicGateLayers.Output" ]
     - state: nor
       map: [ "enum.LogicGateLayers.Gate" ]
   - type: LogicGate
@@ -131,6 +161,16 @@
   - type: Sprite
     layers:
     - state: base
+    - state: logic
+    - state: logic_a
+      visible: false
+      map: [ "enum.LogicGateLayers.InputA" ]
+    - state: logic_b
+      visible: false
+      map: [ "enum.LogicGateLayers.InputB" ]
+    - state: logic_o
+      visible: false
+      map: [ "enum.LogicGateLayers.Output" ]
     - state: nand
       map: [ "enum.LogicGateLayers.Gate" ]
   - type: LogicGate
@@ -144,6 +184,16 @@
   - type: Sprite
     layers:
     - state: base
+    - state: logic
+    - state: logic_a
+      visible: false
+      map: [ "enum.LogicGateLayers.InputA" ]
+    - state: logic_b
+      visible: false
+      map: [ "enum.LogicGateLayers.InputB" ]
+    - state: logic_o
+      visible: false
+      map: [ "enum.LogicGateLayers.Output" ]
     - state: xnor
       map: [ "enum.LogicGateLayers.Gate" ]
   - type: LogicGate
