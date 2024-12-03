@@ -1,0 +1,12 @@
+- type: entity
+  parent: BaseItem
+  id: FirstBikeHorn
+  name: My_first_bike_horn
+  description: This is my first bike horn.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/skub.rsi
+    state: icon
+  - type: PlaySoundOnUse
+    sound: /Audio/Items/bikehorn.ogg
+    volume: 3
