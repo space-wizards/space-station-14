@@ -36,11 +36,14 @@
     layers:
     - state: base
     - state: logic
-    - state: empty
+    - state: logic_a
+      visible: false
       map: [ "enum.LogicGateLayers.InputA" ]
-    - state: empty
+    - state: logic_b
+      visible: false
       map: [ "enum.LogicGateLayers.InputB" ]
-    - state: empty
+    - state: logic_o
+      visible: false
       map: [ "enum.LogicGateLayers.Output" ]
     - state: or
       map: [ "enum.LogicGateLayers.Gate" ]
@@ -71,17 +74,16 @@
           Xnor: { state: xnor }
       enum.LogicGateVisuals.InputA:
         enum.LogicGateLayers.InputA:
-          High: { state: logic_a }
-          Low:  { state: empty }
+          True: { visible: true }
+          False: { visible: false }
       enum.LogicGateVisuals.InputB:
         enum.LogicGateLayers.InputB:
-          High: { state: logic_b }
-          Low:  { state: empty }
+          True: { visible: true }
+          False: { visible: false }
       enum.LogicGateVisuals.Output:
         enum.LogicGateLayers.Output:
-          High: { state: logic_o }
-          Low:  { state: empty }
-
+          True: { visible: true }
+          False: { visible: false }
 - type: entity
   parent: LogicGateOr
   id: LogicGateAnd
