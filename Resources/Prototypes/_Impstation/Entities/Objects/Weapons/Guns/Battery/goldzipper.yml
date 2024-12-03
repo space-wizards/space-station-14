@@ -40,6 +40,7 @@
   name: golden zipper
   parent: WeaponGoldZipper
   id: WeaponGoldZipperFake
+  suffix: Fake
   description: Legends tell of a gun that can kill anything with a single shot. This one, however, seems to be made of cheap plastic.
   components:
   - type: ProjectileBatteryAmmoProvider
