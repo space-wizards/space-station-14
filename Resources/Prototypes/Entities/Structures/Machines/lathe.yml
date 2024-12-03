@@ -392,6 +392,8 @@
       - WeaponLaserCannon
       - WeaponLaserCarbine
       - WeaponXrayCannon
+      - WeaponPistolMk58
+      - WeaponRevolverInspector
 
 - type: entity
   id: ProtolatheHyperConvection
@@ -783,6 +785,8 @@
       - WeaponLaserCannon
       - WeaponLaserCarbine
       - WeaponXrayCannon
+      - WeaponPistolMk58
+      - WeaponRevolverInspector
   - type: MaterialStorage
     whitelist:
       tags:

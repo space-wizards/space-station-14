@@ -154,6 +154,19 @@
   - WeaponXrayCannon
 
 - type: technology
+  id: FirearmsManufacture
+  name: research-technology-firearms-manufacturing
+  icon:
+    sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+  - WeaponPistolMk58
+  - WeaponRevolverInspector
+
+- type: technology
   id: BasicShuttleArmament
   name: research-technology-basic-shuttle-armament
   icon:
