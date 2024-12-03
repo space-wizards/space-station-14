@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TGRCdev
-  changes:
-  - message: Updating to match upstream + YML fixes
-    type: Fix
-  id: 130
-  time: '2024-08-27T15:25:12.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/152
 - author: sususuyo
   changes:
   - message: senior cargo technician ID, PDA + a couple new options for salvage neckwear
@@ -4403,3 +4396,11 @@
   id: 629
   time: '2024-12-03T00:03:02.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/849
+- author: DinnerCalzone
+  changes:
+  - message: Adjusted the painted stripe on bar, chapel, janitor, and lawyer airlocks
+      to look a bit less washed out.
+    type: Tweak
+  id: 630
+  time: '2024-12-03T00:09:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/873
