@@ -19,7 +19,7 @@ namespace Content.Server.Warps
         ///     Color of the warp button in the ghost menu.
         /// </summary>
         [DataField]
-        public Color Color = new Color(67, 67, 92, 255); // light purple
+        public Color Color = new Color(67, 67, 92, 255); // light purple, TODO add purple preset in the robusttoolbox
     }
     
 }
