@@ -59,10 +59,15 @@
     sprite: Clothing/OuterClothing/Coats/gentlecoat.rsi
 
 - type: entity
-  abstract: true
-  parent: AllowSuitStorageClothing
-  id: ClothingOuterArmorHoS
+  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, ClothingOuterStorageBase, BaseSecurityCommandContraband]
+  id: ClothingOuterCoatHoSTrench
+  name: head of security's armored trenchcoat
+  description: A greatcoat enhanced with a special alloy for some extra protection and style for those with a commanding presence.
   components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
   - type: Armor
     modifiers:
       coefficients:
@@ -75,10 +80,15 @@
     damageCoefficient: 0.9
 
 - type: entity
-  abstract: true
-  parent: AllowSuitStorageClothing
-  id: ClothingOuterArmorWarden
+  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, ClothingOuterStorageBase, BaseRestrictedContraband]
+  id: ClothingOuterCoatWarden
+  name: warden's armored jacket
+  description: A sturdy, utilitarian jacket designed to protect a warden from any brig-bound threats.
   components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/warden.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/warden.rsi
   - type: Armor
     modifiers:
       coefficients:
@@ -88,17 +98,6 @@
         Heat: 0.7
   - type: ExplosionResistance
     damageCoefficient: 0.9
-
-- type: entity
-  parent: [ClothingOuterArmorHoS, ClothingOuterStorageBase, BaseSecurityCommandContraband]
-  id: ClothingOuterCoatHoSTrench
-  name: head of security's armored trenchcoat
-  description: A greatcoat enhanced with a special alloy for some extra protection and style for those with a commanding presence.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
 
 - type: entity
   parent: ClothingOuterStorageToggleableBase
@@ -313,17 +312,6 @@
     sprite: Clothing/OuterClothing/Coats/pirate.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/pirate.rsi
-
-- type: entity
-  parent: [ClothingOuterArmorWarden, ClothingOuterStorageBase, BaseRestrictedContraband]
-  id: ClothingOuterCoatWarden
-  name: warden's armored jacket
-  description: A sturdy, utilitarian jacket designed to protect a warden from any brig-bound threats.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Coats/warden.rsi
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Coats/warden.rsi
 
 - type: entity
   parent: ClothingOuterStorageBase
