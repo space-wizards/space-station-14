@@ -42,7 +42,7 @@ namespace Content.Server.Preferences.Managers
             _netManager.RegisterNetMessage<MsgSelectCharacter>(HandleSelectCharacterMessage);
             _netManager.RegisterNetMessage<MsgUpdateCharacter>(HandleUpdateCharacterMessage);
             _netManager.RegisterNetMessage<MsgDeleteCharacter>(HandleDeleteCharacterMessage);
-            _sawmill = _logManager.GetSawmill("SawmillName");
+            _sawmill = _logManager.GetSawmill(SawmillName);
         }
 
         private async void HandleSelectCharacterMessage(MsgSelectCharacter message)
