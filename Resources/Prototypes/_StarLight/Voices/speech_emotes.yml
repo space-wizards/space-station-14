@@ -1,4 +1,46 @@
 - type: emote
+  id: Howl
+  name: chat-emote-name-howl
+  category: Vocal
+  available: false
+  icon: Interface/Actions/scream.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-howl"]
+  chatTriggers:
+  - howl
+  - howl.
+  - howl!
+  - howls
+  - howls.
+  - howls!
+
+- type: emote
+  id: Growl
+  name: chat-emote-name-growl
+  category: Vocal
+  available: false
+  icon: Interface/Actions/scream.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-growl"]
+  chatTriggers:
+  - growl
+  - growl.
+  - growl!
+  - growls
+  - growls.
+  - growls!
+
+- type: emote
   id: Mew
   name: chat-emote-name-mews
   category: Vocal
