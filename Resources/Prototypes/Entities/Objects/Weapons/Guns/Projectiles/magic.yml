@@ -89,8 +89,11 @@
   - type: ResistLocker
     resistTime: 30
   - type: StoreOnCollide
-    bodyOnly: true
     lockOnCollide: true
+    onProjectileHitOnly: true
+    whitelist:
+      components:
+        - Body
   - type: LockVisuals
     stateLocked: cursed_door
     stateUnlocked: decursed_door
