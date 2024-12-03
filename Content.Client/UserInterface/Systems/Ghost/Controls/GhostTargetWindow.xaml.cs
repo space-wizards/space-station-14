@@ -98,6 +98,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
                     currentButtonRef.OnPressed += _ =>
                     {
                         WarpClicked?.Invoke(warpTarget);
+                        
                         currentButtonRef.Modulate = colorHex;
                     };
                     currentButtonRef.Visible = ButtonIsVisible(currentButtonRef);
