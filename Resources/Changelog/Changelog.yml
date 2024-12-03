@@ -1,40 +1,4 @@
 ﻿Entries:
-- author: Mephisto72
-  changes:
-  - message: The Detective can now access Externals and Cryogenics like their Officer
-      counterpart.
-    type: Tweak
-  id: 7170
-  time: '2024-08-19T23:44:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30203
-- author: Vermidia
-  changes:
-  - message: Mothroaches can now wear anything hamlet can wear
-    type: Add
-  id: 7171
-  time: '2024-08-20T04:20:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/28956
-- author: Cojoke-dot
-  changes:
-  - message: Devouring bodies now reduces bleed for Space Dragons.
-    type: Tweak
-  id: 7172
-  time: '2024-08-20T10:57:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29661
-- author: cranberriez
-  changes:
-  - message: Added Discord webhook error logging!
-    type: Tweak
-  id: 7173
-  time: '2024-08-20T21:12:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30835
-- author: Repo
-  changes:
-  - message: Added copy to clipboard button for connection failure UI.
-    type: Add
-  id: 7174
-  time: '2024-08-20T21:31:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30760
 - author: Lank
   changes:
   - message: Removed the shock collar and associated thief objective.
@@ -3907,3 +3871,42 @@
   id: 7669
   time: '2024-11-30T19:31:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32869
+- author: IProduceWidgets
+  changes:
+  - message: Reindeer.
+    type: Add
+  - message: the legally distinct cookie monster.
+    type: Add
+  - message: cargo order for holiday light tubes.
+    type: Add
+  id: 7670
+  time: '2024-12-01T06:30:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33364
+- author: MilenVolf
+  changes:
+  - message: Mouses, mothroaches, cockroaches and etc can be picked up once again.
+    type: Fix
+  id: 7671
+  time: '2024-12-01T22:09:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33602
+- author: JIPDawg
+  changes:
+  - message: Some Antag ghost roles now show their correct rules.
+    type: Fix
+  id: 7672
+  time: '2024-12-02T19:43:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32457
+- author: Southbridge, Flipsie27
+  changes:
+  - message: 'Added a new low-mid pop map: Amber Station'
+    type: Add
+  id: 7673
+  time: '2024-12-03T02:24:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33441
+- author: CheddaCheez
+  changes:
+  - message: Added recipes for Nachos, Cheesy Nachos, and Cuban Nachos.
+    type: Add
+  id: 7674
+  time: '2024-12-03T02:59:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33637
