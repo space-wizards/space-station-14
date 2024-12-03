@@ -1,0 +1,82 @@
+- type: marking
+  id: PawSocks
+  markingCategory: Overlay
+  bodyPart: RFoot #highest possible layer
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: Corvax/Mobs/Customization/vulpkanin.rsi
+      state: pawsocks
+
+- type: marking
+  id: FoxTail
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: Corvax/Mobs/Customization/vulpkanin.rsi
+      state: vulp_tail
+    - sprite: Corvax/Mobs/Customization/vulpkanin.rsi
+      state: vulp_tail_inner
+
+- type: marking
+  id: FoxEar
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: Corvax/Mobs/Customization/vulpkanin.rsi
+      state: vulp_ear
+    - sprite: Corvax/Mobs/Customization/vulpkanin.rsi
+      state: vulp_ear_inner
+
+- type: marking
+  id: WolfTail
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: Corvax/Mobs/Customization/vulpkanin.rsi
+      state: wolf_tail
+    - sprite: Corvax/Mobs/Customization/vulpkanin.rsi
+      state: wolf_tail_inner
+
+- type: marking
+  id: FoxBelly
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: Corvax/Mobs/Customization/vulpkanin.rsi
+      state: vulp_belly-torso
+
+- type: marking
+  id: FoxSnout
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction: [Vulpkanin]
+  sprites:
+    - sprite: Corvax/Mobs/Customization/vulpkanin.rsi
+      state: vulp_face
+
+# Animated
+- type: marking
+  id: FoxTailAnimated
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+    - sprite: Corvax/Mobs/Customization/vulpkanin.rsi
+      state: tail_fox_waggin
+    - sprite: Corvax/Mobs/Customization/vulpkanin.rsi
+      state: tail_fox_inner_waggin
+
+- type: marking
+  id: WolfTailAnimated
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: []
+  sprites:
+    - sprite: Corvax/Mobs/Customization/vulpkanin.rsi
+      state: tail_wolf_waggin
+    - sprite: Corvax/Mobs/Customization/vulpkanin.rsi
+      state: tail_wolf_inner_waggin
