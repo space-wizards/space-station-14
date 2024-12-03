@@ -20,4 +20,18 @@ public sealed partial class SpiderComponent : Component
     [DataField] public EntityUid? Action;
 }
 
-public sealed partial class SpiderWebActionEvent : InstantActionEvent { }
+public sealed partial class SpiderWebActionEvent : InstantActionEvent
+{
+        /// <summary>
+    /// Vectors determining where the entities will spawn.
+    /// </summary>
+    [DataField]
+    public List<Vector2i> OffsetVectors = new()
+    {
+        Vector2i.Zero,
+        Vector2i.Up,
+        Vector2i.Down,
+        Vector2i.Left,
+        Vector2i.Right,
+    };
+}
