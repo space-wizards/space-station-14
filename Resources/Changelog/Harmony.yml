@@ -708,3 +708,10 @@ Entries:
     changes:
     - type: Tweak
       message: Rebalanced the security family of space suits.
+  - id: 217
+    author: DieselMohawk
+    time: '2024-12-03T10:05:58.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/217
+    changes:
+    - type: Add
+      message: Made Cat Markings Accessible to humans
