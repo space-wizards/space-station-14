@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: quick pda fixes
-    type: Fix
-  id: 132
-  time: '2024-08-27T20:23:11.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/155
 - author: TGRCdev
   changes:
   - message: Station AI
@@ -4405,3 +4398,10 @@
   id: 631
   time: '2024-12-03T02:05:53.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/876
+- author: Sha-Seng
+  changes:
+  - message: mimes have the basic french accent again (but stop talking!)
+    type: Tweak
+  id: 632
+  time: '2024-12-03T04:39:35.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/867
