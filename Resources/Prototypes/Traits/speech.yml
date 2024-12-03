@@ -250,10 +250,4 @@
     - type: MothAccent
     - type: GrayAccent
     - type: ReplacementAccent
-      accents:
-      - cowboy
-      - italian
-      - liar
-      - mobster
-      - slimes
-      - dwarf
+      accent: [ cowboy, italian, liar, mobster, slimes, dwarf ]
