@@ -48,7 +48,6 @@ public sealed class DamageOnInteractSystem : EntitySystem
         // Stop the interaction if the user attempts to interact with the object before the timer is finished
         if (_gameTiming.CurTime < entity.Comp.NextInteraction)
         {
-            Log.Debug(_gameTiming.CurTime + " is less than " + entity.Comp.NextInteraction);
             args.Handled = true;
             return;
         }
