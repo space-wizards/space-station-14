@@ -64,9 +64,9 @@ public abstract class SharedRottingSystem : EntitySystem
         args.PushMarkup(Loc.GetString(description, ("target", Identity.Entity(perishable, EntityManager))));
     }
 
-    private void OnStartup(EntityUid uid, RottingComponent component, ComponentStartup args)
+    private void OnStartup(Entity<RottingComponent> ent, ref ComponentStartup args)
     {
-        component.NextRotUpdate = _timing.CurTime + component.RotUpdateRate;
+        ent.Comp.NextRotUpdate = _timing.CurTime + ent.Comp.RotUpdateRate;
     }
 
     private void OnShutdown(EntityUid uid, RottingComponent component, ComponentShutdown args)
