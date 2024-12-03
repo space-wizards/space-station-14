@@ -30,6 +30,10 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
     [Dependency] private readonly IEntitySystemManager _systemManager = default!;
     [Dependency] private readonly IUserInterfaceManager _ui = default!;
 
+    [Dependency] private readonly ILogManager _logManager = default!;
+    private ISawmill _sawmill = default!;
+    private const string SawmillName = "ui.entity_embed";
+
     private readonly TagSystem _tagSystem;
     private readonly ExamineSystem _examineSystem;
     private readonly GuidebookSystem _guidebookSystem;
@@ -54,6 +58,8 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
         _examineSystem = _systemManager.GetEntitySystem<ExamineSystem>();
         _guidebookSystem = _systemManager.GetEntitySystem<GuidebookSystem>();
         MouseFilter = MouseFilterMode.Stop;
+
+        _sawmill = _logManager.GetSawmill(SawmillName);
     }
 
     public GuideEntityEmbed(string proto, bool caption, bool interactive) : this()
@@ -135,7 +141,7 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
     {
         if (!args.TryGetValue("Entity", out var proto))
         {
-            Logger.Error("Entity embed tag is missing entity prototype argument");
+            _sawmill.Error("Entity embed tag is missing entity prototype argument");
             control = null;
             return false;
         }

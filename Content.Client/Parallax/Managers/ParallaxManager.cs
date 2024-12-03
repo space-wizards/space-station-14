@@ -10,12 +10,13 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Parallax.Managers;
 
-public sealed class ParallaxManager : IParallaxManager
+public sealed class ParallaxManager : IParallaxManager, IPostInjectInit
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-
-    private ISawmill _sawmill = Logger.GetSawmill("parallax");
+    [Dependency] private readonly ILogManager _logManager = default!;
+    private ISawmill _sawmill = default!;
+    private const string SawmillName = "parallax";
 
     public Vector2 ParallaxAnchor { get; set; }
 
@@ -121,5 +122,9 @@ public sealed class ParallaxManager : IParallaxManager
             Config = config
         };
     }
-}
 
+    void IPostInjectInit.PostInject()
+    {
+        _sawmill = _logManager.GetSawmill(SawmillName);
+    }
+}

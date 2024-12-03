@@ -26,6 +26,9 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
 {
     [Dependency] private readonly IEntitySystemManager _systemManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
+    private ISawmill _sawmill = default!;
+    private const string SawmillName = "ui.reagent";
 
     private readonly ChemistryGuideDataSystem _chemistryGuideData;
 
@@ -35,6 +38,8 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
         IoCManager.InjectDependencies(this);
         _chemistryGuideData = _systemManager.GetEntitySystem<ChemistryGuideDataSystem>();
         MouseFilter = MouseFilterMode.Stop;
+
+        _sawmill = _logManager.GetSawmill(SawmillName);
     }
 
     public GuideReagentEmbed(string reagent) : this()
@@ -62,13 +67,13 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
         control = null;
         if (!args.TryGetValue("Reagent", out var id))
         {
-            Logger.Error("Reagent embed tag is missing reagent prototype argument");
+            _sawmill.Error("Reagent embed tag is missing reagent prototype argument");
             return false;
         }
 
         if (!_prototype.TryIndex<ReagentPrototype>(id, out var reagent))
         {
-            Logger.Error($"Specified reagent prototype \"{id}\" is not a valid reagent prototype");
+            _sawmill.Error($"Specified reagent prototype \"{id}\" is not a valid reagent prototype");
             return false;
         }
 

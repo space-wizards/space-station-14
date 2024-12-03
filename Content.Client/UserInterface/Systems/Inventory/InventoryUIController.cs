@@ -31,6 +31,9 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
     IOnSystemChanged<ClientInventorySystem>, IOnSystemChanged<HandsSystem>
 {
     [Dependency] private readonly IEntityManager _entities = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
+    private ISawmill _sawmill = default!;
+    private const string SawmillName = "ui.inventory";
 
     [UISystemDependency] private readonly ClientInventorySystem _inventorySystem = default!;
     [UISystemDependency] private readonly HandsSystem _handsSystem = default!;
@@ -52,6 +55,8 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
 
         var gameplayStateLoad = UIManager.GetUIController<GameplayStateLoadController>();
         gameplayStateLoad.OnScreenLoad += OnScreenLoad;
+
+        _sawmill = _logManager.GetSawmill(SawmillName);
     }
 
     private void OnScreenLoad()
@@ -243,7 +248,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
     {
         if (_inventoryHotbar == null)
         {
-            Logger.Warning("Tried to toggle inventory bar when none are assigned");
+            _sawmill.Warning("Tried to toggle inventory bar when none are assigned");
             return;
         }
 

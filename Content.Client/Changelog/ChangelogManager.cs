@@ -120,7 +120,7 @@ namespace Content.Client.Changelog
             });
         }
 
-        public void PostInject()
+        void IPostInjectInit.PostInject()
         {
             _sawmill = _logManager.GetSawmill(SawmillName);
         }

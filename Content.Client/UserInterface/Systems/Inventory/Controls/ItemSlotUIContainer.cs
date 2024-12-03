@@ -14,6 +14,11 @@ public interface IItemslotUIContainer
 [Virtual]
 public abstract class ItemSlotUIContainer<T> : GridContainer, IItemslotUIContainer where T : SlotControl
 {
+    [Dependency] private readonly ILogManager _logManager = default!;
+    private const string SawmillName = "ui.item_slot";
+    private ISawmill Sawmill => _log ??= _logManager.GetSawmill(SawmillName);
+    private ISawmill? _log;
+
     protected readonly Dictionary<string, T> Buttons = new();
 
     private int? _maxColumns;
@@ -84,7 +89,7 @@ public abstract class ItemSlotUIContainer<T> : GridContainer, IItemslotUIContain
     {
         if (newButton.SlotName == "")
         {
-            Logger.Warning("Could not add button " + newButton.Name + "No slotname");
+            Sawmill.Warning("Could not add button " + newButton.Name + "No slotname");
         }
 
         return !Buttons.TryAdd(newButton.SlotName, newButton) ? null : newButton;

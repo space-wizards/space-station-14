@@ -18,12 +18,16 @@ namespace Content.Server.MoMMI
         [Dependency] private readonly IStatusHost _statusHost = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly ITaskManager _taskManager = default!;
+        [Dependency] private readonly ILogManager _logManager = default!;
+        private ISawmill _sawmill = default!;
+        private const string SawmillName = "mommi";
 
         private readonly HttpClient _httpClient = new();
 
         void IPostInjectInit.PostInject()
         {
             _statusHost.AddHandler(HandleChatPost);
+            _sawmill = _logManager.GetSawmill(SawmillName);
         }
 
         public async void SendOOCMessage(string sender, string message)
@@ -48,7 +52,7 @@ namespace Content.Server.MoMMI
 
             if (string.IsNullOrWhiteSpace(password))
             {
-                Logger.WarningS("mommi", "MoMMI URL specified but not password!");
+                _sawmill.Warning("MoMMI URL specified but not password!");
                 return;
             }
 

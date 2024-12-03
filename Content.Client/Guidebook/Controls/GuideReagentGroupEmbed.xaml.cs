@@ -18,12 +18,17 @@ namespace Content.Client.Guidebook.Controls;
 public sealed partial class GuideReagentGroupEmbed : BoxContainer, IDocumentTag
 {
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
+    private ISawmill _sawmill = default!;
+    private const string SawmillName = "ui.reagent_embed";
 
     public GuideReagentGroupEmbed()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
         MouseFilter = MouseFilterMode.Stop;
+
+        _sawmill = _logManager.GetSawmill(SawmillName);
     }
 
     public GuideReagentGroupEmbed(string group) : this()
@@ -42,7 +47,7 @@ public sealed partial class GuideReagentGroupEmbed : BoxContainer, IDocumentTag
         control = null;
         if (!args.TryGetValue("Group", out var group))
         {
-            Logger.Error("Reagent group embed tag is missing group argument");
+            _sawmill.Error("Reagent group embed tag is missing group argument");
             return false;
         }
 

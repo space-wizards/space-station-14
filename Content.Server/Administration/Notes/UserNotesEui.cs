@@ -13,6 +13,10 @@ public sealed class UserNotesEui : BaseEui
 {
     [Dependency] private readonly IAdminNotesManager _notesMan = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
+    private ISawmill _sawmill = default!;
+    private const string SawmillName = "admin.notes";
+
     private readonly bool _seeOwnNotes;
 
     public UserNotesEui()
@@ -20,9 +24,11 @@ public sealed class UserNotesEui : BaseEui
         IoCManager.InjectDependencies(this);
         _seeOwnNotes = _cfg.GetCVar(CCVars.SeeOwnNotes);
 
+        _sawmill = _logManager.GetSawmill(SawmillName);
+
         if (!_seeOwnNotes)
         {
-            Logger.WarningS("admin.notes", "User notes initialized when see_own_notes set to false");
+            _sawmill.Warning("User notes initialized when see_own_notes set to false");
         }
     }
 
@@ -39,7 +45,7 @@ public sealed class UserNotesEui : BaseEui
     {
         if (!_seeOwnNotes)
         {
-            Logger.WarningS("admin.notes", $"User {Player.Name} with ID {Player.UserId} tried to update their own user notes when see_own_notes was set to false");
+            _sawmill.Warning($"User {Player.Name} with ID {Player.UserId} tried to update their own user notes when see_own_notes was set to false");
             return;
         }
 

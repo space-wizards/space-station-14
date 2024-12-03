@@ -15,8 +15,9 @@ public sealed class VoteWebhooks : IPostInjectInit
     [Dependency] private readonly IEntitySystemManager _entSys = default!;
     [Dependency] private readonly DiscordWebhook _discord = default!;
     [Dependency] private readonly IBaseServer _baseServer = default!;
-
+    [Dependency] private readonly ILogManager _logManager = default!;
     private ISawmill _sawmill = default!;
+    private const string SawmillName = "discord";
 
     public WebhookState? CreateWebhookIfConfigured(VoteOptions voteOptions, string? webhookUrl = null, string? customVoteName = null, string? customVoteMessage = null)
     {
@@ -43,7 +44,6 @@ public sealed class VoteWebhooks : IPostInjectInit
         }
 
         var gameTicker = _entSys.GetEntitySystemOrNull<GameTicker>();
-        _sawmill = Logger.GetSawmill("discord");
 
         var runLevel = gameTicker != null ? Loc.GetString($"game-run-level-{gameTicker.RunLevel}") : "";
         var runId = gameTicker != null ? gameTicker.RoundId : 0;
@@ -179,5 +179,8 @@ public sealed class VoteWebhooks : IPostInjectInit
         public ulong MessageId;
     }
 
-    void IPostInjectInit.PostInject() { }
+    void IPostInjectInit.PostInject()
+    {
+        _sawmill = _logManager.GetSawmill(SawmillName);
+    }
 }

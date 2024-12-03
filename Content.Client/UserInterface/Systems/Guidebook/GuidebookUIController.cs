@@ -25,12 +25,21 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly JobRequirementsManager _jobRequirements = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
+    private ISawmill _sawmill = default!;
+    private const string SawmillName = "ui.guide";
 
     private const int PlaytimeOpenGuidebook = 60;
 
     private GuidebookWindow? _guideWindow;
     private MenuButton? GuidebookButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.GuidebookButton;
     private ProtoId<GuideEntryPrototype>? _lastEntry;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        _sawmill = _logManager.GetSawmill(SawmillName);
+    }
 
     public void OnStateEntered(LobbyState state)
     {
@@ -227,7 +236,7 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
         {
             if (!_prototypeManager.TryIndex(guideId, out var guide))
             {
-                Logger.Error($"Encountered unknown guide prototype: {guideId}");
+                _sawmill.Error($"Encountered unknown guide prototype: {guideId}");
                 continue;
             }
             guides.Add(guideId, guide);
@@ -257,7 +266,7 @@ public sealed class GuidebookUIController : UIController, IOnStateEntered<LobbyS
 
             if (!_prototypeManager.TryIndex(childId, out var child))
             {
-                Logger.Error($"Encountered unknown guide prototype: {childId} as a child of {guide.Id}. If the child is not a prototype, it must be directly provided.");
+                _sawmill.Error($"Encountered unknown guide prototype: {childId} as a child of {guide.Id}. If the child is not a prototype, it must be directly provided.");
                 continue;
             }
 

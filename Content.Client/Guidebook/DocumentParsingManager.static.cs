@@ -13,6 +13,8 @@ namespace Content.Client.Guidebook;
 
 public sealed partial class DocumentParsingManager
 {
+    private static ISawmill Sawmill => IoCManager.Resolve<ILogManager>().GetSawmill(SawmillName);
+
     private const string ListBullet = "  › ";
 
     // Parser that consumes a - and then just parses normal rich text with some prefix text (a bullet point).
@@ -76,7 +78,7 @@ public sealed partial class DocumentParsingManager
                     string? error;
                     if (!msg.TryAddMarkup(text, out error))
                     {
-                        Logger.GetSawmill("Guidebook").Error("Failed to parse RichText in Guidebook");
+                        Sawmill.Error("Failed to parse RichText in Guidebook");
 
                         return new GuidebookError(text, error);
                     }

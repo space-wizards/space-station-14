@@ -187,8 +187,6 @@ namespace Content.Client.Voting
             existingVote.DisplayVotes = message.DisplayVotes;
             existingVote.TargetEntity = message.TargetEntity;
 
-            // Logger.Debug($"{existingVote.StartTime}, {existingVote.EndTime}, {_gameTiming.RealTime}");
-
             for (var i = 0; i < message.Options.Length; i++)
             {
                 existingVote.Entries[i].Votes = message.Options[i].votes;

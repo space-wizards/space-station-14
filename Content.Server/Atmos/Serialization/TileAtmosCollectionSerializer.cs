@@ -14,6 +14,11 @@ namespace Content.Server.Atmos.Serialization;
 
 public sealed partial class TileAtmosCollectionSerializer : ITypeSerializer<Dictionary<Vector2i, TileAtmosphere>, MappingDataNode>, ITypeCopier<Dictionary<Vector2i, TileAtmosphere>>
 {
+    [Dependency] private readonly ILogManager _logManager = default!;
+    private const string SawmillName = "atmos_serializer";
+    private ISawmill Sawmill => _log ??= _logManager.GetSawmill(SawmillName);
+    private ISawmill? _log;
+
     public ValidationNode Validate(ISerializationManager serializationManager, MappingDataNode node,
         IDependencyCollection dependencies, ISerializationContext? context = null)
     {
@@ -48,8 +53,8 @@ public sealed partial class TileAtmosCollectionSerializer : ITypeSerializer<Dict
                     }
                     catch (ArgumentOutOfRangeException)
                     {
-                        Logger.Error(
-                            $"Error during atmos serialization! Tile at {indices} points to an unique mix ({mix}) out of range!");
+                        Sawmill.Error(
+                            $"Tile at {indices} points to an unique mix ({mix}) out of range!");
                     }
                 }
             }
@@ -91,8 +96,8 @@ public sealed partial class TileAtmosCollectionSerializer : ITypeSerializer<Dict
                                 }
                                 catch (ArgumentOutOfRangeException)
                                 {
-                                    Logger.Error(
-                                        $"Error during atmos serialization! Tile at {indices} points to an unique mix ({mix}) out of range!");
+                                    Sawmill.Error(
+                                        $"Tile at {indices} points to an unique mix ({mix}) out of range!");
                                 }
                             }
                         }

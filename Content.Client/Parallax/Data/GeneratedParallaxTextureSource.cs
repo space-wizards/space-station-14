@@ -19,6 +19,9 @@ namespace Content.Client.Parallax.Data;
 [DataDefinition]
 public sealed partial class GeneratedParallaxTextureSource : IParallaxTextureSource
 {
+    private const string SawmillName = "parallax";
+    private ISawmill Sawmill => IoCManager.Resolve<ILogManager>().GetSawmill(SawmillName);
+
     /// <summary>
     /// Parallax config path (the TOML file).
     /// In client resources.
@@ -51,7 +54,7 @@ public sealed partial class GeneratedParallaxTextureSource : IParallaxTextureSou
         var parallaxConfig = GetParallaxConfig();
         if (parallaxConfig == null)
         {
-            Logger.ErrorS("parallax", $"Parallax config not found or unreadable: {ParallaxConfigPath}");
+            Sawmill.Error($"Parallax config not found or unreadable: {ParallaxConfigPath}");
             // The show must go on.
             return Texture.Transparent;
         }
@@ -77,7 +80,7 @@ public sealed partial class GeneratedParallaxTextureSource : IParallaxTextureSou
         }
         catch (Exception ex)
         {
-            Logger.ErrorS("parallax", $"Couldn't retrieve parallax cached texture: {ex}");
+            Sawmill.Error($"Couldn't retrieve parallax cached texture: {ex}");
 
             try
             {
@@ -96,7 +99,7 @@ public sealed partial class GeneratedParallaxTextureSource : IParallaxTextureSou
     {
         var debugImages = saveDebugLayers ? new List<Image<Rgba32>>() : null;
 
-        var sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("parallax");
+        var sawmill = Sawmill;
 
         // Generate the parallax in the thread pool.
         using var newParallexImage = await Task.Run(() =>
@@ -141,4 +144,3 @@ public sealed partial class GeneratedParallaxTextureSource : IParallaxTextureSou
         return configReader.ReadToEnd().Replace(Environment.NewLine, "\n");
     }
 }
-

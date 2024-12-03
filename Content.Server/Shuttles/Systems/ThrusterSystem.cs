@@ -278,8 +278,6 @@ public sealed class ThrusterSystem : EntitySystem
         if (!EntityManager.TryGetComponent(xform.GridUid, out ShuttleComponent? shuttleComponent))
             return;
 
-        // Logger.DebugS("thruster", $"Enabled thruster {uid}");
-
         switch (component.Type)
         {
             case ThrusterType.Linear:
@@ -374,8 +372,6 @@ public sealed class ThrusterSystem : EntitySystem
 
         if (!EntityManager.TryGetComponent(gridId, out ShuttleComponent? shuttleComponent))
             return;
-
-        // Logger.DebugS("thruster", $"Disabled thruster {uid}");
 
         switch (component.Type)
         {

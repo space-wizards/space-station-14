@@ -24,18 +24,19 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
+    private ISawmill _sawmill = default!;
+    private const string SawmillName = "job_requirements";
 
     private readonly Dictionary<string, TimeSpan> _roles = new();
     private readonly List<string> _roleBans = new();
     private readonly List<string> _jobWhitelists = new();
 
-    private ISawmill _sawmill = default!;
-
     public event Action? Updated;
 
     public void Initialize()
     {
-        _sawmill = Logger.GetSawmill("job_requirements");
+        _sawmill = _logManager.GetSawmill(SawmillName);
 
         // Yeah the client manager handles role bans and playtime but the server ones are separate DEAL.
         _net.RegisterNetMessage<MsgRoleBans>(RxRoleBans);
@@ -75,11 +76,6 @@ public sealed class JobRequirementsManager : ISharedPlaytimeManager
             _roles[tracker] = time;
         }
 
-        /*var sawmill = Logger.GetSawmill("play_time");
-        foreach (var (tracker, time) in _roles)
-        {
-            sawmill.Info($"{tracker}: {time}");
-        }*/
         Updated?.Invoke();
     }
 

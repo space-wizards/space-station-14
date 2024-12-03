@@ -44,6 +44,9 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly IInputManager _input = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
+    private ISawmill _sawmill = default!;
+    private const string SawmillName = "ui.action";
 
     [UISystemDependency] private readonly ActionsSystem? _actionsSystem = default;
     [UISystemDependency] private readonly InteractionOutlineSystem? _interactionOutline = default;
@@ -86,6 +89,8 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         var gameplayStateLoad = UIManager.GetUIController<GameplayStateLoadController>();
         gameplayStateLoad.OnScreenLoad += OnScreenLoad;
         gameplayStateLoad.OnScreenUnload += OnScreenUnload;
+
+        _sawmill = _logManager.GetSawmill(SawmillName);
     }
 
     private void OnScreenLoad()
@@ -193,7 +198,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
                 return TryTargetEntityWorld(args, actionId, entMapTarget, user, comp) || !entMapTarget.InteractOnMiss;
 
             default:
-                Logger.Error($"Unknown targeting action: {actionId.GetType()}");
+                _sawmill.Error($"Unknown targeting action: {actionId.GetType()}");
                 return false;
         }
     }

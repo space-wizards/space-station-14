@@ -15,6 +15,10 @@ public sealed class RoleBanCommand : IConsoleCommand
     [Dependency] private readonly IPlayerLocator _locator = default!;
     [Dependency] private readonly IBanManager _bans = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
+    private const string SawmillName = "admin.role_ban";
+    private ISawmill Sawmill => _log ??= _logManager.GetSawmill(SawmillName);
+    private ISawmill? _log;
 
     public string Command => "roleban";
     public string Description => Loc.GetString("cmd-roleban-desc");
@@ -28,7 +32,7 @@ public sealed class RoleBanCommand : IConsoleCommand
         uint minutes;
         if (!Enum.TryParse(_cfg.GetCVar(CCVars.RoleBanDefaultSeverity), out NoteSeverity severity))
         {
-            Logger.WarningS("admin.role_ban", "Role ban severity could not be parsed from config! Defaulting to medium.");
+            Sawmill.Warning("Role ban severity could not be parsed from config! Defaulting to medium.");
             severity = NoteSeverity.Medium;
         }
 

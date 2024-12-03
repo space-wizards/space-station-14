@@ -11,6 +11,9 @@ namespace Content.Server.EUI
     {
         [Dependency] private readonly IPlayerManager _players = default!;
         [Dependency] private readonly IServerNetManager _net = default!;
+        [Dependency] private readonly ILogManager _logManager = default!;
+        private ISawmill _sawmill = default!;
+        private const string SawmillName = "eui";
 
         private readonly Dictionary<ICommonSession, PlayerEuiData> _playerData =
             new();
@@ -27,6 +30,7 @@ namespace Content.Server.EUI
         void IPostInjectInit.PostInject()
         {
             _players.PlayerStatusChanged += PlayerStatusChanged;
+            _sawmill = _logManager.GetSawmill(SawmillName);
         }
 
         public void Initialize()
@@ -99,7 +103,7 @@ namespace Content.Server.EUI
 
             if (!dat.OpenUIs.TryGetValue(message.Id, out var eui))
             {
-                Logger.WarningS("eui", $"Got EUI message from player {ply} for non-existing UI {message.Id}");
+                _sawmill.Warning($"Got EUI message from player {ply} for non-existing UI {message.Id}");
                 return;
             }
 
