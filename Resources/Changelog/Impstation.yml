@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TGRCdev
-  changes:
-  - message: Station AI
-    type: Add
-  id: 133
-  time: '2024-08-28T01:48:43.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/157
 - author: formlessnameless
   changes:
   - message: Upstream merge with Storage UI fixes, some AI fixes for radio and the
@@ -4405,3 +4398,18 @@
   id: 632
   time: '2024-12-03T04:39:35.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/867
+- author: Darkmajia
+  changes:
+  - message: Corpses in any stage of rotting grant halved biomass and no evolution
+      points when absorbed by changelings. This was already live, but not reflected
+      in the changelog. Only extremely bloated corpses are inedible.
+    type: Tweak
+  - message: Goblins grant halved biomass and no evolution points when absorbed by
+      changelings. They're kinda small and stinky and really not that tasty.
+    type: Tweak
+  - message: Salvage corpses should no longer gib almost instantly past a certain
+      period of time.
+    type: Fix
+  id: 633
+  time: '2024-12-03T16:33:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/888
