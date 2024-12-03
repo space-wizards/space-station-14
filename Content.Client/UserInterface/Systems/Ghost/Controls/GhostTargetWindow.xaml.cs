@@ -89,7 +89,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
 
                     currentButtonRef.OnMouseEntered += _ => currentButtonRef.Label.FontColorOverride = Color.InterpolateBetween(Color.White, Color.FromHex(colorHex), 0.35f);
 
-                    currentButtonRef.OnMouseExited += args =>
+                    currentButtonRef.OnMouseExited += _ =>
                     {
                         currentButtonRef.Modulate = Color.White;
                         currentButtonRef.Label.FontColorOverride = Color.White;
