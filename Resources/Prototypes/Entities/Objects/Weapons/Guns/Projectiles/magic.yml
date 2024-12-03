@@ -79,16 +79,15 @@
     totalIntensity: 0.3
     maxTileBreak: 0
 
-#TODO: Create and add StoreOnCollide comp
 - type: entity
   id: ProjectileLocker
   name: locker
-  description: INSERTLOCKERDESCHERE
+  description: A cursed magical locker! Can you resist?
   parent: ClosetSteelBase
   categories: [ HideSpawnMenu ]
   components:
   - type: ResistLocker
-    resistTime: 5 #TODO: Test with resist
+    resistTime: 30
   - type: StoreOnCollide
     bodyOnly: true
     lockOnCollide: true
