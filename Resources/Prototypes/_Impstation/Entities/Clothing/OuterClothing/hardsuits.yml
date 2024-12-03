@@ -24,3 +24,20 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitJanitor
+
+#Black mime Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitMime
+  id: ClothingOuterHardsuitMimeBlack
+  name: black mime hardsuit
+  description: A custom-made mime hardsuit.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/mimeblack.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Hardsuits/mimeblack.rsi
+  - type: Construction
+    graph: BlackMimeHardsuit
+    node: blackmimeHardsuit
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitMimeBlack
