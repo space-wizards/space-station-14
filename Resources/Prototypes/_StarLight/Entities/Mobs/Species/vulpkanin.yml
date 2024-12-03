@@ -35,12 +35,12 @@
       jumpsuit:
         sizeMaps:
           32:
-            sprite: _Starlight/Mobs/Species/displacement.rsi
+            sprite: _Starlight/Mobs/Species/Vulpkanin/displacement.rsi
             state: jumpsuit
       shoes: # DM only for colored shoes!
         sizeMaps:
           32:
-            sprite: _Starlight/Mobs/Species/displacement.rsi
+            sprite: _Starlight/Mobs/Species/Vulpkanin/displacement.rsi
             state: shoes
   - type: ContentEye
     targetZoom: "1.125, 1.125"
@@ -88,10 +88,10 @@
       jumpsuit:
         sizeMaps:
           32:
-            sprite: _Starlight/Mobs/Species/displacement.rsi
+            sprite: _Starlight/Mobs/Species/Vulpkanin/displacement.rsi
             state: jumpsuit
       shoes: # DM only for colored shoes!
         sizeMaps:
           32:
-            sprite: _Starlight/Mobs/Species/displacement.rsi
+            sprite: _Starlight/Mobs/Species/Vulpkanin/displacement.rsi
             state: shoes
