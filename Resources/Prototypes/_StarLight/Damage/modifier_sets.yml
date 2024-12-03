@@ -1,0 +1,5 @@
+- type: damageModifierSet
+  id: Vulpkanin # Because of fur is more flammable and more resistant to cold.
+  coefficients:
+    Cold: 0.5
+    Heat: 1.5

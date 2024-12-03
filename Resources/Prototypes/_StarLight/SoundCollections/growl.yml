@@ -1,0 +1,6 @@
+- type: soundCollection
+  id: Growl
+  files:
+  - /Audio/_Starlight/Effects/Growl/growl1.ogg
+  - /Audio/_Starlight/Effects/Growl/growl2.ogg
+  - /Audio/_Starlight/Effects/Growl/growl3.ogg
