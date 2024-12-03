@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: More upstream merges with a couple of bugfixes
-    type: Fix
-  id: 141
-  time: '2024-08-29T17:28:41.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/166
 - author: Darkmajia
   changes:
   - message: multiple announcement sounds, announcer volume fix
@@ -4425,3 +4418,11 @@
   id: 640
   time: '2024-12-03T16:40:24.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/884
+- author: Sha-Seng
+  changes:
+  - message: Passenger winter coat replaced with the version that actually has a hood
+      lol
+    type: Tweak
+  id: 641
+  time: '2024-12-03T16:42:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/881
