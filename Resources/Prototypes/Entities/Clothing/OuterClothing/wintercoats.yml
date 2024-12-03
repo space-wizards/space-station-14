@@ -359,7 +359,7 @@
 
 ##########################################################
 - type: entity
-  parent: [ClothingOuterCoatHoSTrench, ClothingOuterWinterCoatToggleable]
+  parent: [ClothingOuterArmorHoS, ClothingOuterWinterCoatToggleable, BaseSecurityCommandContraband]
   id: ClothingOuterWinterHoS
   name: head of security's armored winter coat
   description: A sturdy, utilitarian winter coat designed to protect a head of security from any brig-bound threats and hypothermic events.
@@ -665,7 +665,7 @@
 
 ##########################################################
 - type: entity
-  parent: [ClothingOuterArmorBasic, ClothingOuterWinterCoatToggleable]
+  parent: [ClothingOuterArmorBasic, ClothingOuterWinterCoatToggleable, BaseRestrictedContraband]
   id: ClothingOuterWinterSec
   name: security armored winter coat
   description: A sturdy, utilitarian winter coat designed to protect an officer from any brig-bound threats and hypothermic events.
@@ -745,7 +745,7 @@
 
 ################################################################
 - type: entity
-  parent: [ClothingOuterCoatWarden, ClothingOuterWinterCoatToggleable]
+  parent: [ClothingOuterArmorWarden, ClothingOuterWinterCoatToggleable, BaseRestrictedContraband]
   id: ClothingOuterWinterWarden
   name: warden's armored winter coat
   description: A sturdy, utilitarian winter coat designed to protect a warden from any brig-bound threats and hypothermic events.
@@ -783,7 +783,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterWarden
 
 - type: entity
-  parent: [BaseSyndicateContraband, ClothingOuterWinterCoatToggleable]
+  parent: [ClothingOuterWinterCoatToggleable, BaseSyndicateContraband]
   id: ClothingOuterWinterSyndieCap
   name: syndicate's winter coat
   description: "The syndicate's winter coat is made of durable fabric, with gilded patterns, and coarse wool."
@@ -808,7 +808,7 @@
 
 ##############################################################
 - type: entity
-  parent: [BaseSyndicateContraband, ClothingOuterWinterHoS]
+  parent: [ClothingOuterWinterWarden, BaseSyndicateContraband]
   id: ClothingOuterWinterSyndieCapArmored
   name: syndicate's armored winter coat
   description: "The syndicate's armored winter coat is made of durable fabric, with gilded patterns, and coarse wool."
