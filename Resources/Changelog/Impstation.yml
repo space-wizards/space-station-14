@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: sususuyo
-  changes:
-  - message: senior cargo technician ID, PDA + a couple new options for salvage neckwear
-    type: Add
-  id: 131
-  time: '2024-08-27T15:25:32.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/153
 - author: Darkmajia
   changes:
   - message: quick pda fixes
@@ -4404,3 +4397,11 @@
   id: 630
   time: '2024-12-03T00:09:20.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/873
+- author: widgetbeck
+  changes:
+  - message: Slime People now take significant Caustic damage from skin contact &
+      injection with water and water vapor. Be careful!
+    type: Tweak
+  id: 631
+  time: '2024-12-03T02:05:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/876
