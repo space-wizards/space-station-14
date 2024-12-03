@@ -15,14 +15,6 @@
   id: ClothingOuterBaseLarge
   components:
   - type: Item
-    size: Large
-
-- type: entity
-  abstract: true
-  parent: ClothingOuterBase
-  id: ClothingOuterBaseHuge
-  components:
-  - type: Item
     size: Huge
   - type: Clothing
     slots:
@@ -191,3 +183,11 @@
       toggleable-clothing: !type:ContainerSlot {}
       storagebase: !type:Container
         ents: []
+
+- type: entity
+  abstract: true
+  parent: ClothingOuterBase
+  id: ClothingOuterBaseMedium
+  components:
+  - type: Item
+    size: Huge

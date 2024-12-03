@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingOuterBaseHuge
+  parent: ClothingOuterBaseLarge
   id: ClothingOuterBioGeneral
   name: bio suit
   suffix: Generic
