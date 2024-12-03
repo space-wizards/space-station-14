@@ -644,3 +644,123 @@ Entries:
   id: 90
   time: '2024-11-27T17:08:02.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/commit/7b65cc62d7e8a5bc1eb023e999a616e37f00bf1b
+- author: Rinary
+  changes:
+  - message: Fixed bug when starlight species don't absorbable.
+    type: Fix
+  id: 91
+  time: '2024-11-29T08:20:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/8b4e4af35bdbc8586563cd53e59777a3f6a4eaab
+- author: Rinary
+  changes:
+  - message: Fixed bug when mechs are not pacified at the end of the round.
+    type: Fix
+  id: 92
+  time: '2024-11-29T08:20:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/46b534ef02c77f884322f4153fd083fc01a8c9ea
+- author: Rinary
+  changes:
+  - message: Fixed bug when changelings don't have objectives.
+    type: Fix
+  id: 93
+  time: '2024-11-29T08:20:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/74c7741b85d71fd385e76c75f9f97de922479248
+- author: Rinary
+  changes:
+  - message: Fixed bug when entities stucks at welded vents while vent craw.
+    type: Fix
+  id: 94
+  time: '2024-11-29T08:20:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/2f6b5e463979cedaeb6de9878f951de417d2f995
+- author: Rinary
+  changes:
+  - message: Fixed bug when any antagonist can be a vampire or changeling.
+    type: Fix
+  id: 96
+  time: '2024-11-29T08:20:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/74d373a6e7d75af457bed2a54aa160d9412798ee
+- author: Miracula
+  changes:
+  - message: Added brigmedic role
+    type: Add
+  id: 97
+  time: '2024-11-29T08:45:34.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/91
+- author: Rinary
+  changes:
+  - message: Changed cortortionist jumpsuit price to 12 TK, and discount to rare.
+    type: Tweak
+  id: 98
+  time: '2024-11-29T09:16:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/593a312b2c6485513878ce99e0ec304a66a14cdf
+- author: Rinary
+  changes:
+  - message: Removed suicide command.
+    type: Remove
+  id: 99
+  time: '2024-11-29T13:14:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/4d5a9474db725275680c94035b401fd8b425af77
+- author: Miracula
+  changes:
+  - message: Changed salary and time requirements for sec department
+    type: Tweak
+  id: 100
+  time: '2024-11-29T14:58:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/94
+- author: Miracula
+  changes:
+  - message: Added brigmedic glasses
+    type: Add
+  id: 101
+  time: '2024-11-29T17:57:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/95
+- author: fishbait
+  changes:
+  - message: removed contraband tag from advanced circular saw
+    type: Fix
+  id: 102
+  time: '2024-11-29T23:53:37.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/97
+- author: STARLIGHT TEAM
+  changes:
+  - message: Many random events have been casualized
+    type: Tweak
+  id: 103
+  time: '2024-11-30T05:26:01.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/100
+- author: luxikMC
+  changes:
+  - message: All maps updated.
+    type: Tweak
+  id: 104
+  time: '2024-11-30T06:04:46.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/102
+- author: Miracula
+  changes:
+  - message: Fixed brigmedic not being part of security on crew monitor
+    type: Fix
+  id: 105
+  time: '2024-11-30T06:18:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/99
+- author: Miracula
+  changes:
+  - message: Added brigmedic dumbed handheld
+    type: Add
+  id: 106
+  time: '2024-12-01T07:51:54.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/103
+- author: Miracula
+  changes:
+  - message: Fixed brigbuddy not fitting in brigmedic belt
+    type: Fix
+  id: 107
+  time: '2024-12-02T04:52:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/106
+- author: Miracula
+  changes:
+  - message: Fixed brigmedic coat not letting wear stuff on the back
+    type: Fix
+  id: 108
+  time: '2024-12-02T04:52:07.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/106
+

@@ -1,7 +1,7 @@
 - type: gameMap
   id: Packed
   mapName: 'Packed'
-  mapPath: /Maps/packed.yml
+  mapPath: /Maps/_Starlight/Stations/Packed.yml
   minPlayers: 0
   maxPlayers: 35
   stations:
@@ -47,6 +47,7 @@
             Detective: [ 1, 1 ]
             SecurityCadet: [ 2, 2 ]
             Lawyer: [ 1, 1 ]
+            Brigmedic: [ 1, 1 ]
             #supply
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 5, 5 ]
