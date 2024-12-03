@@ -46468,8 +46468,6 @@ entities:
       pos: 6.5,-6.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 11651
   - uid: 1957
