@@ -83,12 +83,23 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
                         HorizontalAlignment = HAlignment.Center,
                         VerticalAlignment = VAlignment.Center,
                         SizeFlagsStretchRatio = 1,
-                        Modulate = Color.FromHex(colorHex),
+                        ModulateSelfOverride = Color.FromHex(colorHex),
                         MinSize = new Vector2(340, 20),
-                        ClipText = true,
                     };
 
-                    currentButtonRef.OnPressed += _ => WarpClicked?.Invoke(warpTarget);
+                    currentButtonRef.OnMouseEntered += _ => currentButtonRef.Label.FontColorOverride = Color.InterpolateBetween(Color.White, Color.FromHex(colorHex), 0.35f);
+
+                    currentButtonRef.OnMouseExited += args =>
+                    {
+                        currentButtonRef.Modulate = Color.White;
+                        currentButtonRef.Label.FontColorOverride = Color.White;
+                    };
+
+                    currentButtonRef.OnPressed += _ =>
+                    {
+                        WarpClicked?.Invoke(warpTarget);
+                        currentButtonRef.Modulate = Color.FromHex(colorHex);
+                    };
                     currentButtonRef.Visible = ButtonIsVisible(currentButtonRef);
 
                     ButtonContainer.AddChild(currentButtonRef);

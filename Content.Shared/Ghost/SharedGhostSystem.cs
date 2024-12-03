@@ -81,7 +81,7 @@ namespace Content.Shared.Ghost
             DisplayName = displayName;
             IsWarpPoint = isWarpPoint;
             CategoryName = categoryName ?? "Other";
-            WarpColor = warpColor ?? "#D3D3D3"; // light grey
+            WarpColor = warpColor ?? "#43435C"; // purple
         }
 
         /// <summary>
