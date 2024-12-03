@@ -99,6 +99,13 @@
     color: "#ffeead"
     enabled: false
     radius: 4
+  - type: Sprite # Imp note: The lit sprites of crushers don't work at all, and it'll take modifying all equipped, held, and wielded sprites of them to make them work
+    layers:
+    - state: icon
+    - state: icon-lit
+      shader: unshaded
+      visible: false
+      map: [ "light" ]
 
 - type: entity
   parent: [BaseWeaponCrusher, BaseSecurityCargoContraband]
@@ -109,7 +116,6 @@
       - Pickaxe
   - type: Sprite
     sprite: Objects/Weapons/Melee/crusher.rsi
-    state: icon
   - type: AmmoCounter
   - type: UseDelayOnShoot
   - type: UseDelay
@@ -152,6 +158,12 @@
     sprite: Objects/Weapons/Melee/crusher-inhands.rsi
   - type: DisarmMalus
   - type: Prying
+  - type: Clothing # Imp
+    sprite: Objects/Weapons/Melee/crusher.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
 
 - type: entity
   parent: [ BaseWeaponCrusher, BaseSecurityCargoContraband]
@@ -197,3 +209,9 @@
   - type: Item
     size: Ginormous
     sprite: Objects/Weapons/Melee/crusher_glaive-inhands.rsi
+  - type: Clothing # Imp
+    sprite: Objects/Weapons/Melee/crusher_glaive.rsi
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
