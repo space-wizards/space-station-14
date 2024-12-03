@@ -345,7 +345,7 @@ namespace Content.Server.Ghost
 
             while (allQuery.MoveNext(out var uid, out var warp))
             {
-                yield return new GhostWarp(GetNetEntity(uid), warp.Location ?? Name(uid), true, null, null);
+                yield return new GhostWarp(GetNetEntity(uid), warp.Location ?? Name(uid), true, null, warp.Color);
             }
         }
 
@@ -373,7 +373,7 @@ namespace Content.Server.Ghost
 
                     if (_jobs.TryGetDepartment(jobProto.ID, out var departmentProto))
                     {
-                        yield return new GhostWarp(GetNetEntity(attached), playerInfo, false, Loc.GetString(departmentProto.Name), departmentProto.Color.ToHex());
+                        yield return new GhostWarp(GetNetEntity(attached), playerInfo, false, Loc.GetString(departmentProto.Name), departmentProto.Color);
                     }
                     else
                     {

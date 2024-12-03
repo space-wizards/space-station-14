@@ -16,7 +16,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
         /// <summary>
         /// Dictionary where the key is the department, and the value is a list of warp data.
         /// </summary>
-        private Dictionary<string, List<(string, NetEntity, string)>> _categories = new();
+        private Dictionary<string, List<(string, NetEntity, Color)>> _categories = new();
 
         public event Action<NetEntity>? WarpClicked;
         public event Action? OnGhostnadoClicked;
@@ -41,7 +41,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
             {
                 if (!_categories.ContainsKey(warp.CategoryName))
                 {
-                    _categories[warp.CategoryName] = new List<(string, NetEntity, string)>();
+                    _categories[warp.CategoryName] = new List<(string, NetEntity, Color)>();
                 }
 
                 var warpName = warp.IsWarpPoint
@@ -83,11 +83,11 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
                         HorizontalAlignment = HAlignment.Center,
                         VerticalAlignment = VAlignment.Center,
                         SizeFlagsStretchRatio = 1,
-                        ModulateSelfOverride = Color.FromHex(colorHex),
+                        ModulateSelfOverride = colorHex,
                         MinSize = new Vector2(340, 20),
                     };
 
-                    currentButtonRef.OnMouseEntered += _ => currentButtonRef.Label.FontColorOverride = Color.InterpolateBetween(Color.White, Color.FromHex(colorHex), 0.35f);
+                    currentButtonRef.OnMouseEntered += _ => currentButtonRef.Label.FontColorOverride = Color.InterpolateBetween(Color.White, colorHex, 0.35f);
 
                     currentButtonRef.OnMouseExited += _ =>
                     {
@@ -98,7 +98,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
                     currentButtonRef.OnPressed += _ =>
                     {
                         WarpClicked?.Invoke(warpTarget);
-                        currentButtonRef.Modulate = Color.FromHex(colorHex);
+                        currentButtonRef.Modulate = colorHex;
                     };
                     currentButtonRef.Visible = ButtonIsVisible(currentButtonRef);
 
