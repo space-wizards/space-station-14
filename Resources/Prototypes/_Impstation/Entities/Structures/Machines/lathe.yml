@@ -69,8 +69,7 @@
       - DrinkWaterBottleEmpty #imp recipe
       - Pitcher #imp recipe
       - BarSpoon #imp recipe
-      #food
-      - ButchCleaver
+      #food      
       - KitchenKnife
       - FoodPlate
       - FoodPlateSmall
@@ -107,7 +106,10 @@
       - FauxTileMowedAstroGrass
       - FauxTileJungleAstroGrass
       - FauxTileAstroIce
-      - FauxTileAstroSnow
+      - FauxTileAstroSnow      
+  - type: EmagLatheRecipes
+    emagStaticRecipes:
+      - ButchCleaver  
   - type: MaterialStorage
     whitelist:
       tags:
