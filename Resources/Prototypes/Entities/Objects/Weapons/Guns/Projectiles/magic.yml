@@ -90,7 +90,7 @@
     resistTime: 30
   - type: StoreOnCollide
     lockOnCollide: true
-    onProjectileHitOnly: true
+    disableWhenFirstOpened: true
     whitelist:
       components:
         - Body

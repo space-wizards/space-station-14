@@ -1,7 +1,9 @@
 ﻿using Content.Shared.Lock;
 using Content.Shared.Storage.Components;
 using Content.Shared.Whitelist;
+using Robust.Shared.Network;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Storage.EntitySystems;
 
@@ -10,11 +12,14 @@ internal sealed class StoreOnCollideSystem : EntitySystem
     [Dependency] private readonly SharedEntityStorageSystem _storage = default!;
     [Dependency] private readonly LockSystem _lock = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private readonly INetManager _netMan = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<StoreOnCollideComponent, StartCollideEvent>(OnCollide);
+        SubscribeLocalEvent<StoreOnCollideComponent, StorageAfterOpenEvent>(AfterOpen);
         // TODO: Add support to stop colliding after throw, wands will need a WandComp
     }
 
@@ -24,12 +29,23 @@ internal sealed class StoreOnCollideSystem : EntitySystem
         TryStoreTarget(ent, args.OtherEntity);
     }
 
+    private void AfterOpen(Entity<StoreOnCollideComponent> ent, ref StorageAfterOpenEvent args)
+    {
+        var comp = ent.Comp;
+
+        if (comp is { DisableWhenFirstOpened: true, Disabled: false })
+            comp.Disabled = true;
+    }
+
     private void TryStoreTarget(Entity<StoreOnCollideComponent> ent, EntityUid target)
     {
         var storageEnt = ent.Owner;
         var comp = ent.Comp;
 
-        if (storageEnt == target || Transform(target).Anchored || _storage.IsOpen(storageEnt) || HasComp<StoreOnCollideComponent>(target) || _whitelist.IsWhitelistFail(comp.Whitelist, target))
+        if (_netMan.IsClient || _gameTiming.ApplyingState)
+            return;
+
+        if (ent.Comp.Disabled || storageEnt == target || Transform(target).Anchored || _storage.IsOpen(storageEnt) || _whitelist.IsWhitelistFail(comp.Whitelist, target))
             return;
 
         _storage.Insert(target, storageEnt);
