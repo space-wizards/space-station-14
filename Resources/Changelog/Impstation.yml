@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: AirFryerBuyOneGetOneFree
-  changes:
-  - message: Add new toys to the Recruiter Shuttle
-    type: Add
-  id: 153
-  time: '2024-08-31T15:38:39.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/179
 - author: LucasTheDrgn
   changes:
   - message: QSI Fix 2 - Actually Fixing It
@@ -4447,3 +4440,21 @@
   id: 652
   time: '2024-12-04T13:29:01.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/896
+- author: Widgetbeck, TGRCDev
+  changes:
+  - message: Courtesy of @TGRCdev, the Blocking action will now deactivate when the
+      entity blocking is crit or stunned.
+    type: Fix
+  - message: Decapoid claws have reduced Piercing damage and increased Structural
+      damage.
+    type: Tweak
+  - message: Decapoid claws can now be used as a shield, blocking 20% of incoming
+      damage when active.
+    type: Tweak
+  - message: Decapoids now have greater friction while weightless and near structures.
+    type: Tweak
+  - message: Decapoid guidebook entry update.
+    type: Tweak
+  id: 653
+  time: '2024-12-04T15:27:02.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/895
