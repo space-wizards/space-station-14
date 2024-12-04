@@ -43,7 +43,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
         if (ev.Sprite.PostShader == null)
             return;
 
-        ev.Sprite.PostShader.SetParameter("t", (float)_timing.RealTime.TotalSeconds * component.ScrollRate);
+        ev.Sprite.PostShader.SetParameter("t", (float)_timing.CurTime.TotalSeconds * component.ScrollRate);
     }
 
     private void OnTypingChanged(TypingChangedEvent ev, EntitySessionEventArgs args)
@@ -155,11 +155,16 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
     private void UpdateHologramShader(EntityUid uid, SpriteComponent sprite, HolopadHologramComponent holopadHologram)
     {
+        // Find the texture height of the largest layer
+        var texHeight = sprite.AllLayers.Max(x => x.PixelSize.Y);
+
         var instance = _prototypeManager.Index<ShaderPrototype>(holopadHologram.ShaderName).InstanceUnique();
         instance.SetParameter("color1", new Vector3(holopadHologram.Color1.R, holopadHologram.Color1.G, holopadHologram.Color1.B));
         instance.SetParameter("color2", new Vector3(holopadHologram.Color2.R, holopadHologram.Color2.G, holopadHologram.Color2.B));
         instance.SetParameter("alpha", holopadHologram.Alpha);
         instance.SetParameter("intensity", holopadHologram.Intensity);
+        instance.SetParameter("texHeight", texHeight);
+        instance.SetParameter("t", (float)_timing.CurTime.TotalSeconds * holopadHologram.ScrollRate);
 
         sprite.PostShader = instance;
         sprite.RaiseShaderEvent = true;

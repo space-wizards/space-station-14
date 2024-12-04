@@ -1,11 +1,11 @@
 light_mode unshaded;
 
-uniform highp vec3 color1 = vec3(1.0,1.0,1.0);
-uniform highp vec3 color2 = vec3(1.0,1.0,1.0);
-uniform highp float alpha = 1.0; 
-uniform highp float intensity = 1.0;
-uniform highp int texHeight = 32;
-uniform highp float t = 0.0;
+uniform highp vec3 color1;
+uniform highp vec3 color2;
+uniform highp float alpha;
+uniform highp float intensity;
+uniform highp int texHeight;
+uniform highp float t;
 
 const highp float PI = 3.14159265;
 
