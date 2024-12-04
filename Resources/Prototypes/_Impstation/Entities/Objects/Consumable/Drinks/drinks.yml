@@ -401,3 +401,17 @@
   - type: Icon
     sprite: _Impstation/Objects/Consumable/Drinks/clevergirl.rsi
     state: icon
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkTeapotEmpty
+  name: teapot
+  suffix: Empty
+  description: An elegant teapot. It simply oozes class.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/teapot.rsi
