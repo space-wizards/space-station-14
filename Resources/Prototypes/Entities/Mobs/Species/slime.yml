@@ -55,7 +55,7 @@
     sounds:
       Male: MaleSlime
       Female: FemaleSlime
-      Unsexed: MaleSlime
+      Unsexed: UnisexSlime
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Slime
@@ -92,13 +92,13 @@
       effects:
       - !type:WashCreamPieReaction
     - reagents: [ Water ]
-      methods: [ Touch ]
+      methods: [ Touch, Injection ]
       effects:
       - !type:HealthChange
         scaleByQuantity: true
         damage:
           types:
-            Heat: 0.1
+            Caustic: 2 # the original value was 0.1. this makes it so that it takes 7 water pistol shots to crit a slime.
       - !type:PopupMessage
         type: Local
         visualType: Large

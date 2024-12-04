@@ -1,0 +1,16 @@
+- type: entity
+  parent: PumpkinLantern
+  id: PumpkinLanternReallyLarge
+  suffix: ReallyLarge
+  components:
+    - type: Sprite
+      scale: 4, 4
+    - type: GhostTakeoverAvailable
+    - type: GhostRole
+      allowMovement: false
+      allowSpeech: true
+      makeSentient: true
+      name: jack
+      description: this holiday is for YOU and everyone better act like it
+      raffle:
+        settings: default

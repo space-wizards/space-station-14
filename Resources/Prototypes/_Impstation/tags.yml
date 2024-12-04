@@ -24,6 +24,12 @@
   id: HolyArrow
 
 - type: Tag
+  id: MimeBeltBlack
+
+- type: Tag
+  id: MimeBeltRed
+
+- type: Tag
   id: NullRod
 
 - type: Tag
@@ -34,6 +40,9 @@
 
 - type: Tag
   id: SprayPainter
+
+- type: Tag
+  id: RubberStamp
 
 - type: Tag
   id: Vaporizer

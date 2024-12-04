@@ -204,7 +204,7 @@
     sounds:
       Male: MaleHuman
       Female: FemaleHuman
-      Unsexed: MaleHuman
+      Unsexed: UnisexHuman
   - type: Emoting
   - type: BodyEmotes
     soundsId: GeneralBodyEmotes

@@ -22,8 +22,8 @@
     proto: vox
   - type: Vocal
     sounds:
-      Male: UnisexVox
-      Female: UnisexVox
+      Male: MaleVox
+      Female: FemaleVox
       Unsexed: UnisexVox
   - type: Butcherable
     butcheringType: Spike

@@ -38,7 +38,7 @@
     sounds:
       Male: MaleReptilian
       Female: FemaleReptilian
-      Unsexed: MaleReptilian
+      Unsexed: UnisexReptilian
   - type: BodyEmotes
     soundsId: ReptilianBodyEmotes
   - type: Damageable

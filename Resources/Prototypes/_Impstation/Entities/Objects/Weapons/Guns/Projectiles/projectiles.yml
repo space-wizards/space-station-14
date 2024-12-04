@@ -133,3 +133,65 @@
     damage:
       types:
         Heat: 15
+        
+- type: entity
+  name: godly laser bolt
+  id: BulletLaserGold
+  parent: ImpstationBaseBullet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Reflective
+    reflective:
+    - Energy
+  - type: FlyBySound
+    sound:
+      collection: EnergyMiss
+      params:
+        volume: 5
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Projectiles/goldzipper.rsi
+    layers:
+    - state: goldlaser
+      shader: unshaded
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.15,-0.3,0.15,0.3"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
+      fly-by: *flybyfixture
+  - type: Ammo
+  - type: Projectile
+    impactEffect: GZipImpactEffect
+    damage:
+      types:
+        Blunt: 200
+        Piercing: 200
+        Heat: 200
+        Shock: 200
+        Radiation: 200
+    ignoreResistances: true
+    soundHit:
+      path: "/Audio/_Impstation/Weapons/Guns/Hits/gamemaker-explosion.ogg"
+    forceSound: true
+  - type: PointLight
+    radius: 1.2
+    energy: 1.34
+    castShadows: false
+    color: "#9b68ff"
+    
+- type: entity
+  name : ungodly laser bolt
+  id: BulletLaserFGold
+  parent: BulletLaserGold
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Heat: 1
