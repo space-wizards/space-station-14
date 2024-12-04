@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Exclusively Upstream stuff - Fixes AI Eye dying to singulo, Revs spawning
-      as solid, other stuff. Includes RobustToolbox update, RUN_THIS.py required.
-    type: Tweak
-  id: 156
-  time: '2024-08-31T15:39:37.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/182
 - author: TGRCdev
   changes:
   - message: Fixes some error drinks
@@ -4461,3 +4453,10 @@
   id: 655
   time: '2024-12-04T18:51:43.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/903
+- author: hivehum
+  changes:
+  - message: The medsec hud now takes sunglasses to craft, instead of security glasses.
+    type: Tweak
+  id: 656
+  time: '2024-12-04T20:39:27.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/904
