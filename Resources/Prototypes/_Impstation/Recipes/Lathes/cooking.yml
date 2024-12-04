@@ -1,0 +1,103 @@
+- type: latheRecipe
+  id: DrinkWaterBottleEmpty
+  result: DrinkWaterBottleEmpty
+  completetime: 1
+  materials:
+    Plastic: 200
+
+- type: latheRecipe
+  id: DrinkTeapotEmpty
+  result: DrinkTeapotEmpty
+  completetime: 2
+  materials:
+    Steel: 200
+
+- type: latheRecipe
+  parent: DrinkMug
+  id: DrinkTeacupEmpty
+  result: DrinkTeacupEmpty
+  completetime: 0.4
+
+- type: latheRecipe
+  id: Pitcher
+  result: Pitcher
+  completetime: 2
+  materials:
+    Steel: 150
+
+- type: latheRecipe
+  id: DrinkShaker
+  result: DrinkShaker
+  completetime: 2
+  materials:
+    Steel: 200
+    
+- type: latheRecipe
+  id: DrinkJigger
+  result: DrinkJigger
+  completetime: 1
+  materials:
+    Steel: 100
+
+- type: latheRecipe
+  id: DrinkFlaskBar
+  result: DrinkFlaskBar
+  completetime: .4
+  materials:
+    Steel: 100
+
+- type: latheRecipe
+  id: DrinkVacuumFlask
+  result: DrinkVacuumFlask
+  completetime: .4
+  materials:
+    Steel: 100
+
+- type: latheRecipe
+  id: BarSpoon
+  result: BarSpoon
+  completetime: .4
+  materials:
+    Steel: 50
+
+- type: latheRecipe
+  id: Fork
+  result: Fork
+  completetime: .4
+  materials:
+    Steel: 50
+
+- type: latheRecipe
+  id: Spoon
+  result: Spoon
+  completetime: .4
+  materials:
+    Steel: 50
+
+- type: latheRecipe
+  id: ForkPlastic
+  result: ForkPlastic
+  completetime: .4
+  materials:
+    Plastic: 50
+
+- type: latheRecipe
+  id: SpoonPlastic
+  result: SpoonPlastic
+  completetime: .4
+  materials:
+    Plastic: 50
+    
+- type: latheRecipe
+  id: PairedChopsticks
+  result: PairedChopsticks
+  completetime: .4
+  materials:
+    Wood: 50
+
+- type: latheRecipe
+  parent: BaseToolRecipe
+  id: RollingPin
+  result: RollingPin
+  materials:
+    Wood: 400

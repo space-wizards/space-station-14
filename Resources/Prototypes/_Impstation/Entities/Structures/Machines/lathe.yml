@@ -51,15 +51,27 @@
       - HydroponicsToolHatchet
       - HydroponicsToolSpade
       - HydroponicsToolClippers
-      #service
-      - ButchCleaver
-      - KitchenKnife
+      - Shovel
+      - PlantBag #imp recipe
+      #drinks
       - DrinkMug
       - DrinkMugMetal
       - DrinkGlass
       - DrinkShotGlass
       - DrinkGlassCoupeShaped
       - CustomDrinkJug
+      - DrinkShaker #imp recipe
+      - DrinkJigger #imp recipe
+      - DrinkFlaskBar #imp recipe
+      - DrinkVacuumFlask #imp recipe
+      - DrinkTeapotEmpty # imp recipe
+      - DrinkTeacupEmpty #imp recipe
+      - DrinkWaterBottleEmpty #imp recipe
+      - Pitcher #imp recipe
+      - BarSpoon #imp recipe
+      #food
+      - ButchCleaver
+      - KitchenKnife
       - FoodPlate
       - FoodPlateSmall
       - FoodPlatePlastic
@@ -68,12 +80,18 @@
       - FoodPlateTin
       - FoodPlateMuffinTin
       - FoodKebabSkewer
+      - RollingPin #imp recipe
+      - Fork #imp recipe
+      - Spoon #imp recipe
+      - ForkPlastic #imp recipe
+      - SpoonPlastic #imp recipe
+      - PairedChopsticks #imp recipe
+      #service
       - Beaker
       - LargeBeaker
       - Dropper
       - Syringe
       - DeskBell
-      #misc
       - ClothingHeadHatCone
       - SprayPainter
       - HandLabeler
