@@ -777,4 +777,11 @@ Entries:
   id: 110
   time: '2024-12-04T07:36:40.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/113
+- author: Miracula
+  changes:
+  - message: Vulpkanins now have survival box.
+    type: Fix
+  id: 111
+  time: '2024-12-04T16:00:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/117
 
