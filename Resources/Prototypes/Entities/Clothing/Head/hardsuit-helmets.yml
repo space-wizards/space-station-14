@@ -9,7 +9,7 @@
 - type: entity
   parent: ClothingHeadHardsuitBase
   id: ClothingHeadHelmetHardsuitBasic
-  name: basic pressure suit helmet
+  name: basic pressure suit
   description: A basic-looking pressure suit helmet that provides minor protection against the nightmares of the sea.
   components:
   - type: Sprite
@@ -518,7 +518,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
-  - type: StaticViewer
 
 #Pirate Captain Hardsuit
 - type: entity
