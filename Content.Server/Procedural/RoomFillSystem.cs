@@ -7,9 +7,6 @@ public sealed class RoomFillSystem : EntitySystem
     [Dependency] private readonly DungeonSystem _dungeon = default!;
     [Dependency] private readonly SharedMapSystem _maps = default!;
 
-    private HashSet<string> _spawnedRoomTypes = new();
-    private HashSet<string> _attemptedRoomTypes = new(); 
-
     public override void Initialize()
     {
         base.Initialize();
@@ -18,7 +15,7 @@ public sealed class RoomFillSystem : EntitySystem
 
     private void OnRoomFillMapInit(EntityUid uid, RoomFillComponent component, MapInitEvent args)
     {
-        // Early exit if the room size is invalid (e.g., zero or invalid dimensions)
+        // Just test things.
         if (component.Size == Vector2i.Zero)
             return;
 
@@ -27,68 +24,28 @@ public sealed class RoomFillSystem : EntitySystem
         if (xform.GridUid != null)
         {
             var random = new Random();
+            var room = _dungeon.GetRoomPrototype(component.Size, random, component.RoomWhitelist);
 
-            // Try to find a valid room up to 3 times
-            int attempts = 0;
-            RoomPrototype? room = null;
-
-            while (attempts < 3)
+            if (room != null)
             {
-                room = TryGetUniqueRoom(component.Size, component.RoomWhitelist, random);
-
-                if (room != null && !_spawnedRoomTypes.Contains(room.Type))
-                {
-                    break; // Found a valid room that hasn't been spawned
-                }
-
-                attempts++;
+                var mapGrid = Comp<MapGridComponent>(xform.GridUid.Value);
+                _dungeon.SpawnRoom(
+                    xform.GridUid.Value,
+                    mapGrid,
+                    _maps.LocalToTile(xform.GridUid.Value, mapGrid, xform.Coordinates),
+                    room,
+                    random,
+                    null,
+                    clearExisting: component.ClearExisting,
+                    rotation: component.Rotation);
             }
-
-            if (room == null || _spawnedRoomTypes.Contains(room.Type))
+            else
             {
-                // If no valid room is found after 3 attempts, delete the marker
-                QueueDel(uid);
-                return;
+                Log.Error($"Unable to find matching room prototype for {ToPrettyString(uid)}");
             }
-
-            var mapGrid = Comp<MapGridComponent>(xform.GridUid.Value);
-            _dungeon.SpawnRoom(
-                xform.GridUid.Value,
-                mapGrid,
-                _maps.LocalToTile(xform.GridUid.Value, mapGrid, xform.Coordinates),
-                room,
-                random,
-                clearExisting: component.ClearExisting,
-                rotation: component.Rotation);
-
-            _spawnedRoomTypes.Add(room.Type);
-            _attemptedRoomTypes.Clear(); // Clear attempted room types after a successful spawn
         }
 
+        // Final cleanup
         QueueDel(uid);
-    }
-
-    private RoomPrototype? TryGetUniqueRoom(Vector2i size, List<string> roomWhitelist, Random random)
-    {
-        // Shuffle the whitelist to try different room types
-        var shuffledWhitelist = new List<string>(roomWhitelist);
-        shuffledWhitelist.Shuffle(random);
-
-        foreach (var roomType in shuffledWhitelist)
-        {
-            if (!_attemptedRoomTypes.Contains(roomType)) // Only try rooms that haven't been attempted yet
-            {
-                var room = _dungeon.GetRoomPrototype(size, random, roomType);
-
-                if (room != null && !_spawnedRoomTypes.Contains(room.Type))
-                {
-                    // Mark this room type as attempted to avoid retrying the same one
-                    _attemptedRoomTypes.Add(room.Type);
-                    return room;
-                }
-            }
-        }
-
-        return null; // Return null if no valid room is found
     }
 }

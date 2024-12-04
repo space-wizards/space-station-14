@@ -197,6 +197,13 @@ entities:
     - type: Transform
       pos: 2.5,3.5
       parent: 1
+- proto: AtmosDeviceFanTiny
+  entities:
+  - uid: 127
+    components:
+    - type: Transform
+      pos: 2.5,-4.5
+      parent: 1
 - proto: CableApcExtension
   entities:
   - uid: 57
@@ -690,17 +697,13 @@ entities:
     - type: Transform
       pos: 3.5,0.5
       parent: 1
-- proto: SpaceHeaterAnchored
+- proto: SpaceHeaterEnabled
   entities:
   - uid: 82
     components:
     - type: Transform
-      pos: 2.5,0.5
+      pos: 3.5,-0.5
       parent: 1
-    - type: ApcPowerReceiver
-      powerDisabled: False
-    - type: GasThermoMachine
-      targetTemperature: 303.15
 - proto: SubstationWallBasic
   entities:
   - uid: 48
