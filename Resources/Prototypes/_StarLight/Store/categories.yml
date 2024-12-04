@@ -21,3 +21,7 @@
 - type: storeCategory
   id: SLEnginery
   name: store-category-medical-enginery
+
+- type: storeCategory
+  id: SLClown
+  name: store-category-medical-enginery

@@ -2,3 +2,14 @@
   id: HohohonkersInventory
   startingInventory:
     PrototypeJawsOfLife: 1
+    
+- type: listing
+  id: VendorFakeGrenade
+  productEntity: FakeGrenade
+  cost:
+    NTCredit: 86
+  categories:
+  - SLClown
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2

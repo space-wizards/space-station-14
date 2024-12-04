@@ -1,0 +1,103 @@
+- type: entity
+  name: fragmentation grenade
+  description: "Makes a fake boom! The label reads: With love from HonkHonkers!"
+  suffix: Fake
+  id: FakeGrenade
+  parent: GrenadeBase
+  components:
+  - type: OnUseTimerTrigger
+    delay: 3
+    beepInterval: 0.46
+    beepSound:
+      path: /Audio/Effects/Grenades/Supermatter/smbeep.ogg
+      params:
+        volume: -5
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/Grenades/Supermatter/smbeep.ogg
+      params:
+        volume: -5
+    beepInterval: 2
+  - type: TwoStageTrigger
+    triggerDelay: 3
+    components:
+      - type: AmbientSound
+        enabled: true
+        volume: 0
+        range: 14
+        sound:
+          path: /Audio/Effects/Diseases/beepboop.ogg
+      - type: TimedDespawn
+        lifetime: 15
+        
+- type: entity
+  name: holo-parasite injector
+  description: The most intricate piece of art, based on... Oh, wait. It's a fake. The HonkHonkers store logo can be seen on the side.
+  id: HoloparasiteFakeInjector
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/hypospray.rsi
+    state: combat_hypo
+  - type: SolutionContainerManager
+    solutions:
+      hypospray:
+        maxVol: 10
+        reagents:
+        - ReagentId: Ipecac
+          Quantity: 10
+  - type: Hypospray
+    solutionName: hypospray
+    transferAmount: 10
+    onlyAffectsMobs: false
+    injectOnly: true
+  - type: UseDelay
+    delay: 0.5
+    
+
+- type: entity
+  name: toy dual-bladed sword
+  description: The new dual plastic sword from Sandy-Cat! Twice the epicness and twice the loud sounds!
+  id: ToySwordDoubled
+  parent: ToySword
+  components:
+  - type: Wieldable
+    wieldTime: 0
+  - type: EnergySword
+    isSharp: false
+    colorOptions:
+      - DodgerBlue
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/e_sword_double.rsi
+    layers:
+      - state: e_sword_double
+      - state: e_sword_double_blade
+        color: "#FFFFFF"
+        visible: false
+        shader: unshaded
+        map: [ "blade" ]
+  - type: Item
+    size: Small
+    sprite: Objects/Weapons/Melee/e_sword_double-inhands.rsi
+  - type: UseDelay
+    delay: 1.0
+  - type: PointLight
+    enabled: false
+    radius: 2
+    energy: 2
+    color: white
+    netsync: false
+  - type: Appearance
+  - type: ToggleableLightVisuals
+    spriteLayer: blade
+    inhandVisuals:
+      left:
+        - state: inhand-left-blade
+          shader: unshaded
+      right:
+        - state: inhand-right-blade
+          shader: unshaded
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 0
