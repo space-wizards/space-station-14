@@ -2490,6 +2490,7 @@ entities:
     - type: RadiationGridResistance
     - type: BecomesStation
       id: Trieste
+    - type: Trieste
     - type: Parallax
       parallax: Sky
     - type: MapAtmosphere
@@ -2518,7 +2519,6 @@ entities:
         path: /Audio/Effects/alert.ogg
       inherent: True
       enabled: True
-    - type: Trieste
     - type: NavMap
 - proto: AcousticGuitarInstrument
   entities:
