@@ -23,6 +23,6 @@
     
 - type: latheRecipe
   parent: BaseCircuitboardRecipe
-  id: JanitorialTechFabCircuitboard
-  result: JanitorialTechFabCircuitboard
+  id: ServiceTechFabCircuitboard
+  result: ServiceTechFabCircuitboard
 
