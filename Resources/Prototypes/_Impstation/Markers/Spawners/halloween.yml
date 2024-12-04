@@ -1,5 +1,5 @@
 - type: entity
-  name: slurva spawner
+  name: Slurva Spawner
   id: SpawnMobSlurva
   parent: MarkerBase
   components:
@@ -12,7 +12,7 @@
       - MobArgocyteSlurva
 
 - type: entity
-  name: barrier spawner
+  name: Barrier Spawner
   id: SpawnMobBarrier
   parent: MarkerBase
   components:
@@ -25,7 +25,7 @@
       - MobArgocyteBarrier
 
 - type: entity
-  name: skitter spawner
+  name: Skitter Spawner
   id: SpawnMobSkitter
   parent: MarkerBase
   components:
@@ -38,7 +38,7 @@
       - MobArgocyteSkitter
 
 - type: entity
-  name: swiper spawner
+  name: Swiper Spawner
   id: SpawnMobSwiper
   parent: MarkerBase
   components:
@@ -51,7 +51,7 @@
       - MobArgocyteSwiper
 
 - type: entity
-  name: molder spawner
+  name: Molder Spawner
   id: SpawnMobMolder
   parent: MarkerBase
   components:
@@ -64,7 +64,7 @@
       - MobArgocyteMolder
 
 - type: entity
-  name: pouncer spawner
+  name: Pouncer Spawner
   id: SpawnMobPouncer
   parent: MarkerBase
   components:
@@ -77,7 +77,7 @@
       - MobArgocytePouncer
 
 - type: entity
-  name: glider spawner
+  name: Glider Spawner
   id: SpawnMobGlider
   parent: MarkerBase
   components:
@@ -90,7 +90,7 @@
       - MobArgocyteGlider
 
 - type: entity
-  name: harvester spawner
+  name: Harvester Spawner
   id: SpawnMobHarvester
   parent: MarkerBase
   components:
@@ -103,7 +103,7 @@
       - MobArgocyteHarvester
 
 - type: entity
-  name: crawler spawner
+  name: Crawler Spawner
   id: SpawnMobCrawler
   parent: MarkerBase
   components:
@@ -116,7 +116,7 @@
       - MobArgocyteCrawler
 
 - type: entity
-  name: enforcer spawner
+  name: Enforcer Spawner
   id: SpawnMobEnforcer
   parent: MarkerBase
   components:
@@ -129,7 +129,7 @@
       - MobArgocyteEnforcer
 
 - type: entity
-  name: founder spawner
+  name: Founder Spawner
   id: SpawnMobFounder
   parent: MarkerBase
   components:
@@ -142,7 +142,7 @@
       - MobArgocyteFounder
 
 - type: entity
-  name: leviathing spawner
+  name: Leviathing Spawner
   id: SpawnMobLeviathing
   parent: MarkerBase
   components:
@@ -155,7 +155,7 @@
       - MobArgocyteLeviathing
 
 - type: entity
-  name: hivelord spawner
+  name: Hivelord Spawner
   id: SpawnMobHiverlord
   parent: MarkerBase
   components:
@@ -168,7 +168,7 @@
       - MobHivelord
 
 - type: entity
-  name: nice carp spawner
+  name: Nice Carp Spawner
   id: SpawnMobNiceCarp
   parent: MarkerBase
   components:
@@ -181,7 +181,7 @@
       - NiceMobCarp
 
 - type: entity
-  name: lava watcher spawner
+  name: Lava Watcher Spawner
   id: SpawnMobLavaWatcher
   parent: MarkerBase
   components:
@@ -194,7 +194,7 @@
       - MobWatcherLavaland
 
 - type: entity
-  name: icewing watcher spawner
+  name: Icewing Watcher Spawner
   id: SpawnMobIcewingWatcher
   parent: MarkerBase
   components:
@@ -207,7 +207,7 @@
       - MobWatcherIcewing
 
 - type: entity
-  name: magmawing watcher spawner
+  name: Magmawing Watcher Spawner
   id: SpawnMobMagmawingWatcher
   parent: MarkerBase
   components:
@@ -220,7 +220,7 @@
       - MobWatcherMagmawing
 
 - type: entity
-  name: mimic spawner
+  name: Mimic Spawner
   id: SpawnMobMimic
   parent: MarkerBase
   components:
@@ -233,7 +233,7 @@
       - MobMimic
 
 - type: entity
-  name: shadow cat spawner
+  name: Shadow Cat Spawner
   id: SpawnMobShadowCat
   parent: MarkerBase
   components:
@@ -246,7 +246,7 @@
       - MobCatShadow
 
 - type: entity
-  name: tick spawner
+  name: Tick Spawner
   id: SpawnMobTick
   parent: MarkerBase
   components:
@@ -259,7 +259,7 @@
       - MobTickSalvage
 
 - type: entity
-  name: queen spawner
+  name: Queen Spawner
   id: SpawnMobQueen
   parent: MarkerBase
   components:
@@ -272,7 +272,7 @@
       - MobXenoQueen
 
 - type: entity
-  name: rouny spawner
+  name: Rouny Spawner
   id: SpawnMobRouny
   parent: MarkerBase
   components:
@@ -285,7 +285,7 @@
       - MobXenoRouny
 
 - type: entity
-  name: special guy spawner
+  name: Special Guy Spawner
   id: SpawnMobSpecialGuy
   parent: MarkerBase
   components:

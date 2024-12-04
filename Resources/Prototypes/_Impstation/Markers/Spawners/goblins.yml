@@ -1,5 +1,5 @@
 - type: entity
-  name: goblin stowaways (x3) spawner
+  name: Goblin Stowaways (x3) Spawner
   id: GoblinStowawaysVentSpawner
   parent: MarkerBase
   components:
