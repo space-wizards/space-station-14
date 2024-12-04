@@ -770,4 +770,11 @@ Entries:
   id: 109
   time: '2024-12-03T13:22:19.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/92
+- author: Miracula
+  changes:
+  - message: Fix mentor system not allowing mentors to use it properly
+    type: Fix
+  id: 110
+  time: '2024-12-04T07:36:40.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/113
 
