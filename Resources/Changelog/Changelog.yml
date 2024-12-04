@@ -1,21 +1,4 @@
 ﻿Entries:
-- author: Lank
-  changes:
-  - message: Removed the shock collar and associated thief objective.
-    type: Remove
-  id: 7175
-  time: '2024-08-21T17:56:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31229
-- author: EmoGarbage404
-  changes:
-  - message: Increased the view range on the handheld mass scanner and decreased the
-      power draw.
-    type: Tweak
-  - message: Handheld radars no longer spin with the player while moving.
-    type: Fix
-  id: 7176
-  time: '2024-08-21T18:33:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31284
 - author: Beck Thompson
   changes:
   - message: Nuclear authentication code folder that spawns the nuclear authentication
@@ -3910,3 +3893,17 @@
   id: 7674
   time: '2024-12-03T02:59:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33637
+- author: notafet
+  changes:
+  - message: Fix sinks and toilets not draining.
+    type: Fix
+  id: 7675
+  time: '2024-12-04T02:42:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33691
+- author: PJB3005
+  changes:
+  - message: Fixed broken layout on some wire hacking UIs.
+    type: Fix
+  id: 7676
+  time: '2024-12-04T10:13:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33714
