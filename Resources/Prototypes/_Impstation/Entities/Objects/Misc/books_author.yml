@@ -58,7 +58,7 @@
 - type: entity
   parent: BookBase
   id: BookGatsby
-  name: the great gatsby by F. Scott Fitzgerald
+  name: The Great Gatsby by F. Scott Fitzgerald
   description: The book is worn and tattered, with a barcode visible embedded physically within the cover. It smells like high school.
   components:
   - type: Sprite

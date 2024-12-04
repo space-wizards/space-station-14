@@ -8,4 +8,4 @@ ghost-bar-rules =
 
     You may talk about all current round events without the need for LOOC, and you remember everything from your previous life.
 
-    DO NOT attack others, start fights, or attempt to break the station. If you see anyone doing this, please ahelp and they will be promptly thrown into space. Also, if you decide to leave the bar, you DO NOT remember anything from being here, or your life before it.
+    DO NOT attack others, start fights, or attempt to break the station. If you see anyone doing this, please AHelp and they will be promptly thrown into space. Also, if you decide to leave the bar, you DO NOT remember anything from being here, or your life before it.
