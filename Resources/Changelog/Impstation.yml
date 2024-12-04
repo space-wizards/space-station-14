@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: beenade nerf
-    type: Tweak
-  id: 144
-  time: '2024-08-29T19:45:29.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/170
 - author: ultramario1998
   changes:
   - message: bros tweaks
@@ -4434,3 +4427,11 @@
   id: 643
   time: '2024-12-03T16:53:01.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/847
+- author: suyo
+  changes:
+  - message: Added a spare expedition console board to the QM's locker. If they both
+      get stolen then... good luck!
+    type: Add
+  id: 644
+  time: '2024-12-04T02:59:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/890
