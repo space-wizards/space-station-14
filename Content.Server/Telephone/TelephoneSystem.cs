@@ -84,8 +84,10 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
             return;
 
         // Simple check to make sure that we haven't sent this message already this frame
-        if (_recentChatMessages.Add((args.Source, args.Message, entity)))
-            SendTelephoneMessage(args.Source, args.Message, entity);
+        if (!_recentChatMessages.Add((args.Source, args.Message, entity)))
+            return;
+
+        SendTelephoneMessage(args.Source, args.Message, entity);
     }
 
     private void OnTelephoneMessageReceived(Entity<TelephoneComponent> entity, ref TelephoneMessageReceivedEvent args)
@@ -123,21 +125,28 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
             {
                 // Try to play ring tone if ringing
                 case TelephoneState.Ringing:
-                    if (_timing.RealTime > telephone.StateStartTime + TimeSpan.FromSeconds(telephone.RingingTimeout))
+                    if (_timing.CurTime > telephone.StateStartTime + TimeSpan.FromSeconds(telephone.RingingTimeout))
                         EndTelephoneCalls(entity);
 
                     else if (telephone.RingTone != null &&
-                        _timing.RealTime > telephone.NextRingToneTime)
+                        _timing.CurTime > telephone.NextRingToneTime)
                     {
                         _audio.PlayPvs(telephone.RingTone, uid);
-                        telephone.NextRingToneTime = _timing.RealTime + TimeSpan.FromSeconds(telephone.RingInterval);
+                        telephone.NextRingToneTime = _timing.CurTime + TimeSpan.FromSeconds(telephone.RingInterval);
                     }
+
+                    break;
+
+                // Try to hang up if their has been no recent in-call activity 
+                case TelephoneState.InCall:
+                    if (_timing.CurTime > telephone.StateStartTime + TimeSpan.FromSeconds(telephone.IdlingTimeout))
+                        EndTelephoneCalls(entity);
 
                     break;
 
                 // Try to terminate if the telephone has finished hanging up
                 case TelephoneState.EndingCall:
-                    if (_timing.RealTime > telephone.StateStartTime + TimeSpan.FromSeconds(telephone.HangingUpTimeout))
+                    if (_timing.CurTime > telephone.StateStartTime + TimeSpan.FromSeconds(telephone.HangingUpTimeout))
                         TerminateTelephoneCalls(entity);
 
                     break;
@@ -322,6 +331,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
         var evSentMessage = new TelephoneMessageSentEvent(message, chatMsg, messageSource);
         RaiseLocalEvent(source, ref evSentMessage);
+        source.Comp.StateStartTime = _timing.CurTime;
 
         var evReceivedMessage = new TelephoneMessageReceivedEvent(message, chatMsg, messageSource, source);
 
@@ -331,6 +341,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
                 continue;
 
             RaiseLocalEvent(receiver, ref evReceivedMessage);
+            receiver.Comp.StateStartTime = _timing.CurTime;
         }
 
         if (name != Name(messageSource))
@@ -346,7 +357,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         var oldState = entity.Comp.CurrentState;
 
         entity.Comp.CurrentState = newState;
-        entity.Comp.StateStartTime = _timing.RealTime;
+        entity.Comp.StateStartTime = _timing.CurTime;
         Dirty(entity);
 
         _appearanceSystem.SetData(entity, TelephoneVisuals.Key, entity.Comp.CurrentState);
