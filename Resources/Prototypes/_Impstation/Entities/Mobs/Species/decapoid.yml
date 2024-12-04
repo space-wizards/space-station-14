@@ -113,6 +113,8 @@
       Acidic:  [ Touch ]
   - type: Vocal
     sounds:
+      Male: UnisexDecapoid
+      Female: UnisexDecapoid
       Unsexed: UnisexDecapoid
   - type: MovementSpeedModifier
     baseSprintSpeed: 3.5
