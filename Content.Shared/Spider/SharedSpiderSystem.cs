@@ -4,6 +4,9 @@ using Robust.Shared.Random;
 
 namespace Content.Shared.Spider;
 
+/// <summary>
+/// Gives entities (probably spiders) an action on init.  Spawning handled by <see cref="ServerSpiderSystem"/>..
+/// </summary>
 public abstract class SharedSpiderSystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _action = default!;

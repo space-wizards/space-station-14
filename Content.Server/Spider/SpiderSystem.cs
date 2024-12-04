@@ -9,6 +9,9 @@ using Robust.Shared.Map.Components;
 
 namespace Content.Server.Spider;
 
+/// <summary>
+/// Spawns entities (probably webs) around the component owner. Action handled by <see cref="SharedSpiderSystem"/>.
+/// </summary>
 public sealed class SpiderSystem : SharedSpiderSystem
 {
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
@@ -33,7 +36,7 @@ public sealed class SpiderSystem : SharedSpiderSystem
 
         if (grid == null || !TryComp<MapGridComponent>(grid, out var gridComp))
         {
-            _popup.PopupEntity(Loc.GetString("spider-web-action-nogrid"), args.Performer, args.Performer);
+            _popup.PopupEntity(Loc.GetString(component._offGrid), args.Performer, args.Performer);
             return;
         }
 
@@ -46,9 +49,10 @@ public sealed class SpiderSystem : SharedSpiderSystem
         foreach (var vect in vects)
             spawnPos.Add(coords.Offset(vect));
 
+        // Spawn webs here
         bool success = false;
         foreach (var pos in spawnPos)
-            if (IsValidTile(pos, component.BlockedByBlacklist, grid.Value, gridComp))
+            if (IsValidTile(pos, component.DestinationWhitelist, component.DestinationBlacklist, grid.Value, gridComp))
             {
                 Spawn(component.WebPrototype, pos);
                 success = true;
@@ -56,16 +60,26 @@ public sealed class SpiderSystem : SharedSpiderSystem
 
         if (success)
         {
-            _popup.PopupEntity(Loc.GetString("spider-web-action-success"), args.Performer, args.Performer);
+            _popup.PopupEntity(Loc.GetString(component._success), args.Performer, args.Performer);
             args.Handled = true;
         }
         else
-            _popup.PopupEntity(Loc.GetString("spider-web-action-fail"), args.Performer, args.Performer);
+            _popup.PopupEntity(Loc.GetString(component._fail), args.Performer, args.Performer);
     }
 
-    private bool IsValidTile(EntityCoordinates coords, EntityWhitelist? blacklist, EntityUid grid, MapGridComponent gridComp)
+    private bool IsValidTile(EntityCoordinates coords, EntityWhitelist? whitelist, EntityWhitelist? blacklist, EntityUid grid, MapGridComponent gridComp)
     {
-        // Don't place webs on top of webs
+        // Only place webs on webs
+        if (whitelist != null)
+        {
+            foreach (var entity in _lookup.GetEntitiesIntersecting(coords, LookupFlags.Uncontained))
+                if (_whitelistSystem.IsWhitelistPass(whitelist, entity))
+                    return true;
+            
+            return false;
+        }
+
+        // Don't place webs on webs
         if (blacklist != null)
             foreach (var entity in _lookup.GetEntitiesIntersecting(coords, LookupFlags.Uncontained))
                 if (_whitelistSystem.IsBlacklistPass(blacklist, entity))

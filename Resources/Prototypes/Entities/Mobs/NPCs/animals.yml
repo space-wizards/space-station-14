@@ -2367,7 +2367,7 @@
   - type: NoSlip
   - type: Spider
     webPrototype: SpiderWeb
-    blockedByBlacklist:
+    destinationBlacklist:
       components:
       - SpiderWebObject
   - type: IgnoreSpiderWeb
@@ -2459,7 +2459,7 @@
         180: Dead
     - type: Spider
       webPrototype: SpiderWebClown
-      blockedByBlacklist:
+      destinationBlacklist:
         components:
         - SpiderWebObject
     - type: MeleeWeapon
