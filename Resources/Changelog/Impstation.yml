@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Ling Tweaks
-    type: Tweak
-  id: 147
-  time: '2024-08-30T03:07:53.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/173
-- author: sususuyo
-  changes:
-  - message: wave 3 music tracks
-    type: Add
-  id: 148
-  time: '2024-08-30T14:10:18.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/174
 - author: Darkmajia
   changes:
   - message: brosnade items and traitor uplink
@@ -4435,3 +4421,18 @@
   id: 646
   time: '2024-12-04T13:17:45.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/891
+- author: Darkmajia
+  changes:
+  - message: Impstation changelogs now let you know when they've been updated - just
+      like this one!
+    type: Add
+  id: 647
+  time: '2024-12-04T13:19:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/897
+- author: Darkmajia
+  changes:
+  - message: Space wind has been disabled.
+    type: Remove
+  id: 648
+  time: '2024-12-04T13:20:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/899
