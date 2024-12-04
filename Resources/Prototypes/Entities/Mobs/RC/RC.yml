@@ -187,3 +187,4 @@
         type: StorageBoundUserInterface
   - type: UseDelay
     delay: 0.5
+  - type: SpittableContainer
