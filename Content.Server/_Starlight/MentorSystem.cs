@@ -135,7 +135,7 @@ public sealed partial class MentorSystem : SharedMentorSystem
             Text = text,
             PlaySound = true
         };
-
+        _sawmill.Info($"mhelp message: {text}");
         if (ticket.Mentor is null && (senderIsMentor || senderIsAdmin))
         {
             ticket.Mentor = senderSession.UserId;
