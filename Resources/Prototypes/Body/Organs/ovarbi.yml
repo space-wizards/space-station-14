@@ -1,0 +1,38 @@
+﻿- type: entity
+  id: OrganOvarbiHeart
+  parent: OrganHumanHeart
+  name: ovarbi heart
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [Dwarf]
+
+- type: entity
+  id: OrganOvarbiLiver
+  parent: OrganHumanLiver
+  name: ovarbi liver
+  components:
+  - type: Metabolizer
+    metabolizerTypes: [Dwarf]
+
+- type: entity
+  id: OrganOvarbiStomach
+  parent: OrganHumanStomach
+  name: ovarbi stomach
+  components:
+  - type: Sprite
+    state: stomach
+  - type: Organ
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 75
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: Stomach
+  - type: Metabolizer
+    # mm very yummy
+    maxReagents: 5
+    metabolizerTypes: [Dwarf]

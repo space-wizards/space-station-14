@@ -1,0 +1,9 @@
+- type: species
+  id: Fuscian
+  name: species-name-fuscian
+  roundStart: true
+  prototype: MobFuscian
+  sprites: MobHumanSprites
+  markingLimits: MobHumanMarkingLimits
+  dollPrototype: MobFuscianDummy
+  skinColoration: HumanToned
