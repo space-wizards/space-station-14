@@ -2366,6 +2366,10 @@
       path: /Audio/Animals/snake_hiss.ogg
   - type: NoSlip
   - type: Spider
+    webPrototype: SpiderWeb
+    blockedByBlacklist:
+      components:
+      - SpiderWebObject
   - type: IgnoreSpiderWeb
   - type: Bloodstream
     bloodMaxVolume: 150
@@ -2455,6 +2459,9 @@
         180: Dead
     - type: Spider
       webPrototype: SpiderWebClown
+      blockedByBlacklist:
+        components:
+        - SpiderWebObject
     - type: MeleeWeapon
       altDisarm: false
       angle: 0

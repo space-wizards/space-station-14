@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -9,20 +10,37 @@ namespace Content.Shared.Spider;
 [Access(typeof(SharedSpiderSystem))]
 public sealed partial class SpiderComponent : Component
 {
+    /// <summary>
+    /// Id of the entity getting spawned.
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("webPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string WebPrototype = "SpiderWeb";
+    [DataField(required: true,
+               customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string WebPrototype;
 
+    /// <summary>
+    /// List of entities that prevent spawning.
+    /// </summary>
+    [DataField]
+    public EntityWhitelist? BlockedByBlacklist;
+
+    /// <summary>
+    /// Id of the action that will be given.
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("webAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string WebAction = "ActionSpiderWeb";
+    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string SpawnWebAction = "ActionSpiderWeb";
 
-    [DataField] public EntityUid? Action;
+    /// <summary>
+    /// Action given to the player.
+    /// </summary>
+    [ViewVariables]
+    public EntityUid? ActionEntity;
 }
 
 public sealed partial class SpiderWebActionEvent : InstantActionEvent
 {
-        /// <summary>
+    /// <summary>
     /// Vectors determining where the entities will spawn.
     /// </summary>
     [DataField]

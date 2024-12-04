@@ -20,7 +20,7 @@ public abstract class SharedSpiderSystem : EntitySystem
 
     private void OnInit(EntityUid uid, SpiderComponent component, MapInitEvent args)
     {
-        _action.AddAction(uid, ref component.Action, component.WebAction, uid);
+        _action.AddAction(uid, ref component.ActionEntity, component.SpawnWebAction, uid);
     }
 
     private void OnWebStartup(EntityUid uid, SpiderWebObjectComponent component, ComponentStartup args)

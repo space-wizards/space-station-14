@@ -1,7 +1,8 @@
 using System.Linq;
 using Content.Server.Popups;
-using Content.Shared.Spider;
 using Content.Shared.Maps;
+using Content.Shared.Spider;
+using Content.Shared.Whitelist;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -10,10 +11,11 @@ namespace Content.Server.Spider;
 
 public sealed class SpiderSystem : SharedSpiderSystem
 {
-    [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly ITileDefinitionManager _tile = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
 
     public override void Initialize()
     {
@@ -46,7 +48,7 @@ public sealed class SpiderSystem : SharedSpiderSystem
 
         bool success = false;
         foreach (var pos in spawnPos)
-            if (IsValidTile(pos, grid.Value, gridComp))
+            if (IsValidTile(pos, component.BlockedByBlacklist, grid.Value, gridComp))
             {
                 Spawn(component.WebPrototype, pos);
                 success = true;
@@ -61,13 +63,13 @@ public sealed class SpiderSystem : SharedSpiderSystem
             _popup.PopupEntity(Loc.GetString("spider-web-action-fail"), args.Performer, args.Performer);
     }
 
-    private bool IsValidTile(EntityCoordinates coords, EntityUid grid, MapGridComponent gridComp)
+    private bool IsValidTile(EntityCoordinates coords, EntityWhitelist? blacklist, EntityUid grid, MapGridComponent gridComp)
     {
-        // TODO change this hard coded comp
         // Don't place webs on top of webs
-        foreach (var entity in _lookup.GetEntitiesIntersecting(coords, LookupFlags.Uncontained))
-            if (HasComp<SpiderWebObjectComponent>(entity))
-                return false;
+        if (blacklist != null)
+            foreach (var entity in _lookup.GetEntitiesIntersecting(coords, LookupFlags.Uncontained))
+                if (_whitelistSystem.IsBlacklistPass(blacklist, entity))
+                    return false;
 
         // Don't place webs in space
         if (!_map.TryGetTileRef(grid, gridComp, coords, out var tileRef) ||
