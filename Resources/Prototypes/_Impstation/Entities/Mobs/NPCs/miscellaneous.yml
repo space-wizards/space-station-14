@@ -172,8 +172,8 @@
 - type: entity
   parent: MobUraniumCrab
   id: MobRay
-  name: ray
-  description: A giant ore crab. It has a sticker on it's carapace reading "PLEASE HANDLE WITH CARE".
+  name: Ray
+  description: A giant ore crab. It has a sticker on its carapace reading "PLEASE HANDLE WITH CARE".
   components:
   - type: Sprite
     scale: 3, 3
@@ -190,3 +190,6 @@
       types:
         Radiation: 5
         Cellular: 5
+  - type: RadiationSource
+    intensity: 3
+    slope: 0.3
