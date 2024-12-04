@@ -4,4 +4,5 @@ store-category-plushie-species = Species
 store-category-medical-chemistry = Chemistry
 store-category-medical-medical = Medical
 store-category-medical-surgery = Surgery
-store-category-medical-enginery = Enginery
+store-category-enginery-main = Enginery
+store-category-service-clown = Clown
