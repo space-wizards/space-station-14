@@ -7,6 +7,7 @@ using Content.Server.Ghost.Components;
 using Content.Server.Mind;
 using Content.Server.Roles.Jobs;
 using Content.Server.Warps;
+using Content.Server.Ghost.Roles.Components;
 using Content.Shared.Actions;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
@@ -358,11 +359,11 @@ namespace Content.Server.Ghost
 
                 if (attached == except) continue;
 
+                TryComp<GhostRoleComponent>(attached, out var ghostRole);
                 TryComp<MindContainerComponent>(attached, out var mind);
-
                 TryComp<GhostComponent>(attached, out var ghost);
 
-                if (!_mobState.IsAlive(attached) && !_mobState.IsCritical(attached) && ghost == null) continue;
+                if (!_mobState.IsAlive(attached) && !_mobState.IsCritical(attached) && ghost == null && ghostRole == null) continue;
 
                 var entityName = Name(attached);
                 if (ghost != null)
@@ -387,10 +388,17 @@ namespace Content.Server.Ghost
                     }
                     else
                     {
-                        yield return new GhostWarp(GetNetEntity(attached), playerInfo, false, null, null);
+                        yield return new GhostWarp(GetNetEntity(attached), playerInfo, false, null, null); // there exists some job without a department.
                     }
                 }
+                else if (ghostRole != null)
+                {
+                    var playerInfo = Loc.GetString("ghost-target-window-player-warp-name",
+                    ("entityName", entityName),
+                    ("jobName", ghostRole.RoleName));
 
+                    yield return new GhostWarp(GetNetEntity(attached), playerInfo, false, Loc.GetString("ghost-target-category-ghost-role"), Color.Gray);
+                }
             }
         }
 
