@@ -79,7 +79,7 @@ public abstract class SharedSpittableContainerSystem : EntitySystem
 
         if (!_containerSystem.CanInsert(args.Target.Value, ent.Comp.Container))
             return;
-        
+
         _audioSystem.PlayPredicted(ent.Comp.SoundEat, ent.Owner, ent.Owner, ent.Comp.SoundEat.Params);
         _containerSystem.InsertOrDrop(args.Target.Value, ent.Comp.Container);
 
