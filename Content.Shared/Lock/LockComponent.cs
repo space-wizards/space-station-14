@@ -34,6 +34,12 @@ public sealed partial class LockComponent : Component
     public bool UnlockOnClick = true;
 
     /// <summary>
+    /// The fixture to set when lock is locked.
+    /// </summary>
+    [DataField]
+    public string LockedFixtureId = string.Empty;
+
+    /// <summary>
     /// The sound played when unlocked.
     /// </summary>
     [DataField("unlockingSound"), ViewVariables(VVAccess.ReadWrite)]
