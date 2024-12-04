@@ -358,13 +358,16 @@ namespace Content.Server.Ghost
 
                 if (attached == except) continue;
 
-                if (!_mobState.IsAlive(attached) && !_mobState.IsCritical(attached) && !HasComp<GhostComponent>(attached)) continue;
-
                 TryComp<MindContainerComponent>(attached, out var mind);
 
+                TryComp<GhostComponent>(attached, out var ghost);
+
+                if (!_mobState.IsAlive(attached) && !_mobState.IsCritical(attached) && ghost == null) continue;
+
                 var entityName = Name(attached);
-                if (HasComp<GhostComponent>(attached))
+                if (ghost != null)
                 {
+                    if (ghost.HideGhostWarp == true) continue;
                     var playerInfo = Loc.GetString("ghost-target-window-player-warp-name",
                     ("entityName", entityName),
                     ("jobName", Loc.GetString("ghost-target-warp-role")));

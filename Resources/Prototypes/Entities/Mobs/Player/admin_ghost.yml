@@ -17,6 +17,7 @@
     context: "aghost"
   - type: Ghost
     canInteract: true
+    hideGhostWarp: true
   - type: GhostHearing
   - type: Hands
   - type: ComplexInteraction
