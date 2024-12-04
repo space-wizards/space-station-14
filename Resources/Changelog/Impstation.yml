@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: starlighthowls
-  changes:
-  - message: removing ntas ww from rotation
-    type: Remove
-  id: 151
-  time: '2024-08-30T23:51:43.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/177
-- author: sususuyo
-  changes:
-  - message: volume correction for a jukebox track
-    type: Tweak
-  id: 152
-  time: '2024-08-31T15:38:29.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/178
 - author: AirFryerBuyOneGetOneFree
   changes:
   - message: Add new toys to the Recruiter Shuttle
@@ -4445,3 +4431,19 @@
   id: 650
   time: '2024-12-04T13:25:39.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/893
+- author: widgetbeck
+  changes:
+  - message: Made Slime People's damage from water vapor scale with quantity, which
+      should make it more dangerous.
+    type: Tweak
+  id: 651
+  time: '2024-12-04T13:29:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/898
+- author: widgetbeck
+  changes:
+  - message: Fixed some Urists not spawning with emote sounds. Have fun with that,
+      Admins.
+    type: Fix
+  id: 652
+  time: '2024-12-04T13:29:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/896
