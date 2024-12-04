@@ -14,6 +14,7 @@
   <GuideEntityEmbed Entity="MobReptilian" Caption="Reptilian"/>
   <GuideEntityEmbed Entity="MobSlimePerson" Caption="Slime Person"/>
   <GuideEntityEmbed Entity="MobVox" Caption="Vox"/>
+  <GuideEntityEmbed Entity="MobJellid" Caption="Jellid"/>
   </Box>
 
 </Document>

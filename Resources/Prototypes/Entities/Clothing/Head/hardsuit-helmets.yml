@@ -113,7 +113,7 @@
         shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 1000
-    lowPressureMultiplier: 1000
+    lowPressureMultiplier: 0.1
   - type: StaticViewer
 
 #Salvage Hardsuit
@@ -129,7 +129,7 @@
     sprite: Clothing/Head/Hardsuits/salvage.rsi
   - type: PressureProtection
     highPressureMultiplier: 1000
-    lowPressureMultiplier: 1000
+    lowPressureMultiplier: 0.1
   - type: PointLight
     radius: 7
     energy: 3
@@ -148,7 +148,7 @@
     sprite: Clothing/Head/Hardsuits/maxim.rsi
   - type: PressureProtection
     highPressureMultiplier: 1000
-    lowPressureMultiplier: 1000
+    lowPressureMultiplier: 0.1
   - type: Armor
     modifiers:
       coefficients:
@@ -172,7 +172,7 @@
     color: "#ffeead"
   - type: PressureProtection
     highPressureMultiplier: 0.525
-    lowPressureMultiplier: 1000
+    lowPressureMultiplier: 0.1
   - type: Armor
     modifiers:
       coefficients:
@@ -205,7 +205,7 @@
         Caustic: 0.90
   - type: PressureProtection
     highPressureMultiplier: 0.6
-    lowPressureMultiplier: 1000
+    lowPressureMultiplier: 0.1
 
 #Warden's Hardsuit
 - type: entity
@@ -222,7 +222,7 @@
     color: "#ffeead"
   - type: PressureProtection
     highPressureMultiplier: 0.525
-    lowPressureMultiplier: 1000
+    lowPressureMultiplier: 0.1
   - type: Armor
     modifiers:
       coefficients:
@@ -244,7 +244,7 @@
     sprite: Clothing/Head/Hardsuits/capspace.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.3
-    lowPressureMultiplier: 1000
+    lowPressureMultiplier: 0.1
 
 #Chief Engineer's Hardsuit
 - type: entity

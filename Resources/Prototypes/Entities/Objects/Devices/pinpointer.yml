@@ -108,3 +108,25 @@
   - type: Pinpointer
     component: ResearchServer
     targetName: the station
+
+- type: entity
+  parent: PinpointerBase
+  name: pilot pinpointer
+  description: A built-in tracking device designed to keep track of your pilot.
+  id: PinpointerPilot
+  suffix: Station
+  components:
+  - type: Sprite
+    layers:
+    - state: pinpointer-station
+      map: ["enum.PinpointerLayers.Base"]
+    - state: pinonnull
+      map: ["enum.PinpointerLayers.Screen"]
+      shader: unshaded
+      visible: false
+  - type: Icon
+    state: pinpointer-station
+  - type: Pinpointer
+    component: ExpedPilot
+    targetName: The Pilot
+  - type: Unremoveable

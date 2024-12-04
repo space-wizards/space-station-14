@@ -2490,6 +2490,7 @@ entities:
     - type: RadiationGridResistance
     - type: BecomesStation
       id: Trieste
+    - type: Trieste
     - type: Parallax
       parallax: Sky
     - type: MapAtmosphere
@@ -6867,6 +6868,31 @@ entities:
     components:
     - type: Transform
       pos: -5.5,10.5
+      parent: 2
+  - uid: 3338
+    components:
+    - type: Transform
+      pos: 5.5,-20.5
+      parent: 2
+  - uid: 3339
+    components:
+    - type: Transform
+      pos: 6.5,-20.5
+      parent: 2
+  - uid: 3340
+    components:
+    - type: Transform
+      pos: 7.5,-20.5
+      parent: 2
+  - uid: 3349
+    components:
+    - type: Transform
+      pos: 7.5,-19.5
+      parent: 2
+  - uid: 3350
+    components:
+    - type: Transform
+      pos: 8.5,-19.5
       parent: 2
   - uid: 3399
     components:

@@ -28,3 +28,5 @@
     outerClothing: ClothingOuterCoatBomber
     gloves: ClothingHandsGlovesFingerless
     head: ClothingHeadHatHardhatArmored # protect the pilot
+    shoes: ClothingShoesLeather
+    back: ClothingBackpackSatchelLeather
