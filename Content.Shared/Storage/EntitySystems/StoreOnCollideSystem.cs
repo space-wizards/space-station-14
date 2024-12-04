@@ -51,12 +51,19 @@ internal sealed class StoreOnCollideSystem : EntitySystem
             return;
 
         _storage.Insert(target, storageEnt);
+
     }
 
     private void TryLockStorage(Entity<StoreOnCollideComponent> ent)
     {
         var storageEnt = ent.Owner;
         var comp = ent.Comp;
+
+        if (_netMan.IsClient || _gameTiming.ApplyingState)
+            return;
+
+        if (ent.Comp.Disabled)
+            return;
 
         if (comp.LockOnCollide && !_lock.IsLocked(storageEnt))
             _lock.Lock(storageEnt, storageEnt);
