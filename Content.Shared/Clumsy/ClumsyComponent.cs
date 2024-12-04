@@ -56,7 +56,7 @@ public sealed partial class ClumsyComponent : Component
     /// <summary>
     ///     Noise to play after failing to shoot a gun. Boom!
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField]
     public SoundSpecifier GunShootFailSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg");
 
     /// <summary>
