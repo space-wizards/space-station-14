@@ -36,6 +36,7 @@
   - AtmosphericsSystems
   - AtmosphericUpsets
   - AtmosTools
+  - Gasses
 
 - type: guideEntry
   id: GasManipulation
@@ -200,6 +201,11 @@
   id: AtmosTools
   name: guide-entry-atmostools
   text: "/ServerInfo/Guidebook/Engineering/AtmosTools.xml"
+
+- type: guideEntry
+  id: Gasses
+  name: guide-entry-gasses
+  text: "/ServerInfo/Guidebook/Engineering/Gasses.xml"
 
 - type: guideEntry
   id: ShuttleCraft
