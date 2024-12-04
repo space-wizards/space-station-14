@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Audio;
 using Content.Shared.Explosion;
 using Content.Shared.Interaction.Events;
@@ -117,10 +116,8 @@ namespace Content.Shared.SubFloor
         {
             // TODO Redo this function. Currently wires on an asteroid are always "below the floor"
             var tileDef = (ContentTileDefinition) _tileDefinitionManager[Map.GetTileRef(gridUid, grid, position).Tile.TypeId];
-
             return !tileDef.IsSubFloor;
         }
-
 
         private void UpdateTile(EntityUid gridUid, MapGridComponent grid, Vector2i position)
         {
