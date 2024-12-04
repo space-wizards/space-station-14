@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: LucasTheDrgn
-  changes:
-  - message: QSI Fix 2 - Actually Fixing It
-    type: Fix
-  id: 154
-  time: '2024-08-31T15:38:55.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/180
 - author: Darkmajia
   changes:
   - message: BROSochloric BROS, edible/grindable BROS, adjusted BROSnade
@@ -4458,3 +4451,13 @@
   id: 653
   time: '2024-12-04T15:27:02.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/895
+- author: Sha-Seng
+  changes:
+  - message: Stun Enforcers now come from nonlethals research to make advanced riot
+      control less cracked
+    type: Tweak
+  - message: Fixed capitalization on the stun shotgun item names
+    type: Tweak
+  id: 654
+  time: '2024-12-04T15:56:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/900
