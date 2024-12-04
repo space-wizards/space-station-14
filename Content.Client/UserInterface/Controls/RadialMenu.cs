@@ -4,6 +4,7 @@ using Robust.Client.UserInterface.CustomControls;
 using System.Linq;
 using System.Numerics;
 using Robust.Client.Graphics;
+using Robust.Shared.Input;
 
 namespace Content.Client.UserInterface.Controls;
 
@@ -86,7 +87,13 @@ public class RadialMenu : BaseWindow
             SetSize = new Vector2(64f, 64f),
         };
 
-        ContextualButton.OnButtonUp += _ => ReturnToPreviousLayer();
+        ContextualButton.OnButtonUp += args =>
+        {
+            // this button uses enableAllKeybinds mode, which propagates more events,
+            // then just click, but we need only click and only once per user interaction
+            if (args.Event.Function == EngineKeyFunctions.UIClick)
+                ReturnToPreviousLayer();
+        };
         AddChild(ContextualButton);
 
         // Hide any further add children, unless its promoted to the active layer
