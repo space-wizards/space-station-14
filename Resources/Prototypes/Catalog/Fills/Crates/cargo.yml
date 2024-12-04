@@ -107,6 +107,9 @@
     - id: WeaponPulseCarbine
       prob: 0.0001
       orGroup: Weapons
+    - id: WeaponGoldZipper
+      prob: 0.00001
+      orGroup: Weapons
     - id: WeaponRifleAk
       prob: 0.0001
       orGroup: Weapons
@@ -156,6 +159,9 @@
       prob: 0.01
       orGroup: Weapons
     - id: WeaponTurretXeno
+      prob: 0.01
+      orGroup: Weapons
+    - id: WeaponGoldZipperFake
       prob: 0.01
       orGroup: Weapons
     - id: WeaponRifleFoam

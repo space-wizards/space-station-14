@@ -5,9 +5,9 @@
   description: "A captain's cap with the so-called fifty mission crush, losing its structure from extended use. A prized symbol of veteran status. It bears a winged star on the front."
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/captaincrushercap.rsi
+    sprite: _Impstation/Clothing/Head/Hats/captaincrushercap.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hats/captaincrushercap.rsi
+    sprite: _Impstation/Clothing/Head/Hats/captaincrushercap.rsi
   - type: Tag
     tags:
     - ClothMade

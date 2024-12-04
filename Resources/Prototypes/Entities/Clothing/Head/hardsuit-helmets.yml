@@ -803,7 +803,7 @@
 - type: entity
   parent: ClothingHeadHelmetHardsuitSecurity
   id: ClothingHeadHelmetHardsuitMime
-  name: mime hardsuit helmet
+  name: red mime hardsuit helmet # Imp
   description: A mime hardsuit helmet.
   components:
   - type: BreathMask

@@ -67,8 +67,8 @@
     allowedEmotes: ['Click', 'Chitter']
   - type: Vocal
     sounds:
-      Male: UnisexArachnid
-      Female: UnisexArachnid
+      Male: MaleArachnid
+      Female: FemaleArachnid
       Unsexed: UnisexArachnid
   - type: TypingIndicator
     proto: spider
