@@ -37,7 +37,7 @@ reagent-desc-bloodier-mary = AH, AH, AHH!
 reagent-name-salvagerssoothe = salvager's soothe
 reagent-desc-salvagerssoothe = Come home safe, okay? We're counting on you.
 
-reagent-name-donttelldsheriff = don't tell D sherrif
+reagent-name-donttelldsheriff = don't tell D sheriff
 reagent-desc-donttelldsheriff = If Red Bool gives you wings, this'll give you four wheel drive.
 
 reagent-name-cottonbool = cotton bool
