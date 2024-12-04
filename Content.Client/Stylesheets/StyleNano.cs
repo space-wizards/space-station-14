@@ -623,6 +623,11 @@ namespace Content.Client.Stylesheets
                     .Class(ButtonOpenLeft)
                     .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonOpenLeft),
 
+                Element<TextureButton>().Class(ContainerButton.StyleClassButton)
+                    .Class(ButtonOpenLeft)
+                    .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonOpenLeft),
+
+
                 Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
                     .Class(ButtonOpenBoth)
                     .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonOpenBoth),
@@ -1455,7 +1460,12 @@ namespace Content.Client.Stylesheets
 
                 Element<TextureButton>().Class("CrossButtonRed").Pseudo(TextureButton.StylePseudoClassHover)
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#753131")),
+
+                //
+                Element<TextureButton>().Class("Refresh")
+                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Nano/circular_arrow.svg.96dpi.png")),
                 // ---
+
 
                 // Profile Editor
                 Element<TextureButton>().Class("SpeciesInfoDefault")
