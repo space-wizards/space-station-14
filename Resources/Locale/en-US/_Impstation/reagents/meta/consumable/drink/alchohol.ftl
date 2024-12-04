@@ -1,4 +1,4 @@
-reagent-name-uap = U.A.P
+reagent-name-uap = U.A.P.
 reagent-desc-uap = An unidentified alcoholic product...
 
 reagent-name-theehorsepussy = the horsepussy

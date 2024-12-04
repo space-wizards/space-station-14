@@ -15,6 +15,9 @@
   id: ConversionKitHB
 
 - type: Tag
+  id: DionaMinded
+
+- type: Tag
   id: MagazineLPistol
 
 - type: Tag
@@ -28,6 +31,9 @@
 
 - type: Tag
   id: SecTicket
+
+- type: Tag
+  id: SGD
 
 - type: Tag
   id: ShellShotgunBeanbag
@@ -49,9 +55,3 @@
 
 - type: Tag
   id: WeaponSurvivalRifleUpgradeSMGKit
-
-- type: Tag
-  id: DionaMinded
-
-- type: Tag
-  id: SGD

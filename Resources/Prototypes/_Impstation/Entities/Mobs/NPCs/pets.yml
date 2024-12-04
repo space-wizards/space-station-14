@@ -197,7 +197,7 @@
           Bloodloss: 5
 
 - type: entity
-  name: major
+  name: Major
   id: MobBearSpaceMajor
   parent: MobSpaceNice
   description: Nanotrasen's majority shareholder.

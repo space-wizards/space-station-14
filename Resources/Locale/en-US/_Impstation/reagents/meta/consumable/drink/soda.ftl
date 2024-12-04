@@ -1,4 +1,4 @@
-reagent-name-kingsoda = king Soda
+reagent-name-kingsoda = king soda
 reagent-desc-kingsoda = A drink fit for a king. Or a seven year old.
 
 reagent-name-hummingbird = hummingbird's delight
