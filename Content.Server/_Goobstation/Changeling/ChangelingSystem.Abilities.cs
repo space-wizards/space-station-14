@@ -90,7 +90,7 @@ public sealed partial class ChangelingSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("changeling-absorb-fail-absorbed"), uid, uid);
             return;
         }
-        if (!HasComp<AbsorbableComponent>(target))
+        if (!HasComp<AbsorbableComponent>(target) || (TryComp<AbsorbableComponent>(target, out var absorbComp) && absorbComp.Disabled))
         {
             _popup.PopupEntity(Loc.GetString("changeling-absorb-fail-unabsorbable"), uid, uid);
             return;
@@ -105,7 +105,6 @@ public sealed partial class ChangelingSystem : EntitySystem
             return;
 
         var popupOthers = Loc.GetString("changeling-absorb-start", ("user", Identity.Entity(uid, EntityManager)), ("target", Identity.Entity(target, EntityManager)));
-        _popup.PopupEntity(Loc.GetString("changeling-absorb-rotting"), uid, uid);
         _popup.PopupEntity(popupOthers, uid, PopupType.LargeCaution);
         PlayMeatySound(uid, comp);
         var dargs = new DoAfterArgs(EntityManager, uid, TimeSpan.FromSeconds(15), new AbsorbDNADoAfterEvent(), uid, target)
@@ -132,8 +131,12 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         PlayMeatySound(args.User, comp);
 
+        var reducedBiomass = false;
+        if (HasComp<RottingComponent>(target) || (TryComp<AbsorbableComponent>(target, out var absorbComp) && absorbComp.ReducedBiomass))
+            reducedBiomass = true;
+
         float biomassModifier = 1f;
-        if (HasComp<RottingComponent>(target))
+        if (reducedBiomass)
             biomassModifier = 0.5f;
 
         UpdateBiomass(uid, comp, (comp.MaxBiomass * biomassModifier) - comp.TotalAbsorbedEntities);
@@ -159,8 +162,10 @@ public sealed partial class ChangelingSystem : EntitySystem
             popup = Loc.GetString("changeling-absorb-end-self");
             bonusChemicals += 10;
 
-            if (!HasComp<RottingComponent>(target))
+            if (!reducedBiomass)
                 bonusEvolutionPoints += 2;
+            else
+                popup = Loc.GetString("changeling-absorb-end-self-reduced-biomass");
         }
         TryStealDNA(uid, target, comp, true);
         comp.TotalAbsorbedEntities++;

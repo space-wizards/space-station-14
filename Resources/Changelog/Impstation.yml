@@ -1,96 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: quick pda fixes
-    type: Fix
-  id: 132
-  time: '2024-08-27T20:23:11.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/155
-- author: TGRCdev
-  changes:
-  - message: Station AI
-    type: Add
-  id: 133
-  time: '2024-08-28T01:48:43.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/157
-- author: formlessnameless
-  changes:
-  - message: Upstream merge with Storage UI fixes, some AI fixes for radio and the
-      like. Still working on Tesla issues
-    type: Fix
-  id: 134
-  time: '2024-08-28T03:52:31.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/158
-- author: sususuyo
-  changes:
-  - message: removing passenger time requirement on the mantle for salvage
-    type: Tweak
-  id: 135
-  time: '2024-08-28T15:23:14.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/159
-- author: formlessnameless
-  changes:
-  - message: Upstream merge with more AI stuff and fixes
-    type: Fix
-  id: 136
-  time: '2024-08-28T15:23:28.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/161
-- author: Darkmajia
-  changes:
-  - message: fix dupe cargo tech pda
-    type: Fix
-  id: 137
-  time: '2024-08-28T15:23:42.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/162
-- author: ultramario1998
-  changes:
-  - message: removed potentially offensive borg name, added a couple RTVS-themed ones
-    type: Tweak
-  id: 138
-  time: '2024-08-28T21:47:26.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/163
-- author: AirFryerBuyOneGetOneFree
-  changes:
-  - message: Increased Plasma Sheets in Plasma Crate to 60
-    type: Tweak
-  id: 139
-  time: '2024-08-29T02:52:35.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/164
-- author: ultramario1998
-  changes:
-  - message: Bros
-    type: Add
-  id: 140
-  time: '2024-08-29T17:28:33.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/165
-- author: formlessnameless
-  changes:
-  - message: More upstream merges with a couple of bugfixes
-    type: Fix
-  id: 141
-  time: '2024-08-29T17:28:41.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/166
-- author: Darkmajia
-  changes:
-  - message: multiple announcement sounds, announcer volume fix
-    type: Fix
-  id: 142
-  time: '2024-08-29T17:29:56.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/167
-- author: Darkmajia
-  changes:
-  - message: salvage neck loadout fix
-    type: Fix
-  id: 143
-  time: '2024-08-29T17:30:03.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/168
-- author: Darkmajia
-  changes:
-  - message: beenade nerf
-    type: Tweak
-  id: 144
-  time: '2024-08-29T19:45:29.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/170
 - author: ultramario1998
   changes:
   - message: bros tweaks
@@ -4405,3 +4313,125 @@
   id: 631
   time: '2024-12-03T02:05:53.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/876
+- author: Sha-Seng
+  changes:
+  - message: mimes have the basic french accent again (but stop talking!)
+    type: Tweak
+  id: 632
+  time: '2024-12-03T04:39:35.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/867
+- author: Darkmajia
+  changes:
+  - message: Corpses in any stage of rotting grant halved biomass and no evolution
+      points when absorbed by changelings. This was already live, but not reflected
+      in the changelog. Only extremely bloated corpses are inedible.
+    type: Tweak
+  - message: Goblins grant halved biomass and no evolution points when absorbed by
+      changelings. They're kinda small and stinky and really not that tasty.
+    type: Tweak
+  - message: Salvage corpses should no longer gib almost instantly past a certain
+      period of time.
+    type: Fix
+  id: 633
+  time: '2024-12-03T16:33:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/888
+- author: widgetbeck
+  changes:
+  - message: SGD is now derived from Decapoid technology, for flavor.
+    type: Tweak
+  id: 634
+  time: '2024-12-03T16:34:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/887
+- author: hivehum
+  changes:
+  - message: The command prestige cloaks now count as cloaks for a thief's steal objective.
+    type: Tweak
+  id: 635
+  time: '2024-12-03T16:34:27.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/773
+- author: DinnerCalzone
+  changes:
+  - message: All species with sex-based emotes may now choose between male, female,
+      and unisex sexes to choose their emote sounds. Unisex uses both male and female
+      emote sounds.
+    type: Add
+  id: 636
+  time: '2024-12-03T16:37:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/866
+- author: Sha-Seng
+  changes:
+  - message: Black mime hardsuit, crafted using black suspenders
+    type: Add
+  - message: Red mime hardsuit (original) now crafted using red suspenders
+    type: Tweak
+  id: 637
+  time: '2024-12-03T16:40:37.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/880
+- author: ATDoop
+  changes:
+  - message: Jamjar glasses now have a side view consistent with their front!
+    type: Tweak
+  id: 638
+  time: '2024-12-03T16:41:00.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/877
+- author: DinnerCalzone
+  changes:
+  - message: (Xeno Station) Added birgmedic spawner and brigmedic locker.
+    type: Add
+  - message: (Xeno Station) The gas filter hooked up to the cryo pod is no longer
+      insane and now functions how it does on every other station.
+    type: Tweak
+  - message: (Xeno Station) The station now has a player range of 40 - 80, up from
+      25 - 70 (it's big).
+    type: Tweak
+  - message: (Barratry Station) Added birgmedic spawner and brigmedic locker.
+    type: Add
+  id: 639
+  time: '2024-12-03T16:41:35.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/878
+- author: DinnerCalzone
+  changes:
+  - message: (Hummingbird) Swapped placement of the robotech deluxe and exosuit fabricators
+      in robotics to reduce instances of cyborg endoskeletons spawning in the wall.
+    type: Tweak
+  id: 640
+  time: '2024-12-03T16:40:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/884
+- author: Sha-Seng
+  changes:
+  - message: Passenger winter coat replaced with the version that actually has a hood
+      lol
+    type: Tweak
+  id: 641
+  time: '2024-12-03T16:42:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/881
+- author: Sha-Seng
+  changes:
+  - message: The "No Accent" trait, which removes _all_ accents from your character
+    type: Add
+  - message: The "Accentless" trait is now called "No Species Accent" for clarity
+    type: Tweak
+  - message: The patronizing forced accents on various hats, masks, and coats are
+      now removed
+    type: Remove
+  id: 642
+  time: '2024-12-03T16:46:25.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/882
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: A fun toy that can be found in a grand lottery crate.
+    type: Add
+  - message: A Very Fun Toy that admins can play with and if you are astronomically
+      lucky can find in a grand lottery crate.
+    type: Add
+  id: 643
+  time: '2024-12-03T16:53:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/847
+- author: suyo
+  changes:
+  - message: Added a spare expedition console board to the QM's locker. If they both
+      get stolen then... good luck!
+    type: Add
+  id: 644
+  time: '2024-12-04T02:59:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/890
