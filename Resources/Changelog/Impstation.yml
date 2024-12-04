@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: ultramario1998
-  changes:
-  - message: bros tweaks
-    type: Tweak
-  id: 145
-  time: '2024-08-29T23:01:03.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/171
-- author: AirFryerBuyOneGetOneFree
-  changes:
-  - message: Adds Signature System from Delta-V
-    type: Add
-  id: 146
-  time: '2024-08-30T03:07:25.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/172
 - author: formlessnameless
   changes:
   - message: Ling Tweaks
@@ -4435,3 +4421,17 @@
   id: 644
   time: '2024-12-04T02:59:56.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/890
+- author: Pinkbat5
+  changes:
+  - message: Fixed some duplicate and missing items in the Head of Security loadout.
+    type: Fix
+  id: 645
+  time: '2024-12-04T13:18:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/892
+- author: starlighthowls
+  changes:
+  - message: changed and fixed lots of whale map things!
+    type: Tweak
+  id: 646
+  time: '2024-12-04T13:17:45.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/891
