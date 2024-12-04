@@ -81,7 +81,7 @@
 
 - type: entity
   id: ProjectileLocker
-  name: locker
+  name: cursed locker
   description: A cursed magical locker! Can you resist?
   parent: ClosetSteelBase
   categories: [ HideSpawnMenu ]
