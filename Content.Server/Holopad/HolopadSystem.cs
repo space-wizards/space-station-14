@@ -674,9 +674,8 @@ public sealed class HolopadSystem : SharedHolopadSystem
         _xformSystem.SetCoordinates(stationAiCore.Value.Comp.RemoteEntity.Value, Transform(entity).Coordinates);
         _stationAiSystem.SwitchRemoteEntityMode(stationAiCore.Value, false);
 
-        // Open the holopad Ui if it hasn't been opened yet
-        if (TryComp<UserInterfaceComponent>(entity, out var entityUserInterfaceComponent) &&
-            !_userInterfaceSystem.IsUiOpen((entity, entityUserInterfaceComponent), HolopadUiKey.InteractionWindow))
+        // Open the holopad UI if it hasn't been opened yet
+        if (TryComp<UserInterfaceComponent>(entity, out var entityUserInterfaceComponent))
             _userInterfaceSystem.OpenUi((entity, entityUserInterfaceComponent), HolopadUiKey.InteractionWindow, user);
     }
 
