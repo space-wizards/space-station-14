@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: GasPipeBase
   abstract: true
   id: GasBinaryBase
@@ -24,13 +24,16 @@
         pipeDirection: South
 
 - type: entity
-  parent: [BaseMachinePowered, GasBinaryBase]
+  parent: GasBinaryBase
   id: GasPressurePump
   name: gas pump
   description: A pump that moves gas by pressure.
   placement:
     mode: SnapgridCenter
   components:
+  - type: ExtensionCableReceiver
+  - type: LightningTarget
+    priority: 1
   - type: ApcPowerReceiver
     powerLoad: 200
   - type: Rotatable
@@ -69,13 +72,16 @@
       path: /Audio/Ambience/Objects/gas_pump.ogg
 
 - type: entity
-  parent: [BaseMachinePowered, GasBinaryBase]
+  parent: GasBinaryBase
   id: GasVolumePump
   name: volumetric gas pump
   description: A pump that moves gas by volume.
   placement:
     mode: SnapgridCenter
   components:
+    - type: ExtensionCableReceiver
+    - type: LightningTarget
+      priority: 1
     - type: ApcPowerReceiver
       powerLoad: 200
     - type: Rotatable

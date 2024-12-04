@@ -62,6 +62,49 @@
       - !type:DeleteEntity
 
 - type: constructionGraph
+  id: ClosetFreezer
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: done
+      steps:
+      - material: Steel
+        amount: 4
+      - material: Cable
+        amount: 2
+        doAfter: 5
+      - tag: FreezerElectronics
+        name: freezer electronics
+        icon:
+          sprite: Objects/Misc/module.rsi
+          state: door_electronics
+  - node: done
+    entity: LockerFreezerBase
+    edges:
+    - to: start
+      steps:
+      - tool: Screwing
+        doAfter: 5
+      conditions:
+      - !type:StorageWelded
+        welded: false
+      - !type:Locked
+        locked: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 4
+      - !type:SpawnPrototype
+        prototype: CableApcStack1
+        amount: 2
+      - !type:SpawnPrototype
+        prototype: FreezerElectronics
+        amount: 1
+      - !type:EmptyAllContainers
+      - !type:DeleteEntity
+
+- type: constructionGraph
   id: ClosetWall
   start: start
   graph:
