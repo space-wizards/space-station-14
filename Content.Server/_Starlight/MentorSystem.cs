@@ -92,10 +92,9 @@ public sealed partial class MentorSystem : SharedMentorSystem
 
         var senderIsAdmin = adminData?.HasFlag(AdminFlags.Adminhelp) ?? false;
         var senderIsMentor = _playerRolesManager.GetPlayerData(senderSession)?.HasFlag(PlayerFlags.Mentor) ?? false;
-
         if (!senderIsAdmin && !senderIsMentor && _rateLimit.CountAction(senderSession, RateLimitKey) != RateLimitStatus.Allowed)
             return;
-
+        
         if (message.Ticket is not Guid ticketId)
         {
             ticketId = Guid.NewGuid();
@@ -117,15 +116,12 @@ public sealed partial class MentorSystem : SharedMentorSystem
             };
             RaiseNetworkEvent(@event, senderSession.Channel);
         }
-
         if (ticket is null && !_tickets.TryGetValue(ticketId, out ticket))
             return;
-
         if (ticket.Creator != senderSession.UserId
-            && ((ticket.Mentor is null && !senderIsMentor) || (ticket.Mentor != senderSession.UserId))
-            && !senderIsAdmin)
+        && ((ticket.Mentor is null && !senderIsMentor) || (ticket.Mentor != senderSession.UserId)) 
+        && !(senderIsAdmin || senderIsMentor))
             return;
-
         var escapedText = FormattedMessage.EscapeText(message.Text);
 
         var text = senderIsAdmin ? $"{(message.PlaySound ? "" : "(S) ")}[color=#9B59B6][bold]\\[admin\\][/bold] {senderSession.Name}[/color]: {escapedText}"
@@ -139,8 +135,6 @@ public sealed partial class MentorSystem : SharedMentorSystem
             Text = text,
             PlaySound = true
         };
-
-        _sawmill.Info($"mhelp message: {text}");
 
         if (ticket.Mentor is null && (senderIsMentor || senderIsAdmin))
         {
@@ -185,24 +179,18 @@ public sealed partial class MentorSystem : SharedMentorSystem
 
         var senderIsAdmin = adminData?.HasFlag(AdminFlags.Adminhelp) ?? false;
         var senderIsMentor = _playerRolesManager.GetPlayerData(senderSession)?.HasFlag(PlayerFlags.Mentor) ?? false;
-
         if (!senderIsAdmin && !senderIsMentor && _rateLimit.CountAction(senderSession, RateLimitKey) != RateLimitStatus.Allowed)
             return;
-
         if (message.Ticket is not Guid ticketId)
             return;
-
         if (ticket is null && !_tickets.TryGetValue(ticketId, out ticket))
             return;
-
         if (ticket.IsClosed)
             return;
-
         if (ticket.Creator != senderSession.UserId
             && (ticket.Mentor != senderSession.UserId)
-            && !senderIsAdmin)
+            && !(senderIsAdmin || senderIsMentor))
             return;
-
         ticket.IsClosed = true;
         var msg = new MHelpTextMessage()
         {
