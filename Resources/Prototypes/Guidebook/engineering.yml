@@ -156,6 +156,7 @@
   - PipeNetworks
   - DeviceMonitoringAndControl
   - FireAndGasControl
+  - GasMiningAndStorage
 
 - type: guideEntry
   id: PipeNetworks
@@ -171,6 +172,11 @@
   id: FireAndGasControl
   name: guide-entry-fireandgascontrol
   text: "/ServerInfo/Guidebook/Engineering/FireAndGasControl.xml"
+
+- type: guideEntry
+  id: GasMiningAndStorage
+  name: guide-entry-gasminingandstorage
+  text: "/ServerInfo/Guidebook/Engineering/GasMiningAndStorage.xml"
 
 - type: guideEntry
   id: AtmosphericUpsets

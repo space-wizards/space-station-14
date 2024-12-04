@@ -26,6 +26,7 @@ guide-entry-atmosphericssystems = Atmospherics Systems
 guide-entry-pipenetworks = Pipe Networks
 guide-entry-devicemonitoringandcontrol = Device Monitoring and Control
 guide-entry-fireandgascontrol = Fire and Gas Control
+guide-entry-gasminingandstorage = Gas Mining and Storage
 guide-entry-atmosphericupsets = Atmospheric Upsets
 guide-entry-fires = Fires
 guide-entry-spacing = Spacing
