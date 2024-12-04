@@ -27,6 +27,8 @@ internal sealed class StoreOnCollideSystem : EntitySystem
     private void OnCollide(Entity<StoreOnCollideComponent> ent, ref StartCollideEvent args)
     {
         TryStoreTarget(ent, args.OtherEntity);
+
+        TryLockStorage(ent);
     }
 
     private void AfterOpen(Entity<StoreOnCollideComponent> ent, ref StorageAfterOpenEvent args)
@@ -49,8 +51,6 @@ internal sealed class StoreOnCollideSystem : EntitySystem
             return;
 
         _storage.Insert(target, storageEnt);
-
-        TryLockStorage(ent);
     }
 
     private void TryLockStorage(Entity<StoreOnCollideComponent> ent)
