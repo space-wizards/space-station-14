@@ -2,7 +2,6 @@ using Content.Server.Atmos;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
-using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 
@@ -32,7 +31,9 @@ namespace Content.Server.NodeContainer.Nodes
 
         public void AddAlwaysReachable(PipeNode pipeNode)
         {
-            if (pipeNode.NodeGroupID != NodeGroupID) return;
+            if (pipeNode.NodeGroupID != NodeGroupID)
+                return;
+
             _alwaysReachable ??= new();
             _alwaysReachable.Add(pipeNode);
 
@@ -42,7 +43,8 @@ namespace Content.Server.NodeContainer.Nodes
 
         public void RemoveAlwaysReachable(PipeNode pipeNode)
         {
-            if (_alwaysReachable == null) return;
+            if (_alwaysReachable == null)
+                return;
 
             _alwaysReachable.Remove(pipeNode);
 
@@ -177,7 +179,9 @@ namespace Content.Server.NodeContainer.Nodes
             if (!xform.Anchored || grid == null)
                 yield break;
 
-            var pos = grid.TileIndicesFor(xform.Coordinates);
+            var mapSys = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedMapSystem>();
+
+            var pos = mapSys.TileIndicesFor(xform.GridUid!.Value, grid, xform.Coordinates);
 
             for (var i = 0; i < PipeDirectionHelpers.PipeDirections; i++)
             {
@@ -186,7 +190,7 @@ namespace Content.Server.NodeContainer.Nodes
                 if (!CurrentPipeDirection.HasDirection(pipeDir))
                     continue;
 
-                foreach (var pipe in LinkableNodesInDirection(pos, pipeDir, grid, nodeQuery))
+                foreach (var pipe in LinkableNodesInDirection(pos, pipeDir, xform, grid, nodeQuery))
                 {
                     yield return pipe;
                 }
@@ -196,10 +200,14 @@ namespace Content.Server.NodeContainer.Nodes
         /// <summary>
         ///     Gets the pipes that can connect to us from entities on the tile or adjacent in a direction.
         /// </summary>
-        private IEnumerable<PipeNode> LinkableNodesInDirection(Vector2i pos, PipeDirection pipeDir, MapGridComponent grid,
+        private IEnumerable<PipeNode> LinkableNodesInDirection(
+            Vector2i pos,
+            PipeDirection pipeDir,
+            TransformComponent xform,
+            MapGridComponent grid,
             EntityQuery<NodeContainerComponent> nodeQuery)
         {
-            foreach (var pipe in PipesInDirection(pos, pipeDir, grid, nodeQuery))
+            foreach (var pipe in PipesInDirection(pos, pipeDir, xform, grid, nodeQuery))
             {
                 if (pipe.NodeGroupID == NodeGroupID
                     && pipe.CurrentPipeDirection.HasDirection(pipeDir.GetOpposite()))
@@ -212,12 +220,18 @@ namespace Content.Server.NodeContainer.Nodes
         /// <summary>
         ///     Gets the pipes from entities on the tile adjacent in a direction.
         /// </summary>
-        protected IEnumerable<PipeNode> PipesInDirection(Vector2i pos, PipeDirection pipeDir, MapGridComponent grid,
+        protected IEnumerable<PipeNode> PipesInDirection(
+            Vector2i pos,
+            PipeDirection pipeDir,
+            TransformComponent xform,
+            MapGridComponent grid,
             EntityQuery<NodeContainerComponent> nodeQuery)
         {
+            var mapSys = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedMapSystem>();
+
             var offsetPos = pos.Offset(pipeDir.ToDirection());
 
-            foreach (var entity in grid.GetAnchoredEntities(offsetPos))
+            foreach (var entity in mapSys.GetAnchoredEntities(xform.GridUid!.Value, grid, offsetPos))
             {
                 if (!nodeQuery.TryGetComponent(entity, out var container))
                     continue;

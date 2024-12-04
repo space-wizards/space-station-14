@@ -19,7 +19,7 @@ namespace Content.Server.Power.Nodes
 
             var gridIndex = grid.TileIndicesFor(xform.Coordinates);
 
-            var nodes = NodeHelpers.GetCardinalNeighborNodes(nodeQuery, grid, gridIndex, includeSameTile: false);
+            var nodes = NodeHelpers.GetCardinalNeighborNodes(nodeQuery, xform, grid, gridIndex, includeSameTile: false);
             foreach (var (_, node) in nodes)
             {
                 if (node is CableTerminalNode)

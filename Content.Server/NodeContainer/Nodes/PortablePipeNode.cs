@@ -17,7 +17,7 @@ namespace Content.Server.NodeContainer.Nodes
 
             var gridIndex = grid.TileIndicesFor(xform.Coordinates);
 
-            foreach (var node in NodeHelpers.GetNodesInTile(nodeQuery, grid, gridIndex))
+            foreach (var node in NodeHelpers.GetNodesInTile(nodeQuery, xform, grid, gridIndex))
             {
                 if (node is PortPipeNode)
                     yield return node;
