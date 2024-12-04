@@ -464,7 +464,7 @@
     - StationAnchorCircuitboard
     - SalvageMagnetMachineCircuitboard
     - ShipyardComputerCircuitboard
-    - JanitorialTechFabCircuitboard #imp addition
+    - ServiceTechFabCircuitboard #imp addition
     dynamicRecipes:
       - ThermomachineFreezerMachineCircuitBoard
       - HellfireFreezerMachineCircuitBoard

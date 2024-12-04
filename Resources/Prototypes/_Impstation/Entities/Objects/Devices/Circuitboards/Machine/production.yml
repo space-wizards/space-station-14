@@ -11,10 +11,10 @@
       Glass: 2
 
 - type: entity
-  id: JanitorialTechFabCircuitboard
+  id: ServiceTechFabCircuitboard
   parent: BaseMachineCircuitboard
-  name: janitorial techfab machine board
-  description: A machine printed circuit board for a janitorial techfab.
+  name: Service techfab machine board
+  description: A machine printed circuit board for a Service techfab.
   components:
     - type: Sprite
       state: service

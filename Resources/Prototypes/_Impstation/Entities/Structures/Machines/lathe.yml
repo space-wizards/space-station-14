@@ -18,7 +18,7 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Machine
-    board: JanitorialTechFabCircuitboard
+    board: ServiceTechFabCircuitboard
   - type: Lathe
     idleState: icon
     runningState: icon
