@@ -5,11 +5,13 @@ using Content.Client.Lobby.UI;
 using Content.Client.Message;
 using Content.Client.UserInterface.Systems.Chat;
 using Content.Client.Voting;
+using Content.Shared.CCVar;
 using Robust.Client;
 using Robust.Client.Console;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
 
 
@@ -18,6 +20,7 @@ namespace Content.Client.Lobby
     public sealed class LobbyState : Robust.Client.State.State
     {
         [Dependency] private readonly IBaseClient _baseClient = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
@@ -49,7 +52,12 @@ namespace Content.Client.Lobby
 
             _voteManager.SetPopupContainer(Lobby.VoteContainer);
             LayoutContainer.SetAnchorPreset(Lobby, LayoutContainer.LayoutPreset.Wide);
-            Lobby.ServerName.Text = _baseClient.GameInfo?.ServerName; //The eye of refactor gazes upon you...
+
+            var serverLobbyName = _cfg.GetCVar(CCVars.ServerLobbyName);
+            Lobby.ServerName.Text = string.IsNullOrEmpty(serverLobbyName)
+                ? Loc.GetString("ui-lobby-title") + " "  + _baseClient.GameInfo?.ServerName
+                : serverLobbyName;
+
             UpdateLobbyUi();
 
             Lobby.CharacterPreview.CharacterSetupButton.OnPressed += OnSetupPressed;
