@@ -116,15 +116,15 @@
       map: [ "enum.StorageVisualLayers.Base" ]
     - state: decursed_door
       map: [ "enum.StorageVisualLayers.Door" ]
-    - state: welded
-      visible: false
-      map: [ "enum.WeldableLayers.BaseWelded" ]
-    - state: cursed_door
-      map: [ "enum.LockVisualLayers.Lock" ]
     - state: paper
       visible: false
       sprite: Structures/Storage/closet_labels.rsi
       map: [ "enum.PaperLabelVisuals.Layer" ]
+    - state: cursed_door
+      map: [ "enum.LockVisualLayers.Lock" ]
+    - state: welded
+      visible: false
+      map: [ "enum.WeldableLayers.BaseWelded" ]
   #TODO: Will have to eventually make a custom visualizer for cursed lockers
   - type: EntityStorageVisuals
     stateBaseClosed: decursed
