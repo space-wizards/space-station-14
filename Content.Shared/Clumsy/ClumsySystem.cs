@@ -38,27 +38,29 @@ public sealed class ClumsySystem : EntitySystem
     private void BeforeHyposprayEvent(Entity<ClumsyComponent> ent, ref SelfBeforeHyposprayInjectsEvent args)
     {
         // Clumsy people sometimes inject themselves! Apparently syringes are clumsy proof...
-        if (!_random.Prob(ent.Comp.ClumsyDefaultCheck))
-            return;
 		
-		// imp special. checks if ClumsyHypo is false, if so, skips.
+		// checks if ClumsyHypo is false, if so, skips.
 		if (!ent.Comp.ClumsyHypo)
 			return;
 
+        if (!_random.Prob(ent.Comp.ClumsyDefaultCheck))
+            return;
+
         args.TargetGettingInjected = args.EntityUsingHypospray;
-        args.InjectMessageOverride = ent.Comp.HypoFailedMessage; //imp special - upstream, this links directly to the message.
+        args.InjectMessageOverride = "hypospray-component-inject-self-clumsy-message";
         _audio.PlayPvs(ent.Comp.ClumsySound, ent);
     }
 
     private void BeforeDefibrillatorZapsEvent(Entity<ClumsyComponent> ent, ref SelfBeforeDefibrillatorZapsEvent args)
     {
         // Clumsy people sometimes defib themselves!
-        if (!_random.Prob(ent.Comp.ClumsyDefaultCheck))
-            return;
-
-		// imp special. checks if ClumsyDefib is false, if so, skips.
+		
+		// checks if ClumsyDefib is false, if so, skips.
 		if (!ent.Comp.ClumsyDefib)
 			return;
+		
+        if (!_random.Prob(ent.Comp.ClumsyDefaultCheck))
+            return;
 
         args.DefibTarget = args.EntityUsingDefib;
         _audio.PlayPvs(ent.Comp.ClumsySound, ent);
@@ -69,15 +71,15 @@ public sealed class ClumsySystem : EntitySystem
     {
         // Clumsy people sometimes can't shoot :(
 
+		// checks if ClumsyGuns is false, if so, skips.
+		if (!ent.Comp.ClumsyGuns)
+			return;
+
         if (args.Gun.Comp.ClumsyProof)
             return;
 
         if (!_random.Prob(ent.Comp.ClumsyDefaultCheck))
             return;
-
-		// imp special. checks if ClumsyGuns is false, if so, skips.
-		if (!ent.Comp.ClumsyGuns)
-			return;
 
         if (ent.Comp.GunShootFailDamage != null)
             _damageable.TryChangeDamage(ent, ent.Comp.GunShootFailDamage, origin: ent);
@@ -88,22 +90,22 @@ public sealed class ClumsySystem : EntitySystem
         _audio.PlayPvs(ent.Comp.GunShootFailSound, ent);
         _audio.PlayPvs(ent.Comp.ClumsySound, ent);
 
-        _popup.PopupEntity(Loc.GetString(ent.Comp.GunFailedMessage), ent, ent);
+        _popup.PopupEntity(Loc.GetString("gun-clumsy"), ent, ent);
         args.Cancel();
     }
 
     private void OnBeforeClimbEvent(Entity<ClumsyComponent> ent, ref SelfBeforeClimbEvent args)
     {
+		// checks if ClumsyVaulting is false, if so, skips.
+		if (!ent.Comp.ClumsyVaulting)
+			return;
+		
         // This event is called in shared, thats why it has all the extra prediction stuff.
         var rand = new System.Random((int)_timing.CurTick.Value);
 
         // If someone is putting you on the table, always get past the guard.
         if (!_cfg.GetCVar(CCVars.GameTableBonk) && args.PuttingOnTable == ent.Owner && !rand.Prob(ent.Comp.ClumsyDefaultCheck))
             return;
-
-		// imp special. checks if ClumsyVaulting is false, if so, skips.
-		if (!ent.Comp.ClumsyVaulting)
-			return;
 
         HitHeadClumsy(ent, args.BeingClimbedOn);
 

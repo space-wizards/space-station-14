@@ -60,44 +60,44 @@ public sealed partial class ClumsyComponent : Component
     public SoundSpecifier GunShootFailSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg");
 	
 	/// <summary>
-	///		Imp special. Whether or not to apply Clumsy to hyposprays.
+	///		Whether or not to apply Clumsy to hyposprays.
 	/// </summary>
 	[DataField]
 	public bool ClumsyHypo = true;
 	
 	/// <summary>
-	///		Imp special. Whether or not to apply Clumsy to defibs.
+	///		Whether or not to apply Clumsy to defibs.
 	/// </summary>
 	[DataField]
 	public bool ClumsyDefib = true;
 	
 	/// <summary>
-	///		Imp special. Whether or not to apply Clumsy to guns.
+	///		Whether or not to apply Clumsy to guns.
 	/// </summary>
 	[DataField]
 	public bool ClumsyGuns = true;
 	
 	/// <summary>
-	///		Imp special. Whether or not to apply Clumsy to vaulting.
+	///		Whether or not to apply Clumsy to vaulting.
 	/// </summary>
 	[DataField]
 	public bool ClumsyVaulting = true;
 	
 	/// <summary>
-	///		Imp special. Lets you define a new "failed" string for each event.
+	///		Lets you define a new "failed" message for each event.
 	/// </summary>
 	[DataField]
-	public string HypoFailedMessage = "hypospray-component-inject-self-clumsy-message";
+	public LocId HypoFailedMessage = "hypospray-component-inject-self-clumsy-message";
 	
 	[DataField]
-	public string GunFailedMessage = "gun-clumsy";
+	public LocId GunFailedMessage = "gun-clumsy";
 	
 	[DataField]
-	public string VaulingFailedMessageSelf = "bonkable-success-message-user";
+	public LocId VaulingFailedMessageSelf = "bonkable-success-message-user";
 	
 	[DataField]
-	public string VaulingFailedMessageOthers = "bonkable-success-message-others";
+	public LocId VaulingFailedMessageOthers = "bonkable-success-message-others";
 	
 	[DataField]
-	public string VaulingFailedMessageForced = "forced-bonkable-success-message";
+	public LocId VaulingFailedMessageForced = "forced-bonkable-success-message";
 }
