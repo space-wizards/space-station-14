@@ -83,7 +83,7 @@ public sealed partial class GhostComponent : Component
     }
 
     /// <summary>
-    ///     Whether the ghost warp is visibile in the ghost menu.
+    ///     Whether the ghost warp is visible in the ghost menu.
     /// </summary>
     /// <remarks>Admin ghosts will not appear in the ghost warp menu for the public.</remarks>
     [DataField("hideGhostWarp"), ViewVariables(VVAccess.ReadWrite)]
