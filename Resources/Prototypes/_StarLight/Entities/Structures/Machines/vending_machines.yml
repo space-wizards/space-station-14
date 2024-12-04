@@ -188,3 +188,35 @@
         density: 190
   - type: Transform
     noRot: false
+    
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineClown
+  name: HohohonkersVend
+  description: Get your honk fix here! Surprise the station with HohohonkersVend — the ultimate machine for hilarious pranks. Hack it, and you'll unlock something special!
+  components:
+  - type: VendingMachine
+    pack: HohohonkersInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    ejectState: eject-unshaded
+    denyState: deny-unshaded
+  - type: Advertise
+    pack: HonkersAds
+  - type: AccessReader
+    breakOnEmag: true
+    access: [["Service"]]
+  - type: SpeakOnUIClosed
+    pack: GenericVendGoodbyes
+  - type: Speech
+  - type: Sprite
+    sprite: _Starlight/Structures/Machines/VendingMachines/hohohonkers.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]

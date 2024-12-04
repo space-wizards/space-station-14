@@ -1,0 +1,4 @@
+- type: vendingMachineInventory
+  id: HohohonkersInventory
+  startingInventory:
+    PrototypeJawsOfLife: 1
