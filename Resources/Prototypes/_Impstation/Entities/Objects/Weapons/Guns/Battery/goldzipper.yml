@@ -1,0 +1,48 @@
+- type: entity
+  name: golden zipper
+  parent: WeaponDisablerPractice
+  id: WeaponGoldZipper
+  description: Legends tell of a gun that can kill anything with a single shot.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/gzipper.rsi
+    layers:
+      - state: base
+        map: ["enum.GunVisualLayers.Base"]
+      - state: mag-unshaded-4
+        map: ["enum.GunVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Clothing
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/gzipper.rsi
+    quickEquip: false
+    slots:
+      - suitStorage
+      - Belt
+  - type: Appearance
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Gun
+    fireRate: 2
+    soundGunshot:
+      path: /Audio/_Impstation/Weapons/Guns/Gunshots/goldlaser.ogg
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletLaserGold
+    fireCost: 100
+  - type: PointLight
+    radius: 1.2
+    energy: 1.34
+    castShadows: false
+    color: "#9b68ff"
+    
+- type: entity
+  name: golden zipper
+  parent: WeaponGoldZipper
+  id: WeaponGoldZipperFake
+  suffix: Fake
+  description: Legends tell of a gun that can kill anything with a single shot. This one, however, seems to be made of cheap plastic.
+  components:
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletLaserFGold
+    fireCost: 100

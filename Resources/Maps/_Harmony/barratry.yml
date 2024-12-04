@@ -13701,13 +13701,13 @@ entities:
             0: 28791
           -21,12:
             1: 15
-            5: 30464
+            3: 30464
           -20,13:
             0: 52305
             1: 4352
           -21,13:
             1: 65280
-            5: 7
+            3: 7
           -20,14:
             1: 24337
             0: 12
@@ -13867,7 +13867,7 @@ entities:
             0: 32
           -23,8:
             1: 255
-            3: 57344
+            4: 57344
           -22,4:
             1: 8184
           -22,5:
@@ -13898,12 +13898,12 @@ entities:
             1: 226
           -23,11:
             1: 61440
-            5: 224
+            3: 224
           -23,9:
-            4: 224
-            5: 57344
-          -23,10:
             5: 224
+            3: 57344
+          -23,10:
+            3: 224
             6: 57344
           -23,12:
             1: 242
@@ -14041,6 +14041,21 @@ entities:
         - volume: 2500
           temperature: 293.15
           moles:
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
           - 6666.982
           - 0
           - 0
@@ -14058,21 +14073,6 @@ entities:
           moles:
           - 0
           - 6666.982
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 0
-          - 0
           - 0
           - 0
           - 0
@@ -81183,6 +81183,13 @@ entities:
         - 0
         - 0
         - 0
+- proto: LockerBrigmedicFilled
+  entities:
+  - uid: 16592
+    components:
+    - type: Transform
+      pos: -61.5,51.5
+      parent: 1
 - proto: LockerCaptain
   entities:
   - uid: 2542
@@ -95075,6 +95082,13 @@ entities:
     - type: Transform
       pos: -41.5,42.5
       parent: 1
+- proto: SpawnPointBrigmedic
+  entities:
+  - uid: 16591
+    components:
+    - type: Transform
+      pos: -61.5,52.5
+      parent: 1
 - proto: SpawnPointCaptain
   entities:
   - uid: 16122
@@ -97092,7 +97106,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -54.5,39.5
       parent: 1
-    - type: DeviceNetwork
     - type: SurveillanceCamera
       id: Janitorial Back
 - proto: SurveillanceCameraSupply

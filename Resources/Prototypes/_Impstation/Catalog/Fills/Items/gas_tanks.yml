@@ -1,0 +1,57 @@
+- type: entity
+  id: EmergencyNitrogenTankCommandFilled
+  parent: EmergencyNitrogenTankCommand
+  suffix: Filled
+  components:
+  - type: GasTank
+    outputPressure: 21.3
+    air:
+      # 4 minutes
+      volume: 0.66
+      moles:
+        - 0 # oxygen
+        - 0.270782035 # nitrogen
+      temperature: 293.15
+
+- type: entity
+  id: EmergencyOxygenTankCommandFilled
+  parent: EmergencyOxygenTankCommand
+  suffix: Filled
+  components:
+  - type: GasTank
+    outputPressure: 21.3
+    air:
+      # 4 minutes
+      volume: 0.66
+      moles:
+        - 0.270782035 # oxygen
+      temperature: 293.15
+
+- type: entity
+  id: ExtendedEmergencyOxygenTankCommandFilled
+  parent: ExtendedEmergencyOxygenTankCommand
+  suffix: Filled
+  components:
+  - type: GasTank
+    outputPressure: 21.3
+    air:
+      # 9 minutes
+      volume: 1.5
+      moles:
+        - 0.615413715 # oxygen
+      temperature: 293.15
+
+- type: entity
+  id: ExtendedEmergencyNitrogenTankCommandFilled
+  parent: ExtendedEmergencyNitrogenTankCommand
+  suffix: Filled
+  components:
+  - type: GasTank
+    outputPressure: 21.3
+    air:
+      # 9 minutes
+      volume: 1.5
+      moles:
+        - 0 # oxygen
+        - 0.615413715 # nitrogen
+      temperature: 293.15

@@ -98,3 +98,53 @@
       forceAllPossible: true
       mindRoles:
       - MindRoleTraitor
+
+# population limiters
+
+- type: entity
+  parent: BaseGameRule
+  id: MidpopLimiter
+  components:
+  - type: GameRule
+    minPlayers: 20
+
+- type: entity
+  parent: BaseGameRule
+  id: LowpopLimiter
+  components:
+  - type: GameRule
+    maxPlayers: 19
+    cancelPresetOnTooManyPlayers: true
+
+# event schedulers
+
+- type: entityTable
+  id: LowpopGameRulesTable
+  table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
+    children:
+      - !type:NestedSelector
+        tableId: BasicCalmEventsTable
+      - !type:NestedSelector
+        tableId: LowpopAntagEventsTable
+      - !type:NestedSelector
+        tableId: CargoGiftsTable
+      - !type:NestedSelector
+        tableId: CalmPestEventsTable
+      - !type:NestedSelector
+        tableId: SpicyPestEventsTable
+
+- type: entity
+  id: LowpopStationEventScheduler
+  parent: BaseGameRule
+  components:
+  - type: BasicStationEventScheduler
+    scheduledGameRules: !type:NestedSelector
+      tableId: LowpopGameRulesTable
+
+- type: entity
+  id: LowpopRampingStationEventScheduler
+  parent: BaseGameRule
+  components:
+  - type: RampingStationEventScheduler
+    scheduledGameRules: !type:NestedSelector
+      tableId: LowpopGameRulesTable

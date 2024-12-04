@@ -1,0 +1,37 @@
+- type: entity
+  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseCommandContraband]
+  id: ClothingOuterArmorCaptainRepeller
+  name: "captain's repeller"
+  description: "High-tech, low-profile body armor for the captain that utilizes forcefield technology to provide as much protection as heavier armor. Decorated with a ribbon earned through meritorious service."
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Armor/captain_repeller.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Armor/captain_repeller.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.6
+        Heat: 0.5
+        Caustic: 0.9
+  - type: ClothingSpeedModifier
+    walkModifier: 1.0
+    sprintModifier: 1.0
+  - type: HeldSpeedModifier
+  - type: ExplosionResistance
+    damageCoefficient: 0.65
+  - type: GroupExamine
+
+- type: entity
+  parent: [ClothingOuterArmorHoS, ClothingOuterStorageBase, BaseSecurityCommandContraband]
+  id: ClothingOuterArmorHoSEliteArmor
+  name: head of security's elite armor
+  description: High-tech, low-profile body armor with tactical pouches for storage. The alloys used to make it are prohibitively expensive.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Armor/hoselitearmor.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Armor/hoselitearmor.rsi
+

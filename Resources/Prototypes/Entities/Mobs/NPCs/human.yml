@@ -88,6 +88,8 @@
         Blunt: 19
   - type: Inventory
     templateId: corpse
+  - type: Rotting
+    totalRotTime: 1200 # 20 minutes
 
 - type: entity
   parent: MobHuman

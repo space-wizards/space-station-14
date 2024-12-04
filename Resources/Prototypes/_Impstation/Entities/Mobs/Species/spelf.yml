@@ -62,6 +62,8 @@
     proto: guardian
   - type: Vocal
     sounds:
+      Male: MaleSpElf
+      Female: FemaleSpElf
       Unsexed: UnisexSpElf
   - type: Speech
     speechSounds: Alto

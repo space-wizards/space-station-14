@@ -12,6 +12,8 @@
   femaleFirstNames: names_vox
   naming: First
   sexes:
+  - Male
+  - Female
   - Unsexed
 
 - type: speciesBaseSprites
