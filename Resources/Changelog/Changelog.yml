@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Beck Thompson
-  changes:
-  - message: Nuclear authentication code folder that spawns the nuclear authentication
-      codes when opened.
-    type: Add
-  id: 7177
-  time: '2024-08-21T18:53:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31272
 - author: Brandon-Huu
   changes:
   - message: Nukie shuttle now spawns with the nuclear authentication code folder.
@@ -3907,3 +3899,11 @@
   id: 7676
   time: '2024-12-04T10:13:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33714
+- author: keronshb
+  changes:
+  - message: Adds Wand of the Locker - a wand that shoots out cursed lockers, that
+      will store anyone they touch!
+    type: Add
+  id: 7677
+  time: '2024-12-04T16:49:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33710
