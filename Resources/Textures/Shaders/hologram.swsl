@@ -7,12 +7,14 @@ uniform highp float intensity = 1.0;
 uniform highp int texHeight = 32;
 uniform highp float t = 0.0;
 
+const highp float PI = 3.14159265;
+
 void fragment() {
 	highp vec4 base = texture2D(TEXTURE, UV);
 	highp float bw = zGrayscale(base.rgb * intensity);
 	highp vec4 color = vec4(vec3(color1), alpha);
 
-	if (mod((UV.y + t) * texHeight, 2) < 1)
+	if (sin(PI * (UV.y + t) * texHeight) < 0)
 	{
 		color = vec4(vec3(color2), alpha);
 	}
