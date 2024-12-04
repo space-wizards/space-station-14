@@ -1,12 +1,14 @@
 using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.Procedural;
 using Content.Shared.CCVar;
 using Content.Shared.Parallax.Biomes;
 using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.CPUJob.JobQueues;
 using Robust.Shared.CPUJob.JobQueues.Queues;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Map.Enumerators;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -15,11 +17,11 @@ using Box2i = Robust.Shared.Maths.Box2i;
 
 namespace Content.Server.Parallax;
 
-public sealed class NewBiomeSystem : EntitySystem
+public sealed partial class NewBiomeSystem : EntitySystem
 {
     /*
      * Handles loading in biomes around players.
-     * Separate but similar to dungeons.
+     * These are essentially chunked-areas that load in dungeons and can also be unloaded.
      */
 
     [Dependency] private readonly IConfigurationManager _cfgManager = default!;
@@ -34,11 +36,6 @@ public sealed class NewBiomeSystem : EntitySystem
     private float _checkUnloadTime;
     private float _loadRange = 1f;
     private float _loadTime;
-
-    /// <summary>
-    /// Only load 1 job per entity at a time.
-    /// </summary>
-    private readonly Dictionary<EntityUid, BiomeLoadJob> _loadingJobs = new();
 
     private EntityQuery<NewBiomeComponent> _biomeQuery;
 
@@ -60,6 +57,7 @@ public sealed class NewBiomeSystem : EntitySystem
     private void OnLoadTime(float obj)
     {
         _biomeQueue = new JobQueue(obj);
+        _loadTime = obj;
     }
 
     private void OnLoadRange(float obj)
@@ -75,23 +73,40 @@ public sealed class NewBiomeSystem : EntitySystem
 
         while (query.MoveNext(out var biome))
         {
+            // If it's still loading then don't touch the observer bounds.
+            if (biome.Loading)
+                continue;
+
             biome.LoadedBounds.Clear();
         }
 
         // Get all relevant players.
-        // If they already have a job loading then don't make a new one yet.
         foreach (var player in new List<ICommonSession>())
         {
             if (player.AttachedEntity != null)
             {
-                TryAddBiomeJob(player.AttachedEntity.Value);
+                TryAddBiomeBounds(player.AttachedEntity.Value);
             }
 
             // If not relevant then discard.
             foreach (var viewer in player.ViewSubscriptions)
             {
-                TryAddBiomeJob(viewer);
+                TryAddBiomeBounds(viewer);
             }
+        }
+
+        // Check if any biomes are intersected and queue up loads.
+        while (query.MoveNext(out var biome))
+        {
+            if (biome.Loading || biome.LoadedBounds.Count == 0)
+                continue;
+
+            biome.Loading = true;
+            var job = new BiomeLoadJob(_loadTime)
+            {
+                Biome = biome,
+            };
+            _biomeQueue.EnqueueJob(job);
         }
 
         _checkUnloadAccumulator += frameTime;
@@ -114,11 +129,16 @@ public sealed class NewBiomeSystem : EntitySystem
 
         while (query.MoveNext(out var biome))
         {
+            // Only start unloading if it's currently not loading anything.
+            if (biome.Loading)
+                continue;
+
             foreach (var (layerId, loadedLayer) in biome.LoadedData)
             {
                 var layer = biome.Layers[layerId];
                 var toUnload = new ValueList<Vector2i>();
 
+                // Go through each loaded chunk and check if they can be unloaded by checking if any players are in range.
                 foreach (var chunk in loadedLayer.Keys)
                 {
                     // If it's pending then don't interrupt the loading
@@ -148,7 +168,7 @@ public sealed class NewBiomeSystem : EntitySystem
                     continue;
 
                 // Queue up unloads.
-                var job = new BiomeUnloadJob();
+                var job = new BiomeUnloadJob(_loadTime);
                 _biomeQueue.EnqueueJob(job);
             }
         }
@@ -181,7 +201,7 @@ public sealed class NewBiomeSystem : EntitySystem
         return bounds;
     }
 
-    private void TryAddBiomeJob(EntityUid uid)
+    private void TryAddBiomeBounds(EntityUid uid)
     {
         var xform = Transform(uid);
 
@@ -189,25 +209,18 @@ public sealed class NewBiomeSystem : EntitySystem
         if (!_biomeQuery.TryComp(xform.MapUid, out var biome))
             return;
 
-        if (_loadingJobs.ContainsKey(uid))
+        // Currently already loading.
+        if (biome.Loading)
             return;
-
-        var job = new BiomeLoadJob(_loadTime)
-        {
-            Biome = biome,
-        };
 
         var center = _xforms.GetWorldPosition(uid);
 
-        job.Bounds = new Box2i((center - new Vector2(_loadRange, _loadRange)).Floored(), (center + new Vector2(_loadRange, _loadRange)).Floored());
+        var bounds = new Box2i((center - new Vector2(_loadRange, _loadRange)).Floored(), (center + new Vector2(_loadRange, _loadRange)).Floored());
 
-        biome.LoadedBounds.Add(job.Bounds);
-
-        _loadingJobs.Add(uid, job);
-        _biomeQueue.EnqueueJob(job);
+        biome.LoadedBounds.Add(bounds);
     }
 
-    private Box2i GetLayerBounds(NewBiomeMetaLayer layer, Box2i layerBounds)
+    public Box2i GetLayerBounds(NewBiomeMetaLayer layer, Box2i layerBounds)
     {
         var chunkSize = (Vector2) layer.Size;
 
@@ -219,18 +232,18 @@ public sealed class NewBiomeSystem : EntitySystem
         var loadBounds = new Box2i(layerBL.Floored(), layerTR.Ceiled());
         return loadBounds;
     }
+}
 
-    private sealed class BiomeLoadJob : Job<bool>
+ public sealed class BiomeLoadJob : Job<bool>
     {
+        private NewBiomeSystem System = default!;
+
+        public Entity<MapGridComponent> Grid;
+
         /// <summary>
         /// Biome that is getting loaded.
         /// </summary>
-        public NewBiomeComponent Biome;
-
-        /// <summary>
-        /// Bounds to load in. The actual area may be loaded larger due to layer dependencies.
-        /// </summary>
-        public Box2i Bounds;
+        public NewBiomeComponent Biome = default!;
 
         public BiomeLoadJob(double maxTime, CancellationToken cancellation = default) : base(maxTime, cancellation)
         {
@@ -242,24 +255,32 @@ public sealed class NewBiomeSystem : EntitySystem
 
         protected override async Task<bool> Process()
         {
-            foreach (var (layerId, layer) in Biome.Layers)
+            foreach (var bound in Biome.LoadedBounds)
             {
-                await LoadLayer(layerId, layer, Bounds);
+                foreach (var (layerId, layer) in Biome.Layers)
+                {
+                    await LoadLayer(layerId, layer, bound);
+                }
             }
 
+            // Finished
+            DebugTools.Assert(Biome.Loading);
+            Biome.Loading = false;
             return true;
         }
 
         private async Task LoadLayer(string layerId, NewBiomeMetaLayer layer, Box2i parentBounds)
         {
-            var loadBounds = GetLayerBounds(layer, parentBounds);
+            var loadBounds = System.GetLayerBounds(layer, parentBounds);
 
             // Make sure our dependencies are loaded first.
             if (layer.DependsOn != null)
             {
                 foreach (var sub in layer.DependsOn)
                 {
-                    LoadLayer(sub, loadBounds);
+                    var actualLayer = Biome.Layers[sub];
+
+                    await LoadLayer(sub, actualLayer, loadBounds);
                 }
             }
 
@@ -271,6 +292,7 @@ public sealed class NewBiomeSystem : EntitySystem
                 var layerLoaded = Biome.LoadedData.GetOrNew(layerId);
 
                 // Layer already loaded for this chunk.
+                // This can potentially happen if we're moving and the player's bounds changed but some existing chunks remain.
                 if (layerLoaded.ContainsKey(chunk.Value))
                 {
                     continue;
@@ -278,26 +300,46 @@ public sealed class NewBiomeSystem : EntitySystem
 
                 var layerPending = Biome.PendingData.GetOrNew(layerId);
                 DebugTools.Assert(!layerPending.Contains(chunk.Value));
+
                 layerPending.Add(chunk.Value);
 
-                // Load here
-                foreach (var sub in layer.SubLayers)
+                // Start loading here.
+                var loadedData = new BiomeLoadedData()
                 {
 
+                };
+
+                unchecked
+                {
+                    var seedOffset = chunk.Value.X * 256 + chunk.Value.Y + Biome.Seed;
+
+                    // Load dungeon here async await and all that jaz.
+                    await IoCManager.Resolve<IEntityManager>()
+                        .System<DungeonSystem>()
+                        .GenerateDungeonAsync(layer.Dungeon, Grid.Owner, Grid.Comp, chunk.Value, seedOffset);
                 }
 
                 // Cleanup loading
                 layerPending.Remove(chunk.Value);
-                layerLoaded.Add(chunk.Value, new BiomeLoadedData()
-                {
-
-                });
+                layerLoaded.Add(chunk.Value, loadedData);
             }
         }
     }
 
-    private sealed class BiomeUnloadJob : Job<bool>
+    public sealed class BiomeUnloadJob : Job<bool>
     {
         public List<Vector2i> Chunks = new();
+
+        public BiomeUnloadJob(double maxTime, CancellationToken cancellation = default) : base(maxTime, cancellation)
+        {
+        }
+
+        public BiomeUnloadJob(double maxTime, IStopwatch stopwatch, CancellationToken cancellation = default) : base(maxTime, stopwatch, cancellation)
+        {
+        }
+
+        protected override Task<bool> Process()
+        {
+            //
+        }
     }
-}

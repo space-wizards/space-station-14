@@ -1,7 +1,10 @@
+using Content.Shared.Procedural;
+using Robust.Shared.Prototypes;
+
 namespace Content.Shared.Parallax.Biomes;
 
 /// <summary>
-/// Contains underlying biome layers.
+/// A layer inside of <see cref="NewBiomeComponent"/>
 /// </summary>
 [DataRecord]
 public sealed record NewBiomeMetaLayer
@@ -17,8 +20,11 @@ public sealed record NewBiomeMetaLayer
     /// </summary>
     public List<string>? DependsOn;
 
+    /// <summary>
+    /// Dungeon config to load inside the specified area.
+    /// </summary>
     [DataField(required: true)]
-    public List<INewBiomeLayer> SubLayers = new();
+    public ProtoId<DungeonConfigPrototype> Dungeon = new();
 }
 
 public interface INewBiomeLayer
@@ -29,11 +35,24 @@ public interface INewBiomeLayer
 [RegisterComponent]
 public sealed partial class NewBiomeComponent : Component
 {
-    // TODO: Template prototype.
+    /// <summary>
+    /// Is there currently a job that's loading.
+    /// </summary>
+    public bool Loading = false;
 
+    [DataField]
+    public int Seed;
+
+    /// <summary>
+    /// Layer key and associated data.
+    /// </summary>
     [DataField(required: true)]
     public Dictionary<string, NewBiomeMetaLayer> Layers = new();
 
+    /// <summary>
+    /// Data that is currently loaded.
+    /// </summary>
+    [DataField]
     public Dictionary<string, Dictionary<Vector2i, BiomeLoadedData>> LoadedData = new();
 
     /// <summary>
@@ -47,9 +66,17 @@ public sealed partial class NewBiomeComponent : Component
     public Dictionary<string, HashSet<Vector2i>> PendingData = new();
 }
 
-public sealed class BiomeLoadedData
+[DataDefinition]
+public sealed partial class BiomeLoadedData
 {
+    public static readonly BiomeLoadedData Empty = new();
+
+    [DataField]
     public HashSet<EntityUid>? LoadedEntities;
+
+    [DataField]
     public List<uint>? LoadedDecals;
+
+    [DataField]
     public bool LoadedTiles;
 }
