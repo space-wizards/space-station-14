@@ -25,7 +25,7 @@
 - type: entity
   id: ActionContainerSpit
   name: Spit
-  description: Spit all items out of your hidden storage.
+  description: Spit all items from your hidden storage.
   components:
   - type: InstantAction
     priority: -9
