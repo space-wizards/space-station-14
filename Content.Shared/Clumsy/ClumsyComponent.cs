@@ -87,17 +87,17 @@ public sealed partial class ClumsyComponent : Component
 	///		Imp. Lets you define a new "failed" message for each event.
 	/// </summary>
 	[DataField]
-	public string HypoFailedMessage = "hypospray-component-inject-self-clumsy-message";
+	public LocId HypoFailedMessage = "hypospray-component-inject-self-clumsy-message";
 	
 	[DataField]
-	public string GunFailedMessage = "gun-clumsy";
+	public LocId GunFailedMessage = "gun-clumsy";
 	
 	[DataField]
-	public string VaulingFailedMessageSelf = "bonkable-success-message-user";
+	public LocId VaulingFailedMessageSelf = "bonkable-success-message-user";
 	
 	[DataField]
-	public string VaulingFailedMessageOthers = "bonkable-success-message-others";
+	public LocId VaulingFailedMessageOthers = "bonkable-success-message-others";
 	
 	[DataField]
-	public string VaulingFailedMessageForced = "forced-bonkable-success-message";
+	public LocId VaulingFailedMessageForced = "forced-bonkable-success-message";
 }
