@@ -110,12 +110,6 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
 
     private void UpdateAppearance(EntityUid uid, VendingMachineVisualState visualState, VendingMachineComponent component, SpriteComponent sprite)
     {
-        if (_light.TryGetLight(uid, out var pointlight))
-        {
-            var lightEnabled = visualState != VendingMachineVisualState.Broken && visualState != VendingMachineVisualState.Off;
-            _light.SetEnabled(uid, lightEnabled, pointlight);
-        }
-
         SetLayerState(VendingMachineVisualLayers.Base, component.OffState, sprite);
 
         switch (visualState)

@@ -271,6 +271,13 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
             finalState = VendingMachineVisualState.Off;
         }
 
+        // TODO: You know this should really live on the client with netsync off because client knows the state.
+        if (_light.TryGetLight(entity.Owner, out var pointlight))
+        {
+            var lightEnabled = finalState != VendingMachineVisualState.Broken && finalState != VendingMachineVisualState.Off;
+            _light.SetEnabled(entity.Owner, lightEnabled, pointlight);
+        }
+
         _appearanceSystem.SetData(entity.Owner, VendingMachineVisuals.VisualState, finalState);
     }
 
