@@ -58,4 +58,46 @@ public sealed partial class ClumsyComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier GunShootFailSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg");
+	
+	/// <summary>
+	///		Imp special. Whether or not to apply Clumsy to hyposprays.
+	/// </summary>
+	[DataField]
+	public bool ClumsyHypo = true;
+	
+	/// <summary>
+	///		Imp special. Whether or not to apply Clumsy to defibs.
+	/// </summary>
+	[DataField]
+	public bool ClumsyDefib = true;
+	
+	/// <summary>
+	///		Imp special. Whether or not to apply Clumsy to guns.
+	/// </summary>
+	[DataField]
+	public bool ClumsyGuns = true;
+	
+	/// <summary>
+	///		Imp special. Whether or not to apply Clumsy to vaulting.
+	/// </summary>
+	[DataField]
+	public bool ClumsyVaulting = true;
+	
+	/// <summary>
+	///		Imp special. Lets you define a new "failed" string for each event.
+	/// </summary>
+	[DataField]
+	public string HypoFailedMessage = "hypospray-component-inject-self-clumsy-message";
+	
+	[DataField]
+	public string GunFailedMessage = "gun-clumsy";
+	
+	[DataField]
+	public string VaulingFailedMessageSelf = "bonkable-success-message-user";
+	
+	[DataField]
+	public string VaulingFailedMessageOthers = "bonkable-success-message-others";
+	
+	[DataField]
+	public string VaulingFailedMessageForced = "forced-bonkable-success-message";
 }
