@@ -182,7 +182,7 @@ namespace Content.Client.Chemistry.UI
             };
             bufferHBox.AddChild(bufferVol);
 
-            foreach (var (reagent, quantity) in state.BufferReagents)
+            foreach (var (reagent, quantity) in state.BufferReagents.OrderBy(x => x.Reagent.Prototype))
             {
                 // Try to get the prototype for the given reagent. This gives us its name.
                 _prototypeManager.TryIndex(reagent.Prototype, out ReagentPrototype? proto);
