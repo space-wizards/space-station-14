@@ -197,7 +197,7 @@
 - type: entity
   parent: DrinkGlass
   id: DrinkDontTellGlass
-  suffix: don't tell D sherrif
+  suffix: don't tell D sheriff
   components:
   - type: SolutionContainerManager
     solutions:
@@ -261,7 +261,7 @@
 - type: entity
   parent: DrinkGlass
   id: DrinkUAPGlass
-  suffix: uap
+  suffix: U.A.P.
   components:
   - type: SolutionContainerManager
     solutions:

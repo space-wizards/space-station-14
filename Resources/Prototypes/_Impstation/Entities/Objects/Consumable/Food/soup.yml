@@ -1,0 +1,23 @@
+- type: entity
+  name: camel's soup
+  parent: FoodBowlBase
+  id: FoodCamelSoup
+  description: the hospital can't stop me. I will never go. not with the strength I've obtained.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cigarettes
+  - type: Sprite
+    sprite: _Impstation/Objects/Consumable/Food/bowl.rsi
+    layers:
+    - state: bowl
+    - state: camelsouplit
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 57
+        reagents:
+        - ReagentId: TearGas
+          Quantity: 40
+        - ReagentId: ChloralHydrate
+          Quantity: 17
