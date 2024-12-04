@@ -62,25 +62,25 @@ public sealed partial class ClumsyComponent : Component
 	/// <summary>
 	///		Whether or not to apply Clumsy to hyposprays.
 	/// </summary>
-	[DataField]
+	[DataField, AutoNetworkedField]
 	public bool ClumsyHypo = true;
 	
 	/// <summary>
 	///		Whether or not to apply Clumsy to defibs.
 	/// </summary>
-	[DataField]
+	[DataField, AutoNetworkedField]
 	public bool ClumsyDefib = true;
 	
 	/// <summary>
 	///		Whether or not to apply Clumsy to guns.
 	/// </summary>
-	[DataField]
+	[DataField, AutoNetworkedField]
 	public bool ClumsyGuns = true;
 	
 	/// <summary>
 	///		Whether or not to apply Clumsy to vaulting.
 	/// </summary>
-	[DataField]
+	[DataField, AutoNetworkedField]
 	public bool ClumsyVaulting = true;
 	
 	/// <summary>
