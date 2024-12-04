@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: BROSochloric BROS, edible/grindable BROS, adjusted BROSnade
-    type: Add
-  id: 155
-  time: '2024-08-31T15:39:28.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/181
 - author: formlessnameless
   changes:
   - message: Exclusively Upstream stuff - Fixes AI Eye dying to singulo, Revs spawning
@@ -4461,3 +4454,10 @@
   id: 654
   time: '2024-12-04T15:56:39.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/900
+- author: honeyed-lemons
+  changes:
+  - message: Chem master now displays reagent colors and sorts alphabetically.
+    type: Tweak
+  id: 655
+  time: '2024-12-04T18:51:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/903

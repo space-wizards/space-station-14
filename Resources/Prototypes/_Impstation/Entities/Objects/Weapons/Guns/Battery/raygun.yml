@@ -1,5 +1,5 @@
 - type: entity
-  name: Raygun
+  name: raygun
   parent: BaseWeaponBatterySmall
   id: WeaponRaygun
   description: Pew pew.
