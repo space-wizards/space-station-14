@@ -20,8 +20,23 @@ namespace Content.Server.Changeling.Devour;
 
 public sealed class ChangelingDevourSystem : SharedChangelingDevourSystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly EntityManager _entityManager = default!;
     public override void Initialize()
     {
         base.Initialize();
+
+
     }
+
+
+
+
 }

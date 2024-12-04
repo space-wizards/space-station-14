@@ -10,6 +10,7 @@ using Content.Shared.Roles;
 using Content.Shared.StationRecords;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
+using DnaComponent = Content.Shared.Forensics.DnaComponent;
 
 namespace Content.Server.StationRecords.Systems;
 

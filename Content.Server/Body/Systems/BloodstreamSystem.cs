@@ -22,6 +22,7 @@ using Robust.Server.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using DnaComponent = Content.Shared.Forensics.DnaComponent;
 
 namespace Content.Server.Body.Systems;
 

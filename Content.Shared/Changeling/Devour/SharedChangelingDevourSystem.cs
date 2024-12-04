@@ -12,7 +12,11 @@ using Content.Shared.Damage;
 using Content.Shared.Devour;
 using Content.Shared.Devour.Components;
 using Content.Shared.DoAfter;
+using Content.Shared.Forensics;
+using Content.Shared.Humanoid;
+using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.NameModifier.Components;
 using Content.Shared.Popups;
 using Content.Shared.Speech.Components;
 using Content.Shared.Whitelist;
@@ -44,56 +48,44 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
         SubscribeLocalEvent<ChangelingDevourComponent, ChangelingDevourActionEvent>(OnDevourAction);
         SubscribeLocalEvent<ChangelingDevourComponent, ChangelingDevourWindupDoAfterEvent>(OnDevourWindup);
         SubscribeLocalEvent<ChangelingDevourComponent, ChangelingDevourConsumeDoAfterEvent>(OnDevourConsume);
+        SubscribeLocalEvent<ChangelingDevourComponent, DoAfterAttemptEvent<ChangelingDevourConsumeDoAfterEvent>>(OnConsumeAttemptTick);
     }
-
-    private void OnInit(EntityUid uid, ChangelingDevourComponent component, MapInitEvent args)
-    {
-        _actionsSystem.AddAction(uid, ref component.ChangelingDevourActionEntity, component.ChangelingDevourAction);
-        var identityStorage = EnsureComp<ChangelingIdentityComponent>(uid);
-        if (identityStorage.OriginalIdentityComponent == null && TryComp<AppearanceComponent>(uid, out var appearance) && TryComp<VocalComponent>(uid, out var vocals))
-        {
-            StoredIdentityComponent ling = new()
-            {
-                IdentityAppearance = appearance,
-                IdentityVocals = vocals
-            };
-            identityStorage.Identities?.Add(ling);
-            identityStorage.OriginalIdentityComponent = ling;
-        }
-    }
-
     public override void Update(float frameTime)
     {
-        base.Update(frameTime);
-
-        var curTime = _timing.CurTime;
         var query = EntityQueryEnumerator<ChangelingDevourComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
-            if (comp.CurrentDevourEvent != null)
-                continue;
-
+            //Clean up canceled Sounds for Changelings if they cancel them
             var consumeStatus = _doAfterSystem.GetStatus(comp.CurrentDevourEvent?.DoAfter.Id);
-            var target = comp.CurrentDevourEvent?.Args.Target;
-            var user = comp.CurrentDevourEvent?.User;
-
-            if (consumeStatus.Equals(DoAfterStatus.Cancelled))
-            {
-                comp.CurrentDevourEvent = null;
-                _audioSystem.Stop(comp.CurrentDevourSound);
-                comp.CurrentDevourSound = null;
+            if (!consumeStatus.Equals(DoAfterStatus.Cancelled))
                 continue;
-            }
-            if (curTime > comp.NextTick)
-            {
-                if (consumeStatus.Equals(DoAfterStatus.Running))
-                {
-                    ConsumeDamageTick(target, comp, user);
-                }
-                comp.NextTick = curTime + TimeSpan.FromSeconds(1f);
-            }
+            comp.CurrentWindupEvent = null;
+            comp.CurrentDevourEvent = null;
+            _audioSystem.Stop(comp.CurrentDevourSound);
+            comp.CurrentDevourSound = null;
+            Dirty(uid, comp);
         }
     }
+
+    private void OnConsumeAttemptTick(EntityUid uid,
+        ChangelingDevourComponent component,
+        DoAfterAttemptEvent<ChangelingDevourConsumeDoAfterEvent> eventData)
+    {
+        if (component.CurrentDevourEvent == null)
+            return;
+        if (component.CurrentWindupEvent != null)
+            return;
+
+        var target = component.CurrentDevourEvent?.Args.Target;
+        var user = component.CurrentDevourEvent?.User;
+        var curTime = _timing.CurTime;
+        if (curTime > component.NextTick)
+        {
+            ConsumeDamageTick(target, component, user);
+            component.NextTick = curTime + TimeSpan.FromSeconds(1f);
+        }
+    }
+
     private void ConsumeDamageTick(EntityUid? target, ChangelingDevourComponent comp, EntityUid? user)
     {
         if (target == null)
@@ -107,65 +99,141 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
             }
         }
     }
+    private void OnInit(EntityUid uid, ChangelingDevourComponent component, MapInitEvent args)
+    {
+        _actionsSystem.AddAction(uid, ref component.ChangelingDevourActionEntity, component.ChangelingDevourAction);
+        var identityStorage = EnsureComp<ChangelingIdentityComponent>(uid);
+        if (identityStorage.OriginalIdentityComponent == null
+            && TryComp<HumanoidAppearanceComponent>(uid, out var appearance)
+            && TryComp<VocalComponent>(uid, out var vocals)
+            && TryComp<DnaComponent>(uid, out var dna))
+        {
+            StoredIdentityComponent ling = new()
+            {
+                IdentityDna = dna,
+                IdentityAppearance = appearance,
+                IdentityVocals = vocals
+            };
+            identityStorage.Identities?.Add(ling);
+            identityStorage.OriginalIdentityComponent = ling;
+        }
+    }
+
     private void OnDevourAction(EntityUid uid, ChangelingDevourComponent component, ChangelingDevourActionEvent args)
     {
-        var target = args.Target;
+        Dirty(args.Performer, component);
+        if (component.CurrentDevourEvent != null
+            || component.CurrentWindupEvent != null)
+            return;
         if (args.Handled || _whitelistSystem.IsWhitelistFailOrNull(component.Whitelist, args.Target))
             return;
+
+        var curTime = _timing.CurTime;
+        component.NextTick = curTime + TimeSpan.FromSeconds(15); // Prevent someone from spamming and canceling the Action repeatedly and doing absurd damage due to DoAfter's continuing onwards on cancel
         args.Handled = true;
+        component.CurrentWindupEvent = new ChangelingDevourWindupDoAfterEvent();
+        var target = args.Target;
         if (HasComp<ChangelingHuskedCorpseComponent>(target))
         {
-            _popupSystem.PopupClient("changeling-devour-failed-husk", args.Performer, args.Performer);
+            _popupSystem.PopupClient(Loc.GetString("changeling-devour-failed-husk"), args.Performer, args.Performer);
             return;
         }
-        _popupSystem.PopupPredicted("changeling-devour-begin-windup", args.Performer, null, PopupType.MediumCaution);
-        //TODO: check if the target has a resistance of higher than 10% Brute
-        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, uid, component.DevourWindupTime, new ChangelingDevourWindupDoAfterEvent(), uid, target: target, used: uid)
+        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, uid, component.DevourWindupTime, component.CurrentWindupEvent, uid, target: target, used: uid)
         {
             BreakOnMove = true,
             BlockDuplicate = true,
         });
 
+        _popupSystem.PopupPredicted(Loc.GetString("changeling-devour-begin-windup"), args.Performer, null, PopupType.MediumCaution);
+        //TODO: check if the target has a resistance of higher than 10% Brute
     }
     private void OnDevourWindup(EntityUid uid, ChangelingDevourComponent component, ChangelingDevourWindupDoAfterEvent args)
     {
-        component.CurrentDevourEvent = new ChangelingDevourConsumeDoAfterEvent();
+        var curTime = _timing.CurTime;
+        args.Handled = true;
 
-        _popupSystem.PopupPredicted("changeling-devour-begin-consume", args.User, null, PopupType.LargeCaution);
-        var sound = _audioSystem.PlayPredicted(component.ConsumeTickNoise, uid, uid);
-        component.CurrentDevourSound = sound?.Entity;
-        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, uid, component.DevourConsumeTime, component.CurrentDevourEvent, uid, target: args.Target, used: uid)
+
+        if(component.CurrentWindupEvent == null)
+            return;
+
+
+        Dirty(args.User, component);
+        var windupStatus = _doAfterSystem.GetStatus(args.DoAfter.Id);
+        if(!windupStatus.Equals(DoAfterStatus.Cancelled))
         {
-            BreakOnMove = true,
-            BlockDuplicate = true,
-        });
+            component.CurrentDevourEvent = new ChangelingDevourConsumeDoAfterEvent();
+            _popupSystem.PopupPredicted(Loc.GetString("changeling-devour-begin-consume"),
+                args.User,
+                null,
+                PopupType.LargeCaution);
+            var sound = _audioSystem.PlayPredicted(component.ConsumeTickNoise, uid, uid);
+            component.CurrentDevourSound = sound?.Entity;
+            component.NextTick = curTime + TimeSpan.FromSeconds(1);
+
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
+                uid,
+                component.DevourConsumeTime,
+                component.CurrentDevourEvent,
+                uid,
+                target: args.Target,
+                used: uid)
+            {
+                AttemptFrequency = AttemptFrequency.EveryTick,
+                BreakOnMove = true,
+                BlockDuplicate = true,
+            });
+        }
+        component.CurrentWindupEvent = null;
     }
     private void OnDevourConsume(EntityUid uid, ChangelingDevourComponent component, ChangelingDevourConsumeDoAfterEvent args)
     {
         args.Handled = true;
         //TODO: move Devour complete into if dead and make a separate one on the RARE chance someone survives the devour (and doesn't break it)
-        //TODO: Also loc all the shit
-        _popupSystem.PopupPredicted("changeling-devour-consume-complete", args.User, null, PopupType.LargeCaution);
+        //TODO: Make Consumption conditional on rotted bodies (I.E Fails with a unique popup)
+
         var target = args.Target;
+        if(component.CurrentDevourEvent == null)
+            return;
         if (target == null)
             return;
-        if (_mobState.IsDead((EntityUid)target) && TryComp<BodyComponent>(target, out var body)
-            && TryComp<AppearanceComponent>(target, out var appearance)
-            && TryComp<VocalComponent>(target, out var vocals)
-            && TryComp<ChangelingIdentityComponent>(args.User, out var identitystorage))
+
+        var consumeStatus = _doAfterSystem.GetStatus(component.CurrentDevourEvent?.DoAfter.Id);
+        if (consumeStatus != DoAfterStatus.Cancelled)
         {
+            _popupSystem.PopupPredicted(Loc.GetString("changeling-devour-consume-complete"), args.User, null, PopupType.LargeCaution);
+        }
+
+        if (_mobState.IsDead((EntityUid)target)
+            && TryComp<BodyComponent>(target, out var body)
+            && TryComp<HumanoidAppearanceComponent>(target, out var appearance)
+            && TryComp<VocalComponent>(target, out var vocals)
+            && TryComp<ChangelingIdentityComponent>(args.User, out var identitystorage)
+            && TryComp<DnaComponent>(target, out var dna))
+        {
+
             EnsureComp<ChangelingHuskedCorpseComponent>((EntityUid)target);
-            identitystorage.Identities?.Add(new()
+            var name = Name((EntityUid)target);
+            if (TryComp<NameModifierComponent>(target, out var namemodifier))
+                name = namemodifier.BaseName;
+            var description = MetaData((EntityUid)target).EntityDescription;
+            var consumedIdentity = new StoredIdentityComponent()
             {
+                IdentityName = name,
+                IdentityDescription = description,
+                IdentityDna = dna,
                 IdentityAppearance = appearance,
-                IdentityVocals = vocals
-            });
+                IdentityVocals = vocals,
+            };
+            identitystorage.Identities?.Add(consumedIdentity);
+            identitystorage.LastConsumedIdentityComponent = consumedIdentity;
             foreach (var organ in _bodySystem.GetBodyOrgans(target, body))
             {
                 _bodySystem.RemoveOrgan(organ.Id);
                 _entityManager.QueueDeleteEntity(organ.Id);
             }
         }
+        component.CurrentDevourEvent = null;
+        Dirty(uid, component);
     }
 }
 public sealed partial class ChangelingDevourActionEvent : EntityTargetActionEvent { }

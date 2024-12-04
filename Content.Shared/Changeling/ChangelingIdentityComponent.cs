@@ -9,6 +9,7 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Changeling.Devour;
@@ -21,4 +22,6 @@ public sealed partial class ChangelingIdentityComponent : Component
     public StoredIdentityComponent? OriginalIdentityComponent;
     [DataField]
     public List<StoredIdentityComponent>? Identities = [];
+    [DataField]
+    public StoredIdentityComponent? LastConsumedIdentityComponent;
 }

@@ -1,4 +1,6 @@
-﻿using Content.Shared.Changeling.Transform;
+﻿using Content.Client.Store.Ui;
+using Content.Shared.Changeling.Devour;
+using Content.Shared.Changeling.Transform;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Changeling.Transform;
@@ -16,7 +18,7 @@ public sealed class ChangelingTransformBoundUserInterface : BoundUserInterface
         base.Open();
         _menu = this.CreateWindow<ChangelingTransformMenu>();
         _menu.Owner(Owner);
-        _menu.OnTransformMenuClicked += SendChangelingTransformRadialMessage;
+        // _menu.OnTransformMenuClicked += SendChangelingTransformRadialMessage;
     }
 
     public void SendChangelingTransformRadialMessage(ChangelingTransformRadialMessage message)

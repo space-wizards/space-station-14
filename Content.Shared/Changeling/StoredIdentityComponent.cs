@@ -3,20 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Forensics;
+using Content.Shared.Humanoid;
+using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Speech.Components;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Changeling;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class StoredIdentityComponent : Component
 {
+    [DataField]
+    public String? IdentityName;
+    [DataField]
+    public String? IdentityDescription;
     /// <summary>
     /// The DNA of a stored Identity
     /// </summary>
     [DataField]
-    public DnaData? IdentityDna;
+    public DnaComponent? IdentityDna;
 
     /// <summary>
     /// The vocal information about the Identity
@@ -28,7 +38,7 @@ public sealed partial class StoredIdentityComponent : Component
     /// The appearance associated with the Identity
     /// </summary>
     [DataField]
-    public AppearanceComponent? IdentityAppearance;
+    public HumanoidAppearanceComponent? IdentityAppearance;
 
     ///TODO: Figure out how to handle unique organs like Vox lungs, Moth/lizard dietary restrictions
     /// <summary>

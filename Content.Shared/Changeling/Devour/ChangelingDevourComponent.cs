@@ -56,6 +56,8 @@ public sealed partial class ChangelingDevourComponent : Component
     public float DevourConsumeDamageCap = 350f;
 
     [DataField]
+    public ChangelingDevourWindupDoAfterEvent? CurrentWindupEvent = null;
+    [DataField]
     public ChangelingDevourConsumeDoAfterEvent? CurrentDevourEvent = null;
     [DataField]
     public EntityUid? CurrentDevourSound = null;
