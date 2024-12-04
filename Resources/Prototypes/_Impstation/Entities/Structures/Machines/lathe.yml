@@ -1,15 +1,15 @@
 - type: entity
-  id: JanitorialTechFab
+  id: ServiceTechFab
   parent: BaseLatheLube
-  name: janitorial techfab
-  description: Produces supplies useful for the janitorial crew.
+  name: service techfab
+  description: Produces supplies useful for the service crew.
   components:
   - type: Sprite
     sprite: Structures/Machines/techfab.rsi
     layers:
     - state: icon
       map: ["enum.LatheVisualLayers.IsRunning"]
-    - state: jani
+    - state: service
     - state: unlit
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
@@ -23,6 +23,7 @@
     idleState: icon
     runningState: icon
     staticRecipes:
+      #lights
       - FlashlightLantern
       - LightReplacer
       - LightTube
@@ -33,23 +34,62 @@
       - LightBulb
       - LedLightBulb
       - DimLightBulb
+      #janitorial
       - Bucket
       - SprayBottle
       - Plunger
       - MopItem
       - MopBucket
       - Holoprojector
-      - Mousetrap
       - TrashBag
+      - Mousetrap
       - WetFloorSign
+      - SoapNT #imp recipe
+      #botany
+      - HydroponicsToolMiniHoe
+      - HydroponicsToolScythe
+      - HydroponicsToolHatchet
+      - HydroponicsToolSpade
+      - HydroponicsToolClippers
+      #service
+      - ButchCleaver
+      - KitchenKnife
+      - DrinkMug
+      - DrinkMugMetal
+      - DrinkGlass
+      - DrinkShotGlass
+      - DrinkGlassCoupeShaped
+      - CustomDrinkJug
+      - FoodPlate
+      - FoodPlateSmall
+      - FoodPlatePlastic
+      - FoodPlateSmallPlastic
+      - FoodBowlBig
+      - FoodPlateTin
+      - FoodPlateMuffinTin
+      - FoodKebabSkewer
+      - Beaker
+      - LargeBeaker
+      - Dropper
+      - Syringe
+      - DeskBell
+      #misc
       - ClothingHeadHatCone
-      - SoapNT
+      - SprayPainter
+      - HandLabeler
     dynamicRecipes:
+      #janitorial
       - MegaSprayBottle
       - AdvMopItem
       - WeaponSprayNozzle
       - ClothingBackpackWaterTank
-      - CleanerGrenade
+      - CleanerGrenade #imp recipe
+      #misc.
+      - FauxTileAstroGrass
+      - FauxTileMowedAstroGrass
+      - FauxTileJungleAstroGrass
+      - FauxTileAstroIce
+      - FauxTileAstroSnow
   - type: MaterialStorage
     whitelist:
       tags:

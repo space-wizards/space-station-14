@@ -3,10 +3,10 @@
   result: CleanerGrenade
   completetime: 2
   materials:
-    Steel: 400
+    Steel: 300
     Plastic: 200
     Glass: 100
-    Plasma: 100
+    Plasma: 200
 
 - type: latheRecipe
   id: SoapNT
