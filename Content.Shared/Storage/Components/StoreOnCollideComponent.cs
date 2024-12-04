@@ -8,15 +8,27 @@ namespace Content.Shared.Storage.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(StoreOnCollideSystem))]
 public sealed partial class StoreOnCollideComponent : Component
 {
+    /// <summary>
+    ///     Entities that are allowed in the storage on collide
+    /// </summary>
     [DataField]
     public EntityWhitelist? Whitelist;
 
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    /// <summary>
+    ///     Should this storage lock on collide, provided they have a lock component?
+    /// </summary>
+    [DataField]
     public bool LockOnCollide;
 
+    /// <summary>
+    ///     Should the behavior be disabled when the storage is first opened?
+    /// </summary>
     [DataField]
     public bool DisableWhenFirstOpened;
 
+    /// <summary>
+    ///     If the behavior is disabled or not
+    /// </summary>
     [DataField, AutoNetworkedField]
     public bool Disabled;
 }
