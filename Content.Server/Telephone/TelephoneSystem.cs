@@ -156,16 +156,10 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         _recentChatMessages.Clear();
     }
 
-    public void BroadcastCallToTelephones(Entity<TelephoneComponent> source, HashSet<Entity<TelephoneComponent>> receivers, EntityUid user, bool muteReceivers = false)
+    public void BroadcastCallToTelephones(Entity<TelephoneComponent> source, HashSet<Entity<TelephoneComponent>> receivers, EntityUid user, TelephoneCallOptions? options = null)
     {
         if (IsTelephoneEngaged(source))
             return;
-
-        var options = new TelephoneCallOptions()
-        {
-            ForceConnect = true,
-            MuteReceiver = muteReceivers,
-        };
 
         foreach (var receiver in receivers)
             TryCallTelephone(source, receiver, user, options);

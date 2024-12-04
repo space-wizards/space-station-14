@@ -195,8 +195,9 @@ public sealed class HolopadSystem : SharedHolopadSystem
             return;
 
         var source = new Entity<TelephoneComponent>(entity, telephone);
-
         var query = AllEntityQuery<StationAiCoreComponent, TelephoneComponent>();
+        var reachableAiCores = new HashSet<Entity<TelephoneComponent>>();
+
         while (query.MoveNext(out var receiverUid, out var receiverStationAiCore, out var receiverTelephone))
         {
             var receiver = new Entity<TelephoneComponent>(receiverUid, receiverTelephone);
@@ -204,20 +205,22 @@ public sealed class HolopadSystem : SharedHolopadSystem
             if (!_telephoneSystem.IsSourceAbleToReachReceiver(source, receiver))
                 continue;
 
-            _telephoneSystem.CallTelephone(source, receiver, args.Actor);
-
-            if (!_telephoneSystem.IsSourceConnectedToReceiver(source, receiver))
+            if (_telephoneSystem.IsTelephoneEngaged(receiver))
                 continue;
+
+            reachableAiCores.Add((receiverUid, receiverTelephone));
 
             if (!_stationAiSystem.TryGetInsertedAI((receiver, receiverStationAiCore), out var insertedAi))
                 continue;
 
             if (_userInterfaceSystem.TryOpenUi(receiverUid, HolopadUiKey.AiRequestWindow, insertedAi.Value.Owner))
-            {
                 LinkHolopadToUser(entity, args.Actor);
-                break;
-            }
         }
+
+        if (!reachableAiCores.Any())
+            return;
+
+        _telephoneSystem.BroadcastCallToTelephones(source, reachableAiCores, args.Actor);
     }
 
     #endregion
@@ -706,7 +709,13 @@ public sealed class HolopadSystem : SharedHolopadSystem
             receivers.Add(receiverTelephoneEntity);
         }
 
-        _telephoneSystem.BroadcastCallToTelephones(sourceTelephoneEntity, receivers, user, true);
+        var options = new TelephoneCallOptions()
+        {
+            ForceConnect = true,
+            MuteReceiver = true,
+        };
+
+        _telephoneSystem.BroadcastCallToTelephones(sourceTelephoneEntity, receivers, user, options);
 
         if (!_telephoneSystem.IsTelephoneEngaged(sourceTelephoneEntity))
             return;

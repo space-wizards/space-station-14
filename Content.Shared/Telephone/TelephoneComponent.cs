@@ -164,10 +164,10 @@ public readonly record struct TelephoneMessageReceivedEvent(string Message, MsgC
 [Serializable, NetSerializable]
 public struct TelephoneCallOptions
 {
-    public bool ForceConnect;   // The source immediately opens a call with the receiver, potentially interupting a call already in progress 
-    public bool ForceJoin;      // The source and can smoothly join a call in progress, ringing the reciever if there is none
+    public bool ForceConnect;   // The source immediately starts a call with the receiver, potentially interrupting a call that is already in progress 
+    public bool ForceJoin;      // The source smoothly joins a call in progress, or starts a normal call with the receiver if there is none
     public bool MuteSource;     // Chatter from the source is not transmitted - could be used for eavesdropping when combined with 'ForceJoin'
-    public bool MuteReceiver;   // Chatter from the receiver - useful for emergency broadcasts
+    public bool MuteReceiver;   // Chatter from the receiver is not transmitted - useful for broadcasting messages to multiple receivers
 }
 
 [Serializable, NetSerializable]
