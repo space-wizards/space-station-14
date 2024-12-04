@@ -225,13 +225,13 @@ namespace Content.Shared.VendingMachines
     }
 
     [Serializable, NetSerializable]
-    public enum VendingMachineVisuals
+    public enum VendingMachineVisuals : byte
     {
         VisualState
     }
 
     [Serializable, NetSerializable]
-    public enum VendingMachineVisualState
+    public enum VendingMachineVisualState : byte
     {
         Normal,
         Off,

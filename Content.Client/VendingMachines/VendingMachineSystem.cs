@@ -54,7 +54,7 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
             component.ContrabandInventory.Add(entry.Key, new(entry.Value));
         }
 
-        if (_uiSystem.TryGetOpenUi<VendingMachineBoundUserInterface>(uid, VendingMachineUiKey.Key, out var bui))
+        if (UISystem.TryGetOpenUi<VendingMachineBoundUserInterface>(uid, VendingMachineUiKey.Key, out var bui))
         {
             if (fullUiUpdate)
             {
@@ -72,7 +72,7 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
         if (!Resolve(entity, ref entity.Comp))
             return;
 
-        if (_uiSystem.TryGetOpenUi<VendingMachineBoundUserInterface>(entity.Owner,
+        if (UISystem.TryGetOpenUi<VendingMachineBoundUserInterface>(entity.Owner,
                 VendingMachineUiKey.Key,
                 out var bui))
         {
@@ -110,6 +110,12 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
 
     private void UpdateAppearance(EntityUid uid, VendingMachineVisualState visualState, VendingMachineComponent component, SpriteComponent sprite)
     {
+        if (_light.TryGetLight(uid, out var pointlight))
+        {
+            var lightEnabled = visualState != VendingMachineVisualState.Broken && visualState != VendingMachineVisualState.Off;
+            _light.SetEnabled(uid, lightEnabled, pointlight);
+        }
+
         SetLayerState(VendingMachineVisualLayers.Base, component.OffState, sprite);
 
         switch (visualState)

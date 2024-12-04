@@ -29,10 +29,11 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
     [Dependency] private   readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private   readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] protected readonly SharedPointLightSystem _light = default!;
     [Dependency] private   readonly SharedPowerReceiverSystem _receiver = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] private   readonly SharedSpeakOnUIClosedSystem _speakOn = default!;
-    [Dependency] protected  readonly SharedUserInterfaceSystem _uiSystem = default!;
+    [Dependency] protected readonly SharedUserInterfaceSystem UISystem = default!;
     [Dependency] protected readonly IRobustRandom Randomizer = default!;
 
     public override void Initialize()
@@ -199,7 +200,7 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
 
         var entry = GetEntry(uid, itemId, type, vendComponent);
 
-        if (entry == null)
+        if (string.IsNullOrEmpty(entry?.ID))
         {
             Popup.PopupClient(Loc.GetString("vending-machine-component-try-eject-invalid-item"), uid);
             Deny((uid, vendComponent));
@@ -212,9 +213,6 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
             Deny((uid, vendComponent));
             return;
         }
-
-        if (string.IsNullOrEmpty(entry.ID))
-            return;
 
         // Start Ejecting, and prevent users from ordering while anim playing
         vendComponent.EjectEnd = Timing.CurTime + vendComponent.EjectDelay;
