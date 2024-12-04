@@ -39,7 +39,7 @@ public sealed class ClumsySystem : EntitySystem
     {
         // Clumsy people sometimes inject themselves! Apparently syringes are clumsy proof...
 		
-		// imp. checks if ClumsyHypo is false, if so, skips.
+		// checks if ClumsyHypo is false, if so, skips.
 		if (!ent.Comp.ClumsyHypo)
 			return;
 

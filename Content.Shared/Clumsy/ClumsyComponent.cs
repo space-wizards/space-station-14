@@ -60,31 +60,31 @@ public sealed partial class ClumsyComponent : Component
     public SoundSpecifier GunShootFailSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg");
 	
 	/// <summary>
-	///		Imp. Whether or not to apply Clumsy to hyposprays.
+	///		Whether or not to apply Clumsy to hyposprays.
 	/// </summary>
 	[DataField]
 	public bool ClumsyHypo = true;
 	
 	/// <summary>
-	///		Imp. Whether or not to apply Clumsy to defibs.
+	///		Whether or not to apply Clumsy to defibs.
 	/// </summary>
 	[DataField]
 	public bool ClumsyDefib = true;
 	
 	/// <summary>
-	///		Imp. Whether or not to apply Clumsy to guns.
+	///		Whether or not to apply Clumsy to guns.
 	/// </summary>
 	[DataField]
 	public bool ClumsyGuns = true;
 	
 	/// <summary>
-	///		Imp. Whether or not to apply Clumsy to vaulting.
+	///		Whether or not to apply Clumsy to vaulting.
 	/// </summary>
 	[DataField]
 	public bool ClumsyVaulting = true;
 	
 	/// <summary>
-	///		Imp. Lets you define a new "failed" message for each event.
+	///		Lets you define a new "failed" message for each event.
 	/// </summary>
 	[DataField]
 	public LocId HypoFailedMessage = "hypospray-component-inject-self-clumsy-message";
