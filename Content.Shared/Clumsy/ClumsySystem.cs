@@ -40,6 +40,10 @@ public sealed class ClumsySystem : EntitySystem
         // Clumsy people sometimes inject themselves! Apparently syringes are clumsy proof...
         if (!_random.Prob(ent.Comp.ClumsyDefaultCheck))
             return;
+		
+		// imp. checks if ClumsyHypo is false, if so, skips.
+		if (!ent.Comp.ClumsyHypo)
+			return;
 
         args.TargetGettingInjected = args.EntityUsingHypospray;
         args.InjectMessageOverride = "hypospray-component-inject-self-clumsy-message";
@@ -51,6 +55,10 @@ public sealed class ClumsySystem : EntitySystem
         // Clumsy people sometimes defib themselves!
         if (!_random.Prob(ent.Comp.ClumsyDefaultCheck))
             return;
+
+		// imp. checks if ClumsyDefib is false, if so, skips.
+		if (!ent.Comp.ClumsyDefib)
+			return;
 
         args.DefibTarget = args.EntityUsingDefib;
         _audio.PlayPvs(ent.Comp.ClumsySound, ent);
@@ -66,6 +74,10 @@ public sealed class ClumsySystem : EntitySystem
 
         if (!_random.Prob(ent.Comp.ClumsyDefaultCheck))
             return;
+
+		// imp. checks if ClumsyGuns is false, if so, skips.
+		if (!ent.Comp.ClumsyGuns)
+			return;
 
         if (ent.Comp.GunShootFailDamage != null)
             _damageable.TryChangeDamage(ent, ent.Comp.GunShootFailDamage, origin: ent);
@@ -89,6 +101,10 @@ public sealed class ClumsySystem : EntitySystem
         if (!_cfg.GetCVar(CCVars.GameTableBonk) && args.PuttingOnTable == ent.Owner && !rand.Prob(ent.Comp.ClumsyDefaultCheck))
             return;
 
+		// imp special. checks if ClumsyVaulting is false, if so, skips.
+		if (!ent.Comp.ClumsyVaulting)
+			return;
+
         HitHeadClumsy(ent, args.BeingClimbedOn);
 
         _audio.PlayPredicted(ent.Comp.ClumsySound, ent, ent);
@@ -102,8 +118,8 @@ public sealed class ClumsySystem : EntitySystem
         {
             // You are slamming yourself onto the table.
             _popup.PopupPredicted(
-                Loc.GetString("bonkable-success-message-user", ("bonkable", args.BeingClimbedOn)),
-                Loc.GetString("bonkable-success-message-others", ("victim", gettingPutOnTableName), ("bonkable", args.BeingClimbedOn)),
+                Loc.GetString(ent.Comp.VaulingFailedMessageSelf, ("bonkable", args.BeingClimbedOn)),
+                Loc.GetString(ent.Comp.VaulingFailedMessageOthers, ("victim", gettingPutOnTableName), ("bonkable", args.BeingClimbedOn)),
                 ent,
                 ent);
         }
@@ -112,7 +128,7 @@ public sealed class ClumsySystem : EntitySystem
             // Someone else slamed you onto the table.
             // This is only run in server so you need to use popup entity.
             _popup.PopupPredicted(
-                Loc.GetString("forced-bonkable-success-message",
+                Loc.GetString(ent.Comp.VaulingFailedMessageForced,
                     ("bonker", puttingOnTableName),
                     ("victim", gettingPutOnTableName),
                     ("bonkable", args.BeingClimbedOn)),
