@@ -1,103 +1,4 @@
 ﻿Entries:
-- author: ultramario1998
-  changes:
-  - message: bros tweaks
-    type: Tweak
-  id: 145
-  time: '2024-08-29T23:01:03.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/171
-- author: AirFryerBuyOneGetOneFree
-  changes:
-  - message: Adds Signature System from Delta-V
-    type: Add
-  id: 146
-  time: '2024-08-30T03:07:25.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/172
-- author: formlessnameless
-  changes:
-  - message: Ling Tweaks
-    type: Tweak
-  id: 147
-  time: '2024-08-30T03:07:53.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/173
-- author: sususuyo
-  changes:
-  - message: wave 3 music tracks
-    type: Add
-  id: 148
-  time: '2024-08-30T14:10:18.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/174
-- author: Darkmajia
-  changes:
-  - message: brosnade items and traitor uplink
-    type: Add
-  id: 149
-  time: '2024-08-30T14:10:56.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/175
-- author: Darkmajia
-  changes:
-  - message: suspenders fix
-    type: Fix
-  id: 150
-  time: '2024-08-30T14:11:12.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/176
-- author: starlighthowls
-  changes:
-  - message: removing ntas ww from rotation
-    type: Remove
-  id: 151
-  time: '2024-08-30T23:51:43.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/177
-- author: sususuyo
-  changes:
-  - message: volume correction for a jukebox track
-    type: Tweak
-  id: 152
-  time: '2024-08-31T15:38:29.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/178
-- author: AirFryerBuyOneGetOneFree
-  changes:
-  - message: Add new toys to the Recruiter Shuttle
-    type: Add
-  id: 153
-  time: '2024-08-31T15:38:39.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/179
-- author: LucasTheDrgn
-  changes:
-  - message: QSI Fix 2 - Actually Fixing It
-    type: Fix
-  id: 154
-  time: '2024-08-31T15:38:55.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/180
-- author: Darkmajia
-  changes:
-  - message: BROSochloric BROS, edible/grindable BROS, adjusted BROSnade
-    type: Add
-  id: 155
-  time: '2024-08-31T15:39:28.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/181
-- author: formlessnameless
-  changes:
-  - message: Exclusively Upstream stuff - Fixes AI Eye dying to singulo, Revs spawning
-      as solid, other stuff. Includes RobustToolbox update, RUN_THIS.py required.
-    type: Tweak
-  id: 156
-  time: '2024-08-31T15:39:37.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/182
-- author: TGRCdev
-  changes:
-  - message: Fixes some error drinks
-    type: Fix
-  id: 157
-  time: '2024-09-01T00:02:56.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/183
-- author: starlighthowls
-  changes:
-  - message: new boy ! (not rounstart enabled)
-    type: Add
-  id: 158
-  time: '2024-09-01T18:32:32.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/184
 - author: formlessnameless
   changes:
   - message: Added mini jetpacks to salv starting loadout
@@ -4435,3 +4336,130 @@
   id: 644
   time: '2024-12-04T02:59:56.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/890
+- author: Pinkbat5
+  changes:
+  - message: Fixed some duplicate and missing items in the Head of Security loadout.
+    type: Fix
+  id: 645
+  time: '2024-12-04T13:18:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/892
+- author: starlighthowls
+  changes:
+  - message: changed and fixed lots of whale map things!
+    type: Tweak
+  id: 646
+  time: '2024-12-04T13:17:45.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/891
+- author: Darkmajia
+  changes:
+  - message: Impstation changelogs now let you know when they've been updated - just
+      like this one!
+    type: Add
+  id: 647
+  time: '2024-12-04T13:19:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/897
+- author: Darkmajia
+  changes:
+  - message: Space wind has been disabled.
+    type: Remove
+  id: 648
+  time: '2024-12-04T13:20:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/899
+- author: DinnerCalzone
+  changes:
+  - message: The spray painter can now paint airlocks to use the new civilian door
+      sprites.
+    type: Add
+  - message: Spray painter pipe color options have been adjusted to be more distinct
+      and more color options have been added.
+    type: Tweak
+  id: 649
+  time: '2024-12-04T13:26:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/894
+- author: DinnerCalzone
+  changes:
+  - message: Added the service techfab, which can be used to produce a number of useful
+      items for the service staff. The machine board for it can be produced on the
+      circuit imprinter on roundstart.
+    type: Add
+  - message: Cleanades can now be crafted at protolathes and service techfabs once
+      Advanced Cleaning has been researched.
+    type: Add
+  id: 650
+  time: '2024-12-04T13:25:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/893
+- author: widgetbeck
+  changes:
+  - message: Made Slime People's damage from water vapor scale with quantity, which
+      should make it more dangerous.
+    type: Tweak
+  id: 651
+  time: '2024-12-04T13:29:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/898
+- author: widgetbeck
+  changes:
+  - message: Fixed some Urists not spawning with emote sounds. Have fun with that,
+      Admins.
+    type: Fix
+  id: 652
+  time: '2024-12-04T13:29:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/896
+- author: Widgetbeck, TGRCDev
+  changes:
+  - message: Courtesy of @TGRCdev, the Blocking action will now deactivate when the
+      entity blocking is crit or stunned.
+    type: Fix
+  - message: Decapoid claws have reduced Piercing damage and increased Structural
+      damage.
+    type: Tweak
+  - message: Decapoid claws can now be used as a shield, blocking 20% of incoming
+      damage when active.
+    type: Tweak
+  - message: Decapoids now have greater friction while weightless and near structures.
+    type: Tweak
+  - message: Decapoid guidebook entry update.
+    type: Tweak
+  id: 653
+  time: '2024-12-04T15:27:02.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/895
+- author: Sha-Seng
+  changes:
+  - message: Stun Enforcers now come from nonlethals research to make advanced riot
+      control less cracked
+    type: Tweak
+  - message: Fixed capitalization on the stun shotgun item names
+    type: Tweak
+  id: 654
+  time: '2024-12-04T15:56:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/900
+- author: honeyed-lemons
+  changes:
+  - message: Chem master now displays reagent colors and sorts alphabetically.
+    type: Tweak
+  id: 655
+  time: '2024-12-04T18:51:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/903
+- author: hivehum
+  changes:
+  - message: The medsec hud now takes sunglasses to craft, instead of security glasses.
+    type: Tweak
+  id: 656
+  time: '2024-12-04T20:39:27.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/904
+- author: DinnerCalzone
+  changes:
+  - message: Adjusted player count range of a number of maps to better reflect what
+      they can accommodate.
+    type: Tweak
+  id: 657
+  time: '2024-12-05T06:10:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/911
+- author: honeyed-lemons
+  changes:
+  - message: Updated Hydroponics Jumpsuit, Jumpskirt, and backpack colors.
+    type: Tweak
+  - message: Updated Engineering Jumpsuit and Jumpskirt colors.
+    type: Tweak
+  id: 658
+  time: '2024-12-05T06:13:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/910

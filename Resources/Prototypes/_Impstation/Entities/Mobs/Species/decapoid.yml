@@ -113,12 +113,14 @@
       Acidic:  [ Touch ]
   - type: Vocal
     sounds:
+      Male: UnisexDecapoid
+      Female: UnisexDecapoid
       Unsexed: UnisexDecapoid
   - type: MovementSpeedModifier
     baseSprintSpeed: 3.5
     baseWalkSpeed: 1.5
     weightlessAcceleration: 1.5 # move more easily in space
-    weightlessFriction: 1 # more control over movement in space?
+    weightlessFrictionNoInput: 2 # more control over movement in space?
     weightlessModifier: 1
   - type: Temperature
     heatDamageThreshold: 380 # slightly more vulnerable to heat
@@ -142,6 +144,10 @@
         Blunt: 5
     clumsySound:
       path: /Audio/_Impstation/Effects/Clumsy/crab_snap.ogg # the game gets really touchy about having that initial forward slash.
+    clumsyHypo: false # these variables are imp specials
+    clumsyVaulting: false
+    clumsyDefib: false
+    gunFailedMessage: gun-clumsy-decapoid
   - type: Bloodstream
     bloodReagent: CopperBlood # real life crustaceans are in the same clade as spiders and share a blood type
   - type: Puller

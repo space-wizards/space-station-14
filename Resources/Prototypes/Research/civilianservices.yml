@@ -154,6 +154,7 @@
   recipeUnlocks:
   - AdvMopItem
   - MegaSprayBottle
+  - CleanerGrenade #imp addition
 
 - type: technology
   id: HONKMech

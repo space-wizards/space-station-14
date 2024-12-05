@@ -1,5 +1,5 @@
 - type: entity
-  name: P.V.C
+  name: P.V.C.
   parent: BaseSword
   id: PVC
   description: Percision Velocity Channeler.

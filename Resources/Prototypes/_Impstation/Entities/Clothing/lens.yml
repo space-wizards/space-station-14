@@ -1,7 +1,7 @@
 - type: entity
   parent: ClothingEyesBase
   id: PrescriptionLens
-  name: perscription lens
+  name: prescription lens
   description: Adaptive lenses that fit inside frames or your face.
   components:
   - type: Sprite
@@ -17,7 +17,7 @@
 - type: entity
   parent: PrescriptionLens
   id: PrescriptionLensStrong
-  name: strong perscription lens
+  name: strong prescription lens
   components:
   - type: Sprite
     layers:
