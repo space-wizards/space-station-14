@@ -106,3 +106,145 @@
     damage:
       types:
         Blunt: 0
+        
+- type: entity
+  name: packaged anomaly
+  description: A universal assembly package used to create a fake anomaly. Specially from Hohohonkers!
+  id: FakeAnomalyFlatpack
+  parent: BaseFlatpack
+  components:
+  - type: Flatpack
+    entity: FakeAnomalyIce
+    randomEntities:
+      - FakeAnomalyIce
+      - FakeAnomalyPyroclastic
+      - FakeAnomalyGravity
+      - FakeAnomalyElectricity
+      - FakeAnomalyFlesh
+      - FakeAnomalyBluespace
+  - type: Sprite
+    layers:
+    - state: base
+    - state: overlay
+      color: "#cec8ac"
+    - state: icon-default
+    
+- type: entity
+  name: anomaly
+  description: An incomprehensible joke in space. Should you really be standing this close to it?
+  id: FakeAnomalyIce
+  parent: BaseStructureDynamic
+  components:
+  - type: Anomaly
+    maxPointsPerSecond: 0
+    minPointsPerSecond: 0
+    pulseSound:
+      collection: RadiationPulse
+      params:
+        volume: 5
+  - type: AmbientSound
+    range: 5
+    volume: -5
+    sound:
+      path: /Audio/Ambience/anomaly_drone.ogg
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/ice_anom.rsi
+    layers:
+    - state: anom
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: PointLight
+    radius: 2.0
+    energy: 2.5
+    color: "#befaff"
+    castShadows: false
+  - type: Anchorable
+  - type: Pullable
+  
+- type: entity
+  id: FakeAnomalyPyroclastic
+  parent: FakeAnomalyIce
+  components:
+  - type: Sprite
+    sprite: Structures/Specific/Anomalies/pyro_anom.rsi
+    layers:
+    - state: anom
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: PointLight
+    radius: 6.0
+    energy: 7.5
+    color: "#E25822"
+    castShadows: false
+    
+- type: entity
+  id: FakeAnomalyGravity
+  parent: FakeAnomalyIce
+  components:
+  - type: Sprite
+    layers:
+    - state: anom2
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: anom2-pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: PointLight
+    radius: 5.0
+    energy: 20
+    color: "#1e070e"
+    castShadows: false
+    
+- type: entity
+  id: FakeAnomalyElectricity
+  parent: FakeAnomalyIce
+  components:
+  - type: Sprite
+    layers:
+    - state: anom3
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: anom3-pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: PointLight
+    radius: 2.0
+    energy: 5.0
+    color: "#ffffaa"
+    castShadows: false
+    
+- type: entity
+  id: FakeAnomalyFlesh
+  parent: FakeAnomalyIce
+  components:
+  - type: Sprite
+    layers:
+    - state: anom5
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: anom5-pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: PointLight
+    radius: 2.0
+    energy: 7.5
+    color: "#cb5b7e"
+    castShadows: false
+    
+- type: entity
+  id: FakeAnomalyBluespace
+  parent: FakeAnomalyIce
+  components:
+  - type: Sprite
+    layers:
+    - state: anom4
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: anom4-pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: PointLight
+    radius: 2.0
+    energy: 7.5
+    color: "#00ccff"
+    castShadows: false

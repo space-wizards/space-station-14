@@ -12,6 +12,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Construction;
 
@@ -30,6 +31,7 @@ public abstract class SharedFlatpackSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedToolSystem _tool = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -67,7 +69,7 @@ public abstract class SharedFlatpackSystem : EntitySystem
 
         args.Handled = true;
 
-        if (comp.Entity == null)
+        if (comp.Entity == null && comp.RandomEntities == null)
         {
             Log.Error($"No entity prototype present for flatpack {ToPrettyString(ent)}.");
 
@@ -89,6 +91,9 @@ public abstract class SharedFlatpackSystem : EntitySystem
                 _popup.PopupEntity(Loc.GetString("flatpack-unpack-no-room"), uid, args.User);
             return;
         }
+        
+        if (comp.RandomEntities != null)
+            comp.Entity = _random.Pick(comp.RandomEntities);
 
         if (_net.IsServer)
         {

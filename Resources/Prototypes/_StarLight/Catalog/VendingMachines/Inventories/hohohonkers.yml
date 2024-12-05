@@ -42,3 +42,18 @@
     whitelist:
     - Civilian
     - Command
+    
+- type: listing
+  id: VendorFakeAnomalyFlatpack
+  productEntity: FakeAnomalyFlatpack
+  cost:
+    NTCredit: 98
+  categories:
+  - SLClown
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 6
+  - !type:BuyerDepartmentCondition
+    whitelist:
+    - Civilian
+    - Command

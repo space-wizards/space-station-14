@@ -24,6 +24,9 @@ public sealed partial class FlatpackComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public EntProtoId? Entity;
+    
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    public List<EntProtoId>? RandomEntities;
 
     /// <summary>
     /// Sound effect played upon the object being unpacked.
