@@ -154,11 +154,15 @@
     slots:
       garnish_slot:
         name: garnish-slot-component-slot-name-garnish
+        insertSound: /Audio/Effects/glass_clink.ogg
+        ejectSound: /Audio/Effects/glass_clink.ogg
         whitelist:
           tags:
           - DrinkGarnish
       decoration_slot:
         name: decoration-slot-component-slot-name-decoration
+        insertSound: /Audio/Effects/glass_clink.ogg
+        ejectSound: /Audio/Effects/glass_clink.ogg
         whitelist:
           tags:
           - DrinkDecoration

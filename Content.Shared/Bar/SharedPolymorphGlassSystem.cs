@@ -38,7 +38,7 @@ public abstract class SharedPolymorphGlassSystem : EntitySystem
             var v = new Verb
             {
                 Priority = 2,
-                Category = new VerbCategory("Glass Type", "Objects/Consumable/Drinks/glass_clear.rsi/icon.png"),
+                Category = new VerbCategory(Loc.GetString("polymorphic-glass-verb-category"), "Objects/Consumable/Drinks/glass_clear.rsi/icon.png"),
                 Text = proto.Name,
                 DoContactInteraction = true,
                 Icon = glass.Value,
