@@ -71,6 +71,7 @@
   loadouts:
   - EmergencyNitrogen
   - EmergencyOxygen
+  - EmergencyNitrogenVox
   - LoadoutSpeciesVoxNitrogen
 
 - type: loadoutGroup
@@ -469,6 +470,7 @@
   loadouts:
   - EmergencyNitrogenClown
   - EmergencyOxygenClown
+  - EmergencyNitrogenVoxClown
   - LoadoutSpeciesVoxNitrogen
 
 - type: loadoutGroup
@@ -525,6 +527,7 @@
   loadouts:
   - EmergencyNitrogenMime
   - EmergencyOxygenMime
+  - EmergencyNitrogenVoxMime
   - LoadoutSpeciesVoxNitrogen
 
 - type: loadoutGroup
@@ -809,6 +812,7 @@
   loadouts:
   - EmergencyNitrogenExtended
   - EmergencyOxygenExtended
+  - EmergencyNitrogenExtendedVox
   - LoadoutSpeciesVoxNitrogen
 
 # Science
@@ -1091,6 +1095,7 @@
   loadouts:
   - EmergencyNitrogenSecurity
   - EmergencyOxygenSecurity
+  - EmergencyNitrogenSecurityVox
   - LoadoutSpeciesVoxNitrogen
 
 - type: loadoutGroup
@@ -1280,6 +1285,7 @@
   loadouts:
   - EmergencyNitrogenMedical
   - EmergencyOxygenMedical
+  - EmergencyNitrogenMedicalVox
   - LoadoutSpeciesVoxNitrogen
 
 # Wildcards
@@ -1322,6 +1328,7 @@
   loadouts:
   - EmergencyNitrogenSyndicate
   - EmergencyOxygenSyndicate
+  - EmergencyNitrogenSyndicateVox
   - LoadoutSpeciesVoxNitrogen
 
 - type: loadoutGroup

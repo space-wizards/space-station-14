@@ -1,3 +1,5 @@
+# Standrad
+
 - type: entity
   parent: BoxCardboard
   id: BoxSurvival
@@ -34,6 +36,23 @@
   # Intentionally wrong picture on the box. NT did not care enough to change it.
   - type: Label
     currentLabel: reagent-name-nitrogen
+
+- type: entity
+  name: vox box
+  parent: BoxSurvivalNitrogen
+  id: BoxSurvivalNitrogenVox
+  suffix: N2+Char Vox
+  components:
+  - type: StorageFill
+    contents:
+    - id: PillCanisterCharcoal #vox should spawn with their mask on so we can replace it here.
+    - id: EmergencyNitrogenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkWaterBottleFull
+
+#Engineering
 
 - type: entity
   parent: BoxCardboard
@@ -73,7 +92,23 @@
     currentLabel: reagent-name-nitrogen
 
 - type: entity
+  name: vox box
+  parent: BoxSurvivalEngineering
+  id: BoxSurvivalEngineeringNitrogenVox
+  suffix: Extended Vox
+  components:
+  - type: StorageFill
+    contents:
+    - id: PillCanisterCharcoal #vox should spawn with their mask on so we can replace it here.
+    - id: ExtendedEmergencyNitrogenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkWaterBottleFull
 
+# Security
+
+- type: entity
   parent: BoxCardboard
   id: BoxSurvivalSecurity
   name: survival box
@@ -111,7 +146,23 @@
     currentLabel: reagent-name-nitrogen
 
 - type: entity
+  name: vox box
+  parent: BoxSurvivalSecurity
+  id: BoxSurvivalSecurityNitrogenVox
+  suffix: Security Vox
+  components:
+  - type: StorageFill
+    contents:
+    - id: PillCanisterCharcoal #vox should spawn with their mask on so we can replace it here.
+    - id: EmergencyNitrogenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkWaterBottleFull
 
+# Medical
+
+- type: entity
   parent: BoxCardboard
   id: BoxSurvivalMedical
   name: survival box
@@ -147,6 +198,23 @@
   # Intentionally wrong picture on the box. NT did not care enough to change it.
   - type: Label
     currentLabel: reagent-name-nitrogen
+
+- type: entity
+  name: vox box
+  parent: BoxSurvivalMedical
+  id: BoxSurvivalMedicalNitrogenVox
+  suffix: Medical Vox
+  components:
+  - type: StorageFill
+    contents:
+    - id: PillCanisterCharcoal #vox should spawn with their mask on so we can replace it here.
+    - id: EmergencyNitrogenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkWaterBottleFull
+
+# Clown
 
 - type: entity
   parent: BoxCardboard
@@ -190,6 +258,23 @@
     currentLabel: reagent-name-nitrogen
 
 - type: entity
+  name: vox box
+  parent: BoxHugNitrogen
+  id: BoxHugNitrogenVox
+  suffix: N2+Char Vox
+  components:
+  - type: StorageFill
+    contents:
+    - id: PillCanisterCharcoal #vox should spawn with their mask on so we can replace it here.
+    - id: EmergencyNitrogenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodSnackNutribrick
+    - id: DrinkWaterBottleFull
+
+# Mime
+
+- type: entity
   parent: BoxSurvival
   id: BoxMime
   suffix: Mime, Emergency
@@ -218,6 +303,23 @@
     - id: DrinkWaterBottleFull
   - type: Label
     currentLabel: reagent-name-nitrogen
+
+- type: entity
+  name: vox box
+  parent: BoxMimeNitrogen
+  id: BoxMimeNitrogenVox
+  suffix: Mime, Vox
+  components:
+  - type: StorageFill
+    contents:
+    - id: PillCanisterCharcoal #vox should spawn with their mask on so we can replace it here.
+    - id: EmergencyNitrogenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodBreadBaguette
+    - id: DrinkWaterBottleFull
+
+# Syndicate
 
 - type: entity
   parent: BoxCardboard
@@ -253,3 +355,18 @@
     # Intentionally wrong picture on the box to mimic the NT one
   - type: Label
     currentLabel: reagent-name-nitrogen
+
+- type: entity
+  name: vox box
+  parent: BoxSurvivalSyndicateNitrogen
+  id: BoxSurvivalSyndicateNitrogenVox
+  suffix: Syndie, Vox
+  components:
+  - type: StorageFill
+    contents:
+    - id: PillCanisterCharcoal #vox should spawn with their mask on so we can replace it here.
+    - id: EmergencyNitrogenTankFilled
+    - id: EmergencyMedipen
+    - id: Flare
+    - id: FoodBreadBaguette
+    - id: DrinkWaterBottleFull
