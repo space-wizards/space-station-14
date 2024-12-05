@@ -171,6 +171,7 @@
     spawned:
     - id: FoodMeat
     - amount: 1
+
 - type: entity
   id: MobKangarooSpaceSalvage
   parent: MobKangarooSpace
