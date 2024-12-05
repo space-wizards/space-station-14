@@ -120,7 +120,6 @@
     - Mouse
     - Meat
   - type: Emoting
-  - type: ProtectedFromStepTriggers
   - type: CanEscapeInventory
   - type: MobPrice
     price: 50
@@ -195,6 +194,7 @@
 - type: entity
   parent: BaseMouseRC
   id: BaseMouseRCUplinkFilled
+  categories: [ HideSpawnMenu ]
   components:
   - type: StorageFill
     contents:
