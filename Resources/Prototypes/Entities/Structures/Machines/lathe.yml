@@ -945,12 +945,14 @@
       - ClothingUniformJumpskirtBartender
       - ClothingHeadHatCapcap
       - ClothingHeadHatCaptain
+      - ClothingHeadHatBeretCaptainHarmony # Harmony
       - ClothingUniformJumpsuitCaptain
       - ClothingUniformJumpskirtCaptain
       - ClothingUniformJumpsuitCapFormal
       - ClothingUniformJumpskirtCapFormalDress
       - ClothingUniformJumpsuitCaptainTurtleneckHarmony # Harmony
       - ClothingUniformJumpskirtCaptainTurtleneckHarmony # Harmony
+      - ClothingUniformJumpsuitCaptainHawaiianHarmony # Harmony
       - ClothingUniformJumpsuitCargo
       - ClothingUniformJumpskirtCargo
       - ClothingUniformJumpsuitSalvageSpecialist

@@ -11,6 +11,17 @@
 
 - type: entity
   parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpsuitCaptainHawaiianHarmony
+  name: captain's hawaiian shirt
+  description: Actually, you know what? YOU'RE FIRED!!
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/captain_hawaiian.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/captain_hawaiian.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
   id: ClothingUniformJumpsuitHeadOfPersonnelTurtleneckHarmony
   name: head of personnel's turtleneck
   description: A blue turtle neck meant to amplify the comfort of the office. Watch out for dog hairs.

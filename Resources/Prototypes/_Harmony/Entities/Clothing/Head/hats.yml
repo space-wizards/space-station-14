@@ -40,3 +40,19 @@
     - ClothMade
     - HamsterWearable
     - WhitelistChameleon
+
+- type: entity
+  parent: [ClothingHeadBase, BaseCommandContraband]
+  id: ClothingHeadHatBeretCaptainHarmony
+  name: captain's beret
+  description: A simple yet stylish beret made out of only the finest materials.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Head/Hats/beret_captain.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Head/Hats/beret_captain.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - HamsterWearable
+    - WhitelistChameleon

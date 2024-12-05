@@ -9,6 +9,16 @@
   id: ClothingUniformJumpskirtCaptainTurtleneckHarmony
   result: ClothingUniformJumpskirtCaptainTurtleneckHarmony
 
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpsuitCaptainHawaiianHarmony
+  result: ClothingUniformJumpsuitCaptainHawaiianHarmony
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingHeadHatBeretCaptainHarmony
+  result: ClothingHeadHatBeretCaptainHarmony
+
 ## HoP
 - type: latheRecipe
   parent: BaseCommandJumpsuitRecipe
