@@ -43,6 +43,10 @@
     thresholds:
       0: Alive
       50: Dead
+  - type: Butcherable
+    spawned:
+    - id: DiamondOre1
+      amount: 1
   - type: MovementSpeedModifier
     baseWalkSpeed: 5
     baseSprintSpeed: 7
