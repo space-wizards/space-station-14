@@ -18,4 +18,7 @@ public sealed partial class StarlightCCVars
     /// </summary>
     public static readonly CVarDef<bool> PeacefulRoundEnd =
         CVarDef.Create("game.peaceful_end", true, CVar.SERVERONLY);
+        
+    public static readonly CVarDef<string> MHelpSound =
+        CVarDef.Create("audio.mhelp_sound", "/Audio/_Starlight/Effects/hello_moderator.ogg", CVar.ARCHIVE | CVar.CLIENTONLY);
 }

@@ -10,6 +10,7 @@ using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Shared.Starlight.MHelp;
+using Content.Shared.Starlight.CCVar;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Input;
@@ -54,7 +55,7 @@ public sealed class MHelpUIController : UIController, IOnSystemChanged<MentorSys
         SubscribeNetworkEvent<MHelpTypingUpdated>(OnTypingUpdated);
 
         _playerRolesManager.PlayerStatusUpdated += OnPlayerStatusUpdated;
-        _config.OnValueChanged(CCVars.AHelpSound, v => _mHelpSound = v, true);
+        _config.OnValueChanged(StarlightCCVars.MHelpSound, v => _mHelpSound = v, true);
     }
     public void UnloadButton()
     {
