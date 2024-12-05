@@ -127,6 +127,8 @@
       Junction: BaseAirlock
       WallMounts: ScienceLabsWalls
       Window: BaseWindow
+    tiles:
+      FallbackTile: FloorDark
     whitelists:
       Rooms:
         tags:

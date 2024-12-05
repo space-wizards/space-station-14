@@ -17,6 +17,9 @@
           task: RatServantCombatCompound
     - tasks:
         - !type:HTNCompoundTask
+          task: FollowCompound
+    - tasks:
+        - !type:HTNCompoundTask
           task: IdleCompound
 
 - type: htnCompound

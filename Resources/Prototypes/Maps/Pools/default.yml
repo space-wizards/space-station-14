@@ -1,6 +1,7 @@
 - type: gameMapPool
   id: DefaultMapPool
   maps:
+  - Amber
   - Bagel
   - Box
   - Cog

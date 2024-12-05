@@ -44,6 +44,10 @@
   id: AirlockArmory
 
 - type: wireLayout
+  parent: Airlock
+  id: AirlockExternal
+
+- type: wireLayout
   id: HighSec
   wires:
   - !type:PowerWireAction
@@ -86,6 +90,7 @@
 - type: wireLayout
   id: FireAlarm
   wires:
+  - !type:AiInteractWireAction
   - !type:PowerWireAction
   - !type:AtmosMonitorDeviceNetWire
     alarmOnPulse: true
@@ -152,22 +157,35 @@
   id: TrainingDefusable
   dummyWires: 0
   wires:
-    - !type:ActivateWireAction
-    - !type:BoltWireAction
-    - !type:DelayWireAction
-    - !type:ProceedWireAction
-    - !type:BoomWireAction
-    
+  - !type:ActivateWireAction
+  - !type:BoltWireAction
+  - !type:DelayWireAction
+  - !type:ProceedWireAction
+  - !type:BoomWireAction
+
 - type: wireLayout
   id: Jukebox
   dummyWires: 2
   wires:
-    - !type:PowerWireAction
-    - !type:AiInteractWireAction
-    
+  - !type:PowerWireAction
+  - !type:AiInteractWireAction
+
 - type: wireLayout
   id: AnomalyGenerator
   dummyWires: 2
   wires:
-    - !type:PowerWireAction
-    - !type:AiInteractWireAction
+  - !type:PowerWireAction
+  - !type:AiInteractWireAction
+
+- type: wireLayout
+  id: Computer
+  dummyWires: 3
+  wires:
+  - !type:PowerWireAction
+
+- type: wireLayout
+  id: ComputerAi
+  dummyWires: 2
+  wires:
+  - !type:PowerWireAction
+  - !type:AiInteractWireAction

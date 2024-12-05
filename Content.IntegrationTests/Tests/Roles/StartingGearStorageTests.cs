@@ -35,15 +35,16 @@ public sealed class StartingGearPrototypeStorageTest
         {
             foreach (var gearProto in protos)
             {
-                var backpackProto = ((IEquipmentLoadout) gearProto).GetGear("back");
-                if (backpackProto == string.Empty)
-                    continue;
-
-                var bag = server.EntMan.SpawnEntity(backpackProto, coords);
                 var ents = new ValueList<EntityUid>();
 
                 foreach (var (slot, entProtos) in gearProto.Storage)
                 {
+                    ents.Clear();
+                    var storageProto = ((IEquipmentLoadout)gearProto).GetGear(slot);
+                    if (storageProto == string.Empty)
+                        continue;
+
+                    var bag = server.EntMan.SpawnEntity(storageProto, coords);
                     if (entProtos.Count == 0)
                         continue;
 
@@ -59,9 +60,8 @@ public sealed class StartingGearPrototypeStorageTest
 
                         server.EntMan.DeleteEntity(ent);
                     }
+                    server.EntMan.DeleteEntity(bag);
                 }
-
-                server.EntMan.DeleteEntity(bag);
             }
 
             mapManager.DeleteMap(testMap.MapId);

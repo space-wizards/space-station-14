@@ -1,6 +1,6 @@
-using Content.Server.Players.RateLimiting;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
+using Content.Shared.Players.RateLimiting;
 using Robust.Shared.Player;
 
 namespace Content.Server.Chat.Managers;
@@ -12,15 +12,13 @@ internal sealed partial class ChatManager
     private void RegisterRateLimits()
     {
         _rateLimitManager.Register(RateLimitKey,
-            new RateLimitRegistration
-            {
-                CVarLimitPeriodLength = CCVars.ChatRateLimitPeriod,
-                CVarLimitCount = CCVars.ChatRateLimitCount,
-                CVarAdminAnnounceDelay = CCVars.ChatRateLimitAnnounceAdminsDelay,
-                PlayerLimitedAction = RateLimitPlayerLimited,
-                AdminAnnounceAction = RateLimitAlertAdmins,
-                AdminLogType = LogType.ChatRateLimited,
-            });
+            new RateLimitRegistration(CCVars.ChatRateLimitPeriod,
+                CCVars.ChatRateLimitCount,
+                RateLimitPlayerLimited,
+                CCVars.ChatRateLimitAnnounceAdminsDelay,
+                RateLimitAlertAdmins,
+                LogType.ChatRateLimited)
+            );
     }
 
     private void RateLimitPlayerLimited(ICommonSession player)
@@ -30,8 +28,7 @@ internal sealed partial class ChatManager
 
     private void RateLimitAlertAdmins(ICommonSession player)
     {
-        if (_configurationManager.GetCVar(CCVars.ChatRateLimitAnnounceAdmins))
-            SendAdminAlert(Loc.GetString("chat-manager-rate-limit-admin-announcement", ("player", player.Name)));
+        SendAdminAlert(Loc.GetString("chat-manager-rate-limit-admin-announcement", ("player", player.Name)));
     }
 
     public RateLimitStatus HandleRateLimit(ICommonSession player)
