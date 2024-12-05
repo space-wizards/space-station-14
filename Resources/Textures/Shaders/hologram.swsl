@@ -4,7 +4,7 @@ uniform highp vec3 color1;
 uniform highp vec3 color2;
 uniform highp float alpha;
 uniform highp float intensity;
-uniform highp int texHeight;
+uniform highp float texHeight;
 uniform highp float t;
 
 const highp float PI = 3.14159265;
@@ -14,7 +14,7 @@ void fragment() {
 	highp float bw = zGrayscale(base.rgb * intensity);
 	highp vec4 color = vec4(vec3(color1), alpha);
 
-	if (sin(PI * (UV.y + t) * texHeight) < 0)
+	if (sin(PI * (UV.y + t) * texHeight) < 0.0)
 	{
 		color = vec4(vec3(color2), alpha);
 	}

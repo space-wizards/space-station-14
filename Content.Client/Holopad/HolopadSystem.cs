@@ -156,7 +156,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
     private void UpdateHologramShader(EntityUid uid, SpriteComponent sprite, HolopadHologramComponent holopadHologram)
     {
         // Find the texture height of the largest layer
-        var texHeight = sprite.AllLayers.Max(x => x.PixelSize.Y);
+        float texHeight = sprite.AllLayers.Max(x => x.PixelSize.Y);
 
         var instance = _prototypeManager.Index<ShaderPrototype>(holopadHologram.ShaderName).InstanceUnique();
         instance.SetParameter("color1", new Vector3(holopadHologram.Color1.R, holopadHologram.Color1.G, holopadHologram.Color1.B));
