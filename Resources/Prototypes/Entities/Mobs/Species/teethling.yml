@@ -4,18 +4,15 @@
   parent:
   - MobFlammable
   - BaseMobSpecies
-  id: BaseMobTeethlingPerson
+  id: BaseMobTeethling
   abstract: true
   components:
   - type: HumanoidAppearance
     species: Teethling
+  #- type: TeethlingAccent # Not created
   - type: Icon
     sprite: Mobs/Species/Teethling/parts.rsi
     state: full
-  - type: Body
-    prototype: Teethling
-    requiredLegs: 2
-    gibSound: /Audio/Effects/bone_rattle.ogg
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Teethling
@@ -26,13 +23,6 @@
         color: "#555555AA"
       Burn:
         sprite: Mobs/Effects/burn_damage.rsi
-  - type: MobState
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      100: Critical
-      150: Dead
-  - type: TransferMindOnGib
   - type: Destructible
     thresholds:
     - trigger:
@@ -43,7 +33,7 @@
   - type: Butcherable
     butcheringType: Spike
     spawned:
-      - id: FoodBakedCookie
+      - id: FoodMeatHuman
         amount: 5
   - type: SlowOnDamage #modified speeds because they're so weak
     speedModifierThresholds:
@@ -108,12 +98,22 @@
     alternateState: Standing
   - type: FlashImmunity
   - type: Inventory
+  - type: MeleeWeapon
+    soundHit:
+      collection: AlienClaw
+    angle: 30
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Blunt: 5
 
 - type: entity
   parent: BaseSpeciesDummy
-  id: MobTeethlingPersonDummy
+  id: MobTeethlingDummy
   categories: [ HideSpawnMenu ]
   components:
   - type: HumanoidAppearance
     species: Teethling
+  - type: Body
+    prototype: Teethling
   - type: Inventory

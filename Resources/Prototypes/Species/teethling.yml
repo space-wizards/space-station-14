@@ -2,12 +2,14 @@
   id: Teethling
   name: species-name-teethling
   roundStart: true
-  prototype: MobTeethlingPerson
+  prototype: MobTeethling
   sprites: MobTeethlingSprites
   defaultSkinTone: "#fff9e2"
   markingLimits: MobHumanMarkingLimits
-  dollPrototype: MobTeethlingPersonDummy
+  dollPrototype: MobTeethlingDummy
   skinColoration: TintedHues
+  sexes:
+  - Unsexed
 
 - type: speciesBaseSprites
   id: MobTeethlingSprites
