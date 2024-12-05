@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: starlighthowls
-  changes:
-  - message: new boy ! (not rounstart enabled)
-    type: Add
-  id: 158
-  time: '2024-09-01T18:32:32.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/184
 - author: formlessnameless
   changes:
   - message: Added mini jetpacks to salv starting loadout
@@ -4461,3 +4454,12 @@
   id: 657
   time: '2024-12-05T06:10:10.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/911
+- author: honeyed-lemons
+  changes:
+  - message: Updated Hydroponics Jumpsuit, Jumpskirt, and backpack colors.
+    type: Tweak
+  - message: Updated Engineering Jumpsuit and Jumpskirt colors.
+    type: Tweak
+  id: 658
+  time: '2024-12-05T06:13:34.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/910
