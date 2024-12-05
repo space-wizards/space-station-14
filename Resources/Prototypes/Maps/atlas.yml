@@ -2,7 +2,7 @@
   id: Atlas
   mapName: Atlas
   mapPath: /Maps/atlas.yml
-  minPlayers: 0
+  minPlayers: 7
   maxPlayers: 25
   stations:
     Atlas:
