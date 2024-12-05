@@ -13,8 +13,12 @@
               icon:
                 sprite: Objects/Power/power_cells.rsi
                 state: small
-            - material: Cable
-              amount: 15
+            - tag: Cablecuffs
+              name: makeshift handcuffs
+              icon:
+                sprite: Objects/Misc/cablecuffs.rsi
+                state: cuff
+                color: forestgreen
               doAfter: 1
             - tag: Igniter
               name: igniter
