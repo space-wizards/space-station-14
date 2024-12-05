@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Upstream merge, some merge fixes
-    type: Fix
-  id: 165
-  time: '2024-09-03T02:34:48.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/192
 - author: iaada
   changes:
   - message: Salvage Jetpack, fixed
@@ -4466,3 +4459,12 @@
   id: 664
   time: '2024-12-05T22:26:05.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/918
+- author: suyo
+  changes:
+  - message: Added Burning Men's Soul to the lobby
+    type: Add
+  - message: Adjusted the volume for some of the expedition tracks
+    type: Tweak
+  id: 665
+  time: '2024-12-05T23:50:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/919
