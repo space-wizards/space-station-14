@@ -65,7 +65,7 @@ namespace Content.IntegrationTests.Tests
             "Xeno", // Xeno map playtest
             "Barratry", // Update of old map
             "dm01-entryway", // deathmatch PROMOD map
-            "Aspid" // Pseudo playtest, not merged to upstream yet.
+            "Aspid", // Pseudo playtest, not merged to upstream yet.
             "Amber"
         };
 
