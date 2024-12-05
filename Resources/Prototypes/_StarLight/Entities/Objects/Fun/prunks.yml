@@ -43,9 +43,12 @@
     solutions:
       hypospray:
         maxVol: 10
-        reagents:
-        - ReagentId: Ipecac
-          Quantity: 10
+  - type: SolutionRegeneration
+    solution: hypospray
+    generated:
+      reagents:
+      - ReagentId: Ipecac
+        Quantity: 0.1
   - type: Hypospray
     solutionName: hypospray
     transferAmount: 10
