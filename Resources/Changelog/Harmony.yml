@@ -715,3 +715,17 @@ Entries:
     changes:
     - type: Add
       message: Made Cat Markings Accessible to humans
+  - id: 223
+    author: spanky-spanky
+    time: '2024-12-05T06:28:44.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/223
+    changes:
+    - type: Tweak
+      message: Nukeops game mode chance has been reduced and Extended has been added.
+  - id: 226
+    author: liltenhead
+    time: '2024-12-05T14:32:20.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/226
+    changes:
+    - type: Tweak
+      message: Updated space law to reflect the current version on the wiki.
