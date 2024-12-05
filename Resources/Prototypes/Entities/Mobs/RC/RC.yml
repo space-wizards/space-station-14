@@ -6,7 +6,6 @@
   suffix: RC
   components:
   - type: Body
-    prototype: Mouse
   - type: CombatMode
   - type: MeleeWeapon
     soundHit:
@@ -92,7 +91,7 @@
           Quantity: 3
   - type: ZombieImmune
   - type: Repairable
-    doAfterDelay: 5
+    doAfterDelay: 10
     allowSelfRepair: false
   - type: Item
     size: Tiny

@@ -10,25 +10,28 @@ namespace Content.Shared.SpittableContainer.Components;
 public sealed partial class SpittableContainerComponent : Component
 {
     [DataField, AutoNetworkedField]
-    public EntProtoId SwallowActionPrototype = "ActionContainerSwallow";
+    public EntProtoId? SwallowActionPrototype = "ActionContainerSwallow";
 
     [DataField, AutoNetworkedField]
     public EntityUid? SwallowActionEntity;
 
     [DataField, AutoNetworkedField]
-    public EntProtoId SpitContainerActionPrototype = "ActionContainerSpit";
+    public EntProtoId? SpitContainerActionPrototype = "ActionContainerSpit";
 
     [DataField, AutoNetworkedField]
     public EntityUid? SpitContainerActionEntity;
 
     [DataField, AutoNetworkedField]
-    public SoundSpecifier SoundEat= new SoundCollectionSpecifier("eating");
+    public SoundSpecifier? SoundEat= new SoundCollectionSpecifier("eating");
 
     [DataField, AutoNetworkedField]
-    public SoundSpecifier SoundSpit = new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg")
+    public SoundSpecifier? SoundSpit = new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg")
     {
         Params = AudioParams.Default.WithVolume(-5f),
     };
+
+    [DataField, AutoNetworkedField]
+    public bool ShowSpitPopup = true;
 
     /// <summary>
     /// Time it takes to swallow an item into the container.

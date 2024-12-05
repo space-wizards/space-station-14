@@ -35,6 +35,7 @@ public abstract class SharedRemoteControlSystem : EntitySystem
         SubscribeLocalEvent<RemotelyControllableComponent, MobStateChangedEvent>(OnMobStateChanged);
 
         SubscribeLocalEvent<RemoteControllerComponent, DamageChangedEvent>(OnTookDamage);
+        SubscribeLocalEvent<RemoteControllerComponent, InteractionSuccessEvent>(OnSuccessfulInteract);
 
         SubscribeLocalEvent<RCRemoteComponent, GetVerbsEvent<ActivationVerb>>(OnRCRemoteVerbs);
         SubscribeLocalEvent<RCRemoteComponent, UseInHandEvent>(OnUseInHand);
@@ -88,7 +89,7 @@ public abstract class SharedRemoteControlSystem : EntitySystem
         remoteComp.BoundTo = args.Target;
         ent.Comp.BoundRemote = args.Used;
 
-        _popup.PopupEntity(Loc.GetString("rc-remote-bound", ("entityName", Prototype(ent.Owner)?.Name ?? "Unknown")), args.User, args.User, PopupType.Medium);
+        _popup.PopupClient(Loc.GetString("rc-remote-bound", ("entityName", Prototype(ent.Owner)?.Name ?? "Unknown")), args.User, args.User, PopupType.Medium);
 
         args.Handled = true;
     }
@@ -107,7 +108,14 @@ public abstract class SharedRemoteControlSystem : EntitySystem
             return;
 
         TryStopRemoteControl(ent.Comp.Controlled.Value);
+    }
 
+    private void OnSuccessfulInteract(Entity<RemoteControllerComponent> ent, ref InteractionSuccessEvent args)
+    {
+        if (ent.Comp.Controlled == null)
+            return;
+
+        _popup.PopupEntity(Loc.GetString("rc-controller-shake"), ent.Comp.Controlled.Value, ent.Comp.Controlled.Value, PopupType.MediumCaution);
     }
 
     private void OnRCRemoteVerbs(Entity<RCRemoteComponent> ent, ref GetVerbsEvent<ActivationVerb> args)
@@ -130,7 +138,7 @@ public abstract class SharedRemoteControlSystem : EntitySystem
             {
                 ent.Comp.BoundTo = null;
                 remotelyComp.BoundRemote = null;
-                _popup.PopupEntity(Loc.GetString("rc-remote-wiped"), user, user, PopupType.Large);
+                _popup.PopupClient(Loc.GetString("rc-remote-wiped"), user, user, PopupType.Medium);
             }
         };
         args.Verbs.Add(verb);
@@ -140,7 +148,7 @@ public abstract class SharedRemoteControlSystem : EntitySystem
     {
         if (ent.Comp.BoundTo is null)
         {
-            _popup.PopupEntity(Loc.GetString("rc-remote-unbound"), args.User, args.User, PopupType.Medium);
+            _popup.PopupClient(Loc.GetString("rc-remote-unbound"), args.User, args.User, PopupType.Medium);
             return;
         }
 
@@ -149,7 +157,7 @@ public abstract class SharedRemoteControlSystem : EntitySystem
 
         if (!TryComp<MobStateComponent>(ent.Comp.BoundTo, out var mobState) || mobState.CurrentState != MobState.Alive)
         {
-            _popup.PopupEntity(Loc.GetString("rc-remote-fail"), args.User, args.User, PopupType.Medium);
+            _popup.PopupClient(Loc.GetString("rc-remote-fail"), args.User, args.User, PopupType.Medium);
             return;
         }
 

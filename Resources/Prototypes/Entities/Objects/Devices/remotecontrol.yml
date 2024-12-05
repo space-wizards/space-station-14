@@ -13,3 +13,5 @@
   - type: Appearance
   - type: StaticPrice
     price: 85
+  - type: UseDelay
+    delay: 0.5

@@ -4,7 +4,6 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.SpittableContainer.Components;
-using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization;
@@ -35,15 +34,21 @@ public abstract class SharedSpittableContainerSystem : EntitySystem
     {
         ent.Comp.Container = _containerSystem.EnsureContainer<Container>(ent.Owner, ent.Comp.Storage);
 
-        EntityUid? SwallowActionUid = null;
-        _actionsSystem.AddAction(ent.Owner, ref SwallowActionUid, ent.Comp.SwallowActionPrototype);
-        if (SwallowActionUid != null)
-            ent.Comp.SwallowActionEntity = SwallowActionUid.Value;
+        if (ent.Comp.SwallowActionPrototype != null)
+        {
+            EntityUid? SwallowActionUid = null;
+            _actionsSystem.AddAction(ent.Owner, ref SwallowActionUid, ent.Comp.SwallowActionPrototype);
+            if (SwallowActionUid != null)
+                ent.Comp.SwallowActionEntity = SwallowActionUid.Value;
+        }
 
-        EntityUid? SpitActionUid = null;
-        _actionsSystem.AddAction(ent.Owner, ref SpitActionUid, ent.Comp.SpitContainerActionPrototype);
-        if (SpitActionUid != null)
-            ent.Comp.SwallowActionEntity = SpitActionUid.Value;
+        if (ent.Comp.SpitContainerActionPrototype != null)
+        {
+            EntityUid? SpitActionUid = null;
+            _actionsSystem.AddAction(ent.Owner, ref SpitActionUid, ent.Comp.SpitContainerActionPrototype);
+            if (SpitActionUid != null)
+                ent.Comp.SwallowActionEntity = SpitActionUid.Value;
+        }
     }
 
     private void OnShutdown(Entity<SpittableContainerComponent> ent, ref ComponentShutdown args)
@@ -61,7 +66,10 @@ public abstract class SharedSpittableContainerSystem : EntitySystem
             return;
 
         if (!_containerSystem.CanInsert(args.Target, ent.Comp.Container))
+        {
+            _popupSystem.PopupClient(Loc.GetString("spittable-container-fail"), ent.Owner, ent.Owner);
             return;
+        }
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, ent.Owner, ent.Comp.SwallowTime, new SwallowDoAfterEvent(), ent.Owner, target: args.Target, used: ent.Owner)
         {
@@ -80,7 +88,9 @@ public abstract class SharedSpittableContainerSystem : EntitySystem
         if (!_containerSystem.CanInsert(args.Target.Value, ent.Comp.Container))
             return;
 
-        _audioSystem.PlayPredicted(ent.Comp.SoundEat, ent.Owner, ent.Owner, ent.Comp.SoundEat.Params);
+        if(ent.Comp.SoundEat != null)
+            _audioSystem.PlayPredicted(ent.Comp.SoundEat, ent.Owner, ent.Owner, ent.Comp.SoundEat.Params);
+
         _containerSystem.InsertOrDrop(args.Target.Value, ent.Comp.Container);
 
         args.Handled = true;
@@ -101,8 +111,12 @@ public abstract class SharedSpittableContainerSystem : EntitySystem
         if (args.Handled || ent.Comp.Container.Count == 0 || args.Cancelled)
             return;
 
-        _popupSystem.PopupPredicted(Loc.GetString("disease-vomit", ("person", Identity.Entity(ent.Owner, EntityManager))), ent.Owner, ent.Owner);
-        _audioSystem.PlayPredicted(ent.Comp.SoundSpit, ent.Owner, ent.Owner, ent.Comp.SoundSpit.Params);
+        if (ent.Comp.ShowSpitPopup)
+            _popupSystem.PopupPredicted(Loc.GetString("spittable-container-spit", ("person", Identity.Entity(ent.Owner, EntityManager))), ent.Owner, ent.Owner);
+
+        if (ent.Comp.SoundSpit != null)
+            _audioSystem.PlayPredicted(ent.Comp.SoundSpit, ent.Owner, ent.Owner, ent.Comp.SoundSpit.Params);
+
         _containerSystem.EmptyContainer(ent.Comp.Container);
 
         args.Handled = true;
