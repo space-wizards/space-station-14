@@ -2347,3 +2347,19 @@
     - type: Icon
       sprite: Objects/Consumable/Drinks/bloodglass.rsi
       state: icon
+
+- type: entity
+  parent: DrinkGlass
+  id: DrinkMoffee
+  suffix: moffee
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Moffee
+          Quantity: 30
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/coffee.rsi
+    state: icon
