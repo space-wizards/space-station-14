@@ -1,5 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.Whitelist;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -16,14 +17,13 @@ public sealed partial class SpiderComponent : Component
     /// <summary>
     /// Id of the entity getting spawned.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string WebPrototype = "SpiderWeb";
 
     /// <summary>
     /// Id of the action that will be given.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadOnly)]
     [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string SpawnWebAction = "ActionSpiderWeb";
 
@@ -34,25 +34,27 @@ public sealed partial class SpiderComponent : Component
     public EntityUid? ActionEntity;
 
     /// <summary>
-    /// List of entities proto will spawn on.
+    /// Whitelist of entities proto will only spawn on.
     /// </summary>
     [DataField]
     public EntityWhitelist? DestinationWhitelist;
 
     /// <summary>
-    /// List of entities proto won't spawn on.
+    /// Blacklist of entities proto won't spawn on.
     /// </summary>
     [DataField]
     public EntityWhitelist? DestinationBlacklist;
 
-    /// Popup text
-    [DataField("inSpace")] public string _offGrid = "spider-web-action-nogrid";
-    [DataField("success")] public string _success = "spider-web-action-success";
-    [DataField("failure")] public string _fail = "spider-web-action-fail";
-}
+    /// <summary>
+    /// Sound played when successfully spawning webs.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier? WebSound =
+            new SoundPathSpecifier("/Audio/Effects/spray3.ogg")
+            {
+                Params = AudioParams.Default.WithVariation(0.125f),
+            };
 
-public sealed partial class SpiderWebActionEvent : InstantActionEvent
-{
     /// <summary>
     /// Vectors determining where the entities will spawn.
     /// </summary>
@@ -65,4 +67,13 @@ public sealed partial class SpiderWebActionEvent : InstantActionEvent
         Vector2i.Left,
         Vector2i.Right,
     };
+
+    /// Localization files for popup text.
+    [DataField] public LocId MessageOffGrid = "spider-web-action-nogrid";
+    [DataField] public LocId MessageSuccess = "spider-web-action-success";
+    [DataField] public LocId MessageFail = "spider-web-action-fail";
+}
+
+public sealed partial class SpiderWebActionEvent : InstantActionEvent
+{
 }

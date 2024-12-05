@@ -4,6 +4,8 @@ using Content.Shared.Maps;
 using Content.Shared.Spider;
 using Content.Shared.Whitelist;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 
@@ -18,6 +20,7 @@ public sealed class SpiderSystem : SharedSpiderSystem
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly ITileDefinitionManager _tile = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedMapSystem _map = default!;
 
     public override void Initialize()
@@ -36,7 +39,7 @@ public sealed class SpiderSystem : SharedSpiderSystem
 
         if (grid == null || !TryComp<MapGridComponent>(grid, out var gridComp))
         {
-            _popup.PopupEntity(Loc.GetString(component._offGrid), args.Performer, args.Performer);
+            _popup.PopupEntity(Loc.GetString(component.MessageOffGrid), args.Performer, args.Performer);
             return;
         }
 
@@ -44,7 +47,7 @@ public sealed class SpiderSystem : SharedSpiderSystem
         List<EntityCoordinates> spawnPos = new();
 
         var vects = new List<Vector2i>();
-        vects.AddRange(args.OffsetVectors);
+        vects.AddRange(component.OffsetVectors);
 
         foreach (var vect in vects)
             spawnPos.Add(coords.Offset(vect));
@@ -60,11 +63,14 @@ public sealed class SpiderSystem : SharedSpiderSystem
 
         if (success)
         {
-            _popup.PopupEntity(Loc.GetString(component._success), args.Performer, args.Performer);
+            _popup.PopupEntity(Loc.GetString(component.MessageSuccess), args.Performer, args.Performer);
             args.Handled = true;
+
+            if (component.WebSound != null)
+                _audio.PlayPvs(component.WebSound, uid);
         }
         else
-            _popup.PopupEntity(Loc.GetString(component._fail), args.Performer, args.Performer);
+            _popup.PopupEntity(Loc.GetString(component.MessageFail), args.Performer, args.Performer);
     }
 
     private bool IsValidTile(EntityCoordinates coords, EntityWhitelist? whitelist, EntityWhitelist? blacklist, EntityUid grid, MapGridComponent gridComp)
@@ -81,7 +87,7 @@ public sealed class SpiderSystem : SharedSpiderSystem
             foreach (var entity in _lookup.GetEntitiesIntersecting(coords, LookupFlags.Uncontained))
                 if (_whitelistSystem.IsWhitelistPass(whitelist, entity))
                     return true;
-            
+
             return false;
         }
 
