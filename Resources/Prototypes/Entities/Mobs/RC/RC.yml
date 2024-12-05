@@ -135,6 +135,9 @@
         damage: 400
       behaviors:
       - !type:GibBehavior { }
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
     - trigger:
         !type:DamageTypeTrigger
         damageType: Heat

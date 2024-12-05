@@ -1,36 +1,36 @@
 - type: entity
   id: ActionRCBackToBody
-  name: Back to body.
+  name: Back to body
   description: Stops remotely controlling this entity.
   components:
   - type: InstantAction
-    priority: -9
+    priority: -10
     itemIconStyle: BigAction
     icon:
-      sprite: Interface/Actions/actions_ai.rsi
-      state: ai_core
+      sprite: Interface/Actions/remote_control.rsi
+      state: return
     event: !type:RCReturnToBodyEvent
 
 - type: entity
   id: ActionContainerSwallow
-  name: Swallow
-  description: Swallow an item into your hidden storage.
+  name: Store
+  description: Store an item in your storage.
   components:
   - type: EntityTargetAction
-    icon: { sprite : Interface/Actions/devour.rsi, state: icon }
-    iconOn: { sprite : Interface/Actions/devour.rsi, state: icon-on }
+    icon: { sprite : Interface/Actions/spittable_container.rsi, state: eat }
+    iconOn: { sprite : Interface/Actions/spittable_container.rsi, state: eat-on }
     event: !type:SwallowToContainerActionEvent
-    priority: 1
+    priority: -9
  
 - type: entity
   id: ActionContainerSpit
   name: Spit
-  description: Spit all items from your hidden storage.
+  description: Spit all items from your storage.
   components:
   - type: InstantAction
-    priority: -9
+    priority: -8
     itemIconStyle: BigAction
     icon:
-      sprite: Interface/Actions/devour.rsi
-      state: icon-on
+      sprite: Interface/Actions/spittable_container.rsi
+      state: spit
     event: !type:SpitFromContainerActionEvent
