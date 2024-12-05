@@ -190,3 +190,23 @@
       types:
         Radiation: 5
         Cellular: 5
+
+- type: entity
+  parent: MobUraniumCrab
+  id: MobFrank
+  name: frank
+  description: A friendly ore crab. Its little eyes watch you with great interest.
+  components:
+  - type: PointLight
+    radius: 2
+    energy: 3
+    color: "#06DF24"
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessString: petting-success-ray
+    interactSuccessSpawn: EffectHearts
+  - type: DamageOnInteract
+    damage:
+      types:
+        Radiation: 5
+        Cellular: 5
