@@ -15,6 +15,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.Ghost.Roles.Components;
 
 namespace Content.Server.Mind;
 
@@ -365,15 +366,15 @@ public sealed class MindSystem : SharedMindSystem
             return;
         }
 
-        var validTargetMind = TryGetMind(target, out var targetMindId, out var targetMind);
+        TryGetMind(target, out var targetMindId, out var targetMind);
         _jobs.MindTryGetJobId(targetMindId, out var targetJobProtoId);
+        _jobs.MindTryGetJobId(mindId, out var originalJobProtoId);
+        TryComp<GhostRoleComponent>(target, out var ghostRole);
+        var targetJob = targetJobProtoId ?? ghostRole?.JobProto ?? originalJobProtoId;
 
         MakeSentientCommand.MakeSentient(target, EntityManager);
         TransferTo(mindId, target, ghostCheckOverride: true, mind: mind);
 
-        if (validTargetMind)
-        {
-            _roleSystem.MindAddJobRole(mindId, mind, silent:false, targetJobProtoId);
-        }
+        _roleSystem.MindAddJobRole(mindId, mind, silent:false, targetJob);
     }
 }
