@@ -190,3 +190,12 @@
   - type: UseDelay
     delay: 0.5
   - type: SpittableContainer
+
+
+- type: entity
+  parent: BaseMouseRC
+  id: BaseMouseRCUplinkFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: SyndieRCRemote

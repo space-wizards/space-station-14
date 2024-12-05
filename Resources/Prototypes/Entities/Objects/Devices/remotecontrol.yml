@@ -1,7 +1,7 @@
 - type: entity
   name: syndie rc remote
   parent: [BaseItem, BaseSyndicateContraband]
-  id: RCRemote
+  id: SyndieRCRemote
   description: A remote controller provided by the syndicate for spy operations.
   components:
   - type: Sprite
