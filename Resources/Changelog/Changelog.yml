@@ -1,50 +1,4 @@
 ﻿Entries:
-- author: Cojoke-dot
-  changes:
-  - message: Devouring bodies now reduces bleed for Space Dragons.
-    type: Tweak
-  id: 7172
-  time: '2024-08-20T10:57:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/29661
-- author: cranberriez
-  changes:
-  - message: Added Discord webhook error logging!
-    type: Tweak
-  id: 7173
-  time: '2024-08-20T21:12:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30835
-- author: Repo
-  changes:
-  - message: Added copy to clipboard button for connection failure UI.
-    type: Add
-  id: 7174
-  time: '2024-08-20T21:31:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30760
-- author: Lank
-  changes:
-  - message: Removed the shock collar and associated thief objective.
-    type: Remove
-  id: 7175
-  time: '2024-08-21T17:56:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31229
-- author: EmoGarbage404
-  changes:
-  - message: Increased the view range on the handheld mass scanner and decreased the
-      power draw.
-    type: Tweak
-  - message: Handheld radars no longer spin with the player while moving.
-    type: Fix
-  id: 7176
-  time: '2024-08-21T18:33:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31284
-- author: Beck Thompson
-  changes:
-  - message: Nuclear authentication code folder that spawns the nuclear authentication
-      codes when opened.
-    type: Add
-  id: 7177
-  time: '2024-08-21T18:53:04.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31272
 - author: Brandon-Huu
   changes:
   - message: Nukie shuttle now spawns with the nuclear authentication code folder.
@@ -3910,3 +3864,46 @@
   id: 7671
   time: '2024-12-01T22:09:34.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33602
+- author: JIPDawg
+  changes:
+  - message: Some Antag ghost roles now show their correct rules.
+    type: Fix
+  id: 7672
+  time: '2024-12-02T19:43:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32457
+- author: Southbridge, Flipsie27
+  changes:
+  - message: 'Added a new low-mid pop map: Amber Station'
+    type: Add
+  id: 7673
+  time: '2024-12-03T02:24:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33441
+- author: CheddaCheez
+  changes:
+  - message: Added recipes for Nachos, Cheesy Nachos, and Cuban Nachos.
+    type: Add
+  id: 7674
+  time: '2024-12-03T02:59:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33637
+- author: notafet
+  changes:
+  - message: Fix sinks and toilets not draining.
+    type: Fix
+  id: 7675
+  time: '2024-12-04T02:42:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33691
+- author: PJB3005
+  changes:
+  - message: Fixed broken layout on some wire hacking UIs.
+    type: Fix
+  id: 7676
+  time: '2024-12-04T10:13:22.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33714
+- author: keronshb
+  changes:
+  - message: Adds Wand of the Locker - a wand that shoots out cursed lockers, that
+      will store anyone they touch!
+    type: Add
+  id: 7677
+  time: '2024-12-04T16:49:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33710
