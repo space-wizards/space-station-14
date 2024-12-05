@@ -266,6 +266,9 @@
     - id: EmergencyMedipen
     - id: Flare
     - id: FoodSnackNutribrick
-    # Intentionally wrong picture on the box to mimic the NT one
+  - type: Sprite
+    layers:
+    - state: internals
+    - state: nitrogentank
   - type: Label
     currentLabel: reagent-name-nitrogen
