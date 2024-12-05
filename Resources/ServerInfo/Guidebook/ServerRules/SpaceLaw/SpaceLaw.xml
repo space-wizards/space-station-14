@@ -40,6 +40,16 @@
   ## Implant Removal
   A suspect can be forced to receive implant removal if there is strong, reasonable proof that they have been implanted, such as an officer seeing them use one or their prints being on a discarded injector. Unlike the implantation procedure, a prisoner can have their sentence entirely delayed or extended until they comply with the procedure, as long as security is actively making attempts to perform it. Akin to implanting, if an inmate gives their clear permission, implant removal can proceed without proof.
 
+  ## Arresting Procedure
+  Arresting procedure refers to an ideal way of carrying out an arrest. Not all arrests can or will be performed this way, but they should generally follow these procedures in order to make the arrest go as smoothly as possible. 
+  1. Inform the criminal that they are wanted, and why they are wanted. This is void if they are visibly armed, or in in the process of committing a crime, including trespassing in a high security area.
+
+  2. If compliant, cuff and transport the prisoner to the brig immediately and without harming them, and proceed to brigging procedures. You may utilize departmental security outposts to search compliant suspects or prisoners.
+
+  3. If resistant to arrest, use your nonlethal weaponry until such a situation may prompt use of lethal force. If successful, transport the prisoner immediately to the brig and begin brigging procedure.
+
+  4. If lethal force was used, the suspect must be provided medical aid until they are in a stable enough condition to serve their sentence.
+
   ## Sentencing
   From a server rules perspective, security officers are only responsible for ensuring that they only place sentences over 20 minutes where space law would allow permanent confinement. Informing the Warden is highly recommended, even for timed sentences. As long as those requirements are met, security officers not giving inappropriate sentence lengths is considered an in-character issue, not a rule issue.
 
@@ -47,14 +57,42 @@
 
   Use common sense and humanity when issuing punishments. You should not always seek out the highest punishment you can, you don't have to always give the maximum time or always look to demote someone. Prisoners cooperating and on good behavior should have their sentences reduced. Always take in account the severity and only charge for what is needed for someone to learn their lesson.
 
-  [color=#a4885c]Stackable Crimes:[/color] Crimes are to be considered 'stackable' in the sense that if you charge someone with two or more different crimes, you should combine the times you would give them for each crime. Linked crimes, shown in matching colors and suffixes on the Quick Crime Guide, can not be stacked and instead override each other, you should pick the highest crime that matches the case.
-
-  - Example: A suspect has committed a 2-01 (possession of restricted gear) and a 3-01 (possession of restricted weapons). The maximum sentence here would be 10 minutes due to them being linked crimes, and 3-01 is the greater crime.
-  - Example 2: A suspect commits a 3-04 (Secure trespassing) and a 3-06 (manslaughter). Those crimes stack since they are not linked crimes. You could sentence for a maximum of 20 minutes, but context matters heavily, and maximum sentences should only be used for the worst offenders.
-
-  [color=#a4885c]Repeater Offenders:[/color] Repeated crimes are when someone is released for a crime and then goes to commit the same crime within the same shift. Repeated crimes can be charged with tacked-on time; first repeat: 3:00, second repeat: 6:00, third repeat: permanent confinement. It should be noted each tacked-on time is directly linked to one type of crime, so for example, if someone does their first repeat of trespass and petty theft, you can charge them with an extra 6 minutes.
+  [color=#a4885c]Sentencing Modifiers:[/color] When determining sentencing, only time based on the worst crime committed, without stacking multiple offenses. An exception to this rule is made for repeat visits to the brig: for those, you can elevate sentencing by one tier. For example, two brig visits for a minor crime can elevate to a moderate one, two visits for major crimes to a extreme, and two extremes to a capital.
 
   [color=#a4885c]Accessory, Attempting, And Intention:[/color] If someone intentionally, knowingly and substantially assists someone in enacting a crime they can be charged with the relevant crimes, such as an engineer giving someone tools, who says they are going to break into an area. Same goes for a clear and solid attempt at a crime, or a person who shows clear intent to act out a crime, such as a syndicate nuclear operative arming a nuke but getting arrested before it goes off, they can still be charged with terrorism. Does not apply to crimes that have an attempted listing already, like attempted murder.
+
+  ## Brigging Procedure
+  Brigging procedures refers to the recommended way to handle brigging a prisoner. Not all situations can or will go down this smooth; this serves as a guideline of an ideal brigging situation. 
+
+  1. Take the prisoner to the brig and inform the Warden of their crimes so their Security Record may be updated.
+
+  2. Take the prisoner to a brig cell, set the time and activate the timer.
+
+  3. Enter the cell with the prisoner in tow, open the cell locker and hold the prisoner over it.
+
+  4. Empty their pockets and remove their gloves, backpacks, tool belt, gas masks, and any flash resistant equipment such as Sunglasses, Welding Masks/Goggles (Vox Excluded), Space Helmets, etc.
+
+  5. Buckle the prisoner to the bed.
+
+  6. Search the items removed and be sure to check the internals box in their backpack.
+
+  7. Confiscate any contraband and/or stolen items, as well as any tools that may be used for future crimes. These are to be placed in evidence, not left on the brig floor or your personal use, until they can be returned to their rightful owners.
+
+  8. Close the locker and lock it.
+
+  9. Remove their cuffs, pick up the cuffs then leave the cell.
+
+  10. If the suspect attempts an escape, stun them before exiting the cell.
+
+  11. Modify their brig sentence for sparking a hunt, or good behavior, if applicable.
+
+  12. Upon release, ensure that they are marked as "Discharged" in the Criminal Records Computer, in the event they end up in the brig again.
+
+  The Warden or Head of Security is responsible for placing/ordering prisoners be placed in permanent confinement.
+
+  1. Permanent Prisoners are to be completely stripped of their belongings, which are to be held in either evidence or a prison locker.
+
+  2. The prisoner is to be dressed in an Orange Prison Jumpsuit and Shoes, which are found in the prison lockers.
 
   ## Normal Punishments
   - [color=#a4885c]Warning:[/color] For minor crimes, fix the issue, then warn the person not to attempt the crime again. If they still proceed to do it at a later date, a brig time may be better.
