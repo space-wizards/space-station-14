@@ -1,0 +1,110 @@
+- type: species
+  id: Teethling
+  name: species-name-teethling
+  roundStart: true
+  prototype: MobTeethling
+  sprites: MobTeethlingSprites
+  defaultSkinTone: "#fff9e2"
+  markingLimits: MobHumanMarkingLimits
+  dollPrototype: MobTeethlingDummy
+  skinColoration: TintedHues
+  sexes:
+  - Unsexed
+  
+- type: speciesBaseSprites
+  id: MobTeethlingSprites
+  sprites:
+    Head: MobTeethlingHead
+    Chest: MobTeethlingTorso
+    LArm: MobTeethlingLArm
+    RArm: MobTeethlingRArm
+    LHand: MobTeethlingLHand
+    RHand: MobTeethlingRHand
+    LLeg: MobTeethlingLLeg
+    RLeg: MobTeethlingRLeg
+    LFoot: MobTeethlingLFoot
+    RFoot: MobTeethlingRFoot
+
+- type: humanoidBaseSprite
+  id: MobTeethlingHead
+  baseSprite:
+    sprite: Mobs/Species/Teethling/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobTeethlingHeadMale
+  baseSprite:
+    sprite: Mobs/Species/Teethling/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobTeethlingHeadFemale
+  baseSprite:
+    sprite: Mobs/Species/Teethling/parts.rsi
+    state: head_f
+
+- type: humanoidBaseSprite
+  id: MobTeethlingTorso
+  baseSprite:
+    sprite: Mobs/Species/Teethling/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobTeethlingTorsoMale
+  baseSprite:
+    sprite: Mobs/Species/Teethling/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobTeethlingTorsoFemale
+  baseSprite:
+    sprite: Mobs/Species/Teethling/parts.rsi
+    state: torso_f
+
+- type: humanoidBaseSprite
+  id: MobTeethlingLLeg
+  baseSprite:
+    sprite: Mobs/Species/Teethling/parts.rsi
+    state: l_leg
+
+- type: humanoidBaseSprite
+  id: MobTeethlingLArm
+  baseSprite:
+    sprite: Mobs/Species/Teethling/parts.rsi
+    state: l_arm
+
+- type: humanoidBaseSprite
+  id: MobTeethlingLHand
+  baseSprite:
+    sprite: Mobs/Species/Teethling/parts.rsi
+    state: l_hand
+
+- type: humanoidBaseSprite
+  id: MobTeethlingLFoot
+  baseSprite:
+    sprite: Mobs/Species/Teethling/parts.rsi
+    state: l_foot
+
+- type: humanoidBaseSprite
+  id: MobTeethlingRLeg
+  baseSprite:
+    sprite: Mobs/Species/Teethling/parts.rsi
+    state: r_leg
+
+- type: humanoidBaseSprite
+  id: MobTeethlingRArm
+  baseSprite:
+    sprite: Mobs/Species/Teethling/parts.rsi
+    state: r_arm
+
+- type: humanoidBaseSprite
+  id: MobTeethlingRHand
+  baseSprite:
+    sprite: Mobs/Species/Teethling/parts.rsi
+    state: r_hand
+
+- type: humanoidBaseSprite
+  id: MobTeethlingRFoot
+  baseSprite:
+    sprite: Mobs/Species/Teethling/parts.rsi
+    state: r_foot

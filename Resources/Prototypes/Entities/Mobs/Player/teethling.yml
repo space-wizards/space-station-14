@@ -1,0 +1,9 @@
+- type: entity
+  save: false
+  name: John Teethling
+  parent: [BaseMobTeethling, BaseMob]
+  id: MobTeethling
+  components:
+  - type: MovementSpeedModifier
+    baseSprintSpeed: 4
+    baseWalkSpeed: 3
