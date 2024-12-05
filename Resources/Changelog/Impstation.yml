@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Snail reagent fixes.
-    type: Tweak
-  id: 161
-  time: '2024-09-02T15:52:35.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/187
 - author: iaada
   changes:
   - message: Salvage Jetpack
@@ -4464,3 +4457,10 @@
   id: 660
   time: '2024-12-05T12:15:15.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/906
+- author: Sha-Seng
+  changes:
+  - message: Fixed capitalization on some traits
+    type: Tweak
+  id: 661
+  time: '2024-12-05T12:16:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/909
