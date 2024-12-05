@@ -1620,7 +1620,7 @@
       movement:
         state: mouse-0
   - type: Item
-    size: Small
+    size: Tiny
     heldPrefix: 0
   - type: Clothing
     quickEquip: false
