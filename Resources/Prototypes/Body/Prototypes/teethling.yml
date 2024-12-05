@@ -7,6 +7,9 @@
       part: HeadTeethling
       connections:
       - torso
+      organs:
+        brain: OrganTeethlingSkull
+        eyes: OrganTeethlingTeeth
     torso:
       part: TorsoTeethling
       connections:
@@ -14,6 +17,7 @@
       - left arm
       - right leg
       - left leg
+
     right arm:
       part: RightArmTeethling
       connections:

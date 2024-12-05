@@ -14,12 +14,12 @@
       organ:
         maxVol: 10
         reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
+        - ReagentId: Blood
+          Quantity: 5
       food:
         maxVol: 5
         reagents:
-        - ReagentId: UncookedAnimalProteins
+        - ReagentId: GreyMatter
           Quantity: 5
   - type: Tag
     tags:
@@ -33,3 +33,17 @@
   components:
   - type: Sprite
     state: teeth
+
+- type: entity
+  id: OrganTeethlingSkull
+  parent: [BaseItem, OrganHumanBrain, BaseTeethlingOrgan]
+  name: sentient teethling brain
+  description: "It reeks of rotten teeth and muscle extract."
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/Teethling/organs.rsi
+      state: skull
+    - type: Brain
+    - type: Item
+      size: Small
+      heldPrefix: brain

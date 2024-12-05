@@ -16,6 +16,9 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Teethling
+  - type: Body
+    prototype: Teethling
+    requiredLegs: 2
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:
@@ -33,8 +36,10 @@
   - type: Butcherable
     butcheringType: Spike
     spawned:
-      - id: FoodMeatHuman
+      - id: MaterialBone
         amount: 5
+      - id: FoodMeatHuman
+        amount: 1
   - type: SlowOnDamage #modified speeds because they're so weak
     speedModifierThresholds:
       60: 0.9
@@ -86,23 +91,14 @@
         visualType: Large
         messages: [ "skeleton-healed-by-milk-popup" ]
         probability: 0.25
-    - reagents: [ MilkOat ]
-      methods: [ Touch ]
-      effects:
-        - !type:PopupMessage
-          type: Local
-          visualType: Large
-          messages: [ "skeleton-sprayed-by-oat-milk-popup" ]
-          probability: 0.5
   - type: FireVisuals
     alternateState: Standing
-  - type: FlashImmunity
   - type: Inventory
   - type: MeleeWeapon
     soundHit:
       collection: AlienClaw
     angle: 30
-    animation: WeaponArcClaw
+    animation: WeaponArcBite
     damage:
       types:
         Blunt: 5
@@ -114,6 +110,4 @@
   components:
   - type: HumanoidAppearance
     species: Teethling
-  - type: Body
-    prototype: Teethling
   - type: Inventory
