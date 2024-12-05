@@ -7286,7 +7286,6 @@ entities:
     - type: BecomesStation
       id: Boat
     - type: NavMap
-    - type: KillSign
 - proto: ActionToggleInternals
   entities:
   - uid: 15219
@@ -10129,7 +10128,7 @@ entities:
       pos: 10.5,88.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -127390.53
+      secondsUntilStateChange: -127492.9
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -10140,7 +10139,7 @@ entities:
       pos: 10.5,87.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -127392.4
+      secondsUntilStateChange: -127494.766
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -10560,18 +10559,42 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 74.5,-1.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        6102:
+        - DoorStatus: DoorBolt
+        6088:
+        - DoorStatus: DoorBolt
   - uid: 6088
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 68.5,-0.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        6102:
+        - DoorStatus: DoorBolt
+        1957:
+        - DoorStatus: DoorBolt
   - uid: 6102
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 69.5,-2.5
       parent: 2
+    - type: DeviceLinkSink
+      invokeCounter: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        6088:
+        - DoorStatus: DoorBolt
+        1957:
+        - DoorStatus: DoorBolt
 - proto: AirlockExternalGlassCargoLocked
   entities:
   - uid: 3610
@@ -10913,7 +10936,7 @@ entities:
       pos: 38.5,-21.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -322961.47
+      secondsUntilStateChange: -323063.84
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -61725,16 +61748,6 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
-- proto: ClothingHeadHatCatEarsValid
-  entities:
-  - uid: 18103
-    components:
-    - type: Transform
-      parent: 17719
-    - type: Physics
-      canCollide: False
-    - type: ItemToggle
-      activated: True
 - proto: ClothingHeadHatCentcomcap
   entities:
   - uid: 25171
@@ -65753,7 +65766,7 @@ entities:
       pos: 60.5,76.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -51710.22
+      secondsUntilStateChange: -51812.586
       state: Opening
   - uid: 18653
     components:
@@ -78349,7 +78362,7 @@ entities:
       pos: 34.5,-25.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -354299.75
+      secondsUntilStateChange: -354402.12
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -111871,7 +111884,7 @@ entities:
       pos: 13.5,-16.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -460954.22
+      secondsUntilStateChange: -461056.6
       state: Opening
 - proto: HospitalCurtainsOpen
   entities:
@@ -114631,7 +114644,7 @@ entities:
         head: !type:ContainerSlot
           showEnts: False
           occludes: False
-          ent: 18103
+          ent: null
         suitstorage: !type:ContainerSlot
           showEnts: False
           occludes: False
@@ -117846,7 +117859,8 @@ entities:
       pos: -1.5,-2.5
       parent: 2
     - type: LinkedEntity
-      linkedEntities: [25296]
+      linkedEntities:
+      - 25296
   - uid: 25296
     components:
     - type: Transform
@@ -117854,7 +117868,8 @@ entities:
       pos: 40.5,90.5
       parent: 2
     - type: LinkedEntity
-      linkedEntities: [14961]
+      linkedEntities:
+      - 14961
 - proto: PortalGatewayOrange
   entities:
   - uid: 14964
@@ -117863,7 +117878,8 @@ entities:
       pos: 45.5,-36.5
       parent: 2
     - type: LinkedEntity
-      linkedEntities: [25295]
+      linkedEntities:
+      - 25295
   - uid: 25295
     components:
     - type: Transform
@@ -117871,7 +117887,8 @@ entities:
       pos: 32.5,90.5
       parent: 2
     - type: LinkedEntity
-      linkedEntities: [14964]
+      linkedEntities:
+      - 14964
 - proto: PosterContrabandAmbrosiaVulgaris
   entities:
   - uid: 13347
