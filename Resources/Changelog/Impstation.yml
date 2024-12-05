@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TGRCdev
-  changes:
-  - message: Fixes some error drinks
-    type: Fix
-  id: 157
-  time: '2024-09-01T00:02:56.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/183
 - author: starlighthowls
   changes:
   - message: new boy ! (not rounstart enabled)
@@ -4460,3 +4453,11 @@
   id: 656
   time: '2024-12-04T20:39:27.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/904
+- author: DinnerCalzone
+  changes:
+  - message: Adjusted player count range of a number of maps to better reflect what
+      they can accommodate.
+    type: Tweak
+  id: 657
+  time: '2024-12-05T06:10:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/911
