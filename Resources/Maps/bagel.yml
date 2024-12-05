@@ -13738,8 +13738,6 @@ entities:
       pos: 13.5,-13.5
       parent: 60
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 23956
   - uid: 5061
