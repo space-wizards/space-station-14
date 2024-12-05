@@ -11,6 +11,7 @@ species-name-skeleton = Skeleton
 species-name-vox = Vox
 species-name-ovarbi = Ovarbi
 species-name-fuscian = Fuscian
+species-name-teethling = Teethling
 
 ## Misc species things
 

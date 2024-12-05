@@ -1,24 +1,24 @@
 - type: entity
   save: false
-  name: John Skeleton
+  name: John Teethling
   parent:
   - MobFlammable
   - BaseMobSpecies
-  id: BaseMobSkeletonPerson
+  id: BaseMobTeethlingPerson
   abstract: true
   components:
   - type: HumanoidAppearance
-    species: Skeleton
+    species: Teethling
   - type: Icon
-    sprite: Mobs/Species/Skeleton/parts.rsi
+    sprite: Mobs/Species/Teethling/parts.rsi
     state: full
   - type: Body
-    prototype: Skeleton
+    prototype: Teethling
     requiredLegs: 2
     gibSound: /Audio/Effects/bone_rattle.ogg
   - type: Damageable
     damageContainer: Biological
-    damageModifierSet: Skeleton
+    damageModifierSet: Teethling
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:
@@ -40,19 +40,24 @@
         damage: 150
       behaviors:
       - !type:GibBehavior { }
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+      - id: FoodBakedCookie
+        amount: 5
   - type: SlowOnDamage #modified speeds because they're so weak
     speedModifierThresholds:
       60: 0.9
       80: 0.7
   - type: Speech
-    speechVerb: Skeleton
+    speechVerb: Arachnid
+    speechSounds: Arachnid
   - type: ZombieImmune
   - type: Vocal
     sounds:
-      Male: Skeleton
-      Female: Skeleton
-      Unsexed: Skeleton
-  - type: SkeletonAccent
+      Male: UnisexArachnid
+      Female: UnisexArachnid
+      Unsexed: UnisexArachnid
   - type: Fixtures
     fixtures:
       fix1:
@@ -103,24 +108,12 @@
     alternateState: Standing
   - type: FlashImmunity
   - type: Inventory
-    femaleDisplacements:
-      jumpsuit:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Human/displacement.rsi
-            state: jumpsuit-female
 
 - type: entity
   parent: BaseSpeciesDummy
-  id: MobSkeletonPersonDummy
+  id: MobTeethlingPersonDummy
   categories: [ HideSpawnMenu ]
   components:
   - type: HumanoidAppearance
-    species: Skeleton
+    species: Teethling
   - type: Inventory
-    femaleDisplacements:
-      jumpsuit:
-        sizeMaps:
-          32:
-            sprite: Mobs/Species/Human/displacement.rsi
-            state: jumpsuit-female

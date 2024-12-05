@@ -1,0 +1,40 @@
+﻿- type: body
+  id: Teethling
+  name: "teethling"
+  root: torso
+  slots:
+    head:
+      part: HeadTeethling
+      connections:
+      - torso
+    torso:
+      part: TorsoTeethling
+      connections:
+      - right arm
+      - left arm
+      - right leg
+      - left leg
+    right arm:
+      part: RightArmTeethling
+      connections:
+      - right hand
+    left arm:
+      part: LeftArmTeethling
+      connections:
+      - left hand
+    right hand:
+      part: RightHandTeethling
+    left hand:
+      part: LeftHandTeethling
+    right leg:
+      part: RightLegTeethling
+      connections:
+      - right foot
+    left leg:
+      part: LeftLegTeethling
+      connections:
+      - left foot
+    right foot:
+      part: RightFootTeethling
+    left foot:
+      part: LeftFootTeethling

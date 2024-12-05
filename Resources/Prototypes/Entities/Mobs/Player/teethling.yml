@@ -1,0 +1,11 @@
+- type: entity
+  save: false
+  parent: BaseMobTeethlingPerson
+  id: MobTeethlingPerson
+  components:
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessString: hugging-success-generic
+    interactSuccessSound: /Audio/Effects/thudswoosh.ogg
+    messagePerceivedByOthers: hugging-success-generic-others
+    

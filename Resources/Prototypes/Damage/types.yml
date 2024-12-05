@@ -7,7 +7,6 @@
   armorCoefficientPrice: 5
   armorFlatPrice: 50
 
-
 # Damage representing not having enough blood.
 # Represents there not enough blood to supply oxygen (or equivalent).
 - type: damageType
