@@ -198,11 +198,6 @@
     - id: Flare
     - id: FoodSnackNutribrick
     - id: DrinkWaterBottleFull
-  - type: Sprite
-    layers:
-    - state: box_hug
-    - state: heart
-    - state: nitrogentank
   - type: Label
     currentLabel: reagent-name-nitrogen
 
