@@ -42,5 +42,5 @@
     baseSprintSpeed : 1
   - type: Butcherable
     spawned:
-    - id: FoodMeat
+    - id: DrinkChangelingStingCan
       amount: 1
