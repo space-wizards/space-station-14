@@ -9,6 +9,7 @@ using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Devour;
 using Content.Shared.Devour.Components;
 using Content.Shared.DoAfter;
@@ -19,9 +20,11 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.NameModifier.Components;
 using Content.Shared.Popups;
 using Content.Shared.Speech.Components;
+using Content.Shared.Wagging;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Components;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -40,6 +43,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedBodySystem _bodySystem = default!;
     [Dependency] private readonly EntityManager _entityManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     public override void Initialize()
     {
@@ -122,10 +126,13 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
     private void OnDevourAction(EntityUid uid, ChangelingDevourComponent component, ChangelingDevourActionEvent args)
     {
         Dirty(args.Performer, component);
+
         if (component.CurrentDevourEvent != null
             || component.CurrentWindupEvent != null)
             return;
         if (args.Handled || _whitelistSystem.IsWhitelistFailOrNull(component.Whitelist, args.Target))
+            return;
+        if (!TryComp<DamageableComponent>(args.Target, out var damageable))
             return;
 
         var curTime = _timing.CurTime;
@@ -133,7 +140,23 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
         args.Handled = true;
         component.CurrentWindupEvent = new ChangelingDevourWindupDoAfterEvent();
         var target = args.Target;
-        if (HasComp<ChangelingHuskedCorpseComponent>(target))
+
+        //TODO: check if the target has a resistance of higher than 10% Brute
+       if (_prototypeManager.TryIndex(damageable.DamageModifierSetId, out var prototype))
+       {
+           if(prototype.Coefficients.TryGetValue("Slash", out var slash) && slash > 0.1
+              || prototype.Coefficients.TryGetValue("Blunt", out var blunt) && blunt > 0.1
+              || prototype.Coefficients.TryGetValue("Piercing", out var peirce) && peirce > 0.1)
+           {
+               _popupSystem.PopupClient(Loc.GetString("changeling-devour-failed-armored"),
+                   args.Performer,
+                   args.Performer);
+               return;
+           }
+       }
+
+
+       if (HasComp<ChangelingHuskedCorpseComponent>(target))
         {
             _popupSystem.PopupClient(Loc.GetString("changeling-devour-failed-husk"), args.Performer, args.Performer);
             return;
@@ -145,7 +168,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
         });
 
         _popupSystem.PopupPredicted(Loc.GetString("changeling-devour-begin-windup"), args.Performer, null, PopupType.MediumCaution);
-        //TODO: check if the target has a resistance of higher than 10% Brute
+
     }
     private void OnDevourWindup(EntityUid uid, ChangelingDevourComponent component, ChangelingDevourWindupDoAfterEvent args)
     {
@@ -216,6 +239,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
             if (TryComp<NameModifierComponent>(target, out var namemodifier))
                 name = namemodifier.BaseName;
             var description = MetaData((EntityUid)target).EntityDescription;
+
             var consumedIdentity = new StoredIdentityComponent()
             {
                 IdentityName = name,
@@ -223,6 +247,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
                 IdentityDna = dna,
                 IdentityAppearance = appearance,
                 IdentityVocals = vocals,
+                IdentityEntityPrototype = Prototype((EntityUid)target),
             };
             identitystorage.Identities?.Add(consumedIdentity);
             identitystorage.LastConsumedIdentityComponent = consumedIdentity;

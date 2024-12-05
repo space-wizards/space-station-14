@@ -1,30 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Content.Server.Actions;
 using Content.Server.IdentityManagement;
-using Content.Server.Players;
-using Content.Shared.Actions;
-using Content.Shared.Body.Prototypes;
 using Content.Shared.Changeling.Transform;
-using Content.Shared.Devour;
-using Content.Shared.DoAfter;
 using Content.Shared.Forensics;
 using Content.Shared.Humanoid;
-using Content.Shared.Humanoid.Prototypes;
-using Content.Shared.IdentityManagement;
 using Content.Shared.IdentityManagement.Components;
-using Content.Shared.Mind;
-using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Prototypes;
-using Content.Shared.Speech;
 using Content.Shared.Speech.Components;
 using Content.Shared.Wagging;
 using Robust.Shared.GameObjects.Components.Localization;
-using Robust.Shared.Network;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Changeling.Transform;
 
@@ -35,7 +18,6 @@ public sealed class ChangelingTransformSystem : SharedChangelingTransformSystem
     [Dependency] private readonly GrammarSystem _grammarSystem = default!;
     [Dependency] private readonly IdentitySystem _identitySystem = default!;
     [Dependency] private readonly ActionsSystem _actionSystem = default!;
-    [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
     public override void Initialize()
     {
@@ -46,6 +28,9 @@ public sealed class ChangelingTransformSystem : SharedChangelingTransformSystem
         ChangelingTransformComponent component,
         ChangelingTransformWindupDoAfterEvent args)
     {
+        args.Handled = true;
+        if (args.Cancelled)
+            return;
         if(!TryComp<HumanoidAppearanceComponent>(uid, out var currentAppearance))
             return;
         if(!TryComp<VocalComponent>(uid, out var currentVocals))
@@ -77,15 +62,11 @@ public sealed class ChangelingTransformSystem : SharedChangelingTransformSystem
                 _actionSystem.RemoveAction(uid, waggingComp.ActionEntity);
                 RemComp<WaggingComponent>(uid);
             }
-
-            if (EntityPrototypeHelpers.HasComponent<WaggingComponent>(lastConsumedAppearance.Species)
-                && !TryComp<WaggingComponent>(uid, out var _))
+            if (EntityPrototypeHelpers.HasComponent<WaggingComponent>(component.ChangelingIdentities?.LastConsumedIdentityComponent?.IdentityEntityPrototype!)
+                && !HasComp<WaggingComponent>(uid))
             {
-                EnsureComp<WaggingComponent>(uid, out var newWagging);
-                _actionSystem.AddAction(uid, newWagging.Action, newWagging.ActionEntity!.Value);
+                EnsureComp<WaggingComponent>(uid, out _);
             }
-
-
             currentAppearance.Age = lastConsumedAppearance!.Age;
             currentAppearance.Gender = lastConsumedAppearance.Gender;
             currentAppearance.EyeColor = lastConsumedAppearance.EyeColor;
@@ -98,6 +79,7 @@ public sealed class ChangelingTransformSystem : SharedChangelingTransformSystem
             currentAppearance.CachedHairColor = lastConsumedAppearance.CachedHairColor;
             currentAppearance.CustomBaseLayers = lastConsumedAppearance.CustomBaseLayers;
             currentAppearance.CachedFacialHairColor = lastConsumedAppearance.CachedFacialHairColor;
+            currentDna.DNA = lastConsumedDna!.DNA;
 
             currentVocals.EmoteSounds = lastConsumedVocals!.EmoteSounds;
             currentVocals.Sounds = lastConsumedVocals!.Sounds;

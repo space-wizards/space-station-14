@@ -59,7 +59,8 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
                 IdentityName = Name(uid),
                 IdentityDna = dna,
                 IdentityAppearance = appearance,
-                IdentityVocals = vocals
+                IdentityVocals = vocals,
+                IdentityEntityPrototype = Prototype(uid),
             };
             component.ChangelingIdentities.Identities?.Add(ling);
             component.ChangelingIdentities.OriginalIdentityComponent = ling;
@@ -83,6 +84,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         {
             BreakOnMove = true,
             BreakOnWeightlessMove = true,
+
         });
 
 

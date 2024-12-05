@@ -11,6 +11,7 @@ using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Speech.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Changeling;
@@ -46,6 +47,9 @@ public sealed partial class StoredIdentityComponent : Component
     /// </summary>
     [DataField]
     public Container IdentityOrgans;
+
+    [DataField]
+    public EntityPrototype? IdentityEntityPrototype;
 
 }
 
