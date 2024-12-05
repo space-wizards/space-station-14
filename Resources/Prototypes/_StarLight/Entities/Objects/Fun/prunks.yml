@@ -62,11 +62,13 @@
   parent: ToySword
   components:
   - type: Wieldable
-    wieldTime: 0
   - type: EnergySword
-    isSharp: false
     colorOptions:
       - DodgerBlue
+      - Aqua
+      - Tomato
+      - MediumSpringGreen
+      - MediumOrchid
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_sword_double.rsi
     layers:

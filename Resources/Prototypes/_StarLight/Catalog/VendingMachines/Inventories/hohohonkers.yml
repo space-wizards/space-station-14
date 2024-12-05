@@ -10,7 +10,7 @@
     stock: 4
   - !type:BuyerDepartmentCondition
     whitelist:
-    - Service
+    - Civilian
     - Command
     
 - type: listing
@@ -25,7 +25,7 @@
     stock: 2
   - !type:BuyerDepartmentCondition
     whitelist:
-    - Service
+    - Civilian
     - Command
     
 - type: listing
@@ -40,5 +40,5 @@
     stock: 1
   - !type:BuyerDepartmentCondition
     whitelist:
-    - Service
+    - Civilian
     - Command
