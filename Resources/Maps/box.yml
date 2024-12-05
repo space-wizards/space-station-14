@@ -2207,8 +2207,9 @@ entities:
             3637: 60,-44
             3641: 58,-51
         - node:
+            zIndex: 5
             cleanable: True
-            color: '#474F52FF'
+            color: '#FFFFFF7F'
             id: Dirt
           decals:
             205: -33,-11
@@ -2247,18 +2248,7 @@ entities:
             274: 62,-34
             275: 63,-34
             276: 64,-36
-        - node:
-            cleanable: True
-            zIndex: 1
-            color: '#474F52FF'
-            id: Dirt
-          decals:
             242: -32,-18
-        - node:
-            cleanable: True
-            color: '#D4D4D4A4'
-            id: Dirt
-          decals:
             2530: 0,-57
             2531: -1,-57
             2532: -2,-55
@@ -2272,11 +2262,6 @@ entities:
             2540: -2,-47
             2541: -1,-46
             2542: -1,-45
-        - node:
-            cleanable: True
-            color: '#FFFFFFFF'
-            id: Dirt
-          decals:
             3462: 3,-63
             3463: 3,-62
             3464: 4,-61
@@ -2313,15 +2298,12 @@ entities:
             3632: 57,-45
             3633: 58,-46
         - node:
-            color: '#FFFFFFFF'
+            zIndex: 5
+            cleanable: True
+            color: '#FFFFFF7F'
             id: DirtHeavy
           decals:
             455: -28,-37
-        - node:
-            cleanable: True
-            color: '#FFFFFFFF'
-            id: DirtHeavy
-          decals:
             2529: -1,-55
             2749: 5,-69
             2750: 6,-69
@@ -2355,8 +2337,9 @@ entities:
             3683: -47,-16
             3684: -46,-14
         - node:
+            zIndex: 5
             cleanable: True
-            color: '#FFFFFFFF'
+            color: '#FFFFFF7F'
             id: DirtHeavyMonotile
           decals:
             2908: 1,-72
@@ -2366,17 +2349,12 @@ entities:
             3594: 51,-56
             3595: 51,-48
         - node:
+            zIndex: 5
             cleanable: True
-            color: '#474F52FF'
+            color: '#FFFFFF7F'
             id: DirtLight
           decals:
             277: 61,-34
-        - node:
-            cleanable: True
-            zIndex: 1
-            color: '#474F52FF'
-            id: DirtLight
-          decals:
             243: -32,-16
             244: -32,-15
             245: -33,-15
@@ -2392,10 +2370,6 @@ entities:
             255: -30,-14
             256: -32,-11
             257: -30,-10
-        - node:
-            color: '#FFFFFFFF'
-            id: DirtLight
-          decals:
             446: -30,-38
             447: -29,-37
             448: -27,-31
@@ -2425,11 +2399,6 @@ entities:
             2115: -10,25
             2116: -10,23
             2117: -9,23
-        - node:
-            cleanable: True
-            color: '#FFFFFFFF'
-            id: DirtLight
-          decals:
             1020: -62,-5
             1021: -61,-5
             1022: -55,-3
@@ -2642,8 +2611,8 @@ entities:
             3694: -42,-13
         - node:
             cleanable: True
-            zIndex: 1
-            color: '#474F52FF'
+            zIndex: 5
+            color: '#FFFFFF7F'
             id: DirtMedium
           decals:
             233: -33,-11
@@ -2655,18 +2624,9 @@ entities:
             239: -31,-16
             240: -32,-17
             241: -32,-18
-        - node:
-            color: '#FFFFFFFF'
-            id: DirtMedium
-          decals:
             453: -22,-25
             454: -26,-31
             465: -32,-24
-        - node:
-            cleanable: True
-            color: '#FFFFFFFF'
-            id: DirtMedium
-          decals:
             1428: -8,50
             2526: 0,-58
             2527: -1,-58
