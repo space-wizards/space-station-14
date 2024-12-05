@@ -4,11 +4,15 @@
       "x": 32,
       "y": 32
     },
-    "copyright": "gatheredlow sprited by Sha-Seng (Github)",
+    "copyright": "gatheredlow sprited by Sha-Seng (Github), lowpigtails by Skeleskitty (Discord)",
     "license": "CC-BY-SA-3.0",
     "states": [
       {
         "name": "gatheredlow",
+        "directions": 4
+      },
+      {
+        "name": "lowpigtails",
         "directions": 4
       }
     ]

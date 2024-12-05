@@ -1,32 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Added mini jetpacks to salv starting loadout
-    type: Tweak
-  id: 159
-  time: '2024-09-01T18:32:42.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/185
-- author: widgetbeck
-  changes:
-  - message: update guidebook entry for snails
-    type: Tweak
-  id: 160
-  time: '2024-09-02T02:14:39.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/186
-- author: widgetbeck
-  changes:
-  - message: Snail reagent fixes.
-    type: Tweak
-  id: 161
-  time: '2024-09-02T15:52:35.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/187
-- author: iaada
-  changes:
-  - message: Salvage Jetpack
-    type: Add
-  id: 162
-  time: '2024-09-02T15:52:46.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/188
 - author: Darkmajia
   changes:
   - message: added pride cloaks in the uniform printer
@@ -4463,3 +4435,32 @@
   id: 658
   time: '2024-12-05T06:13:34.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/910
+- author: DinnerCalzone
+  changes:
+  - message: Fixed male dwarves using the incorrect vocal emotes.
+    type: Fix
+  id: 659
+  time: '2024-12-05T12:15:37.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/907
+- author: Sha-Seng
+  changes:
+  - message: Low Pigtails hairstyle for humans and species that use their hair (by
+      Skel)
+    type: Add
+  id: 660
+  time: '2024-12-05T12:15:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/906
+- author: Sha-Seng
+  changes:
+  - message: Fixed capitalization on some traits
+    type: Tweak
+  id: 661
+  time: '2024-12-05T12:16:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/909
+- author: kipdotnet, Starlighthowls
+  changes:
+  - message: Added Banana station for playtesting, a new lowpop map!
+    type: Add
+  id: 662
+  time: '2024-12-05T12:19:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/913
