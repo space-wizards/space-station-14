@@ -16,6 +16,7 @@
   children:
   - Airlocks
   - ExpandingRepairingStation
+  - WirePanels
 
 - type: guideEntry
   id: ExpandingRepairingStation
@@ -28,6 +29,11 @@
   text: "/ServerInfo/Guidebook/Engineering/Airlocks.xml"
   children:
   - AirlockSecurity
+
+- type: guideEntry
+  id: WirePanels
+  name: guide-entry-wirepanels
+  text: "/ServerInfo/Guidebook/Engineering/WirePanels.xml"
 
 - type: guideEntry
   id: AirlockSecurity

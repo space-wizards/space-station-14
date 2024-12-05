@@ -3,6 +3,7 @@ guide-entry-engineering = Engineering
 guide-entry-construction = Construction
 guide-entry-expandingrepairingstation = Expanding and Repairing Stations
 guide-entry-airlock-security = Airlock Upgrades
+guide-entry-wirepanels = Wire Panels
 guide-entry-airlocks = Airlocks
 guide-entry-atmospherics = Atmospherics
 guide-entry-pipes = Pipes
