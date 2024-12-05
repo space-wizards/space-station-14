@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: added pride cloaks in the uniform printer
-    type: Add
-  id: 163
-  time: '2024-09-02T15:52:56.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/189
-- author: AirFryerBuyOneGetOneFree
-  changes:
-  - message: The recruiter's personal ship has a new design!
-    type: Add
-  id: 164
-  time: '2024-09-02T17:04:53.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/190
 - author: formlessnameless
   changes:
   - message: Upstream merge, some merge fixes
@@ -4464,3 +4450,19 @@
   id: 662
   time: '2024-12-05T12:19:23.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/913
+- author: honeyed-lemons
+  changes:
+  - message: Space Engineer Jumpsuit for you silly engineers
+    type: Add
+  - message: Greytider space jumpsuit Works Now
+    type: Fix
+  id: 663
+  time: '2024-12-05T22:25:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/915
+- author: starlighthowls
+  changes:
+  - message: more cruise changes
+    type: Tweak
+  id: 664
+  time: '2024-12-05T22:26:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/918
