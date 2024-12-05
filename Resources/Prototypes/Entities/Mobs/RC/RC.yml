@@ -94,7 +94,7 @@
     doAfterDelay: 10
     allowSelfRepair: false
   - type: Item
-    size: Tiny
+    size: Small
     shape:
     - 0,0,0,1
   - type: StatusEffects
