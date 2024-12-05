@@ -17,12 +17,12 @@
   id: VendorHoloparasiteFakeInjector
   productEntity: HoloparasiteFakeInjector
   cost:
-    NTCredit: 166
+    NTCredit: 327
   categories:
   - SLClown
   conditions:
   - !type:ListingLimitedStockCondition
-    stock: 2
+    stock: 1
   - !type:BuyerDepartmentCondition
     whitelist:
     - Civilian
