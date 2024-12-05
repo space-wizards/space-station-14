@@ -675,6 +675,7 @@
     - VimPilot
     - DoorBumpOpener
     - FootstepSound
+    - IgnoreSpiderWeb
   - type: StealTarget
     stealGroup: AnimalShiva
 

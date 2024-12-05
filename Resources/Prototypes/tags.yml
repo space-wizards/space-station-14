@@ -723,6 +723,9 @@
   id: Igniter
 
 - type: Tag
+  id: IgnoreSpiderWeb
+
+- type: Tag
   id: Ingredient
 
 - type: Tag #Drop this innate tool instead of deleting it.
@@ -1173,6 +1176,9 @@
 
 - type: Tag
   id: SpiderCraft
+
+- type: Tag
+  id: SpiderWeb
 
 - type: Tag
   id: SpookyFog

@@ -68,13 +68,15 @@
       groups:
         Flammable: [Touch]
         Extinguish: [Touch]
-    - type: SpiderWebObject
     - type: SpeedModifierContacts
       walkSpeedModifier: 0.5
       sprintSpeedModifier: 0.5
       ignoreWhitelist:
-        components:
+        tags:
             - IgnoreSpiderWeb
+    - type: Tag
+      tags: 
+      - SpiderWeb
 
 - type: entity
   id: SpiderWebClown
@@ -150,7 +152,6 @@
       groups:
         Flammable: [Touch]
         Extinguish: [Touch]
-    - type: SpiderWebObject
     - type: FlavorProfile
       flavors:
         - sweet
@@ -162,3 +163,6 @@
           reagents:
           - ReagentId: Sugar
             Quantity: 2
+    - type: Tag
+      tags: 
+      - SpiderWeb
