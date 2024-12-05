@@ -88,6 +88,14 @@
       collection: FelionoidMews
     Hisses:
       collection: FelionoidHisses
+    Meow:
+      collection: FelionoidMeows
+    Purr:
+      collection: FelionoidPurrs
+    Growl:
+      collection: FelionoidGrowls
+    Trill:
+      collection: FelionoidTrills
 
 - type: emoteSounds
   id: FemaleFelionoid
@@ -110,6 +118,14 @@
       collection: FelionoidMews
     Hisses:
       collection: FelionoidHisses
+    Meow:
+      collection: FelionoidMeows
+    Purr:
+      collection: FelionoidPurrs
+    Growl:
+      collection: FelionoidGrowls
+    Trill:
+      collection: FelionoidTrills
 
 - type: emoteSounds
   id: MaleCyclorite

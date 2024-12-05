@@ -9,7 +9,7 @@
     speciesWalkSpeedModifier: 1.00
   - type: Speech
     speechVerb: Felionoid
-    allowedEmotes: ['Mew', 'Hisses']
+    allowedEmotes: ['Mew', 'Hisses', 'Meow', 'Growl', 'Purr', 'Trill']
   - type: Vocal
     sounds:
       Male: MaleFelionoid
