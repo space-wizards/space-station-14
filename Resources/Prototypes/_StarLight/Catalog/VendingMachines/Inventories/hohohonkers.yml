@@ -1,0 +1,44 @@
+- type: listing
+  id: VendorFakeGrenade
+  productEntity: FakeGrenade
+  cost:
+    NTCredit: 86
+  categories:
+  - SLClown
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 4
+  - !type:BuyerDepartmentCondition
+    whitelist:
+    - Civilian
+    - Command
+    
+- type: listing
+  id: VendorHoloparasiteFakeInjector
+  productEntity: HoloparasiteFakeInjector
+  cost:
+    NTCredit: 166
+  categories:
+  - SLClown
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+  - !type:BuyerDepartmentCondition
+    whitelist:
+    - Civilian
+    - Command
+    
+- type: listing
+  id: VendorToySwordDoubled
+  productEntity: ToySwordDoubled
+  cost:
+    NTCredit: 127
+  categories:
+  - SLClown
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+  - !type:BuyerDepartmentCondition
+    whitelist:
+    - Civilian
+    - Command

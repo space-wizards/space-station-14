@@ -147468,6 +147468,13 @@ entities:
     - type: Transform
       pos: 3.5,-9.5
       parent: 60
+- proto: VendingMachineClown
+  entities:
+  - uid: 18848
+    components:
+    - type: Transform
+      pos: 21.5,-13.5
+      parent: 60
 - proto: VendingMachineCoffee
   entities:
   - uid: 6139

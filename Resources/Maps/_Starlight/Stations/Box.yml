@@ -11638,7 +11638,7 @@ entities:
       pos: 24.5,16.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -27198.496
+      secondsUntilStateChange: -27245.85
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -70445,11 +70445,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 20.5,-3.5
       parent: 8364
-  - uid: 6994
-    components:
-    - type: Transform
-      pos: 22.5,3.5
-      parent: 8364
   - uid: 8077
     components:
     - type: Transform
@@ -85164,7 +85159,7 @@ entities:
       pos: -34.5,-14.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -21387.033
+      secondsUntilStateChange: -21434.387
       state: Closing
   - uid: 15010
     components:
@@ -85657,7 +85652,7 @@ entities:
       pos: -4.5,-71.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -13134.764
+      secondsUntilStateChange: -13182.116
       state: Closing
 - proto: Fireplace
   entities:
@@ -160711,6 +160706,13 @@ entities:
     components:
     - type: Transform
       pos: -39.5,-4.5
+      parent: 8364
+- proto: VendingMachineClown
+  entities:
+  - uid: 6994
+    components:
+    - type: Transform
+      pos: 22.5,3.5
       parent: 8364
 - proto: VendingMachineCoffee
   entities:

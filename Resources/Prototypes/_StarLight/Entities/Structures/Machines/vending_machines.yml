@@ -170,7 +170,7 @@
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
       shader: unshaded
   - type: Store
-    name: vendor-medical-dispenser
+    name: vendor-engineering-dispenser
     categories:
     - SLEnginery
     currencyWhitelist:
@@ -188,3 +188,35 @@
         density: 190
   - type: Transform
     noRot: false
+    
+- type: entity
+  parent: SLVendingMachine
+  id: VendingMachineClown
+  name: HohohonkersVend
+  description: Get your honk fix here! Surprise the station with HohohonkersVend — the ultimate machine for hilarious pranks. Hack it, and you'll unlock something special!
+  components:
+  - type: Store
+    name: vendor-clown-dispenser
+    categories:
+    - SLClown
+    currencyWhitelist:
+    - NTCredit
+  - type: Sprite
+    sprite: _Starlight/Structures/Machines/VendingMachines/hohohonkers.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: normal-unshaded
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.16,0.3,0.40"
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+        density: 190

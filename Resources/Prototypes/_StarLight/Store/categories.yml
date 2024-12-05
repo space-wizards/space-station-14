@@ -20,4 +20,8 @@
 
 - type: storeCategory
   id: SLEnginery
-  name: store-category-medical-enginery
+  name: store-category-enginery-main
+
+- type: storeCategory
+  id: SLClown
+  name: store-category-service-clown
