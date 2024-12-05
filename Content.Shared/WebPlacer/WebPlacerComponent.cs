@@ -5,14 +5,14 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Shared.Spider;
+namespace Content.Shared.WebPlacer;
 
 /// <summary>
 /// Gives the entity (probably a spider) an ability to spawn webs around itself.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(SharedSpiderSystem))]
-public sealed partial class SpiderComponent : Component
+[Access(typeof(SharedWebPlacerSystem))]
+public sealed partial class WebPlacerComponent : Component
 {
     /// <summary>
     /// Id of the entity getting spawned.

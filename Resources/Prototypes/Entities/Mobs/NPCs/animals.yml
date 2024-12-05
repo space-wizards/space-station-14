@@ -2365,7 +2365,7 @@
     interactSuccessSound:
       path: /Audio/Animals/snake_hiss.ogg
   - type: NoSlip
-  - type: Spider
+  - type: WebPlacer
     webPrototype: SpiderWeb
     destinationBlacklist:
       tags:
@@ -2457,7 +2457,7 @@
       thresholds:
         0: Alive
         180: Dead
-    - type: Spider
+    - type: WebPlacer
       webPrototype: SpiderWebClown
       destinationBlacklist:
         tags:

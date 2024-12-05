@@ -1,7 +1,7 @@
 using System.Linq;
 using Content.Server.Popups;
 using Content.Shared.Maps;
-using Content.Shared.Spider;
+using Content.Shared.WebPlacer;
 using Content.Shared.Whitelist;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -9,12 +9,12 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 
-namespace Content.Server.Spider;
+namespace Content.Server.WebPlacer;
 
 /// <summary>
-/// Spawns entities (probably webs) around the component owner. Action handled by <see cref="SharedSpiderSystem"/>.
+/// Spawns entities (probably webs) around the component owner. Action handled by <see cref="SharedWebPlacerSystem"/>.
 /// </summary>
-public sealed class SpiderSystem : SharedSpiderSystem
+public sealed class WebPlacerSystem : SharedWebPlacerSystem
 {
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
@@ -26,10 +26,10 @@ public sealed class SpiderSystem : SharedSpiderSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<SpiderComponent, SpiderWebActionEvent>(OnSpawnNet);
+        SubscribeLocalEvent<WebPlacerComponent, SpiderWebActionEvent>(OnSpawnNet);
     }
 
-    private void OnSpawnNet(EntityUid uid, SpiderComponent component, SpiderWebActionEvent args)
+    private void OnSpawnNet(EntityUid uid, WebPlacerComponent component, SpiderWebActionEvent args)
     {
         if (args.Handled)
             return;
@@ -37,6 +37,7 @@ public sealed class SpiderSystem : SharedSpiderSystem
         var transform = Transform(uid);
         var grid = transform.GridUid;
 
+        // Instantly fail in space
         if (grid == null || !TryComp<MapGridComponent>(grid, out var gridComp))
         {
             _popup.PopupEntity(Loc.GetString(component.MessageOffGrid), args.Performer, args.Performer);
@@ -52,7 +53,7 @@ public sealed class SpiderSystem : SharedSpiderSystem
         foreach (var vect in vects)
             spawnPos.Add(coords.Offset(vect));
 
-        // Spawn webs here
+        // Spawn webs
         bool success = false;
         foreach (var pos in spawnPos)
             if (IsValidTile(pos, component.DestinationWhitelist, component.DestinationBlacklist, grid.Value, gridComp))
@@ -61,6 +62,7 @@ public sealed class SpiderSystem : SharedSpiderSystem
                 success = true;
             }
 
+        // Process success
         if (success)
         {
             _popup.PopupEntity(Loc.GetString(component.MessageSuccess), args.Performer, args.Performer);

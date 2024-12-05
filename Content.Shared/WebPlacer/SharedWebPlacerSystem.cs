@@ -2,12 +2,12 @@ using Content.Shared.Actions;
 using Robust.Shared.Network;
 using Robust.Shared.Random;
 
-namespace Content.Shared.Spider;
+namespace Content.Shared.WebPlacer;
 
 /// <summary>
-/// Gives entities (probably spiders) an action on init.  Spawning handled by <see cref="ServerSpiderSystem"/>..
+/// Gives entities (probably spiders) an action on init.  Spawning handled by <see cref="WebPlacerSystem"/>..
 /// </summary>
-public abstract class SharedSpiderSystem : EntitySystem
+public abstract class SharedWebPlacerSystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _action = default!;
 
@@ -15,10 +15,10 @@ public abstract class SharedSpiderSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SpiderComponent, MapInitEvent>(OnInit);
+        SubscribeLocalEvent<WebPlacerComponent, MapInitEvent>(OnInit);
     }
 
-    private void OnInit(EntityUid uid, SpiderComponent component, MapInitEvent args)
+    private void OnInit(EntityUid uid, WebPlacerComponent component, MapInitEvent args)
     {
         _action.AddAction(uid, ref component.ActionEntity, component.SpawnWebAction, uid);
     }
