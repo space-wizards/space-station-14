@@ -27,10 +27,10 @@ trait-unrevivable-desc = You are unable to be revived by defibrillators.
 trait-pirate-accent-name = Pirate accent
 trait-pirate-accent-desc = You can't stop speaking like a pirate!
 
-trait-accentless-name = No Species Accent
+trait-accentless-name = No species accent
 trait-accentless-desc = You don't have the accent that your species would usually have.
 
-trait-accentimmune-name = No Accent
+trait-accentimmune-name = No accent
 trait-accentimmune-desc = You have no accent whatsoever, somehow. Where are you from?
 
 trait-frontal-lisp-name = Frontal lisp
