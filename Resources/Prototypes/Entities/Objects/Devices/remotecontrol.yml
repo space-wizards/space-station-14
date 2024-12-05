@@ -5,11 +5,12 @@
   description: A remote controller provided by the syndicate for spy operations.
   components:
   - type: Sprite
-    sprite: Objects/Tools/t-ray.rsi
-    state: tray-off
+    sprite: Objects/Devices/syndie_rc_remote.rsi
+    state: remote
   - type: RCRemote
   - type: Item
-    sprite: Objects/Tools/t-ray.rsi
+    sprite: Objects/Devices/syndie_rc_remote.rsi
+    storedRotation: -90
   - type: Appearance
   - type: StaticPrice
     price: 85
