@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: iaada
-  changes:
-  - message: Salvage Jetpack
-    type: Add
-  id: 162
-  time: '2024-09-02T15:52:46.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/188
 - author: Darkmajia
   changes:
   - message: added pride cloaks in the uniform printer
@@ -4464,3 +4457,10 @@
   id: 661
   time: '2024-12-05T12:16:48.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/909
+- author: kipdotnet, Starlighthowls
+  changes:
+  - message: Added Banana station for playtesting, a new lowpop map!
+    type: Add
+  id: 662
+  time: '2024-12-05T12:19:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/913
