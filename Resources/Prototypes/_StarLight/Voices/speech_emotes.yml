@@ -31,7 +31,7 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: ["chat-emote-msg-howl"]
+  chatMessages: ["chat-emote-msg-bark"]
   chatTriggers:
   - bark
   - bark.
