@@ -12,6 +12,8 @@
       collection: Growl
     Howl:
       path: /Audio/_Starlight/Effects/howl.ogg
+    Bark:
+      collection: Bark
     Sneeze:
       collection: MaleSneezes
     Cough:
@@ -46,6 +48,8 @@
       collection: Growl
     Howl:
       path: /Audio/_Starlight/Effects/howl.ogg
+    Bark:
+      collection: Bark
     Sneeze:
       collection: FemaleSneezes
     Cough:
