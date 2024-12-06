@@ -19,7 +19,7 @@
     jumpsuit: ClothingUniformJumpsuitDeathSquad
     back: ClothingBackpackDeathSquad
     mask: ClothingMaskGasDeathSquad
-    eyes: ClothingEyesGlassesBrigmedic
+    eyes: ClothingEyesHudSecurity
     ears: ClothingHeadsetAltCentCom
     gloves: ClothingHandsGlovesCombat
     outerClothing: ClothingOuterHardsuitDeathsquad
