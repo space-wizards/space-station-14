@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: joelsgp
-  changes:
-  - message: Fixed various attribution links on audio
-    type: Fix
-  - message: Fix repulsion gel flavor complex
-    type: Fix
-  - message: Fix some snail metadata
-    type: Fix
-  id: 168
-  time: '2024-09-05T12:27:13.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/207
 - author: Darkmajia
   changes:
   - message: Added a new reagent to the liquid anomaly. Dude, the captain's gonna
@@ -4470,3 +4459,11 @@
   id: 667
   time: '2024-12-06T01:43:09.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/920
+- author: Darkmajia
+  changes:
+  - message: Sofas and reinforced wood tables can now be built in the construction
+      menu.
+    type: Add
+  id: 668
+  time: '2024-12-06T02:26:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/916
