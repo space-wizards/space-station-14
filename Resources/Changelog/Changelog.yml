@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix the inventory GUI being visible when you don't have an inventory.
-    type: Fix
-  id: 7183
-  time: '2024-08-22T17:05:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31306
 - author: EmoGarbage404
   changes:
   - message: Moved the mining asteroid slightly closer to the station.
@@ -3904,3 +3897,10 @@
   id: 7682
   time: '2024-12-06T06:22:39.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33433
+- author: TheShuEd
+  changes:
+  - message: Fixed debris chunks loot spawning
+    type: Fix
+  id: 7683
+  time: '2024-12-06T10:15:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33747
