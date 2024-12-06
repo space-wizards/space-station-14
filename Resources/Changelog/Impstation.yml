@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: joelsgp
-  changes:
-  - message: Added more login tips
-    type: Add
-  - message: Added new lobby art by SnazzyGator
-    type: Add
-  id: 173
-  time: '2024-09-06T00:20:30.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/216
 - author: formlessnameless
   changes:
   - message: Added Spy Vs Spy to the secret rotation with a weight similar to Nukies
@@ -4473,3 +4464,23 @@
   id: 672
   time: '2024-12-06T10:45:00.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/921
+- author: widgetbeck
+  changes:
+  - message: Decapoid claws now function as a crowbar and wirecutters, to alleviate
+      the downside of having one hand.
+    type: Add
+  - message: Increased the range of the Decapoid claw to match its sprite, and reduced
+      its wideswing radius.
+    type: Tweak
+  - message: New Decapoid footstep sounds.
+    type: Tweak
+  - message: Decapoid claws appearing to not have mouse1 attacks.
+    type: Fix
+  - message: Decapoids now spawn with an oxygen emergency survival box. Piskun NT.
+      At least it has water...
+    type: Fix
+  - message: Decapoids now have stomachs.
+    type: Fix
+  id: 673
+  time: '2024-12-06T12:03:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/925
