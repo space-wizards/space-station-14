@@ -49,11 +49,11 @@
   - type: Tool
     qualities:
       - Prying
-    useSound: /Audio/Items/jaws_pry.ogg
+    useSound: /Audio/_Impstation/Items/Decapoid/claw_prying.ogg
   - type: Prying
     speedModifier: 1.5
     pryPowered: true
-    useSound: /Audio/_Impstation/Items/Decapoid/claw_pry.ogg
+    useSound: /Audio/_Impstation/Items/Decapoid/claw_prying.ogg
   - type: MultipleTool
     statusShowBehavior: true
     entries:
