@@ -106,7 +106,7 @@
   name: svalinn laser pistol
   parent: [ BaseWeaponPowerCellSmall, BaseRestrictedContraband ]
   id: WeaponLaserSvalinn
-  description: A cheap and widely-used laser pistol. Defeats glass cover, passing right through.
+  description: A cheap and widely-used laser pistol.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
@@ -127,7 +127,7 @@
   name: retro laser blaster
   parent: [ BaseWeaponBatterySmall, BaseMajorContraband ]
   id: WeaponLaserGun
-  description: A weapon using light amplified by the stimulated emission of radiation. Defeats glass cover, passing right through.
+  description: A weapon using light amplified by the stimulated emission of radiation.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
@@ -150,7 +150,7 @@
   name: makeshift laser pistol
   parent: BaseWeaponBatterySmall
   id: WeaponMakeshiftLaser
-  description: Better pray it won't burn your hands off. Defeats glass cover, passing right through.
+  description: Better pray it won't burn your hands off.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
@@ -228,7 +228,7 @@
   name: laser rifle
   parent: [WeaponLaserCarbinePractice, BaseGunWieldable, BaseRestrictedContraband]
   id: WeaponLaserCarbine
-  description: Favored by Nanotrasen Security for being cheap and easy to use. Lasers can defeat glass cover, passing right through.
+  description: Favored by Nanotrasen Security for being cheap and easy to use.
   components:
   - type: StaticPrice
     price: 420
@@ -240,7 +240,7 @@
   name: pulse pistol
   parent: BaseWeaponBatterySmall
   id: WeaponPulsePistol
-  description: A state-of-the-art energy pistol favored as a sidearm by NT operatives. Defeats glass cover, passing right through.
+  description: A state-of-the-art energy pistol favored as a sidearm by NT operatives.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
@@ -269,7 +269,7 @@
   name: pulse carbine
   parent: [BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband]
   id: WeaponPulseCarbine
-  description: A high-tech energy carbine favored by the NT-ERT operatives. Defeats glass cover, passing right through.
+  description: A high-tech energy carbine favored by the NT-ERT operatives.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
@@ -300,7 +300,7 @@
   name: pulse rifle
   parent: [BaseWeaponBattery, BaseGunWieldable]
   id: WeaponPulseRifle
-  description: A weapon that is almost as infamous as its users. Defeats glass cover, passing right through.
+  description: A weapon that is almost as infamous as its users.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/pulse_rifle.rsi
@@ -327,7 +327,7 @@
   name: laser cannon
   parent: [BaseWeaponBattery, BaseGunWieldable, BaseRestrictedContraband]
   id: WeaponLaserCannon
-  description: A heavy-duty, high-powered laser weapon. Defeats glass cover, passing right through.
+  description: A heavy-duty, high-powered laser weapon.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
@@ -382,7 +382,7 @@
   name: x-ray cannon
   parent: [BaseWeaponBattery, BaseGunWieldable, BaseSecurityContraband]
   id: WeaponXrayCannon
-  description: An experimental weapon that uses concentrated x-ray energy against its target. Defeats glass cover, passing right through.
+  description: An experimental weapon that uses concentrated x-ray energy against its target.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/xray.rsi
@@ -549,7 +549,7 @@
   name: antique laser pistol
   parent: [BaseWeaponBatterySmall, BaseGrandTheftContraband]
   id: WeaponAntiqueLaser
-  description: All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. Defeats glass cover, passing right through.
+  description: All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
@@ -593,7 +593,7 @@
   name: advanced laser pistol
   parent: [ BaseWeaponBatterySmall, BaseRestrictedContraband]
   id: WeaponAdvancedLaser
-  description: An experimental high-energy laser pistol with a self-charging nuclear battery. Defeats glass cover, passing right through.
+  description: An experimental high-energy laser pistol with a self-charging nuclear battery.
   components:
   - type: Item
     size: Normal  # Intentionally larger than other pistols
