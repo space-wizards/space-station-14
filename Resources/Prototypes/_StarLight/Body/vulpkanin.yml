@@ -1,6 +1,6 @@
 ﻿- type: body
-  name: "vulpkanin"
   id: Vulpkanin
+  name: "vulpkanin"
   root: torso
   slots:
     head:
@@ -10,40 +10,42 @@
       organs:
         brain: OrganHumanBrain
         eyes: OrganHumanEyes
+        tongue: OrganHumanTongue
+        eye_implant: null
     torso:
       part: TorsoVulpkanin
+      connections:
+      - right arm
+      - left arm
+      - right leg
+      - left leg
       organs:
         heart: OrganAnimalHeart
         lungs: OrganHumanLungs
         stomach: OrganVulpkaninStomach # basically just arachnid stomach
         liver: OrganAnimalLiver
         kidneys: OrganHumanKidneys
-      connections:
-      - right_arm
-      - left_arm
-      - right_leg
-      - left_leg
-    right_arm:
+    right arm:
       part: RightArmVulpkanin
       connections:
-      - right_hand
-    left_arm:
+      - right hand
+    left arm:
       part: LeftArmVulpkanin
       connections:
-      - left_hand
-    right_hand:
+      - left hand
+    right hand:
       part: RightHandVulpkanin
-    left_hand:
+    left hand:
       part: LeftHandVulpkanin
-    right_leg:
+    right leg:
       part: RightLegVulpkanin
       connections:
-      - right_foot
-    left_leg:
+      - right foot
+    left leg:
       part: LeftLegVulpkanin
       connections:
-      - left_foot
-    right_foot:
+      - left foot
+    right foot:
       part: RightFootVulpkanin
-    left_foot:
+    left foot:
       part: LeftFootVulpkanin
