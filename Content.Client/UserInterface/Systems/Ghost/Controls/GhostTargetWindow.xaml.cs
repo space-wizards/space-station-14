@@ -85,6 +85,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
                         SizeFlagsStretchRatio = 1,
                         ModulateSelfOverride = colorHex,
                         MinSize = new Vector2(340, 20),
+                        ClipText = true,
                     };
 
                     currentButtonRef.OnMouseEntered += _ => currentButtonRef.Label.FontColorOverride = Color.InterpolateBetween(Color.White, colorHex, 0.35f);
