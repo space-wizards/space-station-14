@@ -11,6 +11,7 @@
         brain: OrganHumanBrain
         eyes: OrganHumanEyes
         tongue: OrganHumanTongue
+        eye_implant: null
     torso:
       part: TorsoHuman
       connections:
