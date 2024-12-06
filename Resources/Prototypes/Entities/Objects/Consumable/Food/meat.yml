@@ -678,6 +678,11 @@
     tags:
     - Raw
     - Meat
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Slime
+        Quantity: 10
   - type: Sprite
     state: slime
 
@@ -1207,7 +1212,7 @@
   name: anomalous steak
   parent: FoodMeatBase
   id: FoodMeatAnomalyCooked
-  description: A gigantic mass of cooked meat. A meal for a dinner party, or someone REALLY hungry. 
+  description: A gigantic mass of cooked meat. A meal for a dinner party, or someone REALLY hungry.
   components:
   - type: Tag
     tags:

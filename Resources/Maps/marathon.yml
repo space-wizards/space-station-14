@@ -9815,6 +9815,8 @@ entities:
       rot: 3.141592653589793 rad
       pos: 5.5,-44.5
       parent: 30
+    - type: DeviceLinkSink
+      invokeCounter: 1
     - type: DeviceLinkSource
       linkedPorts:
         10559:
@@ -9827,6 +9829,12 @@ entities:
       parent: 30
     - type: DeviceLinkSink
       invokeCounter: 1
+    - type: DeviceLinkSource
+      linkedPorts:
+        9342:
+        - DoorStatus: DoorBolt
+      lastSignals:
+        DoorStatus: True
   - uid: 20059
     components:
     - type: Transform
