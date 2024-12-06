@@ -21,6 +21,7 @@
     - Gray
     - Snail
     - SpElf
+    - Decapoid
 
 - type: loadoutEffectGroup
   id: EffectSpeciesVox
@@ -35,6 +36,23 @@
   - !type:SpeciesLoadoutEffect
     species:
     - Snail
+
+# commenting these out because I would like to do emergency vapor boxes at some point.
+#- type: loadoutEffectGroup
+#  id: EffectSpeciesDecapoid
+#  effects:
+#  - !type:SpeciesLoadoutEffect
+#    species:
+#    - Decapoid
+
+#- type: loadout
+#  id: EmergencyOxygenDecapoid
+#  effects:
+#  - !type:GroupLoadoutEffect
+#    proto: EffectSpeciesDecapoid
+#  storage:
+#    back:
+#    - BoxSurvivalVapor
 
 - type: loadout
   id: EmergencyOxygenSnail
