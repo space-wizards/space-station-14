@@ -55,7 +55,7 @@
   name: AKMS
   parent: [BaseWeaponRifle, BaseRestrictedContraband]
   id: WeaponRifleAk
-  description: An iconic weapon of war. Simple and effective, favored by revolutionaries everywhere. Uses .30 rifle ammo.
+  description: An iconic weapon of war. Simple and effective; favored by revolutionaries everywhere. Uses .30 rifle ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/ak.rsi
