@@ -28,7 +28,7 @@
   id: CrateTrackingImplants
   parent: [ CrateWeaponSecure, BaseRestrictedContraband ]
   name: tracking implants
-  description: Contains five tracking implanters. Good for prisoners you'd like to release but still keep track of.
+  description: Contains a handful of tracking implanters. Good for prisoners you'd like to release but still keep track of.
   components:
   - type: StorageFill
     contents:
