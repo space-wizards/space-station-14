@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: Brandon-Huu
-  changes:
-  - message: Nukie shuttle now spawns with the nuclear authentication code folder.
-      This fixes the issue where the nuclear codes would only ever have the codes
-      for the nuclear operatives nuke and not the stations.
-    type: Fix
-  id: 7178
-  time: '2024-08-21T18:55:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31273
-- author: Winkarst-cpu
-  changes:
-  - message: Now getting creamed will not reveal a person's identity.
-    type: Fix
-  id: 7179
-  time: '2024-08-21T21:50:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31291
 - author: Sarahon
   changes:
   - message: Now can add head(top) cosmetics to humanoids and dwarfs.
@@ -3907,3 +3891,18 @@
   id: 7677
   time: '2024-12-04T16:49:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33710
+- author: PJB3005
+  changes:
+  - message: Vox now have natural poison regeneration, allowing them to go for ~30
+      seconds in oxygen and heal the damage away.
+    type: Tweak
+  id: 7678
+  time: '2024-12-05T21:17:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33722
+- author: IProduceWidgets
+  changes:
+  - message: N2 survival boxes now show the right tank icon.
+    type: Tweak
+  id: 7679
+  time: '2024-12-05T21:39:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33733
