@@ -78,6 +78,90 @@
   - hiss
   - hiss.
   - hiss!
+  - hiss?
   - hissing
   - hissing.
   - hissing!
+  - hissing?
+  - hisses
+  - hisses.
+  - hisses!
+  - hisses?
+
+- type: emote
+  id: Meow
+  name: chat-emote-name-meows
+  category: Vocal
+  available: false
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: [meow]
+  chatTriggers:
+    - meow
+    - meow.
+    - meow!
+    - meow?
+    - meows
+    - meows.
+    - meows!
+    - meows?
+    - meowing
+    - meowing.
+    - meowing!
+    - meowing?
+
+- type: emote
+  id: Purr
+  name: chat-emote-name-purrs
+  category: Vocal
+  available: false
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: [purr]
+  chatTriggers:
+    - purr
+    - purr.
+    - purr!
+    - purr?
+    - purrs
+    - purrs.
+    - purrs!
+    - purrs?
+    - purring
+    - purring.
+    - purring?
+    - purring!
+
+- type: emote
+  id: Trill
+  name: chat-emote-name-trills
+  category: Vocal
+  available: false
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: [trill]
+  chatTriggers:
+    - trill
+    - trill.
+    - trill!
+    - trill?
+    - trills
+    - trills.
+    - trills!
+    - trills?
+    - trilling
+    - trilling.
+    - trilling!
+    - trilling?
