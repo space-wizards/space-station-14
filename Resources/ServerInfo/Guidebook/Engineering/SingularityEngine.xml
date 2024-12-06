@@ -15,7 +15,7 @@
   - Turn on the four Containment Field Generators.
   - Turn on and lock the Emitters.
   - Confirm that the Containment Field Generators have created a Containment Field around the Singularity.
-  - Turn on the Radiation Collectors.
+  - Turn on the Radiation Collectors. These require plasma to produce power. They might not come fueled, so be sure to refill them.
   - Construct the Particle Accelerator.
   - Turn on the Particle Accelerator Control Computer and set the power level to the desired power level.
 

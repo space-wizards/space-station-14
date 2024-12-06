@@ -12,8 +12,10 @@
   <GuideEntityEmbed Entity="AmeJar"/>
   </Box>
 
-  To assemble an AME, start by wrenching down the controller on the near end of a HV wire.
-  Most stations have exposed HV wiring or designated spots to wrench an AME controller to the floor.
+  The AME Controller is the part of the AME that outputs power to the station's grid through an HV connection.
+  Because of this, you'll want to start your AME construction with the controller on top of an HV wire.
+
+  Most stations have exposed HV wiring or designated spots to wrench an AME controller, so that it connects to the grid.
 
   From there, start putting down a 3x3 or larger square of AME parts in preparation for construction, making sure to maximize the number of "center" pieces that are surrounded on all eight sides.
 

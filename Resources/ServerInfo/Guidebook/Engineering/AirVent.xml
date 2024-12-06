@@ -19,7 +19,7 @@
     [italic]Speed = 2 × Pipenet Pressure - Exposed Atmosphere Pressure[/italic]
   </Box>
 
-  For example, this means that an air vent will be unable to pump to 101.3kPa if the gas inside the vest goes below half that (50.65kPa).
+  For example, this means that an air vent will be unable to pump to 101.3kPa if the gas inside the vent goes below half that (50.65kPa).
 
   ## Pressure Lockout
   Air vents will enter [color=red]pressure lockout[/color] when the pressure of the atmosphere it's exposed to is below 80 kPa. This is to prevent wasting useful gasses to space if a room is not sealed. The lights on the air vent will turn [color=yellow]yellow[/color] to highlight this change.
