@@ -12,6 +12,7 @@
     - type: OwOAccent
     - type: LizardAccent
     - type: MothAccent
+    - type: GrowlingAccent
     - type: ReplacementAccent
       accent: dwarf
 
