@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: iaada
   changes:
-  - message: Salvage Jetpack, fixed
-    type: Tweak
-  id: 166
-  time: '2024-09-03T02:35:00.0000000+00:00'
-  url: https://github.com/medabunny/imp-station-14/pull/193
-- author: iaada
-  changes:
   - message: Fix buff to salvage jetpacks
     type: Fix
   id: 167
@@ -4468,3 +4461,11 @@
   id: 665
   time: '2024-12-05T23:50:44.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/919
+- author: widgetbeck
+  changes:
+  - message: ADDED DECAPOIDS, a new playable species that you should probably read
+      the guidebook entry for.
+    type: Add
+  id: 666
+  time: '2024-12-06T00:48:57.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/914
