@@ -42,16 +42,50 @@
   name: Kardashev-Mosin
   parent: [BaseWeaponSniper, BaseGunWieldable, BaseSyndicateContraband]
   id: WeaponSniperMosin
-  description: A weapon for hunting, or endless trench warfare. Uses .30 rifle ammo.
+  description: A weapon for hunting, or endless trench warfare. There's a bayonet at the end, and the heft of the rifle could do some damage. Uses .30 rifle ammo.
+# Melee and gun components don't play nice; description will change when fixed. Melee components also disabled for the time being
   components:
+  - type: Gun
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/bolt_gun_wood.rsi
+#  - type: MeleeWeapon
+#    range: 2
+#    wideAnimationRotation: -135
+#    attackRate: 1.2
+#    damage:
+#      types:
+#        Piercing: 12
+#        Slash: 4
+#    angle: 0
+#    animation: WeaponArcThrust
+#    soundHit:
+#      path: /Audio/Weapons/bladeslice.ogg
+  - type: EmbeddableProjectile
+    offset: -0.15,0.0
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: ThrowingAngle
+    angle: 225
+  - type: LandAtCursor
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 15
+        Slash: 5
+#  - type: Sharp
+#  - type: Execution
+#    doAfterDuration: 2.0
+#    animation: WeaponArcThrust
+#    angle: 0
+#  - type: MeleeRequiresWield
 
 - type: entity
   name: Hristov
   parent: [BaseWeaponSniper, BaseGunWieldable, BaseSyndicateContraband]
   id: WeaponSniperHristov
-  description: A portable anti-materiel rifle. Fires armor piercing 14.5mm shells. Uses .60 anti-materiel ammo.
+  description: A portable anti-materiel rifle, originally intended for destroying the engine blocks of moving vehicles. Uses .60 anti-materiel ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Snipers/heavy_sniper.rsi

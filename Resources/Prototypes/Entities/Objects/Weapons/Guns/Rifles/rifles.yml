@@ -55,7 +55,7 @@
   name: AKMS
   parent: [BaseWeaponRifle, BaseRestrictedContraband]
   id: WeaponRifleAk
-  description: An iconic weapon of war. Uses .30 rifle ammo.
+  description: An iconic weapon of war. Simple and effective; favored by revolutionaries everywhere. Uses .30 rifle ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/ak.rsi
@@ -104,7 +104,7 @@
   name: M-90gl
   parent: [BaseWeaponRifle, BaseSyndicateContraband]
   id: WeaponRifleM90GrenadeLauncher
-  description: An older bullpup carbine model, with an attached underbarrel grenade launcher. Uses .20 rifle ammo.
+  description: An older bullpup-carbine model with an attached underbarrel grenade launcher. Uses .20 rifle ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/carbine.rsi
@@ -148,7 +148,7 @@
   name: Lecter
   parent: [BaseWeaponRifle, BaseRestrictedContraband]
   id: WeaponRifleLecter
-  description: A high end military grade assault rifle. Uses .20 rifle ammo.
+  description: A modern short-barreled assault rifle fielded by militaries and law enforcement throughout many worlds, complete with familiar controls and ergonomics. Uses .20 rifle ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
@@ -195,7 +195,7 @@
   name: Foam Force Astro Ace
   parent: [BaseWeaponShotgun, BaseGunWieldable]
   id: WeaponRifleFoam
-  description: A premium foam rifle of the highest quality. Its plastic feels rugged, and its mechanisms sturdy.
+  description: A premium foam rifle of the highest quality. Its plastic feels rugged, and its mechanisms sturdy. The body crackles when you squeeze too tightly.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Rifles/foam_rifle.rsi
