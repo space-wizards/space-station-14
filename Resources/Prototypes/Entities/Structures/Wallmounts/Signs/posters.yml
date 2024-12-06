@@ -1069,6 +1069,15 @@
   - type: Sprite
     state: poster52_legit
 
+- type: entity
+  parent: PosterBase
+  id: PosterLegitOppenhopper
+  name: "Oppenhopper"
+  description: "A poster for a long-forgotten movie. It follows a group of tenacious greenhorns from the Grasshopper Sector as they defend against onslaughts of the infamous Nuclear Operatives. The tagline reads: \"Nuke Ops will continue until robustness improves.\""
+  components:
+  - type: Sprite
+    state: poster53_legit
+
 
 #maps
 
