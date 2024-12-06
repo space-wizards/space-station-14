@@ -350,4 +350,4 @@
   - type: SubdermalImplant
   - type: RadioImplant
     radioChannels:
-    - CentComm
+    - CentCom
