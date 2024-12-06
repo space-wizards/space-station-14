@@ -97,7 +97,7 @@
   name: Mateba
   parent: [BaseWeaponRevolver, BaseMajorContraband]
   id: WeaponRevolverMateba
-  description: The iconic sidearm of the dreaded Death Squads, allegedly. Uses .45 magnum ammo.
+  description: The iconic sidearm of the dreaded Deathsquads... allegedly. Uses .45 magnum ammo.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
