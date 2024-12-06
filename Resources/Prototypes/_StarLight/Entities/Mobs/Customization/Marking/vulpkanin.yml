@@ -1,11 +1,12 @@
-- type: marking
-  id: PawSocks
-  markingCategory: Overlay
-  bodyPart: RFoot #highest possible layer
-  speciesRestriction: [Vulpkanin]
-  sprites:
-    - sprite: _Starlight/Mobs/Customization/vulpkanin.rsi
-      state: pawsocks
+# Eventually layering will allow to have markings on the body not layering above jumpsuits
+#- type: marking
+#  id: PawSocks
+#  markingCategory: Overlay
+#  bodyPart: RFoot #highest possible layer
+#  speciesRestriction: [Vulpkanin]
+#  sprites:
+#    - sprite: _Starlight/Mobs/Customization/vulpkanin.rsi
+#      state: pawsocks
 
 - type: marking
   id: FoxTail
