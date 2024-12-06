@@ -819,4 +819,11 @@ Entries:
   id: 116
   time: '2024-12-06T13:17:47.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/121
+- author: Miracula
+  changes:
+  - message: Accentless trait now works at vulpkanins
+    type: Fix
+  id: 117
+  time: '2024-12-06T18:57:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/127
 
