@@ -29,6 +29,8 @@
           Quantity: 30
       absorbed:
         maxVol: 30
+  - type: UseDelay
+    delay: 1
   - type: Fiber
     fiberColor: fibers-white
   - type: DnaSubstanceTrace

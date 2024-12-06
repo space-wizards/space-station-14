@@ -189,3 +189,11 @@
   wires:
   - !type:PowerWireAction
   - !type:AiInteractWireAction
+
+- type: wireLayout
+  id: BarSign
+  dummyWires: 2
+  wires:
+  - !type:PowerWireAction
+  - !type:AiInteractWireAction
+  - !type:AccessWireAction
