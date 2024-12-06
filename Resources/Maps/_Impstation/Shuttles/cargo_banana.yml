@@ -13,7 +13,7 @@ entities:
   - uid: 2
     components:
     - type: MetaData
-      name: grid
+      name: Cargo shuttle
     - type: Transform
       pos: -1.3382838,1.234375
       parent: invalid
