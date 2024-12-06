@@ -840,4 +840,11 @@ Entries:
   id: 119
   time: '2024-12-06T20:23:45.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/129
+- author: Rinary
+  changes:
+  - message: Fixed battery drain on HOS and Maxim hardsuit's
+    type: Fix
+  id: 120
+  time: '2024-12-06T20:39:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/130
 
