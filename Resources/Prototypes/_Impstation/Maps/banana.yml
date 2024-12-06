@@ -31,7 +31,7 @@
             SecurityOfficer: [ 1, 1 ]
             #cargo
             CargoTechnician: [ 1, 1 ]
-            SalvageSpecialist: [ 1, 2 ]
+            SalvageSpecialist: [ 1, 1 ]
             #service
             Bartender: [ 1, 1 ]
             Botanist: [ 2, 2 ]
@@ -42,8 +42,8 @@
             MedicalIntern: [ 1, 1 ]
             Chemist: [ 1, 1 ]
             #engineering
-            AtmosphericTechnician: [ 1, 1 ]
             StationEngineer: [ 1, 1 ]
+            TechnicalAssistant: [ 1, 1 ]
             #sci
             Scientist: [ 1, 1 ]
             ResearchAssistant: [ 1, 1 ]
@@ -52,4 +52,5 @@
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Passenger: [ -1, -1 ]
+            Musician: [ 1, 1 ]
 
