@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: iaada
-  changes:
-  - message: Fix buff to salvage jetpacks
-    type: Fix
-  id: 167
-  time: '2024-09-05T07:28:13.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/206
 - author: joelsgp
   changes:
   - message: Fixed various attribution links on audio
@@ -4469,3 +4462,11 @@
   id: 666
   time: '2024-12-06T00:48:57.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/914
+- author: DinnerCalzone
+  changes:
+  - message: Reverted the service techfab to its original sprite present in the game
+      files.
+    type: Tweak
+  id: 667
+  time: '2024-12-06T01:43:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/920
