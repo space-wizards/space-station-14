@@ -1,21 +1,6 @@
 ﻿Entries:
 - author: Darkmajia
   changes:
-  - message: Added a new reagent to the liquid anomaly. Dude, the captain's gonna
-      know you're high...
-    type: Add
-  id: 169
-  time: '2024-09-05T12:27:30.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/208
-- author: Darkmajia
-  changes:
-  - message: Mucin and propulsion gel are now able to be spread with foam and smoke.
-    type: Add
-  id: 170
-  time: '2024-09-05T20:30:36.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/210
-- author: Darkmajia
-  changes:
   - message: Announcer rarities have been adjusted.
     type: Tweak
   id: 171
@@ -4467,3 +4452,17 @@
   id: 668
   time: '2024-12-06T02:26:55.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/916
+- author: kipdotnet
+  changes:
+  - message: Fixed a bunch of missing stuff in the playtest map "Banana"
+    type: Tweak
+  id: 669
+  time: '2024-12-06T10:17:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/922
+- author: DinnerCalzone
+  changes:
+  - message: Origin Station has been updated and added back to the map rotation.
+    type: Add
+  id: 670
+  time: '2024-12-06T10:18:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/923
