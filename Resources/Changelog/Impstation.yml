@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: sususuyo
   changes:
-  - message: Removed an incompatible track from the jukebox
-    type: Remove
-  id: 175
-  time: '2024-09-06T15:23:43.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/217
-- author: sususuyo
-  changes:
   - message: Edited Sam Jones with fore to not be a 8 minute track. (sorry!)
     type: Tweak
   id: 176
@@ -4476,3 +4469,11 @@
   id: 674
   time: '2024-12-06T23:02:21.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/927
+- author: Sha-Seng
+  changes:
+  - message: Stun Prod now requires makeshift cuffs instead of any cuffs so it won't
+      eat your security cuffs
+    type: Tweak
+  id: 675
+  time: '2024-12-06T23:03:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/908
