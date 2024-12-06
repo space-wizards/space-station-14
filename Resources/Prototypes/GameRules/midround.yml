@@ -43,6 +43,8 @@
       max: 5
       playerRatio: 10
       lateJoinAdditional: true
+      allowNonHumans: false
+      multiAntagSetting: None
       mindRoles:
       - MindRoleChangeling
 
@@ -58,5 +60,7 @@
       max: 5
       playerRatio: 10
       lateJoinAdditional: true
+      allowNonHumans: false
+      multiAntagSetting: None
       mindRoles:
       - MindRoleVampire
