@@ -81,7 +81,7 @@
     requiredLegs: 2
   - type: FootstepModifier
     footstepSoundCollection:
-      path: /Audio/_Impstation/Effects/Footsteps/crab_step.ogg # todo: better?
+      collection: FootstepDecapoid
   - type: Butcherable
     butcheringType: Spike
     spawned:

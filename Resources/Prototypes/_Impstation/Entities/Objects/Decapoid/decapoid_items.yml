@@ -11,8 +11,8 @@
   - type: Item
     sprite: _Impstation/Objects/Decapoid/claw.rsi
   - type: MeleeWeapon
-    range: 0.9
-    angle: 30
+    range: 1
+    angle: 20
     resetOnHandSelected: true
     wideAnimationRotation: 135
     attackRate: 1.5
@@ -44,6 +44,31 @@
     activeBlockFraction: 0.2
   - type: Damageable
     damageContainer: Shield
+  - type: ToolTileCompatible
+    delay: 0.5
+  - type: Tool
+    qualities:
+      - Prying
+    useSound: /Audio/Items/jaws_pry.ogg
+  - type: Prying
+    speedModifier: 1.5
+    pryPowered: true
+    useSound: /Audio/_Impstation/Items/Decapoid/claw_pry.ogg
+  - type: MultipleTool
+    statusShowBehavior: true
+    entries:
+      - behavior: Prying
+        sprite:
+          sprite: _Impstation/Objects/Decapoid/claw.rsi
+          state: icon-closed
+        useSound: /Audio/_Impstation/Items/Decapoid/claw_prying.ogg
+        changeSound: /Audio/_Impstation/Items/Decapoid/switch.ogg
+      - behavior: Cutting
+        sprite:
+          sprite: _Impstation/Objects/Decapoid/claw.rsi
+          state: icon
+        useSound: /Audio/_Impstation/Items/Decapoid/claw_cutting.ogg
+        changeSound: /Audio/_Impstation/Items/Decapoid/switch.ogg
 
 - type: entity
   name: vaporizer

@@ -9,6 +9,9 @@
   "states": [
     {
       "name": "icon"
-    }
+    },
+	{
+	  "name": "icon-closed"
+	}
   ]
 }
