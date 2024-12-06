@@ -61,7 +61,7 @@
   id: CrateArmoryPistols
   parent: [ CrateWeaponSecure, BaseRestrictedContraband ]
   name: pistols crate
-  description: Contains two standard-issue Mk58 handguns with four magazines. Requires Armory access to open.
+  description: Contains two standard-issue Mk 58 handguns with four magazines. Requires Armory access to open.
   components:
   - type: StorageFill
     contents:
