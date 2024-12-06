@@ -62,6 +62,7 @@
   storage:
     lhand:
     - BoxSurvival
+
 # Basic
 - type: loadout
   id: EmergencyOxygen
