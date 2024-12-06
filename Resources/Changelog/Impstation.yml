@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: Darkmajia
   changes:
-  - message: Announcer rarities have been adjusted.
-    type: Tweak
-  id: 171
-  time: '2024-09-05T20:31:55.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/211
-- author: Darkmajia
-  changes:
   - message: Puddles can now be diluted to apply less slow-down and speed-up.
     type: Add
   - message: Small puddles only apply half the speed adjustment of large ones.
@@ -4466,3 +4459,12 @@
   id: 670
   time: '2024-12-06T10:18:07.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/923
+- author: DinnerCalzone
+  changes:
+  - message: (Atlas Station) Added support for brigmedic.
+    type: Add
+  - message: (Atlas Station) Fixed missing LV cables in robotics.
+    type: Fix
+  id: 671
+  time: '2024-12-06T10:19:33.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/924
