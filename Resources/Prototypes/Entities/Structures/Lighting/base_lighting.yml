@@ -43,7 +43,7 @@
   - type: RCDDeconstructable
     cost: 4
     delay: 2
-    fx: EffectRCDDeconstruct2  
+    fx: EffectRCDDeconstruct2
   - type: Destructible
     thresholds:
     - trigger:
@@ -74,7 +74,7 @@
     mode: SnapgridCenter
     snap:
     - Wallmount
-    
+
 - type: entity
   name: light
   description: "A light fixture. Draws power and produces light when equipped with a light tube."
@@ -347,6 +347,27 @@
     popupText: powered-light-component-burn-hand
 
 - type: entity
+  id: PoweredDimSmallLight
+  suffix: Dim
+  parent: PoweredSmallLightEmpty
+  components:
+  - type: Sprite
+    state: base
+  - type: PointLight
+    enabled: true
+    radius: 5
+    energy: 0.5
+    softness: 3
+    color: "#ba473f"
+  - type: PoweredLight
+    hasLampOnSpawn: DimLightBulb
+  - type: DamageOnInteract
+    damage:
+      types:
+        Heat: 1
+    popupText: powered-light-component-burn-hand
+
+- type: entity
   id: PoweredSmallLight
   suffix: ""
   parent: PoweredSmallLightEmpty
@@ -400,6 +421,37 @@
       shader: "unshaded"
       visible: false
   - type: Appearance
+  - type: Construction
+    graph: LightFixture
+    node: emergencyLight
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors: #excess damage, don't spawn entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+          ShardGlass:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
   placement:
     mode: SnapgridCenter
     snap:

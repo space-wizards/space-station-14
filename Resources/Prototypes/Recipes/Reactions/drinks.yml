@@ -953,7 +953,7 @@
     LemonLime:
       amount: 1
   products:
-    SnowWhite: 3
+    SnowWhite: 2
 
 - type: reaction
   id: SodaWater
