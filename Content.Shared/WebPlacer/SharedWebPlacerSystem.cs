@@ -1,11 +1,9 @@
 using Content.Shared.Actions;
-using Robust.Shared.Network;
-using Robust.Shared.Random;
 
 namespace Content.Shared.WebPlacer;
 
 /// <summary>
-/// Gives entities (probably spiders) an action on init.  Spawning handled by <see cref="WebPlacerSystem"/>..
+/// Gives entities (probably spiders) an action on init.  Spawning handled by <see cref="WebPlacerSystem"/>.
 /// </summary>
 public abstract class SharedWebPlacerSystem : EntitySystem
 {
