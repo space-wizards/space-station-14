@@ -100,7 +100,7 @@
   - type: GhostRole
     name: ghost-role-information-loneop-name
     description: ghost-role-information-loneop-description
-    rules: ghost-role-information-rules-default-solo-antagonist
+    rules: ghost-role-information-loneop-rules
   - type: Sprite
     sprite: Markers/jobs.rsi
     layers:
@@ -170,3 +170,21 @@
     - state: green
     - sprite: Objects/Weapons/Melee/energykatana.rsi
       state: icon
+
+- type: entity
+  categories: [ HideSpawnMenu, Spawner ]
+  parent: BaseAntagSpawner
+  id: SpawnPointGhostDerelictCyborg
+  components:
+  - type: GhostRole
+    name: ghost-role-information-derelict-cyborg-name
+    description: ghost-role-information-derelict-cyborg-description
+    rules: ghost-role-information-silicon-rules
+    raffle:
+      settings: default
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+    - state: green
+    - sprite: Mobs/Silicon/chassis.rsi
+      state: derelict_icon
