@@ -5,16 +5,16 @@
   <Box>
     <GuideEntityEmbed Entity="GasVentScrubber"/>
   </Box>
-  The air scrubber requires power through a nearby LV cable to function.
+  The air scrubber requires [textlink="power" link="Power"] through a nearby [textlink="LV cable" link="VoltageNetworks"] to function.
 
-  The default behavior of an air scrubber is to scrub all gasses except Nitrogen and Oxygen from the atmosphere it's exposed to. It will continue this behavior unless directed by a linked air alarm.
+  The default behavior of an air scrubber is to scrub all gasses except Nitrogen and Oxygen from the atmosphere it's exposed to. It will continue this behavior unless directed by a [textlink="linked" link="Networking"] [textlink="air alarm" link="DeviceMonitoringAndControl"].
 
   The scrubber can be welded with any welding tool to stop it from functioning.
 
   ## Configuration Options
-  When linked to an air alarm, air scrubbers gain more functionality.
+  When [textlink="linked" link="Networking"] to an [textlink="air alarm" link="DeviceMonitoringAndControl"], air scrubbers gain more functionality.
 
-  The target gasses for scrubbing can be defined in the "Gas filters" dropdown. Keep in mind this resets if you change air alarm modes.
+  The target gasses for scrubbing can be defined in the "Gas filters" dropdown. Keep in mind this resets if you change [textlink="air alarm" link="DeviceMonitoringAndControl"] modes.
 
   Air scrubbers have two "direction" options: Scrubbing and Siphoning.
   - Scrubbing scrubs gasses as defined in the gas filters.
@@ -39,7 +39,7 @@
 
   This effectively multiplies its total speed, as air scrubbers will now preform their scrubbing work on 5 tiles at once.
 
-  Scrubbers linked to an air alarm in auto mode will automatically enable WideNet mode under the air alarm's "Filtering (Wide)" mode when a high concentration of unwanted gasses is detected in the atmosphere.
+  Scrubbers [textlink="linked" link="Networking"] to an [textlink="air alarm" link="DeviceMonitoringAndControl"] in auto mode will automatically enable WideNet mode under the [textlink="air alarm's" link="DeviceMonitoringAndControl"] "Filtering (Wide)" mode when a high concentration of unwanted gasses is detected in the atmosphere.
 
   WideNet is extremely useful in quickly scrubbing large amounts of tritium from plasma burn chambers.
 

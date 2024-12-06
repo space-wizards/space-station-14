@@ -3,7 +3,7 @@
   Atmos has a wide variety of tools and equipment at their disposal for the manipulation of gasses throughout the station.
 
   [bold]Warning: unanchoring (unwrenching) most devices containing gas will [color=red]leak gas[/color] into the atmosphere.[/bold]
-  You can safely unanchor canisters, portable scrubbers, condensers, and thermomachines.
+  You can safely unanchor [textlink="canisters" link="GasCanisters"], [textlink="portable scrubbers" link="PortableScrubber"], [textlink="condensers" link="GasCondensing"], and [textlink="thermomachines" link="Thermomachines"].
 
   <Box>
     <GuideEntityEmbed Entity="GasPipeStraight" Caption=""/>

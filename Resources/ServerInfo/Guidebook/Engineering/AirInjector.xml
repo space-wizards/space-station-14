@@ -4,14 +4,16 @@
   <Box>
     <GuideEntityEmbed Entity="GasOutletInjector"/>
   </Box>
-  It is primarily used to force gasses into high-pressure rooms like the station's gas storage rooms, or a burn chamber.
+  It is primarily used to force gasses into high-pressure rooms like the station's [textlink="gas storage rooms" link="GasMiningAndStorage"], or a burn chamber.
 
-  The air injector does not require power to function.
+  The air injector does not require [textlink="power" link="Power"] to function.
 
   The air injector will inject gasses into the atmosphere it's exposed to until the atmosphere reaches 9000 kPa.
 
-  The air injector's speed is proportional to the amount of gas in the injector. The more gas in the injector, the faster it will inject gas into the exposed atmosphere.
+  The air injector's speed is proportional to the amount of gas in the injector.
+  The more gas in the injector, the faster it will inject gas into the exposed atmosphere.
 
-  A normal air injector (even one that has no gasses to inject) will have a [color=green]green[/color] light. An air injector that cannot inject gasses into the atmosphere will have a [color=red]red[/color] light.
+  A normal air injector (even one that has no gasses to inject) will have a [color=green]green[/color] light.
+  An air injector that cannot inject gasses into the atmosphere will have a [color=red]red[/color] light.
 
 </Document>

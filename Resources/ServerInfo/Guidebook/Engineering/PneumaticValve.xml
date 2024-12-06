@@ -5,7 +5,8 @@
     <GuideEntityEmbed Entity="PressureControlledValve"/>
   </Box>
 
-  The pneumatic valve has 3 connections: input, output, and control. The "input" side will be the input/output connection with the highest pressure, and can switch sides, making the valve bidirectional.
+  The pneumatic valve has 3 connections: input, output, and control.
+  The "input" side will be the input/output connection with the highest pressure, and can switch sides, making the valve bidirectional.
 
   <Box>
     <GuideEntityEmbed Entity="GasPipeStraight" Caption="Input/Output"/>
@@ -29,9 +30,11 @@
 
   ## Differences to Pumps
 
-  The pneumatic valve is different from a pump which moves gas via work. The pneumatic valve is a passive device that moves gas based on the higher pressure of the input gas, and as such it can sometimes fill volumes faster than a pump can.
+  The pneumatic valve is different from a pump which moves gas via work.
+  The pneumatic valve is a passive device that moves gas based on the higher pressure of the input gas, and as such it can sometimes fill volumes faster than a pump can.
 
-  For example, a pneumatic valve with a control pressure of 500 kPa will fill a volume faster than a pressure pump set to 500 kPa. However, the pump will be able to maintain the pressure in the volume more accurately.
+  For example, a pneumatic valve with a control pressure of 500 kPa will fill a volume faster than a pressure pump set to 500 kPa.
+  However, the pump will be able to maintain the pressure in the volume more accurately.
 
   The pneumatic valve can be used in a variety of applications, for example:
   - To automatically vent gasses in a burn chamber based on control input

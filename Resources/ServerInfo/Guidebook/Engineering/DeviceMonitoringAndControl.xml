@@ -1,23 +1,26 @@
 ﻿<Document>
   # Device Monitoring and Control
-  In previous sections, we've discussed Air Vents and Air Scrubbers, and how they can be used to manage the atmosphere in a given area.
+  In previous sections, we've discussed [textlink="Air Vents" link="AirVent"] and [textlink="Air Scrubbers" link="AirScrubber"], and how they can be used to manage the atmosphere in a given area.
 
-  While their default behavior is often sufficient, it is often desirable to have more control over these devices, especially multiple devices over a large area. This is where the Air Alarm comes in.
+  While their default behavior is often sufficient, it is often desirable to have more control over these devices, especially multiple devices over a large area.
+  This is where the Air Alarm comes in.
 
+  ## Air Alarm
   <Box>
     <GuideEntityEmbed Entity="AirAlarm"/>
   </Box>
 
-  The Air Alarm is a device that enables central monitoring and control over all relevant Atmos devices linked to it. Using the Air Alarm, Atmos can quickly and efficiently manage the atmosphere in a given area.
+  The Air Alarm is a device that enables central monitoring and control over all relevant Atmos devices linked to it.
+  Using the Air Alarm, Atmos can quickly and efficiently manage the atmosphere in a given area.
 
   A room will often have an Air Alarm mounted on the wall, for quick control over multiple devices in that room.
 
-  You can see how to link devices in (insert guide link here later numnut!!!!)
+  You can see how to link devices in the [textlink="Link" link="Networking"] guide.
 
   ## User Interface
   Interacting with an Air Alarm will bring up a menu with 3 sections:
   - Top: The current status of the air alarm. This includes the current pressure and temperature of the area the air alarm is monitoring.
-  - Middle: Lists of linked air vents and air scrubbers, as well as all sensors reporting back to the air alarm.
+  - Middle: Lists of linked [textlink="Air Vents" link="AirVent"] and [textlink="Air Scrubbers" link="AirScrubber"], as well as all sensors reporting back to the air alarm.
   - Bottom: Buttons to control air alarm operating modes, as well as the ability to toggle the automatic changing of modes.
 
   ## Alarm Status
@@ -26,17 +29,22 @@
   - [color=yellow]Warning[/color]: The area is starting to deviate from the desired atmosphere, and is becoming unsafe.
   - [color=red]Danger[/color]: The area is no longer safe, internals and/or hardsuits are required.
 
-  Air alarms will automatically drop (close) linked firelocks when the [color=orange]Warning[/color] status is reached. These firelocks will automatically raise (open) when the status returns to [color=green]Normal[/color].
+  Air alarms will automatically drop (close) linked [textlink="firelocks" link="FireAndGasControl"] when the [color=orange]Warning[/color] status is reached.
+  These [textlink="firelocks" link="FireAndGasControl"] will automatically raise (open) when the status returns to [color=green]Normal[/color].
 
-  Air alarms have Signal outputs for each of the three statuses, which can be used to trigger other signal devices when the status changes.
+  Air alarms have [textlink="signal" link="Networking"] outputs for each of the three statuses, which can be used to trigger other [textlink="signal" link="Networking"] devices when the status changes.
 
   ## Sensors
-  All air vents and air scrubbers have a built-in sensor, which reports back to the air alarm. These sensors can be adjusted in the [bold]Sensors[/bold] tab of the air alarm menu.
-  An air alarm's status is directly determined by the thresholds on each sensor. If a sensor reports a pressure, temperature, or gas composition outside the set thresholds, the air alarm will change its status accordingly.
+  All [textlink="Air Vents" link="AirVent"] and [textlink="Air Scrubbers" link="AirScrubber"] have a built-in sensor, which reports back to the air alarm.
+  These sensors can be adjusted in the [bold]Sensors[/bold] tab of the air alarm menu.
 
-  These thresholds can be adjusted and disabled as needed. For example, if you are monitoring a room that naturally has a low temperature (such as a freezer) or a high temperature (such as a burn chamber), you can adjust the temperature thresholds to match the expected values.
+  An air alarm's status is directly determined by the thresholds on each sensor.
+  If a sensor reports a pressure, temperature, or gas composition outside the set thresholds, the air alarm will change its status accordingly.
 
-  An air sensor can also be constructed and linked to an air alarm.
+  These thresholds can be adjusted and disabled as needed.
+  For example, if you are monitoring a room that naturally has a low temperature (such as a freezer) or a high temperature (such as a burn chamber), you can adjust the temperature thresholds to match the expected values.
+
+  An air sensor can also be constructed and [textlink="linked" link="Networking"] to an air alarm.
 
   <Box>
     <GuideEntityEmbed Entity="AirSensor"/>
@@ -47,16 +55,18 @@
   ## Operating Modes
   To control connected devices quickly, air alarms feature operating modes, which quickly changes the behavior of all linked devices to achieve a desired effect.
   - None: Disables all devices linked to the air alarm.
-  - Filtering: Air vents will be enabled with their external bound set to standard atmospheric pressure. Air scrubbers will be enabled and scrub all waste gasses normally.
-  - Filtering (Wide): Same as Filtering, but all linked air scrubbers will enable their WideNet mode.
-  - Fill: Air vents will be enabled with their external bound set to max pressure, 4500 kPa. Air scrubbers will be disabled.
-  - Panic: Air vents will be disabled, and air scrubbers will be set to siphon mode.
+  - Filtering: [textlink="Air Vents" link="AirVent"] will be enabled with their external bound set to standard atmospheric pressure. [textlink="Air Scrubbers" link="AirScrubber"] will be enabled and scrub all waste gasses normally.
+  - Filtering (Wide): Same as Filtering, but all linked [textlink="Air Scrubbers" link="AirScrubber"] will enable their WideNet mode.
+  - Fill: [textlink="Air Vents" link="AirVent"] will be enabled with their external bound set to max pressure, 4500 kPa. [textlink="Air Scrubbers" link="AirScrubber"] will be disabled.
+  - Panic: [textlink="Air Vents" link="AirVent"] will be disabled, and [textlink="Air Scrubbers" link="AirScrubber"] will be set to siphon mode.
 
-  Air alarms will automatically switch between the Filtering and Filtering (Wide) modes based on the current status of the area they are monitoring. If the area reaches [color=yellow]Warning[/color] status or above, the air alarm will switch to Filtering (Wide) mode. If the area reaches [color=green]Normal[/color] status, the air alarm will switch to Filtering mode.
+  Air alarms will automatically switch between the Filtering and Filtering (Wide) modes based on the current status of the area they are monitoring.
+  - If the area reaches [color=yellow]Warning[/color] status or above, the air alarm will switch to Filtering (Wide) mode.
+  - If the area reaches [color=green]Normal[/color] status, the air alarm will switch to Filtering mode.
 
   This behavior can be disabled by toggling the "Auto" box in the bottom section of the air alarm menu.
 
-  Relevant tips on how to fix spacing and fires can be found in the relevant guides.
+  Relevant tips on how to fix [textlink="spacing" link="Spacing"] and [textlink="fires" link="Fires"] can be found in the relevant guides.
 
   ## Atmospheric Alerts Computer
   The Atmospheric Alerts Computer is a computer that shows information on all air alarms across the station.
@@ -67,14 +77,24 @@
 
   It is a useful tool for quickly identifying areas that require attention.
 
-  The Atmospheric Alerts Computer is often found in Atmospherics, and is used by Atmospherics Technicians to monitor atmospheres across the entire station. However, it is also a good indicator for general engineers to gauge station damage.
+  The Atmospheric Alerts Computer is often found in Atmospherics, and is used by Atmospherics Technicians to monitor atmospheres across the entire station.
+  However, it is also a good indicator for general engineers to gauge station damage.
 
-  The computer displays lists of Air Alarms in [color=orange]Warning[/color] and [color=red]Danger[/color] levels, as well as their location on the station.
+  The computer displays lists of Air Alarms in [color=orange]Warning[/color] and [color=red]Danger[/color] levels. Additionally, the computer displays the location of all air alarms, color-coded based on their current status.
+
+  Air alarms with the normal status are hidden by default.
+  You can toggle the visibility of normal air alarms by adjusting the filters at the bottom of the interface.
+
+  The map draws a box around the area that the air alarm is monitoring, which can help identify the area that is in danger.
+  This box will change color based on the status of the air alarm.
+
+  If an Air Alarm is unpowered, it is shown as greyed out on the list and on the map.
 
   Clicking on an air alarm on the list or on the map will show detailed information about the atmosphere in that area, which can help gauge the type of emergency that is occurring.
 
-  A list of triggered fire alarms is also displayed on the Atmospheric Alerts Computer in a separate tab, which can be used to quickly identify areas that might be on fire.
+  A list of triggered [textlink="fire alarms" link="FireAndGasControl"] is also displayed on the Atmospheric Alerts Computer in a separate tab, which can be used to quickly identify areas that might be on fire.
 
   You can silence specific alarms (such as alarms that monitor burn chambers and freezers) by clicking on the alarm in the list and pressing the "Silence alerts" button.
+  This will hide the alarm from the list, but it will still be visible on the map.
 
 </Document>
