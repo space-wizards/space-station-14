@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Puddles can now be diluted to apply less slow-down and speed-up.
-    type: Add
-  - message: Small puddles only apply half the speed adjustment of large ones.
-    type: Tweak
-  id: 172
-  time: '2024-09-05T20:33:06.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/212
 - author: joelsgp
   changes:
   - message: Added more login tips
@@ -4468,3 +4459,17 @@
   id: 671
   time: '2024-12-06T10:19:33.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/924
+- author: AvianMaiden
+  changes:
+  - message: You can now throw the Mosin. Go ahead. Throw it. (LEGAL DO NOT READ)
+    type: Add
+  - message: Adjusted many firearm flavortexts! How flavorful! Still in-line with
+      originals, but much more love in them.
+    type: Fix
+  - message: Adjusted a few Security cargo buys for grammar and description.
+    type: Fix
+  - message: Spear now makes an impact noise when thrown. Whoosh!
+    type: Fix
+  id: 672
+  time: '2024-12-06T10:45:00.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/921
