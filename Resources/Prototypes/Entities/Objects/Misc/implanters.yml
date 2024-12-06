@@ -262,3 +262,13 @@
   components:
     - type: Implanter
       implant: MindShieldImplant
+
+# Centcomm implanters
+
+- type: entity
+  id: RadioImplanterCentcomm
+  suffix: radio
+  parent: BaseImplantOnlyImplanter
+  components:
+  - type: Implanter
+    implant: RadioImplantCentcomm
