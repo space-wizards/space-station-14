@@ -110,6 +110,7 @@
   - type: WarpPoint
     follow: true
     location: nuclear bomb
+  - type: FTLSmashImmune
 
 - type: entity
   parent: NuclearBomb
