@@ -34,3 +34,5 @@ alert-level-delta-instructions = Crewmembers are advised to listen to heads of s
 alert-level-epsilon = Epsilon
 alert-level-epsilon-announcement = Central Command has ordered the Epsilon security level on the station. Consider all contracts terminated.
 alert-level-epsilon-instructions = Consider all contracts terminated.
+
+alert-level-emergencyaccess = Station destruction is imminent. For your safety, all door locks have been disabled. Please evacuate in a safe and timely fashion.
