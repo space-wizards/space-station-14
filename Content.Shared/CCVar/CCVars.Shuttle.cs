@@ -5,6 +5,12 @@ namespace Content.Shared.CCVar;
 public sealed partial class CCVars
 {
     /// <summary>
+    ///     Delay for auto-orientation. Used for people arriving via arrivals.
+    /// </summary>
+    public static readonly CVarDef<double> AutoOrientDelay =
+        CVarDef.Create("shuttle.auto_orient_delay", 2.0, CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>
     ///     If true then the camera will match the grid / map and is unchangeable.
     ///     - When traversing grids it will snap to 0 degrees rotation.
     ///     False means the player has control over the camera rotation.
