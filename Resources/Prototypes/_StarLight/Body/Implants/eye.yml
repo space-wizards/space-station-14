@@ -82,3 +82,21 @@
     - type: ShowMindShieldIcons
     - type: ShowCriminalRecordIcons
     - type: ShowSyndicateIcons
+
+- type: entity
+  id: EyeImplantOmni
+  name: Omni Implant
+  description: Enables you to see information about station crew and humanoids with added eye and flash protection.
+  parent: BaseEntityEyeImplant
+  components:
+  - type: Sprite
+    state: eye_implant_omni
+  - type: OrganImplant
+    compsToAdd: 
+    - type: ShowHealthBars
+    - type: ShowHealthIcons
+    - type: ShowJobIcons
+    - type: ShowMindShieldIcons
+    - type: ShowCriminalRecordIcons
+    - type: FlashImmunity
+    - type: EyeProtection
