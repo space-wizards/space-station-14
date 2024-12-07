@@ -8,10 +8,7 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 2
-  - !type:BuyerJobCondition
-    whitelist:
-    - Chemist
-    - ChiefMedicalOfficer
+  - !type:BuyerAccessCondition
 
 - type: listing
   id: VendorVialCase
@@ -23,10 +20,7 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 6
-  - !type:BuyerDepartmentCondition
-    whitelist:
-    - Command
-    - Medical
+  - !type:BuyerAccessCondition
 
 - type: listing
   id: VendorCleanerGrenade
@@ -38,10 +32,7 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 5
-  - !type:BuyerDepartmentCondition
-    whitelist:
-    - Command
-    - Medical
+  - !type:BuyerAccessCondition
 
 - type: listing
   id: VendorBluebrutepack20
@@ -53,10 +44,7 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 4
-  - !type:BuyerDepartmentCondition
-    whitelist:
-    - Command
-    - Medical
+  - !type:BuyerAccessCondition
 
 - type: listing
   id: VendorBlueointment20
@@ -68,10 +56,7 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 4
-  - !type:BuyerDepartmentCondition
-    whitelist:
-    - Command
-    - Medical
+  - !type:BuyerAccessCondition
 
 - type: listing
   id: VendorMobTrueDoctorbot
@@ -83,10 +68,7 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
-  - !type:BuyerDepartmentCondition
-    whitelist:
-    - Command
-    - Medical
+  - !type:BuyerAccessCondition
 
 - type: listing
   id: VendorMobOrganHumanHeart
@@ -96,10 +78,7 @@
   categories:
   - SLSurgery
   conditions:
-  - !type:BuyerDepartmentCondition
-    whitelist:
-    - Command
-    - Medical
+  - !type:BuyerAccessCondition
 
 - type: listing
   id: VendorMobOrganHumanStomach
@@ -109,10 +88,7 @@
   categories:
   - SLSurgery
   conditions:
-  - !type:BuyerDepartmentCondition
-    whitelist:
-    - Command
-    - Medical
+  - !type:BuyerAccessCondition
 
 - type: listing
   id: VendorMobOrganHumanLiver
@@ -122,10 +98,7 @@
   categories:
   - SLSurgery
   conditions:
-  - !type:BuyerDepartmentCondition
-    whitelist:
-    - Command
-    - Medical
+  - !type:BuyerAccessCondition
 
 - type: listing
   id: VendorMobOrganHumanKidneys
@@ -135,10 +108,7 @@
   categories:
   - SLSurgery
   conditions:
-  - !type:BuyerDepartmentCondition
-    whitelist:
-    - Command
-    - Medical
+  - !type:BuyerAccessCondition
 
 - type: listing
   id: VendorMobOrganHumanLungs
@@ -148,10 +118,7 @@
   categories:
   - SLSurgery
   conditions:
-  - !type:BuyerDepartmentCondition
-    whitelist:
-    - Command
-    - Medical
+  - !type:BuyerAccessCondition
 
 - type: listing
   id: VendorMobOrganHumanTongue
@@ -161,10 +128,7 @@
   categories:
   - SLSurgery
   conditions:
-  - !type:BuyerDepartmentCondition
-    whitelist:
-    - Command
-    - Medical
+  - !type:BuyerAccessCondition
   
 - type: listing
   id: VendorMobOrganHumanEyes
@@ -174,10 +138,7 @@
   categories:
   - SLSurgery
   conditions:
-  - !type:BuyerDepartmentCondition
-    whitelist:
-    - Command
-    - Medical
+  - !type:BuyerAccessCondition
     
 - type: listing
   id: VendorLeftLegHuman
@@ -187,10 +148,7 @@
   categories:
   - SLSurgery
   conditions:
-  - !type:BuyerDepartmentCondition
-    whitelist:
-    - Command
-    - Medical
+  - !type:BuyerAccessCondition
     
 - type: listing
   id: VendorRightLegHuman
@@ -200,10 +158,7 @@
   categories:
   - SLSurgery
   conditions:
-  - !type:BuyerDepartmentCondition
-    whitelist:
-    - Command
-    - Medical
+  - !type:BuyerAccessCondition
       
 - type: listing
   id: VendorLeftFootHuman
@@ -213,10 +168,7 @@
   categories:
   - SLSurgery
   conditions:
-  - !type:BuyerDepartmentCondition
-    whitelist:
-    - Command
-    - Medical
+  - !type:BuyerAccessCondition
     
 - type: listing
   id: VendorRightFootHuman
@@ -226,7 +178,4 @@
   categories:
   - SLSurgery
   conditions:
-  - !type:BuyerDepartmentCondition
-    whitelist:
-    - Command
-    - Medical
+  - !type:BuyerAccessCondition
