@@ -7,6 +7,7 @@ using Content.Server.Popups;
 using Content.Shared.Crayon;
 using Content.Shared.Database;
 using Content.Shared.Decals;
+using Content.Shared.Heretic;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Robust.Server.GameObjects;
@@ -47,6 +48,9 @@ public sealed class CrayonSystem : SharedCrayonSystem
     private void OnCrayonAfterInteract(EntityUid uid, CrayonComponent component, AfterInteractEvent args)
     {
         if (args.Handled || !args.CanReach)
+            return;
+
+        if (TryComp<HereticComponent>(args.User, out var heretic) && heretic.MansusGraspActive)
             return;
 
         if (component.Charges <= 0)

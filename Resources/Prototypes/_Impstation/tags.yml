@@ -3,6 +3,9 @@
   id: BeltUtility
 
 - type: Tag
+  id: Cablecuffs
+
+- type: Tag
   id: CartridgeLPistol
 
 - type: Tag

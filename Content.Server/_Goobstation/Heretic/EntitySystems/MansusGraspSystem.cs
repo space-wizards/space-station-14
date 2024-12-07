@@ -1,4 +1,5 @@
 using Content.Server.Chat.Systems;
+using Content.Server.Crayon;
 using Content.Server.EntityEffects.Effects.StatusEffects;
 using Content.Server.Heretic.Components;
 using Content.Server.Speech.EntitySystems;
@@ -155,7 +156,7 @@ public sealed partial class MansusGraspSystem : EntitySystem
         || !TryComp<HereticComponent>(args.User, out var heretic) // not a heretic - how???
         || !heretic.MansusGraspActive // no grasp - not special
         || HasComp<ActiveDoAfterComponent>(args.User) // prevent rune shittery
-        || !tags.Contains("Write") || !tags.Contains("Pen") || !tags.Contains("DecapoidClaw")) // not a pen
+        || (!tags.Contains("Write") && !tags.Contains("DecapoidClaw"))) // not a writing implement or decapoid claw
             return;
 
         // remove our rune if clicked

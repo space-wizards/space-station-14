@@ -106,7 +106,7 @@
   name: svalinn laser pistol
   parent: [ BaseWeaponPowerCellSmall, BaseRestrictedContraband ]
   id: WeaponLaserSvalinn
-  description: A cheap and widely used laser pistol.
+  description: A cheap and widely-used laser pistol.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/svalinn.rsi
@@ -228,7 +228,7 @@
   name: laser rifle
   parent: [WeaponLaserCarbinePractice, BaseGunWieldable, BaseRestrictedContraband]
   id: WeaponLaserCarbine
-  description: Favoured by Nanotrasen Security for being cheap and easy to use.
+  description: Favored by Nanotrasen Security for being cheap and easy to use.
   components:
   - type: StaticPrice
     price: 420
@@ -240,7 +240,7 @@
   name: pulse pistol
   parent: BaseWeaponBatterySmall
   id: WeaponPulsePistol
-  description: A state of the art energy pistol favoured as a sidearm by the NT operatives.
+  description: A state-of-the-art energy pistol favored as a sidearm by NT operatives.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/pulse_pistol.rsi
@@ -269,7 +269,7 @@
   name: pulse carbine
   parent: [BaseWeaponBattery, BaseGunWieldable, BaseCentcommContraband]
   id: WeaponPulseCarbine
-  description: A high tech energy carbine favoured by the NT-ERT operatives.
+  description: A high-tech energy carbine favored by the NT-ERT operatives.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/pulse_carbine.rsi
@@ -327,7 +327,7 @@
   name: laser cannon
   parent: [BaseWeaponBattery, BaseGunWieldable, BaseRestrictedContraband]
   id: WeaponLaserCannon
-  description: A heavy duty, high powered laser weapon.
+  description: A heavy-duty, high-powered laser weapon.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
@@ -549,7 +549,7 @@
   name: antique laser pistol
   parent: [BaseWeaponBatterySmall, BaseGrandTheftContraband]
   id: WeaponAntiqueLaser
-  description: This is an antique laser pistol. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
+  description: All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi

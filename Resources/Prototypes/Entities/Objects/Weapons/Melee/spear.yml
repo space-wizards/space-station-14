@@ -5,6 +5,7 @@
   description: Definition of a Classic. Keeping murder affordable since 200,000 BCE.
   components:
   - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
     offset: -0.15,0.0
   - type: ThrowingAngle
     angle: 225

@@ -1,0 +1,152 @@
+- type: construction
+  name: reinforced wood table
+  id: TableWoodReinforced
+  graph: Table
+  startNode: start
+  targetNode: TableWoodReinforced
+  category: construction-category-furniture
+  description: A classic wooden table. Extra robust.
+  icon:
+    sprite: _DeltaV/Structures/Furniture/Tables/rwood.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: comfy sofa (middle)
+  id: SofaMiddle
+  graph: Sofa
+  startNode: start
+  targetNode: SofaMiddle
+  category: construction-category-furniture
+  description: It looks like you could sink right into it.
+  icon:
+    sprite: _DeltaV/Structures/Furniture/Benches/sofa.rsi
+    state: middle
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: comfy sofa (left)
+  id: SofaLeft
+  graph: Sofa
+  startNode: start
+  targetNode: SofaLeft
+  category: construction-category-furniture
+  description: It looks like you could sink right into it.
+  icon:
+    sprite: _DeltaV/Structures/Furniture/Benches/sofa.rsi
+    state: left
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: comfy sofa (right)
+  id: SofaRight
+  graph: Sofa
+  startNode: start
+  targetNode: SofaRight
+  category: construction-category-furniture
+  description: It looks like you could sink right into it.
+  icon:
+    sprite: _DeltaV/Structures/Furniture/Benches/sofa.rsi
+    state: right
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: comfy sofa (corner)
+  id: SofaCorner
+  graph: Sofa
+  startNode: start
+  targetNode: SofaCorner
+  category: construction-category-furniture
+  description: It looks like you could sink right into it.
+  icon:
+    sprite: _DeltaV/Structures/Furniture/Benches/sofa.rsi
+    state: corner
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: corporate sofa (middle)
+  id: SofaCorpMiddle
+  graph: Sofa
+  startNode: start
+  targetNode: SofaCorpMiddle
+  category: construction-category-furniture
+  description: It looks like it's going to correct your posture.
+  icon:
+    sprite: _DeltaV/Structures/Furniture/Benches/sofa_corp.rsi
+    state: middle
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: corporate sofa (left)
+  id: SofaCorpLeft
+  graph: Sofa
+  startNode: start
+  targetNode: SofaCorpLeft
+  category: construction-category-furniture
+  description: It looks like it's going to correct your posture.
+  icon:
+    sprite: _DeltaV/Structures/Furniture/Benches/sofa_corp.rsi
+    state: left
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: corporate sofa (right)
+  id: SofaCorpRight
+  graph: Sofa
+  startNode: start
+  targetNode: SofaCorpRight
+  category: construction-category-furniture
+  description: It looks like it's going to correct your posture.
+  icon:
+    sprite: _DeltaV/Structures/Furniture/Benches/sofa_corp.rsi
+    state: right
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: corporate sofa (corner)
+  id: SofaCorpCorner
+  graph: Sofa
+  startNode: start
+  targetNode: SofaCorpCorner
+  category: construction-category-furniture
+  description: It looks like it's going to correct your posture.
+  icon:
+    sprite: _DeltaV/Structures/Furniture/Benches/sofa_corp.rsi
+    state: corner
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
