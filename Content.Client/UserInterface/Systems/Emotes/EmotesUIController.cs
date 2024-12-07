@@ -1,4 +1,4 @@
-﻿using Content.Client.Chat.UI;
+using Content.Client.Chat.UI;
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Chat;
@@ -114,7 +114,7 @@ public sealed class EmotesUIController : UIController, IOnStateChanged<GameplayS
         if (_menu == null)
             return;
 
-        _menu.Dispose();
+        _menu.Parent?.RemoveChild(_menu);
         _menu = null;
     }
 

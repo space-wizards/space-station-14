@@ -493,7 +493,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
         for (; i < existing.Count; i++)
         {
-            existing[i].Dispose();
+            existing[i].Parent?.RemoveChild(existing[i]);
         }
     }
 
@@ -763,7 +763,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             _window.SearchBar.OnTextChanged -= OnSearchChanged;
             _window.FilterButton.OnItemSelected -= OnFilterSelected;
 
-            _window.Dispose();
+            _window.Parent?.RemoveChild(_window);
             _window = null;
         }
     }

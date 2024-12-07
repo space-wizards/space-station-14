@@ -272,8 +272,8 @@ public sealed class ReplayMainScreen : State
 
     protected override void Shutdown()
     {
-        _mainMenuControl.Dispose();
-        _selectWindow?.Dispose();
+        _mainMenuControl.Parent?.RemoveChild(_mainMenuControl);
+        _selectWindow?.Parent?.RemoveChild(_selectWindow);
     }
 
     private void OptionsButtonPressed(BaseButton.ButtonEventArgs args)

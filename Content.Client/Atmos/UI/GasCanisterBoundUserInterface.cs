@@ -1,4 +1,4 @@
-﻿using Content.Shared.Atmos.Piping.Binary.Components;
+using Content.Shared.Atmos.Piping.Binary.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
@@ -74,7 +74,7 @@ namespace Content.Client.Atmos.UI
         {
             base.Dispose(disposing);
             if (!disposing) return;
-            _window?.Dispose();
+            _window?.Parent?.RemoveChild(_window);
         }
     }
 }

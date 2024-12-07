@@ -50,12 +50,9 @@ public sealed partial class LoadoutContainer : BoxContainer
         }
     }
 
-    protected override void Dispose(bool disposing)
+    protected override void ExitedTree()
     {
-        base.Dispose(disposing);
-
-        if (!disposing)
-            return;
+        base.ExitedTree();
 
         _entManager.DeleteEntity(_entity);
     }

@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Content.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.Controls;
 
@@ -41,7 +41,7 @@ public abstract class ItemSlotUIContainer<T> : GridContainer, IItemslotUIContain
     {
         foreach (var button in Buttons.Values)
         {
-            button.Dispose();
+            button.Parent?.RemoveChild(button);
         }
 
         Buttons.Clear();
@@ -122,8 +122,7 @@ public abstract class ItemSlotUIContainer<T> : GridContainer, IItemslotUIContain
     public virtual void RemoveButton(T button)
     {
         RemoveButtonFromDict(button);
-        Children.Remove(button);
-        button.Dispose();
+        button.Parent?.RemoveChild(button);
     }
 
     public virtual T? GetButton(string slotName)
