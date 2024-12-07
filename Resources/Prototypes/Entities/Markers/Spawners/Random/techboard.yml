@@ -19,6 +19,7 @@
     - SignalTimerElectronics
     - APECircuitboard
     - SMESMachineCircuitboard
+    - SMESAdvancedMachineCircuitboard
     - SubstationMachineCircuitboard
     - TelecomServerCircuitboard
     chance: 0.95
