@@ -6,7 +6,7 @@
   components:
   - type: AtmosMonitor
     gasThresholdPrototypes:
-      Oxygen: stationOxygen
+      Oxygen: ignore
       Nitrogen: ignore
       CarbonDioxide: stationCO2
       Plasma: stationPlasma
