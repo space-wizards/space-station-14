@@ -497,6 +497,15 @@
 - type: Tag
   id: Duck
 
+
+# Dungeon Rooms
+- type: Tag
+  id: DungeonRooms4x4
+
+- type: Tag
+  id: DungeonRooms5x5
+
+# End of Dungeon Rooms
 - type: Tag
   id: Ectoplasm
 
@@ -836,9 +845,6 @@
 
 - type: Tag
   id: Maints
-
-- type: Tag
-  id: DungeonRooms
 
 - type: Tag
   id: Matchstick

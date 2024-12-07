@@ -1,8 +1,8 @@
 - type: entity
   id: BaseRoomMarker
-  name: Room marker
+  name: room marker
   parent: MarkerBase
-  suffix: Weh
+  suffix: Base
   components:
   - type: RoomFill
     size: 5,5

@@ -1,10 +1,21 @@
+# 4 x 4 ROOM DEFINITIONS
+- type: dungeonRoom
+  id: DungeonRooms4x4d
+  size: 4,4
+  atlas: /Maps/Dungeon/dungeon_rooms.yml
+  offset: -20,0
+  tags:
+  - DungeonRooms4x4
+
+
+# 5 x 5 ROOM DEFINITIONS
 - type: dungeonRoom
   id: DungeonRooms5x5a
   size: 5,5
   atlas: /Maps/Dungeon/dungeon_rooms.yml
   offset: 0,0
   tags:
-  - DungeonRooms
+  - DungeonRooms5x5
 
 - type: dungeonRoom
   id: DungeonRooms5x5b
@@ -12,7 +23,7 @@
   atlas: /Maps/Dungeon/dungeon_rooms.yml
   offset: 6,0
   tags:
-  - DungeonRooms
+  - DungeonRooms5x5
 
 - type: dungeonRoom
   id: DungeonRooms5x5c
@@ -20,7 +31,7 @@
   atlas: /Maps/Dungeon/dungeon_rooms.yml
   offset: 12,0
   tags:
-  - DungeonRooms
+  - DungeonRooms5x5
 
 - type: dungeonRoom
   id: DungeonRooms5x5d
@@ -28,7 +39,7 @@
   atlas: /Maps/Dungeon/dungeon_rooms.yml
   offset: 18,0
   tags:
-  - DungeonRooms
+  - DungeonRooms5x5
 
 - type: dungeonRoom
   id: DungeonRooms5x5e
@@ -36,7 +47,7 @@
   atlas: /Maps/Dungeon/dungeon_rooms.yml
   offset: 0,6
   tags:
-    - DungeonRooms
+    - DungeonRooms5x5
 
 - type: dungeonRoom
   id: DungeonRooms5x5f
@@ -44,7 +55,7 @@
   atlas: /Maps/Dungeon/dungeon_rooms.yml
   offset: 6,6
   tags:
-  - DungeonRooms
+  - DungeonRooms5x5
 
 - type: dungeonRoom
   id: DungeonRooms5x5g
@@ -52,7 +63,7 @@
   atlas: /Maps/Dungeon/dungeon_rooms.yml
   offset: 12,6
   tags:
-  - DungeonRooms
+  - DungeonRooms5x5
 
 - type: dungeonRoom
   id: DungeonRooms5x5h
@@ -60,7 +71,7 @@
   atlas: /Maps/Dungeon/dungeon_rooms.yml
   offset: 18,6
   tags:
-  - DungeonRooms
+  - DungeonRooms5x5
 
 - type: dungeonRoom
   id: DungeonRooms5x5i
@@ -68,7 +79,7 @@
   atlas: /Maps/Dungeon/dungeon_rooms.yml
   offset: 0,12
   tags:
-  - DungeonRooms
+  - DungeonRooms5x5
 
 - type: dungeonRoom
   id: DungeonRooms5x5j
@@ -76,7 +87,7 @@
   atlas: /Maps/Dungeon/dungeon_rooms.yml
   offset: 6,12
   tags:
-  - DungeonRooms
+  - DungeonRooms5x5
 
 - type: dungeonRoom
   id: DungeonRooms5x5k
@@ -84,7 +95,7 @@
   atlas: /Maps/Dungeon/dungeon_rooms.yml
   offset: 12,12
   tags:
-  - DungeonRooms
+  - DungeonRooms5x5
 
 - type: dungeonRoom
   id: DungeonRooms5x5l
@@ -92,7 +103,7 @@
   atlas: /Maps/Dungeon/dungeon_rooms.yml
   offset: 18,12
   tags:
-  - DungeonRooms
+  - DungeonRooms5x5
 
 - type: dungeonRoom
   id: DungeonRooms5x5m
@@ -100,7 +111,7 @@
   atlas: /Maps/Dungeon/dungeon_rooms.yml
   offset: 0,18
   tags:
-  - DungeonRooms
+  - DungeonRooms5x5
 
 - type: dungeonRoom
   id: DungeonRooms5x5n
@@ -108,7 +119,7 @@
   atlas: /Maps/Dungeon/dungeon_rooms.yml
   offset: 6,18
   tags:
-  - DungeonRooms
+  - DungeonRooms5x5
 
 - type: dungeonRoom
   id: DungeonRooms5x5o
@@ -116,7 +127,7 @@
   atlas: /Maps/Dungeon/dungeon_rooms.yml
   offset: 12,18
   tags:
-  - DungeonRooms
+  - DungeonRooms5x5
 
 - type: dungeonRoom
   id: DungeonRooms5x5p
@@ -124,7 +135,7 @@
   atlas: /Maps/Dungeon/dungeon_rooms.yml
   offset: 18,18
   tags:
-  - DungeonRooms
+  - DungeonRooms5x5
 
 - type: dungeonRoom
   id: DungeonRooms5x5q
@@ -132,7 +143,7 @@
   atlas: /Maps/Dungeon/dungeon_rooms.yml
   offset: 0,24
   tags:
-  - DungeonRooms
+  - DungeonRooms5x5
 
 - type: dungeonRoom
   id: DungeonRooms5x5r
@@ -140,7 +151,7 @@
   atlas: /Maps/Dungeon/dungeon_rooms.yml
   offset: 6,24
   tags:
-  - DungeonRooms
+  - DungeonRooms5x5
 
 - type: dungeonRoom
   id: DungeonRooms5x5s
@@ -148,7 +159,7 @@
   atlas: /Maps/Dungeon/dungeon_rooms.yml
   offset: 12,24
   tags:
-  - DungeonRooms
+  - DungeonRooms5x5
 
 - type: dungeonRoom
   id: DungeonRooms5x5t
@@ -156,14 +167,42 @@
   atlas: /Maps/Dungeon/dungeon_rooms.yml
   offset: 18,24
   tags:
-  - DungeonRooms
+  - DungeonRooms5x5
 
+
+# ====Dungeon Marker Definitions====
+# FOUR BY FOUR
 - type: entity
-  id: DungeonRoomsRoomMarker
+  id: DungeonRoomsRoomMarker4x4
   parent: BaseRoomMarker
-  name: DungeonRooms interior marker
+  name: room marker
+  suffix: 4x4
   components:
   - type: RoomFill
+    size: 4,4
     roomWhitelist:
       tags:
-      - DungeonRooms
+      - DungeonRooms4x4
+  - type: Sprite
+    layers:
+      - sprite: Markers/Rooms/room4x4.rsi
+        state: img
+        offset: 1.5,1.5
+
+# FIVE BY FIVE    
+- type: entity
+  id: DungeonRoomsRoomMarker5x5
+  parent: BaseRoomMarker
+  name: room marker
+  suffix: 5x5
+  components:
+  - type: RoomFill
+    size: 5,5
+    roomWhitelist:
+      tags:
+      - DungeonRooms5x5
+  - type: Sprite
+    layers:
+      - sprite: Markers/Rooms/room5x5.rsi
+        state: img
+        offset: 2,2
