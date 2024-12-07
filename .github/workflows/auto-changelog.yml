@@ -16,27 +16,30 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
-
-      - name: Install Dependencies
-        run: |
-          pip install pyyaml PyGithub
-
       - name: Get Pull Request Number
         id: get_pr
         run: |
           COMMIT_MESSAGE=$(git log -1 --pretty=%B)
           echo "Commit message: $COMMIT_MESSAGE"
-          PR_NUMBER=$(echo "$COMMIT_MESSAGE" | grep -oP '(?<=Merge pull request #)\d+')
+          PR_NUMBER=$(echo "$COMMIT_MESSAGE" | grep -oP '(?<=Merge pull request #)\d+' || true)
           if [ -z "$PR_NUMBER" ]; then
-            echo "No PR number found in commit message."
+            echo "No PR number found in commit message. Skipping changelog update."
+            echo "::set-output name=PR_NUMBER::"
             exit 0
           fi
           echo "PR Number: $PR_NUMBER"
           echo "::set-output name=PR_NUMBER::$PR_NUMBER"
+          
+      - name: Set up Python
+        if: steps.get_pr.outputs.PR_NUMBER != ''
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install Dependencies
+        if: steps.get_pr.outputs.PR_NUMBER != ''
+        run: |
+          pip install pyyaml PyGithub
     
       - name: Parse PR and Update Changelog
         if: steps.get_pr.outputs.PR_NUMBER != ''

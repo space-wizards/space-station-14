@@ -124,6 +124,8 @@
   id: SLVendingMachineMedical
   name: medical dispenser
   components:
+  - type: AccessReader
+    access: [["Medical"]]
   - type: Sprite
     sprite: _Starlight/Structures/Machines/VendingMachines/medical.rsi
     snapCardinals: true
@@ -160,6 +162,8 @@
   id: SLVendingMachineEngi
   name: engi dispenser
   components:
+  - type: AccessReader
+    access: [["Engineering"]]
   - type: Sprite
     sprite: _Starlight/Structures/Machines/VendingMachines/engi.rsi
     snapCardinals: true
@@ -195,6 +199,8 @@
   name: HohohonkersVend
   description: Get your honk fix here! Surprise the station with HohohonkersVend — the ultimate machine for hilarious pranks. Hack it, and you'll unlock something special!
   components:
+  - type: AccessReader
+    access: [["Theatre"]]
   - type: Store
     name: vendor-clown-dispenser
     categories:

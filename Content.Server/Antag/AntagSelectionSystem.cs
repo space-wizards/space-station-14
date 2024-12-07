@@ -1,6 +1,9 @@
 using System.Linq;
 using Content.Server.Antag.Components;
+using Content.Server.Body.Systems;
+using Content.Server.Body.Components;
 using Content.Server.Chat.Managers;
+using Content.Server.GameTicking.Rules.Components;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Ghost.Roles;
@@ -12,6 +15,8 @@ using Content.Server.Roles;
 using Content.Server.Roles.Jobs;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Antag;
+using Content.Server.Bible.Components; 
+using Content.Shared.Body.Components;
 using Content.Shared.Clothing;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
@@ -46,6 +51,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private readonly BodySystem _body = default!;
 
     // arbitrary random number to give late joining some mild interest.
     public const float LateJoinRandomChance = 0.5f;
@@ -251,6 +257,17 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
                 {
                     Log.Warning($"Somehow picked {session} for an antag when this rule already selected them previously");
                     continue;
+                }
+                
+                if (session != null && HasComp<VampireRuleComponent>(ent))
+                {
+                    var playerEntity = session.AttachedEntity;
+                    
+                    if (playerEntity == null 
+                        || HasComp<BibleUserComponent>(playerEntity)
+                        || !TryComp<BodyComponent>(playerEntity, out var body) 
+                        || !_body.TryGetBodyOrganEntityComps<StomachComponent>((playerEntity.Value, body), out var stomachs))
+                        continue;
                 }
             }
 

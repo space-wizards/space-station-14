@@ -791,4 +791,82 @@ Entries:
   id: 112
   time: '2024-12-05T07:06:05.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/118
+- author: Cerzix
+  changes:
+  - message: Added Purr emote audio for felionoids.
+    type: Add
+  id: 113
+  time: '2024-12-06T13:17:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/121
+- author: Cerzix
+  changes:
+  - message: Added Trill emote audio for felionoids.
+    type: Add
+  id: 114
+  time: '2024-12-06T13:17:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/121
+- author: Cerzix
+  changes:
+  - message: Added Meow emote audio for felionoids.
+    type: Add
+  id: 115
+  time: '2024-12-06T13:17:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/121
+- author: Cerzix
+  changes:
+  - message: Added Growl emote audio for felionoids.
+    type: Add
+  id: 116
+  time: '2024-12-06T13:17:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/121
+- author: Miracula
+  changes:
+  - message: Accentless trait now works at vulpkanins
+    type: Fix
+  id: 117
+  time: '2024-12-06T18:57:32.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/127
+- author: Rinary
+  changes:
+  - message: Fixed visuals when item with solution container attached to player.
+    type: Fix
+  id: 118
+  time: '2024-12-06T19:56:31.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/128
+- author: Rinary
+  changes:
+  - message: Removed paw socks marking.
+    type: Remove
+  id: 119
+  time: '2024-12-06T20:23:45.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/129
+- author: Rinary
+  changes:
+  - message: Fixed battery drain on HOS and Maxim hardsuit's
+    type: Fix
+  id: 120
+  time: '2024-12-06T20:39:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/130
+- author: Aedler
+  changes:
+  - message: Changed the security webbing.
+    type: Tweak
+  id: 121
+  time: '2024-12-07T12:47:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/131
+- author: Rinary
+  changes:
+  - message: Fixed bug when vending machines needs job department instead of access
+    type: Fix
+  id: 122
+  time: '2024-12-07T13:50:36.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/133
+- author: Rinary
+  changes:
+  - message: Fixed antag selection system, now players can be changeling or vampire
+      without any issues.
+    type: Fix
+  id: 123
+  time: '2024-12-07T14:30:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/134
 

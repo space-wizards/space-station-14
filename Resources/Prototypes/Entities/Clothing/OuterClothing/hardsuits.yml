@@ -206,6 +206,7 @@
     damageEnergyDraw: 6
     domePrototype: EnergyDomeSmallPink
   - type: PowerCellDraw
+    enabled: false
     drawRate: 8
     useRate: 0
   - type: UseDelay
@@ -482,6 +483,7 @@
     damageEnergyDraw: 5
     domePrototype: EnergyDomeSmallPink
   - type: PowerCellDraw
+    enabled: false
     drawRate: 6
     useRate: 0
   - type: UseDelay

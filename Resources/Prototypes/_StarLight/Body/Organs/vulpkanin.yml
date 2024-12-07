@@ -1,11 +1,11 @@
 ﻿- type: entity
   id: OrganVulpkaninStomach
-  parent: [OrganAnimalStomach, BaseOrganStomach] # (fine, maybe i'll resprite it for starlight vulps someday)
+  parent: [OrganAnimalStomach, BaseOrganStomach]
   name: stomach
   description: "Gross. This is hard to stomach." 
   components:
   - type: Sprite
-    sprite: Mobs/Species/Arachnid/organs.rsi
+    sprite: Mobs/Species/Human/organs.rsi
     state: stomach
   - type: Item
     size: Small

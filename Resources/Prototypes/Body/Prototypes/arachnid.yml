@@ -11,19 +11,20 @@
         brain: OrganHumanBrain
         eyes: OrganArachnidEyes
         tongue: OrganHumanTongue
+        eye_implant: null
     torso:
       part: TorsoArachnid
+      connections:
+      - right arm
+      - left arm
+      - right leg
+      - left leg
       organs:
         heart: OrganArachnidHeart
         lungs: OrganAnimalLungs
         stomach: OrganArachnidStomach
         liver: OrganArachnidLiver
         kidneys: OrganArachnidKidneys
-      connections:
-      - right arm
-      - left arm
-      - right leg
-      - left leg
     right arm:
       part: RightArmArachnid
       connections:
