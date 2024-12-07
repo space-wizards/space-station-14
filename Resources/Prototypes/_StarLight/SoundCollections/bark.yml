@@ -1,0 +1,6 @@
+- type: soundCollection
+  id: Bark
+  files:
+  - /Audio/_Starlight/Effects/Bark/dog_bark1.ogg
+  - /Audio/_Starlight/Effects/Bark/dog_bark2.ogg
+  - /Audio/_Starlight/Effects/Bark/dog_bark3.ogg

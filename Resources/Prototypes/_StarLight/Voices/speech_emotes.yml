@@ -20,6 +20,29 @@
   - howls!
 
 - type: emote
+  id: Bark
+  name: chat-emote-name-bark
+  category: Vocal
+  available: false
+  icon: Interface/Actions/scream.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["barks"]
+  chatTriggers:
+  - bark
+  - bark.
+  - bark?
+  - bark!
+  - barks
+  - barks.
+  - barks?
+  - barks!
+
+- type: emote
   id: Growl
   name: chat-emote-name-growl
   category: Vocal
