@@ -121,7 +121,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             activated.TimeLeft -= frameTime;
             if (activated.TimeLeft <= 0 || !IsPowered(uid, electrified, transform))
             {
-                _appearance.SetData(uid, ElectrifiedVisuals.IsPowered, false);
+                _appearance.SetData(uid, ElectrifiedVisuals.ShowSparks, false);
                 RemComp<ActivatedElectrifiedComponent>(uid);
             }
         }
@@ -217,7 +217,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             return false;
 
         EnsureComp<ActivatedElectrifiedComponent>(uid);
-        _appearance.SetData(uid, ElectrifiedVisuals.IsPowered, true);
+        _appearance.SetData(uid, ElectrifiedVisuals.ShowSparks, true);
 
         siemens *= electrified.SiemensCoefficient;
         if (!DoCommonElectrocutionAttempt(targetUid, uid, ref siemens) || siemens <= 0)
@@ -487,16 +487,5 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             return;
         }
         _audio.PlayPvs(electrified.ShockNoises, targetUid, AudioParams.Default.WithVolume(electrified.ShockVolume));
-    }
-
-    public void SetElectrifiedWireCut(Entity<ElectrifiedComponent> ent, bool value)
-    {
-        if (ent.Comp.IsWireCut == value)
-        {
-            return;
-        }
-
-        ent.Comp.IsWireCut = value;
-        Dirty(ent);
     }
 }

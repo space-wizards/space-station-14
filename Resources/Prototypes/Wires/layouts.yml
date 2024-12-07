@@ -197,3 +197,11 @@
   - !type:PowerWireAction
   - !type:AiInteractWireAction
   - !type:AiVisionWireAction
+
+- type: wireLayout
+  id: BarSign
+  dummyWires: 2
+  wires:
+  - !type:PowerWireAction
+  - !type:AiInteractWireAction
+  - !type:AccessWireAction
