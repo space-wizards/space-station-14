@@ -62,7 +62,8 @@
   storage:
     lhand:
     - BoxSurvival
-# Basic
+
+    # Basic
 - type: loadout
   id: EmergencyOxygen
   effects:
