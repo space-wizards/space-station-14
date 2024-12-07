@@ -44,6 +44,9 @@
     activeBlockFraction: 0.2
   - type: Damageable
     damageContainer: Shield
+  - type: Tag
+    tags:
+      - DecapoidClaw
 
 - type: entity
   name: vaporizer
