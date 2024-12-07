@@ -6337,15 +6337,10 @@ entities:
       parent: 2
 - proto: CryoxadoneBeakerSmall
   entities:
-  - uid: 2392
-    components:
-    - type: Transform
-      pos: -16.252075,12.55249
-      parent: 2
   - uid: 2393
     components:
     - type: Transform
-      pos: -16.61145,12.80249
+      pos: -16.361938,12.339966
       parent: 2
 - proto: CurtainsBlue
   entities:
@@ -6363,7 +6358,7 @@ entities:
       pos: -6.5,9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -50215.02
+      secondsUntilStateChange: -50445.91
       state: Closing
 - proto: DebugAPC
   entities:
@@ -6514,13 +6509,19 @@ entities:
     - type: Transform
       pos: 1.5,10.5
       parent: 2
-- proto: DefibrillatorCabinet
+- proto: DefibrillatorCabinetFilled
   entities:
-  - uid: 822
+  - uid: 2392
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: -15.5,8.5
+      rot: 3.141592653589793 rad
+      pos: -20.5,6.5
+      parent: 2
+  - uid: 2439
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -21.5,12.5
       parent: 2
 - proto: DisposalBend
   entities:
@@ -7495,7 +7496,7 @@ entities:
       pos: 6.5,-3.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -36371.41
+      secondsUntilStateChange: -36602.3
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -10980,6 +10981,12 @@ entities:
     - type: Transform
       pos: -14.5,-13.5
       parent: 2
+  - uid: 822
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -12.5,14.5
+      parent: 2
   - uid: 960
     components:
     - type: Transform
@@ -12530,6 +12537,11 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 3.5,-3.5
+      parent: 2
+  - uid: 2438
+    components:
+    - type: Transform
+      pos: -16.5,12.5
       parent: 2
 - proto: Poweredlight
   entities:
@@ -14874,14 +14886,14 @@ entities:
   - uid: 2390
     components:
     - type: Transform
-      pos: -16.382172,11.651703
+      pos: -16.335266,11.527161
       parent: 2
 - proto: VendingMachineRestockMedical
   entities:
   - uid: 2391
     components:
     - type: Transform
-      pos: -16.632172,11.995453
+      pos: -16.580688,11.886841
       parent: 2
 - proto: VendingMachineSalvage
   entities:
