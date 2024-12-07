@@ -25,3 +25,7 @@
 - type: storeCategory
   id: SLClown
   name: store-category-service-clown
+  
+- type: storeCategory
+  id: SLSecurity
+  name: store-category-security-main
