@@ -869,4 +869,11 @@ Entries:
   id: 123
   time: '2024-12-07T14:30:00.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/134
+- author: KillerTheFlareon
+  changes:
+  - message: Added bark emotion to vulps
+    type: Add
+  id: 124
+  time: '2024-12-07T16:50:51.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/135
 
