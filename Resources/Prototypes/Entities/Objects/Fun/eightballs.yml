@@ -1,0 +1,43 @@
+- type: entity
+  parent: BaseItem
+  id: BaseEightball
+  name: eightball
+  description: It tells of a future.
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/eight_balls.rsi
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 100
+  - type: StaticPrice
+    price: 75
+  - type: Tag
+    tags:
+    - Figurine
+  - type: UseDelay
+    delay: 3
+  - type: Speech
+    speechSounds: Pai # it just sounds better
+
+- type: entity
+  parent: BaseEightball
+  id: ToyEightball
+  name: magic eight-ball
+  description: It tells of a future's possibilities.
+  components:
+  - type: Sprite
+    state: eight-ball
+  - type: SpeakOnUse
+    pack: Eightball
+    
+- type: entity
+  parent: BaseEightball
+  id: ToyEightballConch
+  name: magic conch
+  description: Offers absurd advice that may or may not lead to hilariously improbable success, or undeniably unfortunate failure.
+  components:
+  - type: Sprite
+    state: magic-conch
+  - type: SpeakOnUse
+    pack: EightballConch

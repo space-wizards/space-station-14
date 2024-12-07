@@ -11,7 +11,7 @@
   - type: Body
     prototype: Vox
     requiredLegs: 2
-  - type:  HumanoidAppearance
+  - type: HumanoidAppearance
     species: Vox
     #- type: VoxAccent # Not yet coded
   - type: Speech

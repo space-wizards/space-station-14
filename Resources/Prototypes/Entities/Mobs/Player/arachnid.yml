@@ -1,6 +1,6 @@
 - type: entity
   save: false
-  name: Urist McWeb
+  name: John Spider
   parent: BaseMobArachnid
   id: MobArachnid
   components:

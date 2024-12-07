@@ -1,0 +1,41 @@
+{
+    "version": 1,
+    "license": "MIT",
+    "copyright": "Created by Froxxin (github) for vault-station https://github.com/LukeZurg22/Vault-Station",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "spear"
+        },
+        {
+            "name": "spear1"
+        },
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "equipped-BACKPACK",
+            "directions": 4
+        },
+        {
+            "name": "equipped-SUITSTORAGE",
+            "directions": 4
+        },
+        {
+            "name": "wielded-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "wielded-inhand-right",
+            "directions": 4
+        }
+    ]
+}

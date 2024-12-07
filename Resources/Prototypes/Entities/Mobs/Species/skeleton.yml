@@ -1,6 +1,6 @@
 - type: entity
   save: false
-  name: Urist McSkelly
+  name: John Skeleton
   parent:
   - MobFlammable
   - BaseMobSpecies

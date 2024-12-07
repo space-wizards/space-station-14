@@ -232,6 +232,18 @@
     price: 75
 
 - type: entity
+  name: plain wooden chair
+  id: ChairWoodPlain
+  parent: ChairWood
+  description: How long can you tolerate sitting in this before you die of a heart attack?
+  components:
+  - type: Sprite
+    state: woodenplain
+  - type: Construction
+    graph: WoodPlainSeat
+    node: chairWoodPlain
+
+- type: entity
   name: ritual chair
   id: ChairRitual
   parent: ChairWood

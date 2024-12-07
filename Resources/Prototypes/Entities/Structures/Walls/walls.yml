@@ -80,7 +80,6 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-
   - type: IconSmooth
     key: bricks
     base: brick
@@ -1185,7 +1184,7 @@
     node: wall
 
 
-# Lavalend Walls
+# Lavaland Walls
 
 - type: entity
   parent: BaseWall

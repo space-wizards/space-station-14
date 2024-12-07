@@ -10,6 +10,9 @@ species-name-moth = Moth Person
 species-name-skeleton = Skeleton
 species-name-vox = Vox
 species-name-gingerbread = delicious baked good
+species-name-ovarbi = Ovarbi
+species-name-fuscian = Fuscian
+species-name-teethling = Teethling
 
 ## Misc species things
 

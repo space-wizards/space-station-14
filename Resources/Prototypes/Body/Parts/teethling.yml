@@ -1,0 +1,96 @@
+# TODO BODY: Part damage
+- type: entity
+  id: PartTeethling
+  parent: [BaseItem, BasePart]
+  name: "teethling body part"
+  abstract: true
+
+- type: entity
+  id: TorsoTeethling
+  name: "teethling torso"
+  parent: [PartTeethling, BaseTorso]
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/Teethling/parts.rsi
+      state: "torso_m"
+
+- type: entity
+  id: HeadTeethling
+  name: "teethling head"
+  parent: [PartTeethling, BaseHead]
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/Teethling/parts.rsi
+      state: "head_m"
+  
+- type: entity
+  id: LeftArmTeethling
+  name: "left teethling arm"
+  parent: [PartTeethling, BaseLeftArm]
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/Teethling/parts.rsi
+      state: "l_arm"
+
+- type: entity
+  id: RightArmTeethling
+  name: "right teethling arm"
+  parent: [PartTeethling, BaseRightArm]
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/Teethling/parts.rsi
+      state: "r_arm"
+
+- type: entity
+  id: LeftHandTeethling
+  name: "left teethling hand"
+  parent: [PartTeethling, BaseLeftHand]
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/Teethling/parts.rsi
+      state: "l_hand"
+
+- type: entity
+  id: RightHandTeethling
+  name: "right teethling hand"
+  parent: [PartTeethling, BaseRightHand]
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/Teethling/parts.rsi
+      state: "r_hand"
+
+- type: entity
+  id: LeftLegTeethling
+  name: "left teethling leg"
+  parent: [PartTeethling, BaseLeftLeg]
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/Teethling/parts.rsi
+      state: "l_leg"
+
+- type: entity
+  id: RightLegTeethling
+  name: "right teethling leg"
+  parent: [PartTeethling, BaseRightLeg]
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/Teethling/parts.rsi
+      state: "r_leg"
+
+- type: entity
+  id: LeftFootTeethling
+  name: "left teethling foot"
+  parent: [PartTeethling, BaseLeftFoot]
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/Teethling/parts.rsi
+      state: "l_foot"
+
+- type: entity
+  id: RightFootTeethling
+  name: "right teethling foot"
+  parent: [PartTeethling, BaseRightFoot]
+  components:
+    - type: Sprite
+      sprite: Mobs/Species/Teethling/parts.rsi
+      state: "r_foot"

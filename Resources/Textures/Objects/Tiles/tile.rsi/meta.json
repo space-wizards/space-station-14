@@ -549,6 +549,39 @@
     },
     {
       "name": "wood-large"
+    },
+    {
+      "name": "ycircuit"
+    },
+    {
+      "name": "ycircuit-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "ycircuit-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "pcircuit"
+    },
+    {
+      "name": "pcircuit-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "pcircuit-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "ocircuit"
+    },
+    {
+      "name": "ocircuit-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "ocircuit-inhand-left",
+      "directions": 4
     }
   ]
 }

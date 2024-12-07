@@ -628,3 +628,21 @@
   name: large wood floor
   spawn: FloorTileItemWoodLarge
   maxCount: 30
+
+- type: stack
+  id: FloorTileYCircuit
+  name: yellow-circuit floor
+  spawn: FloorTileItemYCircuit
+  maxCount: 30
+
+- type: stack
+  id: FloorTileOCircuit
+  name: orange-circuit floor
+  spawn: FloorTileItemOCircuit
+  maxCount: 30
+
+- type: stack
+  id: FloorTilePCircuit
+  name: purple-circuit floor
+  spawn: FloorTileItemPCircuit
+  maxCount: 30

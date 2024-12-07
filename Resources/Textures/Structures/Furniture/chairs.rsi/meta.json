@@ -71,6 +71,10 @@
       "name": "wooden",
       "directions": 4
     },
+	{
+      "name": "woodenplain",
+      "directions": 4
+    },
     {
       "name": "wooden-bench",
       "directions": 4

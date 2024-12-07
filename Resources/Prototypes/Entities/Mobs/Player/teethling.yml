@@ -1,0 +1,5 @@
+- type: entity
+  save: false
+  name: John Teethling
+  parent: [BaseMobTeethling, BaseMob]
+  id: MobTeethling

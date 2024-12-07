@@ -221,6 +221,9 @@
       map: ["base"]
   - type: Item
     heldPrefix: pglass
+  - type: FloorTile
+    outputs:
+    - FloorPGlass
   - type: Construction
     graph: Glass
     node: SheetPGlass
@@ -296,6 +299,9 @@
       map: ["base"]
   - type: Item
     heldPrefix: rpglass
+  - type: FloorTile
+    outputs:
+    - FloorRPGlass
   - type: Construction
     graph: Glass
     node: SheetRPGlass

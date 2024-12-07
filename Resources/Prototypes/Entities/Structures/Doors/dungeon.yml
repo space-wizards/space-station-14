@@ -1,0 +1,26 @@
+- type: entity
+  id: DungeonBrickDoor
+  name: dungeon brick door
+  parent: BaseMaterialDoorNavMap
+  description: It opens, it closes, and maybe blocks your way.
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Dungeon/dungeonbrick.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Door
+    bumpOpen: true
+    clickOpen: true
+    canCrush: false
+    closeTimeOne: 0.2
+    closeTimeTwo: 0.6
+    openTimeOne: 0.6
+    openTimeTwo: 0.2
+    openSound:
+      path: /Audio/Effects/door_open.ogg
+    closeSound:
+      path: /Audio/Effects/door_close.ogg
+  - type: Construction
+    graph: DoorGraph
+    node: dungeonBrickDoor

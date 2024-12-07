@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "license": "MIT",
+  "copyright": "Made by LukeZurg22",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+	  "name": "full"
+	},
+    {
+      "name": "oldwindow0",
+	  "directions": 4
+    },
+    {
+      "name": "oldwindow1",
+	  "directions": 4
+    },
+    {
+      "name": "oldwindow2",
+	  "directions": 4
+    },
+    {
+      "name": "oldwindow3",
+	  "directions": 4
+    },
+    {
+      "name": "oldwindow4",
+	  "directions": 4
+    },
+    {
+      "name": "oldwindow5",
+	  "directions": 4
+    },
+    {
+      "name": "oldwindow6",
+	  "directions": 4
+    },
+    {
+      "name": "oldwindow7",
+	  "directions": 4
+    }
+  ]
+}

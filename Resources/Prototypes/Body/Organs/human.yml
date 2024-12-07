@@ -38,7 +38,7 @@
   id: OrganHumanBrain
   parent: BaseHumanOrganUnGibbable
   name: brain
-  description: "The source of incredible, unending intelligence. Honk."
+  description: "The source of incredible, unending intelligence."
   components:
   - type: Sprite
     state: brain

@@ -1302,6 +1302,55 @@
   - type: Stack
     stackType: FloorTileRCircuit
 
+- type: entity
+  name: purple circuit floor
+  parent: FloorTileItemBase
+  id: FloorTileItemPCircuit
+  components:
+  - type: Sprite
+    state: pcircuit
+  - type: Item
+    heldPrefix: pcircuit
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorPurpleCircuit
+  - type: Stack
+    stackType: FloorTilePCircuit
+
+- type: entity
+  name: orange circuit floor
+  parent: FloorTileItemBase
+  id: FloorTileItemOCircuit
+  components:
+  - type: Sprite
+    state: ocircuit
+  - type: Item
+    heldPrefix: ocircuit
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorOrangeCircuit
+  - type: Stack
+    stackType: FloorTileOCircuit
+
+- type: entity
+  name: yellow circuit floor
+  parent: FloorTileItemBase
+  id: FloorTileItemYCircuit
+  components:
+  - type: Sprite
+    state: ycircuit
+  - type: Item
+    heldPrefix: ycircuit
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorYellowCircuit
+  - type: Stack
+    stackType: FloorTileYCircuit
+
+
 # Circuits stacks
 
 - type: entity
@@ -1315,6 +1364,30 @@
 - type: entity
   parent: FloorTileItemBCircuit
   id: FloorTileItemBCircuit4
+  suffix: 4
+  components:
+  - type: Stack
+    count: 4
+
+- type: entity
+  parent: FloorTileItemOCircuit
+  id: FloorTileItemOCircuit4
+  suffix: 4
+  components:
+  - type: Stack
+    count: 4
+
+- type: entity
+  parent: FloorTileItemYCircuit
+  id: FloorTileItemYCircuit4
+  suffix: 4
+  components:
+  - type: Stack
+    count: 4
+
+- type: entity
+  parent: FloorTileItemPCircuit
+  id: FloorTileItemPCircuit4
   suffix: 4
   components:
   - type: Stack

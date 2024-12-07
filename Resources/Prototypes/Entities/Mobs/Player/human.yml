@@ -1,6 +1,6 @@
 - type: entity
   save: false
-  name: Urist McHands
+  name: John Human
   parent: BaseMobHuman
   id: MobHuman
 

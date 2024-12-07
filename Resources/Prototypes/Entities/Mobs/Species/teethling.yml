@@ -1,0 +1,113 @@
+- type: entity
+  save: false
+  name: John Teethling
+  parent:
+  - MobFlammable
+  - BaseMobSpecies
+  id: BaseMobTeethling
+  abstract: true
+  components:
+  - type: HumanoidAppearance
+    species: Teethling
+  #- type: TeethlingAccent # Not created
+  - type: Icon
+    sprite: Mobs/Species/Teethling/parts.rsi
+    state: full
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Teethling
+  - type: Body
+    prototype: Teethling
+    requiredLegs: 2
+  - type: DamageVisuals
+    damageOverlayGroups:
+      Brute:
+        sprite: Mobs/Effects/brute_damage.rsi
+        color: "#555555AA"
+      Burn:
+        sprite: Mobs/Effects/burn_damage.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:GibBehavior { }
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+      - id: MaterialBone
+        amount: 5
+      - id: FoodMeatHuman
+        amount: 1
+  - type: SlowOnDamage #modified speeds because they're so weak
+    speedModifierThresholds:
+      60: 0.9
+      80: 0.7
+  - type: Speech
+    speechVerb: Arachnid
+    speechSounds: Arachnid
+  - type: ZombieImmune
+  - type: Vocal
+    sounds:
+      Male: UnisexArachnid
+      Female: UnisexArachnid
+      Unsexed: UnisexArachnid
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 130
+        restitution: 0.0
+        mask:
+          - MobMask
+        layer:
+          - MobLayer
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+    reactions:
+    - reagents: [ Water, SpaceCleaner ]
+      methods: [ Touch ]
+      effects:
+      - !type:WashCreamPieReaction
+    - reagents: [ Milk, MilkGoat, MilkSoy, MilkSpoiled ]
+      # add new types of milk to reagents as they appear, oat milk isn't on the list
+      # because turns out oat milk has 1/30th the amount of calcium in it compared to the rest
+      # even if it's a meme - I did research
+      methods: [ Touch ]
+      effects: # TODO: when magic is around - make a milk transformation to a skeleton monster
+      - !type:HealthChange
+        scaleByQuantity: true
+        damage:
+          groups:
+            Burn: -2 # healing obviously up to discussion
+            Brute: -1.5 # these groups are the only 2 possible ways to damage a skeleton
+      - !type:PopupMessage
+        type: Local
+        visualType: Large
+        messages: [ "skeleton-healed-by-milk-popup" ]
+        probability: 0.25
+  - type: FireVisuals
+    alternateState: Standing
+  - type: Inventory
+  - type: MeleeWeapon
+    soundHit:
+      collection: AlienClaw
+    angle: 30
+    animation: WeaponArcBite
+    damage:
+      types:
+        Blunt: 5
+
+- type: entity
+  parent: BaseSpeciesDummy
+  id: MobTeethlingDummy
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: HumanoidAppearance
+    species: Teethling
+  - type: Inventory
