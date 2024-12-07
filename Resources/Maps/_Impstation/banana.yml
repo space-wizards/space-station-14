@@ -6714,7 +6714,7 @@ entities:
       pos: -6.5,9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -56690.215
+      secondsUntilStateChange: -56768.78
       state: Closing
 - proto: DebugAPC
   entities:
@@ -7416,6 +7416,7 @@ entities:
       pos: -17.5,2.5
       parent: 2
     - type: FaxMachine
+      name: Main Hall
       destinationAddress: north hallway
   - uid: 914
     components:
@@ -7423,6 +7424,7 @@ entities:
       pos: 4.5,-4.5
       parent: 2
     - type: FaxMachine
+      name: Cargo
       destinationAddress: Cargo
   - uid: 915
     components:
@@ -7430,6 +7432,7 @@ entities:
       pos: -16.5,-16.5
       parent: 2
     - type: FaxMachine
+      name: HoP Office
       destinationAddress: HoP
 - proto: FireAxeCabinetFilled
   entities:
@@ -7867,7 +7870,7 @@ entities:
       pos: 6.5,-3.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -42846.605
+      secondsUntilStateChange: -42925.17
       state: Closing
     - type: DeviceNetwork
       deviceLists:
