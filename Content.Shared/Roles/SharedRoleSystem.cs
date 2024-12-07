@@ -214,7 +214,7 @@ public abstract class SharedRoleSystem : EntitySystem
                 roles.Add(comp.RoleType.Value);
         }
 
-        ProtoId<RoleTypePrototype> result = (roles.Count > 0)? roles.LastOrDefault() : "Neutral";
+        ProtoId<RoleTypePrototype> result = (roles.Count > 0) ? roles.LastOrDefault() : "Neutral";
         return (result);
     }
 
