@@ -8,7 +8,4 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 4
-  - !type:BuyerDepartmentCondition
-    whitelist:
-    - Command
-    - Engineering
+  - !type:BuyerAccessCondition
