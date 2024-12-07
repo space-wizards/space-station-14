@@ -42,7 +42,7 @@
   description: One of our undercover agents will debrief you when you arrive. Don't show up in cuffs.
   components:
   - type: Objective
-    difficulty: 1.3
+    difficulty: 1
     icon:
       sprite: Structures/Furniture/chairs.rsi
       state: shuttle
@@ -119,7 +119,7 @@
   description: Identify yourself at your own risk. We just need them alive.
   components:
   - type: Objective
-    difficulty: 1.75
+    difficulty: 1.5
   - type: TargetObjective
     title: objective-condition-other-traitor-alive-title
   - type: RandomTraitorAlive
@@ -130,7 +130,7 @@
   description: Identify yourself at your own risk. We just need them to succeed.
   components:
   - type: Objective
-    difficulty: 2.5
+    difficulty: 2
   - type: TargetObjective
     title: objective-condition-other-traitor-progress-title
   - type: RandomTraitorProgress
@@ -183,7 +183,7 @@
     stealGroup: ClothingOuterHardsuitRd
   - type: Objective
     # This item must be worn or stored in a slowing duffelbag, very hard to hide.
-    difficulty: 3
+    difficulty: 2
 
 - type: entity
   parent: BaseRDStealObjective
