@@ -876,4 +876,11 @@ Entries:
   id: 124
   time: '2024-12-07T16:50:51.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/135
+- author: Rinary
+  changes:
+  - message: Added security vending machine.
+    type: Add
+  id: 125
+  time: '2024-12-07T16:54:08.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/136
 
