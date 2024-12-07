@@ -77,7 +77,7 @@ public sealed partial class AlertLevelComponent : Component
     /// Timer that keeps track of how long until the door enters emergency access.
     /// </summary>
     [ViewVariables]
-    public float DeltaAlertRemainingEmergencyAccessTimer;
+    public float EmergencyAlertRemainingEmergencyAccessTimer;
 
     /// <summary>
     /// If the level can be selected on the station.
