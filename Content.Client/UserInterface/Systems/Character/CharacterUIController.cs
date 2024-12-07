@@ -41,7 +41,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
     {
         base.Initialize();
 
-        _sawmill = _logMan.GetSawmill("ui");
+        _sawmill = _logMan.GetSawmill("character");
 
         SubscribeNetworkEvent<MindRoleTypeChangedEvent>(OnRoleTypeChanged);
     }
