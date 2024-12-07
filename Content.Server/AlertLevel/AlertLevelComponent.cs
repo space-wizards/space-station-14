@@ -1,5 +1,4 @@
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.AlertLevel;
 
@@ -23,15 +22,20 @@ public sealed partial class AlertLevelComponent : Component
     /// <summary>
     /// The current level on the station.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)] public string CurrentLevel = string.Empty;
+    [ViewVariables(VVAccess.ReadWrite)]
+    public string CurrentLevel = string.Empty;
 
     /// <summary>
     /// Is current station level can be changed by crew.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)] public bool IsLevelLocked = false;
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool IsLevelLocked = false;
 
-    [ViewVariables] public float CurrentDelay = 0;
-    [ViewVariables] public bool ActiveDelay;
+    [ViewVariables]
+    public float CurrentDelay = 0;
+
+    [ViewVariables]
+    public bool ActiveDelay;
 
     /// <summary>
     /// Whether this should alert level should toggle emergency access on the entire station
@@ -58,16 +62,16 @@ public sealed partial class AlertLevelComponent : Component
     public float PostAlertRemainingEmergencyAccessTimer;
 
     /// <summary>
-    /// Tells us if the a station-destroying threat was recently averted on this grid.
+    /// Tells us if the station-destroying threat was recently averted on this grid.
     /// </summary>
     [ViewVariables]
     public bool DeltaAlertRecentlyEnded;
 
     /// <summary>
-    /// Tells us if the a station-destroying threat is currently ongoing.
+    /// Tells us if the station-destroying threat is currently ongoing.
     /// </summary>
     [ViewVariables]
-    public bool DeltaAlertOngoing;
+    public bool EmergencyAlertOngoing;
 
     /// <summary>
     /// Timer that keeps track of how long until the door enters emergency access.
