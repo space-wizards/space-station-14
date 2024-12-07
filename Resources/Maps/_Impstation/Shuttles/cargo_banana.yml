@@ -130,12 +130,12 @@ entities:
   - uid: 26
     components:
     - type: Transform
-      pos: 2.5,-2.5
+      pos: 0.5,-2.5
       parent: 2
   - uid: 27
     components:
     - type: Transform
-      pos: 0.5,-2.5
+      pos: 2.5,-2.5
       parent: 2
 - proto: APCBasic
   entities:
@@ -150,14 +150,12 @@ entities:
   - uid: 91
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 0.5,-2.5
+      pos: 2.5,-2.5
       parent: 2
   - uid: 92
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 2.5,-2.5
+      pos: 0.5,-2.5
       parent: 2
 - proto: CableApcExtension
   entities:

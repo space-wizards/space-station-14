@@ -52,7 +52,7 @@
     useSound: /Audio/_Impstation/Items/Decapoid/claw_prying.ogg
   - type: Prying
     speedModifier: 1.5
-    pryPowered: true
+    pryPowered: false # god damn it
     useSound: /Audio/_Impstation/Items/Decapoid/claw_prying.ogg
   - type: MultipleTool
     statusShowBehavior: true
@@ -69,6 +69,9 @@
           state: icon
         useSound: /Audio/_Impstation/Items/Decapoid/claw_cutting.ogg
         changeSound: /Audio/_Impstation/Items/Decapoid/switch.ogg
+  - type: Tag
+    tags:
+      - DecapoidClaw
 
 - type: entity
   name: vaporizer
