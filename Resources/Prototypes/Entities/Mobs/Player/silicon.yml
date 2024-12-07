@@ -305,6 +305,18 @@
   - type: Intellicard
 
 - type: entity
+  id: PlayerStationAiPreview
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Mobs/Silicon/station_ai.rsi
+    layers:
+    - state: base
+    - state: ai
+      map: ["unshaded"]
+      shader: unshaded
+
+- type: entity
   id: PlayerStationAiEmpty
   name: AI Core
   description: The latest in Artificial Intelligences.
