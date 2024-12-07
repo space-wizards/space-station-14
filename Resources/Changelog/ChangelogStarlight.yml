@@ -861,4 +861,12 @@ Entries:
   id: 122
   time: '2024-12-07T13:50:36.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/133
+- author: Rinary
+  changes:
+  - message: Fixed antag selection system, now players can be changeling or vampire
+      without any issues.
+    type: Fix
+  id: 123
+  time: '2024-12-07T14:30:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/134
 
