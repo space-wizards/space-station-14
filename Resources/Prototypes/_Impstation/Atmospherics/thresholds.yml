@@ -1,0 +1,8 @@
+# For gas concentrations, threshold=0.1 means 10%
+# this is a copy of stationOxygen
+- type: alarmThreshold
+  id: decapoidWaterVapor
+  lowerBound: !type:AlarmThresholdSetting
+    threshold: 0.10
+  lowerWarnAround: !type:AlarmThresholdSetting
+    threshold: 1.5

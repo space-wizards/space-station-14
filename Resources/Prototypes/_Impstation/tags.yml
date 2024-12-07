@@ -3,6 +3,9 @@
   id: BeltUtility
 
 - type: Tag
+  id: Cablecuffs
+
+- type: Tag
   id: CartridgeLPistol
 
 - type: Tag
@@ -13,6 +16,9 @@
 
 - type: Tag
   id: ConversionKitHB
+
+- type: Tag
+  id: DionaMinded
 
 - type: Tag
   id: MagazineLPistol
@@ -36,6 +42,9 @@
   id: SecTicket
 
 - type: Tag
+  id: SGD
+
+- type: Tag
   id: ShellShotgunBeanbag
 
 - type: Tag
@@ -55,9 +64,3 @@
 
 - type: Tag
   id: WeaponSurvivalRifleUpgradeSMGKit
-
-- type: Tag
-  id: DionaMinded
-
-- type: Tag
-  id: SGD

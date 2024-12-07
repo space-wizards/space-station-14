@@ -2,8 +2,8 @@
   id: Atlas
   mapName: Atlas
   mapPath: /Maps/atlas.yml
-  minPlayers: 5
-  maxPlayers: 20
+  minPlayers: 7
+  maxPlayers: 25
   stations:
     Atlas:
       stationProto: StandardNanotrasenStation
@@ -46,6 +46,7 @@
             SecurityOfficer: [ 3, 3 ]
             SecurityCadet: [ 3, 3 ]
             Detective: [ 1, 1 ]
+            Brigmedic: [ 1, 1 ]
             #supply
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 2, 2 ]

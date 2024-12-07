@@ -1,8 +1,8 @@
 - type: entity
-  name: raw finfin meat
+  name: raw Fin Fin meat
   parent: FoodMeatRawBase
   id: FoodMeatFinfin
-  description: A slab of raw finfin. He was your best friend!
+  description: A slab of raw Fin Fin. He was your best friend!
   components:
   - type: Sprite
     state: finfin
@@ -25,10 +25,10 @@
     defaultTarget: cooked finfin
 
 - type: entity
-  name: cooked finfin
+  name: cooked Fin Fin
   parent: FoodMeatBase
   id: FoodMeatFinfinCooked
-  description: A cooked piece of finfin. Best used in other recipes.
+  description: A cooked piece of Fin Fin. Best used in other recipes.
   components:
   - type: Tag
     tags:
@@ -53,10 +53,10 @@
     node: cooked finfin
 
 - type: entity
-  name: fried finfin
+  name: fried Fin Fin
   parent: FoodMeatBase
   id: FoodMeatFinfinFried
-  description: A juicy hunk of finfin meat, fried to perfection.
+  description: A juicy hunk of Fin Fin meat, fried to perfection.
   components:
   - type: Tag
     tags:

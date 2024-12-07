@@ -1043,6 +1043,7 @@
   - StationEngineerJumpsuit
   - StationEngineerJumpskirt
   - StationEngineerHazardsuit
+  - SpaceEngineerJumpsuit
   - SeniorEngineerJumpsuit
   - SeniorEngineerJumpskirt
 
@@ -1328,9 +1329,6 @@
   - ArmorVest #imp
   - ArmorVestSlim #imp
   - HeadofSecurityEliteArmor #imp
-  - ArmorVest
-  - ArmorVestSlim
-  - HeadofSecurityEliteArmor
 
 - type: loadoutGroup
   id: HeadofSecurityBelt

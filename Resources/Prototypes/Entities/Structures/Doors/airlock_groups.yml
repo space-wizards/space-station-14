@@ -15,6 +15,12 @@
     science:     Structures/Doors/Airlocks/Standard/science.rsi
     security:    Structures/Doors/Airlocks/Standard/security.rsi
     virology:    Structures/Doors/Airlocks/Standard/virology.rsi
+    bar:         _Impstation/Structures/Doors/Airlocks/Standard/bar.rsi
+    chapel:      _Impstation/Structures/Doors/Airlocks/Standard/chapel.rsi
+    janitor:     _Impstation/Structures/Doors/Airlocks/Standard/janitor.rsi
+    kitchen:     _Impstation/Structures/Doors/Airlocks/Standard/kitchen.rsi
+    lawyer:      _Impstation/Structures/Doors/Airlocks/Standard/lawyer.rsi
+    theatre:     _Impstation/Structures/Doors/Airlocks/Standard/theatre.rsi
 
 - type: AirlockGroup
   id: Glass
@@ -33,6 +39,12 @@
     medical:     Structures/Doors/Airlocks/Glass/medical.rsi
     security:    Structures/Doors/Airlocks/Glass/security.rsi
     virology:    Structures/Doors/Airlocks/Glass/virology.rsi
+    bar:         _Impstation/Structures/Doors/Airlocks/Glass/bar.rsi
+    chapel:      _Impstation/Structures/Doors/Airlocks/Glass/chapel.rsi
+    janitor:     _Impstation/Structures/Doors/Airlocks/Glass/janitor.rsi
+    kitchen:     _Impstation/Structures/Doors/Airlocks/Glass/kitchen.rsi
+    lawyer:      _Impstation/Structures/Doors/Airlocks/Glass/lawyer.rsi
+    theatre:     _Impstation/Structures/Doors/Airlocks/Glass/theatre.rsi
 
 - type: AirlockGroup
   id: Windoor
@@ -82,3 +94,9 @@
     science: Science
     security: Security
     virology: Medical
+    bar: Civilian
+    chapel: Civilian
+    janitor: Civilian
+    kitchen: Civilian
+    lawyer: Civilian
+    theatre: Civilian
