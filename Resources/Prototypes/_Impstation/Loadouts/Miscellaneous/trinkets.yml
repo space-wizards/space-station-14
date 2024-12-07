@@ -59,7 +59,7 @@
     - FlippoLighter
 
 - type: loadout
-  id: ModernCane
+  id: WalkingCane
   storage:
     back:
-    - ModernCane
+    - WalkingCane

@@ -1,12 +1,12 @@
 - type: entity
   parent: BaseItem
-  id: ModernCane
-  name: modern cane
+  id: WalkingCane
+  name: walking cane
   description: A cane, of a more modern design.
   components:
   - type: Sprite
     sprite: _Impstation/Objects/Weapons/Melee/cane.rsi
-    state: moderncane
+    state: walkingcane
   - type: Item
     size: Normal
     sprite: _Impstation/Objects/Weapons/Melee/cane.rsi
