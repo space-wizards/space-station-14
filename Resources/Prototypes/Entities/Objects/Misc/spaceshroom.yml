@@ -101,7 +101,7 @@
     reagents:
     - Amatoxin
   - quantity: 5
-    weight: 0.25
+    weight: 0.1
     reagents:
     - Romerol
 
