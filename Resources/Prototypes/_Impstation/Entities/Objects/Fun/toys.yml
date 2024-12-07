@@ -99,3 +99,26 @@
   - type: FlavorProfile
     flavors:
       - stardust
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieBug
+  name: bug plushie
+  description: What the hell is this ugly thing?
+  components:
+  - type: Sprite
+    state: bugplush
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Arachnid/arachnid_scream.ogg #YAY!!!
+  - type: Food
+    requiresSpecialDigestion: false
+    useSound:
+      path: /Audio/Voice/Arachnid/arachnid_scream.ogg
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: HeartbreakerToxin #anti-mice countermeasures
+          Quantity: 10
