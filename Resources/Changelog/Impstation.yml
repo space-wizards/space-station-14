@@ -1,17 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: indirectly nerfed chance of depth 4 foam being really really dangerous
-      by adding additional reagents to roll from in the list
-    type: Tweak
-  - message: BROS are now in the depth 4 artifact foam
-    type: Add
-  - message: something more evil than any foam before is now in the depth 4 artifact
-      foam
-    type: Add
-  id: 183
-  time: '2024-09-10T05:52:47.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/236
 - author: Drags-His-Tail
   changes:
   - message: A new book documenting the Ritual of Agony's process and recounting one
@@ -4473,3 +4460,14 @@
   id: 682
   time: '2024-12-07T17:06:59.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/946
+- author: Darkmajia
+  changes:
+  - message: Decapoid claws can now etch transmutation runes into the ground. Be careful
+      not to pry tiles as you do.
+    type: Add
+  - message: Crayons can now sketch transmutation runes on the floor. Clowns and mimes
+      are now a little more evil.
+    type: Add
+  id: 683
+  time: '2024-12-07T17:11:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/935
