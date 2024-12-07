@@ -5917,6 +5917,13 @@ entities:
     - type: Transform
       pos: -15.5,-3.5
       parent: 2
+- proto: ClosetRadiationSuit
+  entities:
+  - uid: 2398
+    components:
+    - type: Transform
+      pos: -25.5,7.5
+      parent: 2
 - proto: ClosetToolFilled
   entities:
   - uid: 772
@@ -6356,7 +6363,7 @@ entities:
       pos: -6.5,9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -50086.58
+      secondsUntilStateChange: -50215.02
       state: Closing
 - proto: DebugAPC
   entities:
@@ -7488,7 +7495,7 @@ entities:
       pos: 6.5,-3.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -36242.97
+      secondsUntilStateChange: -36371.41
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -14118,13 +14125,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -0.5,2.5
-      parent: 2
-- proto: StorageCanister
-  entities:
-  - uid: 2398
-    components:
-    - type: Transform
-      pos: -25.5,7.5
       parent: 2
 - proto: SubstationWallBasic
   entities:
