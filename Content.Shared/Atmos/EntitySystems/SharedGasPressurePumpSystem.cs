@@ -38,7 +38,7 @@ public abstract class SharedGasPressurePumpSystem : EntitySystem
 
     private void OnExamined(EntityUid uid, GasPressurePumpComponent pump, ExaminedEvent args)
     {
-        if (!Transform(uid).Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
+        if (!Transform(uid).Anchored)
             return;
 
         if (Loc.TryGetString("gas-pressure-pump-system-examined", out var str,
