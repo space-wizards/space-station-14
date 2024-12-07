@@ -6,6 +6,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Clothing;
 using Content.Shared.Inventory.Events;
+using InternalsComponent = Content.Shared.Body.Components.InternalsComponent;
 
 namespace Content.Server.Body.Systems;
 

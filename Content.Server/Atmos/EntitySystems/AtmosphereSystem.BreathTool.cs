@@ -1,5 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
+using InternalsComponent = Content.Shared.Body.Components.InternalsComponent;
 
 namespace Content.Server.Atmos.EntitySystems;
 
