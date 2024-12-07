@@ -1,0 +1,8 @@
+- type: entity
+  parent: BaseSign
+  id: WarningWaterVapor
+  name: atmos water vapor sign
+  description: WARNING! Water vapor flow tube. Ensure the flow is disengaged before working.
+  components:
+  - type: Sprite
+    state: atmos_h2o
