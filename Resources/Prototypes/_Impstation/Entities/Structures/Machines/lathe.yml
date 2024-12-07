@@ -1,0 +1,118 @@
+- type: entity
+  id: ServiceTechFab
+  parent: BaseLatheLube
+  name: service techfab
+  description: Produces supplies useful for the service crew.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/techfab.rsi
+    layers:
+    - state: icon
+      map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: service
+    - state: unlit
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: inserting
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Machine
+    board: ServiceTechFabCircuitboard
+  - type: Lathe
+    idleState: icon
+    runningState: icon
+    staticRecipes:
+      #lights
+      - FlashlightLantern
+      - LightReplacer
+      - LightTube
+      - LedLightTube
+      - SodiumLightTube
+      - ExteriorLightTube
+      - UvLightTube
+      - LightBulb
+      - LedLightBulb
+      - DimLightBulb
+      #janitorial
+      - Bucket
+      - SprayBottle
+      - Plunger
+      - MopItem
+      - MopBucket
+      - Holoprojector
+      - TrashBag
+      - Mousetrap
+      - WetFloorSign
+      - SoapNT #imp recipe
+      #botany
+      - HydroponicsToolMiniHoe
+      - HydroponicsToolScythe
+      - HydroponicsToolHatchet
+      - HydroponicsToolSpade
+      - HydroponicsToolClippers
+      - Shovel
+      - PlantBag #imp recipe
+      #drinks
+      - DrinkMug
+      - DrinkMugMetal
+      - DrinkGlass
+      - DrinkShotGlass
+      - DrinkGlassCoupeShaped
+      - CustomDrinkJug
+      - DrinkShaker #imp recipe
+      - DrinkJigger #imp recipe
+      - DrinkFlaskBar #imp recipe
+      - DrinkVacuumFlask #imp recipe
+      - DrinkTeapotEmpty # imp recipe
+      - DrinkTeacupEmpty #imp recipe
+      - DrinkWaterBottleEmpty #imp recipe
+      - Pitcher #imp recipe
+      - BarSpoon #imp recipe
+      #food      
+      - KitchenKnife
+      - FoodPlate
+      - FoodPlateSmall
+      - FoodPlatePlastic
+      - FoodPlateSmallPlastic
+      - FoodBowlBig
+      - FoodPlateTin
+      - FoodPlateMuffinTin
+      - FoodKebabSkewer
+      - RollingPin #imp recipe
+      - Fork #imp recipe
+      - Spoon #imp recipe
+      - ForkPlastic #imp recipe
+      - SpoonPlastic #imp recipe
+      - PairedChopsticks #imp recipe
+      #service
+      - Beaker
+      - LargeBeaker
+      - Dropper
+      - Syringe
+      - DeskBell
+      - ClothingHeadHatCone
+      - SprayPainter
+      - HandLabeler
+    dynamicRecipes:
+      #janitorial
+      - MegaSprayBottle
+      - AdvMopItem
+      - WeaponSprayNozzle
+      - ClothingBackpackWaterTank
+      - CleanerGrenade #imp recipe
+      #misc.
+      - FauxTileAstroGrass
+      - FauxTileMowedAstroGrass
+      - FauxTileJungleAstroGrass
+      - FauxTileAstroIce
+      - FauxTileAstroSnow      
+  - type: EmagLatheRecipes
+    emagStaticRecipes:
+      - ButchCleaver  
+  - type: MaterialStorage
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
+        - Ingot

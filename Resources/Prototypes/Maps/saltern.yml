@@ -2,8 +2,8 @@
   id: Saltern
   mapName: 'Saltern'
   mapPath: /Maps/saltern.yml
-  minPlayers: 0
-  maxPlayers: 50
+  minPlayers: 7
+  maxPlayers: 35
   fallback: true
   stations:
     Saltern:

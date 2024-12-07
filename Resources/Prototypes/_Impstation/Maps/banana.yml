@@ -1,0 +1,57 @@
+- type: gameMap
+  id: Banana
+  mapName: 'Banana'
+  mapPath: /Maps/_Impstation/banana.yml
+  minPlayers: 0
+  maxPlayers: 18
+  stations:
+    Banana:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Banana {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '-IMP-KDN'
+        - type: StationEmergencyShuttle
+          emergencyShuttlePath: /Maps/Shuttles/emergency.yml
+        - type: StationCargoShuttle
+          path: /Maps/_Impstation/Shuttles/cargo_banana.yml
+        - type: StationJobs
+          availableJobs:
+            #command
+            Captain: [ 1, 1 ]
+            HeadOfSecurity: [ 1, 1 ]
+            HeadOfPersonnel: [ 1, 1 ]
+            Quartermaster: [ 1, 1 ]
+            ChiefMedicalOfficer: [ 1, 1 ]
+            ChiefEngineer: [ 1, 1 ]
+            ResearchDirector: [ 1, 1 ]
+            #security
+            SecurityOfficer: [ 1, 1 ]
+            #cargo
+            CargoTechnician: [ 1, 1 ]
+            SalvageSpecialist: [ 1, 1 ]
+            AtmosphericTechnician: [ 1, 1 ]
+            #service
+            Bartender: [ 1, 1 ]
+            Botanist: [ 1, 1 ]
+            Chef: [ 1, 1 ]
+            Janitor: [ 1, 1 ]
+            #medical
+            MedicalDoctor: [ 1, 1 ]
+            MedicalIntern: [ 1, 1 ]
+            Chemist: [ 1, 1 ]
+            #engineering
+            StationEngineer: [ 1, 1 ]
+            TechnicalAssistant: [ 1, 1 ]
+            #sci
+            Scientist: [ 1, 1 ]
+            ResearchAssistant: [ 1, 1 ]
+            #other
+            Borg: [ 1, 1 ]
+            Clown: [ 1, 1 ]
+            Mime: [ 1, 1 ]
+            Passenger: [ -1, -1 ]
+            Musician: [ 1, 1 ]
+

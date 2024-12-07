@@ -28,27 +28,6 @@
       flatReductions:
         Heat: 5 # the average lightbulb only does around four damage!
 
-# a ClothingHandsBase for handwear that's entirely leather or synthetic since moths eat cloth and occasionally paper
-- type: entity
-  abstract: true
-  parent: Clothing
-  id: ClothingHandsInedibleBase
-  components:
-  - type: Sprite
-    state: icon
-  - type: Clothing
-    slots: [gloves]
-  - type: Item
-    size: Small
-    storedRotation: -90
-  - type: Tag
-    tags:
-    - WhitelistChameleon
-  - type: DamageOnInteractProtection
-    damageProtection:
-      flatReductions:
-        Heat: 5 # the average lightbulb only does around four damage!
-
 - type: entity
   abstract: true
   parent: ClothingHandsBase

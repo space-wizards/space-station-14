@@ -1,0 +1,92 @@
+# For the veteran captain cosmetic set
+- type: loadoutEffectGroup
+  id: VeteranCap
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobCaptain
+      time: 180000 #50 hrs
+
+# For the veteran command cosmetic set, used for all command jobs
+- type: loadoutEffectGroup
+  id: VeteranCommand
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Command
+      time: 180000 # 50 hrs
+
+- type: loadout
+  id: CaptainEveningAttire
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCaptaineveningattire
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranCap
+
+- type: loadout
+  id: CaptainVisor
+  equipment:
+    eyes: ClothingEyesGlassesCaptainvisor
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranCap
+
+- type: loadout
+  id: CaptainGreatcoat
+  equipment:
+    neck: ClothingNeckCloakCaptaingreatcoat
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranCap
+
+# Command Veteran backpacks are used by all command
+- type: loadout
+  id: CommandVeteranBackpack
+  equipment:
+    back: ClothingBackpackCommandveteran
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranCommand
+
+- type: loadout
+  id: CommandVeteranSatchel
+  equipment:
+    back: ClothingBackpackSatchelCommandveteran
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranCommand
+
+- type: loadout
+  id: CaptainRepeller
+  equipment:
+    outerClothing: ClothingOuterArmorCaptainRepeller
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranCap
+
+- type: loadout
+  id: CaptainFlightGloves
+  equipment:
+    gloves: ClothingHandsGlovesCaptainflightgloves
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranCap
+
+- type: loadout
+  id: CaptainJumpBoots
+  equipment:
+    shoes: ClothingShoesBootsCaptainjumpboots
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranCap
+
+- type: loadout
+  id: CommandVeteranHeadset
+  equipment:
+    ears: ClothingHeadsetCommandveteran
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranCommand

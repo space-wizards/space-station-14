@@ -2,7 +2,7 @@
   parent: [ClothingUniformBase, ClothingUniformFoldableBase]
   id: ClothingUniformSpaceJumpsuitMedical
   name: space medical jumpsuit
-  description: A high quality medical jumpsuit made from the highest quality fibers.. It almost feels like it's from another universe.
+  description: A high quality medical jumpsuit made from the highest quality fibers.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacedoctor.rsi
@@ -13,18 +13,18 @@
   parent: [ClothingUniformBase, ClothingUniformFoldableBase]
   id: ClothingUniformSpaceJumpsuitChemist
   name: space chemist jumpsuit
-  description: A high quality chemist jumpsuit made from the highest quality fibers.. It almost feels like it's from another universe.
+  description: A high quality chemist jumpsuit made from the highest quality fibers.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacechemist.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacechemist.rsi
- 
+
 - type: entity
   parent: [ClothingUniformBase, ClothingUniformFoldableBase]
   id: ClothingUniformSpaceJumpsuitScientist
   name: space scientist jumpsuit
-  description: A high quality scientist jumpsuit made from the highest quality fibers.. It almost feels like it's from another universe.
+  description: A high quality scientist jumpsuit made from the highest quality fibers.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacescientist.rsi
@@ -33,14 +33,37 @@
 
 - type: entity
   parent: [ClothingUniformBase, ClothingUniformFoldableBase]
+  id: ClothingUniformSpaceJumpsuitEngineer
+  name: space engineer jumpsuit
+  description: A high quality engineer jumpsuit made from the highest quality fibers.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spaceengineer.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spaceengineer.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, ClothingUniformFoldableBase]
   id: ClothingUniformSpaceJumpsuitGrayTider
   name: gilded grey space jumpsuit
-  description: A high quality gray jumpsuit made from the highest quality fiber, with gold accents.. It almost feels like it's from another universe.
+  description: A high quality gray jumpsuit made from the highest quality fiber, with gold accents.
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacegreytider.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/spacegreytider.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband, ClothingUniformFoldableBase]
+  id: ClothingUniformJumpsuitCaptaineveningattire
+  name: captain's evening attire
+  description: "A comfortable captain's uniform with a low-cut collar and three-quarter sleeves, complete with a sword belt. Held fastened in part by a medal-like brooch."
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/captaineveningattire.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/captaineveningattire.rsi
+
 
 - type: entity
   parent: [ClothingUniformBase, BaseCommandContraband, ClothingUniformFoldableBase]

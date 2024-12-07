@@ -8,5 +8,9 @@ namespace Content.Shared.Changeling;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class AbsorbableComponent : Component
 {
+    [DataField("disabled")]
+    public bool Disabled = false;
 
+    [DataField("reducedBiomass")]
+    public bool ReducedBiomass = false;
 }

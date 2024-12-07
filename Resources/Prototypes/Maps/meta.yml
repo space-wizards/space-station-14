@@ -2,7 +2,8 @@
   id: Meta
   mapName: 'Meta Station'
   mapPath: /Maps/meta.yml
-  minPlayers: 50
+  minPlayers: 35
+  maxPlayers: 70
   stations:
     Meta:
       stationProto: StandardNanotrasenStation

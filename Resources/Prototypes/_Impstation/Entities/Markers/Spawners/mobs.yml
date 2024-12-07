@@ -185,3 +185,17 @@
     - type: ConditionalSpawner
       prototypes:
         - MobRay
+
+- type: entity
+  name: frank spawner
+  suffix: UraniumCrab
+  id: UraniumCrabSpawnerFrank
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: ai
+    - type: ConditionalSpawner
+      prototypes:
+        - MobFrank

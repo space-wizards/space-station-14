@@ -15,7 +15,7 @@ petting-failure-cargorilla = You try to give {THE($target)} a hug, but you strug
 petting-success-disgustingpig = You insult {THE($target)}, as it deserves.
 petting-failure-disgustingpig = You think about insulting {THE($target)}, but hold your tongue.
 
-petting-success-ray = You Pet {$target}, it wiggles glowing pincers at you happily.
+petting-success-ray = You pet {$target}, it wiggles glowing pincers at you happily.
 
 ## Petting silicons
 

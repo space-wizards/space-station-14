@@ -170,9 +170,7 @@ public sealed class TemperatureSystem : EntitySystem
             return Atmospherics.MinimumHeatCapacity;
         }
 
-        if (physics.Mass < 1)
-            return comp.SpecificHeat;
-        else return comp.SpecificHeat * physics.FixturesMass;
+        return comp.SpecificHeat * physics.FixturesMass;
     }
 
     private void OnInit(EntityUid uid, InternalTemperatureComponent comp, MapInitEvent args)
