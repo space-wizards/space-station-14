@@ -8,4 +8,4 @@ chat-emote-name-bark = Bark
 # Msg
 chat-emote-msg-howl = howls
 chat-emote-msg-growl = growls
-chat-emote-msg-bark1 = barks
+chat-emote-msg-bark = barks
