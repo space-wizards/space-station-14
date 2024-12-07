@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Drags-His-Tail
-  changes:
-  - message: A new book documenting the Ritual of Agony's process and recounting one
-      such sermon will now be available in random bookshelves.
-    type: Add
-  id: 184
-  time: '2024-09-10T05:54:46.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/230
-- author: TGRCdev
-  changes:
-  - message: Mucin speed boost now only affects Gastropoids
-    type: Tweak
-  id: 185
-  time: '2024-09-10T05:55:49.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/228
 - author: FlippenPage
   changes:
   - message: gave brigmeds more of their stuff back
@@ -4471,3 +4456,17 @@
   id: 683
   time: '2024-12-07T17:11:42.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/935
+- author: TheGrimbeeper
+  changes:
+  - message: Changed hint for a beverage artifact trigger to be clearer.
+    type: Tweak
+  id: 684
+  time: '2024-12-07T23:06:19.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/926
+- author: starlighthowls
+  changes:
+  - message: NTAS white whale added to map rotation!
+    type: Add
+  id: 685
+  time: '2024-12-07T23:06:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/942
