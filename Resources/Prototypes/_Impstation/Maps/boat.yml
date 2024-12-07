@@ -4,7 +4,7 @@
   mapPath: /Maps/_Impstation/boat.yml
   minPlayers: 50
   maxPlayers: 100
-  randomRotation: false
+  randomRotation: true
   stations:
     Boat:
       stationProto: StandardNanotrasenStation
