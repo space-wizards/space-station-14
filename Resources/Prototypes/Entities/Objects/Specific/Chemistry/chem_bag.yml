@@ -24,6 +24,7 @@
       components:
         - FitsInDispenser
         - Pill
+        - Hypospray
       tags:
         - Document
         - PillCanister
