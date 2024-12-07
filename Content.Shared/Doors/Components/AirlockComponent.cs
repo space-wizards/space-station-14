@@ -17,14 +17,12 @@ public sealed partial class AirlockComponent : Component
     public bool Powered;
 
     // Need to network airlock safety state to avoid mis-predicts when a door auto-closes as the client walks through the door.
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField, AutoNetworkedField]
     public bool Safety = true;
 
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField, AutoNetworkedField]
     public bool EmergencyAccess = false;
-	
+
     /// <summary>
     /// Sound to play when the airlock emergency access is turned on.
     /// </summary>
@@ -82,6 +80,19 @@ public sealed partial class AirlockComponent : Component
     /// </summary>
     [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
     public string AutoClosePort = "AutoClose";
+
+    /// <summary>
+    /// Used to hold the state of emergency access on the door prior to a station-destroying event.  This allows us to return to the saved state
+    /// after the station-destroying threat is eliminated.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool PreAlertEmergencyAccessState = false;
+
+    /// <summary>
+    /// Determines if the door is currently under alert-level emergency access rules.
+    /// </summary>
+    [ViewVariables, AutoNetworkedField]
+    public bool AlertEmergencyAccess;
 
     #region Graphics
 

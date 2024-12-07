@@ -46,26 +46,19 @@ public sealed partial class AlertLevelComponent : Component
     public TimeSpan EmergencyAccessTimer = TimeSpan.FromSeconds(180);
 
     /// <summary>
-    /// Used to hold the state of emergency access on the door prior to a station-destroying event.  This allows us to return to the saved state
-    /// after the station-destroying threat is eliminated.
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool PreDeltaAlertEmergencyAccessState = false;
-
-    /// <summary>
-    ///     Time before delta alert emergency access is reverted, in seconds, after a station-destroying threat is averted.
+    /// Time before delta alert emergency access is reverted, in seconds, after a station-destroying threat is averted.
     /// </summary>
     [DataField]
     public int PostDeltaAlertEmergencyAccessTimer = 10;
 
     /// <summary>
-    ///     Time remaining until the door reverts its emergency access settings after a station-destroying threat is averted.
+    /// Time remaining until the door reverts its emergency access settings after a station-destroying threat is averted.
     /// </summary>
-    [DataField]
-    public float PostDeltaAlertRemainingEmergencyAccessTimer;
+    [ViewVariables]
+    public float PostAlertRemainingEmergencyAccessTimer;
 
     /// <summary>
-    /// Tells us if the a station-destroying threat was recently averted on this airlock's grid.
+    /// Tells us if the a station-destroying threat was recently averted on this grid.
     /// </summary>
     [ViewVariables]
     public bool DeltaAlertRecentlyEnded;
@@ -77,21 +70,10 @@ public sealed partial class AlertLevelComponent : Component
     public bool DeltaAlertOngoing;
 
     /// <summary>
-    /// Determines how long to wait during a delta-level event before triggering emergency access.
-    /// </summary>
-    [ViewVariables]
-    public int DeltaAlertEmergencyAccessDelayTime = 180;
-
-    /// <summary>
     /// Timer that keeps track of how long until the door enters emergency access.
     /// </summary>
     [ViewVariables]
     public float DeltaAlertRemainingEmergencyAccessTimer;
-    /// <summary>
-    /// Determines if the door is currently under delta-level emergency access rules.
-    /// </summary>
-    [ViewVariables]
-    public bool DeltaEmergencyAccessEnabled;
 
     /// <summary>
     /// If the level can be selected on the station.
