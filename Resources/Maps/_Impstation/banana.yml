@@ -7802,8 +7802,6 @@ entities:
       pos: -17.5,10.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 2328
 - proto: FloorDrain
@@ -10600,8 +10598,6 @@ entities:
       pos: -5.5,-2.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 120
     - type: AtmosPipeColor
@@ -10922,8 +10918,6 @@ entities:
       pos: -5.5,-1.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 120
     - type: AtmosPipeColor
