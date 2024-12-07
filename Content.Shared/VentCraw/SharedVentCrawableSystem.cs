@@ -12,6 +12,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
+using Content.Shared.Eye.Blinding.Systems;
 
 namespace Content.Shared.VentCraw;
 
@@ -33,6 +34,20 @@ public sealed class SharedVentCrawableSystem : EntitySystem
 
         SubscribeLocalEvent<VentCrawHolderComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<VentCrawHolderComponent, MoveInputEvent>(OnMoveInput);
+
+        SubscribeLocalEvent<VentCrawlerComponent, CanSeeAttemptEvent>(OnCanSee);
+    }
+
+    /// <summary>
+    /// Blinds entities that are inside of vents
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="comp"></param>
+    /// <param name="args"></param>
+    private void OnCanSee(EntityUid uid, VentCrawlerComponent comp, ref CanSeeAttemptEvent args)
+    {
+        if (comp.InTube)
+            args.Cancel();
     }
 
     /// <summary>

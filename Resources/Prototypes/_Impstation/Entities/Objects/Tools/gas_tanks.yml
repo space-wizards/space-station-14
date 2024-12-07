@@ -1,0 +1,96 @@
+- type: entity
+  parent: [GasTankRoundBase, BaseCommandContraband]
+  id: EmergencyOxygenTankCommand
+  name: command emergency oxygen tank
+  description: An easily portable tank for emergencies. Contains very little oxygen, but at least it looks nice. It can hold 0.66 L of gas.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Tanks/emergency_command.rsi
+  - type: Item
+    size: Small
+    sprite: _Impstation/Objects/Tanks/emergency_command.rsi
+  - type: GasTank
+    air:
+      volume: 0.66
+      temperature: 293.15
+  - type: Clothing
+    sprite: _Impstation/Objects/Tanks/emergency_command.rsi
+    slots:
+    - Pocket
+    - Belt
+    - suitStorage
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 5
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
+
+- type: entity
+  parent: EmergencyOxygenTankCommand
+  id: ExtendedEmergencyOxygenTankCommand
+  name: extended command emergency oxygen tank
+  description: An emergency tank with extended capacity. Technically rated for prolonged use, and it looks nice. It can hold 1.5 L of gas.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Tanks/emergency_command.rsi
+  - type: Item
+    sprite: _Impstation/Objects/Tanks/emergency_command.rsi
+  - type: GasTank
+    air:
+      volume: 1.5
+      temperature: 293.15
+  - type: Clothing
+    sprite: _Impstation/Objects/Tanks/emergency_command.rsi
+  - type: Tag
+    tags:
+      - ExtendedEmergencyOxygenTank
+
+- type: entity
+  parent: [GasTankRoundBase, BaseCommandContraband]
+  id: EmergencyNitrogenTankCommand
+  name: command emergency nitrogen tank
+  description: An easily portable tank for emergencies. Contains very little nitrogen, but at least it looks nice. It can hold 0.66 L of gas.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Tanks/emergency_red_command.rsi
+  - type: Item
+    size: Small
+    sprite: _Impstation/Objects/Tanks/emergency_red_command.rsi
+  - type: GasTank
+    air:
+      volume: 0.66
+      temperature: 293.15
+  - type: Clothing
+    sprite: _Impstation/Objects/Tanks/emergency_red_command.rsi
+    slots:
+    - Pocket
+    - Belt
+    - suitStorage
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 5
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
+  - type: Tag
+    tags:
+      - EmergencyNitrogenTank
+
+- type: entity
+  parent: ExtendedEmergencyOxygenTankCommand
+  id: ExtendedEmergencyNitrogenTankCommand
+  name: extended command emergency nitrogen tank
+  description: An emergency tank with extended capacity. Technically rated for prolonged use, and it looks nice. It can hold 1.5 L of gas.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Tanks/emergency_red_command.rsi
+  - type: Item
+    sprite: _Impstation/Objects/Tanks/emergency_red_command.rsi
+  - type: Clothing
+    sprite: _Impstation/Objects/Tanks/emergency_red_command.rsi
+  - type: Tag
+    tags:
+      - ExtendedEmergencyOxygenTank

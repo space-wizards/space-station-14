@@ -1,7 +1,7 @@
 - type: entity
   parent: BasePlushie
   id: PlushieFinfin
-  name: fin fin plushie
+  name: Fin Fin plushie
   description: A highly marketable plushie of the adorable dolphin-bird recently discovered on the distant planet Teo. Made artificially rare on purpose.
   components:
   - type: Sprite

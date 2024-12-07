@@ -148,6 +148,7 @@
       - LedLightTube
       - SodiumLightTube
       - ExteriorLightTube
+      - UvLightTube
       - LightBulb
       - LedLightBulb
       - DimLightBulb
@@ -360,6 +361,7 @@
       - FauxTileAstroSnow
       - OreBagOfHolding
       - DeviceQuantumSpinInverter
+      - CleanerGrenade #imp addition
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - BoxBeanbag
@@ -462,6 +464,7 @@
     - StationAnchorCircuitboard
     - SalvageMagnetMachineCircuitboard
     - ShipyardComputerCircuitboard
+    - ServiceTechFabCircuitboard #imp addition
     dynamicRecipes:
       - ThermomachineFreezerMachineCircuitBoard
       - HellfireFreezerMachineCircuitBoard

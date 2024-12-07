@@ -1,0 +1,22 @@
+- type: entity
+  parent: DrinkBaseCup
+  id: DrinkTeacupEmpty
+  name: teacup
+  suffix: Empty
+  description: A plain white porcelain teacup.
+  components:
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/teacup.rsi
+    state: icon-vend-tea
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/teacup.rsi
+    layers:
+      - state: icon-0
+      - map: ["enum.SolutionContainerLayers.Fill"]
+        state: icon-4
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 4
+    fillBaseName: icon-
+  - type: TrashOnSolutionEmpty
+    solution: drink

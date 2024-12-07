@@ -12,6 +12,8 @@
   femaleFirstNames: names_arachnid_first
   lastNames: names_arachnid_last
   sexes:
+  - Male
+  - Female
   - Unsexed
 
 - type: speciesBaseSprites

@@ -1,7 +1,7 @@
 - type: species
   id: Decapoid
   name: species-name-decapoid
-  roundStart: false
+  roundStart: true
   prototype: MobDecapoid
   sprites: MobDecapoidSprites
   defaultSkinTone: "#385878"
@@ -17,9 +17,10 @@
 - type: speciesBaseSprites
   id: MobDecapoidSprites
   sprites:
-    Eyes: MobDecapoidEyes
+    Eyes: MobHumanoidAnyMarking
     Head: MobDecapoidHead
     HeadTop: MobHumanoidAnyMarking
+    Hair: MobHumanoidAnyMarking
     Chest: MobDecapoidTorso
     LArm: MobDecapoidLArm
     RArm: MobDecapoidRArm
@@ -36,6 +37,10 @@
   id: MobDecapoidMarkingLimits
   onlyWhitelisted: true
   points:
+    Eyes:
+      points: 1
+      required: true
+      defaultMarkings: [ DecapoidEyesDefault ]
     Head:
       points: 6
       required: false
@@ -47,9 +52,6 @@
       required: false
     Undershirt:
       points: 1
-      required: false
-    Arms:
-      points: 2
       required: false
     Tail:
       points: 1
@@ -65,8 +67,8 @@
 - type: humanoidBaseSprite
   id: MobDecapoidEyes
   baseSprite:
-    sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
-    state: eyes
+    sprite: _Impstation/Mobs/Customization/decapoid.rsi
+    state: eyes-1
 
 - type: humanoidBaseSprite
   id: MobDecapoidHead

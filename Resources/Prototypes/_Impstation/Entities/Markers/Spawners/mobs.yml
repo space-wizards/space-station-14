@@ -1,0 +1,201 @@
+- type: entity
+  name: random dinosaur spawner
+  id: DinosaurSpawnerRandom
+  parent: MarkerBase
+  suffix: DO NOT MAP
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: raptor
+          sprite: _Impstation/Mobs/Aliens/Dinos/raptor.rsi
+    - type: ConditionalSpawner
+      prototypes:
+      - MobDinosaurAnki
+      - MobDinosaurCompy
+      - MobDinosaurDilo
+      - MobDinosaurKentro
+      - MobDinosaurPara
+      - MobDinosaurRaptor
+      - MobDinosaurSpino
+      - MobDinosaurStego
+      - MobDinosaurTrex
+      - MobDinosaurTrike
+
+- type: entity
+  name: dinosaur spawner
+  suffix: ankylosaurus, DO NOT MAP
+  id: DinosaurSpawnerAnki
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: anki
+          sprite: _Impstation/Mobs/Aliens/Dinos/anky.rsi
+    - type: ConditionalSpawner
+      prototypes:
+      - MobDinosaurAnki
+
+- type: entity
+  name: dinosaur spawner
+  suffix: compsognathus, DO NOT MAP
+  id: DinosaurSpawnerCompy
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: compy
+          sprite: _Impstation/Mobs/Aliens/Dinos/compy.rsi
+    - type: ConditionalSpawner
+      prototypes:
+      - MobDinosaurCompy
+
+- type: entity
+  name: dinosaur spawner
+  suffix: dilophosaurus, DO NOT MAP
+  id: DinosaurSpawnerDilo
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: dilo
+          sprite: _Impstation/Mobs/Aliens/Dinos/dilo.rsi
+    - type: ConditionalSpawner
+      prototypes:
+      - MobDinosaurDilo
+
+- type: entity
+  name: dinosaur spawner
+  suffix: kentrosaurus, DO NOT MAP
+  id: DinoSpawnerKentro
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: kentro
+          sprite: _Impstation/Mobs/Aliens/Dinos/kentro.rsi
+    - type: ConditionalSpawner
+      prototypes:
+      - MobDinosaurKentro
+
+- type: entity
+  name: dinosaur spawner
+  suffix: parasaurolophus, DO NOT MAP
+  id: DinoSpawnerPara
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: para
+          sprite: _Impstation/Mobs/Aliens/Dinos/para.rsi
+    - type: ConditionalSpawner
+      prototypes:
+      - MobDinosaurPara
+
+- type: entity
+  name: dinosaur spawner
+  suffix: velociraptor, DO NOT MAP
+  id: DinoSpawnerRaptor
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: raptor
+          sprite: _Impstation/Mobs/Aliens/Dinos/raptor.rsi
+    - type: ConditionalSpawner
+      prototypes:
+      - MobDinosaurRaptor
+
+- type: entity
+  name: dinosaur spawner
+  suffix: spinosaurus, DO NOT MAP
+  id: DinoSpawnerSpino
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: spino
+          sprite: _Impstation/Mobs/Aliens/Dinos/spino.rsi
+    - type: ConditionalSpawner
+      prototypes:
+      - MobDinosaurSpino
+
+- type: entity
+  name: dinosaur spawner
+  suffix: stegosaurus, DO NOT MAP
+  id: DinoSpawnerStego
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: stego
+          sprite: _Impstation/Mobs/Aliens/Dinos/stego.rsi
+    - type: ConditionalSpawner
+      prototypes:
+      - MobDinosaurStego
+
+- type: entity
+  name: dinosaur spawner
+  suffix: tyrannosaurus, DO NOT MAP
+  id: DinoSpawnerTrex
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: trex
+          sprite: _Impstation/Mobs/Aliens/Dinos/trex.rsi
+    - type: ConditionalSpawner
+      prototypes:
+      - MobDinosaurTrex
+
+- type: entity
+  name: dinosaur spawner
+  suffix: triceratops, DO NOT MAP
+  id: DinoSpawnerTrike
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: trike
+          sprite: _Impstation/Mobs/Aliens/Dinos/trike.rsi
+    - type: ConditionalSpawner
+      prototypes:
+      - MobDinosaurTrike
+
+- type: entity
+  name: ray spawner
+  suffix: UraniumCrab
+  id: UraniumCrabSpawnerRay
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: ai
+    - type: ConditionalSpawner
+      prototypes:
+        - MobRay
+
+- type: entity
+  name: frank spawner
+  suffix: UraniumCrab
+  id: UraniumCrabSpawnerFrank
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: ai
+    - type: ConditionalSpawner
+      prototypes:
+        - MobFrank

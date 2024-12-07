@@ -1,28 +1,31 @@
 # Base benches
 - type: entity
   name: bench
-  id: BenchBaseMiddle
+  id: BenchBase
   suffix: Middle
   abstract: true
   parent: SeatBase
   description: Multiple seats spanning a single object. Truly a marvel of science.
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Physics
     bodyType: Static
-  - type: Transform
-    anchored: true
-  - type: Rotatable
   - type: Sprite
     state: middle
 
 # Standard sofa
 - type: entity
-  name: sofa
+  name: comfy sofa
   id: BenchSofaMiddle
-  parent: BenchBaseMiddle
+  parent: BenchBase
+  description: It looks like you could sink right into it.
   components:
   - type: Sprite
     sprite: _DeltaV/Structures/Furniture/Benches/sofa.rsi
+  - type: Construction
+    graph: Sofa
+    node: SofaMiddle
 
 - type: entity
   id: BenchSofaLeft
@@ -31,6 +34,9 @@
   components:
   - type: Sprite
     state: left
+  - type: Construction
+    graph: Sofa
+    node: SofaLeft
 
 - type: entity
   id: BenchSofaRight
@@ -39,47 +45,34 @@
   components:
   - type: Sprite
     state: right
+  - type: Construction
+    graph: Sofa
+    node: SofaRight
 
 - type: entity
   name: sofa
   id: BenchSofaCorner
   suffix: Corner
-#  parent: BenchSofaMiddle
-  placement:
-    mode: SnapgridCenter
+  parent: BenchSofaMiddle
   components:
-  - type: Transform
-    anchored: true
-  - type: Rotatable
   - type: Sprite
-    sprite: _DeltaV/Structures/Furniture/Benches/sofa.rsi
     state: corner
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Pullable
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalBreak
+  - type: Construction
+    graph: Sofa
+    node: SofaCorner
 
 # Corp sofa
 - type: entity
-  name: grey sofa
+  name: corporate sofa
   id: BenchSofaCorpMiddle
-  parent: BenchBaseMiddle
+  parent: BenchBase
+  description: It looks like it's going to correct your posture.
   components:
   - type: Sprite
     sprite: _DeltaV/Structures/Furniture/Benches/sofa_corp.rsi
+  - type: Construction
+    graph: Sofa
+    node: SofaCorpMiddle
 
 - type: entity
   id: BenchSofaCorpLeft
@@ -88,6 +81,9 @@
   components:
   - type: Sprite
     state: left
+  - type: Construction
+    graph: Sofa
+    node: SofaCorpLeft
 
 - type: entity
   id: BenchSofaCorpRight
@@ -96,35 +92,18 @@
   components:
   - type: Sprite
     state: right
+  - type: Construction
+    graph: Sofa
+    node: SofaCorpRight
 
 - type: entity
   name: grey sofa
   id: BenchSofaCorpCorner
   suffix: Corner
-#  parent: BenchSofaCorpMiddle
-  placement:
-    mode: SnapgridCenter
+  parent: BenchSofaCorpMiddle
   components:
-  - type: Transform
-    anchored: true
-  - type: Rotatable
   - type: Sprite
-    sprite: _DeltaV/Structures/Furniture/Benches/sofa_corp.rsi
     state: corner
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Pullable
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound:
-          collection: MetalThud
+  - type: Construction
+    graph: Sofa
+    node: SofaCorpCorner

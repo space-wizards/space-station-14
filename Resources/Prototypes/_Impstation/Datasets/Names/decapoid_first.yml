@@ -1,4 +1,30 @@
 - type: dataset
   id: names_decapoid_first
   values:
-    - Temp ## come up with a naming convention
+#     These use only voiceless consonants, excluding F. The apostrophe represents a glottal stop. 
+#     It is important to note that these are rough transliterations and not what would actually be said in native Decapoid.
+    - "Otepa't,"
+    - "Ku'tukat,"
+    - "Aku'ka,"
+    - "Szyth,"
+    - "Y'tep,"
+    - "I'tak,"
+    - "U'utep,"
+    - "Syt'u,"
+    - "Yiqat,"
+    - "U'uqet,"
+    - "Yi'tuq,"
+    - "Tiqutet,"
+    - "Ysh,"
+    - "Chk',"
+    - "Tch'tek,"
+    - "Q'qka,"
+    - "Yq,"
+    - "Q'ut,"
+    - "A'ik,"
+    - "Ta'thuk,"
+    - "Ku'ut,"
+    - "Tys'q,"
+    - "Tep'atet,"
+    - "Ya'aq,"
+    - "'Uut,"

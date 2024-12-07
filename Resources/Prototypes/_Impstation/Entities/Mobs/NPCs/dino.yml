@@ -2,7 +2,7 @@
   save: false
   parent: [ BaseSimpleMob, MobCombat ]
   id: BaseMobDinosaur
-  suffix: AI, DO NOT MAP
+  suffix: AI
   description: Enigmatic behemoth from a bygone era, known for their imposing stature and formidable presence.
   abstract: true
   components:
@@ -14,7 +14,7 @@
       - Prying
   - type: Prying
     pryPowered: false
-    useSound: /Audio/Items/jaws_pry.ogg
+    useSound: /Audio/Items/crowbar.ogg
   - type: HTN
     rootTask:
       task: XenoCompound #maybe someday... But for now it's enough.
@@ -80,8 +80,35 @@
     name: ghost-role-information-dino-name
     description: ghost-role-information-dino-description
     rules: ghost-role-information-rules-team-antagonist
-    raffle:
-      settings: short
+  - type: GhostTakeoverAvailable
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 0.50
+        Heat: 0.1
+  - type: Temperature # temperature values taken from reptilian species
+    heatDamageThreshold: 400
+    coldDamageThreshold: 285
+    currentTemperature: 310.15
+    specificHeat: 42
+    coldDamage:
+      types:
+        Cold : 0.1 #per second, scales with temperature & other constants
+    heatDamage:
+      types:
+        Heat : 1.5 #per second, scales with temperature & other constants
+  - type: TemperatureSpeed 
+    thresholds:
+      301: 0.8
+      295: 0.6
+      285: 0.4
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 1.0
+    damageRecovery:
+      types:
+        Asphyxiation: -1.0
 
 - type: entity
   parent: BaseMobDinosaur
@@ -126,9 +153,20 @@
     damage:
       types:
         Blunt: 20
+        Structural: 10
   - type: MovementSpeedModifier
     baseSprintSpeed : 2
     baseWalkSpeed: 1
+  - type: Devourer # imp additions
+    foodPreference: Humanoid
+    shouldStoreDevoured: true
+    chemical: DinoBlood
+    healRate: 15.0
+    whitelist:
+      components:
+      - Door
+      tags:
+      - Wall
 
 - type: entity
   parent: BaseMobDinosaur
@@ -184,6 +222,7 @@
     damage:
       types:
         Piercing: 5
+        Structural: 2
   - type: MovementSpeedModifier
     baseSprintSpeed : 5
     baseWalkSpeed: 2.5
@@ -250,6 +289,7 @@
       types:
         Slash: 5
         Caustic: 2
+        Structural: 2
   - type: MovementSpeedModifier
     baseSprintSpeed : 5.5
     baseWalkSpeed: 2.5
@@ -304,9 +344,20 @@
     damage:
       types:
         Piercing: 10
+        Structural: 5
   - type: MovementSpeedModifier
     baseSprintSpeed : 2.5
     baseWalkSpeed: 1.5
+  - type: Devourer # imp additions
+    foodPreference: Humanoid
+    shouldStoreDevoured: true
+    chemical: DinoBlood
+    healRate: 15.0
+    whitelist:
+      components:
+      - Door
+      tags:
+      - Wall
 
 - type: entity
   parent: BaseMobDinosaur
@@ -351,9 +402,20 @@
     damage:
       types:
         Blunt: 5
+        Structural: 2
   - type: MovementSpeedModifier
     baseSprintSpeed : 4
     baseWalkSpeed: 2.5
+  - type: Devourer # imp additions
+    foodPreference: Humanoid
+    shouldStoreDevoured: true
+    chemical: DinoBlood
+    healRate: 15.0
+    whitelist:
+      components:
+      - Door
+      tags:
+      - Wall
 
 - type: entity
   parent: BaseMobDinosaur
@@ -431,6 +493,7 @@
     damage:
       types:
         Slash: 12
+        Structural: 6
   - type: MovementSpeedModifier
     baseSprintSpeed : 6.5
     baseWalkSpeed: 2.5
@@ -486,9 +549,21 @@
       types:
         Slash: 18
         Piercing: 12
+        Structural: 15
   - type: MovementSpeedModifier
     baseSprintSpeed : 5
     baseWalkSpeed: 2.5
+  - type: Devourer # imp additions
+    foodPreference: Humanoid
+    shouldStoreDevoured: true
+    chemical: DinoBlood
+    healRate: 15.0
+    whitelist:
+      components:
+      - MobState
+      - Door
+      tags:
+      - Wall
 
 - type: entity
   parent: BaseMobDinosaur
@@ -534,9 +609,20 @@
       types:
         Blunt: 10
         Piercing: 8
+        Structural: 9
   - type: MovementSpeedModifier
     baseSprintSpeed : 3.5
     baseWalkSpeed: 2
+  - type: Devourer # imp additions
+    foodPreference: Humanoid
+    shouldStoreDevoured: true
+    chemical: DinoBlood
+    healRate: 15.0
+    whitelist:
+      components:
+      - Door
+      tags:
+      - Wall
 
 - type: entity
   parent: BaseMobDinosaur
@@ -582,9 +668,21 @@
       types:
         Slash: 15
         Piercing: 25
+        Structural: 20
   - type: MovementSpeedModifier
     baseSprintSpeed : 4.5
     baseWalkSpeed: 2.5
+  - type: Devourer # imp additions
+    foodPreference: Humanoid
+    shouldStoreDevoured: true
+    chemical: DinoBlood
+    healRate: 15.0
+    whitelist:
+      components:
+      - MobState
+      - Door
+      tags:
+      - Wall
 
 - type: entity
   parent: BaseMobDinosaur
@@ -629,6 +727,18 @@
     damage:
       types:
         Blunt: 15
+        Structural: 7
   - type: MovementSpeedModifier
     baseSprintSpeed : 3
     baseWalkSpeed: 1.5
+  - type: Devourer # imp additions
+    foodPreference: Humanoid
+    shouldStoreDevoured: true
+    chemical: DinoBlood
+    healRate: 15.0
+    whitelist:
+      components:
+      - MobState
+      - Door
+      tags:
+      - Wall

@@ -2,7 +2,7 @@
   parent: ClothingNeckBase
   id: ClothingNeckSGD
   name: speech generating device
-  description: A device that translates brainwaves into audible speech. It requires neural implants to function, so it wont work for everyone.
+  description: An assistive device for people who are incapable of vocal communication, based on Decapoid technology. Translates data from neural implants into audiable speech.
   components:
   - type: Item
     size: Small
