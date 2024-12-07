@@ -1,33 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Reverted my very lazy fix of making everything a tweak in the changelog
-    type: Fix
-  id: 179
-  time: '2024-09-07T18:41:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/225
-- author: Darkmajia
-  changes:
-  - message: Maintenance locker loot has been fixed, and will now have a much wider
-      variety.
-    type: Fix
-  id: 180
-  time: '2024-09-08T16:16:52.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/224
-- author: joelsgp
-  changes:
-  - message: Fixed older changelog entries
-    type: Fix
-  id: 181
-  time: '2024-09-08T16:17:05.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/226
-- author: FlippenPage
-  changes:
-  - message: Added PISK!
-    type: Add
-  id: 182
-  time: '2024-09-10T05:53:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/237
 - author: TheGrimbeeper
   changes:
   - message: indirectly nerfed chance of depth 4 foam being really really dangerous
@@ -4473,3 +4444,32 @@
   id: 678
   time: '2024-12-07T09:10:46.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/940
+- author: DinnerCalzone
+  changes:
+  - message: (Origin) Added biogenerators to botany and perma.
+    type: Add
+  id: 679
+  time: '2024-12-07T17:07:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/941
+- author: honeyed-lemons
+  changes:
+  - message: Added more chem possibilities to strange pills and space shrooms, for
+      clowns to eat
+    type: Tweak
+  id: 680
+  time: '2024-12-07T17:08:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/939
+- author: kipdotnet
+  changes:
+  - message: Banana.
+    type: Fix
+  id: 681
+  time: '2024-12-07T17:06:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/945
+- author: ATDoop
+  changes:
+  - message: 'Added a new trinket: a walking cane!'
+    type: Add
+  id: 682
+  time: '2024-12-07T17:06:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/946
