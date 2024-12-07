@@ -1,15 +1,11 @@
 using Content.Server.Antag;
 using Content.Server.Atmos.Components;
-using Content.Server.Body.Systems;
-using Content.Server.Body.Components;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
 using Content.Server.Objectives;
 using Content.Server.Roles;
 using Content.Server.Vampire;
-using Content.Server.Bible.Components; 
 using Content.Shared.Alert;
-using Content.Shared.Body.Components;
 using Content.Shared.Vampire.Components;
 using Content.Shared.NPC.Prototypes;
 using Content.Shared.NPC.Systems;
@@ -36,7 +32,6 @@ public sealed partial class VampireRuleSystem : GameRuleSystem<VampireRuleCompon
     [Dependency] private readonly ObjectivesSystem _objective = default!;
     [Dependency] private readonly VampireSystem _vampire = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly BodySystem _body = default!;
 
     public readonly SoundSpecifier BriefingSound = new SoundPathSpecifier("/Audio/Ambience/Antag/vampire_start.ogg");
 
@@ -52,8 +47,6 @@ public sealed partial class VampireRuleSystem : GameRuleSystem<VampireRuleCompon
     {
         base.Initialize();
 
-        SubscribeLocalEvent<VampireRuleComponent, GetBriefingEvent>(OnGetBriefing);
-
         SubscribeLocalEvent<VampireRuleComponent, AfterAntagEntitySelectedEvent>(OnSelectAntag);
         SubscribeLocalEvent<VampireRuleComponent, ObjectivesTextPrependEvent>(OnTextPrepend);
     }
@@ -62,16 +55,16 @@ public sealed partial class VampireRuleSystem : GameRuleSystem<VampireRuleCompon
     {
         MakeVampire(args.EntityUid, comp);
     }
+    
     public bool MakeVampire(EntityUid target, VampireRuleComponent rule)
     {
-        if (!_mind.TryGetMind(target, out var mindId, out var mind) || _role.MindIsAntagonist(mindId))
+        if (!_mind.TryGetMind(target, out var mindId, out var mind))
             return false;
 
         // briefing
         if (TryComp<MetaDataComponent>(target, out var metaData))
         {
             var briefing = Loc.GetString("vampire-role-greeting", ("name", metaData?.EntityName ?? "Unknown"));
-            var briefingShort = Loc.GetString("vampire-role-greeting-short", ("name", metaData?.EntityName ?? "Unknown"));
 
             _antag.SendBriefing(target, MakeBriefing(target), Color.Yellow, BriefingSound);
             _role.MindHasRole<VampireRoleComponent>(mindId, out var vampireRole);
@@ -129,19 +122,6 @@ public sealed partial class VampireRuleSystem : GameRuleSystem<VampireRuleCompon
         }
 
         return true;
-    }
-    
-    private void OnGetBriefing(Entity<VampireRuleComponent> role, ref GetBriefingEvent args)
-    {
-        var ent = args.Mind.Comp.OwnedEntity;
-        
-        if (ent == null 
-            || HasComp<BibleUserComponent>(ent) 
-            || !TryComp<BodyComponent>(ent, out var body) 
-            || _body.TryGetBodyOrganEntityComps<StomachComponent>((ent.Value, body), out var stomachs))
-            return;
-
-        args.Append(MakeBriefing(ent.Value));
     }
     
     private string MakeBriefing(EntityUid ent)
