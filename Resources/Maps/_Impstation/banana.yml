@@ -6056,6 +6056,13 @@ entities:
     - type: Transform
       pos: -25.5,-13.5
       parent: 2
+- proto: ClothingBackpackSatchelMedical
+  entities:
+  - uid: 118
+    components:
+    - type: Transform
+      pos: -15.480408,7.5780334
+      parent: 2
 - proto: ClothingBeltMedicalFilled
   entities:
   - uid: 2324
@@ -6411,7 +6418,7 @@ entities:
       pos: -6.5,9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -50745.605
+      secondsUntilStateChange: -50926.305
       state: Closing
 - proto: DebugAPC
   entities:
@@ -7549,7 +7556,7 @@ entities:
       pos: 6.5,-3.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -36901.996
+      secondsUntilStateChange: -37082.695
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -12411,6 +12418,8 @@ entities:
       stampedBy:
       - stampedColor: '#006600FF'
         stampedName: stamp-component-stamped-name-centcom
+      - stampedColor: '#2F4F4FFF'
+        stampedName: Syt'u, Fourteenth
       content: >+
         [color=#f39f27]░░▄▀░░ [head=2]Engineering Memo[/head]
 
@@ -12422,7 +12431,11 @@ entities:
 
         Welcome to the IMP-KDN-Banana Station! If you arent familiar, here's a checklist of things that you'll need to enable to keep the station functioning smoothly.
 
+
         - All of the pumps and filters in the engineering department. you can see them embedded in the floor, and can click on them to turn them on.
+
+
+        - The pump and filter in the medical bay's back room are needed for the cryopod to function.
 
 
         - The radiation collectors in Frank (the crab)'s chamber. You can turn them on just by clicking on them.
@@ -12435,8 +12448,6 @@ entities:
 
 
         Best of luck!
-
-
 
         ───────────────────────────────────────
 
@@ -14957,13 +14968,6 @@ entities:
     components:
     - type: Transform
       pos: -16.5,9.5
-      parent: 2
-- proto: VendingMachineMediDrobe
-  entities:
-  - uid: 118
-    components:
-    - type: Transform
-      pos: -17.5,13.5
       parent: 2
 - proto: VendingMachineNutri
   entities:
