@@ -52,7 +52,7 @@
     useSound: /Audio/_Impstation/Items/Decapoid/claw_prying.ogg
   - type: Prying
     speedModifier: 1.5
-    pryPowered: true
+    pryPowered: false # god damn it
     useSound: /Audio/_Impstation/Items/Decapoid/claw_prying.ogg
   - type: MultipleTool
     statusShowBehavior: true

@@ -37,7 +37,7 @@
     species:
     - Snail
 
-# commenting these out because I would like to do emergency vapor boxes at some point.
+# commenting these out because I would like to do emergency vapor boxes at some point. - move these to imp filestructure
 #- type: loadoutEffectGroup
 #  id: EffectSpeciesDecapoid
 #  effects:
@@ -63,7 +63,7 @@
     lhand:
     - BoxSurvival
 
-# Basic
+    # Basic
 - type: loadout
   id: EmergencyOxygen
   effects:
