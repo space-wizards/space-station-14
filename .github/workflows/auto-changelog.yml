@@ -30,9 +30,10 @@ jobs:
         run: |
           COMMIT_MESSAGE=$(git log -1 --pretty=%B)
           echo "Commit message: $COMMIT_MESSAGE"
-          PR_NUMBER=$(echo "$COMMIT_MESSAGE" | grep -oP '(?<=Merge pull request #)\d+')
+          PR_NUMBER=$(echo "$COMMIT_MESSAGE" | grep -oP '(?<=Merge pull request #)\d+' || true)
           if [ -z "$PR_NUMBER" ]; then
-            echo "No PR number found in commit message."
+            echo "No PR number found in commit message. Skipping changelog update."
+            echo "::set-output name=PR_NUMBER::"
             exit 0
           fi
           echo "PR Number: $PR_NUMBER"
