@@ -18,6 +18,9 @@
   id: ConversionKitHB
 
 - type: Tag
+  id: DecapoidClaw
+
+- type: Tag
   id: DionaMinded
 
 - type: Tag
