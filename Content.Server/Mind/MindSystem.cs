@@ -36,7 +36,6 @@ public sealed class MindSystem : SharedMindSystem
 
         SubscribeLocalEvent<MindContainerComponent, EntityTerminatingEvent>(OnMindContainerTerminating);
         SubscribeLocalEvent<MindComponent, ComponentShutdown>(OnMindShutdown);
-        // SubscribeLocalEvent<MindRoleComponent, MindAddedMessage>(OnMindAdded);
     }
 
     private void OnMindShutdown(EntityUid uid, MindComponent mind, ComponentShutdown args)
