@@ -83,3 +83,18 @@
       collection: MaleSlimeDeathGasp
   params:
     variation: 0.125
+
+- type: emoteSounds
+  id: Monkey
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      path: /Audio/Animals/monkey_scream.ogg
+      params:
+        variation: 0.125
+        pitch: 0.90
+    MonkeyScreeches:
+      collection: MonkeyScreeches
+    DefaultDeathgasp:
+      path: /Audio/_Impstation/Animals/bros_hurt.ogg

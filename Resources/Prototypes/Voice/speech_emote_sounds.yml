@@ -434,7 +434,7 @@
       collection: FemaleDeathGasp #placeholder
   params:
     variation: 0.125
-    
+
 - type: emoteSounds
   id: UnisexVox
   sounds:
@@ -641,7 +641,7 @@
       collection: FemaleGasp
     DefaultDeathgasp:
       collection: DeathGasp
-      
+
 - type: emoteSounds
   id: UnisexArachnid
   params:
