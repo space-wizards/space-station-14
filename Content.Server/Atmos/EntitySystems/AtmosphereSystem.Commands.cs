@@ -36,7 +36,7 @@ public sealed partial class AtmosphereSystem
            return;
        }
 
-       var mixtures = new GasMixture[8];
+       var mixtures = new GasMixture[10];
        for (var i = 0; i < mixtures.Length; i++)
            mixtures[i] = new GasMixture(Atmospherics.CellVolume) { Temperature = Atmospherics.T20C };
 
@@ -67,6 +67,14 @@ public sealed partial class AtmosphereSystem
 
        // 7: Nitrogen (101kpa) for vox rooms
        mixtures[7].AdjustMoles(Gas.Nitrogen, Atmospherics.MolesCellStandard);
+
+       // imp specials
+
+       // 8: Water Vapor (GM)
+       mixtures[8].AdjustMoles(Gas.WaterVapor, Atmospherics.MolesCellGasMiner);
+
+       // 9: Water Vapor (101kpa) for decapoid rooms
+       mixtures[9].AdjustMoles(Gas.WaterVapor, Atmospherics.MolesCellStandard);
 
        foreach (var arg in args)
        {
