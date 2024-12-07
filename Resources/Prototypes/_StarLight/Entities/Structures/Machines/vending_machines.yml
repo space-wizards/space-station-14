@@ -226,3 +226,39 @@
         layer:
         - MachineLayer
         density: 190
+        
+- type: entity
+  parent: SLVendingMachine
+  id: SLVendingMachineSecurity
+  name: security dispenser
+  components:
+  - type: AccessReader
+    access: [["Security"]]
+  - type: Sprite
+    sprite: _Starlight/Structures/Machines/VendingMachines/security.rsi
+    snapCardinals: true
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: normal-unshaded
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+  - type: Store
+    name: vendor-security-dispenser
+    categories:
+    - SLSecurity
+    currencyWhitelist:
+    - NTCredit
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.16,0.3,0.40"
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+        density: 190
+  - type: Transform
+    noRot: false
