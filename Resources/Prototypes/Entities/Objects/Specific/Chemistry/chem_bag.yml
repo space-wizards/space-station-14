@@ -31,4 +31,5 @@
         - Bottle
         - Syringe
         - Dropper
+        - ChemDispensable
   - type: Dumpable
