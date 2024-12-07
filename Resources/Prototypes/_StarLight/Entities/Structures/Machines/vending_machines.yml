@@ -200,7 +200,7 @@
   description: Get your honk fix here! Surprise the station with HohohonkersVend — the ultimate machine for hilarious pranks. Hack it, and you'll unlock something special!
   components:
   - type: AccessReader
-    access: [["Service"]]
+    access: [["Theatre"]]
   - type: Store
     name: vendor-clown-dispenser
     categories:
