@@ -2360,11 +2360,6 @@ entities:
     - type: Transform
       pos: -14.290314,8.552368
       parent: 2
-  - uid: 2513
-    components:
-    - type: Transform
-      pos: -7.5732117,6.597351
-      parent: 2
 - proto: Bed
   entities:
   - uid: 128
@@ -5746,6 +5741,31 @@ entities:
     - type: Transform
       pos: -29.5,-12.5
       parent: 2
+  - uid: 2524
+    components:
+    - type: Transform
+      pos: -8.5,5.5
+      parent: 2
+  - uid: 2525
+    components:
+    - type: Transform
+      pos: -9.5,5.5
+      parent: 2
+  - uid: 2526
+    components:
+    - type: Transform
+      pos: -9.5,6.5
+      parent: 2
+  - uid: 2527
+    components:
+    - type: Transform
+      pos: -10.5,6.5
+      parent: 2
+  - uid: 2528
+    components:
+    - type: Transform
+      pos: -11.5,6.5
+      parent: 2
 - proto: CableTerminal
   entities:
   - uid: 721
@@ -6694,7 +6714,7 @@ entities:
       pos: -6.5,9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -56555.816
+      secondsUntilStateChange: -56690.215
       state: Closing
 - proto: DebugAPC
   entities:
@@ -7847,7 +7867,7 @@ entities:
       pos: 6.5,-3.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -42712.207
+      secondsUntilStateChange: -42846.605
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -12452,6 +12472,11 @@ entities:
     - type: Transform
       pos: -14.664459,8.579437
       parent: 2
+  - uid: 2513
+    components:
+    - type: Transform
+      pos: -7.5152893,6.562561
+      parent: 2
 - proto: LockerAtmosphericsFilledHardsuit
   entities:
   - uid: 94
@@ -13480,6 +13505,12 @@ entities:
       rot: 3.141592653589793 rad
       pos: -7.5,8.5
       parent: 2
+  - uid: 2529
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -20.5,7.5
+      parent: 2
 - proto: PoweredlightUV
   entities:
   - uid: 72
@@ -13723,6 +13754,11 @@ entities:
     - type: Physics
       canCollide: False
     - type: InsideEntityStorage
+  - uid: 2530
+    components:
+    - type: Transform
+      pos: -24.43573,-5.293335
+      parent: 2
 - proto: SheetPlasma
   entities:
   - uid: 802
