@@ -390,6 +390,7 @@
         !type:PipeNode
         nodeGroupID: Pipe
         pipeDirection: South
+  - type: PipeFill
   - type: AtmosDevice
   - type: AtmosPipeColor
   - type: AmbientSound

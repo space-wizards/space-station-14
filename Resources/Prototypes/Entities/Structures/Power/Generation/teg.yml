@@ -174,7 +174,8 @@
         circulator:
           !type:TegNodeCirculator
           nodeGroupID: Teg
-
+    - type: PipeFill
+    
     - type: AtmosUnsafeUnanchor
     - type: PipeRestrictOverlap
     - type: TegCirculator

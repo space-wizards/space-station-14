@@ -1,0 +1,505 @@
+- type: entity
+  name: gas reservoir
+  id: StaticGasTankBase
+  parent: BaseStructure
+  categories: [ HideSpawnMenu ]
+  description: |
+    A large pressure vessel for gas.
+    It looks too heavy to move.
+  components:
+  - type: Transform
+    anchored: true
+    noRot: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.40"
+        density: 5000 # right out of my butt
+        mask:
+        - SmallMobMask
+        layer:
+        - MachineLayer
+  - type: Anchorable
+    flags:
+    - Anchorable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: InteractionOutline
+  - type: PipeAppearance
+  - type: PipeColorVisuals
+  - type: AtmosPipeColor
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.FilterVisuals.Enabled:
+        enabled:
+          True: { state: valveOn }
+          False: { state: valveOff }
+  - type: Rotatable
+  - type: PipeRestrictOverlap
+  - type: AtmosUnsafeUnanchor
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+    - trigger:
+        !type:DamageTrigger
+        damage: 250
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/statictank.rsi
+    layers:
+      - state: pipe
+        map: [ "enum.PipeVisualLayers.Pipe" ]
+        drawdepth: ThinPipe
+      - state: white
+  - type: GasValve
+    open: false
+    inlet: tank
+  - type: NodeContainer
+    nodes:
+      tank:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: None
+        volume: 40000
+      outlet:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
+        volume: 100
+  - type: PipeFill
+  - type: Construction
+    graph: GasReservoir
+    node: staticGasTank
+  - type: Tag
+    tags:
+    - Pipe # its basically a big pipe, okay?
+
+- type: entity
+  name: gas reservoir
+  id: StaticGasTankEmpty
+  parent: StaticGasTankBase
+  suffix: Empty
+
+- type: entity
+  name: air reservoir
+  id: AirStaticGasTankBase
+  parent: StaticGasTankBase
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    layers:
+      - state: pipe
+        map: [ "enum.PipeVisualLayers.Pipe" ]
+        drawdepth: ThinPipe
+      - state: air
+  - type: Construction
+    graph: GasReservoir
+    node: airStaticGasTank
+    
+- type: entity
+  name: air reservoir
+  id: AirStaticGasTankEmpty
+  parent: AirStaticGasTankBase
+  suffix: Empty
+
+- type: entity
+  name: air reservoir
+  id: AirStaticGasTank
+  parent: AirStaticGasTankBase
+  suffix: 4500kpa
+  components:
+  - type: PipeFill
+    airDict:
+      tank:
+        moles: # List of gasses for easy reference
+        - 15,722.368284 # oxygen 21%
+        - 59,146.052116 # nitrogen 79%
+        temperature: 293.15
+
+- type: entity
+  name: oxygen reservoir
+  id: OxygenStaticGasTankBase
+  parent: StaticGasTankBase
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    layers:
+      - state: pipe
+        map: [ "enum.PipeVisualLayers.Pipe" ]
+        drawdepth: ThinPipe
+      - state: oxygen
+  - type: Construction
+    graph: GasReservoir
+    node: oxygenStaticGasTank
+
+- type: entity
+  name: oxygen reservoir
+  id: OxygenStaticGasTankEmpty
+  parent: OxygenStaticGasTankBase
+  suffix: Empty
+
+- type: entity
+  name: oxygen reservoir
+  id: OxygenStaticGasTank
+  parent: OxygenStaticGasTankBase
+  suffix: 4500kpa
+  components:
+  - type: PipeFill
+    airDict:
+      tank:
+        moles: # List of gasses for easy reference
+        - 74,868.4204 # oxygen
+        - 0 # nitrogen
+        - 0 # CO2
+        - 0 # Plasma
+        - 0 # Tritium
+        - 0 # Water vapor
+        - 0 # Ammonia
+        - 0 # N2O
+        - 0 # Frezon
+        temperature: 293.15
+
+- type: entity
+  name: nitrogen reservoir
+  id: NitrogenStaticGasTankBase
+  parent: StaticGasTankBase
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    layers:
+      - state: pipe
+        map: [ "enum.PipeVisualLayers.Pipe" ]
+        drawdepth: ThinPipe
+      - state: nitrogen
+  - type: Construction
+    graph: GasReservoir
+    node: nitrogenStaticGasTank
+
+- type: entity
+  name: nitrogen reservoir
+  id: NitrogenStaticGasTankEmpty
+  parent: NitrogenStaticGasTankBase
+  suffix: Empty
+
+- type: entity
+  name: nitrogen reservoir
+  id: NitrogenStaticGasTank
+  parent: NitrogenStaticGasTankBase
+  suffix: 4500kpa
+  components:
+  - type: PipeFill
+    airDict:
+      tank:
+        moles: # List of gasses for easy reference
+        - 0 # oxygen
+        - 74,868.4204 # nitrogen
+        temperature: 293.15
+
+- type: entity
+  name: carbon dioxide reservoir
+  id: CarbonDioxideStaticGasTankBase
+  parent: StaticGasTankBase
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    layers:
+      - state: pipe
+        map: [ "enum.PipeVisualLayers.Pipe" ]
+        drawdepth: ThinPipe
+      - state: white
+      - state: greyscale
+        color: "#999999"
+  - type: Construction
+    graph: GasReservoir
+    node: carbonDioxideStaticGasTank
+
+- type: entity
+  name: carbon dioxide reservoir
+  id: CarbonDioxideStaticGasTankEmpty
+  parent: CarbonDioxideStaticGasTankBase
+  suffix: Empty
+
+- type: entity
+  name: carbon dioxide reservoir
+  id: CarbonDioxideStaticGasTank
+  parent: CarbonDioxideStaticGasTankBase
+  suffix: 4500kpa
+  components:
+  - type: PipeFill
+    airDict:
+      tank:
+        moles: # List of gasses for easy reference
+        - 0 # oxygen
+        - 0 # nitrogen
+        - 74,868.4204 # CO2
+        temperature: 293.15
+
+- type: entity
+  name: plasma reservoir
+  id: PlasmaStaticGasTankBase
+  parent: StaticGasTankBase
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    layers:
+      - state: pipe
+        map: [ "enum.PipeVisualLayers.Pipe" ]
+        drawdepth: ThinPipe
+      - state: plasma
+  - type: Construction
+    graph: GasReservoir
+    node: plasmaStaticGasTank
+
+- type: entity
+  name: plasma reservoir
+  id: PlasmaStaticGasTankEmpty
+  parent: PlasmaStaticGasTankBase
+  suffix: Empty
+
+- type: entity
+  name: plasma reservoir
+  id: PlasmaStaticGasTank
+  parent: PlasmaStaticGasTankBase
+  suffix: 4500kpa
+  components:
+  - type: PipeFill
+    airDict:
+      tank:
+        moles: # List of gasses for easy reference
+        - 0 # oxygen
+        - 0 # nitrogen
+        - 0 # CO2
+        - 74,868.4204 # Plasma
+        temperature: 293.15
+
+- type: entity
+  name: tritium reservoir
+  id: TritiumStaticGasTankBase
+  parent: StaticGasTankBase
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    layers:
+      - state: pipe
+        map: [ "enum.PipeVisualLayers.Pipe" ]
+        drawdepth: ThinPipe
+      - state: white
+      - state: greyscale
+        color: "#55F055"
+  - type: Construction
+    graph: GasReservoir
+    node: tritiumStaticGasTank
+
+- type: entity
+  name: tritium reservoir
+  id: TritiumStaticGasTankEmpty
+  parent: TritiumStaticGasTankBase
+  suffix: Empty
+
+- type: entity
+  name: tritium reservoir
+  id: TritiumStaticGasTank
+  parent: TritiumStaticGasTankBase
+  suffix: 4500kpa
+  components:
+  - type: PipeFill
+    airDict:
+      tank:
+        moles: # List of gasses for easy reference
+        - 0 # oxygen
+        - 0 # nitrogen
+        - 0 # CO2
+        - 0 # Plasma
+        - 74,868.4204 # Tritium
+        temperature: 293.15
+
+- type: entity
+  name: water vapor reservoir
+  id: WaterVaporStaticGasTankBase
+  parent: StaticGasTankBase
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    layers:
+      - state: pipe
+        map: [ "enum.PipeVisualLayers.Pipe" ]
+        drawdepth: ThinPipe
+      - state: white
+      - state: greyscale
+        color: "#f5c9eb"
+  - type: Construction
+    graph: GasReservoir
+    node: waterVaporStaticGasTank
+
+- type: entity
+  name: water vapor reservoir
+  id: WaterVaporStaticGasTankEmpty
+  parent: WaterVaporStaticGasTankBase
+  suffix: Empty
+
+- type: entity
+  name: water vapor reservoir
+  id: WaterVaporStaticGasTank
+  parent: WaterVaporStaticGasTankBase
+  suffix: 4500kpa
+  components:
+  - type: PipeFill
+    airDict:
+      tank:
+        moles: # List of gasses for easy reference
+        - 0 # oxygen
+        - 0 # nitrogen
+        - 0 # CO2
+        - 0 # Plasma
+        - 0 # Tritium
+        - 74,868.4204 # Water vapor
+        temperature: 293.15
+
+- type: entity
+  name: ammonia reservoir
+  id: AmmoniaStaticGasTankBase
+  parent: StaticGasTankBase
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    layers:
+      - state: pipe
+        map: [ "enum.PipeVisualLayers.Pipe" ]
+        drawdepth: ThinPipe
+      - state: white
+      - state: greyscale
+        color: "#dbc42a"
+  - type: Construction
+    graph: GasReservoir
+    node: ammoniaStaticGasTank
+
+- type: entity
+  name: ammonia reservoir
+  id: AmmoniaStaticGasTankEmpty
+  parent: AmmoniaStaticGasTankBase
+  suffix: Empty
+
+- type: entity
+  name: ammonia reservoir
+  id: AmmoniaStaticGasTank
+  parent: AmmoniaStaticGasTankBase
+  suffix: 4500kpa
+  components:
+  - type: PipeFill
+    airDict:
+      tank:
+        moles: # List of gasses for easy reference
+        - 0 # oxygen
+        - 0 # nitrogen
+        - 0 # CO2
+        - 0 # Plasma
+        - 0 # Tritium
+        - 0 # Water vapor
+        - 74,868.4204 # Ammonia
+        temperature: 293.15
+
+- type: entity
+  name: nitrous oxide reservoir
+  id: NitrousOxideStaticGasTankBase
+  parent: StaticGasTankBase
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    layers:
+      - state: pipe
+        map: [ "enum.PipeVisualLayers.Pipe" ]
+        drawdepth: ThinPipe
+      - state: nitrousoxide
+  - type: Construction
+    graph: GasReservoir
+    node: nitrousOxideStaticGasTank
+
+- type: entity
+  name: nitrous oxide reservoir
+  id: NitrousOxideStaticGasTankEmpty
+  parent: NitrousOxideStaticGasTankBase
+  suffix: Empty
+
+- type: entity
+  name: nitrous oxide reservoir
+  id: NitrousOxideStaticGasTank
+  parent: NitrousOxideStaticGasTankBase
+  suffix: 4500kpa
+  components:
+  - type: PipeFill
+    airDict:
+      tank:
+        moles: # List of gasses for easy reference
+        - 0 # oxygen
+        - 0 # nitrogen
+        - 0 # CO2
+        - 0 # Plasma
+        - 0 # Tritium
+        - 0 # Water vapor
+        - 0 # Ammonia
+        - 74,868.4204 # N2O
+        temperature: 293.15
+
+- type: entity
+  name: frezon reservoir
+  id: FrezonStaticGasTankBase
+  parent: StaticGasTankBase
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    layers:
+      - state: pipe
+        map: [ "enum.PipeVisualLayers.Pipe" ]
+        drawdepth: ThinPipe
+      - state: white
+      - state: greyscale
+        color: "#88D0FF"
+  - type: Construction
+    graph: GasReservoir
+    node: frezonStaticGasTank
+
+- type: entity
+  name: frezon reservoir
+  id: FrezonStaticGasTankEmpty
+  parent: FrezonStaticGasTankBase
+  suffix: Empty
+
+- type: entity
+  name: frezon reservoir
+  id: FrezonStaticGasTank
+  parent: FrezonStaticGasTankBase
+  suffix: 4500kpa
+  components:
+  - type: PipeFill
+    airDict:
+      tank:
+        moles: # List of gasses for easy reference
+        - 0 # oxygen
+        - 0 # nitrogen
+        - 0 # CO2
+        - 0 # Plasma
+        - 0 # Tritium
+        - 0 # Water vapor
+        - 0 # Ammonia
+        - 0 # N2O
+        - 74,868.4204 # Frezon
+        temperature: 293.15
