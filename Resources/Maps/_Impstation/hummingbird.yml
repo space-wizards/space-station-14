@@ -33776,6 +33776,56 @@ entities:
     - type: Transform
       pos: 6.5,-0.5
       parent: 2
+  - uid: 24315
+    components:
+    - type: Transform
+      pos: 98.5,35.5
+      parent: 2
+  - uid: 24316
+    components:
+    - type: Transform
+      pos: 98.5,36.5
+      parent: 2
+  - uid: 24317
+    components:
+    - type: Transform
+      pos: 98.5,37.5
+      parent: 2
+  - uid: 24318
+    components:
+    - type: Transform
+      pos: 98.5,38.5
+      parent: 2
+  - uid: 24319
+    components:
+    - type: Transform
+      pos: 98.5,39.5
+      parent: 2
+  - uid: 24320
+    components:
+    - type: Transform
+      pos: 97.5,37.5
+      parent: 2
+  - uid: 24321
+    components:
+    - type: Transform
+      pos: 96.5,37.5
+      parent: 2
+  - uid: 24322
+    components:
+    - type: Transform
+      pos: 95.5,37.5
+      parent: 2
+  - uid: 24323
+    components:
+    - type: Transform
+      pos: 98.5,40.5
+      parent: 2
+  - uid: 24324
+    components:
+    - type: Transform
+      pos: 95.5,38.5
+      parent: 2
 - proto: CableApcStack
   entities:
   - uid: 76
@@ -155068,7 +155118,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -151671.44
+      secondsUntilStateChange: -151746.16
       state: Opening
     - type: Airlock
       autoClose: False
