@@ -193,3 +193,47 @@
   components:
     - type: Paper
       content: doc-text-printer-request-establish-threat-level
+      
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentRequestChangeSalary
+  name: Request for salary change
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-request-change-salary
+      
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentRequestForNonlistedEmployment
+  name: Request for non-listed employment
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-request-for-non-listed-employment
+      
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentRequestForPromotion
+  name: Request for promotion
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-request-for-promotion
+      
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentRequestDocuments
+  name: Request for the provision of documents
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-request-documents
+      
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentRequestEuthanasia
+  name: Request for euthanasia
+  components:
+    - type: Paper
+      content: doc-text-printer-request-euthanasia

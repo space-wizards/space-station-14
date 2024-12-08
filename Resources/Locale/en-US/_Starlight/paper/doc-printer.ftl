@@ -344,3 +344,90 @@ doc-text-printer-request-establish-threat-level =
     
     ──────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+doc-text-printer-request-change-salary =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀                         [bold]REQUEST CHANGE SALARY[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    I, (full name), in the position of (full job title), request consideration for a salary increase/decrease of (amount or number of percent) for employee (full name) in the position of (full job title)/department (name of department)/current shift.
+    Reason for salary increase/decrease:
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
+doc-text-printer-request-change-salary =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀             [bold]REQUEST FOR NON-LISTED EMPLOYMENT[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    I, (full name), in the position of (full job title), request consideration for acceptance into the current shift workforce of (full name) in a non-listed position.
+    Full job title:
+    
+    Responsible for the employee's head or coworker:
+    
+    Position Work Performed (SOP):
+    
+    Access provided to the employee:
+    
+    Reason for Employment:
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
+doc-text-printer-request-for-promotion =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀                         [bold]REQUEST FOR PROMOTION[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    I, (full name), in the position of (full name of position), request consideration for promotion of (full name of position), 
+    in the position of (full name of position), in accordance with the command hierarchy. 
+    The employee has obtained the necessary qualifications for the job.
+    
+    Requested Position:
+    
+    Responsible for the employee's chapter or officer:
+    
+    Reason for Promotion:
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
+doc-text-printer-request-documents =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀                         [bold]REQUEST FOR DOCUMENTS[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    I, (full name), in the capacity of Internal Affairs Agent, request a copy/original of the documents for verification of compliance with the Corporate Act:
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
+doc-text-printer-request-euthanasia =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀                         [bold]REQUEST FOR EUTHANASIA[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    I, (full name), in the position of (full name of position), 
+    request the assistance of the medical department in performing euthanasia as a medical treatment for the reason of (specify reason for request). 
+    I am familiar with the implications of this decision, and the rationality and humanity of this decision has been established by the medical staff. 
+    I have no claims against the medical department in their adherence to euthanasia protocols.
+    At the end of the procedure, I ask to dispose of the body by (method of disposal) if possible.
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]

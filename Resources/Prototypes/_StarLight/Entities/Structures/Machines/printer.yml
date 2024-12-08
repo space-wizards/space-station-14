@@ -49,6 +49,10 @@
       - PrintedDocumentShuttleRegistrationRequestRecipe
       - PrintedDocumentRequestCallCentCommMembersRecipe
       - PrintedDocumentRequestRequestEstablishThreatLevelRecipe
+      - PrintedDocumentRequestForNonlistedEmploymentRecipe
+      - PrintedDocumentRequestForPromotionRecipe
+      - PrintedDocumentRequestDocumentsRecipe
+      - PrintedDocumentRequestEuthanasiaRecipe
 #  - type: EmagLatheRecipes
 #    emagStaticRecipes:
 #        - PrintedDocumentErrorLoadingFormHeaderRecipe
