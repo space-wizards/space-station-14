@@ -1,0 +1,1 @@
+examine-mob-unconscious = [color=orange]{ CAPITALIZE(SUBJECT($target)) } { CONJUGATE-BE($target) } unconscious![/color]

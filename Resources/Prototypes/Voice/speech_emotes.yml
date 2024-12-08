@@ -296,6 +296,17 @@
    - gasped
 
 - type: emote
+  id: DefaultUnconscious
+  name: chat-emote-name-unconscious
+  icon: Interface/Emotes/deathgasp.png
+  whitelist:
+    components:
+    - MobState
+  chatMessages: ["chat-emote-msg-unconscious"]
+  chatTriggers:
+  - unconscious
+
+- type: emote
   id: DefaultDeathgasp
   name: chat-emote-name-deathgasp
   icon: Interface/Emotes/deathgasp.png
