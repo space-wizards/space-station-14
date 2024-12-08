@@ -211,27 +211,39 @@ public sealed class StationSystem : EntitySystem
     /// </summary>
     public Filter GetInStation(StationDataComponent dataComponent, float range = 32f)
     {
-        // Could also use circles if you wanted.
-        var bounds = new ValueList<Box2>(dataComponent.Grids.Count);
         var filter = Filter.Empty();
         var mapIds = new ValueList<MapId>();
         var xformQuery = GetEntityQuery<TransformComponent>();
 
+        // First collect all valid map IDs where station grids exist
         foreach (var gridUid in dataComponent.Grids)
         {
-            if (!TryComp(gridUid, out MapGridComponent? grid) ||
-                !xformQuery.TryGetComponent(gridUid, out var xform))
+            if (!xformQuery.TryGetComponent(gridUid, out var xform))
                 continue;
 
             var mapId = xform.MapID;
-            var position = _transform.GetWorldPosition(xform, xformQuery);
-            var bound = grid.LocalAABB.Enlarged(range).Translated(position);
-
-            bounds.Add(bound);
             if (!mapIds.Contains(mapId))
-            {
-                mapIds.Add(xform.MapID);
-            }
+                mapIds.Add(mapId);
+        }
+
+        // Cache the rotated bounds for each grid
+        var gridBounds = new List<(Box2Rotated bounds, MapId mapId)>();
+        foreach (var gridUid in dataComponent.Grids)
+        {
+            if (!TryComp(gridUid, out MapGridComponent? grid) ||
+                !xformQuery.TryGetComponent(gridUid, out var gridXform))
+                continue;
+
+            var worldRotation = _transform.GetWorldRotation(gridXform, xformQuery);
+            var localBounds = grid.LocalAABB.Enlarged(range);
+
+            // Create a rotated box using the grid's transform
+            var rotatedBounds = new Box2Rotated(
+                localBounds,
+                worldRotation,
+                _transform.GetWorldPosition(gridXform, xformQuery));
+
+            gridBounds.Add((rotatedBounds, gridXform.MapID));
         }
 
         foreach (var session in Filter.GetAllPlayers(_player))
@@ -245,11 +257,24 @@ public sealed class StationSystem : EntitySystem
             if (!mapIds.Contains(mapId))
                 continue;
 
+            // Check if the player is directly on any station grid
+            var gridUid = xform.GridUid;
+            if (gridUid != null && dataComponent.Grids.Contains(gridUid.Value))
+            {
+                filter.AddPlayer(session);
+                continue;
+            }
+
+            // If not directly on a grid, check against cached rotated bounds
             var position = _transform.GetWorldPosition(xform, xformQuery);
 
-            foreach (var bound in bounds)
+            foreach (var (bounds, boundsMapId) in gridBounds)
             {
-                if (!bound.Contains(position))
+                // Skip bounds on different maps
+                if (boundsMapId != mapId)
+                    continue;
+
+                if (!bounds.Contains(position))
                     continue;
 
                 filter.AddPlayer(session);
