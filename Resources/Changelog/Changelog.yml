@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Added the clown skirt
-    type: Add
-  id: 7187
-  time: '2024-08-23T04:59:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31207
 - author: Aquif
   changes:
   - message: Boiling Vox blood results in ammonia.
@@ -3904,3 +3897,11 @@
   id: 7686
   time: '2024-12-08T01:46:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33763
+- author: PJB3005
+  changes:
+  - message: You can now use Interact (E by default) to toggle radiation collectors,
+      field generators, and emitters. Previously you had to click with an empty hand.
+    type: Fix
+  id: 7687
+  time: '2024-12-08T22:37:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33762
