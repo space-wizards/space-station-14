@@ -153,13 +153,17 @@
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/goliathcloak.rsi
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodGoliathCloak
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodGoliathCloak
     requiredSlot:
     - neck
-    slot: head
+  - type: UserInterface
+    interfaces:
+      enum.ToggleClothingUiKey.Key:
+        type: ToggleableClothingBoundUserInterface
   - type: ContainerContainer
     containers:
-      toggleable-clothing: !type:ContainerSlot {}
+      toggleable-clothing: !type:Container {}
 
 - type: entity
   parent: ClothingNeckBase
@@ -179,13 +183,17 @@
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/moth.rsi
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodMoth
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodMoth
     requiredSlot:
     - neck
-    slot: head
+  - type: UserInterface
+    interfaces:
+      enum.ToggleClothingUiKey.Key:
+        type: ToggleableClothingBoundUserInterface
   - type: ContainerContainer
     containers:
-      toggleable-clothing: !type:ContainerSlot {}
+      toggleable-clothing: !type:Container {}
   - type: TypingIndicatorClothing
     proto: moth
 
@@ -198,13 +206,17 @@
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/void.rsi
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodVoidCloak
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodVoidCloak
     requiredSlot:
     - neck
-    slot: head
+  - type: UserInterface
+    interfaces:
+      enum.ToggleClothingUiKey.Key:
+        type: ToggleableClothingBoundUserInterface
   - type: ContainerContainer
     containers:
-      toggleable-clothing: !type:ContainerSlot {}
+      toggleable-clothing: !type:Container {}
   - type: TypingIndicatorClothing
     proto: alien
 
