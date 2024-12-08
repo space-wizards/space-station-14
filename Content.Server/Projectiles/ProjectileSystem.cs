@@ -1,9 +1,11 @@
 using Content.Server.Administration.Logs;
+using Content.Server.Body.Components;
 using Content.Server.Effects;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Camera;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.Destructible;
 using Content.Shared.Projectiles;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
@@ -22,6 +24,8 @@ public sealed class ProjectileSystem : SharedProjectileSystem
     {
         base.Initialize();
         SubscribeLocalEvent<ProjectileComponent, StartCollideEvent>(OnStartCollide);
+        SubscribeLocalEvent<HasProjectilesEmbeddedComponent, DestructionEventArgs>(OnDestruction);
+        SubscribeLocalEvent<HasProjectilesEmbeddedComponent, BeingGibbedEvent>(OnDestruction);
     }
 
     private void OnStartCollide(EntityUid uid, ProjectileComponent component, ref StartCollideEvent args)
@@ -76,6 +80,18 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         if (component.ImpactEffect != null && TryComp(uid, out TransformComponent? xform))
         {
             RaiseNetworkEvent(new ImpactEffectEvent(component.ImpactEffect, GetNetCoordinates(xform.Coordinates)), Filter.Pvs(xform.Coordinates, entityMan: EntityManager));
+        }
+    }
+
+    private void OnDestruction<TEvent>(Entity<HasProjectilesEmbeddedComponent> embeddee, ref TEvent args)
+    {
+        var children = Transform(embeddee).ChildEnumerator;
+        while (children.MoveNext(out var child))
+        {
+            if (TryComp<EmbeddableProjectileComponent>(child, out var component))
+            {
+                TryUnEmbedFromParent((child, component), null);
+            }
         }
     }
 }
