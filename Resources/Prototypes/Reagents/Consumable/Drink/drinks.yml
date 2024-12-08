@@ -469,7 +469,7 @@
           shouldHave: true
         damage:
           types:
-            Caustic: 8 # i want this to be a legitimate assassination method. end imp special.
+            Caustic: 8
 
 - type: reagent
   id: Ice
