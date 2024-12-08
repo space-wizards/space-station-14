@@ -191,6 +191,7 @@
       - SignalTimerElectronics
       - APCElectronics
       - SMESMachineCircuitboard
+      - SMESAdvancedMachineCircuitboard
       - SubstationMachineCircuitboard
       - WallmountSubstationElectronics
       - CellRechargerCircuitboard

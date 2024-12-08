@@ -108,3 +108,24 @@
   components:
   - type: Battery
     startingCharge: 0
+
+- type: entity
+  parent: BaseSMES
+  id: SMESAdvanced
+  suffix: Advanced, 15MJ
+  name: advanced SMES
+  description: A high-capacity superconducting magnetic energy storage (SMES) unit. This one boasts a larger capacity for powering stations.
+  components:
+  - type: Machine
+    board: SMESAdvancedMachineCircuitboard
+  - type: Battery
+    maxCharge: 15000000
+    startingCharge: 15000000
+
+- type: entity
+  parent: SMESAdvanced
+  id: SMESAdvancedEmpty
+  suffix: Empty
+  components:
+  - type: Battery
+    startingCharge: 0
