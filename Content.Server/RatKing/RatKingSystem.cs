@@ -107,9 +107,10 @@ namespace Content.Server.RatKing
             }
         }
 
-        /**
-        * Give leeway for how close you have to point, lets you point NOT directly at something and still target it
-        */
+        /// <summary>
+        /// Give leeway on how close you have to point to a target.
+        /// Allows you to point near someone and still have them targeted
+        /// </summary>
         private void OnPointedNearby(EntityUid uid, RatKingComponent component, ref AfterPointedArrowEvent args)
         {
             if (component.CurrentOrder != RatKingOrderType.CheeseEm)
