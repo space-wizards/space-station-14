@@ -71,6 +71,10 @@
         reagents:
         - ReagentId: Fiber
           Quantity: 1
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      SheetPrinter: 100
 
 - type: entity
   name: paper scrap
