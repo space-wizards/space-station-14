@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: aada
-  changes:
-  - message: Added cloth flavored donk-pockets.
-    type: Add
-  id: 192
-  time: '2024-09-12T03:53:06.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/245
 - author: TGRCDev
   changes:
   - message: Added a new revenant ability to draw bloody glyphs on the ground.
@@ -4447,3 +4440,44 @@
   id: 691
   time: '2024-12-08T15:11:26.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/951
+- author: EpicToast
+  changes:
+  - message: (Union Station) Added a shipyard console to the QM's office.
+    type: Add
+  - message: (Union Station) Added a servicefab to the bar backroom, and made it accessible
+      to all service workers.
+    type: Add
+  - message: (Union Station) Added a fire axe to atmos and a radiation suit to engineering.
+    type: Add
+  - message: (Union Station) Added intercoms to each cross-department room.
+    type: Add
+  - message: (Union Station) Added janitorial lights.
+    type: Add
+  - message: (Union Station) Added more water coolers for decapoids.
+    type: Add
+  - message: (Union Station) Added santa suits to security lockers.
+    type: Add
+  - message: (Union Station) Gave names to air alarms, airlocks and buttons.
+    type: Tweak
+  - message: (Union Station) Replaced all shutter levers with signal timers, as a
+      test. Try them out!
+    type: Tweak
+  - message: (Union Station) Reworked the medbay and perma brig.
+    type: Tweak
+  - message: (Union Station) Shifted some job slots around.
+    type: Tweak
+  - message: (Union Station) Made it so observers actually spawn on the station.
+    type: Fix
+  - message: (Union Station) Fixed atmos's external airlock.
+    type: Fix
+  - message: (Union Station) Separated virology and the cryo pods from the overall
+      waste network.
+    type: Fix
+  - message: (Union Station) Fixed access to the atmos-only portion of the canister
+      room.
+    type: Fix
+  - message: (Union Station) And other minor fixes.
+    type: Fix
+  id: 692
+  time: '2024-12-08T15:13:40.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/955
