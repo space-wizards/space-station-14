@@ -28,6 +28,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
+using Content.Shared.Atmos.Piping.Binary.Components;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -413,7 +414,6 @@ namespace Content.Server.Atmos.EntitySystems
 
             _timer -= UpdateTime;
 
-            // TODO: This needs cleanup to take off the crust from TemperatureComponent and shit.
             var query = EntityQueryEnumerator<FlammableComponent, TransformComponent>();
             while (query.MoveNext(out var uid, out var flammable, out _))
             {
@@ -433,20 +433,45 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (flammable.FireStacks > 0)
                 {
-                    var air = _atmosphereSystem.GetContainingMixture(uid);
+                    var air = _atmosphereSystem.GetContainingMixture(uid); // we dont excite the atmos here, and let AtmosExposedComponent handle if it is necessary.
 
-                    // If we're in an oxygenless environment, put the fire out.
-                    if (air == null || air.GetMoles(Gas.Oxygen) < 1f)
+                    if (flammable.FuelGasMix != null)
                     {
-                        Extinguish(uid, flammable);
-                        continue;
+                        // If we're in no atmos extinguish.
+                        if (air == null)
+                        {
+                            Extinguish(uid, flammable);
+                            continue;
+                        }
+
+                        // If our local atmos doesnt have enough of the required gases extinguish.
+                        if (!flammable.FuelGasMix.HasMinMoles(air))
+                        {
+                            Extinguish(uid, flammable);
+                            continue;
+                        }
                     }
 
                     var source = EnsureComp<IgnitionSourceComponent>(uid);
                     _ignitionSourceSystem.SetIgnited((uid, source));
 
                     if (TryComp(uid, out TemperatureComponent? temp))
-                        _temperatureSystem.ChangeHeat(uid, 12500 * flammable.FireStacks, false, temp);
+                    {
+                        // get hot
+                        EnsureComp<AtmosExposedComponent>(uid); // required for the entity to ever cool down.
+                        if (!_physicsQuery.TryComp(uid, out var physics))
+                            continue;
+
+                        _temperatureSystem.ChangeHeat(uid, flammable.JoulesPerFirestack * flammable.FireStacks, false, temp);
+
+//                       var maxDeltaT = flammable.PeakFlameTemperature - temp.CurrentTemperature; // commented out in favor of the above simple linear heat change. Leaving this here in case that proves too abusable.
+//                        if (maxDeltaT > 0) // we dont want to burn and get colder.
+//                        {
+//
+//                            var tempBump = MathF.Sqrt(maxDeltaT * temp.SpecificHeat * physics.Mass) * flammable.FireStacks; //monotonic function, slows as it reaches maxT
+//                            _temperatureSystem.ChangeHeat(uid, tempBump, false, temp);
+//                        }
+                    }
 
                     var ev = new GetFireProtectionEvent();
                     // let the thing on fire handle it
