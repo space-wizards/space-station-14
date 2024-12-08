@@ -24,6 +24,8 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     [Dependency] private readonly SharedPointLightSystem _light = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly TagSystem _tags = default!;
+    [Dependency] private readonly ContainmentAlarmSystem _alarm = default!;
+
 
     public override void Initialize()
     {
@@ -85,7 +87,6 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     {
         if (component.Enabled)
             args.PushMarkup(Loc.GetString("comp-containment-on"));
-
         else
             args.PushMarkup(Loc.GetString("comp-containment-off"));
     }
@@ -136,6 +137,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         generator.Comp.Enabled = true;
         ChangeFieldVisualizer(generator);
         _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-on"), generator);
+        Dirty(generator);
     }
 
     private void TurnOff(Entity<ContainmentFieldGeneratorComponent> generator)
@@ -143,7 +145,8 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         generator.Comp.Enabled = false;
         ChangeFieldVisualizer(generator);
         _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-off"), generator);
-    }
+		Dirty(generator);
+	}
 
     private void OnComponentRemoved(Entity<ContainmentFieldGeneratorComponent> generator, ref ComponentRemove args)
     {
@@ -199,9 +202,9 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         if (component.PowerBuffer >= component.PowerMinimum)
         {
             var directions = Enum.GetValues<Direction>().Length;
-            for (int i = 0; i < directions-1; i+=2)
+            for (int i = 0; i < directions - 1; i += 2)
             {
-                var dir = (Direction)i;
+                var dir = (Direction) i;
 
                 if (component.Connections.ContainsKey(dir))
                     continue; // This direction already has an active connection
@@ -209,7 +212,8 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
                 TryGenerateFieldConnection(dir, generator, genXForm);
             }
         }
-
+        if (TryComp<ContainmentAlarmComponent>(generator.Owner, out var alarm))
+            _alarm.ResetAlarm(generator.Owner, alarm, component.PowerBuffer);
         ChangePowerVisualizer(power, generator);
     }
 
@@ -218,9 +222,22 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         var component = generator.Comp;
         component.PowerBuffer -= power;
 
-        if (component.PowerBuffer < component.PowerMinimum && component.Connections.Count != 0)
+        if(component.Connections.Count != 0)
         {
-            RemoveConnections(generator);
+            bool brokenLink = false;
+            if (component.PowerBuffer < component.PowerMinimum)
+            {
+                RemoveConnections(generator);
+                brokenLink = true;
+            }
+
+            if (TryComp<ContainmentAlarmComponent>(generator.Owner, out var alarm))
+            {
+                if (brokenLink)
+                    _alarm.BroadcastContainmentBreak((generator, alarm));
+                else
+                    _alarm.UpdateAlertLevel((generator, alarm), component.PowerBuffer);
+            }
         }
 
         ChangePowerVisualizer(power, generator);
