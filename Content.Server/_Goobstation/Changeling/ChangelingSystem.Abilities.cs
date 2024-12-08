@@ -178,7 +178,7 @@ public sealed partial class ChangelingSystem : EntitySystem
             if (!reducedBiomass)
                 bonusEvolutionPoints += 2;
             else
-                popupSelf = Loc.GetString("changeling-absorb-end-self-reduced-biomass");
+                popupSelf = Loc.GetString("changeling-absorb-end-self-reduced-biomass", ("target", Identity.Entity(target, EntityManager)));
         }
 
         _popup.PopupEntity(popupSelf, uid, uid);

@@ -21,7 +21,7 @@
 - type: entity
   id: ActionAbsorbDNA
   name: Absorb DNA
-  description: Absorbs the DNA of our incapacitated victim. Costs 25 chemicals.
+  description: Absorbs the DNA of our incapacitated victim. Costs a small amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction
@@ -44,7 +44,7 @@
 - type: entity
   id: ActionStingExtractDNA
   name: Extract DNA Sting
-  description: We stealthily sting a target and extract their DNA. Costs 25 chemicals.
+  description: We stealthily sting a target and extract their DNA. Costs a small amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction
@@ -81,7 +81,7 @@
 - type: entity
   id: ActionChangelingTransform
   name: Transform
-  description: We take on the voice and appearance of one we have absorbed. Costs 5 chemicals.
+  description: We take on the voice and appearance of one we have absorbed. Costs a trace amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
@@ -117,7 +117,7 @@
 - type: entity
   id: ActionExitStasis
   name: Exit Stasis
-  description: We arise once more. Costs 60 chemicals.
+  description: We arise once more. Costs a large amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
@@ -137,7 +137,7 @@
 - type: entity
   id: ActionToggleArmblade
   name: Toggle Arm Blade
-  description: We reform one of our arms into a strong blade. We may retract our blade in the same manner as we form it. Costs 15 chemicals.
+  description: We recreate one of our arms into a strong blade. We may retract our blade in the same manner as we form it. Costs a small amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
@@ -153,7 +153,7 @@
 - type: entity
   id: ActionCreateBoneShard
   name: Form Bone Shard
-  description: We break off shards of sharp bone to use as projectile weapons. Costs 15 chemicals.
+  description: We break off shards of sharp bone to use as projectile weapons. Costs a small amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
@@ -169,7 +169,7 @@
 - type: entity
   id: ActionToggleChitinousArmor
   name: Toggle Chitin
-  description: We turn our skin into tough chitin to protect us from damage. Costs 25 chemicals.
+  description: We turn our skin into tough chitin to protect us from damage. Costs a small amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
@@ -186,7 +186,7 @@
 - type: entity
   id: ActionToggleOrganicShield
   name: Form Shield
-  description: We reform one of our arms into a hard, yet brittle shield. Costs 20 chemicals.
+  description: We reform one of our arms into a hard, yet brittle shield. Costs a small amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
@@ -203,7 +203,7 @@
 - type: entity
   id: ActionShriekDissonant
   name: Dissonant Shriek
-  description: We shift our vocal cords to release a high-frequency sound that overloads nearby electronics. Costs 30 chemicals.
+  description: We shift our vocal cords to release a high-frequency sound that overloads nearby electronics. Costs a small amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
@@ -221,7 +221,7 @@
 - type: entity
   id: ActionShriekResonant
   name: Resonant Shriek
-  description: We emit a high-frequency sound that confuses and deafens organics, blows out nearby lights, and overloads cyborg sensors. Costs 30 chemicals.
+  description: We emit a high-frequency sound that confuses and deafens organics, blows out nearby lights, and overloads cyborg sensors. Costs a small amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
@@ -257,7 +257,7 @@
 - type: entity
   id: ActionStingBlind
   name: Blind Sting
-  description: We sting a target, blinding them temporarily. Costs 35 chemicals.
+  description: We sting a target, blinding them temporarily. Costs a medium amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction
@@ -278,7 +278,7 @@
 - type: entity
   id: ActionStingCryo
   name: Cryogenic Sting
-  description: We inject a target with a cocktail of chemicals that chills the blood. Costs 35 chemicals.
+  description: We inject a target with a cocktail of chemicals that chills the blood. Costs a medium amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction
@@ -299,7 +299,7 @@
 - type: entity
   id: ActionStingLethargic
   name: Lethargic Sting
-  description: We inject a target with a cocktail of anesthetics, inhibiting their movement. Costs 35 chemicals.
+  description: We inject a target with a cocktail of anesthetics, inhibiting their movement. Costs a medium amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction
@@ -320,7 +320,7 @@
 - type: entity
   id: ActionStingMute
   name: Mute Sting
-  description: We sting a target, silencing them for a short time. Costs 35 chemicals.
+  description: We sting a target, silencing them for a short time. Costs a medium amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction
@@ -341,7 +341,7 @@
 - type: entity
   id: ActionStingFakeArmblade
   name: Fake Arm Blade Sting
-  description: We sting a target, mutating their arm to temporarily appear as an arm blade. Costs 50 chemicals.
+  description: We sting a target, mutating their arm to temporarily appear as an arm blade. Costs a medium amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction
@@ -362,7 +362,7 @@
 - type: entity
   id: ActionStingTransform
   name: Transformation Sting
-  description: We sting a target, injecting a retrovirus that causes them to transform. Costs 75 chemicals.
+  description: We sting a target, injecting a retrovirus that causes them to transform. Costs a large amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction
@@ -405,7 +405,7 @@
 - type: entity
   id: ActionAnatomicPanacea
   name: Anatomic Panacea
-  description: We expel impurities from our form, sobering us, and purging radiation and toxins. Costs 30 chemicals.
+  description: We expel impurities from our form, sobering us, and purging radiation and toxins. Costs a small amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
@@ -440,7 +440,7 @@
 - type: entity
   id: ActionBiodegrade
   name: Biodegrade
-  description: We spew a caustic substance, dissolving restraints and spraying those who hold onto us. Costs 30 chemicals.
+  description: We spew a caustic substance, dissolving restraints and spraying those who hold onto us. Costs a small amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
@@ -457,7 +457,7 @@
 - type: entity
   id: ActionChameleonSkin
   name: Chameleon Skin
-  description: Our skin pigmentation rapidly changes to suit our current environment. Costs 25 chemicals.
+  description: Our skin pigmentation rapidly changes to suit our current environment. Costs a small amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
@@ -475,7 +475,7 @@
 - type: entity
   id: ActionEphedrineOverdose
   name: Ephedrine Overdose
-  description: We inject a cocktail of stimulants into ourself. Costs 30 chemicals.
+  description: We inject a cocktail of stimulants into ourself. Costs a small amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
@@ -494,7 +494,7 @@
 - type: entity
   id: ActionFleshmend
   name: Fleshmend
-  description: Our flesh rapidly regenerates, healing our burns, bruises, and asphyxiation. Costs 35 chemicals.
+  description: Our flesh rapidly regenerates, healing our burns, bruises, and asphyxiation. Costs a medium amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
@@ -512,7 +512,7 @@
 - type: entity
   id: ActionLastResort
   name: Last Resort
-  description: We abandon our vessel, escaping in our vulnerable true self, to find a new body to occupy. Costs 20 chemicals.
+  description: We abandon our vessel, escaping in our vulnerable true self, to find a new body to occupy. Costs a small amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
@@ -530,7 +530,7 @@
 - type: entity
   id: ActionToggleLesserForm
   name: Lesser Form
-  description: We become lesser, transforming into a sentient monkey. Costs 20 chemicals.
+  description: We become lesser, transforming into a sentient monkey. Costs a small amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
@@ -547,7 +547,7 @@
 - type: entity
   id: ActionToggleSpacesuit
   name: Toggle Space Adaptation
-  description: We prepare our cells to resist barotrauma. Costs 20 chemicals.
+  description: We prepare our cells to resist barotrauma. Costs a small amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction

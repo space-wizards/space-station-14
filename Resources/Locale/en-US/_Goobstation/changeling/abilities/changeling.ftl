@@ -17,7 +17,7 @@ changeling-absorb-fail-unabsorbable = We cannot consume {THE($target)}.
 changeling-absorb-fail-extremely-bloated = {CAPITALIZE(THE($target))} is too rotten to consume.
 changeling-absorb-end-self = We have consumed {THE($target)}.
 changeling-absorb-end-self-ling = We have consumed another changeling. We are evolving more rapidly.
-changeling-absorb-end-self-reduced-biomass = We have consumed {THE($target)}, but POSS-ADJ($target) weak DNA is not enough to satisfy us.
+changeling-absorb-end-self-reduced-biomass = We have consumed {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} not enough to satisfy us.
 changeling-absorb-end-target = You are consumed by the changeling!
 changeling-absorb-end-others = {CAPITALIZE(THE($user))} hollows out {THE($target)}!
 changeling-absorb-onexamine = [color=red]{CAPITALIZE(POSS-ADJ($target))} body {CONJUGATE-BE($target)} hollow.[/color]
