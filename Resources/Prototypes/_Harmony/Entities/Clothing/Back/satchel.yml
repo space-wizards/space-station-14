@@ -11,8 +11,9 @@
     - 3,0,6,3
     - 8,0,9,3
   - type: Sprite
-    sprite: Clothing/Back/Satchels/smuggler.rsi
+    sprite: _Harmony/Clothing/Back/Satchels/smuggler.rsi
     visible: false
   - type: SubFloorHide
   - type: Anchorable
   - type: Appearance
+  - type: CollideOnAnchor
