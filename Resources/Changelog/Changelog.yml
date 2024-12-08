@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sarahon
-  changes:
-  - message: Brand new emote sprites and colours to the Y menu.
-    type: Add
-  id: 7189
-  time: '2024-08-23T05:08:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30887
 - author: jimmy12or
   changes:
   - message: Added a recipe for cream. Heat some milk and shake some air into it.
@@ -3909,3 +3902,10 @@
   id: 7688
   time: '2024-12-08T22:50:14.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33765
+- author: slarticodefast
+  changes:
+  - message: Fixed pipes still containing gas after unanchoring them.
+    type: Fix
+  id: 7689
+  time: '2024-12-08T23:20:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33774
