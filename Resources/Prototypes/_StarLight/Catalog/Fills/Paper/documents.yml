@@ -263,6 +263,7 @@
   parent: PrintedDocument
   id: PrintedDocumentComplaintViolationLaborRules
   name: Complaint for violation of labor order
+  categories: [ HideSpawnMenu ]
   components:
     - type: Paper
       content: doc-text-printer-complaint-violation-labor-rules
