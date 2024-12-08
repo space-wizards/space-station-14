@@ -31,6 +31,12 @@ namespace Content.Server.Medical.Components
         public float ModifyBloodLevel = 0.0f;
 
         /// <remarks>
+        ///     Whitelist bloodtypes that this item can restore
+        /// </remarks>
+        [DataField("bloodReagentWhitelist")]
+        public List<string> BloodReagentWhitelist = new List<string>();
+
+        /// <remarks>
         ///     The supported damage types are specified using a <see cref="DamageContainerPrototype"/>s. For a
         ///     HealingComponent this filters what damage container type this component should work on. If null,
         ///     all damage container types are supported.
@@ -39,14 +45,14 @@ namespace Content.Server.Medical.Components
         public List<string>? DamageContainers;
 
         /// <summary>
-        /// How long it takes to apply the damage.
+        ///     How long it takes to apply the damage.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("delay")]
         public float Delay = 3f;
 
         /// <summary>
-        /// Delay multiplier when healing yourself.
+        ///     Delay multiplier when healing yourself.
         /// </summary>
         [DataField("selfHealPenaltyMultiplier")]
         public float SelfHealPenaltyMultiplier = 3f;
