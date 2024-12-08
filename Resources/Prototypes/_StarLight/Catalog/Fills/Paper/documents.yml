@@ -68,6 +68,44 @@
   parent: PrintedDocument
   id: PrintedDocumentConditionReport
   name: Report on technical condition
+  categories: [ HideSpawnMenu ]
   components:
     - type: Paper
       content: doc-text-printer-condition-report
+      
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentObjectInvestigationReport
+  name: Report on object Investigation
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-object-investigation-report
+      
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentExperimentReport
+  name: Experiment report
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-experiment-report
+      
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentDisposalReport
+  name: Disposal report
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-disposal-report
+      
+# Statements
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentStatementAppointmentInterimChapter
+  name: Statement of Appointment to the Interim Chapter
+  components:
+    - type: Paper
+      content: doc-text-printer-statement-appointment-interim-chapter

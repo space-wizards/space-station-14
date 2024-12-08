@@ -62,3 +62,41 @@
   applyMaterialDiscount: false
   materials:
     SheetPrinter: 100
+    
+- type: latheRecipe
+  id: PrintedDocumentObjectInvestigationReportRecipe
+  result: PrintedDocumentObjectInvestigationReport
+  category: Reports
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+    
+- type: latheRecipe
+  id: PrintedDocumentExperimentReportRecipe
+  result: PrintedDocumentExperimentReport
+  category: Reports
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+    
+- type: latheRecipe
+  id: PrintedDocumentDisposalReportRecipe
+  result: PrintedDocumentDisposalReport
+  category: Reports
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+    
+# Statements
+
+- type: latheRecipe
+  id: PrintedDocumentStatementAppointmentInterimChapterRecipe
+  result: PrintedDocumentStatementAppointmentInterimChapter
+  category: Reports
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100

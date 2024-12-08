@@ -33,6 +33,10 @@
       - PrintedDocumentReportOnTheChaptersMeetingRecipe
       - PrintedDocumentInternalAffairsAgentsReportRecipe
       - PrintedDocumentConditionReportRecipe
+      - PrintedDocumentObjectInvestigationReportRecipe
+      - PrintedDocumentExperimentReportRecipe
+      - PrintedDocumentDisposalReportRecipe
+      - PrintedDocumentStatementAppointmentInterimChapterRecipe
 #  - type: EmagLatheRecipes
 #    emagStaticRecipes:
 #        - PrintedDocumentErrorLoadingFormHeaderRecipe

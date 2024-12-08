@@ -125,4 +125,76 @@ doc-text-printer-condition-report =
     
     ──────────────────────────────────────────
    ⠀                                    [italic]Place for seals[/italic]
+doc-text-printer-object-investigation-report =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀                    [bold]OBJECT INVESTIGATION REPORT[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    A device with unexplored properties was submitted for expert examination (who or what department handed over the object). In the course of the expertise the object was studied, the properties of the object and its species affiliation were established.
+    External description of the object:
+    
+    Identified properties of the object:
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for seals[/italic]
+doc-text-printer-experiment-report =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀                              [bold]EXPERIMENT REPORT[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    External description of the object of the experiment:
+    
+    Experimenter(s):
+    
+    Experiment №...
+    Description of experiment:
+    
+    Expected result:
+    
+    Equipment used:
+    
+    Actual result:
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for seals[/italic]
+doc-text-printer-disposal-report =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀                                [bold]DISPOSAL REPORT[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    The Supplies Department disposed of the objects at (method of disposal). During the disposal valuable items and things were found, valuable items were handed over to the appropriate departments for their use.
+    List of items found:
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for seals[/italic]
+
 # Statements
+
+doc-text-printer-statement-appointment-interim-chapter =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀          [bold]STATEMENT APPOINTMENT INTERIM CHAPTER[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    I, (Name), in the position of (full job title), request approval of my appointment to the position of Acting (full division name)/Captain.
+    Upon assuming the position, I agree to follow Standard Operating Procedures and, until the arrival of the (full name of division)/Captain from Central Command, to ensure the order and management of the division, and to ensure the safety of particularly valuable items and equipment entrusted to me.
+    
+    Upon arrival of the Head of Department/Captain from the Central Command, I undertake to surrender the increased access, especially valuable items and equipment.
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for seals[/italic]
