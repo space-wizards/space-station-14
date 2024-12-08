@@ -6776,7 +6776,7 @@ entities:
       pos: -6.5,9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -60156.93
+      secondsUntilStateChange: -60188.793
       state: Closing
 - proto: DebugAPC
   entities:
@@ -7951,7 +7951,7 @@ entities:
       pos: 6.5,-3.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -46313.32
+      secondsUntilStateChange: -46345.184
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -14803,6 +14803,13 @@ entities:
     components:
     - type: Transform
       pos: -17.5,-14.5
+      parent: 2
+- proto: SpawnMobMonkeyPunpun
+  entities:
+  - uid: 2567
+    components:
+    - type: Transform
+      pos: 2.5,5.5
       parent: 2
 - proto: SpawnMobShiva
   entities:
