@@ -181,3 +181,10 @@
       path: /Audio/_Impstation/Voice/Snail/snail_scream.ogg
   - type: Food
     requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Mucin
+          Quantity: 10
