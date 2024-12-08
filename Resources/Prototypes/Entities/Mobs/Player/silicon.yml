@@ -313,7 +313,6 @@
     layers:
     - state: base
     - state: ai
-      map: ["unshaded"]
       shader: unshaded
 
 - type: entity
