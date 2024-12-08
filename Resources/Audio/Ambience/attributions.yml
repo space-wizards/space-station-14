@@ -121,3 +121,8 @@
   license: "CC0-1.0"
   copyright: "Created by dimbark1, edited and converted to mono by TheShuEd"
   source: "https://freesound.org/people/dimbark1/sounds/316797/"
+
+- files: ["ambi_gateway.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Created by zimbot, edited and converted to mono by TheShuEd"
+  source: "https://freesound.org/people/zimbot/sounds/122972/"
