@@ -20,7 +20,7 @@ namespace Content.Server.NodeContainer.Nodes
 
             var gridIndex = grid.TileIndicesFor(xform.Coordinates);
 
-            foreach (var (_, node) in NodeHelpers.GetCardinalNeighborNodes(nodeQuery, grid, gridIndex))
+            foreach (var (_, node) in NodeHelpers.GetCardinalNeighborNodes(nodeQuery, xform, grid, gridIndex))
             {
                 if (node != this)
                     yield return node;

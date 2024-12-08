@@ -24,7 +24,7 @@ namespace Content.Server.Power.Nodes
             var terminalDirs = 0;
             List<(Direction, Node)> nodeDirs = new();
 
-            foreach (var (dir, node) in NodeHelpers.GetCardinalNeighborNodes(nodeQuery, grid, gridIndex))
+            foreach (var (dir, node) in NodeHelpers.GetCardinalNeighborNodes(nodeQuery, xform, grid, gridIndex))
             {
                 if (node is CableNode && node != this)
                 {

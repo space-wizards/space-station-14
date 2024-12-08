@@ -22,7 +22,7 @@ namespace Content.Server.Power.Nodes
             var dir = xform.LocalRotation.GetDir();
             var targetIdx = gridIndex.Offset(dir);
 
-            foreach (var node in NodeHelpers.GetNodesInTile(nodeQuery, grid, targetIdx))
+            foreach (var node in NodeHelpers.GetNodesInTile(nodeQuery, xform, grid, targetIdx))
             {
                 if (node is CableTerminalPortNode)
                     yield return node;

@@ -41,7 +41,7 @@ namespace Content.Server.Power.Nodes
 
             var gridIndex = grid.TileIndicesFor(xform.Coordinates);
 
-            foreach (var node in NodeHelpers.GetNodesInTile(nodeQuery, grid, gridIndex))
+            foreach (var node in NodeHelpers.GetNodesInTile(nodeQuery, xform, grid, gridIndex))
             {
                 if (node is CableNode)
                     yield return node;
