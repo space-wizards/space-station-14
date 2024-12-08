@@ -31,3 +31,6 @@ hud-chatbox-channel-Server = Server
 hud-chatbox-channel-Visual = Actions
 hud-chatbox-channel-Damage = Damage
 hud-chatbox-channel-Unspecified = Unspecified
+
+hud-chatbox-highlight-separate-words = Use a comma to separate words
+hud-chatbox-highlight-apply = Apply
