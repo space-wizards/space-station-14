@@ -24,7 +24,6 @@
       - Omnizine
       - Tricordrazine
       - Vitamin
-      - DinoBlood
   # Neutral - weight: 20
     - quantity: 20
       weight: 17.5
@@ -75,7 +74,6 @@
       weight: 2.5
       reagents:
       - Lexorin
-      - Romerol
 
 - type: entity
   name: strange pill
