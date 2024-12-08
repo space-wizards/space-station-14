@@ -134,6 +134,9 @@
     attributes:
       proper: true
       gender: female
+  - type: Inventory
+    speciesId: dog
+    templateId: pet
 
 - type: entity
   name: Puppy Ian
