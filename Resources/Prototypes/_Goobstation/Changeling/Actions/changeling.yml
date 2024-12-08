@@ -98,7 +98,7 @@
 - type: entity
   id: ActionEnterStasis
   name: Enter Regenerative Stasis
-  description: We fall into a stasis, allowing us to regenerate. Drains all of our chemicals, and consumes biomass.
+  description: We fall into a stasis, allowing us to regenerate while appearing dead to the unwise. Drains all of our chemicals, and consumes biomass.
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
@@ -278,7 +278,7 @@
 - type: entity
   id: ActionStingCryo
   name: Cryogenic Sting
-  description: We inject a target with a cocktail of chemicals that freezes them from the inside. Costs 35 chemicals.
+  description: We inject a target with a cocktail of chemicals that chills the blood. Costs 35 chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction
@@ -405,7 +405,7 @@
 - type: entity
   id: ActionAnatomicPanacea
   name: Anatomic Panacea
-  description: We expel impurities from our form; sobering us, and purging radiation and toxins. Costs 30 chemicals.
+  description: We expel impurities from our form: sobering us, and purging radiation and toxins. Costs 30 chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
@@ -424,7 +424,7 @@
 - type: entity
   id: ActionAugmentedEyesight
   name: Augmented Eyesight
-  description: We shield the light-sensing rods in our eyes, protecting our vision from flashes.
+  description: We grow a tinted nictitating membrane over our eyes, protecting our vision from sudden bright lights.
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
@@ -440,7 +440,7 @@
 - type: entity
   id: ActionBiodegrade
   name: Biodegrade
-  description: We eject a caustic substance, dissolving restraints and spraying those who hold onto us. Costs 30 chemicals.
+  description: We spew a caustic substance, dissolving restraints and spraying those who hold onto us. Costs 30 chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
@@ -494,7 +494,7 @@
 - type: entity
   id: ActionFleshmend
   name: Fleshmend
-  description: Our flesh rapidly regenerates, healing our burns, bruises, and shortness of breath. Costs 35 chemicals.
+  description: Our flesh rapidly regenerates, healing our burns, bruises, and asphyxiation. Costs 35 chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
@@ -512,7 +512,7 @@
 - type: entity
   id: ActionLastResort
   name: Last Resort
-  description: We abandon our current body, placing us in control of a vessel that can plant our likeness in a new host. Costs 20 chemicals.
+  description: We abandon our vessel, escaping in our vulnerable true self, to find a new body to occupy. Costs 20 chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
@@ -547,7 +547,7 @@
 - type: entity
   id: ActionToggleSpacesuit
   name: Toggle Space Adaptation
-  description: We prepare our cells to resist the hostile environment outside the station. Costs 20 chemicals.
+  description: We prepare our cells to resist barotrauma. Costs 20 chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
