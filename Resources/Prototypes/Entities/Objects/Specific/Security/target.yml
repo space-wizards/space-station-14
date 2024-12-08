@@ -111,3 +111,223 @@
           collection: MetalBreak
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+
+- type: entity
+  name: cat tree
+  id: BaseTargetCatTree
+  parent: BaseTarget
+  description: Why does the cat get better furniture than me?
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/cattree.rsi
+    state: cattree
+  - type: NpcFactionMember
+  - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      500: Dead
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1000
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialCardboard:
+            min: 1
+            max: 7
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  name: HTN debug cat tree
+  id: TargetCatTreeAlwaysMouse
+  parent: BaseTargetCatTree
+  categories: [ Debug ]
+  suffix: DEBUG
+  description: A cat tree. This one is covered in catnip.
+  components:
+  - type: NpcFactionMember
+    factions:
+      - Mouse
+
+- type: entity
+  name: cat tree
+  id: TargetCatTree
+  parent: BaseTargetCatTree
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/cattree.rsi
+    state: cattree
+  - type: NpcTimedFaction
+    timeUntilFactionChange: 240
+    randomBonusTimeUntilFactionChange: 300
+    timeAsFaction: 3
+    randomBonusTimeAsFaction: 5
+    faction: Mouse
+  - type: Construction
+    graph: TargetCatTree
+    node: TargetCatTree
+
+- type: entity
+  id: TargetCatTreeBeige
+  parent: TargetCatTree
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/cattree.rsi
+    layers:
+      - state: cattree
+      - state: cattree-beige
+  - type: Construction
+    graph: TargetCatTree
+    node: TargetCatTreeBeige
+
+- type: entity
+  id: TargetCatTreeBlack
+  parent: TargetCatTree
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/cattree.rsi
+    layers:
+      - state: cattree
+      - state: cattree-black
+  - type: Construction
+    graph: TargetCatTree
+    node: TargetCatTreeBlack
+
+- type: entity
+  name: cat tree
+  id: TargetCatTreeBlue
+  parent: TargetCatTree
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/cattree.rsi
+    layers:
+      - state: cattree
+      - state: cattree-blue
+  - type: Construction
+    graph: TargetCatTree
+    node: TargetCatTreeBlue
+
+- type: entity
+  name: cat tree
+  id: TargetCatTreeCyan
+  parent: TargetCatTree
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/cattree.rsi
+    layers:
+      - state: cattree
+      - state: cattree-cyan
+  - type: Construction
+    graph: TargetCatTree
+    node: TargetCatTreeCyan
+
+- type: entity
+  name: cat tree
+  id: TargetCatTreeGamble
+  parent: TargetCatTree
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/cattree.rsi
+    layers:
+      - state: cattree
+      - state: cattree-gamble
+  # I couldn't think of a good recipe for this one since we already used cloth for beige which I think is better. mapped only for now ig
+
+- type: entity
+  name: cat tree
+  id: TargetCatTreeGreen
+  parent: TargetCatTree
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/cattree.rsi
+    layers:
+      - state: cattree
+      - state: cattree-green
+  - type: Construction
+    graph: TargetCatTree
+    node: TargetCatTreeGreen
+
+- type: entity
+  name: cat tree
+  id: TargetCatTreePink
+  parent: TargetCatTree
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/cattree.rsi
+    layers:
+      - state: cattree
+      - state: cattree-pink
+  - type: Construction
+    graph: TargetCatTree
+    node: TargetCatTreePink
+
+- type: entity
+  name: cat tree
+  id: TargetCatTreePurple
+  parent: TargetCatTree
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/cattree.rsi
+    layers:
+      - state: cattree
+      - state: cattree-purple
+  - type: Construction
+    graph: TargetCatTree
+    node: TargetCatTreePurple
+
+- type: entity
+  name: cat tree
+  id: TargetCatTreeRed
+  parent: TargetCatTree
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/cattree.rsi
+    layers:
+      - state: cattree
+      - state: cattree-red
+  - type: Construction
+    graph: TargetCatTree
+    node: TargetCatTreeRed
+
+- type: entity
+  name: cat tree
+  id: TargetCatTreeSkyblue
+  parent: TargetCatTree
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/cattree.rsi
+    layers:
+      - state: cattree
+      - state: cattree-skyblue
+  - type: Construction
+    graph: TargetCatTree
+    node: TargetCatTreeSkyblue
+
+- type: entity
+  name: cat tree
+  id: TargetCatTreeWhite
+  parent: TargetCatTree
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/cattree.rsi
+    layers:
+      - state: cattree
+      - state: cattree-white
+  - type: Construction
+    graph: TargetCatTree
+    node: TargetCatTreeWhite
+
