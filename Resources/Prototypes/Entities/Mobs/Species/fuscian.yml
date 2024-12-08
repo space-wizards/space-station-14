@@ -21,6 +21,7 @@
         Piercing: 0.8
         Asphyxiation: 0.8
   - type: Damageable
+    damageContainer: Biological
     damageModiferSet: Fuscian
   - type: Thirst
   - type: Butcherable

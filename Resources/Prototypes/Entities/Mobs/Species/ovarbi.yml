@@ -52,9 +52,9 @@
         - MobLayer
   - type: Vocal
     sounds:
-      Male: UnisexOvarbi
-      Female: FemaleOvarbi
-      Unsexed: UnisexOvarbi
+      Male: UnisexHuman
+      Female: UnisexHuman
+      Unsexed: UnisexHuman
   - type: ReplacementAccent
     accent: ovarbi
   - type: Speech

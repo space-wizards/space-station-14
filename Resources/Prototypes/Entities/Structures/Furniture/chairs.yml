@@ -240,7 +240,7 @@
   - type: Sprite
     state: woodenplain
   - type: Construction
-    graph: WoodPlainSeat
+    graph: ChairWoodPlain
     node: chairWoodPlain
 
 - type: entity

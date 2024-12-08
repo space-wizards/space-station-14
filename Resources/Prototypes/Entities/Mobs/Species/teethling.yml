@@ -36,7 +36,7 @@
   - type: Butcherable
     butcheringType: Spike
     spawned:
-      - id: MaterialBone
+      - id: MaterialBones1
         amount: 5
       - id: FoodMeatHuman
         amount: 1
