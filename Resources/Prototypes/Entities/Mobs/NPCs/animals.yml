@@ -1348,10 +1348,19 @@
   components:
   - type: NameIdentifier
     group: Monkey
+  - type: Vocal
+    sounds:
+      Male: Monkey
+      Female: Monkey
+      Unsexed: Monkey
   - type: Speech
     speechSounds: Monkey
     speechVerb: Monkey
+    allowedEmotes: ['Scream', 'Laugh']
   - type: MonkeyAccent
+  - type: Emoting
+  - type: BodyEmotes
+    soundsId: GeneralBodyEmotes
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-primate
   - type: AlwaysRevolutionaryConvertible
@@ -1384,10 +1393,19 @@
     group: Monkey
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-primate
+  - type: Vocal
+    sounds:
+      Male: Monkey
+      Female: Monkey
+      Unsexed: Monkey
   - type: Speech
     speechSounds: Monkey
     speechVerb: Monkey
+    allowedEmotes: ['Scream', 'Laugh']
   - type: MonkeyAccent
+  - type: Emoting
+  - type: BodyEmotes
+    soundsId: GeneralBodyEmotes
   - type: NpcFactionMember
     factions:
     - Syndicate
