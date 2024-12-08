@@ -53,6 +53,10 @@
       - PrintedDocumentRequestForPromotionRecipe
       - PrintedDocumentRequestDocumentsRecipe
       - PrintedDocumentRequestEuthanasiaRecipe
+      - PrintedDocumentRequestConstructionWorkRecipe
+      - PrintedDocumentRequestModernizationRecipe
+# Complaintst
+      - PrintedDocumentComplaintViolationLaborRulesRecipe
 #  - type: EmagLatheRecipes
 #    emagStaticRecipes:
 #        - PrintedDocumentErrorLoadingFormHeaderRecipe

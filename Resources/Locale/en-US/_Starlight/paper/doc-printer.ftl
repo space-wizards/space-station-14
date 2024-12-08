@@ -417,7 +417,7 @@ doc-text-printer-request-documents =
 doc-text-printer-request-euthanasia =
    ⠀[logo]            [head=3]NanoTrasen[/head]
     ──────────────────────────────────────────
-   ⠀⠀                         [bold]REQUEST FOR EUTHANASIA[/bold]
+   ⠀⠀                        [bold]REQUEST FOR EUTHANASIA[/bold]
     ──────────────────────────────────────────
     Time and Date:
     Compiler of the document:
@@ -428,6 +428,52 @@ doc-text-printer-request-euthanasia =
     I am familiar with the implications of this decision, and the rationality and humanity of this decision has been established by the medical staff. 
     I have no claims against the medical department in their adherence to euthanasia protocols.
     At the end of the procedure, I ask to dispose of the body by (method of disposal) if possible.
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
+doc-text-printer-request-construction-work =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀                     [bold]CONSTRUCTION WORK REQUEST[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    I, (full name), in the position of (full job title), request construction work at (name of department or facility) due to (reason for request).
+    List of construction work:
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
+doc-text-printer-request-modernization =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀                         [bold]MODERNIZATION REQUEST[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    I, (full name), in the position of (full job title), request to upgrade the instrumentation in (name of department or facility) due to (reason for request).
+    List of upgrades:
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
+   
+# Complaintst
+
+doc-text-printer-complaint-violation-labor-rules =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀  [bold]COMPLAINT FOR VIOLATION OF LABOR REGULATIONS[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    I, (full name), in the position of (full name of the position), believe that the following violations were committed in the course of work of the (name of the department):
+    
+    I request an internal review of these violations.
     
     ──────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]

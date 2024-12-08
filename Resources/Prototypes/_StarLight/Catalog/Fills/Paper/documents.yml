@@ -234,6 +234,35 @@
   parent: PrintedDocument
   id: PrintedDocumentRequestEuthanasia
   name: Request for euthanasia
+  categories: [ HideSpawnMenu ]
   components:
     - type: Paper
       content: doc-text-printer-request-euthanasia
+      
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentRequestConstructionWork
+  name: Request for construction works
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-request-construction-work
+      
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentRequestModernization
+  name: Request for modernization
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-request-modernization
+      
+# Complaintst
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentComplaintViolationLaborRules
+  name: Complaint for violation of labor order
+  components:
+    - type: Paper
+      content: doc-text-printer-complaint-violation-labor-rules
