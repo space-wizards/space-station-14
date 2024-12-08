@@ -16,6 +16,7 @@
     onState: on
     offState: off
     selectState: select
+    audioMixer: Jukebox
   - type: Machine
     board: JukeboxCircuitBoard
   - type: Appearance

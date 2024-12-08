@@ -1,11 +1,18 @@
 using Content.Shared.Audio;
 using Content.Shared.GameTicking;
+using Robust.Client.Audio.Midi;
+using Robust.Client.Audio.Mixers;
+using Robust.Shared.Audio.Mixers;
+using Robust.Shared.Prototypes;
 using AudioComponent = Robust.Shared.Audio.Components.AudioComponent;
 
 namespace Content.Client.Audio;
 
 public sealed partial class ContentAudioSystem : SharedContentAudioSystem
 {
+    [Dependency] private readonly IMidiManager _midiManager = default!;
+    [Dependency] private readonly IAudioMixersManager _audioMixersManager = default!;
+
     // Need how much volume to change per tick and just remove it when it drops below "0"
     private readonly Dictionary<EntityUid, float> _fadingOut = new();
 
@@ -13,6 +20,8 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
     private readonly Dictionary<EntityUid, (float VolumeChange, float TargetVolume)> _fadingIn = new();
 
     private readonly List<EntityUid> _fadeToRemove = new();
+
+    private static readonly ProtoId<AudioMixerPrototype> MidiMixer = "Midi";
 
     private const float MinVolume = -32f;
     private const float DefaultDuration = 2f;
@@ -29,12 +38,14 @@ public sealed partial class ContentAudioSystem : SharedContentAudioSystem
     public const float AmbientMusicMultiplier = 3f;
     public const float LobbyMultiplier = 3f;
     public const float InterfaceMultiplier = 2f;
+    public const float JukeboxMultiplier = 2f;
     
     public override void Initialize()
     {
         base.Initialize();
 
         UpdatesOutsidePrediction = true;
+        _midiManager.Mixer = _audioMixersManager.GetMixer(MidiMixer);
         InitializeAmbientMusic();
         InitializeLobbyMusic();
         SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundCleanup);

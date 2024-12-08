@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Client.Gameplay;
 using Content.Shared.Audio;
-using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Random;
 using Content.Shared.Random.Rules;
@@ -11,6 +10,7 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.State;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Components;
+using Robust.Shared.Audio.Mixers;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
@@ -36,7 +36,7 @@ public sealed partial class ContentAudioSystem
     private readonly TimeSpan _maxAmbienceTime = TimeSpan.FromSeconds(60);
 
     private const float AmbientMusicFadeTime = 10f;
-    private static float _volumeSlider;
+    private static readonly ProtoId<AudioMixerPrototype> AmbientMusicMixer = "AmbienceMusic";
 
     // Don't need to worry about this being serializable or pauseable as it doesn't affect the sim.
     private TimeSpan _nextAudio;
@@ -60,7 +60,6 @@ public sealed partial class ContentAudioSystem
 
     private void InitializeAmbientMusic()
     {
-        Subs.CVar(_configManager, CCVars.AmbientMusicVolume, AmbienceCVarChanged, true);
         _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("audio.ambience");
 
         // Reset audio
@@ -71,16 +70,6 @@ public sealed partial class ContentAudioSystem
         _state.OnStateChanged += OnStateChange;
         // On round end summary OR lobby cut audio.
         SubscribeNetworkEvent<RoundEndMessageEvent>(OnRoundEndMessage);
-    }
-
-    private void AmbienceCVarChanged(float obj)
-    {
-        _volumeSlider = SharedAudioSystem.GainToVolume(obj);
-
-        if (_ambientMusicStream != null && _musicProto != null)
-        {
-            _audio.SetVolume(_ambientMusicStream, _musicProto.Sound.Params.Volume + _volumeSlider);
-        }
     }
 
     private void ShutdownAmbientMusic()
@@ -211,7 +200,7 @@ public sealed partial class ContentAudioSystem
             track.ToString(),
             Filter.Local(),
             false,
-            AudioParams.Default.WithVolume(_musicProto.Sound.Params.Volume + _volumeSlider));
+            AudioParams.Default.WithVolume(_musicProto.Sound.Params.Volume).WithMixer(AmbientMusicMixer));
 
         _ambientMusicStream = strim?.Entity;
 
