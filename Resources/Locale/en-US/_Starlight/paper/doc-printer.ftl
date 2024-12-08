@@ -358,7 +358,7 @@ doc-text-printer-request-change-salary =
     
     ──────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
-doc-text-printer-request-change-salary =
+doc-text-printer-request-for-non-listed-employment =
    ⠀[logo]            [head=3]NanoTrasen[/head]
     ──────────────────────────────────────────
    ⠀⠀             [bold]REQUEST FOR NON-LISTED EMPLOYMENT[/bold]
