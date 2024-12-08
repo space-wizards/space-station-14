@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Aquif
-  changes:
-  - message: Boiling Vox blood results in ammonia.
-    type: Add
-  id: 7188
-  time: '2024-08-23T05:05:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30749
 - author: Sarahon
   changes:
   - message: Brand new emote sprites and colours to the Y menu.
@@ -3905,3 +3898,14 @@
   id: 7687
   time: '2024-12-08T22:37:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33762
+- author: ArtisticRoomba
+  changes:
+  - message: Detectives are now required to start with outer clothing (armor) like
+      all other security roles.
+    type: Tweak
+  - message: Vox Detectives now spawn with their chosen outer clothing equipped. Previously
+      the tank harness would override this and your armor would start on the floor.
+    type: Fix
+  id: 7688
+  time: '2024-12-08T22:50:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33765
