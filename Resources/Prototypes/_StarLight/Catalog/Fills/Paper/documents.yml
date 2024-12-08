@@ -128,3 +128,68 @@
   components:
     - type: Paper
       content: doc-text-printer-resignation-statement
+      
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentAccessRequestStatement
+  name: Access request statement
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-access-request-statement
+      
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentEquipmentRequestStatement
+  name: Equipment request statement
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-equipment-request-statement
+      
+# InquiriesAndAppeals
+      
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentInvocation
+  name: Invocation
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-invocation
+      
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentEvacuationShuttleRequest
+  name: Evacuation shuttle request
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-evacuation-shuttle-request
+      
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentShuttleRegistrationRequest
+  name: Shuttle registration request
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-shuttle-registration-request
+      
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentRequestCallCentCommMembers
+  name: Request to call CentComm members
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-request-call-members-centcomm
+      
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentRequestRequestEstablishThreatLevel
+  name: Request to establish threat level
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-request-establish-threat-level

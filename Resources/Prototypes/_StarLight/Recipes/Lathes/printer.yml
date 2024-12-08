@@ -118,3 +118,68 @@
   applyMaterialDiscount: false
   materials:
     SheetPrinter: 100
+    
+- type: latheRecipe
+  id: PrintedDocumentAccessRequestStatementRecipe
+  result: PrintedDocumentAccessRequestStatement
+  category: Statements
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+    
+- type: latheRecipe
+  id: PrintedDocumentEquipmentRequestStatementRecipe
+  result: PrintedDocumentEquipmentRequestStatement
+  category: Statements
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+    
+# InquiriesAndAppeals
+    
+- type: latheRecipe
+  id: PrintedDocumentInvocationRecipe
+  result: PrintedDocumentInvocation
+  category: InquiriesAndAppeals
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+    
+- type: latheRecipe
+  id: PrintedDocumentEvacuationShuttleRequestRecipe
+  result: PrintedDocumentEvacuationShuttleRequest
+  category: InquiriesAndAppeals
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+    
+- type: latheRecipe
+  id: PrintedDocumentShuttleRegistrationRequestRecipe
+  result: PrintedDocumentShuttleRegistrationRequest
+  category: InquiriesAndAppeals
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+    
+- type: latheRecipe
+  id: PrintedDocumentRequestCallCentCommMembersRecipe
+  result: PrintedDocumentRequestCallCentCommMembers
+  category: InquiriesAndAppeals
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+    
+- type: latheRecipe
+  id: PrintedDocumentRequestRequestEstablishThreatLevelRecipe
+  result: PrintedDocumentRequestRequestEstablishThreatLevel
+  category: InquiriesAndAppeals
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100

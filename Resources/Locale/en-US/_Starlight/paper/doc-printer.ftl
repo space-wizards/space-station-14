@@ -231,3 +231,116 @@ doc-text-printer-resignation-statement =
     
     ──────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+doc-text-printer-access-request-statement =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀                       [bold]ACCESS REQUEST STATEMENT[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    I, (full name), in the position of (full job title), request the following accesses:
+    
+    Reason for gaining elevated access:
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
+doc-text-printer-equipment-request-statement =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀                    [bold]EQUIPMENT REQUEST STATEMENT[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    I, (full name), in the position of (full job title), request the following department (department name)/personal equipment be issued to me:
+    
+    Reason for obtaining the equipment:
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
+   
+# InquiriesAndAppeals
+   
+doc-text-printer-invocation =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀                                    [bold]INVOCATION[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    I, (full name), in the position of (full name of the position), request to consider (full name), in the position of (full name of the position) my invocation.
+    Content of the invocation:
+    
+    Reasons for writing it:
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
+doc-text-printer-evacuation-shuttle-request =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀                    [bold]EVACUATION SHUTTLE REQUEST[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    Dear Central Command! I, (full name), in the position of (full job title), request to run evacuation protocols and send an evacuation shuttle by deciding to end the shift.
+    Reason for end of shift:
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
+doc-text-printer-shuttle-registration-request =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀                  [bold]SHUTTLE REGISTRATION REQUEST[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    I, (full name), in the position of (full job title), request that the shuttle be registered in the NanoTrasen system for identification.
+    Shuttle Size:
+    
+    Shuttle Class:
+    
+    Construction Responsible:
+    
+    Requested Title:
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
+doc-text-printer-request-call-centcomm-members =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀              [bold]REQUEST TO CALL CENTCOMM MEMBERS[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    I, (full name), in the position of (full job title), request to be considered for a call to the station:
+    
+    Reason for the call:
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
+doc-text-printer-request-establish-threat-level =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀             [bold]REQUEST TO ESTABLISH THREAT LEVEL[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    I, (full name), in the position of (full name of position), request to consider establishing a threat level at the station:
+    
+    Reason for establishing the code:
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]

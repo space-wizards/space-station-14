@@ -26,6 +26,7 @@
     idleState: icon
     runningState: building
     staticRecipes:
+# Reports
       - PrintedDocumentReportStationRecipe
       - PrintedDocumentReportOnEliminationOfViolationsRecipe
       - PrintedDocumentReporDepartmentRecipe
@@ -36,9 +37,18 @@
       - PrintedDocumentObjectInvestigationReportRecipe
       - PrintedDocumentExperimentReportRecipe
       - PrintedDocumentDisposalReportRecipe
+# Statements
       - PrintedDocumentStatementAppointmentInterimChapterRecipe
       - PrintedDocumentEmploymentStatementRecipe
       - PrintedDocumentResignationStatementRecipe
+      - PrintedDocumentAccessRequestStatementRecipe
+      - PrintedDocumentEquipmentRequestStatementRecipe
+# InquiriesAndAppeals
+      - PrintedDocumentInvocationRecipe
+      - PrintedDocumentEvacuationShuttleRequestRecipe
+      - PrintedDocumentShuttleRegistrationRequestRecipe
+      - PrintedDocumentRequestCallCentCommMembersRecipe
+      - PrintedDocumentRequestRequestEstablishThreatLevelRecipe
 #  - type: EmagLatheRecipes
 #    emagStaticRecipes:
 #        - PrintedDocumentErrorLoadingFormHeaderRecipe
