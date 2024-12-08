@@ -34,6 +34,20 @@ public sealed partial class IntellicardComponent : Component
     [DataField, AutoNetworkedField]
     public TimeSpan WarningDelay = TimeSpan.FromSeconds(8);
 
+    /// <summary>
+    /// The text used for the "Wipe AI" verb on the intellicard.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public LocId WipeVerb = "intellicard-wipe-verb";
+
+    /// <summary>
+    /// The text used for the popup after wiping the intellicard.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public LocId WipePopup = "intellicard-wipe-popup";
+
     [ViewVariables]
     public TimeSpan NextWarningAllowed = TimeSpan.Zero;
+
+    public const string Container = "station_ai_mind_slot";
 }
