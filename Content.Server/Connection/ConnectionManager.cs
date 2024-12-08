@@ -60,6 +60,11 @@ namespace Content.Server.Connection
         private ISawmill _sawmill = default!;
         private readonly Dictionary<NetUserId, TimeSpan> _temporaryBypasses = [];
 
+        public void PostInit()
+        {
+            InitializeWhitelist();
+            InitializeIPIntel();
+        }
 
         public void Initialize()
         {
@@ -282,7 +287,7 @@ namespace Content.Server.Connection
                 {
                     _sawmill.Error("Whitelist enabled but no whitelists loaded.");
                     // Misconfigured, deny everyone.
-                    return (ConnectionDenyReason.Whitelist, Loc.GetString("whitelist-misconfigured"), null);
+                    return (ConnectionDenyReason.Whitelist, Loc.GetString("generic-misconfigured"), null);
                 }
 
                 foreach (var whitelist in _whitelists)
@@ -303,6 +308,15 @@ namespace Content.Server.Connection
                     // Whitelisted, don't check any more.
                     break;
                 }
+            }
+
+            // ALWAYS keep this at the end, to preserve the API limit.
+            if (_cfg.GetCVar(CCVars.GameIPIntelEnabled) && adminData == null)
+            {
+                var result = await IsVpnOrProxy(e);
+
+                if (result.IsBad)
+                    return (ConnectionDenyReason.IPChecks, result.Reason, null);
             }
 
             return null;
