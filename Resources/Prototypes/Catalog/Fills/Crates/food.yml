@@ -170,7 +170,7 @@
   id: CrateFoodGetMore
   parent: CratePlastic
   name: Getmore Bakemore crate
-  description: GetMore branded snacks and baking supplies for the creative chef, all without the need of emptying your station's GetMore machines!
+  description: Getmore branded snacks and baking supplies for the creative chef, all without the need of emptying your station's Getmore machines!
   components:
   - type: StorageFill
     contents:
