@@ -31,7 +31,7 @@ public abstract class SharedRemoteControlSystem : EntitySystem
         SubscribeLocalEvent<RemotelyControllableComponent, ComponentShutdown>(OnControllableShutdown);
         SubscribeLocalEvent<RemotelyControllableComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<RemotelyControllableComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
-        SubscribeLocalEvent<RemotelyControllableComponent, RCReturnToBodyEvent>(OnReturnToBody);
+        SubscribeLocalEvent<RemotelyControllableComponent, RemoteControlReturnToBodyEvent>(OnReturnToBody);
         SubscribeLocalEvent<RemotelyControllableComponent, MobStateChangedEvent>(OnMobStateChanged);
 
         SubscribeLocalEvent<RemoteControllerComponent, DamageChangedEvent>(OnTookDamage);
@@ -45,10 +45,8 @@ public abstract class SharedRemoteControlSystem : EntitySystem
 
     private void OnExamine(Entity<RemotelyControllableComponent> ent, ref ExaminedEvent args)
     {
-        if (ent.Comp.ExamineMessage == null)
-            return;
-
-        if (!args.IsInDetailsRange)
+        if (ent.Comp.ExamineMessage == null
+            || !args.IsInDetailsRange)
             return;
 
         args.PushText(Loc.GetString("rc-controlled-examine", ("user", ent.Owner)));
@@ -74,16 +72,11 @@ public abstract class SharedRemoteControlSystem : EntitySystem
 
     private void OnAfterInteractUsing(Entity<RemotelyControllableComponent> ent, ref AfterInteractUsingEvent args)
     {
-        if (args.Handled || !args.CanReach)
-            return;
-
-        if (!TryComp<RCRemoteComponent>(args.Used, out var remoteComp))
-            return;
-
-        if (!TryComp<RemotelyControllableComponent>(args.Target, out var _))
-            return;
-
-        if (ent.Comp.BoundRemote != null)
+        if (args.Handled
+            || !args.CanReach
+            || !TryComp<RCRemoteComponent>(args.Used, out var remoteComp)
+            || !HasComp<RemotelyControllableComponent>(args.Target)
+            || ent.Comp.BoundRemote != null)
             return;
 
         remoteComp.BoundTo = args.Target;
@@ -94,17 +87,16 @@ public abstract class SharedRemoteControlSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnReturnToBody(Entity<RemotelyControllableComponent> ent, ref RCReturnToBodyEvent args)
+    private void OnReturnToBody(Entity<RemotelyControllableComponent> ent, ref RemoteControlReturnToBodyEvent args)
     {
         TryStopRemoteControl(ent);
     }
 
     private void OnTookDamage(Entity<RemoteControllerComponent> ent, ref DamageChangedEvent args)
     {
-        if (!args.DamageIncreased || !args.InterruptsDoAfters)
-            return;
-
-        if (ent.Comp.Controlled == null)
+        if (!args.DamageIncreased
+            || !args.InterruptsDoAfters
+            || ent.Comp.Controlled == null)
             return;
 
         TryStopRemoteControl(ent.Comp.Controlled.Value);
@@ -120,13 +112,11 @@ public abstract class SharedRemoteControlSystem : EntitySystem
 
     private void OnRCRemoteVerbs(Entity<RCRemoteComponent> ent, ref GetVerbsEvent<ActivationVerb> args)
     {
-        if (args.Hands == null || !args.CanAccess || !args.CanInteract)
-            return;
-
-        if (ent.Comp.BoundTo == null)
-            return;
-
-        if (!TryComp<RemotelyControllableComponent>(ent.Comp.BoundTo, out var remotelyComp))
+        if (args.Hands == null
+            || !args.CanAccess
+            || !args.CanInteract
+            || ent.Comp.BoundTo == null
+            || !TryComp<RemotelyControllableComponent>(ent.Comp.BoundTo, out var remotelyComp))
             return;
 
         var user = args.User;
@@ -178,10 +168,8 @@ public abstract class SharedRemoteControlSystem : EntitySystem
 
     private void OnRemoteDropped(Entity<RCRemoteComponent> ent, ref DroppedEvent args)
     {
-        if (ent.Comp.BoundTo is null)
-            return;
-
-        if(!HasComp<RemotelyControllableComponent>(ent.Comp.BoundTo.Value))
+        if (ent.Comp.BoundTo is null
+            || !HasComp<RemotelyControllableComponent>(ent.Comp.BoundTo.Value))
             return;
 
         TryStopRemoteControl(ent.Comp.BoundTo.Value);
@@ -223,16 +211,10 @@ public abstract class SharedRemoteControlSystem : EntitySystem
     /// <returns>True If remote control is stopped, otherwise False.</returns>
     public bool TryStopRemoteControl(EntityUid uid)
     {
-        if (!TryComp<RemotelyControllableComponent>(uid, out var remoteControl))
-            return false;
-
-        if (!TryComp<VisitingMindComponent>(uid, out var _))
-            return false;
-
-        if (!_mind.TryGetMind(uid, out var mindId, out var mind))
-            return false;
-
-        if (remoteControl.IsControlled == false)
+        if (!TryComp<RemotelyControllableComponent>(uid, out var remoteControl)
+            || !HasComp<VisitingMindComponent>(uid)
+            || !_mind.TryGetMind(uid, out var mindId, out var mind)
+            || remoteControl.IsControlled == false)
             return false;
 
         if (TryComp<SSDIndicatorComponent>(remoteControl.Controller, out var ssd))
@@ -250,7 +232,7 @@ public abstract class SharedRemoteControlSystem : EntitySystem
     }
 }
 
-public sealed partial class RCReturnToBodyEvent : InstantActionEvent
+public sealed partial class RemoteControlReturnToBodyEvent : InstantActionEvent
 {
 
 }

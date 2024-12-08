@@ -9,7 +9,7 @@
     icon:
       sprite: Interface/Actions/remote_control.rsi
       state: return
-    event: !type:RCReturnToBodyEvent
+    event: !type:RemoteControlReturnToBodyEvent
 
 - type: entity
   id: ActionContainerSwallow
@@ -21,7 +21,7 @@
     iconOn: { sprite : Interface/Actions/spittable_container.rsi, state: eat-on }
     event: !type:SwallowToContainerActionEvent
     priority: -9
- 
+
 - type: entity
   id: ActionContainerSpit
   name: Spit
