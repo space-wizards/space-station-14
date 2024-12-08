@@ -1,71 +1,6 @@
 ﻿Entries:
 - author: hivehum
   changes:
-  - message: "Added the \"Nanotrasen\u2019s Expanded Guide to Station Security,\"\
-      \ a short primer on good Security gameplay, to the guidebook."
-    type: Add
-  - message: Core Rule 0, Cuck's Law.
-    type: Add
-  - message: Fixed formatting errors on the Changeling page.
-    type: Fix
-  - message: The Gastropoid page now shows a Gastropoid and not a snail. Easy mistake!
-    type: Fix
-  - message: Linked Changelings on the Antagonist overview.
-    type: Tweak
-  - message: Core Rule 7 (English only) now only applies to OOC interactions.
-    type: Tweak
-  - message: Core Rule 12 (minimum player age) is now 20, to align with the Mirakurutaimu
-      Discord server and Twitch channel rules.
-    type: Tweak
-  - message: Core Rule 13 (character names) has been heavily overhauled and additionally
-      includes guidelines for Greys and Gastropoids.
-    type: Tweak
-  - message: Many minor changes to RP rules to better align with admin rulings and
-      OOC consensus.
-    type: Tweak
-  id: 189
-  time: '2024-09-11T15:05:28.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/239
-- author: widgetbeck
-  changes:
-  - message: DF-style randomized Dwarf names.
-    type: Add
-  id: 190
-  time: '2024-09-11T19:26:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/240
-- author: aada
-  changes:
-  - message: Rare chance for space ticks to spawn in maints lockers.
-    type: Add
-  - message: Very Rare chance for carp.
-    type: Add
-  id: 191
-  time: '2024-09-11T19:26:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/231
-- author: aada
-  changes:
-  - message: Added cloth flavored donk-pockets.
-    type: Add
-  id: 192
-  time: '2024-09-12T03:53:06.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/245
-- author: TGRCDev
-  changes:
-  - message: Added a new revenant ability to draw bloody glyphs on the ground.
-    type: Add
-  id: 193
-  time: '2024-09-12T03:52:51.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/244
-- author: formlessnameless
-  changes:
-  - message: Fixed all changeling gamemodes missing the SpaceTrafficControl event
-      handler.
-    type: Fix
-  id: 194
-  time: '2024-09-12T04:53:20.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/246
-- author: hivehum
-  changes:
   - message: Head Revolutionaries require 10 hours in Command and 10 hours in Security
       to unlock.
     type: Tweak
@@ -4469,3 +4404,81 @@
   id: 688
   time: '2024-12-08T02:47:47.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/952
+- author: Darkmajia
+  changes:
+  - message: Removed some chemicals from the maintenance pill and spaceshroom pool.
+    type: Remove
+  id: 689
+  time: '2024-12-08T15:04:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/958
+- author: kipdotnet
+  changes:
+  - message: Banana.
+    type: Fix
+  id: 690
+  time: '2024-12-08T15:12:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/950
+- author: Sha-Seng
+  changes:
+  - message: Gathered Low hairstyle has more body from the side now
+    type: Tweak
+  id: 691
+  time: '2024-12-08T15:11:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/951
+- author: EpicToast
+  changes:
+  - message: (Union Station) Added a shipyard console to the QM's office.
+    type: Add
+  - message: (Union Station) Added a servicefab to the bar backroom, and made it accessible
+      to all service workers.
+    type: Add
+  - message: (Union Station) Added a fire axe to atmos and a radiation suit to engineering.
+    type: Add
+  - message: (Union Station) Added intercoms to each cross-department room.
+    type: Add
+  - message: (Union Station) Added janitorial lights.
+    type: Add
+  - message: (Union Station) Added more water coolers for decapoids.
+    type: Add
+  - message: (Union Station) Added santa suits to security lockers.
+    type: Add
+  - message: (Union Station) Gave names to air alarms, airlocks and buttons.
+    type: Tweak
+  - message: (Union Station) Replaced all shutter levers with signal timers, as a
+      test. Try them out!
+    type: Tweak
+  - message: (Union Station) Reworked the medbay and perma brig.
+    type: Tweak
+  - message: (Union Station) Shifted some job slots around.
+    type: Tweak
+  - message: (Union Station) Made it so observers actually spawn on the station.
+    type: Fix
+  - message: (Union Station) Fixed atmos's external airlock.
+    type: Fix
+  - message: (Union Station) Separated virology and the cryo pods from the overall
+      waste network.
+    type: Fix
+  - message: (Union Station) Fixed access to the atmos-only portion of the canister
+      room.
+    type: Fix
+  - message: (Union Station) And other minor fixes.
+    type: Fix
+  id: 692
+  time: '2024-12-08T15:13:40.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/955
+- author: DinnerCalzone
+  changes:
+  - message: Toned down the previous increase to water damage against slimes. Water
+      will still deal an appreciable amount of damage, so be careful.
+    type: Tweak
+  id: 693
+  time: '2024-12-08T15:14:52.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/956
+- author: TheGrimbeeper
+  changes:
+  - message: Rat Kings can now target someone by pointing vaguely near them (helpful
+      in intense moments)
+    type: Tweak
+  id: 694
+  time: '2024-12-08T15:35:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/953

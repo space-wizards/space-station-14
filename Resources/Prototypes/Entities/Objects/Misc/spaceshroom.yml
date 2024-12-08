@@ -100,10 +100,6 @@
     weight: 1
     reagents:
     - Amatoxin
-  - quantity: 5
-    weight: 0.1
-    reagents:
-    - Romerol
 
 # Cooked Object
 - type: entity

@@ -13,6 +13,10 @@ using Content.Shared.Pointing;
 using Content.Shared.RatKing;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
+using Content.Shared.Damage;
+using Content.Shared.SubFloor;
+using Content.Shared.Body;
+using Content.Shared.Body.Components;
 
 namespace Content.Server.RatKing
 {
@@ -25,6 +29,7 @@ namespace Content.Server.RatKing
         [Dependency] private readonly HungerSystem _hunger = default!;
         [Dependency] private readonly NPCSystem _npc = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
 
         public override void Initialize()
         {
@@ -33,6 +38,7 @@ namespace Content.Server.RatKing
             SubscribeLocalEvent<RatKingComponent, RatKingRaiseArmyActionEvent>(OnRaiseArmy);
             SubscribeLocalEvent<RatKingComponent, RatKingDomainActionEvent>(OnDomain);
             SubscribeLocalEvent<RatKingComponent, AfterPointedAtEvent>(OnPointedAt);
+            SubscribeLocalEvent<RatKingComponent, AfterPointedArrowEvent>(OnPointedNearby);
         }
 
         /// <summary>
@@ -98,6 +104,53 @@ namespace Content.Server.RatKing
             foreach (var servant in component.Servants)
             {
                 _npc.SetBlackboard(servant, NPCBlackboard.CurrentOrderedTarget, args.Pointed);
+            }
+        }
+
+        /// <summary>
+        /// Give leeway on how close you have to point to a target.
+        /// Allows you to point near someone and still have them targeted
+        /// </summary>
+        private void OnPointedNearby(EntityUid uid, RatKingComponent component, ref AfterPointedArrowEvent args)
+        {
+            if (component.CurrentOrder != RatKingOrderType.CheeseEm)
+                return;
+
+            var arrow = args.PointedArrow;
+            var arrowXform = Transform(arrow);
+
+            var ents = _lookup.GetEntitiesInRange(arrow, component.PointingMargin);
+
+            var target = EntityUid.Invalid;
+            var minDistance = component.PointingMargin + 1f;
+
+            foreach (var ent in ents)
+            {
+                if (ent == uid)
+                    continue;
+
+                // Remove ineligable targets
+                if (!TryComp<DamageableComponent>(ent, out var _1) || !TryComp<BodyComponent>(ent, out var _2))
+                    continue;
+
+                if (TryComp<SubFloorHideComponent>(ent, out var _3) || TryComp<RatKingServantComponent>(ent, out var _4))
+                    continue;
+
+                if (!arrowXform.Coordinates.TryDistance(EntityManager, Transform(ent).Coordinates, out var distance))
+                    continue;
+
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    target = ent;
+                }
+            }
+
+            if (target != EntityUid.Invalid){
+                foreach (var servant in component.Servants)
+                {
+                    _npc.SetBlackboard(servant, NPCBlackboard.CurrentOrderedTarget, target);
+                }
             }
         }
 
