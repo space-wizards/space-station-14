@@ -1,0 +1,481 @@
+# 4 x 4 ROOM DEFINITIONS
+# Trashy Restaurant
+- type: dungeonRoom
+  id: DungeonRooms4x4a
+  size: 4,4
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: -5,0
+  tags:
+    - DungeonRooms4x4
+    - DungeonRoomRandom
+
+# Dingy Healing Wood Room
+- type: dungeonRoom
+  id: DungeonRooms4x4b
+  size: 4,4
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: -10,0
+  tags:
+    - DungeonRooms4x4
+    - DungeonRoomRandom
+
+# Clothing Room      
+- type: dungeonRoom
+  id: DungeonRooms4x4c
+  size: 4,4
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: -15,0
+  tags:
+    - DungeonRooms4x4
+    - DungeonRoomRandom
+
+# Bee Display
+- type: dungeonRoom
+  id: DungeonRooms4x4d
+  size: 4,4
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: -20,0
+  tags:
+    - DungeonRooms4x4
+    - DungeonRoomRandom
+
+# Medical Office
+- type: dungeonRoom
+  id: DungeonRooms4x4e
+  size: 4,4
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: -5,5
+  tags:
+    - DungeonRooms4x4
+    - DungeonRoomRandom
+
+# Wintery Combat Grille Pit
+- type: dungeonRoom
+  id: DungeonRooms4x4f
+  size: 4,4
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: -10,5
+  tags:
+    - DungeonRooms4x4
+    - DungeonRoomRandom
+
+# Virology Enclosure
+- type: dungeonRoom
+  id: DungeonRooms4x4g
+  size: 4,4
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: -15,5
+  tags:
+    - DungeonRooms4x4
+    - DungeonRoomRandom
+
+# Trashy Anomaly Room
+- type: dungeonRoom
+  id: DungeonRooms4x4h
+  size: 4,4
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: -20,5
+  tags:
+    - DungeonRooms4x4
+    - DungeonRoomRandom
+
+# Vault Variant 1 
+- type: dungeonRoom
+  id: DungeonRooms4x4i
+  size: 4,4
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: -5,10
+  tags:
+    - DungeonRooms4x4
+    - DungeonRoomRandom
+
+# Vault Variant 2 
+- type: dungeonRoom
+  id: DungeonRooms4x4j
+  size: 4,4
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: -10,10
+  tags:
+    - DungeonRooms4x4
+    - DungeonRoomRandom
+
+# Vault Variant 3 
+- type: dungeonRoom
+  id: DungeonRooms4x4k
+  size: 4,4
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: -15,10
+  tags:
+    - DungeonRooms4x4
+    - DungeonRoomRandom
+
+# Vault Variant 4 
+- type: dungeonRoom
+  id: DungeonRooms4x4l
+  size: 4,4
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: -20,10
+  tags:
+    - DungeonRooms4x4
+    - DungeonRoomRandom
+
+# Shadowy Trees
+- type: dungeonRoom
+  id: DungeonRooms4x4m
+  size: 4,4
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: -5,15
+  tags:
+    - DungeonRooms4x4
+    - DungeonRoomRandom
+
+# Small Park
+- type: dungeonRoom
+  id: DungeonRooms4x4n
+  size: 4,4
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: -10,15
+  tags:
+    - DungeonRooms4x4
+    - DungeonRoomRandom
+    
+# Grassy Mine Segment
+- type: dungeonRoom
+  id: DungeonRooms4x4o
+  size: 4,4
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: -15,15
+  tags:
+    - DungeonRooms4x4
+    - DungeonRoomRandom
+
+# Grassy Blasted Room w. Carp Statue
+- type: dungeonRoom
+  id: DungeonRooms4x4p
+  size: 4,4
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: -20,15
+  tags:
+    - DungeonRooms4x4
+    - DungeonRoomRandom
+
+# Chasm Room 1
+- type: dungeonRoom
+  id: DungeonRooms4x4q
+  size: 4,4
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: -5,20
+  tags:
+    - DungeonRooms4x4
+    - DungeonRoomRandom
+
+# Chasm Room 2
+- type: dungeonRoom
+  id: DungeonRooms4x4r
+  size: 4,4
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: -10,20
+  tags:
+    - DungeonRooms4x4
+    - DungeonRoomRandom
+
+# Chasm Room 3
+- type: dungeonRoom
+  id: DungeonRooms4x4s
+  size: 4,4
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: -15,20
+  tags:
+    - DungeonRooms4x4
+    - DungeonRoomRandom
+
+# Chasm Room 4
+- type: dungeonRoom
+  id: DungeonRooms4x4t
+  size: 4,4
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: -20,20
+  tags:
+    - DungeonRooms4x4
+    - DungeonRoomRandom
+
+# Try Not To Slip Ice Room w. Skates
+- type: dungeonRoom
+  id: DungeonRooms4x4u
+  size: 4,4
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: -5,25
+  tags:
+    - DungeonRooms4x4
+    - DungeonRoomRandom
+
+# Arcade Room
+- type: dungeonRoom
+  id: DungeonRooms4x4v
+  size: 4,4
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: -10,25
+  tags:
+    - DungeonRooms4x4
+    - DungeonRoomRandom
+
+# Cigarette Addict's Room
+- type: dungeonRoom
+  id: DungeonRooms4x4w
+  size: 4,4
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: -15,25
+  tags:
+    - DungeonRooms4x4
+    - DungeonRoomRandom
+
+# Clown Pillar Room
+- type: dungeonRoom
+  id: DungeonRooms4x4x
+  size: 4,4
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: -20,25
+  tags:
+    - DungeonRooms4x4
+    - DungeonRoomRandom
+
+# 5 x 5 ROOM DEFINITIONS
+# Old Bar
+- type: dungeonRoom
+  id: DungeonRooms5x5a
+  size: 5,5
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: 0,0
+  tags:
+    - DungeonRooms5x5
+    - DungeonRoomRandom
+
+# Religious Gathering
+- type: dungeonRoom
+  id: DungeonRooms5x5b
+  size: 5,5
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: 6,0
+  tags:
+    - DungeonRooms5x5
+    - DungeonRoomRandom
+
+# Barracks Bedroom    
+- type: dungeonRoom
+  id: DungeonRooms5x5c
+  size: 5,5
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: 12,0
+  tags:
+    - DungeonRooms5x5
+    - DungeonRoomRandom
+
+# Ron Swanson's Round Office Desk
+- type: dungeonRoom
+  id: DungeonRooms5x5d
+  size: 5,5
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: 18,0
+  tags:
+    - DungeonRooms5x5
+    - DungeonRoomRandom
+
+# Campfire Room 
+- type: dungeonRoom
+  id: DungeonRooms5x5e
+  size: 5,5
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: 0,6
+  tags:
+    - DungeonRooms5x5
+    - DungeonRoomRandom
+  
+# Carp Fishing Room
+- type: dungeonRoom
+  id: DungeonRooms5x5f
+  size: 5,5
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: 6,6
+  tags:
+  - DungeonRooms5x5
+  - DungeonRoomRandom
+  
+# Musician's Platform
+- type: dungeonRoom
+  id: DungeonRooms5x5g
+  size: 5,5
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: 12,6
+  tags:
+    - DungeonRooms5x5
+    - DungeonRoomRandom
+
+# Shadow Rock & Shadow Grass
+- type: dungeonRoom
+  id: DungeonRooms5x5h
+  size: 5,5
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: 18,6
+  tags:
+    - DungeonRooms5x5
+    - DungeonRoomRandom
+
+# One-Room Vault 1
+- type: dungeonRoom
+  id: DungeonRooms5x5i
+  size: 5,5
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: 0,12
+  tags:
+    - DungeonRooms5x5
+    - DungeonRoomRandom
+
+# One-Room Vault 2
+- type: dungeonRoom
+  id: DungeonRooms5x5j
+  size: 5,5
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: 6,12
+  tags:
+    - DungeonRooms5x5
+    - DungeonRoomRandom
+ 
+# Rapier On A Bridge 
+- type: dungeonRoom
+  id: DungeonRooms5x5k
+  size: 5,5
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: 12,12
+  tags:
+    - DungeonRooms5x5
+    - DungeonRoomRandom
+
+# Duality of Nature
+- type: dungeonRoom
+  id: DungeonRooms5x5l
+  size: 5,5
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: 18,12
+  tags:
+    - DungeonRooms5x5
+    - DungeonRoomRandom
+
+# Rocky Chasm Room 1
+- type: dungeonRoom
+  id: DungeonRooms5x5m
+  size: 5,5
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: 0,18
+  tags:
+    - DungeonRooms5x5
+    - DungeonRoomRandom
+
+# Rocky Chasm Room 2
+- type: dungeonRoom
+  id: DungeonRooms5x5n
+  size: 5,5
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: 6,18
+  tags:
+    - DungeonRooms5x5
+    - DungeonRoomRandom
+
+# Rocky Chasm Room 3
+- type: dungeonRoom
+  id: DungeonRooms5x5o
+  size: 5,5
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: 12,18
+  tags:
+    - DungeonRooms5x5
+    - DungeonRoomRandom
+
+# Rocky Chasm Room w. Carp
+- type: dungeonRoom
+  id: DungeonRooms5x5p
+  size: 5,5
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: 18,18
+  tags:
+    - DungeonRooms5x5
+    - DungeonRoomRandom
+
+# Sad Clown Memorial
+- type: dungeonRoom
+  id: DungeonRooms5x5q
+  size: 5,5
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: 0,24
+  tags:
+    - DungeonRooms5x5
+    - DungeonRoomRandom
+
+# Clown Spider Scary Room
+- type: dungeonRoom
+  id: DungeonRooms5x5r
+  size: 5,5
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: 6,24
+  tags:
+    - DungeonRooms5x5
+    - DungeonRoomRandom
+
+# Steel Mineshaft Intersection
+- type: dungeonRoom
+  id: DungeonRooms5x5s
+  size: 5,5
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: 12,24
+  tags:
+    - DungeonRooms5x5
+    - DungeonRoomRandom
+
+# FLESH ROOM FLESH ROOM FLESH ROOM
+- type: dungeonRoom
+  id: DungeonRooms5x5t
+  size: 5,5
+  atlas: /Maps/Dungeon/dungeon_rooms_random.yml
+  offset: 18,24
+  tags:
+    - DungeonRooms5x5
+    - DungeonRoomRandom
+
+
+# ====Dungeon Marker Definitions====
+# FOUR BY FOUR
+- type: entity
+  id: DungeonRoomsRandomRoomMarker4x4
+  parent: BaseRoomMarker
+  name: 4x4 room marker
+  suffix: random
+  components:
+  - type: RoomFill
+    size: 4,4
+    roomWhitelist:
+      tags:
+        - DungeonRooms4x4
+        - DungeonRoomRandom
+  - type: Sprite
+    layers:
+      - sprite: Markers/Rooms/room4x4.rsi
+        state: img
+        offset: 1.5,1.5
+
+# FIVE BY FIVE    
+- type: entity
+  id: DungeonRoomsRandomRoomMarker5x5
+  parent: BaseRoomMarker
+  name: 5x5 room marker
+  suffix: random
+  components:
+  - type: RoomFill
+    size: 5,5
+    roomWhitelist:
+      tags:
+      - DungeonRooms5x5
+      - DungeonRoomRandom
+  - type: Sprite
+    layers:
+      - sprite: Markers/Rooms/room5x5.rsi
+        state: img
+        offset: 2,2

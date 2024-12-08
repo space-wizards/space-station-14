@@ -505,6 +505,21 @@
 - type: Tag
   id: DungeonRooms5x5
 
+- type: Tag
+  id: DungeonRoomRandom
+
+- type: Tag
+  id: DungeonRoomGreen
+
+- type: Tag
+  id: DungeonRoomRock
+
+- type: Tag
+  id: DungeonRoomShadow
+
+- type: Tag
+  id: DungeonRoomCultist
+
 # End of Dungeon Rooms
 - type: Tag
   id: Ectoplasm
