@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: aada
-  changes:
-  - message: Basic service cyborg module split into bureaucracy module and bartender
-      module.
-    type: Tweak
-  id: 188
-  time: '2024-09-10T09:34:34.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/238
 - author: hivehum
   changes:
   - message: "Added the \"Nanotrasen\u2019s Expanded Guide to Station Security,\"\
@@ -4470,3 +4462,10 @@
   id: 687
   time: '2024-12-08T02:46:36.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/933
+- author: DinnerCalzone
+  changes:
+  - message: (Hummingbird) Fixed missing LV cables in nitrogen lounge.
+    type: Fix
+  id: 688
+  time: '2024-12-08T02:47:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/952
