@@ -8,6 +8,7 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Systems;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 
@@ -19,7 +20,7 @@ public sealed class GasCondenserSystem : EntitySystem
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly PowerReceiverSystem _power = default!;
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
+    [Dependency] private readonly SharedSolutionSystem _solutionSystem = default!;
 
     public override void Initialize()
     {
@@ -32,12 +33,11 @@ public sealed class GasCondenserSystem : EntitySystem
     {
         if (!(TryComp<ApcPowerReceiverComponent>(entity, out var receiver) && _power.IsPowered(entity, receiver))
             || !_nodeContainer.TryGetNode(entity.Owner, entity.Comp.Inlet, out PipeNode? inlet)
-            || !_solution.ResolveSolution(entity.Owner, entity.Comp.SolutionId, ref entity.Comp.Solution, out var solution))
-        {
+            || !_solutionSystem.ResolveSolution(entity.Owner, entity.Comp.SolutionId, ref entity.Comp.Solution))
             return;
-        }
+        var solution = entity.Comp.Solution.Value;
 
-        if (solution.AvailableVolume == 0 || inlet.Air.TotalMoles == 0)
+        if (solution.Comp.AvailableVolume == 0 || inlet.Air.TotalMoles == 0)
             return;
 
         var molesToConvert = NumberOfMolesToConvert(receiver, inlet.Air, args.dt);
@@ -52,17 +52,17 @@ public sealed class GasCondenserSystem : EntitySystem
                 continue;
 
             var moleToReagentMultiplier = entity.Comp.MolesToReagentMultiplier;
-            var amount = FixedPoint2.Min(FixedPoint2.New(moles * moleToReagentMultiplier), solution.AvailableVolume);
+            var amount = FixedPoint2.Min(FixedPoint2.New(moles * moleToReagentMultiplier), solution.Comp.AvailableVolume);
             if (amount <= 0)
                 continue;
 
-            solution.AddReagent(gasReagent, amount);
+            _solutionSystem.AddReagent(solution,(gasReagent, amount), out _);
 
             // if we have leftover reagent, then convert it back to moles and put it back in the mixture.
             inlet.Air.AdjustMoles(i, moles - (amount.Float() / moleToReagentMultiplier));
         }
 
-        _solution.UpdateChemicals(entity.Comp.Solution.Value);
+        _solutionSystem.UpdateChemicals(entity.Comp.Solution.Value);
     }
 
     public float NumberOfMolesToConvert(ApcPowerReceiverComponent comp, GasMixture mix, float dt)

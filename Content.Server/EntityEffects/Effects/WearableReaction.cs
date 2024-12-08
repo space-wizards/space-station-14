@@ -41,7 +41,7 @@ public sealed partial class WearableReaction : EntityEffect
             {
                 if (reagentArgs.Reagent == null || reagentArgs.Quantity < AmountThreshold)
                     return;
-                reagentArgs.Source?.RemoveReagent(reagentArgs.Reagent.ID, AmountThreshold);
+                reagentArgs.Source?.RemoveReagent(reagentArgs.Reagent.Value.Comp.Id, AmountThreshold);
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Server.Chemistry.Containers.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
@@ -8,13 +8,15 @@ using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Syntax;
 using Robust.Shared.Toolshed.TypeParsers;
 using System.Linq;
+using Content.Shared.Chemistry.Components.Solutions;
+using Content.Shared.Chemistry.Systems;
 
 namespace Content.Server.Administration.Toolshed;
 
 [ToolshedCommand, AdminCommand(AdminFlags.Debug)]
 public sealed class SolutionCommand : ToolshedCommand
 {
-    private SharedSolutionContainerSystem? _solutionContainer;
+    private SharedSolutionSystem? solutionSystem;
 
     [CommandImplementation("get")]
     public SolutionRef? Get(
@@ -23,10 +25,10 @@ public sealed class SolutionCommand : ToolshedCommand
             [CommandArgument] ValueRef<string> name
         )
     {
-        _solutionContainer ??= GetSys<SharedSolutionContainerSystem>();
+        solutionSystem ??= GetSys<SharedSolutionSystem>();
 
-        if (_solutionContainer.TryGetSolution(input, name.Evaluate(ctx)!, out var solution))
-            return new SolutionRef(solution.Value);
+        if (solutionSystem.TryGetSolution(input, name.Evaluate(ctx)!, out var solution))
+            return new SolutionRef(solution);
 
         return null;
     }
@@ -49,16 +51,16 @@ public sealed class SolutionCommand : ToolshedCommand
             [CommandArgument] ValueRef<FixedPoint2> amountRef
         )
     {
-        _solutionContainer ??= GetSys<SharedSolutionContainerSystem>();
+        solutionSystem ??= GetSys<SharedSolutionSystem>();
 
         var amount = amountRef.Evaluate(ctx);
         if (amount > 0)
         {
-            _solutionContainer.TryAddReagent(input.Solution, name.Value.ID, amount, out _);
+            solutionSystem.AddReagent(input.Solution, (name.Value.ID, amount), out _);
         }
         else if (amount < 0)
         {
-            _solutionContainer.RemoveReagent(input.Solution, name.Value.ID, -amount);
+            solutionSystem.RemoveReagent(input.Solution, (name.Value.ID, -amount), out _);
         }
 
         return input;
@@ -78,6 +80,6 @@ public readonly record struct SolutionRef(Entity<SolutionComponent> Solution)
 {
     public override string ToString()
     {
-        return $"{Solution.Owner} {Solution.Comp.Solution}";
+        return $"{Solution.Owner} {Solution.Comp.Contents}";
     }
 }

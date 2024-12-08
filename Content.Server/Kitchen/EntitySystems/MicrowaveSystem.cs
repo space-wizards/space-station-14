@@ -8,11 +8,10 @@ using Content.Server.Hands.Systems;
 using Content.Server.Kitchen.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Temperature.Components;
+using Content.Shared.Temperature.Components;
 using Content.Server.Temperature.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Database;
@@ -39,6 +38,8 @@ using Robust.Shared.Timing;
 using Content.Shared.Stacks;
 using Content.Server.Construction.Components;
 using Content.Shared.Chat;
+using Content.Shared.Chemistry.Components.Solutions;
+using Content.Shared.Chemistry.Systems;
 using Content.Shared.Damage;
 using Robust.Shared.Utility;
 
@@ -58,7 +59,7 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly ExplosionSystem _explosion = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
-        [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+        [Dependency] private readonly SharedSolutionSystem _solutionSystem = default!;
         [Dependency] private readonly TagSystem _tag = default!;
         [Dependency] private readonly TemperatureSystem _temperature = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
@@ -154,15 +155,14 @@ namespace Content.Server.Kitchen.EntitySystems
                 if (TryComp<TemperatureComponent>(entity, out var tempComp))
                     _temperature.ChangeHeat(entity, heatToAdd * component.ObjectHeatMultiplier, false, tempComp);
 
-                if (!TryComp<SolutionContainerManagerComponent>(entity, out var solutions))
+                if (!TryComp<SolutionHolderComponent>(entity, out var solutions))
                     continue;
-                foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((entity, solutions)))
+                foreach (var solution in _solutionSystem.EnumerateSolutions((entity, solutions)))
                 {
-                    var solution = soln.Comp.Solution;
-                    if (solution.Temperature > component.TemperatureUpperThreshold)
+                    if (solution.Comp.Temperature > component.TemperatureUpperThreshold)
                         continue;
 
-                    _solutionContainer.AddThermalEnergy(soln, heatToAdd);
+                    _solutionSystem.ChangeThermalEnergy(solution, heatToAdd);
                 }
             }
         }
@@ -176,20 +176,19 @@ namespace Content.Server.Kitchen.EntitySystems
             // this is spaghetti ngl
             foreach (var item in component.Storage.ContainedEntities)
             {
-                if (!TryComp<SolutionContainerManagerComponent>(item, out var solMan))
+                if (!TryComp<SolutionHolderComponent>(item, out var solMan))
                     continue;
 
                 // go over every solution
-                foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((item, solMan)))
+                foreach (var solution in _solutionSystem.EnumerateSolutions((item, solMan)))
                 {
-                    var solution = soln.Comp.Solution;
                     foreach (var (reagent, _) in recipe.IngredientsReagents)
                     {
                         // removed everything
                         if (!totalReagentsToRemove.ContainsKey(reagent))
                             continue;
 
-                        var quant = solution.GetTotalPrototypeQuantity(reagent);
+                        var quant = _solutionSystem.GetTotalQuantity(solution,reagent);
 
                         if (quant >= totalReagentsToRemove[reagent])
                         {
@@ -201,7 +200,7 @@ namespace Content.Server.Kitchen.EntitySystems
                             totalReagentsToRemove[reagent] -= quant;
                         }
 
-                        _solutionContainer.RemoveReagent(soln, reagent, quant);
+                        _solutionSystem.RemoveReagent(solution, (reagent, quant), out _);
                     }
                 }
             }
@@ -574,18 +573,17 @@ namespace Content.Server.Kitchen.EntitySystems
                     solidsDict.Add(solidID, amountToAdd);
                 }
 
-                if (!TryComp<SolutionContainerManagerComponent>(item, out var solMan))
+                if (!TryComp<SolutionHolderComponent>(item, out var solMan))
                     continue;
 
-                foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((item, solMan)))
+                foreach (var solution in _solutionSystem.EnumerateSolutions((item, solMan)))
                 {
-                    var solution = soln.Comp.Solution;
-                    foreach (var (reagent, quantity) in solution.Contents)
+                    foreach (var (reagent, quantity) in _solutionSystem.EnumerateReagents(solution, true))
                     {
-                        if (reagentDict.ContainsKey(reagent.Prototype))
-                            reagentDict[reagent.Prototype] += quantity;
+                        if (reagentDict.ContainsKey(reagent.Id))
+                            reagentDict[reagent.Id] += quantity;
                         else
-                            reagentDict.Add(reagent.Prototype, quantity);
+                            reagentDict.Add(reagent.Id, quantity);
                     }
                 }
             }

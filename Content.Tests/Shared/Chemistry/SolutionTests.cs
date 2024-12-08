@@ -1,4 +1,5 @@
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using NUnit.Framework;
 using Robust.Shared.IoC;
@@ -6,7 +7,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Tests.Shared.Chemistry;
 
-[TestFixture, Parallelizable, TestOf(typeof(Solution))]
+[TestFixture, Parallelizable, TestOf(typeof(SolutionSpecifier))]
 public sealed class SolutionTests : ContentUnitTest
 {
     [OneTimeSetUp]
@@ -18,7 +19,7 @@ public sealed class SolutionTests : ContentUnitTest
     [Test]
     public void AddReagentAndGetSolution()
     {
-        var solution = new Solution();
+        var solution = new SolutionSpecifier();
         solution.AddReagent("water", FixedPoint2.New(1000));
         var quantity = solution.GetTotalPrototypeQuantity("water");
 
@@ -28,7 +29,7 @@ public sealed class SolutionTests : ContentUnitTest
     [Test]
     public void ScaleSolution()
     {
-        var solution = new Solution();
+        var solution = new SolutionSpecifier();
         solution.AddReagent("water", FixedPoint2.New(20));
         solution.AddReagent("fire", FixedPoint2.New(30));
 
@@ -73,7 +74,7 @@ public sealed class SolutionTests : ContentUnitTest
     [Test]
     public void ConstructorAddReagent()
     {
-        var solution = new Solution("water", FixedPoint2.New(1000));
+        var solution = new SolutionSpecifier("water", FixedPoint2.New(1000));
         var quantity = solution.GetTotalPrototypeQuantity("water");
 
         Assert.That(quantity.Int(), Is.EqualTo(1000));
@@ -82,7 +83,7 @@ public sealed class SolutionTests : ContentUnitTest
     [Test]
     public void NonExistingReagentReturnsZero()
     {
-        var solution = new Solution();
+        var solution = new SolutionSpecifier();
         var quantity = solution.GetTotalPrototypeQuantity("water");
 
         Assert.That(quantity.Int(), Is.EqualTo(0));
@@ -102,7 +103,7 @@ public sealed class SolutionTests : ContentUnitTest
     [Test]
     public void AddingReagentsSumsProperly()
     {
-        var solution = new Solution();
+        var solution = new SolutionSpecifier();
         solution.AddReagent("water", FixedPoint2.New(1000));
         solution.AddReagent("water", FixedPoint2.New(2000));
         var quantity = solution.GetTotalPrototypeQuantity("water");
@@ -113,7 +114,7 @@ public sealed class SolutionTests : ContentUnitTest
     [Test]
     public void ReagentQuantitiesStayUnique()
     {
-        var solution = new Solution();
+        var solution = new SolutionSpecifier();
         solution.AddReagent("water", FixedPoint2.New(1000));
         solution.AddReagent("fire", FixedPoint2.New(2000));
 
@@ -124,7 +125,7 @@ public sealed class SolutionTests : ContentUnitTest
     [Test]
     public void TotalVolumeIsCorrect()
     {
-        var solution = new Solution();
+        var solution = new SolutionSpecifier();
         solution.AddReagent("water", FixedPoint2.New(1000));
         solution.AddReagent("fire", FixedPoint2.New(2000));
 
@@ -134,7 +135,7 @@ public sealed class SolutionTests : ContentUnitTest
     [Test]
     public void CloningSolutionIsCorrect()
     {
-        var solution = new Solution();
+        var solution = new SolutionSpecifier();
         solution.AddReagent("water", FixedPoint2.New(1000));
         solution.AddReagent("fire", FixedPoint2.New(2000));
 
@@ -148,7 +149,7 @@ public sealed class SolutionTests : ContentUnitTest
     [Test]
     public void RemoveSolutionRecalculatesProperly()
     {
-        var solution = new Solution();
+        var solution = new SolutionSpecifier();
         solution.AddReagent("water", FixedPoint2.New(1000));
         solution.AddReagent("fire", FixedPoint2.New(2000));
 
@@ -162,7 +163,7 @@ public sealed class SolutionTests : ContentUnitTest
     [Test]
     public void RemoveLessThanOneQuantityDoesNothing()
     {
-        var solution = new Solution("water", FixedPoint2.New(100));
+        var solution = new SolutionSpecifier("water", FixedPoint2.New(100));
 
         solution.RemoveReagent("water", FixedPoint2.New(-100));
 
@@ -173,7 +174,7 @@ public sealed class SolutionTests : ContentUnitTest
     [Test]
     public void RemoveMoreThanTotalRemovesAllReagent()
     {
-        var solution = new Solution("water", FixedPoint2.New(100));
+        var solution = new SolutionSpecifier("water", FixedPoint2.New(100));
 
         solution.RemoveReagent("water", FixedPoint2.New(1000));
 
@@ -184,7 +185,7 @@ public sealed class SolutionTests : ContentUnitTest
     [Test]
     public void RemoveNonExistReagentDoesNothing()
     {
-        var solution = new Solution("water", FixedPoint2.New(100));
+        var solution = new SolutionSpecifier("water", FixedPoint2.New(100));
 
         solution.RemoveReagent("fire", FixedPoint2.New(1000));
 
@@ -195,7 +196,7 @@ public sealed class SolutionTests : ContentUnitTest
     [Test]
     public void RemoveSolution()
     {
-        var solution = new Solution("water", FixedPoint2.New(700));
+        var solution = new SolutionSpecifier("water", FixedPoint2.New(700));
 
         solution.RemoveSolution(FixedPoint2.New(500));
 
@@ -207,7 +208,7 @@ public sealed class SolutionTests : ContentUnitTest
     [Test]
     public void RemoveSolutionMoreThanTotalRemovesAll()
     {
-        var solution = new Solution("water", FixedPoint2.New(800));
+        var solution = new SolutionSpecifier("water", FixedPoint2.New(800));
 
         solution.RemoveSolution(FixedPoint2.New(1000));
 
@@ -219,7 +220,7 @@ public sealed class SolutionTests : ContentUnitTest
     [Test]
     public void RemoveSolutionRatioPreserved()
     {
-        var solution = new Solution();
+        var solution = new SolutionSpecifier();
         solution.AddReagent("water", FixedPoint2.New(1000));
         solution.AddReagent("fire", FixedPoint2.New(2000));
 
@@ -233,7 +234,7 @@ public sealed class SolutionTests : ContentUnitTest
     [Test]
     public void RemoveSolutionLessThanOneDoesNothing()
     {
-        var solution = new Solution("water", FixedPoint2.New(800));
+        var solution = new SolutionSpecifier("water", FixedPoint2.New(800));
 
         solution.RemoveSolution(FixedPoint2.New(-200));
 
@@ -244,7 +245,7 @@ public sealed class SolutionTests : ContentUnitTest
     [Test]
     public void SplitSolution()
     {
-        var solution = new Solution();
+        var solution = new SolutionSpecifier();
         solution.AddReagent("water", FixedPoint2.New(1000));
         solution.AddReagent("fire", FixedPoint2.New(2000));
 
@@ -262,7 +263,7 @@ public sealed class SolutionTests : ContentUnitTest
     [Test]
     public void SplitSolutionFractional()
     {
-        var solution = new Solution();
+        var solution = new SolutionSpecifier();
         solution.AddReagent("water", FixedPoint2.New(1));
         solution.AddReagent("fire", FixedPoint2.New(2));
 
@@ -280,7 +281,7 @@ public sealed class SolutionTests : ContentUnitTest
     [Test]
     public void SplitSolutionFractionalOpposite()
     {
-        var solution = new Solution();
+        var solution = new SolutionSpecifier();
         solution.AddReagent("water", FixedPoint2.New(1));
         solution.AddReagent("fire", FixedPoint2.New(2));
 
@@ -319,7 +320,7 @@ public sealed class SolutionTests : ContentUnitTest
     [TestCase(1000)]
     public void SplitRounding(int amount)
     {
-        var solutionOne = new Solution();
+        var solutionOne = new SolutionSpecifier();
         solutionOne.AddReagent("foo", FixedPoint2.New(amount));
         solutionOne.AddReagent("bar", FixedPoint2.New(amount));
         solutionOne.AddReagent("baz", FixedPoint2.New(amount));
@@ -333,7 +334,7 @@ public sealed class SolutionTests : ContentUnitTest
     [Test]
     public void SplitSolutionMoreThanTotalRemovesAll()
     {
-        var solution = new Solution("water", FixedPoint2.New(800));
+        var solution = new SolutionSpecifier("water", FixedPoint2.New(800));
 
         var splitSolution = solution.SplitSolution(FixedPoint2.New(1000));
 
@@ -347,7 +348,7 @@ public sealed class SolutionTests : ContentUnitTest
     [Test]
     public void SplitSolutionLessThanOneDoesNothing()
     {
-        var solution = new Solution("water", FixedPoint2.New(800));
+        var solution = new SolutionSpecifier("water", FixedPoint2.New(800));
 
         var splitSolution = solution.SplitSolution(FixedPoint2.New(-200));
 
@@ -361,7 +362,7 @@ public sealed class SolutionTests : ContentUnitTest
     [Test]
     public void SplitSolutionZero()
     {
-        var solution = new Solution();
+        var solution = new SolutionSpecifier();
         solution.AddReagent("Impedrezene", FixedPoint2.New(0.01 + 0.19));
         solution.AddReagent("Thermite", FixedPoint2.New(0.01 + 0.39));
         solution.AddReagent("Li", FixedPoint2.New(0.01 + 0.17));
@@ -382,11 +383,11 @@ public sealed class SolutionTests : ContentUnitTest
     [Test]
     public void AddSolution()
     {
-        var solutionOne = new Solution();
+        var solutionOne = new SolutionSpecifier();
         solutionOne.AddReagent("water", FixedPoint2.New(1000));
         solutionOne.AddReagent("fire", FixedPoint2.New(2000));
 
-        var solutionTwo = new Solution();
+        var solutionTwo = new SolutionSpecifier();
         solutionTwo.AddReagent("water", FixedPoint2.New(500));
         solutionTwo.AddReagent("earth", FixedPoint2.New(1000));
 
@@ -405,7 +406,7 @@ public sealed class SolutionTests : ContentUnitTest
     [Test]
     public void EmptySolutionHasNoHeatCapacity()
     {
-        var solution = new Solution();
+        var solution = new SolutionSpecifier();
         Assert.That(solution.GetHeatCapacity(null), Is.EqualTo(0.0f));
     }
 
@@ -414,7 +415,7 @@ public sealed class SolutionTests : ContentUnitTest
     {
         const float initialTemp = 100.0f;
 
-        var solution = new Solution("water", FixedPoint2.New(100)) { Temperature = initialTemp };
+        var solution = new SolutionSpecifier("water", FixedPoint2.New(100)) { Temperature = initialTemp };
 
         solution.AddReagent("water", FixedPoint2.New(100));
         Assert.That(solution.Temperature, Is.EqualTo(initialTemp));
@@ -428,11 +429,11 @@ public sealed class SolutionTests : ContentUnitTest
     {
         const float initialTemp = 100.0f;
 
-        var solutionOne = new Solution();
+        var solutionOne = new SolutionSpecifier();
         solutionOne.AddReagent("water", FixedPoint2.New(100));
         solutionOne.Temperature = initialTemp;
 
-        var solutionTwo = new Solution();
+        var solutionTwo = new SolutionSpecifier();
         solutionTwo.AddReagent("water", FixedPoint2.New(100));
         solutionTwo.AddReagent("earth", FixedPoint2.New(100));
         solutionTwo.Temperature = initialTemp;
@@ -446,7 +447,7 @@ public sealed class SolutionTests : ContentUnitTest
     {
         const float initialTemp = 100.0f;
 
-        var solution = new Solution("water", FixedPoint2.New(100)) { Temperature = initialTemp };
+        var solution = new SolutionSpecifier("water", FixedPoint2.New(100)) { Temperature = initialTemp };
         solution.RemoveReagent("water", FixedPoint2.New(50));
         Assert.That(solution.Temperature, Is.EqualTo(initialTemp));
     }
@@ -456,7 +457,7 @@ public sealed class SolutionTests : ContentUnitTest
     {
         const float initialTemp = 100.0f;
 
-        var solution = new Solution("water", FixedPoint2.New(100)) { Temperature = initialTemp };
+        var solution = new SolutionSpecifier("water", FixedPoint2.New(100)) { Temperature = initialTemp };
         solution.RemoveSolution(FixedPoint2.New(50));
         Assert.That(solution.Temperature, Is.EqualTo(initialTemp));
     }
@@ -466,7 +467,7 @@ public sealed class SolutionTests : ContentUnitTest
     {
         const float initialTemp = 100.0f;
 
-        var solution = new Solution("water", FixedPoint2.New(100)) { Temperature = initialTemp };
+        var solution = new SolutionSpecifier("water", FixedPoint2.New(100)) { Temperature = initialTemp };
         solution.SplitSolution(FixedPoint2.New(50));
         Assert.That(solution.Temperature, Is.EqualTo(initialTemp));
     }

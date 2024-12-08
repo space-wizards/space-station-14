@@ -1,5 +1,7 @@
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.Solutions;
+using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Chemistry.Components;
@@ -26,8 +28,8 @@ public sealed partial class SolutionRegenerationComponent : Component
     /// <summary>
     /// The reagent(s) to be regenerated in the solution.
     /// </summary>
-    [DataField(required: true)]
-    public Solution Generated = default!;
+    [DataField("generated", required: true), ViewVariables(VVAccess.ReadWrite)]
+    public SolutionSpecifier Generated = default!;
 
     /// <summary>
     /// How long it takes to regenerate once.

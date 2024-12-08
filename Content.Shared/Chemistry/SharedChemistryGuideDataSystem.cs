@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -10,6 +11,7 @@ namespace Content.Shared.Chemistry;
 public abstract class SharedChemistryGuideDataSystem : EntitySystem
 {
     [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
+    [Dependency] protected readonly SharedChemistryRegistrySystem ChemistryRegistry = default!;
 
     protected readonly Dictionary<string, ReagentGuideEntry> Registry = new();
 
