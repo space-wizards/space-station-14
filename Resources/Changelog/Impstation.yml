@@ -1,16 +1,6 @@
 ﻿Entries:
 - author: hivehum
   changes:
-  - message: Head Revolutionaries require 10 hours in Command and 10 hours in Security
-      to unlock.
-    type: Tweak
-  - message: The Revolutionary start text was altered to be less bloodthirsty.
-    type: Tweak
-  id: 195
-  time: '2024-09-14T04:46:37.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/251
-- author: hivehum
-  changes:
   - message: Cigarettes are now functionally worthless.
     type: Fix
   id: 196
@@ -4482,3 +4472,12 @@
   id: 694
   time: '2024-12-08T15:35:26.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/953
+- author: Darkmajia
+  changes:
+  - message: Slimepeople have had their weakness to water and water vapor reduced.
+    type: Tweak
+  - message: Gastropoids have had their weakness to salt and salt-based reagents reduced.
+    type: Tweak
+  id: 695
+  time: '2024-12-08T19:06:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/959
