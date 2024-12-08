@@ -54,8 +54,10 @@ namespace Content.Client.Lobby
             LayoutContainer.SetAnchorPreset(Lobby, LayoutContainer.LayoutPreset.Wide);
 
             var lobbyNameCvar = _cfg.GetCVar(CCVars.ServerLobbyName);
+            var serverName = _baseClient.GameInfo?.ServerName ?? "";
+
             Lobby.ServerName.Text = string.IsNullOrEmpty(lobbyNameCvar)
-                ? Loc.GetString("ui-lobby-title") + " "  + _baseClient.GameInfo?.ServerName
+                ? Loc.GetString("ui-lobby-title", ("serverName", serverName))
                 : lobbyNameCvar;
 
             var width = _cfg.GetCVar(CCVars.ServerLobbyRightPanelWidth);
