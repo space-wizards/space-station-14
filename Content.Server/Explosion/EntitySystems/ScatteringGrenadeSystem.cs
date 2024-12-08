@@ -91,46 +91,44 @@ public sealed class ScatteringGrenadeSystem : EntitySystem
             var totalCount = component.Container.ContainedEntities.Count + component.UnspawnedCount;
 
             // if triggered while empty, (if it's blown up while empty) it'll just delete itself
-            if (component.IsTriggered)
+            if (component.IsTriggered && totalCount > 0)
             {
-                if (totalCount > 0)
+                var grenadeCoord = _transformSystem.GetMapCoordinates(uid);
+                var thrownCount = 0;
+                var segmentAngle = 360 / totalCount;
+                var additionalIntervalDelay = 0f;
+
+                while (TrySpawnContents(grenadeCoord, component, out var contentUid))
                 {
-                    var grenadeCoord = _transformSystem.GetMapCoordinates(uid);
-                    var thrownCount = 0;
-                    var segmentAngle = 360 / totalCount;
-                    var additionalIntervalDelay = 0f;
-
-                    while (TrySpawnContents(grenadeCoord, component, out var contentUid))
+                    Angle angle;
+                    if (component.RandomAngle)
+                        angle = _random.NextAngle();
+                    else
                     {
-                        Angle angle;
-                        if (component.RandomAngle)
-                            angle = _random.NextAngle();
-                        else
-                        {
-                            var angleMin = segmentAngle * thrownCount;
-                            var angleMax = segmentAngle * (thrownCount + 1);
-                            angle = Angle.FromDegrees(_random.Next(angleMin, angleMax));
-                            thrownCount++;
-                        }
+                        var angleMin = segmentAngle * thrownCount;
+                        var angleMax = segmentAngle * (thrownCount + 1);
+                        angle = Angle.FromDegrees(_random.Next(angleMin, angleMax));
+                        thrownCount++;
+                    }
 
-                        Vector2 direction = angle.ToVec().Normalized();
-                        if (component.RandomDistance)
-                            direction *= _random.NextFloat(component.RandomThrowDistanceMin, component.RandomThrowDistanceMax);
-                        else
-                            direction *= component.Distance;
+                    Vector2 direction = angle.ToVec().Normalized();
+                    if (component.RandomDistance)
+                        direction *= _random.NextFloat(component.RandomThrowDistanceMin, component.RandomThrowDistanceMax);
+                    else
+                        direction *= component.Distance;
 
-                        _throwingSystem.TryThrow(contentUid, direction, component.Velocity);
+                    _throwingSystem.TryThrow(contentUid, direction, component.Velocity);
 
-                        if (component.TriggerContents)
-                        {
-                            additionalIntervalDelay += _random.NextFloat(component.IntervalBetweenTriggersMin, component.IntervalBetweenTriggersMax);
-                            var contentTimer = EnsureComp<ActiveTimerTriggerComponent>(contentUid);
-                            contentTimer.TimeRemaining = component.DelayBeforeTriggerContents + additionalIntervalDelay;
-                            var ev = new ActiveTimerTriggerEvent(contentUid, uid);
-                            RaiseLocalEvent(contentUid, ref ev);
-                        }
+                    if (component.TriggerContents)
+                    {
+                        additionalIntervalDelay += _random.NextFloat(component.IntervalBetweenTriggersMin, component.IntervalBetweenTriggersMax);
+                        var contentTimer = EnsureComp<ActiveTimerTriggerComponent>(contentUid);
+                        contentTimer.TimeRemaining = component.DelayBeforeTriggerContents + additionalIntervalDelay;
+                        var ev = new ActiveTimerTriggerEvent(contentUid, uid);
+                        RaiseLocalEvent(contentUid, ref ev);
                     }
                 }
+
                 // Normally we'd use DeleteOnTrigger but because we need to wait for the frame update
                 // we have to delete it here instead
                 Del(uid);

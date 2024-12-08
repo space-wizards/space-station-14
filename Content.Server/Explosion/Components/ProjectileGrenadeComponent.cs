@@ -35,8 +35,14 @@ public sealed partial class ProjectileGrenadeComponent : Component
     public bool RandomAngle = false;
 
     /// <summary>
-    ///     The speed the projectiles are shot at
+    /// The minimum speed the projectiles may come out at
     /// </summary>
     [DataField]
-    public float Velocity = 1.5f;
+    public float MinVelocity = 2f;
+
+    /// <summary>
+    /// The maximum speed the projectiles may come out at
+    /// </summary>
+    [DataField]
+    public float MaxVelocity = 6f;
 }

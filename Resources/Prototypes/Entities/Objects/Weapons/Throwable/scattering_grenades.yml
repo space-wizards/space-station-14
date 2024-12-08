@@ -160,7 +160,7 @@
   - type: ScatteringGrenade
     fillPrototype: BulletFoam
     capacity: 30
-    velocity: 70
+    velocity: 30
   - type: OnUseTimerTrigger
     beepSound:
       path: "/Audio/Effects/beep1.ogg"

@@ -75,10 +75,10 @@ public sealed class ProjectileGrenadeSystem : EntitySystem
             }
 
             // velocity is randomized to make the projectiles look
-            // slightly even, doesn't really change much but it looks better
+            // slightly uneven, doesn't really change much, but it looks better
             Vector2 direction = angle.ToVec().Normalized();
-            Vector2 velocity = _random.NextVector2(component.Velocity);
-            _gun.ShootProjectile(contentUid, direction, velocity, uid);
+            Vector2 velocity = _random.NextVector2(component.MinVelocity, component.MaxVelocity);
+            _gun.ShootProjectile(contentUid, direction, velocity, uid, null);
         }
     }
 
