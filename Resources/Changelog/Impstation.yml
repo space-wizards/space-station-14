@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Cigarettes are now functionally worthless.
-    type: Fix
-  id: 196
-  time: '2024-09-14T04:46:28.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/252
 - author: sususuyo
   changes:
   - message: Added more Justice Helms to the secdrobe vend. The whole department should
@@ -4481,3 +4474,11 @@
   id: 695
   time: '2024-12-08T19:06:05.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/959
+- author: ATDoop
+  changes:
+  - message: 3 new plushies! Decapoid, snail, and a very rare secret plush. Buy some
+      plushie crates and try and find them!!
+    type: Add
+  id: 696
+  time: '2024-12-08T21:09:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/960
