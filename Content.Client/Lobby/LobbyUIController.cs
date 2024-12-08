@@ -460,7 +460,7 @@ public sealed class LobbyUIController : UIController, IOnStateEntered<LobbyState
         {
             job ??= GetPreferredJob(humanoid);
 
-            previewEntity = job.JobPreviewEntity ?? (EntProtoId?) job?.JobEntity;
+            previewEntity = job.JobPreviewEntity ?? (EntProtoId?)job?.JobEntity;
         }
 
         if (previewEntity != null)
