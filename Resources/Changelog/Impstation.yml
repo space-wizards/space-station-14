@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: DF-style randomized Dwarf names.
-    type: Add
-  id: 190
-  time: '2024-09-11T19:26:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/240
-- author: aada
-  changes:
-  - message: Rare chance for space ticks to spawn in maints lockers.
-    type: Add
-  - message: Very Rare chance for carp.
-    type: Add
-  id: 191
-  time: '2024-09-11T19:26:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/231
 - author: aada
   changes:
   - message: Added cloth flavored donk-pockets.
@@ -4449,3 +4433,17 @@
   id: 689
   time: '2024-12-08T15:04:43.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/958
+- author: kipdotnet
+  changes:
+  - message: Banana.
+    type: Fix
+  id: 690
+  time: '2024-12-08T15:12:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/950
+- author: Sha-Seng
+  changes:
+  - message: Gathered Low hairstyle has more body from the side now
+    type: Tweak
+  id: 691
+  time: '2024-12-08T15:11:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/951
