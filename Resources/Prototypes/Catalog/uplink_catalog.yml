@@ -1816,6 +1816,17 @@
     - UplinkPointless
 
 - type: listing
+  id: UplinkPropagandaBundle
+  name: uplink-propaganda-bundle-name
+  description: uplink-propaganda-bundle-desc
+  icon: { sprite: Structures/Wallmounts/posters.rsi, state: poster5_contraband }
+  productEntity: ClothingBackpackDuffelSyndicatePropagandaKitFilled
+  cost:
+    Telecrystal: 3
+  categories:
+    - UplinkPointless
+    
+- type: listing
   id: UplinkSyndicateBusinessCard
   name: uplink-business-card-name
   description: uplink-business-card-desc
