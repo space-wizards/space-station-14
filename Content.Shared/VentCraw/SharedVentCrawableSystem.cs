@@ -1,8 +1,10 @@
 // Initial file ported from the Starlight project repo, located at https://github.com/ss14Starlight/space-station-14
 
 using System.Linq;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
 using Content.Shared.Tools.Components;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Movement.Events;
 using Content.Shared.VentCraw.Tube.Components;
@@ -27,6 +29,7 @@ public sealed class SharedVentCrawableSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
 
     public override void Initialize()
     {
@@ -36,6 +39,7 @@ public sealed class SharedVentCrawableSystem : EntitySystem
         SubscribeLocalEvent<VentCrawHolderComponent, MoveInputEvent>(OnMoveInput);
 
         SubscribeLocalEvent<VentCrawlerComponent, CanSeeAttemptEvent>(OnCanSee);
+        SubscribeLocalEvent<VentCrawlerComponent, InteractionAttemptEvent>(OnInteractAttempt);
     }
 
     /// <summary>
@@ -50,6 +54,11 @@ public sealed class SharedVentCrawableSystem : EntitySystem
             args.Cancel();
     }
 
+    private void OnInteractAttempt(EntityUid uid, VentCrawlerComponent comp, ref InteractionAttemptEvent args)
+    {
+        if (comp.InTube)
+            args.Cancelled = true;
+    }
     /// <summary>
     /// Handles the MoveInputEvent for VentCrawHolderComponent.
     /// </summary>
