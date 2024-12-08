@@ -122,12 +122,6 @@ entities:
           decals:
             595: -7,8
         - node:
-            color: '#334E6DC8'
-            id: BrickCornerOverlayNE
-          decals:
-            275: -17,-19
-            447: -26,-21
-        - node:
             color: '#89347ECD'
             id: BrickCornerOverlayNE
           decals:
@@ -143,12 +137,6 @@ entities:
           decals:
             250: 4,-5
         - node:
-            color: '#334E6DC8'
-            id: BrickCornerOverlayNW
-          decals:
-            270: -24,-19
-            444: -29,-21
-        - node:
             color: '#89347ECD'
             id: BrickCornerOverlayNW
           decals:
@@ -163,12 +151,6 @@ entities:
             id: BrickCornerOverlayNW
           decals:
             249: -2,-5
-        - node:
-            color: '#334E6DC8'
-            id: BrickCornerOverlaySE
-          decals:
-            272: -17,-22
-            446: -26,-22
         - node:
             color: '#89347ECD'
             id: BrickCornerOverlaySE
@@ -190,12 +172,6 @@ entities:
           decals:
             248: 4,-8
         - node:
-            color: '#334E6DC8'
-            id: BrickCornerOverlaySW
-          decals:
-            271: -24,-22
-            445: -29,-22
-        - node:
             color: '#89347ECD'
             id: BrickCornerOverlaySW
           decals:
@@ -211,12 +187,6 @@ entities:
           decals:
             247: -2,-8
         - node:
-            color: '#334E6DC8'
-            id: BrickLineOverlayE
-          decals:
-            273: -17,-21
-            274: -17,-20
-        - node:
             color: '#8C1D99D9'
             id: BrickLineOverlayE
           decals:
@@ -228,18 +198,6 @@ entities:
           decals:
             233: 4,-7
             234: 4,-6
-        - node:
-            color: '#334E6DC8'
-            id: BrickLineOverlayN
-          decals:
-            278: -23,-19
-            279: -22,-19
-            280: -21,-19
-            281: -20,-19
-            282: -19,-19
-            283: -18,-19
-            450: -28,-21
-            451: -27,-21
         - node:
             color: '#89347ECD'
             id: BrickLineOverlayN
@@ -257,18 +215,6 @@ entities:
             239: 1,-5
             240: 2,-5
             241: 3,-5
-        - node:
-            color: '#334E6DC8'
-            id: BrickLineOverlayS
-          decals:
-            284: -18,-22
-            285: -19,-22
-            286: -20,-22
-            287: -21,-22
-            288: -22,-22
-            289: -23,-22
-            448: -27,-22
-            449: -28,-22
         - node:
             color: '#89347ECD'
             id: BrickLineOverlayS
@@ -291,12 +237,6 @@ entities:
             535: 3,-8
             536: 2,-8
         - node:
-            color: '#334E6DC8'
-            id: BrickLineOverlayW
-          decals:
-            276: -24,-21
-            277: -24,-20
-        - node:
             color: '#8C1D99D9'
             id: BrickLineOverlayW
           decals:
@@ -308,6 +248,11 @@ entities:
           decals:
             235: -2,-7
             236: -2,-6
+        - node:
+            color: '#334E6DC8'
+            id: BrickTileWhiteCornerNe
+          decals:
+            640: -17,-19
         - node:
             color: '#474F52FF'
             id: BrickTileWhiteCornerNe
@@ -346,6 +291,12 @@ entities:
             331: -23,5
             332: -26,6
         - node:
+            color: '#334E6DC8'
+            id: BrickTileWhiteCornerNw
+          decals:
+            641: -29,-21
+            642: -19,-15
+        - node:
             color: '#474F52FF'
             id: BrickTileWhiteCornerNw
           decals:
@@ -383,6 +334,12 @@ entities:
             333: -30,6
             340: -30,1
         - node:
+            color: '#334E6DC8'
+            id: BrickTileWhiteCornerSe
+          decals:
+            630: -17,-22
+            670: -26,-22
+        - node:
             color: '#474F52FF'
             id: BrickTileWhiteCornerSe
           decals:
@@ -419,6 +376,13 @@ entities:
             328: -26,-2
             330: -23,4
         - node:
+            color: '#334E6DC8'
+            id: BrickTileWhiteCornerSw
+          decals:
+            631: -24,-22
+            638: -29,-22
+            639: -19,-17
+        - node:
             color: '#474F52FF'
             id: BrickTileWhiteCornerSw
           decals:
@@ -451,6 +415,12 @@ entities:
             327: -30,-2
             531: -30,4
         - node:
+            color: '#334E6DC8'
+            id: BrickTileWhiteInnerNe
+          decals:
+            652: -21,-19
+            653: -18,-19
+        - node:
             color: '#474F52FF'
             id: BrickTileWhiteInnerNe
           decals:
@@ -474,6 +444,13 @@ entities:
             366: -26,5
             610: -31,5
         - node:
+            color: '#334E6DC8'
+            id: BrickTileWhiteInnerNw
+          decals:
+            651: -23,-19
+            658: -18,-19
+            673: -24,-21
+        - node:
             color: '#474F52FF'
             id: BrickTileWhiteInnerNw
           decals:
@@ -493,6 +470,12 @@ entities:
           decals:
             349: -27,1
             609: -30,5
+        - node:
+            color: '#334E6DC8'
+            id: BrickTileWhiteInnerSe
+          decals:
+            657: -18,-17
+            671: -26,-21
         - node:
             color: '#474F52FF'
             id: BrickTileWhiteInnerSe
@@ -517,6 +500,13 @@ entities:
             365: -26,4
             611: -31,5
         - node:
+            color: '#334E6DC8'
+            id: BrickTileWhiteInnerSw
+          decals:
+            655: -18,-17
+            666: -24,-21
+            669: -24,-19
+        - node:
             color: '#474F52FF'
             id: BrickTileWhiteInnerSw
           decals:
@@ -537,18 +527,19 @@ entities:
             534: -27,4
             612: -30,5
         - node:
+            color: '#334E6DC8'
+            id: BrickTileWhiteLineE
+          decals:
+            660: -18,-18
+            661: -17,-20
+            662: -17,-21
+        - node:
             angle: -1.5707963267948966 rad
             color: '#474F52FF'
             id: BrickTileWhiteLineE
           decals:
             88: -9,-2
             90: -11,-2
-            100: -18,-22
-            101: -19,-22
-            102: -20,-22
-            103: -21,-22
-            104: -22,-22
-            105: -23,-22
         - node:
             color: '#474F52FF'
             id: BrickTileWhiteLineE
@@ -631,6 +622,19 @@ entities:
             541: -26,1
             542: -26,2
         - node:
+            color: '#334E6DC8'
+            id: BrickTileWhiteLineN
+          decals:
+            643: -20,-19
+            644: -19,-19
+            645: -27,-21
+            646: -28,-21
+            647: -26,-21
+            650: -24,-19
+            654: -18,-15
+            664: -25,-21
+            668: -25,-19
+        - node:
             color: '#474F52FF'
             id: BrickTileWhiteLineN
           decals:
@@ -705,6 +709,20 @@ entities:
             353: -25,5
             354: -24,5
             597: -29,6
+        - node:
+            color: '#334E6DC8'
+            id: BrickTileWhiteLineS
+          decals:
+            624: -23,-22
+            625: -22,-22
+            626: -21,-22
+            627: -20,-22
+            628: -19,-22
+            629: -18,-22
+            634: -27,-22
+            635: -28,-22
+            665: -25,-21
+            667: -25,-19
         - node:
             color: '#474F52FF'
             id: BrickTileWhiteLineS
@@ -781,6 +799,13 @@ entities:
             364: -29,-2
             532: -29,4
             533: -28,4
+        - node:
+            color: '#334E6DC8'
+            id: BrickTileWhiteLineW
+          decals:
+            656: -19,-16
+            659: -18,-18
+            672: -24,-20
         - node:
             color: '#474F52FF'
             id: BrickTileWhiteLineW
@@ -1960,8 +1985,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -17.5,-8.5
       parent: 2
-- proto: AirlockSecurityLocked
-  entities:
   - uid: 69
     components:
     - type: Transform
@@ -2360,6 +2383,11 @@ entities:
     - type: Transform
       pos: -14.290314,8.552368
       parent: 2
+  - uid: 2534
+    components:
+    - type: Transform
+      pos: -7.542572,6.475281
+      parent: 2
 - proto: Bed
   entities:
   - uid: 128
@@ -2403,19 +2431,24 @@ entities:
       parent: 2
 - proto: BenchSofaCorpLeft
   entities:
-  - uid: 133
+  - uid: 2562
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -29.5,-11.5
+      pos: -12.5,2.5
+      parent: 2
+- proto: BenchSofaCorpMiddle
+  entities:
+  - uid: 2555
+    components:
+    - type: Transform
+      pos: -13.5,2.5
       parent: 2
 - proto: BenchSofaCorpRight
   entities:
-  - uid: 134
+  - uid: 2563
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -29.5,-12.5
+      pos: -14.5,2.5
       parent: 2
 - proto: Bible
   entities:
@@ -6109,6 +6142,12 @@ entities:
       rot: 3.141592653589793 rad
       pos: -24.494568,4.9684753
       parent: 2
+  - uid: 2561
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -13.281921,7.61557
+      parent: 2
 - proto: ChairWood
   entities:
   - uid: 119
@@ -6335,8 +6374,24 @@ entities:
     - type: ContainerContainer
       containers:
         lens_slot: !type:ContainerSlot {}
+- proto: ClothingEyesHudBeer
+  entities:
+  - uid: 2533
+    components:
+    - type: Transform
+      pos: 1.1422424,6.4457397
+      parent: 2
+    - type: ContainerContainer
+      containers:
+        lens_slot: !type:ContainerSlot {}
 - proto: ComfyChair
   entities:
+  - uid: 133
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -29.5,-12.5
+      parent: 2
   - uid: 2492
     components:
     - type: Transform
@@ -6636,6 +6691,13 @@ entities:
           ent: null
     - type: Pullable
       prevFixedRotation: True
+- proto: CrateServiceJanitorialHardsuit
+  entities:
+  - uid: 134
+    components:
+    - type: Transform
+      pos: -29.5,-11.5
+      parent: 2
 - proto: CrateTrashCart
   entities:
   - uid: 816
@@ -6714,7 +6776,7 @@ entities:
       pos: -6.5,9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -56768.78
+      secondsUntilStateChange: -60115.586
       state: Closing
 - proto: DebugAPC
   entities:
@@ -6878,6 +6940,18 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -21.5,12.5
+      parent: 2
+- proto: DeskBell
+  entities:
+  - uid: 2544
+    components:
+    - type: Transform
+      pos: 1.894989,3.5820312
+      parent: 2
+  - uid: 2550
+    components:
+    - type: Transform
+      pos: -19.610687,-15.173004
       parent: 2
 - proto: DisposalBend
   entities:
@@ -7290,6 +7364,13 @@ entities:
     components:
     - type: Transform
       pos: -13.5,9.5
+      parent: 2
+- proto: DrinkCottonBoolGlass
+  entities:
+  - uid: 2537
+    components:
+    - type: Transform
+      pos: -11.6249695,5.4873047
       parent: 2
 - proto: DrinkGlass
   entities:
@@ -7870,7 +7951,7 @@ entities:
       pos: 6.5,-3.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -42925.17
+      secondsUntilStateChange: -46271.977
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -8225,6 +8306,13 @@ entities:
       parent: 2
     - type: Fixtures
       fixtures: {}
+- proto: FoodBakedBunHoney
+  entities:
+  - uid: 2554
+    components:
+    - type: Transform
+      pos: -5.0829163,4.475281
+      parent: 2
 - proto: FoodBoxPizzaFilled
   entities:
   - uid: 998
@@ -11553,8 +11641,8 @@ entities:
   - uid: 1367
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -39.5,6.5
+      rot: 1.5707963267948966 rad
+      pos: -37.5,9.5
       parent: 2
   - uid: 1368
     components:
@@ -12306,6 +12394,36 @@ entities:
     - type: Transform
       pos: -16.5,17.5
       parent: 2
+  - uid: 2556
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -38.5,5.5
+      parent: 2
+  - uid: 2557
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -38.5,6.5
+      parent: 2
+  - uid: 2558
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -38.5,7.5
+      parent: 2
+  - uid: 2559
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -38.5,8.5
+      parent: 2
+  - uid: 2560
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -38.5,3.5
+      parent: 2
 - proto: HandHeldMassScanner
   entities:
   - uid: 1488
@@ -12474,11 +12592,6 @@ entities:
     components:
     - type: Transform
       pos: -14.664459,8.579437
-      parent: 2
-  - uid: 2513
-    components:
-    - type: Transform
-      pos: -7.5152893,6.562561
       parent: 2
 - proto: LockerAtmosphericsFilledHardsuit
   entities:
@@ -12822,7 +12935,7 @@ entities:
         stampedName: Syt'u, Fourteenth
       - stampedColor: '#2F4F4FFF'
         stampedName: Odds-And-Ends
-      content: >+
+      content: >-
         [color=#f39f27]░░▄▀░░ [head=2]Engineering Memo[/head]
 
         ░▄█▄▄▀ [head=3]Subject:  Setup[/head]
@@ -12837,10 +12950,10 @@ entities:
         - All of the pumps and filters in the engineering department. you can see them embedded in the floor, and can click on them to turn them on.
 
 
-        - The pump and filter in the medical bay's back room are needed for the cryopod to function.
+        - The pump and filter in the medical bay are needed for the cryopod to function.
 
 
-        - The radiation collectors in Frank (the crab)'s chamber. You can turn them on just by clicking on them.
+        - The radiation collectors in Frank (the crab)'s chamber. You can turn them on just by clicking on them. Please be advised that the windows are rated to a higher than usual standard, and if you choose to remove and rebuild them you may need additional shielding.
 
 
         - The emitter and containment field in the shuttle bay will need to be enabled, in the same manner.
@@ -12854,11 +12967,15 @@ entities:
         ───────────────────────────────────────
 
         Sincerely, CENTCOMM Engineering.
-
   - uid: 2244
     components:
     - type: Transform
       pos: -16.508514,-21.697113
+      parent: 2
+  - uid: 2551
+    components:
+    - type: Transform
+      pos: -19.376312,-15.360504
       parent: 2
 - proto: PartRodMetal
   entities:
@@ -12873,6 +12990,18 @@ entities:
     components:
     - type: Transform
       pos: 4.4968195,-5.3027654
+      parent: 2
+  - uid: 2552
+    components:
+    - type: Transform
+      pos: -19.610687,-15.548004
+      parent: 2
+- proto: PenCentcom
+  entities:
+  - uid: 2553
+    components:
+    - type: Transform
+      pos: -23.342499,-21.316711
       parent: 2
 - proto: PhoneInstrument
   entities:
@@ -13024,12 +13153,76 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -2.5,-4.5
       parent: 2
+- proto: PlushieArachind
+  entities:
+  - uid: 2564
+    components:
+    - type: Transform
+      pos: -12.538422,2.5822754
+      parent: 2
+- proto: PlushieCosmicCult
+  entities:
+  - uid: 2547
+    components:
+    - type: Transform
+      pos: 6.1757812,-7.0670166
+      parent: 2
+- proto: PlushieDiona
+  entities:
+  - uid: 2538
+    components:
+    - type: Transform
+      pos: -18.5401,-15.4539795
+      parent: 2
+- proto: PlushieFinfin
+  entities:
+  - uid: 2543
+    components:
+    - type: Transform
+      pos: 2.6047668,3.8632812
+      parent: 2
+- proto: PlushieGray
+  entities:
+  - uid: 2548
+    components:
+    - type: Transform
+      pos: -6.3056335,-9.643036
+      parent: 2
 - proto: PlushieLamp
   entities:
   - uid: 2242
     components:
     - type: Transform
       pos: -23.564392,-21.203064
+      parent: 2
+- proto: PlushieLizard
+  entities:
+  - uid: 2540
+    components:
+    - type: Transform
+      pos: -18.48291,13.490936
+      parent: 2
+- proto: PlushieRouny
+  entities:
+  - uid: 2541
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -13.193298,9.303436
+      parent: 2
+- proto: PlushieSlime
+  entities:
+  - uid: 2539
+    components:
+    - type: Transform
+      pos: -26.82434,-7.36322
+      parent: 2
+- proto: PlushieVox
+  entities:
+  - uid: 2542
+    components:
+    - type: Transform
+      pos: -5.570587,-2.3172302
       parent: 2
 - proto: PortableGeneratorJrPacman
   entities:
@@ -13057,6 +13250,23 @@ entities:
     - type: Transform
       pos: -16.5,2.5
       parent: 2
+- proto: PosterContrabandMissingGloves
+  entities:
+  - uid: 2531
+    components:
+    - type: MetaData
+      desc: "Across the bottom of the poster, its normal writing has been graffiti'd over, instead reading: \"yellows of hand, of glove. electricity\"."
+      name: Missing Yellows
+    - type: Transform
+      pos: -5.5,-9.5
+      parent: 2
+- proto: PosterContrabandSunkist
+  entities:
+  - uid: 2566
+    components:
+    - type: Transform
+      pos: -30.5,1.5
+      parent: 2
 - proto: PosterLegitEnlist
   entities:
   - uid: 2436
@@ -13064,6 +13274,30 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -19.5,-6.5
+      parent: 2
+- proto: PosterLegitJustAWeekAway
+  entities:
+  - uid: 2513
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -21.5,10.5
+      parent: 2
+- proto: PosterLegitSafetyMothEpi
+  entities:
+  - uid: 2535
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -15.5,3.5
+      parent: 2
+- proto: PosterLegitSafetyMothMeth
+  entities:
+  - uid: 2565
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -11.5,9.5
       parent: 2
 - proto: PowerCellRecharger
   entities:
@@ -14556,12 +14790,26 @@ entities:
     - type: Transform
       pos: 2.5,9.5
       parent: 2
+- proto: SpawnMobCatRuntime
+  entities:
+  - uid: 2532
+    components:
+    - type: Transform
+      pos: -19.5,12.5
+      parent: 2
 - proto: SpawnMobCorgi
   entities:
   - uid: 1138
     components:
     - type: Transform
       pos: -17.5,-14.5
+      parent: 2
+- proto: SpawnMobShiva
+  entities:
+  - uid: 2545
+    components:
+    - type: Transform
+      pos: -17.5,-9.5
       parent: 2
 - proto: SpawnMobWalter
   entities:
@@ -14626,6 +14874,13 @@ entities:
     - type: Transform
       pos: -18.5,-19.5
       parent: 2
+- proto: SpawnPointClown
+  entities:
+  - uid: 2546
+    components:
+    - type: Transform
+      pos: 6.5,-0.5
+      parent: 2
 - proto: SpawnPointHeadOfPersonnel
   entities:
   - uid: 2226
@@ -14660,6 +14915,20 @@ entities:
     components:
     - type: Transform
       pos: -18.5,8.5
+      parent: 2
+- proto: SpawnPointMime
+  entities:
+  - uid: 2549
+    components:
+    - type: Transform
+      pos: 6.5,0.5
+      parent: 2
+- proto: SpawnPointMusician
+  entities:
+  - uid: 2536
+    components:
+    - type: Transform
+      pos: 6.5,-1.5
       parent: 2
 - proto: SpawnPointObserver
   entities:
