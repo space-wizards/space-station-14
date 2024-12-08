@@ -138,7 +138,7 @@ public sealed class FloorTileSystem : EntitySystem
 
                 if (HasBaseTurf(currentTileDefinition, baseTurf.ID))
                 {
-                    if (!_stackSystem.Use(uid, 1, stack))
+                    if (!_stackSystem.Use((uid, stack), 1))
                         continue;
 
                     PlaceAt(args.User, gridUid, mapGrid, location, currentTileDefinition.TileId, component.PlaceTileSound);
@@ -148,7 +148,7 @@ public sealed class FloorTileSystem : EntitySystem
             }
             else if (HasBaseTurf(currentTileDefinition, ContentTileDefinition.SpaceID))
             {
-                if (!_stackSystem.Use(uid, 1, stack))
+                if (!_stackSystem.Use((uid, stack), 1))
                     continue;
 
                 args.Handled = true;
