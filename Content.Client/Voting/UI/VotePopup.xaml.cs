@@ -87,8 +87,6 @@ namespace Content.Client.Voting.UI
 
         protected override void FrameUpdate(FrameEventArgs args)
         {
-            // Logger.Debug($"{_gameTiming.ServerTime}, {_vote.StartTime}, {_vote.EndTime}");
-
             var curTime = _gameTiming.RealTime;
             var timeLeft = _vote.EndTime - curTime;
             if (timeLeft < TimeSpan.Zero)

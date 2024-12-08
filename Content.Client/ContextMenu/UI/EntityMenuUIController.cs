@@ -52,6 +52,10 @@ namespace Content.Client.ContextMenu.UI
         [UISystemDependency] private readonly TransformSystem _xform = default!;
         [UISystemDependency] private readonly CombatModeSystem _combatMode = default!;
 
+        [Dependency] private readonly ILogManager _logManager = default!;
+        private ISawmill _sawmill = default!;
+        private const string SawmillName = "ui.entity";
+
         private bool _updating;
 
         /// <summary>
@@ -61,6 +65,12 @@ namespace Content.Client.ContextMenu.UI
         ///     This is used remove GUI elements when the entities are deleted. or leave the LOS.
         /// </remarks>
         public Dictionary<EntityUid, EntityMenuElement> Elements = new();
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            _sawmill = _logManager.GetSawmill(SawmillName);
+        }
 
         public void OnStateEntered(GameplayState state)
         {
@@ -306,7 +316,7 @@ namespace Content.Client.ContextMenu.UI
             // find the element associated with this entity
             if (!Elements.TryGetValue(entity, out var element))
             {
-                Logger.Error($"Attempted to remove unknown entity from the entity menu: {_entityManager.GetComponent<MetaDataComponent>(entity).EntityName} ({entity})");
+                _sawmill.Error($"Attempted to remove unknown entity from the entity menu: {_entityManager.GetComponent<MetaDataComponent>(entity).EntityName} ({entity})");
                 return;
             }
 
