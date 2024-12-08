@@ -106,6 +106,18 @@ namespace Content.Shared.Chemistry.Reagent
         public bool Slippery;
 
         /// <summary>
+        /// If this reagent evaporates on its own over time.
+        /// </summary>
+        [DataField]
+        public bool Evaporates = false;
+
+        /// <summary>
+        /// If this reagent can be used to mop up other reagents.
+        /// </summary>
+        [DataField]
+        public bool Moppable = false;
+
+        /// <summary>
         /// How easily this reagent becomes fizzy when aggitated.
         /// 0 - completely flat, 1 - fizzes up when nudged.
         /// </summary>
@@ -206,7 +218,7 @@ namespace Content.Shared.Chemistry.Reagent
                 .ToDictionary(x => x.Key, x => x.Item2);
             if (proto.PlantMetabolisms.Count > 0)
             {
-                PlantMetabolisms = new List<string> (proto.PlantMetabolisms
+                PlantMetabolisms = new List<string>(proto.PlantMetabolisms
                     .Select(x => x.GuidebookEffectDescription(prototype, entSys))
                     .Where(x => x is not null)
                     .Select(x => x!)
