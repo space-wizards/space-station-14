@@ -106,6 +106,7 @@
   parent: PrintedDocument
   id: PrintedDocumentStatementAppointmentInterimChapter
   name: Statement of Appointment to the Interim Chapter
+  categories: [ HideSpawnMenu ]
   components:
     - type: Paper
       content: doc-text-printer-statement-appointment-interim-chapter
@@ -114,6 +115,16 @@
   parent: PrintedDocument
   id: PrintedDocumentEmploymentStatement
   name: Statement of Employment
+  categories: [ HideSpawnMenu ]
   components:
     - type: Paper
       content: doc-text-printer-employment-statement
+      
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentResignationStatement
+  name: Statement of Resignation
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-resignation-statement

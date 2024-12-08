@@ -17,7 +17,7 @@ doc-text-printer-report-station =
     Current Situation:
     
     ──────────────────────────────────────────
-   ⠀                                    [italic]Place for seals[/italic]
+   ⠀                                    [italic]Place for stamps[/italic]
 doc-text-printer-report-on-elimination-of-violations =
    ⠀[logo]            [head=3]NanoTrasen[/head]
     ──────────────────────────────────────────
@@ -35,7 +35,7 @@ doc-text-printer-report-on-elimination-of-violations =
     Measures taken to eliminate violations:
     
     ──────────────────────────────────────────
-   ⠀                                    [italic]Place for seals[/italic]
+   ⠀                                    [italic]Place for stamps[/italic]
 doc-text-printer-report-department =
    ⠀[logo]            [head=3]NanoTrasen[/head]
     ──────────────────────────────────────────
@@ -53,7 +53,7 @@ doc-text-printer-report-department =
     General condition of the department:
     
     ──────────────────────────────────────────
-   ⠀                                    [italic]Place for seals[/italic]
+   ⠀                                    [italic]Place for stamps[/italic]
 doc-text-printer-report-employee-performance =
    ⠀[logo]            [head=3]NanoTrasen[/head]
     ──────────────────────────────────────────
@@ -67,7 +67,7 @@ doc-text-printer-report-employee-performance =
     Works performed:
     
     ──────────────────────────────────────────
-   ⠀                                    [italic]Place for seals[/italic]
+   ⠀                                    [italic]Place for stamps[/italic]
 doc-text-printer-report-on-the-chapters-meeting =
    ⠀[logo]            [head=3]NanoTrasen[/head]
     ──────────────────────────────────────────
@@ -91,7 +91,7 @@ doc-text-printer-report-on-the-chapters-meeting =
     Resolution of the Meeting of Heads:
     
     ──────────────────────────────────────────
-   ⠀                                    [italic]Place for seals[/italic]
+   ⠀                                    [italic]Place for stamps[/italic]
 doc-text-printer-internal-affairs-agents-report =
    ⠀[logo]            [head=3]NanoTrasen[/head]
     ──────────────────────────────────────────
@@ -106,7 +106,7 @@ doc-text-printer-internal-affairs-agents-report =
     I also wish to report the following:
     
     ──────────────────────────────────────────
-   ⠀                                    [italic]Place for seals[/italic]
+   ⠀                                    [italic]Place for stamps[/italic]
 doc-text-printer-condition-report =
    ⠀[logo]            [head=3]NanoTrasen[/head]
     ──────────────────────────────────────────
@@ -124,7 +124,7 @@ doc-text-printer-condition-report =
     Facility repairs performed:
     
     ──────────────────────────────────────────
-   ⠀                                    [italic]Place for seals[/italic]
+   ⠀                                    [italic]Place for stamps[/italic]
 doc-text-printer-object-investigation-report =
    ⠀[logo]            [head=3]NanoTrasen[/head]
     ──────────────────────────────────────────
@@ -140,7 +140,7 @@ doc-text-printer-object-investigation-report =
     Identified properties of the object:
     
     ──────────────────────────────────────────
-   ⠀                                    [italic]Place for seals[/italic]
+   ⠀                                    [italic]Place for stamps[/italic]
 doc-text-printer-experiment-report =
    ⠀[logo]            [head=3]NanoTrasen[/head]
     ──────────────────────────────────────────
@@ -164,7 +164,7 @@ doc-text-printer-experiment-report =
     Actual result:
     
     ──────────────────────────────────────────
-   ⠀                                    [italic]Place for seals[/italic]
+   ⠀                                    [italic]Place for stamps[/italic]
 doc-text-printer-disposal-report =
    ⠀[logo]            [head=3]NanoTrasen[/head]
     ──────────────────────────────────────────
@@ -178,7 +178,7 @@ doc-text-printer-disposal-report =
     List of items found:
     
     ──────────────────────────────────────────
-   ⠀                                    [italic]Place for seals[/italic]
+   ⠀                                    [italic]Place for stamps[/italic]
 
 # Statements
 
@@ -191,17 +191,22 @@ doc-text-printer-statement-appointment-interim-chapter =
     Compiler of the document:
     The position of the originator:
     
-    I, (full name), in the position of (full job title), request approval of my appointment to the position of Acting (full department name)/Captain.
-    Upon assuming the position, I agree to follow Standard Operating Procedures and, until the arrival of the (full name of department)/Captain from Central Command, to ensure the order and management of the division, and to ensure the safety of particularly valuable items and equipment entrusted to me.
+    I, (full name), in the position of (full job title), 
+    request approval of my appointment to the position of Acting (full department name)/Captain.
+    Upon assuming the position, I agree to follow Standard Operating Procedures and, 
+    until the arrival of the (full name of department)/Captain from Central Command, 
+    to ensure the order and management of the division, 
+    and to ensure the safety of particularly valuable items and equipment entrusted to me.
     
-    Upon arrival of the Head of Department/Captain from the Central Command, I undertake to surrender the increased access, especially valuable items and equipment.
+    Upon arrival of the Head of Department/Captain from the Central Command, 
+    I undertake to surrender the increased access, especially valuable items and equipment.
     
     ──────────────────────────────────────────
-   ⠀                                    [italic]Place for seals[/italic]
-doc-text-printer-statement-employment =
+   ⠀                                    [italic]Place for stamps[/italic]
+doc-text-printer-employment-statement =
    ⠀[logo]            [head=3]NanoTrasen[/head]
     ──────────────────────────────────────────
-   ⠀⠀          [bold]EMPLOYMENT STATEMENT[/bold]
+   ⠀⠀                           [bold]EMPLOYMENT STATEMENT[/bold]
     ──────────────────────────────────────────
     Time and Date:
     Compiler of the document:
@@ -211,4 +216,18 @@ doc-text-printer-statement-employment =
     I agree to follow the department's Standard Operating Procedures. I agree to surrender my department work gear and equipment upon transfer.
     
     ──────────────────────────────────────────
-   ⠀                                    [italic]Place for seals[/italic]
+   ⠀                                    [italic]Place for stamps[/italic]
+doc-text-printer-resignation-statement =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀                          [bold]RESIGNATION STATEMENT[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    I, (full name), in the current position of (full job title), wish to resign from (name of department) for (reason).
+    I undertake to pay the penalty established by the terms of termination of fixed-term/permanent contract at the Central Command station.
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]

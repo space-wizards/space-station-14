@@ -109,3 +109,12 @@
   applyMaterialDiscount: false
   materials:
     SheetPrinter: 100
+    
+- type: latheRecipe
+  id: PrintedDocumentResignationStatementRecipe
+  result: PrintedDocumentResignationStatement
+  category: Statements
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
