@@ -1,0 +1,17 @@
+- files:
+    - "taperecorder_play.ogg"
+  license: "CC0-1.0"
+  copyright: "Taken from cassette tape deck open, close +tape handling.aif by kyles. Converted from Aiff to Ogg."
+  source: "https://freesound.org/people/kyles/sounds/450525/"
+
+- files:
+    - "taperecorder_stop.ogg"
+  license: "CC-BY-4.0"
+  copyright: "Taken from Pressing Stop on An Old Tape Machine by djlprojects. Converted from Mp3 to Ogg."
+  source: "https://freesound.org/people/djlprojects/sounds/392889/"
+
+- files:
+    - "taperecorder_rewind.ogg"
+  license: "CC-BY-NC-4.0"
+  copyright: "Taken from CassetteRewind.flac by acclivity. Converted from Flac to Ogg."
+  source: "https://freesound.org/people/acclivity/sounds/23393/"
