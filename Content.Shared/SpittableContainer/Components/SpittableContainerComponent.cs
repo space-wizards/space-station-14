@@ -22,7 +22,7 @@ public sealed partial class SpittableContainerComponent : Component
     public EntityUid? SpitContainerActionEntity;
 
     [DataField, AutoNetworkedField]
-    public SoundSpecifier? SoundEat= new SoundCollectionSpecifier("eating");
+    public SoundSpecifier? SoundEat = new SoundCollectionSpecifier("eating");
 
     [DataField, AutoNetworkedField]
     public SoundSpecifier? SoundSpit = new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg")

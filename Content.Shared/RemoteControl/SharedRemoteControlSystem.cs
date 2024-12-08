@@ -142,7 +142,7 @@ public abstract class SharedRemoteControlSystem : EntitySystem
             return;
         }
 
-        if(!TryComp<RemotelyControllableComponent>(ent.Comp.BoundTo.Value, out var controllable))
+        if (!TryComp<RemotelyControllableComponent>(ent.Comp.BoundTo.Value, out var controllable))
             return;
 
         if (!TryComp<MobStateComponent>(ent.Comp.BoundTo, out var mobState) || mobState.CurrentState != MobState.Alive)
@@ -183,7 +183,7 @@ public abstract class SharedRemoteControlSystem : EntitySystem
     /// <returns>True If control was given to the controller, otherwise False.</returns>
     public bool TryRemoteControl(Entity<RemotelyControllableComponent> ent, EntityUid controller)
     {
-        if(!HasComp<RemotelyControllableComponent>(ent.Owner))
+        if (!HasComp<RemotelyControllableComponent>(ent.Owner))
             return false;
 
         if (TryComp<SSDIndicatorComponent>(controller, out var ssd))
@@ -198,7 +198,7 @@ public abstract class SharedRemoteControlSystem : EntitySystem
         ent.Comp.Controller = controller;
         ent.Comp.IsControlled = true;
 
-        if(_mind.TryGetMind(controller, out var mindId, out var mind))
+        if (_mind.TryGetMind(controller, out var mindId, out var mind))
             _mind.Visit(mindId, ent.Owner, mind);
 
         return true;

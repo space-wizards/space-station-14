@@ -34,21 +34,8 @@ public abstract class SharedSpittableContainerSystem : EntitySystem
     {
         ent.Comp.Container = _containerSystem.EnsureContainer<Container>(ent.Owner, ent.Comp.Storage);
 
-        if (ent.Comp.SwallowActionPrototype != null)
-        {
-            EntityUid? SwallowActionUid = null;
-            _actionsSystem.AddAction(ent.Owner, ref SwallowActionUid, ent.Comp.SwallowActionPrototype);
-            if (SwallowActionUid != null)
-                ent.Comp.SwallowActionEntity = SwallowActionUid.Value;
-        }
-
-        if (ent.Comp.SpitContainerActionPrototype != null)
-        {
-            EntityUid? SpitActionUid = null;
-            _actionsSystem.AddAction(ent.Owner, ref SpitActionUid, ent.Comp.SpitContainerActionPrototype);
-            if (SpitActionUid != null)
-                ent.Comp.SwallowActionEntity = SpitActionUid.Value;
-        }
+        AddActionIfNeeded(ent.Owner, ref ent.Comp.SwallowActionEntity, ent.Comp.SwallowActionPrototype);
+        AddActionIfNeeded(ent.Owner, ref ent.Comp.SwallowActionEntity, ent.Comp.SpitContainerActionPrototype);
     }
 
     private void OnShutdown(Entity<SpittableContainerComponent> ent, ref ComponentShutdown args)
@@ -59,10 +46,8 @@ public abstract class SharedSpittableContainerSystem : EntitySystem
 
     private void OnSwallowToContainerAction(Entity<SpittableContainerComponent> ent, ref SwallowToContainerActionEvent args)
     {
-        if (args.Handled)
-            return;
-
-        if (!HasComp<ItemComponent>(args.Target))
+        if (args.Handled
+            || !HasComp<ItemComponent>(args.Target))
             return;
 
         if (!_containerSystem.CanInsert(args.Target, ent.Comp.Container))
@@ -82,13 +67,13 @@ public abstract class SharedSpittableContainerSystem : EntitySystem
 
     private void OnSwallowDoAfter(Entity<SpittableContainerComponent> ent, ref SwallowDoAfterEvent args)
     {
-        if (args.Handled || args.Target == null || args.Cancelled)
+        if (args.Handled
+            || args.Target == null
+            || args.Cancelled
+            || !_containerSystem.CanInsert(args.Target.Value, ent.Comp.Container))
             return;
 
-        if (!_containerSystem.CanInsert(args.Target.Value, ent.Comp.Container))
-            return;
-
-        if(ent.Comp.SoundEat != null)
+        if (ent.Comp.SoundEat != null)
             _audioSystem.PlayPredicted(ent.Comp.SoundEat, ent.Owner, ent.Owner, ent.Comp.SoundEat.Params);
 
         _containerSystem.InsertOrDrop(args.Target.Value, ent.Comp.Container);
@@ -120,6 +105,17 @@ public abstract class SharedSpittableContainerSystem : EntitySystem
         _containerSystem.EmptyContainer(ent.Comp.Container);
 
         args.Handled = true;
+    }
+
+    private void AddActionIfNeeded(EntityUid ownerEntity, ref EntityUid? actionEntity, string? actionPrototype)
+    {
+        if (actionPrototype == null)
+            return;
+
+        EntityUid? actionUid = null;
+        _actionsSystem.AddAction(ownerEntity, ref actionUid, actionPrototype);
+        if (actionUid != null)
+            actionEntity = actionUid.Value;
     }
 }
 
