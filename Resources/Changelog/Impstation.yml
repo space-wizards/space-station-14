@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Fixed all changeling gamemodes missing the SpaceTrafficControl event
-      handler.
-    type: Fix
-  id: 194
-  time: '2024-09-12T04:53:20.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/246
 - author: hivehum
   changes:
   - message: Head Revolutionaries require 10 hours in Command and 10 hours in Security
@@ -4482,3 +4474,11 @@
   id: 693
   time: '2024-12-08T15:14:52.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/956
+- author: TheGrimbeeper
+  changes:
+  - message: Rat Kings can now target someone by pointing vaguely near them (helpful
+      in intense moments)
+    type: Tweak
+  id: 694
+  time: '2024-12-08T15:35:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/953
