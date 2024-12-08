@@ -34,6 +34,11 @@ public sealed class RequireProjectileTargetSystem : EntitySystem
             if (!shooter.HasValue)
                 return;
 
+            // ProjectileGrenades delete the entity that's shooting the projectile,
+            // so it's impossible to check if the entity is in a container
+            if (TerminatingOrDeleted(shooter.Value))
+                return;
+
             if (!_container.IsEntityOrParentInContainer(shooter.Value))
                args.Cancelled = true;
         }
