@@ -31,12 +31,15 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             if (!component.Enabled || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodes))
                 return;
 
+            if (_atmosphere.GetContainingMixture(uid, true) is not {} environment)
+                return;
+
             foreach (var node in nodes.Nodes.Values)
             {
                 if (node is not PipeNode pipe)
                     continue;
 
-                if (pipe.Air.Pressure > Atmospherics.OneAtmosphere)
+                if (pipe.Air.Pressure - environment.Pressure > 2 * Atmospherics.OneAtmosphere)
                 {
                     args.Delay += 2f;
                     _popup.PopupEntity(Loc.GetString("comp-atmos-unsafe-unanchor-warning"), pipe.Owner,
