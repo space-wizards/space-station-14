@@ -41,6 +41,9 @@
     - id: PlushiePenguin
     - id: PlushieGray
     - id: PlushieUrsaMinor
+    - id: PlushieBug
+      weight: 0.1
+    - id: PlushieDecapoid
 
 - type: entity
   id: CrateFunPlushie
