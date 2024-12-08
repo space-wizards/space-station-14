@@ -10,9 +10,13 @@
     state: industrial-working
     snapCardinals: true
   - type: ReagentDispenser
+  - type: SolutionTransferMachine
     storageWhitelist:
       tags:
       - ChemDispensable
+    dispenserWhitelist:
+      components:
+      - FitsInDispenser
     pack: ChemDispenserStandardInventory
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
@@ -56,4 +60,8 @@
   parent: ChemDispenser
   components:
   - type: ReagentDispenser
+  - type: SolutionTransferMachine
+    dispenserWhitelist:
+      components:
+      - FitsInDispenser
     pack: EmptyInventory

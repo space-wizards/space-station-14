@@ -11,9 +11,13 @@
     drawdepth: SmallObjects
     state: booze
   - type: ReagentDispenser
+  - type: SolutionTransferMachine
     storageWhitelist:
       tags:
       - DrinkBottle
+    dispenserWhitelist:
+      components:
+      - FitsInDispenser
     pack: BoozeDispenserInventory
   - type: Transform
     noRot: false
@@ -32,7 +36,11 @@
   parent: BoozeDispenser
   components:
   - type: ReagentDispenser
+  - type: SolutionTransferMachine
     storageWhitelist:
       tags:
       - DrinkBottle
+    dispenserWhitelist:
+      components:
+      - FitsInDispenser
     pack: EmptyInventory

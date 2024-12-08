@@ -11,9 +11,13 @@
     drawdepth: SmallObjects
     state: soda
   - type: ReagentDispenser
+  - type: SolutionTransferMachine
     storageWhitelist:
       tags:
       - DrinkBottle
+    dispenserWhitelist:
+      components:
+      - FitsInDispenser
     pack: SodaDispenserInventory
   - type: Transform
     noRot: false
@@ -30,7 +34,11 @@
   suffix: Empty
   components:
   - type: ReagentDispenser
+  - type: SolutionTransferMachine
     storageWhitelist:
       tags:
       - DrinkBottle
+    dispenserWhitelist:
+      components:
+      - FitsInDispenser
     pack: EmptyInventory

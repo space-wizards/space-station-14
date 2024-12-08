@@ -9,7 +9,6 @@ namespace Content.Shared.Chemistry
     /// </summary>
     public sealed class SharedReagentDispenser
     {
-        public const string OutputSlotName = "beakerSlot";
     }
 
     [Serializable, NetSerializable]
@@ -64,14 +63,10 @@ namespace Content.Shared.Chemistry
     }
 
     [Serializable, NetSerializable]
-    public sealed class ReagentDispenserDispenseReagentMessage : BoundUserInterfaceMessage
+    public sealed class ReagentDispenserDispenseReagentMessage(string slotId, string outputSlotId) : BoundUserInterfaceMessage
     {
-        public readonly string SlotId;
-
-        public ReagentDispenserDispenseReagentMessage(string slotId)
-        {
-            SlotId = slotId;
-        }
+        public readonly string SlotId = slotId;
+        public readonly string OutputSlotId = outputSlotId;
     }
 
     [Serializable, NetSerializable]
@@ -94,20 +89,9 @@ namespace Content.Shared.Chemistry
     }
 
     [Serializable, NetSerializable]
-    public sealed class ReagentInventoryItem(string storageSlotId, string reagentLabel, FixedPoint2 quantity, Color reagentColor)
-    {
-        public string StorageSlotId = storageSlotId;
-        public string ReagentLabel = reagentLabel;
-        public FixedPoint2 Quantity = quantity;
-        public Color ReagentColor = reagentColor;
-    }
-
-    [Serializable, NetSerializable]
     public sealed class ReagentDispenserBoundUserInterfaceState : BoundUserInterfaceState
     {
-        public readonly ContainerInfo? OutputContainer;
-
-        public readonly NetEntity? OutputContainerEntity;
+        public readonly ReagentInventoryItem? OutputContainer;
 
         /// <summary>
         /// A list of the reagents which this dispenser can dispense.
@@ -116,10 +100,9 @@ namespace Content.Shared.Chemistry
 
         public readonly ReagentDispenserDispenseAmount SelectedDispenseAmount;
 
-        public ReagentDispenserBoundUserInterfaceState(ContainerInfo? outputContainer, NetEntity? outputContainerEntity, List<ReagentInventoryItem> inventory, ReagentDispenserDispenseAmount selectedDispenseAmount)
+        public ReagentDispenserBoundUserInterfaceState(ReagentInventoryItem? outputContainer, List<ReagentInventoryItem> inventory, ReagentDispenserDispenseAmount selectedDispenseAmount)
         {
             OutputContainer = outputContainer;
-            OutputContainerEntity = outputContainerEntity;
             Inventory = inventory;
             SelectedDispenseAmount = selectedDispenseAmount;
         }

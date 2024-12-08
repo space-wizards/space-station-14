@@ -35,12 +35,12 @@ namespace Content.Client.Chemistry.UI
             _window.HelpGuidebookIds = EntMan.GetComponent<GuideHelpComponent>(Owner).Guides;
 
             // Setup static button actions.
-            _window.EjectButton.OnPressed += _ => SendMessage(new ItemSlotButtonPressedEvent(SharedReagentDispenser.OutputSlotName));
+            _window.EjectButton.OnPressed += (id) => SendMessage(new ItemSlotButtonPressedEvent(SharedSolutionTransferMachineSystem.BaseDispenserSlotId + 0));
             _window.ClearButton.OnPressed += _ => SendMessage(new ReagentDispenserClearContainerSolutionMessage());
 
             _window.AmountGrid.OnButtonPressed += s => SendMessage(new ReagentDispenserSetDispenseAmountMessage(s));
 
-            _window.OnDispenseReagentButtonPressed += (id) => SendMessage(new ReagentDispenserDispenseReagentMessage(id));
+            _window.OnDispenseReagentButtonPressed += (id) => SendMessage(new ReagentDispenserDispenseReagentMessage(id, SharedSolutionTransferMachineSystem.BaseDispenserSlotId + 0));
             _window.OnEjectJugButtonPressed += (id) => SendMessage(new ItemSlotButtonPressedEvent(id));
         }
 
