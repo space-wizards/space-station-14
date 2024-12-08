@@ -95,7 +95,16 @@
 - type: latheRecipe
   id: PrintedDocumentStatementAppointmentInterimChapterRecipe
   result: PrintedDocumentStatementAppointmentInterimChapter
-  category: Reports
+  category: Statements
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+    
+- type: latheRecipe
+  id: PrintedDocumentEmploymentStatementRecipe
+  result: PrintedDocumentEmploymentStatement
+  category: Statements
   completetime: 2
   applyMaterialDiscount: false
   materials:

@@ -37,6 +37,7 @@
       - PrintedDocumentExperimentReportRecipe
       - PrintedDocumentDisposalReportRecipe
       - PrintedDocumentStatementAppointmentInterimChapterRecipe
+      - PrintedDocumentEmploymentStatementRecipe
 #  - type: EmagLatheRecipes
 #    emagStaticRecipes:
 #        - PrintedDocumentErrorLoadingFormHeaderRecipe

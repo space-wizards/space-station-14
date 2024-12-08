@@ -191,10 +191,24 @@ doc-text-printer-statement-appointment-interim-chapter =
     Compiler of the document:
     The position of the originator:
     
-    I, (Name), in the position of (full job title), request approval of my appointment to the position of Acting (full division name)/Captain.
-    Upon assuming the position, I agree to follow Standard Operating Procedures and, until the arrival of the (full name of division)/Captain from Central Command, to ensure the order and management of the division, and to ensure the safety of particularly valuable items and equipment entrusted to me.
+    I, (full name), in the position of (full job title), request approval of my appointment to the position of Acting (full department name)/Captain.
+    Upon assuming the position, I agree to follow Standard Operating Procedures and, until the arrival of the (full name of department)/Captain from Central Command, to ensure the order and management of the division, and to ensure the safety of particularly valuable items and equipment entrusted to me.
     
     Upon arrival of the Head of Department/Captain from the Central Command, I undertake to surrender the increased access, especially valuable items and equipment.
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for seals[/italic]
+doc-text-printer-statement-employment =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀          [bold]EMPLOYMENT STATEMENT[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    I, (full name), in the current position of (full job title), request to be appointed as an employee of (name of employment department) in the position of (full job title).
+    I agree to follow the department's Standard Operating Procedures. I agree to surrender my department work gear and equipment upon transfer.
     
     ──────────────────────────────────────────
    ⠀                                    [italic]Place for seals[/italic]

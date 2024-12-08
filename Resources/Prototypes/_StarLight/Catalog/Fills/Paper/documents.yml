@@ -109,3 +109,11 @@
   components:
     - type: Paper
       content: doc-text-printer-statement-appointment-interim-chapter
+      
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentEmploymentStatement
+  name: Statement of Employment
+  components:
+    - type: Paper
+      content: doc-text-printer-employment-statement
