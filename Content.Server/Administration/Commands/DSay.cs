@@ -1,5 +1,6 @@
-using Content.Server.Chat.Systems;
+using Content.Server.Chat.Managers;
 using Content.Shared.Administration;
+using Content.Shared.Chat;
 using Robust.Shared.Console;
 
 namespace Content.Server.Administration.Commands
@@ -7,7 +8,7 @@ namespace Content.Server.Administration.Commands
     [AdminCommand(AdminFlags.Moderator)]
     sealed class DSay : IConsoleCommand
     {
-        [Dependency] private readonly IEntityManager _e = default!;
+        [Dependency] private readonly IChatManager _chat = default!;
 
         public string Command => "dsay";
 
@@ -23,18 +24,11 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (player.AttachedEntity is not { Valid: true } entity)
-                return;
-
             if (args.Length < 1)
                 return;
 
             var message = string.Join(" ", args).Trim();
-            if (string.IsNullOrEmpty(message))
-                return;
-
-            var chat = _e.System<ChatSystem>();
-            chat.TrySendInGameOOCMessage(entity, message, InGameOOCChatType.Dead, false, shell, player);
+            _chat.RequestChat(player, message, ChatSelectChannel.Dead);
         }
     }
 }
