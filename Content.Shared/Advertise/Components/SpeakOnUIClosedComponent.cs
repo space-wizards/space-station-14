@@ -1,13 +1,15 @@
+using Content.Shared.Advertise.Systems;
 using Content.Shared.Dataset;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Advertise.Components;
+namespace Content.Shared.Advertise.Components;
 
 /// <summary>
 /// Causes the entity to speak using the Chat system when its ActivatableUI is closed, optionally
 /// requiring that a Flag be set as well.
 /// </summary>
-[RegisterComponent, Access(typeof(SpeakOnUIClosedSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedSpeakOnUIClosedSystem))]
 public sealed partial class SpeakOnUIClosedComponent : Component
 {
     /// <summary>
@@ -31,6 +33,6 @@ public sealed partial class SpeakOnUIClosedComponent : Component
     /// <summary>
     /// State variable only used if <see cref="RequireFlag"/> is true. Set with <see cref="SpeakOnUIClosedSystem.TrySetFlag"/>.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool Flag;
 }
