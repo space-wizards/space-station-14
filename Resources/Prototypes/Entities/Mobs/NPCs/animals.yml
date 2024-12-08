@@ -1677,7 +1677,7 @@
     flavors:
     - meaty
   - type: Thirst
-    startingThirst: 25  # spawn with Okay thirst state
+    lastAuthoritativeThirstValue: 25  # spawn with Okay thirst state
     thresholds:
       OverHydrated: 35
       Okay: 25
