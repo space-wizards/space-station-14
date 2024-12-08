@@ -50,9 +50,9 @@ public sealed partial class SignalTimerComponent : Component
     public SoundSpecifier? DoneSound;
 
     /// <summary>
-    ///     The maximum duration the timer can be set to (in seconds)
+    ///     The maximum duration in seconds
+    ///     When a larger number is in the input box, the display will start counting down from this one instead
     /// </summary>
     [DataField]
-    public Double MaxDuration = 3599;
+    public Double MaxDuration = 3599; // 59m 59s
 }
-
