@@ -89,16 +89,6 @@
   group: market
 
 - type: cargoProduct
-  id: FoodCannibal
-  icon:
-    sprite: Structures/Storage/Crates/freezer.rsi
-    state: icon
-  product: CrateFoodCannibal
-  cost: 550
-  category: cargoproduct-category-name-food
-  group: market
-
-- type: cargoProduct
   id: FoodPizzaMoth
   icon:
     sprite: Objects/Consumable/Food/Baked/pizza.rsi

@@ -192,21 +192,6 @@
       amount: 2
 
 - type: entity
-  id: CrateFoodCannibal
-  parent: CrateFreezer
-  name: black market meats freezer
-  description: Some meat for the kitchen, just don't ask where it came from. Includes 8 pieces of meat.
-  components:
-  - type: StorageFill
-    contents:
-    - id: FoodMeatHuman
-      amount: 4
-    - id: FoodMeatLizard
-      amount: 2
-    - id: FoodMeatPlant
-      amount: 2
-
-- type: entity
   id: CrateFoodPizzaMoth
   parent: CratePlastic
   name: moth pizza delivery
