@@ -15,6 +15,8 @@
     name: ghost-role-information-space-dragon-name
     description: ghost-role-information-space-dragon-description
     rules: ghost-role-information-space-dragon-rules
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
@@ -152,7 +154,7 @@
     - DoorBumpOpener
   - type: Puller
     needsHands: false
-    
+
 - type: entity
   parent: BaseMobDragon
   id: MobDragon
