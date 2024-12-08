@@ -1,0 +1,35 @@
+﻿<Document>
+  # Power Storage
+  Because of Power Ramping, it is important to have power storage devices to help flatten out spikes and dips in power usage, as well as to provide power in the event of a power deficit.
+
+  Each transformer for its respective power level (HV, MV, and LV) has an attached small power battery to handle minor spikes and dips; however, this is not viable in the case of a large grid deficit.
+
+  ## SMES
+
+  The Superconducting Magnetic Energy Storage (SMES) unit is a device that can store a large amount of power and release it quickly.
+
+  <Box>
+    <GuideEntityEmbed Entity="SMESBasic"/>
+  </Box>
+
+  In order to charge the SMES unit, HV power must be provided to a cable terminal pointing at the SMES unit. The SMES will draw power from the terminal and send power out from underneath.
+  The terminal will ensure that the HV input and HV output do not connect.
+
+  <Box HorizontalAlignment="Stretch">
+    <Box>
+      <GuideEntityEmbed Entity="CableTerminal"/>
+    </Box>
+
+    <Box>
+      <GuideEntityEmbed Entity="CableHV" Caption="Output"/>
+      <GuideEntityEmbed Entity="SMESBasic" Caption="" Margin="0"/>
+      <GuideEntityEmbed Entity="CableTerminal" Caption="" Margin="0" Rotation="270"/>
+      <GuideEntityEmbed Entity="CableHV" Caption="Input"/>
+    </Box>
+  </Box>
+
+  SMESes can store 8 MJ of power, and can output a maximum 150 kW of power.
+
+  If the battery is full, the SMES will pass through the power it receives from the input cable to the output cable. In the event of a power deficit, the SMES will ramp up to supplement the power draw.
+
+</Document>
