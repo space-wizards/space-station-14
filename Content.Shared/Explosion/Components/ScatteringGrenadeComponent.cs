@@ -1,15 +1,15 @@
-﻿using Content.Server.Explosion.EntitySystems;
-using Content.Shared.Whitelist;
+﻿using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Explosion.Components;
+namespace Content.Shared.Explosion.Components;
 
 /// <summary>
 /// Use this component if the grenade splits into entities that make use of Timers
 /// or if you just want it to throw entities out in the world
 /// </summary>
-[RegisterComponent, Access(typeof(ScatteringGrenadeSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class ScatteringGrenadeComponent : Component
 {
     public Container Container = default!;
@@ -26,6 +26,7 @@ public sealed partial class ScatteringGrenadeComponent : Component
     /// <summary>
     /// If we have a pre-fill how many more can we spawn.
     /// </summary>
+    [AutoNetworkedField]
     public int UnspawnedCount;
 
     /// <summary>

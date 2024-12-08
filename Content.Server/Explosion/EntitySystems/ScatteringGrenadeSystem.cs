@@ -1,5 +1,4 @@
-﻿using Content.Server.Explosion.Components;
-using Content.Shared.Explosion.Components;
+﻿using Content.Shared.Explosion.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Throwing;
 using Content.Shared.Whitelist;
@@ -7,63 +6,24 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
-using System;
 using System.Numerics;
+using Content.Shared.Explosion.EntitySystems;
 
 namespace Content.Server.Explosion.EntitySystems;
 
 public sealed class ScatteringGrenadeSystem : EntitySystem
 {
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
+    [Dependency] private readonly SharedScatteringGrenadeSystem _scatteringGrenadeSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ScatteringGrenadeComponent, ComponentInit>(OnScatteringInit);
-        SubscribeLocalEvent<ScatteringGrenadeComponent, ComponentStartup>(OnScatteringStartup);
-        SubscribeLocalEvent<ScatteringGrenadeComponent, InteractUsingEvent>(OnScatteringInteractUsing);
         SubscribeLocalEvent<ScatteringGrenadeComponent, TriggerEvent>(OnScatteringTrigger);
-    }
-
-    private void OnScatteringInit(Entity<ScatteringGrenadeComponent> entity, ref ComponentInit args)
-    {
-        entity.Comp.Container = _container.EnsureContainer<Container>(entity.Owner, "cluster-payload");
-    }
-
-    /// <summary>
-    /// Setting the unspawned count based on capacity, so we know how many new entities to spawn
-    /// Update appearance based on initial fill amount
-    /// </summary>
-    private void OnScatteringStartup(Entity<ScatteringGrenadeComponent> entity, ref ComponentStartup args)
-    {
-        if (entity.Comp.FillPrototype == null)
-            return;
-
-        entity.Comp.UnspawnedCount = Math.Max(0, entity.Comp.Capacity - entity.Comp.Container.ContainedEntities.Count);
-        UpdateAppearance(entity);
-    }
-
-    /// <summary>
-    /// There are some scattergrenades you can fill up with more grenades (like clusterbangs)
-    /// This covers how you insert more into it
-    /// </summary>
-    private void OnScatteringInteractUsing(Entity<ScatteringGrenadeComponent> entity, ref InteractUsingEvent args)
-    {
-        if (entity.Comp.Whitelist == null)
-            return;
-
-        if (args.Handled || !_whitelistSystem.IsValid(entity.Comp.Whitelist, args.Used))
-            return;
-
-        _container.Insert(args.Used, entity.Comp.Container);
-        UpdateAppearance(entity);
-        args.Handled = true;
     }
 
     /// <summary>
@@ -161,16 +121,5 @@ public sealed class ScatteringGrenadeSystem : EntitySystem
         }
 
         return false;
-    }
-
-    /// <summary>
-    /// Update appearance based off of total count of contents
-    /// </summary>
-    private void UpdateAppearance(Entity<ScatteringGrenadeComponent> entity)
-    {
-        if (!TryComp<AppearanceComponent>(entity, out var appearanceComponent))
-            return;
-
-        _appearance.SetData(entity, ClusterGrenadeVisuals.GrenadesCounter, entity.Comp.UnspawnedCount + entity.Comp.Container.ContainedEntities.Count, appearanceComponent);
     }
 }
