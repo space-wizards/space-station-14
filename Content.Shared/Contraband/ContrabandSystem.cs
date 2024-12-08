@@ -40,6 +40,7 @@ public sealed class ContrabandSystem : EntitySystem
 
         contraband.Severity = other.Severity;
         contraband.AllowedDepartments = other.AllowedDepartments;
+        contraband.AllowedJobs = other.AllowedJobs;
         Dirty(uid, contraband);
     }
 
@@ -55,10 +56,26 @@ public sealed class ContrabandSystem : EntitySystem
         using (args.PushGroup(nameof(ContrabandComponent)))
         {
             var severity = _proto.Index(ent.Comp.Severity);
-            if (severity.ShowDepartments && ent.Comp is { AllowedDepartments: not null })
+            var jobList = new List<string>();
+            var departmentList = new List<string>();
+            if (severity.ShowDepartmentsAndJobs)
             {
+                if (ent.Comp is { AllowedJobs: not null })
+                {
+                    jobList = ent.Comp.AllowedJobs.Select(p => Loc.GetString($"{p.Id}")).ToList();
+                }
+
                 // TODO shouldn't department prototypes have a localized name instead of just using the ID for this?
-                var list = ContentLocalizationManager.FormatList(ent.Comp.AllowedDepartments.Select(p => Loc.GetString($"department-{p.Id}")).ToList());
+
+                if (ent.Comp is { AllowedDepartments: not null })
+                {
+                    departmentList = ent.Comp.AllowedDepartments.Select(p => Loc.GetString($"department-{p.Id}")).ToList();
+                }
+
+                //creating a combined list of jobs and departments for the restricted text
+                departmentList.AddRange(jobList);
+
+                var list = ContentLocalizationManager.FormatList(departmentList);
 
                 // department restricted text
                 args.PushMarkup(Loc.GetString("contraband-examine-text-Restricted-department", ("departments", list)));
@@ -68,17 +85,36 @@ public sealed class ContrabandSystem : EntitySystem
                 args.PushMarkup(Loc.GetString(severity.ExamineText));
             }
 
+
             // text based on ID card
             List<ProtoId<DepartmentPrototype>>? departments = null;
+            var jobId = "";
+
             if (_id.TryFindIdCard(args.Examiner, out var id))
             {
                 departments = id.Comp.JobDepartments;
+                if (id.Comp.LocalizedJobTitle is not null)
+                {
+                    jobId = id.Comp.LocalizedJobTitle;
+                }
             }
 
-            // either its fully restricted, you have no departments, or your departments dont intersect with the restricted departments
-            if (ent.Comp.AllowedDepartments is null
-                || departments is null
-                || !departments.Intersect(ent.Comp.AllowedDepartments).Any())
+            var localizedContrabandAllowedJobs = "";
+            if (ent.Comp.AllowedJobs is not null)
+            {
+                //grabbing the names of each job in the allowed jobs field
+                foreach (var job in ent.Comp.AllowedJobs)
+                {
+                    //note this Id field means the name of the job, and is
+                    //different from the "id" we're getting the examiner's job from (their Id card)
+                    localizedContrabandAllowedJobs += (job.Id);
+                }
+                localizedContrabandAllowedJobs = Loc.GetString(localizedContrabandAllowedJobs);
+            }
+
+            // either its fully restricted, you have no departments, or your departments and job don't intersect with the restricted departments and jobs
+            if (ent.Comp.AllowedDepartments is null || departments is null
+                    || (!departments.Intersect(ent.Comp.AllowedDepartments).Any() && !localizedContrabandAllowedJobs.Contains(jobId)))
             {
                 args.PushMarkup(Loc.GetString("contraband-examine-text-avoid-carrying-around"));
                 return;
