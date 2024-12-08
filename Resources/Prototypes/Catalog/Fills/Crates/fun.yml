@@ -44,6 +44,7 @@
     - id: PlushieBug
       weight: 0.1
     - id: PlushieDecapoid
+    - id: PlushieSnail
 
 - type: entity
   id: CrateFunPlushie
