@@ -3,7 +3,6 @@ using Content.Shared.CCVar;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Movement.Systems;
-using Robust.Client.GameObjects;
 using Robust.Client.Physics;
 using Robust.Client.Player;
 using Robust.Shared.Configuration;
@@ -109,16 +108,16 @@ public sealed class MoverController : SharedMoverController
 
         var physicsUid = player;
         PhysicsComponent? body;
-        var xformMover = xform;
+        var xformMover = (player, xform);
 
         if (mover.ToParent && RelayQuery.HasComponent(xform.ParentUid))
         {
             if (!PhysicsQuery.TryGetComponent(xform.ParentUid, out body) ||
-                !XformQuery.TryGetComponent(xform.ParentUid, out xformMover))
+                !XformQuery.TryGetComponent(xform.ParentUid, out var xformNew))
             {
                 return;
             }
-
+            xformMover = (xform.ParentUid, xformNew);
             physicsUid = xform.ParentUid;
         }
         else if (!PhysicsQuery.TryGetComponent(player, out body))
