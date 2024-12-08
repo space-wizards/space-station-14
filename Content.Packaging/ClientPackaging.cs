@@ -72,7 +72,7 @@ public static class ClientPackaging
             new[] { "Content.Client", "Content.Shared", "Content.Shared.Database" },
             cancel: cancel);
 
-        await RobustClientPackaging.WriteClientResources(contentDir, pass, cancel);
+        await RobustClientPackaging.WriteClientResources(contentDir, inputPass, cancel);
 
         inputPass.InjectFinished();
     }
