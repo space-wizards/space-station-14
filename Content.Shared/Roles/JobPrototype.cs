@@ -123,7 +123,7 @@ namespace Content.Shared.Roles
         /// Entity to use as a preview in the lobby/character editor.
         /// Same restrictions as <see cref="JobEntity"/> apply.
         /// </summary>
-        [DataField("jobPreviewEntity")]
+        [DataField]
         public EntProtoId? JobPreviewEntity = null;
 
         [DataField]
