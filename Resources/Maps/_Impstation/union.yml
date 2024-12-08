@@ -10026,7 +10026,7 @@ entities:
       pos: -36.5,0.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -54393.273
+      secondsUntilStateChange: -54707.51
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 1
@@ -10335,7 +10335,7 @@ entities:
       pos: 33.5,-43.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -182730.31
+      secondsUntilStateChange: -183044.55
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -11000,7 +11000,7 @@ entities:
       pos: 37.5,-46.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -5065.795
+      secondsUntilStateChange: -5380.03
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -28453,6 +28453,164 @@ entities:
     - type: Transform
       pos: 48.5,-21.5
       parent: 2
+  - uid: 20754
+    components:
+    - type: Transform
+      pos: 10.5,-65.5
+      parent: 2
+  - uid: 20755
+    components:
+    - type: Transform
+      pos: 9.5,-65.5
+      parent: 2
+  - uid: 20756
+    components:
+    - type: Transform
+      pos: 12.5,-65.5
+      parent: 2
+  - uid: 20757
+    components:
+    - type: Transform
+      pos: 13.5,-65.5
+      parent: 2
+  - uid: 20758
+    components:
+    - type: Transform
+      pos: 10.5,-70.5
+      parent: 2
+  - uid: 20759
+    components:
+    - type: Transform
+      pos: 9.5,-70.5
+      parent: 2
+  - uid: 20760
+    components:
+    - type: Transform
+      pos: 12.5,-70.5
+      parent: 2
+  - uid: 20761
+    components:
+    - type: Transform
+      pos: 13.5,-70.5
+      parent: 2
+  - uid: 20762
+    components:
+    - type: Transform
+      pos: 10.5,-63.5
+      parent: 2
+  - uid: 20763
+    components:
+    - type: Transform
+      pos: 8.5,-63.5
+      parent: 2
+  - uid: 20764
+    components:
+    - type: Transform
+      pos: 7.5,-63.5
+      parent: 2
+  - uid: 20765
+    components:
+    - type: Transform
+      pos: 6.5,-63.5
+      parent: 2
+  - uid: 20766
+    components:
+    - type: Transform
+      pos: 9.5,-63.5
+      parent: 2
+  - uid: 20767
+    components:
+    - type: Transform
+      pos: 12.5,-63.5
+      parent: 2
+  - uid: 20768
+    components:
+    - type: Transform
+      pos: 13.5,-63.5
+      parent: 2
+  - uid: 20769
+    components:
+    - type: Transform
+      pos: 14.5,-63.5
+      parent: 2
+  - uid: 20770
+    components:
+    - type: Transform
+      pos: 15.5,-63.5
+      parent: 2
+  - uid: 20771
+    components:
+    - type: Transform
+      pos: 16.5,-63.5
+      parent: 2
+  - uid: 20772
+    components:
+    - type: Transform
+      pos: 11.5,-75.5
+      parent: 2
+  - uid: 20773
+    components:
+    - type: Transform
+      pos: 11.5,-76.5
+      parent: 2
+  - uid: 20774
+    components:
+    - type: Transform
+      pos: 10.5,-76.5
+      parent: 2
+  - uid: 20775
+    components:
+    - type: Transform
+      pos: 9.5,-76.5
+      parent: 2
+  - uid: 20776
+    components:
+    - type: Transform
+      pos: 8.5,-76.5
+      parent: 2
+  - uid: 20777
+    components:
+    - type: Transform
+      pos: 7.5,-76.5
+      parent: 2
+  - uid: 20778
+    components:
+    - type: Transform
+      pos: 6.5,-76.5
+      parent: 2
+  - uid: 20779
+    components:
+    - type: Transform
+      pos: 12.5,-76.5
+      parent: 2
+  - uid: 20780
+    components:
+    - type: Transform
+      pos: 14.5,-76.5
+      parent: 2
+  - uid: 20781
+    components:
+    - type: Transform
+      pos: 15.5,-76.5
+      parent: 2
+  - uid: 20782
+    components:
+    - type: Transform
+      pos: 16.5,-76.5
+      parent: 2
+  - uid: 20783
+    components:
+    - type: Transform
+      pos: 13.5,-76.5
+      parent: 2
+  - uid: 20786
+    components:
+    - type: Transform
+      anchored: False
+      pos: -2.5,-76.5
+      parent: 1
+    - type: Physics
+      bodyType: Dynamic
 - proto: CableApcStack
   entities:
   - uid: 6034
@@ -52629,6 +52787,13 @@ entities:
     components:
     - type: Transform
       pos: 43.5,-33.5
+      parent: 2
+- proto: DefaultStationBeaconPermaBrig
+  entities:
+  - uid: 20753
+    components:
+    - type: Transform
+      pos: 25.5,24.5
       parent: 2
 - proto: DefaultStationBeaconQMRoom
   entities:
@@ -102140,14 +102305,25 @@ entities:
   - uid: 4817
     components:
     - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 46.5,-30.5
+      pos: 41.5,-32.5
       parent: 2
   - uid: 14742
     components:
     - type: Transform
       rot: 3.141592653589793 rad
-      pos: 41.5,-35.5
+      pos: 43.5,-35.5
+      parent: 2
+  - uid: 20784
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 46.5,-32.5
+      parent: 2
+  - uid: 20785
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 44.5,-30.5
       parent: 2
 - proto: PoweredSmallLight
   entities:
