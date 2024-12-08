@@ -422,6 +422,7 @@ public abstract class SharedRoleSystem : EntitySystem
                 prototype = comp.AntagPrototype;
                 if (_prototypes.TryIndex(comp.AntagPrototype, out var antag))
                 {
+                    playTimeTracker = antag.PlayTimeTracker;
                     name = antag.Name;
                     valid = true;
                 }
