@@ -38,6 +38,8 @@ namespace Content.Server.Database
         public DbSet<ServerBanHit> ServerBanHit { get; set; } = default!;
         public DbSet<ServerRoleBan> RoleBan { get; set; } = default!;
         public DbSet<ServerRoleUnban> RoleUnban { get; set; } = default!;
+        public DbSet<UsernameWhitelist> UsernameWhitelist { get; set; } = default!;
+        public DbSet<ServerUsernameRule> UsernameRule { get; set; } = default!;
         public DbSet<PlayTime> PlayTime { get; set; } = default!;
         public DbSet<UploadedResourceLog> UploadedResourceLog { get; set; } = default!;
         public DbSet<AdminNote> AdminNotes { get; set; } = null!;
@@ -180,6 +182,14 @@ namespace Content.Server.Database
 
             modelBuilder.Entity<ServerRoleBan>().ToTable(t =>
                 t.HasCheckConstraint("HaveEitherAddressOrUserIdOrHWId", "address IS NOT NULL OR player_user_id IS NOT NULL OR hwid IS NOT NULL"));
+
+            // all non retired expressions have null fields for retiring admin and retire time
+            modelBuilder.Entity<ServerUsernameRule>().ToTable(t =>
+                t.HasCheckConstraint("ActiveRulesDoNotHaveRetireInformation", "retired OR retire_time IS NULL AND retiring_admin IS NULL"));
+
+            // all retired expressions have a retire time
+            modelBuilder.Entity<ServerUsernameRule>().ToTable(t =>
+                t.HasCheckConstraint("InactiveRulesHaveRetireInformation", "NOT retired OR retire_time IS NOT NULL"));
 
             modelBuilder.Entity<Player>()
                 .HasIndex(p => p.UserId)
@@ -968,6 +978,7 @@ namespace Content.Server.Database
          * Reservation by commenting out the value is likely sufficient for this purpose, but may impact projects which depend on SS14 like SS14.Admin.
          */
         BabyJail = 4,
+        UsernameBan = 5,
     }
 
     public class ServerBanHit
@@ -1023,6 +1034,40 @@ namespace Content.Server.Database
         public Guid? UnbanningAdmin { get; set; }
 
         public DateTime UnbanTime { get; set; }
+    }
+
+    /// <summary>
+    /// Usernames not checked by connection manager for username violations present in username rules <see cref="ServerUsernameRule"/>
+    /// </summary>
+    [Table("username_whitelist")]
+    public sealed class UsernameWhitelist
+    {
+        [Required, Key] public required string Username { get; set; }
+    }
+
+    /// <summary>
+    /// Table of all username bans; including when the ban was created by whom and if said ban has been retired.
+    /// </summary>
+    [Table("server_username_rule")]
+    public sealed class ServerUsernameRule
+    {
+        [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        public DateTime CreationTime { get; set; }
+        /// <summary>
+        /// RoundID is required to provide server of origin information for pg triggers
+        /// </summary>
+        [ForeignKey("Round")]
+        public int? RoundId { get; set; }
+        public bool Regex { get; set; }
+        [Required]
+        public required string Expression { get; set; }
+        public required string Message { get; set; }
+        public Guid? RestrictingAdmin { get; set; }
+        public bool ExtendToBan { get; set; }
+        public bool Retired { get; set; }
+        public Guid? RetiringAdmin { get; set; }
+        public DateTime? RetireTime { get; set; }
     }
 
     [Table("play_time")]
