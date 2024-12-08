@@ -60,6 +60,9 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
 
     private void OnEmagged(EntityUid uid, MaterialReclaimerComponent component, ref GotEmaggedEvent args)
     {
+        if (args.Handled)
+            return;
+
         args.Handled = true;
     }
 
