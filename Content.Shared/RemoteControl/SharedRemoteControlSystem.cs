@@ -220,7 +220,7 @@ public abstract class SharedRemoteControlSystem : EntitySystem
         if (TryComp<SSDIndicatorComponent>(remoteControl.Controller, out var ssd))
             ssd.Enabled = true;
 
-        if(remoteControl.Controller != null)
+        if (remoteControl.Controller != null)
             RemCompDeferred<RemoteControllerComponent>(remoteControl.Controller.Value);
 
         remoteControl.Controller = null;
