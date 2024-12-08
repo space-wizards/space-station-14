@@ -29,4 +29,4 @@ reagent-name-weh = juice that makes you Weh
 reagent-desc-weh = Pure essence of lizard plush. Makes you Weh!
 
 reagent-name-hew = juice that makes you Hew
-reagent-desc-hew = Pure essence of inverted lizard plush. Makes you Hew!
+reagent-desc-hew = Pure essence of inversed lizard plush. Makes you Hew!
