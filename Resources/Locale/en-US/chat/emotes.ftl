@@ -17,6 +17,7 @@ chat-emote-name-gasp = Gasp
 chat-emote-name-deathgasp = Deathgasp
 chat-emote-name-buzz = Buzz
 chat-emote-name-weh = Weh
+chat-emote-name-hew = Hew
 chat-emote-name-chirp = Chirp
 chat-emote-name-beep = Beep
 chat-emote-name-chime = Chime
