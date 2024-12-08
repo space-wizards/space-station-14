@@ -14,6 +14,10 @@
     - CableCoil
   - type: Stack
     stackType: Cable
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     sprite: Objects/Tools/cable-coils.rsi
   - type: Item

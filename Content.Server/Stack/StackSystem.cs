@@ -15,6 +15,7 @@ namespace Content.Server.Stack
     public sealed class StackSystem : SharedStackSystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
 
         public static readonly int[] DefaultSplitAmounts = { 1, 5, 10, 20, 30, 50 };
 
@@ -198,6 +199,30 @@ namespace Content.Server.Stack
 
                 args.Verbs.Add(verb);
             }
+
+            AlternativeVerb custom = new()
+            {
+                Text = Loc.GetString("comp-stack-split-custom"),
+                Category = VerbCategory.Split,
+                Act = () =>
+                {
+                    _ui.OpenUi(uid, StackCustomSplitUiKey.Key, args.User);
+                },
+                Priority = priority - 1
+            };
+            args.Verbs.Add(custom);
+        }
+
+        protected override void OnCustomSplitMessage(Entity<StackComponent> ent, ref StackCustomSplitAmountMessage message)
+        {
+            var (uid, comp) = ent;
+
+            // digital ghosts shouldn't be allowed to split stacks
+            if (!(message.Actor is { Valid: true } user))
+                return;
+
+            var amount = message.Amount;
+            UserSplit(uid, user, amount, comp);
         }
 
         private void UserSplit(EntityUid uid, EntityUid userUid, int amount,
