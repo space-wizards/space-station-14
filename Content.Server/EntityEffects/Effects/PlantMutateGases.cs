@@ -20,24 +20,19 @@ public sealed partial class PlantMutateExudeGasses : EntityEffect
 
     public override void Effect(EntityEffectBaseArgs args)
     {
-        var plantholder = args.EntityManager.GetComponent<PlantHolderComponent>(args.TargetEntity);
-
-        if (plantholder.Seed == null)
-            return;
-
+        var gasses = args.EntityManager.EnsureComponent<ConsumeExudeGasGrowthComponent>(args.TargetEntity);
         var random = IoCManager.Resolve<IRobustRandom>();
-        var gasses = plantholder.Seed.ExudeGasses;
 
         // Add a random amount of a random gas to this gas dictionary
         float amount = random.NextFloat(MinValue, MaxValue);
         Gas gas = random.Pick(Enum.GetValues(typeof(Gas)).Cast<Gas>().ToList());
-        if (gasses.ContainsKey(gas))
+        if (gasses.ExudeGasses.ContainsKey(gas))
         {
-            gasses[gas] += amount;
+            gasses.ExudeGasses[gas] += amount;
         }
         else
         {
-            gasses.Add(gas, amount);
+            gasses.ExudeGasses.Add(gas, amount);
         }
     }
 
@@ -59,24 +54,19 @@ public sealed partial class PlantMutateConsumeGasses : EntityEffect
     public float MaxValue = 0.5f;
     public override void Effect(EntityEffectBaseArgs args)
     {
-        var plantholder = args.EntityManager.GetComponent<PlantHolderComponent>(args.TargetEntity);
-
-        if (plantholder.Seed == null)
-            return;
-
+        var gasses = args.EntityManager.GetComponent<ConsumeExudeGasGrowthComponent>(args.TargetEntity);
         var random = IoCManager.Resolve<IRobustRandom>();
-        var gasses = plantholder.Seed.ConsumeGasses;
 
         // Add a random amount of a random gas to this gas dictionary
         float amount = random.NextFloat(MinValue, MaxValue);
         Gas gas = random.Pick(Enum.GetValues(typeof(Gas)).Cast<Gas>().ToList());
-        if (gasses.ContainsKey(gas))
+        if (gasses.ConsumeGasses.ContainsKey(gas))
         {
-            gasses[gas] += amount;
+            gasses.ConsumeGasses[gas] += amount;
         }
         else
         {
-            gasses.Add(gas, amount);
+            gasses.ConsumeGasses.Add(gas, amount);
         }
     }
 
