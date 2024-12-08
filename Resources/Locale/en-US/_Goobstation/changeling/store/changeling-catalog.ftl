@@ -75,7 +75,7 @@ evolutionmenu-sting-armblade-desc =
 
 evolutionmenu-utility-panacea-name = Anatomic Panacea
 evolutionmenu-utility-panacea-desc =
-    We expel impurities from our form; sobering us, and purging radiation and toxins.
+    We expel impurities from our form, sobering us, and purging radiation and toxins.
     Costs a small amount of chemicals.
 
 evolutionmenu-utility-eyesight-name = Augmented Eyesight

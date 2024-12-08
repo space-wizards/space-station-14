@@ -405,7 +405,7 @@
 - type: entity
   id: ActionAnatomicPanacea
   name: Anatomic Panacea
-  description: We expel impurities from our form: sobering us, and purging radiation and toxins. Costs 30 chemicals.
+  description: We expel impurities from our form, sobering us, and purging radiation and toxins. Costs 30 chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
