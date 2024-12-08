@@ -21,4 +21,10 @@ public sealed partial class CCVars
 
     public static readonly CVarDef<bool> OutlineEnabled =
         CVarDef.Create("outline.enabled", true, CVar.CLIENTONLY);
+
+    // <summary>
+    //  The width of the right side (chat) panel in the lobby
+    // </summary>
+    public static readonly CVarDef<int> ServerLobbyRightPanelWidth =
+        CVarDef.Create("server.lobby_right_panel_width", 650, CVar.REPLICATED | CVar.SERVER);
 }
