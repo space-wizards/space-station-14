@@ -1,6 +1,7 @@
 using Content.Client.Stylesheets;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.Consoles;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.FixedPoint;
 using Content.Shared.Temperature;
@@ -29,19 +30,6 @@ public sealed partial class AtmosAlarmEntryContainer : BoxContainer
         [AtmosAlarmType.Normal] = "atmos-alerts-window-normal-state",
         [AtmosAlarmType.Warning] = "atmos-alerts-window-warning-state",
         [AtmosAlarmType.Danger] = "atmos-alerts-window-danger-state",
-    };
-
-    private Dictionary<Gas, string> _gasShorthands = new Dictionary<Gas, string>()
-    {
-        [Gas.Ammonia] = "NH₃",
-        [Gas.CarbonDioxide] = "CO₂",
-        [Gas.Frezon] = "F",
-        [Gas.Nitrogen] = "N₂",
-        [Gas.NitrousOxide] = "N₂O",
-        [Gas.Oxygen] = "O₂",
-        [Gas.Plasma] = "P",
-        [Gas.Tritium] = "T",
-        [Gas.WaterVapor] = "H₂O",
     };
 
     public AtmosAlarmEntryContainer(NetEntity uid, EntityCoordinates? coordinates)
@@ -162,8 +150,7 @@ public sealed partial class AtmosAlarmEntryContainer : BoxContainer
                     foreach ((var gas, (var mol, var percent, var alert)) in keyValuePairs)
                     {
                         FixedPoint2 gasPercent = percent * 100f;
-
-                        var gasShorthand = _gasShorthands.GetValueOrDefault(gas, "X");
+                        var gasShorthand = SharedAtmosAlertsComputerSystem.GasShorthands.GetValueOrDefault(gas, "X");
 
                         var gasLabel = new Label()
                         {

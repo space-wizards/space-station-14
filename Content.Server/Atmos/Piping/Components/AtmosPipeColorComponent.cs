@@ -16,4 +16,11 @@ namespace Content.Server.Atmos.Piping.Components
             set => IoCManager.Resolve<IEntityManager>().System<AtmosPipeColorSystem>().SetColor(Owner, this, value);
         }
     }
+
+    [ByRefEvent]
+    public record struct AtmosPipeColorChangedEvent(EntityUid EntityUid, Color Color)
+    {
+        public EntityUid EntityUid = EntityUid;
+        public Color Color = Color;
+    }
 }
