@@ -49,18 +49,24 @@ public sealed class RiggableSystem : EntitySystem
             return;
 
         var wasRigged = entity.Comp.IsRigged;
-        var quantity = args.Solution.GetReagentQuantity(entity.Comp.RequiredQuantity.Reagent);
-        entity.Comp.IsRigged = quantity >= entity.Comp.RequiredQuantity.Quantity;
 
-        if (entity.Comp.IsRigged && !wasRigged)
+        foreach (var (reagent, quantity) in entity.Comp.RequiredQuantity)
         {
-            _adminLogger.Add(LogType.Explosion, LogImpact.Medium, $"{ToPrettyString(entity.Owner)} has been rigged up to explode when used.");
+            entity.Comp.IsRigged = args.Solution.GetReagentQuantity(reagent) >= quantity;
+
+            if (entity.Comp.IsRigged)
+            {
+                if (!wasRigged)
+                    _adminLogger.Add(LogType.Explosion, LogImpact.Medium, $"{ToPrettyString(entity.Owner)} has been rigged up to explode when used.");
+
+                break;
+            }
         }
     }
 
     public void Explode(EntityUid uid, BatteryComponent? battery = null, EntityUid? cause = null)
     {
-        if (!Resolve(uid, ref battery))
+        if (!Resolve(uid, ref battery, false))
             return;
 
         var radius = MathF.Min(5, MathF.Sqrt(battery.CurrentCharge) / 9);
