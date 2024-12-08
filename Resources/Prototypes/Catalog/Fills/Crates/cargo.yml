@@ -302,6 +302,21 @@
     - id: PlushieMoth
       prob: 0.01
       orGroup: Plushies
+    - id: PlushieMothRainbow
+      prob: 0.005
+      orGroup: Plushies
+    - id: PlushieMothsician
+      prob: 0.005
+      orGroup: Plushies
+    - id: PlushieMothBar
+      prob: 0.005
+      orGroup: Plushies
+    - id: PlushieMothBluespace
+      prob: 0.005
+      orGroup: Plushies
+    - id: PlushieMothrror
+      prob: 0.005
+      orGroup: Plushies
     - id: PlushieArachind
       prob: 0.01
       orGroup: Plushies

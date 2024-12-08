@@ -109,6 +109,16 @@
   group: market
 
 - type: cargoProduct
+  id: FunMothPlushies
+  icon:
+    sprite: Objects/Fun/moff_plushie.rsi
+    state: moff
+  product: CrateFunMothPlushieBulk
+  cost: 1000
+  category: cargoproduct-category-name-fun
+  group: market
+
+- type: cargoProduct
   id: FunBoardGames
   icon:
     sprite: Objects/Fun/dice.rsi
