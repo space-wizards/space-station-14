@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TGRCDev
-  changes:
-  - message: Added a new revenant ability to draw bloody glyphs on the ground.
-    type: Add
-  id: 193
-  time: '2024-09-12T03:52:51.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/244
 - author: formlessnameless
   changes:
   - message: Fixed all changeling gamemodes missing the SpaceTrafficControl event
@@ -4481,3 +4474,11 @@
   id: 692
   time: '2024-12-08T15:13:40.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/955
+- author: DinnerCalzone
+  changes:
+  - message: Toned down the previous increase to water damage against slimes. Water
+      will still deal an appreciable amount of damage, so be careful.
+    type: Tweak
+  id: 693
+  time: '2024-12-08T15:14:52.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/956
