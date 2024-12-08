@@ -142,7 +142,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         UpdateBiomass(uid, comp, (comp.MaxBiomass * biomassModifier) - comp.TotalAbsorbedEntities);
 
         var dmg = new DamageSpecifier(_proto.Index(AbsorbedDamageGroup), 200);
-        _damage.TryChangeDamage(target, dmg, false, false);
+        _damage.TryChangeDamage(target, dmg, true, false);
         _blood.ChangeBloodReagent(target, "FerrochromicAcid");
         _blood.SpillAllSolutions(target);
 
@@ -493,7 +493,7 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         EnsureComp<AbsorbedComponent>(target);
         var dmg = new DamageSpecifier(_proto.Index(AbsorbedDamageGroup), 200);
-        _damage.TryChangeDamage(target, dmg, false, false);
+        _damage.TryChangeDamage(target, dmg, true, false);
         _blood.ChangeBloodReagent(target, "FerrochromicAcid");
         _blood.SpillAllSolutions(target);
 

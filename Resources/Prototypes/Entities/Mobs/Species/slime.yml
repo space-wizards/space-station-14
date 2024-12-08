@@ -98,7 +98,7 @@
         scaleByQuantity: true
         damage:
           types:
-            Caustic: 2 # the original value was 0.1. this makes it so that it takes 7 water pistol shots to crit a slime.
+            Caustic: 1 # the original value was 0.1. this makes it so that it takes 10 water pistol shots to crit a slime.
       - !type:PopupMessage
         type: Local
         visualType: Large
