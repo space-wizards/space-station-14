@@ -75242,8 +75242,6 @@ entities:
       pos: 74.5,-26.5
       parent: 5350
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 27494
       - 27495
@@ -75254,8 +75252,6 @@ entities:
       pos: 75.5,-28.5
       parent: 5350
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 27495
 - proto: Fireplace
@@ -108732,8 +108728,6 @@ entities:
       pos: 75.5,-26.5
       parent: 5350
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 27495
     - type: AtmosPipeColor
@@ -110142,8 +110136,6 @@ entities:
       pos: 77.5,-26.5
       parent: 5350
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 27495
     - type: AtmosPipeColor
