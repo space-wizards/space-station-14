@@ -34,118 +34,6 @@
             acts: [ "Destruction" ]
 
 - type: entity
-  id: BaseTree
-  description: Yep, it's a tree.
-  abstract: true
-  components:
-  - type: SpriteFade
-  - type: Clickable
-  - type: Sprite
-    noRot: true
-    sprite: Objects/Decoration/Flora/flora_trees.rsi
-    drawdepth: Overdoors
-    offset: 0,0.9
-  - type: Physics
-    bodyType: Static
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.35,-0.4,0.35,0.4"
-        density: 1000
-        layer:
-        - WallLayer
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: Wood
-  - type: MeleeSound
-    soundGroups:
-      Brute:
-        path: /Audio/Effects/chop.ogg
-        params:
-          variation: 0.05
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 400
-      behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 50
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/tree_fell.ogg
-          params:
-            volume: 5
-            variation: 0.05
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          Log:
-            min: 2
-            max: 8
-
-- type: entity
-  parent: BaseTree
-  id: BaseTreeSnow
-  abstract: true
-  components:
-  - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_treessnow.rsi
-    offset: 0,0.7
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.1,-0.3,0.1,0.3"
-        density: 4000
-        layer:
-        - WallLayer
-
-- type: entity
-  parent: BaseTree
-  id: BaseTreeLarge
-  abstract: true
-  components:
-  - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_treeslarge.rsi
-    offset: 0,1.55
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.18,-0.35,0.18,0.35"
-        density: 2000
-        layer:
-        - WallLayer
-
-- type: entity
-  parent: BaseTree
-  id: BaseTreeConifer
-  abstract: true
-  components:
-  - type: Sprite
-    sprite: Objects/Decoration/Flora/flora_treesconifer.rsi
-    offset: 0,1.15
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.1,-0.35,0.1,0.35"
-        density: 3500
-        layer:
-        - WallLayer
-
-- type: entity
   parent: BaseRock
   id: FloraRockSolid01
   components:
@@ -167,10 +55,10 @@
     state: rocksolid03
 
 - type: entity
-  name: stalagmite
-  description: Natural stone spikes.
   parent: BaseRock
   id: FloraStalagmite1
+  name: stalagmite
+  description: Natural stone spikes.
   components:
   - type: Destructible
     thresholds:
@@ -277,9 +165,67 @@
 
 
 - type: entity
+  id: BaseTree
+  name: tree
+  description: Yep, it's a tree.
+  abstract: true
+  components:
+  - type: SpriteFade
+  - type: Clickable
+  - type: Sprite
+    noRot: true
+    sprite: Objects/Decoration/Flora/flora_trees.rsi
+    drawdepth: Overdoors
+    offset: 0,0.9
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,-0.4,0.35,0.4"
+        density: 1000
+        layer:
+        - WallLayer
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Wood
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path: /Audio/Effects/chop.ogg
+        params:
+          variation: 0.05
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/tree_fell.ogg
+          params:
+            volume: 5
+            variation: 0.05
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Log:
+            min: 2
+            max: 8
+
+- type: entity
   parent: BaseTree
   id: FloraTree01
-  name: tree
   components:
   - type: Sprite
     state: tree01
@@ -287,7 +233,6 @@
 - type: entity
   parent: BaseTree
   id: FloraTree02
-  name: tree
   components:
   - type: Sprite
     state: tree02
@@ -295,7 +240,6 @@
 - type: entity
   parent: BaseTree
   id: FloraTree03
-  name: tree
   components:
   - type: Sprite
     state: tree03
@@ -303,7 +247,6 @@
 - type: entity
   parent: BaseTree
   id: FloraTree04
-  name: tree
   components:
   - type: Sprite
     state: tree04
@@ -311,7 +254,6 @@
 - type: entity
   parent: BaseTree
   id: FloraTree05
-  name: tree
   components:
   - type: Sprite
     state: tree05
@@ -319,15 +261,33 @@
 - type: entity
   parent: BaseTree
   id: FloraTree06
-  name: tree
   components:
   - type: Sprite
     state: tree06
 
+
+- type: entity
+  parent: BaseTree
+  id: BaseTreeSnow
+  name: snowy tree
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_treessnow.rsi
+    offset: 0,0.7
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.3,0.1,0.3"
+        density: 4000
+        layer:
+        - WallLayer
+
 - type: entity
   parent: BaseTreeSnow
   id: FloraTreeSnow01
-  name: snowy tree
   components:
   - type: Sprite
     state: treesnow01
@@ -335,7 +295,6 @@
 - type: entity
   parent: BaseTreeSnow
   id: FloraTreeSnow02
-  name: snowy tree
   components:
   - type: Sprite
     state: treesnow02
@@ -343,7 +302,6 @@
 - type: entity
   parent: BaseTreeSnow
   id: FloraTreeSnow03
-  name: snowy tree
   components:
   - type: Sprite
     state: treesnow03
@@ -351,7 +309,6 @@
 - type: entity
   parent: BaseTreeSnow
   id: FloraTreeSnow04
-  name: snowy tree
   components:
   - type: Sprite
     state: treesnow04
@@ -359,7 +316,6 @@
 - type: entity
   parent: BaseTreeSnow
   id: FloraTreeSnow05
-  name: snowy tree
   components:
   - type: Sprite
     state: treesnow05
@@ -367,7 +323,6 @@
 - type: entity
   parent: BaseTreeSnow
   id: FloraTreeSnow06
-  name: snowy tree
   components:
   - type: Sprite
     state: treesnow06
@@ -375,15 +330,33 @@
 - type: entity
   parent: BaseTreeSnow
   id: FloraTreeStump
-  name: tree stump
   components:
   - type: Sprite
     state: treestump
 
+
+- type: entity
+  parent: BaseTree
+  id: BaseTreeLarge
+  name: large tree
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_treeslarge.rsi
+    offset: 0,1.55
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.18,-0.35,0.18,0.35"
+        density: 2000
+        layer:
+        - WallLayer
+
 - type: entity
   parent: BaseTreeLarge
   id: FloraTreeLarge01
-  name: large tree
   components:
   - type: Sprite
     state: treelarge01
@@ -391,7 +364,6 @@
 - type: entity
   parent: BaseTreeLarge
   id: FloraTreeLarge02
-  name: large tree
   components:
   - type: Sprite
     state: treelarge02
@@ -399,7 +371,6 @@
 - type: entity
   parent: BaseTreeLarge
   id: FloraTreeLarge03
-  name: large tree
   components:
   - type: Sprite
     state: treelarge03
@@ -407,7 +378,6 @@
 - type: entity
   parent: BaseTreeLarge
   id: FloraTreeLarge04
-  name: large tree
   components:
   - type: Sprite
     state: treelarge04
@@ -415,7 +385,6 @@
 - type: entity
   parent: BaseTreeLarge
   id: FloraTreeLarge05
-  name: large tree
   components:
   - type: Sprite
     state: treelarge05
@@ -423,15 +392,32 @@
 - type: entity
   parent: BaseTreeLarge
   id: FloraTreeLarge06
-  name: large tree
   components:
   - type: Sprite
     state: treelarge06
 
 - type: entity
+  parent: BaseTree
+  id: BaseTreeConifer
+  name: snowy conifer
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Decoration/Flora/flora_treesconifer.rsi
+    offset: 0,1.15
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.35,0.1,0.35"
+        density: 3500
+        layer:
+        - WallLayer
+
+- type: entity
   parent: BaseTreeConifer
   id: FloraTreeConifer01
-  name: snowy conifer
   components:
   - type: Sprite
     state: treeconifer01
@@ -439,7 +425,6 @@
 - type: entity
   parent: BaseTreeConifer
   id: FloraTreeConifer02
-  name: snowy conifer
   components:
   - type: Sprite
     state: treeconifer02
@@ -447,7 +432,6 @@
 - type: entity
   parent: BaseTreeConifer
   id: FloraTreeConifer03
-  name: snowy conifer
   components:
   - type: Sprite
     state: treeconifer03
