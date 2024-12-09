@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: FATFSAAM2
-  changes:
-  - message: Added 3 new voicelines for the boxer figurine.
-    type: Add
-  id: 7194
-  time: '2024-08-24T00:10:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31382
 - author: Winkarst-cpu
   changes:
   - message: The damage dealt by the folded chair can now be inspected.
@@ -3913,3 +3906,15 @@
   id: 7693
   time: '2024-12-09T16:10:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33788
+- author: joshepvodka
+  changes:
+  - message: Added flavor profiles to beverages that missed them.
+    type: Add
+  - message: Tweaked some drink flavor profiles.
+    type: Tweak
+  - message: Soda/Booze dispenser will now always eject the shaker/glass before any
+      bottle or jug.
+    type: Tweak
+  id: 7694
+  time: '2024-12-09T17:12:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33505
