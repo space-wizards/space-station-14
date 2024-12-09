@@ -14,9 +14,12 @@ using Content.Shared.IdentityManagement.Components;
 using Content.Shared.NameModifier.Components;
 using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Popups;
-using Robust.Client.GameObjects;
+using Content.Shared.Prototypes;
+using Content.Shared.Wagging;
 using Robust.Shared.Containers;
+using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components.Localization;
+using Robust.Shared.Prototypes;
 
 
 namespace Content.Shared.Changeling.Transform;
@@ -28,11 +31,14 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
     [Dependency] private readonly EntityManager _entityManager = default!;
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidAppearanceSystem = default!;
     [Dependency] private readonly NameModifierSystem _nameModifierSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly GrammarSystem _grammarSystem = default!;
     [Dependency] private readonly SharedIdentitySystem _identitySystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly SharedChangelingIdentitySystem _changelingIdentitySystem = default!;
 
     public override void Initialize()
     {
@@ -41,31 +47,16 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformActionEvent>(OnTransformAction);
         SubscribeLocalEvent<ChangelingTransformRadialMessage>(OnRadialmessage);
         SubscribeNetworkEvent<ChangelingIdentityRequest>(OnIdentityRequest);
+        SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformWindupDoAfterEvent>(OnSuccessfulTransform);
     }
 
     private void OnInit(EntityUid uid, ChangelingTransformComponent component, MapInitEvent init)
     {
         _actionsSystem.AddAction(uid, ref component.ChangelingTransformActionEntity, component.ChangelingTransformAction);
-
-
-        component.ChangelingIdentities = EnsureComp<ChangelingIdentityComponent>(uid);
-        if (component.ChangelingIdentities.OriginalIdentityComponent == null &&
-            TryComp<HumanoidAppearanceComponent>(uid, out var appearance) &&
-            TryComp<VocalComponent>(uid, out var vocals) &&
-            TryComp<DnaComponent>(uid, out var dna))
-        {
-            StoredIdentityComponent ling = new()
-            {
-                IdentityName = Name(uid),
-                IdentityDna = dna,
-                IdentityAppearance = appearance,
-                IdentityVocals = vocals,
-                IdentityEntityPrototype = Prototype(uid),
-            };
-            component.ChangelingIdentities.Identities?.Add(ling);
-            component.ChangelingIdentities.OriginalIdentityComponent = ling;
-            Dirty(uid, component);
-        }
+        var identityStorage = EnsureComp<ChangelingIdentityComponent>(uid);
+        if (identityStorage.ConsumedIdentities.Count > 0)
+            return;
+        _changelingIdentitySystem.CloneToNullspace(uid, identityStorage, uid);
     }
 
     private void OnTransformAction(EntityUid uid,
@@ -84,7 +75,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         {
             BreakOnMove = true,
             BreakOnWeightlessMove = true,
-
+            DuplicateCondition = DuplicateConditions.None,
         });
 
 
@@ -102,27 +93,65 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         // }
     }
 
+    private void OnSuccessfulTransform(EntityUid uid,
+        ChangelingTransformComponent component,
+        ChangelingTransformWindupDoAfterEvent args)
+    {
+        args.Handled = true;
+        if (args.Cancelled)
+            return;
+        if(!TryComp<HumanoidAppearanceComponent>(uid, out var currentAppearance))
+            return;
+        if(!TryComp<VocalComponent>(uid, out var currentVocals))
+            return;
+        if(!TryComp<DnaComponent>(uid, out var currentDna))
+            return;
+        if(!HasComp<GrammarComponent>(uid))
+            return;
+        if(!TryComp<ChangelingIdentityComponent>(args.User, out var identityStorage))
+            return;
+
+        var lastConsumed = identityStorage.LastConsumedEntityUid;
+        if (lastConsumed == null)
+            return;
+        if(!TryComp<DnaComponent>(uid, out var lastConsumedDna))
+            return;
+        if (!TryComp<HumanoidAppearanceComponent>(lastConsumed, out var humanoid))
+            return;
+        if (!TryComp<VocalComponent>(lastConsumed, out var lastConsumedVocals))
+            return;
+
+        //Handle species with the ability to wag their tail
+        if (TryComp<WaggingComponent>(uid, out var waggingComp))
+        {
+            _actionsSystem.RemoveAction(uid, waggingComp.ActionEntity);
+            RemComp<WaggingComponent>(uid);
+        }
+        if (HasComp<WaggingComponent>(lastConsumed)
+            && !HasComp<WaggingComponent>(uid))
+        {
+            EnsureComp<WaggingComponent>(uid, out _);
+        }
+        _humanoidAppearanceSystem.CloneAppearance((EntityUid)lastConsumed, args.User);
+        currentDna.DNA = lastConsumedDna.DNA;
+        currentVocals.EmoteSounds = lastConsumedVocals.EmoteSounds;
+        currentVocals.Sounds = lastConsumedVocals.Sounds;
+        currentVocals.ScreamAction = lastConsumedVocals.ScreamAction;
+        currentVocals.ScreamId = lastConsumedVocals.ScreamId;
+        currentVocals.Wilhelm = lastConsumedVocals.Wilhelm;
+        currentVocals.WilhelmProbability = lastConsumedVocals.WilhelmProbability;
+        _metaSystem.SetEntityName(uid, Name((EntityUid)lastConsumed), raiseEvents: false);
+        _metaSystem.SetEntityDescription(uid, MetaData((EntityUid)lastConsumed).EntityDescription);
+        TransformGrammarSet(uid, humanoid.Gender);
+
+        _entityManager.Dirty(uid, currentAppearance);
+        _entityManager.Dirty(uid, currentVocals);
+    }
+
+    public virtual void TransformGrammarSet(EntityUid uid, Gender gender) { }
+
     private void OnIdentityRequest(ChangelingIdentityRequest ev)
     {
-        _mindSystem.TryGetMind(ev.ChannelId, out var mindId, out var mind);
-
-        TryComp<ChangelingIdentityComponent>(mind?.OwnedEntity, out var identity);
-        if (identity?.Identities != null)
-        {
-            var identityList = new List<ChangelingIdentityMessageComposite>();
-            foreach (var ident in identity?.Identities!)
-            {
-                var piece = new ChangelingIdentityMessageComposite()
-                {
-                    Dna = ident.IdentityDna?.DNA,
-                    Sprite = new SpriteSpecifier.Rsi(new ResPath("/Textures/Interface/Actions/changeling.rsi"),
-                        "transform"),
-                    Tooltip = ident.IdentityDna?.DNA,
-                };
-                identityList.Add(piece);
-            }
-            RaiseNetworkEvent(new ChangelingIdentityResponse(ev.ChannelId, identityList));
-        }
     }
 
 
@@ -137,20 +166,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
 
     private void OnGetIdentities(Entity<ChangelingTransformComponent> component, ref GetChangelingIdentitiesRadialEvent ev)
     {
-        TryComp<ChangelingIdentityComponent>(component.Owner, out var identites);
-        var o = component.Comp.ChangelingIdentities?.Identities;
-        if (component.Comp.ChangelingIdentities?.Identities != null)
-        {
-            foreach (var identity in component.Comp.ChangelingIdentities.Identities)
-            {
-                ev.Actions.Add(new()
-                    {
-                        Sprite = new SpriteSpecifier.Rsi(new ResPath("/Textures/Interface/Actions/changeling.rsi"), "transform"),
-                        Tooltip = identity.IdentityDna?.DNA,
-                    }
-                );
-            }
-        }
+
     }
 }
 

@@ -10,20 +10,17 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Changeling.Transform;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedChangelingTransformSystem))]
 public sealed partial class ChangelingTransformComponent : Component
 {
     [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string? ChangelingTransformAction = "ActionChangelingTransform";
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityUid? ChangelingTransformActionEntity;
 
-    [DataField]
-    public ChangelingIdentityComponent? ChangelingIdentities;
-
-    [DataField]
+    [DataField, AutoNetworkedField]
     public float TransformWindup = 5f;
 }
 
