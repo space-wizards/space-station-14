@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: sususuyo
-  changes:
-  - message: Added more Justice Helms to the secdrobe vend. The whole department should
-      be allowed one okay?
-    type: Add
-  id: 197
-  time: '2024-09-14T04:45:45.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/250
 - author: TGRCDev
   changes:
   - message: Revenants can now animate items and make them attack living beings.
@@ -4482,3 +4474,10 @@
   id: 696
   time: '2024-12-08T21:09:58.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/960
+- author: ATDoop
+  changes:
+  - message: You can grind the bug and snail plushies.
+    type: Add
+  id: 697
+  time: '2024-12-09T16:37:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/968
