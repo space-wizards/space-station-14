@@ -28,7 +28,6 @@ namespace Content.Server.Changeling;
 public sealed partial class ChangelingSystem : EntitySystem
 {
     [Dependency] private readonly SharedRottingSystem _rotting = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     public void SubscribeAbilities()
     {
