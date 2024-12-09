@@ -116,7 +116,7 @@
   name: reagent-name-holium
   desc: reagent-desc-holium
   physicalDesc: reagent-physical-desc-threat
-  flavor: bottomless
+  flavor: singulo
   color: "#000000"
   tileReactions:
   - !type:CreateEntityTileReaction
