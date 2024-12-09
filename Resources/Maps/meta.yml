@@ -11199,7 +11199,7 @@ entities:
       pos: -42.5,29.5
       parent: 5350
     - type: Door
-      secondsUntilStateChange: -32686.27
+      secondsUntilStateChange: -33320.883
       state: Opening
     - type: DeviceLinkSink
       invokeCounter: 2
@@ -14051,11 +14051,15 @@ entities:
       parent: 5350
   - uid: 11916
     components:
+    - type: MetaData
+      name: Atmos Maints APC
     - type: Transform
       pos: 43.5,-18.5
       parent: 5350
   - uid: 11970
     components:
+    - type: MetaData
+      name: Atmospherics Main Floor APC
     - type: Transform
       pos: 50.5,-18.5
       parent: 5350
@@ -71778,7 +71782,6 @@ entities:
   - uid: 27478
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: 76.5,-27.5
       parent: 5350
 - proto: DoorElectronics
@@ -141676,6 +141679,8 @@ entities:
       parent: 5350
   - uid: 27233
     components:
+    - type: MetaData
+      name: TEG substation
     - type: Transform
       pos: 77.5,-30.5
       parent: 5350
@@ -142586,6 +142591,9 @@ entities:
       pos: 66.5,-26.5
       parent: 5350
     - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
       id: Atmos TEG Room Entrance
   - uid: 27267
     components:
@@ -142594,6 +142602,9 @@ entities:
       pos: 66.5,-38.5
       parent: 5350
     - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
       id: Atmos TEG Room Chamber
   - uid: 27269
     components:
@@ -142602,6 +142613,8 @@ entities:
       pos: 74.5,-42.5
       parent: 5350
     - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
       id: Atmos TEG Exterior south
   - uid: 27484
     components:
@@ -142609,36 +142622,66 @@ entities:
       rot: 3.141592653589793 rad
       pos: 71.5,-25.5
       parent: 5350
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Atmos TEG SMES Bank
   - uid: 27485
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 75.5,-32.5
       parent: 5350
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Atmos TEG Room Chamber East
   - uid: 27486
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 76.5,-29.5
       parent: 5350
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Atmos TEG Room Substation
   - uid: 27487
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 75.5,-27.5
       parent: 5350
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Atmos TEG Break Room
   - uid: 27574
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 61.5,13.5
       parent: 5350
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Containment Lower
   - uid: 27575
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 61.5,27.5
       parent: 5350
+    - type: SurveillanceCamera
+      setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Containment Upper
 - proto: SurveillanceCameraGeneral
   entities:
   - uid: 23189
