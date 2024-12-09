@@ -96,7 +96,9 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     _atmosphereSystem.React(comp.Air, comp);
                 }
+
                 CheckStatus(gasTank);
+
                 if ((comp.IsConnected || comp.IsValveOpen) && _ui.IsUiOpen(uid, SharedGasTankUiKey.Key))
                 {
                     UpdateUserInterface(gasTank);

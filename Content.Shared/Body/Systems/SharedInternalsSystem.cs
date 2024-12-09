@@ -13,11 +13,13 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Body.Systems;
 
+/// <summary>
+/// Handles lung breathing with gas tanks for entities.
+/// </summary>
 public abstract class SharedInternalsSystem : EntitySystem
 {
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly SharedAtmosphereSystem _atmos = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedGasTankSystem _gasTank = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
@@ -60,33 +62,32 @@ public abstract class SharedInternalsSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    public void ToggleInternals(
+    public bool ToggleInternals(
         EntityUid uid,
         EntityUid user,
         bool force,
         InternalsComponent? internals = null)
     {
         if (!Resolve(uid, ref internals, logMissing: false))
-            return;
+            return false;
 
         // Check if a mask is present.
         if (internals.BreathTools.Count == 0)
         {
             _popupSystem.PopupClient(Loc.GetString("internals-no-breath-tool"), uid, user);
-            return;
+            return false;
         }
 
-        // Start the toggle do-after
-        if (!force)
+        // Start the toggle do-after if it's on someone else.
+        if (!force && user != uid)
         {
-            StartToggleInternalsDoAfter(user, (uid, internals));
-            return;
+            return StartToggleInternalsDoAfter(user, (uid, internals));
         }
 
         // Toggle off.
         if (TryComp(internals.GasTankEntity, out GasTankComponent? gas))
         {
-            _gasTank.DisconnectFromInternals((internals.GasTankEntity.Value, gas), user);
+            return _gasTank.DisconnectFromInternals((internals.GasTankEntity.Value, gas), user);
         }
         else
         {
@@ -97,20 +98,20 @@ public abstract class SharedInternalsSystem : EntitySystem
             if (tank == null)
             {
                 _popupSystem.PopupClient(Loc.GetString("internals-no-tank"), uid, user);
-                return;
+                return false;
             }
 
-            _gasTank.ConnectToInternals(tank.Value, user: user);
+            return _gasTank.ConnectToInternals(tank.Value, user: user);
         }
     }
 
-    private void StartToggleInternalsDoAfter(EntityUid user, Entity<InternalsComponent> targetEnt)
+    private bool StartToggleInternalsDoAfter(EntityUid user, Entity<InternalsComponent> targetEnt)
     {
         // Is the target not you? If yes, use a do-after to give them time to respond.
         var isUser = user == targetEnt.Owner;
         var delay = !isUser ? targetEnt.Comp.Delay : TimeSpan.Zero;
 
-        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, delay, new InternalsDoAfterEvent(), targetEnt, target: targetEnt)
+        return _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, delay, new InternalsDoAfterEvent(), targetEnt, target: targetEnt)
         {
             BreakOnDamage = true,
             BreakOnMove =  true,
@@ -132,8 +133,8 @@ public abstract class SharedInternalsSystem : EntitySystem
     {
         if (args.Handled)
             return;
-        ToggleInternals(ent, ent, false, internals: ent.Comp);
-        args.Handled = true;
+
+        args.Handled |= ToggleInternals(ent, ent, false, internals: ent.Comp);
     }
 
     private void OnInternalsStartup(Entity<InternalsComponent> ent, ref ComponentStartup args)
@@ -151,11 +152,17 @@ public abstract class SharedInternalsSystem : EntitySystem
         if (!ent.Comp.BreathTools.Add(toolEntity))
             return;
 
+        if (TryComp(toolEntity, out BreathToolComponent? breathTool))
+        {
+            breathTool.ConnectedInternalsEntity = ent.Owner;
+            Dirty(toolEntity, breathTool);
+        }
+
         Dirty(ent);
         _alerts.ShowAlert(ent, ent.Comp.InternalsAlert, GetSeverity(ent));
     }
 
-    public void DisconnectBreathTool(Entity<InternalsComponent> ent, EntityUid toolEntity)
+    public void DisconnectBreathTool(Entity<InternalsComponent> ent, EntityUid toolEntity, bool forced = false)
     {
         if (!ent.Comp.BreathTools.Remove(toolEntity))
             return;
@@ -163,18 +170,23 @@ public abstract class SharedInternalsSystem : EntitySystem
         Dirty(ent);
 
         if (TryComp(toolEntity, out BreathToolComponent? breathTool))
-            _atmos.DisconnectInternals((toolEntity, breathTool));
+        {
+            breathTool.ConnectedInternalsEntity = null;
+            Dirty(toolEntity, breathTool);
+        }
 
         if (ent.Comp.BreathTools.Count == 0)
-            DisconnectTank(ent);
+        {
+            DisconnectTank(ent, forced: forced);
+        }
 
         _alerts.ShowAlert(ent, ent.Comp.InternalsAlert, GetSeverity(ent));
     }
 
-    public void DisconnectTank(Entity<InternalsComponent> ent)
+    public void DisconnectTank(Entity<InternalsComponent> ent, bool forced = false)
     {
         if (TryComp(ent.Comp.GasTankEntity, out GasTankComponent? tank))
-            _gasTank.DisconnectFromInternals((ent.Comp.GasTankEntity.Value, tank));
+            _gasTank.DisconnectFromInternals((ent.Comp.GasTankEntity.Value, tank), forced: forced);
 
         ent.Comp.GasTankEntity = null;
         Dirty(ent);

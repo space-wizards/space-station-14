@@ -2,6 +2,7 @@ using Content.Shared.Actions;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Examine;
+using Content.Shared.Timing;
 using Content.Shared.Toggleable;
 using Content.Shared.UserInterface;
 using Content.Shared.Verbs;
@@ -18,6 +19,9 @@ public abstract class SharedGasTankSystem : EntitySystem
     [Dependency] private   readonly SharedContainerSystem _containers = default!;
     [Dependency] private   readonly SharedInternalsSystem _internals = default!;
     [Dependency] protected readonly SharedUserInterfaceSystem UI = default!;
+    [Dependency] private   readonly UseDelaySystem _delay = default!;
+
+    public const string GasTankDelay = "gasTank";
 
     public override void Initialize()
     {
@@ -84,7 +88,8 @@ public abstract class SharedGasTankSystem : EntitySystem
         if (args.Handled)
             return;
 
-        args.Handled = ToggleInternals(gasTank, user: args.Performer);
+        ToggleInternals(gasTank, user: args.Performer);
+        args.Handled = true;
     }
 
     private void OnGetAlternativeVerb(EntityUid uid, GasTankComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -121,11 +126,15 @@ public abstract class SharedGasTankSystem : EntitySystem
         if (internalsUid == null || internalsComp == null)
             return false;
 
+        if (!_delay.TryResetDelay(ent.Owner, checkDelayed: true, id: GasTankDelay))
+            return false;
+
         if (_internals.TryConnectTank((internalsUid.Value, internalsComp), owner))
             component.User = internalsUid.Value;
 
         Dirty(ent);
         _actions.SetToggled(component.ToggleActionEntity, component.IsConnected);
+        _actions.SetCooldown(component.ToggleActionEntity, TimeSpan.FromSeconds(1));
 
         // Couldn't toggle!
         if (!component.IsConnected)
@@ -175,11 +184,14 @@ public abstract class SharedGasTankSystem : EntitySystem
         return false;
     }
 
-    public bool DisconnectFromInternals(Entity<GasTankComponent> ent, EntityUid? user = null)
+    public bool DisconnectFromInternals(Entity<GasTankComponent> ent, EntityUid? user = null, bool forced = false)
     {
         var (owner, component) = ent;
 
         if (component.User == null)
+            return false;
+
+        if (!forced && !_delay.TryResetDelay(ent.Owner, checkDelayed: true, id: GasTankDelay))
             return false;
 
         TryGetInternalsComp(ent, out var internalsUid, out var internalsComp, component.User);
@@ -188,8 +200,14 @@ public abstract class SharedGasTankSystem : EntitySystem
 
         _actions.SetToggled(component.ToggleActionEntity, false);
 
+        // I hate this but actions have no easy way to unify this with usedelay.
+        if (!forced && _delay.TryGetDelayInfo(ent.Owner, out var delayInfo, id: GasTankDelay))
+        {
+            _actions.SetCooldown(component.ToggleActionEntity, delayInfo.Length);
+        }
+
         if (internalsUid != null && internalsComp != null)
-            _internals.DisconnectTank((internalsUid.Value, internalsComp));
+            _internals.DisconnectTank((internalsUid.Value, internalsComp), forced: forced);
 
         component.DisconnectStream = _audio.Stop(component.DisconnectStream);
         component.DisconnectStream = _audio.PlayPredicted(component.DisconnectSound, owner, user)?.Entity;

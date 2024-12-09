@@ -42,6 +42,10 @@
       interfaces:
         enum.SharedGasTankUiKey.Key:
           type: GasTankBoundUserInterface
+    - type: UseDelay
+      delays:
+        gasTank:
+          length: 1.0
     - type: Clothing
       sprite: Objects/Tanks/Jetpacks/blue.rsi
       quickEquip: false

@@ -20,6 +20,9 @@ public sealed partial class BreathToolComponent : Component
     [ViewVariables]
     public bool IsFunctional => ConnectedInternalsEntity != null;
 
+    /// <summary>
+    /// Entity that the breath tool is currently connected to.
+    /// </summary>
     [DataField, AutoNetworkedField]
     public EntityUid? ConnectedInternalsEntity;
 }

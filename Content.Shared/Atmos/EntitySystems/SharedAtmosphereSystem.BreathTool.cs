@@ -17,7 +17,7 @@ public abstract partial class SharedAtmosphereSystem
         DisconnectInternals(entity);
     }
 
-    public void DisconnectInternals(Entity<BreathToolComponent> entity)
+    public void DisconnectInternals(Entity<BreathToolComponent> entity, bool forced = false)
     {
         var old = entity.Comp.ConnectedInternalsEntity;
 
@@ -28,7 +28,7 @@ public abstract partial class SharedAtmosphereSystem
 
         if (TryComp<InternalsComponent>(old, out var internalsComponent))
         {
-            _internals.DisconnectBreathTool((old.Value, internalsComponent), entity.Owner);
+            _internals.DisconnectBreathTool((old.Value, internalsComponent), entity.Owner, forced: forced);
         }
 
         Dirty(entity);
@@ -38,15 +38,13 @@ public abstract partial class SharedAtmosphereSystem
     {
         if (args.IsToggled || args.IsEquip)
         {
-            DisconnectInternals(ent);
+            DisconnectInternals(ent, forced: true);
         }
         else
         {
             if (TryComp(args.Wearer, out InternalsComponent? internals))
             {
-                ent.Comp.ConnectedInternalsEntity = args.Wearer;
                 _internals.ConnectBreathTool((args.Wearer, internals), ent);
-                Dirty(ent);
             }
         }
     }
