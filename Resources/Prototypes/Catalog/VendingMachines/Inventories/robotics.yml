@@ -11,10 +11,11 @@
     HandheldHealthAnalyzer: 3
     Scalpel: 2
     SawElectric: 2
-    #Bonesetter: 2 add when robotics
+    Bonesetter: 2
     NitrousOxideTankFilled: 2
     ClothingMaskBreathMedical: 5
     ClothingHeadHatWeldingMaskFlame: 1
+    ClothingEyesWeldingGoggles: 2
     Welder: 1
     Screwdriver: 2
     Crowbar: 2

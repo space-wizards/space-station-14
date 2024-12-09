@@ -660,7 +660,7 @@ doc-text-printer-prisoner-parole-order =
 doc-text-printer-order-recognizing-reasonableness-creature =
    ⠀[logo]            [head=3]NanoTrasen[/head]
     ──────────────────────────────────────────
-    [bold]ORDER RECOGNIZING THE REASONABLENESS OF THE CREATURE[/bold]
+   ⠀[bold]ORDER RECOGNIZING THE REASONABLENESS OF THE CREATURE[/bold]
     ──────────────────────────────────────────
     Time and Date:
     Compiler of the document:

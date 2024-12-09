@@ -1,0 +1,20 @@
+- type: entity
+  parent: BasePDA
+  id: RoboticistPDA
+  name: roboticist PDA
+  description: Covered in dirt and oil. The screen is covered in something sticky.
+  components:
+  - type: Pda
+    id: RoboticistIDCard
+    state: pda-roboticist
+  - type: PdaBorderColor
+    borderColor: "#d7d7d0"
+    accentVColor: "#8900c9"
+  - type: Icon
+    state: pda-roboticist
+  - type: HealthAnalyzer
+    scanningEndSound:
+      path: "/Audio/Items/Medical/healthscanner.ogg"
+    damageContainers:
+    - Synth
+    - Silicon
