@@ -333,3 +333,21 @@
     SheetPrinter: 100
     
 # OrdersAndInstructions
+
+- type: latheRecipe
+  id: PrintedDocumentDismissalOrderRecipe
+  result: PrintedDocumentDismissalOrder
+  category: OrdersAndInstructions
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+    
+- type: latheRecipe
+  id: PrintedDocumentAccessRevocationOrderRecipe
+  result: PrintedDocumentAccessRevocationOrder
+  category: OrdersAndInstructions
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100

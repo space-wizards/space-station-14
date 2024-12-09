@@ -67,6 +67,8 @@
       - PrintedDocumentPermissionDisposeBodyRecipe
       - PrintedDocumentConstructionPermitRecipe
 # OrdersAndInstructions
+      - PrintedDocumentDismissalOrderRecipe
+      - PrintedDocumentAccessRevocationOrderRecipe
 #  - type: EmagLatheRecipes
 #    emagStaticRecipes:
 #        - PrintedDocumentErrorLoadingFormHeaderRecipe

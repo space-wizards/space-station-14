@@ -337,8 +337,27 @@
   parent: PrintedDocument
   id: PrintedDocumentConstructionPermit
   name: Building permit
+  categories: [ HideSpawnMenu ]
   components:
     - type: Paper
       content: doc-text-printer-construction-permit
       
 # OrdersAndInstructions
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentDismissalOrder
+  name: Dismissal order
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-dismissal-order
+      
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentAccessRevocationOrder
+  name: Access revocation order
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-access-revocation-order

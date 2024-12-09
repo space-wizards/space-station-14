@@ -603,3 +603,30 @@ doc-text-printer-construction-permit =
    ⠀                                    [italic]Place for stamps[/italic]
    
 # OrdersAndInstructions
+
+doc-text-printer-dismissal-order =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀                               [bold]DISMISSAL ORDER[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    I, (full name), in the position of (full job title), am ordered to terminate the employment of (full name) of (name of department) in the position of (full job title of person being terminated) for cause:
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
+doc-text-printer-access-revocation-order =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀                       [bold]ACCESS REVOCATION ORDER[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    I, (full name), in the position of (full job title), am ordered to revoke the following access(s) from employee (full name) in the position of (full job title):
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
