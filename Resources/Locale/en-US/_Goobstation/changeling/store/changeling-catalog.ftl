@@ -2,24 +2,24 @@
 
 evolutionmenu-combat-armblade-name = Arm Blade
 evolutionmenu-combat-armblade-desc =
-    We recreate one of our arms into a grotesque blade, capable of prying open airlocks and maiming our enemies.
+    We recreate one of our arms into a grotesque blade, capable of prying open airlocks and maiming our enemies. Cannot be used in our lesser form.
     Costs a small amount of chemicals.
 
 evolutionmenu-combat-boneshard-name = Bone Shard
 evolutionmenu-combat-boneshard-desc =
-    We break off shards of sharp bone to use as projectile weapons.
+    We break off shards of sharp bone to use as projectile weapons. Cannot be used in our lesser form.
     Costs a small amount of chemicals.
 
 evolutionmenu-combat-armor-name = Chitinous Armor
 evolutionmenu-combat-armor-desc =
     We turn our skin into tough chitin to protect us from damage.
-    WARNING: We must absorb at least 2 organics to use this ability.
+    WARNING: We must absorb at least 2 organics to use this ability. Cannot be used in our lesser form.
     Costs a small amount of chemicals.
 
 evolutionmenu-combat-shield-name = Organic Shield
 evolutionmenu-combat-shield-desc =
     We reform one of our arms into a hard yet brittle shield.
-    WARNING: Requires you to absorb at least 1 organic to use the ability.
+    WARNING: Requires you to absorb at least 1 organic to use the ability. Cannot be used in our lesser form.
     Costs a small amount of chemicals.
 
 evolutionmenu-combat-shriek-dissonant-name = Dissonant Shriek
@@ -80,17 +80,17 @@ evolutionmenu-utility-panacea-desc =
 
 evolutionmenu-utility-eyesight-name = Augmented Eyesight
 evolutionmenu-utility-eyesight-desc =
-    We grow a tinted nictitating membrane over our eyes, protecting our vision from sudden bright lights.
+    We grow a tinted nictitating membrane over our eyes, protecting our vision from sudden bright lights. Cannot be used in our lesser form.
     Costs no chemicals.
 
 evolutionmenu-utility-biodegrade-name = Biodegrade
 evolutionmenu-utility-biodegrade-desc =
-    We spew a caustic substance, dissolving restraints and spraying those who hold onto us.
+    We spew a caustic substance, dissolving restraints and spraying those who hold onto us. Cannot be used in our lesser form.
     Costs a small amount of chemicals.
 
 evolutionmenu-utility-chameleon-name = Chameleon Skin
 evolutionmenu-utility-chameleon-desc =
-    Our skin pigmentation rapidly changes to suit our current environment.
+    Our skin pigmentation rapidly changes to suit our current environment. Cannot be used in our lesser form.
     Costs a small amount of chemicals.
 
 evolutionmenu-utility-stims-name = Ephedrine Overdose
@@ -116,7 +116,7 @@ evolutionmenu-utility-lesserform-desc =
 
 evolutionmenu-utility-spacesuit-name = Space Adaptation
 evolutionmenu-utility-spacesuit-desc =
-    We prepare our cells to resist barotrauma. We must still breathe.
+    We prepare our cells to resist barotrauma. We must still breathe. Cannot be used in our lesser form.
     Costs a small amount of chemicals.
 
 evolutionmenu-utility-hivemindaccess-name = Hivemind Access

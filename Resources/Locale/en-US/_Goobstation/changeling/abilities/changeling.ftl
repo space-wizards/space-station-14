@@ -27,6 +27,9 @@ changeling-transform-cycle-empty = We have no DNA strains.
 changeling-transform-self = We assume {THE($target)}'s form.
 changeling-transform-target = Your body contorts into the shape of {THE($target)}!
 changeling-transform-others = {CAPITALIZE($user)}'s body contorts into the shape of {THE($target)}!
+changeling-transform-lesser-self = We assume a lesser form.
+# TODO: different lesser form species?
+changeling-transform-lesser-others = {CAPITALIZE($user)}'s body contorts into the shape of a monkey!
 changeling-transform-fail-self = We cannot re-assume our current form.
 changeling-transform-fail-choose = We must select a form to assume.
 changeling-transform-fail-absorbed = We cannot transform a hollow body.

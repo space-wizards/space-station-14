@@ -22,6 +22,7 @@ using Content.Server.Radio.Components;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Content.Shared.Humanoid;
 
 namespace Content.Server.Changeling;
 
@@ -680,15 +681,10 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         var targetUid = (EntityUid)newUid;
 
-        var popupSelf = Loc.GetString("changeling-transform-self", ("target", targetUid));
-        var popupTarget = Loc.GetString("changeling-transform-target", ("target", targetUid));
-        var popupOthers = Loc.GetString("changeling-transform-others", ("user", Identity.Entity(uid, EntityManager)), ("target", targetUid));
+        var popupSelf = Loc.GetString("changeling-transform-lesser-self");
+        var popupOthers = Loc.GetString("changeling-transform-lesser-others", ("user", Identity.Entity(uid, EntityManager)));
 
-        if (HasComp<ChangelingComponent>(uid))
-            _popup.PopupEntity(popupSelf, targetUid, targetUid);
-        else
-            _popup.PopupEntity(popupTarget, targetUid, targetUid, PopupType.MediumCaution);
-
+        _popup.PopupEntity(popupSelf, targetUid, targetUid);
         _popup.PopupEntity(popupOthers, targetUid, Filter.Pvs(targetUid).RemovePlayerByAttachedEntity(targetUid), true, PopupType.MediumCaution);
 
         PlayMeatySound((EntityUid)newUid, comp);
