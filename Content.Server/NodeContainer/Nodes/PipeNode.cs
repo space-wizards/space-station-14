@@ -191,7 +191,7 @@ namespace Content.Server.NodeContainer.Nodes
                 if (!CurrentPipeDirection.HasDirection(pipeDir))
                     continue;
 
-                foreach (var pipe in LinkableNodesInDirection(pos, pipeDir, xform, grid, nodeQuery))
+                foreach (var pipe in LinkableNodesInDirection(pos, pipeDir, xform, grid, nodeQuery, mapSystem))
                 {
                     yield return pipe;
                 }
@@ -206,9 +206,10 @@ namespace Content.Server.NodeContainer.Nodes
             PipeDirection pipeDir,
             TransformComponent xform,
             MapGridComponent grid,
-            EntityQuery<NodeContainerComponent> nodeQuery)
+            EntityQuery<NodeContainerComponent> nodeQuery,
+            SharedMapSystem mapSystem)
         {
-            foreach (var pipe in PipesInDirection(pos, pipeDir, xform, grid, nodeQuery))
+            foreach (var pipe in PipesInDirection(pos, pipeDir, xform, grid, nodeQuery, mapSystem))
             {
                 if (pipe.NodeGroupID == NodeGroupID
                     && pipe.CurrentPipeDirection.HasDirection(pipeDir.GetOpposite()))
@@ -226,13 +227,12 @@ namespace Content.Server.NodeContainer.Nodes
             PipeDirection pipeDir,
             TransformComponent xform,
             MapGridComponent grid,
-            EntityQuery<NodeContainerComponent> nodeQuery)
+            EntityQuery<NodeContainerComponent> nodeQuery,
+            SharedMapSystem mapSystem)
         {
-            var mapSys = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedMapSystem>();
-
             var offsetPos = pos.Offset(pipeDir.ToDirection());
 
-            foreach (var entity in mapSys.GetAnchoredEntities(xform.GridUid!.Value, grid, offsetPos))
+            foreach (var entity in mapSystem.GetAnchoredEntities(xform.GridUid!.Value, grid, offsetPos))
             {
                 if (!nodeQuery.TryGetComponent(entity, out var container))
                     continue;
