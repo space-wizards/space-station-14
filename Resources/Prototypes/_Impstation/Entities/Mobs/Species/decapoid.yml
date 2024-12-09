@@ -93,7 +93,7 @@
         shape:
           !type:PhysShapeCircle
           radius: 0.35
-        density: 150 # they're a little heavier than everyone else.
+        density: 350 # they're a little heavier than everyone else.
         restitution: 0.0
         mask:
         - MobMask

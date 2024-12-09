@@ -1,0 +1,19 @@
+- type: entity
+  id: BorgModuleTckTck
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: tck'tck power module
+  components:
+  - type: Sprite
+    layers:
+    - state: generic
+    - state: icon-cables
+  - type: ItemBorgModule
+    items:
+    - CableApcStackLingering10
+    - trayScanner
+    - TckWrench
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: wire-module }
+  - type: Tag
+    tags:
+      - BorgModuleTckTck

@@ -1,10 +1,14 @@
 // Initial file ported from the Starlight project repo, located at https://github.com/ss14Starlight/space-station-14
 
 using System.Linq;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
-using Content.Shared.Tools.Components;
+using Content.Shared.Eye.Blinding.Systems;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Movement.Events;
+using Robust.Shared.Player;
+using Content.Shared.Tools.Components;
 using Content.Shared.VentCraw.Tube.Components;
 using Content.Shared.VentCraw.Components;
 using Robust.Shared.Audio.Systems;
@@ -12,7 +16,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
-using Content.Shared.Eye.Blinding.Systems;
 
 namespace Content.Shared.VentCraw;
 
@@ -27,6 +30,7 @@ public sealed class SharedVentCrawableSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
 
     public override void Initialize()
     {
@@ -36,15 +40,41 @@ public sealed class SharedVentCrawableSystem : EntitySystem
         SubscribeLocalEvent<VentCrawHolderComponent, MoveInputEvent>(OnMoveInput);
 
         SubscribeLocalEvent<VentCrawlerComponent, CanSeeAttemptEvent>(OnCanSee);
+        SubscribeLocalEvent<VentCrawlerComponent, InteractionAttemptEvent>(OnInteractAttempt);
+        SubscribeLocalEvent<VentCrawlerComponent, AttackAttemptEvent>(OnAttackAttempt);
     }
 
     /// <summary>
     /// Blinds entities that are inside of vents
     /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="comp"></param>
-    /// <param name="args"></param>
+    /// <param name="uid">The entity attempting to see.</param>
+    /// <param name="comp">That entity's ventcrawler component.</param>
+    /// <param name="args">The CanSeeAttemptEvent arguments.</param>
     private void OnCanSee(EntityUid uid, VentCrawlerComponent comp, ref CanSeeAttemptEvent args)
+    {
+        if (comp.InTube)
+            args.Cancel();
+    }
+
+    /// <summary>
+    /// Prevents entities from performing actions while inside the vents.
+    /// </summary>
+    /// <param name="uid">The entity attempting the action.</param>
+    /// <param name="comp">That entity's ventcrawler component.</param>
+    /// <param name="args">The InteractionAttemptEvent arguments.</param>
+    private void OnInteractAttempt(EntityUid uid, VentCrawlerComponent comp, ref InteractionAttemptEvent args)
+    {
+        if (comp.InTube)
+            args.Cancelled = true;
+    }
+
+    /// <summary>
+    /// Prevents entities from attacking while inside the vents.
+    /// </summary>
+    /// <param name="uid">The entity attempting the attack.</param>
+    /// <param name="comp">That entity's ventcrawler component.</param>
+    /// <param name="args">The AttackAttemptEvent arguments.</param>
+    private void OnAttackAttempt(EntityUid uid, VentCrawlerComponent comp, ref AttackAttemptEvent args)
     {
         if (comp.InTube)
             args.Cancel();

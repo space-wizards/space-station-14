@@ -52,7 +52,7 @@
         shape:
           !type:PhysShapeCircle
           radius: 0.35
-        density: 120
+        density: 300 # this matches diona
         restitution: 0.0
         mask:
         - MobMask
@@ -112,6 +112,9 @@
       294: 0.2
   - type: Bloodstream
     bloodReagent: CopperBlood
+  - type: Tag
+    tags:
+      - Gastropod
   - type: Inventory
     templateId: snail
     displacements:
