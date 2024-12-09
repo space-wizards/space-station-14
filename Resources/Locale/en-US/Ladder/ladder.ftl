@@ -1,2 +1,2 @@
-ladder-down = You climb down the ladder
-ladder-up = You climb up the ladder
+ladder-down = {$owner} climbs down the ladder
+ladder-up = {$owner} climbs up the ladder
