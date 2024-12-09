@@ -32,38 +32,38 @@ public sealed class LadderSystem : EntitySystem
         SubscribeLocalEvent<LadderupComponent, StepTriggerAttemptEvent>(OnStepTriggerAttemptUp);
     }
 
-    private void OnClimbedDown(EntityUid owner, LadderdownComponent component, ref ClimbedOnEvent args)
+    private void OnClimbedDown(EntityUid uid, LadderdownComponent component, ref ClimbedOnEvent args)
     {
-       if (HasComp<GhostComponent>(owner))
+       if (HasComp<GhostComponent>(args.Climber))
            {
             return;
            }
 
-          if (HasComp<HandsComponent>(owner))
+          if (HasComp<HandsComponent>(args.Climber))
             {
            var destination = EntityManager.EntityQuery<LadderupComponent>().FirstOrDefault();
             if (destination != null)
             {
-                Transform(owner).Coordinates = Transform(destination.Owner).Coordinates;
-                 _popup.PopupEntity(Loc.GetString("ladder-down"), owner, PopupType.Medium);
+                Transform(args.Climber).Coordinates = Transform(destination.args.Climber).Coordinates;
+                 _popup.PopupEntity(Loc.GetString("ladder-down"), args.Climber, PopupType.Medium);
             }
             }
     }
 
-     private void OnClimbedUp(EntityUid owner, LadderupComponent component, ref ClimbedOnEvent args)
+     private void OnClimbedUp(EntityUid uid, LadderupComponent component, ref ClimbedOnEvent args)
     {
-       if (HasComp<GhostComponent>(owner))
+       if (HasComp<GhostComponent>(args.Climber))
          {
             return;
          }
 
-        if (HasComp<HandsComponent>(owner))
+        if (HasComp<HandsComponent>(args.Climber))
             {
        var destination = EntityManager.EntityQuery<LadderdownComponent>().FirstOrDefault();
             if (destination != null)
             {
-                Transform(owner).Coordinates = Transform(destination.Owner).Coordinates;
-                _popup.PopupEntity(Loc.GetString("ladder-up"), owner, PopupType.Medium);
+                Transform(args.Climber).Coordinates = Transform(destination.args.Climber).Coordinates;
+                _popup.PopupEntity(Loc.GetString("ladder-up"), args.Climber, PopupType.Medium);
             }
             }
     }
