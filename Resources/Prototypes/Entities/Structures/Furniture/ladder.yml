@@ -27,6 +27,7 @@
   - type: Climbable
   - type: Clickable
   - type: Ladderdown
+  - type: StepTrigger
 
   - type: entity
   id: LadderUpBase
@@ -57,4 +58,5 @@
   - type: Climbable
   - type: Clickable
   - type: Ladderup
+  - type: StepTrigger
 
