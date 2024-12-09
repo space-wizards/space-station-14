@@ -6,8 +6,8 @@ using Content.Server.Popups;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Popups;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.Components.Solutions;
+using Content.Shared.Chemistry.Systems;
 using Content.Shared.DoAfter;
 using Content.Shared.Forensics;
 using Content.Shared.Interaction;
@@ -26,7 +26,7 @@ namespace Content.Server.Forensics
         [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly SharedSolutionSystem _solutionSystem = default!;
 
         public override void Initialize()
         {
@@ -138,9 +138,9 @@ namespace Content.Server.Forensics
         public List<string> GetSolutionsDNA(EntityUid uid)
         {
             List<string> list = new();
-            if (TryComp<SolutionContainerManagerComponent>(uid, out var comp))
+            if (TryComp<SolutionHolderComponent>(uid, out var comp))
             {
-                foreach (var (_, soln) in _solutionContainerSystem.EnumerateSolutions((uid, comp)))
+                foreach (var (_, soln) in _solutionSystem.EnumerateSolutions((uid, comp)))
                 {
                     list.AddRange(GetSolutionsDNA(soln.Comp.Solution));
                 }

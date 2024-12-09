@@ -5,6 +5,7 @@ using Content.Shared.Nutrition;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using System.Linq;
+using Content.Server.Chemistry.EntitySystems;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
@@ -15,6 +16,7 @@ public sealed class FlavorProfileSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
+    [Dependency] private readonly ChemistryRegistrySystem _chemistryRegistry = default!;
 
     private const string BackupFlavorMessage = "flavor-profile-unknown";
 
@@ -81,9 +83,9 @@ public sealed class FlavorProfileSystem : EntitySystem
     private HashSet<string> GetFlavorsFromReagents(Solution solution, int desiredAmount, HashSet<string>? toIgnore = null)
     {
         var flavors = new HashSet<string>();
-        foreach (var (reagent, quantity) in solution.GetReagentPrototypes(_prototypeManager))
+        foreach (var (reagent, quantity) in solution.GetReagents(_chemistryRegistry))
         {
-            if (toIgnore != null && toIgnore.Contains(reagent.ID))
+            if (toIgnore != null && toIgnore.Contains(reagent.Comp.Id))
             {
                 continue;
             }
@@ -94,13 +96,13 @@ public sealed class FlavorProfileSystem : EntitySystem
             }
 
             // don't care if the quantity is negligible
-            if (quantity < reagent.FlavorMinimum)
+            if (quantity < reagent.Comp.FlavorMinimum)
             {
                 continue;
             }
 
-            if (reagent.Flavor != null)
-                flavors.Add(reagent.Flavor);
+            if (reagent.Comp.Flavor != null)
+                flavors.Add(reagent.Comp.Flavor);
         }
 
         return flavors;

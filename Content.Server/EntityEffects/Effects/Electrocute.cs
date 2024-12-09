@@ -28,7 +28,7 @@ public sealed partial class Electrocute : EntityEffect
                 Math.Max((reagentArgs.Quantity * ElectrocuteDamageScale).Int(), 1), TimeSpan.FromSeconds(ElectrocuteTime), Refresh, ignoreInsulation: true);
 
             if (reagentArgs.Reagent != null)
-                reagentArgs.Source?.RemoveReagent(reagentArgs.Reagent.ID, reagentArgs.Quantity);
+                reagentArgs.Source?.RemoveReagent(reagentArgs.Reagent.Value.Comp.Id, reagentArgs.Quantity);
         } else
         {
             args.EntityManager.System<ElectrocutionSystem>().TryDoElectrocution(args.TargetEntity, null,

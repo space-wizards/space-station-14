@@ -11,7 +11,6 @@ using Content.Server.Popups;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.CCVar;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Cloning;
 using Content.Shared.Damage;
 using Content.Shared.DeviceLinking.Events;
@@ -314,9 +313,6 @@ namespace Content.Server.Cloning
                 _audio.PlayPvs(clonePod.ScreamSound, uid);
                 Spawn(clonePod.MobSpawnId, transform.Coordinates);
             }
-
-            Solution bloodSolution = new();
-
             var i = 0;
             while (i < 1)
             {

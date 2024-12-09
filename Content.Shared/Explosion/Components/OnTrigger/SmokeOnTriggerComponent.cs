@@ -1,5 +1,6 @@
 using Content.Shared.Explosion.EntitySystems;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -38,5 +39,5 @@ public sealed partial class SmokeOnTriggerComponent : Component
     /// When using repeating trigger this essentially gets multiplied so dont do anything crazy like omnizine or lexorin.
     /// </remarks>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public Solution Solution = new();
+    public SolutionSpecifier Solution = new();
 }

@@ -29,6 +29,7 @@ namespace Content.Server.Chemistry.EntitySystems
         [Dependency] private readonly ThrowingSystem _throwing = default!;
         [Dependency] private readonly ReactiveSystem _reactive = default!;
         [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+        [Dependency] private readonly ChemistryRegistrySystem _chemistryRegistry = default!;
 
         private const float ReactTime = 0.125f;
 
@@ -120,7 +121,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 foreach (var reagentQuantity in contents.Contents.ToArray())
                 {
                     if (reagentQuantity.Quantity == FixedPoint2.Zero) continue;
-                    var reagent = _protoManager.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
+                    var reagent = _chemistryRegistry.Index(reagentQuantity.Reagent.Prototype);
 
                     var reaction =
                         reagent.ReactionTile(tile, (reagentQuantity.Quantity / vapor.TransferAmount) * 0.25f, EntityManager, reagentQuantity.Reagent.Data);

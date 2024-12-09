@@ -4,6 +4,7 @@ using Content.Server.Body.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Systems;
 using Content.Shared.Clothing;
 using Content.Shared.Inventory.Events;
 
@@ -13,7 +14,8 @@ public sealed class LungSystem : EntitySystem
 {
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
     [Dependency] private readonly InternalsSystem _internals = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly SharedSolutionSystem _solutionSystem = default!;
+    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
     public static string LungSolutionName = "Lung";
 
@@ -28,7 +30,7 @@ public sealed class LungSystem : EntitySystem
 
     private void OnGotUnequipped(Entity<BreathToolComponent> ent, ref GotUnequippedEvent args)
     {
-        _atmos.DisconnectInternals(ent);
+        _atmosphereSystem.DisconnectInternals(ent);
     }
 
     private void OnGotEquipped(Entity<BreathToolComponent> ent, ref GotEquippedEvent args)
@@ -49,11 +51,9 @@ public sealed class LungSystem : EntitySystem
 
     private void OnComponentInit(Entity<LungComponent> entity, ref ComponentInit args)
     {
-        if (_solutionContainerSystem.EnsureSolution(entity.Owner, entity.Comp.SolutionName, out var solution))
-        {
-            solution.MaxVolume = 100.0f;
-            solution.CanReact = false; // No dexalin lungs
-        }
+        var solution = _solutionSystem.EnsureSolution(entity.Owner, entity.Comp.SolutionName);
+        solution.MaxVolume = 100.0f;
+        solution.CanReact = false; // No dexalin lungs
     }
 
     private void OnMaskToggled(Entity<BreathToolComponent> ent, ref ItemMaskToggledEvent args)
@@ -76,11 +76,11 @@ public sealed class LungSystem : EntitySystem
 
     public void GasToReagent(EntityUid uid, LungComponent lung)
     {
-        if (!_solutionContainerSystem.ResolveSolution(uid, lung.SolutionName, ref lung.Solution, out var solution))
+        if (!_solutionSystem.ResolveSolution(uid, lung.SolutionName, ref lung.Solution, out var solution))
             return;
 
         GasToReagent(lung.Air, solution);
-        _solutionContainerSystem.UpdateChemicals(lung.Solution.Value);
+        _solutionSystem.UpdateChemicals(lung.Solution.Value);
     }
 
     private void GasToReagent(GasMixture gas, Solution solution)
@@ -92,7 +92,7 @@ public sealed class LungSystem : EntitySystem
             if (moles <= 0)
                 continue;
 
-            var reagent = _atmos.GasReagents[i];
+            var reagent = _atmosphereSystem.GasReagents[i];
             if (reagent is null)
                 continue;
 

@@ -1,5 +1,6 @@
 using Content.Client.IconSmoothing;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.Solutions;
 using Content.Shared.Fluids;
 using Content.Shared.Fluids.Components;
 using Robust.Client.GameObjects;
@@ -72,28 +73,28 @@ public sealed class PuddleSystem : SharedPuddleSystem
     // Maybe someday we'll have clientside prediction for entity spawning, but not today.
     // Until then, these methods do nothing on the client.
     /// <inheritdoc/>
-    public override bool TrySplashSpillAt(EntityUid uid, EntityCoordinates coordinates, Solution solution, out EntityUid puddleUid, bool sound = true, EntityUid? user = null)
+    public override bool TrySplashSpillAt(EntityUid uid, EntityCoordinates coordinates, Entity<SolutionComponent> solution, out EntityUid puddleUid, bool sound = true, EntityUid? user = null)
     {
         puddleUid = EntityUid.Invalid;
         return false;
     }
 
     /// <inheritdoc/>
-    public override bool TrySpillAt(EntityCoordinates coordinates, Solution solution, out EntityUid puddleUid, bool sound = true)
+    public override bool TrySpillAt(EntityCoordinates coordinates, Entity<SolutionComponent>  solution, out EntityUid puddleUid, bool sound = true)
     {
         puddleUid = EntityUid.Invalid;
         return false;
     }
 
     /// <inheritdoc/>
-    public override bool TrySpillAt(EntityUid uid, Solution solution, out EntityUid puddleUid, bool sound = true, TransformComponent? transformComponent = null)
+    public override bool TrySpillAt(EntityUid uid, Entity<SolutionComponent>  solution, out EntityUid puddleUid, bool sound = true, TransformComponent? transformComponent = null)
     {
         puddleUid = EntityUid.Invalid;
         return false;
     }
 
     /// <inheritdoc/>
-    public override bool TrySpillAt(TileRef tileRef, Solution solution, out EntityUid puddleUid, bool sound = true, bool tileReact = true)
+    public override bool TrySpillAt(TileRef tileRef, Entity<SolutionComponent>  solution, out EntityUid puddleUid, bool sound = true, bool tileReact = true)
     {
         puddleUid = EntityUid.Invalid;
         return false;

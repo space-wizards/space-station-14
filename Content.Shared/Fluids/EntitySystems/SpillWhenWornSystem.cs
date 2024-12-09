@@ -1,4 +1,5 @@
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Systems;
 using Content.Shared.Clothing;
 using Content.Shared.Fluids.Components;
 
@@ -7,7 +8,7 @@ namespace Content.Shared.Fluids.EntitySystems;
 /// <inheritdoc cref="SpillWhenWornComponent"/>
 public sealed class SpillWhenWornSystem : EntitySystem
 {
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly SharedSolutionSystem _solutionSystem = default!;
     [Dependency] private readonly SharedPuddleSystem _puddle = default!;
 
     public override void Initialize()
@@ -21,11 +22,11 @@ public sealed class SpillWhenWornSystem : EntitySystem
 
     private void OnGotEquipped(Entity<SpillWhenWornComponent> ent, ref ClothingGotEquippedEvent args)
     {
-        if (_solutionContainer.TryGetSolution(ent.Owner, ent.Comp.Solution, out var soln, out var solution)
-            && solution.Volume > 0)
+        if (_solutionSystem.TryGetSolution(ent.Owner, ent.Comp.Solution, out var solution)
+            && solution.Comp.Volume > 0)
         {
             // Spill all solution on the player
-            var drainedSolution = _solutionContainer.Drain(ent.Owner, soln.Value, solution.Volume);
+            var drainedSolution = _solutionSystem.TransferSolution(ent.Owner, soln.Value, solution.Volume);
             _puddle.TrySplashSpillAt(ent.Owner, Transform(args.Wearer).Coordinates, drainedSolution, out _);
         }
 

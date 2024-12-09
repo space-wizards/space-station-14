@@ -65,6 +65,9 @@ public sealed partial class DevourerComponent : Component
     [DataField("chemical", customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
     public string Chemical = "Ichor";
 
+    [DataField]
+    public ReagentDef CachedReagentDef = ReagentDef.Invalid;
+
     /// <summary>
     /// The amount of ichor injected per devour
     /// </summary>
