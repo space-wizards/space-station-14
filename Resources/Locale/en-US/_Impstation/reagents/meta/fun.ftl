@@ -9,3 +9,6 @@ reagent-desc-propulsion-gel = A refinement of the accelerative properties of Gas
 
 reagent-name-ungh-juice = juice that makes you UNGH
 reagent-desc-ungh-juice = The glucose and citric acid seem to have neutralized the toxic effects of the vent crud. Though, the mixture has caused new side-effects to occur.
+
+reagent-name-holium = holium
+reagent-desc-holium = An impossibly compressed liquid. It feels as though it could tear through any surface.

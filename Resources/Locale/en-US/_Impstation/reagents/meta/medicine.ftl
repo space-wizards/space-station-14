@@ -6,3 +6,6 @@ reagent-desc-subjuzine = A devious alteration of cognizine that bends the creatu
 
 reagent-name-caramexinin = caramexinin
 reagent-desc-caramexinin = An artificial sweetener that treats and prevents Theobromine poisoning in animals.
+
+reagent-name-abnormium = abnormium
+reagent-desc-abnormium = A strange liquid of alien origin.
