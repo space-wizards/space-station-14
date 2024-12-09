@@ -69,6 +69,11 @@
 # OrdersAndInstructions
       - PrintedDocumentDismissalOrderRecipe
       - PrintedDocumentAccessRevocationOrderRecipe
+      - PrintedDocumentIncentiveOrderRecipe
+      - PrintedDocumentPrisonerParoleOrderRecipe
+      - PrintedDocumentOrderRecognizingReasonablenessCreatureRecipe
+      - PrintedDocumentMedicalInterventionOrderRecipe
+# Orders
 #  - type: EmagLatheRecipes
 #    emagStaticRecipes:
 #        - PrintedDocumentErrorLoadingFormHeaderRecipe

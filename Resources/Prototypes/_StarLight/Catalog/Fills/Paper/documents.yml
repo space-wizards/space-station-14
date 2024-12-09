@@ -361,3 +361,41 @@
   components:
     - type: Paper
       content: doc-text-printer-access-revocation-order
+      
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentIncentiveOrder
+  name: Incentive order
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-incentive-order
+      
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentPrisonerParoleOrder
+  name: Prisoner parole order
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-prisoner-parole-order
+      
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentOrderRecognizingReasonablenessCreature
+  name: An order recognizing the reasonableness of the creature
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-order-recognizing-reasonableness-creature
+      
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentMedicalInterventionOrder
+  name: Medical intervention order
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-medical-intervention-order
+
+# Orders

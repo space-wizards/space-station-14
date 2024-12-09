@@ -630,3 +630,64 @@ doc-text-printer-access-revocation-order =
     
     ──────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+doc-text-printer-incentive-order =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀                               [bold]INCENTIVE ORDER[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    I, (full name), in the capacity of (full name of the post) award (full name) in the capacity of (full name of the post of the awardee) a medal/citation/memorial/award in the amount of (amount of award) for the following services:
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
+doc-text-printer-prisoner-parole-order =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀                         [bold]PRISONER PAROLE ORDER[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    I, (full name), in the capacity of (full job title), authorize the release of detainee (full name) to the brig/permabrig. Upon issuance of parole, the detainee will be issued a civilian occupation with mandatory work through the end of the shift.
+    Issued Occupation:
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
+doc-text-printer-order-recognizing-reasonableness-creature =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+    [bold]ORDER RECOGNIZING THE REASONABLENESS OF THE CREATURE[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    In the course of testing the creature, signs of higher brain activity and reasonableness of this creature, its ability to think, learn, understanding of morality, presence of common sense in its actions were revealed. Thus I, (full name), in the position of (full name of position), based on the principles of equality of rights of all reasonable beings established by the OPRA, recognize this creature as reasonable.
+    Appearance of the being:
+    
+    The established full name of the creature:
+    
+    The creature is accepted/not accepted as a passenger of the station until the end of the shift.
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
+doc-text-printer-medical-intervention-order =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀                    [bold]MEDICAL INTERVENTION ORDER[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    I, (full name), in the position of (full name of the position), order to conduct a medical intervention for the purpose of (description of the purpose of the medical intervention), in respect of (full name) in the position of (full name of the position).
+    Grounds for the intervention:
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
+   
+# Orders

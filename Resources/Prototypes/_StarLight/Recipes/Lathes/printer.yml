@@ -351,3 +351,41 @@
   applyMaterialDiscount: false
   materials:
     SheetPrinter: 100
+    
+- type: latheRecipe
+  id: PrintedDocumentIncentiveOrderRecipe
+  result: PrintedDocumentIncentiveOrder
+  category: OrdersAndInstructions
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+    
+- type: latheRecipe
+  id: PrintedDocumentPrisonerParoleOrderRecipe
+  result: PrintedDocumentPrisonerParoleOrder
+  category: OrdersAndInstructions
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+    
+- type: latheRecipe
+  id: PrintedDocumentOrderRecognizingReasonablenessCreatureRecipe
+  result: PrintedDocumentOrderRecognizingReasonablenessCreature
+  category: OrdersAndInstructions
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+    
+- type: latheRecipe
+  id: PrintedDocumentMedicalInterventionOrderRecipe
+  result: PrintedDocumentMedicalInterventionOrder
+  category: OrdersAndInstructions
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100
+    
+# Orders
