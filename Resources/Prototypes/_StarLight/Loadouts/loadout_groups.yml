@@ -20,3 +20,11 @@
   loadouts:
   - RoboticistCap
   - SkullBandana
+  
+- type: loadoutGroup
+  id: RoboticistBackpack
+  name: loadout-group-roboticist-backpack
+  loadouts:
+  - RoboticistBackpack
+  - RoboticistSatchel
+  - RoboticistDuffel

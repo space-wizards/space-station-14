@@ -1,0 +1,8 @@
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackRoboticist
+  name: roboticist backpack
+  description: A backpack specifically designed for oil and short circuit protection.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Back/Backpacks/roboticist.rsi

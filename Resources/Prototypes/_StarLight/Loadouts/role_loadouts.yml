@@ -2,10 +2,9 @@
   id: JobRoboticist
   groups:
   - RoboticistHead
-  - ScientistNeck
   - RoboticistJumpsuit
   - RoboticistOuterClothing
-  - ScientistBackpack
+  - RoboticistBackpack
   - ScientistShoes
   - Survival
   - Trinkets
