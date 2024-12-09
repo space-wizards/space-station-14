@@ -14768,6 +14768,65 @@ entities:
     - type: Transform
       pos: -112.765816,8.588821
       parent: 60
+- proto: ATM
+  entities:
+  - uid: 7070
+    components:
+    - type: Transform
+      pos: -6.5,11.5
+      parent: 60
+  - uid: 18848
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 42.5,13.5
+      parent: 60
+  - uid: 24349
+    components:
+    - type: Transform
+      pos: 37.5,26.5
+      parent: 60
+  - uid: 25666
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -21.5,22.5
+      parent: 60
+  - uid: 25667
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 2.5,-10.5
+      parent: 60
+  - uid: 25668
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -39.5,9.5
+      parent: 60
+  - uid: 25669
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -21.5,-25.5
+      parent: 60
+  - uid: 25670
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 3.5,-50.5
+      parent: 60
+  - uid: 25671
+    components:
+    - type: Transform
+      pos: 37.5,-21.5
+      parent: 60
+  - uid: 25674
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 22.5,-27.5
+      parent: 60
 - proto: AtmosDeviceFanDirectional
   entities:
   - uid: 280
@@ -15966,12 +16025,6 @@ entities:
     components:
     - type: Transform
       pos: 36.5,-16.5
-      parent: 60
-  - uid: 1354
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -18.5,-2.5
       parent: 60
   - uid: 1502
     components:
@@ -118776,6 +118829,13 @@ entities:
     - type: Transform
       pos: 33.5,-35.5
       parent: 60
+- proto: LockerBrigmedicFilled
+  entities:
+  - uid: 1354
+    components:
+    - type: Transform
+      pos: -18.5,-2.5
+      parent: 60
 - proto: LockerCaptainFilledNoLaser
   entities:
   - uid: 21695
@@ -118811,6 +118871,8 @@ entities:
     - type: Transform
       pos: 19.5,-12.5
       parent: 60
+    - type: Lock
+      locked: False
 - proto: LockerDetectiveFilled
   entities:
   - uid: 7640
@@ -119942,11 +120004,6 @@ entities:
     components:
     - type: Transform
       pos: 30.5,-16.5
-      parent: 60
-  - uid: 4746
-    components:
-    - type: Transform
-      pos: -18.5,-2.5
       parent: 60
   - uid: 8750
     components:
@@ -121304,6 +121361,87 @@ entities:
     - type: Transform
       pos: -14.5,-52.5
       parent: 60
+- proto: PaperOffice
+  entities:
+  - uid: 25675
+    components:
+    - type: MetaData
+      name: Your first supermatter engine and you!
+    - type: Transform
+      pos: -41.50804,57.453377
+      parent: 60
+    - type: Paper
+      stampState: paper_stamp-centcom
+      stampedBy:
+      - stampedColor: '#006600FF'
+        stampedName: stamp-component-stamped-name-centcom
+      content: >-
+        [color=#1b487e]███░███░░░░██░░░░[/color]
+
+        [color=#1b487e]░██░████░░░██░░░░[/color] [head=3]NanoTrasen[/head]
+
+        [color=#1b487e]░░█░██░██░░██░█░░[/color] [head=3]Supermatter Guide[/head]
+
+        [color=#1b487e]░░░░██░░██░██░██░[/color]
+
+        [color=#1b487e]░░░░██░░░████░███[/color]
+
+        ═══════════════════════════════════════
+
+        [color=darkgreen]
+
+        [head=3][color=darkgreen]Hello! Welcome to the quick guide on how to set up your very own supermatter crystal![/color][/head]
+
+
+        [head=1][color=darkred]Hazards[/color][/head]
+
+        ═══════════════════════════════════════
+
+        [head=3] The first thing you should know about your supermatter crystal is that it's very shy! Any contact with the supermatter crystal will result in your instant [head=1][color=red]vaporization![/color][/head]
+
+
+        The supermatter crystal is VERY dangerous to the station, make sure you read this guide fully! Please feel free to ask your nearest nanotrasen representative for assistance if needed.
+
+
+        [head=1][color=darkred]Basic details of the crystal:[/head][/color]
+
+        [color=darkgreen]Emitters will damage the crystal over time, however under the right conditions, the crystal will repair itself!
+
+
+        The first thing to take into account is that if allowed, the supermatter crystal will delaminate after taking too much damage! This jepordizes the whole station!
+
+        In order to keep the crystal healing, you must control its atmosphere between [head=3][color=red]30kPa [/color][/head] and [head=2][color=red]300kPa[/color][/head]. Similarly, it cannot heat up over [head=2][color=red]320 Kelvin.[/color]
+
+
+        [head=1][color=darkred] Advanced operation and setup:[color=darkgreen]
+
+        [head=3]We at NanoTrasen recommend that you take time to refine your design, but here we are including a few pointers.
+
+
+        Understand that the supermatter crystal upon activation will start producing [color=lightgreen]tritium[/color], as well as [color=lightblue]oxygen[/color] gasses. These gasses can and should be siphoned off for further use.
+
+
+        A simple setup for the supermatter engine, is to first activate all of the radiation collectors and make sure they are filled with [color=pink]plasma[/color]. Similarly, the crystal will spark like the tesla ball, and nescessary precautions should be taken.
+
+        Then, you should begin setting up your [color=blue]cooling loop[/color]. Your cooling loop is very important, as fresh cold gas must be supplied to keep the crystal from delaminating.
+
+
+        Any gas can be used for these loops, but a basic setup utilizes nitrogen, while more advanced setups will utilize plasma. 
+
+
+        Be prepared, as the crystal will begin to heat up the gas inside the chamber. If gas is not exchanged, a runaway reaction will occur which is very difficult to recover from.
+
+
+        Start [color=red]slow[/color]! Begin by using just one emitter. Once you have that under control, feel free to turn on more! More emitters=more power!
+
+
+        [color=red]WEAR A RADIATION SUIT![/color] The supermatter has been recorded as producing upwards of 6 rads at its lowest levels. Through radiation shielding. 
+
+
+        Hopefully this guide is enough to get you started. Please ask your nearest NanoTrasen representative if you require further assistance.
+
+
+        [head=1][color=darkblue]Glory to Nanotrasen!
 - proto: ParchisBoard
   entities:
   - uid: 17892
@@ -123018,7 +123156,7 @@ entities:
   - uid: 13798
     components:
     - type: Transform
-      pos: 49.5,-14.5
+      pos: 49.5,-13.5
       parent: 60
 - proto: PottedPlant28
   entities:
@@ -123137,14 +123275,6 @@ entities:
     components:
     - type: Transform
       pos: 24.5,-22.5
-      parent: 60
-    - type: ContainerContainer
-      containers:
-        stash: !type:ContainerSlot {}
-  - uid: 2905
-    components:
-    - type: Transform
-      pos: 37.5,-22.5
       parent: 60
     - type: ContainerContainer
       containers:
@@ -137840,6 +137970,20 @@ entities:
     - type: Transform
       pos: -7.5,29.5
       parent: 60
+- proto: SLVendingMachineHugDispenser
+  entities:
+  - uid: 25672
+    components:
+    - type: Transform
+      pos: 2.5,-51.5
+      parent: 60
+- proto: SLVendingMachineMedical
+  entities:
+  - uid: 2905
+    components:
+    - type: Transform
+      pos: 49.5,-14.5
+      parent: 60
 - proto: SmartFridge
   entities:
   - uid: 772
@@ -140188,6 +140332,14 @@ entities:
     - type: Transform
       pos: 8.5,-23.5
       parent: 60
+- proto: SpawnMobClownCorgi
+  entities:
+  - uid: 25673
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 20.5,-13.5
+      parent: 60
 - proto: SpawnMobCorgi
   entities:
   - uid: 8747
@@ -140357,6 +140509,13 @@ entities:
     components:
     - type: Transform
       pos: 34.5,-36.5
+      parent: 60
+- proto: SpawnPointBrigmedic
+  entities:
+  - uid: 2092
+    components:
+    - type: Transform
+      pos: -18.5,-3.5
       parent: 60
 - proto: SpawnPointCaptain
   entities:
@@ -144321,11 +144480,6 @@ entities:
     - type: Transform
       pos: -45.5,-4.5
       parent: 60
-  - uid: 7070
-    components:
-    - type: Transform
-      pos: 49.5,-13.5
-      parent: 60
   - uid: 7079
     components:
     - type: Transform
@@ -147470,10 +147624,10 @@ entities:
       parent: 60
 - proto: VendingMachineClown
   entities:
-  - uid: 18848
+  - uid: 25676
     components:
     - type: Transform
-      pos: 21.5,-13.5
+      pos: 24.5,-11.5
       parent: 60
 - proto: VendingMachineCoffee
   entities:
@@ -163295,29 +163449,11 @@ entities:
         - 0
         - 0
         - 0
-  - uid: 2092
+  - uid: 4746
     components:
     - type: Transform
       pos: -19.5,-7.5
       parent: 60
-    - type: EntityStorage
-      air:
-        volume: 200
-        immutable: False
-        temperature: 293.1496
-        moles:
-        - 1.6495836
-        - 6.2055764
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
-        - 0
   - uid: 8896
     components:
     - type: Transform

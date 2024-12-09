@@ -78,7 +78,7 @@ entities:
           version: 6
         0,0:
           ind: 0,0
-          tiles: XQAAAAABXQAAAAAAfgAAAAAATQAAAAAATQAAAAAATQAAAAAAfgAAAAAAfgAAAAAAfgAAAAAAfgAAAAAAfgAAAAAAXQAAAAAAXQAAAAAAXQAAAAADfgAAAAAAXQAAAAABXQAAAAABXQAAAAACXQAAAAADXQAAAAADXQAAAAAAXQAAAAADXQAAAAACTQAAAAAAXQAAAAACXQAAAAADXQAAAAADXQAAAAABXQAAAAACXQAAAAABXQAAAAAAXQAAAAABXQAAAAABXQAAAAACXQAAAAABXQAAAAADXQAAAAACXQAAAAABXQAAAAAATQAAAAAAXQAAAAACXQAAAAACXQAAAAACXQAAAAAAXQAAAAACXQAAAAAAfgAAAAAAXQAAAAABXQAAAAABXQAAAAABXQAAAAACXQAAAAAAXQAAAAADXQAAAAACXQAAAAACTQAAAAAAXQAAAAAAXQAAAAABXQAAAAAAXQAAAAADXQAAAAADXQAAAAACfgAAAAAAfgAAAAAAXQAAAAAAXQAAAAAAXQAAAAABXQAAAAAAXQAAAAACXQAAAAAAXQAAAAAAfgAAAAAAXQAAAAACXQAAAAACXQAAAAABXQAAAAABXQAAAAAAXQAAAAABfgAAAAAAfgAAAAAAfgAAAAAAfgAAAAAAfgAAAAAAfgAAAAAAXQAAAAACXQAAAAABfgAAAAAAfgAAAAAAXQAAAAADXQAAAAADXQAAAAADfgAAAAAAbQAAAAAAfgAAAAAAfgAAAAAAfgAAAAAAXQAAAAABHwAAAAACXQAAAAAAHwAAAAABXQAAAAAAHwAAAAADXQAAAAAAfgAAAAAAXQAAAAACXQAAAAADXQAAAAACfgAAAAAAfgAAAAAAfgAAAAAAfgAAAAAAfgAAAAAAHwAAAAADXQAAAAACHwAAAAADXQAAAAACHwAAAAABXQAAAAACHwAAAAADXQAAAAABXQAAAAADXQAAAAABXQAAAAADfgAAAAAAfgAAAAAAfgAAAAAAfgAAAAAAfgAAAAAAXQAAAAAAHwAAAAABXQAAAAADHwAAAAABXQAAAAADHwAAAAACXQAAAAACXQAAAAAAXQAAAAABXQAAAAABXQAAAAABfgAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAHwAAAAAAXQAAAAAAHwAAAAAAfgAAAAAAHwAAAAAAXQAAAAACHwAAAAAAfgAAAAAAXQAAAAABXQAAAAACXQAAAAADfgAAAAAAfgAAAAAAbQAAAAAAfgAAAAAAfgAAAAAAXQAAAAAAHwAAAAADXQAAAAACfgAAAAAAXQAAAAABHwAAAAACXQAAAAACfgAAAAAAXQAAAAADXQAAAAAAXQAAAAACfgAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAHwAAAAAAHwAAAAADXQAAAAACHwAAAAACfgAAAAAAfgAAAAAAfgAAAAAAfgAAAAAAfgAAAAAATQAAAAAATQAAAAAATQAAAAAAfgAAAAAAHwAAAAAAHwAAAAAAHwAAAAADHwAAAAACHwAAAAAAfgAAAAAAHwAAAAADfgAAAAAAHwAAAAADHwAAAAADHwAAAAADfgAAAAAAXQAAAAADXQAAAAAAXQAAAAABfgAAAAAAeQAAAAAAHwAAAAAAcAAAAAAAHwAAAAAAegAAAAACfgAAAAAAGwAAAAAAGwAAAAAAQwAAAAAAQwAAAAAAQwAAAAAAfgAAAAAAXQAAAAAAXQAAAAABXQAAAAACfgAAAAAAfgAAAAAAHwAAAAAAfgAAAAAAfgAAAAAAegAAAAABfgAAAAAAGwAAAAAAGwAAAAAAGwAAAAAAQwAAAAAAQwAAAAAAfgAAAAAAXQAAAAADXQAAAAAAXQAAAAADfgAAAAAAHwAAAAADHwAAAAABHwAAAAAAHwAAAAACHwAAAAADfgAAAAAAHwAAAAAAHwAAAAABHwAAAAAAHwAAAAAAHwAAAAAAfgAAAAAAXQAAAAAAXQAAAAACXQAAAAADXQAAAAAAXQAAAAAAXQAAAAAAXQAAAAAAHwAAAAAD
+          tiles: XQAAAAABXQAAAAAAfgAAAAAATQAAAAAATQAAAAAATQAAAAAAfgAAAAAAfgAAAAAAfgAAAAAAfgAAAAAAfgAAAAAAXQAAAAAAXQAAAAAAXQAAAAADfgAAAAAAXQAAAAABXQAAAAABXQAAAAACXQAAAAADXQAAAAADXQAAAAAAXQAAAAADXQAAAAACTQAAAAAAXQAAAAACXQAAAAADXQAAAAADXQAAAAABXQAAAAACXQAAAAABXQAAAAAAXQAAAAABXQAAAAABXQAAAAACXQAAAAABXQAAAAADXQAAAAACXQAAAAABXQAAAAAATQAAAAAAXQAAAAACXQAAAAACXQAAAAACXQAAAAAAXQAAAAACXQAAAAAAfgAAAAAAXQAAAAABXQAAAAABXQAAAAABXQAAAAACXQAAAAAAXQAAAAADXQAAAAACXQAAAAACTQAAAAAAXQAAAAAAXQAAAAABXQAAAAAAXQAAAAADXQAAAAADXQAAAAACfgAAAAAAfgAAAAAAXQAAAAAAXQAAAAAAXQAAAAABXQAAAAAAXQAAAAACXQAAAAAAXQAAAAAAfgAAAAAAXQAAAAACXQAAAAACXQAAAAABXQAAAAABXQAAAAAAXQAAAAABfgAAAAAAfgAAAAAAfgAAAAAAfgAAAAAAfgAAAAAAfgAAAAAAXQAAAAACXQAAAAABfgAAAAAAfgAAAAAAXQAAAAADXQAAAAADXQAAAAADfgAAAAAAbQAAAAAAfgAAAAAAfgAAAAAAfgAAAAAAXQAAAAABHwAAAAACXQAAAAAAHwAAAAABXQAAAAAAHwAAAAADXQAAAAAAfgAAAAAAXQAAAAACXQAAAAADXQAAAAACfgAAAAAAfgAAAAAAfgAAAAAAfgAAAAAAfgAAAAAAHwAAAAADXQAAAAACHwAAAAADXQAAAAACHwAAAAABXQAAAAACHwAAAAADXQAAAAABXQAAAAADXQAAAAABXQAAAAADfgAAAAAAfgAAAAAAfgAAAAAAfgAAAAAAfgAAAAAAXQAAAAAAHwAAAAABXQAAAAADHwAAAAABXQAAAAADHwAAAAACXQAAAAACXQAAAAAAXQAAAAABXQAAAAABXQAAAAABfgAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAbAAAAAAAHwAAAAAAXQAAAAAAHwAAAAAAfgAAAAAAHwAAAAAAXQAAAAACHwAAAAAAfgAAAAAAXQAAAAABXQAAAAACXQAAAAADfgAAAAAAfgAAAAAAbQAAAAAAfgAAAAAAfgAAAAAAXQAAAAAAHwAAAAADXQAAAAACfgAAAAAAXQAAAAABHwAAAAACXQAAAAACfgAAAAAAXQAAAAADXQAAAAAAXQAAAAACfgAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAHwAAAAAAHwAAAAADXQAAAAACHwAAAAACfgAAAAAAfgAAAAAAfgAAAAAAfgAAAAAAfgAAAAAATQAAAAAATQAAAAAATQAAAAAAfgAAAAAAHwAAAAAAHwAAAAAAHwAAAAADHwAAAAACHwAAAAAAfgAAAAAAHwAAAAADfgAAAAAAHwAAAAADHwAAAAADHwAAAAADfgAAAAAAXQAAAAADXQAAAAAAXQAAAAABfgAAAAAAeQAAAAAAHwAAAAAAcAAAAAAAHwAAAAAAegAAAAACfgAAAAAAGwAAAAAAGwAAAAAAQwAAAAAAQwAAAAAAQwAAAAAAfgAAAAAAXQAAAAAAXQAAAAABXQAAAAACfgAAAAAAfgAAAAAAHwAAAAAAfgAAAAAAfgAAAAAAegAAAAABfgAAAAAAGwAAAAAAGwAAAAAAGwAAAAAAQwAAAAAAQwAAAAAAfgAAAAAAXQAAAAADXQAAAAAAXQAAAAADfgAAAAAAHwAAAAADHwAAAAABHwAAAAAAHwAAAAACHwAAAAADfgAAAAAAHwAAAAAAHwAAAAABHwAAAAAAfgAAAAAAbQAAAAAAfgAAAAAAXQAAAAAAXQAAAAACXQAAAAADXQAAAAAAXQAAAAAAXQAAAAAAXQAAAAAAHwAAAAAD
           version: 6
         -1,-1:
           ind: -1,-1
@@ -11021,15 +11021,15 @@ entities:
       parent: 30
 - proto: AirlockMaintTheatreLocked
   entities:
+  - uid: 653
+    components:
+    - type: Transform
+      pos: 6.5,15.5
+      parent: 30
   - uid: 740
     components:
     - type: Transform
       pos: -31.5,20.5
-      parent: 30
-  - uid: 4445
-    components:
-    - type: Transform
-      pos: 6.5,16.5
       parent: 30
 - proto: AirlockMedicalGlassLocked
   entities:
@@ -13126,6 +13126,12 @@ entities:
       parent: 30
 - proto: ATM
   entities:
+  - uid: 7103
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 3.5,11.5
+      parent: 30
   - uid: 22380
     components:
     - type: Transform
@@ -14633,7 +14639,7 @@ entities:
   - uid: 2245
     components:
     - type: Transform
-      pos: -52.567253,52.64174
+      pos: -50.298836,53.700985
       parent: 30
   - uid: 7499
     components:
@@ -52641,7 +52647,7 @@ entities:
   - uid: 2242
     components:
     - type: Transform
-      pos: -52.504753,53.54799
+      pos: -52.524803,53.725445
       parent: 30
   - uid: 21252
     components:
@@ -53024,7 +53030,7 @@ entities:
   - uid: 2243
     components:
     - type: Transform
-      pos: -52.52038,53.282364
+      pos: -52.516647,53.391144
       parent: 30
 - proto: ClothingNeckBling
   entities:
@@ -107016,6 +107022,13 @@ entities:
         - 0
         - 0
         - 0
+- proto: LockerBrigmedicFilled
+  entities:
+  - uid: 2235
+    components:
+    - type: Transform
+      pos: -52.5,52.5
+      parent: 30
 - proto: LockerCaptainFilledNoLaser
   entities:
   - uid: 12238
@@ -108494,7 +108507,7 @@ entities:
   - uid: 2240
     components:
     - type: Transform
-      pos: -50.48913,53.64174
+      pos: -50.690216,53.676525
       parent: 30
   - uid: 3174
     components:
@@ -108526,7 +108539,7 @@ entities:
   - uid: 2241
     components:
     - type: Transform
-      pos: -51.008476,53.677338
+      pos: -51.07344,53.676525
       parent: 30
   - uid: 7752
     components:
@@ -109557,6 +109570,85 @@ entities:
     - type: Transform
       pos: 23.549414,13.599922
       parent: 30
+  - uid: 22911
+    components:
+    - type: MetaData
+      name: Your first supermatter engine and you!
+    - type: Transform
+      pos: 19.5615,-41.94327
+      parent: 30
+    - type: Paper
+      stampState: paper_stamp-centcom
+      stampedBy:
+      - stampedColor: '#006600FF'
+        stampedName: stamp-component-stamped-name-centcom
+      content: >-
+        [color=#1b487e]███░███░░░░██░░░░[/color]
+
+        [color=#1b487e]░██░████░░░██░░░░[/color] [head=3]NanoTrasen[/head]
+
+        [color=#1b487e]░░█░██░██░░██░█░░[/color] [head=3]Supermatter Guide[/head]
+
+        [color=#1b487e]░░░░██░░██░██░██░[/color]
+
+        [color=#1b487e]░░░░██░░░████░███[/color]
+
+        ═══════════════════════════════════════
+
+        [color=darkgreen]
+
+        [head=3][color=darkgreen]Hello! Welcome to the quick guide on how to set up your very own supermatter crystal![/color][/head]
+
+
+        [head=1][color=darkred]Hazards[/color][/head]
+
+        ═══════════════════════════════════════
+
+        [head=3] The first thing you should know about your supermatter crystal is that it's very shy! Any contact with the supermatter crystal will result in your instant [head=1][color=red]vaporization![/color][/head]
+
+
+        The supermatter crystal is VERY dangerous to the station, make sure you read this guide fully! Please feel free to ask your nearest nanotrasen representative for assistance if needed.
+
+
+        [head=1][color=darkred]Basic details of the crystal:[/head][/color]
+
+        [color=darkgreen]Emitters will damage the crystal over time, however under the right conditions, the crystal will repair itself!
+
+
+        The first thing to take into account is that if allowed, the supermatter crystal will delaminate after taking too much damage! This jepordizes the whole station!
+
+        In order to keep the crystal healing, you must control its atmosphere between [head=3][color=red]30kPa [/color][/head] and [head=2][color=red]300kPa[/color][/head]. Similarly, it cannot heat up over [head=2][color=red]320 Kelvin.[/color]
+
+
+        [head=1][color=darkred] Advanced operation and setup:[color=darkgreen]
+
+        [head=3]We at NanoTrasen recommend that you take time to refine your design, but here we are including a few pointers.
+
+
+        Understand that the supermatter crystal upon activation will start producing [color=lightgreen]tritium[/color], as well as [color=lightblue]oxygen[/color] gasses. These gasses can and should be siphoned off for further use.
+
+
+        A simple setup for the supermatter engine, is to first activate all of the radiation collectors and make sure they are filled with [color=pink]plasma[/color]. Similarly, the crystal will spark like the tesla ball, and nescessary precautions should be taken.
+
+        Then, you should begin setting up your [color=blue]cooling loop[/color]. Your cooling loop is very important, as fresh cold gas must be supplied to keep the crystal from delaminating.
+
+
+        Any gas can be used for these loops, but a basic setup utilizes nitrogen, while more advanced setups will utilize plasma. 
+
+
+        Be prepared, as the crystal will begin to heat up the gas inside the chamber. If gas is not exchanged, a runaway reaction will occur which is very difficult to recover from.
+
+
+        Start [color=red]slow[/color]! Begin by using just one emitter. Once you have that under control, feel free to turn on more! More emitters=more power!
+
+
+        [color=red]WEAR A RADIATION SUIT![/color] The supermatter has been recorded as producing upwards of 6 rads at its lowest levels. Through radiation shielding. 
+
+
+        Hopefully this guide is enough to get you started. Please ask your nearest NanoTrasen representative if you require further assistance.
+
+
+        [head=1][color=darkblue]Glory to Nanotrasen!
 - proto: PaperBin5
   entities:
   - uid: 9040
@@ -110219,10 +110311,10 @@ entities:
       parent: 30
 - proto: PosterContrabandClown
   entities:
-  - uid: 171
+  - uid: 4445
     components:
     - type: Transform
-      pos: 5.5,16.5
+      pos: 5.5,15.5
       parent: 30
   - uid: 16148
     components:
@@ -111031,11 +111123,6 @@ entities:
     - type: ContainerContainer
       containers:
         stash: !type:ContainerSlot {}
-  - uid: 7103
-    components:
-    - type: Transform
-      pos: 0.5,-37.5
-      parent: 30
   - uid: 7110
     components:
     - type: Transform
@@ -111265,6 +111352,11 @@ entities:
     - type: ContainerContainer
       containers:
         stash: !type:ContainerSlot {}
+  - uid: 22910
+    components:
+    - type: Transform
+      pos: 3.5,-38.5
+      parent: 30
 - proto: PottedPlantRD
   entities:
   - uid: 12726
@@ -125069,6 +125161,14 @@ entities:
     - type: Transform
       pos: -34.5,-19.5
       parent: 30
+- proto: SpawnMobClownCorgi
+  entities:
+  - uid: 22909
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 4.5,14.5
+      parent: 30
 - proto: SpawnMobCorgi
   entities:
   - uid: 5685
@@ -125249,6 +125349,13 @@ entities:
     components:
     - type: Transform
       pos: -24.5,16.5
+      parent: 30
+- proto: SpawnPointBrigmedic
+  entities:
+  - uid: 22908
+    components:
+    - type: Transform
+      pos: -51.5,52.5
       parent: 30
 - proto: SpawnPointCaptain
   entities:
@@ -129907,11 +130014,6 @@ entities:
       parent: 30
 - proto: TableGlass
   entities:
-  - uid: 2235
-    components:
-    - type: Transform
-      pos: -52.5,52.5
-      parent: 30
   - uid: 2236
     components:
     - type: Transform
@@ -132248,10 +132350,10 @@ entities:
       parent: 30
 - proto: VendingMachineClown
   entities:
-  - uid: 653
+  - uid: 22912
     components:
     - type: Transform
-      pos: 5.5,15.5
+      pos: 5.5,14.5
       parent: 30
 - proto: VendingMachineCoffee
   entities:
@@ -142424,6 +142526,11 @@ entities:
     components:
     - type: Transform
       pos: 7.5,16.5
+      parent: 30
+  - uid: 171
+    components:
+    - type: Transform
+      pos: 5.5,15.5
       parent: 30
   - uid: 172
     components:
