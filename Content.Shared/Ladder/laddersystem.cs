@@ -36,11 +36,6 @@ public sealed class LadderSystem : EntitySystem
 
     private void OnClimbedDown(EntityUid uid, LadderdownComponent component, ref ClimbedOnEvent args)
     {
-       if (HasComp<GhostComponent>(args.Climber))
-           {
-            return;
-           }
-
           if (HasComp<HandsComponent>(args.Climber))
             {
              var destination = EntityManager.EntityQuery<LadderupComponent>().FirstOrDefault();
@@ -54,11 +49,6 @@ public sealed class LadderSystem : EntitySystem
 
      private void OnClimbedUp(EntityUid uid, LadderupComponent component, ref ClimbedOnEvent args)
     {
-       if (HasComp<GhostComponent>(args.Climber))
-         {
-            return;
-         }
-
         if (HasComp<HandsComponent>(args.Climber))
             {
               var destination = EntityManager.EntityQuery<LadderdownComponent>().FirstOrDefault();
