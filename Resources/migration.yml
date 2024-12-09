@@ -476,8 +476,12 @@ TorsoBorgJanitor: TorsoBorg
 
 # 2024-11-17
 PresentRandomAsh: PresentRandomCoal
+
 # 2024-11-19
 CrateCrewMonitoringBoards: CrateCrewMonitoring
+
+# 2024-12-09
+CrateSlimepersonLifeSupport: CrateNitrogenInternals
 
 # 2024-11-25
 #impstation change
@@ -491,3 +495,4 @@ LeftLegBorgCargo: LeftLegBorg
 RightLegBorgCargo: RightLegBorg
 HeadBorgCargo: LightHeadBorg
 TorsoBorgCargo: TorsoBorg
+

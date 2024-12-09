@@ -345,6 +345,14 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         return true;
     }
 
+    public bool IsOpen(EntityUid target, SharedEntityStorageComponent? component = null)
+    {
+        if (!ResolveStorage(target, ref component))
+            return false;
+
+        return component.Open;
+    }
+
     public bool CanOpen(EntityUid user, EntityUid target, bool silent = false, SharedEntityStorageComponent? component = null)
     {
         if (!ResolveStorage(target, ref component))

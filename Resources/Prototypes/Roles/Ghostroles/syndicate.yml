@@ -2,35 +2,35 @@
   id: SyndicateKobold
   name: ghost-role-information-syndicate-kobold-reinforcement-name
   description: ghost-role-information-syndicate-kobold-reinforcement-description
-  rules: ghost-role-information-familiar-rules 
+  rules: ghost-role-information-syndicate-reinforcement-rules
   entityPrototype: MobKoboldSyndicateAgent
 
 - type: ghostRole
   id: SyndicateKoboldNukeops
   name: ghost-role-information-syndicate-kobold-reinforcement-name
   description: ghost-role-information-syndicate-kobold-reinforcement-description
-  rules: ghost-role-information-familiar-rules 
+  rules: ghost-role-information-nukeop-reinforcement-rules
   entityPrototype: MobKoboldSyndicateAgentNukeops
 
 - type: ghostRole
   id: SyndicateMonkey
   name: ghost-role-information-syndicate-monkey-reinforcement-name
   description: ghost-role-information-syndicate-monkey-reinforcement-description
-  rules: ghost-role-information-familiar-rules 
+  rules: ghost-role-information-syndicate-reinforcement-rules
   entityPrototype: MobMonkeySyndicateAgent
 
 - type: ghostRole
   id: SyndicateMonkeyNukeops
   name: ghost-role-information-syndicate-monkey-reinforcement-name
   description: ghost-role-information-syndicate-monkey-reinforcement-description
-  rules: ghost-role-information-syndicate-monkey-reinforcement-name
+  rules: ghost-role-information-nukeop-reinforcement-rules
   entityPrototype: MobMonkeySyndicateAgentNukeops
 
 - type: ghostRole
   id: SyndicateAgentMedic
   name: ghost-role-information-syndicate-reinforcement-medic-name
   description: ghost-role-information-syndicate-reinforcement-medic-description
-  rules: ghost-role-information-syndicate-monkey-reinforcement-rules
+  rules: ghost-role-information-syndicate-reinforcement-rules
   entityPrototype: MobHumanSyndicateAgentMedic
   iconPrototype: MedkitCombat
 
@@ -38,7 +38,7 @@
   id: SyndicateAgentSpy
   name: ghost-role-information-syndicate-reinforcement-spy-name
   description: ghost-role-information-syndicate-reinforcement-spy-description
-  rules: ghost-role-information-syndicate-monkey-reinforcement-rules
+  rules: ghost-role-information-syndicate-reinforcement-rules
   entityPrototype: MobHumanSyndicateAgentSpy
   iconPrototype: ClothingMaskGasVoiceChameleon
 
@@ -46,6 +46,6 @@
   id: SyndicateAgentThief
   name: ghost-role-information-syndicate-reinforcement-thief-name
   description: ghost-role-information-syndicate-reinforcement-thief-description
-  rules: ghost-role-information-syndicate-monkey-reinforcement-rules
+  rules: ghost-role-information-syndicate-reinforcement-rules
   entityPrototype: MobHumanSyndicateAgentThief
   iconPrototype: SyndicateJawsOfLife

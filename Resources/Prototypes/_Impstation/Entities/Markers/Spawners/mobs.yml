@@ -1,4 +1,105 @@
 - type: entity
+  name: Laser Raptor Spawner
+  id: SpawnMobLaserRaptor
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: laser_raptor
+      sprite: Mobs/Aliens/laser_raptor.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobLaserRaptor
+
+- type: entity
+  name: Kisser Tomato Spawner
+  id: SpawnMobKisserTomato
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: alive
+      sprite: Mobs/Demons/tomatokisser.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobTomatoKisser
+
+- type: entity
+  name: Laser-less Laser Raptor Spawner
+  id: SpawnMobRaptor
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: raptor
+      sprite: Mobs/Aliens/laser-less_laser_raptor.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobRaptor
+
+- type: entity
+  name: BROS/SORB Spawner
+  id: BrosSorbSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: blue
+        - sprite: Mobs/Animals/bros.rsi
+          state: bros
+    - type: ClusterSpawner
+      prototypes:
+        - MobBros
+        - MobSorb
+
+- type: entity
+  name: Duck Duck Goose Spawner
+  id: DuckDuckGooseSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: blue
+        - sprite: Mobs/Animals/goose.rsi
+    - type: GroupSpawner
+      spawns:
+      - id: MobDuckWhite
+        amount: 2
+        maxAmount: 2
+      - id: MobGoose
+
+- type: entity
+  name: xeno lone praetorian spawner
+  id: SpawnMobXenoPraetorian
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: running
+      sprite: Mobs/Aliens/Xenos/praetorian.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobXenoLonePraetorianNoGhost
+
+- type: entity
+  name: Space Bear Major Spawner
+  id: SpawnMobBearMajor
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: major
+      sprite: Mobs/Animals/major.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobBearSpaceMajor
+
+- type: entity
   name: random dinosaur spawner
   id: DinosaurSpawnerRandom
   parent: MarkerBase
@@ -199,3 +300,4 @@
     - type: ConditionalSpawner
       prototypes:
         - MobFrank
+

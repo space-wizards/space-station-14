@@ -10,7 +10,6 @@
       - id: ClothingBeltSecurityFilled
       - id: Flash
       - id: ClothingEyesGlassesSecurity
-      - id: ClothingHeadsetAltSecurity
       - id: ClothingHandsGlovesCombat
       - id: ClothingShoesBootsJack
       - id: ClothingOuterCoatWarden
@@ -39,7 +38,6 @@
       - id: ClothingBeltSecurityFilled
       - id: Flash
       - id: ClothingEyesGlassesSecurity
-      - id: ClothingHeadsetAltSecurity
       - id: ClothingHandsGlovesCombat
       - id: ClothingShoesBootsJack
       - id: ClothingOuterCoatWarden
