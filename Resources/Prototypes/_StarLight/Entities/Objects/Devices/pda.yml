@@ -16,5 +16,4 @@
     scanningEndSound:
       path: "/Audio/Items/Medical/healthscanner.ogg"
     damageContainers:
-    - Synth
     - Silicon
