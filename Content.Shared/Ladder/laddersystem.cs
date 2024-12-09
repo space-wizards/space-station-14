@@ -65,7 +65,7 @@ public sealed class LadderSystem : EntitySystem
             if (destination != null)
             {
                 Transform(args.Climber).Coordinates = Transform(destination.args.Climber).Coordinates;
-                _popup.PopupEntity(Loc.GetString("ladder-up"), args.Climber, PopupType.Medium);
+                _popup.PopupEntity(Loc.GetString("ladder-up"), ("owner", args.Climber), args.Climber, PopupType.Medium);
             }
             }
     }
