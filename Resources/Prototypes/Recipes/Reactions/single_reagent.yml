@@ -24,10 +24,11 @@
     TableSalt: 1
 
 # DENATURING
-# 2 ingredients: 300
-# 3 ingredients: 450
-# 4+ ingredients: 550
-# 6 ingredients OR unique: 700
+# 2 ingredients: 300K
+# 3 ingredients: 450K
+# 4-5 ingredients: 550K
+# 6 ingredients OR unique: 700K
+# If a chem requires a certain heat to mix, raise it's denaturing threshold accordingly.
 - type: reaction
   id: DyloveneDenaturing
   impact: Low
