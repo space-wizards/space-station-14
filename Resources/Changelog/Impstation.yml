@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: TGRCDev
   changes:
-  - message: Cyborgs no longer explode when they click on themselves
-    type: Fix
-  id: 203
-  time: '2024-09-16T02:42:22.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/266
-- author: TGRCDev
-  changes:
   - message: Revenants now enter stasis on death instead of dying outright. You can
       kill a revenant in stasis by either destroying or exorcising its ectoplasm.
     type: Tweak
@@ -4490,3 +4483,11 @@
   id: 702
   time: '2024-12-09T17:10:43.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/969
+- author: Darkmajia
+  changes:
+  - message: Changeling's chameleon skin reveals faster while moving, but is cheaper
+      to evolve.
+    type: Tweak
+  id: 703
+  time: '2024-12-09T18:07:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/970
