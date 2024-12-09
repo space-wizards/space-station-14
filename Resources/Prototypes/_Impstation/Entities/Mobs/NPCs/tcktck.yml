@@ -207,6 +207,7 @@
     needsPower: false
     powerLoad: 0
   - type: Charger
+    chargeRate: 40
     slotId: charger_slot
     portable: true
   - type: ItemSlots
