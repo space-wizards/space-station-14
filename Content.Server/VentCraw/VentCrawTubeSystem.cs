@@ -93,7 +93,7 @@ namespace Content.Server.VentCraw
             }
 
             // Check if they have any items in their hands that they can drop
-            if (TryComp<HandsComponent>(user, out var hands) && _hands.CountFreeableHands((user, hands)) > 0)
+            if (TryComp<HandsComponent>(user, out var hands) && _hands.CountFreeableHands((user, hands)) != hands.CountFreeHands())
             {
                 _popup.PopupEntity(Loc.GetString("vent-entry-denied-held-items"), user);
                 return;
