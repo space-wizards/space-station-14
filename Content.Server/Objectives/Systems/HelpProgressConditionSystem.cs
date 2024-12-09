@@ -70,10 +70,7 @@ public sealed class HelpProgressConditionSystem : EntitySystem
             {
                 if (TryComp<TargetObjectiveComponent>(objective, out var help))
                 {
-                    if (help.Target != null)
-                    {
-                        traitors.RemoveWhere(x => x.Id == help.Target);
-                    }
+                    traitors.RemoveWhere(x => x.Id == help.Target);
                 }
             }
         }
