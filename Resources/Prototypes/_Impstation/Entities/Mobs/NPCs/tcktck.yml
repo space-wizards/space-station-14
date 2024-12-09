@@ -1,18 +1,9 @@
 - type: entity
   parent: [BaseMob, StripableInventoryBase]
-  id: TckTck
+  id: MobTckTck
   name: tck'tck
   description: A man-machine hybrid that assists in station activity. They love being asked to state their laws over and over.
-  save: false
   components:
-  - type: Sprite
-    sprite: _Impstation/Mobs/NPCs/luggage.rsi
-    norot: true
-    layers:
-    - state: luggage_closed
-      map: ["enum.StorageVisualLayers.Base"]
-    - state: luggage_open
-      map: ["enum.StorageVisualLayers.Door"]
   - type: Reactive
     groups:
       Acidic: [Touch]
@@ -39,11 +30,17 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.5
     baseSprintSpeed : 4.5
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: mimebot
+      sprite: Mobs/Silicon/Bots/mimebot.rsi
   - type: RotationVisuals
     horizontalRotation: 90
   - type: MobState
     allowedStates:
     - Alive
+    - Critical
     - Dead
   - type: MobThresholds
     thresholds:
@@ -72,6 +69,9 @@
         type: BorgBoundUserInterface
       enum.StrippingUiKey.Key:
         type: StrippableBoundUserInterface
+      # Only used for NT borgs that can switch type, defined here to avoid copy-pasting the rest of this component.
+      enum.BorgSwitchableTypeUiKey.SelectBorgType:
+        type: BorgSelectTypeUserInterface
   - type: ActivatableUI
     key: enum.BorgUiKey.Key
   - type: SiliconLawBound
@@ -90,7 +90,9 @@
   - type: IntrinsicRadioReceiver
   - type: IntrinsicRadioTransmitter
     channels:
-    - Binary
+    - Common
+  - type: ActiveRadio
+    channels:
     - Common
   - type: ZombieImmune
   - type: Repairable
@@ -107,18 +109,20 @@
     group: Silicon
   - type: ContainerContainer
     containers:
+      cell_slot: !type:ContainerSlot { }
       borg_module: !type:Container { }
-      cell_slot: !type:ContainerSlot { }      
+      part-container: !type:Container
   - type: PowerCellSlot
     cellSlotId: cell_slot
     fitsInCharger: true
-  - type: PowerCellDraw
-    drawRate: 0.1
   - type: ItemToggle
     onActivate: false # You should not be able to turn off a borg temporarily.
     activated: false # gets activated when a mind is added
     onUse: false # no item-borg toggling sorry
   - type: ItemTogglePointLight
+  - type: PowerCellDraw
+    drawRate: 0.1
+  # no ToggleCellDraw since dont want to lose access when power is gone
   - type: Body
   - type: StatusEffects
     allowed:
@@ -135,6 +139,8 @@
     sounds:
       Unsexed: UnisexSilicon
   - type: UnblockableSpeech
+  - type: ReplacementAccent
+    accent: silicon
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepBorg
@@ -174,6 +180,11 @@
   - type: HandheldLight
     toggleOnInteract: false
     wattage: 0.2
+  - type: ToggleableLightVisuals
+  - type: PointLight
+    enabled: false
+    radius: 4
+    netsync: false
   - type: Pullable
   - type: Puller
     needsHands: false
@@ -187,18 +198,19 @@
   - type: GuideHelp
     guides:
     - Robotics
+  - type: ProtectedFromStepTriggers
   - type: DamageOnInteractProtection
     damageProtection:
       flatReductions:
         Heat: 10 # capable of touching light bulbs and stoves without feeling pain!
-  - type: Anchorable
-    delay: 2
-  - type: PowerSupplier
-    supplyRate: 8000
-    supplyRampRate: 1500
-    supplyRampTolerance: 1500
   - type: BorgChassis
     maxModules: 1
-    moduleWhitelist:
-      tags:
+  - type: ContainerFill
+    containers:
+      borg_module:
         - BorgModuleTckTck
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHyper

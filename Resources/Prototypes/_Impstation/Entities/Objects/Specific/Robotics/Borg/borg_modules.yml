@@ -10,8 +10,10 @@
   - type: ItemBorgModule
     items:
     - CableApcStackLingering10
-    - Wirecutter
     - trayScanner
     - PowerDrill
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: wire-module }
+  - type: Tag
+    tags:
+      - BorgModuleTckTck

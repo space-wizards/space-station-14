@@ -67,3 +67,6 @@
 
 - type: Tag
   id: WeaponSurvivalRifleUpgradeSMGKit
+
+- type: Tag
+  id: BorgModuleTckTck
