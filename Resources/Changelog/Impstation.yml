@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TGRCDev
-  changes:
-  - message: Revenants can now animate items and make them attack living beings.
-    type: Add
-  id: 198
-  time: '2024-09-14T04:45:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/247
 - author: FlippenPage
   changes:
   - message: Added Cargo Cyborg
@@ -4481,3 +4474,12 @@
   id: 697
   time: '2024-12-09T16:37:59.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/968
+- author: formlessnameless
+  changes:
+  - message: You can no longer attack or perform most other actions while inside vents.
+    type: Tweak
+  - message: You can no longer enter the vents with things in your hands.
+    type: Tweak
+  id: 698
+  time: '2024-12-09T16:40:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/961
