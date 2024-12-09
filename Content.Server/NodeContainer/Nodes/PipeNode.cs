@@ -104,9 +104,9 @@ namespace Content.Server.NodeContainer.Nodes
 
         private const float DefaultVolume = 200f;
 
-        public override void Initialize(EntityUid owner, IEntityManager entMan)
+        public override void Initialize(EntityUid owner, IEntityManager entMan, SharedMapSystem mapSystem)
         {
-            base.Initialize(owner, entMan);
+            base.Initialize(owner, entMan, mapSystem);
 
             if (!RotationsEnabled)
                 return;
@@ -156,7 +156,8 @@ namespace Content.Server.NodeContainer.Nodes
             EntityQuery<NodeContainerComponent> nodeQuery,
             EntityQuery<TransformComponent> xformQuery,
             MapGridComponent? grid,
-            IEntityManager entMan)
+            IEntityManager entMan,
+            SharedMapSystem mapSystem)
         {
             if (_alwaysReachable != null)
             {
@@ -176,12 +177,12 @@ namespace Content.Server.NodeContainer.Nodes
                 }
             }
 
-            if (!xform.Anchored || grid == null)
+            if (!xform.Anchored
+                || xform.GridUid == null
+                || grid == null)
                 yield break;
 
-            var mapSys = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedMapSystem>();
-
-            var pos = mapSys.TileIndicesFor(xform.GridUid!.Value, grid, xform.Coordinates);
+            var pos = mapSystem.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates);
 
             for (var i = 0; i < PipeDirectionHelpers.PipeDirections; i++)
             {

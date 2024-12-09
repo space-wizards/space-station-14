@@ -17,7 +17,8 @@ namespace Content.Server.Electrocution
             EntityQuery<NodeContainerComponent> nodeQuery,
             EntityQuery<TransformComponent> xformQuery,
             MapGridComponent? grid,
-            IEntityManager entMan)
+            IEntityManager entMan,
+            SharedMapSystem mapSystem)
         {
             if (CableEntity == null || NodeName == null)
                 yield break;
