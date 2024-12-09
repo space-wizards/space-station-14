@@ -27,6 +27,11 @@ public sealed partial class GuideTechnologyEmbed : BoxContainer, IDocumentTag, I
     private readonly ResearchSystem _research;
     private readonly SpriteSystem _sprite;
 
+
+    [Dependency] private readonly ILogManager _logManager = default!;
+    private ISawmill _sawmill = default!;
+    private const string SawmillName = "ui.tech_embed";
+
     public GuideTechnologyEmbed()
     {
         RobustXamlLoader.Load(this);
@@ -34,6 +39,8 @@ public sealed partial class GuideTechnologyEmbed : BoxContainer, IDocumentTag, I
         _research = _systemManager.GetEntitySystem<ResearchSystem>();
         _sprite = _systemManager.GetEntitySystem<SpriteSystem>();
         MouseFilter = MouseFilterMode.Stop;
+
+        _sawmill = _logManager.GetSawmill(SawmillName);
     }
 
     public GuideTechnologyEmbed(string technology) : this()
@@ -61,13 +68,13 @@ public sealed partial class GuideTechnologyEmbed : BoxContainer, IDocumentTag, I
         control = null;
         if (!args.TryGetValue("Technology", out var id))
         {
-            Logger.Error("Technology embed tag is missing technology prototype argument");
+            _sawmill.Error("Technology embed tag is missing technology prototype argument");
             return false;
         }
 
         if (!_prototype.TryIndex<TechnologyPrototype>(id, out var technology))
         {
-            Logger.Error($"Specified technology prototype \"{id}\" is not a valid technology prototype");
+            _sawmill.Error($"Specified technology prototype \"{id}\" is not a valid technology prototype");
             return false;
         }
 

@@ -19,6 +19,10 @@ namespace Content.Client.UserInterface.Systems.Chat.Widgets;
 [Virtual]
 public partial class ChatBox : UIWidget
 {
+    [Dependency] private readonly ILogManager _logManager = default!;
+    private ISawmill _sawmill = default!;
+    private const string SawmillName = "ui.chat";
+
     private readonly ChatUIController _controller;
     private readonly IEntityManager _entManager;
 
@@ -40,6 +44,8 @@ public partial class ChatBox : UIWidget
         _controller = UserInterfaceManager.GetUIController<ChatUIController>();
         _controller.MessageAdded += OnMessageAdded;
         _controller.RegisterChat(this);
+
+        _sawmill = _logManager.GetSawmill(SawmillName);
     }
 
     private void OnTextEntered(LineEditEventArgs args)
@@ -49,7 +55,7 @@ public partial class ChatBox : UIWidget
 
     private void OnMessageAdded(ChatMessage msg)
     {
-        Logger.DebugS("chat", $"{msg.Channel}: {msg.Message}");
+        _sawmill.Debug($"{msg.Channel}: {msg.Message}");
         if (!ChatInput.FilterButton.Popup.IsActive(msg.Channel))
         {
             return;
