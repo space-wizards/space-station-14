@@ -15,6 +15,8 @@ using Content.Shared.Radio.Components;
 using Content.Shared.Roles;
 using Content.Shared.Speech;
 using Content.Shared.StatusIcon;
+using Content.Shared.Silicons.Borgs.Components;
+using Content.Shared.Silicons.StationAi;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -130,6 +132,16 @@ public sealed class RadioSystem : EntitySystem
                 }
             }
         }
+        else if (HasComp<BorgChassisComponent>(messageSource))
+        {
+            iconId = "JobIconBorg";
+            jobName = Loc.GetString("job-name-borg");
+        }
+        else if (HasComp<StationAiHeldComponent>(messageSource))
+        {
+            iconId = "JobIconStationAi";
+            jobName = Loc.GetString("job-name-station-ai");
+        }
         // end 🌟Starlight🌟
 
         var wrappedMessage = Loc.GetString(speech.Bold ? "chat-radio-message-wrap-bold" : "chat-radio-message-wrap",
@@ -138,7 +150,7 @@ public sealed class RadioSystem : EntitySystem
             ("fontSize", speech.FontSize),
             ("verb", Loc.GetString(_random.Pick(speech.SpeechVerbStrings))),
             ("channel", $"\\[{channel.LocalizedName}\\]"),
-            ("name", $"[icon src=\"{iconId}\" tooltip=\"{jobName}\"]{name}"),  // 🌟Starlight🌟
+            ("name", $"[icon src=\"{iconId}\" tooltip=\"{jobName}\"] {name}"),  // 🌟Starlight🌟
             ("message", content));
 
         // most radios are relayed to chat, so lets parse the chat message beforehand
