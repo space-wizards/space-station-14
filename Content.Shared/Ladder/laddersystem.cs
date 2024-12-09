@@ -12,6 +12,7 @@ using Content.Server.Popups;
 using Content.Shared.Popups;
 using Content.Shared.Climbing.Systems;
 using Content.Shared.Hands.Components;
+using Content.Shared.Ghost;
 
 namespace Content.Shared.Ladder;
 
@@ -30,8 +31,6 @@ public sealed class LadderSystem : EntitySystem
        // SubscribeLocalEvent<LadderupComponent, StepTriggeredOffEvent>(OnStepTriggeredUp);
         SubscribeLocalEvent<LadderdownComponent, ClimbedOnEvent>(OnClimbedDown);
         SubscribeLocalEvent<LadderupComponent, ClimbedOnEvent>(OnClimbedUp);
-        SubscribeLocalEvent<LadderdownComponent, StepTriggerAttemptEvent>(OnStepTriggerAttemptDown);
-        SubscribeLocalEvent<LadderupComponent, StepTriggerAttemptEvent>(OnStepTriggerAttemptUp);
     }
 
     private void OnClimbedDown(EntityUid uid, LadderdownComponent component, ref ClimbedOnEvent args)
@@ -68,17 +67,6 @@ public sealed class LadderSystem : EntitySystem
                 _popup.PopupEntity(Loc.GetString("ladder-up"), args.Climber, PopupType.Medium);
             }
             }
-    }
-
-
-    private void OnStepTriggerAttemptDown(EntityUid uid, LadderdownComponent component, ref StepTriggerAttemptEvent args)
-    {
-        args.Continue = true;
-    }
-
-     private void OnStepTriggerAttemptUp(EntityUid uid, LadderupComponent component, ref StepTriggerAttemptEvent args)
-    {
-        args.Continue = true;
     }
     
 }
