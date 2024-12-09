@@ -62,6 +62,7 @@ namespace Content.Server.Speech.EntitySystems
                 // this is kind of slow but its not that bad
                 // essentially: go over all matches, try to match capitalization where possible, then replace
                 // rather than using regex.replace
+#pragma warning disable RA0026 // Use of uncached static Regex function
                 for (int i = Regex.Count(maskMessage, $@"(?<!\w){f}(?!\w)", RegexOptions.IgnoreCase); i > 0; i--)
                 {
                     // fetch the match again as the character indices may have changed
@@ -92,6 +93,7 @@ namespace Content.Server.Speech.EntitySystems
                     var mask = new string('_', replacement.Length);
                     maskMessage = maskMessage.Remove(match.Index, match.Length).Insert(match.Index, mask);
                 }
+#pragma warning restore RA0026 // Use of uncached static Regex function
             }
 
             return message;

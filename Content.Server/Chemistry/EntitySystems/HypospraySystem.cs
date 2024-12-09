@@ -12,10 +12,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Timing;
 using Content.Shared.Weapons.Melee.Events;
-using Content.Server.Interaction;
 using Content.Server.Body.Components;
-using Robust.Shared.GameStates;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Robust.Server.Audio;
 
@@ -24,7 +21,6 @@ namespace Content.Server.Chemistry.EntitySystems;
 public sealed class HypospraySystem : SharedHypospraySystem
 {
     [Dependency] private readonly AudioSystem _audio = default!;
-    [Dependency] private readonly InteractionSystem _interaction = default!;
 
     public override void Initialize()
     {

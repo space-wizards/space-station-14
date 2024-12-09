@@ -3,7 +3,6 @@ using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Client.Administration.Managers;
-using Content.Shared.Database;
 using Content.Shared.Verbs;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -42,12 +41,12 @@ public sealed class ContentSpriteSystem : EntitySystem
     {
         base.Shutdown();
 
-        foreach (var queued in _control._queuedTextures)
+        foreach (var queued in _control.QueuedTextures)
         {
             queued.Tcs.SetCanceled();
         }
 
-        _control._queuedTextures.Clear();
+        _control.QueuedTextures.Clear();
 
         _ui.RootControl.RemoveChild(_control);
     }
@@ -103,7 +102,7 @@ public sealed class ContentSpriteSystem : EntitySystem
         var texture = _clyde.CreateRenderTarget(new Vector2i(size.X, size.Y), new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba8Srgb), name: "export");
         var tcs = new TaskCompletionSource(cancelToken);
 
-        _control._queuedTextures.Enqueue((texture, direction, entity, includeId, tcs));
+        _control.QueuedTextures.Enqueue((texture, direction, entity, includeId, tcs));
 
         await tcs.Task;
     }
@@ -117,9 +116,9 @@ public sealed class ContentSpriteSystem : EntitySystem
         {
             Text = Loc.GetString("export-entity-verb-get-data-text"),
             Category = VerbCategory.Debug,
-            Act = () =>
+            Act = async () =>
             {
-                Export(ev.Target);
+                await Export(ev.Target);
             },
         };
 
@@ -141,7 +140,7 @@ public sealed class ContentSpriteSystem : EntitySystem
             Direction Direction,
             EntityUid Entity,
             bool IncludeId,
-            TaskCompletionSource Tcs)> _queuedTextures = new();
+            TaskCompletionSource Tcs)> QueuedTextures = new();
 
         private ISawmill _sawmill;
 
@@ -155,7 +154,7 @@ public sealed class ContentSpriteSystem : EntitySystem
         {
             base.Draw(handle);
 
-            while (_queuedTextures.TryDequeue(out var queued))
+            while (QueuedTextures.TryDequeue(out var queued))
             {
                 if (queued.Tcs.Task.IsCanceled)
                     continue;
