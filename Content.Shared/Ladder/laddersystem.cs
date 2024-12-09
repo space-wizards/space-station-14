@@ -10,6 +10,8 @@ using Robust.Shared.Timing;
 using Content.Server.Ladder;
 using Content.Server.Popups;
 using Content.Shared.Popups;
+using Content.Shared.Climbing.Systems;
+using Content.Shared.Hands.Components;
 
 namespace Content.Shared.Ladder;
 
