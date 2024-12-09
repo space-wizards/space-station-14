@@ -7,10 +7,10 @@ bwoink-system-messages-being-relayed-to-discord =
     Issues may be handled without a response.
 
 bwoink-system-introductory-message =
-    Please explain issues. Assume admins know nothing about them.
-    Do not ask for events or request bans of other players.
-    Please report bugs and other game issues through Discord or the Github.
-    Misuse of the Admin Message system may result in a ban.
+    Please describe the issue that you have encountered in detail. Assume that the game administrator who is resolving the problem does not have first-hand knowledge of what has occurred.
+    Please do not ask for special events or punishments for other players.
+    Any bugs and other related issues should be reported through Discord or Github.
+    Misuse of this message system may result in disciplinary action.
 
 bwoink-system-typing-indicator = {$players} {$count ->
 [one] is
