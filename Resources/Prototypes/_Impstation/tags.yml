@@ -21,7 +21,13 @@
   id: DecapoidClaw
 
 - type: Tag
+  id: DecapoidGenericTag
+
+- type: Tag
   id: DionaMinded
+  
+- type: Tag
+  id: Gastropod
 
 - type: Tag
   id: MagazineLPistol
