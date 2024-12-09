@@ -1,4 +1,4 @@
-- type: entity
+- type: entity #behold my abombination, mortal
   parent: [BaseMob, StripableInventoryBase]
   id: MobTckTck
   name: tck'tck
