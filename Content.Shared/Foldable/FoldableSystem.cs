@@ -3,6 +3,7 @@ using Content.Shared.Buckle.Components;
 using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -13,6 +14,7 @@ public sealed class FoldableSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedBuckleSystem _buckle = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
 
     public override void Initialize()
     {
@@ -76,6 +78,9 @@ public sealed class FoldableSystem : EntitySystem
     public void SetFolded(EntityUid uid, FoldableComponent component, bool folded)
     {
         component.IsFolded = folded;
+
+        TryChangeCollision(uid, component, folded);
+
         Dirty(uid, component);
         _appearance.SetData(uid, FoldedVisuals.State, folded);
         _buckle.StrapSetEnabled(uid, !component.IsFolded);
@@ -95,13 +100,17 @@ public sealed class FoldableSystem : EntitySystem
         return TrySetFolded(uid, comp, !comp.IsFolded);
     }
 
-    public bool CanToggleFold(EntityUid uid, FoldableComponent? fold = null)
+    public bool CanToggleFold(EntityUid uid, FoldableComponent? fold = null, bool handlyFold = true)
     {
         if (!Resolve(uid, ref fold))
             return false;
 
         // Can't un-fold in any container unless enabled (locker, hands, inventory, whatever).
         if (_container.IsEntityInContainer(uid) && !fold.CanFoldInsideContainer)
+            return false;
+
+        // Check for entities that don't want to be unfolded directly by players
+        if (handlyFold && !fold.CanBeHandlyFolded)
             return false;
 
         var ev = new FoldAttemptEvent();
@@ -142,6 +151,19 @@ public sealed class FoldableSystem : EntitySystem
         };
 
         args.Verbs.Add(verb);
+    }
+
+    /// <summary>
+    /// Tries to change collision group to none when obejct is unfolded
+    /// </summary>
+    private bool TryChangeCollision(EntityUid uid, FoldableComponent component, bool enableCollision = true)
+    {
+        if (!component.FoldedDisableCollision)
+            return false;
+
+        _physicsSystem.SetCanCollide(uid, enableCollision);
+
+        return true;
     }
 
     #endregion
