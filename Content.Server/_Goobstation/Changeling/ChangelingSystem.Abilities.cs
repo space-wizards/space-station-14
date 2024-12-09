@@ -20,6 +20,7 @@ using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Stealth.Components;
 using Content.Shared.Damage.Components;
 using Content.Server.Radio.Components;
+using Content.Shared.Stealth;
 
 namespace Content.Server.Changeling;
 
@@ -575,10 +576,15 @@ public sealed partial class ChangelingSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("changeling-chameleon-end"), uid, uid);
             return;
         }
+        else
+        {
+            AddComp<StealthComponent>(uid);
 
-        EnsureComp<StealthComponent>(uid);
-        EnsureComp<StealthOnMoveComponent>(uid);
-        _popup.PopupEntity(Loc.GetString("changeling-chameleon-start"), uid, uid);
+            var stealthOnMove = AddComp<StealthOnMoveComponent>(uid);
+            stealthOnMove.MovementVisibilityRate = 1;
+
+            _popup.PopupEntity(Loc.GetString("changeling-chameleon-start"), uid, uid);
+        }
     }
     public void OnEphedrineOverdose(EntityUid uid, ChangelingComponent comp, ref ActionEphedrineOverdoseEvent args)
     {
