@@ -230,9 +230,12 @@ namespace Content.Server.NodeContainer.Nodes
             EntityQuery<NodeContainerComponent> nodeQuery,
             SharedMapSystem mapSystem)
         {
+            if (xform.GridUid == null)
+                yield break;
+
             var offsetPos = pos.Offset(pipeDir.ToDirection());
 
-            foreach (var entity in mapSystem.GetAnchoredEntities(xform.GridUid!.Value, grid, offsetPos))
+            foreach (var entity in mapSystem.GetAnchoredEntities(xform.GridUid.Value, grid, offsetPos))
             {
                 if (!nodeQuery.TryGetComponent(entity, out var container))
                     continue;
