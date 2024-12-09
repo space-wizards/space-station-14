@@ -1,7 +1,7 @@
 - type: gameMap
   id: Meta
   mapName: 'Meta Station'
-  mapPath: /Maps/meta.yml
+  mapPath: /Maps/_Impstation/meta.yml
   minPlayers: 35
   maxPlayers: 70
   stations:

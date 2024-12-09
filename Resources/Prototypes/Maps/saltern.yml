@@ -1,7 +1,7 @@
 - type: gameMap
   id: Saltern
   mapName: 'Saltern'
-  mapPath: /Maps/saltern.yml
+  mapPath: /Maps/_Impstation/saltern.yml
   minPlayers: 7
   maxPlayers: 35
   fallback: true

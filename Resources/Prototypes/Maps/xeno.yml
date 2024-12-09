@@ -1,7 +1,7 @@
 - type: gameMap
   id: Xeno
   mapName: 'Xeno'
-  mapPath: /Maps/xeno.yml
+  mapPath: /Maps/_Impstation/xeno.yml
   minPlayers: 40
   maxPlayers: 80
   stations:

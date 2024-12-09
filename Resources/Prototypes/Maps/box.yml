@@ -1,7 +1,7 @@
 - type: gameMap
   id: Box
   mapName: 'Box Station'
-  mapPath: /Maps/box.yml
+  mapPath: /Maps/_Impstation/box.yml
   minPlayers: 35
   maxPlayers: 70
   stations:
