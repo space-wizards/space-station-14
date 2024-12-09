@@ -43,12 +43,12 @@ public sealed class LadderSystem : EntitySystem
 
           if (HasComp<HandsComponent>(args.Climber))
             {
-           var destination = EntityManager.EntityQuery<LadderupComponent>().FirstOrDefault();
-            if (destination != null)
-            {
+             var destination = EntityManager.EntityQuery<LadderupComponent>().FirstOrDefault();
+             if (destination != null)
+                {
                 Transform(args.Climber).Coordinates = Transform(destination.args.Climber).Coordinates;
                  _popup.PopupEntity(Loc.GetString("ladder-down"), ("owner", args.Climber), args.Climber, PopupType.Medium);
-            }
+                }
             }
     }
 
@@ -61,12 +61,12 @@ public sealed class LadderSystem : EntitySystem
 
         if (HasComp<HandsComponent>(args.Climber))
             {
-       var destination = EntityManager.EntityQuery<LadderdownComponent>().FirstOrDefault();
-            if (destination != null)
-            {
+              var destination = EntityManager.EntityQuery<LadderdownComponent>().FirstOrDefault();
+              if (destination != null)
+                {
                 Transform(args.Climber).Coordinates = Transform(destination.args.Climber).Coordinates;
                 _popup.PopupEntity(Loc.GetString("ladder-up"), ("owner", args.Climber), args.Climber, PopupType.Medium);
-            }
+                }
             }
     }
     
