@@ -45,7 +45,6 @@ public abstract partial class SharedDoorSystem : EntitySystem
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
 
 
     [ValidatePrototypeId<TagPrototype>]
@@ -372,7 +371,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         var nextState = DoorState.Opening;
 
         // Admin ghosts in map editor mode can instantly open doors.
-        if (Paused(uid) && user is EntityUid realUser && _tag.HasTag(realUser, "InstantDoAfters"))
+        if (Paused(uid) && user is EntityUid realUser && Tags.HasTag(realUser, "InstantDoAfters"))
             nextState = DoorState.Open;
 
         if (!SetState(uid, nextState, door))
@@ -471,7 +470,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         var nextState = DoorState.Closing;
 
         // Admin ghosts in map editor mode can instantly open doors.
-        if (Paused(uid) && user is EntityUid realUser && _tag.HasTag(realUser, "InstantDoAfters"))
+        if (Paused(uid) && user is EntityUid realUser && Tags.HasTag(realUser, "InstantDoAfters"))
             nextState = DoorState.Closed;
 
         if (!SetState(uid, nextState, door))
