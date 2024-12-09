@@ -926,6 +926,9 @@
 
 - type: Tag
   id: Paper
+  
+- type: Tag
+  id: PaiWearable
 
 - type: Tag
   id: Pancake

@@ -1,0 +1,13 @@
+- type: inventoryTemplate
+  id: pai
+  slots:
+  - name: eyes
+    slotTexture: glasses
+    slotFlags: EYES
+    stripTime: 1
+    uiWindowPos: 0,1
+    strippingWindowPos: 0,0
+    displayName: Eyes
+    whitelist:
+      tags:
+        - PaiWearable
