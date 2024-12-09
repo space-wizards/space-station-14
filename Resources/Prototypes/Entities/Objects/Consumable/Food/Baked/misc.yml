@@ -835,3 +835,28 @@
           Quantity: 2
         - ReagentId: Vitamin
           Quantity: 1
+
+- type: entity         
+  name: grilled cheese sandwich
+  parent: FoodBakedBase
+  id: FoodBakedGrilledCheese
+  description: Bread and melted cheese toasted with butter, perfect for a chilly day in space.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bread
+      - cheese
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/misc.rsi
+    state: grilled-cheese
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 19
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Butter
+          Quantity: 2
+        - ReagentId: Vitamin
+          Quantity: 4  
