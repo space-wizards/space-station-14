@@ -130,12 +130,19 @@
   - type: FlavorProfile
     flavors:
       - whimsy
+  - type: Extractable
+    grindableSolutionName: bugblood #AUUUUH!!!!!!
   - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 10
         reagents:
         - ReagentId: HeartbreakerToxin #anti-mice countermeasures
+          Quantity: 10
+      bugblood:
+        maxVol: 10
+        reagents:
+        - ReagentId: CopperBlood
           Quantity: 10
 
 - type: entity
@@ -171,7 +178,7 @@
 - type: entity
   parent: BasePlushie
   id: PlushieSnail
-  name: gastropod plushie
+  name: gastropoid plushie
   description: It's a little slimy...
   components:
   - type: Sprite
@@ -181,9 +188,11 @@
       path: /Audio/_Impstation/Voice/Snail/snail_scream.ogg
   - type: Food
     requiresSpecialDigestion: true
+  - type: Extractable
+    grindableSolutionName: mucin
   - type: SolutionContainerManager
     solutions:
-      food:
+      mucin:
         maxVol: 10
         reagents:
         - ReagentId: Mucin
