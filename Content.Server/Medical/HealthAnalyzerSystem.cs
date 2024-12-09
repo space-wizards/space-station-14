@@ -82,7 +82,7 @@ public sealed class HealthAnalyzerSystem : EntitySystem
     {
         if (args.Target == null 
             || !args.CanReach 
-            || TryComp<DamageableComponent>(args.Target, out var damageableComponent)
+            || !TryComp<DamageableComponent>(args.Target, out var damageableComponent)
             || !HasComp<MobStateComponent>(args.Target) 
             || !_cell.HasDrawCharge(uid, user: args.User))
             return;
