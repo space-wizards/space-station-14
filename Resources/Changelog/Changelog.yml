@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: jimmy12or
-  changes:
-  - message: Added a recipe for cream. Heat some milk and shake some air into it.
-    type: Add
-  id: 7190
-  time: '2024-08-23T05:13:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30503
 - author: SlamBamActionman
   changes:
   - message: Codewords are now highlighted for traitors.
@@ -3909,3 +3902,12 @@
   id: 7689
   time: '2024-12-08T23:20:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33774
+- author: Errant
+  changes:
+  - message: Signal timers now have a maximum countdown duration, which can be specified
+      in yaml. The default maximum is one hour, to prevent the displayed time from
+      overflowing into hh:mm .
+    type: Tweak
+  id: 7690
+  time: '2024-12-09T03:41:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33781
