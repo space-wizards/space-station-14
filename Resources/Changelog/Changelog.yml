@@ -1,40 +1,4 @@
 ﻿Entries:
-- author: jimmy12or
-  changes:
-  - message: Added a recipe for cream. Heat some milk and shake some air into it.
-    type: Add
-  id: 7190
-  time: '2024-08-23T05:13:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30503
-- author: SlamBamActionman
-  changes:
-  - message: Codewords are now highlighted for traitors.
-    type: Add
-  id: 7191
-  time: '2024-08-23T09:14:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30092
-- author: SlamBamActionman
-  changes:
-  - message: Janitor's galoshes now apply slowdown over slippery surfaces, and has
-      a max slowdown cap over sticky surfaces.
-    type: Tweak
-  id: 7192
-  time: '2024-08-23T09:59:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30967
-- author: coolsurf6
-  changes:
-  - message: Increased the maximum number of reptilian chest markings to 3.
-    type: Tweak
-  id: 7193
-  time: '2024-08-23T14:24:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30786
-- author: FATFSAAM2
-  changes:
-  - message: Added 3 new voicelines for the boxer figurine.
-    type: Add
-  id: 7194
-  time: '2024-08-24T00:10:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31382
 - author: Winkarst-cpu
   changes:
   - message: The damage dealt by the folded chair can now be inspected.
@@ -3909,3 +3873,48 @@
   id: 7689
   time: '2024-12-08T23:20:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33774
+- author: Errant
+  changes:
+  - message: Signal timers now have a maximum countdown duration, which can be specified
+      in yaml. The default maximum is one hour, to prevent the displayed time from
+      overflowing into hh:mm .
+    type: Tweak
+  id: 7690
+  time: '2024-12-09T03:41:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33781
+- author: Plykiya
+  changes:
+  - message: You are now notified of who is pulling you when being pulled.
+    type: Add
+  id: 7691
+  time: '2024-12-09T03:51:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33612
+- author: Bhijn and Myr
+  changes:
+  - message: The Admin Message system now contains an introductory message as the
+      very first message shown to a user, before any messages are written or received.
+      This message serves primarily to remind ahelping players (whom are likely to
+      be experiencing strong emotion) to remember that admins are humans, too.
+    type: Add
+  id: 7692
+  time: '2024-12-09T08:54:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33348
+- author: ScarKy0
+  changes:
+  - message: You can now pet the AI Core.
+    type: Add
+  id: 7693
+  time: '2024-12-09T16:10:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33788
+- author: joshepvodka
+  changes:
+  - message: Added flavor profiles to beverages that missed them.
+    type: Add
+  - message: Tweaked some drink flavor profiles.
+    type: Tweak
+  - message: Soda/Booze dispenser will now always eject the shaker/glass before any
+      bottle or jug.
+    type: Tweak
+  id: 7694
+  time: '2024-12-09T17:12:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33505
