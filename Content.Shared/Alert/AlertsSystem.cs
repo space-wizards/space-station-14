@@ -8,8 +8,8 @@ namespace Content.Shared.Alert;
 
 public abstract class AlertsSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     private FrozenDictionary<ProtoId<AlertPrototype>, AlertPrototype> _typeToAlert = default!;
 
@@ -328,7 +328,15 @@ public abstract class AlertsSystem : EntitySystem
             return;
         }
 
-        ActivateAlert(player.Value, alert);
+        if (ActivateAlert(player.Value, alert) && _timing.IsFirstTimePredicted)
+        {
+            HandledAlert();
+        }
+    }
+
+    protected virtual void HandledAlert()
+    {
+
     }
 
     public bool ActivateAlert(EntityUid user, AlertPrototype alert)
