@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: SlamBamActionman
   changes:
-  - message: Codewords are now highlighted for traitors.
-    type: Add
-  id: 7191
-  time: '2024-08-23T09:14:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30092
-- author: SlamBamActionman
-  changes:
   - message: Janitor's galoshes now apply slowdown over slippery surfaces, and has
       a max slowdown cap over sticky surfaces.
     type: Tweak
@@ -3911,3 +3904,10 @@
   id: 7690
   time: '2024-12-09T03:41:11.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33781
+- author: Plykiya
+  changes:
+  - message: You are now notified of who is pulling you when being pulled.
+    type: Add
+  id: 7691
+  time: '2024-12-09T03:51:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33612
