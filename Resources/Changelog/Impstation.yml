@@ -1,29 +1,4 @@
 ﻿Entries:
-- author: FlippenPage
-  changes:
-  - message: Added Cargo Cyborg
-    type: Add
-  - message: Added Cargo Cyborg components, they have been included in the exosuit
-      lathe.
-    type: Add
-  id: 199
-  time: '2024-09-14T04:45:10.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/253
-- author: formlessnameless
-  changes:
-  - message: Fin Fin of pain and suffering
-    type: Add
-  id: 200
-  time: '2024-09-14T08:15:37.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/254
-- author: KingMudkipIII
-  changes:
-  - message: Testosterone and Estradiol can now be produced by chemists. (no ingame
-      effect)
-    type: Add
-  id: 201
-  time: '2024-09-14T14:23:42.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/256
 - author: hivehum
   changes:
   - message: The message you receive upon becoming some antagonists have been rewritten
@@ -4483,3 +4458,32 @@
   id: 698
   time: '2024-12-09T16:40:59.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/961
+- author: widgetbeck
+  changes:
+  - message: Fixed Decapoids being sped up by Mucin
+    type: Fix
+  - message: Fixed Decapoids and Gastropoids using the incorrect density values, which
+      means that they should now correctly shatter glass tables when vaulting.
+    type: Fix
+  id: 699
+  time: '2024-12-09T16:55:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/964
+- author: kipdotnet, Aftrlite
+  changes:
+  - message: Added the tck'tck, and admin-spawn ghost role for mapping and emergency
+      backup.
+    type: Add
+  id: 700
+  time: '2024-12-09T16:56:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/966
+- author: DinnerCalzone
+  changes:
+  - message: Stations we receive from upstream have been hard-forked to enable edits
+      to them specific to our server. This does not come with any changes to the maps
+      as of this moment, but it does enable us to add new content that requires significant
+      map changes to work as well as make any other edits to maps that best suit our
+      server's needs.
+    type: Tweak
+  id: 701
+  time: '2024-12-09T16:54:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/963
