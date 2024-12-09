@@ -932,5 +932,10 @@ Entries:
   id: 132
   time: '2024-12-09T08:49:11.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/145
-
-
+- author: Rinary
+  changes:
+  - message: Uncoocked protains now are food.
+    type: Tweak
+  id: 133
+  time: '2024-12-09T08:49:11.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/145

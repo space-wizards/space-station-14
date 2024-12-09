@@ -476,6 +476,9 @@
       - !type:SatiateHunger
         conditions:
           - !type:OrganType
+            type: Animal
+            shouldHave: true
+          - !type:OrganType
             type: Vampire
             shouldHave: true
       - !type:PopupMessage
