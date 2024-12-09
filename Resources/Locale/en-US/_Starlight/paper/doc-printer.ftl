@@ -691,3 +691,20 @@ doc-text-printer-medical-intervention-order =
    ⠀                                    [italic]Place for stamps[/italic]
    
 # Orders
+
+doc-text-printer-product-order =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀                                 [bold]PRODUCT ORDER[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    I, (full name), in the position of (full job title), request to produce products by the department of (name of department).
+    List of products required:
+    
+    Reason for order:
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]

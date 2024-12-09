@@ -389,3 +389,12 @@
     SheetPrinter: 100
     
 # Orders
+
+- type: latheRecipe
+  id: PrintedDocumentProductOrderRecipe
+  result: PrintedDocumentProductOrder
+  category: Orders
+  completetime: 2
+  applyMaterialDiscount: false
+  materials:
+    SheetPrinter: 100

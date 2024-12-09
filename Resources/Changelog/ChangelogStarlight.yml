@@ -946,4 +946,17 @@ Entries:
   id: 134
   time: '2024-12-09T10:03:45.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/146
-
+- author: Rinary
+  changes:
+  - message: Added more forms to document printer.
+    type: Add
+  id: 135
+  time: '2024-12-09T12:28:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/32aa37d53fc52420cd2137eccd6800bde4df47fe
+- author: LuxikMC
+  changes:
+  - message: All maps updated.
+    type: Tweak
+  id: 136
+  time: '2024-12-09T12:28:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/add1645890e2a98006455caa13a2c5c6186dd174

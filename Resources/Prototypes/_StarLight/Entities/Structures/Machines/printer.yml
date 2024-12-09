@@ -74,6 +74,7 @@
       - PrintedDocumentOrderRecognizingReasonablenessCreatureRecipe
       - PrintedDocumentMedicalInterventionOrderRecipe
 # Orders
+      - PrintedDocumentProductOrderRecipe
 #  - type: EmagLatheRecipes
 #    emagStaticRecipes:
 #        - PrintedDocumentErrorLoadingFormHeaderRecipe
