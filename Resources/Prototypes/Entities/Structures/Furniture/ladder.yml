@@ -1,0 +1,29 @@
+- type: entity
+  id: AltarBase
+  parent: BaseStructure
+  name: altar
+  description: Altar of the Gods.
+  abstract: true
+  components:
+  - type: Anchorable
+  - type: Transform
+  - type: Prayable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: PlaceableSurface
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 55
+        mask: #mouse can pass under, but I think this is can understandable by logic
+        - TableMask
+        layer:
+        - TableLayer
+  - type: Sprite
+    snapCardinals: true
+  - type: Climbable
+  - type: Clickable
