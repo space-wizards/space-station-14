@@ -960,3 +960,32 @@ Entries:
   id: 136
   time: '2024-12-09T12:28:00.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/commit/add1645890e2a98006455caa13a2c5c6186dd174
+- author: Rinary
+  changes:
+  - message: Added roboticist.
+    type: Add
+  id: 137
+  time: '2024-12-09T17:40:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/149
+- author: yuitop
+  changes:
+  - message: Welding mask and googles is now adjustable
+    type: Tweak
+  id: 138
+  time: '2024-12-09T17:40:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/149
+- author: yuitop
+  changes:
+  - message: Added welding goggles
+    type: Add
+  id: 139
+  time: '2024-12-09T17:40:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/149
+- author: yuitop
+  changes:
+  - message: Welding mask and goggles darken vision upon equip
+    type: Add
+  id: 140
+  time: '2024-12-09T17:40:47.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/149
+
