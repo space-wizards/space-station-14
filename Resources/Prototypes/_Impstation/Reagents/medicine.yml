@@ -50,10 +50,10 @@
             Poison: -0.2
 
 - type: reagent
-  id: Abnormium
-  name: reagent-name-abnormium
+  id: Anomalium
+  name: reagent-name-anomalium
   group: Medicine
-  desc: reagent-desc-abnormium
+  desc: reagent-desc-anomalium
   flavor: sour
   color: "#64ffe6"
   physicalDesc: reagent-physical-desc-enigmatic
