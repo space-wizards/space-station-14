@@ -33,7 +33,6 @@ using Content.Server.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Collections;
 using Content.Shared.Ghost.Roles.Components;
-using Content.Shared.Roles.Jobs;
 
 namespace Content.Server.Ghost.Roles;
 
@@ -514,13 +513,19 @@ public sealed class GhostRoleSystem : EntitySystem
         var newMind = _mindSystem.CreateMind(player.UserId,
             EntityManager.GetComponent<MetaDataComponent>(mob).EntityName);
 
-        _roleSystem.MindAddRole(newMind, "MindRoleGhostMarker");
-
-        if(_roleSystem.MindHasRole<GhostRoleMarkerRoleComponent>(newMind!, out var markerRole))
-            markerRole.Value.Comp2.Name = role.RoleName;
-
         _mindSystem.SetUserId(newMind, player.UserId);
         _mindSystem.TransferTo(newMind, mob);
+
+        foreach (var mind in role.MindRoles)
+        {
+            if(!_prototype.HasIndex(mind))
+                continue;
+
+            _roleSystem.MindAddRole(newMind, mind);
+        }
+
+        if (_roleSystem.MindHasRole<GhostRoleMarkerRoleComponent>(newMind!, out var markerRole))
+            markerRole.Value.Comp2.Name = role.RoleName;
     }
 
     /// <summary>

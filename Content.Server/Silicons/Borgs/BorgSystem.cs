@@ -5,9 +5,10 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Hands.Systems;
 using Content.Server.PowerCell;
-using Content.Shared.Access.Systems;
+using Content.Server.Roles;
 using Content.Shared.Alert;
 using Content.Shared.Database;
+using Content.Shared.GameTicking;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Item.ItemToggle.Components;
@@ -74,6 +75,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
         SubscribeLocalEvent<BorgChassisComponent, PowerCellSlotEmptyEvent>(OnPowerCellSlotEmpty);
         SubscribeLocalEvent<BorgChassisComponent, GetCharactedDeadIcEvent>(OnGetDeadIC);
         SubscribeLocalEvent<BorgChassisComponent, ItemToggledEvent>(OnToggled);
+        SubscribeLocalEvent<BorgChassisComponent, PlayerSpawnCompleteEvent>(OnSpawn);
 
         SubscribeLocalEvent<BorgBrainComponent, MindAddedMessage>(OnBrainMindAdded);
         SubscribeLocalEvent<BorgBrainComponent, PointAttemptEvent>(OnBrainPointAttempt);
@@ -88,6 +90,16 @@ public sealed partial class BorgSystem : SharedBorgSystem
     {
         UpdateBatteryAlert((uid, component));
         _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
+    }
+
+    // Borgs that enter the game through the normal StationSpawningSystem process get their Silicon role type here
+    private void OnSpawn(EntityUid uid, BorgChassisComponent component, PlayerSpawnCompleteEvent args)
+    {
+        if (!_mind.TryGetMind(args.Mob, out var mindId, out _))
+            return;
+
+        if (!_roles.MindHasRole<BorgBrainRoleComponent>(mindId))
+            _roles.MindAddRole(mindId, "MindRoleBorgBrain", silent: true);
     }
 
     private void OnChassisInteractUsing(EntityUid uid, BorgChassisComponent component, AfterInteractUsingEvent args)
