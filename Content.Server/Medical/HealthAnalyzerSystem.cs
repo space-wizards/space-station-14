@@ -82,6 +82,11 @@ public sealed class HealthAnalyzerSystem : EntitySystem
     {
         if (args.Target == null || !args.CanReach || !HasComp<MobStateComponent>(args.Target) || !_cell.HasDrawCharge(uid, user: args.User))
             return;
+        
+        if (uid.Comp.DamageContainers is not null 
+            && damageableComponent.DamageContainerID is not null 
+            && !uid.Comp.DamageContainers.Contains(damageableComponent.DamageContainerID))
+            return;
 
         _audio.PlayPvs(uid.Comp.ScanningBeginSound, uid);
 

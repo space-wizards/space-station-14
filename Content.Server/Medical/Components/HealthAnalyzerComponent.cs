@@ -61,4 +61,7 @@ public sealed partial class HealthAnalyzerComponent : Component
     /// </summary>
     [DataField]
     public bool Silent;
+    
+    [DataField("damageContainers", customTypeSerializer: typeof(PrototypeIdListSerializer<DamageContainerPrototype>))]
+    public List<string>? DamageContainers;
 }
