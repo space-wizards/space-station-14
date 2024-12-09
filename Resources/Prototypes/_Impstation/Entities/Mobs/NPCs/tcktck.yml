@@ -69,9 +69,6 @@
         type: BorgBoundUserInterface
       enum.StrippingUiKey.Key:
         type: StrippableBoundUserInterface
-      # Only used for NT borgs that can switch type, defined here to avoid copy-pasting the rest of this component.
-      enum.BorgSwitchableTypeUiKey.SelectBorgType:
-        type: BorgSelectTypeUserInterface
   - type: ActivatableUI
     key: enum.BorgUiKey.Key
   - type: SiliconLawBound
@@ -117,7 +114,6 @@
     onActivate: false # You should not be able to turn off a borg temporarily.
     activated: false # gets activated when a mind is added
     onUse: false # no item-borg toggling sorry
-  - type: ItemTogglePointLight
   - type: PowerCellDraw
     drawRate: 0 #if it doesnt have power nothing works so I just made it 0 drain instead of cutting power entirely
   # no ToggleCellDraw since dont want to lose access when power is gone
@@ -207,8 +203,12 @@
     containers:
       borg_module:
         - BorgModuleTckTck
+  - type: ApcPowerReceiver
+    needsPower: false
+    powerLoad: 0
   - type: Charger
     slotId: charger_slot
+    portable: true
   - type: ItemSlots
     slots:
       cell_slot:
