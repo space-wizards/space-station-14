@@ -1,0 +1,30 @@
+- type: loadoutGroup
+  id: RoboticistJumpsuit
+  name: loadout-group-roboticist-jumpsuit
+  loadouts:
+  - RoboticistJumpsuit
+  - RoboticistJumpskirt
+
+- type: loadoutGroup
+  id: RoboticistOuterClothing
+  name: loadout-group-roboticist-outerclothing
+  minLimit: 0
+  loadouts:
+  - RoboticistLabCoat
+  - RoboticistWintercoat
+
+- type: loadoutGroup
+  id: RoboticistHead
+  name: loadout-group-roboticist-head
+  minLimit: 0
+  loadouts:
+  - RoboticistCap
+  - SkullBandana
+  
+- type: loadoutGroup
+  id: RoboticistBackpack
+  name: loadout-group-roboticist-backpack
+  loadouts:
+  - RoboticistBackpack
+  - RoboticistSatchel
+  - RoboticistDuffel

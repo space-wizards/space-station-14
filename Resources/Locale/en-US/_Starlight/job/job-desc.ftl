@@ -1,0 +1,1 @@
+job-description-roboticist = A scientist whose purpose is to repair and create mechanoids, cyborgs, and other mechanical creations.
