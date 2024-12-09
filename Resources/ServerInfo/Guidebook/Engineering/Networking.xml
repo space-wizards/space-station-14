@@ -1,10 +1,12 @@
 <Document>
   # Networking
-  On the station, devices need to communicate to each other to preform their functions. Air alarms need to talk to their respective devices, doors need to be linked to form airlocks, and much more.
+  On the station, devices need to communicate to each other to preform their functions.
+  [textlink="Air alarms" link="DeviceMonitoringAndControl"] need to talk to their respective devices, [textlink="doors" link="Airlocks"] need to be linked to form proper airlocks, and much more.
 
   This is done through two systems, the Link system and the List system.
 
-  You can use either the Multitool or Network Configurator to interact with these systems. You can switch between the different systems using [color=yellow][bold][keybind="AltActivateItemInHand"][/bold][/color] or by hovering your cursor over the device and using [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color].
+  You can use either the Multitool or Network Configurator to interact with these systems.
+  You can switch between the different systems using [color=yellow][bold][keybind="AltActivateItemInHand"][/bold][/color] or by hovering your cursor over the device and using [color=yellow][bold][keybind="AltActivateItemInWorld"][/bold][/color].
 
   <Box HorizontalAlignment="Stretch">
     <Box>
@@ -15,7 +17,9 @@
     </Box>
   </Box>
 
-  Some devices will require access to link devices to them. For example, you need Atmospherics access to link devices to an air alarm. For doors, you'll need the access level of the door you're linking to.
+  Some devices will require access to link devices to them.
+  For example, you need Atmospherics access to link devices to an [textlink="air alarm" link="DeviceMonitoringAndControl"].
+  For doors, you'll need the access level of the door you're linking to.
 
   ## Link System
   The link system is used for explicitly linking two devices, such as linking a door to another door.
@@ -29,7 +33,8 @@
 
   Under the link system, devices have [bold]ports[/bold] that are capable of either sending or receiving signals.
 
-  Hovering over a port using your cursor will show a tooltip that tells you what the port does. For example, output ports will state the conditions under which they will invoke a signal, and input ports will state what the device will do if it receives a signal.
+  Hovering over a port using your cursor will show a tooltip that tells you what the port does.
+  For example, output ports will state the conditions under which they will invoke a signal, and input ports will state what the device will do if it receives a signal.
 
   ## List System
   The list system is used for linking multiple devices to a single primary device, such as linking multiple atmospherics devices to an air alarm.

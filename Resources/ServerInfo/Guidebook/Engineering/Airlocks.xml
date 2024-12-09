@@ -16,7 +16,7 @@
 
   The access level required to open the door can be modified using an Access Configurator, or by using a Multitool on the door electronics for the airlock (which requires deconstruction).
 
-  Airlocks block gas flow, so they can be used to seal off areas in case of a hull breach or a fire.
+  Airlocks block gas flow, so they can be used to seal off areas in case of a [textlink="hull breach" link="Spacing"] or a [textlink="fire." link="Fires"]
   They also store gas on their tile, even when closed, so be careful when opening them during or after a gas leak.
 
   ## Bolting and Emergency Access
@@ -51,7 +51,7 @@
   They can open, close, bolt, and set to emergency access using these remotes.
 
   ## Linking
-  Airlocks can be linked using the Link system to other devices.
+  Airlocks can be linked using the [textlink="Link" link="Networking"] system to other devices.
   This allows for proper station airlocks to space, or to link multiple airlocks together.
 
   ## Styling
@@ -127,9 +127,5 @@
   - [color=yellow]Pulse the wire[/color]: Does nothing.
   - [color=red]Cut the wire[/color]: Disables AI access. The AI can no longer control the door.
   - [color=green]Mend the wire[/color]: Re-enables AI access.
-
-
-
-
 
 </Document>
