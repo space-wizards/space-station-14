@@ -477,3 +477,129 @@ doc-text-printer-complaint-violation-labor-rules =
     
     ──────────────────────────────────────────
    ⠀                                    [italic]Place for stamps[/italic]
+doc-text-printer-offense-complaint =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀                             [bold]OFFENSE COMPLAINT[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    I, (full name), in the position of (full name of position), believe that (full name), in the position of (full name of position), violated the Corporate Law because (reason).
+    What happened from my point of view:
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
+   
+# Permissions
+
+doc-text-printer-permission-equipment =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀                           [bold]EQUIPMENT PERMISSION[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    I, (full name), as department head of (full name of department), authorize the use of the following department work equipment by (full name) in the position of (full name of position):
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
+doc-text-printer-permission-to-travel-in-case-of-threat =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀         [bold]TRAVEL PERMISSION IN CASE OF A THREAT[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    I, (full name), in the position of (full job title), authorize employee (full name) in the position of (full job title) to move around the station in order to perform his/her work duties.
+    The threat code levels at which this authorization is given:
+    
+    Authorized portions of the station for the employee's location (the entire station can be specified):
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
+doc-text-printer-search-permission =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀                             [bold]SEARCH PERMISSION[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    I, (full name), in the position of (full name of position), authorize the search of (full name)/(full name of department), in the position of (full name of position).
+    Reason for search:
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
+doc-text-printer-permission-to-carry-weapons =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀                                [bold]GUN PERMISSION[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    I, (full name), in the position of (full name of position), authorize the carrying of the weapon by (full name), in the position of (full name of position), as long as it is used for its intended purpose. 
+    In the event of a violation, the authorization will be revoked and the weapon will be confiscated by Security.
+    
+    The weapon and the type of ammunition for it:
+    
+    The method of obtaining the weapon and the ammunition for it:
+    
+    Reason for authorization:
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
+doc-text-printer-prescription-drug-authorization =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀               [bold]PRESCRIPTION DRUG AUTHORIZATION[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    I, (full name), in the position of (full title of position), authorize the possession and use of prescription drug or narcotic medication "(full name of substance)" for patient (full name), in the position of (full title of position).
+    Diagnosis Provided:
+    
+    Reason for dispensing the drug:
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
+doc-text-printer-permission-dispose-body =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀                      [bold]BODY DISPOSAL PERMISSION[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    I, (full name), in the position of (full name of position), authorize the disposal of the body of (full name), in the position of (full name of position) due to the impossibility of its resuscitation and cloning.
+    Method of disposal:
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
+doc-text-printer-construction-permit =
+   ⠀[logo]            [head=3]NanoTrasen[/head]
+    ──────────────────────────────────────────
+   ⠀⠀                           [bold]CONSTRUCTION PERMIT[/bold]
+    ──────────────────────────────────────────
+    Time and Date:
+    Compiler of the document:
+    The position of the originator:
+    
+    I, (full name), in the position of (full name of the position), authorize the redevelopment of a part of the station (indication of the place of redevelopment) by (reason for redevelopment).
+    Agreed scope of redevelopment:
+    
+    ──────────────────────────────────────────
+   ⠀                                    [italic]Place for stamps[/italic]
+   
+# OrdersAndInstructions
