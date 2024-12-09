@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: SlamBamActionman
-  changes:
-  - message: Janitor's galoshes now apply slowdown over slippery surfaces, and has
-      a max slowdown cap over sticky surfaces.
-    type: Tweak
-  id: 7192
-  time: '2024-08-23T09:59:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30967
 - author: coolsurf6
   changes:
   - message: Increased the maximum number of reptilian chest markings to 3.
@@ -3911,3 +3903,13 @@
   id: 7691
   time: '2024-12-09T03:51:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33612
+- author: Bhijn and Myr
+  changes:
+  - message: The Admin Message system now contains an introductory message as the
+      very first message shown to a user, before any messages are written or received.
+      This message serves primarily to remind ahelping players (whom are likely to
+      be experiencing strong emotion) to remember that admins are humans, too.
+    type: Add
+  id: 7692
+  time: '2024-12-09T08:54:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33348
