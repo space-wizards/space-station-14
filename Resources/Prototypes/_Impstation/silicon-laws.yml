@@ -1,0 +1,29 @@
+#tck'tck lawset
+- type: siliconLaw
+  id: Tcksimov1
+  order: 1
+  lawString: law-tcksimov-1
+
+- type: siliconLaw
+  id: Tcksimov2
+  order: 2
+  lawString: law-tcksimov-2
+
+- type: siliconLaw
+  id: Tcksimov3
+  order: 3
+  lawString: law-tcksimov-3
+  
+- type: siliconLaw
+  id: Tcksimov4
+  order: 4
+  lawString: law-tcksimov-4
+
+- type: siliconLawset
+  id: Tcksimov
+  laws:
+  - Tcksimov1
+  - Tcksimov2
+  - Tcksimov3
+  - Tcksimov4
+  obeysTo: laws-owner-crew
