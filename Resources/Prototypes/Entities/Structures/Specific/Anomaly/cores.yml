@@ -33,7 +33,7 @@
     timeToDecay: 600
     startPrice: 10000
     endPrice: 200
-  #Imp special : grind the cores for abnormalium
+  #Imp special : grind the cores for abnormium
   - type: Extractable
     grindableSolutionName: abnoJuice
   - type: SolutionContainerManager
