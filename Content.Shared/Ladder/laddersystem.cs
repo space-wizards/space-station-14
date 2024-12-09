@@ -24,13 +24,15 @@ public sealed class LadderSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<LadderdownComponent, StepTriggeredOffEvent>(OnStepTriggeredDown);
-        SubscribeLocalEvent<LadderupComponent, StepTriggeredOffEvent>(OnStepTriggeredUp);
+       // SubscribeLocalEvent<LadderdownComponent, StepTriggeredOffEvent>(OnStepTriggeredDown);
+       // SubscribeLocalEvent<LadderupComponent, StepTriggeredOffEvent>(OnStepTriggeredUp);
+        SubscribeLocalEvent<LadderdownComponent, ClimbedOnEvent>(OnClimbedDown);
+        SubscribeLocalEvent<LadderupComponent, ClimbedOnEvent>(OnClimbedUp);
         SubscribeLocalEvent<LadderdownComponent, StepTriggerAttemptEvent>(OnStepTriggerAttemptDown);
         SubscribeLocalEvent<LadderupComponent, StepTriggerAttemptEvent>(OnStepTriggerAttemptUp);
     }
 
-    private void OnStepTriggeredDown(EntityUid owner, LadderdownComponent component, ref StepTriggeredOffEvent args)
+    private void OnClimbedDown(EntityUid owner, LadderdownComponent component, ref ClimbedOnEvent args)
     {
        if (HasComp<GhostComponent>(owner))
            {
@@ -48,7 +50,7 @@ public sealed class LadderSystem : EntitySystem
             }
     }
 
-     private void OnStepTriggeredUp(EntityUid uid, LadderupComponent component, ref StepTriggeredOffEvent args)
+     private void OnClimbedUp(EntityUid owner, LadderupComponent component, ref ClimbedOnEvent args)
     {
        if (HasComp<GhostComponent>(owner))
          {
