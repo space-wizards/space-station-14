@@ -57,6 +57,16 @@
       - PrintedDocumentRequestModernizationRecipe
 # Complaintst
       - PrintedDocumentComplaintViolationLaborRulesRecipe
+      - PrintedDocumentComplaintOffenseRecipe
+# Permissions
+      - PrintedDocumentPermissionEquipmentRecipe
+      - PrintedDocumentPermissionToTravelInCaseOfThreatRecipe
+      - PrintedDocumentSearchPermissionRecipe
+      - PrintedDocumentPermissionToCarryWeaponsRecipe
+      - PrintedDocumentPrescriptionDrugAuthorizationRecipe
+      - PrintedDocumentPermissionDisposeBodyRecipe
+      - PrintedDocumentConstructionPermitRecipe
+# OrdersAndInstructions
 #  - type: EmagLatheRecipes
 #    emagStaticRecipes:
 #        - PrintedDocumentErrorLoadingFormHeaderRecipe

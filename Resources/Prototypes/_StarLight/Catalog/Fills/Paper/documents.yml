@@ -183,7 +183,7 @@
   categories: [ HideSpawnMenu ]
   components:
     - type: Paper
-      content: doc-text-printer-request-call-members-centcomm
+      content: doc-text-printer-request-call-centcomm-members
       
 - type: entity
   parent: PrintedDocument
@@ -267,3 +267,78 @@
   components:
     - type: Paper
       content: doc-text-printer-complaint-violation-labor-rules
+      
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentComplaintOffense
+  name: Complaint about an offense
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-offense-complaint
+      
+# Permissions
+
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentPermissionEquipment
+  name: Authorization to use equipment
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-permission-equipment
+      
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentPermissionToTravelInCaseOfThreat
+  name: Permission to travel in case of threat
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-permission-to-travel-in-case-of-threat
+      
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentSearchPermission
+  name: Authorization to search
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-search-permission
+      
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentPermissionToCarryWeapons
+  name: Permission to carry weapons
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-permission-to-carry-weapons
+      
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentPrescriptionDrugAuthorization
+  name: Prescription Drug Authorization
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-prescription-drug-authorization
+      
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentPermissionDisposeBody
+  name: Authorization to dispose of the body
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Paper
+      content: doc-text-printer-permission-dispose-body
+      
+- type: entity
+  parent: PrintedDocument
+  id: PrintedDocumentConstructionPermit
+  name: Building permit
+  components:
+    - type: Paper
+      content: doc-text-printer-construction-permit
+      
+# OrdersAndInstructions
