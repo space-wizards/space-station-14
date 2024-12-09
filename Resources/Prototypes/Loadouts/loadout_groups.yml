@@ -854,7 +854,7 @@
   name: loadout-group-scientist-head
   minLimit: 0
   loadouts:
-  - RoboticistCap
+#  - RoboticistCap Only for roboticist
   - SkullBandana
   - ScientificBeret
 
@@ -911,7 +911,7 @@
   loadouts:
   - LatexGloves
   - PurpleGloves
-  - RobohandsGloves
+#  - RobohandsGloves Only for roboticist
 
 - type: loadoutGroup
   id: ScientistPDA

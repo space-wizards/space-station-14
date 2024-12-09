@@ -1,0 +1,11 @@
+# Head
+
+- type: loadout
+  id: RoboticistCap
+  equipment: 
+    head: ClothingHeadHatCorpsoft
+
+- type: loadout
+  id: SkullBandana
+  equipment: 
+    head: ClothingHeadBandSkull
