@@ -48,7 +48,7 @@
 - type: reaction
   id: BicaridineDenaturing
   impact: Low
-  minTemp: 300
+  minTemp: 400
   reactants:
     Bicaridine:
       amount: 1
@@ -123,7 +123,7 @@
 - type: reaction
   id:  HyronalinDenaturing
   impact: Low
-  minTemp: 300
+  minTemp: 400
   reactants:
    Hyronalin:
       amount: 1
@@ -213,7 +213,7 @@
 - type: reaction
   id: SiderlacDenaturing
   impact: Low
-  minTemp: 300
+  minTemp: 400
   reactants:
     Siderlac:
       amount: 1
@@ -258,7 +258,7 @@
 - type: reaction
   id: TricordrazineDenaturing
   impact: Low
-  minTemp: 300
+  minTemp: 400
   reactants:
     Tricordrazine:
       amount: 1
@@ -408,7 +408,7 @@
 - type: reaction
   id: THCDenaturing
   impact: Low
-  minTemp: 300
+  minTemp: 400
   reactants:
     THC:
       amount: 1
