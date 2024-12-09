@@ -34,19 +34,21 @@ public sealed class LadderSystem : EntitySystem
         SubscribeLocalEvent<LadderupComponent, ClimbedOnEvent>(OnClimbedUp);
     }
 
+    // Called when you are climbing down a ladder
     private void OnClimbedDown(EntityUid uid, LadderdownComponent component, ref ClimbedOnEvent args)
     {
           if (HasComp<HandsComponent>(args.Climber))
             {
-             var destination = EntityManager.EntityQuery<LadderupComponent>().FirstOrDefault();
+             var destination = EntityManager.EntityQuery<LadderupComponent>().FirstOrDefault(); // finds the nearest ladder
              if (destination != null)
                 {
-                Transform(args.Climber).Coordinates = Transform(destination.args.Climber).Coordinates;
-                 _popup.PopupEntity(Loc.GetString("ladder-down"), ("owner", args.Climber), args.Climber, PopupType.Medium);
+                Transform(args.Climber).Coordinates = Transform(destination.args.Climber).Coordinates; // teleports you to the other ladder
+                 _popup.PopupEntity(Loc.GetString("ladder-down"), ("owner", args.Climber), args.Climber, PopupType.Medium); // displays the popup
                 }
             }
     }
 
+    // called when you are climbing up a ladder
      private void OnClimbedUp(EntityUid uid, LadderupComponent component, ref ClimbedOnEvent args)
     {
         if (HasComp<HandsComponent>(args.Climber))
