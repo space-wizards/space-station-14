@@ -17,7 +17,6 @@ namespace Content.Server.Forensics
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly MetaDataSystem _metaData = default!;
         [Dependency] private readonly LabelSystem _label = default!;
 
         public override void Initialize()
