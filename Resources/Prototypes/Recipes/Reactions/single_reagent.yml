@@ -23,6 +23,275 @@
   products:
     TableSalt: 1
 
+# DENATURING
+# 2 ingredients: 300
+# 3 ingredients: 450
+# 4+ ingredients: 550
+# 6 ingredients OR unique: 700
+- type: reaction
+  id: DyloveneDenaturing
+  impact: Low
+  minTemp: 450
+  reactants:
+    Dylovene:
+      amount: 1
+  products:
+    DenaturedProteins: 1
+
+- type: reaction
+  id: BicaridineDenaturing
+  impact: Low
+  minTemp: 300
+  reactants:
+    Bicaridine:
+      amount: 1
+  products:
+    DenaturedProteins: 1
+
+- type: reaction
+  id: DermalineDenaturing
+  impact: Low
+  minTemp: 450
+  reactants:
+    Dermaline:
+      amount: 1
+  products:
+    DenaturedProteins: 1
+
+- type: reaction
+  id: DexalinDenaturing
+  impact: Low
+  minTemp: 450
+  reactants:
+    Dexalin:
+      amount: 1
+  products:
+    DenaturedProteins: 1
+
+- type: reaction
+  id: CryoxadoneDenaturing
+  impact: Low
+  minTemp: 450
+  reactants:
+    DexalinPlus:
+      amount: 1
+  products:
+    DenaturedProteins: 1
+
+- type: reaction
+  id: EpinephrineDenaturing
+  impact: Low
+  minTemp: 550
+  reactants:
+   Epinephrine:
+      amount: 1
+  products:
+    DenaturedProteins: 1
+
+- type: reaction
+  id:  HyronalinDenaturing
+  impact: Low
+  minTemp: 300
+  reactants:
+   Hyronalin:
+      amount: 1
+  products:
+    DenaturedProteins: 1
+
+- type: reaction
+  id: IpecacDenaturing
+  impact: Low
+  minTemp: 450
+  reactants:
+   Ipecac:
+      amount: 1
+  products:
+    DenaturedProteins: 1
+
+- type: reaction
+  id: InaprovalineDenaturing
+  impact: Low
+  minTemp: 450
+  reactants:
+   Inaprovaline:
+      amount: 1
+  products:
+    DenaturedProteins: 1
+
+- type: reaction
+  id: KelotaneDenaturing
+  impact: Low
+  minTemp: 450
+  reactants:
+    Kelotane:
+      amount: 1
+  products:
+    DenaturedProteins: 1
+
+- type: reaction
+  id: LeporazineDenaturing
+  impact: Low
+  minTemp: 450
+  reactants:
+    Leporazine:
+      amount: 1
+  products:
+    DenaturedProteins: 1
+
+- type: reaction
+  id: PhalanximineDenaturing
+  impact: Low
+  minTemp: 450
+  reactants:
+    Phalanximine:
+      amount: 1
+  products:
+    DenaturedProteins: 1
+
+- type: reaction
+  id: SiderlacDenaturing
+  impact: Low
+  minTemp: 300
+  reactants:
+    Siderlac:
+      amount: 1
+  products:
+    DenaturedProteins: 1
+
+- type: reaction
+  id: SynaptizineDenaturing
+  impact: Low
+  minTemp: 450
+  reactants:
+    Synaptizine:
+      amount: 1
+  products:
+    DenaturedProteins: 1
+    
+- type: reaction
+  id: TranexamicAcidDenaturing
+  impact: Low
+  minTemp: 450
+  reactants:
+    TranexamicAcid:
+      amount: 1
+  products:
+    DenaturedProteins: 1
+
+- type: reaction
+  id: TricordrazineDenaturing
+  impact: Low
+  minTemp: 300
+  reactants:
+    Tricordrazine:
+      amount: 1
+  products:
+    DenaturedProteins: 1
+
+- type: reaction
+  id: UltravasculineDenaturing
+  impact: Low
+  minTemp: 450
+  reactants:
+    Ultravasculine:
+      amount: 1
+  products:
+    DenaturedProteins: 1
+
+- type: reaction
+  id: EthyloxyephedrineDenaturing
+  impact: Low
+  minTemp: 450
+  reactants:
+    Ethyloxyephedrine:
+      amount: 1
+  products:
+    DenaturedProteins: 1
+
+- type: reaction
+  id: DiphenylmethylamineDenaturing
+  impact: Low
+  minTemp: 450
+  reactants:
+    Diphenylmethylamine:
+      amount: 1
+  products:
+    DenaturedProteins: 1
+
+- type: reaction
+  id: LacerinolDenaturing
+  impact: Low
+  minTemp: 550
+  reactants:
+    Lacerinol:
+      amount: 1
+  products:
+    DenaturedProteins: 1
+
+- type: reaction
+  id: BruizineDenaturing
+  impact: Low
+  minTemp: 550
+  reactants:
+    Bruizine:
+      amount: 1
+  products:
+    DenaturedProteins: 1
+
+- type: reaction
+  id: PyrazineDenaturing
+  impact: Low
+  minTemp: 550
+  reactants:
+    Pyrazine:
+      amount: 1
+  products:
+    DenaturedProteins: 1
+
+- type: reaction
+  id: InsuzineDenaturing
+  impact: Low
+  minTemp: 550
+  reactants:
+    Insuzine:
+      amount: 1
+  products:
+    DenaturedProteins: 1
+
+- type: reaction
+  id: EphedrineDenaturing
+  impact: Low
+  minTemp: 400
+  reactants:
+    Ephedrine:
+      amount: 1
+  products:
+    DenaturedProteins: 1
+
+- type: reaction
+  id: StimulantsDenaturing
+  impact: Low
+  minTemp: 600
+  reactants:
+    Stimulants:
+      amount: 1
+  products:
+    DenaturedProteins: 1
+
+- type: reaction
+  id: THCDenaturing
+  impact: Low
+  minTemp: 300
+  reactants:
+    THC:
+      amount: 1
+  products:
+    DenaturedProteins: 1
+
+
+
+# END OF DENATURING
+
 - type: reaction
   id: EggCooking
   impact: Low
