@@ -1,9 +1,9 @@
-using Content.Shared.Inventory.Events;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Movement.Components;
 
-namespace Content.Shared.Clothing;
+namespace Content.Shared.Clothing.EntitySystems;
 
 /// <summary>
 /// Changes the friction and acceleration of the wearer and also the damage on impact variables of thew wearer when hitting a static object.
