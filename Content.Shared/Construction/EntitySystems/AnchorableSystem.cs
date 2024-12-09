@@ -322,7 +322,6 @@ public sealed partial class AnchorableSystem : EntitySystem
             return false;
 
         var tileIndices = _mapSystem.LocalToTile(gridUid.Value, grid, location);
-
         var enumerator = _mapSystem.GetAnchoredEntitiesEnumerator(gridUid.Value, grid, tileIndices);
 
         while (enumerator.MoveNext(out var entity))
