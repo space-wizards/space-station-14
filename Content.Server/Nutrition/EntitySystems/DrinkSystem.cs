@@ -24,6 +24,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
@@ -163,6 +164,9 @@ public sealed class DrinkSystem : SharedDrinkSystem
     private bool TryDrink(EntityUid user, EntityUid target, DrinkComponent drink, EntityUid item)
     {
         if (!HasComp<BodyComponent>(target))
+            return false;
+
+        if (!_body.TryGetBodyOrganEntityComps<StomachComponent>(target, out var stomachs))
             return false;
 
         if (_openable.IsClosed(item, user))
