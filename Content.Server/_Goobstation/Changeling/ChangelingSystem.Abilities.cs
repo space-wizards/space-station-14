@@ -22,7 +22,6 @@ using Content.Server.Radio.Components;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Content.Shared.Humanoid;
 
 namespace Content.Server.Changeling;
 
