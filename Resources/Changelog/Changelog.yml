@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Added the clown skirt
-    type: Add
-  id: 7187
-  time: '2024-08-23T04:59:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31207
-- author: Aquif
-  changes:
-  - message: Boiling Vox blood results in ammonia.
-    type: Add
-  id: 7188
-  time: '2024-08-23T05:05:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30749
-- author: Sarahon
-  changes:
-  - message: Brand new emote sprites and colours to the Y menu.
-    type: Add
-  id: 7189
-  time: '2024-08-23T05:08:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30887
 - author: jimmy12or
   changes:
   - message: Added a recipe for cream. Heat some milk and shake some air into it.
@@ -3904,3 +3883,29 @@
   id: 7686
   time: '2024-12-08T01:46:41.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33763
+- author: PJB3005
+  changes:
+  - message: You can now use Interact (E by default) to toggle radiation collectors,
+      field generators, and emitters. Previously you had to click with an empty hand.
+    type: Fix
+  id: 7687
+  time: '2024-12-08T22:37:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33762
+- author: ArtisticRoomba
+  changes:
+  - message: Detectives are now required to start with outer clothing (armor) like
+      all other security roles.
+    type: Tweak
+  - message: Vox Detectives now spawn with their chosen outer clothing equipped. Previously
+      the tank harness would override this and your armor would start on the floor.
+    type: Fix
+  id: 7688
+  time: '2024-12-08T22:50:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33765
+- author: slarticodefast
+  changes:
+  - message: Fixed pipes still containing gas after unanchoring them.
+    type: Fix
+  id: 7689
+  time: '2024-12-08T23:20:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33774
