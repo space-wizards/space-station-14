@@ -2,7 +2,7 @@
   parent: [BaseMob, StripableInventoryBase]
   id: MobTckTck
   name: tck'tck
-  description: A man-machine hybrid that assists in station activity. They love being asked to state their laws over and over.
+  description: A borg-like entity manufactured by the Decapoid Empire. Contains a recharger port, and provides power when anchored.
   components:
   - type: Reactive
     groups:
@@ -21,8 +21,8 @@
       fix1:
         shape:
           !type:PhysShapeCircle
-          radius: 0.35
-        density: 150
+          radius: 0.25
+        density: 100
         mask:
         - MobMask
         layer:
@@ -33,8 +33,8 @@
   - type: Sprite
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: mimebot
-      sprite: Mobs/Silicon/Bots/mimebot.rsi
+      state: tcktck
+      sprite: _Impstation/Mobs/Silicon/Bots/tcktck.rsi
   - type: RotationVisuals
     horizontalRotation: 90
   - type: MobState
@@ -79,7 +79,7 @@
     actions:
     - ActionViewLaws
   - type: SiliconLawProvider
-    laws: Crewsimov
+    laws: Tcksimov
   - type: Inventory
     templateId: borg
   - type: Hands
@@ -105,8 +105,6 @@
       - RoboticsConsole
   - type: WiresPanel
   - type: ActivatableUIRequiresPanel
-  - type: NameIdentifier
-    group: Silicon
   - type: ContainerContainer
     containers:
       cell_slot: !type:ContainerSlot { }
@@ -121,7 +119,7 @@
     onUse: false # no item-borg toggling sorry
   - type: ItemTogglePointLight
   - type: PowerCellDraw
-    drawRate: 0.1
+    drawRate: 0 #if it doesnt have power nothing works so I just made it 0 drain instead of cutting power entirely
   # no ToggleCellDraw since dont want to lose access when power is gone
   - type: Body
   - type: StatusEffects
@@ -177,13 +175,13 @@
         - cell_slot
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: HandheldLight
-    toggleOnInteract: false
-    wattage: 0.2
-  - type: ToggleableLightVisuals
   - type: PointLight
-    enabled: false
-    radius: 4
+    radius: .5
+    energy: 5
+    color: "#ff0043"
+    mask: /Textures/Effects/LightMasks/double_cone.png
+  - type: RotatingLight
+    speed: 180
     netsync: false
   - type: Pullable
   - type: Puller
@@ -209,8 +207,29 @@
     containers:
       borg_module:
         - BorgModuleTckTck
+  - type: Charger
+    slotId: charger_slot
   - type: ItemSlots
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
         startingItem: PowerCellHyper
+      charger_slot:
+        ejectOnInteract: true
+        whitelist:
+          components:
+          - HitscanBatteryAmmoProvider
+          - ProjectileBatteryAmmoProvider
+          - Stunbaton
+          - PowerCell
+  - type: PowerSupplier
+    supplyRate: 8000
+    supplyRampTolerance: 2000
+    voltage: Apc
+  - type: Anchorable
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      output:
+        !type:CableDeviceNode
+        nodeGroupID: Apc
