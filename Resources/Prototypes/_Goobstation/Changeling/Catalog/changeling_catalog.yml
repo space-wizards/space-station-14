@@ -249,7 +249,7 @@
   icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: chameleon_skin }
   productAction: ActionChameleonSkin
   cost:
-    EvolutionPoint: 4
+    EvolutionPoint: 2
   categories:
   - ChangelingAbilityUtility
   conditions:
