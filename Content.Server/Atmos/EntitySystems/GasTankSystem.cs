@@ -44,6 +44,16 @@ namespace Content.Server.Atmos.EntitySystems
             _maxExplosionRange = value;
         }
 
+        public override void UpdateUserInterface(Entity<GasTankComponent> ent)
+        {
+            var (owner, component) = ent;
+            _ui.SetUiState(owner, SharedGasTankUiKey.Key,
+                new GasTankBoundUserInterfaceState
+                {
+                    TankPressure = component.Air?.Pressure ?? 0,
+                });
+        }
+
         private void OnParentChange(EntityUid uid, GasTankComponent component, ref EntParentChangedMessage args)
         {
             // When an item is moved from hands -> pockets, the container removal briefly dumps the item on the floor.
@@ -87,7 +97,7 @@ namespace Content.Server.Atmos.EntitySystems
                     _atmosphereSystem.React(comp.Air, comp);
                 }
                 CheckStatus(gasTank);
-                if (_ui.IsUiOpen(uid, SharedGasTankUiKey.Key))
+                if ((comp.IsConnected || comp.IsValveOpen) && _ui.IsUiOpen(uid, SharedGasTankUiKey.Key))
                 {
                     UpdateUserInterface(gasTank);
                 }

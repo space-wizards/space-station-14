@@ -1,11 +1,10 @@
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Atmos.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 public sealed partial class GasTankComponent : Component, IGasMixtureHolder
 {
     public const float MaxExplosionRange = 26f;
@@ -94,10 +93,10 @@ public sealed partial class GasTankComponent : Component, IGasMixtureHolder
     [DataField]
     public float TankFragmentScale = 2 * Atmospherics.OneAtmosphere;
 
-    [DataField("toggleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string ToggleAction = "ActionToggleInternals";
+    [DataField]
+    public EntProtoId ToggleAction = "ActionToggleInternals";
 
-    [DataField("toggleActionEntity")] public EntityUid? ToggleActionEntity;
+    [DataField, AutoNetworkedField] public EntityUid? ToggleActionEntity;
 
     /// <summary>
     ///     Valve to release gas from tank

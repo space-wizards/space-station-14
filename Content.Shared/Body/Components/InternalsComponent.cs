@@ -1,4 +1,5 @@
 using Content.Shared.Alert;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Body.Components;
@@ -6,19 +7,18 @@ namespace Content.Shared.Body.Components;
 /// <summary>
 /// Handles hooking up a mask (breathing tool) / gas tank together and allowing the Owner to breathe through it.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 public sealed partial class InternalsComponent : Component
 {
-    [ViewVariables]
+    [DataField, AutoNetworkedField]
     public EntityUid? GasTankEntity;
 
-    [ViewVariables]
-    public HashSet<EntityUid> BreathTools { get; set; } = new();
+    [DataField, AutoNetworkedField]
+    public HashSet<EntityUid> BreathTools = new();
 
     /// <summary>
     /// Toggle Internals delay when the target is not you.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public TimeSpan Delay = TimeSpan.FromSeconds(3);
 

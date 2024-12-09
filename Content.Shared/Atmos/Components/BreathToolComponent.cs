@@ -1,11 +1,13 @@
-﻿using Content.Shared.Inventory;
+﻿using Content.Shared.Body.Components;
+using Content.Shared.Inventory;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Atmos.Components;
+namespace Content.Shared.Atmos.Components;
 
 /// <summary>
-/// Used in internals as breath tool.
+/// Gas masks or the likes; used by <see cref="InternalsComponent"/> for breathing.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [ComponentProtoName("BreathMask")]
 public sealed partial class BreathToolComponent : Component
 {
@@ -14,7 +16,10 @@ public sealed partial class BreathToolComponent : Component
     /// </summary>
     [DataField]
     public SlotFlags AllowedSlots = SlotFlags.MASK | SlotFlags.HEAD;
-    public bool IsFunctional;
 
+    [ViewVariables]
+    public bool IsFunctional => ConnectedInternalsEntity != null;
+
+    [DataField, AutoNetworkedField]
     public EntityUid? ConnectedInternalsEntity;
 }

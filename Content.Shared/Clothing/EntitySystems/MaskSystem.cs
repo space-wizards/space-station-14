@@ -3,9 +3,7 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.Foldable;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
-using Content.Shared.Item;
 using Content.Shared.Popups;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
@@ -14,7 +12,6 @@ public sealed class MaskSystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _actionSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -29,13 +26,16 @@ public sealed class MaskSystem : EntitySystem
     private void OnGetActions(EntityUid uid, MaskComponent component, GetItemActionsEvent args)
     {
         if (_inventorySystem.InSlotWithFlags(uid, SlotFlags.MASK))
+        {
             args.AddAction(ref component.ToggleActionEntity, component.ToggleAction);
+            Dirty(uid, component);
+        }
     }
 
     private void OnToggleMask(Entity<MaskComponent> ent, ref ToggleMaskEvent args)
     {
         var (uid, mask) = ent;
-        if (mask.ToggleActionEntity == null || !_timing.IsFirstTimePredicted || !mask.IsEnabled)
+        if (mask.ToggleActionEntity == null || !mask.IsEnabled)
             return;
 
         if (!_inventorySystem.TryGetSlotEntity(args.Performer, "mask", out var existing) || !uid.Equals(existing))
@@ -62,7 +62,7 @@ public sealed class MaskSystem : EntitySystem
 
     /// <summary>
     /// Called after setting IsToggled, raises events and dirties.
-    /// <summary>
+    /// </summary>
     private void ToggleMaskComponents(EntityUid uid, MaskComponent mask, EntityUid wearer, string? equippedPrefix = null, bool isEquip = false)
     {
         Dirty(uid, mask);
