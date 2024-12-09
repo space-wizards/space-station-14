@@ -88,9 +88,11 @@
   - type: IntrinsicRadioTransmitter
     channels:
     - Common
+    - Binary
   - type: ActiveRadio
     channels:
     - Common
+    - Binary
   - type: ZombieImmune
   - type: Repairable
     doAfterDelay: 10
@@ -166,18 +168,38 @@
           collection: MetalBreak
       - !type:EmptyContainersBehaviour
         containers:
-        - borg_brain
         - borg_module
         - cell_slot
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: HandheldLight
+    toggleOnInteract: false
+    wattage: 0.2
+    blinkingBehaviourId: blinking
+    radiatingBehaviourId: radiating
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour
+      id: radiating
+      maxDuration: 2.0
+      startValue: 3.0
+      endValue: 2.0
+      isLooped: true
+      reverseWhenFinished: true
+    - !type:PulseBehaviour
+      id: blinking
+      interpolate: Nearest
+      maxDuration: 1.0
+      minValue: 0.1
+      maxValue: 2.0
+      isLooped: true
+  - type: ToggleableLightVisuals
   - type: PointLight
-    radius: .5
-    energy: 5
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    radius: 2.5
     color: "#ff0043"
-    mask: /Textures/Effects/LightMasks/double_cone.png
-  - type: RotatingLight
-    speed: 180
     netsync: false
   - type: Pullable
   - type: Puller
