@@ -218,7 +218,7 @@ public sealed class PricingSystem : EntitySystem
     /// <param name="price">The price that will be given.</param>
     public void SetPrice(EntityUid uid, double price)
     {
-        comp = EnsureComp<StaticPriceComponent>(uid);
+        var comp = EnsureComp<StaticPriceComponent>(uid);
         comp.Price = price;
     }
 
