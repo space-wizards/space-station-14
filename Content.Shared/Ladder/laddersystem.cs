@@ -7,13 +7,13 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
+using Content.Server.Ladder;
+using Content.Server.Popups;
+using Content.Shared.Popups;
 
 namespace Content.Shared.Ladder;
 
-/// <summary>
-///     Handles making entities fall into chasms when stepped on.
-/// </summary>
-public sealed class ChasmSystem : EntitySystem
+public sealed class LadderSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ActionBlockerSystem _blocker = default!;
@@ -30,10 +30,6 @@ public sealed class ChasmSystem : EntitySystem
         SubscribeLocalEvent<LadderupComponent, StepTriggerAttemptEvent>(OnStepTriggerAttemptUp);
     }
 
-    public override void Update(float frameTime)
-    {
-    }
-
     private void OnStepTriggeredDown(EntityUid owner, LadderdownComponent component, ref StepTriggeredOffEvent args)
     {
        if (HasComp<GhostComponent>(owner))
@@ -47,6 +43,7 @@ public sealed class ChasmSystem : EntitySystem
             if (destination != null)
             {
                 Transform(owner).Coordinates = Transform(destination.Owner).Coordinates;
+                 _popup.PopupEntity(Loc.GetString("ladder-down"), owner, PopupType.Medium);
             }
             }
     }
@@ -64,6 +61,7 @@ public sealed class ChasmSystem : EntitySystem
             if (destination != null)
             {
                 Transform(owner).Coordinates = Transform(destination.Owner).Coordinates;
+                _popup.PopupEntity(Loc.GetString("ladder-up"), owner, PopupType.Medium);
             }
             }
     }
