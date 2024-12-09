@@ -988,4 +988,18 @@ Entries:
   id: 140
   time: '2024-12-09T17:40:47.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/149
+- author: aedler
+  changes:
+  - message: Security gets extended emergency tanks in their survival box.
+    type: Tweak
+  id: 141
+  time: '2024-12-09T18:55:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/150
+- author: aedler
+  changes:
+  - message: Captain gets an extended emergency survival box.
+    type: Tweak
+  id: 142
+  time: '2024-12-09T18:55:04.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/150
 
