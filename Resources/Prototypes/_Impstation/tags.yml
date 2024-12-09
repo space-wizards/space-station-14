@@ -22,6 +22,9 @@
 
 - type: Tag
   id: DionaMinded
+  
+- type: Tag
+  id: FloorChasmEntity
 
 - type: Tag
   id: MagazineLPistol
