@@ -6,21 +6,27 @@
   </Box>
 
   [color=#ffa500]Caution! This species has a severely limiting game mechanic and is not recommended for new players. [/color]
-  
+
   ## Special Accomodations
-  
-  Vox lungs function very differently from most other species. [color=#ffa500]They are only capable of processing nitrogen,[/color] which is converted to ammonia and exhaled. 
-  
+
+  Vox lungs function very differently from most other species. [color=#ffa500]They are only capable of processing nitrogen,[/color] which is converted to ammonia and exhaled.
+
   Additionally, due to an unusual set of biological circumstances, [color=red][bold]oxygen is highly toxic to them.[/color][/bold] If exposed to oxygen, it will quickly build up in their blood, causing rapid onset organ failure and eventually death.
-  
-  Resultantly, [color=red][bold]Vox must be on internals at all times while aboard NT stations.[/color][/bold] [color=#ffa500]This may make it difficult for Vox to eat or drink normally,[/color] although direct injection of liquid food is possible.
-  
+
+  Vox [color=#1e90ff]slowly recover from low levels of poison damage[/color] on their own, so long as they are careful not to exceed 20 poison damage.
+
+  This allows them to endure breathing station air for up to thirty seconds at a time without lasting damage, letting them quickly eat, drink, take oral medication, and so on.
+
+  A thirty second oxygen exposure takes them two minutes to recover from.
+
+  If their health does not seem to improve within a minute of oxygen exposure, they should seek medical attention.
+
   NT has made special accomodations for this species, [color=#1e90ff]including readily accessible nitrogen tanks in dispensers and lockers throughout most stations.[/color] Some stations may even have a "Vox Box," an enclosed nitrogen-rich environment devoid of oxygen.
-  
+
   ## Damage
-  
+
   Vox blood is anaerobic, [color=#1e90ff]but is iron-based, allowing it to be metabolized from iron supplements.[/color]
-  
+
   As they possess talons, their unarmed attacks deal Slash damage instead of Blunt.
 
  ## Vox Naming Conventions

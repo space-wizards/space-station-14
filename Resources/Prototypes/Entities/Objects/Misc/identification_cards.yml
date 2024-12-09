@@ -864,6 +864,7 @@
     - CentralCommand
     - NuclearOperative
     - SyndicateAgent
+    - Wizard
   - type: Tag #  Ignore Chameleon tags
     tags:
     - DoorBumpOpener
