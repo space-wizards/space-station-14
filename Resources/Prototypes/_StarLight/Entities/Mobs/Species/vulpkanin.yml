@@ -5,6 +5,7 @@
   id: BaseMobVulpkanin
   abstract: true
   components:
+  - type: Absorbable
   - type: HumanoidAppearance
     species: Vulpkanin
   - type: Hunger # on 1.5x more
