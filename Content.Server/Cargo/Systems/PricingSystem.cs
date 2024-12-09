@@ -215,6 +215,7 @@ public sealed class PricingSystem : EntitySystem
     /// Sets the price to given entity.
     /// </summary>
     /// <param name="uid">The entity to set price.</param>
+    /// <param name="price">The price that will be given.</param>
     public void SetPrice(EntityUid uid, double price)
     {
         comp = EnsureComp<StaticPriceComponent>(uid);
