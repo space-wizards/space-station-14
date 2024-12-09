@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Popups;
 using Content.Shared.Maps;
 using Content.Shared.WebPlacer;
@@ -25,6 +26,7 @@ public sealed class WebPlacerSystem : SharedWebPlacerSystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<WebPlacerComponent, SpiderWebActionEvent>(OnSpawnNet);
     }
 
@@ -37,41 +39,37 @@ public sealed class WebPlacerSystem : SharedWebPlacerSystem
         var grid = transform.GridUid;
 
         // Instantly fail in space
-        if (grid == null || !TryComp<MapGridComponent>(grid, out var gridComp))
+        if (!TryComp<MapGridComponent>(grid, out var gridComp))
         {
             _popup.PopupEntity(Loc.GetString(component.MessageOffGrid), args.Performer, args.Performer);
             return;
         }
 
         var coords = transform.Coordinates;
-        List<EntityCoordinates> spawnPos = new();
+        var spawnPos = component.OffsetVectors.Select(v => coords.Offset(v));
 
-        var vects = new List<Vector2i>();
-        vects.AddRange(component.OffsetVectors);
-
-        foreach (var vect in vects)
-            spawnPos.Add(coords.Offset(vect));
-
-        // Spawn webs
         bool success = false;
         foreach (var pos in spawnPos)
-            if (IsValidTile(pos, component.DestinationWhitelist, component.DestinationBlacklist, grid.Value, gridComp))
-            {
-                Spawn(component.WebPrototype, pos);
-                success = true;
-            }
-
-        // Process success
-        if (success)
         {
-            _popup.PopupEntity(Loc.GetString(component.MessageSuccess), args.Performer, args.Performer);
-            args.Handled = true;
+            if (!IsValidTile(pos, component.DestinationWhitelist, component.DestinationBlacklist, grid.Value, gridComp))
+                continue;
 
-            if (component.WebSound != null)
-                _audio.PlayPvs(component.WebSound, uid);
+            Spawn(component.WebPrototype, pos);
+            success = true;
         }
-        else
+
+        // Return if nothing was spawned
+        if (!success)
+        {
             _popup.PopupEntity(Loc.GetString(component.MessageFail), args.Performer, args.Performer);
+            return;
+        }
+
+        args.Handled = true;
+        _popup.PopupEntity(Loc.GetString(component.MessageSuccess), args.Performer, args.Performer);
+
+        if (component.WebSound != null)
+            _audio.PlayPvs(component.WebSound, uid);
     }
 
     private bool IsValidTile(EntityCoordinates coords, EntityWhitelist? whitelist, EntityWhitelist? blacklist, EntityUid grid, MapGridComponent gridComp)

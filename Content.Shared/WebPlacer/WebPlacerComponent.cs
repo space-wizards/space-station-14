@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.WebPlacer;
 
 /// <summary>
-/// Gives the entity (probably a spider) an ability to spawn webs around itself.
+/// Gives the entity (probably a spider) an ability to spawn entites (probably webs) around itself.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedWebPlacerSystem))]
@@ -46,7 +46,7 @@ public sealed partial class WebPlacerComponent : Component
     public EntityWhitelist? DestinationBlacklist;
 
     /// <summary>
-    /// Sound played when successfully spawning webs.
+    /// Sound played when successfully spawning something.
     /// </summary>
     [DataField]
     public SoundSpecifier? WebSound =
@@ -68,7 +68,7 @@ public sealed partial class WebPlacerComponent : Component
         Vector2i.Right,
     };
 
-    /// Localization files for popup text.
+    // Localization files for popup text.
     [DataField] public LocId MessageOffGrid = "spider-web-action-nogrid";
     [DataField] public LocId MessageSuccess = "spider-web-action-success";
     [DataField] public LocId MessageFail = "spider-web-action-fail";
