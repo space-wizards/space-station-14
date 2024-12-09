@@ -7,6 +7,7 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Singularity.Components;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Radiation.Events;

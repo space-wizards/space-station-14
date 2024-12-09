@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.NodeContainer;
+using Content.Shared.NodeContainer;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.PostGeneration;
 using Robust.Shared.Random;
