@@ -233,3 +233,9 @@
       output:
         !type:CableDeviceNode
         nodeGroupID: Apc
+  - type: GhostRole
+    makeSentient: true
+    name: Tck'Tck
+    description: Power the station. Power the world.
+    rules: ghost-role-information-silicon-rules
+  - type: GhostTakeoverAvailable
