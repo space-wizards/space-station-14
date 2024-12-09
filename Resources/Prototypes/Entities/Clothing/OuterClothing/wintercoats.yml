@@ -36,19 +36,14 @@
     price: 50
 
 - type: entity
-  parent: ClothingOuterWinterCoat
+  parent: [ ClothingOuterBaseToggleable, ClothingOuterWinterCoat ]
   id: ClothingOuterWinterCoatToggleable
   name: winter coat with hood
   categories: [ HideSpawnMenu ]
   components:
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterDefault
-    slot: head
-  - type: ContainerContainer
-    containers:
-      toggleable-clothing: !type:ContainerSlot {}
-      storagebase: !type:Container
-        ents: []
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterDefault
 
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
@@ -71,7 +66,8 @@
       outerClothing:
       - state: ATMOS-equipped-OUTERCLOTHING
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterEngineer
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterEngineer
 
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
@@ -94,7 +90,8 @@
       outerClothing:
       - state: BAR-equipped-OUTERCLOTHING
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterBartender
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterBartender
 
 - type: entity
   parent: [ClothingOuterWinterCoatToggleable, BaseCommandContraband]
@@ -117,7 +114,8 @@
       outerClothing:
       - state: CAP-equipped-OUTERCLOTHING
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterCaptain
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterCaptain
 
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
@@ -140,7 +138,8 @@
       outerClothing:
       - state: CARGO-equipped-OUTERCLOTHING
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterCargo
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterCargo
 
 - type: entity
   parent: [ClothingOuterWinterCoatToggleable, BaseCommandContraband]
@@ -163,7 +162,8 @@
       outerClothing:
       - state: CE-equipped-OUTERCLOTHING
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterCE
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterCE
 
 - type: entity
   parent: [ ClothingOuterWinterCoatToggleable, BaseCentcommContraband ]
@@ -186,7 +186,8 @@
       outerClothing:
       - state: CENTCOM-equipped-OUTERCLOTHING
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterCentcom
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterCentcom
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -238,7 +239,8 @@
         Caustic: 0.75
     priceMultiplier: 0.15
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterChem
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterChem
 
 - type: entity
   parent: [ClothingOuterWinterCoatToggleable, BaseCommandContraband]
@@ -268,7 +270,8 @@
         Caustic: 0.75
     priceMultiplier: 0.15
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterCMO
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterCMO
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -301,7 +304,8 @@
       outerClothing:
       - state: ENGI-equipped-OUTERCLOTHING
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterEngineer
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterEngineer
 
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
@@ -331,7 +335,8 @@
         Caustic: 0.9
     priceMultiplier: 0.15
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterSci
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterSci
 
 - type: entity
   parent: [ClothingOuterWinterCoatToggleable, BaseCommandContraband]
@@ -354,7 +359,8 @@
       outerClothing:
       - state: HOP-equipped-OUTERCLOTHING
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterHOP
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterHOP
 
 
 ##########################################################
@@ -369,7 +375,8 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coathosarmored.rsi
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterHOS
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterHOS
 ##########################################################
 
 - type: entity
@@ -394,7 +401,8 @@
       outerClothing:
       - state: HOS-equipped-OUTERCLOTHING
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterHOS
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterHOS
 
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
@@ -417,7 +425,8 @@
       outerClothing:
       - state: HYDRO-equipped-OUTERCLOTHING
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterHydro
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterHydro
 
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
@@ -447,7 +456,8 @@
         Caustic: 0.9
     priceMultiplier: 0.15
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterJani
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterJani
 
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
@@ -477,7 +487,8 @@
         Caustic: 0.9
     priceMultiplier: 0.15
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterMed
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterMed
 
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
@@ -500,7 +511,8 @@
       outerClothing:
       - state: MIME-equipped-OUTERCLOTHING
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterMime
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterMime
 
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
@@ -523,7 +535,8 @@
       outerClothing:
       - state: MINER-equipped-OUTERCLOTHING
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterMiner
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterMiner
 
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
@@ -553,7 +566,8 @@
         Caustic: 0.9
     priceMultiplier: 0.15
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterPara
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterPara
 
 - type: entity
   parent: [ClothingOuterWinterCoatToggleable, BaseCommandContraband]
@@ -576,7 +590,8 @@
       outerClothing:
       - state: QM-equipped-OUTERCLOTHING
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterQM
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterQM
 
 
 - type: entity
@@ -607,7 +622,8 @@
         Caustic: 0.9
     priceMultiplier: 0.15
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterRD
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterRD
 
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
@@ -630,7 +646,8 @@
       outerClothing:
       - state: ROBO-equipped-OUTERCLOTHING
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterRobo
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterRobo
 
 
 - type: entity
@@ -661,7 +678,8 @@
         Caustic: 0.9
     priceMultiplier: 0.15
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterSci
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterSci
 
 - type: entity
   parent: [ClothingOuterWinterCoatToggleable, BaseRestrictedContraband]
@@ -684,7 +702,8 @@
       outerClothing:
       - state: SEC-equipped-OUTERCLOTHING
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterSec
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterSec
 
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
@@ -714,7 +733,8 @@
         Caustic: 0.9
     priceMultiplier: 0.15
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterSci
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterSci
 
 ################################################################
 - type: entity
@@ -728,7 +748,8 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatwardenarmored.rsi
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterWarden
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterWarden
 ################################################################
 
 - type: entity
@@ -753,7 +774,8 @@
       outerClothing:
       - state: WARD-equipped-OUTERCLOTHING
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterWarden
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterWarden
 
 - type: entity
   parent: [ClothingOuterWinterCoatToggleable, BaseSyndicateContraband]
@@ -777,7 +799,8 @@
       outerClothing:
       - state: SYNDIECAP-equipped-OUTERCLOTHING
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterSyndie
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterSyndie
 
 ##############################################################
 - type: entity
@@ -791,7 +814,8 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/syndicate/coatsyndiecaparmored.rsi
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterSyndie
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterSyndie
 ##############################################################
 
 - type: entity
@@ -816,7 +840,8 @@
       outerClothing:
       - state: SYNDIE-equipped-OUTERCLOTHING
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterSyndie
+    clothingPrototypes:
+      head: ClothingHeadHatHoodWinterSyndie
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -870,7 +895,8 @@
         - ReagentId: Fiber
           Quantity: 20
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterWeb
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterWeb
 
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
@@ -901,7 +927,8 @@
         color: "#1d1d1d"
       - state: winterbits-equipped-OUTERCLOTHING
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterColorBlack
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterColorBlack
 
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
@@ -932,7 +959,8 @@
         color: "#9C0DE1"
       - state: winterbits-equipped-OUTERCLOTHING
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterColorPurple
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterColorPurple
 
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
@@ -963,7 +991,8 @@
         color: "#940000"
       - state: winterbits-equipped-OUTERCLOTHING
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterColorRed
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterColorRed
 
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
@@ -994,7 +1023,8 @@
         color: "#0089EF"
       - state: winterbits-equipped-OUTERCLOTHING
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterColorBlue
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterColorBlue
 
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
@@ -1025,7 +1055,8 @@
         color: "#723A02"
       - state: winterbits-equipped-OUTERCLOTHING
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterColorBrown
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterColorBrown
 
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
@@ -1056,7 +1087,8 @@
         color: "#999999"
       - state: winterbits-equipped-OUTERCLOTHING
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterColorGray
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterColorGray
 
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
@@ -1087,7 +1119,8 @@
         color: "#5ABF2F"
       - state: winterbits-equipped-OUTERCLOTHING
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterColorGreen
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterColorGreen
 
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
@@ -1118,7 +1151,8 @@
         color: "#C09F72"
       - state: winterbits-equipped-OUTERCLOTHING
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterColorLightBrown
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterColorLightBrown
 
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
@@ -1149,7 +1183,8 @@
         color: "#EF8100"
       - state: winterbits-equipped-OUTERCLOTHING
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterColorOrange
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterColorOrange
 
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
@@ -1180,7 +1215,8 @@
         color: "#EAE8E8"
       - state: winterbits-equipped-OUTERCLOTHING
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterColorWhite
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterColorWhite
 
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
@@ -1211,4 +1247,5 @@
         color: "#EBE216"
       - state: winterbits-equipped-OUTERCLOTHING
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterColorYellow
+    clothingPrototypes: 
+      head: ClothingHeadHatHoodWinterColorYellow
