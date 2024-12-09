@@ -45,10 +45,7 @@ public sealed class HelpProgressConditionSystem : EntitySystem
             return;
         }
 
-        var traitors = _traitorRule.GetOtherTraitorMindsAliveAndConnected(args.Mind)
-            .Select(pair => pair.Item1)
-            .ToHashSet();
-        var removeList = new List<EntityUid>();
+        var traitors = _traitorRule.GetOtherTraitorMindsAliveAndConnected(args.Mind).ToHashSet();
 
         // cant help anyone who is tasked with helping:
         // 1. thats boring
@@ -56,19 +53,26 @@ public sealed class HelpProgressConditionSystem : EntitySystem
         foreach (var traitor in traitors)
         {
             // TODO: replace this with TryComp<ObjectivesComponent>(traitor) or something when objectives are moved out of mind
-            if (!TryComp<MindComponent>(traitor, out var mind))
+            if (!TryComp<MindComponent>(traitor.Id, out var mind))
                 continue;
 
             foreach (var objective in mind.Objectives)
             {
                 if (HasComp<HelpProgressConditionComponent>(objective))
-                    removeList.Add(traitor);
+                    traitors.RemoveWhere(x => x.Mind == mind);
             }
         }
 
-        foreach (var tot in removeList)
+        // Can't have multiple objectives to help/save the same person
+        foreach (var objective in args.Mind.Objectives)
         {
-            traitors.Remove(tot);
+            if (HasComp<RandomTraitorAliveComponent>(objective) || HasComp<RandomTraitorProgressComponent>(objective))
+            {
+                if (TryComp<TargetObjectiveComponent>(objective, out var help))
+                {
+                    traitors.RemoveWhere(x => x.Id == help.Target);
+                }
+            }
         }
 
         // no more helpable traitors
@@ -78,7 +82,7 @@ public sealed class HelpProgressConditionSystem : EntitySystem
             return;
         }
 
-        _target.SetTarget(uid, _random.Pick(traitors), target);
+        _target.SetTarget(uid, _random.Pick(traitors).Id, target);
     }
 
     private float GetProgress(EntityUid target)
