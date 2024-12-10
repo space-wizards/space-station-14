@@ -149,3 +149,18 @@
         reagents:
           - ReagentId: Chlorine
             Quantity: 5
+
+- type: entity
+  id: SubjuzineChemistryVial
+  name: subjuzine vial
+  parent: BaseChemistryEmptyVial
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 30
+          reagents:
+            - ReagentId: Subjuzine
+              Quantity: 20
+    - type: Tag
+      tags: []

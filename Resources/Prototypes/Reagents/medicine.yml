@@ -881,6 +881,40 @@
           min: 5
 
 - type: reagent
+  id: Subjuzine
+  name: reagent-name-inert-subjuzine
+  desc: reagent-desc-inert-subjuzine
+  group: Medicine
+  physicalDesc: reagent-physical-desc-enigmatic
+  flavor: magical
+  color: "#a50ed8"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:MakeSentient
+        conditions:
+        - !type:ReagentThreshold
+          min: 5
+
+
+- type: reagent
+  id: ActivatedSubjuzine
+  name: reagent-name-subjuzine
+  desc: reagent-desc-subjuzine
+  group: Medicine
+  physicalDesc: reagent-physical-desc-enigmatic
+  flavor: magical
+  color: "#911d06"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:MakeSyndient
+        conditions:
+        - !type:ReagentThreshold
+          min: 5
+
+
+- type: reagent
   id: Ethyloxyephedrine
   name: reagent-name-ethyloxyephedrine
   desc: reagent-desc-ethyloxyephedrine
