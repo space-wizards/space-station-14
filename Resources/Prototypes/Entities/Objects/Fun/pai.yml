@@ -19,6 +19,9 @@
       enum.StationMapUiKey.Key:
         type: StationMapBoundUserInterface
         requireInputValidation: false
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+        requireInputValidation: false
   - type: Sprite
     sprite: Objects/Fun/pai.rsi
     layers:
@@ -73,6 +76,11 @@
     whitelist:
       components:
         - SecretStash
+  - type: Strippable
+  - type: InventorySlots
+  - type: Inventory
+    templateId: pai
+    speciesId: pai
 
 - type: entity
   parent: [ PersonalAI, BaseSyndicateContraband]
