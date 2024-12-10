@@ -72,6 +72,9 @@ public sealed partial class XenoArtifactGraphControl : BoxContainer
         UserInterfaceManager.ClickSound();
     }
 
+    /// <summary>
+    /// Renders artifact node graph control, consisting of nodes and edges connecting them.
+    /// </summary>
     protected override void Draw(DrawingHandleScreen handle)
     {
         base.Draw(handle);
@@ -79,8 +82,6 @@ public sealed partial class XenoArtifactGraphControl : BoxContainer
         _hoveredNode = null;
         if (_artifact == null)
             return;
-
-        var cursor = (UserInterfaceManager.MousePositionScaled.Position * UIScale) - GlobalPixelPosition;
 
         var maxDepth = _artifactSystem.GetAllNodes(_artifact.Value)
                                       .Max(s => s.Comp.Depth);
@@ -93,10 +94,12 @@ public sealed partial class XenoArtifactGraphControl : BoxContainer
         var controlHeight = bottomLeft.Y;
         var controlWidth = Size.X * UIScale - NodeRadius;
 
+        // select y spacing based on max number of nodes we have on Y axis - that is max depth of artifact graph node
         var ySpacing = 0f;
         if (maxDepth != 0)
             ySpacing = Math.Clamp((controlHeight - ((maxDepth + 1) * NodeDiameter)) / maxDepth, MinYSpacing, MaxYSpacing);
 
+        // gets settings for visualizing segments (groups of interconnected nodes - there may be 1 or more per artifact).
         var segmentWidths = segments.Sum(GetBiggestWidth);
         var segmentSpacing = Math.Clamp((controlWidth - segmentWidths) / (segments.Count - 1), MinXSegmentSpacing, MaxXSegmentSpacing);
         var segmentOffset = Math.Max((controlWidth - (segmentWidths) - (segmentSpacing * (segments.Count - 1))) / 2, 0);
@@ -104,18 +107,18 @@ public sealed partial class XenoArtifactGraphControl : BoxContainer
         bottomLeft.X += segmentOffset;
         bottomLeft.Y -= (controlHeight - (ySpacing * maxDepth) - (NodeDiameter * (maxDepth + 1))) / 2;
 
+        var cursor = (UserInterfaceManager.MousePositionScaled.Position * UIScale) - GlobalPixelPosition;
+
         foreach (var segment in segments)
         {
+            // For each segment we draw nodes in order of depth. Method returns List of nodes for each depth level.
             var orderedNodes = _artifactSystem.GetDepthOrderedNodes(segment);
-
             foreach (var (_, nodes) in orderedNodes)
             {
                 for (var i = 0; i < nodes.Count; i++)
                 {
+                    // selecting color for node based on its state
                     var node = nodes[i];
-                    var pos = GetNodePos(node, ySpacing, segments, ref bottomLeft);
-                    var hovered = (cursor - pos).LengthSquared() <= NodeRadius * NodeRadius;
-
                     var color = LockedNodeColor;
                     if (_artifactSystem.IsNodeActive(_artifact.Value, node))
                     {
@@ -126,12 +129,16 @@ public sealed partial class XenoArtifactGraphControl : BoxContainer
                         color = UnlockedNodeColor;
                     }
 
+                    var pos = GetNodePos(node, ySpacing, segments, ref bottomLeft);
+                    var hovered = (cursor - pos).LengthSquared() <= NodeRadius * NodeRadius;
                     if (hovered)
                     {
+                        // render hovered node if we have one
                         _hoveredNode = node;
                         handle.DrawCircle(pos, NodeRadius, HoveredNodeColor);
                     }
 
+                    // render circle and text with node id inside
                     handle.DrawCircle(pos, NodeRadius, Color.ToSrgb(color), false);
 
                     var text = _artifactSystem.GetNodeId(node);
@@ -140,17 +147,18 @@ public sealed partial class XenoArtifactGraphControl : BoxContainer
                 }
             }
 
+            // draw edges for each segment and each node that have successors
             foreach (var node in segment)
             {
                 var from = GetNodePos(node, ySpacing, segments, ref bottomLeft) + new Vector2(0, -NodeRadius);
-                var successors = _artifactSystem.GetDirectSuccessorNodes((_artifact.Value, _artifact.Value.Comp), node);
-                foreach (var s in successors)
+                var successorNodes = _artifactSystem.GetDirectSuccessorNodes((_artifact.Value, _artifact.Value.Comp), node);
+                foreach (var successorNode in successorNodes)
                 {
                     var color = node.Comp.Locked
                         ? LockedNodeColor
                         : UnlockedNodeColor;
 
-                    var to = GetNodePos(s, ySpacing, segments, ref bottomLeft) + new Vector2(0, NodeRadius);
+                    var to = GetNodePos(successorNode, ySpacing, segments, ref bottomLeft) + new Vector2(0, NodeRadius);
                     handle.DrawLine(from, to, color);
                 }
             }
@@ -159,7 +167,6 @@ public sealed partial class XenoArtifactGraphControl : BoxContainer
         }
     }
 
-    // bottomLeft is copied - that not great.
     private Vector2 GetNodePos(Entity<XenoArtifactNodeComponent> node, float ySpacing, List<List<Entity<XenoArtifactNodeComponent>>> segments, ref Vector2 bottomLeft)
     {
         var yPos = -(NodeDiameter + ySpacing) * node.Comp.Depth;
@@ -173,6 +180,7 @@ public sealed partial class XenoArtifactGraphControl : BoxContainer
         var xSpacing = Math.Clamp((biggestWidth - (NodeDiameter * nodesInLayer)) / (nodesInLayer - 1), MinXSpacing, MaxXSpacing);
         var layerXOffset = (biggestWidth - (xSpacing * (nodesInLayer - 1)) - (NodeDiameter * nodesInLayer)) / 2;
 
+        // get index of node in current segment's row (row per depth level)
         var index = depthOrderedNodes.GetValueOrDefault(node.Comp.Depth)!.IndexOf(node);
 
         var xPos = NodeDiameter * index + (xSpacing * index) + layerXOffset;

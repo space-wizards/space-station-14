@@ -3,6 +3,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Xenoarchaeology.Artifact.XAE;
 
+/// <summary>
+/// System for applying component-registry when artifact effect is activated.
+/// </summary>
 public sealed class XAEApplyComponentsSystem : BaseXAESystem<XAEApplyComponentsComponent>
 {
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
@@ -15,7 +18,6 @@ public sealed class XAEApplyComponentsSystem : BaseXAESystem<XAEApplyComponentsC
             return;
 
         var artifact = args.Artifact;
-
 
         foreach (var registry in ent.Comp.Components)
         {

@@ -1,11 +1,14 @@
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Xenoarchaeology.Artifact.XAE.Components;
 using Content.Shared.Xenoarchaeology.Artifact;
 using Content.Shared.Xenoarchaeology.Artifact.XAE;
-using XAEChargeBatteryComponent = Content.Server.Xenoarchaeology.Artifact.XAE.Components.XAEChargeBatteryComponent;
 
 namespace Content.Server.Xenoarchaeology.Artifact.XAE;
 
+/// <summary>
+/// System for artifact activation effect that is fully charging batteries in certain range.
+/// </summary>
 public sealed class XAEChargeBatterySystem : BaseXAESystem<XAEChargeBatteryComponent>
 {
     [Dependency] private readonly BatterySystem _battery = default!;

@@ -1,5 +1,8 @@
 namespace Content.Server.Xenoarchaeology.Artifact.XAT.Components;
 
+/// <summary>
+/// Component for triggering node on getting activated by powerful magnets.
+/// </summary>
 [RegisterComponent, Access(typeof(XATMagnetSystem))]
 public sealed partial class XATMagnetComponent : Component
 {

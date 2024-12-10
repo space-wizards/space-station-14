@@ -5,9 +5,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Xenoarchaeology.Equipment;
 
-/// <summary>
-/// This handles...
-/// </summary>
+/// <inheritdoc />
 public sealed class ArtifactAnalyzerSystem : SharedArtifactAnalyzerSystem
 {
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
@@ -23,8 +21,7 @@ public sealed class ArtifactAnalyzerSystem : SharedArtifactAnalyzerSystem
 
     private void OnAnalysisConsoleAfterAutoHandleState(Entity<AnalysisConsoleComponent> ent, ref AfterAutoHandleStateEvent args)
     {
-        if (_ui.TryGetOpenUi<AnalysisConsoleBoundUserInterface>(ent.Owner, ArtifactAnalyzerUiKey.Key, out var bui))
-            bui.Update(ent);
+        UpdateBuiIfCanGetAnalysisConsoleUi(ent);
     }
 
     private void OnAnalyzerAfterAutoHandleState(Entity<ArtifactAnalyzerComponent> ent, ref AfterAutoHandleStateEvent args)
@@ -32,7 +29,12 @@ public sealed class ArtifactAnalyzerSystem : SharedArtifactAnalyzerSystem
         if (!TryGetAnalysisConsole(ent, out var analysisConsole))
             return;
 
-        if (_ui.TryGetOpenUi<AnalysisConsoleBoundUserInterface>(analysisConsole.Value.Owner, ArtifactAnalyzerUiKey.Key, out var bui))
-            bui.Update(analysisConsole.Value);
+        UpdateBuiIfCanGetAnalysisConsoleUi(analysisConsole.Value);
+    }
+
+    private void UpdateBuiIfCanGetAnalysisConsoleUi(Entity<AnalysisConsoleComponent> analysisConsole)
+    {
+        if (_ui.TryGetOpenUi<AnalysisConsoleBoundUserInterface>(analysisConsole.Owner, ArtifactAnalyzerUiKey.Key, out var bui))
+            bui.Update(analysisConsole);
     }
 }

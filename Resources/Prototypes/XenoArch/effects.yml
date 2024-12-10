@@ -556,7 +556,7 @@
   parent: BaseXenoArtifactEffect
   description: Minor implosion
   components:
-  - type: XAEThrowArtifact
+  - type: XAEThrowThingsAround
 
 - type: entity
   id: XenoArtifactColdWave
@@ -1073,7 +1073,7 @@
   parent: BaseXenoArtifactEffect
   description: Small scale high-speed nuclear reaction
   components:
-  - type: XAENodeTriggerExplosives
+  - type: XAETriggerExplosives
   - type: Explosive
     deleteAfterExplosion: false
     explosionType: Radioactive
@@ -1088,7 +1088,7 @@
   parent: BaseXenoArtifactEffect
   description: Explosion
   components:
-  - type: XAENodeTriggerExplosives
+  - type: XAETriggerExplosives
   - type: Explosive
     deleteAfterExplosion: false
     explosionType: Default

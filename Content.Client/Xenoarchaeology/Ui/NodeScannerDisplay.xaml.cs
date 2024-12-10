@@ -22,21 +22,25 @@ public sealed partial class NodeScannerDisplay : FancyWindow
         Update((scannerEntityUid, scannerComponent));
     }
 
+    /// <summary>
+    /// Updates labels with scanned artifact data and list of triggered nodes from component.
+    /// </summary>
     public void Update(Entity<NodeScannerComponent> ent)
     {
+        ArtifactStateLabel.Text = GetState(ent);
+        var scannedAt = ent.Comp.ScannedAt;
+        NodeScannerState.Text = scannedAt > TimeSpan.Zero
+            ? Loc.GetString("node-scanner-artifact-scanned-time", ("time", scannedAt.Value.ToString(@"hh\:mm\:ss")))
+            : Loc.GetString("node-scanner-artifact-scanned-time-none");
+
+        ActiveNodesList.Children.Clear();
+
         var triggeredNodesSnapshot = ent.Comp.TriggeredNodesSnapshot;
-        if (triggeredNodesSnapshot.Count == 0)
+        if (triggeredNodesSnapshot.Count > 0)
         {
-            NoActiveNodeDataLabel.Visible = true;
-            ActiveNodesList.Visible = false;
-            ActiveNodesList.Children.Clear();
-        }
-        else
-        {
+            // show list of triggered nodes instead of 'no data' placeholder
             NoActiveNodeDataLabel.Visible = false;
             ActiveNodesList.Visible = true;
-
-            ActiveNodesList.Children.Clear();
 
             foreach (var nodeId in triggeredNodesSnapshot)
             {
@@ -50,15 +54,15 @@ public sealed partial class NodeScannerDisplay : FancyWindow
                 ActiveNodesList.Children.Add(nodeLabel);
             }
         }
-
-        ArtifactStateLabel.Text = GetState(ent);
-        var scannedAt = ent.Comp.ScannedAt;
-        NodeScannerState.Text = scannedAt > TimeSpan.Zero
-            ? Loc.GetString("node-scanner-artifact-scanned-time", ("time", scannedAt.Value.ToString(@"hh\:mm\:ss")))
-            : Loc.GetString("node-scanner-artifact-scanned-time-none");
+        else
+        {
+            // clear list of activated nodes (done previously), show 'no data' placeholder
+            NoActiveNodeDataLabel.Visible = true;
+            ActiveNodesList.Visible = false;
+        }
     }
 
-    private string? GetState(Entity<NodeScannerComponent> ent)
+    private string GetState(Entity<NodeScannerComponent> ent)
     {
         return ent.Comp.ArtifactState switch
         {

@@ -12,16 +12,20 @@ public sealed class NodeScannerBoundUserInterface(EntityUid owner, Enum uiKey) :
     {
         base.Open();
 
-        _scannerDisplay = new NodeScannerDisplay(owner);
+        _scannerDisplay = new NodeScannerDisplay(Owner);
         _scannerDisplay.OpenCentered();
         _scannerDisplay.OnClose += Close;
     }
 
+    /// <summary>
+    /// Update UI state based on corresponding component.
+    /// </summary>
     public void Update(Entity<NodeScannerComponent> ent)
     {
         _scannerDisplay?.Update(ent);
     }
 
+    /// <inheritdoc />
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);

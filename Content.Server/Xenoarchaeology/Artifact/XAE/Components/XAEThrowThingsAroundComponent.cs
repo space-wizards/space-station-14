@@ -4,8 +4,8 @@ namespace Content.Server.Xenoarchaeology.Artifact.XAE.Components;
 /// Throws all nearby entities backwards.
 /// Also pries nearby tiles.
 /// </summary>
-[RegisterComponent, Access(typeof(XAEThrowArtifactSystem))]
-public sealed partial class XAEThrowArtifactComponent : Component
+[RegisterComponent, Access(typeof(XAEThrowThingsAroundSystem))]
+public sealed partial class XAEThrowThingsAroundComponent : Component
 {
     /// <summary>
     /// How close do you have to be to get yeeted?

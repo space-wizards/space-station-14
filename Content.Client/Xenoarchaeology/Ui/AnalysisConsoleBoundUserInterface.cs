@@ -10,6 +10,7 @@ public sealed class AnalysisConsoleBoundUserInterface(EntityUid owner, Enum uiKe
     [ViewVariables]
     private AnalysisConsoleMenu? _consoleMenu;
 
+    /// <inheritdoc />
     protected override void Open()
     {
         base.Open();
@@ -29,11 +30,15 @@ public sealed class AnalysisConsoleBoundUserInterface(EntityUid owner, Enum uiKe
         };
     }
 
+    /// <summary>
+    /// Update UI state based on corresponding component.
+    /// </summary>
     public void Update(Entity<AnalysisConsoleComponent> ent)
     {
         _consoleMenu?.Update(ent);
     }
 
+    /// <inheritdoc />
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);

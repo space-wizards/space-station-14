@@ -26,13 +26,13 @@ public sealed partial class XAEFoamComponent : Component
     /// How long does the foam last?
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float Duration = 10;
+    public float Duration = 10f;
 
     /// <summary>
     /// How much reagent is in the foam?
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float ReagentAmount = 100;
+    public float ReagentAmount = 100f;
 
     /// <summary>
     /// Minimum radius of foam spawned

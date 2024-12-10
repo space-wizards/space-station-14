@@ -125,7 +125,7 @@ public sealed partial class XenoArtifactComponent : Component
     public MinMax ScatterPerLayer = new(0, 2);
 
     /// <summary>
-    /// Effects that can be used during this artefact generation.
+    /// Effects that can be used during this artifact generation.
     /// </summary>
     [DataField]
     public EntityTableSelector EffectsTable = new NestedSelector

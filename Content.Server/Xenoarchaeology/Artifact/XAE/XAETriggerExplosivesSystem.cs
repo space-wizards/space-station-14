@@ -6,12 +6,12 @@ using Content.Shared.Xenoarchaeology.Artifact.XAE;
 
 namespace Content.Server.Xenoarchaeology.Artifact.XAE;
 
-public sealed class XAENodeTriggerExplosivesSystem : BaseXAESystem<XAENodeTriggerExplosivesComponent>
+public sealed class XAETriggerExplosivesSystem : BaseXAESystem<XAETriggerExplosivesComponent>
 {
     [Dependency] private readonly ExplosionSystem _explosion = default!;
 
     /// <inheritdoc />
-    protected override void OnActivated(Entity<XAENodeTriggerExplosivesComponent> ent, ref XenoArtifactNodeActivatedEvent args)
+    protected override void OnActivated(Entity<XAETriggerExplosivesComponent> ent, ref XenoArtifactNodeActivatedEvent args)
     {
         if(!TryComp<ExplosiveComponent>(ent, out var explosiveComp))
             return;

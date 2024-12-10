@@ -7,10 +7,7 @@ using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Xenoarchaeology.Equipment;
 
-/// <summary>
-/// This system is used for managing the artifact analyzer as well as the analysis console.
-/// It also handles scanning and ui updates for both systems.
-/// </summary>
+/// <inheritdoc />
 public sealed class ArtifactAnalyzerSystem : SharedArtifactAnalyzerSystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;

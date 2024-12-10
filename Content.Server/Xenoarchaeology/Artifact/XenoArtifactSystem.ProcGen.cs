@@ -26,6 +26,15 @@ public sealed partial class XenoArtifactSystem
         RebuildXenoArtifactMetaData((ent, ent));
     }
 
+    /// <summary>
+    /// Creates pool from all node triggers that current artifact can support.
+    /// As artifact cannot re-use triggers, pool will be growing smaller
+    /// and smaller with each node generated.
+    /// </summary>
+    /// <param name="ent">Artifact for which pool should be created.</param>
+    /// <param name="size">
+    /// Max size of pool. Resulting pool is not guaranteed to be exactly as large, but it will 100% won't be bigger.
+    /// </param>
     private List<XenoArchTriggerPrototype> CreateTriggerPool(Entity<XenoArtifactComponent> ent, int size)
     {
         var triggerPool = new List<XenoArchTriggerPrototype>(size);
@@ -53,6 +62,10 @@ public sealed partial class XenoArtifactSystem
         return triggerPool;
     }
 
+    /// <summary>
+    /// Generates segment of artifact - isolated graph, nodes inside which are interconnected.
+    /// As size of segment is randomized - it is subtracted from node count.
+    /// </summary>
     private void GenerateArtifactSegment(
         Entity<XenoArtifactComponent> ent,
         List<XenoArchTriggerPrototype> triggerPool,
@@ -88,9 +101,8 @@ public sealed partial class XenoArtifactSystem
                 if (min > max || min == max)
                     continue;
 
-                var node1Options = segment
-                                   .Where(n => n.Comp.Depth >= min && n.Comp.Depth <= max)
-                                   .ToList();
+                var node1Options = segment.Where(n => n.Comp.Depth >= min && n.Comp.Depth <= max)
+                                          .ToList();
                 if (node1Options.Count == 0)
                 {
                     continue;
@@ -99,9 +111,8 @@ public sealed partial class XenoArtifactSystem
                 var node1 = RobustRandom.Pick(node1Options);
                 var node1Depth = node1.Comp.Depth;
 
-                var node2Options = parent
-                                   .Where(n => n.Comp.Depth >= node1Depth - 1 && n.Comp.Depth <= node1Depth + 1 && n.Comp.Depth != node1Depth)
-                                   .ToList();
+                var node2Options = parent.Where(n => n.Comp.Depth >= node1Depth - 1 && n.Comp.Depth <= node1Depth + 1 && n.Comp.Depth != node1Depth)
+                                         .ToList();
                 if (node2Options.Count == 0)
                 {
                     continue;
@@ -121,6 +132,11 @@ public sealed partial class XenoArtifactSystem
         }
     }
 
+    /// <summary>
+    /// Recursively populate layers of artifact segment - isolated graph, nodes inside which are interconnected.
+    /// Each next iteration is going to have more chances to have more nodes (so it goes 'from top to bottom' of
+    /// the tree, creating its peak nodes first, and then making layers with more and more branches).
+    /// </summary>
     private List<Entity<XenoArtifactNodeComponent>> PopulateArtifactSegmentRecursive(
         Entity<XenoArtifactComponent> ent,
         List<XenoArchTriggerPrototype> triggerPool,
@@ -178,6 +194,9 @@ public sealed partial class XenoArtifactSystem
         return nodes;
     }
 
+    /// <summary>
+    /// Rolls segment size, based on amount of nodes left and XenoArtifactComponent settings.
+    /// </summary>
     private int GetArtifactSegmentSize(Entity<XenoArtifactComponent> ent, int nodeCount)
     {
         // Make sure we can't generate a single segment artifact.

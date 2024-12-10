@@ -23,6 +23,11 @@ namespace Content.Client.Xenoarchaeology.Ui;
 [GenerateTypedNameReferences]
 public sealed partial class AnalysisConsoleMenu : FancyWindow
 {
+    /// <summary> Time for which extract point messages going to stay on display before screen clear. </summary>
+    private static readonly TimeSpan ExtractNonEmptyShowDelaySpan = TimeSpan.FromSeconds(3);
+    /// <summary> Time for which zero extracted points message is going to stay on display before screen clear. </summary>
+    private static readonly TimeSpan ExtractEmptyShowDelaySpan = TimeSpan.FromSeconds(0.25);
+
     [Dependency] private readonly IEntityManager _ent = default!;
     [Dependency] private readonly IResourceCache _resCache = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -35,7 +40,8 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
     private readonly Entity<AnalysisConsoleComponent> _owner;
     private Entity<XenoArtifactNodeComponent>? _currentNode;
 
-    private readonly List<(string NodeId, int ExtractedPoints)> _nodeExtractionValues = new();
+    /// <summary> Queue of node info to output into extraction window. </summary>
+    private readonly List<(string NodeId, int ExtractedPoints)> _nodeExtractionsToProcess = new();
     private TimeSpan? _nextExtractStringTime;
     private int _extractionSum;
     private readonly FormattedMessage _extractionMessage = new();
@@ -72,7 +78,7 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
 
         var comp = _ent.GetComponent<AnalysisConsoleComponent>(owner);
         _owner = (owner, comp);
-        Update((owner, comp));
+        Update(_owner);
     }
 
     private void StartExtract(BaseButton.ButtonEventArgs obj)
@@ -83,7 +89,7 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         ExtractContainer.Visible = true;
         NodeViewContainer.Visible = false;
 
-        _nodeExtractionValues.Clear();
+        _nodeExtractionsToProcess.Clear();
         _extractionSum = 0;
         _extractionMessage.Clear();
         _nextExtractStringTime = _timing.CurTime;
@@ -98,52 +104,50 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
             var nodeId = _xenoArtifact.GetNodeId(node);
 
             var text = Loc.GetString("analysis-console-extract-value", ("id", nodeId), ("value", pointValue));
-            _nodeExtractionValues.Add((text, pointValue));
+            _nodeExtractionsToProcess.Add((text, pointValue));
         }
 
-        if (_nodeExtractionValues.Count == 0)
-            _nodeExtractionValues.Add((Loc.GetString("analysis-console-extract-none"), 0));
+        if (_nodeExtractionsToProcess.Count == 0)
+            _nodeExtractionsToProcess.Add((Loc.GetString("analysis-console-extract-none"), 0));
 
-        _nodeExtractionValues.Sort((x, y) => x.ExtractedPoints.CompareTo(y.ExtractedPoints));
+        _nodeExtractionsToProcess.Sort((x, y) => x.ExtractedPoints.CompareTo(y.ExtractedPoints));
     }
 
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
 
-        if (_nextExtractStringTime == null)
+        if (_nextExtractStringTime == null || _timing.CurTime < _nextExtractStringTime)
             return;
 
-        if (_timing.CurTime < _nextExtractStringTime)
-            return;
-
-        if (_nodeExtractionValues.Count == 0)
+        if (_nodeExtractionsToProcess.Count == 0)
         {
             ExtractContainer.Visible = false;
             NodeViewContainer.Visible = true;
             _nextExtractStringTime = null;
+
             return;
         }
 
-        var (message, value) = _nodeExtractionValues.First();
+        var (message, value) = _nodeExtractionsToProcess.Pop();
         _extractionMessage.AddMarkupOrThrow(message);
         _extractionMessage.PushNewline();
         ExtractionResearchLabel.SetMessage(_extractionMessage);
 
-        _nodeExtractionValues.RemoveAt(0);
-
-        var delay = _nodeExtractionValues.Count == 0 ? TimeSpan.FromSeconds(3) : TimeSpan.FromSeconds(0.25);
+        var delay = _nodeExtractionsToProcess.Count == 0
+            ? ExtractNonEmptyShowDelaySpan
+            : ExtractEmptyShowDelaySpan;
         _nextExtractStringTime = _timing.CurTime + delay;
         _extractionSum += value;
         ExtractionSumLabel.SetMarkup(Loc.GetString("analysis-console-extract-sum", ("value", _extractionSum)));
 
         if (_playerManager.LocalSession?.AttachedEntity is { } attachedEntity)
         {
-            var volume = _nodeExtractionValues.Count == 0 ? 1f : -10f;
+            var volume = _nodeExtractionsToProcess.Count == 0 ? 1f : -10f;
             _audio.PlayGlobal(_owner.Comp.ScanFinishedSound, attachedEntity, AudioParams.Default.WithVolume(volume));
         }
 
-        if (_nodeExtractionValues.Count == 0)
+        if (_nodeExtractionsToProcess.Count == 0)
             OnExtractButtonPressed?.Invoke();
     }
 
@@ -160,24 +164,16 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
 
         NoArtiLabel.Visible = true;
         if (!_artifactAnalyzer.TryGetAnalyzer(ent, out _))
-        {
             NoArtiLabel.Text = Loc.GetString("analysis-console-info-no-scanner");
-        }
         else if (arti == null)
-        {
             NoArtiLabel.Text = Loc.GetString("analysis-console-info-no-artifact");
-        }
         else
-        {
             NoArtiLabel.Visible = false;
-        }
 
         if (_currentNode == null
             || arti == null
             || !_xenoArtifact.TryGetIndex((arti.Value, arti.Value), _currentNode.Value, out _))
-        {
             SetSelectedNode(null);
-        }
     }
 
     public void SetSelectedNode(Entity<XenoArtifactNodeComponent>? node)
@@ -195,11 +191,12 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
         IDValueLabel.SetMarkup(Loc.GetString("analysis-console-info-id-value", ("id", nodeId)));
 
         // If active, state is 2. else, it is 0 or 1 based on whether it is unlocked, or not.
-        var lockedState = _xenoArtifact.IsNodeActive(artifact.Value, node.Value)
-            ? 2
-            : node.Value.Comp.Locked
-                ? 0
-                : 1;
+        int lockedState;
+        if (_xenoArtifact.IsNodeActive(artifact.Value, node.Value))
+            lockedState = 2;
+        else
+            lockedState = node.Value.Comp.Locked ? 0 : 1;
+
         LockedValueLabel.SetMarkup(Loc.GetString("analysis-console-info-locked-value",
             ("state", lockedState)));
 

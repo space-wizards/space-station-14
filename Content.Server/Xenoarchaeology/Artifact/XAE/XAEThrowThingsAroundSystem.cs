@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Server.Xenoarchaeology.Artifact.XAE.Components;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Throwing;
@@ -8,11 +9,10 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using XAEThrowArtifactComponent = Content.Server.Xenoarchaeology.Artifact.XAE.Components.XAEThrowArtifactComponent;
 
 namespace Content.Server.Xenoarchaeology.Artifact.XAE;
 
-public sealed class XAEThrowArtifactSystem : BaseXAESystem<XAEThrowArtifactComponent>
+public sealed class XAEThrowThingsAroundSystem : BaseXAESystem<XAEThrowThingsAroundComponent>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
@@ -23,7 +23,7 @@ public sealed class XAEThrowArtifactSystem : BaseXAESystem<XAEThrowArtifactCompo
     [Dependency] private readonly IGameTiming _timing = default!;
 
     /// <inheritdoc />
-    protected override void OnActivated(Entity<XAEThrowArtifactComponent> ent, ref XenoArtifactNodeActivatedEvent args)
+    protected override void OnActivated(Entity<XAEThrowThingsAroundComponent> ent, ref XenoArtifactNodeActivatedEvent args)
     {
         if (!_timing.IsFirstTimePredicted)
             return;

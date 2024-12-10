@@ -8,6 +8,10 @@ using Content.Shared.Xenoarchaeology.Equipment.Components;
 
 namespace Content.Shared.Xenoarchaeology.Equipment;
 
+/// <summary>
+/// This system is used for managing the artifact analyzer as well as the analysis console.
+/// It also handles scanning and ui updates for both systems.
+/// </summary>
 public abstract class SharedArtifactAnalyzerSystem : EntitySystem
 {
     [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
