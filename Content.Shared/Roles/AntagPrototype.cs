@@ -22,6 +22,12 @@ public sealed partial class AntagPrototype : IPrototype
     public string Name { get; private set; } = "";
 
     /// <summary>
+    ///     The playtime that will be tracked while this antag.
+    /// </summary>
+    [DataField("playTimeTracker", required: true)]
+    public string PlayTimeTracker { get; private set; } = string.Empty;
+
+    /// <summary>
     ///     The antag's objective, shown in a tooltip in the antag preference menu or as a ghost role description.
     /// </summary>
     [DataField("objective", required: true)]

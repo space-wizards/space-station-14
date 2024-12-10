@@ -3,4 +3,5 @@
   name: roles-antag-subverted-silicon-name
   antagonist: true
   setPreference: false
+  playTimeTracker: AntagSubvertedSilicon
   objective: roles-antag-subverted-silicon-objective

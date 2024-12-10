@@ -4,6 +4,7 @@
   antagonist: true
   setPreference: true
   objective: roles-antag-syndicate-agent-objective
+  playTimeTracker: AntagSyndicateAgent
   guides: [ Traitors ]
 
 - type: antag
@@ -12,6 +13,7 @@
   antagonist: true
   setPreference: true
   objective: roles-antag-syndicate-agent-sleeper-objective
+  playTimeTracker: AntagSyndicateSleeperAgent
   guides: [ Traitors ]
 
 # Syndicate Operative Outfit - Monkey
