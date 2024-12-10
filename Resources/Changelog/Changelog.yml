@@ -1,68 +1,4 @@
 ﻿Entries:
-- author: lzk228
-  changes:
-  - message: Added second jester suit and hat in clown loadouts.
-    type: Add
-  id: 7186
-  time: '2024-08-23T01:29:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30673
-- author: Dutch-VanDerLinde
-  changes:
-  - message: Added the clown skirt
-    type: Add
-  id: 7187
-  time: '2024-08-23T04:59:18.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31207
-- author: Aquif
-  changes:
-  - message: Boiling Vox blood results in ammonia.
-    type: Add
-  id: 7188
-  time: '2024-08-23T05:05:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30749
-- author: Sarahon
-  changes:
-  - message: Brand new emote sprites and colours to the Y menu.
-    type: Add
-  id: 7189
-  time: '2024-08-23T05:08:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30887
-- author: jimmy12or
-  changes:
-  - message: Added a recipe for cream. Heat some milk and shake some air into it.
-    type: Add
-  id: 7190
-  time: '2024-08-23T05:13:14.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30503
-- author: SlamBamActionman
-  changes:
-  - message: Codewords are now highlighted for traitors.
-    type: Add
-  id: 7191
-  time: '2024-08-23T09:14:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30092
-- author: SlamBamActionman
-  changes:
-  - message: Janitor's galoshes now apply slowdown over slippery surfaces, and has
-      a max slowdown cap over sticky surfaces.
-    type: Tweak
-  id: 7192
-  time: '2024-08-23T09:59:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30967
-- author: coolsurf6
-  changes:
-  - message: Increased the maximum number of reptilian chest markings to 3.
-    type: Tweak
-  id: 7193
-  time: '2024-08-23T14:24:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30786
-- author: FATFSAAM2
-  changes:
-  - message: Added 3 new voicelines for the boxer figurine.
-    type: Add
-  id: 7194
-  time: '2024-08-24T00:10:10.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31382
 - author: Winkarst-cpu
   changes:
   - message: The damage dealt by the folded chair can now be inspected.
@@ -3904,3 +3840,81 @@
   id: 7685
   time: '2024-12-07T05:58:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33752
+- author: PJB3005
+  changes:
+  - message: Silicons now have a proper preview in the lobby/character editor.
+    type: Tweak
+  id: 7686
+  time: '2024-12-08T01:46:41.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33763
+- author: PJB3005
+  changes:
+  - message: You can now use Interact (E by default) to toggle radiation collectors,
+      field generators, and emitters. Previously you had to click with an empty hand.
+    type: Fix
+  id: 7687
+  time: '2024-12-08T22:37:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33762
+- author: ArtisticRoomba
+  changes:
+  - message: Detectives are now required to start with outer clothing (armor) like
+      all other security roles.
+    type: Tweak
+  - message: Vox Detectives now spawn with their chosen outer clothing equipped. Previously
+      the tank harness would override this and your armor would start on the floor.
+    type: Fix
+  id: 7688
+  time: '2024-12-08T22:50:14.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33765
+- author: slarticodefast
+  changes:
+  - message: Fixed pipes still containing gas after unanchoring them.
+    type: Fix
+  id: 7689
+  time: '2024-12-08T23:20:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33774
+- author: Errant
+  changes:
+  - message: Signal timers now have a maximum countdown duration, which can be specified
+      in yaml. The default maximum is one hour, to prevent the displayed time from
+      overflowing into hh:mm .
+    type: Tweak
+  id: 7690
+  time: '2024-12-09T03:41:11.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33781
+- author: Plykiya
+  changes:
+  - message: You are now notified of who is pulling you when being pulled.
+    type: Add
+  id: 7691
+  time: '2024-12-09T03:51:53.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33612
+- author: Bhijn and Myr
+  changes:
+  - message: The Admin Message system now contains an introductory message as the
+      very first message shown to a user, before any messages are written or received.
+      This message serves primarily to remind ahelping players (whom are likely to
+      be experiencing strong emotion) to remember that admins are humans, too.
+    type: Add
+  id: 7692
+  time: '2024-12-09T08:54:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33348
+- author: ScarKy0
+  changes:
+  - message: You can now pet the AI Core.
+    type: Add
+  id: 7693
+  time: '2024-12-09T16:10:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33788
+- author: joshepvodka
+  changes:
+  - message: Added flavor profiles to beverages that missed them.
+    type: Add
+  - message: Tweaked some drink flavor profiles.
+    type: Tweak
+  - message: Soda/Booze dispenser will now always eject the shaker/glass before any
+      bottle or jug.
+    type: Tweak
+  id: 7694
+  time: '2024-12-09T17:12:57.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33505
