@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Gibbing.Events;
 
@@ -11,11 +11,12 @@ namespace Content.Shared.Gibbing.Events;
 /// <param name="GibType">What type of gibbing is occuring</param>
 /// <param name="AllowedContainers">Containers we are allow to gib</param>
 /// <param name="ExcludedContainers">Containers we are allow not allowed to gib</param>
-[ByRefEvent] public record struct AttemptEntityContentsGibEvent(
+[ByRefEvent]
+public record struct AttemptEntityContentsGibEvent(
     EntityUid Target,
     GibContentsOption GibType,
-    List<string>? AllowedContainers,
-    List<string>? ExcludedContainers
+    ICollection<string>? AllowedContainers,
+    ICollection<string>? ExcludedContainers
     );
 
 
@@ -32,7 +33,7 @@ namespace Content.Shared.Gibbing.Events;
 /// </summary>
 /// <param name="Target">The entity being gibbed</param>
 /// <param name="DroppedEntities">Any entities that are spilled out (if any)</param>
-[ByRefEvent] public record struct EntityGibbedEvent(EntityUid Target, List<EntityUid> DroppedEntities);
+[ByRefEvent] public record struct EntityGibbedEvent(EntityUid Target, ICollection<EntityUid> DroppedEntities);
 
 [Serializable, NetSerializable]
 public enum GibType : byte
