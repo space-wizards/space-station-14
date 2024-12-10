@@ -612,6 +612,9 @@
   id: Grenade
 
 - type: Tag
+  id: GrenadeFlashBang
+
+- type: Tag
   id: HudMedical
 
 - type: Tag
