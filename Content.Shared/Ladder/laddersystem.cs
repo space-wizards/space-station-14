@@ -1,4 +1,5 @@
-﻿using Content.Shared.ActionBlocker;
+﻿using System.Linq;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.StepTrigger.Systems;
@@ -7,12 +8,12 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
-using Content.Server.Ladder;
-using Content.Server.Popups;
-using Content.Shared.Popups;
 using Content.Shared.Climbing.Systems;
 using Content.Shared.Hands.Components;
 using Content.Shared.Ghost;
+using Content.Shared.Climbing.Components;
+using Content.Shared.Climbing.Events;
+using Robust.Shared.Random;
 
 namespace Content.Shared.Ladder;
 
@@ -22,7 +23,6 @@ public sealed class LadderSystem : EntitySystem
     [Dependency] private readonly ActionBlockerSystem _blocker = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
 
     public override void Initialize()
     {
@@ -42,8 +42,8 @@ public sealed class LadderSystem : EntitySystem
              var destination = EntityManager.EntityQuery<LadderupComponent>().FirstOrDefault(); // finds the nearest ladder
              if (destination != null)
                 {
-                Transform(args.Climber).Coordinates = Transform(destination.args.Climber).Coordinates; // teleports you to the other ladder
-                 _popup.PopupEntity(Loc.GetString("ladder-down"), ("owner", args.Climber), args.Climber, PopupType.Medium); // displays the popup
+                Transform(args.Climber).Coordinates = Transform(destination.Owner).Coordinates;
+                    // teleports you to the other ladder
                 }
             }
     }
@@ -56,10 +56,22 @@ public sealed class LadderSystem : EntitySystem
               var destination = EntityManager.EntityQuery<LadderdownComponent>().FirstOrDefault();
               if (destination != null)
                 {
-                Transform(args.Climber).Coordinates = Transform(destination.args.Climber).Coordinates;
-                _popup.PopupEntity(Loc.GetString("ladder-up"), ("owner", args.Climber), args.Climber, PopupType.Medium);
+                Transform(args.Climber).Coordinates = Transform(destination.Owner).Coordinates;
                 }
             }
     }
-    
+
+}
+
+
+[RegisterComponent]
+public sealed partial class LadderdownComponent : Component
+{
+
+}
+
+[RegisterComponent]
+public sealed partial class LadderupComponent : Component
+{
+
 }
