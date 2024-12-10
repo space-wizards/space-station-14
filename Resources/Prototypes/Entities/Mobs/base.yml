@@ -97,6 +97,7 @@
       - ActionCritFakeDeath
       - ActionCritLastWords
   - type: Deathgasp
+  - type: Unconscious
   - type: HealthExaminable
     examinableTypes:
     - Blunt
