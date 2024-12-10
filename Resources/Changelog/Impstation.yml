@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: Pinkbat5
-  changes:
-  - message: Diona and nymphs can now chirp.
-    type: Add
-  - message: Nymphs can scream and laugh like adult diona.
-    type: Add
-  - message: Double eyepatch item, craftable from two eyepatches.
-    type: Add
-  id: 207
-  time: '2024-09-16T02:47:30.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/261
 - author: Darkmajia
   changes:
   - message: Forgotten, devoured, gutted. Humanity has forgotten the eldritch forces
@@ -4492,3 +4481,11 @@
   id: 706
   time: '2024-12-10T11:04:30.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/976
+- author: iaada, kipdotnet
+  changes:
+  - message: Fixed missing sprite layering on the tck'tck drone, and gave it a grapple
+      module.
+    type: Fix
+  id: 707
+  time: '2024-12-10T11:09:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/977
