@@ -196,3 +196,28 @@
     NTDefault: 1
     Drone: 0.5
     Ninja: 0.25
+
+# NT traitor borg
+
+- type: siliconLaw
+  id: Nanotraitor1
+  order: 1
+  lawString: law-nanotraitor-1
+
+- type: siliconLaw
+  id: Nanotraitor2
+  order: 2
+  lawString: law-nanotraitor-2
+
+- type: siliconLaw
+  id: Nanotraitor3
+  order: 3
+  lawString: law-nanotraitor-3
+
+- type: siliconLawset
+  id: NanotraitorStatic
+  laws:
+  - Nanotraitor1
+  - Nanotraitor2
+  - Nanotraitor3
+  obeysTo: laws-owner-syndicate
