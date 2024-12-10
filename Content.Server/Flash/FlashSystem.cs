@@ -19,6 +19,7 @@ using Content.Shared.Examine;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using InventoryComponent = Content.Shared.Inventory.InventoryComponent;
 
@@ -38,6 +39,7 @@ namespace Content.Server.Flash
         [Dependency] private readonly TagSystem _tag = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
         public override void Initialize()
         {
@@ -167,6 +169,11 @@ namespace Content.Server.Flash
                 // Is the entity affected by the flash either through status effects or by taking damage?
                 if (!statusEffectsQuery.HasComponent(entity) && !damagedByFlashingQuery.HasComponent(entity))
                     continue;
+
+                if (!_containerSystem.IsInSameOrTransparentContainer((source, null), entity, userSeeInsideSelf: true))
+                {
+                    continue;
+                }
 
                 // Check for entites in view
                 // put damagedByFlashingComponent in the predicate because shadow anomalies block vision.
