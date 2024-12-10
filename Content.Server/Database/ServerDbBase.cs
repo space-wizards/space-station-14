@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
@@ -535,6 +536,131 @@ namespace Content.Server.Database
                     .SetProperty(b => b.LastEditedById, editedBy)
                     .SetProperty(b => b.LastEditedAt, editedAt.UtcDateTime)
                 );
+        }
+        #endregion
+
+        #region username whitelist
+        public async Task AddUsernameWhitelistAsync(string username)
+        {
+            await using var db = await GetDb();
+            await using var tx = await db.DbContext.Database.BeginTransactionAsync(IsolationLevel.RepeatableRead, CancellationToken.None);
+            if (await db.DbContext.UsernameWhitelist.AnyAsync(u => u.Username == username))
+            {
+                return;
+            }
+            await db.DbContext.UsernameWhitelist.AddAsync(new UsernameWhitelist { Username = username });
+            await db.DbContext.SaveChangesAsync();
+            await tx.CommitAsync();
+        }
+
+        public async Task RemoveUsernameWhitelistAsync(string username)
+        {
+            await using var db = await GetDb();
+            var entry = await db.DbContext.UsernameWhitelist.FindAsync(username);
+            if (entry is null)
+            {
+                return;
+            }
+            db.DbContext.UsernameWhitelist.Remove(entry);
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task<bool> CheckUsernameWhitelistAsync(string username)
+        {
+            await using var db = await GetDb();
+            return await db.DbContext.UsernameWhitelist.AnyAsync(u => u.Username == username);
+        }
+        #endregion
+
+        #region Username Rule
+        public async Task<ServerUsernameRuleDef?> GetServerUsernameRuleAsync(int id)
+        {
+            await using var db = await GetDb();
+            var row = await db.DbContext.UsernameRule.FindAsync(id);
+            return row is null ? null : ConvertUsernameRule(row);
+        }
+
+        public async Task<List<ServerUsernameRuleDef>> GetServerUsernameRulesAsync(bool includeRetired)
+        {
+            await using var db = await GetDb();
+            return db.DbContext.UsernameRule
+                .Where(r => includeRetired || !r.Retired)
+                .Select(ConvertUsernameRule)
+                .ToList();
+        }
+
+        public async Task<int> CreateUsernameRuleAsync(ServerUsernameRuleDef usernameRule)
+        {
+            await using var db = await GetDb();
+
+            var row = new ServerUsernameRule
+            {
+                CreationTime = usernameRule.CreationTime.UtcDateTime,
+                RoundId = usernameRule.RoundId,
+                Expression = usernameRule.Expression,
+                Message = usernameRule.Message,
+                RestrictingAdmin = usernameRule.RestrictingAdmin?.UserId,
+                ExtendToBan = usernameRule.ExtendToBan,
+                Regex = usernameRule.Regex,
+                // rules added should not be pre-retired
+                Retired = false,
+                RetiringAdmin = null,
+                RetireTime = null
+            };
+
+            await db.DbContext.UsernameRule.AddAsync(row);
+            await db.DbContext.SaveChangesAsync();
+            return row.Id;
+        }
+
+        public async Task RemoveServerUsernameRuleAsync(int id, NetUserId? retiringAdmin, DateTimeOffset retireTime)
+        {
+            await using var db = await GetDb();
+
+            await using var tx = await db.DbContext.Database.BeginTransactionAsync(IsolationLevel.RepeatableRead, CancellationToken.None);
+
+            var usernameRule = await db.DbContext.UsernameRule.FindAsync(id);
+
+            if (usernameRule == null || usernameRule.Retired)
+            {
+                return;
+            }
+
+            usernameRule.Retired = true;
+            usernameRule.RetiringAdmin = retiringAdmin;
+            usernameRule.RetireTime = retireTime.UtcDateTime;
+
+            await db.DbContext.SaveChangesAsync();
+            await tx.CommitAsync();
+        }
+
+        protected static ServerUsernameRuleDef ConvertUsernameRule(ServerUsernameRule rule)
+        {
+            NetUserId? acUid = null;
+            if (rule.RestrictingAdmin is { } acGuid)
+            {
+                acUid = new NetUserId(acGuid);
+            }
+
+            NetUserId? arUid = null;
+            if (rule.RetiringAdmin is { } arGuid)
+            {
+                arUid = new NetUserId(arGuid);
+            }
+
+            return new ServerUsernameRuleDef(
+                rule.Id,
+                rule.CreationTime,
+                rule.RoundId,
+                rule.Regex,
+                rule.Expression,
+                rule.Message,
+                acUid,
+                rule.ExtendToBan,
+                rule.Retired,
+                arUid,
+                rule.RetireTime
+            );
         }
         #endregion
 

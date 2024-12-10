@@ -1231,6 +1231,66 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.ToTable("server_unban", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.ServerUsernameRule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("server_username_rule_id");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("creation_time");
+
+                    b.Property<string>("Expression")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("expression");
+
+                    b.Property<bool>("ExtendToBan")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("extend_to_ban");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("message");
+
+                    b.Property<bool>("Regex")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("regex");
+
+                    b.Property<Guid?>("RestrictingAdmin")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("restricting_admin");
+
+                    b.Property<DateTime?>("RetireTime")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("retire_time");
+
+                    b.Property<bool>("Retired")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("retired");
+
+                    b.Property<Guid?>("RetiringAdmin")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("retiring_admin");
+
+                    b.Property<int?>("RoundId")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("round_id");
+
+                    b.HasKey("Id")
+                        .HasName("PK_server_username_rule");
+
+                    b.ToTable("server_username_rule", null, t =>
+                        {
+                            t.HasCheckConstraint("ActiveRulesDoNotHaveRetireInformation", "retired OR retire_time IS NULL AND retiring_admin IS NULL");
+
+                            t.HasCheckConstraint("InactiveRulesHaveRetireInformation", "NOT retired OR retire_time IS NOT NULL");
+                        });
+                });
+
             modelBuilder.Entity("Content.Server.Database.Trait", b =>
                 {
                     b.Property<int>("Id")
@@ -1285,6 +1345,18 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasName("PK_uploaded_resource_log");
 
                     b.ToTable("uploaded_resource_log", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.UsernameWhitelist", b =>
+                {
+                    b.Property<string>("Username")
+                        .HasColumnType("TEXT")
+                        .HasColumnName("username");
+
+                    b.HasKey("Username")
+                        .HasName("PK_username_whitelist");
+
+                    b.ToTable("username_whitelist", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.Whitelist", b =>

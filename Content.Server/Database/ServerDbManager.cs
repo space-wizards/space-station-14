@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Npgsql;
 using Prometheus;
+using Robust.Shared.Asynchronous;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Network;
@@ -161,6 +162,62 @@ namespace Content.Server.Database
             DateTimeOffset? expiration,
             Guid editedBy,
             DateTimeOffset editedAt);
+        #endregion
+
+        #region username whitelist
+        /// <summary>
+        /// Adds a username to the username whitelist allowing bypass of username bans.
+        /// This method is fault tolerant and will not add duplicate usernames.
+        /// </summary>
+        /// <param name="username">The username to add</param>
+        /// <returns></returns>
+        Task AddUsernameWhitelistAsync(string username);
+
+        /// <summary>
+        /// Removes username from the username whitelist.
+        /// </summary>
+        /// <param name="username">The username to remove</param>
+        /// <returns></returns>
+        Task RemoveUsernameWhitelistAsync(string username);
+
+        /// <summary>
+        /// Checks if a username is presently whitelisted
+        /// </summary>
+        /// <param name="username">The checked username</param>
+        /// <returns>True if a username is whitelisted false otherwise</returns>
+        Task<bool> CheckUsernameWhitelistAsync(string username);
+        #endregion
+
+        #region Username Rules
+        /// <summary>
+        /// Gets the full data of a particular username rule by id
+        /// </summary>
+        /// <param name="id">The id of the target username ban</param>
+        /// <returns>The full information for a username ban or null</returns>
+        Task<ServerUsernameRuleDef?> GetServerUsernameRuleAsync(int id);
+
+        /// <summary>
+        /// Gets all username rules optionally including non-active rules
+        /// </summary>
+        /// <param name="includeRetired">Weather or not to include retired rules</param>
+        /// <returns>A list of username rules</returns>
+        Task<List<ServerUsernameRuleDef>> GetServerUsernameRulesAsync(bool includeRetired);
+
+        /// <summary>
+        /// Creates a new username rule based off of the provided information.
+        /// </summary>
+        /// <param name="usernameRule">The information to create a new rule</param>
+        /// <returns>The Id of the created rule</returns>
+        Task<int> CreateUsernameRuleAsync(ServerUsernameRuleDef usernameRule);
+
+        /// <summary>
+        /// Retires a rule causing it to not appear in non-retired searches <see cref="GetServerUsernameRulesAsync"/>
+        /// </summary>
+        /// <param name="id">the id of the rule to retire</param>
+        /// <param name="retiringAdmin">The person who is retiring the rule</param>
+        /// <param name="retireTime">When the rule is being retired</param>
+        /// <returns></returns>
+        Task RemoveServerUsernameRuleAsync(int id, NetUserId? retiringAdmin, DateTimeOffset retireTime);
         #endregion
 
         #region Playtime
@@ -324,7 +381,14 @@ namespace Content.Server.Database
 
         #region DB Notifications
 
-        void SubscribeToNotifications(Action<DatabaseNotification> handler);
+        /// <summary>
+        /// Adds a wrapped db notification handler which listens to a specified channel.
+        /// The generic type is the type which is generated from the notification json and passed as a parameter to the specified handler
+        /// </summary>
+        /// <typeparam name="T">The struct which the DB notification payload should conform to and is taken as the action parameter</typeparam>
+        /// <param name="handler">The function called with the database payload</param>
+        /// <param name="channel">the channel that should be read from</param>
+        void SubscribeToNotifications<T>(Action<T> handler, string channel);
 
         /// <summary>
         /// Inject a notification as if it was created by the database. This is intended for testing.
@@ -377,6 +441,7 @@ namespace Content.Server.Database
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IResourceManager _res = default!;
         [Dependency] private readonly ILogManager _logMgr = default!;
+        [Dependency] private readonly ITaskManager _taskManager = default!;
 
         private ServerDbBase _db = default!;
         private LoggingProvider _msLogProvider = default!;
@@ -569,6 +634,52 @@ namespace Content.Server.Database
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.EditServerRoleBan(id, reason, severity, expiration, editedBy, editedAt));
+        }
+        #endregion
+
+        #region username whitelist
+        public Task AddUsernameWhitelistAsync(string username)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.AddUsernameWhitelistAsync(username));
+        }
+
+        public Task RemoveUsernameWhitelistAsync(string username)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.RemoveUsernameWhitelistAsync(username));
+        }
+
+        public Task<bool> CheckUsernameWhitelistAsync(string username)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.CheckUsernameWhitelistAsync(username));
+        }
+        #endregion
+
+        #region Username rules
+        public Task<ServerUsernameRuleDef?> GetServerUsernameRuleAsync(int id)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetServerUsernameRuleAsync(id));
+        }
+
+        public Task<List<ServerUsernameRuleDef>> GetServerUsernameRulesAsync(bool includeRetired)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.GetServerUsernameRulesAsync(includeRetired));
+        }
+
+        public Task<int> CreateUsernameRuleAsync(ServerUsernameRuleDef usernameRule)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.CreateUsernameRuleAsync(usernameRule));
+        }
+
+        public Task RemoveServerUsernameRuleAsync(int id, NetUserId? retiringAdmin, DateTimeOffset retireTime)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.RemoveServerUsernameRuleAsync(id, retiringAdmin, retireTime));
         }
         #endregion
 
@@ -991,11 +1102,43 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.RemoveJobWhitelist(player, job));
         }
 
-        public void SubscribeToNotifications(Action<DatabaseNotification> handler)
+
+        private void OnDatabaseNotification<T>(DatabaseNotification notification, string notificationChannel, Action<T> onSuccess)
+        {
+            if (notification.Channel != notificationChannel)
+            {
+                return;
+            }
+
+            if (notification.Payload == null)
+            {
+                //_sawmill.Error("got username rule notification with no payload");
+                return;
+            }
+
+            T data;
+            try
+            {
+                data = JsonSerializer.Deserialize<T>(notification.Payload)
+                    ?? throw new JsonException("Content is null");
+            }
+            catch (JsonException e)
+            {
+                //_sawmill.Error($"Got invalid JSON in username rule notification: {e}");
+                return;
+            }
+
+            _taskManager.RunOnMainThread(() => onSuccess(data));
+        }
+
+        public void SubscribeToNotifications<T>(Action<T> handler, string channel)
         {
             lock (_notificationHandlers)
             {
-                _notificationHandlers.Add(handler);
+                _notificationHandlers.Add(notification =>
+                {
+                    OnDatabaseNotification(notification, channel, handler);
+                });
             }
         }
 
