@@ -15,6 +15,7 @@
     - MeteorSwarmScheduler
     - SpaceTrafficControlEventScheduler
     - BasicRoundstartVariation
+    - MidpopLimiter
 
 - type: gamePreset
   id: Secretling

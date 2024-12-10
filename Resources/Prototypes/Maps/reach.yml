@@ -1,9 +1,9 @@
 - type: gameMap
   id: Reach
   mapName: 'Reach'
-  mapPath: /Maps/reach.yml
+  mapPath: /Maps/_Impstation/reach.yml
   minPlayers: 0
-  maxPlayers: 15
+  maxPlayers: 7
   stations:
     Reach:
       stationProto: StandardNanotrasenStation

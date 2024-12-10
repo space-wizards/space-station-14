@@ -1,0 +1,65 @@
+- type: loadout
+  id: CigPackNewport
+  storage:
+    back:
+    - CigPackNewport
+
+- type: loadout
+  id: CigPackSpirits
+  storage:
+    back:
+    - CigPackSpirits
+
+- type: loadout
+  id: PersonalAI
+  storage:
+    back:
+    - PersonalAI
+
+- type: loadout
+  id: GoldPersonalAI
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: PrestigeGold
+  storage:
+    back:
+    - GoldPersonalAI
+
+- type: loadout
+  id: FolderHamster
+  storage:
+    back:
+    - BoxFolderHamster
+
+- type: loadout
+  id: FolderMime
+  storage:
+    back:
+    - BoxFolderMime
+
+- type: loadout
+  id: FolderPun
+  storage:
+    back:
+    - BoxFolderPun
+
+- type: loadout
+  id: HarmonicaInstrument
+  storage:
+    back:
+    - HarmonicaInstrument
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MusicallyTalented
+
+- type: loadout
+  id: FlippoLighter
+  storage:
+    back:
+    - FlippoLighter
+
+- type: loadout
+  id: WalkingCane
+  storage:
+    back:
+    - WalkingCane

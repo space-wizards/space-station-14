@@ -19,7 +19,7 @@ heretic-manselink-start-target = You feel your mind being pulled somewhere...
 heretic-livingheart-notargets = No available targets, visit the rune.
 heretic-livingheart-offstation = It's {$state}, off station, {$direction}!
 heretic-livingheart-onstation = It's {$state}, {$direction}!
-heretic-livingheart-unknown = It's... not in this plain of reality.
+heretic-livingheart-unknown = It's... not in this plane of reality.
 
 ## speech
 heretic-speech-mansusgrasp = R'CH T'H TR'TH!

@@ -10,12 +10,14 @@ using Content.Shared.Popups;
 using Content.Shared.Damage;
 using Robust.Shared.Prototypes;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Atmos.Rotting;
 using Content.Server.Objectives.Components;
 using Content.Server.Light.Components;
 using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Server.Flash.Components;
 using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
 using Content.Shared.Damage.Components;
 using Content.Server.Radio.Components;
@@ -24,6 +26,9 @@ namespace Content.Server.Changeling;
 
 public sealed partial class ChangelingSystem : EntitySystem
 {
+    [Dependency] private readonly SharedRottingSystem _rotting = default!;
+    [Dependency] private readonly SharedStealthSystem _stealth = default!;
+
     public void SubscribeAbilities()
     {
         SubscribeLocalEvent<ChangelingComponent, OpenEvolutionMenuEvent>(OnOpenEvolutionMenu);
@@ -87,9 +92,14 @@ public sealed partial class ChangelingSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString("changeling-absorb-fail-absorbed"), uid, uid);
             return;
         }
-        if (!HasComp<AbsorbableComponent>(target))
+        if (!HasComp<AbsorbableComponent>(target) || (TryComp<AbsorbableComponent>(target, out var absorbComp) && absorbComp.Disabled))
         {
             _popup.PopupEntity(Loc.GetString("changeling-absorb-fail-unabsorbable"), uid, uid);
+            return;
+        }
+        if (TryComp<RottingComponent>(target, out var rotComp) && _rotting.RotStage(target, rotComp) >= 2)
+        {
+            _popup.PopupEntity(Loc.GetString("changeling-absorb-fail-extremely-bloated"), uid, uid);
             return;
         }
 
@@ -123,10 +133,18 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         PlayMeatySound(args.User, comp);
 
-        UpdateBiomass(uid, comp, comp.MaxBiomass - comp.TotalAbsorbedEntities);
+        var reducedBiomass = false;
+        if (HasComp<RottingComponent>(target) || (TryComp<AbsorbableComponent>(target, out var absorbComp) && absorbComp.ReducedBiomass))
+            reducedBiomass = true;
+
+        float biomassModifier = 1f;
+        if (reducedBiomass)
+            biomassModifier = 0.5f;
+
+        UpdateBiomass(uid, comp, (comp.MaxBiomass * biomassModifier) - comp.TotalAbsorbedEntities);
 
         var dmg = new DamageSpecifier(_proto.Index(AbsorbedDamageGroup), 200);
-        _damage.TryChangeDamage(target, dmg, false, false);
+        _damage.TryChangeDamage(target, dmg, true, false);
         _blood.ChangeBloodReagent(target, "FerrochromicAcid");
         _blood.SpillAllSolutions(target);
 
@@ -145,7 +163,11 @@ public sealed partial class ChangelingSystem : EntitySystem
         {
             popup = Loc.GetString("changeling-absorb-end-self");
             bonusChemicals += 10;
-            bonusEvolutionPoints += 2;
+
+            if (!reducedBiomass)
+                bonusEvolutionPoints += 2;
+            else
+                popup = Loc.GetString("changeling-absorb-end-self-reduced-biomass");
         }
         TryStealDNA(uid, target, comp, true);
         comp.TotalAbsorbedEntities++;
@@ -473,7 +495,7 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         EnsureComp<AbsorbedComponent>(target);
         var dmg = new DamageSpecifier(_proto.Index(AbsorbedDamageGroup), 200);
-        _damage.TryChangeDamage(target, dmg, false, false);
+        _damage.TryChangeDamage(target, dmg, true, false);
         _blood.ChangeBloodReagent(target, "FerrochromicAcid");
         _blood.SpillAllSolutions(target);
 
@@ -557,7 +579,11 @@ public sealed partial class ChangelingSystem : EntitySystem
         }
 
         EnsureComp<StealthComponent>(uid);
-        EnsureComp<StealthOnMoveComponent>(uid);
+        _stealth.SetMinVisibility(uid, 0);
+
+        var stealthOnMove = EnsureComp<StealthOnMoveComponent>(uid);
+        stealthOnMove.MovementVisibilityRate = 1;
+
         _popup.PopupEntity(Loc.GetString("changeling-chameleon-start"), uid, uid);
     }
     public void OnEphedrineOverdose(EntityUid uid, ChangelingComponent comp, ref ActionEphedrineOverdoseEvent args)

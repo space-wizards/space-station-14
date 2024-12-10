@@ -1,8 +1,8 @@
 - type: gameMap
   id: Oasis
   mapName: 'Oasis'
-  mapPath: /Maps/oasis.yml
-  minPlayers: 70
+  mapPath: /Maps/_Impstation/oasis.yml
+  minPlayers: 60
   stations:
     Oasis:
       stationProto: StandardNanotrasenStation

@@ -208,4 +208,18 @@ public abstract class SharedStealthSystem : EntitySystem
             FlatModifier = flatModifier;
         }
     }
+
+    /// <summary>
+    /// Sets the minimum visibility
+    /// </summary>
+    /// <param name="value">The value to set the minimum visibility to.</param>
+    public void SetMinVisibility(EntityUid uid, float value, StealthComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        component.MinVisibility = value;
+
+        Dirty(uid, component);
+    }
 }

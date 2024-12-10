@@ -18,26 +18,17 @@
                 sprite: Clothing/Eyes/Hud/med.rsi
                 state: icon
               doAfter: 5
-            - tag: GlassesSecurity
-              name: security glasses
+            - tag: Sunglasses #imp
+              name: sun glasses
               icon:
-                sprite: Clothing/Eyes/Glasses/secglasses.rsi
+                sprite: Clothing/Eyes/Glasses/sunglasses.rsi
                 state: icon
               doAfter: 5
             - material: Cable
               amount: 5
               doAfter: 5
-            - tag: CapacitorStockPart
-              name: capacitor
-              icon:
-                sprite: Objects/Misc/stock_parts.rsi
-                state: capacitor
-              doAfter: 5
-            - tag: CapacitorStockPart
-              name: capacitor
-              icon:
-                sprite: Objects/Misc/stock_parts.rsi
-                state: capacitor
+            - material: Capacitor #imp but low key this is a bugfix
+              amount: 2
               doAfter: 5
     - node: medsecHud
       entity: ClothingEyesHudMedSec

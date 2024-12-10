@@ -459,7 +459,17 @@
           type: Decapoid
         ratios:
           Ammonia: 1.0
-          WaterVapor: -1.0 # end imp special.
+          WaterVapor: -1.0
+      - !type:HealthChange # for slimes
+        scaleByQuantity: true
+        ignoreResistances: true
+        conditions:
+        - !type:OrganType
+          type: Slime 
+          shouldHave: true
+        damage:
+          types:
+            Caustic: 8
 
 - type: reagent
   id: Ice

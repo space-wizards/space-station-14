@@ -1,0 +1,50 @@
+<Document>
+  # Decapoid
+
+  <Box>
+    <GuideEntityEmbed Entity="MobDecapoid" Caption=""/>
+  </Box>
+  
+  [color=red]Caution! This species has several SEVERELY limiting game mechanics and is only recommended for highly experienced players. Some jobs and tasks may be difficult or impossible to perform by yourself with only one hand, and you will be limited to melee combat only.[/color]
+  
+  ## Physiology
+  Decapoids are a recent addition to Nanotrasen's list of accepted species, and are one of the more unusual species NT has encountered. [color=#1e90ff]Their carapace is uniquely adapted for extreme pressures, allowing them to traverse space without the aid of a pressure suit.[/color] Perhaps as a result of this, [color=#1e90ff]they have developed an affinity for microgravity - they are capable of moving considerably faster in it.[/color]
+  
+  This enormous benefit comes with a laundry list of detriments, however, when it comes to operating aboard a Nanotrasen vessel. Due to the weight of their carapace, [color=#ffa500]they move approximately 20% slower than most NT-accepted species,[/color] and their unique configuration of lower limbs makes it [color=#ffa500]impossible for them to wear shoes.[/color] 
+  
+  Their major claw is enormous and somewhat unwieldy. [color=#ffa500]This left "hand" is useless for most of the tasks one might use a hand for,[/color] and functions primarily as a [color=#1e90ff]prying tool and cutting tool, though it can also serve as a competent melee weapon and shield.[/color] Their minor claw isn't much more dextrous, and while its smaller size allows it to manipulate most tools, [color=#ffa500]Decapoids are incapable of efficiently using firearms of any kind.[/color] It's not all bad, however - Their abundance of limbs allows them to [color=#1e90ff]drag objects without the use of their claws,[/color] and their immense physical strength [color=#1e90ff]negates the normal speed penalty for dragging.[/color]
+
+  ## Breathing Requirements
+
+  <Box>
+    <GuideEntityEmbed Entity="DecapoidBreathingApparatus" Caption=""/>
+    <GuideEntityEmbed Entity="DecapoidVaporTank" Caption=""/>
+  </Box>
+
+  Their recently aquatic ancestry left them with respiratory needs unique among NT-accepted species. [color=#ffa500]Decapoids require a steady supply of water vapor to survive.[/color] Luckily, the Decapoid Empire has seen fit to supply each Decapoid with a [color=#1e90ff]Vaporizer[/color] and a [color=#1e90ff]Vapor Tank,[/color] devices capable of safely turning water into water vapor and supplying it to their gills, respectively. The Decapoid Empire has not, however, deigned to provide Nanotrasen with the blueprints for these devices, so [color=red]Decapoids are encouraged not to lose theirs.[/color]
+
+  This is not the only feature their aquatic history has left them, however - Decapoids do not possess vocal cords that would function in a gaseous atmosphere. [color=#ffa500]They are incapable of normal speech.[/color] This deficit is fortunately mitigated by their [color=#1e90ff]Vaporizers,[/color] which plug directly into their nervous system and [color=#1e90ff]translate their brainwaves into sound directly.[/color] The NT Board of Directors would like to once again stress that [color=red][bold]Decapoids should avoid losing these devices at all costs, as they cannot be replaced.[/color][/bold]
+
+  In the event of the loss of these items, [color=#1e90ff]reach out to the Atmos team immediately to be supplied with water vapor. Decapoids are capable of using any NT-provided internals mask as a stopgap measure, [/color]but [color=#ffa500]they will be unable to speak while doing so. [/color][color=red]Keep this in mind.[/color]
+  
+  ## Damage
+  A Decapoid's carapace is extremely sturdy, and capable of deflecting blades and bullets alike, but relatively brittle. As a result, they take [color=#1e90ff]30% less damage from Slashing and Piercing,[/color] but [color=#ffa500]20% more damage from Blunt.[/color] Their particular adaptations render them [color=#1e90ff]fully immune to Cold damage and barotrauma from spacing,[/color] but more sensitive to high temperatures - [color=#ffa500]They take 50% more damage from Heat.[/color]
+  
+  Their blood, similarly to that of Arachnids, uses a copper-based respiratory protein, and as such [color=#ffa500]can only be metabolized from copper, not iron.[/color]
+  
+  ## Decapoid Naming Conventions and Culture
+  Decapoids are born in broods of (almost always) exactly thirty individuals. The Empire has developed a caste system based on the order in which these brood eggs hatch, with the oldest among a brood being ranked highest. 
+  
+  As a result, the structure of their names is very simple - Decapoid names consist of a "brood name," similar to a Human last name, which indicates familial relation, followed by the ordinal number of their rank. Some Decapoids who are estranged from the Empire for one reason or another may choose to go by a mononym, rather than display their rank.
+  
+  Brood names are written in a rough transliteration of native Decapoid, and thus only use voiceless consonants (Ch, K, P, S, Sh, T, Th,) with an apostrophe marking a glottal stop.
+  - [color=#449944]Acceptable:[/color] U'uqet, Sixth
+  - [color=#449944]Acceptable:[/color] 'Uut, Seventeenth
+  - [color=#449944]Acceptable:[/color] Tep'atet, Twenty-Fourth
+  - [color=#449944]Acceptable:[/color] Ku'ut
+  - [color=#994444]Bad:[/color] Brrrx, Sixty-Ninth
+  - [color=#994444]Bad:[/color] Jeff, 420th
+  - [color=#994444]Bad:[/color] Crab Legs
+  - [color=#994444]Bad:[/color] Keith Hardshell
+  - [color=#994444]Bad:[/color] Benry
+</Document>

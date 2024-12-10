@@ -9,3 +9,21 @@
       Manipulator: 1
       Capacitor: 1
       Glass: 2
+
+- type: entity
+  id: ServiceTechFabCircuitboard
+  parent: BaseMachineCircuitboard
+  name: service techfab machine board
+  description: A machine printed circuit board for a Service techfab.
+  components:
+    - type: Sprite
+      state: service
+    - type: MachineBoard
+      prototype: ServiceTechFab
+      stackRequirements:
+        MatterBin: 2
+        Manipulator: 2
+      tagRequirements:
+        GlassBeaker:
+          amount: 2
+          defaultPrototype: Beaker

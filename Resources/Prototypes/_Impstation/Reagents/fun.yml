@@ -109,3 +109,17 @@
   desc: reagent-desc-testosterone
   physicalDesc: reagent-physical-desc-chalky
   color: "#267ef0"
+
+- type: reagent
+  id: Holium
+  # group: Special # The recipe is complicated enough that I think we shouldnt hide the recipe honestly
+  name: reagent-name-holium
+  desc: reagent-desc-holium
+  physicalDesc: reagent-physical-desc-threat
+  flavor: singulo
+  color: "#000000"
+  tileReactions:
+  - !type:CreateEntityTileReaction
+    entity: FloorChasmEntity
+    maxOnTileWhitelist:
+      tags: [ FloorChasmEntity ]

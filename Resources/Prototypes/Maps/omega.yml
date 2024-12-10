@@ -1,9 +1,9 @@
 - type: gameMap
   id: Omega
   mapName: 'Omega'
-  mapPath: /Maps/omega.yml
-  minPlayers: 10
-  maxPlayers: 50
+  mapPath: /Maps/_Impstation/omega.yml
+  minPlayers: 7
+  maxPlayers: 35
   stations:
     Omega:
       stationProto: StandardNanotrasenStation

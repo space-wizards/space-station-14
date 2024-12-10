@@ -49,3 +49,29 @@
           types:
             Poison: -0.2
 
+- type: reagent
+  id: Anomalium
+  name: reagent-name-anomalium
+  group: Medicine
+  desc: reagent-desc-anomalium
+  flavor: sour
+  color: "#64ffe6"
+  physicalDesc: reagent-physical-desc-enigmatic
+  slippery: false
+  metabolisms:
+    # Bad omnizine that also gives you cancer
+    Medicine:
+      effects:
+      - !type:ModifyBloodLevel
+        amount: 2
+      - !type:HealthChange
+        damage:
+          groups:
+            Brute: -2
+            Burn: -2
+            Airloss: -2
+            Toxin: -2
+            Genetic: 5
+      - !type:ModifyBleedAmount
+        amount: -1
+

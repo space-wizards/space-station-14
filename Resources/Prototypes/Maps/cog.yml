@@ -1,8 +1,8 @@
 - type: gameMap
   id: Cog
   mapName: 'Cog'
-  mapPath: /Maps/cog.yml
-  minPlayers: 50
+  mapPath: /Maps/_Impstation/cog.yml
+  minPlayers: 45
   maxPlayers: 80 #big map
   stations:
     Cog:

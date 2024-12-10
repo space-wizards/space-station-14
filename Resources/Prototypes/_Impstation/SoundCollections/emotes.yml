@@ -10,6 +10,13 @@
     - /Audio/_Impstation/Voice/Slime/s_womanlaugh.ogg
 
 - type: soundCollection
+  id: UnisexSlimeLaugh
+  files:
+    - /Audio/_Impstation/Voice/Slime/s_manlaugh1.ogg
+    - /Audio/_Impstation/Voice/Slime/s_manlaugh2.ogg
+    - /Audio/_Impstation/Voice/Slime/s_womanlaugh.ogg
+
+- type: soundCollection
   id: MaleSlimeCough
   files:
     - /Audio/_Impstation/Voice/Slime/s_male_cough_1.ogg
@@ -18,6 +25,14 @@
 - type: soundCollection
   id: FemaleSlimeCough
   files:
+    - /Audio/_Impstation/Voice/Slime/s_female_cough_1.ogg
+    - /Audio/_Impstation/Voice/Slime/s_female_cough_2.ogg
+
+- type: soundCollection
+  id: UnisexSlimeCough
+  files:
+    - /Audio/_Impstation/Voice/Slime/s_male_cough_1.ogg
+    - /Audio/_Impstation/Voice/Slime/s_male_cough_2.ogg
     - /Audio/_Impstation/Voice/Slime/s_female_cough_1.ogg
     - /Audio/_Impstation/Voice/Slime/s_female_cough_2.ogg
 
@@ -32,6 +47,12 @@
     - /Audio/_Impstation/Voice/Slime/s_female_sigh.ogg
 
 - type: soundCollection
+  id: UnisexSlimeSigh
+  files:
+    - /Audio/_Impstation/Voice/Slime/s_male_sigh.ogg
+    - /Audio/_Impstation/Voice/Slime/s_female_sigh.ogg
+
+- type: soundCollection
   id: MaleSlimeCry
   files:
     - /Audio/_Impstation/Voice/Slime/s_cry_male_1.ogg
@@ -42,6 +63,18 @@
 - type: soundCollection
   id: FemaleSlimeCry
   files:
+    - /Audio/_Impstation/Voice/Slime/s_cry_female_1.ogg
+    - /Audio/_Impstation/Voice/Slime/s_cry_female_2.ogg
+    - /Audio/_Impstation/Voice/Slime/s_cry_female_3.ogg
+    - /Audio/_Impstation/Voice/Slime/s_cry_female_4.ogg
+
+- type: soundCollection
+  id: UnisexSlimeCry
+  files:
+    - /Audio/_Impstation/Voice/Slime/s_cry_male_1.ogg
+    - /Audio/_Impstation/Voice/Slime/s_cry_male_2.ogg
+    - /Audio/_Impstation/Voice/Slime/s_cry_male_3.ogg
+    - /Audio/_Impstation/Voice/Slime/s_cry_male_4.ogg
     - /Audio/_Impstation/Voice/Slime/s_cry_female_1.ogg
     - /Audio/_Impstation/Voice/Slime/s_cry_female_2.ogg
     - /Audio/_Impstation/Voice/Slime/s_cry_female_3.ogg

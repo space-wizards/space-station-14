@@ -1,0 +1,4 @@
+- type: loadout
+  id: HoPShoesWhite
+  equipment:
+    shoes: ClothingShoesDameDane

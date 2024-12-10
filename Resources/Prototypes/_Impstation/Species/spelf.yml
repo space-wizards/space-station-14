@@ -12,6 +12,8 @@
   femaleFirstNames: names_spelf
   naming: First
   sexes:
+  - Male
+  - Female
   - Unsexed
 
 - type: speciesBaseSprites

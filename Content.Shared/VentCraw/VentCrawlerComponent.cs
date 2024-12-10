@@ -12,7 +12,8 @@ public sealed partial class VentCrawlerComponent : Component
     [ViewVariables, AutoNetworkedField]
     public bool InTube = false;
 
-    public float EnterDelay = 2.5f;
+    [DataField, ViewVariables, AutoNetworkedField]
+    public TimeSpan EnterDelay = TimeSpan.FromSeconds(5);
 }
 
 

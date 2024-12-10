@@ -7,6 +7,7 @@ using Content.Shared.VentCraw;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Containers;
+using Content.Shared.Eye.Blinding.Systems;
 
 namespace Content.Server.VentCraw;
 
@@ -15,6 +16,7 @@ public sealed class VentCrawableSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
+    [Dependency] private readonly BlindableSystem _blind = default!;
 
     public override void Initialize()
     {
@@ -70,6 +72,8 @@ public sealed class VentCrawableSystem : EntitySystem
             {
                 _physicsSystem.WakeBody(entity, body: physics);
             }
+
+            _blind.UpdateIsBlind(entity);
         }
 
         EntityManager.DeleteEntity(uid);

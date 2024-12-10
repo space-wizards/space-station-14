@@ -8,3 +8,182 @@
   sprites:
   - sprite: _Impstation/Mobs/Species/Decapoid/parts.rsi
     state: gills
+    
+- type: marking
+  id: DecapoidFlatHead
+  bodyPart: Hair
+  markingCategory: Head
+  followSkinColor: true
+  forcedColoring: true
+  speciesRestriction: [ Decapoid ]
+  sprites: 
+  - sprite: _Impstation/Mobs/Customization/decapoid.rsi
+    state: flathead
+    
+- type: marking
+  id: DecapoidPauldronSpike
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/decapoid.rsi
+    state: pauldronspike
+
+- type: marking
+  id: DecapoidClawGradient
+  bodyPart: LHand
+  markingCategory: Arms
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/decapoid.rsi
+    state: clawgradient
+
+- type: marking
+  id: DecapoidAbPlate
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/decapoid.rsi
+    state: abdominalplate
+
+- type: marking
+  id: DecapoidPecPlate
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/decapoid.rsi
+    state: pectoralplate
+
+- type: marking
+  id: DecapoidLowerPlate
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/decapoid.rsi
+    state: lowerplate
+
+- type: marking
+  id: DecapoidPauldronLeft
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/decapoid.rsi
+    state: pauldronleft
+
+- type: marking
+  id: DecapoidPauldronRight
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/decapoid.rsi
+    state: pauldronright
+
+- type: marking
+  id: DecapoidRHandGradient
+  bodyPart: RHand
+  markingCategory: Arms
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/decapoid.rsi
+    state: righthandgradient
+
+- type: marking
+  id: DecapoidRHandPlate
+  bodyPart: RHand
+  markingCategory: Arms
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/decapoid.rsi
+    state: righthandplate
+
+- type: marking
+  id: DecapoidClawPlate
+  bodyPart: LHand
+  markingCategory: Arms
+  speciesRestriction: [ Decapoid ]
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/decapoid.rsi
+    state: clawplate
+
+- type: marking
+  id: DecapoidEyesDefault
+  bodyPart: Eyes
+  markingCategory: Eyes
+  speciesRestriction: [ Decapoid ]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/decapoid.rsi
+    state: eyes-1
+
+- type: marking
+  id: DecapoidEyesThree
+  bodyPart: Eyes
+  markingCategory: Eyes
+  speciesRestriction: [ Decapoid ]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/decapoid.rsi
+    state: eyes-2
+
+- type: marking
+  id: DecapoidEyesWideClose
+  bodyPart: Eyes
+  markingCategory: Eyes
+  speciesRestriction: [ Decapoid ]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/decapoid.rsi
+    state: eyes-3
+
+- type: marking
+  id: DecapoidEyesStalks
+  bodyPart: Eyes
+  markingCategory: Eyes
+  speciesRestriction: [ Decapoid ]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/decapoid.rsi
+    state: eyes-4
+
+- type: marking
+  id: DecapoidEyesWideFar
+  bodyPart: Eyes
+  markingCategory: Eyes
+  speciesRestriction: [ Decapoid ]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/decapoid.rsi
+    state: eyes-5
+
+- type: marking
+  id: DecapoidEyesSpider
+  bodyPart: Eyes
+  markingCategory: Eyes
+  speciesRestriction: [ Decapoid ]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+  sprites:
+  - sprite: _Impstation/Mobs/Customization/decapoid.rsi
+    state: eyes-6

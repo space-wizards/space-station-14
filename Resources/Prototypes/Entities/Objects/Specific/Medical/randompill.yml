@@ -28,17 +28,18 @@
     - quantity: 20
       weight: 17.5
       reagents:
-      - Ipecac 
+      - Ipecac
       - SodiumPolyacrylate
       - SpaceDrugs
       - SpaceGlue
       - Laughter
       - JuiceThatMakesYouWeh
+      - JuiceThatMakesYouUngh
       - Lipozine
     - quantity: 5
       weight: 2.5
       reagents:
-      - Honk 
+      - Honk
   # Bad - weight: 25
     - quantity: 20
       weight: 10.5

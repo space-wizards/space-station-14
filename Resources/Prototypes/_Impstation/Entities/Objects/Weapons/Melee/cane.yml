@@ -1,0 +1,22 @@
+- type: entity
+  parent: BaseItem
+  id: WalkingCane
+  name: walking cane
+  description: A cane, of a more modern design.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Objects/Weapons/Melee/cane.rsi
+    state: walkingcane
+  - type: Item
+    size: Normal
+    sprite: _Impstation/Objects/Weapons/Melee/cane.rsi
+  - type: Appearance
+  - type: MeleeWeapon
+    wideAnimationRotation: 45
+    damage:
+      types:
+        Blunt: 4
+  - type: StaminaDamageOnHit
+    damage: 4
+  - type: UseDelay
+    delay: 1

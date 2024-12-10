@@ -1008,7 +1008,7 @@
 - type: entity
   parent: ClothingOuterHardsuitClown
   id: ClothingOuterHardsuitMime
-  name: mime hardsuit
+  name: red mime hardsuit # Imp
   description: A custom-made mime hardsuit.
   components:
   - type: Sprite

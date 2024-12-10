@@ -1,0 +1,17 @@
+- type: latheRecipe
+  id: CleanerGrenade
+  result: CleanerGrenade
+  completetime: 2
+  materials:
+    Steel: 300
+    Plastic: 200
+    Glass: 100
+    Plasma: 200
+
+- type: latheRecipe
+  id: SoapNT
+  result: SoapNT
+  completetime: 2
+  materials:
+    Plastic: 200
+    Plasma: 200

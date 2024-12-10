@@ -10,7 +10,7 @@
   objectType: Item
 
 - type: construction
-  name: mime hardsuit
+  name: red mime hardsuit # Imp
   id: MimeHardsuit
   graph: MimeHardsuit
   startNode: start

@@ -17,6 +17,18 @@
       "name": "dropper1"
     },
     {
+      "name": "dropper2"
+    },
+    {
+      "name": "dropper3"
+    },
+    {
+      "name": "dropper4"
+    },
+    {
+      "name": "dropper5"
+    },
+    {
       "name": "inhand-left",
       "directions": 4
     },

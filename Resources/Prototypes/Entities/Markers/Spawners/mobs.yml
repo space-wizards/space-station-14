@@ -953,102 +953,45 @@
     - MobHonkBot
 
 - type: entity
-  name: xeno lone praetorian spawner
-  id: SpawnMobXenoPraetorian
+  name: gingerbread man Spawner
+  id: SpawnMobGingerbreadAI
+  suffix: Ghostrole
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: full
+        sprite: Mobs/Species/Gingerbread/parts.rsi
+  - type: ConditionalSpawner
+    prototypes:
+      - MobGingerbreadAI
+
+- type: entity
+  name: Reindeer Buck Spawner
+  id: SpawnMobReindeerBuck
   parent: MarkerBase
   components:
   - type: Sprite
     layers:
     - state: green
-    - state: running
-      sprite: Mobs/Aliens/Xenos/praetorian.rsi
+    - state: reindeer_buck_still
+      sprite: Mobs/Animals/reindeer_buck.rsi
   - type: ConditionalSpawner
     prototypes:
-    - MobXenoLonePraetorianNoGhost
+    - MobReindeerBuck
 
 - type: entity
-  name: Space Bear Major Spawner
-  id: SpawnMobBearMajor
+  name: Reindeer Doe Spawner
+  id: SpawnMobReindeerDoe
   parent: MarkerBase
   components:
   - type: Sprite
     layers:
     - state: green
-    - state: major
-      sprite: Mobs/Animals/major.rsi
+    - state: reindeer_doe_still
+      sprite: Mobs/Animals/reindeer_doe.rsi
   - type: ConditionalSpawner
     prototypes:
-    - MobBearSpaceMajor
+    - MobReindeerDoe
 
-- type: entity
-  name: Laser Raptor Spawner
-  id: SpawnMobLaserRaptor
-  parent: MarkerBase
-  components:
-  - type: Sprite
-    layers:
-    - state: green
-    - state: laser_raptor
-      sprite: Mobs/Aliens/laser_raptor.rsi
-  - type: ConditionalSpawner
-    prototypes:
-    - MobLaserRaptor
-
-- type: entity
-  name: Kisser Tomato Spawner
-  id: SpawnMobKisserTomato
-  parent: MarkerBase
-  components:
-  - type: Sprite
-    layers:
-    - state: green
-    - state: alive
-      sprite: Mobs/Demons/tomatokisser.rsi
-  - type: ConditionalSpawner
-    prototypes:
-    - MobTomatoKisser
-
-- type: entity
-  name: Laser-less Laser Raptor Spawner
-  id: SpawnMobRaptor
-  parent: MarkerBase
-  components:
-  - type: Sprite
-    layers:
-    - state: green
-    - state: raptor
-      sprite: Mobs/Aliens/laser-less_laser_raptor.rsi
-  - type: ConditionalSpawner
-    prototypes:
-    - MobRaptor
-
-- type: entity
-  name: BROS/SORB Spawner
-  id: BrosSorbSpawner
-  parent: MarkerBase
-  components:
-    - type: Sprite
-      layers:
-        - state: blue
-        - sprite: Mobs/Animals/bros.rsi
-          state: bros
-    - type: ClusterSpawner
-      prototypes:
-        - MobBros
-        - MobSorb
-
-- type: entity
-  name: Duck Duck Goose Spawner
-  id: DuckDuckGooseSpawner
-  parent: MarkerBase
-  components:
-    - type: Sprite
-      layers:
-        - state: blue
-        - sprite: Mobs/Animals/goose.rsi
-    - type: GroupSpawner
-      spawns:
-      - id: MobDuckWhite
-        amount: 2
-        maxAmount: 2
-      - id: MobGoose

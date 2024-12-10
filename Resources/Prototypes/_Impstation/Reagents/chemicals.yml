@@ -1,0 +1,9 @@
+- type: reagent
+  id: PhilosophersJuice
+  name: reagent-name-philosophers-juice
+  desc: reagent-desc-philosophers-juice
+  physicalDesc: reagent-physical-desc-space-grease
+  flavor: bitter
+  color: "#7e009e"
+  boilingPoint: -127.3 # Same as plasma
+  meltingPoint: -186.4

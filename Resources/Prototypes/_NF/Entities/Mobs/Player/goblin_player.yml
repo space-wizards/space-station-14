@@ -6,6 +6,8 @@
   components:
   - type: Speech
     speechVerb: Goblin
+  - type: Absorbable
+    reducedBiomass: true
 
 - type: entity
   parent: MobGoblin
