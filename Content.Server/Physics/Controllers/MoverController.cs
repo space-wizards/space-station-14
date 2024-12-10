@@ -76,16 +76,16 @@ public sealed class MoverController : SharedMoverController
             }
 
             PhysicsComponent? body;
-            var xformMover = xform;
+            var xformMover = (uid, xform);
 
             if (mover.ToParent && RelayQuery.HasComponent(xform.ParentUid))
             {
                 if (!PhysicsQuery.TryGetComponent(xform.ParentUid, out body) ||
-                    !XformQuery.TryGetComponent(xform.ParentUid, out xformMover))
+                    !XformQuery.TryGetComponent(xform.ParentUid, out var xformNew))
                 {
                     continue;
                 }
-
+                xformMover = (xform.ParentUid, xformNew);
                 physicsUid = xform.ParentUid;
             }
             else if (!PhysicsQuery.TryGetComponent(uid, out body))
@@ -138,7 +138,8 @@ public sealed class MoverController : SharedMoverController
 
     private void ResetSubtick(PilotComponent component)
     {
-        if (Timing.CurTick <= component.LastInputTick) return;
+        if (Timing.CurTick <= component.LastInputTick)
+            return;
 
         component.CurTickStrafeMovement = Vector2.Zero;
         component.CurTickRotationMovement = 0f;
@@ -271,7 +272,8 @@ public sealed class MoverController : SharedMoverController
                 consoleEnt = cargoConsole.Entity;
             }
 
-            if (!TryComp(consoleEnt, out TransformComponent? xform)) continue;
+            if (!TryComp(consoleEnt, out TransformComponent? xform))
+                continue;
 
             var gridId = xform.GridUid;
             // This tries to see if the grid is a shuttle and if the console should work.
@@ -280,7 +282,7 @@ public sealed class MoverController : SharedMoverController
                 !shuttleComponent.Enabled)
                 continue;
 
-            if (!newPilots.TryGetValue(gridId!.Value, out var pilots))
+            if (!newPilots.TryGetValue(gridId.Value, out var pilots))
             {
                 pilots = (shuttleComponent, new List<(EntityUid, PilotComponent, InputMoverComponent, TransformComponent)>());
                 newPilots[gridId.Value] = pilots;
