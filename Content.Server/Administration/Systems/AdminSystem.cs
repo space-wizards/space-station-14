@@ -246,13 +246,11 @@ public sealed class AdminSystem : EntitySystem
         var startingRole = string.Empty;
         if (_minds.TryGetMind(session, out var mindId, out var mindComp))
         {
-            if (TryComp<MindComponent>(mindId, out var mindComp))
-            {
-                if (_proto.TryIndex(mindComp.RoleType, out var role))
-                    roleType = role;
-                else
-                    Log.Error($"{ToPrettyString(mindId)} has invalid Role Type '{mindComp.RoleType}'. Displaying '{Loc.GetString(roleType.Name)}' instead");
-            }
+            if (_proto.TryIndex(mindComp.RoleType, out var role))
+                roleType = role;
+            else
+                Log.Error($"{ToPrettyString(mindId)} has invalid Role Type '{mindComp.RoleType}'. Displaying '{Loc.GetString(roleType.Name)}' instead");
+
             antag = _role.MindIsAntagonist(mindId);
             startingRole = _jobs.MindTryGetJobName(mindId);
         }
