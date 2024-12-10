@@ -48,6 +48,14 @@
   name: security beret
   description: A stylish clothing option for security officers.
   components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+  - type: Tag
   - type: Sprite
     sprite: Clothing/Head/Hats/beret_security.rsi
   - type: Clothing
@@ -64,6 +72,13 @@
   name: trooper hat
   description: A campaign hat for the Nanotrasen Troopers, comes with a case too, but you lost it.
   components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
   - type: Sprite
     sprite: Clothing/Head/Hats/security_trooper_hat.rsi
   - type: Clothing
@@ -138,6 +153,13 @@
   name: head of security's beret
   description: A black beret with a commander's rank emblem. For officers that are more inclined towards style than safety.
   components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
   - type: Sprite
     sprite: Clothing/Head/Hats/beret_hos.rsi
   - type: Clothing
@@ -154,6 +176,13 @@
   name: warden's beret
   description: A corporate blue beret with a warden's rank emblem. For officers that are more inclined towards style than safety.
   components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
   - type: Sprite
     sprite: Clothing/Head/Hats/beret_warden.rsi
   - type: Clothing
@@ -176,6 +205,13 @@
   name: brigmedical beret
   description: White beret, looks like a cream pie on the head.
   components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
   - type: Sprite
     sprite: Clothing/Head/Hats/beret_brigmedic.rsi
   - type: Clothing
@@ -187,6 +223,13 @@
   name: mercenary beret
   description: Olive beret, the badge depicts a jackal on a rock.
   components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
   - type: Sprite
     sprite: Clothing/Head/Hats/beret_merc.rsi
   - type: Clothing
@@ -335,6 +378,13 @@
   name: head of security cap
   description: The robust standard-issue cap of the Head of Security. For showing the officers who's in charge.
   components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
   - type: Sprite
     sprite: Clothing/Head/Hats/hoshat.rsi
   - type: Clothing
