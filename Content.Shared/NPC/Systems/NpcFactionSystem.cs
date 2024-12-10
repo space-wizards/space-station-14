@@ -1,3 +1,5 @@
+using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
 using Content.Shared.NPC.Components;
 using Content.Shared.NPC.Prototypes;
 using Robust.Shared.Prototypes;
@@ -39,6 +41,7 @@ public sealed partial class NpcFactionSystem : EntitySystem
 
     private void OnFactionStartup(Entity<NpcFactionMemberComponent> ent, ref ComponentStartup args)
     {
+        ent.Comp.StartingFactions.UnionWith(ent.Comp.Factions);
         RefreshFactions(ent);
     }
 
@@ -100,6 +103,17 @@ public sealed partial class NpcFactionSystem : EntitySystem
     }
 
     /// <summary>
+    /// Returns whether an entity is a starting-member of a faction.
+    /// </summary>
+    public bool IsStartingMember(Entity<NpcFactionMemberComponent?> ent, string faction)
+    {
+        if (!Resolve(ent, ref ent.Comp, false))
+            return false;
+
+        return ent.Comp.StartingFactions.Contains(faction);
+    }
+
+    /// <summary>
     /// Adds this entity to the particular faction.
     /// </summary>
     public void AddFaction(Entity<NpcFactionMemberComponent?> ent, string faction, bool dirty = true)
@@ -152,6 +166,11 @@ public sealed partial class NpcFactionSystem : EntitySystem
         }
 
         if (!Resolve(ent, ref ent.Comp, false))
+            return;
+
+        var ev = new TryRemoveFactionAttemptEvent(faction);
+        RaiseLocalEvent(ent, ev);
+        if (ev.Cancelled)
             return;
 
         if (!ent.Comp.Factions.Remove(faction))
@@ -322,5 +341,19 @@ public sealed partial class NpcFactionSystem : EntitySystem
             comp.HostileFactions.Clear();
             RefreshFactions((uid, comp));
         }
+    }
+
+    /// <summary>
+    ///     Raised at an entity to see if something is keeping it inside a faction.
+    /// </summary>
+    public sealed class TryRemoveFactionAttemptEvent : CancellableEntityEventArgs, IInventoryRelayEvent
+    {
+        public readonly ProtoId<NpcFactionPrototype>? Faction;
+        public TryRemoveFactionAttemptEvent(ProtoId<NpcFactionPrototype>? faction)
+        {
+            Faction = faction;
+        }
+
+        public SlotFlags TargetSlots => SlotFlags.OUTERCLOTHING; // I guess you gotta add more if you want anything else :shrugs:
     }
 }
