@@ -32,6 +32,13 @@
                Text="{Loc player-tab-antagonist}"
                MouseFilter="Pass"/>
         <cc:VSeparator/>
+        <Label Name="RoleTypeLabel"
+               SizeFlagsStretchRatio="2"
+               HorizontalExpand="True"
+               ClipText="True"
+               Text="{Loc player-tab-roletype}"
+               MouseFilter="Pass"/>
+        <cc:VSeparator/>
         <Label Name="PlaytimeLabel"
                SizeFlagsStretchRatio="1"
                HorizontalExpand="True"
