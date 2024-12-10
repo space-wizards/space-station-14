@@ -84,3 +84,6 @@ uplink-borging-desc = A bundle containing everything needed to build build a new
 
 uplink-lottery-name = TH3 GRAND L0TTERY !!!@!
 uplink-lottery-desc = Redirects a grand lottery shipment to you. We have no idea what's in these things, to be honest.
+
+uplink-energybomb-name = cascade bomb
+uplink-energybomb-desc = A newer prototype, capable of producing a atom-sized resonance cascade on-site. Releases extreme amounts of energy and violently absorbs body heat.
