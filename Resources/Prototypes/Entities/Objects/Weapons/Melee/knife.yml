@@ -96,6 +96,7 @@
         Slash: 12
   - type: EmbeddableProjectile
     sound: /Audio/Weapons/star_hit.ogg
+    offset: -0.15,0.0
   - type: LandAtCursor
   - type: DamageOtherOnHit
     damage:
@@ -108,6 +109,8 @@
       sprite: Objects/Weapons/Melee/combat_knife.rsi
   - type: DisarmMalus
     malus: 0.225
+  - type: ThrowingAngle
+    angle: 225
 
 - type: entity
   name: survival knife
@@ -140,6 +143,7 @@
         Slash: 15
   - type: Item
     sprite: Objects/Weapons/Melee/kukri_knife.rsi
+    storedSprite: null
 
 - type: entity
   parent: ClothingHeadHatGreyFlatcap
@@ -286,6 +290,7 @@
         Slash: 5
   - type: EmbeddableProjectile
     sound: /Audio/Weapons/star_hit.ogg
+    offset: -0.15,0.0
   - type: LandAtCursor
   - type: DamageOtherOnHit
     ignoreResistances: true
@@ -295,3 +300,5 @@
         Piercing: 15
   - type: Item
     sprite: Objects/Weapons/Melee/throwing_knife.rsi
+  - type: ThrowingAngle
+    angle: 225
