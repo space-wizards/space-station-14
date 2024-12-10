@@ -3,6 +3,7 @@
   startingInventory:
     SecurityWhistle: 5
     Handcuffs: 8
+    EnergyBola: 5
     GrenadeFlashBang: 4
     TearGasGrenade: 4
     ClusterBangFull: 2
