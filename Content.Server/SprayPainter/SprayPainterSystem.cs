@@ -1,5 +1,5 @@
-using Content.Server.Atmos.Piping.Components;
-using Content.Server.Atmos.Piping.EntitySystems;
+using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.SprayPainter;
