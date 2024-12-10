@@ -138,6 +138,14 @@
   copyright: "Taken from ParadiseSS13"
   source: "https://github.com/ParadiseSS13/Paradise/commit/a34f1054cef5a44a67fdac3b67b811137c6071dd"
 
+- files: 
+    - "sheep1.ogg"
+    - "sheep2.ogg"
+    - "sheep3.ogg"
+  license: "CC0-1.0"
+  copyright: "Audio is created by freesound.org user 'milkotz', then cut and modified by dragomagol."
+  source: "https://freesound.org/people/milkotz/sounds/618865/"
+
 - files:
     - fox1.ogg
     - fox2.ogg
