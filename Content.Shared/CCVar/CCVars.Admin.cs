@@ -160,4 +160,26 @@ public sealed partial class CCVars
 
     public static readonly CVarDef<bool> BanHardwareIds =
         CVarDef.Create("ban.hardware_ids", true, CVar.SERVERONLY);
+
+    /// <summary>
+    /// If this many aHelps have occured in a round, the server will automatically go into panic bunker mode.
+    /// Will respect <see cref="PanicBunkerDisableWithAdmins"/> and will only ever activate at most once per round.
+    /// If zero or less, the feature is disabled.
+    /// </summary>
+    public static readonly CVarDef<int> ActivatePanicBunkerAhelpsPerRound =
+        CVarDef.Create("admin.activate_panic_bunker_after_ahelps", 12, CVar.SERVERONLY);
+
+    /// <summary>
+    /// If <see cref="ActivatePanicBunkerAhelpsAmount"/> aHelps have been received in <see cref="ActivatePanicBunkerAhelpsTime"/> many minutes,
+    /// the server will automatically go into panic bunker mode.
+    /// Will respect <see cref="PanicBunkerDisableWithAdmins"/> and will only ever activate at most once per round.
+    /// Set either value to 0 or less to disable.
+    /// </summary>
+    public static readonly CVarDef<int> ActivatePanicBunkerAhelpsTime =
+        CVarDef.Create("admin.activate_panic_bunker_received_ahelps_time", 10, CVar.SERVERONLY);
+
+    /// <inheritdoc cref="ActivatePanicBunkerAhelpsTime"/>
+    public static readonly CVarDef<int> ActivatePanicBunkerAhelpsAmount =
+        CVarDef.Create("admin.activate_panic_bunker_received_ahelps_amount", 6, CVar.SERVERONLY);
+
 }
