@@ -216,7 +216,7 @@
   description: uplink-toolboxnt-desc
   productEntity: ToolboxNanotrasenFilled
   cost:
-    BluespaceCrystal: 5
+    BluespaceCrystal: 3
   categories:
   - UplinkNtDisruption
 
