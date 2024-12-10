@@ -1,4 +1,4 @@
-using Robust.Shared.Configuration;
+﻿using Robust.Shared.Configuration;
 
 namespace Content.Shared.CCVar;
 
@@ -74,5 +74,5 @@ public sealed partial class CCVars
         ///     Jukebox volume.
         /// </summary>
         public static readonly CVarDef<float> JukeboxVolume =
-                CVarDef.Create("audio.jukebox_volume", 0.50f, CVar.ARCHIVE | CVar.CLIENTONLY);
+            CVarDef.Create("audio.jukebox_volume", 0.50f, CVar.ARCHIVE | CVar.CLIENTONLY);
 }
