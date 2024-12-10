@@ -32,6 +32,10 @@
   components:
   - type: Stack
     stackType: GoldOre
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: gold
   - type: Material
@@ -65,6 +69,10 @@
   components:
   - type: Stack
     stackType: DiamondOre
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: diamond
   - type: Material
@@ -98,6 +106,10 @@
   components:
   - type: Stack
     stackType: SteelOre
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: iron
   - type: Material
@@ -131,6 +143,10 @@
   components:
   - type: Stack
     stackType: PlasmaOre
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: plasma
   - type: Material
@@ -169,6 +185,10 @@
   components:
   - type: Stack
     stackType: SilverOre
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: silver
   - type: Material
@@ -202,6 +222,10 @@
   components:
   - type: Stack
     stackType: SpaceQuartz
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: spacequartz
   - type: Material
@@ -235,6 +259,10 @@
   components:
   - type: Stack
     stackType: UraniumOre
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: uranium
   - type: Material
@@ -276,6 +304,10 @@
   components:
   - type: Stack
     stackType: BananiumOre
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: bananium
   - type: Material
@@ -318,6 +350,10 @@
   components:
   - type: Stack
     stackType: Coal
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: coal
   - type: Material
@@ -383,6 +419,10 @@
   components:
   - type: Stack
     stackType: SaltOre
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: salt
   - type: Material

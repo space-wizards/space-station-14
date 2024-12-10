@@ -38,6 +38,10 @@
     - rods_3
     - rods_4
     - rods_5
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: rods_5
     layers:
