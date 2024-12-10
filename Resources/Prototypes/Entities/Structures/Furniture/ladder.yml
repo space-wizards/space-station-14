@@ -21,6 +21,8 @@
   - type: Climbable
   - type: Clickable
   - type: Ladderdown
+  - type: Sprite
+    sprite: Structures/Furniture/Altars/Cults/fangs.rsi
 
 - type: entity
   id: LadderUpBase
