@@ -41,15 +41,12 @@ public sealed partial class ChangelingDevourComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public float DevourConsumeTime = 10f;
-    
+
     /// <summary>
     /// Damage cap that a target is allowed to be caused due to IdentityConsumption
     /// </summary>
     [DataField, AutoNetworkedField]
     public float DevourConsumeDamageCap = 350f;
-
-    // public ChangelingDevourWindupDoAfterEvent? CurrentWindupEvent = null;
-    // public ChangelingDevourConsumeDoAfterEvent? CurrentDevourEvent = null;
 
     [DataField, AutoNetworkedField]
     public EntityUid? CurrentDevourSound;

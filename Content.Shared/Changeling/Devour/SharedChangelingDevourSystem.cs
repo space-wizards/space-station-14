@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Content.Shared.Actions;
 using Content.Shared.Armor;
+using Content.Shared.Atmos.Rotting;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems;
@@ -17,8 +18,10 @@ using Content.Shared.DoAfter;
 using Content.Shared.Forensics;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement.Components;
+using Content.Shared.Materials;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.NameModifier.Components;
+using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Speech.Components;
 using Content.Shared.Wagging;
@@ -48,6 +51,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
     [Dependency] private readonly EntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedChangelingIdentitySystem _changelingIdentitySystem = default!;
+
 
     public override void Initialize()
     {
@@ -101,11 +105,15 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
             return;
         if(!TryComp<ContainerManagerComponent>(args.Target, out var containerManager))
             return;
-        var curTime = _timing.CurTime;
-        component.NextTick = curTime + TimeSpan.FromSeconds(15); // Prevent someone from spamming and canceling the Action repeatedly and doing absurd damage due to DoAfter's continuing onwards on cancel
-        args.Handled = true;
 
+        args.Handled = true;
         var target = args.Target;
+
+        if (HasComp<RottingComponent>(target)) // if the Target is rotting, don't eat it
+        {
+            _popupSystem.PopupClient(Loc.GetString("changeling-attempt-failed-rotting"), args.Performer, args.Performer, PopupType.Medium);
+            return;
+        }
 
         if (containerManager.Containers.TryGetValue("outerClothing", out var outerClothing)
             && outerClothing.Count > 0) // Somehow they don't have an outerClothing slot... somehow, so like... we'll just eat the target anyways
@@ -121,6 +129,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
                 return;
             }
         }
+
         if (HasComp<ChangelingHuskedCorpseComponent>(target))
         {
             _popupSystem.PopupClient(Loc.GetString("changeling-devour-failed-husk"), args.Performer, args.Performer);
@@ -132,7 +141,6 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
             BlockDuplicate = true,
             DuplicateCondition = DuplicateConditions.None,
         });
-
         _popupSystem.PopupPredicted(Loc.GetString("changeling-devour-begin-windup"), args.Performer, null, PopupType.MediumCaution);
 
     }
@@ -152,6 +160,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
             null,
             PopupType.LargeCaution);
         StartSound(uid, component);
+
         component.NextTick = curTime + TimeSpan.FromSeconds(1);
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
@@ -173,6 +182,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
     {
         args.Handled = true;
         var target = args.Target;
+
         if (target == null)
             return;
 
@@ -191,23 +201,39 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
             return;
         }
         _popupSystem.PopupPredicted(Loc.GetString("changeling-devour-consume-complete"), args.User, null, PopupType.LargeCaution);
-        if (_mobState.IsDead((EntityUid)target)
+        if (_mobState.IsDead(target.Value)
             && TryComp<BodyComponent>(target, out var body)
             && TryComp<HumanoidAppearanceComponent>(target, out _)
-            && TryComp<ChangelingIdentityComponent>(args.User, out var identityStorage))
+            && TryComp<ChangelingIdentityComponent>(args.User, out var identityStorage)
+            && TryComp<ContainerManagerComponent>(args.Target, out var containerManager))
         {
-            _changelingIdentitySystem.CloneToNullspace(uid, identityStorage, (EntityUid)target);
-            EnsureComp<ChangelingHuskedCorpseComponent>((EntityUid)target);
+            _changelingIdentitySystem.CloneToNullspace(uid, identityStorage, target.Value);
+            EnsureComp<ChangelingHuskedCorpseComponent>(target.Value);
 
             foreach (var organ in _bodySystem.GetBodyOrgans(target, body))
             {
                 _entityManager.QueueDeleteEntity(organ.Id);
             }
+
+            if (containerManager.Containers.TryGetValue("jumpsuit", out var jumpsuit)
+                && jumpsuit.Count > 0)
+            {
+                foreach (var item in jumpsuit.ContainedEntities)
+                {
+                    if (!TryComp<ButcherableComponent>(item, out var butcherable))
+                        continue;
+                    RipClothing(target.Value, item, butcherable);
+                }
+            }
         }
         Dirty(uid, component);
     }
-    public virtual void StartSound(EntityUid uid, ChangelingDevourComponent component){ }
-    public virtual void StopSound(EntityUid uid, ChangelingDevourComponent component) { }
+
+    protected virtual void StartSound(EntityUid uid, ChangelingDevourComponent component){ }
+    protected virtual void StopSound(EntityUid uid, ChangelingDevourComponent component) { }
+
+    protected virtual void RipClothing(EntityUid uid, EntityUid item, ButcherableComponent butcherable) { }
+
 }
 
 
@@ -219,24 +245,5 @@ public sealed partial class ChangelingDevourWindupDoAfterEvent : SimpleDoAfterEv
 [Serializable, NetSerializable]
 public sealed partial class ChangelingDevourConsumeDoAfterEvent : SimpleDoAfterEvent { }
 
-public struct ChangelingKillSoundEvent
-{
-    public bool Handled { get; set; }
-    public EntityUid sound { get; }
 
-    public ChangelingKillSoundEvent(EntityUid Sound)
-    {
-        sound = Sound;
-        Handled = false;
-    }
-}
 
-[ByRefEvent]
-public struct ChangelingDevourFailedOnHuskEvent
-{
-    public bool Handled;
-    public ChangelingDevourFailedOnHuskEvent()
-    {
-        Handled = false;
-    }
-}
