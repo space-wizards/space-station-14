@@ -83,8 +83,14 @@ public abstract class SharedSpittableContainerSystem : EntitySystem
 
     private void OnSpitFromContainerAction(Entity<SpittableContainerComponent> ent, ref SpitFromContainerActionEvent args)
     {
-        if (args.Handled || ent.Comp.Container.Count == 0)
+        if (args.Handled)
             return;
+
+        if (ent.Comp.Container.Count == 0)
+        {
+            _popupSystem.PopupClient(Loc.GetString("spittable-container-spit-empty"), ent.Owner, ent.Owner);
+            return;
+        }
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, ent.Owner, ent.Comp.SpitTime, new SpitFromContainerDoAfterEvent(), ent.Owner));
 
