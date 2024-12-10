@@ -9,7 +9,7 @@ public sealed partial class TargetObjectiveComponent : Component
     /// Locale id for the objective title.
     /// It is passed "targetName" and "job" arguments.
     /// </summary>
-    [DataField(required: true), ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
     public string Title = string.Empty;
 
     /// <summary>
