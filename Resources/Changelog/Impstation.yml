@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Armblades finally have a hit sound.
-    type: Add
-  id: 211
-  time: '2024-09-18T05:36:48.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/273
-- author: starlighthowls
-  changes:
-  - message: couple white whale changes
-    type: Tweak
-  - message: added AI to WW and put back in rotation
-    type: Add
-  id: 212
-  time: '2024-09-18T05:38:42.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/279
 - author: aada
   changes:
   - message: 500 cigarettes moved to the emag inventory of cigVend.
@@ -4510,3 +4494,23 @@
   id: 710
   time: '2024-12-10T16:32:17.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/947
+- author: Kandiyaki
+  changes:
+  - message: changed up the cryogenic sting to no longer have a chance to cause sleep.
+    type: Tweak
+  - message: changed up the lethargic sting so it has a chance to cause sleep, and
+      no longer mutes victims.
+    type: Tweak
+  - message: changed up the mute sting so it mutes the victim for 3 minutes instead
+      of 5.
+    type: Tweak
+  id: 711
+  time: '2024-12-10T21:11:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/983
+- author: hivehum
+  changes:
+  - message: The greytide virus will infect much less often.
+    type: Tweak
+  id: 712
+  time: '2024-12-10T21:11:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/981
