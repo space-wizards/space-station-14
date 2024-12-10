@@ -474,6 +474,9 @@
   id: DoorElectronics
 
 - type: Tag
+  id: Donksoftfoam
+
+- type: Tag
   id: DoorElectronicsConfigurator
 
 - type: Tag
@@ -828,6 +831,9 @@
 
 - type: Tag
   id: MagazineGrenade
+
+- type: Tag
+  id: MagazineFoamBox #Donksoft represent!
 
 # Magazines end
 
