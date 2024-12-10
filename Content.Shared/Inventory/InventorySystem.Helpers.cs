@@ -106,8 +106,8 @@ public partial class InventorySystem
     /// Will attempt to spawn an item inside of an entities bag, pockets, hands or nearby
     /// </summary>
     /// <param name="entity">The entity that you want to spawn an item on</param>
-    /// <param name="item">The prototype ID that you want to spawn in the bag.</param>
-    public void SpawnItemOnEntity(EntityUid entity, EntProtoId item)
+    /// <param name="itemProto">The prototype ID that you want to spawn in the bag.</param>
+    public void SpawnItemOnEntity(EntityUid entity, EntProtoId itemProto)
     {
         //Transform() throws error if TransformComponent doesnt exist
         if (!HasComp<TransformComponent>(entity))
@@ -116,8 +116,18 @@ public partial class InventorySystem
         var xform = Transform(entity);
         var mapCoords = _transform.GetMapCoordinates(xform);
 
-        var itemToSpawn = Spawn(item, mapCoords);
+        var itemToSpawn = Spawn(itemProto, mapCoords);
 
+        GiveItemToEntity(entity, itemToSpawn);
+    }
+
+    /// <summary>
+    /// Will attempt to give an entity the given item by inserting it into their backpack, pockets or hands.
+    /// </summary>
+    /// <param name="entity">The entity that you want to give the item to.</param>
+    /// <param name="item">The entity that you want to insert into the bag.</param>
+    public void GiveItemToEntity(EntityUid entity, EntityUid itemToSpawn)
+    {
         //Try insert into the backpack
         if (TryGetSlotContainer(entity, "back", out var backSlot, out _)
             && backSlot.ContainedEntity.HasValue
@@ -138,5 +148,23 @@ public partial class InventorySystem
 
         //Try insert into hands, or drop on the floor
         _handsSystem.PickupOrDrop(entity, itemToSpawn, false);
+    }
+
+    /// <summary>
+    ///     Will return true if the entity has room for the item in their backpack, pockets, or hands and false if not.
+    /// </summary>
+    /// <param name="entity">The entity that you want to check if it has enough room for item.</param>
+    /// <param name="item">The uid of the item you want to insert.</param>
+    public bool CanItemFitOnEntity(EntityUid entity, EntityUid item)
+    {
+        var canFit = TryGetSlotContainer(entity, "back", out var backSlot, out _) && backSlot.ContainedEntity.HasValue && _storageSystem.CanInsert(backSlot.ContainedEntity.Value, item, out _);
+
+        canFit |= TryGetSlotContainer(entity, "pocket1", out var pocket1, out _) && _containerSystem.CanInsert(item, pocket1);
+
+        canFit |= TryGetSlotContainer(entity, "pocket2", out var pocket2, out _) && _containerSystem.CanInsert(item, pocket2);
+
+        canFit |= _handsSystem.CanPickupAnyHand(entity, item, false);
+
+        return canFit;
     }
 }
