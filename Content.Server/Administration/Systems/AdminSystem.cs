@@ -244,7 +244,7 @@ public sealed class AdminSystem : EntitySystem
 
         RoleTypePrototype roleType = new();
         var startingRole = string.Empty;
-        if (_minds.TryGetMind(session, out var mindId, out _))
+        if (_minds.TryGetMind(session, out var mindId, out var mindComp))
         {
             if (TryComp<MindComponent>(mindId, out var mindComp))
             {
