@@ -35,6 +35,7 @@
   - HamtrPeripheralsElectronics
   - MechEquipmentGrabberSmall
   - VimHarness
+  - HydroponicsSunflowerHardSuit
 
 - type: technology
   id: AudioVisualCommunication
