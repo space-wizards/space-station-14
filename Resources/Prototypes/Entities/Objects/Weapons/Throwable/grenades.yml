@@ -511,13 +511,13 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 1
+        damage: 10
       behaviors:
       - !type:TriggerBehavior
   - type: DamageOnLand
     damage:
       types:
-        Blunt: 3
+        Blunt: 10
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: beachball
