@@ -92,6 +92,16 @@
   categories:
   - UplinkNtExplosives
 
+- type: listing
+  id: UplinkEnergyBomb
+  name: uplink-energybomb-name
+  description: uplink-energybomb-desc
+  productEntity: EnergyBomb
+  cost:
+    BluespaceCrystal: 15
+  categories:
+  - UplinkNtExplosives
+  
 ## AMMO
 
 - type: listing
