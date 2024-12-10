@@ -37,6 +37,11 @@ internal sealed class AdminNameOverlay : Overlay
     {
         var viewport = args.WorldAABB;
 
+        //TODO make this adjustable via GUI
+        var filter = new List<RoleEnum>(){ RoleEnum.SoloAntagonist, RoleEnum.TeamAntagonist, RoleEnum.SiliconAntagonist, RoleEnum.FreeAgent };
+        //TODO make this adjustable via GUI
+        var classic = _config.GetCVar(CCVars.AdminOverlayClassic);
+
         foreach (var playerInfo in _system.PlayerList)
         {
             var entity = _entityManager.GetEntity(playerInfo.NetEntity);
@@ -67,12 +72,8 @@ internal sealed class AdminNameOverlay : Overlay
                                                               new Angle(-_eyeManager.CurrentEye.Rotation).RotateVec(
                                                                   aabb.TopRight - aabb.Center)) + new Vector2(1f, 7f);
 
-            //TODO make this adjustable via GUI
-            var classic = _config.GetCVar(CCVars.AdminOverlayClassic);
             var label = Loc.GetString(playerInfo.RoleProto.Name).ToUpper();
             var color = playerInfo.RoleProto.Color;
-            //TODO make this adjustable via GUI
-            var filter = new List<RoleEnum>(){RoleEnum.SoloAntagonist, RoleEnum.TeamAntagonist, RoleEnum.SiliconAntagonist, RoleEnum.FreeAgent};
 
             if (classic)
             {
