@@ -919,6 +919,9 @@
   id: Ointment
 
 - type: Tag
+  id: Omnivorous
+
+- type: Tag
   id: Ore
 
 - type: Tag
