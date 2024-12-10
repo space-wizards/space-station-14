@@ -298,6 +298,11 @@ namespace Content.Shared.Examine
     /// </summary>
     public sealed class ExaminedEvent : EntityEventArgs
     {
+#if DEBUG
+        private static ISawmill Log = IoCManager.Resolve<ILogManager>()
+                .GetSawmill(nameof(ExaminedEvent));
+#endif
+
         /// <summary>
         ///     The message that will be displayed as the examine text.
         ///     You should use <see cref="PushMarkup"/> and similar instead to modify this,
@@ -370,6 +375,16 @@ namespace Content.Shared.Examine
             // tolist/clone formatted message so calling this multiple times wont fuck shit up
             // (if that happens for some reason)
             var parts = Parts.ToList();
+#if DEBUG
+            // in debug mode, show empty message groups and print a warning
+            foreach (var part in parts)
+                if (part.Message.Count == 0)
+                    Log.Warning($"Examine group `{part.Group ?? "unknown-group"}` is empty. Please avoid this!");
+#else
+            // in release mode, remove empty message groups
+            parts.RemoveAll(p => p.Message.Count == 0);
+#endif
+
             var totalMessage = new FormattedMessage(Message);
             parts.Sort(Comparison);
 
@@ -380,6 +395,10 @@ namespace Content.Shared.Examine
 
             foreach (var part in parts)
             {
+#if DEBUG
+                if (part.Message.Count > 0 && part.Message[^1].ToString().EndsWith('\n'))
+                    Log.Warning($"Examine group `{part.Group ?? "unknown-group"}` ends with a trailing newline. Please avoid this!");
+#endif
                 totalMessage.AddMessage(part.Message);
                 if (part.DoNewLine && parts.Last() != part)
                     totalMessage.PushNewline();
