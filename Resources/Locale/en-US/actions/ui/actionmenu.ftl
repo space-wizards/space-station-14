@@ -4,10 +4,12 @@ ui-actionmenu-title = Actions
 ui-actionmenu-filter-label = Filters: {$selectedLabels}
 ui-actionmenu-filter-button = Filter
 ui-actionmenu-search-bar-placeholder-text = Search
-ui-actionmenu-clear-button = Clear
 
-ui-actionsui-function-lock-action-slots = (Un)lock dragging and clearing action slots
-ui-actionsui-function-open-abilities-menu = Open action menu
+ui-actionmenu-clear-filter-button = Clear filter
+ui-actionmenu-lock-button = Lock actionbar
+ui-actionmenu-unlock-button = Unlock actionbar
+ui-actionmenu-clear-actions-button = Clear actionbar
+ui-actionmenu-phantom-action-tooltip = You are missing something required to perform this action
 
 ui-actionmenu-enabled = Enabled
 ui-actionmenu-item = Item
