@@ -50,6 +50,7 @@ public sealed class FaxSystem : EntitySystem
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly FaxecuteSystem _faxecute = default!;
+    [Dependency] private readonly SharedPaperQuantumSystem _quantum = default!;
 
     private const string PaperSlotId = "Paper";
 
@@ -292,8 +293,9 @@ public sealed class FaxSystem : EntitySystem
                     args.Data.TryGetValue(FaxConstants.FaxPaperStampedByData, out List<StampDisplayInfo>? stampedBy);
                     args.Data.TryGetValue(FaxConstants.FaxPaperPrototypeData, out string? prototypeId);
                     args.Data.TryGetValue(FaxConstants.FaxPaperLockedData, out bool? locked);
+                    args.Data.TryGetValue(FaxConstants.FaxPaperSourceEnt, out EntityUid? sourceEnt);
 
-                    var printout = new FaxPrintout(content, name, label, prototypeId, stampState, stampedBy, locked ?? false);
+                    var printout = new FaxPrintout(content, name, label, prototypeId, stampState, stampedBy, locked ?? false, sourceEnt);
                     Receive(uid, printout, args.SenderAddress);
 
                     break;
@@ -463,7 +465,9 @@ public sealed class FaxSystem : EntitySystem
                                        metadata.EntityPrototype?.ID ?? component.PrintPaperId,
                                        paper.StampState,
                                        paper.StampedBy,
-                                       paper.EditingDisabled);
+                                       paper.EditingDisabled,
+                                       sendEntity);
+        Log.Debug(ToPrettyString(sendEntity));
 
         component.PrintingQueue.Enqueue(printout);
         component.SendTimeoutRemaining += component.SendTimeout;
@@ -514,6 +518,7 @@ public sealed class FaxSystem : EntitySystem
             { FaxConstants.FaxPaperLabelData, labelComponent?.CurrentLabel },
             { FaxConstants.FaxPaperContentData, paper.Content },
             { FaxConstants.FaxPaperLockedData, paper.EditingDisabled },
+            { FaxConstants.FaxPaperSourceEnt, sendEntity },
         };
 
         if (metadata.EntityPrototype != null)
@@ -579,21 +584,9 @@ public sealed class FaxSystem : EntitySystem
         var entityToSpawn = printout.PrototypeId.Length == 0 ? component.PrintPaperId.ToString() : printout.PrototypeId;
         var printed = EntityManager.SpawnEntity(entityToSpawn, Transform(uid).Coordinates);
 
-        if (TryComp<PaperComponent>(printed, out var paper))
-        {
-            _paperSystem.SetContent((printed, paper), printout.Content);
-
-            // Apply stamps
-            if (printout.StampState != null)
-            {
-                foreach (var stamp in printout.StampedBy)
-                {
-                    _paperSystem.TryStamp((printed, paper), stamp, printout.StampState);
-                }
-            }
-
-            paper.EditingDisabled = printout.Locked;
-        }
+        _paperSystem.Fill(printed, printout.Content, printout.StampState, printout.StampedBy, printout.Locked);
+        if (printout.SourceEnt is not null)
+            _quantum.TryTransferQuantum(printout.SourceEnt.Value, printed);
 
         _metaData.SetEntityName(printed, printout.Name);
 

@@ -1358,6 +1358,6 @@
   id: Write
 
 - type: Tag
-  id: WriteIgnoreStamps
+  id: WriteIgnoreRestrictions
 
 # ALPHABETICAL

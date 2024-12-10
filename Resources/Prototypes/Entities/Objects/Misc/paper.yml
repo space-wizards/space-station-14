@@ -700,3 +700,20 @@
       - !type:EmptyAllContainersBehaviour
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+
+- type: entity
+  parent: Paper
+  id: PaperQuantum
+  name: "quantum paper"
+  description: "Catastrophic consequences of accidentally bluespacing 384 megatons of paper to satisfy a single request to a malfunctioning printer still echo throughout the galaxy."
+  components:
+  - type: Superposed
+  - type: PaperQuantum
+    damage:
+      types:
+        Slash: 50
+  - type: Explosive
+    explosionType: FireBomb
+    totalIntensity: 2
+    deleteAfterExplosion: false
+    canCreateVacuum: false
