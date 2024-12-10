@@ -67,6 +67,7 @@ namespace Content.Server.Atmos.EntitySystems
             _physicsQuery = GetEntityQuery<PhysicsComponent>();
 
             SubscribeLocalEvent<FlammableComponent, MapInitEvent>(OnMapInit);
+            SubscribeLocalEvent<FlammableComponent, AfterInteractEvent>(OnInteract);
             SubscribeLocalEvent<FlammableComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<FlammableComponent, StartCollideEvent>(OnCollide);
             SubscribeLocalEvent<FlammableComponent, IsHotEvent>(OnIsHot);
@@ -137,6 +138,25 @@ namespace Content.Server.Atmos.EntitySystems
 
             _fixture.TryCreateFixture(uid, component.FlammableCollisionShape, component.FlammableFixtureID, hard: false,
                 collisionMask: (int) CollisionGroup.FullTileLayer, body: body);
+        }
+
+        /// <summary>
+        /// Using something flammable on something that's hot (fireplace, e-sword, lighter) will ignite the item
+        /// Example: burning paper by using it on a fireplace
+        /// </summary>
+        private void OnInteract(Entity<FlammableComponent> entity, ref AfterInteractEvent args)
+        {
+            if (args.Handled || args.Target == null)
+                return;
+
+            var isHotEvent = new IsHotEvent();
+            RaiseLocalEvent(args.Target.Value, isHotEvent);
+
+            if (!isHotEvent.IsHot)
+                return;
+
+            Ignite(entity, args.Used, entity.Comp, args.User);
+            args.Handled = true;
         }
 
         private void OnInteractUsing(EntityUid uid, FlammableComponent flammable, InteractUsingEvent args)
