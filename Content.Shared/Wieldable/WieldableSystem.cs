@@ -18,7 +18,9 @@ using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Wieldable.Components;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Wieldable;
@@ -35,139 +37,217 @@ public sealed class WieldableSystem : EntitySystem
     [Dependency] private readonly SharedGunSystem _gun = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly INetManager _netManager = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<WieldableComponent, UseInHandEvent>(OnUseInHand, before: [typeof(SharedGunSystem)]);
-        SubscribeLocalEvent<WieldableComponent, ItemUnwieldedEvent>(OnItemUnwielded);
         SubscribeLocalEvent<WieldableComponent, GotUnequippedHandEvent>(OnItemLeaveHand);
         SubscribeLocalEvent<WieldableComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
         SubscribeLocalEvent<WieldableComponent, GetVerbsEvent<InteractionVerb>>(AddToggleWieldVerb);
         SubscribeLocalEvent<WieldableComponent, HandDeselectedEvent>(OnDeselectWieldable);
 
         SubscribeLocalEvent<MeleeRequiresWieldComponent, AttemptMeleeEvent>(OnMeleeAttempt);
+        SubscribeLocalEvent<IncreaseDamageOnWieldComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
+
         SubscribeLocalEvent<GunRequiresWieldComponent, ExaminedEvent>(OnExamineRequires);
         SubscribeLocalEvent<GunRequiresWieldComponent, ShotAttemptedEvent>(OnShootAttempt);
+
         SubscribeLocalEvent<GunWieldBonusComponent, ItemWieldedEvent>(OnGunWielded);
         SubscribeLocalEvent<GunWieldBonusComponent, ItemUnwieldedEvent>(OnGunUnwielded);
         SubscribeLocalEvent<GunWieldBonusComponent, GunRefreshModifiersEvent>(OnGunRefreshModifiers);
         SubscribeLocalEvent<GunWieldBonusComponent, ExaminedEvent>(OnExamine);
-
-        SubscribeLocalEvent<IncreaseDamageOnWieldComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
     }
 
-    private void OnMeleeAttempt(EntityUid uid, MeleeRequiresWieldComponent component, ref AttemptMeleeEvent args)
+    /// <summary>
+    /// Attempt to attack with a gun that requires being wielded to melee attack
+    /// </summary>
+    /// <param name="entity">The gun that requires wielding to melee</param>
+    /// <param name="args">Attack attempt event</param>
+    private void OnMeleeAttempt(Entity<MeleeRequiresWieldComponent> entity, ref AttemptMeleeEvent args)
     {
-        if (TryComp<WieldableComponent>(uid, out var wieldable) &&
+        if (TryComp<WieldableComponent>(entity, out var wieldable) &&
             !wieldable.Wielded)
         {
             args.Cancelled = true;
-            args.Message = Loc.GetString("wieldable-component-requires", ("item", uid));
+            args.Message = Loc.GetString("wieldable-component-requires", ("item", entity));
         }
     }
 
-    private void OnShootAttempt(EntityUid uid, GunRequiresWieldComponent component, ref ShotAttemptedEvent args)
+    /// <summary>
+    /// Adds bonus damage to the gun when wielded
+    /// </summary>
+    /// <param name="entity">The gun that receives a bonus to melee damage when wielded</param>
+    /// <param name="args">Melee damage retrieval event</param>
+    private void OnGetMeleeDamage(Entity<IncreaseDamageOnWieldComponent> entity, ref GetMeleeDamageEvent args)
     {
-        if (TryComp<WieldableComponent>(uid, out var wieldable) &&
+        if (!TryComp<WieldableComponent>(entity, out var wieldableComponent))
+            return;
+
+        if (!wieldableComponent.Wielded)
+            return;
+
+        args.Damage += entity.Comp.BonusDamage;
+    }
+
+    /// <summary>
+    /// Attempt to shoot with a gun that requires being wielded to shoot
+    /// </summary>
+    /// <param name="entity">The gun that requires wielding to shoot</param>
+    /// <param name="args">Shot attempt event</param>
+    private void OnShootAttempt(Entity<GunRequiresWieldComponent> entity, ref ShotAttemptedEvent args)
+    {
+        if (TryComp<WieldableComponent>(entity, out var wieldable) &&
             !wieldable.Wielded)
         {
             args.Cancel();
 
             var time = _timing.CurTime;
-            if (time > component.LastPopup + component.PopupCooldown &&
-                !HasComp<MeleeWeaponComponent>(uid) &&
-                !HasComp<MeleeRequiresWieldComponent>(uid))
+            if (time > entity.Comp.LastPopup + entity.Comp.PopupCooldown &&
+                !HasComp<MeleeWeaponComponent>(entity) &&
+                !HasComp<MeleeRequiresWieldComponent>(entity))
             {
-                component.LastPopup = time;
-                var message = Loc.GetString("wieldable-component-requires", ("item", uid));
+                entity.Comp.LastPopup = time;
+                var message = Loc.GetString("wieldable-component-requires", ("item", entity));
                 _popupSystem.PopupClient(message, args.Used, args.User);
             }
         }
     }
 
-    private void OnGunUnwielded(EntityUid uid, GunWieldBonusComponent component, ItemUnwieldedEvent args)
+    /// <summary>
+    /// Updates the gun's aiming bonuses when the gun is unwielded
+    /// </summary>
+    /// <param name="entity">The gun being unwielded</param>
+    /// <param name="args">The unwield event</param>
+    private void OnGunUnwielded(Entity<GunWieldBonusComponent> entity, ref ItemUnwieldedEvent args)
     {
-        _gun.RefreshModifiers(uid);
+        if (TryComp<GunComponent>(entity, out var gunComponent))
+            _gun.RefreshModifiers((entity, gunComponent));
     }
 
-    private void OnGunWielded(EntityUid uid, GunWieldBonusComponent component, ref ItemWieldedEvent args)
+    /// <summary>
+    /// Updates the gun's aiming bonuses when the gun is wielded
+    /// </summary>
+    /// <param name="entity">The gun being wielded</param>
+    /// <param name="args">The wield event</param>
+    private void OnGunWielded(Entity<GunWieldBonusComponent> entity, ref ItemWieldedEvent args)
     {
-        _gun.RefreshModifiers(uid);
+        if (TryComp<GunComponent>(entity, out var gunComponent))
+            _gun.RefreshModifiers((entity, gunComponent));
     }
 
-    private void OnDeselectWieldable(EntityUid uid, WieldableComponent component, HandDeselectedEvent args)
+    /// <summary>
+    /// The gun's modifiers actually being changed when wielded
+    /// </summary>
+    /// <param name="entity">The entity containing the bonuses that the gun should receive</param>
+    /// <param name="args">The modifier event</param>
+    private void OnGunRefreshModifiers(Entity<GunWieldBonusComponent> entity, ref GunRefreshModifiersEvent args)
     {
-        if (!component.Wielded ||
-            _handsSystem.EnumerateHands(args.User).Count() > 2)
-            return;
-
-        TryUnwield(uid, component, args.User);
-    }
-
-    private void OnGunRefreshModifiers(Entity<GunWieldBonusComponent> bonus, ref GunRefreshModifiersEvent args)
-    {
-        if (TryComp(bonus, out WieldableComponent? wield) &&
+        if (TryComp(entity, out WieldableComponent? wield) &&
             wield.Wielded)
         {
-            args.MinAngle += bonus.Comp.MinAngle;
-            args.MaxAngle += bonus.Comp.MaxAngle;
-            args.AngleDecay += bonus.Comp.AngleDecay;
-            args.AngleIncrease += bonus.Comp.AngleIncrease;
+            args.MinAngle += entity.Comp.MinAngle;
+            args.MaxAngle += entity.Comp.MaxAngle;
+            args.AngleDecay += entity.Comp.AngleDecay;
+            args.AngleIncrease += entity.Comp.AngleIncrease;
         }
     }
 
+    /// <summary>
+    /// Attempt to automatically unwield the weapon when the gun is deselected
+    /// </summary>
+    /// <param name="entity">The gun being unwielded</param>
+    /// <param name="args">The hand deslection event</param>
+    private void OnDeselectWieldable(Entity<WieldableComponent> entity, ref HandDeselectedEvent args)
+    {
+        if (!entity.Comp.Wielded ||
+            _handsSystem.EnumerateHands(args.User).Count() > 2)
+            return;
+
+        TryUnwield(entity, args.User);
+    }
+
+    /// <summary>
+    /// Notifies the user in the examine text that the gun requires wielding to shoot
+    /// </summary>
+    /// <param name="entity">The gun that requires wielding</param>
+    /// <param name="args">The examine event on the gun</param>
     private void OnExamineRequires(Entity<GunRequiresWieldComponent> entity, ref ExaminedEvent args)
     {
         if(entity.Comp.WieldRequiresExamineMessage != null)
             args.PushText(Loc.GetString(entity.Comp.WieldRequiresExamineMessage));
     }
 
-    private void OnExamine(EntityUid uid, GunWieldBonusComponent component, ref ExaminedEvent args)
+    /// <summary>
+    /// Notifies the user in the examine text that the gun fires more accurately when wielded
+    /// </summary>
+    /// <param name="entity">The gun that gains a bonus when being wielded</param>
+    /// <param name="args">The examine event on the gun</param>
+    private void OnExamine(Entity<GunWieldBonusComponent> entity, ref ExaminedEvent args)
     {
-        if (HasComp<GunRequiresWieldComponent>(uid))
+        if (HasComp<GunRequiresWieldComponent>(entity))
             return;
 
-        if (component.WieldBonusExamineMessage != null)
-            args.PushText(Loc.GetString(component.WieldBonusExamineMessage));
+        if (entity.Comp.WieldBonusExamineMessage != null)
+            args.PushText(Loc.GetString(entity.Comp.WieldBonusExamineMessage));
     }
 
-    private void AddToggleWieldVerb(EntityUid uid, WieldableComponent component, GetVerbsEvent<InteractionVerb> args)
+    /// <summary>
+    /// Adds the wield or unwield verb to the verb menu
+    /// </summary>
+    /// <param name="entity">The gun that can be wielded</param>
+    /// <param name="args">The event that retrieves verb options for the entity</param>
+    private void AddToggleWieldVerb(Entity<WieldableComponent> entity, ref GetVerbsEvent<InteractionVerb> args)
     {
         if (args.Hands == null || !args.CanAccess || !args.CanInteract)
             return;
 
-        if (!_handsSystem.IsHolding(args.User, uid, out _, args.Hands))
+        if (!_handsSystem.IsHolding(args.User, entity, out _, args.Hands))
             return;
 
         // TODO VERB TOOLTIPS Make CanWield or some other function return string, set as verb tooltip and disable
         // verb. Or just don't add it to the list if the action is not executable.
 
         // TODO VERBS ICON
+        var user = args.User;
         InteractionVerb verb = new()
         {
-            Text = component.Wielded ? Loc.GetString("wieldable-verb-text-unwield") : Loc.GetString("wieldable-verb-text-wield"),
-            Act = component.Wielded
-                ? () => TryUnwield(uid, component, args.User)
-                : () => TryWield(uid, component, args.User)
+            Text = entity.Comp.Wielded ? Loc.GetString("wieldable-verb-text-unwield") : Loc.GetString("wieldable-verb-text-wield"),
+            Act = entity.Comp.Wielded
+                ? () => TryUnwield(entity, user)
+                : () => TryWield(entity,user),
         };
 
         args.Verbs.Add(verb);
     }
 
-    private void OnUseInHand(EntityUid uid, WieldableComponent component, UseInHandEvent args)
+    /// <summary>
+    /// Using the gun in hand either causes the gun to be wielded
+    /// but also potentially can unwield the gun if entity.Comp.UnwieldOnUse is true
+    /// </summary>
+    /// <param name="entity">The gun that can be wielded</param>
+    /// <param name="args">Event thrown when using the gun</param>
+    private void OnUseInHand(Entity<WieldableComponent> entity, ref UseInHandEvent args)
     {
         if (args.Handled)
             return;
 
-        if (!component.Wielded)
-            args.Handled = TryWield(uid, component, args.User);
-        else if (component.UnwieldOnUse)
-            args.Handled = TryUnwield(uid, component, args.User);
+        if (!entity.Comp.Wielded)
+            args.Handled = TryWield(entity, args.User);
+        else if (entity.Comp.UnwieldOnUse)
+            args.Handled = TryUnwield(entity, args.User);
     }
 
-    public bool CanWield(EntityUid uid, WieldableComponent component, EntityUid user, bool quiet = false)
+    /// <summary>
+    /// Checks if the user has enough free hands to wield the gun
+    /// </summary>
+    /// <param name="entity">The gun that can be wielded</param>
+    /// <param name="user">The user holding the gun</param>
+    /// <param name="quiet">When set to true, hides the popup messages that indicate a lack of hands</param>
+    /// <returns></returns>
+    private bool CanWield(Entity<WieldableComponent> entity, EntityUid user, bool quiet = false)
     {
         // Do they have enough hands free?
         if (!EntityManager.TryGetComponent<HandsComponent>(user, out var hands))
@@ -177,20 +257,20 @@ public sealed class WieldableSystem : EntitySystem
             return false;
         }
 
-        // Is it.. actually in one of their hands?
-        if (!_handsSystem.IsHolding(user, uid, out _, hands))
+        // Is it... actually in one of their hands?
+        if (!_handsSystem.IsHolding(user, entity, out _, hands))
         {
             if (!quiet)
-                _popupSystem.PopupClient(Loc.GetString("wieldable-component-not-in-hands", ("item", uid)), user, user);
+                _popupSystem.PopupClient(Loc.GetString("wieldable-component-not-in-hands", ("item", entity)), user, user);
             return false;
         }
 
-        if (_handsSystem.CountFreeableHands((user, hands)) < component.FreeHandsRequired)
+        if (_handsSystem.CountFreeableHands((user, hands)) < entity.Comp.FreeHandsRequired)
         {
             if (!quiet)
             {
                 var message = Loc.GetString("wieldable-component-not-enough-free-hands",
-                    ("number", component.FreeHandsRequired), ("item", uid));
+                    ("number", entity.Comp.FreeHandsRequired), ("item", entity));
                 _popupSystem.PopupClient(message, user, user);
             }
             return false;
@@ -201,30 +281,36 @@ public sealed class WieldableSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Attempts to wield an item, starting a UseDelay after.
+    /// Attempts to wield an item, starting a UseDelay after.
     /// </summary>
+    /// <param name="entity">The gun that can be wielded</param>
+    /// <param name="user">The user holding the gun</param>
     /// <returns>True if the attempt wasn't blocked.</returns>
-    public bool TryWield(EntityUid used, WieldableComponent component, EntityUid user)
+    private bool TryWield(Entity<WieldableComponent> entity, EntityUid user)
     {
-        if (!CanWield(used, component, user))
+        if (!CanWield(entity, user))
             return false;
 
         var ev = new BeforeWieldEvent();
-        RaiseLocalEvent(used, ev);
+        RaiseLocalEvent(entity, ev);
 
         if (ev.Cancelled)
             return false;
 
-        if (TryComp<ItemComponent>(used, out var item))
+        var targEv = new ItemWieldedEvent();
+        RaiseLocalEvent(entity, ref targEv);
+
+        if (TryComp<ItemComponent>(entity, out var itemComponent))
         {
-            component.OldInhandPrefix = item.HeldPrefix;
-            _itemSystem.SetHeldPrefix(used, component.WieldedInhandPrefix, component: item);
+            entity.Comp.OldInhandPrefix = itemComponent.HeldPrefix;
+            _itemSystem.SetHeldPrefix(entity, entity.Comp.WieldedInhandPrefix, component: itemComponent);
         }
 
-        component.Wielded = true;
+        entity.Comp.Wielded = true;
+        Dirty(entity, entity.Comp);
 
-        if (component.WieldSound != null)
-            _audioSystem.PlayPredicted(component.WieldSound, used, user);
+        if (entity.Comp.WieldSound != null)
+            _audioSystem.PlayPredicted(entity.Comp.WieldSound, entity, user);
 
         //This section handles spawning the virtual item(s) to occupy the required additional hand(s).
         //Since the client can't currently predict entity spawning, only do this if this is running serverside.
@@ -232,9 +318,9 @@ public sealed class WieldableSystem : EntitySystem
         if (_netManager.IsServer)
         {
             var virtuals = new List<EntityUid>();
-            for (var i = 0; i < component.FreeHandsRequired; i++)
+            for (var i = 0; i < entity.Comp.FreeHandsRequired; i++)
             {
-                if (_virtualItemSystem.TrySpawnVirtualItemInHand(used, user, out var virtualItem, true))
+                if (_virtualItemSystem.TrySpawnVirtualItemInHand(entity, user, out var virtualItem, true))
                 {
                     virtuals.Add(virtualItem.Value);
                     continue;
@@ -249,88 +335,100 @@ public sealed class WieldableSystem : EntitySystem
             }
         }
 
-        if (TryComp(used, out UseDelayComponent? useDelay)
-            && !_delay.TryResetDelay((used, useDelay), true))
+        if (TryComp(entity, out UseDelayComponent? useDelay)
+            && !_delay.TryResetDelay((entity, useDelay), true))
             return false;
 
-        var selfMessage = Loc.GetString("wieldable-component-successful-wield", ("item", used));
-        var othersMessage = Loc.GetString("wieldable-component-successful-wield-other", ("user", Identity.Entity(user, EntityManager)), ("item", used));
-        _popupSystem.PopupPredicted(selfMessage, othersMessage, user, user);
+        var selfMessage = Loc.GetString("wieldable-component-successful-wield", ("item", entity));
+        var othersMessage = Loc.GetString("wieldable-component-successful-wield-other", ("user", Identity.Entity(user, EntityManager)), ("item", entity));
+        _popupSystem.PopupClient(selfMessage, user, user);
+        _popupSystem.PopupEntity(othersMessage,
+            user,
+            Filter.PvsExcept(user, entityManager: EntityManager)
+                .RemoveWhere(e =>
+                    e.AttachedEntity != null && _container.IsEntityInContainer(user)
+                                             && !_container.IsInSameOrParentContainer(
+                                                 (user, Transform(user)),
+                                                 (e.AttachedEntity.Value, Transform(e.AttachedEntity.Value)))),
+            true);
 
-        var targEv = new ItemWieldedEvent();
-        RaiseLocalEvent(used, ref targEv);
-
-        Dirty(used, component);
         return true;
     }
-
     /// <summary>
-    ///     Attempts to unwield an item, with no DoAfter.
+    /// Attempts to unwield an item, with no DoAfter.
     /// </summary>
+    /// <param name="entity">The gun that can be wielded</param>
+    /// <param name="user">The user holding the gun</param>
+    /// <param name="force">Whether the gun was forced out of the user's hands, hides the unwield popup when true</param>
     /// <returns>True if the attempt wasn't blocked.</returns>
-    public bool TryUnwield(EntityUid used, WieldableComponent component, EntityUid user)
+    private bool TryUnwield(Entity<WieldableComponent> entity, EntityUid user, bool force = false)
     {
         var ev = new BeforeUnwieldEvent();
-        RaiseLocalEvent(used, ev);
+        RaiseLocalEvent(entity, ev);
 
         if (ev.Cancelled)
             return false;
 
-        component.Wielded = false;
-        var targEv = new ItemUnwieldedEvent(user);
+        // Throw unwielded event to update gun modifiers
+        var targEv = new ItemUnwieldedEvent();
+        RaiseLocalEvent(entity, targEv);
 
-        RaiseLocalEvent(used, targEv);
+        if (TryComp<ItemComponent>(entity, out var itemComponent))
+        {
+            _itemSystem.SetHeldPrefix(entity, entity.Comp.OldInhandPrefix, component: itemComponent);
+        }
+
+        if (!force) // don't play sound/popup if this was a forced unwield
+        {
+            if (entity.Comp.UnwieldSound != null)
+                _audioSystem.PlayPredicted(entity.Comp.UnwieldSound, entity, user);
+
+            var selfMessage = Loc.GetString("wieldable-component-failed-wield", ("item", entity));
+            var othersMessage = Loc.GetString("wieldable-component-failed-wield-other", ("user", Identity.Entity(user, EntityManager)), ("item", entity));
+            _popupSystem.PopupClient(selfMessage, user, user);
+            _popupSystem.PopupEntity(othersMessage,
+                user,
+                Filter.PvsExcept(user, entityManager: EntityManager)
+                    .RemoveWhere(e =>
+                        e.AttachedEntity != null && _container.IsEntityInContainer(user)
+                                                 && !_container.IsInSameOrParentContainer(
+                                                     (user, Transform(user)),
+                                                     (e.AttachedEntity.Value, Transform(e.AttachedEntity.Value)))),
+                true);
+        }
+
+        _appearance.SetData(entity, WieldableVisuals.Wielded, false);
+        entity.Comp.Wielded = false;
+        Dirty(entity, entity.Comp);
+        _virtualItemSystem.DeleteInHandsMatching(user, entity);
         return true;
     }
 
-    private void OnItemUnwielded(EntityUid uid, WieldableComponent component, ItemUnwieldedEvent args)
+    /// <summary>
+    /// Unwields the gun if the item leaves the hand forcefully, such as being thrown or disarmed or stripped
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <param name="args"></param>
+    private void OnItemLeaveHand(Entity<WieldableComponent> entity, ref GotUnequippedHandEvent args)
     {
-        if (args.User == null)
+        //
+        if (!entity.Comp.Wielded || entity.Owner != args.Unequipped)
             return;
 
-        if (TryComp<ItemComponent>(uid, out var item))
-        {
-            _itemSystem.SetHeldPrefix(uid, component.OldInhandPrefix, component: item);
-        }
-
-        if (!args.Force) // don't play sound/popup if this was a forced unwield
-        {
-            if (component.UnwieldSound != null)
-                _audioSystem.PlayPredicted(component.UnwieldSound, uid, args.User);
-
-            var selfMessage = Loc.GetString("wieldable-component-failed-wield", ("item", uid));
-            var othersMessage = Loc.GetString("wieldable-component-failed-wield-other", ("user", Identity.Entity(args.User.Value, EntityManager)), ("item", uid));
-            _popupSystem.PopupPredicted(selfMessage, othersMessage, args.User.Value, args.User.Value);
-        }
-
-        _appearance.SetData(uid, WieldableVisuals.Wielded, false);
-
-        Dirty(uid, component);
-        _virtualItemSystem.DeleteInHandsMatching(args.User.Value, uid);
+        TryUnwield(entity, args.User, true);
     }
 
-    private void OnItemLeaveHand(EntityUid uid, WieldableComponent component, GotUnequippedHandEvent args)
+    /// <summary>
+    /// Attempts to unwield the gun when the virtual wield entity is deleted from the hand slot
+    /// such as by using the drop key on the virtual entity or when unwielding the gun
+    /// </summary>
+    /// <param name="entity">The gun being unwielded</param>
+    /// <param name="args">Event thrown when virtual item gets deleted from the hands</param>
+    private void OnVirtualItemDeleted(Entity<WieldableComponent> entity, ref VirtualItemDeletedEvent args)
     {
-        if (!component.Wielded || uid != args.Unequipped)
+        if (args.BlockingEntity != entity.Owner || !entity.Comp.Wielded)
             return;
 
-        RaiseLocalEvent(uid, new ItemUnwieldedEvent(args.User, force: true), true);
-    }
-
-    private void OnVirtualItemDeleted(EntityUid uid, WieldableComponent component, VirtualItemDeletedEvent args)
-    {
-        if (args.BlockingEntity == uid && component.Wielded)
-            TryUnwield(args.BlockingEntity, component, args.User);
-    }
-
-    private void OnGetMeleeDamage(EntityUid uid, IncreaseDamageOnWieldComponent component, ref GetMeleeDamageEvent args)
-    {
-        if (!TryComp<WieldableComponent>(uid, out var wield))
-            return;
-
-        if (!wield.Wielded)
-            return;
-
-        args.Damage += component.BonusDamage;
+        TryUnwield(entity, args.User);
     }
 }
