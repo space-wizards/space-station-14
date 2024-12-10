@@ -1,5 +1,6 @@
 flavor-base-kingsoda = like you're a champion
 flavor-base-drinkdrink = like dogshit
+flavor-base-unholy = unholy
 
 flavor-complex-raktaccino = fantastically bitter
 
@@ -22,5 +23,3 @@ flavor-complex-snotty = like snot
 flavor-complex-speed = like speed
 flavor-base-whimsy = whimsical
 flavor-complex-secticket = like rotten eggs
-
-flavor-base-unholy = unholy
