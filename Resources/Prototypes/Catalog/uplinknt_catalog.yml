@@ -46,7 +46,7 @@
   description: uplink-pistol-N1984-desc
   productEntity: WeaponPistolN1984
   cost:
-    BluespaceCrystal: 10
+    BluespaceCrystal: 8
   categories:
   - UplinkNtWeaponry
 
@@ -56,7 +56,7 @@
   description: uplink-pistol-Mk58-desc
   productEntity: WeaponPistolMk58
   cost:
-    BluespaceCrystal: 3
+    BluespaceCrystal: 2
   categories:
   - UplinkNtWeaponry
 
@@ -271,6 +271,16 @@
   productEntity: BoxEncryptionKeyNanotrasen
   cost:
     BluespaceCrystal: 2
+  categories:
+  - UplinkNtAllies
+
+- type: listing
+  id: UplinkBorgingBundle
+  name: uplink-borging-name
+  description: uplink-borging-desc
+  productEntity: CrateBorgingBundle
+  cost:
+    BluespaceCrystal: 15
   categories:
   - UplinkNtAllies
 
