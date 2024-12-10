@@ -97,3 +97,20 @@
     sprite: _Impstation/Clothing/Ears/Headsets/commandveteranhos.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Ears/Headsets/commandveteranhos.rsi
+
+- type: entity
+  parent: [ClothingHeadsetSecurity, BaseCommandContraband]
+  id: ClothingHeadsetWarden
+  name: warden's headset
+  description: A headset fit for a warden. Just like your old one, but you can hear Command complain, too.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeySecurity
+      - EncryptionKeyCommon
+      - EncryptionKeyCommand
+  - type: Sprite
+    sprite: _Impstation/Clothing/Ears/Headsets/securitywarden.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Ears/Headsets/securitywarden.rsi

@@ -24,6 +24,7 @@
         amount: 2
       - id: RemoteSignaller
         amount: 2
+      - id: ClothingHeadsetWarden
       - id: ClothingOuterHardsuitBrigmedic
 
 - type: entity
@@ -52,6 +53,7 @@
       - id: RemoteSignaller
         amount: 2
       - id: ClothingOuterHardsuitBrigmedic
+      - id: ClothingHeadsetWarden
       - id: TicketPad #imp special
 
 - type: entity
