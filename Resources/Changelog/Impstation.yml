@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: aada
-  changes:
-  - message: 500 cigarettes moved to the emag inventory of cigVend.
-    type: Tweak
-  id: 213
-  time: '2024-09-18T05:37:45.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/275
 - author: widgetbeck
   changes:
   - message: Reduced the thirst cost of Mucin now that it's not OP.
@@ -4514,3 +4507,12 @@
   id: 712
   time: '2024-12-10T21:11:59.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/981
+- author: Saeko-44
+  changes:
+  - message: aquam divinos, an upgrade to holy water for the chaplain
+    type: Add
+  - message: aqua avari, a poison for the chaplain
+    type: Add
+  id: 713
+  time: '2024-12-10T23:55:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/982
