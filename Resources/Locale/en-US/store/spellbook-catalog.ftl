@@ -28,6 +28,9 @@ spellbook-wand-polymorph-door-description = For when you need a get-away route.
 spellbook-wand-polymorph-carp-name = Wand of Carp Polymorph
 spellbook-wand-polymorph-carp-description = For when you need a carp filet quick and the clown is looking juicy.
 
+spellbook-wand-locker-name = Wand of the Locker
+spellbook-wand-locker-description = Shoot cursed lockers at your enemies and lock em away!
+
 # Events
 
 spellbook-event-summon-ghosts-name = Summon Ghosts
