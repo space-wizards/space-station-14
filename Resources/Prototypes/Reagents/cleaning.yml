@@ -79,6 +79,8 @@
     - !type:SpillTileReaction
       requiredSlipSpeed: 1
       superSlippery: true
+  applicationReactions:
+    - !type:ApplyLubeToItemEffect
 
 - type: reagent
   id: SpaceGlue
@@ -92,6 +94,8 @@
   viscosity: 0.5
   tileReactions:
     - !type:SpillTileReaction
+  applicationReactions:
+    - !type:ApplyGlueToItemEffect
   reactiveEffects:
     Acidic:
       methods: [ Touch ]

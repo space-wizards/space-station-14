@@ -98,3 +98,10 @@
     Steel: 200
     Plastic: 300
     Glass: 500
+
+- type: latheRecipe
+  id: SqueezeBottle
+  result: SqueezeBottle
+  completetime: 1
+  materials:
+    Plastic: 200

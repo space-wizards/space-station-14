@@ -273,8 +273,10 @@
       - id: BarberScissors
       - !type:GroupSelector
         children:
-        - id: DrinkSpaceGlue
-        - id: DrinkSpaceLube
+        - id: SqueezeBottleOfGlue
+        - id: SqueezeBottleOfLube
+        - id: SqueezeBottle
+          weight: 0.2
       # Rare Group
     - !type:GroupSelector
       weight: 2
