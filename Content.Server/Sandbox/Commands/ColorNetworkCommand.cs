@@ -1,6 +1,6 @@
 using Content.Server.Administration.Managers;
-using Content.Server.Atmos.Piping.Components;
-using Content.Server.Atmos.Piping.EntitySystems;
+using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.EntitySystems;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Administration;
