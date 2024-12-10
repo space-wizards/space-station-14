@@ -1,4 +1,4 @@
-namespace Content.Server.Nutrition;
+namespace Content.Shared.Nutrition;
 
 /// <summary>
 ///     Raised directed at the consumer when attempting to ingest something.
