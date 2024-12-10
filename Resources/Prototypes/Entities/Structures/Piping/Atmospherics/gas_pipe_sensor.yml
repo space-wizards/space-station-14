@@ -27,6 +27,9 @@
           True: { state: lights }
   - type: AtmosMonitor
     monitorsPipeNet: true
+  - type: GasPipeSensor
+  - type: AtmosMonitoringConsoleDevice
+    navMapBlip: GasPipeSensor
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: Construction

@@ -40,6 +40,9 @@ namespace Content.Server.Atmos.Piping.EntitySystems
                 return;
 
             _appearance.SetData(uid, PipeColorVisuals.Color, color, appearance);
+
+            var ev = new AtmosPipeColorChangedEvent(uid, color);
+            RaiseLocalEvent(uid, ref ev);
         }
     }
 }
