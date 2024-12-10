@@ -2,6 +2,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
 using Content.Shared.UserInterface;
 using Robust.Shared.Audio.Systems;
@@ -47,6 +48,15 @@ public abstract class SharedWiresSystem : EntitySystem
         var sound = panel.Open ? panel.ScrewdriverOpenSound : panel.ScrewdriverCloseSound;
         Audio.PlayPredicted(sound, uid, args.User);
         args.Handled = true;
+    }
+
+    public bool CanWireAct(Entity<ToolComponent?> ent)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp, false))
+            return false;
+
+        return Tool.HasQuality(ent.Owner, SharedToolSystem.CutQuality, tool: ent.Comp) ||
+               Tool.HasQuality(ent.Owner, SharedToolSystem.PulseQuality, tool: ent.Comp);
     }
 
     private void OnInteractUsing(Entity<WiresPanelComponent> ent, ref InteractUsingEvent args)
