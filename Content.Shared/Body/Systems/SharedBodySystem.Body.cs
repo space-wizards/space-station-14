@@ -1,5 +1,3 @@
-using System.Linq;
-using System.Numerics;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
@@ -14,6 +12,8 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
+using System.Linq;
+using System.Numerics;
 
 namespace Content.Shared.Body.Systems;
 
@@ -309,8 +309,8 @@ public partial class SharedBodySystem
         {
 
             _gibbingSystem.TryGibEntityWithRef(bodyId, part.Id, GibType.Gib, GibContentsOption.Skip, ref gibs,
-                playAudio: false, launchGibs:true, launchDirection:splatDirection, launchImpulse: GibletLaunchImpulse * splatModifier,
-                launchImpulseVariance:GibletLaunchImpulseVariance, launchCone: splatCone);
+                playAudio: false, launchGibs: true, launchDirection: splatDirection, launchImpulse: GibletLaunchImpulse * splatModifier,
+                launchImpulseVariance: GibletLaunchImpulseVariance, launchCone: splatCone);
 
             if (!gibOrgans)
                 continue;
@@ -319,7 +319,7 @@ public partial class SharedBodySystem
             {
                 _gibbingSystem.TryGibEntityWithRef(bodyId, organ.Id, GibType.Drop, GibContentsOption.Skip,
                     ref gibs, playAudio: false, launchImpulse: GibletLaunchImpulse * splatModifier,
-                    launchImpulseVariance:GibletLaunchImpulseVariance, launchCone: splatCone);
+                    launchImpulseVariance: GibletLaunchImpulseVariance, launchCone: splatCone);
             }
         }
 
