@@ -7,6 +7,8 @@
     snap:
     - Wall
   components:
+  - type: TileEmission
+    color: "#FF4500"
   - type: StepTrigger
     requiredTriggeredSpeed: 0
     intersectRatio: 0.1
