@@ -15,6 +15,6 @@ public sealed partial class RiggableComponent : Component
     public string Solution = "battery";
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("reagent")]
-    public ReagentQuantity RequiredQuantity = new("Plasma", FixedPoint2.New(5), null);
+    [DataField("reagents")]
+    public ReagentQuantity[] RequiredQuantity = { new("Plasma", FixedPoint2.New(5), null) };
 }

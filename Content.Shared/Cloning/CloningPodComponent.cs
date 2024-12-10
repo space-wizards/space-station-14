@@ -46,15 +46,6 @@ public sealed partial class CloningPodComponent : Component
     [DataField("mobSpawnId"), ViewVariables(VVAccess.ReadWrite)]
     public EntProtoId MobSpawnId = "MobAbomination";
 
-    /// <summary>
-    /// Emag sound effects.
-    /// </summary>
-    [DataField("sparkSound")]
-    public SoundSpecifier SparkSound = new SoundCollectionSpecifier("sparks")
-    {
-        Params = AudioParams.Default.WithVolume(8),
-    };
-
     // TODO: Remove this from here when cloning and/or zombies are refactored
     [DataField("screamSound")]
     public SoundSpecifier ScreamSound = new SoundCollectionSpecifier("ZombieScreams")
