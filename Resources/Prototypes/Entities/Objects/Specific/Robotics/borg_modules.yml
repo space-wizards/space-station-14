@@ -567,3 +567,15 @@
     - type: ItemBorgModule
       items:
         - SelfDestructSeq
+
+- type: entity
+  id: BorgModuleNanotrasenWeapon
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: offensive cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: service
+  - type: ItemBorgModule
+    items:
+    - WeaponNtBlaster
