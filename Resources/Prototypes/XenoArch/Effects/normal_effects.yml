@@ -667,6 +667,7 @@
     maxSpawns: 1
     spawns:
     - id: Singularity
+    - id: SingularityToy # troll
 
 - type: artifactEffect
   id: EffectTesla
@@ -677,3 +678,4 @@
     maxSpawns: 1
     spawns:
     - id: TeslaEnergyBall
+    - id: TeslaToy # troll
