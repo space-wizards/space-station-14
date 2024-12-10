@@ -17,6 +17,9 @@
         <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'emote-menu-category-hands'}" TargetLayer="Hands" Visible="False">
             <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Clothing/Hands/Gloves/latex.rsi/icon.png"/>
         </ui:RadialMenuTextureButton>
+        <ui:RadialMenuTextureButton StyleClasses="RadialMenuButton" SetSize="64 64" ToolTip="{Loc 'emote-menu-category-global-custom'}" TargetLayer="GlobalCustom" Visible="False">
+            <TextureRect VerticalAlignment="Center" HorizontalAlignment="Center" TextureScale="2 2" TexturePath="/Textures/Interface/Emotes/global_custom_emote.png"/>
+        </ui:RadialMenuTextureButton>
     </ui:RadialContainer>
 
     <!-- General -->
@@ -27,5 +30,8 @@
 
     <!-- Hands -->
     <ui:RadialContainer Name="Hands"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
+
+    <!-- Global Custom -->
+    <ui:RadialContainer Name="GlobalCustom"  VerticalExpand="True" HorizontalExpand="True" Radius="64"/>
 
 </ui:RadialMenu>

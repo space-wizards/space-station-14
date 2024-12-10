@@ -52,6 +52,16 @@ public sealed partial class MiscTab : Control
         Control.AddOptionCheckBox(CCVars.ChatEnableFancyBubbles, FancySpeechBubblesCheckBox);
         Control.AddOptionCheckBox(CCVars.ChatFancyNameBackground, FancyNameBackgroundsCheckBox);
         Control.AddOptionCheckBox(CCVars.StaticStorageUI, StaticStorageUI);
+        Control.AddOptionLineEdit(CCVars.GlobalCustomEmote1, GlobalCustomEmote1);
+        Control.AddOptionLineEdit(CCVars.GlobalCustomEmote2, GlobalCustomEmote2);
+        Control.AddOptionLineEdit(CCVars.GlobalCustomEmote3, GlobalCustomEmote3);
+        Control.AddOptionLineEdit(CCVars.GlobalCustomEmote4, GlobalCustomEmote4);
+        Control.AddOptionLineEdit(CCVars.GlobalCustomEmote5, GlobalCustomEmote5);
+        Control.AddOptionLineEdit(CCVars.GlobalCustomEmote6, GlobalCustomEmote6);
+        Control.AddOptionLineEdit(CCVars.GlobalCustomEmote7, GlobalCustomEmote7);
+        Control.AddOptionLineEdit(CCVars.GlobalCustomEmote8, GlobalCustomEmote8);
+        Control.AddOptionLineEdit(CCVars.GlobalCustomEmote9, GlobalCustomEmote9);
+        Control.AddOptionLineEdit(CCVars.GlobalCustomEmote10, GlobalCustomEmote10);
 
         Control.Initialize();
     }
