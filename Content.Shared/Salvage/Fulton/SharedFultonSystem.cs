@@ -89,10 +89,16 @@ public abstract partial class SharedFultonSystem : EntitySystem
 
     private void OnFultonDoAfter(FultonedDoAfterEvent args)
     {
-        if (args.Cancelled || args.Target == null || !TryComp<FultonComponent>(args.Used, out var fulton))
+        if (args.Cancelled || args.Target == null)
             return;
 
-        if (!_stack.Use(args.Used.Value, 1))
+        if (!TryComp<FultonComponent>(args.Used, out var fulton))
+            return;
+
+        if (!TryComp<StackComponent>(args.Used, out var stackComponent))
+            return;
+
+        if (!_stack.Use((args.Used.Value, stackComponent), 1))
         {
             return;
         }
