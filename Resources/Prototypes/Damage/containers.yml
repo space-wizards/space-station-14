@@ -52,3 +52,23 @@
   id: ShadowHaze
   supportedTypes:
     - Heat
+
+- type: damageContainer
+  id: ManifestedSpirit
+  supportedGroups:
+    - Spiritual
+    - Brute
+  supportedTypes:
+    - Heat
+    - Shock
+    - Caustic
+
+- type: damageContainer
+  id: BiologicalSpiritual
+  supportedGroups:
+  - Brute
+  - Burn
+  - Toxin
+  - Airloss
+  - Genetic
+  - Spiritual

@@ -28,7 +28,7 @@
   - type: Body
     prototype: Animal
   - type: Damageable
-    damageContainer: Biological
+    damageContainer: BiologicalSpiritual
     damageModifierSet: HellSpawn
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
