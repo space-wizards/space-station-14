@@ -1,0 +1,264 @@
+- type: entity #behold my abombination, mortal
+  parent: [BaseMob, StripableInventoryBase]
+  id: MobTckTck
+  name: tck'tck
+  description: A borg-like entity manufactured by the Decapoid Empire. Contains a recharger port, and provides power when anchored.
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [Touch]
+  - type: DamageOnHighSpeedImpact
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      collection: MetalThud
+  - type: CombatMode
+  - type: StaticPrice
+    price: 1250
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        density: 100
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2.5
+    baseSprintSpeed : 4.5
+  - type: Sprite
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: tcktck
+      sprite: _Impstation/Mobs/Silicon/Bots/tcktck.rsi
+  - type: RotationVisuals
+    horizontalRotation: 90
+  - type: MobState
+    allowedStates:
+    - Alive
+    - Critical
+    - Dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Critical
+      200: Dead
+    stateAlertDict:
+      Alive: BorgHealth
+      Critical: BorgCrit
+      Dead: BorgDead
+    showOverlays: false
+    allowRevives: true
+  - type: HealthExaminable
+    examinableTypes:
+      - Blunt
+      - Slash
+      - Piercing
+      - Heat
+      - Shock
+    locPrefix: silicon
+  - type: UserInterface
+    interfaces:
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+      enum.BorgUiKey.Key:
+        type: BorgBoundUserInterface
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
+  - type: ActivatableUI
+    key: enum.BorgUiKey.Key
+  - type: SiliconLawBound
+  - type: ActionGrant
+    actions:
+    - ActionViewLaws
+  - type: SiliconLawProvider
+    laws: Tcksimov
+  - type: Inventory
+    templateId: borg
+  - type: Hands
+    showInHands: false
+    disableExplosionRecursion: true
+    canBeStripped: false
+  - type: ComplexInteraction
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+    - Binary
+  - type: ActiveRadio
+    channels:
+    - Common
+    - Binary
+  - type: ZombieImmune
+  - type: Repairable
+    doAfterDelay: 10
+    allowSelfRepair: false
+  - type: LockingWhitelist
+    blacklist:
+      components:
+      - BorgChassis
+      - RoboticsConsole
+  - type: WiresPanel
+  - type: ActivatableUIRequiresPanel
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot { }
+      borg_module: !type:Container { }
+      part-container: !type:Container
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+    fitsInCharger: true
+  - type: ItemToggle
+    onActivate: false # You should not be able to turn off a borg temporarily.
+    activated: false # gets activated when a mind is added
+    onUse: false # no item-borg toggling sorry
+  - type: PowerCellDraw
+    drawRate: 0 #if it doesnt have power nothing works so I just made it 0 drain instead of cutting power entirely
+  # no ToggleCellDraw since dont want to lose access when power is gone
+  - type: Body
+  - type: StatusEffects
+    allowed:
+    - Stun
+    - KnockedDown
+    - SlowedDown
+    - Flashed
+  - type: TypingIndicator
+    proto: robot
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Borg
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSilicon
+  - type: UnblockableSpeech
+  - type: ReplacementAccent
+    accent: silicon
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepBorg
+  - type: Lock
+    locked: true
+    breakOnEmag: false
+    unlockOnClick: false
+  - type: ActivatableUIRequiresLock
+  - type: LockedWiresPanel
+  - type: Damageable
+    damageContainer: Silicon
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Machines/warning_buzzer.ogg
+          params:
+            volume: 5
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:EmptyContainersBehaviour
+        containers:
+        - borg_module
+        - cell_slot
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: HandheldLight
+    toggleOnInteract: false
+    wattage: 0.2
+    blinkingBehaviourId: blinking
+    radiatingBehaviourId: radiating
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour
+      id: radiating
+      maxDuration: 2.0
+      startValue: 3.0
+      endValue: 2.0
+      isLooped: true
+      reverseWhenFinished: true
+    - !type:PulseBehaviour
+      id: blinking
+      interpolate: Nearest
+      maxDuration: 1.0
+      minValue: 0.1
+      maxValue: 2.0
+      isLooped: true
+  - type: ToggleableLightVisuals
+  - type: PointLight
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    radius: 2.5
+    color: "#ff0043"
+    netsync: false
+  - type: Pullable
+  - type: Puller
+    needsHands: false
+  - type: StandingState
+  - type: Tag
+    tags:
+    - DoorBumpOpener
+    - FootstepSound
+    - CanPilot
+  - type: Emoting
+  - type: GuideHelp
+    guides:
+    - Robotics
+  - type: ProtectedFromStepTriggers
+  - type: DamageOnInteractProtection
+    damageProtection:
+      flatReductions:
+        Heat: 10 # capable of touching light bulbs and stoves without feeling pain!
+  - type: BorgChassis
+    maxModules: 1
+  - type: ContainerFill
+    containers:
+      borg_module:
+        - BorgModuleTckTck
+  - type: ApcPowerReceiver
+    needsPower: false
+    powerLoad: 0
+  - type: Charger
+    chargeRate: 40
+    slotId: charger_slot
+    portable: true
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellHyper
+      charger_slot:
+        ejectOnInteract: true
+        whitelist:
+          components:
+          - HitscanBatteryAmmoProvider
+          - ProjectileBatteryAmmoProvider
+          - Stunbaton
+          - PowerCell
+  - type: PowerSupplier
+    supplyRate: 8000
+    supplyRampTolerance: 2000
+    voltage: Apc
+  - type: Anchorable
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      output:
+        !type:CableDeviceNode
+        nodeGroupID: Apc
+  - type: GhostRole
+    makeSentient: true
+    name: Tck'Tck
+    description: Power the station. Power the world.
+    rules: ghost-role-information-silicon-rules
+  - type: GhostTakeoverAvailable

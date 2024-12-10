@@ -10,7 +10,7 @@
       amount: 2
   products:
     Estradiol: 5
-
+    
 - type: reaction
   id: Testosterone
   impact: Medium
@@ -23,3 +23,42 @@
       amount: 2
   products:
     Testosterone: 5
+    
+- type: reaction
+  id: PhilosophersJuice
+  impact: Medium
+  minTemp: 500
+  reactants:
+    TableSalt:
+      amount: 25
+    Silver:
+      amount: 25
+    Gold:
+      amount: 25
+    Plasma:
+      amount: 25
+    Blood:
+      amount: 100
+  products:
+    PhilosophersJuice: 1
+    
+- type: reaction
+  id: Holium
+  impact: High
+  minTemp: 1000
+  reactants:
+    Carbon:
+      amount: 200
+    UncookedAnimalProteins:
+      amount: 50
+    Honk:
+      amount: 50
+    Anomalium:
+      amount: 50
+    Frezon:
+      amount: 50
+    PhilosophersJuice:
+      amount: 1
+      catalyst: true
+  products:
+    Holium: 1

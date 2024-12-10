@@ -9,6 +9,7 @@
     - id: BureaucraticError
     - id: ClericalError
     - id: GasLeak
+    - id: GreytideVirus
     - id: IonStorm # its calm like 90% of the time smh
     - id: KudzuGrowth
     - id: MassHallucinations
@@ -33,6 +34,7 @@
     - id: SleeperAgents
     - id: ZombieOutbreak
     - id: LoneOpsSpawn
+    - id: DerelictCyborgSpawn
     - id: ChangelingAwakening
     - id: GoblinStowawaysEvent # imp
     - id: GoblinCastawaysEvent # imp
@@ -50,6 +52,7 @@
     - id: RevenantSpawn
     - id: ZombieOutbreak
     - id: LoneOpsSpawn
+    - id: DerelictCyborgSpawn
     - id: ChangelingAwakening
     - id: GoblinStowawaysEvent # imp
     - id: GoblinCastawaysEvent # imp
@@ -463,3 +466,43 @@
     maxOccurrences: 1 # this event has diminishing returns on interesting-ness, so we cap it
     weight: 5
   - type: MobReplacementRule
+
+- type: entity
+  id: GreytideVirus
+  parent: BaseStationEventShortDelay
+  components:
+  - type: StationEvent
+    weight: 5
+    minimumPlayers: 25
+    reoccurrenceDelay: 20
+  - type: GreytideVirusRule
+    accessGroups:
+    - Cargo
+    - Command
+    - Engineering
+    - Research
+    - Security
+    - Service
+    blacklist:
+    - External # don't space everything
+
+- type: entity
+  parent: BaseGameRule
+  id: DerelictCyborgSpawn
+  components:
+  - type: StationEvent
+    weight: 5
+    earliestStart: 15
+    reoccurrenceDelay: 20
+    minimumPlayers: 4
+    duration: null
+  - type: SpaceSpawnRule
+    spawnDistance: 0
+  - type: AntagSpawner
+    prototype: PlayerBorgDerelict
+  - type: AntagSelection
+    definitions:
+    - spawnerPrototype: SpawnPointGhostDerelictCyborg
+      min: 1
+      max: 1
+      pickPlayer: false

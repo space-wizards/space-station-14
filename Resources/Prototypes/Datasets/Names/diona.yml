@@ -7,11 +7,28 @@
   - Ivy
   - Stalk
   - Petal
+  - Petals
   - Thorn
+  - Thorns
+  - Vine
+  - Vines
+  - Branch
+  - Branches
+  - Weed
+  - Weeds
   - Rose
   - Dandelion
+  - Lilac
+  - Lily
   - Birch
+  - Oak
+  - Spruce
   - Willow
+  - Cyprus
+  - Mangrove
+  - Stump
+  - Sap
+  - Bayou
   - Bay
   - Lake
   - River
@@ -21,66 +38,63 @@
   - Mountain
   - Peak
   - Garden
-  - Soil
-  - Flower
-  - Veldt
-  - Steppe
-  - Sepal
-  - Stamen
-  - Pistil
-  - Stigma
-  - Loam
-  - Silt
-  - Spore
-  - Needle
-  - Hypha
-  - Alga
-  - Stem
-  - Grain
-  - Legume
-  - Taiga
-  - Plateau
-  - Reef
-  - Marsh
-  - Mangrove
-  - Mire
-  - Humus
-  - Clay
-  - Rhizome
-  - Xylem
-  - Phloem
-  - Stream
-  - Pond
-  - Bloom
-  - Glimmer
-  - Dew
+  - Ocean
+  - Arctic
+  - Sea
   - Spring
-  - Strait
-  - Peduncle
-  - Inflorescence
-  - Tundra
-  - Savanna
-  - Delta
-  - Headwaters
-  - Zone
-  - Benthos
-  - Coast
-  - Trench
-  - Abyss
-  - Estuary
+  - Swamp
+  - Stream
+  - Forest
+  - Rainforest
+  - Soil
   - Valley
-  - Tributary
-  - Confluence
-  - Channel
-  - Rapids
-  - Cascade
-  - Pollen
-  - Anther
-  - Vine
+  - Moor
+  - Steppe
+  - Orchard
+  - Orchid
+  - Glacier
+  - Desert
+  - Tundra
+  - Taiga
+  - Plain
+  - Plains
+  - Plateau
+  - Cliff
+  - Coast
+  - Shore
+  - Jungle
+  - Tropics
+  - Flower
+  - Grass
+  - Bark
+  - Autumn
+  - Summer
+  - Winter
+  - Fruit
+  - Leaves
+  - Overgrowth
+  - Atmosphere
+  - Climate
+  - Chill
+  - Winds
+  - Blossom
+  - Bloom
+  - Cap
+  - Saturation
+  - Permeation
+  - Light
+  - Taste
+  - Acorn
+  - Shell
+  - Ice
+  - Monsoon
+  - Overcast
+  - Storm
 
 - type: dataset
   id: DionaLast
   values:
+# Positive
   - Peace
   - Harmony
   - Relaxation
@@ -102,45 +116,64 @@
   - Equilibrium
   - Composure
   - Control
-  - Remedy
-  - Instruction
-  - Reception
-  - Commerce
-  - Temperance
-  - Recovery
-  - Regrowth
-  - Rest
-  - Inactivity
-  - Consideration
-  - Fascination
-  - Scrutiny
-  - Contemplation
-  - Forethought
-  - Reflection
-  - Guidance
-  - Allegiance
-  - Fervor
-  - Inclination
-  - Regard
-  - Sentiment
-  - Ardency
-  - Conviction
-  - Precaution
-  - Forgiveness
-  - Patience
-  - Elevation
-  - Innovation
-  - Efficiency
-  - Fluidity
-  - Adaptation
-  - Discussion
-  - Benefit
-  - Organization
-  - Communication
-  - Inspiration
-  - Stasis
-  - Preservation
-  - Sensibility
-  - Cooperation
-  - Resonance
-  - Curiosity
+  - Bliss
+  - Enjoyment
+  - Optimism
+  - Ecstasy
+  - Cheer
+  - Delight
+  - Luxury
+  - Euphoria
+  - Excitement
+  - Satisfaction
+  - Cleanliness
+  - Expression
+  - Enrichment
+  - Restraint
+  - Silence
+  - Bewilderment
+  - Tactility
+  - Invisibility
+  - Darkness
+  - Fragility
+  - Action
+  - Awakening
+  - Activity
+  - Audacity
+  - Vivacity
+  - Knowledge
+  - Modification
+# Negative
+# These should be something a diona would still realistically name themselves, i.e not inherintly self deprecating.
+  - Envy
+  - Ineptitude
+  - Ignorance
+  - Decay
+  - Lethargy
+  - Bitterness
+  - Acidity
+  - Illness
+  - Weakness
+  - Enervation
+  - Fatigue
+  - Noxiousness
+  - Convolution
+  - Confusion
+  - Agitation
+  - Despair
+  - Sorrow
+  - Pain
+  - Animosity
+  - Fury
+  - Disinterest
+  - Anger
+  - Rage
+  - Displeasure
+  - Irritation
+  - Resentment
+  - Soreness
+  - Frustration
+  - Insanity
+  - Chaos
+  - Fear
+

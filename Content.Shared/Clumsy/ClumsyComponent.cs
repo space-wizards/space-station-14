@@ -58,46 +58,47 @@ public sealed partial class ClumsyComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier GunShootFailSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg");
-	
-	/// <summary>
-	///		Whether or not to apply Clumsy to hyposprays.
-	/// </summary>
-	[DataField, AutoNetworkedField]
-	public bool ClumsyHypo = true;
-	
-	/// <summary>
-	///		Whether or not to apply Clumsy to defibs.
-	/// </summary>
-	[DataField, AutoNetworkedField]
-	public bool ClumsyDefib = true;
-	
-	/// <summary>
-	///		Whether or not to apply Clumsy to guns.
-	/// </summary>
-	[DataField, AutoNetworkedField]
-	public bool ClumsyGuns = true;
-	
-	/// <summary>
-	///		Whether or not to apply Clumsy to vaulting.
-	/// </summary>
-	[DataField, AutoNetworkedField]
-	public bool ClumsyVaulting = true;
-	
-	/// <summary>
-	///		Lets you define a new "failed" message for each event.
-	/// </summary>
-	[DataField]
-	public LocId HypoFailedMessage = "hypospray-component-inject-self-clumsy-message";
-	
-	[DataField]
-	public LocId GunFailedMessage = "gun-clumsy";
-	
-	[DataField]
-	public LocId VaulingFailedMessageSelf = "bonkable-success-message-user";
-	
-	[DataField]
-	public LocId VaulingFailedMessageOthers = "bonkable-success-message-others";
-	
-	[DataField]
-	public LocId VaulingFailedMessageForced = "forced-bonkable-success-message";
+
+    /// <summary>
+    ///      Whether or not to apply Clumsy to hyposprays.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ClumsyHypo = true;
+
+    /// <summary>
+    ///      Whether or not to apply Clumsy to defibs.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ClumsyDefib = true;
+
+    /// <summary>
+    ///      Whether or not to apply Clumsy to guns.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ClumsyGuns = true;
+
+    /// <summary>
+    ///      Whether or not to apply Clumsy to vaulting.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ClumsyVaulting = true;
+
+    /// <summary>
+    ///      Lets you define a new "failed" message for each event.
+    /// </summary>
+    [DataField]
+    public LocId HypoFailedMessage = "hypospray-component-inject-self-clumsy-message";
+
+    [DataField]
+    public LocId GunFailedMessage = "gun-clumsy";
+
+    [DataField]
+    public LocId VaulingFailedMessageSelf = "bonkable-success-message-user";
+
+    [DataField]
+    public LocId VaulingFailedMessageOthers = "bonkable-success-message-others";
+
+    [DataField]
+    public LocId VaulingFailedMessageForced = "forced-bonkable-success-message";
+
 }

@@ -17,6 +17,7 @@ using Content.Shared.Eye.Blinding.Systems;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Server.Flash.Components;
 using Content.Shared.Movement.Pulling.Components;
+using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
 using Content.Shared.Damage.Components;
 using Content.Server.Radio.Components;
@@ -26,6 +27,7 @@ namespace Content.Server.Changeling;
 public sealed partial class ChangelingSystem : EntitySystem
 {
     [Dependency] private readonly SharedRottingSystem _rotting = default!;
+    [Dependency] private readonly SharedStealthSystem _stealth = default!;
 
     public void SubscribeAbilities()
     {
@@ -577,7 +579,11 @@ public sealed partial class ChangelingSystem : EntitySystem
         }
 
         EnsureComp<StealthComponent>(uid);
-        EnsureComp<StealthOnMoveComponent>(uid);
+        _stealth.SetMinVisibility(uid, 0);
+
+        var stealthOnMove = EnsureComp<StealthOnMoveComponent>(uid);
+        stealthOnMove.MovementVisibilityRate = 1;
+
         _popup.PopupEntity(Loc.GetString("changeling-chameleon-start"), uid, uid);
     }
     public void OnEphedrineOverdose(EntityUid uid, ChangelingComponent comp, ref ActionEphedrineOverdoseEvent args)

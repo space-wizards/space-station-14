@@ -1,79 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Head Revolutionaries require 10 hours in Command and 10 hours in Security
-      to unlock.
-    type: Tweak
-  - message: The Revolutionary start text was altered to be less bloodthirsty.
-    type: Tweak
-  id: 195
-  time: '2024-09-14T04:46:37.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/251
-- author: hivehum
-  changes:
-  - message: Cigarettes are now functionally worthless.
-    type: Fix
-  id: 196
-  time: '2024-09-14T04:46:28.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/252
-- author: sususuyo
-  changes:
-  - message: Added more Justice Helms to the secdrobe vend. The whole department should
-      be allowed one okay?
-    type: Add
-  id: 197
-  time: '2024-09-14T04:45:45.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/250
-- author: TGRCDev
-  changes:
-  - message: Revenants can now animate items and make them attack living beings.
-    type: Add
-  id: 198
-  time: '2024-09-14T04:45:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/247
-- author: FlippenPage
-  changes:
-  - message: Added Cargo Cyborg
-    type: Add
-  - message: Added Cargo Cyborg components, they have been included in the exosuit
-      lathe.
-    type: Add
-  id: 199
-  time: '2024-09-14T04:45:10.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/253
-- author: formlessnameless
-  changes:
-  - message: Fin Fin of pain and suffering
-    type: Add
-  id: 200
-  time: '2024-09-14T08:15:37.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/254
-- author: KingMudkipIII
-  changes:
-  - message: Testosterone and Estradiol can now be produced by chemists. (no ingame
-      effect)
-    type: Add
-  id: 201
-  time: '2024-09-14T14:23:42.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/256
-- author: hivehum
-  changes:
-  - message: The message you receive upon becoming some antagonists have been rewritten
-      to better set the tone of the round.
-    type: Tweak
-  - message: The Ninja greeting is now in second person, like every other antagonist
-      greeting.
-    type: Fix
-  id: 202
-  time: '2024-09-16T02:43:22.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/258
-- author: TGRCDev
-  changes:
-  - message: Cyborgs no longer explode when they click on themselves
-    type: Fix
-  id: 203
-  time: '2024-09-16T02:42:22.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/266
 - author: TGRCDev
   changes:
   - message: Revenants now enter stasis on death instead of dying outright. You can
@@ -4482,3 +4407,87 @@
   id: 694
   time: '2024-12-08T15:35:26.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/953
+- author: Darkmajia
+  changes:
+  - message: Slimepeople have had their weakness to water and water vapor reduced.
+    type: Tweak
+  - message: Gastropoids have had their weakness to salt and salt-based reagents reduced.
+    type: Tweak
+  id: 695
+  time: '2024-12-08T19:06:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/959
+- author: ATDoop
+  changes:
+  - message: 3 new plushies! Decapoid, snail, and a very rare secret plush. Buy some
+      plushie crates and try and find them!!
+    type: Add
+  id: 696
+  time: '2024-12-08T21:09:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/960
+- author: ATDoop
+  changes:
+  - message: You can grind the bug and snail plushies.
+    type: Add
+  id: 697
+  time: '2024-12-09T16:37:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/968
+- author: formlessnameless
+  changes:
+  - message: You can no longer attack or perform most other actions while inside vents.
+    type: Tweak
+  - message: You can no longer enter the vents with things in your hands.
+    type: Tweak
+  id: 698
+  time: '2024-12-09T16:40:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/961
+- author: widgetbeck
+  changes:
+  - message: Fixed Decapoids being sped up by Mucin
+    type: Fix
+  - message: Fixed Decapoids and Gastropoids using the incorrect density values, which
+      means that they should now correctly shatter glass tables when vaulting.
+    type: Fix
+  id: 699
+  time: '2024-12-09T16:55:18.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/964
+- author: kipdotnet, Aftrlite
+  changes:
+  - message: Added the tck'tck, and admin-spawn ghost role for mapping and emergency
+      backup.
+    type: Add
+  id: 700
+  time: '2024-12-09T16:56:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/966
+- author: DinnerCalzone
+  changes:
+  - message: Stations we receive from upstream have been hard-forked to enable edits
+      to them specific to our server. This does not come with any changes to the maps
+      as of this moment, but it does enable us to add new content that requires significant
+      map changes to work as well as make any other edits to maps that best suit our
+      server's needs.
+    type: Tweak
+  id: 701
+  time: '2024-12-09T16:54:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/963
+- author: Saeko-44
+  changes:
+  - message: Abnormium, a new potent medicine made from grinding down abnormality
+      cores. May cause cancer as a side effect.
+    type: Add
+  - message: Philosopher's Juice, a catalyst for endgame chemistry made with unusual
+      materials (more recipes involving this catalyst in the future)
+    type: Add
+  - message: Holium, an impossibly hard to make chemical that will require the entire
+      station to work in tandem to be made in the name of the cult of the hole
+    type: Add
+  id: 702
+  time: '2024-12-09T17:10:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/969
+- author: Darkmajia
+  changes:
+  - message: Changeling's chameleon skin reveals faster while moving, but is cheaper
+      to evolve.
+    type: Tweak
+  id: 703
+  time: '2024-12-09T18:07:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/970

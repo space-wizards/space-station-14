@@ -1,97 +1,85 @@
+# Base Prototypes
+
 - type: latheRecipe
+  abstract: true
+  id: BaseLightRecipe
+  category: Lights
+  completetime: 2
+  materials:
+    Steel: 50
+    Glass: 50
+
+- type: latheRecipe
+  abstract: true
+  id: BaseFauxTileRecipe
+  completetime: 1
+  materials:
+    Plastic: 100
+
+# Recipes
+
+## Lights
+
+- type: latheRecipe
+  parent: BaseLightRecipe
   id: LightTube
   result: LightTube
-  category: Lights
-  completetime: 2
-  materials:
-    Steel: 50
-    Glass: 50
 
 - type: latheRecipe
+  parent: BaseLightRecipe
   id: LedLightTube
   result: LedLightTube
-  category: Lights
-  completetime: 2
-  materials:
-    Steel: 50
-    Glass: 50
 
 - type: latheRecipe
+  parent: BaseLightRecipe
   id: SodiumLightTube
   result: SodiumLightTube
-  category: Lights
-  completetime: 2
-  materials:
-    Steel: 50
-    Glass: 50
 
 - type: latheRecipe
+  parent: BaseLightRecipe
   id: ExteriorLightTube
   result: ExteriorLightTube
-  category: Lights
-  completetime: 2
-  materials:
-    Steel: 50
-    Glass: 50
 
 - type: latheRecipe
+  parent: BaseLightRecipe
   id: LightBulb
   result: LightBulb
-  category: Lights
-  completetime: 2
-  materials:
-    Steel: 50
-    Glass: 50
 
 - type: latheRecipe
+  parent: BaseLightRecipe
   id: LedLightBulb
   result: LedLightBulb
-  category: Lights
-  completetime: 2
-  materials:
-    Steel: 50
-    Glass: 50
 
 - type: latheRecipe
+  parent: BaseLightRecipe
   id: DimLightBulb
   result: DimLightBulb
-  category: Lights
-  completetime: 2
-  materials:
-    Steel: 50
-    Glass: 50
 
 - type: latheRecipe
+  parent: BaseLightRecipe
   id: GlowstickRed
   result: GlowstickRed
-  category: Lights
-  completetime: 2
   materials:
     Plastic: 50
 
 - type: latheRecipe
+  parent: GlowstickRed
   id: Flare
   result: Flare
-  category: Lights
-  completetime: 2
-  materials:
-    Plastic: 50
 
 - type: latheRecipe
+  parent: BaseLightRecipe
   id: FlashlightLantern
   result: EmptyFlashlightLantern
-  category: Lights
-  completetime: 2
   materials:
     Steel: 100
     Glass: 100
     Plastic: 100
 
 - type: latheRecipe
+  parent: BaseToolRecipe
   id: FireExtinguisher
   result: FireExtinguisher
-  category: Tools
-  completetime: 2
   materials:
     Steel: 200
 
@@ -128,10 +116,9 @@
     Glass: 100
 
 - type: latheRecipe
+  parent: BaseToolRecipe
   id: NodeScanner
   result: NodeScanner
-  category: Tools
-  completetime: 2
   materials:
     Steel: 100
     Plastic: 50
@@ -176,39 +163,29 @@
     Plastic: 100
 
 - type: latheRecipe
+  parent: BaseFauxTileRecipe
   id: FauxTileAstroGrass
   result: FloorTileItemAstroGrass
-  completetime: 1
-  materials:
-    Plastic: 100
 
 - type: latheRecipe
+  parent: BaseFauxTileRecipe
   id: FauxTileMowedAstroGrass
   result: FloorTileItemMowedAstroGrass
-  completetime: 1
-  materials:
-    Plastic: 100
 
 - type: latheRecipe
+  parent: BaseFauxTileRecipe
   id: FauxTileJungleAstroGrass
   result: FloorTileItemJungleAstroGrass
-  completetime: 1
-  materials:
-    Plastic: 100
 
 - type: latheRecipe
+  parent: BaseFauxTileRecipe
   id: FauxTileAstroIce
   result: FloorTileItemAstroIce
-  completetime: 1
-  materials:
-    Plastic: 100
 
 - type: latheRecipe
+  parent: BaseFauxTileRecipe
   id: FauxTileAstroSnow
   result: FloorTileItemAstroSnow
-  completetime: 1
-  materials:
-    Plastic: 100
 
 - type: latheRecipe
   id: FloorGreenCircuit
@@ -218,11 +195,9 @@
     Steel: 100
 
 - type: latheRecipe
+  parent: FloorGreenCircuit
   id: FloorBlueCircuit
   result: FloorTileItemBCircuit4
-  completetime: 2
-  materials:
-    Steel: 100
 
 - type: latheRecipe
   id: FloorRedCircuit

@@ -1260,6 +1260,41 @@
     FoodCarrot: 1
 
 - type: microwaveMealRecipe
+  id: RecipeNachos
+  name: nachos recipe
+  result: FoodMealNachos
+  time: 10
+  reagents:
+    TableSalt: 1
+  solids:
+    FoodDoughTortillaFlat: 1
+    FoodPlateSmall: 1
+
+- type: microwaveMealRecipe
+  id: RecipeNachosCheesy
+  name: cheesy nachos recipe
+  result: FoodMealNachosCheesy
+  time: 10
+  reagents:
+    TableSalt: 1
+  solids:
+    FoodCheeseSlice: 1
+    FoodDoughTortillaFlat: 1
+    FoodPlateSmall: 1
+
+- type: microwaveMealRecipe
+  id: RecipeNachosCuban
+  name: cuban nachos recipe
+  result: FoodMealNachosCuban
+  time: 10
+  reagents:
+    Ketchup: 5
+  solids:
+    FoodChiliPepper: 1
+    FoodDoughTortillaFlat: 1
+    FoodPlateSmall: 1
+
+- type: microwaveMealRecipe
   id: RecipePopcorn
   name: popcorn recipe
   result: FoodSnackPopcorn

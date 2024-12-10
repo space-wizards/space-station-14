@@ -469,7 +469,7 @@
           shouldHave: true
         damage:
           types:
-            Caustic: 25 # this is still guaranteed to kill a slime if a water vapor tank is opened at max pressure in a confined space with them. end imp special.
+            Caustic: 8
 
 - type: reagent
   id: Ice

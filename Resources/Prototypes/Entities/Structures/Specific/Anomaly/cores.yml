@@ -33,6 +33,15 @@
     timeToDecay: 600
     startPrice: 10000
     endPrice: 200
+  #Imp special : grind the cores for anomalium
+  - type: Extractable
+    grindableSolutionName: abnoJuice
+  - type: SolutionContainerManager
+    solutions:
+      abnoJuice:
+        reagents:
+        - ReagentId: Anomalium
+          Quantity: 25
 
 - type: entity
   parent: BaseAnomalyCore
