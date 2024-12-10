@@ -208,7 +208,8 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
             || container.Mind is null)
             return;
 
-        var mind = _ent.EnsureComponent<MindComponent>(container.Mind.Value);
+        if (!_ent.TryGetComponent<MindComponent>(container.Mind.Value, out var mind))
+            return;
 
         var roleText = Loc.GetString("role-type-crew-aligned-name");
         var color = Color.White;
