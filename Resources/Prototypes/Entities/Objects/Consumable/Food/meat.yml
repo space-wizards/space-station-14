@@ -536,6 +536,9 @@
           Quantity: 10
         - ReagentId: Toxin
           Quantity: 2
+  - type: FoodSequenceElement
+    entries:
+      Skewer: MeatSnake
 
 - type: entity
   name: raw xeno meat
@@ -934,6 +937,7 @@
     entries:
       Burger: MeatChicken
       Taco: MeatChicken
+      Skewer: MeatChickenSkewer
 
 - type: entity
   name: fried chicken
@@ -1153,6 +1157,7 @@
     entries:
       Burger: MeatSpiderBurger
       Taco: MeatSpider
+      Skewer: MeatSpider
 
 - type: entity
   name: meatball
@@ -1178,6 +1183,7 @@
     entries:
       Burger: MeatBall
       Taco: MeatBall
+      Skewer: MeatBallSkewer
 
 - type: entity
   name: boiled snail
@@ -1529,6 +1535,7 @@
     entries:
       Burger: MeatCutlet
       Taco: MeatCutlet
+      #Skewer: MeatCutletSkewer H: COMMENTED OUT because it no worky :(
 
 - type: entity
   name: bear cutlet
@@ -1561,6 +1568,7 @@
     entries:
       Burger: BearCutletBurger
       Taco: BearCutlet
+      #Skewer: BearCutletSkewer
 
 - type: entity
   name: penguin cutlet
