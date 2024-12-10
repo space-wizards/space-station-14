@@ -1,109 +1,125 @@
-- type: entity
-  id: ToolboxEmergencyFilled
-  name: emergency toolbox
-  parent: ToolboxEmergency
-  suffix: Filled
-  components:
-  - type: StorageFill
-    contents:
-      - id: CrowbarRed
-      - id: RadioHandheld
-      - id: WelderMini
-      - id: FireExtinguisherMini
-      # Random lighting item orGroup
-      - id: FlashlightLantern
-        orGroup: LightingItem
-      - id: Flare
-        orGroup: LightingItem
-      - id: GlowstickBase
-        orGroup: LightingItem
-      # Low-chance items
-      - id: FoodSnackChocolate
-        prob: 0.15
-      - id: HarmonicaInstrument
-        prob: 0.15
- 
-- type: entity
-  id: ToolboxElectricalFilled
-  name: electrical toolbox
-  suffix: Filled
-  parent: ToolboxElectrical
-  components:
-  - type: StorageFill
-    contents:
-      - id: Screwdriver
-      - id: CrowbarOrange
-      - id: Wirecutter
-      - id: CableApcStack10
-      - id: CableMVStack10
-      - id: trayScanner
-        prob: 0.9
-      - id: ClothingHandsGlovesColorYellow
-        prob: 0.05
-        orGroup: GlovesOrWires
-      - id: CableHVStack10
-        orGroup: GlovesOrWires
-
-- type: entity
-  id: ToolboxElectricalTurretFilled
-  name: electrical toolbox
-  suffix: Syndicate, Turret, Filled
-  parent: ToolboxElectricalTurret
-  components:
-  - type: StorageFill
-    contents:
-      - id: Screwdriver
-      - id: CrowbarOrange
-      - id: Wirecutter
-      - id: CableApcStack10
-      - id: CableMVStack10
-      - id: trayScanner
-        prob: 0.9
-      - id: ClothingHandsGlovesColorYellow
-        prob: 0.05
-        orGroup: GlovesOrWires
-      - id: CableHVStack10
-        orGroup: GlovesOrWires
-
-- type: entity
-  id: ToolboxArtisticFilled
-  name: artistic toolbox
-  suffix: Filled
-  parent: ToolboxArtistic
-  components:
-  - type: StorageFill
-    contents:
+- type: entityTable
+  id: ToolboxArtisticFilledEntityTable
+  table: !type:AllSelector
+    children:
     - id: CrayonBox
     - id: Paper
-      amount: 3
+      amount: !type:ConstantNumberSelector
+        value: 3
     - id: Pen
     - id: MysteryFigureBox
-      prob: 0.5
-    - id: MysteryFigureBox
-      prob: 0.5
+      amount: !type:RangeNumberSelector
+        range: 0, 2
     - id: BookRandom
-      amount: 2 
+      amount: !type:ConstantNumberSelector
+        value: 2
     - id: CrayonMime
     - id: CrayonRainbow
 
 - type: entity
-  id: ToolboxMechanicalFilled
-  name: mechanical toolbox
+  parent: ToolboxArtistic
+  id: ToolboxArtisticFilled
   suffix: Filled
-  parent: ToolboxMechanical
   components:
-  - type: StorageFill
-    contents:
-      - id: CrowbarOrange
-      - id: Wrench
-      - id: Welder
-      - id: Wirecutter
-      - id: Screwdriver
-        prob: 0.5
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:NestedSelector
+        tableId: ToolboxArtisticFilledEntityTable
+
+- type: entityTable
+  id: ToolboxEmergencyFilledEntityTable
+  table: !type:AllSelector
+    children:
+    - id: CrowbarRed
+    - id: RadioHandheld
+    - id: WelderMini
+    - id: FireExtinguisherMini
+    - !type:GroupSelector
+      children:
       - id: FlashlightLantern
-        prob: 0.7
-      - id: ClothingHeadHatHardhatBlue
-        prob: 0.5
+      - id: Flare
+      - id: GlowstickBase
+    - id: FoodSnackChocolate
+      prob: 0.15
+    - id: HarmonicaInstrument
+      prob: 0.15
+
+- type: entity
+  parent: ToolboxEmergency
+  id: ToolboxEmergencyFilled
+  suffix: Filled
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:NestedSelector
+        tableId: ToolboxEmergencyFilledEntityTable
+
+- type: entity
+  parent: [ ToolboxEmergencyFilled, ToolboxTurret ]
+  id: ToolboxEmergencyTurretFilled
+  suffix: Syndicate, Turret, Filled
+
+- type: entityTable
+  id: ToolboxElectricalFilledEntityTable
+  table: !type:AllSelector
+    children:
+    - id: Screwdriver
+    - id: CrowbarOrange
+    - id: Wirecutter
+    - id: CableApcStack10
+    - id: CableMVStack10
+    - id: trayScanner
+      prob: 0.9
+    - !type:GroupSelector
+      children:
+      - id: ClothingHandsGlovesColorYellow
+      - id: CableHVStack10
+        weight: 20
+
+- type: entity
+  parent: ToolboxElectrical
+  id: ToolboxElectricalFilled
+  suffix: Filled
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:NestedSelector
+        tableId: ToolboxElectricalFilledEntityTable
+
+- type: entity
+  parent: [ ToolboxElectricalFilled, ToolboxTurret ]
+  id: ToolboxElectricalTurretFilled
+  suffix: Syndicate, Turret, Filled
+
+- type: entityTable
+  id: ToolboxMechanicalFilledEntityTable
+  table: !type:AllSelector
+    children:
+    - id: CrowbarOrange
+    - id: Wrench
+    - id: Welder
+    - id: Wirecutter
+    - id: Screwdriver
+      prob: 0.5
+    - id: FlashlightLantern
+      prob: 0.7
+    - id: ClothingHeadHatHardhatBlue
+      prob: 0.5
+
+- type: entity
+  parent: ToolboxMechanical
+  id: ToolboxMechanicalFilled
+  suffix: Filled
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:NestedSelector
+        tableId: ToolboxMechanicalFilledEntityTable
+
+- type: entity
+  parent: [ ToolboxMechanicalFilled, ToolboxTurret ]
+  id: ToolboxMechanicalTurretFilled
+  suffix: Syndicate, Turret, Filled
 
 - type: entity
   parent: ToolboxSyndicate
