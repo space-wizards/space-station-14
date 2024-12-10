@@ -365,6 +365,8 @@
   params:
     variation: 0.05
   sounds:
+    Scream:
+      path: /Audio/Machines/robot_scream.ogg
     Beep:
       path: /Audio/Machines/twobeep.ogg
     Chime:
@@ -383,6 +385,8 @@
   params:
     variation: 0.05
   sounds:
+    Scream:
+      path: /Audio/Machines/robot_scream.ogg
     Laugh:
       path: /Audio/Voice/Silicon/syndieborg_laugh.ogg
     Beep:

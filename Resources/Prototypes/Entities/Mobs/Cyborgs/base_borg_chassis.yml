@@ -154,6 +154,7 @@
   - type: Vocal
     sounds:
       Unsexed: UnisexSilicon
+    wilhelmProbability: 0
   - type: UnblockableSpeech
   - type: FootstepModifier
     footstepSoundCollection:
