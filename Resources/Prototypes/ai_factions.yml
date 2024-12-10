@@ -42,6 +42,8 @@
   - PetsNT
   - Zombie
   - Revolutionary
+  - Dragon
+  - Xeno
 
 - type: npcFaction
   id: SimpleNeutral
