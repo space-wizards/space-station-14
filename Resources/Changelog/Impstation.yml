@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: sususuyo
-  changes:
-  - message: Screwloose lobby art is actually in rotation now
-    type: Fix
-  id: 205
-  time: '2024-09-16T02:42:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/265
 - author: hivehum
   changes:
   - message: Code Pink, for when you think your employees are trying to form a union.
@@ -4490,3 +4483,12 @@
   id: 704
   time: '2024-12-10T10:53:08.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/972
+- author: honeyed-lemons
+  changes:
+  - message: Shipyard consoles to the quartermasters room in Fland, Box, and Xeno
+    type: Add
+  - message: Update EVA access in Fland, Box, and Xeno to be all command.
+    type: Tweak
+  id: 705
+  time: '2024-12-10T10:54:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/973
