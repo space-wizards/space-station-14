@@ -135,6 +135,6 @@
   - type: Temperature
     # preserve temperature from the boiling step
     currentTemperature: 344
-  - type: Construction
-    graph: Egg
-    node: boiled
+  # - type: Construction
+  #   graph: Egg
+  #   node: boiled
