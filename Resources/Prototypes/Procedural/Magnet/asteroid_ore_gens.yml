@@ -14,7 +14,8 @@
 
 - type: oreDunGen
   id: OreIron
-  replacement: AsteroidRock
+  entityMask: 
+  - AsteroidRock
   entity: AsteroidRockTin
   count: 5
   minGroupSize: 5
@@ -22,7 +23,8 @@
 
 - type: oreDunGen
   id: OreQuartz
-  replacement: AsteroidRock
+  entityMask: 
+  - AsteroidRock
   entity: AsteroidRockQuartz
   count: 5
   minGroupSize: 5
@@ -30,7 +32,8 @@
 
 - type: oreDunGen
   id: OreCoal
-  replacement: AsteroidRock
+  entityMask: 
+  - AsteroidRock
   entity: AsteroidRockCoal
   count: 3
   minGroupSize: 5
@@ -38,7 +41,8 @@
 
 - type: oreDunGen
   id: OreSalt
-  replacement: AsteroidRock
+  entityMask: 
+  - AsteroidRock
   entity: AsteroidRockSalt
   count: 3
   minGroupSize: 5
@@ -46,7 +50,8 @@
 
 - type: oreDunGen
   id: OreGold
-  replacement: AsteroidRock
+  entityMask: 
+  - AsteroidRock
   entity: AsteroidRockGold
   count: 4
   minGroupSize: 5
@@ -54,7 +59,8 @@
 
 - type: oreDunGen
   id: OreSilver
-  replacement: AsteroidRock
+  entityMask: 
+  - AsteroidRock
   entity: AsteroidRockSilver
   count: 4
   minGroupSize: 5
@@ -62,7 +68,8 @@
 
 - type: oreDunGen
   id: OrePlasma
-  replacement: AsteroidRock
+  entityMask: 
+  - AsteroidRock
   entity: AsteroidRockPlasma
   count: 4
   minGroupSize: 5
@@ -70,7 +77,8 @@
 
 - type: oreDunGen
   id: OreUranium
-  replacement: AsteroidRock
+  entityMask: 
+  - AsteroidRock
   entity: AsteroidRockUranium
   count: 4
   minGroupSize: 5
@@ -78,7 +86,8 @@
 
 - type: oreDunGen
   id: OreBananium
-  replacement: AsteroidRock
+  entityMask: 
+  - AsteroidRock
   entity: AsteroidRockBananium
   count: 6
   minGroupSize: 3
@@ -86,7 +95,8 @@
 
 - type: oreDunGen
   id: OreArtifactFragment
-  replacement: AsteroidRock
+  entityMask: 
+  - AsteroidRock
   entity: AsteroidRockArtifactFragment
   count: 5
   minGroupSize: 1
