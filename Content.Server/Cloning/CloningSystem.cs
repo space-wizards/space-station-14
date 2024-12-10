@@ -276,6 +276,9 @@ namespace Content.Server.Cloning
         /// </summary>
         private void OnEmagged(EntityUid uid, CloningPodComponent clonePod, ref GotEmaggedEvent args)
         {
+            if (args.Handled)
+                return;
+
             if (!this.IsPowered(uid, EntityManager))
                 return;
 

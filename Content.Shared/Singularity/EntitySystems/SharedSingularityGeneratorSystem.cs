@@ -22,6 +22,9 @@ public abstract class SharedSingularityGeneratorSystem : EntitySystem
 
     private void OnEmagged(EntityUid uid, SingularityGeneratorComponent component, ref GotEmaggedEvent args)
     {
+        if (args.Handled)
+            return;
+
         component.FailsafeDisabled = true;
         args.Handled = true;
     }

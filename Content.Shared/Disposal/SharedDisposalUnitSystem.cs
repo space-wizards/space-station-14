@@ -102,6 +102,9 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
     protected void OnEmagged(EntityUid uid, SharedDisposalUnitComponent component, ref GotEmaggedEvent args)
     {
+        if (args.Handled)
+            return;
+
         component.DisablePressure = true;
         args.Handled = true;
     }

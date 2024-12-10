@@ -111,6 +111,9 @@ public sealed class ApcSystem : EntitySystem
 
     private void OnEmagged(EntityUid uid, ApcComponent comp, ref GotEmaggedEvent args)
     {
+        if (args.Handled)
+            return;
+
         // no fancy conditions
         args.Handled = true;
     }
