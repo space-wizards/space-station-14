@@ -473,14 +473,6 @@
   metabolisms:
     Food:
       effects:
-      - !type:SatiateHunger
-        conditions:
-          - !type:OrganType
-            type: Animal
-            shouldHave: true
-          - !type:OrganType
-            type: Vampire
-            shouldHave: true
       - !type:PopupMessage
         conditions:
           - !type:OrganType
@@ -518,6 +510,10 @@
         - !type:OrganType
           type: Animal
           shouldHave: true
+        reagent: Protein
+        amount: 0.5
+      - !type:AdjustReagent
+        conditions:
         - !type:OrganType
           type: Vampire
           shouldHave: true
