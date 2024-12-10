@@ -7,6 +7,8 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.NPC;
+using Content.Shared.MouseRotator;
+using Content.Shared.Movement.Components;
 using Content.Shared.NPC.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
@@ -55,6 +57,8 @@ namespace Content.Server.NPC.Systems
             if (TryComp<MindContainerComponent>(uid, out var mindContainer) && mindContainer.HasMind)
                 return;
 
+            RemComp<MouseRotatorComponent>(uid);
+            RemComp<NoRotateOnMoveComponent>(uid);
             WakeNPC(uid, component);
         }
 
