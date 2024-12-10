@@ -1002,4 +1002,17 @@ Entries:
   id: 142
   time: '2024-12-09T18:55:04.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/150
-
+- author: Rinary
+  changes:
+  - message: Fixed chat box scrolling.
+    type: Fix
+  id: 143
+  time: '2024-12-10T14:08:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/8fa4f1baa5f1fe975be8eb23dac1f59415adcd6f
+- author: Rinary
+  changes:
+  - message: Fixed proteins in uncoocked proteins.
+    type: Fix
+  id: 144
+  time: '2024-12-10T14:08:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/8551b6aa30b618fea92ed8b5b06dfdedf7bc7ecd
