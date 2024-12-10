@@ -840,7 +840,7 @@
   name: grilled cheese sandwich
   parent: FoodBakedBase
   id: FoodBakedGrilledCheeseSandwich
-  description: Bread and melted cheese toasted with butter, perfect for a chilly day in space.
+  description: Bread and cheese toasted with butter, perfect for a chilly day in space.
   components:
   - type: FlavorProfile
     flavors:
@@ -852,11 +852,9 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 19
+        maxVol: 17
         reagents:
         - ReagentId: Nutriment
           Quantity: 8
-        - ReagentId: Butter
-          Quantity: 2
         - ReagentId: Vitamin
           Quantity: 4
