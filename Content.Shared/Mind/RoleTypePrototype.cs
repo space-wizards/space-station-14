@@ -12,12 +12,6 @@ public sealed class RoleTypePrototype : IPrototype
     public string ID { get; private set; } = default!;
 
     /// <summary>
-    ///     The role's specific antag-or-other-special category.
-    /// </summary>
-    [DataField(required: true)]
-    public RoleEnum RoleRule = RoleEnum.Neutral;
-
-    /// <summary>
     ///     The role's name as displayed on the UI.
     /// </summary>
     [DataField(required: true)]
@@ -28,18 +22,4 @@ public sealed class RoleTypePrototype : IPrototype
     /// </summary>
     [DataField]
     public Color Color { get; private set; } = Color.FromHex("#eeeeee");
-}
-
-/// <summary>
-///     The possible roles a character can be in the round.
-/// </summary>
-public enum RoleEnum
-{
-    SiliconAntagonist,
-    Silicon,
-    TeamAntagonist,
-    SoloAntagonist,
-    FreeAgent,
-    Familiar,
-    Neutral
 }

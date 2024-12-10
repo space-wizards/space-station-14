@@ -7,6 +7,7 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
+using Robust.Shared.Prototypes;
 
 namespace Content.Client.Administration;
 
@@ -38,7 +39,7 @@ internal sealed class AdminNameOverlay : Overlay
         var viewport = args.WorldAABB;
 
         //TODO make this adjustable via GUI
-        var filter = new List<RoleEnum>(){ RoleEnum.SoloAntagonist, RoleEnum.TeamAntagonist, RoleEnum.SiliconAntagonist, RoleEnum.FreeAgent };
+        var filter = new List<ProtoId<RoleTypePrototype>>(){ "SoloAntagonist", "TeamAntagonist", "SiliconAntagonist", "FreeAgent" };
         //TODO make this adjustable via GUI
         var classic = _config.GetCVar(CCVars.AdminOverlayClassic);
 
@@ -81,7 +82,7 @@ internal sealed class AdminNameOverlay : Overlay
                 color = Color.OrangeRed;
             }
 
-            if (filter.Contains(playerInfo.RoleProto.RoleRule) && !classic ||
+            if (filter.Contains(playerInfo.RoleProto.ID) && !classic ||
                 playerInfo.Antag && classic )
             {
                 args.ScreenHandle.DrawString(_font, screenCoordinates + (lineoffset * 2), label, uiScale, color);
