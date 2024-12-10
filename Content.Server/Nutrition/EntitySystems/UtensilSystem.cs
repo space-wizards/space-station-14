@@ -46,6 +46,9 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!EntityManager.TryGetComponent(target, out FoodComponent? food))
                 return (false, false);
 
+            if (HasComp<SliceableFoodComponent>(target) && (utensil.Comp.Types & UtensilType.Knife) != 0)
+                return (false, false);
+
             //Prevents food usage with a wrong utensil
             if ((food.Utensil & utensil.Comp.Types) == 0)
             {
