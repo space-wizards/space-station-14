@@ -22,7 +22,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
-using Robust.Shared.Audio;
 
 namespace Content.Server.Silicons.Laws;
 
