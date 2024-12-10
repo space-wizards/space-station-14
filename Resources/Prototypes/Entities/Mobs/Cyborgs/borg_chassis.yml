@@ -435,3 +435,60 @@
       interactFailureString: petting-failure-syndicate-cyborg
       interactSuccessSound:
         path: /Audio/Ambience/Objects/periodic_beep.ogg
+
+
+- type: entity
+  id: BorgChassisNanotraitor
+  parent: BaseBorgChassisNT
+  components:
+  - type: Sprite
+    layers:
+    - state: robot
+    - state: robot_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: robot_l
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: BorgChassis
+    maxModules: 6
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleScience
+      - BorgModuleSyndicate
+      - BorgModuleCargo
+      - BorgModuleService
+      - BorgModuleEngineering
+      - BorgModuleMedical
+      - BorgModuleSyndicateAssault
+    hasMindState: robot_e
+    noMindState: robot_e_r
+  - type: Speech
+    speechVerb: Robotic
+  - type: InteractionPopup
+    interactSuccessString: petting-success-generic-cyborg
+    interactFailureString: petting-failure-generic-cyborg
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: NpcFactionMember
+    factions:
+    - NanotrasenTraitor
+  - type: AgentIDCard
+  - type: Access
+    tags:
+    - Maintenance
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Common
+    - Binary
+    - Nanotrasen
+  - type: ActiveRadio
+    channels:
+    - Common
+    - Nanotrasen
+    - Binary
+   - type: SiliconLawProvider
+     laws: NanotraitorStatic
