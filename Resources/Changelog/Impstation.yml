@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: KingMudkipIII
-  changes:
-  - message: horsepussy can be made again without winning the juckport 1 trillion$
-    type: Fix
-  id: 209
-  time: '2024-09-18T05:39:19.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/270
 - author: ultramario1998
   changes:
   - message: Added a flask to the Warden's locker. Leave your room 70% less!
@@ -4488,3 +4481,29 @@
   id: 708
   time: '2024-12-10T11:11:39.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/978
+- author: DinnerCalzone
+  changes:
+  - message: EVA storage rooms on Bagel, Cog, and Marathon have been set to command
+      access.
+    type: Tweak
+  - message: Solar station beacons on Bagel, Cog, Marathon, Omega, and Origin have
+      been renamed to differentiate them.
+    type: Tweak
+  - message: (Cog) Incorporated some upstream changes, namely adding additional infrastructure
+      to the tesla area.
+    type: Add
+  - message: (Cog) The arrivals security checkpoint has been replaced with a vox box.
+      The checkpoint has been moved to the west next to the rec room.
+    type: Tweak
+  - message: (Marathon) Incorporated upstream changes, including an overhaul to the
+      station's atmos systems.
+    type: Add
+  - message: (Marathon) Added a service techfab to the corridor between the bar and
+      kitchen.
+    type: Add
+  - message: (Omega) Made the location of the RTG in space near engineering much more
+      obvious.
+    type: Tweak
+  id: 709
+  time: '2024-12-10T11:14:35.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/979
