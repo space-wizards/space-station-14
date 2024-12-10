@@ -166,7 +166,6 @@
   - type: SleepEmitSound
   - type: SSDIndicator
   - type: StandingState
-  - type: Dna
   - type: MindContainer
     showExamineInfo: true
   - type: CanEnterCryostorage
@@ -238,6 +237,7 @@
       groups:
         Brute: -0.07
   - type: Fingerprint
+  - type: Dna
   - type: Blindable
   # Other
   - type: Temperature
