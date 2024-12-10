@@ -1,0 +1,15 @@
+﻿<Document>
+  # Manual Valve
+  The manual valve is as simple as it gets.
+  Allows or blocks the flow of gasses depending on if it's open or closed.
+  <Box>
+    <GuideEntityEmbed Entity="GasValve"/>
+  </Box>
+
+  Gas can freely flow between both sides with no restrictions.
+
+  Manual valves are used in a variety of applications, for example:
+  - Allowing or blocking the bypass of a recyclernet, to space waste gas directly
+  - Connecting or isolating heaters/coolers from the station's distro
+
+</Document>
