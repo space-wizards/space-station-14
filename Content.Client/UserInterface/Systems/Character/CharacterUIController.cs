@@ -194,7 +194,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         _window.RolePlaceholder.Visible = briefing == null && !controls.Any() && !objectives.Any();
     }
 
-    private void OnRoleTypeChanged(MindRoleTypeChangedEvent ev,EntitySessionEventArgs _)
+    private void OnRoleTypeChanged(MindRoleTypeChangedEvent ev, EntitySessionEventArgs _)
     {
         UpdateRoleType();
     }
