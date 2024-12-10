@@ -219,7 +219,6 @@
   - type: ItemBorgModule
     items:
     - MiningDrill
-    - Shovel
     - MineralScannerUnpowered
     - OreBag
     - Crowbar
@@ -242,6 +241,23 @@
     - HandheldGPSBasic
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: grappling-module }
+
+- type: entity
+  parent: [ BaseBorgModuleCargo, BaseProviderBorgModule ]
+  id: BorgModuleFauna
+  name: fauna protection module
+  description: A borg module for protection from deadly space fauna.
+  components:
+  - type: Sprite
+    layers:
+    - state: cargo
+    - state: icon-carp
+  - type: ItemBorgModule
+    items:
+    - WeaponProtoKineticAcceleratorOneHanded
+    - WeaponCrusherDagger
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: fauna-module }
 
 # engineering modules
 - type: entity
