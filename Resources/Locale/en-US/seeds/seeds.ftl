@@ -142,3 +142,5 @@ seeds-cherry-name = cherry
 seeds-cherry-display-name = cherry tree
 seeds-anomaly-berry-name = anomaly berry
 seeds-anomaly-berry-display-name = anomaly berries
+seeds-bonioon-name = bonioon
+seeds-bonioon-display-name = bonioon bulbs
