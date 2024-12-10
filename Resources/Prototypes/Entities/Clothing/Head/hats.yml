@@ -55,7 +55,6 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
-  - type: Tag
   - type: Sprite
     sprite: Clothing/Head/Hats/beret_security.rsi
   - type: Clothing
