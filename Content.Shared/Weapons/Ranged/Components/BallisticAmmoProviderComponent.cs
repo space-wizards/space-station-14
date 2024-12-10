@@ -57,4 +57,16 @@ public sealed partial class BallisticAmmoProviderComponent : Component
     /// </summary>
     [DataField]
     public TimeSpan FillDelay = TimeSpan.FromSeconds(0.5);
+
+    /// <summary>
+    /// If the gun has a bolt and whether that bolt is closed. Firing is impossible
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("boltClosed"), AutoNetworkedField]
+    public bool? BoltClosed = null;
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("soundBoltClosed"), AutoNetworkedField]
+    public SoundSpecifier? BoltClosedSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg");
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("soundBoltOpened"), AutoNetworkedField]
+    public SoundSpecifier? BoltOpenedSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg");
 }
