@@ -61,6 +61,10 @@
   - type: Stack
     stackType: Fulton
     count: 10
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     drawdepth: SmallObjects
     sprite: Objects/Tools/fulton.rsi

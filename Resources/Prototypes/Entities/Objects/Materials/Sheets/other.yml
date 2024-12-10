@@ -40,6 +40,10 @@
     - paper
     - paper_2
     - paper_3
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Material
   - type: PhysicalComposition
     materialComposition:
@@ -90,6 +94,10 @@
     - plasma
     - plasma_2
     - plasma_3
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: plasma_3
     layers:
@@ -153,6 +161,10 @@
     - plastic
     - plastic_2
     - plastic_3
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: plastic_3
     layers:
@@ -215,6 +227,10 @@
     - uranium
     - uranium_2
     - uranium_3
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: uranium_3
     layers:
@@ -269,6 +285,10 @@
         - meat
         - meat_2
         - meat_3
+    - type: UserInterface
+      interfaces:
+        enum.StackCustomSplitUiKey.Key:
+          type: StackCustomSplitBoundUserInterface
     - type: Item
       sprite: Objects/Materials/Sheets/meaterial.rsi
       heldPrefix: meat
