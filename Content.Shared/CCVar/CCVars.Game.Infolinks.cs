@@ -53,6 +53,12 @@ public sealed partial class CCVars
         CVarDef.Create("infolinks.appeal", "", CVar.SERVER | CVar.REPLICATED);
 
     /// <summary>
+    /// Link to site handling username changes. Shown in username ban disconnect messages.
+    /// </summary>
+    public static readonly CVarDef<string> InfoLinksChangeUsername =
+        CVarDef.Create("infolinks.change_username", "", CVar.SERVER | CVar.REPLICATED);
+
+    /// <summary>
     ///     Link to Telegram channel to show in the launcher.
     /// </summary>
     public static readonly CVarDef<string> InfoLinksTelegram =
