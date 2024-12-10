@@ -413,6 +413,15 @@
           Quantity: 10
         - ReagentId: JuiceThatMakesYouWeh
           Quantity: 10
+  - type: Clothing
+    slots:
+    - HEAD
+    quickEquip: false
+    clothingVisuals:
+      head:
+      - state: spacelizard-equipped-HELMET
+        offset: "0, 0.03"
+    sprite: Objects/Fun/toys.rsi
 
 - type: entity
   parent: BasePlushie
