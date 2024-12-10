@@ -18,6 +18,7 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
         InitializeUpdater();
         SubscribeLocalEvent<EmagSiliconLawComponent, GotEmaggedEvent>(OnGotEmagged);
         SubscribeLocalEvent<EmagSiliconLawComponent, OnAttemptEmagEvent>(OnAttemptEmag);
+        SubscribeLocalEvent<SiliconLawProviderComponent, OnAttemptEmagEvent>(OnAttemptEmag);
     }
 
     protected virtual void OnAttemptEmag(EntityUid uid, EmagSiliconLawComponent component, ref OnAttemptEmagEvent args)
@@ -44,5 +45,11 @@ public abstract partial class SharedSiliconLawSystem : EntitySystem
     {
         component.OwnerName = Name(args.UserUid);
         args.Handled = true;
+    }
+
+    protected virtual void OnAttemptEmag(EntityUid uid, SiliconLawProviderComponent component, ref OnAttemptEmagEvent args) ///imp special
+    {
+        if (component.CanBeSubverted == false)
+            args.Handled = true;
     }
 }

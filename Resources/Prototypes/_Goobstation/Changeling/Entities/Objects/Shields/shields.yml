@@ -2,7 +2,7 @@
   parent: BaseShield
   id: ChangelingShield
   name: oraganic shield
-  description: A large, fleshy shield.
+  description: A mass of tough, bony tissue. You can still see the fingers as a twisted pattern in the shield.
   suffix: Unremoveable
   components:
     - type: Unremoveable
