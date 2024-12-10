@@ -1,0 +1,23 @@
+<controls:FancyWindow
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    MinSize="440 220"
+    SetSize="440 220"
+    Title="{Loc 'tape-recorder-menu-title'}"
+    Resizable="False">
+    <BoxContainer Margin = "10 5" Orientation="Vertical" SeparationOverride="5">
+        <BoxContainer Orientation="Vertical">
+            <Label Margin = "5 0" Name="CassetteLabel" Text="{Loc 'tape-recorder-menu-no-cassette-label'}" Align="Left" StyleClasses="StatusFieldTitle" />
+            <Slider Name="PlaybackSlider" HorizontalExpand="True" />
+        </BoxContainer>
+        <BoxContainer Name ="Test" Margin = "0 5 0 0" Orientation="Horizontal" VerticalExpand = "True">
+            <BoxContainer Orientation="Vertical" HorizontalExpand = "True">
+                <Label Text="{Loc 'tape-recorder-menu-controls-label'}" Align="Center" />
+                <BoxContainer Name="Buttons" Orientation="Horizontal" VerticalExpand="True" Align="Center"/> <!-- Populated in constructor -->
+            </BoxContainer>
+        </BoxContainer>
+        <BoxContainer Margin = "0 2 0 0" Orientation="Horizontal">
+            <Button Name="PrintButton" Text="{Loc 'tape-recorder-menu-print-button'}" TextAlign="Center" HorizontalExpand ="True"/>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>
