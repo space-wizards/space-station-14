@@ -36,6 +36,7 @@ using Robust.Shared.Utility;
 using System.Linq;
 using Content.Server.Silicons.Laws;
 using Content.Shared.Movement.Components;
+using Content.Shared.Chemistry.Components.Solutions;
 using Content.Shared.Silicons.Laws.Components;
 using Robust.Server.Player;
 using Content.Shared.Silicons.StationAi;
@@ -63,6 +64,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly ArtifactSystem _artifactSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly PrayerSystem _prayerSystem = default!;
+        [Dependency] private readonly EuiManager _eui = default!;
         [Dependency] private readonly MindSystem _mindSystem = default!;
         [Dependency] private readonly ToolshedManager _toolshed = default!;
         [Dependency] private readonly RejuvenateSystem _rejuvenate = default!;
@@ -293,7 +295,7 @@ namespace Content.Server.Administration.Systems
                         Act = () =>
                         {
                             var ui = new AdminLogsEui();
-                            _euiManager.OpenEui(ui, player);
+                            _eui.OpenEui(ui, player);
                             ui.SetLogFilter(search:args.Target.Id.ToString());
                         },
                         Impact = LogImpact.Low
@@ -347,30 +349,7 @@ namespace Content.Server.Administration.Systems
                     Impact = LogImpact.Low
                 });
 
-                // This logic is needed to be able to modify the AI's laws through its core and eye.
-                EntityUid? target = null;
-                SiliconLawBoundComponent? lawBoundComponent = null;
-
-                if (TryComp(args.Target, out lawBoundComponent))
-                {
-                    target = args.Target;
-                }
-                // When inspecting the core we can find the entity with its laws by looking at the  AiHolderComponent.
-                else if (TryComp<StationAiHolderComponent>(args.Target, out var holder) && holder.Slot.Item != null
-                         && TryComp(holder.Slot.Item, out lawBoundComponent))
-                {
-                    target = holder.Slot.Item.Value;
-                    // For the eye we can find the entity with its laws as the source of the movement relay since the eye
-                    // is just a proxy for it to move around and look around the station.
-                }
-                else if (TryComp<MovementRelayTargetComponent>(args.Target, out var relay)
-                         && TryComp(relay.Source, out lawBoundComponent))
-                {
-                    target = relay.Source;
-
-                }
-
-                if (lawBoundComponent != null && target != null)
+                if (TryComp<SiliconLawBoundComponent>(args.Target, out var lawBoundComponent))
                 {
                     args.Verbs.Add(new Verb()
                     {
@@ -384,7 +363,7 @@ namespace Content.Server.Administration.Systems
                                 return;
                             }
                             _euiManager.OpenEui(ui, session);
-                            ui.UpdateLaws(lawBoundComponent, target.Value);
+                            ui.UpdateLaws(lawBoundComponent, args.Target);
                         },
                         Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Interface/Actions/actions_borg.rsi"), "state-laws"),
                     });

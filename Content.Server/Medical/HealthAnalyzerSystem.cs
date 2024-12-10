@@ -1,7 +1,7 @@
 using Content.Server.Body.Components;
 using Content.Server.Medical.Components;
 using Content.Server.PowerCell;
-using Content.Server.Temperature.Components;
+using Content.Shared.Temperature.Components;
 using Content.Server.Traits.Assorted;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage;
@@ -103,8 +103,7 @@ public sealed class HealthAnalyzerSystem : EntitySystem
         if (args.Handled || args.Cancelled || args.Target == null || !_cell.HasDrawCharge(uid, user: args.User))
             return;
 
-        if (!uid.Comp.Silent)
-            _audio.PlayPvs(uid.Comp.ScanningEndSound, uid);
+        _audio.PlayPvs(uid.Comp.ScanningEndSound, uid);
 
         OpenUserInterface(args.User, uid);
         BeginAnalyzingEntity(uid, args.Target.Value);

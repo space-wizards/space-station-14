@@ -1,58 +1,67 @@
-﻿using Content.Shared.FixedPoint;
-using Robust.Shared.Serialization;
+﻿using Content.Shared.Chemistry.Components.Reagents;
+using Content.Shared.FixedPoint;
 
 namespace Content.Shared.Chemistry.Reagent;
 
 /// <summary>
 /// Simple struct for storing a <see cref="ReagentId"/> & quantity tuple.
 /// </summary>
-[Serializable, NetSerializable]
-[DataDefinition]
-public partial struct ReagentQuantity : IEquatable<ReagentQuantity>
+public partial struct ReagentQuantity: IEquatable<ReagentQuantity>
 {
-    [DataField("Quantity", required:true)]
-    public FixedPoint2 Quantity { get; private set; }
+    public static readonly ReagentQuantity Invalid = new();
 
-    [IncludeDataField]
-    [ViewVariables]
-    public ReagentId Reagent { get; private set; }
+    public ReagentDef ReagentDef;
 
-    public ReagentQuantity(string reagentId, FixedPoint2 quantity, List<ReagentData>? data = null)
-        : this(new ReagentId(reagentId, data), quantity)
+    public FixedPoint2 Quantity;
+    public bool IsValid => ReagentDef.IsValid;
+
+    public Entity<ReagentDefinitionComponent> Entity => ReagentDef.Entity;
+
+    public ReagentVariant? Variant => ReagentDef.Variant;
+
+    public string Id => ReagentDef.Id;
+
+    public ReagentQuantity()
     {
+        ReagentDef = ReagentDef.Invalid;
+        Quantity = 0;
     }
 
-    public ReagentQuantity(ReagentId reagent, FixedPoint2 quantity)
+    public ReagentQuantity(ReagentDef reagent, FixedPoint2 quantity)
     {
-        Reagent = reagent;
+        ReagentDef = reagent;
         Quantity = quantity;
     }
 
-    public ReagentQuantity() : this(default, default)
+    public ReagentQuantity(Entity<ReagentDefinitionComponent> definitionEntity, FixedPoint2 quantity,
+        ReagentVariant? variant = null)
+        : this(new ReagentDef(definitionEntity, variant), quantity)
     {
     }
+
 
     public override string ToString()
     {
-        return Reagent.ToString(Quantity);
+        return ReagentDef.ToString(Quantity);
     }
 
-    public void Deconstruct(out string prototype, out FixedPoint2 quantity, out List<ReagentData>? data)
+    public void Deconstruct(out string reagentId, out FixedPoint2 quantity, out ReagentVariant? data)
     {
-        prototype = Reagent.Prototype;
+        reagentId = ReagentDef.Id;
         quantity = Quantity;
-        data = Reagent.Data;
+        data = ReagentDef.Variant;
     }
 
-    public void Deconstruct(out ReagentId id, out FixedPoint2 quantity)
+    public void Deconstruct(out ReagentDef reagentDef, out FixedPoint2 quantity)
     {
-        id = Reagent;
+        reagentDef = ReagentDef;
         quantity = Quantity;
     }
 
     public bool Equals(ReagentQuantity other)
     {
-        return Quantity != other.Quantity && Reagent.Equals(other.Reagent);
+        return  Quantity != other.Quantity
+               && ReagentDef.Equals(other.ReagentDef);
     }
 
     public override bool Equals(object? obj)
@@ -62,7 +71,7 @@ public partial struct ReagentQuantity : IEquatable<ReagentQuantity>
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(Reagent.GetHashCode(), Quantity);
+        return HashCode.Combine(ReagentDef.GetHashCode(), Quantity);
     }
 
     public static bool operator ==(ReagentQuantity left, ReagentQuantity right)
@@ -74,4 +83,12 @@ public partial struct ReagentQuantity : IEquatable<ReagentQuantity>
     {
         return !(left == right);
     }
+
+    public static implicit operator (ReagentDef, FixedPoint2)(ReagentQuantity q) => (q.ReagentDef,q.Quantity);
+    public static implicit operator ReagentQuantity((ReagentDef, FixedPoint2)d) => new(d.Item1, d.Item2);
+    public static implicit operator ReagentDef(ReagentQuantity q) => q.ReagentDef;
+    public static implicit operator FixedPoint2(ReagentQuantity q) => q.Quantity;
+    public static implicit operator Entity<ReagentDefinitionComponent>(ReagentQuantity q) => q.ReagentDef.Entity;
+    public static implicit operator ReagentVariant?(ReagentQuantity q) => q.ReagentDef.Variant;
+    public static implicit operator string(ReagentQuantity q) => q.ReagentDef.Id;
 }

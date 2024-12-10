@@ -1,10 +1,8 @@
 using Content.Server.Administration.Logs;
-using Content.Server.DoAfter;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.Components;
 using Content.Server.Spreader;
 using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
@@ -16,11 +14,8 @@ using Content.Shared.Fluids.Components;
 using Content.Shared.Friction;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Maps;
-using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
-using Content.Shared.Slippery;
-using Content.Shared.StepTrigger.Components;
 using Content.Shared.StepTrigger.Systems;
 using Robust.Server.Audio;
 using Robust.Shared.Collections;
@@ -54,6 +49,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
     [Dependency] private readonly SpeedModifierContactsSystem _speedModContacts = default!;
     [Dependency] private readonly TileFrictionController _tile = default!;
+    [Dependency] private readonly ChemistryRegistrySystem _chemistryRegistry = default!;
 
     [ValidatePrototypeId<ReagentPrototype>]
     private const string Blood = "Blood";
@@ -91,7 +87,6 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         SubscribeLocalEvent<PuddleComponent, SolutionContainerChangedEvent>(OnSolutionUpdate);
         SubscribeLocalEvent<PuddleComponent, ComponentInit>(OnPuddleInit);
         SubscribeLocalEvent<PuddleComponent, SpreadNeighborsEvent>(OnPuddleSpread);
-        SubscribeLocalEvent<PuddleComponent, SlipEvent>(OnPuddleSlip);
 
         SubscribeLocalEvent<EvaporationComponent, MapInitEvent>(OnEvaporationMapInit);
 
@@ -284,29 +279,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         }
     }
 
-    private void OnPuddleSlip(Entity<PuddleComponent> entity, ref SlipEvent args)
-    {
-        // Reactive entities have a chance to get a touch reaction from slipping on a puddle
-        // (i.e. it is implied they fell face first onto it or something)
-        if (!HasComp<ReactiveComponent>(args.Slipped) || HasComp<SlidingComponent>(args.Slipped))
-            return;
 
-        // Eventually probably have some system of 'body coverage' to tweak the probability but for now just 0.5
-        // (implying that spacemen have a 50% chance to either land on their ass or their face)
-        if (!_random.Prob(0.5f))
-            return;
-
-        if (!_solutionContainerSystem.ResolveSolution(entity.Owner, entity.Comp.SolutionName, ref entity.Comp.Solution,
-                out var solution))
-            return;
-
-        _popups.PopupEntity(Loc.GetString("puddle-component-slipped-touch-reaction", ("puddle", entity.Owner)),
-            args.Slipped, args.Slipped, PopupType.SmallCaution);
-
-        // Take 15% of the puddle solution
-        var splitSol = _solutionContainerSystem.SplitSolution(entity.Comp.Solution.Value, solution.Volume * 0.15f);
-        _reactive.DoEntityReaction(args.Slipped, splitSol, ReactionMethod.Touch);
-    }
 
     /// <inheritdoc/>
     public override void Update(float frameTime)
@@ -320,11 +293,6 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         _deletionQueue.Clear();
 
         TickEvaporation();
-    }
-
-    private void OnPuddleInit(Entity<PuddleComponent> entity, ref ComponentInit args)
-    {
-        _solutionContainerSystem.EnsureSolution(entity.Owner, entity.Comp.SolutionName, out _, FixedPoint2.New(PuddleVolume));
     }
 
     private void OnSolutionUpdate(Entity<PuddleComponent> entity, ref SolutionContainerChangedEvent args)
@@ -345,121 +313,10 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         UpdateAppearance(entity, entity.Comp);
     }
 
-    private void UpdateAppearance(EntityUid uid, PuddleComponent? puddleComponent = null,
-        AppearanceComponent? appearance = null)
-    {
-        if (!Resolve(uid, ref puddleComponent, ref appearance, false))
-        {
-            return;
-        }
-
-        var volume = FixedPoint2.Zero;
-        Color color = Color.White;
-
-        if (_solutionContainerSystem.ResolveSolution(uid, puddleComponent.SolutionName, ref puddleComponent.Solution,
-                out var solution))
-        {
-            volume = solution.Volume / puddleComponent.OverflowVolume;
-
-            // Make blood stand out more
-            // Kinda EH
-            // Could potentially do alpha per-solution but future problem.
-
-            color = solution.GetColorWithout(_prototypeManager, _standoutReagents);
-            color = color.WithAlpha(0.7f);
-
-            foreach (var standout in _standoutReagents)
-            {
-                var quantity = solution.GetTotalPrototypeQuantity(standout);
-                if (quantity <= FixedPoint2.Zero)
-                    continue;
-
-                var interpolateValue = quantity.Float() / solution.Volume.Float();
-                color = Color.InterpolateBetween(color,
-                    _prototypeManager.Index<ReagentPrototype>(standout).SubstanceColor, interpolateValue);
-            }
-        }
-
-        _appearance.SetData(uid, PuddleVisuals.CurrentVolume, volume.Float(), appearance);
-        _appearance.SetData(uid, PuddleVisuals.SolutionColor, color, appearance);
-    }
-
-    private void UpdateSlip(EntityUid entityUid, PuddleComponent component, Solution solution)
-    {
-        var isSlippery = false;
-        // The base sprite is currently at 0.3 so we require at least 2nd tier to be slippery or else it's too hard to see.
-        var amountRequired = FixedPoint2.New(component.OverflowVolume.Float() * LowThreshold);
-        var slipperyAmount = FixedPoint2.Zero;
-
-        foreach (var (reagent, quantity) in solution.Contents)
-        {
-            var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.Prototype);
-
-            if (reagentProto.Slippery)
-            {
-                slipperyAmount += quantity;
-
-                if (slipperyAmount > amountRequired)
-                {
-                    isSlippery = true;
-                    break;
-                }
-            }
-        }
-
-        if (isSlippery)
-        {
-            var comp = EnsureComp<StepTriggerComponent>(entityUid);
-            _stepTrigger.SetActive(entityUid, true, comp);
-            var friction = EnsureComp<TileFrictionModifierComponent>(entityUid);
-            _tile.SetModifier(entityUid, TileFrictionController.DefaultFriction * 0.5f, friction);
-        }
-        else if (TryComp<StepTriggerComponent>(entityUid, out var comp))
-        {
-            _stepTrigger.SetActive(entityUid, false, comp);
-            RemCompDeferred<TileFrictionModifierComponent>(entityUid);
-        }
-    }
-
-    private void UpdateSlow(EntityUid uid, Solution solution)
-    {
-        var maxViscosity = 0f;
-        foreach (var (reagent, _) in solution.Contents)
-        {
-            var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.Prototype);
-            maxViscosity = Math.Max(maxViscosity, reagentProto.Viscosity);
-        }
-
-        if (maxViscosity > 0)
-        {
-            var comp = EnsureComp<SpeedModifierContactsComponent>(uid);
-            var speed = 1 - maxViscosity;
-            _speedModContacts.ChangeModifiers(uid, speed, comp);
-        }
-        else
-        {
-            RemComp<SpeedModifierContactsComponent>(uid);
-        }
-    }
-
     private void OnAnchorChanged(Entity<PuddleComponent> entity, ref AnchorStateChangedEvent args)
     {
         if (!args.Anchored)
             QueueDel(entity);
-    }
-
-    /// <summary>
-    ///     Gets the current volume of the given puddle, which may not necessarily be PuddleVolume.
-    /// </summary>
-    public FixedPoint2 CurrentVolume(EntityUid uid, PuddleComponent? puddleComponent = null)
-    {
-        if (!Resolve(uid, ref puddleComponent))
-            return FixedPoint2.Zero;
-
-        return _solutionContainerSystem.ResolveSolution(uid, puddleComponent.SolutionName, ref puddleComponent.Solution,
-            out var solution)
-            ? solution.Volume
-            : FixedPoint2.Zero;
     }
 
     /// <summary>

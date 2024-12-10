@@ -1,5 +1,6 @@
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.Reagents;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
@@ -27,7 +28,7 @@ namespace Content.Server.Chemistry.TileReactions
         [DataField("superSlippery")] private bool _superSlippery;
 
         public FixedPoint2 TileReact(TileRef tile,
-            ReagentPrototype reagent,
+            Entity<ReagentDefinitionComponent> reagent,
             FixedPoint2 reactVolume,
             IEntityManager entityManager,
             List<ReagentData>? data)
@@ -48,7 +49,7 @@ namespace Content.Server.Chemistry.TileReactions
                 entityManager.EntitySysManager.GetEntitySystem<StepTriggerSystem>().SetRequiredTriggerSpeed(puddleUid, _requiredSlipSpeed, step);
 
                 var slow = entityManager.EnsureComponent<SpeedModifierContactsComponent>(puddleUid);
-                var speedModifier = 1 - reagent.Viscosity;
+                var speedModifier = 1 - reagent.Comp.Viscosity;
                 entityManager.EntitySysManager.GetEntitySystem<SpeedModifierContactsSystem>().ChangeModifiers(puddleUid, speedModifier, slow);
 
                 return reactVolume;

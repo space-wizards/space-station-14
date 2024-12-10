@@ -43,11 +43,11 @@ namespace Content.Shared.Chemistry
     [Serializable, NetSerializable]
     public sealed class ChemMasterReagentAmountButtonMessage : BoundUserInterfaceMessage
     {
-        public readonly ReagentId ReagentId;
+        public readonly ReagentSpecifier ReagentId;
         public readonly ChemMasterReagentAmount Amount;
         public readonly bool FromBuffer;
 
-        public ChemMasterReagentAmountButtonMessage(ReagentId reagentId, ChemMasterReagentAmount amount, bool fromBuffer)
+        public ChemMasterReagentAmountButtonMessage(ReagentSpecifier reagentId, ChemMasterReagentAmount amount, bool fromBuffer)
         {
             ReagentId = reagentId;
             Amount = amount;

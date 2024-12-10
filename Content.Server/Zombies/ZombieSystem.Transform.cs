@@ -12,7 +12,7 @@ using Content.Server.NPC;
 using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
 using Content.Server.Speech.Components;
-using Content.Server.Temperature.Components;
+using Content.Shared.Temperature.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Damage;

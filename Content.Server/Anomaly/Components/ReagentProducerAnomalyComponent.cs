@@ -4,6 +4,7 @@ using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using System.Numerics;
+using Content.Shared.Chemistry.Components.Solutions;
 
 namespace Content.Server.Anomaly.Components;
 /// <summary>

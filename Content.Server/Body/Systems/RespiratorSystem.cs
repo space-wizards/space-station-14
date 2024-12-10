@@ -2,6 +2,8 @@ using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Chat.Systems;
+using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.EntityEffects.EffectConditions;
 using Content.Server.EntityEffects.Effects;
 using Content.Shared.Chemistry.EntitySystems;
@@ -11,6 +13,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.EntityEffects;
@@ -33,8 +36,9 @@ public sealed class RespiratorSystem : EntitySystem
     [Dependency] private readonly LungSystem _lungSystem = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly SharedSolutionSystem _solutionSystem = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly ChemistryRegistrySystem _chemistryRegistry = default!;
 
     private static readonly ProtoId<MetabolismGroupPrototype> GasId = new("Gas");
 
@@ -166,8 +170,8 @@ public sealed class RespiratorSystem : EntitySystem
             _atmosSys.Merge(outGas, lung.Air);
             lung.Air.Clear();
 
-            if (_solutionContainerSystem.ResolveSolution(organUid, lung.SolutionName, ref lung.Solution))
-                _solutionContainerSystem.RemoveAllSolution(lung.Solution.Value);
+            if (_solutionSystem.ResolveSolution(organUid, lung.SolutionName, ref lung.Solution))
+                _solutionSystem.RemoveAllSolution(lung.Solution.Value);
         }
 
         _atmosSys.Merge(ev.Gas, outGas);
@@ -243,11 +247,11 @@ public sealed class RespiratorSystem : EntitySystem
         float saturation = 0;
         foreach (var (id, quantity) in solution.Contents)
         {
-            var reagent = _protoMan.Index<ReagentPrototype>(id.Prototype);
-            if (reagent.Metabolisms == null)
+            var reagent = _chemistryRegistry.Index(id.Prototype);
+            if (reagent.Comp.Metabolisms == null)
                 continue;
 
-            if (!reagent.Metabolisms.TryGetValue(GasId, out var entry))
+            if (!reagent.Comp.Metabolisms.TryGetValue(GasId, out var entry))
                 continue;
 
             foreach (var effect in entry.Effects)
