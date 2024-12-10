@@ -191,7 +191,6 @@
       - SignalTimerElectronics
       - APCElectronics
       - SMESMachineCircuitboard
-      - SMESAdvancedMachineCircuitboard
       - SubstationMachineCircuitboard
       - WallmountSubstationElectronics
       - CellRechargerCircuitboard
@@ -521,6 +520,8 @@
       - MassMediaCircuitboard
       - ReagentGrinderIndustrialMachineCircuitboard
       - JukeboxCircuitBoard
+      - SMESAdvancedMachineCircuitboard
+
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - ShuttleGunDusterCircuitboard

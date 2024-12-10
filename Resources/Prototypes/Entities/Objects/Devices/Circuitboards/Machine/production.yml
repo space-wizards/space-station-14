@@ -657,7 +657,7 @@
     componentRequirements:
       PowerCell:
         amount: 4
-        defaultPrototype: PowerCellMedium
+        defaultPrototype: PowerCellSmall
 
 - type: entity
   id: CellRechargerCircuitboard
