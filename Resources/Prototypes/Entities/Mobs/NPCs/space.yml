@@ -415,6 +415,7 @@
         - SmallMobLayer
   - type: MobState
   - type: Deathgasp
+  - type: Unconscious
   - type: MobStateActions
     actions:
       Critical:
