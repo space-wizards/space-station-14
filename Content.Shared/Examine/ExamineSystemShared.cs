@@ -409,10 +409,8 @@ namespace Content.Shared.Examine
         private void PopGroup()
         {
             DebugTools.Assert(_currentGroupPart != null);
-            if (_currentGroupPart != null && !_currentGroupPart.Message.IsEmpty)
-            {
+            if (_currentGroupPart != null)
                 Parts.Add(_currentGroupPart);
-            }
 
             _currentGroupPart = null;
         }

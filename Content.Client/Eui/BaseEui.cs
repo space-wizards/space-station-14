@@ -55,7 +55,7 @@ namespace Content.Client.Eui
         /// </summary>
         protected void SendMessage(EuiMessageBase msg)
         {
-            var netMsg = new MsgEuiMessage();
+            var netMsg = _netManager.CreateNetMessage<MsgEuiMessage>();
             netMsg.Id = Id;
             netMsg.Message = msg;
 

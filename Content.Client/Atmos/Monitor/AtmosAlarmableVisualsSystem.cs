@@ -1,7 +1,12 @@
+using System.Collections.Generic;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Power;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Maths;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Atmos.Monitor;
 
@@ -22,7 +27,7 @@ public sealed class AtmosAlarmableVisualsSystem : VisualizerSystem<AtmosAlarmabl
         {
             foreach (var visLayer in component.HideOnDepowered)
             {
-                if (args.Sprite.LayerMapTryGet(visLayer, out var powerVisibilityLayer))
+                if (args.Sprite.LayerMapTryGet(visLayer, out int powerVisibilityLayer))
                     args.Sprite.LayerSetVisible(powerVisibilityLayer, powered);
             }
         }
@@ -31,7 +36,7 @@ public sealed class AtmosAlarmableVisualsSystem : VisualizerSystem<AtmosAlarmabl
         {
             foreach (var (setLayer, powerState) in component.SetOnDepowered)
             {
-                if (args.Sprite.LayerMapTryGet(setLayer, out var setStateLayer))
+                if (args.Sprite.LayerMapTryGet(setLayer, out int setStateLayer))
                     args.Sprite.LayerSetState(setStateLayer, new RSI.StateId(powerState));
             }
         }

@@ -9,7 +9,6 @@ species-name-arachnid = Arachnid
 species-name-moth = Moth Person
 species-name-skeleton = Skeleton
 species-name-vox = Vox
-species-name-gingerbread = delicious baked good
 
 ## Misc species things
 

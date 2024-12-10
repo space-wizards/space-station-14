@@ -394,9 +394,6 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
     private void OnAiInsert(Entity<StationAiCoreComponent> ent, ref EntInsertedIntoContainerMessage args)
     {
-        if (args.Container.ID != StationAiCoreComponent.Container)
-            return;
-
         if (_timing.ApplyingState)
             return;
 

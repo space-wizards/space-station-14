@@ -440,14 +440,6 @@
 
 - type: entity
   parent: DefaultStationBeaconEngineering
-  id: DefaultStationBeaconAnchor
-  suffix: Anchor
-  components:
-  - type: NavMapBeacon
-    defaultText: station-beacon-anchor
-
-- type: entity
-  parent: DefaultStationBeaconEngineering
   id: DefaultStationBeaconSingularity
   suffix: PA Control
   components:

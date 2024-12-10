@@ -4,6 +4,7 @@ using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Throwing;
+using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
@@ -16,8 +17,7 @@ public sealed class ThrowArtifactSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly TileSystem _tile = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+    [Dependency] private readonly TransformSystem _transform = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -30,9 +30,7 @@ public sealed class ThrowArtifactSystem : EntitySystem
         var xform = Transform(uid);
         if (TryComp<MapGridComponent>(xform.GridUid, out var grid))
         {
-            var tiles = _mapSystem.GetTilesIntersecting(
-                xform.GridUid.Value,
-                grid,
+            var tiles = grid.GetTilesIntersecting(
                 Box2.CenteredAround(_transform.GetWorldPosition(xform), new Vector2(component.Range * 2, component.Range)));
 
             foreach (var tile in tiles)

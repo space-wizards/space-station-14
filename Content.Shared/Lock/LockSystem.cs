@@ -131,24 +131,8 @@ public sealed class LockSystem : EntitySystem
                 });
         }
 
-        Lock(uid, user, lockComp);
-        return true;
-    }
-
-    /// <summary>
-    ///     Forces a given entity to be locked, does not activate a do-after.
-    /// </summary>
-    public void Lock(EntityUid uid, EntityUid? user, LockComponent? lockComp = null)
-    {
-        if (!Resolve(uid, ref lockComp))
-            return;
-
-        if (user is { Valid: true })
-        {
-            _sharedPopupSystem.PopupClient(Loc.GetString("lock-comp-do-lock-success",
+        _sharedPopupSystem.PopupClient(Loc.GetString("lock-comp-do-lock-success",
                 ("entityName", Identity.Name(uid, EntityManager))), uid, user);
-        }
-
         _audio.PlayPredicted(lockComp.LockSound, uid, user);
 
         lockComp.Locked = true;
@@ -157,6 +141,7 @@ public sealed class LockSystem : EntitySystem
 
         var ev = new LockToggledEvent(true);
         RaiseLocalEvent(uid, ref ev, true);
+        return true;
     }
 
     /// <summary>

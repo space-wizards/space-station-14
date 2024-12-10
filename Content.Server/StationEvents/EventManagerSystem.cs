@@ -148,20 +148,20 @@ public sealed class EventManagerSystem : EntitySystem
             return null;
         }
 
-        var sumOfWeights = 0.0f;
+        var sumOfWeights = 0;
 
         foreach (var stationEvent in availableEvents.Values)
         {
-            sumOfWeights += stationEvent.Weight;
+            sumOfWeights += (int) stationEvent.Weight;
         }
 
-        sumOfWeights = _random.NextFloat(sumOfWeights);
+        sumOfWeights = _random.Next(sumOfWeights);
 
         foreach (var (proto, stationEvent) in availableEvents)
         {
-            sumOfWeights -= stationEvent.Weight;
+            sumOfWeights -= (int) stationEvent.Weight;
 
-            if (sumOfWeights <= 0.0f)
+            if (sumOfWeights <= 0)
             {
                 return proto.ID;
             }

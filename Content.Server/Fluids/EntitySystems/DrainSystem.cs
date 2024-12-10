@@ -134,6 +134,13 @@ public sealed class DrainSystem : SharedDrainSystem
             }
             drain.Accumulator -= drain.DrainFrequency;
 
+            // Disable ambient sound from emptying manually
+            if (!drain.AutoDrain)
+            {
+                _ambientSoundSystem.SetAmbience(uid, false);
+                continue;
+            }
+
             if (!managerQuery.TryGetComponent(uid, out var manager))
                 continue;
 
@@ -153,44 +160,41 @@ public sealed class DrainSystem : SharedDrainSystem
             // This will ensure that UnitsPerSecond is per second...
             var amount = drain.UnitsPerSecond * drain.DrainFrequency;
 
-            if (drain.AutoDrain)
-            {
-                _puddles.Clear();
-                _lookup.GetEntitiesInRange(Transform(uid).Coordinates, drain.Range, _puddles);
+            _puddles.Clear();
+            _lookup.GetEntitiesInRange(Transform(uid).Coordinates, drain.Range, _puddles);
 
-                if (_puddles.Count == 0)
+            if (_puddles.Count == 0)
+            {
+                _ambientSoundSystem.SetAmbience(uid, false);
+                continue;
+            }
+
+            _ambientSoundSystem.SetAmbience(uid, true);
+
+            amount /= _puddles.Count;
+
+            foreach (var puddle in _puddles)
+            {
+                // Queue the solution deletion if it's empty. EvaporationSystem might also do this
+                // but queuedelete should be pretty safe.
+                if (!_solutionContainerSystem.ResolveSolution(puddle.Owner, puddle.Comp.SolutionName, ref puddle.Comp.Solution, out var puddleSolution))
                 {
-                    _ambientSoundSystem.SetAmbience(uid, false);
+                    EntityManager.QueueDeleteEntity(puddle);
                     continue;
                 }
 
-                _ambientSoundSystem.SetAmbience(uid, true);
+                // Removes the lowest of:
+                // the drain component's units per second adjusted for # of puddles
+                // the puddle's remaining volume (making it cleanly zero)
+                // the drain's remaining volume in its buffer.
+                var transferSolution = _solutionContainerSystem.SplitSolution(puddle.Comp.Solution.Value,
+                    FixedPoint2.Min(FixedPoint2.New(amount), puddleSolution.Volume, drainSolution.AvailableVolume));
 
-                amount /= _puddles.Count;
+                drainSolution.AddSolution(transferSolution, _prototypeManager);
 
-                foreach (var puddle in _puddles)
+                if (puddleSolution.Volume <= 0)
                 {
-                    // Queue the solution deletion if it's empty. EvaporationSystem might also do this
-                    // but queuedelete should be pretty safe.
-                    if (!_solutionContainerSystem.ResolveSolution(puddle.Owner, puddle.Comp.SolutionName, ref puddle.Comp.Solution, out var puddleSolution))
-                    {
-                        EntityManager.QueueDeleteEntity(puddle);
-                        continue;
-                    }
-
-                    // Removes the lowest of:
-                    // the drain component's units per second adjusted for # of puddles
-                    // the puddle's remaining volume (making it cleanly zero)
-                    // the drain's remaining volume in its buffer.
-                    var transferSolution = _solutionContainerSystem.SplitSolution(puddle.Comp.Solution.Value,
-                        FixedPoint2.Min(FixedPoint2.New(amount), puddleSolution.Volume, drainSolution.AvailableVolume));
-
-                    drainSolution.AddSolution(transferSolution, _prototypeManager);
-
-                    if (puddleSolution.Volume <= 0)
-                    {
-                        QueueDel(puddle);
-                    }
+                    QueueDel(puddle);
                 }
             }
 

@@ -38,11 +38,6 @@ public sealed class ClumsySystem : EntitySystem
     private void BeforeHyposprayEvent(Entity<ClumsyComponent> ent, ref SelfBeforeHyposprayInjectsEvent args)
     {
         // Clumsy people sometimes inject themselves! Apparently syringes are clumsy proof...
-    
-        // checks if ClumsyHypo is false, if so, skips.
-        if (!ent.Comp.ClumsyHypo)
-            return;
-
         if (!_random.Prob(ent.Comp.ClumsyDefaultCheck))
             return;
 
@@ -54,11 +49,6 @@ public sealed class ClumsySystem : EntitySystem
     private void BeforeDefibrillatorZapsEvent(Entity<ClumsyComponent> ent, ref SelfBeforeDefibrillatorZapsEvent args)
     {
         // Clumsy people sometimes defib themselves!
-        
-        // checks if ClumsyDefib is false, if so, skips.
-        if (!ent.Comp.ClumsyDefib)
-            return;
-
         if (!_random.Prob(ent.Comp.ClumsyDefaultCheck))
             return;
 
@@ -70,10 +60,6 @@ public sealed class ClumsySystem : EntitySystem
     private void BeforeGunShotEvent(Entity<ClumsyComponent> ent, ref SelfBeforeGunShotEvent args)
     {
         // Clumsy people sometimes can't shoot :(
-
-        // checks if ClumsyGuns is false, if so, skips.
-        if (!ent.Comp.ClumsyGuns)
-            return;
 
         if (args.Gun.Comp.ClumsyProof)
             return;
@@ -96,10 +82,6 @@ public sealed class ClumsySystem : EntitySystem
 
     private void OnBeforeClimbEvent(Entity<ClumsyComponent> ent, ref SelfBeforeClimbEvent args)
     {
-        // checks if ClumsyVaulting is false, if so, skips.
-        if (!ent.Comp.ClumsyVaulting)
-            return;
-
         // This event is called in shared, thats why it has all the extra prediction stuff.
         var rand = new System.Random((int)_timing.CurTick.Value);
 
@@ -120,8 +102,8 @@ public sealed class ClumsySystem : EntitySystem
         {
             // You are slamming yourself onto the table.
             _popup.PopupPredicted(
-                Loc.GetString(ent.Comp.VaulingFailedMessageSelf, ("bonkable", args.BeingClimbedOn)),
-                Loc.GetString(ent.Comp.VaulingFailedMessageOthers, ("victim", gettingPutOnTableName), ("bonkable", args.BeingClimbedOn)),
+                Loc.GetString("bonkable-success-message-user", ("bonkable", args.BeingClimbedOn)),
+                Loc.GetString("bonkable-success-message-others", ("victim", gettingPutOnTableName), ("bonkable", args.BeingClimbedOn)),
                 ent,
                 ent);
         }
@@ -130,7 +112,7 @@ public sealed class ClumsySystem : EntitySystem
             // Someone else slamed you onto the table.
             // This is only run in server so you need to use popup entity.
             _popup.PopupPredicted(
-                Loc.GetString(ent.Comp.VaulingFailedMessageForced,
+                Loc.GetString("forced-bonkable-success-message",
                     ("bonker", puttingOnTableName),
                     ("victim", gettingPutOnTableName),
                     ("bonkable", args.BeingClimbedOn)),

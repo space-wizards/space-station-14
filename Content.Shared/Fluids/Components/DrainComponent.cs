@@ -27,8 +27,8 @@ public sealed partial class DrainComponent : Component
     public float Accumulator = 0f;
 
     /// <summary>
-    /// If true, automatically transfers solutions from nearby puddles and drains them. True for floor drains;
-    /// false for things like toilets and sinks.
+    /// Does this drain automatically absorb surrouding puddles? Or is it a drain designed to empty
+    /// solutions in it manually? 
     /// </summary>
     [DataField]
     public bool AutoDrain = true;
