@@ -10200,8 +10200,6 @@ entities:
       pos: -6.5,-272.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 17465
   - uid: 443
@@ -67348,8 +67346,6 @@ entities:
       pos: -4.5,-271.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 17465
   - uid: 9671

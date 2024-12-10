@@ -1326,13 +1326,8 @@ entities:
           - 433
           - 428
           - 424
-    - type: UserInterface
-      actors:
-        enum.StorageUiKey.Key:
-        - invalid
     - type: Physics
       canCollide: False
-    - type: ActiveUserInterface
     - type: InsideEntityStorage
 - proto: BoxFolderRed
   entities:
@@ -2200,8 +2195,6 @@ entities:
       pos: 12.5,0.5
       parent: 1
     - type: DeviceNetwork
-      configurators:
-      - invalid
 - proto: ComputerIFFSyndicate
   entities:
   - uid: 501
