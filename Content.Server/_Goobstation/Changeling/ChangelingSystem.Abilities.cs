@@ -111,7 +111,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         var popupOthers = Loc.GetString("changeling-absorb-start-others", ("user", Identity.Entity(uid, EntityManager)), ("target", Identity.Entity(target, EntityManager)));
 
         _popup.PopupEntity(popupSelf, uid, uid);
-        _popup.PopupEntity(popupTarget, uid, target, PopupType.MediumCaution);
+        _popup.PopupEntity(popupTarget, target, target, PopupType.MediumCaution);
         _popup.PopupEntity(popupOthers, uid, Filter.Pvs(uid).RemovePlayersByAttachedEntity([uid, target]), true, PopupType.MediumCaution);
 
         PlayMeatySound(uid, comp);
@@ -181,7 +181,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         }
 
         _popup.PopupEntity(popupSelf, uid, uid);
-        _popup.PopupEntity(popupTarget, uid, target, PopupType.LargeCaution);
+        _popup.PopupEntity(popupTarget, target, target, PopupType.LargeCaution);
         _popup.PopupEntity(popupOthers, uid, Filter.Pvs(uid).RemovePlayersByAttachedEntity([uid, target]), true, PopupType.LargeCaution);
 
         TryStealDNA(uid, target, comp, true);

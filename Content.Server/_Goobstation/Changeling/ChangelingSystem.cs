@@ -334,13 +334,6 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         var target = action.Target;
 
-        // can't get his dna if he doesn't have it!
-        if (!HasComp<AbsorbableComponent>(target) || HasComp<AbsorbedComponent>(target))
-        {
-            _popup.PopupEntity(Loc.GetString("changeling-sting-extract-fail", ("target", Identity.Entity(target, EntityManager))), uid, uid);
-            return false;
-        }
-
         if (HasComp<ChangelingComponent>(target))
         {
             _popup.PopupEntity(Loc.GetString("changeling-sting-fail-self", ("target", Identity.Entity(target, EntityManager))), uid, uid);

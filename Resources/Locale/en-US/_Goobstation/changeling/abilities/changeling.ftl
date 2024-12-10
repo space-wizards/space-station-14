@@ -20,7 +20,7 @@ changeling-absorb-end-self-ling = We have consumed another changeling. We are ev
 changeling-absorb-end-self-reduced-biomass = We have consumed {THE($target)}, but {SUBJECT($target)} {CONJUGATE-BE($target)} not enough to satisfy us.
 changeling-absorb-end-target = You are consumed by the changeling!
 changeling-absorb-end-others = {CAPITALIZE(THE($user))} hollows out {THE($target)}!
-changeling-absorb-onexamine = [color=red]{CAPITALIZE(POSS-ADJ($target))} body {CONJUGATE-BE($target)} hollow.[/color]
+changeling-absorb-onexamine = [color=red]{CAPITALIZE(POSS-ADJ($target))} body is hollow.[/color]
 
 changeling-transform-cycle = Switched to {$target}'s DNA.
 changeling-transform-cycle-empty = We have no DNA strains.
