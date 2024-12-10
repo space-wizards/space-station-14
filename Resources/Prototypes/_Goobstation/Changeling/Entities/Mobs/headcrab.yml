@@ -1,5 +1,5 @@
 - type: entity
-  name: head slug
+  name: headslug
   parent: [SimpleMobBase]
   id: MobHeadcrab
   description: You don't want to touch it.
