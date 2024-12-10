@@ -1940,14 +1940,6 @@
     FoodBreadBaguetteSlice: 1
 
 - type: microwaveMealRecipe
-  id: RecipeCookedSpaceshroom
-  name: cooked spaceshroom recipe
-  result: FoodSpaceshroomCooked
-  time: 5
-  solids:
-    FoodSpaceshroom: 1
-
-- type: microwaveMealRecipe
   id: RecipeCannabisButter
   name: cannabis butter recipe
   result: FoodCannabisButter
