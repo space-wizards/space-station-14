@@ -99,7 +99,7 @@
           reagents:
           - ReagentId: Nutriment
             Quantity: 2
-
+          
 - type: entity
   id: WeakKudzu
   parent: Kudzu
@@ -247,8 +247,10 @@
       solutions:
         food:
           reagents:
-          - ReagentId: Protein
+          - ReagentId: Razorium
             Quantity: 2
+          - ReagentId: Protein
+            Quantity: 1
     - type: Respirator
       damage:
         types:
