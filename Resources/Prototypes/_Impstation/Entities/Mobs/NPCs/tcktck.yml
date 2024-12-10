@@ -38,6 +38,10 @@
     - state: tcktck_e_r
       map: ["enum.BorgVisualLayers.Light"]
       visible: false
+    - state: tcktck_e
+      shader: unshaded
+      map: ["enum.BorgVisualLayers.Light"]
+      visible: false
     - state: light
       shader: unshaded
       map: ["light","enum.BorgVisualLayers.LightStatus"]
@@ -228,7 +232,7 @@
         Heat: 10 # capable of touching light bulbs and stoves without feeling pain!
   - type: BorgChassis ######################################################################################################################
     maxModules: 2
-    hasMindState: tcktck
+    hasMindState: tcktck_e
     noMindState: tcktck_e_r
     moduleWhitelist:
       tags:
