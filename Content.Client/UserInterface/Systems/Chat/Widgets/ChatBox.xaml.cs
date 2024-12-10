@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Client.UserInterface.Systems.Chat.Controls;
 using Content.Shared.Chat;
 using Content.Shared.Input;
@@ -73,8 +74,15 @@ public partial class ChatBox : UIWidget
 
     public void Repopulate()
     {
-        Contents.RemoveAllChildren();
         Contents.Clear();
+        
+        foreach (var child in Contents.Children.ToArray())
+        {
+            if (child.Name != "_v_scroll")
+            {
+                Contents.RemoveChild(child);
+            }
+        }
 
         foreach (var message in _controller.History)
         {
@@ -84,8 +92,15 @@ public partial class ChatBox : UIWidget
 
     private void OnChannelFilter(ChatChannel channel, bool active)
     {
-        Contents.RemoveAllChildren();
         Contents.Clear();
+        
+        foreach (var child in Contents.Children.ToArray())
+        {
+            if (child.Name != "_v_scroll")
+            {
+                Contents.RemoveChild(child);
+            }
+        }
 
         foreach (var message in _controller.History)
         {
