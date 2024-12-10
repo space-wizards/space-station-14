@@ -55,3 +55,138 @@
       enum.GatewayUiKey.Key:
         type: GatewayBoundUserInterface
   - type: Gateway
+
+
+
+# Second gateway variant
+
+- type: entity
+  parent: [ BaseMachinePowered ]
+  id: StationGateway
+  suffix: Console Support
+  name: gateway
+  description: The peak of bluespace technology. Giant gates that allow you to travel vast distances in the blink of an eye.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/gateway.rsi
+    noRot: true
+    layers:
+    - state: frame
+    - state: portal
+      shader: unshaded
+      visible: false
+      map: ["Portal"]
+    - state: on
+      shader: unshaded
+      visible: false
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+  - type: ApcPowerReceiver
+    powerLoad: 2500
+    needsPower: true
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+      enum.LinkedEntityVisuals.HasAnyLinks:
+        Portal:
+          True: { visible: true }
+          False: { visible: false }
+  - type: AmbientSound
+    enabled: false
+    sound:
+      path: /Audio/Ambience/ambi_gateway.ogg
+    range: 5
+    volume: 8
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+  - type: Transform
+    noRot: true
+  - type: Fixtures
+    fixtures:
+      portalFixture:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.48,0.25,0.48"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        hard: false
+  - type: Appearance
+  - type: StationGateway
+    portalLayerMap: "Portal"
+  - type: Portal
+    randomTeleport: false
+    canTeleportToOtherMaps: true
+  - type: PointLight
+    enabled: false
+    radius: 3
+    energy: 1
+  - type: LitOnPowered
+
+- type: entity
+  parent: StationGateway
+  id: StationGatewayCenter
+  suffix: Center, Console Support
+  components:
+  - type: StationGateway
+    gateName: Center
+    autoLinkKey: Station
+
+- type: entity
+  parent: StationGateway
+  id: StationGatewaySalvage
+  suffix: Salvage, Console Support
+  components:
+  - type: StationGateway
+    gateName: Salvage
+    autoLinkKey: StationSalvage
+
+- type: entity
+  parent: StationGateway
+  id: StationGatewayMedical
+  suffix: Medical, Console Support
+  components:
+  - type: StationGateway
+    gateName: Medical
+    autoLinkKey: StationMedical
+
+- type: entity
+  parent: StationGateway
+  id: StationGatewayEngineering
+  suffix: Engineering, Console Support
+  components:
+  - type: StationGateway
+    gateName: Engineering
+    autoLinkKey: StationEngineering
+
+- type: entity
+  parent: StationGateway
+  id: StationGatewaySecurity
+  suffix: Security, Console Support
+  components:
+  - type: StationGateway
+    gateName: Security
+    autoLinkKey: StationSecurity
+
+- type: entity
+  parent: StationGateway
+  id: StationGatewayScience
+  suffix: Science, Console Support
+  components:
+  - type: StationGateway
+    gateName: Science
+    autoLinkKey: StationScience
+
+- type: entity
+  parent: StationGateway
+  id: StationGatewayCargo
+  suffix: Cargo, Console Support
+  components:
+  - type: StationGateway
+    gateName: Cargo
+    autoLinkKey: StationCargo
+  
