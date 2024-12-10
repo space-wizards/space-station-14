@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC0-1.0",
-  "copyright": "Created by EmoGarbage404 (github) for Space Station 14. icon-construction.png created by deltanedas (github). syndicateborgbomb.png created by Mangohydra (github).",
+  "copyright": "Created by EmoGarbage404 (github) for Space Station 14. icon-construction.png created by deltanedas (github). syndicateborgbomb.png created by Mangohydra (github). inhands by mubururu_ (github).",
   "size": {
     "x": 32,
     "y": 32
@@ -126,6 +126,38 @@
     },
     {
       "name": "syndicate"
+    },
+    {
+      "name": "base-icon-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "base-icon-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "base-module-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "base-module-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "base-part-inhand-left",
+        "directions": 4
+    },
+    {
+      "name": "base-part-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "base-stripes-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "base-stripes-inhand-right",
+      "directions": 4
     }
   ]
 }
