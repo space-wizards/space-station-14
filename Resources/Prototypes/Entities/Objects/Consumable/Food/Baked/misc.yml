@@ -844,17 +844,19 @@
   components:
   - type: FlavorProfile
     flavors:
+      - cheesy
       - bread
-      - cheese
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/misc.rsi
     state: grilled-cheese
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 17
+        maxVol: 19
         reagents:
         - ReagentId: Nutriment
           Quantity: 8
+        - ReagentId: Butter
+          Quantity: 2
         - ReagentId: Vitamin
           Quantity: 4
