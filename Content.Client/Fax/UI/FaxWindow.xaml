@@ -87,7 +87,9 @@
 
         </PanelContainer>
 
-        <PanelContainer StyleClasses="PanelBackgroundBaseDark" HorizontalExpand="True" Margin="0 10 0 0" VerticalExpand="True" VerticalAlignment="Bottom">
+        <PanelContainer StyleClasses="PanelBackgroundBaseDark"
+            HorizontalExpand="True" Margin="0 10 0 0"
+            VerticalExpand="True" VerticalAlignment="Bottom">
             <BoxContainer Orientation="Vertical"
                 VerticalExpand="True">
 
