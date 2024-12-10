@@ -1,0 +1,81 @@
+﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    Title="{Loc 'cell-sequencer-menu-title'}"
+    MinSize="750 400">
+    <BoxContainer Orientation="Horizontal" HorizontalExpand="True" VerticalExpand="True">
+        <!-- Nav panel -->
+        <BoxContainer Margin="8" MinWidth="175" Orientation="Vertical" VerticalExpand="True">
+            <Button Name="SyncButton"
+                    Text="{Loc 'cell-sequencer-menu-sync-button'}"
+                    ToolTip="{Loc 'cell-sequencer-menu-sync-tooltip-info'}"
+                    Margin="0 0 0 4" />
+
+            <customControls:HSeparator Margin="0 0 0 4" StyleClasses="LowDivider" />
+
+            <Button Name="AddButton"
+                    Text="{Loc 'cell-sequencer-menu-add-button'}"
+                    ToolTip="{Loc 'cell-sequencer-menu-add-tooltip-info'}"
+                    Margin="0 0 0 4" />
+            <Button Name="RemoveButton"
+                    Text="{Loc 'cell-sequencer-menu-remove-button'}"
+                    ToolTip="{Loc 'cell-sequencer-menu-remove-tooltip-info'}"
+                    Margin="0 0 0 4" />
+            <Button Name="ReplaceButton"
+                    Text="{Loc 'cell-sequencer-menu-replace-button'}"
+                    ToolTip="{Loc 'cell-sequencer-replace-tooltip-info'}"
+                    Margin="0 0 0 4" />
+
+            <customControls:HSeparator Margin="0 0 0 4" StyleClasses="LowDivider" />
+
+            <Label Name="MaterialLabel" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+        </BoxContainer>
+
+        <customControls:VSeparator Margin="4 0" StyleClasses="LowDivider" />
+
+        <!-- Selection -->
+        <ScrollContainer MinWidth="175" VerticalExpand="True" HorizontalExpand="True">
+            <PanelContainer Margin="8" VerticalExpand="True" HorizontalExpand="True">
+                <PanelContainer.PanelOverride>
+                    <graphics:StyleBoxFlat BackgroundColor="#000000FF" />
+                </PanelContainer.PanelOverride>
+
+                <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
+                        <Label Margin="0 0 0 2" Text="{Loc 'cell-sequencer-menu-inside-label'}" HorizontalAlignment="Center" />
+                        <customControls:HSeparator Margin="8 0" StyleClasses="LowDivider" />
+                        <BoxContainer Name="InsideCellContainer" Orientation="Vertical" />
+
+                        <Label Margin="0 0 0 2" Text="{Loc 'cell-sequencer-menu-remote-label'}" HorizontalAlignment="Center" />
+                        <customControls:HSeparator Margin="8 0" StyleClasses="LowDivider" />
+                        <BoxContainer Name="RemoteCellContainer" Orientation="Vertical" />
+                </BoxContainer>
+            </PanelContainer>
+        </ScrollContainer>
+
+        <customControls:VSeparator Margin="4 0" StyleClasses="LowDivider" />
+
+        <!-- Info panel -->
+        <BoxContainer Margin="8" MinWidth="175" Orientation="Vertical" VerticalExpand="True">
+            <PanelContainer HorizontalExpand="True" VerticalExpand="True">
+                <PanelContainer.PanelOverride>
+                    <graphics:StyleBoxFlat BackgroundColor="#000000FF" />
+                </PanelContainer.PanelOverride>
+
+                <Label Name="NoSelectedLabel" Text="{Loc 'cell-sequencer-menu-no-selected-label'}" FontColorOverride="#ff0000" Align="Center"/>
+
+                <BoxContainer Name="CellInfoContainer" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Margin="8" Visible="False">
+                    <Label Name="CellNameLabel"/>
+                    <customControls:HSeparator Margin="4 0" StyleClasses="LowDivider" />
+                    <RichTextLabel Name="CellColorLabel"/>
+                    <Label Name="CellStabilityLabel"/>
+                    <Label Name="CellRemoteLabel"/>
+                    <Label Name="CellCostLabel"/>
+                    <customControls:HSeparator Margin="4 0" StyleClasses="LowDivider" />
+                    <Label Text="{Loc 'cell-sequencer-menu-cell-modifiers-label'}"/>
+                    <RichTextLabel Name="CellModifiersText" />
+                </BoxContainer>
+            </PanelContainer>
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>

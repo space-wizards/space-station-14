@@ -1,0 +1,31 @@
+- type: entity
+  parent: BaseItem
+  id: Biopsy
+  name: biopsy tool
+  description: Used to retrieve cell lines from organisms. Don't worry, it won't sting.
+  components:
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.CellCollectorVisuals.State:
+        enum.CellCollectorVisuals.Layer:
+          True:
+            state: icon
+          False:
+            state: icon-full
+  - type: Sprite
+    sprite: Objects/Specific/Xenobiology/biopsy.rsi
+    layers:
+    - map: ["enum.CellCollectorVisuals.Layer"]
+      state: icon
+  - type: Item
+    sprite: Objects/Specific/Xenobiology/biopsy.rsi
+  - type: CellCollector
+    damage:
+      types:
+        Blunt: 2
+        Bloodloss: 5
+  - type: CellContainer
+    allowModifiers: false
+    allowTransfer: false
+    allowCollection: false
