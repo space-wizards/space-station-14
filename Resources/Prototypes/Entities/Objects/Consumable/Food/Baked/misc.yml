@@ -839,7 +839,7 @@
 - type: entity         
   name: grilled cheese sandwich
   parent: FoodBakedBase
-  id: FoodBakedGrilledCheese
+  id: FoodBakedGrilledCheeseSandwich
   description: Bread and melted cheese toasted with butter, perfect for a chilly day in space.
   components:
   - type: FlavorProfile
@@ -859,4 +859,4 @@
         - ReagentId: Butter
           Quantity: 2
         - ReagentId: Vitamin
-          Quantity: 4  
+          Quantity: 4
