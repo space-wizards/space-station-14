@@ -49,7 +49,7 @@ public sealed partial class BotanySystem : EntitySystem
         if (comp.SeedId != null
             && _prototypeManager.TryIndex(comp.SeedId, out SeedPrototype? protoSeed))
         {
-            seed = protoSeed;
+            seed = protoSeed.Clone();
             return true;
         }
 

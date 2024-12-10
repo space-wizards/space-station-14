@@ -20,7 +20,7 @@ public sealed partial class PlantMutateHarvest : EntityEffect
         if (plantholder.Seed.HarvestRepeat == HarvestType.NoRepeat)
             plantholder.Seed.HarvestRepeat = HarvestType.Repeat;
         else if (plantholder.Seed.HarvestRepeat == HarvestType.Repeat)
-            plantholder.Seed.HarvestRepeat = HarvestType.SelfHarvest;
+            args.EntityManager.EnsureComponent<AutoHarvestGrowthComponent>(args.TargetEntity);
     }
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
