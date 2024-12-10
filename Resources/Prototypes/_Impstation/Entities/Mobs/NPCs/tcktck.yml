@@ -31,10 +31,17 @@
     baseWalkSpeed : 2.5
     baseSprintSpeed : 4.5
   - type: Sprite
+    sprite: _Impstation/Mobs/Silicon/Bots/tcktck.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: tcktck
-      sprite: _Impstation/Mobs/Silicon/Bots/tcktck.rsi
+    - state: tcktck
+      map: ["enum.BorgVisualLayers.Body", "movement"]
+    - state: tcktck_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      visible: false
+    - state: light
+      shader: unshaded
+      map: ["light","enum.BorgVisualLayers.LightStatus"]
+      visible: false
   - type: RotationVisuals
     horizontalRotation: 90
   - type: MobState
@@ -219,12 +226,20 @@
     damageProtection:
       flatReductions:
         Heat: 10 # capable of touching light bulbs and stoves without feeling pain!
-  - type: BorgChassis
-    maxModules: 1
+  - type: BorgChassis ######################################################################################################################
+    maxModules: 2
+    hasMindState: tcktck
+    noMindState: tcktck_e_r
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleCargo
+      - BorgModuleTckTck
   - type: ContainerFill
     containers:
       borg_module:
         - BorgModuleTckTck
+        - BorgModuleGrapplingGun
   - type: ApcPowerReceiver
     needsPower: false
     powerLoad: 0
@@ -241,10 +256,7 @@
         ejectOnInteract: true
         whitelist:
           components:
-          - HitscanBatteryAmmoProvider
-          - ProjectileBatteryAmmoProvider
-          - Stunbaton
-          - PowerCell
+          - PowerCell #just power cells no guns
   - type: PowerSupplier
     supplyRate: 8000
     supplyRampTolerance: 2000

@@ -10,6 +10,14 @@
     {
       "name": "tcktck",
       "directions": 4
+    },
+    {
+      "name": "light",
+      "directions": 4
+    },
+    {
+      "name": "tcktck_e_r",
+      "directions": 4
     }
   ]
 }
