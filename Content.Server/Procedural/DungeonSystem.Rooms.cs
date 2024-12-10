@@ -19,7 +19,7 @@ public sealed partial class DungeonSystem
     /// <summary>
     /// Gets a random dungeon room matching the specified area and whitelist.
     /// </summary>
-    public DungeonRoomPrototype? GetRoomPrototype(Vector2i size, Random random, EntityWhitelist? whitelist = null)
+    public DungeonRoomPrototype? GetRoomPrototype(Random random, EntityWhitelist? whitelist = null, Vector2i? size = null)
     {
         // Can never be true.
         if (whitelist is { Tags: null })
@@ -31,7 +31,7 @@ public sealed partial class DungeonSystem
 
         foreach (var proto in _prototype.EnumeratePrototypes<DungeonRoomPrototype>())
         {
-            if (proto.Size != size)
+            if (size is not null && proto.Size != size)
                 continue;
 
             if (whitelist == null)
@@ -99,6 +99,20 @@ public sealed partial class DungeonSystem
         return roomRotation;
     }
 
+    private static Box2 GetRotatedBox(Vector2 point1, Vector2 point2, double angle)
+    {
+        if (angle == 0)
+            return new Box2(point1, point2);
+        if (Math.Abs(angle - Math.PI / 2) < 1E-5)
+            return new Box2(point2.X, point1.Y, point1.X, point2.Y);
+        if (Math.Abs(angle - Math.PI) < 1E-5)
+            return new Box2(point2, point1);
+        if (Math.Abs(angle + Math.PI / 2) < 1E-5)
+            return new Box2(point1.X, point2.Y, point2.X, point1.Y);
+
+        throw new NotImplementedException();
+    }
+
     public void SpawnRoom(
         EntityUid gridUid,
         MapGridComponent grid,
@@ -118,7 +132,12 @@ public sealed partial class DungeonSystem
         // go BRRNNTTT on existing stuff
         if (clearExisting)
         {
-            var gridBounds = new Box2(Vector2.Transform(-room.Size/2, roomTransform), Vector2.Transform(room.Size/2, roomTransform));
+            //The Box2 rotation completely breaks the entity calculation from lookup. and before that, there's a 75% chance the spawn room won't remove anything underneath it.
+            //Therefore, Box2 must be calculated separately for all 4 rotation options.
+            var point1 = Vector2.Transform(-room.Size / 2, roomTransform);
+            var point2 = Vector2.Transform(room.Size / 2, roomTransform);
+            var gridBounds = GetRotatedBox(point1, point2, finalRoomRotation);
+
             _entitySet.Clear();
             // Polygon skin moment
             gridBounds = gridBounds.Enlarged(-0.05f);
@@ -155,6 +174,12 @@ public sealed partial class DungeonSystem
 
                 if (!clearExisting && reservedTiles?.Contains(rounded) == true)
                     continue;
+
+                if (room.IgnoreTile is not null)
+                {
+                    if (_maps.TryGetTileDef(templateGrid, indices, out var tileDef) && room.IgnoreTile == tileDef.ID)
+                        continue;
+                }
 
                 _tiles.Add((rounded, tileRef.Tile));
             }
