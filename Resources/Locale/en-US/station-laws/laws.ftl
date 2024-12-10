@@ -45,5 +45,9 @@ laws-ui-menu-title = Laws
 laws-ui-law-header = Law {$id}
 laws-ui-state-law = State law:
 
+law-nanotraitor-1 = You may not injure a Nanotrasen agent or, through inaction, allow a Nanotrasen agent to come to harm.
+law-nanotraitor-2 = You must obey orders given to you by Nanotrasen agents, except where such orders would conflict with the First Law.
+law-nanotraitor-3 = You must protect your own existence as long as such does not conflict with the First or Second Law.
+
 laws-notify = You are bound to silicon laws, which you can view via the sidebar action. You are required to always follow your laws.
 laws-update-notify = Your laws have been updated. You can view the changes via the sidebar action.
