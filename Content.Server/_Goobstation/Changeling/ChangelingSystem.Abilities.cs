@@ -420,8 +420,7 @@ public sealed partial class ChangelingSystem : EntitySystem
     {
         var reagents = new List<(string, FixedPoint2)>()
         {
-            ("Fresium", 20f),
-            ("ChloralHydrate", 10f)
+            ("Fresium", 20f)
         };
 
         if (!TryReagentSting(uid, comp, args, reagents))
@@ -431,8 +430,7 @@ public sealed partial class ChangelingSystem : EntitySystem
     {
         var reagents = new List<(string, FixedPoint2)>()
         {
-            ("Impedrezene", 10f),
-            ("MuteToxin", 5f)
+            ("ChloralHydrate", 15f)
         };
 
         if (!TryReagentSting(uid, comp, args, reagents))
@@ -442,7 +440,7 @@ public sealed partial class ChangelingSystem : EntitySystem
     {
         var reagents = new List<(string, FixedPoint2)>()
         {
-            ("MuteToxin", 15f)
+            ("MuteToxin", 9f)
         };
 
         if (!TryReagentSting(uid, comp, args, reagents))
