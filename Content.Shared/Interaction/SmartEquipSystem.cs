@@ -3,6 +3,7 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Input;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
@@ -168,6 +169,9 @@ public sealed class SmartEquipSystem : EntitySystem
         {
             if (handItem == null)
             {
+                if (!HasComp<SmartEquipItemSlotComponent>(slotItem))
+                    return;
+
                 ItemSlot? toEjectFrom = null;
 
                 foreach (var slot in slots.Slots.Values)
