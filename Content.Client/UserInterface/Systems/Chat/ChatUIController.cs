@@ -57,6 +57,9 @@ public sealed class ChatUIController : UIController
     [Dependency] private readonly IStateManager _state = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IReplayRecordingManager _replayRecording = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
+    private ISawmill _sawmill = default!;
+    private const string SawmillName = "chat";
 
     [UISystemDependency] private readonly ExamineSystem? _examine = default;
     [UISystemDependency] private readonly GhostSystem? _ghost = default;
@@ -70,8 +73,6 @@ public sealed class ChatUIController : UIController
     private const string ChatNamePalette = "ChatNames";
     private string[] _chatNameColors = default!;
     private bool _chatNameColorsEnabled;
-
-    private ISawmill _sawmill = default!;
 
     public static readonly Dictionary<char, ChatSelectChannel> PrefixToChannel = new()
     {
@@ -175,7 +176,7 @@ public sealed class ChatUIController : UIController
 
     public override void Initialize()
     {
-        _sawmill = Logger.GetSawmill("chat");
+        _sawmill = _logManager.GetSawmill(SawmillName);
         _sawmill.Level = LogLevel.Info;
         _admin.AdminStatusUpdated += UpdateChannelPermissions;
         _player.LocalPlayerAttached += OnAttachedChanged;
