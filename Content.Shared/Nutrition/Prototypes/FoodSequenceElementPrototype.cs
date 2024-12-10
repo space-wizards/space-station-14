@@ -17,7 +17,7 @@ public sealed partial class FoodSequenceElementPrototype : IPrototype
     /// sprite options. A random one will be selected and used to display the layer.
     /// </summary>
     [DataField]
-    public List<SpriteSpecifier> Sprites { get; private set; } = new();
+    public List<SpriteSpecifier> Sprites { get; private set; } = new();         /* H:this would become a List<SpriteComponent> instead. */
 
     /// <summary>
     /// Relative size of the sprite displayed in the food sequence.

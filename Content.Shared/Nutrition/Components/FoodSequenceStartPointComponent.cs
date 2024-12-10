@@ -134,7 +134,7 @@ public record struct FoodSequenceVisualLayer
     /// <summary>
     /// Sprite rendered in sequence
     /// </summary>
-    public SpriteSpecifier? Sprite { get; set; } = SpriteSpecifier.Invalid;
+    public SpriteSpecifier? Sprite { get; set; } = SpriteSpecifier.Invalid;     /* H:this would have to be changed to a SpriteComponent */
 
     /// <summary>
     /// Relative size of the sprite displayed in FoodSequence
@@ -147,7 +147,7 @@ public record struct FoodSequenceVisualLayer
     public Vector2 LocalOffset { get; set; } = Vector2.Zero;
 
     public FoodSequenceVisualLayer(ProtoId<FoodSequenceElementPrototype> proto,
-        SpriteSpecifier? sprite,
+        SpriteSpecifier? sprite,                                                /* H:this too (i know it's the same fuckin' thing) */
         Vector2 scale,
         Vector2 offset)
     {
