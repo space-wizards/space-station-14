@@ -10,5 +10,6 @@
         {
             "name": "chessboard_tabletop"
         }
-    ]
+    ],
+    "atlasGroup": 1
 }
