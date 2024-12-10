@@ -22,3 +22,5 @@ flavor-complex-snotty = like snot
 flavor-complex-speed = like speed
 flavor-base-whimsy = whimsical
 flavor-complex-secticket = like rotten eggs
+
+flavor-base-unholy = unholy
