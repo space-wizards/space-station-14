@@ -2,7 +2,7 @@
   parent: [BaseMob, StripableInventoryBase]
   id: MobTckTck
   name: tck'tck
-  description: A borg-like entity manufactured by the Decapoid Empire. Contains a recharger port, and provides power when anchored.
+  description: A borg-like entity manufactured by the Decapoid Empire. Provides 8KW of power when anchored, and has a charger port for power cells.
   components:
   - type: Reactive
     groups:
@@ -36,10 +36,6 @@
     - state: tcktck
       map: ["enum.BorgVisualLayers.Body", "movement"]
     - state: tcktck_e_r
-      map: ["enum.BorgVisualLayers.Light"]
-      visible: false
-    - state: tcktck_e
-      shader: unshaded
       map: ["enum.BorgVisualLayers.Light"]
       visible: false
     - state: light
@@ -87,6 +83,7 @@
     actions:
     - ActionViewLaws
   - type: SiliconLawProvider
+    canBeSubverted: false
     laws: Tcksimov
   - type: Inventory
     templateId: borg
