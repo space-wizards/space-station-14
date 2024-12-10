@@ -12,15 +12,15 @@ public sealed partial class PlantMutateHarvest : EntityEffect
 {
     public override void Effect(EntityEffectBaseArgs args)
     {
-        var plantholder = args.EntityManager.GetComponent<PlantHolderComponent>(args.TargetEntity);
+        var plant = args.EntityManager.GetComponent<PlantComponent>(args.TargetEntity);
 
-        if (plantholder.Seed == null)
+        if (plant.Seed == null)
             return;
 
-        if (plantholder.Seed.HarvestRepeat == HarvestType.NoRepeat)
-            plantholder.Seed.HarvestRepeat = HarvestType.Repeat;
-        else if (plantholder.Seed.HarvestRepeat == HarvestType.Repeat)
-            plantholder.Seed.HarvestRepeat = HarvestType.SelfHarvest;
+        if (plant.Seed.HarvestRepeat == HarvestType.NoRepeat)
+            plant.Seed.HarvestRepeat = HarvestType.Repeat;
+        else if (plant.Seed.HarvestRepeat == HarvestType.Repeat)
+            plant.Seed.HarvestRepeat = HarvestType.SelfHarvest;
     }
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)

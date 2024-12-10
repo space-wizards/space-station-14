@@ -14,14 +14,14 @@ public sealed partial class PlantMutateChemicals : EntityEffect
 {
     public override void Effect(EntityEffectBaseArgs args)
     {
-        var plantholder = args.EntityManager.GetComponent<PlantHolderComponent>(args.TargetEntity);
+        var plant = args.EntityManager.GetComponent<PlantComponent>(args.TargetEntity);
 
-        if (plantholder.Seed == null)
+        if (plant.Seed == null)
             return;
 
         var random = IoCManager.Resolve<IRobustRandom>();
         var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-        var chemicals = plantholder.Seed.Chemicals;
+        var chemicals = plant.Seed.Chemicals;
         var randomChems = prototypeManager.Index<WeightedRandomFillSolutionPrototype>("RandomPickBotanyReagent").Fills;
 
         // Add a random amount of a random chemical to this set of chemicals
