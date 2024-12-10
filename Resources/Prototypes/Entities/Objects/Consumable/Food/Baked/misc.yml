@@ -771,3 +771,28 @@
     damage:
       types:
         Blunt: 0 # so the damage stats icon doesn't immediately give away the syndie ones
+
+- type: entity
+  name: grilled cheese sandwich
+  parent: FoodBakedBase
+  id: FoodBakedGrilledCheeseSandwich
+  description: Bread and cheese toasted with butter, perfect for a chilly day in space.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+      - bread
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/misc.rsi
+    state: grilled-cheese
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 19
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 8
+        - ReagentId: Butter
+          Quantity: 2
+        - ReagentId: Vitamin
+          Quantity: 4
