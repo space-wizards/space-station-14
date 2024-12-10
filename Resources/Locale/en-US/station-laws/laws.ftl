@@ -33,6 +33,7 @@ laws-owner-crew = members of the crew
 laws-owner-station = station personnel
 laws-owner-beings = beings
 laws-owner-syndicate = Syndicate agents
+laws-owner-nanotraitor = Nanotrasen agents
 laws-owner-pilot = The Pilot
 laws-owner-spider-clan = Spider Clan members
 
