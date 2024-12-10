@@ -299,7 +299,7 @@
 - type: entity
   id: ActionStingLethargic
   name: Lethargic Sting
-  description: We inject a target with a cocktail of anesthetics, inhibiting their movement. Costs a medium amount of chemicals.
+  description: We inject a target with a cocktail of anesthetics, causing them to become slow and drowsy. Costs a medium amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction
@@ -320,7 +320,7 @@
 - type: entity
   id: ActionStingMute
   name: Mute Sting
-  description: We sting a target, silencing them for a short time. Costs a medium amount of chemicals.
+  description: We sting a target, silencing them for a few minutes. Costs a medium amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction
