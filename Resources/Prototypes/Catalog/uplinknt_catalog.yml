@@ -296,4 +296,13 @@
   categories:
   - UplinkNtPointless
 
+- type: listing
+  id: UplinkLottery
+  name: uplink-lottery-name
+  description: uplink-lottery-desc
+  productEntity: CrateCargoGambling
+  cost:
+    BluespaceCrystal: 13
+  categories:
+  - UplinkNtPointless
 
