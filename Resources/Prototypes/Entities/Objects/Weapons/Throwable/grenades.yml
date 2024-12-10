@@ -485,8 +485,8 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: FireBomb
-    maxIntensity: 3
-    intensitySlope: 2
+    maxIntensity: 0.1
+    intensitySlope: 0.1
     totalIntensity: 100 # about a ~4 tile radius
     canCreateVacuum: false
   - type: OnUseTimerTrigger
