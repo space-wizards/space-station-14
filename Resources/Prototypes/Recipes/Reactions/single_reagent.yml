@@ -10,15 +10,6 @@
   products:
     Protein: 0.5
 
-- type: reaction
-  id: EggCooking
-  impact: Low
-  minTemp: 344
-  reactants:
-    Egg:
-      amount: 0.5
-  products:
-    EggCooked: 0.5
 
 - type: reaction
   id: SapBoiling

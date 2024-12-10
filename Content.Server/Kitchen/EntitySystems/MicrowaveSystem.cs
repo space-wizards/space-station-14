@@ -38,9 +38,12 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Content.Shared.Stacks;
 using Content.Server.Construction.Components;
+using Content.Server.Nutrition.Components;
 using Content.Shared.Chat;
 using Content.Shared.Damage;
+using Robust.Shared.Map;
 using Robust.Shared.Utility;
+
 
 namespace Content.Server.Kitchen.EntitySystems
 {
@@ -252,6 +255,50 @@ namespace Content.Server.Kitchen.EntitySystems
                     }
                 }
             }
+
+            //stack for storing containers to remove
+            Stack<EntityUid> entsToRemove = new Stack<EntityUid>();
+            //looking for food type  container  that  are  empty  and pushing  them to a stack so they can be deleted later
+            foreach (var item in component.Storage.ContainedEntities)
+            {
+                if (!TryComp<SolutionContainerManagerComponent>(item, out var solMan))
+                    continue;
+                    
+                if (!HasComp<FoodComponent>(item))
+                    continue;
+                    
+                var empty = true;
+
+                foreach (var (_, soln) in _solutionContainer.EnumerateSolutions((item, solMan)))
+                {
+                    if (soln.Comp.Solution.Volume == 0)
+                        continue;
+                        
+                    empty = false;
+                }
+                
+                if (!empty)
+                    continue;
+                    
+                entsToRemove.Push(item);
+            }
+            //removing food type containers stored in the stack so they dont remain after being used in cooking and spawning the trash version of the container if possible
+            while (entsToRemove.Count > 0)
+            {
+                var entToRemove = entsToRemove.Pop();
+                _container.Remove(entToRemove, component.Storage);
+                
+                if (TryComp<FoodComponent>(entToRemove, out var foodComp))
+                //spawn the trash version of the destroyed  food type container
+                    Spawn(foodComp.Trash, Transform(entToRemove).Coordinates);
+                Del(entToRemove);
+            }
+            
+        }
+
+        private void Spawn(List<EntProtoId> trash, EntityCoordinates coordinates)
+        {
+            throw new NotImplementedException();
         }
 
         private void OnInit(Entity<MicrowaveComponent> ent, ref ComponentInit args)
