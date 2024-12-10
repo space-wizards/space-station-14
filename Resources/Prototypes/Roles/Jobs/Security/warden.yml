@@ -28,7 +28,7 @@
   id: WardenGear
   equipment:
     eyes: ClothingEyesGlassesSecurity
-    ears: ClothingHeadsetSecurity
+    ears: ClothingHeadsetWarden
     pocket1: WeaponPistolMk58
   storage:
     back:
