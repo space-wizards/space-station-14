@@ -78,3 +78,6 @@ uplink-lab-desc = This crate contains everything needed to go breaking bad. Incl
 
 uplink-disabler-name = Exhaustion magcell
 uplink-disabler-desc = A low-frequency variant of the standard magcell, capable of exhausting targets to unconciousness for a few moments. Useful for 'aquiring' targets.
+
+uplink-borging-name = NT Borging Bundle
+uplink-borging-desc = A bundle containing everything needed to build build a new ally. Contains a modified cyborg chassis, an advanced MMI, and a specialization kit. Brain not included.
