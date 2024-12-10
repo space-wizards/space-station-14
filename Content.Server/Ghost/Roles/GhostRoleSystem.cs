@@ -516,13 +516,7 @@ public sealed class GhostRoleSystem : EntitySystem
         _mindSystem.SetUserId(newMind, player.UserId);
         _mindSystem.TransferTo(newMind, mob);
 
-        foreach (var mind in role.MindRoles)
-        {
-            if(!_prototype.HasIndex(mind))
-                continue;
-
-            _roleSystem.MindAddRole(newMind, mind);
-        }
+        _roleSystem.MindAddRoles(newMind.Owner, role.MindRoles, newMind.Comp);
 
         if (_roleSystem.MindHasRole<GhostRoleMarkerRoleComponent>(newMind!, out var markerRole))
             markerRole.Value.Comp2.Name = role.RoleName;
