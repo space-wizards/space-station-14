@@ -89,15 +89,16 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         var query = QueryActiveRules();
         while (query.MoveNext(out var uid, out _, out var comp, out _))
         {
-            if (comp.SelectionTime != AntagSelectionTime.PrePlayerSpawn)
-                continue;
 
             if (comp.SelectionsComplete)
                 continue;
 
             ChooseAntags((uid, comp), pool);
 
-            foreach (var session in comp.SelectedSessions)
+            if (comp.SelectionTime != AntagSelectionTime.PrePlayerSpawn)
+                continue;
+
+            foreach (var session in comp.ProcessedSessions)
             {
                 args.PlayerPool.Remove(session);
                 GameTicker.PlayerJoinGame(session);
@@ -254,8 +255,10 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
                     continue;
                 }
             }
-
-            MakeAntag(ent, session, def, playerPool);
+            if (!midround && ent.Comp.SelectionTime != AntagSelectionTime.PrePlayerSpawn && session != null) // If it's Prespawn or midround we just want to go ahead and finish the process
+                ent.Comp.SelectedSessions.Add(session);
+            else
+                MakeAntag(ent, session, def, playerPool);
         }
     }
 
@@ -284,7 +287,8 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         if (session != null)
         {
-            ent.Comp.SelectedSessions.Add(session);
+            ent.Comp.SelectedSessions.Remove(session);
+            ent.Comp.ProcessedSessions.Add(session);
 
             // we shouldn't be blocking the entity if they're just a ghost or smth.
             if (!HasComp<GhostComponent>(session.AttachedEntity))
@@ -307,7 +311,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         {
             Log.Error($"Attempted to make {session} antagonist in gamerule {ToPrettyString(ent)} but there was no valid entity for player.");
             if (session != null)
-                ent.Comp.SelectedSessions.Remove(session);
+                ent.Comp.ProcessedSessions.Remove(session);
             return;
         }
 
@@ -413,7 +417,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
         if (session.Status is SessionStatus.Disconnected or SessionStatus.Zombie)
             return false;
 
-        if (ent.Comp.SelectedSessions.Contains(session))
+        if (ent.Comp.ProcessedSessions.Contains(session))
             return false;
 
         mind ??= session.GetMind();
