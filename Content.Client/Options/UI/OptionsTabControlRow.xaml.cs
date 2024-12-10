@@ -163,6 +163,20 @@ public sealed partial class OptionsTabControlRow : Control
     }
 
     /// <summary>
+    /// Add a line edit option, backed by a CVar.
+    /// </summary>
+    /// <param name="cVar">The CVar represented by the line edit.</param>
+    /// <param name="lineEdit">The UI control for the option.</param>
+    /// <typeparam name="T">The type of the CVar being controlled.</typeparam>
+    /// <returns>The option instance backing the added option.</returns>
+    public OptionLineEditCVar AddOptionLineEdit(
+        CVarDef<string> cVar,
+        OptionLineEdit lineEdit)
+    {
+        return AddOption(new OptionLineEditCVar(this, _cfg, cVar, lineEdit.LineEdit));
+    }
+
+    /// <summary>
     /// Initializes the control row. This should be called after all options have been added.
     /// </summary>
     public void Initialize()
@@ -680,5 +694,53 @@ public sealed class OptionDropDownCVar<T> : BaseOptionCVar<T> where T : notnull
     private struct ItemEntry
     {
         public T Key;
+    }
+}
+
+/// <summary>
+/// Implementation of a CVar option that simply corresponds with a <see cref="LineEdit"/>.
+/// </summary>
+/// <remarks>
+/// <para>
+/// Generally, you should just call <c>AddOption</c> methods on <see cref="OptionsTabControlRow"/>
+/// instead of instantiating this type directly.
+/// </para>
+/// </remarks>
+/// <seealso cref="OptionsTabControlRow"/>
+public sealed class OptionLineEditCVar : BaseOptionCVar<string>
+{
+    private readonly LineEdit _lineEdit;
+
+    protected override string Value
+    {
+        get => _lineEdit.Text;
+        set => _lineEdit.Text = value;
+    }
+
+    /// <summary>
+    /// Creates a new instance of this type.
+    /// </summary>
+    /// <param name="controller">The control row that owns this option.</param>
+    /// <param name="cfg">The configuration manager to get and set values from.</param>
+    /// <param name="cVar">The CVar that is being controlled by this option.</param>
+    /// <param name="lineEdit">The UI control for the option.</param>
+    /// <remarks>
+    /// <para>
+    /// It is generally more convenient to call overloads on <see cref="OptionsTabControlRow"/>
+    /// such as <see cref="OptionsTabControlRow.AddOptionCheckBox"/> instead of instantiating this type directly.
+    /// </para>
+    /// </remarks>
+    public OptionLineEditCVar(
+        OptionsTabControlRow controller,
+        IConfigurationManager cfg,
+        CVarDef<string> cVar,
+        LineEdit lineEdit)
+        : base(controller, cfg, cVar)
+    {
+        _lineEdit = lineEdit;
+        _lineEdit.OnTextChanged += _ =>
+        {
+            ValueChanged();
+        };
     }
 }

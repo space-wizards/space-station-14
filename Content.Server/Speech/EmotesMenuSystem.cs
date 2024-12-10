@@ -1,5 +1,6 @@
 ﻿using Content.Server.Chat.Systems;
 using Content.Shared.Chat;
+using Content.Shared.Chat.Prototypes;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Speech;
@@ -22,9 +23,16 @@ public sealed partial class EmotesMenuSystem : EntitySystem
         if (!player.HasValue)
             return;
 
-        if (!_prototypeManager.TryIndex(msg.ProtoId, out var proto) || proto.ChatTriggers.Count == 0)
+        if (!_prototypeManager.TryIndex(msg.ProtoId, out var proto))
             return;
 
-        _chat.TryEmoteWithChat(player.Value, msg.ProtoId);
+        if (proto.IsCustomContentType)
+        {
+            _chat.TryCustomEmote(player.Value, proto, msg.CustomEmote);
+        }
+        else if (proto.ChatTriggers.Count > 0)
+        {
+            _chat.TryEmoteWithChat(player.Value, msg.ProtoId);
+        }
     }
 }

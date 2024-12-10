@@ -27,6 +27,18 @@
                 <CheckBox Name="OpaqueStorageWindowCheckBox" Text="{Loc 'ui-options-opaque-storage-window'}" />
                 <CheckBox Name="StaticStorageUI" Text="{Loc 'ui-options-static-storage-ui'}" />
                 <!-- <CheckBox Name="ToggleWalk" Text="{Loc 'ui-options-hotkey-toggle-walk'}" /> -->
+                <Label Text="{Loc 'ui-options-general-custom-emotes'}"
+                       StyleClasses="LabelKeyText"/>
+                <ui:OptionLineEdit Name="GlobalCustomEmote1" Title="{Loc 'ui-options-general-custom-emote-1'}" />
+                <ui:OptionLineEdit Name="GlobalCustomEmote2" Title="{Loc 'ui-options-general-custom-emote-2'}" />
+                <ui:OptionLineEdit Name="GlobalCustomEmote3" Title="{Loc 'ui-options-general-custom-emote-3'}" />
+                <ui:OptionLineEdit Name="GlobalCustomEmote4" Title="{Loc 'ui-options-general-custom-emote-4'}" />
+                <ui:OptionLineEdit Name="GlobalCustomEmote5" Title="{Loc 'ui-options-general-custom-emote-5'}" />
+                <ui:OptionLineEdit Name="GlobalCustomEmote6" Title="{Loc 'ui-options-general-custom-emote-6'}" />
+                <ui:OptionLineEdit Name="GlobalCustomEmote7" Title="{Loc 'ui-options-general-custom-emote-7'}" />
+                <ui:OptionLineEdit Name="GlobalCustomEmote8" Title="{Loc 'ui-options-general-custom-emote-8'}" />
+                <ui:OptionLineEdit Name="GlobalCustomEmote9" Title="{Loc 'ui-options-general-custom-emote-9'}" />
+                <ui:OptionLineEdit Name="GlobalCustomEmote10" Title="{Loc 'ui-options-general-custom-emote-10'}" />
             </BoxContainer>
         </ScrollContainer>
         <ui:OptionsTabControlRow Name="Control" Access="Public" />

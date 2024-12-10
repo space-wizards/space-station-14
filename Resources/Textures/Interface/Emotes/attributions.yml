@@ -56,6 +56,22 @@
   copyright: "Created by Sarahon"
   source: "https://github.com/Sarahon"
 
+- files:
+    - "global_custom_emote.png"
+    - "grey_1.png"
+    - "grey_2.png"
+    - "grey_3.png"
+    - "grey_4.png"
+    - "grey_5.png"
+    - "grey_6.png"
+    - "grey_7.png"
+    - "grey_8.png"
+    - "grey_9.png"
+    - "grey_10.png"
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by Nettingman"
+  source: "https://github.com/Nettingman"
+
 - files: ["honk.png"]
   license: "CC-BY-SA-3.0"
   copyright: "Modified from existing bikehorn texture (icon.png) by TyAshley (AllenTheGreat) & Sarahon"
