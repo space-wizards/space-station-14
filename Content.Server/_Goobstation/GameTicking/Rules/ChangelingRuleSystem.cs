@@ -77,7 +77,7 @@ public sealed partial class ChangelingRuleSystem : GameRuleSystem<ChangelingRule
         foreach (var category in rule.StoreCategories)
             store.Categories.Add(category);
         store.CurrencyWhitelist.Add(Currency);
-        store.Balance.Add(Currency, 16);
+        store.Balance.Add(Currency, 10);
 
         rule.ChangelingMinds.Add(mindId);
 
