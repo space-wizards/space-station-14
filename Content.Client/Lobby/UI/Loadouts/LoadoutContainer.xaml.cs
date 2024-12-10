@@ -36,17 +36,18 @@ public sealed partial class LoadoutContainer : BoxContainer
 
         if (_protoManager.TryIndex(proto, out var loadProto))
         {
-            var ent = _entManager.System<LoadoutSystem>().GetFirstOrNull(loadProto);
+            var ent = loadProto.DummyEntity ?? _entManager.System<LoadoutSystem>().GetFirstOrNull(loadProto);
 
-            if (ent != null)
-            {
-                _entity = _entManager.SpawnEntity(ent, MapCoordinates.Nullspace);
-                Sprite.SetEntity(_entity);
+            if (ent == null)
+                return;
 
-                var spriteTooltip = new Tooltip();
-                spriteTooltip.SetMessage(FormattedMessage.FromUnformatted(_entManager.GetComponent<MetaDataComponent>(_entity.Value).EntityDescription));
-                TooltipSupplier = _ => spriteTooltip;
-            }
+            _entity = _entManager.SpawnEntity(ent, MapCoordinates.Nullspace);
+            Sprite.SetEntity(_entity);
+
+            var spriteTooltip = new Tooltip();
+            spriteTooltip.SetMessage(FormattedMessage.FromUnformatted(_entManager.GetComponent<MetaDataComponent>(_entity.Value).EntityDescription));
+
+            TooltipSupplier = _ => spriteTooltip;
         }
     }
 
