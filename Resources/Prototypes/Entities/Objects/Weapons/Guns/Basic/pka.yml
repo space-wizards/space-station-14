@@ -13,3 +13,19 @@
       map: [ "empty-icon" ]
   # todo: add itemcomponent with inhandVisuals states using unused texture and animation assets in kinetic_accelerator.rsi
   # todo: add clothingcomponent with clothingVisuals states using unused texture and animations assets in kinetic_accelerator.rsi
+
+- type: entity
+  parent: WeaponProtoKineticAccelerator
+  id: WeaponProtoKineticAcceleratorOneHanded
+  suffix: One-Handed, DO NOT MAP
+  description: Fires low-damage kinetic bolts at a short range. This kind has a gyroscope to keep a cyborg's aim steady.
+  components:
+  - type: GunWieldBonus
+    wieldBonusExamineMessage: null
+    minAngle: 0
+    maxAngle: 0
+  - type: Gun
+    minAngle: 1
+    maxAngle: 2
+  - type: UseDelay
+    delay: 0 # You can't dual wield this as a borg so no need for a delay

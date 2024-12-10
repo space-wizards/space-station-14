@@ -146,6 +146,13 @@
   id: BorgModuleTool
   result: BorgModuleTool
 
+# Mining Modules
+
+- type: latheRecipe
+  parent: BaseGoldBorgModuleRecipe
+  id: BorgModuleFauna
+  result: BorgModuleFauna
+
 # Engineering Modules
 
 - type: latheRecipe
