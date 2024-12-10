@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ultramario1998
-  changes:
-  - message: Added a flask to the Warden's locker. Leave your room 70% less!
-    type: Tweak
-  id: 210
-  time: '2024-09-18T05:38:27.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/272
 - author: Darkmajia
   changes:
   - message: Armblades finally have a hit sound.
@@ -4507,3 +4500,13 @@
   id: 709
   time: '2024-12-10T11:14:35.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/979
+- author: Darkmajia
+  changes:
+  - message: Changeling text has been revised in many areas.
+    type: Tweak
+  - message: Changeling bone shards no longer display as errors during the Christmas
+      season.
+    type: Fix
+  id: 710
+  time: '2024-12-10T16:32:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/947
