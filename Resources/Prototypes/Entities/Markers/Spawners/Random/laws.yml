@@ -1,0 +1,27 @@
+- type: entity
+  name: Law Board Random Spawner
+  id: LawSpawner
+  parent: MarkerBase
+  placement:
+    mode: PlaceFree
+  components:
+  - type: Transform
+    anchored: false
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    layers:
+      - state: std_mod
+  - type: RandomSpawner
+    offset: 0
+    prototypes:
+      - AsimovCircuitBoard
+      - CorporateCircuitBoard
+      - NTDefaultCircuitBoard
+      - CommandmentCircuitBoard
+      - PaladinCircuitBoard
+      - LiveLetLiveCircuitBoard
+      - StationEfficiencyCircuitBoard
+      - RobocopCircuitBoard
+      - DungeonMasterCircuitBoard
+      - ArtistCircuitBoard
+      - NutimovCircuitBoard
