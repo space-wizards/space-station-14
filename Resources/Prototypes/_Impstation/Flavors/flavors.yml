@@ -97,3 +97,8 @@
   id: piquant
   flavorType: Base
   description: flavor-base-piquant
+
+- type: flavor
+  id: unholy
+  flavorType: Base
+  description: flavor-base-unholy
