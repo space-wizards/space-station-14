@@ -2,12 +2,12 @@
 
 evolutionmenu-combat-armblade-name = Arm Blade
 evolutionmenu-combat-armblade-desc =
-    We recreate one of our arms into a grotesque blade, capable of prying open airlocks and maiming our enemies. Cannot be used in our lesser form.
+    We shape one of our arms into a grotesque blade, capable of prying open airlocks and maiming our enemies. Cannot be used in our lesser form.
     Costs a small amount of chemicals.
 
 evolutionmenu-combat-boneshard-name = Bone Shard
 evolutionmenu-combat-boneshard-desc =
-    We break off shards of sharp bone to use as projectile weapons. Cannot be used in our lesser form.
+    We break off shards of sharp bone to use as projectiles. Cannot be used in our lesser form.
     Costs a small amount of chemicals.
 
 evolutionmenu-combat-armor-name = Chitinous Armor

@@ -137,7 +137,7 @@
 - type: entity
   id: ActionToggleArmblade
   name: Toggle Arm Blade
-  description: We recreate one of our arms into a strong blade. We may retract our blade in the same manner as we form it. Costs a small amount of chemicals.
+  description: We shape one of our arms into a strong blade. We may retract our blade in the same manner as we form it. Costs a small amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
@@ -153,7 +153,7 @@
 - type: entity
   id: ActionCreateBoneShard
   name: Form Bone Shard
-  description: We break off shards of sharp bone to use as projectile weapons. Costs a small amount of chemicals.
+  description: We break off shards of sharp bone to use as projectiles. Costs a small amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
