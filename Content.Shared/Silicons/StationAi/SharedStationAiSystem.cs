@@ -50,7 +50,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     [Dependency] private readonly   SharedMindSystem _mind = default!;
     [Dependency] private readonly   SharedMoverController _mover = default!;
     [Dependency] private readonly   SharedPopupSystem _popup = default!;
-    [Dependency] private readonly   SharedPowerReceiverSystem PowerReceiver = default!;
+    [Dependency] private readonly   SharedPowerReceiverSystem _powerReceiver = default!;
     [Dependency] private readonly   SharedTransformSystem _xforms = default!;
     [Dependency] private readonly   SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly   StationAiVisionSystem _vision = default!;
@@ -320,6 +320,8 @@ public abstract partial class SharedStationAiSystem : EntitySystem
 
         QueueDel(ent.Comp.RemoteEntity);
         ent.Comp.RemoteEntity = null;
+
+        TryRemoveAiJobSlot(ent.Owner);
     }
 
     private void OnCorePower(Entity<StationAiCoreComponent> ent, ref PowerChangedEvent args)
@@ -443,6 +445,8 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     }
 
     public virtual void AnnounceIntellicardUsage(EntityUid uid, SoundSpecifier? cue = null) { }
+
+    public virtual void TryRemoveAiJobSlot(EntityUid ent, bool force = false) { }
 
     public virtual bool SetVisionEnabled(Entity<StationAiVisionComponent> entity, bool enabled, bool announce = false)
     {
