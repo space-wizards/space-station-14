@@ -89,83 +89,81 @@ namespace Content.Shared.Planktonics
         {
             if ((component.Characteristics & PlanktonComponent.PlanktonCharacteristics.Aggressive) != 0)
             {
-                Log.Error("Plankton is aggressive");
+                Log.Error("{planktonInstance.SpeciesName} is aggressive");
                 // Handle aggressive plankton interactions, e.g., attack nearby entities
             }
 
             if ((component.Characteristics & PlanktonComponent.PlanktonCharacteristics.Bioluminescent) != 0)
             {
-                Log.Info("Plankton is bioluminescent");
+                Log.Info("{planktonInstance.SpeciesName} is bioluminescent");
                 // Handle bioluminescent plankton behavior, e.g., light up certain areas
             }
 
             if ((component.Characteristics & PlanktonComponent.PlanktonCharacteristics.Mimicry) != 0)
             {
-                Log.Info("Plankton is a mimic");
+                Log.Info("{planktonInstance.SpeciesName} is a mimic");
                 // Handle mimicry, plankton might disguise itself as something else
             }
 
             if ((component.Characteristics & PlanktonComponent.PlanktonCharacteristics.ChemicalProduction) != 0)
             {
-                Log.Info("Plankton produces chemicals");
+                Log.Info("{planktonInstance.SpeciesName} produces chemicals");
                 // Handle chemical production, plankton might affect nearby entities with toxins or nutrients
             }
 
             if ((component.Characteristics & PlanktonComponent.PlanktonCharacteristics.MagneticField) != 0)
             {
-                Log.Info("Plankton produces a magnetic field");
+                Log.Info("{planktonInstance.SpeciesName} produces a magnetic field");
                 // Handle magnetic field generation, affecting nearby electronic devices or entities
             }
 
             if ((component.Characteristics & PlanktonComponent.PlanktonCharacteristics.Hallucinogenic) != 0)
             {
-                Log.Info("Plankton makes you high");
+                Log.Info("{planktonInstance.SpeciesName} makes you high");
                 // Handle hallucinogenic effects, plankton could cause status effects like confusion or hallucinations
             }
 
             if ((component.Characteristics & PlanktonComponent.PlanktonCharacteristics.PheromoneGlands) != 0)
             {
-                Log.Info("Plankton produces pheromones");
+                Log.Info("{planktonInstance.SpeciesName} produces pheromones");
                 // Handle pheromone production, plankton might attract or repel other organisms
             }
 
             if ((component.Characteristics & PlanktonComponent.PlanktonCharacteristics.PolypColony) != 0)
             {
-                Log.Info("Plankton forms a polyp colony");
+                Log.Info("{planktonInstance.SpeciesName} forms a polyp colony");
                 // Handle colony formation, plankton could form a larger entity or structure over time
             }
 
             if ((component.Characteristics & PlanktonComponent.PlanktonCharacteristics.AerosolSpores) != 0)
             {
-                Log.Info("Plankton produces spores");
+                Log.Info("{planktonInstance.SpeciesName} produces spores");
                 // Handle aerosol spores, plankton might spread its spores over a wide area
             }
 
             if ((component.Characteristics & PlanktonComponent.PlanktonCharacteristics.HyperExoticSpecies) != 0)
             {
-                Log.Info("Plankton is hyper-exotic");
+                Log.Info("{planktonInstance.SpeciesName} is hyper-exotic");
                 // Handle hyper-exotic species behavior, plankton could be highly specialized or rare
             }
 
             if ((component.Characteristics & PlanktonComponent.PlanktonCharacteristics.Sentience) != 0)
             {
-                Log.Info("Plankton is sentient");
+                Log.Info("{planktonInstance.SpeciesName} is sentient");
                 // Handle sentience, plankton might have the ability to think or communicate
             }
 
             if ((component.Characteristics & PlanktonComponent.PlanktonCharacteristics.Pyrophilic) != 0)
             {
-                Log.Info("Plankton is happiest in heat");
+                Log.Info("{planktonInstance.SpeciesName} is happiest in heat");
                 // Handle pyrophilic behavior, plankton might thrive in hot environments
             }
 
             if ((component.Characteristics & PlanktonComponent.PlanktonCharacteristics.Cryophilic) != 0)
             {
-                Log.Info("Plankton is happiest in cold");
+                Log.Info("{planktonInstance.SpeciesName} is happiest in cold");
                 // Handle cryophilic behavior, plankton might thrive in cold environments
             }
-
-            // You can expand this to check for more conditions or create new interactions based on other characteristics
         }
     }
 }
