@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Replaced a bunch of obsolete noSpawn stuff with HideSpawnMenu category
-    type: Fix
-  id: 216
-  time: '2024-09-18T05:56:35.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/281
 - author: TGRCDev
   changes:
   - message: Rat kings and rat servants can now eat trash
@@ -4518,3 +4511,10 @@
   id: 715
   time: '2024-12-11T20:12:12.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/990
+- author: Sha-Seng
+  changes:
+  - message: brigmed beret has a little cross now hehe
+    type: Tweak
+  id: 716
+  time: '2024-12-11T20:18:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/992
