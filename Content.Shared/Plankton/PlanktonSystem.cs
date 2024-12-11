@@ -39,7 +39,7 @@ namespace Content.Shared.Planktonics
             // Generate random bitwise characteristics
             component.Characteristics = (PlanktonComponent.PlanktonCharacteristics)random.Next(0, (int)PlanktonComponent.PlanktonCharacteristics.Cryophilic + 1); // Random bit flag combination
 
-            Log.Error($"Plankton Initialized: Diet: {component.Diet}, Characteristics: {component.Characteristics}");
+            Log.Error($"Plankton Initialized: Diet: {component.Diet}, Characteristics: {component.Characteristics}, Living inside: {component.ReagentId}");
 
             PlanktonInteraction(uid);
         }
