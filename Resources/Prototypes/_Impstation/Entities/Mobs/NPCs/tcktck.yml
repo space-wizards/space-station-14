@@ -272,6 +272,6 @@
   - type: GhostRole
     makeSentient: true
     name: Tck'Tck
-    description: Power the station. Power the world.
+    description: Charge APCs, help with power, and keep everyone's batteries topped up.
     rules: ghost-role-information-silicon-rules
   - type: GhostTakeoverAvailable
