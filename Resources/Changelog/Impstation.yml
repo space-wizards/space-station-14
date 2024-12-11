@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Reduced the thirst cost of Mucin now that it's not OP.
-    type: Tweak
-  id: 214
-  time: '2024-09-18T05:37:20.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/269
-- author: widgetbeck
-  changes:
-  - message: Propulsion Gel's recipe is now cheaper.
-    type: Tweak
-  id: 215
-  time: '2024-09-18T05:36:20.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/268
 - author: formlessnameless
   changes:
   - message: Replaced a bunch of obsolete noSpawn stuff with HideSpawnMenu category
@@ -4516,3 +4502,19 @@
   id: 713
   time: '2024-12-10T23:55:12.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/982
+- author: EpicToast
+  changes:
+  - message: Updated Packed, Core, Meta, and Reach! (Changes include spawning command
+      in the conference room, renaming solars, and adding a shipyard computer to the
+      QM's office. See GitHub for full changelog.)
+    type: Tweak
+  id: 714
+  time: '2024-12-11T20:11:37.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/989
+- author: kipdotnet
+  changes:
+  - message: Banana has been updated!
+    type: Tweak
+  id: 715
+  time: '2024-12-11T20:12:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/990
