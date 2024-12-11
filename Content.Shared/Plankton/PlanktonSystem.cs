@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Content.Shared.Planktonics
 {
-   private void OnPlanktonCompInit(EntityUid uid, PlanktonComponent component, ComponentInit args)
+  private void OnPlanktonCompInit(EntityUid uid, PlanktonComponent component, ComponentInit args)
 {
     var random = new Random();
 
@@ -26,10 +26,10 @@ namespace Content.Shared.Planktonics
     // Generate 3 plankton species with random characteristics and names
     for (int i = 0; i < 3; i++)
     {
-        // Randomly generate plankton name
-        var firstName = (PlanktonComponent.PlanktonFirstName)random.Next(Enum.GetValues<PlanktonComponent.PlanktonFirstName>().Length);
-        var secondName = (PlanktonComponent.PlanktonSecondName)random.Next(Enum.GetValues<PlanktonComponent.PlanktonSecondName>().Length);
-        var planktonName = new PlanktonComponent.PlanktonName(firstName.ToString(), secondName.ToString());
+        // Randomly generate plankton name from static name lists
+        var firstName = PlanktonComponent.PlanktonFirstNames[random.Next(PlanktonComponent.PlanktonFirstNames.Length)];
+        var secondName = PlanktonComponent.PlanktonSecondNames[random.Next(PlanktonComponent.PlanktonSecondNames.Length)];
+        var planktonName = new PlanktonComponent.PlanktonName(firstName, secondName);
 
         // Randomly generate 2-3 characteristics per plankton
         int numCharacteristics = random.Next(2, 4);  // Randomly pick 2-3 characteristics
@@ -51,9 +51,10 @@ namespace Content.Shared.Planktonics
 
         // Create a new plankton species instance
         var planktonInstance = new PlanktonComponent.PlanktonSpeciesInstance(
-            planktonName.ToString(),
+            planktonName,
             (PlanktonComponent.PlanktonDiet)random.Next(Enum.GetValues<PlanktonComponent.PlanktonDiet>().Length),
             combinedCharacteristics,
+            1.0f // For now, just assign a default size
         );
 
         // Add the plankton species instance to the SpeciesInstances list
@@ -69,6 +70,7 @@ namespace Content.Shared.Planktonics
     // Check plankton interactions
     PlanktonInteraction(uid);
 }
+
 
 
         private void PlanktonInteraction(EntityUid uid)
