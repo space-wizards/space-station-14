@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: The salvage magnet can now pull in large chunks of space debris. Be wary
-      of space carp infestations!
-    type: Add
-  - message: The small asteroids and pieces of debris that generated around the station
-      have been removed.
-    type: Remove
-  - message: The salvage magnet now randomly picks what type of pulls will be offered
-      instead of always having a consistent number of each.
-    type: Tweak
-  id: 7197
-  time: '2024-08-24T02:09:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31113
 - author: Winkarst-cpu
   changes:
   - message: Now you can move the pointer in chat by holding down the arrow keys.
@@ -3917,3 +3903,10 @@
   id: 7696
   time: '2024-12-10T13:45:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33813
+- author: slarticodefast
+  changes:
+  - message: Fixed the greytide virus event affecting non-station maps.
+    type: Fix
+  id: 7697
+  time: '2024-12-11T14:30:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33806
