@@ -7,63 +7,73 @@ using System.Collections.Generic;
 
 namespace Content.Shared.Planktonics
 {
-    public sealed class PlanktonGenerationSystem : EntitySystem
+   private void OnPlanktonCompInit(EntityUid uid, PlanktonComponent component, ComponentInit args)
+{
+    var random = new Random();
+
+    // Ensure we don't mess with existing logic for getting the reagent
+    var reagentId = solution.GetPrimaryReagentId(); // Keep this intact, as it's essential.
+    component.ReagentId = reagentId;
+
+    // If not in "SeaWater", mark as dead and exit
+    if (reagentId != "SeaWater")
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        component.IsAlive = false;
+        Log.Error("The plankton component died due to an invalid environment.");
+        return; // Exit early if the plankton isn't in the right environment
+    }
 
-        public override void Initialize()
+    // Generate 3 plankton species with random characteristics and names
+    for (int i = 0; i < 3; i++)
+    {
+        // Randomly generate plankton name
+        var firstName = (PlanktonComponent.PlanktonFirstName)random.Next(Enum.GetValues<PlanktonComponent.PlanktonFirstName>().Length);
+        var secondName = (PlanktonComponent.PlanktonSecondName)random.Next(Enum.GetValues<PlanktonComponent.PlanktonSecondName>().Length);
+        var planktonName = new PlanktonComponent.PlanktonName(firstName.ToString(), secondName.ToString());
+
+        // Randomly generate 2-3 characteristics per plankton
+        int numCharacteristics = random.Next(2, 4);  // Randomly pick 2-3 characteristics
+        var possibleCharacteristics = Enum.GetValues(typeof(PlanktonComponent.PlanktonCharacteristics));
+        var selectedCharacteristics = new HashSet<PlanktonComponent.PlanktonCharacteristics>();
+
+        while (selectedCharacteristics.Count < numCharacteristics)
         {
-            base.Initialize();
-            SubscribeLocalEvent<PlanktonComponent, ComponentInit>(OnPlanktonCompInit);
+            var randomCharacteristic = (PlanktonComponent.PlanktonCharacteristics)possibleCharacteristics.GetValue(random.Next(possibleCharacteristics.Length));
+            selectedCharacteristics.Add(randomCharacteristic);
         }
 
-        private void OnPlanktonCompInit(EntityUid uid, PlanktonComponent component, ComponentInit args)
+        // Combine characteristics using bitwise OR
+        PlanktonComponent.PlanktonCharacteristics combinedCharacteristics = 0;
+        foreach (var characteristic in selectedCharacteristics)
         {
-            var random = new Random();
-
-            var reagentId = solution.GetPrimaryReagentId();
-            component.ReagentId = reagentId;
-
-            // Check if the reagent is SeaWater
-            if (reagentId != "SeaWater")
-            {
-                component.IsAlive = false;
-                Log.Error("The {component.Name} fucking died.");
-            }
-
-            // Randomly generate plankton name
-            var firstName = (PlanktonComponent.PlanktonFirstName)random.Next(Enum.GetValues<PlanktonComponent.PlanktonFirstName>().Length);
-            var secondName = (PlanktonComponent.PlanktonSecondName)random.Next(Enum.GetValues<PlanktonComponent.PlanktonSecondName>().Length);
-            component.Name = new PlanktonComponent.PlanktonName(firstName.ToString(), secondName.ToString());
-            
-            // Log the generated plankton name
-            Log.Info($"Plankton species: {component.Name}");
-
-            // Generate 2-3 random characteristics
-            int numCharacteristics = random.Next(2, 4);  // Randomly pick 2-3 characteristics
-            var possibleCharacteristics = Enum.GetValues(typeof(PlanktonComponent.PlanktonCharacteristics)); // Get enum values
-            var selectedCharacteristics = new HashSet<PlanktonComponent.PlanktonCharacteristics>();
-
-            while (selectedCharacteristics.Count < numCharacteristics)
-            {
-                var randomCharacteristic = (PlanktonComponent.PlanktonCharacteristics)possibleCharacteristics.GetValue(random.Next(possibleCharacteristics.Length));
-                selectedCharacteristics.Add(randomCharacteristic);
-            }
-
-            // Assign the selected characteristics to the plankton component
-            component.Characteristics = 0; // Initialize the characteristics to 0
-            foreach (var characteristic in selectedCharacteristics)
-            {
-                component.Characteristics |= characteristic;
-            }
-
-            // Log the plankton characteristics
-            Log.Info($"Plankton Initialized: Name: {component.Name}, Diet: {component.Diet}, Characteristics: {component.Characteristics}, Living inside: {component.ReagentId}");
-
-            // Handle plankton interactions
-            PlanktonInteraction(uid);
+            combinedCharacteristics |= characteristic;
         }
+
+        // Generate a random size for the plankton species
+        float randomSize = (float)(random.NextDouble() * (10.0 - 0.5) + 0.5);  // Random size between 0.5 and 10
+
+        // Create a new plankton species instance
+        var planktonInstance = new PlanktonComponent.PlanktonSpeciesInstance(
+            planktonName.ToString(),
+            (PlanktonComponent.PlanktonDiet)random.Next(Enum.GetValues<PlanktonComponent.PlanktonDiet>().Length),
+            combinedCharacteristics,
+            randomSize
+        );
+
+        // Add the plankton species instance to the SpeciesInstances list
+        component.SpeciesInstances.Add(planktonInstance);
+
+        // Log the generated plankton species details
+        Log.Info($"Generated plankton species {planktonInstance.SpeciesName} with characteristics {combinedCharacteristics} and size {randomSize}");
+    }
+
+    // Log the total number of plankton species initialized
+    Log.Info($"Plankton component initialized with {component.SpeciesInstances.Count} species.");
+
+    // Check plankton interactions
+    PlanktonInteraction(uid);
+}
+
 
         private void PlanktonInteraction(EntityUid uid)
         {
