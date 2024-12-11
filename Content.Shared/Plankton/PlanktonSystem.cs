@@ -28,6 +28,7 @@ namespace Content.Shared.Planktonics
             // Check if the reagent is SeaWater
             if (reagentId != "SeaWater")
             {
+                component.IsAlive = false;
                 Log.Error("The plankton fucking died.");
             }
 
