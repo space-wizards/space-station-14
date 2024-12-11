@@ -255,7 +255,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
                     continue;
                 }
             }
-            if (!midround && ent.Comp.SelectionTime != AntagSelectionTime.PrePlayerSpawn && session != null) // If it's Prespawn or midround we just want to go ahead and finish the process
+            if (!midround && ent.Comp.SelectionTime != AntagSelectionTime.PrePlayerSpawn && session != null) // If it's a prespawn antag or midround we just want to go ahead and finish the process
                 ent.Comp.SelectedSessions.Add(session);
             else
                 MakeAntag(ent, session, def, playerPool);
