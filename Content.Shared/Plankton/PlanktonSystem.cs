@@ -21,8 +21,8 @@ namespace Content.Shared.Planktonics
         private void OnPlanktonCompInit(EntityUid uid, PlanktonComponent component, ComponentInit args)
         {
             var random = new Random();
-            var reagentId = component.ReagentId.ToString();
 
+            var reagentId = solution.GetPrimaryReagentId();
             component.ReagentId = reagentId;
 
             // Check if the reagent is SeaWater
