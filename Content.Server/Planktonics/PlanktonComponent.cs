@@ -11,6 +11,9 @@ public sealed partial class PlanktonComponent : Component
     [DataField("isAlive"), ViewVariables(VVAccess.ReadWrite)]
     public bool IsAlive = true; // Is the plankton alive?
 
+    [DataField("reagentId")]
+    public ReagentId ReagentId { get; set; } = new ReagentId();
+
     // Define a Diet Type Enum
     public enum PlanktonDiet
     {
