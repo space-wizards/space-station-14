@@ -1,5 +1,6 @@
 using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
+using Content.Shared.Ghost;
 using Content.Shared.Mind.Components;
 using Content.Shared.Teleportation.Systems;
 using Robust.Shared.Collections;
@@ -28,6 +29,10 @@ public sealed class PortalArtifactSystem : EntitySystem
         var mindQuery = EntityQueryEnumerator<MindContainerComponent, TransformComponent, MetaDataComponent>();
         while (mindQuery.MoveNext(out var uid, out var mc, out var xform, out var meta))
         {
+            // Don't target ghosts
+            if (HasComp<GhostComponent>(uid))
+                continue;
+
             // check if the MindContainer has a Mind and if the entity is not in a container (this also auto excludes AI) and if they are on the same map
             if (mc.HasMind && !_container.IsEntityOrParentInContainer(uid, meta: meta, xform: xform) && xform.MapID == map)
             {
