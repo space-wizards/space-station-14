@@ -1,7 +1,12 @@
+using System.Linq;
+using System.Numerics;
+using System.Threading;
 using Content.Client.Verbs;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Item;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -12,13 +17,8 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
-using System.Linq;
-using System.Numerics;
-using System.Threading;
 using static Content.Shared.Interaction.SharedInteractionSystem;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Item;
 using Direction = Robust.Shared.Maths.Direction;
 
 namespace Content.Client.Examine
@@ -35,7 +35,6 @@ namespace Content.Client.Examine
 
         private EntityUid _examinedEntity;
         private EntityUid _lastExaminedEntity;
-        private EntityUid _playerEntity;
         private Popup? _examineTooltipOpen;
         private ScreenCoordinates _popupPos;
         private CancellationTokenSource? _requestCancelTokenSource;
@@ -74,9 +73,9 @@ namespace Content.Client.Examine
         public override void Update(float frameTime)
         {
             if (_examineTooltipOpen is not {Visible: true}) return;
-            if (!_examinedEntity.Valid || !_playerEntity.Valid) return;
+            if (!_examinedEntity.Valid || _playerManager.LocalEntity is not { } player) return;
 
-            if (!CanExamine(_playerEntity, _examinedEntity))
+            if (!CanExamine(player, _examinedEntity))
                 CloseTooltip();
         }
 
@@ -114,9 +113,8 @@ namespace Content.Client.Examine
                 return false;
             }
 
-            _playerEntity = _playerManager.LocalEntity ?? default;
-
-            if (_playerEntity == default || !CanExamine(_playerEntity, entity))
+            if (_playerManager.LocalEntity is not { } player ||
+                !CanExamine(player, entity))
             {
                 return false;
             }

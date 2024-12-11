@@ -85,6 +85,7 @@
         volume: -3
     cutOffSound: false
   - type: MaterialStorage
+    insertOnInteract: false
   - type: Conveyor
   - type: Rotatable
   - type: Repairable
