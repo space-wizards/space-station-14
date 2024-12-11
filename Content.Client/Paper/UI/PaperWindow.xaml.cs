@@ -43,7 +43,8 @@ namespace Content.Client.Paper.UI
             typeof(BulletTag),
             typeof(ColorTag),
             typeof(HeadingTag),
-            typeof(ItalicTag)
+            typeof(ItalicTag),
+            typeof(MonoTag)
         };
 
         public event Action<string>? OnSaved;
