@@ -3,6 +3,7 @@ using Content.Server.Objectives.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
+using DeltaV.Server.Objectives.Components;
 
 namespace DeltaV.Content.Server.Objectives.Systems;
 

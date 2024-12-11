@@ -7,7 +7,7 @@
   - type: Objective
     unique: false
     icon:
-      sprite: Objects/Weapons/Guns/Pistols/fireaxe.rsi
+      sprite: Objects/Weapons/Melee/fireaxe.rsi
       state: icon
   - type: ObjectiveBlacklistRequirement
     blacklist:
