@@ -1,5 +1,6 @@
 using Content.Server.Planktonics;
 using Robust.Shared.Random;
+using Content.Shared.Chemistry.Reagent;
 
 namespace Content.Shared.Planktonics
 {
@@ -15,7 +16,19 @@ namespace Content.Shared.Planktonics
 
         private void OnPlanktonCompInit(EntityUid uid, PlanktonComponent component, ComponentInit args)
         {
+        
+            var reagentId = component.ReagentId;
+            var prototypeId = reagentId.Prototype;
             var random = new Random();
+
+            if (_prototypeManager.TryIndex<ReagentPrototype>(prototypeId, out var reagentPrototype))
+            {
+                // Successfully retrieved the ReagentPrototype
+                // Now you can access its properties to check or log information
+                if (reagentPrototype.ID == "SeaWater")
+                {
+                    Log.Error("The plankton fucking died.");
+                }
 
             // Generate random diet
             component.Diet = (PlanktonComponent.PlanktonDiet)random.Next(Enum.GetValues<PlanktonComponent.PlanktonDiet>().Length);
