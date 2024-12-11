@@ -29,7 +29,6 @@ namespace Content.Shared.Planktonics
                             Log.Error("The plankton fucking died.");
                         }
                     }
-                    Log.Error($"Plankton is in reagent: {reagentId.Prototype}");
                     
     // Generate 2-3 random characteristics by choosing a small number of random flags
     int numCharacteristics = random.Next(2, 4);
