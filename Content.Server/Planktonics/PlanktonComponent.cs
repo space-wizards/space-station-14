@@ -1,7 +1,5 @@
 namespace Content.Server.Planktonics;
 
-namespace Content.Server.Planktonics;
-
 [RegisterComponent]
 public sealed partial class PlanktonComponent : Component
 {
