@@ -301,3 +301,15 @@
       prototypes:
         - MobFrank
 
+- type: entity
+  name: tck'tck spawner
+  suffix: Borg
+  id: BorgSpawnerTckTck
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+    - type: ConditionalSpawner
+      prototypes:
+        - MobTckTck

@@ -352,8 +352,6 @@ entities:
       pos: 2.5,-0.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 29
 - proto: GeneratorBasic15kW

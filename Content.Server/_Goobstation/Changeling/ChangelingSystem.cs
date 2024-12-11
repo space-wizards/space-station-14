@@ -334,21 +334,19 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         var target = action.Target;
 
-        // can't get his dna if he doesn't have it!
-        if (!HasComp<AbsorbableComponent>(target) || HasComp<AbsorbedComponent>(target))
-        {
-            _popup.PopupEntity(Loc.GetString("changeling-sting-extract-fail"), uid, uid);
-            return false;
-        }
-
         if (HasComp<ChangelingComponent>(target))
         {
             _popup.PopupEntity(Loc.GetString("changeling-sting-fail-self", ("target", Identity.Entity(target, EntityManager))), uid, uid);
             _popup.PopupEntity(Loc.GetString("changeling-sting-fail-ling"), target, target);
             return false;
         }
+
         if (!overrideMessage)
-            _popup.PopupEntity(Loc.GetString("changeling-sting", ("target", Identity.Entity(target, EntityManager))), uid, uid);
+        {
+            _popup.PopupEntity(Loc.GetString("changeling-sting-self", ("target", Identity.Entity(target, EntityManager))), uid, uid);
+            // _popup.PopupEntity(Loc.GetString("changeling-sting-target"), target, target);
+        }
+
         return true;
     }
     public bool TryInjectReagents(EntityUid uid, List<(string, FixedPoint2)> reagents)
@@ -439,12 +437,18 @@ public sealed partial class ChangelingSystem : EntitySystem
         || !TryComp<MetaDataComponent>(target, out var metadata)
         || !TryComp<DnaComponent>(target, out var dna)
         || !TryComp<FingerprintComponent>(target, out var fingerprint))
+        {
+            _popup.PopupEntity(Loc.GetString("changeling-sting-extract-fail", ("target", Identity.Entity(target, EntityManager))), uid, uid);
             return false;
+        }
 
         foreach (var storedDNA in comp.AbsorbedDNA)
         {
             if (storedDNA.DNA != null && storedDNA.DNA == dna.DNA)
+            {
+                _popup.PopupEntity(Loc.GetString("changeling-sting-extract-fail", ("target", Identity.Entity(target, EntityManager))), uid, uid);
                 return false;
+            }
         }
 
         var data = new TransformData
@@ -458,8 +462,12 @@ public sealed partial class ChangelingSystem : EntitySystem
             data.Fingerprint = fingerprint.Fingerprint;
 
         if (comp.AbsorbedDNA.Count >= comp.MaxAbsorbedDNA)
-            _popup.PopupEntity(Loc.GetString("changeling-sting-extract-max"), uid, uid);
-        else comp.AbsorbedDNA.Add(data);
+        {
+            _popup.PopupEntity(Loc.GetString("changeling-sting-extract-max", ("target", Identity.Entity(target, EntityManager))), uid, uid);
+            return false;
+        }
+        else
+            comp.AbsorbedDNA.Add(data);
 
         if (countObjective
         && _mind.TryGetMind(uid, out var mindId, out var mind)
@@ -539,8 +547,6 @@ public sealed partial class ChangelingSystem : EntitySystem
             Comp<DnaComponent>(newEnt).DNA = data.DNA;
             _humanoid.CloneAppearance(data.Appearance.Owner, newEnt);
             _metaData.SetEntityName(newEnt, data.Name);
-            var message = Loc.GetString("changeling-transform-finish", ("target", data.Name));
-            _popup.PopupEntity(message, newEnt, newEnt);
         }
 
         RemCompDeferred<PolymorphedEntityComponent>(newEnt);
@@ -593,7 +599,6 @@ public sealed partial class ChangelingSystem : EntitySystem
             return false;
         }
 
-        var locName = Identity.Entity(target, EntityManager);
         EntityUid? newUid = null;
         if (sting)
             newUid = TransformEntity(target, data: data, persistentDna: persistentDna);
@@ -605,9 +610,20 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         if (newUid != null)
         {
-            PlayMeatySound((EntityUid) newUid, comp);
-            var loc = Loc.GetString("changeling-transform-others", ("user", locName));
-            _popup.PopupEntity(loc, (EntityUid) newUid, PopupType.LargeCaution);
+            var targetUid = (EntityUid)newUid;
+
+            var popupSelf = Loc.GetString("changeling-transform-self", ("target", targetUid));
+            var popupTarget = Loc.GetString("changeling-transform-target", ("target", targetUid));
+            var popupOthers = Loc.GetString("changeling-transform-others", ("user", Identity.Entity(target, EntityManager)), ("target", targetUid));
+
+            if (HasComp<ChangelingComponent>(target))
+                _popup.PopupEntity(popupSelf, targetUid, targetUid);
+            else
+                _popup.PopupEntity(popupTarget, targetUid, targetUid, PopupType.MediumCaution);
+
+            _popup.PopupEntity(popupOthers, targetUid, Filter.Pvs(targetUid).RemovePlayerByAttachedEntity(targetUid), true, PopupType.MediumCaution);
+
+            PlayMeatySound(targetUid, comp);
         }
 
         return true;
