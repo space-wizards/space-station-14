@@ -7012,7 +7012,7 @@ entities:
       pos: -6.5,9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -63774.812
+      secondsUntilStateChange: -63999.48
       state: Closing
 - proto: DebugAPC
   entities:
@@ -8156,7 +8156,7 @@ entities:
       pos: 6.5,-3.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -49931.203
+      secondsUntilStateChange: -50155.87
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -12741,6 +12741,13 @@ entities:
     - type: Transform
       pos: -8.579288,-3.2672858
       parent: 2
+- proto: HolofanProjector
+  entities:
+  - uid: 2635
+    components:
+    - type: Transform
+      pos: -28.641266,6.4356384
+      parent: 2
 - proto: hydroponicsTray
   entities:
   - uid: 1734
@@ -13223,8 +13230,11 @@ entities:
   entities:
   - uid: 1800
     components:
+    - type: MetaData
+      desc: A memo from Centcomm, addressed to the Engineering department.
+      name: engineering memo
     - type: Transform
-      pos: -26.945587,1.3583984
+      pos: -28.319977,6.551819
       parent: 2
     - type: Paper
       stampState: paper_stamp-centcom
@@ -15924,6 +15934,11 @@ entities:
     - type: Transform
       pos: -16.5,10.5
       parent: 2
+  - uid: 2633
+    components:
+    - type: Transform
+      pos: -28.5,6.5
+      parent: 2
 - proto: TableCounterMetal
   entities:
   - uid: 2177
@@ -18101,6 +18116,13 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -19.5,-9.5
+      parent: 2
+- proto: WeaponGrapplingGun
+  entities:
+  - uid: 2634
+    components:
+    - type: Transform
+      pos: -28.507477,6.817444
       parent: 2
 - proto: WeaponQuadDisabler
   entities:
