@@ -46,16 +46,8 @@ public sealed partial class PlanktonComponent : Component
         AerosolSpores = 1 << 12,     // 4096
         HyperExoticSpecies = 1 << 13, // 8192
         Sentience = 1 << 14,          // 16384
-        RadioactiveAttribute = 1 << 15, // 32768
-        MagneticAttribute = 1 << 16,   // 65536
-        HallucinogenicAttribute = 1 << 17, // 131072
-        ChemicalByproduct = 1 << 18,  // 262144
-        Symbiosis = 1 << 19,          // 524288
-        Carnivorous = 1 << 20,        // 1048576
-        Parasite = 1 << 21,           // 2097152
-        Photosynthetic = 1 << 22,     // 4194304
-        Pyrophilic = 1 << 23,         // 8388608
-        Cryophilic = 1 << 24          // 16777216
+        Pyrophilic = 1 << 15,         // 32768
+        Cryophilic = 1 << 16          // 65536
     }
 
     // These hold the random generated values for the plankton
