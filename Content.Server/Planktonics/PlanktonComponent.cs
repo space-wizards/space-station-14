@@ -17,12 +17,12 @@ public sealed partial class PlanktonComponent : Component
     // Define a class that represents each plankton species
     public class PlanktonSpeciesInstance
     {
-        public string SpeciesName { get; set; }
+        public PlanktonName SpeciesName { get; set; }
         public PlanktonDiet Diet { get; set; }
         public PlanktonCharacteristics Characteristics { get; set; }
         public float CurrentSize { get; set; }
 
-        public PlanktonSpeciesInstance(string speciesName, PlanktonDiet diet, PlanktonCharacteristics characteristics, float currentSize)
+        public PlanktonSpeciesInstance(PlanktonName speciesName, PlanktonDiet diet, PlanktonCharacteristics characteristics, float currentSize)
         {
             SpeciesName = speciesName;
             Diet = diet;
@@ -83,4 +83,44 @@ public sealed partial class PlanktonComponent : Component
 
     [DataField("temperatureToleranceHigh"), ViewVariables(VVAccess.ReadWrite)]
     public float TemperatureToleranceHigh { get; set; } = 40.0f; // Max temperature tolerance
+
+    // Define large lists of "scientific" first and second names for plankton
+    public static readonly string[] PlanktonFirstNames = 
+    {
+        "Acanthocystis", "Actinophrys", "Amphora", "Apistosporus", "Aulacodiscus",
+        "Brachionus", "Cladocera", "Coscinodiscus", "Didinium", "Diatoma",
+        "Entomorpha", "Euglena", "Gloeocapsa", "Leptocylindrus", "Mastigophora",
+        "Mesorhizobium", "Navicula", "Nitzschia", "Oscillatoria", "Phaeodactylum",
+        "Phacus", "Platymonas", "Protoperidinium", "Pyramimonas", "Spirulina",
+        "Synedra", "Tetradontia", "Trachelomonas", "Volvox", "Vorticella"
+    };
+
+    public static readonly string[] PlanktonSecondNames = 
+    {
+        "longispina", "latifolia", "quadricaudata", "gracilis", "bioluminescens",
+        "radiata", "toxica", "cystiformis", "fimbriata", "planctonica",
+        "viridis", "globosa", "aurelia", "pulchra", "reducta",
+        "tuberculata", "subtilis", "hyalina", "cephalopodiformis", "corymbosa",
+        "parasitica", "electrica", "xenofila", "macrospora", "fluorescens",
+        "lucida", "cyanobacteria", "multicellularis", "carotenoides", "ectoplasmica"
+    };
+
+    // Class to combine the first and second name for plankton species
+    public class PlanktonName
+    {
+        public string FirstName { get; set; }
+        public string SecondName { get; set; }
+
+        public PlanktonName(string firstName, string secondName)
+        {
+            FirstName = firstName;
+            SecondName = secondName;
+        }
+
+        // Overriding ToString to provide a formatted name
+        public override string ToString()
+        {
+            return $"{FirstName} {SecondName}";
+        }
+    }
 }
