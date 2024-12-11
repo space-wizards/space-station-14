@@ -1,7 +1,6 @@
-using Content.Server.Objectives.Systems;
+using DeltaV.Content.Server.Objectives.Systems;
 
-namespace Content.Server.Objectives.Components;
-
+namespace DeltaV.Server.Objectives.Components;
 /// <summary>
 /// Requires that a target dies once and only once.
 /// Depends on <see cref="TargetObjectiveComponent"/> to function.
