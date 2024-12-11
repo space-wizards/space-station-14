@@ -220,7 +220,8 @@
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 1000
   - type: TemperatureProtection
-    coefficient: 0.2
+    heatingCoefficient: 0.2
+    coolingCoefficient: 0.2
   - type: BreathMask
   # this is on the hood so you only fool the fish if you wear the whole set
   # wear carp suit and security helmet, they'll know you are fake
@@ -745,3 +746,20 @@
       - state: coatybits-equipped-HELMET
         color: "#EBE216"
       - state: winterbits-equipped-HELMET
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHoodVoidCloak
+  name: void cloak hood
+  description: The hood of a void cloak. For those who have gone to the dark side of the force.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/voidcloak.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/voidcloak.rsi
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+  - type: HideLayerClothing
+    slots:
+    - Hair

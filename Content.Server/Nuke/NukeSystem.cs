@@ -40,6 +40,7 @@ public sealed class NukeSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
@@ -167,12 +168,21 @@ public sealed class NukeSystem : EntitySystem
         if (component.Status == NukeStatus.ARMED)
             return;
 
+        // Nuke has to have the disk in it to be moved
+        if (!component.DiskSlot.HasItem)
+        {
+            var msg = Loc.GetString("nuke-component-cant-anchor-toggle");
+            _popups.PopupEntity(msg, uid, args.Actor, PopupType.MediumCaution);
+            return;
+        }
+
         // manually set transform anchor (bypassing anchorable)
         // todo: it will break pullable system
         var xform = Transform(uid);
         if (xform.Anchored)
         {
             _transform.Unanchor(uid, xform);
+            _itemSlots.SetLock(uid, component.DiskSlot, true);
         }
         else
         {
@@ -181,7 +191,7 @@ public sealed class NukeSystem : EntitySystem
 
             var worldPos = _transform.GetWorldPosition(xform);
 
-            foreach (var tile in grid.GetTilesIntersecting(new Circle(worldPos, component.RequiredFloorRadius), false))
+            foreach (var tile in _map.GetTilesIntersecting(xform.GridUid.Value, grid, new Circle(worldPos, component.RequiredFloorRadius), false))
             {
                 if (!tile.IsSpace(_tileDefManager))
                     continue;
@@ -194,6 +204,7 @@ public sealed class NukeSystem : EntitySystem
 
             _transform.SetCoordinates(uid, xform, xform.Coordinates.SnapToGrid());
             _transform.AnchorEntity(uid, xform);
+            _itemSlots.SetLock(uid, component.DiskSlot, false);
         }
 
         UpdateUserInterface(uid, component);

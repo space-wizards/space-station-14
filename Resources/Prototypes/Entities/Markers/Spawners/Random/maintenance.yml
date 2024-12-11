@@ -116,6 +116,7 @@
       - id: BalloonNT
       - id: BalloonCorgi
       - id: MysteryFigureBox
+      - id: RubberChicken
       # Cult
       - !type:AllSelector
         children:
@@ -143,6 +144,7 @@
         - id: ClothingNeckAromanticPin
         - id: ClothingNeckAsexualPin
         - id: ClothingNeckBisexualPin
+        - id: ClothingNeckGayPin
         - id: ClothingNeckIntersexPin
         - id: ClothingNeckLesbianPin
         - id: ClothingNeckNonBinaryPin
@@ -287,6 +289,7 @@
       - id: ResearchDisk5000
       - id: PetCarrier
       - id: DrinkMopwataBottleRandom
+      - id: SpectralLocator
       - id: LidSalami
         weight: 0.05
 

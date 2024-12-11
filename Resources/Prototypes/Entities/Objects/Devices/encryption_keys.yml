@@ -27,7 +27,7 @@
     - state: common_label
 
 - type: entity
-  parent: EncryptionKey
+  parent: [ EncryptionKey, BaseCargoContraband ]
   id: EncryptionKeyCargo
   name: cargo encryption key
   description: An encryption key used by supply employees.
@@ -42,7 +42,7 @@
     - state: cargo_label
 
 - type: entity
-  parent: EncryptionKey
+  parent: [ EncryptionKey, BaseCentcommContraband ]
   id: EncryptionKeyCentCom
   name: central command encryption key
   description: An encryption key used by captain's bosses.
@@ -57,7 +57,7 @@
     - state: nano_label
 
 - type: entity
-  parent: EncryptionKey
+  parent: [ EncryptionKey, BaseCentcommCommandContraband ]
   id: EncryptionKeyStationMaster
   name: station master encryption key
   description: An encryption key used by station's bosses.
@@ -79,7 +79,7 @@
     - state: cap_label
 
 - type: entity
-  parent: EncryptionKey
+  parent: [ EncryptionKey, BaseCommandContraband ]
   id: EncryptionKeyCommand
   name: command encryption key
   description: An encryption key used by crew's bosses.
@@ -94,7 +94,7 @@
     - state: com_label
 
 - type: entity
-  parent: EncryptionKey
+  parent: [ EncryptionKey, BaseEngineeringContraband ]
   id: EncryptionKeyEngineering
   name: engineering encryption key
   description: An encryption key used by the engineers.
@@ -109,7 +109,7 @@
     - state: eng_label
 
 - type: entity
-  parent: EncryptionKey
+  parent: [ EncryptionKey, BaseMedicalContraband ]
   id: EncryptionKeyMedical
   name: medical encryption key
   description: An encryption key used by those who save lives.
@@ -124,7 +124,7 @@
     - state: med_label
 
 - type: entity
-  parent: EncryptionKey
+  parent: [ EncryptionKey, BaseMedicalScienceContraband ]
   id: EncryptionKeyMedicalScience
   name: med-sci encryption key
   description: An encryption key used by someone who hasn't decided which side to take.
@@ -140,7 +140,7 @@
     - state: medsci_label
 
 - type: entity
-  parent: EncryptionKey
+  parent: [ EncryptionKey, BaseScienceContraband ]
   id: EncryptionKeyScience
   name: science encryption key
   description: An encryption key used by scientists. Maybe it is plasmaproof?
@@ -155,7 +155,7 @@
     - state: sci_label
 
 - type: entity
-  parent: EncryptionKey
+  parent: [ EncryptionKey, BaseScienceContraband ]
   id: EncryptionKeyRobo
   name: robotech encryption key
   description: An encryption key used by robototech engineers. Maybe it has a LAH-6000 on it?
@@ -170,7 +170,7 @@
     - state: robotics_label
 
 - type: entity
-  parent: EncryptionKey
+  parent: [ EncryptionKey, BaseSecurityContraband ]
   id: EncryptionKeySecurity
   name: security encryption key
   description: An encryption key used by security.
@@ -185,7 +185,7 @@
     - state: sec_label
 
 - type: entity
-  parent: EncryptionKey
+  parent: [ EncryptionKey, BaseCivilianContraband ]
   id: EncryptionKeyService
   name: service encryption key
   description: An encryption key used by the service staff, tasked with keeping the station full, happy and clean.
@@ -200,7 +200,7 @@
     - state: service_label
 
 - type: entity
-  parent: [EncryptionKey, BaseRestrictedContraband]
+  parent: [ EncryptionKey, BaseSyndicateContraband ]
   id: EncryptionKeySyndie
   name: blood-red encryption key
   description: An encryption key used by... wait... Who is the owner of this chip?
@@ -215,7 +215,7 @@
     - state: synd_label
 
 - type: entity
-  parent: [ EncryptionKey, BaseScienceContraband ]
+  parent: [ EncryptionKey, BaseSiliconScienceContraband ]
   id: EncryptionKeyBinary
   name: binary translator key
   description: An encryption key that translates binary signals used by silicons.
@@ -227,7 +227,22 @@
   - type: Sprite
     layers:
     - state: crypt_silver
-    - state: rd_label
+    - state: ai_label
+
+- type: entity
+  parent: [ EncryptionKey, BaseSyndicateContraband ]
+  id: EncryptionKeyBinarySyndicate
+  name: binary translator key
+  description: A syndicate encryption key that translates binary signals used by silicons.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Binary
+    defaultChannel: Binary
+  - type: Sprite
+    layers:
+    - state: crypt_red
+    - state: ai_label
 
 - type: entity
   parent: EncryptionKey

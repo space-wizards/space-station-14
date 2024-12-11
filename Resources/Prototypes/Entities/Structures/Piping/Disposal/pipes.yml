@@ -29,7 +29,7 @@
     anchored: true
   - type: Anchorable
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:

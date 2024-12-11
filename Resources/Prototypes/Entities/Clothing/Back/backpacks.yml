@@ -192,7 +192,7 @@
 
 #ERT
 - type: entity
-  parent: ClothingBackpack
+  parent: [ ClothingBackpack, BaseCentcommContraband ]
   id: ClothingBackpackERTLeader
   name: ERT leader backpack
   description: A spacious backpack with lots of pockets, worn by the Commander of an Emergency Response Team.

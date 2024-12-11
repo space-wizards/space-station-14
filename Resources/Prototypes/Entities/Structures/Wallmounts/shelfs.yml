@@ -20,7 +20,7 @@
   - type: Transform
   - type: Damageable
     damageModifierSet: Wood
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -119,7 +119,7 @@
     state: base
   - type: Damageable
     damageModifierSet: Metallic
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -154,7 +154,7 @@
     state: base
   - type: Damageable
     damageModifierSet: Glass
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
   - type: Destructible
     thresholds:
     - trigger:

@@ -35,6 +35,7 @@ public abstract class SharedEmitSoundSystem : EntitySystem
     [Dependency] private   readonly SharedAmbientSoundSystem _ambient = default!;
     [Dependency] private   readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
@@ -57,7 +58,10 @@ public abstract class SharedEmitSoundSystem : EntitySystem
 
     private void HandleEmitSoundOnUIOpen(EntityUid uid, EmitSoundOnUIOpenComponent component, AfterActivatableUIOpenEvent args)
     {
-        TryEmitSound(uid, component, args.User);
+        if (_whitelistSystem.IsBlacklistFail(component.Blacklist, args.User))
+        {
+            TryEmitSound(uid, component, args.User);
+        }
     }
 
     private void OnMobState(Entity<SoundWhileAliveComponent> entity, ref MobStateChangedEvent args)
@@ -86,7 +90,7 @@ public abstract class SharedEmitSoundSystem : EntitySystem
             return;
         }
 
-        var tile = grid.GetTileRef(xform.Coordinates);
+        var tile = _map.GetTileRef(xform.GridUid.Value, grid, xform.Coordinates);
 
         // Handle maps being grids (we'll still emit the sound).
         if (xform.GridUid != xform.MapUid && tile.IsSpace(_tileDefMan))

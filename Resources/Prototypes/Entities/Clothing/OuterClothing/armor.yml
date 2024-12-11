@@ -172,7 +172,7 @@
     autoRechargeRate: 2
 
 - type: entity
-  parent: ClothingOuterBaseLarge
+  parent: [ ClothingOuterBaseLarge, BaseMajorContraband, AllowSuitStorageClothing ]
   id: ClothingOuterArmorCult
   name: acolyte armor
   description: An evil-looking piece of cult armor, made of bones.
@@ -210,7 +210,7 @@
         Radiation: 0
         Caustic: 0.75
   - type: GroupExamine
-  - type: ClothingRequiredStepTriggerImmune
+  - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
 
 - type: entity
@@ -284,7 +284,7 @@
   - type: GroupExamine
 
 - type: entity
-  parent: ClothingOuterBaseLarge
+  parent: [ ClothingOuterBaseLarge, BaseMajorContraband, AllowSuitStorageClothing ]
   id: ClothingOuterArmorChangeling
   name: chitinous armor
   description: Inflates the changeling's body into an all-consuming chitinous mass of armor.
@@ -308,11 +308,11 @@
   - type: ExplosionResistance
     damageCoefficient: 0.5
   - type: GroupExamine
-  - type: ClothingRequiredStepTriggerImmune
+  - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
 
 - type: entity
-  parent: ClothingOuterBaseLarge
+  parent: [ ClothingOuterBaseLarge, BaseMajorContraband, AllowSuitStorageClothing ]
   id: ClothingOuterArmorBone
   name: bone armor
   description: Sits on you like a second skin.
@@ -336,11 +336,11 @@
   - type: Construction
     graph: BoneArmor
     node: armor
-  - type: ClothingRequiredStepTriggerImmune
+  - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
 
 - type: entity
-  parent: ClothingOuterBaseLarge
+  parent: [ ClothingOuterBaseLarge, BaseMajorContraband, AllowSuitStorageClothing ]
   id: ClothingOuterArmorPodWars
   name: ironclad II armor
   description: A repurposed suit of ironclad II armor, a relic of the pod wars.
@@ -357,6 +357,6 @@
         Piercing: 0.6
         Heat: 0.5
   - type: GroupExamine
-  - type: ClothingRequiredStepTriggerImmune
+  - type: ProtectedFromStepTriggers
     slots: WITHOUT_POCKET
 
