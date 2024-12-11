@@ -78,3 +78,12 @@ uplink-lab-desc = This crate contains everything needed to go breaking bad. Incl
 
 uplink-disabler-name = Exhaustion magcell
 uplink-disabler-desc = A low-frequency variant of the standard magcell, capable of exhausting targets to unconciousness for a few moments. Useful for 'aquiring' targets.
+
+uplink-borging-name = NT Borging Bundle
+uplink-borging-desc = A bundle containing everything needed to build build a new ally. Contains a modified cyborg chassis, an advanced MMI, and a specialization kit. Brain not included.
+
+uplink-lottery-name = TH3 GRAND L0TTERY !!!@!
+uplink-lottery-desc = Redirects a grand lottery shipment to you. We have no idea what's in these things, to be honest.
+
+uplink-energybomb-name = cascade bomb
+uplink-energybomb-desc = A newer prototype, capable of producing a atom-sized resonance cascade on-site. Releases extreme amounts of energy and violently absorbs body heat.

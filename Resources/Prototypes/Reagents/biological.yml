@@ -262,3 +262,14 @@
     collection: FootstepBlood
     params:
       volume: 6
+
+- type: reagent
+  id: DenaturedProteins
+  name: reagent-name-denatured
+  group: Biological
+  desc: reagent-desc-denatured
+  flavor: sour
+  color: "#dfe1df"
+  recognizable: true
+  physicalDesc: reagent-physical-desc-nondescript
+  slippery: false

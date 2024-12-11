@@ -104,3 +104,40 @@
   - SmokeGrenade
   - SmokeGrenade
   - SmokeGrenade
+
+- type: thiefBackpackSet
+  id: EngineeringSet
+  name: nanotraitor-borg-engineer-name
+  description: nanotraitor-borg-category-engineer-description
+  sprite:
+    sprite: Clothing/Neck/Cloaks/void.rsi
+    state: icon
+  content:
+  - BorgModuleAdvancedTool
+  - BorgModuleConstruction
+  - BorgModuleRCD
+  - BorgModuleNanotrasenWeapon
+
+- type: thiefBackpackSet
+  id: SyndicateSet
+  name: nanotraitor-borg-syndicate-name
+  description: nanotraitor-borg-category-syndicate-description
+  sprite:
+    sprite: Clothing/Neck/Cloaks/void.rsi
+    state: icon
+  content:
+  - BorgModuleEsword
+  - BorgModuleSyndicateWeapon
+
+- type: thiefBackpackSet
+  id: MedicalSet
+  name: nanotraitor-borg-medical-name
+  description: nanotraitor-borg-category-medical-description
+  sprite:
+    sprite: Clothing/Neck/Cloaks/void.rsi
+    state: icon
+  content:
+  - BorgModuleAdvancedTreatment
+  - BorgModuleDefibrillator
+  - BorgModuleTreatment
+  - BorgModuleNanotrasenWeapon
