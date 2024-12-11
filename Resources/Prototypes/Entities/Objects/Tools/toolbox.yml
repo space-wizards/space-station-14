@@ -169,3 +169,27 @@
     interfaces:
       enum.ThiefBackpackUIKey.Key:
         type: ThiefBackpackBoundUserInterface
+
+
+- type: entity
+  id: ToolboxNanotraitor
+  name: undetermined borging kit
+  description: This is where your borg's specialization lies.
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Toolboxes/toolbox_thief.rsi
+    state: icon
+  - type: ThiefUndeterminedBackpack
+    possibleSets:
+    - EngineeringSet
+    - MedicalSet
+    - SyndicateSet
+  - type: ActivatableUI
+    key: enum.ThiefBackpackUIKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.ThiefBackpackUIKey.Key:
+        type: ThiefBackpackBoundUserInterface
+
+

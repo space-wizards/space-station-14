@@ -151,3 +151,48 @@
     - type: OnUseTimerTrigger
       delay: 10
       delayOptions: [10, 20, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300]
+
+- type: entity
+  parent: BaseHardBomb
+  id: EnergyBomb
+  name: cascade bomb
+  description: An advanced bomb that can produce a hyper-microscopic resonance cascade.
+  components:
+    - type: Wires
+      layoutId: Defusable
+      alwaysRandomize: true
+    - type: Sprite
+      sprite: Structures/Machines/bomb.rsi
+      layers:
+        - state: training-bomb
+        - state: training-bomb-active
+          visible: false
+          map: [ "primed" ]
+        - state: training-bomb-wires
+          visible: false
+          map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+    - type: GenericVisualizer
+      visuals:
+        enum.DefusableVisuals.Active:
+          primed:
+            True: { visible: true }
+            False: { visible: false }
+        enum.WiresVisualLayers.MaintenancePanel:
+          enum.WiresVisualLayers.MaintenancePanel:
+            True: { visible: true }
+            False: { visible: false }
+    - type: PointLight
+      color: "#0096FF"
+      radius: 5.1
+      softness: 0.5
+    - type: Explosive
+      explosionType: Cryo
+      totalIntensity: 3000.0
+      intensitySlope: 5
+      maxIntensity: 300
+      canCreateVacuum: false
+    - type: Defusable
+      disposable: false
+    - type: OnUseTimerTrigger
+      delay: 110
+      delayOptions: [110, 240, 300, 600, 900]

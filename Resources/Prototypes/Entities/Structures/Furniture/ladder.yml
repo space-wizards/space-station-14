@@ -1,0 +1,29 @@
+- type: entity
+  id: LadderDownBase
+  parent: BaseStructure
+  name: Ladder down
+  description: WEEEEE.
+  components:
+  - type: Transform
+  - type: Climbable
+  - type: Clickable
+  - type: Ladderdown
+  - type: Sprite
+    sprite: Structures/Furniture/ladder.rsi
+    state: down
+
+- type: entity
+  id: LadderUpBase
+  parent: BaseStructure
+  name: Ladder up
+  description: WEEEEE.
+  components:
+  - type: Anchorable
+  - type: Transform
+  - type: Climbable
+  - type: Clickable
+  - type: Ladderup
+  - type: Sprite
+    sprite: Structures/Furniture/ladder.rsi
+    state: up
+

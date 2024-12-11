@@ -92,6 +92,8 @@
     interfaces:
       enum.CommunicationsConsoleUiKey.Key:
         type: CommunicationsConsoleBoundUserInterface
+  - type: Computer
+    board: CommsComputerCircuitboard
 
 - type: entity
   id: HandHeldMassScannerBorg

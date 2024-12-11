@@ -46,7 +46,7 @@
   description: uplink-pistol-N1984-desc
   productEntity: WeaponPistolN1984
   cost:
-    BluespaceCrystal: 10
+    BluespaceCrystal: 8
   categories:
   - UplinkNtWeaponry
 
@@ -56,21 +56,21 @@
   description: uplink-pistol-Mk58-desc
   productEntity: WeaponPistolMk58
   cost:
-    BluespaceCrystal: 3
+    BluespaceCrystal: 2
   categories:
   - UplinkNtWeaponry
 
 ##EXPLOSIVES
 
-- type: listing
-  id: UplinkBeachballGrenade
-  name: uplink-beachball-name
-  description: uplink-beachball-desc
-  productEntity: BeachballGrenade
-  cost:
-    BluespaceCrystal: 4
-  categories:
-  - UplinkNtExplosives
+#- type: listing
+ # id: UplinkBeachballGrenade
+ # name: uplink-beachball-name
+  #description: uplink-beachball-desc
+  #productEntity: BeachballGrenade
+  #cost:
+  #  BluespaceCrystal: 4
+  #categories:
+  #- UplinkNtExplosives
 
 - type: listing
   id: UplinkIncendiaryGrenade
@@ -89,6 +89,16 @@
   productEntity: SlashBang
   cost:
     BluespaceCrystal: 7
+  categories:
+  - UplinkNtExplosives
+
+- type: listing
+  id: UplinkEnergyBomb
+  name: uplink-energybomb-name
+  description: uplink-energybomb-desc
+  productEntity: EnergyBomb
+  cost:
+    BluespaceCrystal: 15
   categories:
   - UplinkNtExplosives
 
@@ -216,7 +226,7 @@
   description: uplink-toolboxnt-desc
   productEntity: ToolboxNanotrasenFilled
   cost:
-    BluespaceCrystal: 5
+    BluespaceCrystal: 3
   categories:
   - UplinkNtDisruption
 
@@ -274,6 +284,16 @@
   categories:
   - UplinkNtAllies
 
+#- type: listing
+  #id: UplinkBorgingBundle
+  #name: uplink-borging-name
+  #description: uplink-borging-desc
+ # productEntity: CrateBorgingBundle
+ # cost:
+ #   BluespaceCrystal: 15
+ # categories:
+ # - UplinkNtAllies
+
 ##POINTLESS
 
 - type: listing
@@ -286,4 +306,13 @@
   categories:
   - UplinkNtPointless
 
+- type: listing
+  id: UplinkLottery
+  name: uplink-lottery-name
+  description: uplink-lottery-desc
+  productEntity: CrateCargoGambling
+  cost:
+    BluespaceCrystal: 13
+  categories:
+  - UplinkNtPointless
 
