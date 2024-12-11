@@ -49,22 +49,18 @@ namespace Content.Shared.Planktonics
             combinedCharacteristics |= characteristic;
         }
 
-        // Generate a random size for the plankton species
-        float randomSize = (float)(random.NextDouble() * (10.0 - 0.5) + 0.5);  // Random size between 0.5 and 10
-
         // Create a new plankton species instance
         var planktonInstance = new PlanktonComponent.PlanktonSpeciesInstance(
             planktonName.ToString(),
             (PlanktonComponent.PlanktonDiet)random.Next(Enum.GetValues<PlanktonComponent.PlanktonDiet>().Length),
             combinedCharacteristics,
-            randomSize
         );
 
         // Add the plankton species instance to the SpeciesInstances list
         component.SpeciesInstances.Add(planktonInstance);
 
         // Log the generated plankton species details
-        Log.Info($"Generated plankton species {planktonInstance.SpeciesName} with characteristics {combinedCharacteristics} and size {randomSize}");
+        Log.Info($"Generated plankton species {planktonInstance.SpeciesName} with characteristics {combinedCharacteristics}");
     }
 
     // Log the total number of plankton species initialized
