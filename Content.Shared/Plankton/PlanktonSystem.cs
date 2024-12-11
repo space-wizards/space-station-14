@@ -24,20 +24,23 @@ namespace Content.Shared.Planktonics
 
                     if (_prototypeManager.TryIndex<ReagentPrototype>(prototypeId, out var reagentPrototype))
                     {
-                        if (reagentId == "SeaWater")
+                        if (!reagentId == "SeaWater")
                         {
                             Log.Error("The plankton fucking died.");
                         }
                     }
-
-                    // Log the reagent prototype ID for debugging
                     Log.Error($"Plankton is in reagent: {reagentId.Prototype}");
                     
-            // Generate random diet
-            component.Diet = (PlanktonComponent.PlanktonDiet)random.Next(Enum.GetValues<PlanktonComponent.PlanktonDiet>().Length);
+    // Generate 2-3 random characteristics by choosing a small number of random flags
+    int numCharacteristics = random.Next(2, 4);
+    var possibleCharacteristics = Enum.GetValues<PlanktonComponent.PlanktonCharacteristics>();
+    var selectedCharacteristics = new HashSet<PlanktonComponent.PlanktonCharacteristics>();
 
-            // Generate random bitwise characteristics
-            component.Characteristics = (PlanktonComponent.PlanktonCharacteristics)random.Next(0, (int)PlanktonComponent.PlanktonCharacteristics.Cryophilic + 1); // Random bit flag combination
+    while (selectedCharacteristics.Count < numCharacteristics)
+    {
+        var randomCharacteristic = (PlanktonComponent.PlanktonCharacteristics)possibleCharacteristics.GetValue(random.Next(possibleCharacteristics.Length));
+        selectedCharacteristics.Add(randomCharacteristic);
+    }
 
             Log.Error($"Plankton Initialized: Diet: {component.Diet}, Characteristics: {component.Characteristics}, Living inside: {component.ReagentId}");
 
