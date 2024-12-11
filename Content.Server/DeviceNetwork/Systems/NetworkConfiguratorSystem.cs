@@ -18,7 +18,7 @@ using JetBrains.Annotations;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.Player;
+using Robust.Shared.Map.Events;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -66,6 +66,42 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         SubscribeLocalEvent<NetworkConfiguratorComponent, BoundUserInterfaceCheckRangeEvent>(OnUiRangeCheck);
 
         SubscribeLocalEvent<DeviceListComponent, ComponentRemove>(OnComponentRemoved);
+
+        SubscribeLocalEvent<BeforeSaveEvent>(OnMapSave);
+    }
+
+    private void OnMapSave(BeforeSaveEvent ev)
+    {
+        var enumerator = AllEntityQuery<NetworkConfiguratorComponent>();
+        while (enumerator.MoveNext(out var uid, out var conf))
+        {
+            if (CompOrNull<TransformComponent>(conf.ActiveDeviceList)?.MapUid != ev.Map)
+                continue;
+
+            // The linked device list is (probably) being saved. Make sure that the configurator is also being saved
+            // (i.e., not in the hands of a mapper/ghost). In the future, map saving should raise a separate event
+            // containing a set of all entities that are about to be saved, which would make checking this much easier.
+            // This is a shitty bandaid, and will force close the UI during auto-saves.
+            // TODO Map serialization refactor
+
+            var xform = Transform(uid);
+            if (xform.MapUid == ev.Map && IsSaveable(uid))
+                continue;
+
+            _uiSystem.CloseUi(uid, NetworkConfiguratorUiKey.Configure);
+            DebugTools.AssertNull(conf.ActiveDeviceList);
+        }
+
+        bool IsSaveable(EntityUid uid)
+        {
+            while (uid.IsValid())
+            {
+                if (Prototype(uid)?.MapSavable == false)
+                    return false;
+                uid = Transform(uid).ParentUid;
+            }
+            return true;
+        }
     }
 
     private void OnUiRangeCheck(Entity<NetworkConfiguratorComponent> ent, ref BoundUserInterfaceCheckRangeEvent args)
@@ -485,6 +521,9 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         if (!TryComp(targetUid, out DeviceListComponent? list))
             return;
 
+        if (TryComp(configurator.ActiveDeviceList, out DeviceListComponent? oldList))
+            oldList.Configurators.Remove(configuratorUid);
+
         list.Configurators.Add(configuratorUid);
         configurator.ActiveDeviceList = targetUid;
         Dirty(configuratorUid, configurator);
@@ -758,7 +797,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
                 {
                     if (query.TryGetComponent(device, out var comp))
                     {
-                        component.Devices[addr] = device;
+                        component.Devices.Add(addr, device);
                         comp.Configurators.Add(uid);
                     }
                 }

@@ -279,6 +279,9 @@
   parent: [BaseBorgChassis, BaseBorgTransponder]
   abstract: true
   components:
+  - type: RandomMetadata
+    nameSegments:
+      - names_borg
   - type: NpcFactionMember
     factions:
     - NanoTrasen
@@ -325,3 +328,23 @@
       Unsexed: UnisexSiliconSyndicate
   - type: PointLight
     color: "#dd200b"
+
+- type: entity
+  id: BaseBorgChassisDerelict
+  parent: BaseBorgChassis
+  abstract: true
+  components:
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen #The seemingly best fit. It was a regular NT cyborg once, after all.
+  - type: Access
+    enabled: false
+    groups:
+    - AllAccess #Randomized access would be fun. AllAccess is the best i can think of right now that does make it too hard for it to enter the station or navigate it..
+  - type: AccessReader
+    access: [["Command"], ["Research"]]
+  - type: StartIonStormed
+    ionStormAmount: 3
+  - type: IonStormTarget
+    chance: 1
+  - type: ShowJobIcons
