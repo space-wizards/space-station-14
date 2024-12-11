@@ -91,6 +91,28 @@
   - type: ReplacementAccent
     accent: liar
 
+- type: trait
+  id: BipolarDisorder
+  name: trait-bipolar-disorder-name
+  description: trait-bipolar-disorder-desc
+  category: SpeechTraits
+  cost: 1
+  components:
+  - type: BipolarDisorderAccent
+    triggerEmotionChance: 0.3
+    changeMessageChance: 0.4
+    emotions:
+      - Laugh
+      - Scream
+      - Crying
+  - type: EmotionLoop
+    minTimeBetweenEmotions: 60
+    maxTimeBetweenEmotions: 90
+    emotions:
+      - Laugh
+      - Scream
+      - Crying
+
 # 2 Cost
 
 - type: trait
