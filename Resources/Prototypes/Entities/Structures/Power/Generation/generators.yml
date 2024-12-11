@@ -372,7 +372,7 @@
     containers:
       Artifact: !type:ContainerSlot
   - type: Nuke
-    explosionType: Default
+    explosionType: Cryo
     maxIntensity: 100
     intensitySlope: 5
     totalIntensity: 5000000

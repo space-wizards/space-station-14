@@ -115,6 +115,7 @@
               Quantity: 30
     - type: Tag
       tags: []
+
       
 - type: entity
   id: VestineChemistryVialHalf
@@ -124,10 +125,10 @@
     - type: SolutionContainerManager
       solutions:
         beaker:
-          maxVol: 15
+          maxVol: 30
           reagents:
             - ReagentId: Vestine
-              Quantity: 30
+              Quantity: 15
     - type: Tag
       tags: []
 
@@ -402,5 +403,18 @@
           maxVol: 30
           reagents:
             - ReagentId: Silver
+              Quantity: 30
+
+- type: entity
+  id: SugarChemistryVial
+  name:  sugar vial
+  parent: BaseChemistryEmptyVial
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          maxVol: 30
+          reagents:
+            - ReagentId: Sugar
               Quantity: 30
 
