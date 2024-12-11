@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Numerics;
 using Content.Client.Administration.Systems;
 using Content.Shared.CCVar;
@@ -21,6 +22,10 @@ internal sealed class AdminNameOverlay : Overlay
     private readonly IUserInterfaceManager _userInterfaceManager;
     private readonly Font _font;
 
+    //TODO make this adjustable via GUI
+    private readonly ProtoId<RoleTypePrototype>[] _filter =
+        ["SoloAntagonist", "TeamAntagonist", "SiliconAntagonist", "FreeAgent"];
+
     public AdminNameOverlay(AdminSystem system, IEntityManager entityManager, IEyeManager eyeManager, IResourceCache resourceCache, EntityLookupSystem entityLookup, IUserInterfaceManager userInterfaceManager)
     {
         _system = system;
@@ -38,8 +43,6 @@ internal sealed class AdminNameOverlay : Overlay
     {
         var viewport = args.WorldAABB;
 
-        //TODO make this adjustable via GUI
-        var filter = new List<ProtoId<RoleTypePrototype>>(){ "SoloAntagonist", "TeamAntagonist", "SiliconAntagonist", "FreeAgent" };
         //TODO make this adjustable via GUI
         var classic = _config.GetCVar(CCVars.AdminOverlayClassic);
 
@@ -82,7 +85,7 @@ internal sealed class AdminNameOverlay : Overlay
                 color = Color.OrangeRed;
             }
 
-            if (filter.Contains(playerInfo.RoleProto.ID) && !classic ||
+            if (_filter.Contains(playerInfo.RoleProto.ID) && !classic ||
                 playerInfo.Antag && classic )
             {
                 args.ScreenHandle.DrawString(_font, screenCoordinates + (lineoffset * 2), label, uiScale, color);
