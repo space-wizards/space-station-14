@@ -51,7 +51,7 @@ public sealed partial class PlanktonComponent : Component
     Gymnodinium,
     Peridinium,
     Bacillaria,
-    Pseudo-nitzschia
+    Pseudo
     }
 
 
