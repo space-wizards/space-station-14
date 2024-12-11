@@ -213,7 +213,7 @@
 
 - type: cargoBounty
   id: BountyLemon
-  reward: 6000
+  reward: 10000
   description: bounty-description-lemon
   entries:
   - name: bounty-item-lemon
@@ -224,7 +224,7 @@
 
 - type: cargoBounty
   id: BountyLemo
-  reward: 8000
+  reward: 12000
   description: bounty-description-lemo
   entries:
   - name: bounty-item-lemo
@@ -235,7 +235,7 @@
 
 - type: cargoBounty
   id: BountyLime
-  reward: 6000
+  reward: 10000
   description: bounty-description-lime
   idPrefix: CC
   entries:
