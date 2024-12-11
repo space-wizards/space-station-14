@@ -1,14 +1,17 @@
 using Content.Server.Planktonics;
-using Robust.Shared.Random;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Components;
+using Robust.Shared.Random;
+using System;
+using System.Collections.Generic;
 
 namespace Content.Shared.Planktonics
 {
     public sealed class PlanktonGenerationSystem : EntitySystem
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -17,32 +20,47 @@ namespace Content.Shared.Planktonics
 
         private void OnPlanktonCompInit(EntityUid uid, PlanktonComponent component, ComponentInit args)
         {
-                    var random = new Random();
-                    var reagentId = Solution.GetPrimaryReagentId();
+            var random = new Random();
+            var reagentId = component.ReagentId.ToString();
 
-                    component.ReagentId = reagentId;
+            component.ReagentId = reagentId;
 
-                    if (_prototypeManager.TryIndex<ReagentPrototype>(prototypeId, out var reagentPrototype))
-                    {
-                        if (!reagentId == "SeaWater")
-                        {
-                            Log.Error("The plankton fucking died.");
-                        }
-                    }
-                    
-    // Generate 2-3 random characteristics by choosing a small number of random flags
-    int numCharacteristics = random.Next(2, 4);
-    var possibleCharacteristics = Enum.GetValues<PlanktonComponent.PlanktonCharacteristics>();
-    var selectedCharacteristics = new HashSet<PlanktonComponent.PlanktonCharacteristics>();
+            // Check if the reagent is SeaWater
+            if (reagentId != "SeaWater")
+            {
+                Log.Error("The plankton fucking died.");
+            }
 
-    while (selectedCharacteristics.Count < numCharacteristics)
-    {
-        var randomCharacteristic = (PlanktonComponent.PlanktonCharacteristics)possibleCharacteristics.GetValue(random.Next(possibleCharacteristics.Length));
-        selectedCharacteristics.Add(randomCharacteristic);
-    }
+            // Randomly generate plankton name
+            var firstName = (PlanktonComponent.PlanktonFirstName)random.Next(Enum.GetValues<PlanktonComponent.PlanktonFirstName>().Length);
+            var secondName = (PlanktonComponent.PlanktonSecondName)random.Next(Enum.GetValues<PlanktonComponent.PlanktonSecondName>().Length);
+            component.Name = new PlanktonComponent.PlanktonName(firstName.ToString(), secondName.ToString());
+            
+            // Log the generated plankton name
+            Log.Info($"Plankton species: {component.Name}");
 
-            Log.Error($"Plankton Initialized: Diet: {component.Diet}, Characteristics: {component.Characteristics}, Living inside: {component.ReagentId}");
+            // Generate 2-3 random characteristics
+            int numCharacteristics = random.Next(2, 4);  // Randomly pick 2-3 characteristics
+            var possibleCharacteristics = Enum.GetValues(typeof(PlanktonComponent.PlanktonCharacteristics)); // Get enum values
+            var selectedCharacteristics = new HashSet<PlanktonComponent.PlanktonCharacteristics>();
 
+            while (selectedCharacteristics.Count < numCharacteristics)
+            {
+                var randomCharacteristic = (PlanktonComponent.PlanktonCharacteristics)possibleCharacteristics.GetValue(random.Next(possibleCharacteristics.Length));
+                selectedCharacteristics.Add(randomCharacteristic);
+            }
+
+            // Assign the selected characteristics to the plankton component
+            component.Characteristics = 0; // Initialize the characteristics to 0
+            foreach (var characteristic in selectedCharacteristics)
+            {
+                component.Characteristics |= characteristic;
+            }
+
+            // Log the plankton characteristics
+            Log.Info($"Plankton Initialized: Diet: {component.Diet}, Characteristics: {component.Characteristics}, Living inside: {component.ReagentId}");
+
+            // Handle plankton interactions
             PlanktonInteraction(uid);
         }
 
@@ -54,11 +72,17 @@ namespace Content.Shared.Planktonics
                 return;
             }
 
+            // Check for specific characteristics
+            CheckPlanktonCharacteristics(component);
+        }
+
+        private void CheckPlanktonCharacteristics(PlanktonComponent component)
+        {
             if ((component.Characteristics & PlanktonComponent.PlanktonCharacteristics.Aggressive) != 0)
             {
                 Log.Error("Plankton is aggressive");
             }
-          
+
             if ((component.Characteristics & PlanktonComponent.PlanktonCharacteristics.Bioluminescent) != 0)
             {
                 Log.Error("Plankton is bioluminescent");
