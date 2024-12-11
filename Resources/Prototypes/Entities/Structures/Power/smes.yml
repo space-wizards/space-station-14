@@ -112,7 +112,7 @@
 - type: entity
   parent: BaseSMES
   id: SMESAdvanced
-  suffix: Advanced, 15MJ
+  suffix: Advanced, 16MJ
   name: advanced SMES
   description: A high-capacity superconducting magnetic energy storage (SMES) unit. This one boasts a larger capacity for powering stations.
   components:
