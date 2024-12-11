@@ -13,6 +13,47 @@ namespace Content.Server.Connection;
 // Handles checking/warning if the connecting IP address is sus.
 public sealed partial class ConnectionManager
 {
+    [Dependency] private readonly IHttpClientHolder _http = default!;
+
+    public struct Ratelimited
+    {
+        public static bool Minute { get; set; }
+        public static bool Day { get; set; }
+    }
+    public struct CurrentRequests
+    {
+        public static int Day { get; set; }
+        public static int Minute { get; set; }
+    }
+    public struct LastRatelimited
+    {
+        public static TimeSpan Day;
+        public static TimeSpan Minute;
+    }
+
+    private bool _limitHasBeenHandled;
+
+    private TimeSpan _nextClean;
+
+    private int _failedRequests;
+    private TimeSpan _releasePeriod;
+
+    // CCVars
+    private string? _contactEmail;
+    private string? _baseUrl;
+    private string? _flags;
+    private bool _rejectUnknown;
+    private bool _rejectBad;
+    private bool _rejectLimited;
+    private bool _alertAdminReject;
+    private int _requestLimitMinute;
+    private int _requestLimitDay;
+    private int _backoffSeconds;
+    private TimeSpan _cacheDays;
+    private TimeSpan _exemptPlaytime;
+    private float _rating;
+    private float _alertAdminWarn;
+
     private void InitializeIPIntel()
     {
         _cfg.OnValueChanged(CCVars.GameIPIntelEmail, b => _contactEmail = b, true);
@@ -30,39 +71,6 @@ public sealed partial class ConnectionManager
         _cfg.OnValueChanged(CCVars.GameIPIntelAlertAdminReject, b => _alertAdminReject = b, true);
         _cfg.OnValueChanged(CCVars.GameIPIntelAlertAdminWarnRating, b => _alertAdminWarn = b, true);
     }
-
-    [Dependency] private readonly IHttpClientHolder _http = default!;
-
-    private bool _ratelimitedMinute;
-    private bool _ratelimitedDay;
-    private int _currentRequestsDay;
-    private int _currentRequestsMinute;
-    private TimeSpan _lastRatelimitedDay;
-    private TimeSpan _lastRatelimitedMinute;
-    private bool _limitHasBeenHandled;
-
-    private float _score;
-
-    private TimeSpan _nextClean;
-
-    private int _failedRequests;
-    private TimeSpan _releasePeriod;
-
-    // CCVars, they are initialized in ConnectionManager.cs
-    private string? _contactEmail;
-    private string? _baseUrl;
-    private string? _flags;
-    private bool _rejectUnknown;
-    private bool _rejectBad;
-    private bool _rejectLimited;
-    private bool _alertAdminReject;
-    private int _requestLimitMinute;
-    private int _requestLimitDay;
-    private int _backoffSeconds;
-    private TimeSpan _cacheDays;
-    private TimeSpan _exemptPlaytime;
-    private float _rating;
-    private float _alertAdminWarn;
 
     private async Task<(bool IsBad, string Reason)> IsVpnOrProxy(NetConnectingArgs e)
     {
@@ -85,12 +93,12 @@ public sealed partial class ConnectionManager
         }
 
         var ip = e.IP.Address;
+        float score;
 
         // Is this a local ip address?
         if (IsAddressReservedIpv4(ip) || IsAddressReservedIpv6(ip))
         {
-            _sawmill.Warning($"{e.UserName} joined using a local address. Do you need IPIntel? Or is something terribly misconfigured on your server?" +
-                             $" Trusting this connection.");
+            _sawmill.Warning($"{e.UserName} joined using a local address. Do you need IPIntel? Or is something terribly misconfigured on your server? Trusting this connection.");
             return (false, string.Empty);
         }
 
@@ -103,15 +111,15 @@ public sealed partial class ConnectionManager
             // Skip to score check if result is older than _cacheDays
             if (DateTime.UtcNow - query.Time <= _cacheDays)
             {
-                _score = query.Score;
-                return await ScoreCheck(_score, e);
+                score = query.Score;
+                return ScoreCheck(score, e);
             }
         }
 
         // Check our api limits. If we are ratelimited we back out.
         HandleRatelimit();
 
-        if (_ratelimitedMinute || _ratelimitedDay || CheckSuddenRateLimit())
+        if (Ratelimited.Minute || Ratelimited.Day || CheckSuddenRateLimit())
             return _rejectLimited ? (true, Loc.GetString("ipintel-server-ratelimited")) : (false, string.Empty);
 
         // Ensure our contact email is good to use.
@@ -121,8 +129,8 @@ public sealed partial class ConnectionManager
             return _rejectUnknown ? (true, Loc.GetString("generic-misconfigured")) : (false, string.Empty);
         }
 
-        _currentRequestsDay++;
-        _currentRequestsMinute++;
+        CurrentRequests.Day++;
+        CurrentRequests.Minute++;
         // Info about flag B: https://getipintel.net/free-proxy-vpn-tor-detection-api/#flagsb
         // TLDR: We don't care about knowing if a connection is compromised.
         // We just want to know if it's a vpn. This also speeds up the request by quite a bit. (A full scan can take 200ms to 5 seconds. This will take at most 120ms)
@@ -130,19 +138,19 @@ public sealed partial class ConnectionManager
 
         if (request.StatusCode == HttpStatusCode.TooManyRequests)
         {
-            _sawmill.Warning("We hit the IPIntel request limit at some point.");
+            _sawmill.Warning($"We hit the IPIntel request limit at some point. (Current limit count: Minute: {CurrentRequests.Minute} Day: {CurrentRequests.Day})");
             CalculateSuddenRatelimit();
             return _rejectLimited ? (true, Loc.GetString("ipintel-server-ratelimited")) : (false, string.Empty);
         }
 
         var response = await request.Content.ReadAsStringAsync();
-        _score = Parse.Float(response);
+        score = Parse.Float(response);
 
         if (request.StatusCode == HttpStatusCode.OK)
         {
             if (query == null || DateTime.UtcNow - query.Time >= _cacheDays)
-                await Task.Run(() => SaveCache(ip, _score));
-            return await ScoreCheck(_score, e);
+                await Task.Run(() => SaveCache(ip, score));
+            return ScoreCheck(score, e);
         }
 
         // Something went wrong! Let's see if it's an error we know about
@@ -172,7 +180,7 @@ public sealed partial class ConnectionManager
     private void CalculateSuddenRatelimit()
     {
         _failedRequests++;
-        _releasePeriod = TimeSpan.FromMinutes(_failedRequests * _backoffSeconds);
+        _releasePeriod = TimeSpan.FromSeconds(_failedRequests * _backoffSeconds);
     }
 
     private static readonly Dictionary<string, string> ErrorMessages = new()
@@ -201,13 +209,13 @@ public sealed partial class ConnectionManager
     private void HandleRatelimit()
     {
         // Oh my god this is terrible
-        if (_currentRequestsDay >= _requestLimitDay)
+        if (CurrentRequests.Day >= _requestLimitDay)
         {
-            if (ShouldLiftRateLimit(_ratelimitedDay, _lastRatelimitedDay, TimeSpan.FromDays(1)))
+            if (ShouldLiftRateLimit(Ratelimited.Day, LastRatelimited.Day, TimeSpan.FromDays(1)))
             {
                 _sawmill.Info("IPIntel daily rate limit lifted. We are back to normal.");
-                _ratelimitedDay = false;
-                _currentRequestsDay = 0;
+                Ratelimited.Day = false;
+                CurrentRequests.Day = 0;
                 _limitHasBeenHandled = false;
                 return;
             }
@@ -216,17 +224,17 @@ public sealed partial class ConnectionManager
                 return;
 
             _sawmill.Warning($"We just hit our last daily IPIntel limit ({_requestLimitDay})");
-            _ratelimitedDay = true;
+            Ratelimited.Day = true;
             _limitHasBeenHandled = true;
-            _lastRatelimitedDay = _gameTiming.RealTime;
+            LastRatelimited.Day = _gameTiming.RealTime;
         }
-        else if (_currentRequestsMinute >= _requestLimitMinute)
+        else if (CurrentRequests.Minute >= _requestLimitMinute)
         {
-            if (ShouldLiftRateLimit(_ratelimitedMinute, _lastRatelimitedMinute, TimeSpan.FromMinutes(1)))
+            if (ShouldLiftRateLimit(Ratelimited.Minute, LastRatelimited.Minute, TimeSpan.FromMinutes(1)))
             {
                 _sawmill.Info("IPIntel minute rate limit lifted. We are back to normal.");
-                _ratelimitedMinute = false;
-                _currentRequestsMinute = 0;
+                Ratelimited.Minute = false;
+                CurrentRequests.Minute = 0;
                 _limitHasBeenHandled = false;
                 return;
             }
@@ -235,9 +243,9 @@ public sealed partial class ConnectionManager
                 return;
 
             _sawmill.Warning($"We just hit our last minute IPIntel limit ({_requestLimitMinute}).");
-            _ratelimitedMinute = true;
+            Ratelimited.Minute = true;
             _limitHasBeenHandled = true;
-            _lastRatelimitedMinute = _gameTiming.RealTime;
+            LastRatelimited.Minute = _gameTiming.RealTime;
         }
     }
 
@@ -247,7 +255,7 @@ public sealed partial class ConnectionManager
         return currentlyRatelimited && _gameTiming.RealTime >= lastRatelimited + liftingTime;
     }
 
-    private async Task<(bool, string Empty)> ScoreCheck(float score, NetConnectingArgs e)
+    private (bool, string Empty) ScoreCheck(float score, NetConnectingArgs e)
     {
         var decisionIsReject = score > _rating;
 
@@ -276,13 +284,13 @@ public sealed partial class ConnectionManager
         await _db.UpsertIPIntelCache(DateTime.UtcNow, ip, score);
     }
 
-    public async Task Update()
+    public void Update()
     {
         if (_gameTiming.RealTime >= _nextClean)
         {
             // Fuck it we hardcode
             _nextClean = _gameTiming.RealTime + TimeSpan.FromMinutes(15);
-            await _db.CleanIPIntelCache(_cacheDays);
+            _db.CleanIPIntelCache(_cacheDays);
         }
     }
 

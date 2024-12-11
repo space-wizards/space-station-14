@@ -1007,7 +1007,6 @@ namespace Content.Server.Database
 
         public Task<IPIntelCache?> GetIPIntelCache(IPAddress ip)
         {
-            DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.GetIPIntelCache(ip));
         }
 

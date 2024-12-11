@@ -969,7 +969,7 @@ namespace Content.Server.Database
          * Reservation by commenting out the value is likely sufficient for this purpose, but may impact projects which depend on SS14 like SS14.Admin.
          */
         BabyJail = 4,
-        // Results from rejected connections with external API checking tools
+        /// Results from rejected connections with external API checking tools
         IPChecks = 5,
     }
 

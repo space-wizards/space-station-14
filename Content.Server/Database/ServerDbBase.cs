@@ -1746,6 +1746,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                 existing.Score = score;
             }
 
+
             await db.DbContext.SaveChangesAsync();
             return true;
         }
