@@ -55,7 +55,7 @@ public sealed partial class ToggleableGhostRoleComponent : Component
     /// A list of mind roles that will be added to the entity's mind
     /// </summary>
     [DataField]
-    public List<ProtoId<EntityPrototype>> MindRoles;
+    public List<EntProtoId> MindRoles;
 
     /// <summary>
     /// The displayed name of the verb to wipe the controlling player

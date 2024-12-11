@@ -53,7 +53,7 @@ public abstract class SharedRoleSystem : EntitySystem
     /// <param name="mind">If the mind component is provided, it will be checked if it belongs to the mind entity</param>
     /// <param name="silent">If true, no briefing will be generated upon receiving the mind role</param>
     public void MindAddRoles(EntityUid mindId,
-        List<ProtoId<EntityPrototype>>? roles,
+        List<EntProtoId>? roles,
         MindComponent? mind = null,
         bool silent = false)
     {
@@ -74,7 +74,7 @@ public abstract class SharedRoleSystem : EntitySystem
     /// <param name="mind">If the mind component is provided, it will be checked if it belongs to the mind entity</param>
     /// <param name="silent">If true, no briefing will be generated upon receiving the mind role</param>
     public void MindAddRole(EntityUid mindId,
-        ProtoId<EntityPrototype> protoId,
+        EntProtoId protoId,
         MindComponent? mind = null,
         bool silent = false)
     {
@@ -117,7 +117,7 @@ public abstract class SharedRoleSystem : EntitySystem
     ///     Creates a Mind Role
     /// </summary>
     private void MindAddRoleDo(EntityUid mindId,
-        ProtoId<EntityPrototype> protoId,
+        EntProtoId protoId,
         MindComponent? mind = null,
         bool silent = false,
         string? jobPrototype = null)

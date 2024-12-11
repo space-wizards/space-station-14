@@ -76,7 +76,7 @@ public sealed partial class GhostRoleComponent : Component
     /// The mind roles that will be added to the mob's mind entity
     /// </summary>
     [DataField, Access(typeof(GhostRoleSystem), Other = AccessPermissions.ReadWriteExecute)] // Don't make eye contact
-    public List<ProtoId<EntityPrototype>> MindRoles = new List<ProtoId<EntityPrototype>>(){"MindRoleGhostRoleNeutral"};
+    public List<EntProtoId> MindRoles = new(){"MindRoleGhostRoleNeutral"};
 
     [DataField]
     public bool AllowSpeech { get; set; } = true;
