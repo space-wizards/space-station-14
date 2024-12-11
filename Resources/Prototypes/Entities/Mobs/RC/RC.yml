@@ -95,6 +95,7 @@
     allowSelfRepair: false
   - type: Item
     size: Small
+    examineSize: Tiny # Forgive me oh code gods, I have no idea how else to make the mouse Tiny and keep the tests not angry. (And hardcoding the mouse into the tests sounds like a terrible idea)
     shape:
     - 0,0,0,1
   - type: StatusEffects
