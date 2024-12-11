@@ -17,7 +17,7 @@ namespace Content.Shared.Storage.Components
     ///     Unlike <see cref="ItemSlotsComponent"/> it has logic for opening and closing
     ///     the stash.
     /// </summary>
-    [RegisterComponent, NetworkedComponent]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     [Access(typeof(SecretStashSystem))]
     public sealed partial class SecretStashComponent : Component
     {
@@ -46,6 +46,12 @@ namespace Content.Shared.Storage.Components
         /// </summary>
         [DataField]
         public SoundSpecifier? TryRemoveItemSound;
+
+        /// <summary>
+        ///     If true, verbs will appear to help interact with the stash.
+        /// </summary>
+        [DataField, AutoNetworkedField]
+        public bool HasVerbs = true;
 
         /// <summary>
         ///     The name of the secret stash. For example "the toilet cistern".

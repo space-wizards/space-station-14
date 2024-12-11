@@ -36,9 +36,8 @@ public sealed class SecretStashSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<SecretStashComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<SecretStashComponent, DestructionEventArgs>(OnDestroyed);
-        SubscribeLocalEvent<SecretStashComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(ToolOpenableSystem), typeof(AnchorableSystem) });
         SubscribeLocalEvent<SecretStashComponent, GotReclaimedEvent>(OnReclaimed);
-        SubscribeLocalEvent<SecretStashComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(ToolOpenableSystem) });
+        SubscribeLocalEvent<SecretStashComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(ToolOpenableSystem), typeof(AnchorableSystem) });
         SubscribeLocalEvent<SecretStashComponent, InteractHandEvent>(OnInteractHand);
         SubscribeLocalEvent<SecretStashComponent, GetVerbsEvent<InteractionVerb>>(OnGetVerb);
     }
@@ -144,7 +143,7 @@ public sealed class SecretStashSystem : EntitySystem
 
     private void OnGetVerb(Entity<SecretStashComponent> entity, ref GetVerbsEvent<InteractionVerb> args)
     {
-        if (!args.CanInteract || !args.CanAccess)
+        if (!args.CanInteract || !args.CanAccess || !entity.Comp.HasVerbs)
             return;
 
         var user = args.User;
