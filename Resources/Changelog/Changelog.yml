@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: erohrs2
-  changes:
-  - message: Dinnerware Vending Machine access changed from "Service" to "Kitchen".
-    type: Tweak
-  id: 7199
-  time: '2024-08-24T15:56:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31225
 - author: DevilishMilk
   changes:
   - message: Moths and mothroaches are now able to eat bandanas.
@@ -3910,3 +3903,18 @@
   id: 7698
   time: '2024-12-11T15:58:02.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33384
+- author: BramvanZijp
+  changes:
+  - message: The Head of Security's Energy Shotgun has regained its ability to self
+      recharge, but only if the weapon has not been discharged in the last 10 seconds.
+    type: Add
+  - message: The Head of Security's Energy Shotgun now has a varying amount of shots
+      depending on the firing mode.
+    type: Tweak
+  - message: Energy based weapons with differing energy consumption depending on the
+      fire-mode will now update the ammo counter on the HUD when switching between
+      fire-modes.
+    type: Fix
+  id: 7699
+  time: '2024-12-11T16:21:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32104
