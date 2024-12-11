@@ -99,6 +99,10 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField]
         public bool MetamorphicChangeColor { get; private set; } = true;
 
+        [DataField]
+        public List<PlanktonComponent> PlanktonCultures { get; private set; } = new List<PlanktonComponent>();
+
+
         /// <summary>
         /// If this reagent is part of a puddle is it slippery.
         /// </summary>
