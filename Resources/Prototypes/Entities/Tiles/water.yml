@@ -1,7 +1,7 @@
 - type: entity
   id: FloorWaterEntity
   name: water
-  description: A real thirst quencher.
+  description: Salty.
   placement:
     mode: SnapgridCenter
     snap:
@@ -28,7 +28,7 @@
     solution: tank
     generated:
       reagents:
-      - ReagentId: Water
+      - ReagentId: SeaWater
         Quantity: 100
   - type: DrainableSolution
     solution: pool

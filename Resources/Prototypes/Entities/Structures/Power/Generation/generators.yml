@@ -371,6 +371,8 @@
   - type: ContainerContainer
     containers:
       Artifact: !type:ContainerSlot
+  - type: Anchorable
+    delay: 9999
   - type: Nuke
     explosionType: Cryo
     maxIntensity: 100

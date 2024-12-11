@@ -57,6 +57,7 @@ entities:
     - type: SpreaderGrid
     - type: Shuttle
     - type: GridPathfinding
+    - type: ProtectedGrid
     - type: DecalGrid
       chunkCollection:
         version: 2

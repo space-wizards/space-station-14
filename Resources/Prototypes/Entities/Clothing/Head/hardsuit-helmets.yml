@@ -9,7 +9,7 @@
 - type: entity
   parent: ClothingHeadHardsuitBase
   id: ClothingHeadHelmetHardsuitBasic
-  name: basic pressure suit helmet
+  name: basic pressure suit
   description: A basic-looking pressure suit helmet that provides minor protection against the nightmares of the sea.
   components:
   - type: Sprite
@@ -112,8 +112,8 @@
       - state: equipped-head-unshaded
         shader: unshaded
   - type: PressureProtection
-    highPressureMultiplier: 1000
-    lowPressureMultiplier: 0.1
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
   - type: StaticViewer
 
 #Salvage Hardsuit
@@ -128,8 +128,8 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/salvage.rsi
   - type: PressureProtection
-    highPressureMultiplier: 1000
-    lowPressureMultiplier: 0.1
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
   - type: PointLight
     radius: 7
     energy: 3
@@ -147,8 +147,8 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/maxim.rsi
   - type: PressureProtection
-    highPressureMultiplier: 1000
-    lowPressureMultiplier: 0.1
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
   - type: Armor
     modifiers:
       coefficients:
@@ -171,8 +171,8 @@
   - type: PointLight
     color: "#ffeead"
   - type: PressureProtection
-    highPressureMultiplier: 0.525
-    lowPressureMultiplier: 0.1
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
   - type: Armor
     modifiers:
       coefficients:
@@ -204,8 +204,8 @@
         Radiation: 0.90
         Caustic: 0.90
   - type: PressureProtection
-    highPressureMultiplier: 0.6
-    lowPressureMultiplier: 0.1
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
 
 #Warden's Hardsuit
 - type: entity
@@ -221,8 +221,8 @@
   - type: PointLight
     color: "#ffeead"
   - type: PressureProtection
-    highPressureMultiplier: 0.525
-    lowPressureMultiplier: 0.1
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
   - type: Armor
     modifiers:
       coefficients:
@@ -244,7 +244,7 @@
     sprite: Clothing/Head/Hardsuits/capspace.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.3
-    lowPressureMultiplier: 0.1
+    lowPressureMultiplier: 1000
 
 #Chief Engineer's Hardsuit
 - type: entity
@@ -260,7 +260,7 @@
   - type: PointLight
     color: "#daffad"
   - type: PressureProtection
-    highPressureMultiplier: 0.08
+    highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
   - type: FireProtection
     reduction: 0.2
@@ -279,7 +279,7 @@
   - type: PointLight
     color: "#adf1ff"
   - type: PressureProtection
-    highPressureMultiplier: 0.6
+    highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
 
 #Research Director's Hardsuit
@@ -296,7 +296,7 @@
   - type: PointLight
     color: "#d6adff"
   - type: PressureProtection
-    highPressureMultiplier: 0.60
+    highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
 
 #Head of Security's hardsuit
@@ -313,7 +313,7 @@
   - type: PointLight
     color: "#ffeead"
   - type: PressureProtection
-    highPressureMultiplier: 0.45
+    highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
   - type: Armor
     modifiers:
@@ -335,7 +335,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/luxury.rsi
   - type: PressureProtection
-    highPressureMultiplier: 0.525
+    highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
   - type: PointLight
     radius: 7
@@ -356,7 +356,7 @@
   - type: PointLight
     color: green
   - type: PressureProtection
-    highPressureMultiplier: 0.08
+    highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
   - type: Armor
     modifiers:
@@ -380,7 +380,7 @@
   - type: PointLight
     color: green
   - type: PressureProtection
-    highPressureMultiplier: 0.08
+    highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
   - type: Armor
     modifiers:
@@ -404,7 +404,7 @@
   - type: PointLight
     color: red
   - type: PressureProtection
-    highPressureMultiplier: 0.08
+    highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.005
@@ -432,7 +432,7 @@
   - type: PointLight
     color: green
   - type: PressureProtection
-    highPressureMultiplier: 0.08
+    highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
   - type: Armor
     modifiers:
@@ -518,7 +518,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
-  - type: StaticViewer
 
 #Pirate Captain Hardsuit
 - type: entity
