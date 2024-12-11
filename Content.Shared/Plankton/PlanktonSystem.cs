@@ -39,6 +39,16 @@ namespace Content.Shared.Planktonics
         while (selectedCharacteristics.Count < numCharacteristics)
         {
             var randomCharacteristic = (PlanktonComponent.PlanktonCharacteristics)possibleCharacteristics.GetValue(random.Next(possibleCharacteristics.Length));
+             if ((selectedCharacteristics.Contains(PlanktonComponent.PlanktonCharacteristics.Cryophilic) &&
+                  selectedCharacteristics.Contains(PlanktonComponent.PlanktonCharacteristics.Pyrophilic)) ||
+                (randomCharacteristic == PlanktonComponent.PlanktonCharacteristics.Cryophilic &&
+                 selectedCharacteristics.Contains(PlanktonComponent.PlanktonCharacteristics.Pyrophilic)) ||
+                (randomCharacteristic == PlanktonComponent.PlanktonCharacteristics.Pyrophilic &&
+                 selectedCharacteristics.Contains(PlanktonComponent.PlanktonCharacteristics.Cryophilic)))
+            {
+                Log.Error("Dissallowed characteristic mix: Cryophilic and Pyrophilic cannot coexist.");
+                continue; // Exit early if there is a conflict
+            }
             selectedCharacteristics.Add(randomCharacteristic);
         }
 
