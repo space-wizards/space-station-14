@@ -43,7 +43,8 @@ public sealed partial class SensorInfo : BoxContainer
             var label = new RichTextLabel();
 
             var fractionGas = amount / data.TotalMoles;
-            label.SetMarkup(Loc.GetString("air-alarm-ui-gases-indicator", ("gas", $"{gas}"),
+            label.SetMarkup(Loc.GetString("air-alarm-ui-gases-indicator",
+                ("gas", $"{gas}"),
                 ("color", AirAlarmWindow.ColorForThreshold(fractionGas, data.GasThresholds[gas])),
                 ("amount", $"{amount:0.####}"),
                 ("percentage", $"{(100 * fractionGas):0.##}")));
@@ -53,9 +54,9 @@ public sealed partial class SensorInfo : BoxContainer
             var threshold = data.GasThresholds[gas];
             var gasThresholdControl = new ThresholdControl(Loc.GetString($"air-alarm-ui-thresholds-gas-title", ("gas", $"{gas}")), threshold, AtmosMonitorThresholdType.Gas, gas, 100);
             gasThresholdControl.Margin = new Thickness(20, 2, 2, 2);
-            gasThresholdControl.ThresholdDataChanged += (type, threshold, arg3) =>
+            gasThresholdControl.ThresholdDataChanged += (type, alarmThreshold, arg3) =>
             {
-                OnThresholdUpdate!(_address, type, threshold, arg3);
+                OnThresholdUpdate!(_address, type, alarmThreshold, arg3);
             };
 
             _gasThresholds.Add(gas, gasThresholdControl);
@@ -64,7 +65,8 @@ public sealed partial class SensorInfo : BoxContainer
 
         _pressureThreshold = new ThresholdControl(Loc.GetString("air-alarm-ui-thresholds-pressure-title"), data.PressureThreshold, AtmosMonitorThresholdType.Pressure);
         PressureThresholdContainer.AddChild(_pressureThreshold);
-        _temperatureThreshold = new ThresholdControl(Loc.GetString("air-alarm-ui-thresholds-temperature-title"), data.TemperatureThreshold,
+        _temperatureThreshold = new ThresholdControl(Loc.GetString("air-alarm-ui-thresholds-temperature-title"),
+            data.TemperatureThreshold,
             AtmosMonitorThresholdType.Temperature);
         TemperatureThresholdContainer.AddChild(_temperatureThreshold);
 
@@ -103,7 +105,8 @@ public sealed partial class SensorInfo : BoxContainer
             }
 
             var fractionGas = amount / data.TotalMoles;
-            label.SetMarkup(Loc.GetString("air-alarm-ui-gases-indicator", ("gas", $"{gas}"),
+            label.SetMarkup(Loc.GetString("air-alarm-ui-gases-indicator",
+                ("gas", $"{gas}"),
                 ("color", AirAlarmWindow.ColorForThreshold(fractionGas, data.GasThresholds[gas])),
                 ("amount", $"{amount:0.####}"),
                 ("percentage", $"{(100 * fractionGas):0.##}")));

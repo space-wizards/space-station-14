@@ -33,6 +33,17 @@
       - id: BoxLightbulb
 
 - type: entity
+  id: CrateServiceHolidayLights
+  parent: CrateGenericSteel
+  name: holiday lights crate
+  description: Deck the halls with these festive holiday lights!
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxLighttubeHoliday
+      - id: BoxLighttubeHoliday
+
+- type: entity
   id: CrateMousetrapBoxes
   parent: CrateGenericSteel
   name: mousetraps crate
@@ -130,6 +141,7 @@
     - id: BoxFolderYellow
     - id: NewtonCradle
     - id: BoxEnvelope
+    - id: BrbSign
 
 - type: entity
   id: CrateServiceFaxMachine
