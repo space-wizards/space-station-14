@@ -760,26 +760,6 @@
 
 - type: latheRecipe
   parent: BaseCommandHatRecipe
-  id: ClothingHeadHatBeretHoS
-  result: ClothingHeadHatBeretHoS
-
-- type: latheRecipe
-  parent: BaseCommandHatRecipe
-  id: ClothingHeadHatHoshat
-  result: ClothingHeadHatHoshat
-
-- type: latheRecipe
-  parent: BaseCommandHatRecipe
-  id: ClothingHeadHatWarden
-  result: ClothingHeadHatWarden
-
-- type: latheRecipe
-  parent: BaseCommandHatRecipe
-  id: ClothingHeadHatBeretWarden
-  result: ClothingHeadHatBeretWarden
-
-- type: latheRecipe
-  parent: BaseCommandHatRecipe
   id: ClothingHeadHatHopcap
   result: ClothingHeadHatHopcap
 
@@ -819,11 +799,6 @@
   parent: BaseHatRecipe
   id: ClothingHeadHatBeretBrigmedic
   result: ClothingHeadHatBeretBrigmedic
-
-- type: latheRecipe
-  parent: BaseHatRecipe
-  id: ClothingHeadHatBeretSecurity
-  result: ClothingHeadHatBeretSecurity
 
 - type: latheRecipe
   parent: BaseHatRecipe
