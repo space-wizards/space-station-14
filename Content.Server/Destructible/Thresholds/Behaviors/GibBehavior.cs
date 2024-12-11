@@ -1,4 +1,6 @@
+using Content.Server.Body.Systems;
 using Content.Shared.Body.Components;
+using Content.Shared.Destructible.Thresholds.Behaviors;
 using JetBrains.Annotations;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors
@@ -9,11 +11,14 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
     {
         [DataField("recursive")] private bool _recursive = true;
 
-        public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
+        public void Execute(EntityUid owner,
+            IDependencyCollection collection,
+            EntityManager entManager,
+            EntityUid? cause = null)
         {
-            if (system.EntityManager.TryGetComponent(owner, out BodyComponent? body))
+            if (entManager.TryGetComponent(owner, out BodyComponent? body))
             {
-                system.BodySystem.GibBody(owner, _recursive, body);
+                entManager.System<BodySystem>().GibBody(owner, _recursive, body);
             }
         }
     }

@@ -9,6 +9,7 @@ using Content.Server.NPC.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Administration;
 using Content.Shared.Climbing.Components;
+using Content.Shared.Destructible;
 using Content.Shared.Doors.Components;
 using Content.Shared.NPC;
 using Robust.Server.Player;

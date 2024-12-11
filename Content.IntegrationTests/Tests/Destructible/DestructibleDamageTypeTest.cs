@@ -1,6 +1,6 @@
-using Content.Server.Destructible.Thresholds.Triggers;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Destructible.Thresholds.Triggers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using static Content.IntegrationTests.Tests.Destructible.DestructibleTestPrototypes;
@@ -25,7 +25,6 @@ namespace Content.IntegrationTests.Tests.Destructible
             var protoManager = server.ResolveDependency<IPrototypeManager>();
 
             EntityUid sDestructibleEntity = default;
-            DamageableComponent sDamageableComponent = null;
             TestDestructibleListenerSystem sTestThresholdListenerSystem = null;
             DamageableSystem sDamageableSystem = null;
 
@@ -34,7 +33,6 @@ namespace Content.IntegrationTests.Tests.Destructible
                 var coordinates = testMap.GridCoords;
 
                 sDestructibleEntity = sEntityManager.SpawnEntity(DestructibleDamageTypeEntityId, coordinates);
-                sDamageableComponent = sEntityManager.GetComponent<DamageableComponent>(sDestructibleEntity);
                 sTestThresholdListenerSystem = sEntitySystemManager.GetEntitySystem<TestDestructibleListenerSystem>();
                 sTestThresholdListenerSystem.ThresholdsReached.Clear();
                 sDamageableSystem = sEntitySystemManager.GetEntitySystem<DamageableSystem>();

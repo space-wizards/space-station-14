@@ -1,3 +1,4 @@
+using Content.Shared.Destructible.Thresholds.Behaviors;
 using Content.Shared.Popups;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors;
@@ -20,11 +21,14 @@ public sealed partial class PopupBehavior : IThresholdBehavior
     [DataField("popupType")]
     public PopupType PopupType;
 
-    public void Execute(EntityUid uid, DestructibleSystem system, EntityUid? cause = null)
+    public void Execute(EntityUid uid,
+        IDependencyCollection collection,
+        EntityManager entManager,
+        EntityUid? cause = null)
     {
-        var popup = system.EntityManager.System<SharedPopupSystem>();
+        var popup = entManager.System<SharedPopupSystem>();
         // popup is placed at coords since the entity could be deleted after, no more popup then
-        var coords = system.EntityManager.GetComponent<TransformComponent>(uid).Coordinates;
+        var coords = entManager.GetComponent<TransformComponent>(uid).Coordinates;
         popup.PopupCoordinates(Loc.GetString(Popup), coords, PopupType);
     }
 }

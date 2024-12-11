@@ -1,6 +1,6 @@
 using Content.Shared.Damage;
 
-namespace Content.Server.Destructible.Thresholds.Triggers
+namespace Content.Shared.Destructible.Thresholds.Triggers
 {
     /// <summary>
     ///     A trigger that will activate when the amount of damage received
@@ -13,10 +13,10 @@ namespace Content.Server.Destructible.Thresholds.Triggers
         /// <summary>
         ///     The amount of damage at which this threshold will trigger.
         /// </summary>
-        [DataField("damage", required: true)]
-        public int Damage { get; set; } = default!;
+        [DataField(required: true)]
+        public int Damage = default!;
 
-        public bool Reached(DamageableComponent damageable, DestructibleSystem system)
+        public bool Reached(DamageableComponent damageable, EntityManager entManager)
         {
             return damageable.TotalDamage >= Damage;
         }
