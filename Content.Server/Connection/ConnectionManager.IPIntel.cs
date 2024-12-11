@@ -148,8 +148,7 @@ public sealed partial class ConnectionManager
 
         if (request.StatusCode == HttpStatusCode.OK)
         {
-            if (query == null || DateTime.UtcNow - query.Time >= _cacheDays)
-                await Task.Run(() => SaveCache(ip, score));
+            await Task.Run(() => SaveCache(ip, score));
             return ScoreCheck(score, e);
         }
 
