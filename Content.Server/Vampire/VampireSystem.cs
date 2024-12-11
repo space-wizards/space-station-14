@@ -77,6 +77,7 @@ public sealed partial class VampireSystem : EntitySystem
     [Dependency] private readonly MetabolizerSystem _metabolism = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly SharedVampireSystem _vampire = default!;
+    [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
 
     public override void Initialize()
     {
@@ -255,7 +256,7 @@ public sealed partial class VampireSystem : EntitySystem
         if (component.actionEntities.TryGetValue("ActionVampireCloakOfDarkness", out entity) && !HasComp<VampireSealthComponent>(uid) && _vampire.GetBloodEssence(uid) < FixedPoint2.New(300))
             component.actionEntities.Remove("ActionVampireCloakOfDarkness");
         
-        UpdateAbilities(uid, component , VampireComponent.MutationsActionPrototype, null , bloodEssence >= FixedPoint2.New(50) && !HasComp<VampireSealthComponent>(uid));
+        UpdateAbilities(uid, component , VampireComponent.MutationsActionPrototype, "MutationsMenu" , bloodEssence >= FixedPoint2.New(50) && !HasComp<VampireSealthComponent>(uid));
         
         //Hemomancer
         
@@ -310,6 +311,7 @@ public sealed partial class VampireSystem : EntitySystem
                 if (TryComp(uid, out ActionsComponent? comp))
                 {
                     _action.RemoveAction(uid, _entityManager.GetEntity(abilityInfo.Action), comp);
+                    _actionContainer.RemoveAction(_entityManager.GetEntity(abilityInfo.Action));
                     component.actionEntities.Remove(actionId);
                     if (powerId != null && component.UnlockedPowers.ContainsKey(powerId))
                         component.UnlockedPowers.Remove(powerId);

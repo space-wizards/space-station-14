@@ -5,6 +5,9 @@
 
 - type: vampirePower
   id: ToggleFangs
+  
+- type: vampirePower
+  id: MutationsMenu
 
 - type: vampirePower
   id: DrinkBlood
