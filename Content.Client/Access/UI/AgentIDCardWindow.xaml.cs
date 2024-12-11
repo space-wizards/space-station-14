@@ -22,8 +22,11 @@ namespace Content.Client.Access.UI
         private const int JobIconColumnCount = 10;
 
         public event Action<string>? OnNameChanged;
-        public event Action<string>? OnJobChanged;
 
+        private const int MaxNumberLength = 4; // DeltaV - Same as NewChatPopup
+
+        public event Action<string>? OnJobChanged;
+        public event Action<uint>? OnNumberChanged; // DeltaV - Add event for number changes
         public event Action<ProtoId<JobIconPrototype>>? OnJobIconChanged;
 
         public AgentIDCardWindow()
@@ -37,6 +40,37 @@ namespace Content.Client.Access.UI
 
             JobLineEdit.OnTextEntered += e => OnJobChanged?.Invoke(e.Text);
             JobLineEdit.OnFocusExit += e => OnJobChanged?.Invoke(e.Text);
+
+            // DeltaV - Add handlers for number changes
+            NumberLineEdit.OnTextEntered += OnNumberEntered;
+            NumberLineEdit.OnFocusExit += OnNumberEntered;
+
+            // DeltaV - Filter to only allow digits
+            NumberLineEdit.OnTextChanged += args =>
+            {
+                if (args.Text.Length > MaxNumberLength)
+                {
+                    NumberLineEdit.Text = args.Text[..MaxNumberLength];
+                }
+
+                // Filter to digits only
+                var newText = string.Concat(args.Text.Where(char.IsDigit));
+                if (newText != args.Text)
+                    NumberLineEdit.Text = newText;
+            };
+        }
+
+        // DeltaV - Add number validation and event
+        private void OnNumberEntered(LineEdit.LineEditEventArgs args)
+        {
+            if (uint.TryParse(args.Text, out var number) && number > 0)
+                OnNumberChanged?.Invoke(number);
+        }
+
+        // DeltaV - Add setter for current number
+        public void SetCurrentNumber(uint? number)
+        {
+            NumberLineEdit.Text = number?.ToString("D4") ?? "";
         }
 
         public void SetAllowedIcons(string currentJobIconId)
