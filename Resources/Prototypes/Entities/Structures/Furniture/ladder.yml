@@ -5,24 +5,12 @@
   description: WEEEEE.
   components:
   - type: Transform
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.45"
-        density: 55
-        mask: #mouse can pass under, but I think this is can understandable by logic
-        - TableMask
-        layer:
-        - TableLayer
-  - type: Sprite
-    snapCardinals: true
   - type: Climbable
   - type: Clickable
   - type: Ladderdown
   - type: Sprite
-    sprite: Structures/Furniture/Altars/Cults/fangs.rsi
+    sprite: Structures/Furniture/ladder.rsi
+    state: down
 
 - type: entity
   id: LadderUpBase
@@ -32,20 +20,10 @@
   components:
   - type: Anchorable
   - type: Transform
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.45,-0.45,0.45,0.45"
-        density: 55
-        mask: #mouse can pass under, but I think this is can understandable by logic
-        - TableMask
-        layer:
-        - TableLayer
-  - type: Sprite
-    snapCardinals: true
   - type: Climbable
   - type: Clickable
   - type: Ladderup
+  - type: Sprite
+    sprite: Structures/Furniture/ladder.rsi
+    state: up
 
