@@ -7012,7 +7012,7 @@ entities:
       pos: -6.5,9.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -63317.902
+      secondsUntilStateChange: -63774.812
       state: Closing
 - proto: DebugAPC
   entities:
@@ -7162,6 +7162,11 @@ entities:
     components:
     - type: Transform
       pos: 1.5,10.5
+      parent: 2
+  - uid: 2257
+    components:
+    - type: Transform
+      pos: -26.5,-23.5
       parent: 2
 - proto: DefibrillatorCabinetFilled
   entities:
@@ -8151,7 +8156,7 @@ entities:
       pos: 6.5,-3.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -49474.293
+      secondsUntilStateChange: -49931.203
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -12688,6 +12693,37 @@ entities:
     - type: Transform
       pos: -31.5,-22.5
       parent: 2
+  - uid: 1912
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -33.5,-0.5
+      parent: 2
+  - uid: 2229
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -35.5,1.5
+      parent: 2
+  - uid: 2230
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -35.5,2.5
+      parent: 2
+  - uid: 2553
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -32.5,0.5
+      parent: 2
+- proto: HandheldGPSBasic
+  entities:
+  - uid: 2632
+    components:
+    - type: Transform
+      pos: -12.397064,-8.312347
+      parent: 2
 - proto: HandHeldMassScanner
   entities:
   - uid: 1731
@@ -13217,7 +13253,7 @@ entities:
         - The pump and filter in the medical bay are needed for the cryopod to function.
 
 
-        - The radiation collectors in Frank (the crab)'s chamber. You can turn them on just by clicking on them. Please be advised that the windows are rated to a higher than usual standard, and if you choose to remove and rebuild them you may need additional shielding.
+        - The radiation collectors in Frank (the crab)'s chamber. You can turn them on just by clicking on them.
 
 
         - The emitter and containment field in the shuttle bay will need to be enabled, in the same manner.
@@ -13317,6 +13353,12 @@ entities:
       parent: 2
 - proto: PlasmaWindoorSecureSecurityLocked
   entities:
+  - uid: 159
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -19.5,-9.5
+      parent: 2
   - uid: 1814
     components:
     - type: Transform
@@ -13327,12 +13369,6 @@ entities:
     components:
     - type: Transform
       pos: -18.5,-11.5
-      parent: 2
-  - uid: 1816
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -19.5,-9.5
       parent: 2
 - proto: PlasmaWindowDirectional
   entities:
@@ -13557,6 +13593,14 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -15.5,3.5
       parent: 2
+- proto: PosterLegitSafetyMothHardhat
+  entities:
+  - uid: 2231
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -13.5,-9.5
+      parent: 2
 - proto: PosterLegitSafetyMothMeth
   entities:
   - uid: 1850
@@ -13564,6 +13608,14 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: -11.5,9.5
+      parent: 2
+- proto: PosterLegitSafetyMothSSD
+  entities:
+  - uid: 2259
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -19.5,6.5
       parent: 2
 - proto: PowerCellRecharger
   entities:
@@ -13591,6 +13643,12 @@ entities:
       parent: 2
 - proto: Poweredlight
   entities:
+  - uid: 1816
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -28.5,11.5
+      parent: 2
   - uid: 1855
     components:
     - type: Transform
@@ -13913,12 +13971,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -36.5,4.5
       parent: 2
-  - uid: 1912
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -32.5,2.5
-      parent: 2
   - uid: 1913
     components:
     - type: Transform
@@ -14037,8 +14089,19 @@ entities:
       rot: 3.141592653589793 rad
       pos: -7.5,-0.5
       parent: 2
+  - uid: 2256
+    components:
+    - type: Transform
+      pos: -28.5,13.5
+      parent: 2
 - proto: PoweredlightUV
   entities:
+  - uid: 912
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -32.5,2.5
+      parent: 2
   - uid: 1934
     components:
     - type: Transform
@@ -15601,16 +15664,6 @@ entities:
       - SurveillanceCameraGeneral
       nameSet: True
       id: Engineering
-  - uid: 2139
-    components:
-    - type: Transform
-      pos: -28.5,12.5
-      parent: 2
-    - type: SurveillanceCamera
-      setupAvailableNetworks:
-      - SurveillanceCameraGeneral
-      nameSet: True
-      id: Engineering exterior
   - uid: 2140
     components:
     - type: Transform
@@ -16223,23 +16276,11 @@ entities:
       parent: 2
 - proto: WallShuttleDiagonal
   entities:
-  - uid: 2229
+  - uid: 2139
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
-      pos: -34.5,0.5
-      parent: 2
-  - uid: 2230
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -35.5,1.5
-      parent: 2
-  - uid: 2231
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -36.5,2.5
+      pos: -34.5,1.5
       parent: 2
   - uid: 2232
     components:
@@ -16386,25 +16427,10 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 5.5,5.5
       parent: 2
-  - uid: 2256
-    components:
-    - type: Transform
-      pos: -34.5,1.5
-      parent: 2
-  - uid: 2257
-    components:
-    - type: Transform
-      pos: -35.5,2.5
-      parent: 2
   - uid: 2258
     components:
     - type: Transform
       pos: -33.5,10.5
-      parent: 2
-  - uid: 2259
-    components:
-    - type: Transform
-      pos: -33.5,0.5
       parent: 2
   - uid: 2260
     components:
@@ -17962,11 +17988,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -13.5,11.5
-      parent: 2
-  - uid: 2553
-    components:
-    - type: Transform
-      pos: -32.5,0.5
       parent: 2
   - uid: 2554
     components:
