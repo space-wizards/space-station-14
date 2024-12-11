@@ -1,105 +1,6 @@
 ﻿Entries:
 - author: TGRCDev
   changes:
-  - message: Revenants now enter stasis on death instead of dying outright. You can
-      kill a revenant in stasis by either destroying or exorcising its ectoplasm.
-    type: Tweak
-  id: 204
-  time: '2024-09-16T02:42:43.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/262
-- author: sususuyo
-  changes:
-  - message: Screwloose lobby art is actually in rotation now
-    type: Fix
-  id: 205
-  time: '2024-09-16T02:42:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/265
-- author: hivehum
-  changes:
-  - message: Code Pink, for when you think your employees are trying to form a union.
-    type: Add
-  id: 206
-  time: '2024-09-16T02:43:36.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/260
-- author: Pinkbat5
-  changes:
-  - message: Diona and nymphs can now chirp.
-    type: Add
-  - message: Nymphs can scream and laugh like adult diona.
-    type: Add
-  - message: Double eyepatch item, craftable from two eyepatches.
-    type: Add
-  id: 207
-  time: '2024-09-16T02:47:30.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/261
-- author: Darkmajia
-  changes:
-  - message: Forgotten, devoured, gutted. Humanity has forgotten the eldritch forces
-      of decay, but the mansus veil has weakened. We will make them taste fear again...
-    type: Add
-  id: 208
-  time: '2024-09-18T05:36:03.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/249
-- author: KingMudkipIII
-  changes:
-  - message: horsepussy can be made again without winning the juckport 1 trillion$
-    type: Fix
-  id: 209
-  time: '2024-09-18T05:39:19.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/270
-- author: ultramario1998
-  changes:
-  - message: Added a flask to the Warden's locker. Leave your room 70% less!
-    type: Tweak
-  id: 210
-  time: '2024-09-18T05:38:27.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/272
-- author: Darkmajia
-  changes:
-  - message: Armblades finally have a hit sound.
-    type: Add
-  id: 211
-  time: '2024-09-18T05:36:48.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/273
-- author: starlighthowls
-  changes:
-  - message: couple white whale changes
-    type: Tweak
-  - message: added AI to WW and put back in rotation
-    type: Add
-  id: 212
-  time: '2024-09-18T05:38:42.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/279
-- author: aada
-  changes:
-  - message: 500 cigarettes moved to the emag inventory of cigVend.
-    type: Tweak
-  id: 213
-  time: '2024-09-18T05:37:45.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/275
-- author: widgetbeck
-  changes:
-  - message: Reduced the thirst cost of Mucin now that it's not OP.
-    type: Tweak
-  id: 214
-  time: '2024-09-18T05:37:20.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/269
-- author: widgetbeck
-  changes:
-  - message: Propulsion Gel's recipe is now cheaper.
-    type: Tweak
-  id: 215
-  time: '2024-09-18T05:36:20.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/268
-- author: formlessnameless
-  changes:
-  - message: Replaced a bunch of obsolete noSpawn stuff with HideSpawnMenu category
-    type: Fix
-  id: 216
-  time: '2024-09-18T05:56:35.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/281
-- author: TGRCDev
-  changes:
   - message: Rat kings and rat servants can now eat trash
     type: Tweak
   id: 217
@@ -4491,3 +4392,129 @@
   id: 703
   time: '2024-12-09T18:07:09.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/970
+- author: DinnerCalzone
+  changes:
+  - message: (Amber Station) Added brigmedic spawn and locker.
+    type: Add
+  id: 704
+  time: '2024-12-10T10:53:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/972
+- author: honeyed-lemons
+  changes:
+  - message: Shipyard consoles to the quartermasters room in Fland, Box, and Xeno
+    type: Add
+  - message: Update EVA access in Fland, Box, and Xeno to be all command.
+    type: Tweak
+  id: 705
+  time: '2024-12-10T10:54:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/973
+- author: ultramario1998
+  changes:
+  - message: Added a headset that's just for Wardens.
+    type: Add
+  id: 706
+  time: '2024-12-10T11:04:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/976
+- author: iaada, kipdotnet
+  changes:
+  - message: Fixed missing sprite layering on the tck'tck drone, and gave it a grapple
+      module.
+    type: Fix
+  id: 707
+  time: '2024-12-10T11:09:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/977
+- author: kipdotnet, Darkmajia, Starlighthowls
+  changes:
+  - message: Added and rotated Banana, a new lowpop map!
+    type: Add
+  id: 708
+  time: '2024-12-10T11:11:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/978
+- author: DinnerCalzone
+  changes:
+  - message: EVA storage rooms on Bagel, Cog, and Marathon have been set to command
+      access.
+    type: Tweak
+  - message: Solar station beacons on Bagel, Cog, Marathon, Omega, and Origin have
+      been renamed to differentiate them.
+    type: Tweak
+  - message: (Cog) Incorporated some upstream changes, namely adding additional infrastructure
+      to the tesla area.
+    type: Add
+  - message: (Cog) The arrivals security checkpoint has been replaced with a vox box.
+      The checkpoint has been moved to the west next to the rec room.
+    type: Tweak
+  - message: (Marathon) Incorporated upstream changes, including an overhaul to the
+      station's atmos systems.
+    type: Add
+  - message: (Marathon) Added a service techfab to the corridor between the bar and
+      kitchen.
+    type: Add
+  - message: (Omega) Made the location of the RTG in space near engineering much more
+      obvious.
+    type: Tweak
+  id: 709
+  time: '2024-12-10T11:14:35.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/979
+- author: Darkmajia
+  changes:
+  - message: Changeling text has been revised in many areas.
+    type: Tweak
+  - message: Changeling bone shards no longer display as errors during the Christmas
+      season.
+    type: Fix
+  id: 710
+  time: '2024-12-10T16:32:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/947
+- author: Kandiyaki
+  changes:
+  - message: changed up the cryogenic sting to no longer have a chance to cause sleep.
+    type: Tweak
+  - message: changed up the lethargic sting so it has a chance to cause sleep, and
+      no longer mutes victims.
+    type: Tweak
+  - message: changed up the mute sting so it mutes the victim for 3 minutes instead
+      of 5.
+    type: Tweak
+  id: 711
+  time: '2024-12-10T21:11:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/983
+- author: hivehum
+  changes:
+  - message: The greytide virus will infect much less often.
+    type: Tweak
+  id: 712
+  time: '2024-12-10T21:11:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/981
+- author: Saeko-44
+  changes:
+  - message: aquam divinos, an upgrade to holy water for the chaplain
+    type: Add
+  - message: aqua avari, a poison for the chaplain
+    type: Add
+  id: 713
+  time: '2024-12-10T23:55:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/982
+- author: EpicToast
+  changes:
+  - message: Updated Packed, Core, Meta, and Reach! (Changes include spawning command
+      in the conference room, renaming solars, and adding a shipyard computer to the
+      QM's office. See GitHub for full changelog.)
+    type: Tweak
+  id: 714
+  time: '2024-12-11T20:11:37.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/989
+- author: kipdotnet
+  changes:
+  - message: Banana has been updated!
+    type: Tweak
+  id: 715
+  time: '2024-12-11T20:12:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/990
+- author: Sha-Seng
+  changes:
+  - message: brigmed beret has a little cross now hehe
+    type: Tweak
+  id: 716
+  time: '2024-12-11T20:18:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/992

@@ -45,7 +45,7 @@
     price: 22
     
 - type: entity
-  name: tck'wrench
+  name: micro wrench
   parent: Wrench
   id: TckWrench
   description: "A common tool for assembly and disassembly. Remember: lefty t'kch, righty k'ckt."
@@ -62,3 +62,5 @@
         Blunt: 2
     soundHit:
       collection: WeakHit
+  - type: Item
+    size: Tiny

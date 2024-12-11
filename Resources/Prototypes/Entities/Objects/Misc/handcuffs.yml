@@ -72,6 +72,7 @@
     color: forestgreen
   - type: Tag # Imp start
     tags:
+    - Handcuffs
     - Cablecuffs # Imp end
 
 - type: entity

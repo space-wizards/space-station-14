@@ -472,7 +472,7 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
-    weight: 5
+    weight: 2 #imp. tf you mean this was weight 5
     minimumPlayers: 25
     reoccurrenceDelay: 20
   - type: GreytideVirusRule
