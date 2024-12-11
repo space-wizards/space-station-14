@@ -132,7 +132,8 @@ public sealed class RadioSystem : EntitySystem
                 }
             }
         }
-        else if (HasComp<BorgChassisComponent>(messageSource))
+        
+        if (HasComp<BorgChassisComponent>(messageSource) || HasComp<BorgBrainComponent>(messageSource))
         {
             iconId = "JobIconBorg";
             jobName = Loc.GetString("job-name-borg");
