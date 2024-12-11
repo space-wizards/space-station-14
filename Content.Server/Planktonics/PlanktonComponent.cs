@@ -30,6 +30,77 @@ public sealed partial class PlanktonComponent : Component
         Scavenger
     }
 
+    public enum PlanktonFirstName
+    {
+    Noctiluce,
+    Lumina,
+    Scintilla,
+    Pyrexia,
+    Crystalis,
+    Viscera,
+    Cnidaria,
+    Rhizomorpha,
+    Oscillatoria,
+    Fluoresca,
+    Hydrilla,
+    Dinophysis,
+    Pyrocystis,
+    Euglena,
+    Vorticella,
+    Phyllodictyon,
+    Gymnodinium,
+    Peridinium,
+    Bacillaria,
+    Pseudo-nitzschia
+    }
+
+
+    public enum PlanktonSecondName
+    {
+    Scilliens,
+    Pyrexus,
+    Fluctuosa,
+    Aurantia,
+    Cyanus,
+    Vulgaris,
+    Ocellata,
+    Maritima,
+    Toxica,
+    Plumbifera,
+    Subtilis,
+    Diadema,
+    Globosa,
+    Perforans,
+    Confluens,
+    Molybdica,
+    Aeruginosa,
+    Fragilis,
+    Pallida,
+    Gigantea
+    }
+
+
+    [DataField("planktonName"), ViewVariables(VVAccess.ReadWrite)]
+    public PlanktonName Name { get; set; }
+
+    public class PlanktonName
+{
+    public string FirstName { get; set; }
+    public string SecondName { get; set; }
+
+    public PlanktonName(string firstName, string secondName)
+    {
+        FirstName = firstName;
+        SecondName = secondName;
+    }
+
+    public override string ToString()
+    {
+        return $"{FirstName} {SecondName}";
+    }
+}
+
+    
     // Define a combined Behaviors and Attributes Type Enum (bitwise)
     [Flags]
     public enum PlanktonCharacteristics
