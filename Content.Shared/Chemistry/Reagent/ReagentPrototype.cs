@@ -99,8 +99,24 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField]
         public bool MetamorphicChangeColor { get; private set; } = true;
 
-        [DataField]
-        public List<PlanktonComponent> PlanktonCultures { get; private set; } = new List<PlanktonComponent>();
+        
+    // List of plankton components this reagent can contain
+    public List<PlanktonComponent> PlanktonComponents { get; set; } = new List<PlanktonComponent>();
+
+    // Method to check if the reagent contains plankton
+    public bool HasPlankton => PlanktonComponents.Any();
+
+    // Method to add plankton to the reagent (to be added in a solution later)
+    public void AddPlankton(PlanktonComponent plankton)
+    {
+        PlanktonComponents.Add(plankton);
+    }
+
+    // Method to remove plankton from the reagent
+    public void RemovePlankton(PlanktonComponent plankton)
+    {
+        PlanktonComponents.Remove(plankton);
+    }
 
 
         /// <summary>
