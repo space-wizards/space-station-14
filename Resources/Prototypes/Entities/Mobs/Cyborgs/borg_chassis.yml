@@ -439,7 +439,7 @@
 
 - type: entity
   id: BorgChassisNanotraitor
-  parent: BaseBorgChassisNT
+  parent: BaseBorgChassisSyndicate
   components:
   - type: Sprite
     layers:
@@ -490,5 +490,7 @@
     - Common
     - Nanotrasen
     - Binary
-   - type: SiliconLawProvider
-     laws: NanotraitorStatic
+  - type: SiliconLawProvider
+    laws: NanotraitorStatic
+  - type: Construction
+    node: syndicatesaboteur

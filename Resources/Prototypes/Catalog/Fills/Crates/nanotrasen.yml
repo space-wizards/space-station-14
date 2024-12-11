@@ -33,17 +33,17 @@
   suffix: Filled
   parent: CrateScience
   name: NT borging kit
-  description: The label reads: 'We will add your financial and economical assets to our own' # da borg
+  description: The label reads 'We will add your financial and economical assets to our own' # da borg
   components:
   - type: StorageFill
     contents:
-      - id: MMINanotrasen
-      - id: BorgChassisNanotraitor
+      - id: MMI
+      #- id: BorgChassisNanotraitor
       - id: PowerCellHigh
       - id: ClothingHandsGlovesColorYellow
       - id: Screwdriver
       - id: ToolboxNanotraitor
-      
+
 
 
 
