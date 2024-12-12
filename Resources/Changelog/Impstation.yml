@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TGRCDev
-  changes:
-  - message: Rat kings and rat servants can now eat trash
-    type: Tweak
-  id: 217
-  time: '2024-09-18T10:11:00.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/283
 - author: formlessnameless
   changes:
   - message: Modified salvage and added AI to Cluster
@@ -4518,3 +4511,11 @@
   id: 716
   time: '2024-12-11T20:18:46.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/992
+- author: suyo
+  changes:
+  - message: Fixed the mixologist chemmaster flatpack not being in your inventory
+      on spawn
+    type: Fix
+  id: 717
+  time: '2024-12-12T00:35:37.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/994
