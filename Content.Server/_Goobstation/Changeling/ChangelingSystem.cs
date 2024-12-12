@@ -178,6 +178,7 @@ public sealed partial class ChangelingSystem : EntitySystem
         Dirty(uid, comp);
         _alerts.ShowAlert(uid, "ChangelingChemicals");
     }
+
     private void UpdateBiomass(EntityUid uid, ChangelingComponent comp, float? amount = null)
     {
         comp.Biomass += amount ?? -1;
@@ -525,7 +526,7 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         var config = new PolymorphConfiguration()
         {
-            Entity = (EntProtoId) pid,
+            Entity = (EntProtoId)pid,
             TransferDamage = transferDamage,
             Forced = true,
             Inventory = (dropInventory) ? PolymorphInventoryChange.Drop : PolymorphInventoryChange.Transfer,
@@ -555,15 +556,18 @@ public sealed partial class ChangelingSystem : EntitySystem
         {
             // copy our stuff
             var newLingComp = CopyChangelingComponent(newEnt, comp);
-            if (!persistentDna && data != null)
-                newLingComp?.AbsorbedDNA.Remove(data);
-            RemCompDeferred<ChangelingComponent>(uid);
-
-            if (TryComp<StoreComponent>(uid, out var storeComp))
+            if (newLingComp != null)
             {
-                var storeCompCopy = _serialization.CreateCopy(storeComp, notNullableOverride: true);
-                RemComp<StoreComponent>(newUid.Value);
-                EntityManager.AddComponent(newUid.Value, storeCompCopy);
+                if (!persistentDna && data != null)
+                    newLingComp.AbsorbedDNA.Remove(data);
+                RemCompDeferred<ChangelingComponent>(uid);
+
+                if (TryComp<StoreComponent>(uid, out var storeComp))
+                {
+                    var storeCompCopy = _serialization.CreateCopy(storeComp, notNullableOverride: true);
+                    RemComp<StoreComponent>(newUid.Value);
+                    EntityManager.AddComponent(newUid.Value, storeCompCopy);
+                }
             }
         }
 
