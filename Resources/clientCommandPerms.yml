@@ -20,7 +20,6 @@
     - net_watchent
     - devwindow
     - fill
-    - dumpentities
     - ">"
     - gcf
     - gc
@@ -73,6 +72,7 @@
     - detachent
     - localdelete
     - fullstatereset
+    - dumpentities
 
 - Flags: MAPPING
   Commands:
