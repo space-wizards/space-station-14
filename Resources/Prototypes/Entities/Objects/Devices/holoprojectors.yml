@@ -74,9 +74,6 @@
   suffix: borg
   description: Stops suicidal crew from causing more crew harm during atmos emergencies. Powered by a self-recharing power cell.
   components:
-  - type: HolosignProjector
-    signProto: HoloFan
-    chargeUse: 120
   - type: ItemSlots
     slots:
       cell_slot:
