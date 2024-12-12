@@ -593,7 +593,7 @@
   desc: reagent-desc-moffee
   physicalDesc: reagent-physical-desc-sweet
   flavor: moffee
-  color: "#664300"
+  color: "#CDCDCD"
   recognizable: true
   metabolisms:
     Drink:
