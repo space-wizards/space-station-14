@@ -9,7 +9,7 @@
     - state: icon-cables
   - type: ItemBorgModule
     items:
-    - CableApcStackLingering10
+    - CableMVStackLingering10
     - trayScanner
     - TckWrench
   - type: BorgModuleIcon

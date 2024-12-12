@@ -2,7 +2,7 @@
   parent: [BaseMob, StripableInventoryBase]
   id: MobTckTck
   name: tck'tck
-  description: A borg-like entity manufactured by the Decapoid Empire. Provides 8KW of power when anchored, and has a charger port for power cells.
+  description: A borg-like entity manufactured by the Decapoid Empire. Provides 8KW of MV power when anchored, and has a charger port for power cells.
   components:
   - type: Reactive
     groups:
@@ -260,14 +260,13 @@
   - type: PowerSupplier
     supplyRate: 8000
     supplyRampTolerance: 2000
-    voltage: Apc
   - type: Anchorable
   - type: NodeContainer
     examinable: true
     nodes:
       output:
         !type:CableDeviceNode
-        nodeGroupID: Apc
+        nodeGroupID: MVPower
   - type: GhostRole
     makeSentient: true
     name: Tck'Tck
