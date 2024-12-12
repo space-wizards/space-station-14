@@ -17,3 +17,13 @@
   cost: 7000
   category: cargoproduct-category-name-armory
   group: market
+
+- type: cargoProduct
+  id: ArmoryDMR
+  icon:
+    sprite: _Impstation/Objects/Weapons/Guns/Rifles/daito.rsi
+    state: icon
+  product: CrateArmoryDMR
+  cost: 10000
+  category: cargoproduct-category-name-armory
+  group: market
