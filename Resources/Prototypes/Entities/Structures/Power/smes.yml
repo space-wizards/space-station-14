@@ -123,7 +123,7 @@
     sprite: Structures/Power/smes.rsi
     snapCardinals: true
     layers:
-    - state: advanced-smes
+    - state: advancedsmes
     - map: [ "enum.SmesVisualLayers.Charge" ]
       state: "smes-og1" # -og0 does not exist
       shader: unshaded
@@ -134,7 +134,7 @@
     - map: [ "enum.SmesVisualLayers.Output" ]
       state: "smes-op1"
       shader: unshaded
-    - state: advanced-smes-open
+    - state: advancedsmes-open
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Machine
     board: SMESAdvancedMachineCircuitboard
@@ -147,7 +147,7 @@
     loadNode: output
     collectionName: smes
     sprite: Structures/Power/smes.rsi
-    state: advanced-smes-static
+    state: static
 
 - type: entity
   parent: SMESAdvanced

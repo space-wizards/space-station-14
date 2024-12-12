@@ -8,13 +8,13 @@
   },
   "states": [
     {
-      "name": "advanced-smes"
+      "name": "advancedsmes"
     },
     {
-      "name": "advanced-smes-static"
+      "name": "advancedsmes-static"
     },
     {
-      "name": "advanced-smes-open"
+      "name": "advancedsmes-open"
     },
     {
       "name": "smes"
