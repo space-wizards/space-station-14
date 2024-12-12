@@ -7,4 +7,10 @@ public abstract partial class SharedApcPowerReceiverComponent : Component
 {
     [ViewVariables]
     public bool Powered;
+
+    [ViewVariables]
+    public virtual bool NeedsPower { get; set; }
+
+    [ViewVariables]
+    public virtual bool PowerDisabled { get; set; }
 }
