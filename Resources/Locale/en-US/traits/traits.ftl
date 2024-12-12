@@ -60,5 +60,5 @@ trait-french-desc = Your accent seems to have a certain «je ne sais quoi».
 trait-spanish-name = Spanish accent
 trait-spanish-desc = Hola señor, donde esta la biblioteca.
 
-trait-bipolar-disorder-name = Bipolar disorder
-trait-bipolar-disorder-desc = You are periodically overwhelmed by uncontrollable bouts of joy, apathy, or irritation.
+trait-pseudobulbar-affect-name = Pseudobulbar affect
+trait-pseudobulbar-affect-desc = You are periodically overwhelmed by uncontrollable bouts of joy, apathy, or irritation.

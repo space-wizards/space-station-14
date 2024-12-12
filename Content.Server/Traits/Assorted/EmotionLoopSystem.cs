@@ -1,7 +1,7 @@
+namespace Content.Server.Traits.Assorted;
+
 using Robust.Shared.Random;
 using Content.Server.Chat.Systems;
-
-namespace Content.Server.Traits.Assorted;
 
 /// <summary>
 /// This system allows triggering any emotion at random intervals.
@@ -16,9 +16,9 @@ public sealed class EmotionLoopSystem : EntitySystem
         SubscribeLocalEvent<EmotionLoopComponent, ComponentStartup>(SetupTimer);
     }
 
-    private void SetupTimer(EntityUid uid, EmotionLoopComponent component, ComponentStartup args)
+    private void SetupTimer(Entity<EmotionLoopComponent> entity, ref ComponentStartup args)
     {
-        component.NextIncidentTime = TimeSpan.FromSeconds(_random.NextFloat(component.MinTimeBetweenEmotions, component.MaxTimeBetweenEmotions));
+        entity.Comp.NextIncidentTime = _random.Next(entity.Comp.MinTimeBetweenEmotions, entity.Comp.MaxTimeBetweenEmotions);
     }
 
     public override void Update(float frameTime)
@@ -28,19 +28,23 @@ public sealed class EmotionLoopSystem : EntitySystem
         var query = EntityQueryEnumerator<EmotionLoopComponent>();
         while (query.MoveNext(out var uid, out var emotionLoop))
         {
+            // If the HashSet "Emotes" is empty, exit this system.
+            if (emotionLoop.Emotes.Count == 0)
+                return;
+
             emotionLoop.NextIncidentTime = TimeSpan.FromSeconds((float)emotionLoop.NextIncidentTime.TotalSeconds - frameTime);
 
             if (emotionLoop.NextIncidentTime >= TimeSpan.Zero)
                 continue;
 
             // Set the updated time.
-            emotionLoop.NextIncidentTime += TimeSpan.FromSeconds(_random.NextFloat(emotionLoop.MinTimeBetweenEmotions, emotionLoop.MaxTimeBetweenEmotions));
+            emotionLoop.NextIncidentTime += _random.Next(emotionLoop.MinTimeBetweenEmotions, emotionLoop.MaxTimeBetweenEmotions);
 
-            // The next emotion to play is selected by randomly generating the index of an emotion.
-            emotionLoop.NextEmotionIndex = _random.Next(0, emotionLoop.Emotions.Count);
+            // Select a random emotion from the HashSet "Emotes".
+            var emote = _random.Pick(emotionLoop.Emotes);
 
-            // Play the emotion by index "NextEmotionIndex".
-            _chat.TryEmoteWithChat(uid, emotionLoop.Emotions[emotionLoop.NextEmotionIndex], ignoreActionBlocker: false);
+            // Play the emotion recorded in "emote".
+            _chat.TryEmoteWithChat(uid, emote, ignoreActionBlocker: false);
         }
     }
 }

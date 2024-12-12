@@ -1,27 +1,26 @@
-namespace Content.Server.Traits.Assorted;
+namespace Content.Server.Speech.Components;
 
-using System.Numerics;
 using Content.Shared.Chat.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 /// <summary>
-/// This component allows triggering any emotion at random intervals.
+/// This component adds random punctuation ("!", "...", "?!") to the end of phrases, and randomly triggers the emotions selected in the component.
 /// </summary>
-[RegisterComponent, Access(typeof(EmotionLoopSystem))]
-public sealed partial class EmotionLoopComponent : Component
+[RegisterComponent]
+public sealed partial class EmotionallyUnstableAccentComponent : Component
 {
     /// <summary>
-    /// A minimum interval between emotions.
+    /// The probability of triggering an emotion from the "Emotions" list after each phrase.
     /// </summary>
-    [DataField("minTimeBetweenEmotions", required: true)]
-    public TimeSpan MinTimeBetweenEmotions { get; private set; }
-
+    [DataField]
+    public float TriggerEmotionChance = 0.5f;
+    
     /// <summary>
-    /// A maximum interval between emotions.
+    /// The probability of a message being supplemented with punctuation marks.
     /// </summary>
-    [DataField("maxTimeBetweenEmotions", required: true)]
-    public TimeSpan MaxTimeBetweenEmotions { get; private set; }
+    [DataField]
+    public float ChangeMessageChance = 1.0f;
 
     /// <summary> 
     /// A set of emotes that will be randomly picked from. 
@@ -29,6 +28,4 @@ public sealed partial class EmotionLoopComponent : Component
     /// </summary> 
     [DataField("emotes", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<EmotePrototype>)), ViewVariables(VVAccess.ReadWrite)]
     public HashSet<string> Emotes = new();
-
-    public TimeSpan NextIncidentTime;
 }
