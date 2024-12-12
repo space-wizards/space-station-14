@@ -614,6 +614,7 @@
     bodyType: KinematicController
   - type: Hands
     showInHands: false
+  - type: ComplexInteraction
   - type: Body
     prototype: Drone
   - type: IntrinsicRadioReceiver
