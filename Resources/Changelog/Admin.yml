@@ -620,5 +620,12 @@ Entries:
   id: 77
   time: '2024-11-20T07:55:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33311
+- author: TokenStyle
+  changes:
+  - message: makeghostroleraffled admin command now works with few arguments!
+    type: Fix
+  id: 78
+  time: '2024-11-30T20:11:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31836
 Name: Admin
 Order: 1
