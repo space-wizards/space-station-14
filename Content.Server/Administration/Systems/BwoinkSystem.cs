@@ -837,6 +837,7 @@ namespace Content.Server.Administration.Systems
             if (GetNonAfkAdmins().Count > 0 && _config.GetCVar(CCVars.PanicBunkerDisableWithAdmins))
                 return;
 
+            // Activate if total number of ahelps is above x
             var totalAhelpsPerRound = _config.GetCVar(CCVars.ActivatePanicBunkerAhelpsPerRound);
 
             if (totalAhelpsPerRound > 0 && _activeConversations.Count > totalAhelpsPerRound)
@@ -847,6 +848,7 @@ namespace Content.Server.Administration.Systems
                 return;
             }
 
+            // Activate if x ahelps are active in the last y minutes.
             var aHelpTime = _config.GetCVar(CCVars.ActivatePanicBunkerAhelpsTime);
             var aHelpAmount = _config.GetCVar(CCVars.ActivatePanicBunkerAhelpsAmount);
 
