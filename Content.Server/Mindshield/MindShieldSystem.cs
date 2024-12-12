@@ -2,6 +2,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Mind;
 using Content.Server.Popups;
 using Content.Server.Roles;
+using Content.Shared._Goobstation.FakeMindshield.Components;
 using Content.Shared.Database;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
@@ -44,10 +45,16 @@ public sealed class MindShieldSystem : EntitySystem
     }
 
     /// <summary>
-    /// Checks if the implanted person was a Rev or Head Rev and remove role or destroy mindshield respectively.
+    /// Checks if the implanted person was a Rev or Head Rev and remove role or destroy mindshield respectively. Also removes fake Changeling mindshields.
     /// </summary>
     public void MindShieldRemovalCheck(EntityUid implanted, EntityUid implant)
     {
+        if (HasComp<FakeMindShieldComponent>(implanted))
+        {
+            _popupSystem.PopupEntity(Loc.GetString("changeling-mindshield-overwrite"), implanted, implanted, Shared.Popups.PopupType.MediumCaution);
+            RemComp<FakeMindShieldComponent>(implanted);
+        }
+
         if (HasComp<HeadRevolutionaryComponent>(implanted))
         {
             _popupSystem.PopupEntity(Loc.GetString("head-rev-break-mindshield"), implanted);
