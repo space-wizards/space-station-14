@@ -171,6 +171,7 @@
   categories: [ HideSpawnMenu ] #Must be configured to a King or the AI breaks.
   components:
   - type: VentCrawler
+    enterDelay: 1
   - type: CombatMode
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.5

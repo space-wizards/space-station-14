@@ -863,6 +863,7 @@
   description: A folk legend goes around that his claw snaps spacemen out of existence over distasteful remarks. Be polite and tolerant for your own safety.
   components:
   - type: VentCrawler
+    enterDelay: 3
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -1228,6 +1229,7 @@
   abstract: true
   components:
   - type: VentCrawler
+    enterDelay: 3
   - type: CombatMode
   - type: Inventory
     templateId: monkey
@@ -1615,6 +1617,7 @@
   description: Squeak!
   components:
   - type: VentCrawler
+    enterDelay: 1
   - type: Body
     prototype: Mouse
   - type: GhostRole
@@ -1983,6 +1986,7 @@
   description: And they called this a lizard?
   components:
   - type: VentCrawler
+    enterDelay: 1
   - type: MovementSpeedModifier
     baseWalkSpeed : 2
     baseSprintSpeed : 3
@@ -2031,6 +2035,7 @@
   description: Hop hop hop. Lookin' moist.
   components:
   - type: VentCrawler
+    enterDelay: 1
   - type: MovementSpeedModifier
     baseWalkSpeed: 3
     baseSprintSpeed: 6
@@ -2280,6 +2285,7 @@
   description: Hissss! Bites aren't poisonous.
   components:
   - type: VentCrawler
+    enterDelay: 2
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -2330,6 +2336,7 @@
   description: Widely recognized to be the literal worst thing in existence.
   components:
   - type: VentCrawler
+    enterDelay: 3
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -2858,6 +2865,7 @@
   description: A little corgi! Aww...
   components:
   - type: VentCrawler
+    enterDelay: 3
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/corgi.rsi
@@ -3167,6 +3175,8 @@
   id: MobFerret
   description: Just a silly little guy!
   components:
+  - type: VentCrawler
+    enterDelay: 3
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/ferret.rsi
@@ -3222,6 +3232,7 @@
   description: A cute, fluffy, robust hamster.
   components:
   - type: VentCrawler
+    enterDelay: 1
   - type: GhostRole
     makeSentient: true
     allowSpeech: true
