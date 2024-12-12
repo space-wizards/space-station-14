@@ -794,6 +794,9 @@
     color: "#FFFF00"
     radius: 2
     energy: 1.4
+  - type: Tag
+    tags:
+    - Suppermatter
 
 - type: entity
   name: suppermatter shard

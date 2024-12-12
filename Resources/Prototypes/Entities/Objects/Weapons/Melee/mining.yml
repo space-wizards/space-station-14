@@ -106,6 +106,9 @@
       shader: unshaded
       visible: false
       map: [ "light" ]
+  - type: Tag
+    tags:
+    - Crusher
 
 - type: entity
   parent: [BaseWeaponCrusher, BaseSecurityCargoContraband]
