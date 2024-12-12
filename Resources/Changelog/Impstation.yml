@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: AirFryerBuyOneGetOneFree
-  changes:
-  - message: Heretic blades can now be used to perform executions.
-    type: Tweak
-  id: 223
-  time: '2024-09-19T05:22:46.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/289
 - author: TGRCDev
   changes:
   - message: Placing salt on the ground now reveals revenants who pass over it.
@@ -4528,3 +4521,12 @@
   id: 722
   time: '2024-12-12T02:58:56.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/996
+- author: kipdotnet
+  changes:
+  - message: Tck'tcks now can swap between LV and MV power.
+    type: Tweak
+  - message: Tck'tcks now have sprites for being anchored.
+    type: Tweak
+  id: 723
+  time: '2024-12-12T20:07:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1002
