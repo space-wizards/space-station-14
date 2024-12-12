@@ -1397,7 +1397,8 @@
     description: ghost-role-information-monkey-description
     rules: ghost-role-information-syndicate-reinforcement-rules
     mindRoles:
-    - MindRoleGhostRoleTeamAntagonist
+    # This is for syndicate monkeys that randomly gain sentience, thus have no summoner to team with
+    - MindRoleGhostRoleSoloAntagonist
     raffle:
       settings: default
   - type: GhostTakeoverAvailable
