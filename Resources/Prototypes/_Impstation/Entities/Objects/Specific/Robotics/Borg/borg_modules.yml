@@ -17,3 +17,22 @@
   - type: Tag
     tags:
       - BorgModuleTckTck
+
+- type: entity
+  id: BorgModuleTckTckEVA
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: tck'tck EVA module
+  components:
+  - type: Sprite
+    layers:
+    - state: generic
+    - state: icon-grappling-gun
+  - type: ItemBorgModule
+    items:
+    - WeaponGrapplingGunTckTck
+    - HandHeldMassScannerBorg
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: grappling-module }
+  - type: Tag
+    tags:
+      - BorgModuleTckTck

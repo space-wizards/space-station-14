@@ -234,13 +234,12 @@
     moduleWhitelist:
       tags:
       - BorgModuleGeneric
-      - BorgModuleCargo
       - BorgModuleTckTck
   - type: ContainerFill
     containers:
       borg_module:
         - BorgModuleTckTck
-        - BorgModuleGrapplingGun
+        - BorgModuleTckTckEVA
   - type: ApcPowerReceiver
     needsPower: false
     powerLoad: 0
@@ -275,3 +274,9 @@
     description: Charge APCs, help with power, and keep everyone's batteries topped up.
     rules: ghost-role-information-silicon-rules
   - type: GhostTakeoverAvailable
+  - type: GenericVisualizer
+    visuals:
+      enum.AnchorVisuals.Anchored:
+        anchored:
+          False: { state: anchored, visible: false }
+          True: { state: anchored, visible: true }
