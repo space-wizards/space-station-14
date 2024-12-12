@@ -6,6 +6,7 @@ using Content.Shared.PowerCell.Components;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Weapons.Ranged.Systems;
@@ -79,6 +80,9 @@ public sealed partial class GunSystem
             component.Capacity = maxShots;
 
         UpdateBatteryAppearance(uid, component);
+
+        var updateAmmoEv = new UpdateClientAmmoEvent();
+        RaiseLocalEvent(uid, ref updateAmmoEv);
     }
 
     private void OnBatteryDamageExamine(EntityUid uid, BatteryAmmoProviderComponent component, ref DamageExamineEvent args)

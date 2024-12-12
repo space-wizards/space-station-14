@@ -275,9 +275,6 @@
   - type: Tag
     tags:
       - PowerCage
-  - type: HitscanBatteryAmmoProvider
-    proto: RedShuttleLaser
-    fireCost: 150
   - type: ClothingSpeedModifier
     walkModifier: 0.8
     sprintModifier: 0.8
