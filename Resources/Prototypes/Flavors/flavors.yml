@@ -1150,6 +1150,6 @@
   description: flavor-complex-compressed-meat
 
 - type: flavor
-  id: moffee
+  id: Moffee
   flavorType: Complex
   description: flavor-complex-moffee
