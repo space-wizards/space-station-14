@@ -70,3 +70,4 @@ changeling-chameleon-start = We adapt our skin to the environment.
 changeling-chameleon-end = Our skin no longer blends in.
 
 changeling-hivemind-start = We attune our brainwaves to match the greater hivemind.
+changeling-hivemind-end = Our connection to the greater hivemind is severed.

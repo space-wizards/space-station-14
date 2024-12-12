@@ -56,6 +56,8 @@ using Content.Server.Stunnable;
 using Content.Shared.Jittering;
 using Content.Server.Explosion.EntitySystems;
 using System.Linq;
+using Content.Server.Flash.Components;
+using Content.Shared.Stealth.Components;
 
 namespace Content.Server.Changeling;
 
@@ -122,8 +124,9 @@ public sealed partial class ChangelingSystem : EntitySystem
         SubscribeLocalEvent<ChangelingComponent, MobStateChangedEvent>(OnMobStateChange);
         SubscribeLocalEvent<ChangelingComponent, DamageChangedEvent>(OnDamageChange);
         SubscribeLocalEvent<ChangelingComponent, ComponentRemove>(OnComponentRemove);
-
         SubscribeLocalEvent<ChangelingComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshSpeed);
+
+        SubscribeLocalEvent<StoreComponent, StoreRefundedEvent>(OnStoreRefunded);
 
         SubscribeAbilities();
     }
@@ -631,15 +634,31 @@ public sealed partial class ChangelingSystem : EntitySystem
 
     public void RemoveAllChangelingEquipment(EntityUid target, ChangelingComponent comp)
     {
-        // check if there's no entities or all entities are null
-        if (comp.Equipment.Values.Count == 0
-        || comp.Equipment.Values.All(ent => ent == null ? true : false))
-            return;
+        var playSound = false;
 
-        foreach (var equip in comp.Equipment.Values)
-            QueueDel(equip);
+        // check if there's no entities in equipment, or all entities are null
+        if (comp.Equipment.Values.Count != 0
+        || comp.Equipment.Values.All(ent => ent == null ? false : true))
+        {
+            foreach (var equip in comp.Equipment.Values)
+                QueueDel(equip);
 
-        PlayMeatySound(target, comp);
+            comp.Equipment.Clear();
+            playSound = true;
+        }
+
+        // check if there's no entities in armor, or all entities are null
+        if (comp.ActiveArmor != null)
+        {
+            foreach (var armor in comp.ActiveArmor)
+                QueueDel(armor);
+
+            comp.ActiveArmor = null;
+            playSound = true;
+        }
+
+        if (playSound)
+            PlayMeatySound(target, comp);
     }
 
     #endregion
@@ -692,6 +711,26 @@ public sealed partial class ChangelingSystem : EntitySystem
     private void OnComponentRemove(Entity<ChangelingComponent> ent, ref ComponentRemove args)
     {
         RemoveAllChangelingEquipment(ent, ent.Comp);
+    }
+
+    private void OnStoreRefunded(Entity<StoreComponent> ent, ref StoreRefundedEvent args)
+    {
+        var comp = EnsureComp<ChangelingComponent>(ent);
+
+        RemoveAllChangelingEquipment(ent, comp);
+        comp.StrainedMusclesActive = false;
+        RemComp<FlashImmunityComponent>(ent); // augmented vision, yes this sucks. refactor one day i prommy - last online 9740 days ago
+        RemComp<StealthComponent>(ent);       // chameleon skin. as above
+        RemComp<StealthOnMoveComponent>(ent); // chameleon skin
+
+        if (HasComp<HivemindComponent>(ent))
+        {
+            RemComp<HivemindComponent>(ent);
+            _popup.PopupEntity(Loc.GetString("changeling-hivemind-end"), ent, ent, PopupType.MediumCaution);
+        }
+
+        _speed.RefreshMovementSpeedModifiers(ent);
+        _store.DisableRefund(ent.Owner, ent, ent.Comp);
     }
 
     #endregion
