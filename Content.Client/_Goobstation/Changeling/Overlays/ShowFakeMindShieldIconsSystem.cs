@@ -17,12 +17,12 @@ public sealed class ShowFakeMindShieldIconsSystem : EquipmentHudSystem<ShowFakeM
         SubscribeLocalEvent<FakeMindShieldComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent);
     }
 
-    private void OnGetStatusIconsEvent(EntityUid uid, FakeMindShieldComponent component, ref GetStatusIconsEvent ev)
+    private void OnGetStatusIconsEvent(Entity<FakeMindShieldComponent> ent, ref GetStatusIconsEvent ev)
     {
         if (!IsActive)
             return;
 
-        if (_prototype.TryIndex(component.MindShieldStatusIcon, out var iconPrototype))
+        if (_prototype.TryIndex(ent.Comp.MindShieldStatusIcon, out var iconPrototype))
             ev.StatusIcons.Add(iconPrototype);
     }
 }

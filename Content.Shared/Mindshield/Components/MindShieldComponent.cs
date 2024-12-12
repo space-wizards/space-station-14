@@ -13,7 +13,4 @@ public sealed partial class MindShieldComponent : Component
 {
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public ProtoId<SecurityIconPrototype> MindShieldStatusIcon = "MindShieldIcon";
-
-    [DataField]
-    public bool ChangelingMindshield = false;
 }

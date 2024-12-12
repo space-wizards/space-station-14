@@ -700,7 +700,7 @@ public sealed partial class ChangelingSystem : EntitySystem
 
         if (HasComp<MindShieldComponent>(ent))
         {
-            _popup.PopupEntity(Loc.GetString("changeling-mindshield-fail"), ent, ent, PopupType.SmallCaution);
+            _popup.PopupEntity(Loc.GetString("changeling-mindshield-fail"), ent, ent, PopupType.Medium);
             return;
         }
 
