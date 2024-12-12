@@ -143,6 +143,8 @@
     - DoorBumpOpener
     - CannotSuicide
     - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalNamedCat
 
 - type: entity
   name: Goji
