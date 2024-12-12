@@ -41,7 +41,7 @@ public sealed class FrenchAccentSystem : EntitySystem
             var S = uppercase ? "S" : "s";
             var idxLetter = match.Index + 2;
 
-            // If th is alone, just do 'zis
+            // If th is alone, just do 'z
             if (msg.Length <= idxLetter) {
                 msg = msg.Substring(0, match.Index) + "'" + Z;
             } else {
