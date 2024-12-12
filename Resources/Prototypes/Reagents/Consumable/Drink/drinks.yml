@@ -592,7 +592,7 @@
   parent: BaseDrink
   desc: reagent-desc-moffee
   physicalDesc: reagent-physical-desc-sweet
-  flavor: sugar
+  flavor: moffee
   color: "#664300"
   recognizable: true
   metabolisms:
