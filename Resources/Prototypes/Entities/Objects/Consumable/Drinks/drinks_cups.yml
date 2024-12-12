@@ -379,10 +379,10 @@
         - ReagentId: Moffee
           Quantity: 20
   - type: Icon
-    sprite: Objects/Consumable/Drinks/hot_coffee.rsi
+    sprite: Objects/Consumable/Drinks/hot_moffee.rsi
     state: icon-vend
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/hot_coffee.rsi
+    sprite: Objects/Consumable/Drinks/hot_moffee.rsi
     layers:
       - state: icon-0
       - map: ["enum.SolutionContainerLayers.Fill"]
