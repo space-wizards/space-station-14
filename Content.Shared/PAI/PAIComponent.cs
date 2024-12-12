@@ -1,5 +1,8 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Containers;
+using Robust.Shared.Audio;
+using Content.Shared.Tools;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.PAI;
@@ -53,4 +56,46 @@ public sealed partial class PAIComponent : Component
     /// </summary>
     [DataField]
     public string ScramblePopup = "pai-system-scramble-popup";
+
+    /// <summary>
+    /// gives it that satisfying click sound when insert and remove encryption keys
+    /// side note: a lot of this is just yoinked from EncryptionKeyHolderComponents.cs, bless that person
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("keysUnlocked")]
+    public bool KeysUnlocked = true;
+
+    /// <summary>
+    ///     The tool required to extract the encryption keys from the headset.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("keysExtractionMethod", customTypeSerializer: typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
+    public string KeysExtractionMethod = "Screwing";
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("keySlots")]
+    public int KeySlots = 2;
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("keyExtractionSound")]
+    public SoundSpecifier KeyExtractionSound = new SoundPathSpecifier("/Audio/Items/pistol_magout.ogg");
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("keyInsertionSound")]
+    public SoundSpecifier KeyInsertionSound = new SoundPathSpecifier("/Audio/Items/pistol_magin.ogg");
+
+    [ViewVariables]
+    public Container KeyContainer = default!;
+    public const string KeyContainerName = "key_slots";
+
+    /// <summary>
+    ///     Combined set of radio channels provided by all contained keys.
+    /// </summary>
+    [ViewVariables]
+    public HashSet<string> Channels = new();
+
+    /// <summary>
+    ///     This is the channel that will be used when using the default/department prefix (<see cref="SharedChatSystem.DefaultChannelKey"/>).
+    /// </summary>
+    [ViewVariables]
+    public string? DefaultChannel;
 }
