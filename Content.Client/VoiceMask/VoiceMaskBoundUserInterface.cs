@@ -33,7 +33,7 @@ public sealed class VoiceMaskBoundUserInterface : BoundUserInterface
         if (state is not VoiceMaskBuiState cast || _window == null)
             return;
 
-        _window.UpdateState(cast.Name, cast.Verb, cast.Sound);
+        _window.UpdateState(cast);
     }
 
     protected override void Dispose(bool disposing)

@@ -21,7 +21,6 @@ using Content.Shared.Temperature;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Events;
 
-
 namespace Content.Shared.Inventory;
 
 public partial class InventorySystem

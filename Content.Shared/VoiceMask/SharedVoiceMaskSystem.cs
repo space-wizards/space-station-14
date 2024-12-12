@@ -15,7 +15,6 @@ public sealed class VoiceMaskBuiState : BoundUserInterfaceState
     public readonly string? Verb;
     public readonly string? Sound;
 
-
     public VoiceMaskBuiState(string name, string? verb, string? sound)
     {
         Name = name;
