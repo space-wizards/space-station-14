@@ -30,13 +30,6 @@ public sealed partial class EmagSiliconLawComponent : Component
     public TimeSpan StunTime = TimeSpan.Zero;
 
     /// <summary>
-    /// A role given to entities with this component when they are emagged.
-    /// Mostly just for admin purposes.
-    /// </summary>
-    [DataField]
-    public ProtoId<AntagPrototype>? AntagonistRole = "SubvertedSilicon";
-
-    /// <summary>
     /// The sound that plays for the borg player
     /// to let them know they've been emagged
     /// </summary>

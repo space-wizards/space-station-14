@@ -1457,6 +1457,24 @@
     - !type:TileNotBlocked
 
 - type: construction
+  name: emergency light
+  id: EmergencyLightFixture
+  graph: LightFixture
+  startNode: start
+  targetNode: emergencyLight
+  category: construction-category-structures
+  description: An emergency light.
+  icon:
+    sprite: Structures/Wallmounts/Lighting/emergency_light.rsi
+    state: base
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
   name: ground light post
   id: LightGroundFixture
   graph: LightFixture
