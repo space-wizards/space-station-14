@@ -59,7 +59,7 @@
     - CannotSuicide
     - VimPilot
   - type: StealTarget
-    stealGroup: AnimalPipi
+    stealGroup: AnimalNamedCat
 
 - type: entity
   name: Fin Fin
