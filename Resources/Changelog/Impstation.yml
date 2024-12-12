@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Fixed a very misleading word choice on the Singularity guidebook page.
-    type: Fix
-  id: 220
-  time: '2024-09-18T22:00:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/286
 - author: mqole
   changes:
   - message: New library book about the TEG!!!!! And other pipes and vents and shit
@@ -4513,3 +4506,10 @@
   id: 719
   time: '2024-12-12T00:38:04.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/993
+- author: honeyed-lemons
+  changes:
+  - message: PDA Messaging <3
+    type: Add
+  id: 720
+  time: '2024-12-12T01:15:45.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/985
