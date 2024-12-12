@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: DevilishMilk
-  changes:
-  - message: Moths and mothroaches are now able to eat bandanas.
-    type: Tweak
-  id: 7200
-  time: '2024-08-24T23:30:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31405
 - author: PJB3005
   changes:
   - message: Fix the ChemVend jug names again
@@ -3918,3 +3911,11 @@
   id: 7699
   time: '2024-12-11T16:21:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32104
+- author: Winkarst-cpu
+  changes:
+  - message: The A.P.E. guidebook entry now contains information about Sigma particles
+      and transformation effects.
+    type: Tweak
+  id: 7700
+  time: '2024-12-12T14:24:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33558
