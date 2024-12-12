@@ -46,6 +46,8 @@
   description:
   components:
   - type: SubvertedSiliconRole
+  - type: MindRole
+    antagPrototype: SubvertedSilicon
 
 # Dragon
 - type: entity
