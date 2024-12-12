@@ -370,12 +370,7 @@
       allowedTiles:
         - FloorSnow
       entities:
-        - FloraTreeSnow01
-        - FloraTreeSnow02
-        - FloraTreeSnow03
-        - FloraTreeSnow04
-        - FloraTreeSnow05
-        - FloraTreeSnow06
+        - FloraTreeSnow
     # Rock formations
     - !type:BiomeEntityLayer
       allowedTiles:
