@@ -504,6 +504,8 @@
       Steel: 4000 # 40 sheets
       Uranium: 2500 # 25 sheets
       Plastic: 500 # 5 sheets
+  - type: RadiationSource
+    intensity: 1.0
 
 - type: entity
   parent: BaseScrapLarge
@@ -526,6 +528,8 @@
       Steel: 4000 # 40 sheets
       Uranium: 1000 # 10 sheets
       Plastic: 500 # 5 sheets
+  - type: RadiationSource
+    intensity: 0.5
 
 - type: entity
   parent: BaseScrapLarge
