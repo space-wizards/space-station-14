@@ -1,6 +1,6 @@
 - type: job
   id: Frontiersman
-  name: job-name-passenger
+  name: job-name-frontiersman
   description: job-description-passenger
   playTimeTracker: JobPassenger
   startingGear: PassengerGear
