@@ -53,12 +53,6 @@ namespace Content.Client.Atmos.UI
             SendPredictedMessage(new GasCanisterChangeReleaseValveMessage(false));
         }
 
-        public override void Update<T>()
-        {
-            base.Update<T>();
-
-        }
-
         /// <summary>
         /// Update the UI state based on server-sent info
         /// </summary>
