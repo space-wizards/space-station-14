@@ -64,11 +64,11 @@ public sealed class DiscordChatLink
         {
             if (message.Channel.Id == _oocChannelId)
             {
-                _chatManager.SendHookOOC(message.Author.GlobalName, message.Content);
+                _chatManager.SendHookOOC(message.Author.Username, message.Content);
             }
             else if (message.Channel.Id == _adminChannelId)
             {
-                _chatManager.SendHookAdmin(message.Author.GlobalName, message.Content);
+                _chatManager.SendHookAdmin(message.Author.Username, message.Content);
             }
         });
     }
