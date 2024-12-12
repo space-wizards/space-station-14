@@ -118,6 +118,19 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+- type: listing
+  id: SpellbookWandLocker
+  name: spellbook-wand-locker-name
+  description: spellbook-wand-locker-description
+  productEntity: WeaponWandLocker
+  cost:
+    WizCoin: 3
+  categories:
+  - SpellbookEquipment
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
 # Event
 - type: listing
   id: SpellbookEventSummonGhosts
