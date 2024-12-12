@@ -19,8 +19,6 @@ using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
 using Content.Shared.Damage.Components;
-using Content.Server.Radio.Components;
-using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -657,15 +655,15 @@ public sealed partial class ChangelingSystem : EntitySystem
         }
 
         _explosionSystem.QueueExplosion(
-            (EntityUid) newUid,
+            (EntityUid)newUid,
             typeId: "Default",
             totalIntensity: 1,
             slope: 4,
             maxTileIntensity: 2);
 
-        _actions.AddAction((EntityUid) newUid, "ActionLayEgg");
+        _actions.AddAction((EntityUid)newUid, "ActionLayEgg");
 
-        PlayMeatySound((EntityUid) newUid, comp);
+        PlayMeatySound((EntityUid)newUid, comp);
     }
     public void OnLesserForm(EntityUid uid, ChangelingComponent comp, ref ActionLesserFormEvent args)
     {

@@ -45,7 +45,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         base.Initialize();
 
         Log.Level = LogLevel.Debug;
-        
+
         SubscribeLocalEvent<TraitorRuleComponent, AntagPrereqSetupEvent>(AdditionalSetup);
         SubscribeLocalEvent<TraitorRuleComponent, AfterAntagEntitySelectedEvent>(AfterEntitySelected);
         SubscribeLocalEvent<TraitorRuleComponent, ObjectivesTextPrependEvent>(OnObjectivesTextPrepend);
