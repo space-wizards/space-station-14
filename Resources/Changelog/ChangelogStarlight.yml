@@ -1023,3 +1023,12 @@ Entries:
   id: 145
   time: '2024-12-10T14:08:00.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/commit/8551b6aa30b618fea92ed8b5b06dfdedf7bc7ecd
+- author: aedler
+  changes:
+  - message: Updated the brigmedic suit values to be more in line with the security
+      hardsuits.
+    type: Tweak
+  id: 146
+  time: '2024-12-12T15:49:12.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/152
+
