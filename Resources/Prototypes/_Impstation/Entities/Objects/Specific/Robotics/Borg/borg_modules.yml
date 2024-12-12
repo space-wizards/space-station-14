@@ -10,6 +10,7 @@
   - type: ItemBorgModule
     items:
     - CableMVStackLingering10
+    - CableApcStackLingering10
     - trayScanner
     - TckWrench
   - type: BorgModuleIcon
@@ -33,6 +34,25 @@
     - HandHeldMassScannerBorg
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: grappling-module }
+  - type: Tag
+    tags:
+      - BorgModuleTckTck
+      
+- type: entity
+  id: BorgModuleTckTckGun
+  parent: [ BaseBorgModule, BaseProviderBorgModule]
+  name: tck'tck gun module
+  suffix: DO NOT MAP
+  components:
+  - type: Sprite
+    layers:
+    - state: generic
+    - state: icon-grappling-gun
+  - type: ItemBorgModule
+    items:
+    - WeaponPistolEchis
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-weapon-module }
   - type: Tag
     tags:
       - BorgModuleTckTck
