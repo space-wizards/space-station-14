@@ -1,0 +1,32 @@
+- type: vessel
+  id: Botany
+  name: Botany Ship
+  description: A small botanic vessel.
+  price: 15000
+  path:
+  - /Maps/_Impstation/Shuttles/botany.yml
+  categories:
+  - Small
+  - Service
+
+- type: vessel
+  id: Medical
+  name: Medical Ship
+  description: A medium medical vessel.
+  price: 50000
+  path:
+  - /Maps/_Impstation/Shuttles/medical.yml
+  categories:
+  - Medium
+  - Medical
+
+- type: vessel
+  id: Reach
+  name: SS Reach II
+  description: Just order the full reach ship to come by from the depths of space.
+  price: 300000
+  path:
+  - /Maps/_Impstation/reach.yml
+  categories:
+  - Large
+  - Experimental
