@@ -1,16 +1,6 @@
 ﻿Entries:
 - author: formlessnameless
   changes:
-  - message: Minor aesthetic changes to Atlas, Cluster, Train, and Saltern.
-    type: Tweak
-  - message: Fixed some missing device links and wiring on Atlas, Cluster, Train,
-      and Saltern.
-    type: Fix
-  id: 231
-  time: '2024-09-19T17:31:14.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/300
-- author: formlessnameless
-  changes:
   - message: Modified disposals room on Saltern to be more functional
     type: Tweak
   id: 232
@@ -4538,3 +4528,10 @@
   id: 730
   time: '2024-12-13T21:31:44.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1005
+- author: honeyed-lemons
+  changes:
+  - message: Tweaked Boxes Medical
+    type: Tweak
+  id: 731
+  time: '2024-12-13T21:34:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1014
