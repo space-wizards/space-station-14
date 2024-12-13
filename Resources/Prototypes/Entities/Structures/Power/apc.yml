@@ -68,7 +68,6 @@
       input:
         !type:CableDeviceNode
         nodeGroupID: MVPower
-        enabled: false
       output:
         !type:CableDeviceNode
         nodeGroupID: Apc
