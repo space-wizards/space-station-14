@@ -144,7 +144,7 @@
     - CannotSuicide
     - VimPilot
   - type: StealTarget
-    stealGroup: AnimalNamedCat
+    stealGroup: AnimalFinFin
 
 - type: entity
   name: Goji
