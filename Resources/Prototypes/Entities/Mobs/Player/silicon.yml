@@ -305,6 +305,17 @@
   - type: Intellicard
 
 - type: entity
+  id: PlayerStationAiPreview
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: Mobs/Silicon/station_ai.rsi
+    layers:
+    - state: base
+    - state: ai
+      shader: unshaded
+
+- type: entity
   id: PlayerStationAiEmpty
   name: AI Core
   description: The latest in Artificial Intelligences.
@@ -341,6 +352,12 @@
       map: ["unshaded"]
       shader: unshaded
   - type: Appearance
+  - type: InteractionPopup
+    interactSuccessString: petting-success-station-ai
+    interactFailureString: petting-failure-station-ai
+    messagePerceivedByOthers: petting-success-station-ai-others # Otherwise AI cannot tell its being pet as It's just a brain inside of the core, not the core itself.
+    interactSuccessSound:
+      path: /Audio/Ambience/Objects/periodic_beep.ogg
   - type: GenericVisualizer
     visuals:
       enum.StationAiVisualState.Key:
