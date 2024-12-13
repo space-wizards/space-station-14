@@ -242,3 +242,31 @@
   sprite:
     sprite: Structures/Machines/VendingMachines/virodrobe.rsi
     state: broken
+
+- type: stealTargetGroup
+  id: ServiceTechFab
+  name: steal-target-groups-servicetechfab
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: service
+
+- type: stealTargetGroup
+  id: ShiningSpring
+  name: steal-target-groups-shiningspring
+  sprite:
+    sprite: Objects/Weapons/Guns/Launchers/cleaner_lake.rsi
+    state: icon
+
+- type: stealTargetGroup
+  id: ShipyardComputerCircuitboard
+  name: steal-target-groups-shipyardcomputercircuitboard
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: cpu_supply
+
+- type: stealTargetGroup
+  id: CommsComputerCircuitboard
+  name: steal-target-groups-commscomputercircuitboard
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: cpu_command

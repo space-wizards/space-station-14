@@ -4,9 +4,15 @@ steal-target-groups-recruiter-pen = recruiter pen
 steal-target-groups-punpunid = Pun Pun's ID card
 steal-target-groups-firesuit = atmos fire suit
 steal-target-groups-mopbucket = mop bucket
+steal-target-groups-shiningspring = shining spring
+
 steal-target-groups-medtekcartridge = MedTek cartridge
 steal-target-groups-logprobecartridge = LogProbe cartridge
 steal-target-groups-astronavcartridge = AstroNav cartridge
+
+steal-target-groups-servicetechfab = service techfab machine board
+steal-target-groups-shipyardcomputercircuitboard = shipyard computer board
+steal-target-groups-commscomputercircuitboard = communications computer board
 
 # Thief Animal
 
@@ -18,8 +24,10 @@ steal-target-groups-finfinmeat = Fin Fin's Fin-flesh
 steal-target-groups-generator = station's spare power generator
 steal-target-groups-aicore = AI
 steal-target-groups-particleaccelerator = particle accelerator
+
 steal-target-groups-ptech = PTech
 steal-target-groups-sectech = SecTech
+
 steal-target-groups-hydrobe = HyDrobe
 steal-target-groups-lawdrobe = LawDrobe
 steal-target-groups-secdrobe = SecDrobe

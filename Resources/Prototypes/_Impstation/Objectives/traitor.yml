@@ -84,3 +84,16 @@
     stealGroup: WantedListCartridge
   - type: Objective
     difficulty: 1
+
+- type: entity
+  parent: BaseTraitorStealObjective
+  id: ShiningSpringStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Janitor
+  - type: ObjectiveLimit
+    limit: 3
+  - type: StealCondition
+    stealGroup: ShiningSpring
+  - type: Objective
+    difficulty: 0.5

@@ -401,3 +401,53 @@
   - type: Objective
     difficulty: 0.6
 
+- type: entity
+  parent: BaseThiefStealObjective
+  id: ServiceTechFabStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: ServiceTechFab
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: ServiceTechFabStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: ServiceTechFab
+  - type: Objective
+    difficulty: 0.5
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: ShiningSpringStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Janitor
+  - type: ObjectiveLimit
+    limit: 3
+  - type: StealCondition
+    stealGroup: ShiningSpring
+  - type: Objective
+    difficulty: 0.5
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: ShipyardComputerCircuitboardStealObjective
+  components:
+  - type: NotJobRequirement
+    job: SalvageSpecialist
+  - type: StealCondition
+    stealGroup: ShipyardComputerCircuitboard
+  - type: Objective
+    difficulty: 0.7
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: CommsComputerCircuitboardStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: CommsComputerCircuitboard
+  - type: Objective
+    difficulty: 2 #woof

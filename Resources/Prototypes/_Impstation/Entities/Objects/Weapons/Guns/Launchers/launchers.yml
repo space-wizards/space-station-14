@@ -32,6 +32,8 @@
   - type: Construction
     graph: UpgradeWeaponCleanerLake
     node: start
+  - type: StealTarget
+    stealGroup: ShiningSpring
 
 - type: entity
   name: remilitarised shining spring

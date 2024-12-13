@@ -27,3 +27,5 @@
         GlassBeaker:
           amount: 2
           defaultPrototype: Beaker
+    - type: StealTarget
+      stealGroup: ServiceTechFab
