@@ -14,6 +14,8 @@
     sprite: _Impstation/Clothing/Ears/Headsets/commandveteranqm.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Ears/Headsets/commandveteranqm.rsi
+  - type: StealTarget #imp
+    stealGroup: CommandHeadset
 
 - type: entity
   parent: [ClothingHeadset, BaseCommandContraband]
@@ -29,6 +31,8 @@
     sprite: _Impstation/Clothing/Ears/Headsets/commandveteran.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Ears/Headsets/commandveteran.rsi
+  - type: StealTarget #imp
+    stealGroup: CommandHeadset
 
 - type: entity
   parent: [ClothingHeadsetEngineering, BaseCommandContraband]
@@ -46,6 +50,8 @@
     sprite: _Impstation/Clothing/Ears/Headsets/commandveterance.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Ears/Headsets/commandveterance.rsi
+  - type: StealTarget #imp
+    stealGroup: CommandHeadset
 
 - type: entity
   parent: [ClothingHeadsetMedical, BaseCommandContraband]
@@ -63,6 +69,8 @@
     sprite: _Impstation/Clothing/Ears/Headsets/commandveterancmo.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Ears/Headsets/commandveterancmo.rsi
+  - type: StealTarget #imp
+    stealGroup: CommandHeadset
 
 - type: entity
   parent: [ClothingHeadsetScience, BaseCommandContraband]
@@ -80,6 +88,8 @@
     sprite: _Impstation/Clothing/Ears/Headsets/commandveteranrd.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Ears/Headsets/commandveteranrd.rsi
+  - type: StealTarget #imp
+    stealGroup: CommandHeadset
 
 - type: entity
   parent: [ClothingHeadsetSecurity, BaseCommandContraband]
@@ -97,6 +107,8 @@
     sprite: _Impstation/Clothing/Ears/Headsets/commandveteranhos.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Ears/Headsets/commandveteranhos.rsi
+  - type: StealTarget #imp
+    stealGroup: CommandHeadset
 
 - type: entity
   parent: [ClothingHeadsetSecurity, BaseCommandContraband]

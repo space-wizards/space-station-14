@@ -93,6 +93,8 @@
     - type: GuideHelp
       guides:
       - Forensics
+    - type: StealTarget #imp
+      stealGroup: LogProbeCartridge
 
 - type: entity
   parent: BaseItem
@@ -135,6 +137,8 @@
         sprite: Objects/Specific/Medical/healthanalyzer.rsi
         state: icon
     - type: MedTekCartridge
+    - type: StealTarget #imp
+      stealGroup: MedTekCartridge
 
 - type: entity
   parent: BaseItem
@@ -154,3 +158,5 @@
         sprite: Objects/Devices/gps.rsi
         state: icon
     - type: AstroNavCartridge
+    - type: StealTarget #imp
+      stealGroup: AstroNavCartridge
