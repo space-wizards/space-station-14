@@ -11,9 +11,12 @@ steal-target-groups-finfinmeat = Fin Fin's Fin-flesh
 # Thief Structure
 
 steal-target-groups-generator = station's spare power generator
+steal-target-groups-aicore = AI
+steal-target-groups-particleaccelerator = particle accelerator
 
 #Thief Group
 
 steal-target-groups-cigarettes = cigarette
 steal-target-groups-positronicbrains = positronic brain
-steal-target-groups-ailawboards = AI law board
+steal-target-groups-ailawboard = AI law board
+steal-target-groups-commandheadset = commander's headset

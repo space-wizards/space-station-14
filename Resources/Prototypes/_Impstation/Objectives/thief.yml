@@ -42,6 +42,7 @@
     descriptionText: objective-condition-thief-cigarettes
     minCollectionSize: 100
     maxCollectionSize: 1000
+    verifyMapExistence: false
   - type: Objective
     difficulty: 0.3
 
@@ -51,13 +52,14 @@
   components:
   - type: SpeciesRequirement
     allowedSpecies:
-      - Spelf
+      - SpElf
   - type: NotJobRequirement
     job: Scientist
   - type: StealCondition
     stealGroup: PositronicBrains
     minCollectionSize: 1
     maxCollectionSize: 3
+    verifyMapExistence: false
   - type: Objective
     difficulty: 2
 
@@ -73,3 +75,30 @@
     maxCollectionSize: 7
   - type: Objective
     difficulty: 1.6
+
+- type: entity
+  parent: BaseThiefStealStructureObjective
+  id: AICoreStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Scientist
+  - type: StealCondition
+    stealGroup: AICore
+  - type: Objective
+    difficulty: 2.5 #im making this high difficulty so its rare even though objectively it's pretty easy
+
+- type: entity
+  parent: BaseThiefStealStructureObjective
+  id: ParticleAcceleratorStealObjective #lol
+  components:
+  - type: NotJobRequirement
+    job: StationEngineer
+  - type: StealCondition
+    stealGroup: ParticleAccelerator
+    descriptionText: objective-condition-thief-multiply-structure-description
+    minCollectionSize: 1
+    maxCollectionSize: 5
+    verifyMapExistence: false
+  - type: Objective
+    difficulty: 3 #good luck dude
+

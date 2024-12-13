@@ -41,8 +41,29 @@
     state: posibrain
 
 - type: stealTargetGroup
-  id: AILawBoards
-  name: steal-target-groups-ailawboards
+  id: AILawBoard
+  name: steal-target-groups-ailawboard
   sprite:
     sprite: Objects/Misc/module.rsi
     state: std_mod
+
+- type: stealTargetGroup
+  id: CommandHeadset
+  name: steal-target-groups-commandheadset
+  sprite:
+    sprite: Clothing/Ears/Headsets/medical.rsi
+    state: icon_alt
+
+- type: stealTargetGroup
+  id: AICore
+  name: steal-target-groups-aicore
+  sprite:
+    sprite: Mobs/Silicon/station_ai.rsi
+    state: ai
+
+- type: stealTargetGroup
+  id: ParticleAccelerator
+  name: steal-target-groups-particleaccelerator
+  sprite:
+    sprite: Structures/Power/Generation/PA/control_box.rsi
+    state: unwired
