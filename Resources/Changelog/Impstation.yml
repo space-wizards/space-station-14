@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: starlighthowls
-  changes:
-  - message: more ww fixes aaaaaaaaaaa
-    type: Fix
-  id: 228
-  time: '2024-09-19T15:13:15.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/294
 - author: Darkmajia
   changes:
   - message: Added chef shoes, the noir trenchcoat, the scientist's formal jumpsuit,
@@ -4528,3 +4521,10 @@
   id: 727
   time: '2024-12-13T18:48:21.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1008
+- author: Darkmajia
+  changes:
+  - message: Beer now makes you wuhey.
+    type: Add
+  id: 728
+  time: '2024-12-13T20:54:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1011
