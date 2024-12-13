@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: IProduceWidgets
-  changes:
-  - message: Oasis Voxbox is no longer a pressure bomb. (Thanks Delta)
-    type: Fix
-  id: 7204
-  time: '2024-08-25T05:42:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31415
 - author: PopGamer46
   changes:
   - message: Security cadets now spawn with jackboots instead of combat boots
@@ -3919,3 +3912,10 @@
   id: 7703
   time: '2024-12-13T14:24:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33830
+- author: yuitop
+  changes:
+  - message: Anchoring now has higher priority over stashing.
+    type: Tweak
+  id: 7704
+  time: '2024-12-13T23:00:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31779
