@@ -36,3 +36,6 @@
 
 - type: vesselCategory
   id: Security
+
+- type: vesselCategory
+  id: Service
