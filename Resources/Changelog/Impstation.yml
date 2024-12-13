@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: mqole
-  changes:
-  - message: New library book about the TEG!!!!! And other pipes and vents and shit
-      too, I guess.
-    type: Add
-  id: 221
-  time: '2024-09-18T22:05:36.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/285
-- author: formlessnameless
-  changes:
-  - message: Added station anchors to all of the maps I changed previously
-    type: Add
-  id: 222
-  time: '2024-09-19T01:02:43.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/288
-- author: AirFryerBuyOneGetOneFree
-  changes:
-  - message: Heretic blades can now be used to perform executions.
-    type: Tweak
-  id: 223
-  time: '2024-09-19T05:22:46.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/289
 - author: TGRCDev
   changes:
   - message: Placing salt on the ground now reveals revenants who pass over it.
@@ -4513,3 +4491,42 @@
   id: 720
   time: '2024-12-12T01:15:45.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/985
+- author: formlessnameless
+  changes:
+  - message: Changelings now absorb the rest of their current body on use of Last
+      Resort, regaining biomass.
+    type: Tweak
+  - message: Halved the incubation time of the changeling egg so you come back as
+      a monkey sooner.
+    type: Tweak
+  - message: There is now a confirmation popup for Last Resort so you don't accidentally
+      explode into a slug.
+    type: Fix
+  - message: Headslugs can no longer slip. They're slugs. Have you ever seen a slug
+      slip?
+    type: Fix
+  id: 721
+  time: '2024-12-12T02:58:14.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/995
+- author: Darkmajia
+  changes:
+  - message: Changelings have had their evolution point economy significantly rebalanced.
+    type: Tweak
+  - message: Absorbing crewmates grants no evolution points, and absorbing changelings
+      grants fewer evolution points than before.
+    type: Remove
+  - message: Absorption grants changelings the ability to fully refund their evolution
+      points.
+    type: Add
+  id: 722
+  time: '2024-12-12T02:58:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/996
+- author: kipdotnet
+  changes:
+  - message: Tck'tcks now can swap between LV and MV power.
+    type: Tweak
+  - message: Tck'tcks now have sprites for being anchored.
+    type: Tweak
+  id: 723
+  time: '2024-12-12T20:07:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1002
