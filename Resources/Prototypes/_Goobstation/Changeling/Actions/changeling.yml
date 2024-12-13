@@ -299,7 +299,7 @@
 - type: entity
   id: ActionStingLethargic
   name: Lethargic Sting
-  description: We inject a target with a cocktail of anesthetics, inhibiting their movement. Costs a medium amount of chemicals.
+  description: We inject a target with a cocktail of anesthetics, causing them to become slow and drowsy. Costs a medium amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction
@@ -320,7 +320,7 @@
 - type: entity
   id: ActionStingMute
   name: Mute Sting
-  description: We sting a target, silencing them for a short time. Costs a medium amount of chemicals.
+  description: We sting a target, silencing them for a few minutes. Costs a medium amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
   - type: EntityTargetAction
@@ -512,6 +512,7 @@
 - type: entity
   id: ActionLastResort
   name: Last Resort
+  parent: BaseSuicideAction
   description: We abandon our vessel, escaping in our vulnerable true self, to find a new body to occupy. Costs a small amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
@@ -525,6 +526,7 @@
     event: !type:ActionLastResortEvent {}
   - type: ChangelingAction
     chemicalCost: 20
+    biomassCost: -30 # absorbing the rest of the current body on use
     useInLesserForm: true
 
 - type: entity

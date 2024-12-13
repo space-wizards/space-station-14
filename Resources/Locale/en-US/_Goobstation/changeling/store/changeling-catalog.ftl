@@ -53,12 +53,12 @@ evolutionmenu-sting-cryo-desc =
 
 evolutionmenu-sting-lethargic-name = Lethargic Sting
 evolutionmenu-sting-lethargic-desc =
-    We stealithly inject our victim with a cocktail of anesthetics, inhibiting their movement.
+    We stealithly inject our victim with a cocktail of anesthetics, causing them to become slow and drowsy.
     Costs a medium amount of chemicals.
 
 evolutionmenu-sting-mute-name = Mute Sting
 evolutionmenu-sting-mute-desc =
-    We stealthily sting our victim, silencing them for a short time.
+    We stealthily sting our victim, silencing them for a few minutes.
     Costs a medium amount of chemicals.
 
 evolutionmenu-sting-transform-name = Transformation Sting

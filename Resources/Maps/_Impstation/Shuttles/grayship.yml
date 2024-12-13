@@ -3461,8 +3461,6 @@ entities:
       pos: 6.5,7.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 153
@@ -3472,8 +3470,6 @@ entities:
       pos: -5.5,7.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 173
@@ -3483,8 +3479,6 @@ entities:
       pos: -8.5,0.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 212
@@ -3494,8 +3488,6 @@ entities:
       pos: 9.5,-5.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 295
@@ -3513,8 +3505,6 @@ entities:
       pos: 9.5,-1.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 358
@@ -3524,8 +3514,6 @@ entities:
       pos: -8.5,-5.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 360
@@ -3535,8 +3523,6 @@ entities:
       pos: -0.5,-6.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 632
@@ -3546,8 +3532,6 @@ entities:
       pos: 1.5,5.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 651
@@ -3557,8 +3541,6 @@ entities:
       pos: -0.5,3.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
     - type: AtmosPipeColor
       color: '#0055CCFF'
 - proto: GasVentScrubber

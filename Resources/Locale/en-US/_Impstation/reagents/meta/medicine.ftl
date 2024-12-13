@@ -11,4 +11,4 @@ reagent-name-anomalium = anomalium
 reagent-desc-anomalium = A strange liquid of alien origin.
 
 reagent-name-aquamdivinos = aquam divinos
-reagent-desc-aquamdivinos = A brand of holy water blessed by both god and the caring hand of a diviner
+reagent-desc-aquamdivinos = A brand of holy water blessed by both god and the caring hand of a diviner.

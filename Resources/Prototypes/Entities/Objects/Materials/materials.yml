@@ -397,7 +397,6 @@
   - type: Stack
     count: 1
 
-# Following not used currently
 - type: entity
   parent: MaterialBase
   id: MaterialHideBear
@@ -424,6 +423,9 @@
     energy: 1.5
     color: "#4faffb"
     slots:
+  - type: Tag
+    tags:
+      - BearHide
 
 - type: entity
   parent: MaterialBase
