@@ -157,6 +157,7 @@
 - type: entity
   name: Runtime Spawner
   id: SpawnMobCatRuntime
+  suffix: CMO's pet, steal target
   parent: MarkerBase
   components:
   - type: Sprite
@@ -170,6 +171,7 @@
 - type: entity
   name: Exception Spawner
   id: SpawnMobCatException
+  suffix: CMO's pet, steal target
   parent: MarkerBase
   components:
   - type: Sprite
@@ -196,6 +198,7 @@
 - type: entity
   name: Floppa Spawner
   id: SpawnMobCatFloppa
+  suffix: CMO's pet, steal target
   parent: MarkerBase
   components:
   - type: Sprite
@@ -209,6 +212,7 @@
 - type: entity
   name: Bingus Spawner
   id: SpawnMobCatBingus
+  suffix: CMO's pet, steal target
   parent: MarkerBase
   components:
   - type: Sprite
@@ -218,19 +222,6 @@
   - type: ConditionalSpawner
     prototypes:
       - MobBingus
-
-- type: entity
-  name: Pipi Spawner
-  id: SpawnMobCatKittenPipi
-  parent: MarkerBase
-  components:
-  - type: Sprite
-    layers:
-      - state: green
-      - state: ai
-  - type: ConditionalSpawner
-    prototypes:
-      - MobPipi
 
 - type: entity
   name: Space Cat Spawner
@@ -261,6 +252,7 @@
 - type: entity
   name: Cat Spawner
   id: SpawnMobCat
+  suffix: CMO's pet, steal target
   parent: MarkerBase
   components:
   - type: Sprite
