@@ -35,5 +35,5 @@
   - type: SeedExtractor
   - type: Machine
     board: SeedExtractorMachineCircuitboard
-  - type: StealTarget
+  - type: StealTarget #imp
     stealGroup: SeedExtractor
