@@ -1,0 +1,5 @@
+# Decapoid Empire property, antag or otherwise.
+# NT does not have approval to hand this stuff out
+- type: contrabandSeverity
+  id: DecapoidEmpire
+  examineText: contraband-examine-text-DecapoidEmpire
