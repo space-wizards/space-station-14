@@ -411,9 +411,8 @@
   components:
   - type: StealCondition
     stealGroup: CommandHeadset
-    minCollectionSize: 4
-    maxCollectionSize: 12
-    verifyMapExistence: false
+    minCollectionSize: 1
+    maxCollectionSize: 7
   - type: Objective
     difficulty: 1.5
 
