@@ -97,12 +97,12 @@
 # Silicon
 - type: entity
   parent: BaseMindRole
-  id: MindRoleBorgBrain
+  id: MindRoleSiliconBrain
   name: Borg Brain Role
   components:
   - type: MindRole
     roleType: Silicon
-  - type: BorgBrainRole
+  - type: SiliconBrainRole
 
 - type: entity
   parent: BaseMindRoleAntag
