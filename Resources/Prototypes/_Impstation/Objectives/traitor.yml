@@ -32,3 +32,11 @@
 
 #steal
 
+- type: entity
+  parent: BaseTraitorStealObjective
+  id: FinFinMeatStealObjective
+  components:
+  - type: ObjectiveLimit
+    limit: 4
+  - type: StealCondition
+    stealGroup: FoodMeatFinfin

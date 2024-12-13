@@ -6,7 +6,7 @@
   components:
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Pets/pipi.rsi
+    sprite: _Impstation/Mobs/Pets/pipi.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: pipi
@@ -69,7 +69,7 @@
   components:
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Pets/finfin.rsi
+    sprite: _Impstation/Mobs/Pets/finfin.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: finfin

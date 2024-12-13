@@ -329,6 +329,8 @@
     - type: Tag #  Ignore Chameleon tags
       tags:
       - DoorBumpOpener
+    - type: StealTarget
+      stealGroup: PunpunID # imp, makes his card ineligible for the main ID card steal objective but i think we might survive
 
 - type: entity
   parent: IDCardStandard

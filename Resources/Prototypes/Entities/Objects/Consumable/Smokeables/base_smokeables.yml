@@ -49,6 +49,8 @@
   - type: FoodSequenceElement
     entries:
       Burger: CigarBurger
+  - type: StealTarget #imp. this makes cigars and pipes eligible but who gives a fuck
+    stealGroup: Cigarettes
 
 - type: entity
   parent: BaseSmokable
