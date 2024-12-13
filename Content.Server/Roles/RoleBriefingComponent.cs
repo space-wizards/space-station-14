@@ -6,7 +6,7 @@ namespace Content.Server.Roles;
 /// Adds a briefing to the character info menu, does nothing else.
 /// </summary>
 [RegisterComponent]
-public sealed partial class RoleBriefingComponent : BaseRoleComponent
+public sealed partial class RoleBriefingComponent : BaseMindRoleComponent
 {
     [DataField]
     public string Briefing;
