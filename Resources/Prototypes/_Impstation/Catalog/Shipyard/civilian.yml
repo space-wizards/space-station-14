@@ -22,8 +22,8 @@
 
 - type: vessel
   id: Reach
-  name: SS Reach II
-  description: Just order reach to come by from the depths of space.
+  name: NTSC Reach Transport QT-900
+  description: Just order Reach to come by from the depths of space.
   price: 300000
   path:
   - /Maps/_Impstation/Shuttles/reach_shuttle.yml
