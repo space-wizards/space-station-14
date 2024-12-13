@@ -23,10 +23,10 @@
 - type: vessel
   id: Reach
   name: SS Reach II
-  description: Just order the full reach ship to come by from the depths of space.
+  description: Just order reach to come by from the depths of space.
   price: 300000
   path:
-  - /Maps/_Impstation/reach.yml
+  - /Maps/_Impstation/Shuttles/reach_shuttle.yml
   categories:
   - Large
   - Experimental
