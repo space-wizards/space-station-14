@@ -6,25 +6,11 @@
     state: finfin
 
 - type: stealTargetGroup
-  id: FoodMeatFinfin
-  name: steal-target-groups-finfinmeat
-  sprite:
-    sprite: Objects/Consumable/Food/meat.rsi #todo move this png out of upstream meat.rsi
-    state: finfin
-
-- type: stealTargetGroup
   id: Generator #singulo or tesla generator
   name: steal-target-groups-generator
   sprite:
     sprite: Structures/Power/Generation/Singularity/generator.rsi
     state: icon
-
-- type: stealTargetGroup
-  id: PunpunID
-  name: steal-target-groups-punpunid
-  sprite:
-    sprite: Objects/Misc/id_cards.rsi
-    state: default
 
 - type: stealTargetGroup
   id: Cigarettes
@@ -263,13 +249,6 @@
   sprite:
     sprite: Objects/Misc/module.rsi
     state: cpu_supply
-
-- type: stealTargetGroup
-  id: CommsComputerCircuitboard
-  name: steal-target-groups-commscomputercircuitboard
-  sprite:
-    sprite: Objects/Misc/module.rsi
-    state: cpu_command
 
 - type: stealTargetGroup
   id: Plushie

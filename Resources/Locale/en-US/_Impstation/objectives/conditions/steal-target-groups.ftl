@@ -1,7 +1,6 @@
 # Thief single item
 
 steal-target-groups-recruiter-pen = recruiter pen
-steal-target-groups-punpunid = Pun Pun's ID card
 steal-target-groups-firesuit = atmos fire suit
 steal-target-groups-mopbucket = mop bucket
 steal-target-groups-shiningspring = shining spring
@@ -50,8 +49,8 @@ steal-target-groups-virodrobe = ViroDrobe
 
 # Thief Group
 
-steal-target-groups-cigarettes = cigarettes
-steal-target-groups-positronicbrains = positronic brains
-steal-target-groups-ailawboard = AI law boards
-steal-target-groups-commandheadset = commander's headsets
-steal-target-groups-plushie = plushies
+steal-target-groups-cigarettes = cigarette
+steal-target-groups-positronicbrains = positronic brain
+steal-target-groups-ailawboard = AI law board
+steal-target-groups-commandheadset = commander's headset
+steal-target-groups-plushie = plushie

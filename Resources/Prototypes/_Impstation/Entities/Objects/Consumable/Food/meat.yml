@@ -23,8 +23,6 @@
     graph: FinfinSteak
     node: start
     defaultTarget: cooked finfin
-  - type: StealTarget
-    stealGroup: FoodMeatFinfin
 
 - type: entity
   name: cooked Fin Fin

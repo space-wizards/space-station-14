@@ -316,24 +316,6 @@
 
 - type: entity
   parent: IDCardStandard
-  id: PunPunIDCard
-  name: pun pun ID card
-  components:
-    - type: Sprite
-      layers:
-        - state: default
-        - state: idbartender
-    - type: PresetIdCard
-      job: Bartender
-      name: Pun Pun
-    - type: Tag #  Ignore Chameleon tags
-      tags:
-      - DoorBumpOpener
-    - type: StealTarget
-      stealGroup: PunpunID # imp, makes his card ineligible for the main ID card steal objective but i think we might survive
-
-- type: entity
-  parent: IDCardStandard
   id: ChefIDCard
   name: chef ID card
   components:

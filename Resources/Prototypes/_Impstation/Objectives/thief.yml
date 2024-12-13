@@ -20,17 +20,6 @@
     difficulty: 1.5
 
 - type: entity
-  parent: BaseThiefStealObjective
-  id: PunpunIDCardStealObjective
-  components:
-  - type: NotJobRequirement
-    job: Bartender
-  - type: StealCondition
-    stealGroup: PunpunID
-  - type: Objective
-    difficulty: 0.1
-
-- type: entity
   parent: BaseThiefStealCollectionObjective
   id: CigaretteStealCollectionObjective
   components:
@@ -40,8 +29,8 @@
   - type: StealCondition
     stealGroup: Cigarettes
     descriptionText: objective-condition-thief-cigarettes
-    minCollectionSize: 100
-    maxCollectionSize: 1000
+    minCollectionSize: 1
+    maxCollectionSize: 30
     verifyMapExistence: false
   - type: Objective
     difficulty: 0.3
@@ -100,7 +89,7 @@
     maxCollectionSize: 5
     verifyMapExistence: false
   - type: Objective
-    difficulty: 3 #good luck dude
+    difficulty: 2.5 #good luck dude
 
 - type: entity
   parent: BaseThiefStealObjective
@@ -134,7 +123,7 @@
 
 - type: entity
   parent: BaseThiefStealObjective
-  id: MedTekCartridgeThiefStealObjective
+  id: MedTekCartridgeStealObjective
   components:
   - type: NotJobRequirement
     job: MedicalDoctor
@@ -145,7 +134,7 @@
 
 - type: entity
   parent: BaseThiefStealObjective
-  id: LogProbeCartridgeThiefStealObjective
+  id: LogProbeCartridgeStealObjective
   components:
   - type: NotJobRequirement
     job: Detective #you know. just in case
@@ -156,7 +145,7 @@
 
 - type: entity
   parent: BaseThiefStealObjective
-  id: AstroNavCartridgeThiefStealObjective
+  id: AstroNavCartridgeStealObjective
   components:
   - type: NotJobRequirement
     job: SalvageSpecialist
@@ -396,12 +385,10 @@
 
 - type: entity
   parent: BaseThiefStealObjective
-  id: ShiningSpringThiefStealObjective
+  id: ShiningSpringStealObjective
   components:
   - type: NotJobRequirement
     job: Janitor
-  - type: ObjectiveLimit
-    limit: 3
   - type: StealCondition
     stealGroup: ShiningSpring
   - type: Objective
@@ -419,13 +406,16 @@
     difficulty: 0.7
 
 - type: entity
-  parent: BaseThiefStealObjective
-  id: CommsComputerCircuitboardStealObjective
+  parent: BaseThiefStealCollectionObjective
+  id: ClothingCommandHeadsetStealObjective #imp edit: i'm branching this out from just the CMO's headset to all command headsets so there is less of a blatant kick-me sign on the CMO
   components:
   - type: StealCondition
-    stealGroup: CommsComputerCircuitboard
+    stealGroup: CommandHeadset
+    minCollectionSize: 4
+    maxCollectionSize: 12
+    verifyMapExistence: false
   - type: Objective
-    difficulty: 2 #woof
+    difficulty: 1.5
 
 - type: entity
   parent: BaseThiefStealCollectionObjective
@@ -436,7 +426,7 @@
     minCollectionSize: 12
     maxCollectionSize: 50
   - type: Objective
-    difficulty: 1.25
+    difficulty: 1.2
 
 - type: entity
   parent: BaseThiefStealStructureObjective

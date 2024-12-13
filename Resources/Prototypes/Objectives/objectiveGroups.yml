@@ -22,13 +22,6 @@
     CaptainJetpackStealObjective: 0.5
     HandTeleporterStealObjective: 0.5
     EnergyShotgunStealObjective: 0.5
-    #imp
-    ShiningSpringTraitorStealObjective: 1
-    WantedListCartridgeTraitorStealObjective: 1
-    AstroNavCartridgeTraitorStealObjective: 1
-    LogProbeCartridgeTraitorStealObjective: 1
-    MedTekCartridgeTraitorStealObjective: 1
-    FinFinMeatStealObjective: 1
 
 - type: weightedRandom
   id: TraitorObjectiveGroupKill
@@ -86,7 +79,7 @@
     ForensicScannerStealObjective: 1                    #sec
     FlippoEngravedLighterStealObjective: 0.5
     ClothingHeadHatWardenStealObjective: 1
-    WantedListCartridgeThiefStealObjective: 1
+    WantedListCartridgeStealObjective: 1
     ClothingOuterHardsuitVoidParamedStealObjective: 1   #med
     MedicalTechFabCircuitboardStealObjective: 1
     # ClothingHeadsetAltMedicalStealObjective: 1
@@ -100,16 +93,14 @@
     ClothingNeckGoldmedalStealObjective: 1              #other
     ClothingNeckClownmedalStealObjective: 0.5
     #imp
-    PunpunIDCardStealObjective: 1
     AtmosFireSuitStealObjective: 1 #fire vuln species only
     MopBucketStealObjective: 1 #slimes only. idk someone wanted this
-    MedTekCartridgeThiefStealObjective: 1
-    LogProbeCartridgeThiefStealObjective: 1
-    AstroNavCartridgeThiefStealObjective: 1
+    MedTekCartridgeStealObjective: 1
+    LogProbeCartridgeStealObjective: 1
+    AstroNavCartridgeStealObjective: 1
     ServiceTechFabStealObjective: 1
-    ShiningSpringThiefStealObjective: 1
+    ShiningSpringStealObjective: 1
     ShipyardComputerCircuitboardStealObjective: 1
-    CommsComputerCircuitboardStealObjective: 1
 
 - type: weightedRandom
   id: ThiefObjectiveGroupStructure

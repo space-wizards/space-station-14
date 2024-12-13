@@ -175,7 +175,7 @@
 
 - type: entity
   parent: BaseThiefStealObjective
-  id: WantedListCartridgeThiefStealObjective #imp
+  id: WantedListCartridgeStealObjective
   components:
   - type: StealCondition
     stealGroup: WantedListCartridge
@@ -204,17 +204,16 @@
   - type: Objective
     difficulty: 1
 
-- type: entity
-  parent: BaseThiefStealCollectionObjective
-  id: ClothingCommandHeadsetStealObjective #imp edit: i'm branching this out from just the CMO's headset to all command headsets so there is less of a blatant kick-me sign on the CMO
-  components:
-  - type: StealCondition
-    stealGroup: CommandHeadset
-    minCollectionSize: 4
-    maxCollectionSize: 12
-    verifyMapExistence: false
-  - type: Objective
-    difficulty: 1.5
+#- type: entity
+  #parent: BaseThiefStealObjective
+  #id: ClothingHeadsetAltMedicalStealObjective
+  #components:
+  #- type: NotJobRequirement
+  #  job: ChiefMedicalOfficer
+  #- type: StealCondition
+  #  stealGroup: ClothingHeadsetAltMedical
+  #- type: Objective
+  #  difficulty: 1
 
 - type: entity                                      #Engineering subgroup
   parent: BaseThiefStealObjective

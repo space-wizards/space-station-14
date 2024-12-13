@@ -266,8 +266,6 @@
       state: cpu_command
     - type: ComputerBoard
       prototype: ComputerComms
-    - type: StealTarget #imp. this might be a bad idea
-      stealGroup: CommsComputerCircuitboard
 
 - type: entity
   parent: [ BaseComputerCircuitboard, BaseSyndicateContraband ]
