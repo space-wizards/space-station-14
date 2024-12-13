@@ -1,28 +1,4 @@
 ﻿Entries:
-- author: TGRCDev
-  changes:
-  - message: Placing salt on the ground now reveals revenants who pass over it.
-    type: Tweak
-  id: 224
-  time: '2024-09-19T05:22:35.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/278
-- author: Darkmajia
-  changes:
-  - message: Fix tiktok announcer voiceline for power grid back online
-    type: Fix
-  id: 225
-  time: '2024-09-19T13:25:46.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/297
-- author: KingMudkipIII
-  changes:
-  - message: 'Added Four new drinks: Bloodier Mary, Salvager''s Soothe, Hummingbird''s
-      Delight, and Dont Tell D Sheriff.'
-    type: Add
-  - message: Hippies Delight now gets you high.
-    type: Fix
-  id: 226
-  time: '2024-09-19T15:14:19.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/292
 - author: hivehum
   changes:
   - message: Spy v Spy is now less common.
@@ -4530,3 +4506,25 @@
   id: 723
   time: '2024-12-12T20:07:22.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1002
+- author: formlessnameless
+  changes:
+  - message: Gas prices are both higher and lower. Frezon up to 3 spesos per mol,
+      Tritium down to 2 per mol.
+    type: Tweak
+  id: 724
+  time: '2024-12-13T10:19:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/997
+- author: formlessnameless
+  changes:
+  - message: Vent crawlers now have different vent entry times based on their size.
+    type: Tweak
+  id: 725
+  time: '2024-12-13T10:20:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1000
+- author: Darkmajia
+  changes:
+  - message: The greytide virus event has been disabled.
+    type: Remove
+  id: 726
+  time: '2024-12-13T10:19:19.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1010
