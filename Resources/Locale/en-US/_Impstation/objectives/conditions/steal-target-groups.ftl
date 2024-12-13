@@ -48,7 +48,7 @@ steal-target-groups-robodrobe = RoboDrobe
 steal-target-groups-genedrobe = GeneDrobe
 steal-target-groups-virodrobe = ViroDrobe
 
-#Thief Group
+# Thief Group
 
 steal-target-groups-cigarettes = cigarettes
 steal-target-groups-positronicbrains = positronic brains
