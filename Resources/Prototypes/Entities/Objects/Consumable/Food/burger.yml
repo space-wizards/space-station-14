@@ -578,9 +578,6 @@
     flavors:
       - meaty
       - spicy
-  - type: Tag
-    tags:
-    - Meat
   - type: Sprite
     state: fivealarm
   - type: SolutionContainerManager
@@ -596,6 +593,9 @@
           Quantity: 5
         - ReagentId: Vitamin
           Quantity: 1
+  - type: Tag
+    tags:
+    - Meat
 
 # Tastes like bun, HEAT.
 
