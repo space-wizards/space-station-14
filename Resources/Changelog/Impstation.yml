@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Spy v Spy is now less common.
-    type: Tweak
-  id: 227
-  time: '2024-09-19T15:13:06.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/290
 - author: starlighthowls
   changes:
   - message: more ww fixes aaaaaaaaaaa
@@ -4528,3 +4521,10 @@
   id: 726
   time: '2024-12-13T10:19:19.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1010
+- author: widgetbeck
+  changes:
+  - message: Goblin event weights adjusted to make them more common.
+    type: Tweak
+  id: 727
+  time: '2024-12-13T18:48:21.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1008
