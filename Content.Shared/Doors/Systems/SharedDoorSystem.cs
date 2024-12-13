@@ -480,6 +480,8 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (!Resolve(uid, ref door, ref physics))
             return false;
 
+        door.Partial = true;
+
         // Make sure no entity walked into the airlock when it started closing.
         if (!CanClose(uid, door))
         {
@@ -490,7 +492,6 @@ public abstract partial class SharedDoorSystem : EntitySystem
             return false;
         }
 
-        door.Partial = true;
         SetCollidable(uid, true, door, physics);
         door.NextStateChange = GameTiming.CurTime + door.CloseTimeTwo;
         Dirty(uid, door);
