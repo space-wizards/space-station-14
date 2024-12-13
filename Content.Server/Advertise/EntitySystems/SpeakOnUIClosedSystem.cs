@@ -42,7 +42,7 @@ public sealed partial class SpeakOnUIClosedSystem : EntitySystem
             return false;
 
         var message = Loc.GetString(_random.Pick(messagePack.Values), ("name", Name(entity)));
-        _chat.TrySendInGameICMessage(entity, message, InGameICChatType.Speak, true);
+        _chat.TrySendInGameICMessage(entity, message);
         entity.Comp.Flag = false;
         return true;
     }

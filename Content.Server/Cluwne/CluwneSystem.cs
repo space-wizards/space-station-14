@@ -3,6 +3,7 @@ using Content.Server.Popups;
 using Content.Shared.Popups;
 using Content.Shared.Mobs;
 using Content.Server.Chat;
+using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Shared.Chat.Prototypes;
 using Robust.Shared.Random;
@@ -28,6 +29,7 @@ public sealed class CluwneSystem : EntitySystem
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
     [Dependency] private readonly NameModifierSystem _nameMod = default!;
@@ -93,14 +95,16 @@ public sealed class CluwneSystem : EntitySystem
         if (_robustRandom.Prob(component.GiggleRandomChance))
         {
             _audio.PlayPvs(component.SpawnSound, uid);
-            _chat.TrySendInGameICMessage(uid, "honks", InGameICChatType.Emote, ChatTransmitRange.Normal);
+            // Probably should be localized
+            _chatManager.SendChannelMessage("honks", "Emote", null, uid);
         }
 
         else if (_robustRandom.Prob(component.KnockChance))
         {
             _audio.PlayPvs(component.KnockSound, uid);
             _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(component.ParalyzeTime), true);
-            _chat.TrySendInGameICMessage(uid, "spasms", InGameICChatType.Emote, ChatTransmitRange.Normal);
+            // Probably should be localized
+            _chatManager.SendChannelMessage("spasms", "Emote", null, uid);
         }
     }
 

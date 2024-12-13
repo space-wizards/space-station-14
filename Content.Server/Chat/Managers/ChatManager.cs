@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -49,6 +50,7 @@ internal sealed partial class ChatManager : IChatManager
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly PlayerRateLimitManager _rateLimitManager = default!;
+    [Dependency] private readonly ISharedContentMarkupTagManager _contentMarkupTagManager = default!;
 
     /// <summary>
     /// The maximum length a player-sent message can be sent
@@ -77,7 +79,7 @@ internal sealed partial class ChatManager : IChatManager
 
         _oocEnabled = val;
         // CHAT-TODO: Get this (maybe move to ChatSystem?)
-        //DispatchServerAnnouncement(Loc.GetString(val ? "chat-manager-ooc-chat-enabled-message" : "chat-manager-ooc-chat-disabled-message"));
+        DispatchServerAnnouncement(Loc.GetString(val ? "chat-manager-ooc-chat-enabled-message" : "chat-manager-ooc-chat-disabled-message"));
     }
 
     private void OnAdminOocEnabledChanged(bool val)
@@ -86,7 +88,7 @@ internal sealed partial class ChatManager : IChatManager
 
         _adminOocEnabled = val;
         // CHAT-TODO: Get this (maybe move to ChatSystem?)
-        //DispatchServerAnnouncement(Loc.GetString(val ? "chat-manager-admin-ooc-chat-enabled-message" : "chat-manager-admin-ooc-chat-disabled-message"));
+        DispatchServerAnnouncement(Loc.GetString(val ? "chat-manager-admin-ooc-chat-enabled-message" : "chat-manager-admin-ooc-chat-disabled-message"));
     }
 
     public void DeleteMessagesBy(NetUserId uid)
@@ -111,42 +113,121 @@ internal sealed partial class ChatManager : IChatManager
         return user;
     }
 
-    #region Server Announcements
+    #region Public Chat API
+
+    public void SendAdminAnnouncement(string message, AdminFlags? flags = null)
+    {
+        if (flags != null)
+        {
+            var clients = _adminManager.ActiveAdmins.Where(p =>
+            {
+                var adminData = _adminManager.GetAdminData(p);
+
+                DebugTools.AssertNotNull(adminData);
+
+                if (adminData == null)
+                    return false;
+
+                if ((adminData.Flags & flags) == 0)
+                    return false;
+
+                return true;
+
+            });
+
+            SendChannelMessage(message, "AdminChat", null, null, clients.ToHashSet(), false);
+        }
+        else
+        {
+            SendChannelMessage(message, "AdminAlert", null, null, null, false);
+        }
+    }
+
+    public void SendAdminAnnouncementMessage(ICommonSession player, string message, bool suppressLog = true)
+    {
+        var wrappedMessage = Loc.GetString("chat-manager-send-admin-announcement-wrap-message",
+            ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")),
+            ("message", FormattedMessage.EscapeText(message)));
+        SendChannelMessage(wrappedMessage, "AdminAlert", null, null, new HashSet<ICommonSession>() { player }, logMessage: suppressLog);
+    }
+
+    public void SendAdminAlert(string message)
+    {
+        SendChannelMessage(message, "AdminAlert", null, null);
+    }
+
+    // CHAT-TODO: This can probably be refactored into using markup tags.
+    public void SendAdminAlert(EntityUid player, string message)
+    {
+        var mindSystem = _entityManager.System<SharedMindSystem>();
+        if (!mindSystem.TryGetMind(player, out var mindId, out var mind))
+        {
+            SendAdminAlert(message);
+            return;
+        }
+
+        var adminSystem = _entityManager.System<AdminSystem>();
+        var antag = mind.UserId != null && (adminSystem.GetCachedPlayerInfo(mind.UserId.Value)?.Antag ?? false);
+
+        SendAdminAlert($"{mind.Session?.Name}{(antag ? " (ANTAG)" : "")} {message}");
+    }
+
+    public void SendHookOOC(string sender, string message)
+    {
+        if (!_oocEnabled && _configurationManager.GetCVar(CCVars.DisablingOOCDisablesRelay))
+        {
+            return;
+        }
+        // Probably should be formatted using markup, but since it's a hook I'm a bit uncertain
+        var wrappedMessage = Loc.GetString("chat-manager-send-hook-ooc-wrap-message", ("senderName", sender), ("message", FormattedMessage.EscapeText(message)));
+        SendChannelMessage(wrappedMessage, "OOC", null, null);
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Hook OOC from {sender}: {message}");
+    }
+
+    public void DispatchServerAnnouncement(string message)
+    {
+        var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", FormattedMessage.EscapeText(message)));
+        SendChannelMessage(wrappedMessage, "Server", null, null);
+        Logger.InfoS("SERVER", message);
+
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Server announcement: {message}");
+    }
+
+    public void DispatchServerMessage(ICommonSession player, string message, bool suppressLog = false)
+    {
+        var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", FormattedMessage.EscapeText(message)));
+        SendChannelMessage(wrappedMessage, "Server", null, null, new HashSet<ICommonSession>() { player }, logMessage: suppressLog);
+
+        if (!suppressLog)
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Server message to {player:Player}: {message}");
+    }
 
     #endregion
 
-    #region Public OOC Chat API
+    #region Base Chat Functionality
 
-    #endregion
-
-    #region Private API
-
-    #endregion
-
-    #region Main Content
-
-    public void HandleMessage(string message, string communicationChannel, ICommonSession? senderSession, EntityUid? senderEntity, HashSet<ICommonSession>? targetSessions = null, bool escapeText = true, Dictionary<Enum, object>? supplierParameters = null, bool logMessage = true)
+    public void SendChannelMessage(string message, string communicationChannel, ICommonSession? senderSession, EntityUid? senderEntity, HashSet<ICommonSession>? targetSessions = null, bool escapeText = true, Dictionary<Enum, object>? supplierParameters = null, bool logMessage = true)
     {
         var formattedMessage = escapeText ? FormattedMessage.FromMarkupPermissive(message, out string? error) : FormattedMessage.FromUnformatted(FormattedMessage.EscapeText(message));
 
-        HandleMessage(formattedMessage, communicationChannel, senderSession, senderEntity, targetSessions, supplierParameters);
+        SendChannelMessage(formattedMessage, communicationChannel, senderSession, senderEntity, targetSessions, supplierParameters);
     }
 
-    public void HandleMessage(FormattedMessage message, string communicationChannel, ICommonSession? senderSession, EntityUid? senderEntity, HashSet<ICommonSession>? targetSessions = null, Dictionary<Enum, object>? supplierParameters = null, bool logMessage = true)
+    public void SendChannelMessage(FormattedMessage message, string communicationChannel, ICommonSession? senderSession, EntityUid? senderEntity, HashSet<ICommonSession>? targetSessions = null, Dictionary<Enum, object>? supplierParameters = null, bool logMessage = true)
     {
         _prototypeManager.TryIndex<CommunicationChannelPrototype>(communicationChannel, out var proto);
         var usedCommsTypes = new List<CommunicationChannelPrototype>();
 
         if (proto != null)
-            HandleMessage(message, proto, senderSession, senderEntity, ref usedCommsTypes, targetSessions, supplierParameters);
+            SendChannelMessage(message, proto, senderSession, senderEntity, ref usedCommsTypes, targetSessions, supplierParameters);
     }
 
-    public void HandleMessage(FormattedMessage message, string communicationChannel, ICommonSession? senderSession, EntityUid? senderEntity, ref List<CommunicationChannelPrototype> usedCommsTypes, HashSet<ICommonSession>? targetSessions = null, Dictionary<Enum, object>? supplierParameters = null, bool logMessage = true)
+    public void SendChannelMessage(FormattedMessage message, string communicationChannel, ICommonSession? senderSession, EntityUid? senderEntity, ref List<CommunicationChannelPrototype> usedCommsTypes, HashSet<ICommonSession>? targetSessions = null, Dictionary<Enum, object>? supplierParameters = null, bool logMessage = true)
     {
         _prototypeManager.TryIndex<CommunicationChannelPrototype>(communicationChannel, out var proto);
 
         if (proto != null)
-            HandleMessage(message, proto, senderSession, senderEntity, ref usedCommsTypes, targetSessions, supplierParameters);
+            SendChannelMessage(message, proto, senderSession, senderEntity, ref usedCommsTypes, targetSessions, supplierParameters);
     }
 
     /// <summary>
@@ -159,193 +240,230 @@ internal sealed partial class ChatManager : IChatManager
     /// <param name="usedCommsChannels">Tracks the communication channels used. Helps prevent infinitely recursive messages.</param>
     /// <param name="targetSessions">Any sessions that should be specifically targetted (still needs to comply with channel consume conditions). If you are targetting multiple sessions you should likely use a consumeCollection instead of this.</param>
     /// <param name="supplierParameters">Parameters that may be used by MarkupSuppliers; these are not passed on to the client.</param>
-    public void HandleMessage(
+    public void SendChannelMessage(
         FormattedMessage message,
         CommunicationChannelPrototype communicationChannel,
         ICommonSession? senderSession,
         EntityUid? senderEntity,
         ref List<CommunicationChannelPrototype> usedCommsChannels,
         HashSet<ICommonSession>? targetSessions = null,
-        Dictionary<Enum, object>? supplierParameters = null,
+        Dictionary<Enum, object>? channelParameters = null,
         bool logMessage = true)
     {
-        //CHAT-TODO: Step 1
-        //First there needs to be verification; can the client/entity attempting to send this message actually do it?
 
-        //If the comms type is non-repeatable, i.e. the message may only ever be sent once on that comms channel, check for it and block if it has been sent.
+        #region Prep-Step
+
+        // This section handles setting up the parameters and any other business that should happen before validation starts.
+
+        // If the comms type is non-repeatable (i.e. the message may only ever be sent ONCE on that comms channel) check for it and block if it has been sent.
         if (communicationChannel.NonRepeatable && usedCommsChannels.Contains(communicationChannel))
             return;
 
-        // If senderSession is null, it means the server is sending the message.
-        if (senderSession != null)
+        // Set the channel parameters, and supply any custom ones if necessary.
+        var compiledChannelParameters = communicationChannel.ChannelParameters;
+        if (channelParameters != null)
         {
-            var publishSessionChatConditions = communicationChannel.PublishSessionChatConditions;
-
-            var allowPublish = false;
-            foreach (var condition in publishSessionChatConditions)
-            {
-                var result = condition.ProcessCondition(new HashSet<ICommonSession>() { senderSession }, senderEntity);
-
-                //If the session succeeds in any of the publish conditions, no need to do any remaining ones.
-                if (result.Count > 0)
-                {
-                    allowPublish = true;
-                    break;
-                }
-            }
-
-            if (!allowPublish)
-            {
-                return;
-            }
-            Logger.Debug(senderSession.ToString()!);
-        }
-        else if (!communicationChannel.AllowServerMessages)
-        {
-            return;
+            channelParameters.ToList()
+                .ForEach(x => compiledChannelParameters[x.Key] = x.Value);
         }
 
-        //CHAT-TODO: Step 1b
-        // If senderEntity is null, it means it's either a player in a lobby messaging, or the server sending a message without any associated entity.
+        // Includes the sender as a parameter for nodes that need it
         if (senderEntity != null)
-        {
-            var basePublishEntityChatCondition = new EntityChatCondition(communicationChannel.PublishEntityChatConditions);
+            compiledChannelParameters[DefaultChannelParameters.SenderEntity] = senderEntity.Value;
 
-            var result = basePublishEntityChatCondition.ProcessCondition(new HashSet<EntityUid>() { senderEntity.Value }, senderEntity);
+        if (senderSession != null)
+            compiledChannelParameters[DefaultChannelParameters.SenderSession] = senderSession;
 
-            if (result.Count == 0)
-                return;
+        // Include a random seed based on the message's hashcode.
+        // Since the message has yet to be formatted by anything, any child channels should get the same random seed.
+        compiledChannelParameters[DefaultChannelParameters.RandomSeed] = message.GetHashCode();
 
-            foreach (var test in result)
-            {
-                if (test != null)
-                    Logger.Debug(test.ToString()!);
-            }
-        }
-        else if (!communicationChannel.AllowEntitylessMessages)
+        #endregion
+
+        #region Publisher Validation
+
+        // This section handles validating the publisher based on ChatConditions, and passing on the message should the validation fail.
+
+        if (!communicationChannel.AllowEntitylessMessages && senderEntity == null)
         {
             Logger.Debug("EntitylessMessageNotAllowed");
             return;
         }
 
+        var failedPublishing = false;
+
+        // If senderSession is null, it means the server is sending the message.
+        if (senderSession != null)
+        {
+            Logger.Debug("senderSession not null");
+            var basePublishSessionChatCondition = new SessionChatCondition(communicationChannel.PublishSessionChatConditions, new List<EntityChatCondition>());
+
+            var result = basePublishSessionChatCondition.ProcessCondition(new HashSet<ICommonSession>() { senderSession }, compiledChannelParameters);
+
+            var allowPublish = false;
+
+            if (result.Count > 0)
+            {
+                Logger.Debug("Count is over 0");
+                allowPublish = true;
+            }
+
+            if (!allowPublish)
+            {
+                failedPublishing = true;
+            }
+        }
+        else if (!communicationChannel.AllowServerMessages)
+        {
+            Logger.Debug("ServerMessageNotAllowed");
+            return;
+        }
+
+        // If the sender failed the publishing conditions, this attempt a back-up channel.
+        // Useful for e.g. making ghosts sending LOOC messages to speak in Deadchat instead.
+        if (failedPublishing)
+        {
+            var backupChildChannels = HandleChildChannels(communicationChannel, communicationChannel.BackupChildCommunicationChannels);
+            if (backupChildChannels.Count > 0)
+            {
+                foreach (var backupChildChannel in backupChildChannels)
+                {
+                    SendChannelMessage(
+                        message,
+                        backupChildChannel,
+                        senderSession,
+                        senderEntity,
+                        ref usedCommsChannels,
+                        targetSessions);
+                }
+            }
+        }
+
+        if (failedPublishing)
+            return;
+
         //At this point we may assume that the message is publishing; as such, it should be recorded in the usedCommsTypes.
         if (communicationChannel.NonRepeatable)
             usedCommsChannels.Add(communicationChannel);
 
-        //CHAT-TODO: Step 2
-        //Then, there needs to be a filter for who the message should be sent to. This value gets saved.
+        #endregion
+
+        #region Consumers
+
+        // This section handles sending out the message to consumers, whether that be sessions or entities.
 
         var exemptSessions = new HashSet<ICommonSession>();
         var exemptEntities = new HashSet<EntityUid>();
 
+        // ConsumeCollections allow us to modify the message with different ChatModifiers based on the recipients
         foreach (var consumeCollection in communicationChannel.ConsumeCollections)
         {
+            // We start by looking at sessions
 
-            // First we look at eligible sessions
             var eligibleConsumerSessions = new HashSet<ICommonSession>();
             if (consumeCollection.ConsumeSessionChatConditions.Count > 0)
             {
-                foreach (var condition in consumeCollection.ConsumeSessionChatConditions)
-                {
-                    eligibleConsumerSessions.UnionWith(
-                        condition.ProcessCondition(targetSessions ?? _playerManager.NetworkedSessions.ToHashSet(), senderEntity));
-                }
+                // The list of chat conditions is made into its own chat condition here, to more easily evaluate it iteratively.
+                var baseSessionChatCondition =
+                    new SessionChatCondition(consumeCollection.ConsumeSessionChatConditions, new List<EntityChatCondition>());
+
+                var filteredConsumers = baseSessionChatCondition.ProcessCondition(targetSessions ?? _playerManager.NetworkedSessions.ToHashSet(), compiledChannelParameters);
+
+                if (filteredConsumers.Count > 0)
+                    eligibleConsumerSessions = filteredConsumers;
 
                 eligibleConsumerSessions.ExceptWith(exemptSessions);
                 exemptSessions.UnionWith(eligibleConsumerSessions);
-
-                // CHAT-TODO: Remove debug:
-                foreach (var test in eligibleConsumerSessions)
-                {
-                    if (test != null)
-                        Logger.Debug(test.ToString()!);
-                }
             }
 
-            //CHAT-TODO: Step 2b
-            // Then, we look at eligible entities
 
-            var eligibleConsumerEntities = new HashSet<EntityUid>();
-            if (consumeCollection.ConsumeEntityChatConditions.Count > 0)
-            {
-                // First we get all any entity with a ListenerComponent attached, to not have to iterate over every single entities.
-                var ev = new GetListenerConsumerEvent();
-                _entityManager.EventBus.RaiseEvent(EventSource.Local, ref ev);
-
-                // The list of chat conditions is made into its own chat condition, to more easily evaluate it iteratively.
-                var baseConsumerChatCondition =
-                    new EntityChatCondition(consumeCollection.ConsumeEntityChatConditions);
-
-                var filteredConsumers = baseConsumerChatCondition.ProcessCondition(ev.Entities, senderEntity);
-
-                if (filteredConsumers.Count > 0)
-                    eligibleConsumerEntities = filteredConsumers;
-
-                eligibleConsumerEntities.ExceptWith(exemptEntities);
-                exemptEntities.UnionWith(eligibleConsumerEntities);
-            }
-
-            //CHAT-TODO: Step 3
-            //Then, then it also gets passed on to any other communication types (e.g. radio + whisper)
-
-            if (communicationChannel.ChildCommunicationChannels != null)
-            {
-                foreach (var childChannel in communicationChannel.ChildCommunicationChannels)
-                {
-                    if (_prototypeManager.TryIndex(childChannel, out var channelProto))
-                    {
-                        if (communicationChannel.NonRepeatable || channelProto.NonRepeatable)
-                        {
-                            //Prevents a repeatable channel from sending via another repeatable channel without a non-repeatable inbetween; should stop some looping behavior from executing.
-                            HandleMessage(
-                                message,
-                                childChannel,
-                                senderSession,
-                                senderEntity,
-                                ref usedCommsChannels,
-                                targetSessions);
-                        }
-                    }
-                }
-            }
 
             //CHAT-TODO: Step 3.5
             //Supply markup tags.
 
             var consumerMessage = message;
 
-            foreach (var markupSupplier in consumeCollection.CollectionMarkupNodes)
+            foreach (var markupSupplier in consumeCollection.CollectionChatModifiers)
             {
                 //CHAT-TODO: message needs to be converted to FormattedMessage
-                consumerMessage = markupSupplier.ProcessNodeSupplier(consumerMessage, supplierParameters);
+                consumerMessage = markupSupplier.ProcessChatModifier(consumerMessage, compiledChannelParameters);
             }
 
             //CHAT-TODO: Step 4
             //Then, it applies the serversideMessageMutators. This should NOT be formatting and rarely text changes, unless strictly necessary (animal speak/whisper censorship)
-            Logger.Debug("Pre-step4: " + consumerMessage);
-            consumerMessage = ContentMarkupTagManager.ProcessMessage(consumerMessage);
-            Logger.Debug("Post-step4: " + consumerMessage);
+            Logger.Debug("Pre-step4: " + consumerMessage.ToMarkup());
+            consumerMessage = _contentMarkupTagManager.ProcessMessage(consumerMessage);
+            Logger.Debug("Post-step4: " + consumerMessage.ToMarkup());
+
+
+            if (eligibleConsumerSessions.Count > 0)
+            {
+                Logger.Debug("eligible: " + eligibleConsumerSessions.First().ToString()!);
+            }
 
             ChatFormattedMessageToHashset(
                 consumerMessage,
                 communicationChannel,
                 eligibleConsumerSessions.Select(x => x.Channel),
                 senderEntity ?? EntityUid.Invalid,
-                false, //CHAT-TODO: Process properly
+                communicationChannel.HideChat,
                 true //CHAT-TODO: Process properly
                 );
+        }
 
-            //CHAT-TODO: Step5b
-            //Also gotta send it out to all consuming entities
+        var getListenerEv = new GetListenerConsumerEvent();
+        _entityManager.EventBus.RaiseEvent(EventSource.Local, ref getListenerEv);
 
-            foreach (var entity in eligibleConsumerEntities)
+        foreach (var consumerEntity in getListenerEv.Entities)
+        {
+            var listenerConsumeEv = new ListenerConsumeEvent(communicationChannel.ChatChannels, new FormattedMessage());
+
+            _entityManager.EventBus.RaiseLocalEvent(consumerEntity, listenerConsumeEv);
+        }
+
+        // Finally the message also gets passed on to any other communication types (e.g. radio + whisper)
+
+        var childChannels = HandleChildChannels(communicationChannel, communicationChannel.AlwaysChildCommunicationChannels);
+        if (childChannels.Count > 0)
+        {
+            foreach (var childChannel in childChannels)
             {
-                var ev = new ListenerConsumeEvent(communicationChannel.ChatChannels,
-                    new FormattedMessage());
-
-                _entityManager.EventBus.RaiseLocalEvent(entity, ev);
+                SendChannelMessage(
+                    message,
+                    childChannel,
+                    senderSession,
+                    senderEntity,
+                    ref usedCommsChannels,
+                    targetSessions);
             }
         }
+
+        #endregion
+    }
+
+    #endregion
+
+    #region Private API
+
+    private List<CommunicationChannelPrototype> HandleChildChannels(CommunicationChannelPrototype communicationChannel, List<ProtoId<CommunicationChannelPrototype>>? childChannels)
+    {
+        var returnChannels = new List<CommunicationChannelPrototype>();
+        if (childChannels != null)
+        {
+            foreach (var childChannel in childChannels)
+            {
+                if (_prototypeManager.TryIndex(childChannel, out var channelProto))
+                {
+                    //Prevents a repeatable channel from sending via another repeatable channel without a non-repeatable inbetween; should stop some looping behavior from executing.
+                    if (communicationChannel.NonRepeatable || channelProto.NonRepeatable)
+                    {
+                        returnChannels.Add(channelProto);
+                    }
+                }
+            }
+        }
+
+        return returnChannels;
     }
 
     #endregion
@@ -370,12 +488,11 @@ internal sealed partial class ChatManager : IChatManager
         if (!recordReplay)
             return;
 
-        //CHAT-TODO: Figure out how to do this
-        /*if ((channel & ChatChannel.AdminRelated) == 0 ||
+        if ((channel.ChatChannels & ChatChannel.AdminRelated) == 0 ||
             _configurationManager.GetCVar(CCVars.ReplayRecordAdminChat))
-        {*/
+        {
             _replay.RecordServerMessage(msg);
-        //}
+        }
     }
 
     // CHAT-TODO: Figure this one out too

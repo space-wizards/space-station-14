@@ -3,6 +3,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Notes;
 using Content.Server.Afk;
+using Content.Server.Chat;
 using Content.Server.Chat.Managers;
 using Content.Server.Connection;
 using Content.Server.Database;
@@ -73,6 +74,7 @@ namespace Content.Server.IoC
             IoCManager.Register<PlayerRateLimitManager>();
             IoCManager.Register<SharedPlayerRateLimitManager, PlayerRateLimitManager>();
             IoCManager.Register<MappingManager>();
+            IoCManager.Register<ISharedContentMarkupTagManager, ContentMarkupTagManager>();
         }
     }
 }

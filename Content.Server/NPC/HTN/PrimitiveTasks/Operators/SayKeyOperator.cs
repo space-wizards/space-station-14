@@ -34,7 +34,7 @@ public sealed partial class SayKeyOperator : HTNOperator
             return HTNOperatorStatus.Failed;
 
         var speaker = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
-        _chat.TrySendInGameICMessage(speaker, @string, InGameICChatType.Speak, hideChat: Hidden, hideLog: Hidden);
+        _chat.TrySendInGameICMessage(speaker, @string);
 
         return base.Update(blackboard, frameTime);
     }

@@ -22,6 +22,7 @@ using Content.Client.Stylesheets;
 using Content.Client.Viewport;
 using Content.Client.Voting;
 using Content.Shared.Ame.Components;
+using Content.Shared.Chat;
 using Content.Shared.Gravity;
 using Content.Shared.Localizations;
 using Robust.Client;
@@ -72,6 +73,7 @@ namespace Content.Client.Entry
         [Dependency] private readonly ILogManager _logManager = default!;
         [Dependency] private readonly DebugMonitorManager _debugMonitorManager = default!;
         [Dependency] private readonly TitleWindowManager _titleWindowManager = default!;
+        [Dependency] private readonly ISharedContentMarkupTagManager _contentMarkupTagManager = default!;
 
         public override void Init()
         {

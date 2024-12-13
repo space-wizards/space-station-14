@@ -36,7 +36,7 @@ public sealed partial class SpeakOnUIClosedSystem : EntitySystem
             return;
 
         var message = Loc.GetString(_random.Pick(messagePack.Values));
-        _chat.TrySendInGameICMessage(uid, message, InGameICChatType.Speak, true);
+        _chat.TrySendInGameICMessage(uid, message);
         _useDelay.TryResetDelay((uid, useDelay));
     }
 }

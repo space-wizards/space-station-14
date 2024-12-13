@@ -1,3 +1,4 @@
+using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
@@ -8,6 +9,7 @@ namespace Content.Server.Administration.Commands
     sealed class DSay : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _e = default!;
+        [Dependency] private readonly IChatManager _chat = default!;
 
         public string Command => "dsay";
 
@@ -33,8 +35,7 @@ namespace Content.Server.Administration.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            var chat = _e.System<ChatSystem>();
-            chat.TrySendInGameOOCMessage(entity, message, InGameOOCChatType.Dead, false, shell, player);
+            _chat.SendChannelMessage(message, "Dead", player, entity);
         }
     }
 }

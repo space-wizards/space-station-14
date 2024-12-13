@@ -35,7 +35,7 @@ public sealed class KillCalloutRuleSystem : GameRuleSystem<KillCalloutRuleCompon
                 continue;
 
             var callout = GetCallout(kill, ev);
-            _chatManager.ChatMessageToAll(ChatChannel.Server, callout, callout, uid, false, true, Color.OrangeRed);
+            _chatManager.SendChannelMessage(callout, "Server", null, null);
         }
     }
 

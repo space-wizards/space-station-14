@@ -115,7 +115,7 @@ namespace Content.Server.GameTicking
         private void SendServerMessage(string message)
         {
             var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
-            _chatManager.ChatMessageToAll(ChatChannel.Server, message, wrappedMessage, default, false, true);
+            _chatManager.SendChannelMessage(wrappedMessage, "Server", null, null);
         }
 
         public override void Update(float frameTime)

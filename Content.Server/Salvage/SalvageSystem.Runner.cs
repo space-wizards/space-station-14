@@ -68,16 +68,8 @@ public sealed partial class SalvageSystem
     {
         var mapId = Comp<MapComponent>(mapUid).MapId;
 
-        // I love TComms and chat!!!
-        _chat.ChatMessageToManyFiltered(
-            Filter.BroadcastMap(mapId),
-            ChatChannel.Radio,
-            text,
-            text,
-            _mapManager.GetMapEntityId(mapId),
-            false,
-            true,
-            null);
+        // CHAT-TODO: This is wrong - should not take the mapUid as an argument and instead it should be baked into the radio prototype
+        _chat.SendChannelMessage(text, "RadioCargo", null, mapUid);
     }
 
     private void OnFTLRequest(ref FTLRequestEvent ev)

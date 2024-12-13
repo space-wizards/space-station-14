@@ -9,7 +9,7 @@ namespace Content.Shared.Chat.Testing;
 public sealed partial class TestEntityChatCondition : EntityChatCondition
 {
 
-    public override HashSet<EntityUid> FilterConsumers(HashSet<EntityUid> consumers, EntityUid? senderEntity) { return consumers; }
+    public override HashSet<EntityUid> FilterConsumers(HashSet<EntityUid> consumers, Dictionary<Enum, object>? channelParameters) { return consumers; }
 
 }
 

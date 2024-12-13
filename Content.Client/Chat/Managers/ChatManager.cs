@@ -2,7 +2,10 @@ using Content.Client.Administration.Managers;
 using Content.Client.Ghost;
 using Content.Shared.Administration;
 using Content.Shared.Chat;
+using Content.Shared.Chat.Prototypes;
+using Content.Shared.Radio;
 using Robust.Client.Console;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Chat.Managers;
@@ -12,8 +15,12 @@ internal sealed class ChatManager : IChatManager
     [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
     [Dependency] private readonly IClientAdminManager _adminMgr = default!;
     [Dependency] private readonly IEntitySystemManager _systems = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     private ISawmill _sawmill = default!;
+
+    [ValidatePrototypeId<RadioChannelPrototype>]
+    private const string DefaultRadioChannel = "Common";
 
     public void Initialize()
     {
@@ -21,7 +28,7 @@ internal sealed class ChatManager : IChatManager
         _sawmill.Level = LogLevel.Info;
     }
 
-    public void SendMessage(string text, ChatSelectChannel channel)
+    public void SendMessage(string text, ChatSelectChannel channel, RadioChannelPrototype? radioChannel)
     {
         var str = text.ToString();
         switch (channel)
@@ -57,8 +64,18 @@ internal sealed class ChatManager : IChatManager
                     _sawmill.Warning("Tried to speak on deadchat without being ghost or admin.");
                 break;
 
-            // TODO sepearate radio and say into separate commands.
             case ChatSelectChannel.Radio:
+                if (radioChannel != null)
+                {
+                    SendMessage(str, "Radio" + radioChannel.ID);
+                }
+                else
+                {
+                    radioChannel = _prototypeManager.Index<RadioChannelPrototype>(DefaultRadioChannel);
+                    SendMessage(str, "Radio" + radioChannel.ID);
+                }
+                break;
+
             case ChatSelectChannel.Local:
                 _consoleHost.ExecuteCommand($"say \"{CommandParsing.Escape(str)}\"");
                 break;
@@ -70,5 +87,20 @@ internal sealed class ChatManager : IChatManager
             default:
                 throw new ArgumentOutOfRangeException(nameof(channel), channel, null);
         }
+    }
+
+    public void SendMessage(string text, string channel)
+    {
+        if (_prototypeManager.TryIndex(channel, out CommunicationChannelPrototype? channelPrototype))
+        {
+            SendMessage(text, channelPrototype);
+        }
+    }
+
+    public void SendMessage(string text, CommunicationChannelPrototype channel)
+    {
+        var str = text.ToString();
+
+        _consoleHost.ExecuteCommand($"chat {channel.ID} \"{CommandParsing.Escape(str)}\"");
     }
 }

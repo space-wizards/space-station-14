@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Station.Components;
@@ -20,6 +21,7 @@ public sealed class MeteorSwarmSystem : GameRuleSystem<MeteorSwarmComponent>
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly StationSystem _station = default!;
 
     protected override void Added(EntityUid uid, MeteorSwarmComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
@@ -32,7 +34,7 @@ public sealed class MeteorSwarmSystem : GameRuleSystem<MeteorSwarmComponent>
         Filter allPlayersInGame = Filter.Empty().AddWhere(GameTicker.UserHasJoinedGame);
 
         if (component.Announcement is { } locId)
-            _chat.DispatchFilteredAnnouncement(allPlayersInGame, Loc.GetString(locId), playSound: false, colorOverride: Color.Gold);
+            _chatManager.SendChannelMessage(Loc.GetString(locId), "GameMessage", null, null);
 
         _audio.PlayGlobal(component.AnnouncementSound, allPlayersInGame, true);
     }

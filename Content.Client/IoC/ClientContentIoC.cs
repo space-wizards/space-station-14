@@ -59,6 +59,7 @@ namespace Content.Client.IoC
             collection.Register<PlayerRateLimitManager>();
             collection.Register<SharedPlayerRateLimitManager, PlayerRateLimitManager>();
             collection.Register<TitleWindowManager>();
+            collection.Register<ISharedContentMarkupTagManager, ContentMarkupTagManager>();
         }
     }
 }

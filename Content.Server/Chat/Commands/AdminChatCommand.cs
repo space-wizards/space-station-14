@@ -29,7 +29,7 @@ namespace Content.Server.Chat.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            IoCManager.Resolve<IChatManager>().TrySendOOCMessage(player, message, OOCChatType.Admin);
+            IoCManager.Resolve<IChatManager>().SendChannelMessage(message, "AdminChat", player, null);
         }
     }
 }

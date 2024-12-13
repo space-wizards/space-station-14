@@ -30,7 +30,7 @@ public partial class EntityChatCondition
     /// <param name="consumers">Consumers to run this ChatCondition on.</param>
     /// <param name="senderEntity">The entity the message originates from (if there is any). May be optionally used for the filter.</param>
     /// <returns></returns>
-    public virtual HashSet<EntityUid> FilterConsumers(HashSet<EntityUid> consumers, EntityUid? senderEntity) { return consumers; }
+    public virtual HashSet<EntityUid> FilterConsumers(HashSet<EntityUid> consumers, Dictionary<Enum, object> channelParameters) { return consumers; }
 
     public EntityChatCondition() { }
 
@@ -45,11 +45,14 @@ public partial class EntityChatCondition
     /// <param name="consumers">The hashset of consumers that should be evaluated against.</param>
     /// <param name="senderEntity">The entity the message originates from (if there is any). May be optionally used for the filter.</param>
     /// <returns>Hashset of consumers processed in this conditions and its subconditions.</returns>
-    public HashSet<EntityUid> ProcessCondition(HashSet<EntityUid> consumers, EntityUid? senderEntity)
+    public HashSet<EntityUid> ProcessCondition(HashSet<EntityUid> consumers, Dictionary<Enum, object> channelParameters)
     {
-        var filtered = FilterConsumers(consumers, senderEntity);
-        var iterated = IterateSubconditions(filtered, senderEntity);
-        return iterated;
+        var filtered = FilterConsumers(consumers, channelParameters);
+        Logger.Debug("fuck2:" + filtered.Count);
+        if (Subconditions.Count > 0)
+            filtered = IterateSubconditions(filtered, channelParameters);
+        Logger.Debug("fuck3:" + filtered.Count);
+        return filtered;
     }
 
     /// <summary>
@@ -58,19 +61,19 @@ public partial class EntityChatCondition
     /// <param name="consumers">The hashset of consumers that should be evaluated against.</param>
     /// <param name="senderEntity">The entity the message originates from (if there is any). May be optionally used for the filter.</param>
     /// <returns>Hashset of consumers processed by the subconditions.</returns>
-    private HashSet<EntityUid> IterateSubconditions(HashSet<EntityUid> consumers, EntityUid? senderEntity)
+    private HashSet<EntityUid> IterateSubconditions(HashSet<EntityUid> consumers, Dictionary<Enum, object> channelParameters)
     {
-        var changedConsumers = consumers;
+        var changedConsumers = new HashSet<EntityUid>();
         foreach (var condition in Subconditions)
         {
             // No more consumers, no point in continuing further.
-            if (changedConsumers.Count == 0)
+            if (changedConsumers.Count == consumers.Count)
                 return changedConsumers;
 
             if (!condition.Inverted)
-                changedConsumers.IntersectWith(condition.ProcessCondition(consumers, senderEntity));
+                changedConsumers.UnionWith(condition.ProcessCondition(consumers, channelParameters));
             else
-                changedConsumers.ExceptWith(condition.ProcessCondition(consumers, senderEntity));
+                changedConsumers.UnionWith(consumers.Except(condition.ProcessCondition(consumers, channelParameters)));
         }
 
         return changedConsumers;

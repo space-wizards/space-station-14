@@ -4,9 +4,9 @@ namespace Content.Shared.Chat.Testing;
 
 [Serializable]
 [DataDefinition]
-public sealed partial class TestMarkupNodeSupplier : MarkupNodeSupplier
+public sealed partial class TestChatModifier : ChatModifier
 {
-    public override FormattedMessage ProcessNodeSupplier(FormattedMessage message)
+    public override FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object>? channelParameters)
     {
         return InsertAroundString(message, new MarkupNode("TestMarkup", null, null, false), "testString");
     }

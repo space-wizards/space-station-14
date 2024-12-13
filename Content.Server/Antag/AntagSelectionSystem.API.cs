@@ -319,8 +319,7 @@ public sealed partial class AntagSelectionSystem
         if (!string.IsNullOrEmpty(briefing))
         {
             var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", briefing));
-            _chat.ChatMessageToOne(ChatChannel.Server, briefing, wrappedMessage, default, false, session.Channel,
-                briefingColor);
+            _chat.SendChannelMessage(wrappedMessage, "GameMessage", null, null, new HashSet<ICommonSession>() { session });
         }
     }
 

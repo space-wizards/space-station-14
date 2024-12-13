@@ -1,4 +1,5 @@
 ﻿using Content.Server.Administration;
+using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.Popups;
 using Content.Server.Speech.Muting;
@@ -17,6 +18,7 @@ namespace Content.Server.Mobs;
 public sealed class CritMobActionsSystem : EntitySystem
 {
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly DeathgaspSystem _deathgasp = default!;
     [Dependency] private readonly IServerConsoleHost _host = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
@@ -76,7 +78,7 @@ public sealed class CritMobActionsSystem : EntitySystem
                 }
                 lastWords += "...";
 
-                _chat.TrySendInGameICMessage(uid, lastWords, InGameICChatType.Whisper, ChatTransmitRange.Normal, checkRadioPrefix: false, ignoreActionBlocker: true);
+                _chatManager.SendChannelMessage(lastWords, "ICWhisper", actor.PlayerSession, uid);
                 _host.ExecuteCommand(actor.PlayerSession, "ghost");
             });
 

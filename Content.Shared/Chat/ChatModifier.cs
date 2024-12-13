@@ -10,15 +10,15 @@ namespace Content.Shared.Chat;
 [Serializable]
 [DataDefinition]
 [Virtual]
-public partial class MarkupNodeSupplier
+public partial class ChatModifier
 {
     /// <summary>
     /// Returns a FormattedMessage after it has been processed by the node supplier.
     /// </summary>
     /// <param name="message">The message to be processed.</param>
-    /// <param name="supplierParameters">Any parameters that can be handled by the suppliers.</param>
+    /// <param name="channelParameters">Any parameters that can be handled by the suppliers.</param>
     /// <returns></returns>
-    public virtual FormattedMessage ProcessNodeSupplier(FormattedMessage message, Dictionary<Enum, object>? supplierParameters)
+    public virtual FormattedMessage ProcessChatModifier(FormattedMessage message, Dictionary<Enum, object> channelParameters)
     {
         return message;
     }
@@ -194,5 +194,116 @@ public partial class MarkupNodeSupplier
 
         nodeEnumerator.Dispose();
         return returnMessage;
+    }
+
+    /// <summary>
+    /// Helper function that inserts a node surrounding the first and last text node.
+    /// </summary>
+    protected FormattedMessage InsertAroundText(FormattedMessage message, MarkupNode newNode)
+    {
+        var returnMessage = new FormattedMessage();
+        var firstNode = message.Nodes.First(x => x.Name == null);
+        var lastNode = message.Nodes.Last(x => x.Name == null);
+        var nodeEnumerator = message.GetEnumerator();
+
+        while (nodeEnumerator.MoveNext())
+        {
+            var node = nodeEnumerator.Current;
+            if (node == firstNode)
+            {
+                returnMessage.PushTag(newNode, false);
+            }
+            else if (node == lastNode)
+            {
+                returnMessage.Pop();
+            }
+
+            if (!node.Closing)
+                returnMessage.PushTag(node);
+            else
+                returnMessage.Pop();
+        }
+
+        nodeEnumerator.Dispose();
+        return returnMessage;
+    }
+
+    /// <summary>
+    /// Helper function that inserts a node around the entire message.
+    /// </summary>
+    protected FormattedMessage InsertAroundMessage(FormattedMessage message, MarkupNode newNode)
+    {
+        var returnMessage = new FormattedMessage();
+
+        returnMessage.PushTag(newNode, false);
+        returnMessage.AddMessage(message);
+        returnMessage.Pop();
+
+        return returnMessage;
+    }
+
+    /// <summary>
+    /// Helper function that inserts a node before the entire message.
+    /// </summary>
+    protected FormattedMessage InsertBeforeMessage(FormattedMessage message, MarkupNode newNode)
+    {
+        var returnMessage = new FormattedMessage();
+
+        returnMessage.PushTag(newNode, true);
+        returnMessage.AddMessage(message);
+
+        return returnMessage;
+    }
+
+    /// <summary>
+    /// Helper function that inserts a node after the entire message.
+    /// </summary>
+    protected FormattedMessage InsertAfterMessage(FormattedMessage message, MarkupNode newNode)
+    {
+        var returnMessage = new FormattedMessage();
+
+        returnMessage.AddMessage(message);
+        returnMessage.PushTag(newNode, true);
+
+        return returnMessage;
+    }
+
+    /// <summary>
+    /// Helper function that tries to find the first instance of a tag and returns a FormattedMessage containing the nodes inside.
+    /// </summary>
+    /// <returns></returns>
+    protected bool TryGetMessageInsideTag(FormattedMessage message, out FormattedMessage? returnMessage, string tagText)
+    {
+        returnMessage = new FormattedMessage();
+        var nodeEnumerator = message.GetEnumerator();
+        var nodeFound = false;
+
+        while (nodeEnumerator.MoveNext())
+        {
+            var node = nodeEnumerator.Current;
+
+            if (node.Name == tagText)
+            {
+                if (!node.Closing)
+                {
+                    nodeFound = true;
+                }
+                else
+                {
+                    nodeEnumerator.Dispose();
+                    return true;
+                }
+            }
+            else if (nodeFound)
+            {
+                if (!node.Closing)
+                    returnMessage.PushTag(node);
+                else
+                    returnMessage.Pop();
+            }
+        }
+
+        nodeEnumerator.Dispose();
+        return false;
     }
 }

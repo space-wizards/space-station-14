@@ -26,7 +26,8 @@ namespace Content.Server.Chat.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            IoCManager.Resolve<IChatManager>().TrySendOOCMessage(player, message, OOCChatType.OOC);
+
+            IoCManager.Resolve<IChatManager>().SendChannelMessage(message, "OOC", shell.Player, null);
         }
     }
 }

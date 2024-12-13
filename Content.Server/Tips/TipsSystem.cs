@@ -198,8 +198,7 @@ public sealed class TipsSystem : EntitySystem
             RaiseNetworkEvent(ev);
         } else
         {
-            _chat.ChatMessageToManyFiltered(Filter.Broadcast(), ChatChannel.OOC, tip, msg,
-            EntityUid.Invalid, false, false, Color.MediumPurple);
+            _chat.SendChannelMessage(msg, "Server", null, null);
         }
     }
 

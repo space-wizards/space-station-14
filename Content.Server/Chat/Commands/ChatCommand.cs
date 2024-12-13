@@ -1,3 +1,4 @@
+using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
@@ -26,14 +27,14 @@ namespace Content.Server.Chat.Commands
             if (args.Length < 2)
                 return;
 
-            var communicationType = args[0];
+            var communicationChannel = args[0];
 
             var message = args[1];
             if (string.IsNullOrEmpty(message))
                 return;
 
-            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>()
-                .HandleMessage(communicationType, shell.Player, null, message);
+            // CHAT-TODO: Set the senderEntity here
+            IoCManager.Resolve<IChatManager>().SendChannelMessage(message, communicationChannel, shell.Player, player.AttachedEntity);
         }
     }
 }

@@ -7,5 +7,5 @@ namespace Content.Shared.Chat;
 public abstract partial class ListenerComponent : Component
 {
     [DataField]
-    public List<ProtoId<CommunicationTypePrototype>>? FilteredTypes;
+    public ChatChannel? FilteredTypes;
 }

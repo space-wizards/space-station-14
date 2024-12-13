@@ -4,25 +4,16 @@ using Robust.Shared.Player;
 
 namespace Content.Shared.Chat.ChatConditions;
 
+/// <summary>
+/// Checks if the consumers are admins.
+/// </summary>
 [DataDefinition]
 public sealed partial class IsAdminSessionChatCondition : SessionChatCondition
 {
-    /// <summary>
-    /// Checks if the consumers are admins.
-    /// </summary>
-
     [Dependency] private readonly ISharedAdminManager _admin = default!;
-    public override HashSet<ICommonSession> FilterConsumers(HashSet<ICommonSession> consumers)
+    public override HashSet<ICommonSession> FilterConsumers(HashSet<ICommonSession> consumers, Dictionary<Enum, object>? channelParameters)
     {
         IoCManager.InjectDependencies(this);
-
-        var returnConsumers = new HashSet<ICommonSession>();
-
-        foreach (var consumer in consumers)
-        {
-            if (_admin.IsAdmin(consumer, IncludeDeadmin))
-                returnConsumers.Add(consumer);
-        }
 
         return consumers.Where(x => _admin.IsAdmin(x, IncludeDeadmin)).ToHashSet();
     }

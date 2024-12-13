@@ -7,3 +7,4 @@ osay-command-arg-message = message
 
 osay-command-error-args = Invalid number of arguments
 osay-command-error-euid = {$arg} is not a valid entity uid.
+osay-command-error-channel = Invalid channel

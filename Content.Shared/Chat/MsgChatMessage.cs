@@ -3,6 +3,7 @@ using Content.Shared.Chat.Prototypes;
 using JetBrains.Annotations;
 using Lidgren.Network;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -14,7 +15,7 @@ namespace Content.Shared.Chat
         /// <summary>
         /// Which channel this message is being sent on.
         /// </summary>
-        public CommunicationChannelPrototype CommunicationChannel;
+        public ProtoId<CommunicationChannelPrototype> CommunicationChannel;
 
         /// <summary>
         /// This is the text spoken by the entity, after accents and such were applied.
@@ -42,7 +43,7 @@ namespace Content.Shared.Chat
         [NonSerialized]
         public bool Read;
 
-        public ChatMessage(CommunicationChannelPrototype communicationChannel, FormattedMessage message, NetEntity source, int? senderKey, bool hideChat = false)
+        public ChatMessage(ProtoId<CommunicationChannelPrototype> communicationChannel, FormattedMessage message, NetEntity source, int? senderKey, bool hideChat = false)
         {
             CommunicationChannel = communicationChannel;
             Message = message;

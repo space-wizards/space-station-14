@@ -147,13 +147,7 @@ namespace Content.Server.PDA
                 ("header", args.Header),
                 ("message", message));
 
-            _chatManager.ChatMessageToOne(
-                ChatChannel.Notifications,
-                message,
-                wrappedMessage,
-                EntityUid.Invalid,
-                false,
-                actor.PlayerSession.Channel);
+            _chatManager.SendChannelMessage(wrappedMessage, "GameMessage", null, ent.Owner, new HashSet<ICommonSession>() { actor.PlayerSession });
         }
 
         /// <summary>

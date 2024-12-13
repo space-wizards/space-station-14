@@ -16,6 +16,7 @@ using Content.Shared.Popups;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Anomaly.Effects;
@@ -109,13 +110,7 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
         {
             var message = Loc.GetString(ent.Comp.StartMessage);
             var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
-            _chat.ChatMessageToOne(ChatChannel.Server,
-                message,
-                wrappedMessage,
-                default,
-                false,
-                mindComponent.Session.Channel,
-                _messageColor);
+            _chat.SendChannelMessage(wrappedMessage, "GameMessage", null, null, new HashSet<ICommonSession>() { mindComponent.Session });
 
             _popup.PopupEntity(message, ent, ent, PopupType.MediumCaution);
 
@@ -170,13 +165,7 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
             return;
 
         var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
-        _chat.ChatMessageToOne(ChatChannel.Server,
-            message,
-            wrappedMessage,
-            default,
-            false,
-            mindComponent.Session.Channel,
-            _messageColor);
+        _chat.SendChannelMessage(wrappedMessage, "GameMessage", null, null, new HashSet<ICommonSession>() { mindComponent.Session });
 
         _popup.PopupEntity(message, ent, ent, PopupType.MediumCaution);
     }
@@ -216,13 +205,7 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
         {
             var message = Loc.GetString(ent.Comp.EndMessage);
             var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
-            _chat.ChatMessageToOne(ChatChannel.Server,
-                message,
-                wrappedMessage,
-                default,
-                false,
-                mindComponent.Session.Channel,
-                _messageColor);
+            _chat.SendChannelMessage(wrappedMessage, "GameMessage", null, null, new HashSet<ICommonSession>() { mindComponent.Session });
 
 
             _popup.PopupEntity(message, ent, ent, PopupType.MediumCaution);

@@ -11,7 +11,7 @@ namespace Content.Server.Chat.Managers
 {
     public interface IChatManager : ISharedChatManager
     {
-        public void HandleMessage(string message,
+        public void SendChannelMessage(string message,
             string communicationChannel,
             ICommonSession? senderSession,
             EntityUid? senderEntity,
@@ -20,7 +20,7 @@ namespace Content.Server.Chat.Managers
             Dictionary<Enum, object>? supplierParameters = null,
             bool logMessage = true);
 
-        public void HandleMessage(FormattedMessage message,
+        public void SendChannelMessage(FormattedMessage message,
             string communicationChannel,
             ICommonSession? senderSession,
             EntityUid? senderEntity,
@@ -28,7 +28,7 @@ namespace Content.Server.Chat.Managers
             Dictionary<Enum, object>? supplierParameters = null,
             bool logMessage = true);
 
-        public void HandleMessage(FormattedMessage message,
+        public void SendChannelMessage(FormattedMessage message,
             string communicationChannel,
             ICommonSession? senderSession,
             EntityUid? senderEntity,
@@ -37,7 +37,7 @@ namespace Content.Server.Chat.Managers
             Dictionary<Enum, object>? supplierParameters = null,
             bool logMessage = true);
 
-        public void HandleMessage(
+        public void SendChannelMessage(
             FormattedMessage message,
             CommunicationChannelPrototype communicationChannel,
             ICommonSession? senderSession,
@@ -46,6 +46,19 @@ namespace Content.Server.Chat.Managers
             HashSet<ICommonSession>? targetSessions = null,
             Dictionary<Enum, object>? supplierParameters = null,
             bool logMessage = true);
+
+        void SendAdminAnnouncement(string message, AdminFlags? requiredFlags = null);
+        void SendAdminAnnouncementMessage(ICommonSession player, string message, bool suppressLog = true);
+
+        void SendHookOOC(string sender, string message);
+
+        void DispatchServerAnnouncement(string message);
+
+        void DispatchServerMessage(ICommonSession player, string message, bool suppressLog = false);
+
+        void SendAdminAlert(string message);
+
+        void SendAdminAlert(EntityUid player, string message);
 
         void ChatFormattedMessageToHashset(FormattedMessage message, CommunicationChannelPrototype channel, IEnumerable<INetChannel> clients, EntityUid? source, bool hideChat, bool recordReplay, NetUserId? author = null);
 

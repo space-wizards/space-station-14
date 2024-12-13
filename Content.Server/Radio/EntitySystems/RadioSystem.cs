@@ -58,6 +58,9 @@ public sealed class RadioSystem : EntitySystem
             _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.Channel);
     }
 
+
+    // CHAT-TODO: This whole thing will need to be separately refactored!
+
     /// <summary>
     /// Send radio message to all active radio listeners
     /// </summary>
@@ -103,7 +106,7 @@ public sealed class RadioSystem : EntitySystem
             ("message", content));
 
         // most radios are relayed to chat, so lets parse the chat message beforehand
-        var chat = new ChatMessage(
+        /*var chat = new ChatMessage(
             ChatChannel.Radio,
             message,
             wrappedMessage,
@@ -156,7 +159,7 @@ public sealed class RadioSystem : EntitySystem
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio message from {ToPrettyString(messageSource):user} on {channel.LocalizedName}: {message}");
 
         _replay.RecordServerMessage(chat);
-        _messages.Remove(message);
+        _messages.Remove(message);*/
     }
 
     /// <inheritdoc cref="TelecomServerComponent"/>

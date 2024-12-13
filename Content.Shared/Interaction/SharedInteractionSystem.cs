@@ -138,7 +138,8 @@ namespace Content.Shared.Interaction
 
         private void RateLimitAlertAdmins(ICommonSession session)
         {
-            _chat.SendAdminAlert(Loc.GetString("interaction-rate-limit-admin-announcement", ("player", session.Name)));
+            //CHAT-TODO: This is literally the only place this is using shared - should probably be moved to server.
+            //_chat.SendAdminAlert(Loc.GetString("interaction-rate-limit-admin-announcement", ("player", session.Name)));
         }
 
         public override void Shutdown()

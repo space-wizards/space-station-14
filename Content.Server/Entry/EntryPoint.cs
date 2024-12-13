@@ -24,6 +24,7 @@ using Content.Server.ServerInfo;
 using Content.Server.ServerUpdates;
 using Content.Server.Voting.Managers;
 using Content.Shared.CCVar;
+using Content.Shared.Chat;
 using Content.Shared.Kitchen;
 using Content.Shared.Localizations;
 using Robust.Server;

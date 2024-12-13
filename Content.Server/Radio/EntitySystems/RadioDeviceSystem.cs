@@ -186,6 +186,8 @@ public sealed class RadioDeviceSystem : EntitySystem
         }
     }
 
+    // CHAT-TODO: This whole thing will need to be separately refactored!
+
     private void OnListen(EntityUid uid, RadioMicrophoneComponent component, ListenEvent args)
     {
         if (HasComp<RadioSpeakerComponent>(args.Source))
@@ -218,7 +220,7 @@ public sealed class RadioDeviceSystem : EntitySystem
             ("originalName", nameEv.VoiceName));
 
         // log to chat so people can identity the speaker/source, but avoid clogging ghost chat if there are many radios
-        _chat.TrySendInGameICMessage(uid, args.Message, InGameICChatType.Whisper, ChatTransmitRange.GhostRangeLimit, nameOverride: name, checkRadioPrefix: false);
+        _chat.TrySendInGameICMessage(uid, args.Message);
     }
 
     private void OnIntercomEncryptionChannelsChanged(Entity<IntercomComponent> ent, ref EncryptionChannelsChangedEvent args)

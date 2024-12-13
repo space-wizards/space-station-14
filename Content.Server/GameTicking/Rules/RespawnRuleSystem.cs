@@ -115,7 +115,7 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
 
         var msg = Loc.GetString("rule-respawn-in-seconds", ("second", respawnTracker.Comp.RespawnDelay.TotalSeconds));
         var wrappedMsg = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
-        _chatManager.ChatMessageToOne(ChatChannel.Server, msg, wrappedMsg, respawnTracker, false, player.Comp.PlayerSession.Channel, Color.LimeGreen);
+        _chatManager.SendChannelMessage(wrappedMsg, "Server", null, null, new HashSet<ICommonSession>() { player.Comp.PlayerSession });
 
         respawnTracker.Comp.RespawnQueue[player.Comp.PlayerSession.UserId] = _timing.CurTime + respawnTracker.Comp.RespawnDelay;
 

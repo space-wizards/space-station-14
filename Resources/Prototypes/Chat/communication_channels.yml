@@ -1,139 +1,433 @@
 ﻿- type: communicationChannel
   id: ICSpeech
   publishSessionChatConditions:
-    - !type:TestSessionChatCondition
-  publishEntityChatConditions:
-    - !type:TestEntityChatCondition
+  - !type:AllSessionChatCondition
+    subconditions:
+    - !type:IsGhostSessionChatCondition
+      inverted: true
+      entityChatConditions:
+      - !type:IsAboveCritEntityChatCondition
+        subconditions:
+        - !type:HasComponentEntityChatCondition
+          component: Sleeping
+          inverted: true
   consumeCollections:
-    - consumeSessionChatConditions:
-        - !type:TestSessionChatCondition
-      consumeEntityChatConditions:
-        - !type:TestEntityChatCondition
-      collectionMarkupNodes:
-        - !type:TestMarkupNodeSupplier
-  communicationTypes:
-    - Spoken
+  - consumeSessionChatConditions:
+    - !type:AllSessionChatCondition
+      entityChatConditions:
+      - !type:RangeEntityChatCondition
+        maximumRange: 10
+    collectionChatModifiers:
+    - !type:MainMessageChatModifier
+    - !type:EntityNameHeaderChatModifier
+    - !type:SpeechVerbChatModifier
+    - !type:ColorFulltextChatModifier
+      colorKey: Speech
+  clientChatModifiers:
+  - !type:SpaceMainMessageChatModifier
+  - !type:QuoteMainMessageChatModifier
+  - !type:BubbleProviderChatModifier
+    speechType: Say
+  - !type:BoldTagChatModifier
+    targetNode: EntityNameHeader
+  - !type:ColorEntityNameHeaderChatModifier
+  backupChildCommunicationChannels:
+  - Dead #If dead, this should attempt the Dead channel
+  chatChannels:
+  - Local
+
+- type: communicationChannel
+  id: BubbleOnlySpeech # This is for IC speech that shouldn't appear in the chatbox, e.g vending machines
+  allowSessionMessages: false
+  consumeCollections:
+  - consumeSessionChatConditions:
+    - !type:AllSessionChatCondition
+      entityChatConditions:
+      - !type:RangeEntityChatCondition
+        maximumRange: 10
+    collectionChatModifiers:
+    - !type:MainMessageChatModifier
+    - !type:EntityNameHeaderChatModifier
+    - !type:ColorFulltextChatModifier
+      colorKey: Speech
+  clientChatModifiers:
+  - !type:BubbleProviderChatModifier
+    speechType: Say
+  - !type:BoldTagChatModifier
+    targetNode: EntityNameHeader
+  hideChat: true
+  backupChildCommunicationChannels:
+  - Dead #If dead, this should attempt the Dead channel
+  chatChannels:
+  - Local
 
 - type: communicationChannel
   id: ICWhisper
   publishSessionChatConditions:
-  - !type:TestSessionChatCondition
-  publishEntityChatConditions:
-  - !type:TestEntityChatCondition
+  - !type:AllSessionChatCondition
+  consumeCollections:
+  - consumeSessionChatConditions: # Within hearing range
+    - !type:IsGhostSessionChatCondition
+    - !type:AllSessionChatCondition
+      entityChatConditions:
+      - !type:RangeEntityChatCondition
+        maximumRange: 2
+    collectionChatModifiers:
+    - !type:SanitizeRadioPrefixChatModifier
+    - !type:MainMessageChatModifier
+    - !type:EntityNameHeaderChatModifier
+    - !type:ColorFulltextChatModifier
+      colorKey: Whisper
+  - consumeSessionChatConditions: # Whispering obfuscation
+    - !type:AllSessionChatCondition
+      entityChatConditions:
+      - !type:RangeEntityChatCondition
+        minimumRange: 2
+        maximumRange: 5
+    collectionChatModifiers:
+    - !type:SanitizeRadioPrefixChatModifier
+    - !type:MainMessageChatModifier
+    - !type:ObfuscateTextChatModifier
+    - !type:EntityNameHeaderChatModifier
+    - !type:ColorFulltextChatModifier
+      colorKey: Whisper
+  clientChatModifiers:
+  - !type:SpaceMainMessageChatModifier
+  - !type:QuoteMainMessageChatModifier
+  - !type:InsertLoCChatModifier
+    targetNode: EntityNameHeader
+    locString: " whispers"
+  - !type:BubbleProviderChatModifier
+    speechType: Whisper
+  - !type:ColorEntityNameHeaderChatModifier
+  - !type:ItalicsFulltextChatModifier
+  backupChildCommunicationChannels:
+  - Dead #If dead, this should attempt the Dead channel
+  chatChannels:
+  - Local
+
+- type: communicationChannel
+  id: Emote
+  publishSessionChatConditions:
+  - !type:AllSessionChatCondition
   consumeCollections:
   - consumeSessionChatConditions:
-    - !type:TestSessionChatCondition
-    consumeEntityChatConditions:
-    - !type:TestEntityChatCondition
-    collectionMarkupNodes:
-    - !type:TestMarkupNodeSupplier
-  communicationTypes:
-  - Spoken
+    - !type:AllSessionChatCondition
+      entityChatConditions:
+      - !type:RangeEntityChatCondition
+        maximumRange: 10
+    collectionChatModifiers:
+    - !type:MainMessageChatModifier
+    - !type:EntityNameHeaderChatModifier
+    - !type:ColorFulltextChatModifier
+      colorKey: Emote
+  clientChatModifiers:
+  - !type:SpaceMainMessageChatModifier
+  - !type:BubbleProviderChatModifier
+    speechType: Emote
+  - !type:ItalicsFulltextChatModifier
+  chatChannels:
+  - Emotes
 
 - type: communicationChannel
   id: Dead
   publishSessionChatConditions:
-  - !type:TestSessionChatCondition
-  publishEntityChatConditions:
-  - !type:TestEntityChatCondition
+  - !type:IsGhostSessionChatCondition
   consumeCollections:
   - consumeSessionChatConditions:
-    - !type:TestSessionChatCondition
-    consumeEntityChatConditions:
-    - !type:TestEntityChatCondition
-    collectionMarkupNodes:
-    - !type:TestMarkupNodeSupplier
-  communicationTypes:
-  - Spoken
+    - !type:AllSessionChatCondition
+    collectionChatModifiers:
+    - !type:MainMessageChatModifier
+    - !type:EntityNameHeaderChatModifier
+    - !type:ColorFulltextChatModifier
+      colorKey: Dead
+  clientChatModifiers:
+  - !type:InsertLoCChatModifier
+    targetNode: EntityNameHeader
+    locString: "DEAD: "
+    afterNode: false
+  - !type:BoldTagChatModifier
+    targetNode: EntityNameHeader
+  - !type:InsertLoCChatModifier
+    targetNode: EntityNameHeader
+    locString: ": "
+  - !type:BubbleProviderChatModifier
+    speechType: Say
+  chatChannels:
+  - Local
+
+- type: communicationChannel
+  id: LOOC
+  publishSessionChatConditions:
+  - !type:AllSessionChatCondition
+    subconditions:
+    - !type:IsGhostSessionChatCondition
+      inverted: true
+      entityChatConditions:
+      - !type:IsAboveCritEntityChatCondition
+        subconditions:
+        - !type:HasComponentEntityChatCondition
+          component: Sleeping
+          inverted: true
+  consumeCollections:
+  - consumeSessionChatConditions:
+    - !type:AllSessionChatCondition
+    collectionChatModifiers:
+    - !type:MainMessageChatModifier
+    - !type:EntityNameHeaderChatModifier
+    - !type:ColorFulltextChatModifier
+      colorKey: LOOC
+  clientChatModifiers:
+  - !type:InsertLoCChatModifier
+    targetNode: EntityNameHeader
+    locString: "LOOC: "
+    afterNode: false
+  - !type:BoldTagChatModifier
+    targetNode: EntityNameHeader
+  - !type:InsertLoCChatModifier
+    targetNode: EntityNameHeader
+    locString: ": "
+  - !type:BubbleProviderChatModifier
+    speechType: LOOC
+  backupChildCommunicationChannels:
+  - Dead #If dead & not Moderator, this should attempt the Dead channel
+  chatChannels:
+  - Local
 
 - type: communicationChannel
   id: OOC
   publishSessionChatConditions:
-  - !type:TestSessionChatCondition
-  publishEntityChatConditions:
-  - !type:TestEntityChatCondition
+  - !type:AllSessionChatCondition
   consumeCollections:
   - consumeSessionChatConditions:
-    - !type:TestSessionChatCondition
-    consumeEntityChatConditions:
-    - !type:TestEntityChatCondition
-    collectionMarkupNodes:
-    - !type:TestMarkupNodeSupplier
-  communicationTypes:
-  - Spoken
+    - !type:AllSessionChatCondition
+    collectionChatModifiers:
+    - !type:SessionNameHeaderChatModifier
+    - !type:ColorFulltextChatModifier
+      colorKey: OOC
+  clientChatModifiers:
+  - !type:InsertLoCChatModifier
+    targetNode: SessionNameHeader
+    locString: "OOC: "
+    afterNode: false
+  - !type:BoldTagChatModifier
+    targetNode: SessionNameHeader
+  - !type:InsertLoCChatModifier
+    targetNode: SessionNameHeader
+    locString: ": "
+  chatChannels:
+  - Local
+
+# Start of Radios
+
+- type: communicationChannel
+  id: RadioBase
+  abstract: true
+  publishSessionChatConditions:
+  - !type:AllSessionChatCondition
+    entityChatConditions:
+    - !type:IsAboveCritEntityChatCondition
+      subconditions:
+      - !type:HasComponentEntityChatCondition
+        component: Sleeping
+        inverted: true
+        subconditions:
+        - !type:WearingHeadsetEntityChatCondition
+          subconditions:
+          - !type:ActiveTelecomsEntityChatCondition
+  consumeCollections:
+  - consumeSessionChatConditions:
+    - !type:AllSessionChatCondition
+      entityChatConditions:
+      - !type:WearingHeadsetEntityChatCondition
+    collectionChatModifiers:
+    - !type:SanitizeRadioPrefixChatModifier
+    - !type:MainMessageChatModifier
+    - !type:EntityNameHeaderChatModifier
+    - !type:SpeechVerbChatModifier
+  alwaysChildCommunicationChannels:
+  - ICWhisper
+  clientChatModifiers:
+  - !type:ColorRadioChatModifier
+  - !type:SpaceMainMessageChatModifier
+  - !type:QuoteMainMessageChatModifier
+  - !type:InsertRadioNameChatModifier
+    targetNode: EntityNameHeader
+    afterNode: false
+  - !type:BoldTagChatModifier
+    targetNode: EntityNameHeader
+  backupChildCommunicationChannels:
+  - Dead #If dead, this should attempt the Dead channel
+  chatChannels:
+  - Local
+
+- type: communicationChannel
+  parent: RadioBase
+  id: RadioCommon
+  channelParameters:
+    enum.DefaultChannelParameters.RadioChannel:
+      !type:String
+      Common
+
+- type: communicationChannel
+  parent: RadioBase
+  id: RadioCentCom
+  channelParameters:
+    enum.DefaultChannelParameters.RadioChannel:
+      !type:String
+      CentCom
+
+- type: communicationChannel
+  parent: RadioBase
+  id: RadioCommand
+  channelParameters:
+    enum.DefaultChannelParameters.RadioChannel:
+      !type:String
+      Command
+
+- type: communicationChannel
+  parent: RadioBase
+  id: RadioEngineering
+  channelParameters:
+    enum.DefaultChannelParameters.RadioChannel:
+      !type:String
+      Engineering
+
+- type: communicationChannel
+  parent: RadioBase
+  id: RadioMedical
+  channelParameters:
+    enum.DefaultChannelParameters.RadioChannel:
+      !type:String
+      Medical
+
+- type: communicationChannel
+  parent: RadioBase
+  id: RadioScience
+  channelParameters:
+    enum.DefaultChannelParameters.RadioChannel:
+      !type:String
+      Science
+
+- type: communicationChannel
+  parent: RadioBase
+  id: RadioSecurity
+  channelParameters:
+    enum.DefaultChannelParameters.RadioChannel:
+      !type:String
+      Security
+
+- type: communicationChannel
+  parent: RadioBase
+  id: RadioService
+  channelParameters:
+    enum.DefaultChannelParameters.RadioChannel:
+      !type:String
+      Service
+
+- type: communicationChannel
+  parent: RadioBase
+  id: RadioSupply
+  channelParameters:
+    enum.DefaultChannelParameters.RadioChannel:
+      !type:String
+      Supply
+
+- type: communicationChannel
+  parent: RadioBase
+  id: RadioSyndicate
+  channelParameters:
+    enum.DefaultChannelParameters.RadioChannel:
+      !type:String
+      Syndicate
+
+- type: communicationChannel
+  parent: RadioBase
+  id: RadioHandheld
+  channelParameters:
+    enum.DefaultChannelParameters.RadioChannel:
+      !type:String
+      Handheld
+
+- type: communicationChannel
+  parent: RadioBase
+  id: RadioBinary
+  channelParameters:
+    enum.DefaultChannelParameters.RadioChannel:
+      !type:String
+      Binary
+
+- type: communicationChannel
+  parent: RadioBase
+  id: RadioFreelance
+  channelParameters:
+    enum.DefaultChannelParameters.RadioChannel:
+      !type:String
+      Freelance
+
+# End of Radios
 
 - type: communicationChannel
   id: AdminChat
   publishSessionChatConditions:
-  - !type:TestSessionChatCondition
-  publishEntityChatConditions:
-  - !type:TestEntityChatCondition
+  - !type:IsAdminSessionChatCondition
   consumeCollections:
   - consumeSessionChatConditions:
-    - !type:TestSessionChatCondition
-    consumeEntityChatConditions:
-    - !type:TestEntityChatCondition
-    collectionMarkupNodes:
-    - !type:TestMarkupNodeSupplier
-  communicationTypes:
-  - Spoken
+    - !type:AllSessionChatCondition
+    collectionChatModifiers:
+    - !type:ColorFulltextChatModifier
+      colorKey: AdminChat
+  chatChannels:
+  - Local
 
 - type: communicationChannel
   id: AdminAlert
   publishSessionChatConditions:
-  - !type:TestSessionChatCondition
-  publishEntityChatConditions:
-  - !type:TestEntityChatCondition
+  - !type:IsAdminSessionChatCondition
   consumeCollections:
   - consumeSessionChatConditions:
-    - !type:TestSessionChatCondition
-    consumeEntityChatConditions:
-    - !type:TestEntityChatCondition
-    collectionMarkupNodes:
-    - !type:TestMarkupNodeSupplier
-  communicationTypes:
-  - Spoken
+    - !type:AllSessionChatCondition
+    collectionChatModifiers:
+    - !type:ColorFulltextChatModifier
+      colorKey: AdminAlert
+  chatChannels:
+  - Local
 
 - type: communicationChannel
-  id: ServerAnnouncement # Server announcements to go out to all players.
+  id: Server # Server announcements to go out to all players.
   publishSessionChatConditions:
-  - !type:TestSessionChatCondition
-  publishEntityChatConditions:
-  - !type:TestEntityChatCondition
+  - !type:IsAdminSessionChatCondition
   consumeCollections:
   - consumeSessionChatConditions:
-    - !type:TestSessionChatCondition
-    consumeEntityChatConditions:
-    - !type:TestEntityChatCondition
-    collectionMarkupNodes:
-    - !type:TestMarkupNodeSupplier
-  communicationTypes:
-  - Spoken
+    - !type:AllSessionChatCondition
+    collectionChatModifiers:
+    - !type:ColorFulltextChatModifier
+      colorKey: Server
+  chatChannels:
+  - Local
 
 - type: communicationChannel
   id: GameMessage # Used to communicate non-diagetic
   publishSessionChatConditions:
-  - !type:TestSessionChatCondition
-  publishEntityChatConditions:
-  - !type:TestEntityChatCondition
+  - !type:IsAdminSessionChatCondition
   consumeCollections:
   - consumeSessionChatConditions:
-    - !type:TestSessionChatCondition
-    consumeEntityChatConditions:
-    - !type:TestEntityChatCondition
-    collectionMarkupNodes:
-    - !type:TestMarkupNodeSupplier
-  communicationTypes:
-  - Spoken
+    - !type:AllSessionChatCondition
+    collectionChatModifiers:
+    - !type:ColorFulltextChatModifier
+      colorKey: IngameAnnouncement
+  chatChannels:
+  - Local
 
-- type: communicationType
-  id: Spoken
 
-- type: communicationType
-  id: Radio
-
-- type: communicationType
-  id: OOC
-
-- type: communicationType
-  id: Telepathic
+- type: communicationChannel
+  id: StationAnnouncement # Used to communicate non-diagetic
+  allowSessionMessages: false
+  consumeCollections:
+  - consumeSessionChatConditions:
+    - !type:SameStationSessionChatCondition
+    collectionChatModifiers:
+    - !type:ColorFulltextChatModifier
+      colorKey: IngameAnnouncement
+  chatChannels:
+  - Local

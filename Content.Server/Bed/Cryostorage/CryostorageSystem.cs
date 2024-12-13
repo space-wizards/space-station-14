@@ -290,7 +290,7 @@ public sealed class CryostorageSystem : SharedCryostorageSystem
 
         var msg = Loc.GetString(locKey, ("time", comp.GracePeriod.TotalMinutes));
         if (TryComp<ActorComponent>(args.Entity, out var actor))
-            _chatManager.ChatMessageToOne(ChatChannel.Server, msg, msg, uid, false, actor.PlayerSession.Channel);
+            _chatManager.SendChannelMessage(msg, "GameMessage", null, null, new HashSet<ICommonSession>() { actor.PlayerSession });
     }
 
     private List<CryostorageContainedPlayerData> GetAllContainedData(Entity<CryostorageComponent> ent)

@@ -13,7 +13,7 @@ namespace Content.Server.Silicons.StationAi;
 
 public sealed class StationAiSystem : SharedStationAiSystem
 {
-    [Dependency] private readonly IChatManager _chats = default!;
+    [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedRoleSystem _roles = default!;
@@ -53,7 +53,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
 
         var msg = Loc.GetString("ai-consciousness-download-warning");
         var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
-        _chats.ChatMessageToOne(ChatChannel.Server, msg, wrappedMessage, default, false, actor.PlayerSession.Channel, colorOverride: Color.Red);
+        _chatManager.SendChannelMessage(wrappedMessage, "GameMessage", null, null, new HashSet<ICommonSession>() { actor.PlayerSession });
 
         if (cue != null && _mind.TryGetMind(uid, out var mindId, out _))
             _roles.MindPlaySound(mindId, cue);
@@ -70,6 +70,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
         _lookup.GetChildEntities(xform.GridUid.Value, _ais);
         var filter = Filter.Empty();
 
+        /* CHAT-TODO: Should be the AI channel
         foreach (var ai in _ais)
         {
             // TODO: Filter API?
@@ -77,7 +78,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
             {
                 filter.AddPlayer(actorComp.PlayerSession);
             }
-        }
+        }*/
 
         // TEST
         // filter = Filter.Broadcast();
@@ -86,7 +87,7 @@ public sealed class StationAiSystem : SharedStationAiSystem
         var tile = Maps.LocalToTile(xform.GridUid.Value, grid, xform.Coordinates);
         var msg = Loc.GetString("ai-wire-snipped", ("coords", tile));
 
-        _chats.ChatMessageToMany(ChatChannel.Notifications, msg, msg, entity, false, true, filter.Recipients.Select(o => o.Channel));
+        _chatManager.SendChannelMessage(msg, "AIChannel", null, null);
         // Apparently there's no sound for this.
     }
 }

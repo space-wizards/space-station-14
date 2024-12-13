@@ -415,7 +415,7 @@ namespace Content.Server.Voting.Managers
                 {
                     var message = Loc.GetString("ui-vote-votekick-not-enough-eligible", ("voters", eligibleVoterNumber.ToString()), ("requirement", eligibleVoterNumberRequirement.ToString()));
                     var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
-                    _chatManager.ChatMessageToOne(ChatChannel.Server, message, wrappedMessage, default, false, initiator.Channel);
+                    _chatManager.SendChannelMessage(wrappedMessage, "Server", null, null, new HashSet<ICommonSession>() { initiator });
                 }
                 DirtyCanCallVoteAll();
                 return;
@@ -564,7 +564,7 @@ namespace Content.Server.Voting.Managers
                 {
                     var message = Loc.GetString("ui-vote-votekick-server-cancelled", ("target", target));
                     var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
-                    _chatManager.ChatMessageToOne(ChatChannel.Server, message, wrappedMessage, default, false, player.Channel);
+                    _chatManager.SendChannelMessage(wrappedMessage, "Server", null, null, new HashSet<ICommonSession>() { player });
                 }
             }
         }

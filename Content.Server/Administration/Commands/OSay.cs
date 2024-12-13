@@ -1,9 +1,12 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
+using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Shared.Administration;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Database;
 using Robust.Shared.Console;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration.Commands;
 
@@ -11,7 +14,9 @@ namespace Content.Server.Administration.Commands;
 public sealed class OSay : LocalizedCommands
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly IChatManager _chat = default!;
 
     public override string Command => "osay";
 
@@ -44,7 +49,11 @@ public sealed class OSay : LocalizedCommands
             return;
         }
 
-        var chatType = (InGameICChatType) Enum.Parse(typeof(InGameICChatType), args[1]);
+        if (!_prototypeManager.HasIndex<CommunicationChannelPrototype>(args[1]))
+        {
+            shell.WriteLine(Loc.GetString("osay-command-error-channel"));
+            return;
+        }
 
         if (!NetEntity.TryParse(args[0], out var sourceNet) || !_entityManager.TryGetEntity(sourceNet, out var source) || !_entityManager.EntityExists(source))
         {
@@ -56,7 +65,7 @@ public sealed class OSay : LocalizedCommands
         if (string.IsNullOrEmpty(message))
             return;
 
-        _entityManager.System<ChatSystem>().TrySendInGameICMessage(source.Value, message, chatType, false);
+        _chat.SendChannelMessage(message, args[1], null, source.Value);
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"{(shell.Player != null ? shell.Player.Name : "An administrator")} forced {_entityManager.ToPrettyString(source.Value)} to {args[1]}: {message}");
     }
 }

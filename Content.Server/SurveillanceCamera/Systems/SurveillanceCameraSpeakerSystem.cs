@@ -52,6 +52,6 @@ public sealed class SurveillanceCameraSpeakerSystem : EntitySystem
             ("originalName", nameEv.VoiceName));
 
         // log to chat so people can identity the speaker/source, but avoid clogging ghost chat if there are many radios
-        _chatSystem.TrySendInGameICMessage(uid, args.Message, InGameICChatType.Speak, ChatTransmitRange.GhostRangeLimit, nameOverride: name);
+        _chatSystem.TrySendInGameICMessage(uid, args.Message);
     }
 }

@@ -18,6 +18,8 @@ using Content.Client.UserInterface.Systems.Gameplay;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
+using Content.Shared.Chat.ChatModifiers;
+using Content.Shared.Chat.Prototypes;
 using Content.Shared.Damage.ForceSay;
 using Content.Shared.Decals;
 using Content.Shared.Input;
@@ -57,6 +59,7 @@ public sealed class ChatUIController : UIController
     [Dependency] private readonly IStateManager _state = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IReplayRecordingManager _replayRecording = default!;
+    [Dependency] private readonly ISharedContentMarkupTagManager _contentMarkupTagManager = default!;
 
     [UISystemDependency] private readonly ExamineSystem? _examine = default;
     [UISystemDependency] private readonly GhostSystem? _ghost = default;
@@ -428,7 +431,7 @@ public sealed class ChatUIController : UIController
         UpdateChannelPermissions();
     }
 
-    private void AddSpeechBubble(ChatMessage msg, SpeechBubble.SpeechType speechType)
+    public void AddSpeechBubble(ChatMessage msg, SpeechBubble.SpeechType speechType)
     {
         var ent = EntityManager.GetEntity(msg.SenderEntity);
 
@@ -619,7 +622,7 @@ public sealed class ChatUIController : UIController
 
             var msg = queueData.MessageQueue.Dequeue();
 
-            queueData.TimeLeft += BubbleDelayBase + msg.Message.Message.Length * BubbleDelayFactor;
+            queueData.TimeLeft += BubbleDelayBase + msg.Message.Message.ToString().Length * BubbleDelayFactor;
 
             // We keep the queue around while it has 0 items. This allows us to keep the timer.
             // When the timer hits 0 and there's no messages left, THEN we can clear it up.
@@ -742,7 +745,7 @@ public sealed class ChatUIController : UIController
         if (string.IsNullOrWhiteSpace(text))
             return;
 
-        (var prefixChannel, text, var _) = SplitInputContents(text);
+        (var prefixChannel, text, var radioChannel) = SplitInputContents(text);
 
         // Check if message is longer than the character limit
         if (text.Length > MaxMessageLength)
@@ -761,7 +764,7 @@ public sealed class ChatUIController : UIController
             text = $";{text}";
         }
 
-        _manager.SendMessage(text, prefixChannel == 0 ? channel : prefixChannel);
+        _manager.SendMessage(text, prefixChannel == 0 ? channel : prefixChannel, radioChannel);
     }
 
     private void OnDamageForceSay(DamageForceSayEvent ev, EntitySessionEventArgs _)
@@ -807,83 +810,55 @@ public sealed class ChatUIController : UIController
         var msg = message.Message;
         ProcessChatMessage(msg);
 
-        if ((msg.Channel & ChatChannel.AdminRelated) == 0 ||
-            _config.GetCVar(CCVars.ReplayRecordAdminChat))
+        if (_prototypeManager.TryIndex(msg.CommunicationChannel, out var proto))
         {
-            _replayRecording.RecordClientMessage(msg);
+            if ((proto.ChatChannels & ChatChannel.AdminRelated) == 0 ||
+                _config.GetCVar(CCVars.ReplayRecordAdminChat))
+            {
+                _replayRecording.RecordClientMessage(msg);
+            }
         }
     }
 
     public void ProcessChatMessage(ChatMessage msg, bool speechBubble = true)
     {
-        // color the name unless it's something like "the old man"
-        if ((msg.Channel == ChatChannel.Local || msg.Channel == ChatChannel.Whisper) && _chatNameColorsEnabled)
+        if (_prototypeManager.TryIndex(msg.CommunicationChannel, out var proto))
         {
-            var grammar = _ent.GetComponentOrNull<GrammarComponent>(_ent.GetEntity(msg.SenderEntity));
-            if (grammar != null && grammar.ProperNoun == true)
-                msg.WrappedMessage = SharedChatSystem.InjectTagInsideTag(msg, "Name", "color", GetNameColor(SharedChatSystem.GetStringInsideTag(msg, "Name")));
-        }
-
-        // Color any codewords for minds that have roles that use them
-        if (_player.LocalUser != null && _mindSystem != null && _roleCodewordSystem != null)
-        {
-            if (_mindSystem.TryGetMind(_player.LocalUser.Value, out var mindId) && _ent.TryGetComponent(mindId, out RoleCodewordComponent? codewordComp))
+            foreach (var markupSupplier in proto.ClientChatModifiers)
             {
-                foreach (var (_, codewordData) in codewordComp.RoleCodewords)
+                msg.Message = markupSupplier.ProcessChatModifier(msg.Message, proto.ChannelParameters);
+            }
+
+            // Process any remaining clientside content markups.
+            msg.Message = _contentMarkupTagManager.ProcessMessage(msg.Message, null);
+
+
+            // Log all incoming chat to repopulate when filter is un-toggled
+            if (!msg.HideChat)
+            {
+                History.Add((_timing.CurTick, msg));
+                MessageAdded?.Invoke(msg);
+
+                if (!msg.Read)
                 {
-                    foreach (string codeword in codewordData.Codewords)
-                        msg.WrappedMessage = SharedChatSystem.InjectTagAroundString(msg, codeword, "color", codewordData.Color.ToHex());
+                    _sawmill.Debug($"Message filtered: {msg.CommunicationChannel}: {msg.Message}");
+                    if (!_unreadMessages.TryGetValue(proto.ChatChannels, out var count))
+                        count = 0;
+
+                    count += 1;
+                    _unreadMessages[proto.ChatChannels] = count;
+                    UnreadMessageCountsUpdated?.Invoke(proto.ChatChannels, count);
                 }
             }
-        }
 
-        // Log all incoming chat to repopulate when filter is un-toggled
-        if (!msg.HideChat)
-        {
-            History.Add((_timing.CurTick, msg));
-            MessageAdded?.Invoke(msg);
-
-            if (!msg.Read)
+            if (proto.ClientChatModifiers.Where(x => x is BubbleProviderChatModifier).Count() > 0)
             {
-                _sawmill.Debug($"Message filtered: {msg.Channel}: {msg.Message}");
-                if (!_unreadMessages.TryGetValue(msg.Channel, out var count))
-                    count = 0;
-
-                count += 1;
-                _unreadMessages[msg.Channel] = count;
-                UnreadMessageCountsUpdated?.Invoke(msg.Channel, count);
+                var bubbleHeaderNode = msg.Message.Nodes.First(x => x.Name == "BubbleHeader");
+                if (bubbleHeaderNode.Value.TryGetLong(out var speechEnum))
+                {
+                    AddSpeechBubble(msg, (SpeechBubble.SpeechType)speechEnum);
+                }
             }
-        }
-
-        // Local messages that have an entity attached get a speech bubble.
-        if (!speechBubble || msg.SenderEntity == default)
-            return;
-
-        switch (msg.Channel)
-        {
-            case ChatChannel.Local:
-                AddSpeechBubble(msg, SpeechBubble.SpeechType.Say);
-                break;
-
-            case ChatChannel.Whisper:
-                AddSpeechBubble(msg, SpeechBubble.SpeechType.Whisper);
-                break;
-
-            case ChatChannel.Dead:
-                if (_ghost is not {IsGhost: true})
-                    break;
-
-                AddSpeechBubble(msg, SpeechBubble.SpeechType.Say);
-                break;
-
-            case ChatChannel.Emotes:
-                AddSpeechBubble(msg, SpeechBubble.SpeechType.Emote);
-                break;
-
-            case ChatChannel.LOOC:
-                if (_config.GetCVar(CCVars.LoocAboveHeadShow))
-                    AddSpeechBubble(msg, SpeechBubble.SpeechType.Looc);
-                break;
         }
     }
 

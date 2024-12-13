@@ -249,7 +249,8 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         if (comp.Battlecry != null)//If the battlecry is set to empty, doesn't speak
         {
-            _chat.TrySendInGameICMessage(args.User, comp.Battlecry, InGameICChatType.Speak, true, true, checkRadioPrefix: false);  //Speech that isn't sent to chat or adminlogs
+            // CHAT-TODO: Add the ability to not log this
+            _chat.TrySendInGameICMessage(args.User, comp.Battlecry);  //Speech that isn't sent to chat or adminlogs
         }
 
     }

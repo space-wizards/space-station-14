@@ -7,20 +7,18 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Chat;
 
-public sealed class ContentMarkupTagManager
+public interface ISharedContentMarkupTagManager
 {
-    private static readonly Dictionary<string, IContentMarkupTag> _contentMarkupTagTypes = new IContentMarkupTag[] {
-        new TestContentTag(),
-    }.ToDictionary(x => x.Name, x => x);
+    Dictionary<string, IContentMarkupTag> ContentMarkupTagTypes { get; }
 
     public IContentMarkupTag? GetMarkupTag(string name)
     {
-        return _contentMarkupTagTypes.GetValueOrDefault(name);
+        return ContentMarkupTagTypes.GetValueOrDefault(name);
     }
 
-    public static bool TryGetContentMarkupTag(string name, Type[]? tagsAllowed, [NotNullWhen(true)] out IContentMarkupTag? tag)
+    public bool TryGetContentMarkupTag(string name, Type[]? tagsAllowed, [NotNullWhen(true)] out IContentMarkupTag? tag)
     {
-        if (_contentMarkupTagTypes.TryGetValue(name, out var markupTag)
+        if (ContentMarkupTagTypes.TryGetValue(name, out var markupTag)
             // Using a whitelist prevents new tags from sneaking in.
             && (tagsAllowed == null || Array.IndexOf(tagsAllowed, markupTag.GetType()) != -1))
         {
@@ -32,7 +30,7 @@ public sealed class ContentMarkupTagManager
         return false;
     }
 
-    public static FormattedMessage ProcessMessage(FormattedMessage message, Stack<IContentMarkupTag>? tagStack = null)
+    public FormattedMessage ProcessMessage(FormattedMessage message, Stack<IContentMarkupTag>? tagStack = null)
     {
         var consumedNodes = tagStack ?? new Stack<IContentMarkupTag>();
         var returnMessage = new FormattedMessage();
@@ -44,7 +42,6 @@ public sealed class ContentMarkupTagManager
         {
             var node = nodeEnumerator[i];
 
-            Logger.Debug("nodename: " + (node.Name ?? "TEXTNODE"));
             if (consumedNodes.Count > 0)
             {
                 var consumedNode = consumedNodes.First();
@@ -56,12 +53,9 @@ public sealed class ContentMarkupTagManager
                 if (consumedNodeResult != null)
                 {
                     var testvar = string.Join("", consumedNodeResult);
-                    Logger.Debug("testvar " + testvar);
                     var secondtestvar = ProcessMessage(FormattedMessage.FromMarkupOrThrow(testvar), new Stack<IContentMarkupTag>(consumedNodes.Skip(1)));
-                    Logger.Debug("secondtestvar " + secondtestvar.ToMarkup());
                     returnMessage.AddMessage(secondtestvar);
                     nodeEnumerator.InsertRange(i, secondtestvar.Nodes);
-                    Logger.Debug("nodecount: " + secondtestvar.Nodes.Count);
                     i += secondtestvar.Nodes.Count + 1;
                     continue;
                 }
@@ -70,7 +64,6 @@ public sealed class ContentMarkupTagManager
 
             if (node.Name != null && TryGetContentMarkupTag(node.Name, null, out var tag))
             {
-                Logger.Debug("- node: " + node.Name);
                 if (!node.Closing)
                 {
                     var openerNode = tag.OpenerProcessing(node);
@@ -90,7 +83,6 @@ public sealed class ContentMarkupTagManager
                     {
                         nodeEnumerator.InsertRange(i, closerNode);
                         i += closerNode.Count;
-                        Logger.Debug(string.Join("", closerNode));
                         returnMessage.AddMessage(FormattedMessage.FromMarkupOrThrow(string.Join("", closerNode)));
                     }
 
@@ -99,7 +91,6 @@ public sealed class ContentMarkupTagManager
             }
             else
             {
-                Logger.Debug("- textnode: " + (node.Value.StringValue ?? "not contenttag/no value"));
                 if (!node.Closing)
                 {
                     returnMessage.PushTag(node);
