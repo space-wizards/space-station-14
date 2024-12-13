@@ -65,7 +65,11 @@
       - state: mag-0
         map: ["enum.GunVisualLayers.Mag"]
   - type: Gun
-    fireRate: 5
+    minAngle: 22
+    maxAngle: 42
+    angleIncrease: 3
+    angleDecay: 18
+    fireRate: 3.75
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
   - type: ChamberMagazineAmmoProvider
@@ -160,6 +164,11 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Rifles/lecter.rsi
   - type: Gun
+    fireRate: 4.5
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
+      - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg
   - type: ItemSlots

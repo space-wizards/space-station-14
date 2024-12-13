@@ -9,6 +9,8 @@
     state: icon_alt
   - type: Clothing
     equippedPrefix: alt
+  - type: StealTarget #imp
+    stealGroup: CommandHeadset # catches the freelancer and syndicate over ear headsets but this is funny so idc
 
 - type: entity
   parent: ClothingHeadsetAlt
@@ -86,8 +88,6 @@
     sprite: Clothing/Ears/Headsets/medical.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/medical.rsi
-  - type: StealTarget
-    stealGroup: ClothingHeadsetAltMedical
 
 - type: entity
   parent: [ClothingHeadsetAlt, BaseCommandContraband]
