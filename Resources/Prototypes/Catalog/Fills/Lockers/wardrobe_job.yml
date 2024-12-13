@@ -13,6 +13,10 @@
        - id: ClothingShoesColorBlack
          amount: 2
        - id: ClothingMaskMuzzle
+       - id: ClothingOuterVestTank # Harmony. Required for Vox by space law
+         amount: 2
+       - id: ClothingHeadsetGrey # Harmony. Required by space law
+         amount: 2
 
 #- type: entity
 #  id: WardrobePajamaFilled
