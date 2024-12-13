@@ -578,6 +578,9 @@
     flavors:
       - meaty
       - spicy
+  - type: Tag
+    tags:
+    - Meat
   - type: Sprite
     state: fivealarm
   - type: SolutionContainerManager
