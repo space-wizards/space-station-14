@@ -270,3 +270,17 @@
   sprite:
     sprite: Objects/Misc/module.rsi
     state: cpu_command
+
+- type: stealTargetGroup
+  id: Plushie
+  name: steal-target-groups-plushie
+  sprite:
+    sprite: Objects/Fun/toys.rsi
+    state: plushie_bug
+
+- type: stealTargetGroup
+  id: SeedExtractor
+  name: steal-target-groups-seedextractor
+  sprite:
+    sprite: Structures/Machines/seed_extractor.rsi
+    state: seedextractor

@@ -22,6 +22,13 @@
     CaptainJetpackStealObjective: 0.5
     HandTeleporterStealObjective: 0.5
     EnergyShotgunStealObjective: 0.5
+    #imp
+    ShiningSpringTraitorStealObjective: 1
+    WantedListCartridgeTraitorStealObjective: 1
+    AstroNavCartridgeTraitorStealObjective: 1
+    LogProbeCartridgeTraitorStealObjective: 1
+    MedTekCartridgeTraitorStealObjective: 1
+    FinFinMeatStealObjective: 1
 
 - type: weightedRandom
   id: TraitorObjectiveGroupKill
@@ -66,6 +73,11 @@
     TechnologyDiskStealCollectionObjective: 1        #rnd
     IDCardsStealCollectionObjective: 1
     LAMPStealCollectionObjective: 2 #only for moth
+    #imp below
+    CigaretteStealCollectionObjective: 1 #grays
+    PositronicBrainStealCollectionObjective: 1 #thaven
+    AILawBoardStealCollectionObjective: 1
+    PlushieStealCollectionObjective: 1
 
 - type: weightedRandom
   id: ThiefObjectiveGroupItem
@@ -73,7 +85,7 @@
     ForensicScannerStealObjective: 1                    #sec
     FlippoEngravedLighterStealObjective: 0.5
     ClothingHeadHatWardenStealObjective: 1
-    WantedListCartridgeStealObjective: 1
+    WantedListCartridgeThiefStealObjective: 1
     ClothingOuterHardsuitVoidParamedStealObjective: 1   #med
     MedicalTechFabCircuitboardStealObjective: 1
     ClothingHeadsetAltMedicalStealObjective: 1
@@ -86,6 +98,17 @@
     BibleStealObjective: 1
     ClothingNeckGoldmedalStealObjective: 1              #other
     ClothingNeckClownmedalStealObjective: 0.5
+    #imp
+    PunpunIDCardStealObjective: 1
+    AtmosFireSuitStealObjective: 1 #fire vuln species only
+    MopBucketStealObjective: 1 #slimes only. idk someone wanted this
+    MedTekCartridgeThiefStealObjective: 1
+    LogProbeCartridgeThiefStealObjective: 1
+    AstroNavCartridgeThiefStealObjective: 1
+    ServiceTechFabStealObjective: 1
+    ShiningSpringThiefStealObjective: 1
+    ShipyardComputerCircuitboardStealObjective: 1
+    CommsComputerCircuitboardStealObjective: 1
 
 - type: weightedRandom
   id: ThiefObjectiveGroupStructure
@@ -100,6 +123,32 @@
     AltarNanotrasenStealObjective: 1
     PlantRDStealObjective: 1
     ToiletGoldenStealObjective: 1
+    #imp
+    GeneratorStealObjective: 1
+    AICoreStealObjective: 1
+    ParticleAcceleratorStealObjective: 1
+    PTechStealObjective: 1
+    SecTechStealObjective: 1
+    HyDrobeStealObjective: 1
+    LawDrobeStealObjective: 1
+    SecDrobeStealObjective: 1
+    BarDrobeStealObjective: 1
+    PietyVendStealObjective: 1
+    CargoDrobeStealObjective: 1
+    MediDrobeStealObjective: 1
+    ChemDrobeStealObjective: 1
+    CuraDrobeStealObjective: 1
+    AtmosDrobeStealObjective: 1
+    EngiDrobeStealObjective: 1
+    ChefDrobeStealObjective: 1
+    DetDrobeStealObjective: 1
+    JaniDrobeStealObjective: 1
+    SciDrobeStealObjective: 1
+    RoboDrobeStealObjective: 1
+    GeneDrobeStealObjective: 1
+    ViroDrobeStealObjective: 1
+    SeedExtractorStealObjective: 1
+
 
 - type: weightedRandom
   id: ThiefObjectiveGroupAnimal
@@ -112,6 +161,8 @@
     RenaultStealObjective: 1
     ShivaStealObjective: 1
     TropicoStealObjective: 1
+    #imp
+    FinFinStealObjective: 1
 
 - type: weightedRandom
   id: ThiefObjectiveGroupEscape

@@ -43,7 +43,7 @@
 
 - type: entity
   parent: BaseTraitorStealObjective
-  id: MedTekCartridgeStealObjective
+  id: MedTekCartridgeTraitorStealObjective
   components:
   - type: NotJobRequirement
     job: MedicalDoctor
@@ -54,7 +54,7 @@
 
 - type: entity
   parent: BaseTraitorStealObjective
-  id: LogProbeCartridgeStealObjective
+  id: LogProbeCartridgeTraitorStealObjective
   components:
   - type: NotJobRequirement
     job: Detective #you know. just in case
@@ -65,7 +65,7 @@
 
 - type: entity
   parent: BaseTraitorStealObjective
-  id: AstroNavCartridgeStealObjective
+  id: AstroNavCartridgeTraitorStealObjective
   components:
   - type: NotJobRequirement
     job: SalvageSpecialist
@@ -76,7 +76,7 @@
 
 - type: entity
   parent: BaseTraitorStealObjective
-  id: WantedListCartridgeStealObjective
+  id: WantedListCartridgeTraitorStealObjective
   components:
   - type: NotJobRequirement
     job: SecurityOfficer
@@ -87,7 +87,7 @@
 
 - type: entity
   parent: BaseTraitorStealObjective
-  id: ShiningSpringStealObjective
+  id: ShiningSpringTraitorStealObjective
   components:
   - type: NotJobRequirement
     job: Janitor
