@@ -19,6 +19,7 @@ using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind;
 using Content.Shared.Players;
+using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Whitelist;
 using Robust.Server.Audio;
@@ -26,6 +27,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -49,6 +51,8 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
     // arbitrary random number to give late joining some mild interest.
     public const float LateJoinRandomChance = 0.5f;
+
+    public List<NetUserId> QueuedAntags = [];
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -85,6 +89,7 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     private void OnPlayerSpawning(RulePlayerSpawningEvent args)
     {
         var pool = args.PlayerPool;
+        var playerNetIds = args.PlayerPool.Select(o => o.UserId).ToHashSet();
 
         var query = QueryActiveRules();
         while (query.MoveNext(out var uid, out _, out var comp, out _))
@@ -95,8 +100,21 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
             ChooseAntags((uid, comp), pool);
 
+            var selectedAntagNetIds = comp.SelectedSessions.Select(o => o.UserId).ToHashSet();
+
+
+
             if (comp.SelectionTime != AntagSelectionTime.PrePlayerSpawn)
+            {
+                foreach (var (player, _) in args.Profiles)
+                {
+                    if (selectedAntagNetIds.Contains(player))
+                        QueuedAntags.Add(player);
+                }
+
                 continue;
+            }
+
 
             foreach (var session in comp.ProcessedSessions)
             {
@@ -114,7 +132,15 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
             if (comp.SelectionTime != AntagSelectionTime.PostPlayerSpawn)
                 continue;
 
-            ChooseAntags((uid, comp), args.Players);
+            if (!comp.SelectionsComplete) // Should never happen I think?
+                ChooseAntags((uid, comp), args.Players);
+
+            foreach(var session in comp.ProcessedSessions){
+                MakeAntag(ent, session, def, playerPool); // You left off here
+            }
+
+
+
         }
     }
 
