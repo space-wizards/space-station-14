@@ -61,7 +61,7 @@
 
 - type: entity
   name: nemesis-11
-  parent: [BaseWeaponRifle, BaseRestrictedContraband]
+  parent: [BaseWeaponRifle, BaseSyndicateContraband]
   id: WeaponRifleNemesis
   description: An ambitious step into the future of firearms, and no less fearful. Uses .25 caseless ammo.
   components:
