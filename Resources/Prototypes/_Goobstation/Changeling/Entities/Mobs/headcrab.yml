@@ -5,6 +5,7 @@
   description: You don't want to touch it.
   components:
   - type: VentCrawler
+  - type: NoSlip
   - type: Sprite
     drawdepth: SmallMobs
     layers:

@@ -81,6 +81,7 @@
     - CrewManifestCartridge
     - NotekeeperCartridge
     - NewsReaderCartridge
+    - NanoChatCartridge # DeltaV
     cartridgeSlot:
       priority: -1
       name: device-pda-slot-component-slot-name-cartridge
@@ -132,7 +133,7 @@
     - NotekeeperCartridge
     - NewsReaderCartridge
     - WantedListCartridge
-
+    - NanoChatCartridge # DeltaV
 - type: entity
   parent: BasePDA
   id: BaseMedicalPDA
@@ -145,6 +146,7 @@
     - NotekeeperCartridge
     - NewsReaderCartridge
     - MedTekCartridge
+    - NanoChatCartridge # DeltaV
 
 - type: entity
   parent: BasePDA
@@ -478,6 +480,7 @@
     - NotekeeperCartridge
     - NewsReaderCartridge
     - AstroNavCartridge
+    - NanoChatCartridge # DeltaV
 
 - type: entity
   parent: BasePDA
@@ -827,6 +830,7 @@
     - NewsReaderCartridge
     - WantedListCartridge
     - LogProbeCartridge
+    - NanoChatCartridge # DeltaV
 
 - type: entity
   parent: BaseSecurityPDA
@@ -897,6 +901,7 @@
     - WantedListCartridge
     - LogProbeCartridge
     - AstroNavCartridge
+    - NanoChatCartridge # DeltaV
 
 - type: entity
   parent: CentcomPDA
@@ -921,6 +926,7 @@
     - WantedListCartridge
     - MedTekCartridge
     - AstroNavCartridge
+    - NanoChatCartridge # DeltaV
   - type: Tag #  Ignore Chameleon tags
     tags:
     - DoorBumpOpener
@@ -1038,6 +1044,7 @@
     uiKey: enum.PdaUiKey.Key
     preinstalled:
     - NotekeeperCartridge
+    - NanoChatCartridge # DeltaV
 
 - type: entity
   parent: BaseSecurityPDA
@@ -1069,6 +1076,7 @@
     - WantedListCartridge
     - LogProbeCartridge
     - AstroNavCartridge
+    - NanoChatCartridge # DeltaV
 
 - type: entity
   parent: ERTLeaderPDA
@@ -1237,6 +1245,7 @@
     - NewsReaderCartridge
     - WantedListCartridge
     - LogProbeCartridge
+    - NanoChatCartridge # DeltaV
 
 - type: entity
   parent: BaseMedicalPDA
@@ -1264,6 +1273,7 @@
     - NewsReaderCartridge
     - WantedListCartridge
     - MedTekCartridge
+    - NanoChatCartridge # DeltaV
 
 - type: entity
   parent: BasePDA
@@ -1349,6 +1359,7 @@
     preinstalled:
     - NotekeeperCartridge
     - MedTekCartridge
+    - NanoChatCartridge # DeltaV
 
 - type: entity
   parent: BasePDA

@@ -19,8 +19,6 @@ using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
 using Content.Shared.Damage.Components;
-using Content.Server.Radio.Components;
-using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -163,22 +161,20 @@ public sealed partial class ChangelingSystem : EntitySystem
         var popupOthers = Loc.GetString("changeling-absorb-end-others", ("user", Identity.Entity(uid, EntityManager)), ("target", Identity.Entity(target, EntityManager)));
 
         var bonusChemicals = 0f;
-        var bonusEvolutionPoints = 0f;
+        var bonusEvolutionPoints = 0;
 
         if (TryComp<ChangelingComponent>(target, out var targetComp))
         {
             popupSelf = Loc.GetString("changeling-absorb-end-self-ling", ("target", Identity.Entity(target, EntityManager)));
             bonusChemicals += targetComp.MaxChemicals / 2;
-            bonusEvolutionPoints += 10;
+            bonusEvolutionPoints += 2;
             comp.MaxBiomass += targetComp.MaxBiomass / 2;
         }
         else
         {
             bonusChemicals += 10;
 
-            if (!reducedBiomass)
-                bonusEvolutionPoints += 2;
-            else
+            if (reducedBiomass)
                 popupSelf = Loc.GetString("changeling-absorb-end-self-reduced-biomass", ("target", Identity.Entity(target, EntityManager)));
         }
 
@@ -189,11 +185,13 @@ public sealed partial class ChangelingSystem : EntitySystem
         TryStealDNA(uid, target, comp, true);
         comp.TotalAbsorbedEntities++;
         comp.MaxChemicals += bonusChemicals;
+        comp.MaxEvolutionPoints += bonusEvolutionPoints;
 
         if (TryComp<StoreComponent>(args.User, out var store))
         {
             _store.TryAddCurrency(new Dictionary<string, FixedPoint2> { { "EvolutionPoint", bonusEvolutionPoints } }, args.User, store);
             _store.UpdateUserInterface(args.User, args.User, store);
+            _store.EnableRefund(uid, args.User, store);
         }
 
         if (_mind.TryGetMind(uid, out var mindId, out var mind))
@@ -657,15 +655,15 @@ public sealed partial class ChangelingSystem : EntitySystem
         }
 
         _explosionSystem.QueueExplosion(
-            (EntityUid) newUid,
+            (EntityUid)newUid,
             typeId: "Default",
             totalIntensity: 1,
             slope: 4,
             maxTileIntensity: 2);
 
-        _actions.AddAction((EntityUid) newUid, "ActionLayEgg");
+        _actions.AddAction((EntityUid)newUid, "ActionLayEgg");
 
-        PlayMeatySound((EntityUid) newUid, comp);
+        PlayMeatySound((EntityUid)newUid, comp);
     }
     public void OnLesserForm(EntityUid uid, ChangelingComponent comp, ref ActionLesserFormEvent args)
     {

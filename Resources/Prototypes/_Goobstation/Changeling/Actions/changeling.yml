@@ -512,6 +512,7 @@
 - type: entity
   id: ActionLastResort
   name: Last Resort
+  parent: BaseSuicideAction
   description: We abandon our vessel, escaping in our vulnerable true self, to find a new body to occupy. Costs a small amount of chemicals.
   categories: [ HideSpawnMenu ]
   components:
@@ -525,6 +526,7 @@
     event: !type:ActionLastResortEvent {}
   - type: ChangelingAction
     chemicalCost: 20
+    biomassCost: -30 # absorbing the rest of the current body on use
     useInLesserForm: true
 
 - type: entity

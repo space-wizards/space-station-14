@@ -81,6 +81,7 @@
     - NotekeeperCartridge
     - NewsReaderCartridge
     - AstroNavCartridge
+    - NanoChatCartridge # DeltaV
 
 - type: entity
   parent: BasePDA

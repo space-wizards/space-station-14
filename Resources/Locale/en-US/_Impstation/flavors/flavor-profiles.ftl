@@ -1,5 +1,6 @@
 flavor-base-kingsoda = like you're a champion
 flavor-base-drinkdrink = like dogshit
+flavor-base-unholy = unholy
 
 flavor-complex-raktaccino = fantastically bitter
 
