@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: PJB3005
-  changes:
-  - message: Fix the ChemVend jug names again
-    type: Fix
-  id: 7201
-  time: '2024-08-25T02:02:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31398
 - author: metalgearsloth
   changes:
   - message: Fix grids sometimes overlapping on roundstart.
@@ -3919,3 +3912,10 @@
   id: 7700
   time: '2024-12-12T14:24:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33558
+- author: lzk228
+  changes:
+  - message: Disabled evac after declaring nuke war is increased from 15 to 25 minutes.
+    type: Tweak
+  id: 7701
+  time: '2024-12-13T03:10:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33628
