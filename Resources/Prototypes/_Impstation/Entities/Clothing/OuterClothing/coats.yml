@@ -1,0 +1,14 @@
+- type: entity
+  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, BaseCommandContraband]
+  id: ClothingOuterCoatCMO
+  name: Chief Medical Officer's Labcoat
+  description: A Medical Labcoat for the Chief Medical officer. The high collar acts as a splash guard for when a patient's veins are particularly leaky. 
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Coats/cmoprestigecoat.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Coats/cmoprestigecoat.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.75

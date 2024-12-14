@@ -242,15 +242,6 @@
   - CommandVeteranDuffel
 
 - type: loadoutGroup
-  id: ChiefMedicalOfficerNeck
-  name: loadout-group-chief-medical-officer-neck
-  loadouts:
-  - ChiefMedicalOfficerCloak
-  - ChiefMedicalOfficerMantle
-  - ScarfLightBlue
-  - ClothingNeckCloakCmosgreatcloak
-
-- type: loadoutGroup
   id: HeadofSecurityMask
   name: loadout-group-head-of-security-mask
   minLimit: 0

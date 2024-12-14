@@ -24,7 +24,20 @@
   - !type:GroupLoadoutEffect
     proto: VeteranCMO
 
+- type: loadout
+  id: CMOPrestigeLabcoat
+  equipment:
+    outerclothing: ClothingOuterCoatCMO
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranCMO
+
 - type: startingGear
   id: CMOGreatCloak
   equipment:
-	neck: ClothingNeckCloakCmosgreatcloak
+    neck: ClothingNeckCloakCmosgreatcloak
+
+- type: startingGear
+  id: ClothingOuterCoatCMO
+  equipment:
+    outerclothing: ClothingOuterCoatCMO
