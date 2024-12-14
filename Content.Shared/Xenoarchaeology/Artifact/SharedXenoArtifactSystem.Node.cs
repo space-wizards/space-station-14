@@ -23,11 +23,15 @@ public abstract partial class SharedXenoArtifactSystem
         _nodeQuery = GetEntityQuery<XenoArtifactNodeComponent>();
     }
 
+    /// <summary>
+    /// Initializes artifact node on its creation (by setting durability).
+    /// </summary>
     private void OnNodeMapInit(Entity<XenoArtifactNodeComponent> ent, ref MapInitEvent args)
     {
         SetNodeDurability((ent, ent), ent.Comp.MaxDurability - ent.Comp.MaxDurabilityCanDecreaseBy.Next(RobustRandom));
     }
 
+    /// <summary> Gets node component by node entity uid. </summary>
     public XenoArtifactNodeComponent XenoArtifactNode(EntityUid uid)
     {
         return _nodeQuery.Get(uid);
@@ -59,7 +63,7 @@ public abstract partial class SharedXenoArtifactSystem
     }
 
     /// <summary>
-    /// Adds to the node's durability by the specified value.
+    /// Adds to the node's durability by the specified value. To reduce, provide negative value.
     /// </summary>
     public void AdjustNodeDurability(Entity<XenoArtifactNodeComponent?> ent, int durabilityDelta)
     {
@@ -70,7 +74,7 @@ public abstract partial class SharedXenoArtifactSystem
     }
 
     /// <summary>
-    /// Sets a node's durability to the specified value.
+    /// Sets a node's durability to the specified value. HIGHLY recommended to not be less than 0.
     /// </summary>
     public void SetNodeDurability(Entity<XenoArtifactNodeComponent?> ent, int durability)
     {
@@ -82,12 +86,18 @@ public abstract partial class SharedXenoArtifactSystem
         Dirty(ent);
     }
 
+    /// <summary>
+    /// Creates artifact node entity, attaching trigger and marking depth level for future use.
+    /// </summary>
     public Entity<XenoArtifactNodeComponent> CreateNode(Entity<XenoArtifactComponent> ent, ProtoId<XenoArchTriggerPrototype> trigger, int depth = 0)
     {
         var triggerProto = PrototypeManager.Index(trigger);
         return CreateNode(ent, triggerProto, depth);
     }
 
+    /// <summary>
+    /// Creates artifact node entity, attaching trigger and marking depth level for future use.
+    /// </summary>
     public Entity<XenoArtifactNodeComponent> CreateNode(Entity<XenoArtifactComponent> ent, XenoArchTriggerPrototype trigger, int depth = 0)
     {
         var entProtoId = _entityTable.GetSpawns(ent.Comp.EffectsTable)
@@ -105,6 +115,7 @@ public abstract partial class SharedXenoArtifactSystem
         return nodeEnt.Value;
     }
 
+    /// <summary> Checks if all predecessor nodes are marked as 'unlocked'. </summary>
     public bool HasUnlockedPredecessor(Entity<XenoArtifactComponent> ent, EntityUid node)
     {
         var predecessors = GetDirectPredecessorNodes((ent, ent), node);
@@ -124,11 +135,15 @@ public abstract partial class SharedXenoArtifactSystem
         return true;
     }
 
+    /// <summary> Checks if node was marked as 'active'. Active nodes are invoked on artifact use (if durability is greater than zero). </summary>
     public bool IsNodeActive(Entity<XenoArtifactComponent> ent, EntityUid node)
     {
         return ent.Comp.CachedActiveNodes.Contains(GetNetEntity(node));
     }
 
+    /// <summary>
+    /// Gets list of 'active' nodes. Active nodes are invoked on artifact use (if durability is greater than zero).
+    /// </summary>
     public List<Entity<XenoArtifactNodeComponent>> GetActiveNodes(Entity<XenoArtifactComponent> ent)
     {
         return ent.Comp.CachedActiveNodes
@@ -137,7 +152,9 @@ public abstract partial class SharedXenoArtifactSystem
     }
 
     /// <summary>
-    /// We can only extract "what's left" - its base value reduced by already consumed value.
+    /// Gets amount of research points that can be extracted from node.
+    /// We can only extract "what's left" - its base value, reduced by already consumed value.
+    /// Every drained durability brings more points to be extracted.
     /// </summary>
     public int GetResearchValue(Entity<XenoArtifactNodeComponent> ent)
     {
@@ -156,11 +173,18 @@ public abstract partial class SharedXenoArtifactSystem
         Dirty(ent);
     }
 
+    /// <summary>
+    /// Converts node entity uid to its display name (which is Identifier from <see cref="NameIdentifierComponent"/>.
+    /// </summary>
     public string GetNodeId(EntityUid uid)
     {
         return (CompOrNull<NameIdentifierComponent>(uid)?.Identifier ?? 0).ToString("D3");
     }
 
+    /// <summary>
+    /// Gets two-dimensional array in a form of nested lists, which holds artifact nodes, grouped by segments.
+    /// Segments are groups of interconnected nodes, there might be one or more segments in non-empty artifact.
+    /// </summary>
     public List<List<Entity<XenoArtifactNodeComponent>>> GetSegments(Entity<XenoArtifactComponent> ent)
     {
         var output = new List<List<Entity<XenoArtifactNodeComponent>>>();
@@ -180,6 +204,10 @@ public abstract partial class SharedXenoArtifactSystem
         return output;
     }
 
+    /// <summary>
+    /// Gets list of nodes, grouped by depth level. Depth level count starts from 0.
+    /// Only 0 depth nodes have no incoming edges - as only they are starting nodes.
+    /// </summary>
     public Dictionary<int, List<Entity<XenoArtifactNodeComponent>>> GetDepthOrderedNodes(IEnumerable<Entity<XenoArtifactNodeComponent>> nodes)
     {
         var nodesByDepth = new Dictionary<int, List<Entity<XenoArtifactNodeComponent>>>();
@@ -199,7 +227,7 @@ public abstract partial class SharedXenoArtifactSystem
     }
 
     /// <summary>
-    /// Rebuilds all the data associated with nodes in an artifact.
+    /// Rebuilds all the data, associated with nodes in an artifact, updating caches.
     /// </summary>
     public void RebuildXenoArtifactMetaData(Entity<XenoArtifactComponent?> artifact)
     {
@@ -291,6 +319,9 @@ public abstract partial class SharedXenoArtifactSystem
         Dirty(ent);
     }
 
+    /// <summary>
+    /// Gets two-dimensional array (as lists inside enumeration) that contains artifact nodes, grouped by segment.
+    /// </summary>
     public IEnumerable<List<Entity<XenoArtifactNodeComponent>>> GetSegmentsFromNodes(Entity<XenoArtifactComponent> ent, List<Entity<XenoArtifactNodeComponent>> nodes)
     {
         var outSegments = new List<List<Entity<XenoArtifactNodeComponent>>>();
@@ -308,6 +339,9 @@ public abstract partial class SharedXenoArtifactSystem
         return outSegments;
     }
 
+    /// <summary>
+    /// Fills nodes into segments by recursively walking through collections of predecessors and successors.
+    /// </summary>
     private void GetSegmentNodesRecursive(
         Entity<XenoArtifactComponent> ent,
         Entity<XenoArtifactNodeComponent> node,
@@ -336,6 +370,10 @@ public abstract partial class SharedXenoArtifactSystem
         }
     }
 
+    /// <summary>
+    /// Sets node research point amount that can be extracted.
+    /// Used up durability increases amount to be extracted.
+    /// </summary>
     public void UpdateNodeResearchValue(Entity<XenoArtifactNodeComponent> node)
     {
         if (node.Comp.Attached == null)

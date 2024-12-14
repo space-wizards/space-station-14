@@ -11,7 +11,7 @@ namespace Content.Shared.Xenoarchaeology.Artifact;
 public abstract partial class SharedXenoArtifactSystem
 {
     /// <summary>
-    /// Gets the index corresponding to a given node, throwing if the node is not present.
+    /// Gets the index, corresponding to a given node, throwing if the node is not present.
     /// </summary>
     public int GetIndex(Entity<XenoArtifactComponent> ent, EntityUid node)
     {
@@ -23,6 +23,9 @@ public abstract partial class SharedXenoArtifactSystem
         throw new ArgumentException($"node {ToPrettyString(node)} is not present in {ToPrettyString(ent)}");
     }
 
+    /// <summary>
+    /// Tries to get index inside nodes collection, corresponding to a given node EntityUid.
+    /// </summary>
     public bool TryGetIndex(Entity<XenoArtifactComponent?> ent, EntityUid node, [NotNullWhen(true)] out int? index)
     {
         index = null;
@@ -44,6 +47,10 @@ public abstract partial class SharedXenoArtifactSystem
         return false;
     }
 
+    /// <summary>
+    /// Gets node entity with node component from artifact by index of node inside artifact nodes collection.
+    /// </summary>
+    /// <exception cref="ArgumentException">Throws if requested index doesn't exist on artifact. </exception>
     public Entity<XenoArtifactNodeComponent> GetNode(Entity<XenoArtifactComponent> ent, int index)
     {
         if (ent.Comp.NodeVertices[index] is { } netUid && GetEntity(netUid) is var uid)
@@ -52,6 +59,9 @@ public abstract partial class SharedXenoArtifactSystem
         throw new ArgumentException($"index {index} does not correspond to an existing node in {ToPrettyString(ent)}");
     }
 
+    /// <summary>
+    /// Tries to get node entity with node component from artifact by index of node inside artifact nodes collection.
+    /// </summary>
     public bool TryGetNode(Entity<XenoArtifactComponent?> ent, int index, [NotNullWhen(true)] out Entity<XenoArtifactNodeComponent>? node)
     {
         node = null;
@@ -84,6 +94,10 @@ public abstract partial class SharedXenoArtifactSystem
         return length;
     }
 
+    /// <summary>
+    /// Extracts node entities from artifact container
+    /// (uses pre-cached <see cref="XenoArtifactComponent.NodeVertices"/> and mapping from NetEntity).
+    /// </summary>
     public IEnumerable<Entity<XenoArtifactNodeComponent>> GetAllNodes(Entity<XenoArtifactComponent> ent)
     {
         foreach (var netNode in ent.Comp.NodeVertices)
@@ -93,6 +107,9 @@ public abstract partial class SharedXenoArtifactSystem
         }
     }
 
+    /// <summary>
+    /// Extracts enumeration of all indices that artifact node container have.
+    /// </summary>
     public IEnumerable<int> GetAllNodeIndices(Entity<XenoArtifactComponent> ent)
     {
         for (var i = 0; i < ent.Comp.NodeVertices.Length; i++)
@@ -102,6 +119,17 @@ public abstract partial class SharedXenoArtifactSystem
         }
     }
 
+    /// <summary>
+    /// Adds edge between artifact nodes - <see cref="from"/> and <see cref="to"/>
+    /// </summary>
+    /// <param name="ent">Artifact entity that contains 'from' and 'to' node entities.</param>
+    /// <param name="from">Node from which we need to draw edge. </param>
+    /// <param name="to">Node to which we need to draw edge. </param>
+    /// <param name="dirty">
+    /// Marker, if we need to recalculate caches and mark related components dirty to update on client side.
+    /// Should be disabled for initial graph creation to not recalculate cache on each node/edge.
+    /// </param>
+    /// <returns>True if adding edge was successful, false otherwise.</returns>
     public bool AddEdge(Entity<XenoArtifactComponent?> ent, EntityUid from, EntityUid to, bool dirty = true)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -114,6 +142,17 @@ public abstract partial class SharedXenoArtifactSystem
         return AddEdge(ent, fromIdx.Value, toIdx.Value, dirty: dirty);
     }
 
+    /// <summary>
+    /// Adds edge between artifact nodes by indices inside node container - <see cref="fromIdx"/> and <see cref="toIdx"/>
+    /// </summary>
+    /// <param name="ent">Artifact entity that contains 'from' and 'to' node entities.</param>
+    /// <param name="fromIdx">Node index inside artifact node container, from which we need to draw edge. </param>
+    /// <param name="toIdx">Node index inside artifact node container, to which we need to draw edge. </param>
+    /// <param name="dirty">
+    /// Marker, if we need to recalculate caches and mark related components dirty to update on client side.
+    /// Should be disabled for initial graph creation to not recalculate cache on each node/edge.
+    /// </param>
+    /// <returns>True if adding edge was successful, false otherwise.</returns>
     public bool AddEdge(Entity<XenoArtifactComponent?> ent, int fromIdx, int toIdx, bool dirty = true)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -136,6 +175,17 @@ public abstract partial class SharedXenoArtifactSystem
         return true;
     }
 
+    /// <summary>
+    /// Removes edge between artifact nodes.
+    /// </summary>
+    /// <param name="ent">Artifact entity that contains 'from' and 'to' node entities.</param>
+    /// <param name="from">Entity of node from which edge to remove is connected.</param>
+    /// <param name="to">Entity of node to which edge to remove is connected.</param>
+    /// <param name="dirty">
+    /// Marker, if we need to recalculate caches and mark related components dirty to update on client side.
+    /// Should be disabled for initial graph creation to not recalculate cache on each node/edge.
+    /// </param>
+    /// <returns>True if removed edge was successfully, false otherwise.</returns>
     public bool RemoveEdge(Entity<XenoArtifactComponent?> ent, EntityUid from, EntityUid to, bool dirty = true)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -148,6 +198,17 @@ public abstract partial class SharedXenoArtifactSystem
         return RemoveEdge(ent, fromIdx.Value, toIdx.Value, dirty);
     }
 
+    /// <summary>
+    /// Removes edge between artifact nodes.
+    /// </summary>
+    /// <param name="ent">Artifact entity that contains 'from' and 'to' node entities.</param>
+    /// <param name="fromIdx"> First node index inside artifact node container, from which we need to remove connecting edge. </param>
+    /// <param name="toIdx"> Other node index inside artifact node container, from which we need to remove connecting edge. </param>
+    /// <param name="dirty">
+    /// Marker, if we need to recalculate caches and mark related components dirty to update on client side.
+    /// Should be disabled for initial graph creation to not recalculate cache on each node/edge.
+    /// </param>
+    /// <returns>True if removed edge was successfully, false otherwise.</returns>
     public bool RemoveEdge(Entity<XenoArtifactComponent?> ent, int fromIdx, int toIdx, bool dirty = true)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -169,6 +230,17 @@ public abstract partial class SharedXenoArtifactSystem
         return true;
     }
 
+    /// <summary>
+    /// Creates node entity (spawns) and adds node into artifact node container.
+    /// </summary>
+    /// <param name="ent">Artifact entity, to container of which node should be added.</param>
+    /// <param name="entProtoId">EntProtoId of node to be added.</param>
+    /// <param name="node">Created node or null.</param>
+    /// <param name="dirty">
+    /// Marker, if we need to recalculate caches and mark related components dirty to update on client side.
+    /// Should be disabled for initial graph creation to not recalculate cache on each node/edge.
+    /// </param>
+    /// <returns>True if node creation and adding was successful, false otherwise.</returns>
     public bool AddNode(
         Entity<XenoArtifactComponent?> ent,
         EntProtoId entProtoId,
@@ -185,6 +257,16 @@ public abstract partial class SharedXenoArtifactSystem
         return AddNode(ent, (node.Value, node.Value.Comp), dirty: dirty);
     }
 
+    /// <summary>
+    /// Adds node entity to artifact node container.
+    /// </summary>
+    /// <param name="ent">Artifact entity, to container of which node should be added.</param>
+    /// <param name="node">Node entity to add.</param>
+    /// <param name="dirty">
+    /// Marker, if we need to recalculate caches and mark related components dirty to update on client side.
+    /// Should be disabled for initial graph creation to not recalculate cache on each node/edge.
+    /// </param>
+    /// <returns>True if node adding was successful, false otherwise.</returns>
     public bool AddNode(Entity<XenoArtifactComponent?> ent, Entity<XenoArtifactNodeComponent?> node, bool dirty = true)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -206,6 +288,16 @@ public abstract partial class SharedXenoArtifactSystem
         return true;
     }
 
+    /// <summary>
+    /// Removes artifact node from artifact node container.
+    /// </summary>
+    /// <param name="ent">Artifact from container of which node should be removed</param>
+    /// <param name="node">Node entity to be removed.</param>
+    /// <param name="dirty">
+    /// Marker, if we need to recalculate caches and mark related components dirty to update on client side.
+    /// Should be disabled for initial graph creation to not recalculate cache on each node/edge.
+    /// </param>
+    /// <returns>True if node was removed successfully, false otherwise.</returns>
     public bool RemoveNode(Entity<XenoArtifactComponent?> ent, Entity<XenoArtifactNodeComponent?> node, bool dirty = true)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -231,6 +323,15 @@ public abstract partial class SharedXenoArtifactSystem
         return true;
     }
 
+    /// <summary>
+    /// Remove edges, connected to passed artifact node.
+    /// </summary>
+    /// <param name="ent">Entity of artifact, in node container of which node resides.</param>
+    /// <param name="nodeIdx">Index of node (inside node container), for which all edges should be removed.</param>
+    /// <param name="dirty">
+    /// Marker, if we need to recalculate caches and mark related components dirty to update on client side.
+    /// Should be disabled for initial graph creation to not recalculate cache on each node/edge.
+    /// </param>
     public void RemoveAllNodeEdges(Entity<XenoArtifactComponent?> ent, int nodeIdx, bool dirty = true)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -254,6 +355,13 @@ public abstract partial class SharedXenoArtifactSystem
         }
     }
 
+    /// <summary>
+    /// Gets set of node entities, that are direct predecessors to passed node entity.
+    /// </summary>
+    /// <remarks>
+    /// Direct predecessors are nodes, which are connected by edges directly to target node,
+    /// and are on outgoing ('FROM') side of edge connection.
+    /// </remarks>
     public HashSet<Entity<XenoArtifactNodeComponent>> GetDirectPredecessorNodes(Entity<XenoArtifactComponent?> ent, EntityUid node)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -273,6 +381,13 @@ public abstract partial class SharedXenoArtifactSystem
         return output;
     }
 
+    /// <summary>
+    /// Gets set of node indices (in artifact node container) which are direct predecessors to node with passed node index.
+    /// </summary>
+    /// <remarks>
+    /// Direct predecessors are nodes, which are connected by edges directly to target node,
+    /// and are on outgoing ('FROM') side of edge connection.
+    /// </remarks>
     public HashSet<int> GetDirectPredecessorNodes(Entity<XenoArtifactComponent?> ent, int nodeIdx)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -290,6 +405,13 @@ public abstract partial class SharedXenoArtifactSystem
         return indices;
     }
 
+    /// <summary>
+    /// Gets set of node entities, that are direct successors to passed node entity.
+    /// </summary>
+    /// <remarks>
+    /// Direct successors are nodes, which are connected by edges
+    /// directly to target node, and are on incoming ('TO') side of edge connection.
+    /// </remarks>
     public HashSet<Entity<XenoArtifactNodeComponent>> GetDirectSuccessorNodes(Entity<XenoArtifactComponent?> ent, EntityUid node)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -309,6 +431,13 @@ public abstract partial class SharedXenoArtifactSystem
         return output;
     }
 
+    /// <summary>
+    /// Gets set of node indices (in artifact node container) which are direct successors to node with passed node index.
+    /// </summary>
+    /// <remarks>
+    /// Direct successors are nodes, which are connected by edges
+    /// directly to target node, and are on incoming ('TO') side of edge connection.
+    /// </remarks>
     public HashSet<int> GetDirectSuccessorNodes(Entity<XenoArtifactComponent?> ent, int nodeIdx)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -325,6 +454,13 @@ public abstract partial class SharedXenoArtifactSystem
         return indices;
     }
 
+    /// <summary>
+    /// Gets set of node entities, that are predecessors to passed node entity.
+    /// </summary>
+    /// <remarks>
+    /// Predecessors are nodes, which are connected by edges directly to target node on 'FROM' side of edge,
+    /// or connected to such node on 'FROM' side of edge, etc recursively.
+    /// </remarks>
     public HashSet<Entity<XenoArtifactNodeComponent>> GetPredecessorNodes(Entity<XenoArtifactComponent?> ent, Entity<XenoArtifactNodeComponent> node)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -340,6 +476,13 @@ public abstract partial class SharedXenoArtifactSystem
         return output;
     }
 
+    /// <summary>
+    /// Gets set of node indices inside artifact node container, that are predecessors to entity with passed node index.
+    /// </summary>
+    /// <remarks>
+    /// Predecessors are nodes, which are connected by edges directly to target node on 'FROM' side of edge,
+    /// or connected to such node on 'FROM' side of edge, etc recursively.
+    /// </remarks>
     public HashSet<int> GetPredecessorNodes(Entity<XenoArtifactComponent?> ent, int nodeIdx)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -363,6 +506,13 @@ public abstract partial class SharedXenoArtifactSystem
         return output;
     }
 
+    /// <summary>
+    /// Gets set of node entities, that are successors to passed node entity.
+    /// </summary>
+    /// <remarks>
+    /// Successors are nodes, which are connected by edges directly to target node on 'TO' side of edge,
+    /// or connected to such node on 'TO' side of edge, etc recursively.
+    /// </remarks>
     public HashSet<Entity<XenoArtifactNodeComponent>> GetSuccessorNodes(Entity<XenoArtifactComponent?> ent, Entity<XenoArtifactNodeComponent> node)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -378,6 +528,13 @@ public abstract partial class SharedXenoArtifactSystem
         return output;
     }
 
+    /// <summary>
+    /// Gets set of node indices inside artifact node container, that are successors to entity with passed node index.
+    /// </summary>
+    /// <remarks>
+    /// Successors are nodes, which are connected by edges directly to target node on 'TO' side of edge,
+    /// or connected to such node on 'TO' side of edge, etc recursively.
+    /// </remarks>
     public HashSet<int> GetSuccessorNodes(Entity<XenoArtifactComponent?> ent, int nodeIdx)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -401,6 +558,12 @@ public abstract partial class SharedXenoArtifactSystem
         return output;
     }
 
+    /// <summary>
+    /// Determines, if there is an edge (directed link) FROM one node TO other in passed artifact.
+    /// </summary>
+    /// <param name="ent">Artifact, inside which node container nodes are.</param>
+    /// <param name="from">Node FROM which existence of edge should be checked.</param>
+    /// <param name="to">Node TO which existance of edge should be checked.</param>
     public bool NodeHasEdge(
         Entity<XenoArtifactComponent?> ent,
         Entity<XenoArtifactNodeComponent?> from,
@@ -417,7 +580,7 @@ public abstract partial class SharedXenoArtifactSystem
     }
 
     /// <summary>
-    /// Resizes the adjacency matrix and vertices array to newLength
+    /// Resizes the adjacency matrix and vertices array to <paramref name="newSize"/>,
     /// or at least what it WOULD do if i wasn't forced to use shitty lists.
     /// </summary>
     protected void ResizeNodeGraph(Entity<XenoArtifactComponent> ent, int newSize)
@@ -440,6 +603,7 @@ public abstract partial class SharedXenoArtifactSystem
         Dirty(ent);
     }
 
+    /// <summary> Removes unlocking state from artifact. </summary>
     private void CancelUnlockingOnGraphStructureChange(Entity<XenoArtifactComponent> ent)
     {
         if (!TryComp<XenoArtifactUnlockingComponent>(ent, out var unlockingComponent))

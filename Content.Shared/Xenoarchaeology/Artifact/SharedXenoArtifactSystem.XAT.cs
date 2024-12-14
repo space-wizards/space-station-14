@@ -27,6 +27,7 @@ public abstract partial class SharedXenoArtifactSystem
         SubscribeLocalEvent<XenoArtifactComponent, ExaminedEvent>(OnExamined);
     }
 
+    /// <summary> Relays artifact events for artifact nodes. </summary>
     protected void XATRelayLocalEvent<T>() where T : notnull
     {
         SubscribeLocalEvent<XenoArtifactComponent, T>(RelayEventToNodes);
@@ -51,6 +52,9 @@ public abstract partial class SharedXenoArtifactSystem
         }
     }
 
+    /// <summary>
+    /// Attempts to shift artifact into unlocking state, in which it is going to listen to interactions, that could trigger nodes.
+    /// </summary>
     public void TriggerXenoArtifact(Entity<XenoArtifactComponent> ent, Entity<XenoArtifactNodeComponent> node)
     {
         // limits spontaneous chain activations, also prevents spamming every triggering tool to activate nodes
@@ -82,7 +86,13 @@ public abstract partial class SharedXenoArtifactSystem
 [ByRefEvent]
 public record struct XenoArchNodeRelayedEvent<TEvent>(Entity<XenoArtifactComponent> Artifact, TEvent Args)
 {
+    /// <summary>
+    /// Original event.
+    /// </summary>
     public TEvent Args = Args;
 
+    /// <summary>
+    /// Artifact entity, that received original event.
+    /// </summary>
     public Entity<XenoArtifactComponent> Artifact = Artifact;
 }

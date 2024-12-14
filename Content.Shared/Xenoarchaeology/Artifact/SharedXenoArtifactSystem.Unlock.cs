@@ -16,7 +16,8 @@ public abstract partial class SharedXenoArtifactSystem
         _unlockingQuery = GetEntityQuery<XenoArtifactUnlockingComponent>();
     }
 
-    private void UpdateUnlock(float frameTime)
+    /// <summary> Finish unlocking phase when the time is up. </summary>
+    private void UpdateUnlock(float _)
     {
         var query = EntityQueryEnumerator<XenoArtifactUnlockingComponent, XenoArtifactComponent>();
         while (query.MoveNext(out var uid, out var unlock, out var comp))
@@ -28,6 +29,12 @@ public abstract partial class SharedXenoArtifactSystem
         }
     }
 
+    /// <summary>
+    /// Checks if node can be unlocked.
+    /// Only those nodes, that have no predecessors, or have all
+    /// predecessors unlocked can be unlocked themselves.
+    /// Artifact being suppressed also prevents unlocking.
+    /// </summary>
     public bool CanUnlockNode(Entity<XenoArtifactNodeComponent?> ent)
     {
         if (!Resolve(ent, ref ent.Comp))
@@ -46,6 +53,10 @@ public abstract partial class SharedXenoArtifactSystem
         return true;
     }
 
+    /// <summary>
+    /// Finishes unlocking phase, removing related component, and sums up what nodes were triggered,
+    /// that could be unlocked. Marks such nodes as unlocked, and pushes their node activation event.
+    /// </summary>
     public void FinishUnlockingState(Entity<XenoArtifactUnlockingComponent, XenoArtifactComponent> ent)
     {
         string unlockAttemptResultMsg;

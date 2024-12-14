@@ -9,8 +9,8 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAT.Components;
 /// <summary>
 /// This is used for an artifact that is activated after a certain amount of damage is dealt.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(XATDamageSystem))]
-public sealed partial class XATDamageComponent : Component
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(XATDamageThresholdReachedSystem))]
+public sealed partial class XATDamageThresholdReachedComponent : Component
 {
     /// <summary>
     /// Damage, accumulated by artifact so far. Is cleared on node activation.

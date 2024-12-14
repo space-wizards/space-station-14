@@ -42,7 +42,7 @@
   - type: XATTemperature
     targetTemperature: 373
     triggerOnHigherTemp: true
-  - type: XATDamage
+  - type: XATDamageThresholdReached
     typesNeeded:
       Heat: 50
 # This kinda trivializes the difficulty.
@@ -58,7 +58,7 @@
   - type: XATTemperature
     targetTemperature: 255
     triggerOnHigherTemp: false
-  - type: XATDamage
+  - type: XATDamageThresholdReached
     typesNeeded:
       Cold: 50
 
@@ -145,7 +145,7 @@
   id: TriggerRadiation
   tip: xenoarch-trigger-tip-radiation
   components:
-  - type: XATDamage
+  - type: XATDamageThresholdReached
     typesNeeded:
       Radiation: 100
   # TODO: legendary microwave trigger
@@ -174,7 +174,7 @@
   id: TriggerBruteDamage
   tip: xenoarch-trigger-tip-brute-damage
   components:
-  - type: XATDamage
+  - type: XATDamageThresholdReached
     groupsNeeded:
       Brute: 150
 
@@ -225,7 +225,9 @@
   tip: xenoarch-trigger-tip-timer
   components:
   - type: XATTimer
-    delay: 120 #2 minutes
+    possibleDelayInSeconds:
+      min: 80
+      max: 120
 
 - type: xenoArchTrigger
   id: TriggerBlood

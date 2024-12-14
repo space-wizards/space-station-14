@@ -38,6 +38,7 @@ public abstract partial class SharedXenoArtifactSystem : EntitySystem
         UpdateUnlock(frameTime);
     }
 
+    /// <summary> As all artifacts have to contain nodes - we ensure that they are containers. </summary>
     private void OnStartup(Entity<XenoArtifactComponent> ent, ref ComponentStartup args)
     {
         ent.Comp.NodeContainer = _container.EnsureContainer<Container>(ent, XenoArtifactComponent.NodeContainerId);
@@ -47,6 +48,7 @@ public abstract partial class SharedXenoArtifactSystem : EntitySystem
     {
         if (ent.Comp.Suppressed == val)
             return;
+
         ent.Comp.Suppressed = val;
         Dirty(ent);
     }

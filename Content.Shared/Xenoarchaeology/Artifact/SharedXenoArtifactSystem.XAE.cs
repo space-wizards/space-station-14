@@ -44,11 +44,20 @@ public abstract partial class SharedXenoArtifactSystem
         args.Handled = TryActivateXenoArtifact(ent, args.User, args.Target, Transform(args.Target).Coordinates);
     }
 
+    /// <summary>
+    /// Attempts to activate artifact nodes. 'active' are nodes that are marked as 'unlocked' and have no other successors, marked as 'unlocked'.
+    /// </summary>
+    /// <param name="artifact">Artifact entity, for which attempt to activate was made.</param>
+    /// <param name="user">Character that attempted to activate artifact.</param>
+    /// <param name="target">Target, on which artifact activation attempt was used (for hand-held artifact - it can be 'clicked' over someone).</param>
+    /// <param name="coordinates">Coordinates of <paramref name="target"/> entity.</param>
+    /// <returns>True, if activation was successful, false otherwise.</returns>
     public bool TryActivateXenoArtifact(
         Entity<XenoArtifactComponent> artifact,
         EntityUid? user,
         EntityUid? target,
-        EntityCoordinates coordinates)
+        EntityCoordinates coordinates
+    )
     {
         if (artifact.Comp.Suppressed)
             return false;
@@ -70,6 +79,16 @@ public abstract partial class SharedXenoArtifactSystem
         return true;
     }
 
+    /// <summary>
+    /// Pushes node activation event and updates durability for activated node.
+    /// </summary>
+    /// <param name="artifact">Artifact entity, for which attempt to activate was made.</param>
+    /// <param name="node">Node entity, effect of which should be activated.</param>
+    /// <param name="user">Character that attempted to activate artifact.</param>
+    /// <param name="target">Target, on which artifact activation attempt was used (for hand-held artifact - it can be 'clicked' over someone).</param>
+    /// <param name="coordinates">Coordinates of <paramref name="target"/> entity.</param>
+    /// <param name="consumeDurability">Marker, if node durability should be adjusted as a result of activation.</param>
+    /// <returns>True, if activation was successful, false otherwise.</returns>
     public bool ActivateNode(
         Entity<XenoArtifactComponent> artifact,
         Entity<XenoArtifactNodeComponent> node,
@@ -98,6 +117,14 @@ public abstract partial class SharedXenoArtifactSystem
     }
 }
 
+/// <summary>
+/// Event of node activation. Should lead to node effect being activated.
+/// </summary>
+/// <param name="Artifact">Artifact entity, for which attempt to activate was made.</param>
+/// <param name="Node">Node entity, effect of which should be activated.</param>
+/// <param name="User">Character that attempted to activate artifact.</param>
+/// <param name="Target">Target, on which artifact activation attempt was used (for hand-held artifact - it can be 'clicked' over someone).</param>
+/// <param name="Coordinates">Coordinates of <paramref name="Target"/> entity.</param>
 [ByRefEvent]
 public readonly record struct XenoArtifactNodeActivatedEvent(
     Entity<XenoArtifactComponent> Artifact,

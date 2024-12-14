@@ -1,3 +1,4 @@
+using Content.Shared.Destructible.Thresholds;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Xenoarchaeology.Artifact.XAT.Components;
@@ -8,9 +9,15 @@ namespace Content.Shared.Xenoarchaeology.Artifact.XAT.Components;
 [RegisterComponent, NetworkedComponent, Access(typeof(XATTimerSystem)), AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class XATTimerComponent : Component
 {
+    /// <summary>
+    /// Next time timer going to activate.
+    /// </summary>
     [DataField, AutoNetworkedField, AutoPausedField]
     public TimeSpan NextActivation;
 
+    /// <summary>
+    /// Delay between activations.
+    /// </summary>
     [DataField, AutoNetworkedField]
-    public TimeSpan Delay;
+    public MinMax PossibleDelayInSeconds;
 }
