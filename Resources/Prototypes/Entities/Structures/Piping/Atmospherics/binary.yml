@@ -57,10 +57,13 @@
   - type: PipeColorVisuals
   - type: GasPressurePump
     enabled: false
+  - type: ActivatableUI
+    key: enum.GasPressurePumpUiKey.Key
+  - type: ActivatableUIRequiresAnchor
   - type: UserInterface
     interfaces:
-        enum.GasPressurePumpUiKey.Key:
-          type: GasPressurePumpBoundUserInterface
+      enum.GasPressurePumpUiKey.Key:
+        type: GasPressurePumpBoundUserInterface
   - type: Construction
     graph: GasBinary
     node: pressurepump

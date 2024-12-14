@@ -28,6 +28,8 @@
     interfaces:
       enum.BarSignUiKey.Key:
         type: BarSignBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: Appearance
   - type: Destructible
     thresholds:
@@ -37,6 +39,11 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+  - type: StationAiWhitelist
+  - type: WiresPanel
+  - type: Wires
+    boardName: wires-board-name-barsign
+    layoutId: BarSign
 
 - type: entity
   parent: BaseBarSign
