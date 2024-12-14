@@ -623,11 +623,6 @@ namespace Content.Client.Stylesheets
                     .Class(ButtonOpenLeft)
                     .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonOpenLeft),
 
-                Element<TextureButton>().Class(ContainerButton.StyleClassButton)
-                    .Class(ButtonOpenLeft)
-                    .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonOpenLeft),
-
-
                 Element<ContainerButton>().Class(ContainerButton.StyleClassButton)
                     .Class(ButtonOpenBoth)
                     .Prop(ContainerButton.StylePropertyStyleBox, BaseButtonOpenBoth),
