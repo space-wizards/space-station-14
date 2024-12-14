@@ -94,7 +94,7 @@ public sealed partial class VaporizerSystem : EntitySystem
         if (!Resolve(uid, ref appearance))
             return;
 
-        _appearance.SetData(uid, VaporizerVisuals.VisualState, state);
+        _appearance.SetData(uid, VaporizerVisuals.Indicator, state);
     }
 
     public override void Update(float frameTime)
