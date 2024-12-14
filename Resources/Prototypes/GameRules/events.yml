@@ -29,7 +29,6 @@
   id: BasicAntagEventsTable
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
-    - id: ClosetSkeleton
     - id: DragonSpawn
     - id: KingRatMigration
     - id: NinjaSpawn
@@ -141,17 +140,6 @@
     weight: 5
     duration: 1
   - type: ClericalErrorRule
-
-- type: entity
-  parent: BaseGameRule
-  id: ClosetSkeleton
-  components:
-  - type: StationEvent
-    weight: 5
-    duration: 1
-    minimumPlayers: 10
-  - type: RandomEntityStorageSpawnRule
-    prototype: MobSkeletonCloset
 
 - type: entity
   parent: BaseGameRule
