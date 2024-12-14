@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: aada
-  changes:
-  - message: Prescription lenses that can be slotted in and out of eyewear.
-    type: Add
-  - message: Near-sighted trait starts with extra-strength prescription lenses.
-    type: Add
-  - message: JamJar glasses have a stronger prescription.
-    type: Tweak
-  id: 235
-  time: '2024-09-20T16:18:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/304
 - author: hivehum
   changes:
   - message: Revenants can now be bigoted.
@@ -4536,3 +4525,12 @@
   id: 734
   time: '2024-12-14T13:55:15.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1012
+- author: TGRCdev
+  changes:
+  - message: Vapor tank continues to vaporize water when it's low on water.
+    type: Fix
+  - message: Vapor tank now properly updates the fill visuals as it vaporizes water.
+    type: Fix
+  id: 735
+  time: '2024-12-14T14:49:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1020
