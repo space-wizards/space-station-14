@@ -80,7 +80,7 @@ public abstract class SharedRemoteControlSystem : EntitySystem
         remoteComp.BoundTo = args.Target;
         ent.Comp.BoundRemote = args.Used;
 
-        _popup.PopupClient(Loc.GetString("rc-remote-bound", ("entityName", Identity.Name(ent, EntityManager))), args.User, args.User, PopupType.Medium);
+        _popup.PopupClient(Loc.GetString(remoteComp.RemoteBoundToPopup, ("entityName", Identity.Name(ent, EntityManager))), args.User, args.User, PopupType.Medium);
 
         Dirty(args.Used, remoteComp);
         Dirty(ent, ent.Comp);
@@ -108,7 +108,10 @@ public abstract class SharedRemoteControlSystem : EntitySystem
         if (ent.Comp.Controlled == null)
             return;
 
-        _popup.PopupEntity(Loc.GetString("rc-controller-shake"), ent.Comp.Controlled.Value, ent.Comp.Controlled.Value, PopupType.MediumCaution);
+        _popup.PopupEntity(Loc.GetString("rc-controller-shake"),
+            ent.Comp.Controlled.Value,
+            ent.Comp.Controlled.Value,
+            PopupType.MediumCaution);
     }
 
     private void OnRCRemoteVerbs(Entity<RCRemoteComponent> ent, ref GetVerbsEvent<ActivationVerb> args)
@@ -123,14 +126,14 @@ public abstract class SharedRemoteControlSystem : EntitySystem
         var user = args.User;
         args.Verbs.Add(new ActivationVerb
         {
-            Text = Loc.GetString("rc-remote-wipe-verb"),
+            Text = Loc.GetString(ent.Comp.RemoteWipeVerb),
             Act = () =>
             {
                 remotelyComp.BoundRemote = null;
                 Dirty(ent.Comp.BoundTo.Value, remotelyComp);
 
                 ent.Comp.BoundTo = null;
-                _popup.PopupClient(Loc.GetString("rc-remote-wiped"), user, user, PopupType.Medium);
+                _popup.PopupClient(Loc.GetString(ent.Comp.RemoteWipePopup), user, user, PopupType.Medium);
 
                 Dirty(ent, ent.Comp);
             }
@@ -141,7 +144,7 @@ public abstract class SharedRemoteControlSystem : EntitySystem
     {
         if (ent.Comp.BoundTo is null)
         {
-            _popup.PopupClient(Loc.GetString("rc-remote-unbound"), args.User, args.User, PopupType.Medium);
+            _popup.PopupClient(Loc.GetString(ent.Comp.RemoteUnboundPopup), args.User, args.User, PopupType.Medium);
             return;
         }
 
@@ -150,7 +153,7 @@ public abstract class SharedRemoteControlSystem : EntitySystem
 
         if (!TryComp<MobStateComponent>(ent.Comp.BoundTo, out var mobState) || mobState.CurrentState != MobState.Alive)
         {
-            _popup.PopupClient(Loc.GetString("rc-remote-fail"), args.User, args.User, PopupType.Medium);
+            _popup.PopupClient(Loc.GetString(ent.Comp.RemoteFailPopup), args.User, args.User, PopupType.Medium);
             return;
         }
 

@@ -30,8 +30,18 @@ public sealed partial class SpittableContainerComponent : Component
         Params = AudioParams.Default.WithVolume(-5f),
     };
 
+    /// <summary>
+    /// The popup to show when the entity spits out items.
+    /// Will not show anything if null.
+    /// </summary>
     [DataField, AutoNetworkedField]
-    public bool ShowSpitPopup = true;
+    public LocId? SpitPopup = "spittable-container-spit";
+
+    /// <summary>
+    /// The popup to show when the entity can't swallow an item.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public LocId SwallowFailPopup = "spittable-container-swallow-fail";
 
     /// <summary>
     /// Time it takes to swallow an item into the container.

@@ -1,6 +1,6 @@
 - type: entity
   parent: [BaseMob]
-  id: BaseMouseRC
+  id: MouseRC
   name: mouse
   description: Squeak!
   suffix: RC
@@ -192,8 +192,8 @@
 
 
 - type: entity
-  parent: BaseMouseRC
-  id: BaseMouseRCUplinkFilled
+  parent: MouseRC
+  id: MouseRCUplinkFilled
   suffix: RC, Filled
   components:
   - type: StorageFill

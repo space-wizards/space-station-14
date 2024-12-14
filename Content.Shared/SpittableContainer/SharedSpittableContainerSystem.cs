@@ -52,7 +52,7 @@ public abstract class SharedSpittableContainerSystem : EntitySystem
 
         if (!_containerSystem.CanInsert(args.Target, ent.Comp.Container))
         {
-            _popupSystem.PopupClient(Loc.GetString("spittable-container-fail"), ent.Owner, ent.Owner);
+            _popupSystem.PopupClient(Loc.GetString(ent.Comp.SwallowFailPopup), ent, ent);
             return;
         }
 
@@ -102,8 +102,8 @@ public abstract class SharedSpittableContainerSystem : EntitySystem
         if (args.Handled || ent.Comp.Container.Count == 0 || args.Cancelled)
             return;
 
-        if (ent.Comp.ShowSpitPopup)
-            _popupSystem.PopupPredicted(Loc.GetString("spittable-container-spit", ("person", Identity.Entity(ent.Owner, EntityManager))), ent, ent);
+        if (ent.Comp.SpitPopup != null)
+            _popupSystem.PopupPredicted(Loc.GetString(ent.Comp.SpitPopup, ("person", Identity.Entity(ent.Owner, EntityManager))), ent, ent);
 
         if (ent.Comp.SoundSpit != null)
             _audioSystem.PlayPredicted(ent.Comp.SoundSpit, ent.Owner, ent.Owner, ent.Comp.SoundSpit.Params);
