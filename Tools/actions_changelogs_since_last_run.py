@@ -6,7 +6,6 @@ Sends updates to a Discord webhook for new changelog entries since the last GitH
 Automatically figures out the last run and changelog contents with the GitHub API.
 """
 
-import io
 import itertools
 import os
 from pathlib import Path
@@ -32,7 +31,7 @@ ChangelogEntry = dict[str, Any]
 
 def main():
     if not DISCORD_WEBHOOK_URL:
-        print("Discord webhook not set, skipping")
+        print("No discord webhook URL found, skipping discord send")
         return
 
     if DEBUG:
@@ -45,7 +44,8 @@ def main():
         cur_changelog = yaml.safe_load(f)
 
     diff = diff_changelog(last_changelog, cur_changelog)
-    send_entries(diff)
+    message_lines = changelog_entries_to_message_lines(diff)
+    send_message_lines(message_lines)
 
 
 def get_most_recent_workflow(
@@ -141,67 +141,62 @@ def get_discord_body(content: str):
     }
 
 
-def send_discord_webhook(content: str):
+def send_discord_webhook(lines: list[str]):
+    content = "".join(lines)
     body = get_discord_body(content)
 
     response = requests.post(DISCORD_WEBHOOK_URL, json=body)
     response.raise_for_status()
 
 
-def format_entry_line(url: str, change: ChangelogEntry) -> str:
-    emoji = TYPES_TO_EMOJI.get(change["type"], "❓")
-    message = change["message"]
-    if url is not None:
-        line = f"{emoji} - {message} [PR]({url}) \n"
-    else:
-        line = f"{emoji} - {message}\n"
+def changelog_entries_to_message_lines(entries: Iterable[ChangelogEntry]) -> list[str]:
+    message_lines = []
 
-    return line
-
-
-def send_entries(entries: Iterable[ChangelogEntry]) -> None:
-    if not DISCORD_WEBHOOK_URL:
-        print("No discord webhook URL found, skipping discord send")
-        return
-
-    message_content = io.StringIO()
-    # We need to manually split messages to avoid discord's character limit
-    # With that being said this isn't entirely robust
-    # e.g. a sufficiently large CL breaks it, but that's a future problem
-
-    for name, group in itertools.groupby(entries, lambda x: x["author"]):
-        # Need to split text to avoid discord character limit
-        group_content = io.StringIO()
-        group_content.write(f"**{name}** updated:\n")
+    for contributor_name, group in itertools.groupby(entries, lambda x: x["author"]):
+        message_lines.append(f"**{contributor_name}** updated:\n")
 
         for entry in group:
             url = entry.get("url")
             if url and not url.strip():
                 url = None
+
             for change in entry["changes"]:
-                group_content.write(format_entry_line(url, change))
+                emoji = TYPES_TO_EMOJI.get(change["type"], "❓")
+                message = change["message"]
 
-        group_text = group_content.getvalue()
-        message_text = message_content.getvalue()
-        message_length = len(message_text)
-        group_length = len(group_text)
+                # if a single line is longer than the limit, it needs to be truncated
+                if len(message) > DISCORD_SPLIT_LIMIT:
+                    message = message[: DISCORD_SPLIT_LIMIT - 100] + " [...]"
 
-        # If adding the text would bring it over the group limit then send the message and start a new one
-        if message_length + group_length >= DISCORD_SPLIT_LIMIT:
-            print("Split changelog  and sending to discord")
-            send_discord_webhook(message_text)
+                if url is not None:
+                    line = f"{emoji} - {message} [PR]({url}) \n"
+                else:
+                    line = f"{emoji} - {message}\n"
 
-            # Reset the message
-            message_content = io.StringIO()
+                message_lines.append(line)
 
-        # Flush the group to the message
-        message_content.write(group_text)
+    return message_lines
 
-    # Clean up anything remaining
-    message_text = message_content.getvalue()
-    if len(message_text) > 0:
-        print("Sending final changelog to discord")
-        send_discord_webhook(message_text)
+
+def send_message_lines(message_lines: list[str]):
+    chunk_lines = []
+    chunk_length = 0
+
+    for line in message_lines:
+        line_length = len(line)
+        new_chunk_length = chunk_length + line_length
+
+        if new_chunk_length > DISCORD_SPLIT_LIMIT:
+            send_discord_webhook(chunk_lines)
+
+            new_chunk_length = line_length
+            chunk_lines.clear()
+
+        chunk_lines.append(line)
+        chunk_length = new_chunk_length
+
+    if chunk_lines:
+        send_discord_webhook(chunk_lines)
 
 
 if __name__ == "__main__":
