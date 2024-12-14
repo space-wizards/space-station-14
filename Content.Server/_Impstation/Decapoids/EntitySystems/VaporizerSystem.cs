@@ -77,14 +77,13 @@ public sealed partial class VaporizerSystem : EntitySystem
 
         if (
             gasTank.Air.Pressure < vaporizer.MaxPressure && (
-                state == VaporizerState.Empty ||
+                state == VaporizerState.LowSolution ||
                 state == VaporizerState.Normal
             )
         )
         {
-            var reagentConsumed = solution.RemoveReagent(new ReagentQuantity(vaporizer.ExpectedReagent, vaporizer.ReagentPerSecond * vaporizer.ProcessDelay.TotalSeconds));
-            gasTank.Air.AdjustMoles((int)vaporizer.OutputGas, (float)reagentConsumed * vaporizer.ReagentToMoles);
-            Dirty(solutionEnt.Value);
+            var reagentConsumed = _solution.SplitSolution(solutionEnt.Value, vaporizer.ReagentPerSecond * vaporizer.ProcessDelay.TotalSeconds);
+            gasTank.Air.AdjustMoles((int)vaporizer.OutputGas, (float)reagentConsumed.Volume * vaporizer.ReagentToMoles);
         }
 
         UpdateVisualState(uid, state);
@@ -95,7 +94,7 @@ public sealed partial class VaporizerSystem : EntitySystem
         if (!Resolve(uid, ref appearance))
             return;
 
-        _appearance.SetData(uid, VaporizerVisuals.VisualState, state);
+        _appearance.SetData(uid, VaporizerVisuals.Indicator, state);
     }
 
     public override void Update(float frameTime)
