@@ -194,7 +194,7 @@
 - type: entity
   parent: BaseMouseRC
   id: BaseMouseRCUplinkFilled
-  categories: [ HideSpawnMenu ]
+  suffix: RC, Filled
   components:
   - type: StorageFill
     contents:

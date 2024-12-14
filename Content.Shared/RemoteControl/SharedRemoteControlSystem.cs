@@ -190,7 +190,7 @@ public abstract class SharedRemoteControlSystem : EntitySystem
     {
         if (ent.Comp.IsControlled)
             return false;
-        
+
         if (TryComp<SSDIndicatorComponent>(controller, out var ssd))
             ssd.Enabled = false;
 
@@ -203,6 +203,8 @@ public abstract class SharedRemoteControlSystem : EntitySystem
 
         if (_mind.TryGetMind(controller, out var mindId, out var mind))
             _mind.Visit(mindId, ent.Owner, mind);
+
+        Dirty(ent, ent.Comp);
 
         return true;
     }
@@ -230,6 +232,8 @@ public abstract class SharedRemoteControlSystem : EntitySystem
         remoteControl.IsControlled = false;
 
         _mind.UnVisit(mindId, mind);
+
+        Dirty(uid, remoteControl);
 
         return true;
     }
