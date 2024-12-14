@@ -27,24 +27,12 @@ tilemap:
 entities:
 - proto: ""
   entities:
-  - uid: 1
-    components:
-    - type: MetaData
-    - type: Transform
-    - type: Map
-      mapPaused: True
-    - type: PhysicsMap
-    - type: GridTree
-    - type: MovedGrids
-    - type: Broadphase
-    - type: OccluderTree
-    - type: LoadedMap
   - uid: 2
     components:
     - type: MetaData
-      name: SS Reach II
+      name: SS Reach III
     - type: Transform
-      parent: 1
+      parent: invalid
     - type: MapGrid
       chunks:
         -1,-1:
@@ -100,6 +88,8 @@ entities:
       bodyType: Dynamic
     - type: Fixtures
       fixtures: {}
+    - type: BecomesStation
+      id: Reach
     - type: OccluderTree
     - type: Shuttle
     - type: GridPathfinding
@@ -1906,13 +1896,6 @@ entities:
     - type: Transform
       pos: -9.5,6.5
       parent: 2
-- proto: BaseResearchAndDevelopmentPointSource
-  entities:
-  - uid: 82
-    components:
-    - type: Transform
-      pos: -5.5,7.5
-      parent: 2
 - proto: Bed
   entities:
   - uid: 83
@@ -1991,26 +1974,12 @@ entities:
     - type: Transform
       pos: -8.5,5.5
       parent: 2
-- proto: BorgSpawnerTckTck
-  entities:
-  - uid: 1739
-    components:
-    - type: Transform
-      pos: -5.5,-3.5
-      parent: 2
 - proto: BoxBodyBag
   entities:
   - uid: 95
     components:
     - type: Transform
       pos: 2.4605155,-3.2763605
-      parent: 2
-- proto: BoxFolderQmClipboard
-  entities:
-  - uid: 96
-    components:
-    - type: Transform
-      pos: -1.5352863,14.547528
       parent: 2
 - proto: BoxHandcuff
   entities:
@@ -6277,13 +6246,6 @@ entities:
     - type: Transform
       pos: 1.5766428,11.571795
       parent: 2
-- proto: ClothingShoesBootsMagAdv
-  entities:
-  - uid: 915
-    components:
-    - type: Transform
-      pos: 4.5333743,-11.7164135
-      parent: 2
 - proto: ClothingUniformJumpsuitERTJanitor
   entities:
   - uid: 889
@@ -7185,13 +7147,6 @@ entities:
     components:
     - type: Transform
       pos: 21.5,-3.5
-      parent: 2
-- proto: DoorRemoteAll
-  entities:
-  - uid: 1056
-    components:
-    - type: Transform
-      pos: 24.577494,2.096348
       parent: 2
 - proto: DrinkVodkaBottleFull
   entities:
@@ -11425,13 +11380,6 @@ entities:
     - type: Transform
       pos: -26.5,-0.5
       parent: 2
-- proto: HandheldCrewMonitor
-  entities:
-  - uid: 1620
-    components:
-    - type: Transform
-      pos: 10.650544,-4.5766006
-      parent: 2
 - proto: HolofanProjector
   entities:
   - uid: 1621
@@ -11443,13 +11391,6 @@ entities:
     components:
     - type: Transform
       pos: 4.6859074,-10.602916
-      parent: 2
-- proto: HoPIDCard
-  entities:
-  - uid: 1623
-    components:
-    - type: Transform
-      pos: 24.549932,2.4577096
       parent: 2
 - proto: hydroponicsTray
   entities:
@@ -11468,13 +11409,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -12.5,5.5
-      parent: 2
-- proto: Hypospray
-  entities:
-  - uid: 1628
-    components:
-    - type: Transform
-      pos: 6.6989994,-0.46516204
       parent: 2
 - proto: IngotGold1
   entities:
@@ -11600,13 +11534,6 @@ entities:
     - type: Transform
       pos: -14.5,4.5
       parent: 2
-- proto: LockerCaptainFilledHardsuit
-  entities:
-  - uid: 1647
-    components:
-    - type: Transform
-      pos: 21.5,-2.5
-      parent: 2
 - proto: LockerChemistryFilled
   entities:
   - uid: 1648
@@ -11639,13 +11566,6 @@ entities:
     components:
     - type: Transform
       pos: 24.5,-0.5
-      parent: 2
-- proto: LockerHeadOfSecurityFilledHardsuit
-  entities:
-  - uid: 1653
-    components:
-    - type: Transform
-      pos: 22.5,4.5
       parent: 2
 - proto: LockerMedicalFilled
   entities:
@@ -13651,186 +13571,6 @@ entities:
     components:
     - type: Transform
       pos: 6.5,-15.5
-      parent: 2
-- proto: SpawnMobCorgi
-  entities:
-  - uid: 1976
-    components:
-    - type: Transform
-      pos: 18.5,-3.5
-      parent: 2
-- proto: SpawnMobFoxRenault
-  entities:
-  - uid: 1977
-    components:
-    - type: Transform
-      pos: 21.5,-3.5
-      parent: 2
-- proto: SpawnPointAtmos
-  entities:
-  - uid: 1978
-    components:
-    - type: Transform
-      pos: 6.5,-12.5
-      parent: 2
-- proto: SpawnPointBartender
-  entities:
-  - uid: 1979
-    components:
-    - type: Transform
-      pos: -9.5,4.5
-      parent: 2
-- proto: SpawnPointBotanist
-  entities:
-  - uid: 1980
-    components:
-    - type: Transform
-      pos: -13.5,4.5
-      parent: 2
-- proto: SpawnPointCaptain
-  entities:
-  - uid: 1981
-    components:
-    - type: Transform
-      pos: 23.5,-3.5
-      parent: 2
-- proto: SpawnPointCargoTechnician
-  entities:
-  - uid: 1982
-    components:
-    - type: Transform
-      pos: 1.5,12.5
-      parent: 2
-  - uid: 1983
-    components:
-    - type: Transform
-      pos: 0.5,12.5
-      parent: 2
-- proto: SpawnPointChef
-  entities:
-  - uid: 1984
-    components:
-    - type: Transform
-      pos: -4.5,4.5
-      parent: 2
-- proto: SpawnPointChemist
-  entities:
-  - uid: 1985
-    components:
-    - type: Transform
-      pos: 8.5,0.5
-      parent: 2
-- proto: SpawnPointHeadOfSecurity
-  entities:
-  - uid: 1986
-    components:
-    - type: Transform
-      pos: 22.5,2.5
-      parent: 2
-- proto: SpawnPointJanitor
-  entities:
-  - uid: 1987
-    components:
-    - type: Transform
-      pos: -4.5,-7.5
-      parent: 2
-- proto: SpawnPointLatejoin
-  entities:
-  - uid: 1988
-    components:
-    - type: Transform
-      pos: 4.5,15.5
-      parent: 2
-  - uid: 1989
-    components:
-    - type: Transform
-      pos: 4.5,16.5
-      parent: 2
-  - uid: 1990
-    components:
-    - type: Transform
-      pos: 10.5,16.5
-      parent: 2
-- proto: SpawnPointMedicalDoctor
-  entities:
-  - uid: 1991
-    components:
-    - type: Transform
-      pos: 3.5,-3.5
-      parent: 2
-  - uid: 1992
-    components:
-    - type: Transform
-      pos: 4.5,-2.5
-      parent: 2
-- proto: SpawnPointMusician
-  entities:
-  - uid: 1993
-    components:
-    - type: Transform
-      pos: -4.5,-2.5
-      parent: 2
-- proto: SpawnPointObserver
-  entities:
-  - uid: 1994
-    components:
-    - type: Transform
-      pos: -9.5,0.5
-      parent: 2
-- proto: SpawnPointPassenger
-  entities:
-  - uid: 1995
-    components:
-    - type: Transform
-      pos: 6.5,15.5
-      parent: 2
-  - uid: 1996
-    components:
-    - type: Transform
-      pos: 8.5,15.5
-      parent: 2
-- proto: SpawnPointSalvageSpecialist
-  entities:
-  - uid: 953
-    components:
-    - type: Transform
-      pos: -1.5,15.5
-      parent: 2
-- proto: SpawnPointScientist
-  entities:
-  - uid: 1997
-    components:
-    - type: Transform
-      pos: -2.5,8.5
-      parent: 2
-- proto: SpawnPointSecurityOfficer
-  entities:
-  - uid: 1998
-    components:
-    - type: Transform
-      pos: 15.5,-3.5
-      parent: 2
-  - uid: 1999
-    components:
-    - type: Transform
-      pos: 16.5,-3.5
-      parent: 2
-  - uid: 2000
-    components:
-    - type: Transform
-      pos: 17.5,-3.5
-      parent: 2
-- proto: SpawnPointStationEngineer
-  entities:
-  - uid: 2001
-    components:
-    - type: Transform
-      pos: -17.5,-3.5
-      parent: 2
-  - uid: 2002
-    components:
-    - type: Transform
-      pos: -17.5,0.5
       parent: 2
 - proto: SprayBottleSpaceCleaner
   entities:

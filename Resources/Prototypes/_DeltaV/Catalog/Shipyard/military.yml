@@ -2,7 +2,7 @@
   id: Security
   name: NT-Cruiser
   description: A small security vessel built for apprehending criminals.
-  price: 30000
+  price: 30
   path:
   - /Maps/Shuttles/security.yml
   categories:
