@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: PopGamer46
-  changes:
-  - message: Security cadets now spawn with jackboots instead of combat boots
-    type: Tweak
-  id: 7205
-  time: '2024-08-25T06:58:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31419
 - author: ArtisticRoomba
   changes:
   - message: Added the greytide stamp. This stamp can be rarely found in maints lockers.
@@ -3919,3 +3912,11 @@
   id: 7704
   time: '2024-12-13T23:00:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31779
+- author: Nimfar11
+  changes:
+  - message: Changes the colour of the Borg binary channel to a different shade of
+      blue.
+    type: Tweak
+  id: 7705
+  time: '2024-12-14T16:03:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33841
