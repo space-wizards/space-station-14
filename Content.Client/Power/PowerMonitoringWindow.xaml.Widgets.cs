@@ -6,6 +6,7 @@ using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
+using Vector4 = Robust.Shared.Maths.Vector4;
 
 namespace Content.Client.Power;
 
@@ -108,23 +109,23 @@ public sealed partial class PowerMonitoringWindow
         // Update battery level if applicable
         if (entry.BatteryLevel != null)
         {
-            var batteryPercentage = (int) (entry.BatteryLevel.Value * 100);
-            button.BatteryLevel.Text = Loc.GetString("power-monitoring-window-battery-level", ("percentage", batteryPercentage));
+            var batteryPercentage = (int)(entry.BatteryLevel.Value * 100);
+
+            button.BatteryLevel.Value = batteryPercentage;
             button.BatteryLevel.Visible = true;
 
-            // Set battery level color based on percentage
-            var color = batteryPercentage switch
-            {
-                > 75 => Color.LawnGreen,
-                > 25 => Color.Yellow,
-                _ => new(230, 50, 50, 255)
-            };
+            button.BatteryPercentage.Text = $"{batteryPercentage}%";
+            button.BatteryPercentage.Visible = true;
 
-            button.BatteryLevel.ModulateSelfOverride = color;
+            // Set progress bar color based on percentage
+            var color = Color.FromHsv(new Vector4((batteryPercentage / 100f) * 0.33f, 1, 1, 1));
+
+            button.BatteryLevel.ForegroundStyleBoxOverride = new StyleBoxFlat { BackgroundColor = color };
         }
         else
         {
             button.BatteryLevel.Visible = false;
+            button.BatteryPercentage.Visible = false;
         }
     }
 
@@ -466,7 +467,8 @@ public sealed class PowerMonitoringButton : Button
     public TextureRect TextureRect;
     public Label NameLocalized;
 
-    public Label BatteryLevel;
+    public ProgressBar BatteryLevel;
+    public Label BatteryPercentage;
 
     public Label PowerValue;
 
@@ -503,16 +505,30 @@ public sealed class PowerMonitoringButton : Button
 
         MainContainer.AddChild(NameLocalized);
 
-        BatteryLevel = new Label()
+        BatteryLevel = new ProgressBar()
         {
             HorizontalAlignment = HAlignment.Right,
-            SetWidth = 40f,
-            Margin = new Thickness(10, 0, 0, 0),
-            ClipText = true,
+            SetWidth = 60f,
+            Margin = new Thickness(15, 7, 0, 7),
+            MinValue = 0,
+            MaxValue = 100,
+            Page = 0,
+            Value = 0,
             Visible = false,
         };
 
         MainContainer.AddChild(BatteryLevel);
+
+        BatteryPercentage = new Label()
+        {
+            HorizontalAlignment = HAlignment.Right,
+            SetWidth = 45f,
+            Margin = new Thickness(10, 0, 10, 0),
+            ClipText = true,
+            Visible = false,
+        };
+
+        MainContainer.AddChild(BatteryPercentage);
 
         PowerValue = new Label()
         {
