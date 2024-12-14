@@ -10,6 +10,7 @@
       organs:
         brain: OrganAbductorBrain
         eyes: OrganAbductorEyes
+        eye_implant: null
     torso:
       part: TorsoAbductor
       connections:
