@@ -529,15 +529,15 @@
   parent: BaseGameRule
   components:
   - type: StationEvent
-    earliestStart: 120
+    earliestStart: 40
     minimumPlayers: 15
-    weight: 0.1
+    weight: 5
     duration: 60
+    maxOccurrences: 1
   - type: VentCrittersRule
     entries:
       - id: SpawnPointGhostCluwneBeast
-        amount: 1
-        maxAmount: 1
+        prob: 1
 
 - type: entity
   parent: BaseGameRule
