@@ -8,6 +8,16 @@
       role: JobChiefMedicalOfficer
       time: 72000 #20 hrs
 
+# For IMP Prestige
+- type: loadoutEffectGroup
+  id: PrestigeCMO
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChiefMedicalOfficer
+      time: 180000 #50 hrs
+
 # Jumpsuit
 - type: loadout
   id: ChiefMedicalOfficerJumpsuit
@@ -59,6 +69,19 @@
   equipment:
     neck: ClothingNeckMantleCMO
 
+- type: loadout
+  id: CMOGreatCloak
+  equipment:
+    neck: ClothingNeckCloakCmosgreatcloak
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: PrestigeCMO
+
+- type: startingGear
+  id: CMOGreatCloak
+  equipment:
+    neck: ClothingNeckCloakCmosgreatcloak
+
 # Outer clothing
 - type: loadout
   id: ChiefMedicalOfficerLabCoat
@@ -69,6 +92,19 @@
   id: ChiefMedicalOfficerWintercoat
   equipment:
     outerClothing: ClothingOuterWinterCMO
+
+- type: loadout
+  id: CMOPrestigeLabcoat
+  equipment:
+    outerClothing: ClothingOuterCoatCMO
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: PrestigeCMO
+
+- type: startingGear
+  id: CMOPrestigeLabcoat
+  equipment:
+    outerClothing: ClothingOuterCoatCMO
 
 # Headset
 - type: loadout

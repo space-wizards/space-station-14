@@ -1616,7 +1616,7 @@
   loadouts:
   - ChiefMedicalOfficerLabCoat
   - ChiefMedicalOfficerWintercoat
-  - ClothingOuterCoatCMO # IMP
+  - ClothingOuterCoatCMO #IMP
 
 - type: loadoutGroup
   id: ChiefMedicalOfficerNeck
@@ -1626,7 +1626,7 @@
   - ChiefMedicalOfficerCloak
   - ChiefMedicalOfficerMantle
   - ScarfLightBlue
-  - ClothingNeckCloakCmosgreatcloak # IMP
+  - ClothingNeckCloakCmosgreatcloak #IMP
 
 - type: loadoutGroup
   id: ChiefMedicalOfficerShoes
