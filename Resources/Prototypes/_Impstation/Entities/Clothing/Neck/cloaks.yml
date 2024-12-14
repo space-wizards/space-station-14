@@ -82,12 +82,10 @@
     stealGroup: HeadCloak
 
 - type: entity
-  parent: [ClothingNeckBase, BaseCommandContraband]
+  parent: ClothingCloakCmo
   id: ClothingNeckCloakCmosgreatcloak
-  name: chief medical officer's great cloak
+  name: chief medical officer's greatcloak
   description: "An ornate high collared great cloak. Good luck keeping it clean."
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/Neck/Cloaks/cmogreatcloak.rsi
-  - type: StealTarget
-    stealGroup: HeadCloak
