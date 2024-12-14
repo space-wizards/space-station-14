@@ -145,7 +145,7 @@ def send_discord_webhook(content: str):
 
 def send_entries(entries: Iterable[ChangelogEntry]) -> None:
     if not DISCORD_WEBHOOK_URL:
-        print(f"No discord webhook URL found, skipping discord send")
+        print("No discord webhook URL found, skipping discord send")
         return
 
     message_content = io.StringIO()
