@@ -187,7 +187,7 @@
 - type: entity
   parent: [GunSafe, BaseRestrictedContraband]
   id: GunSafeRifleLecter
-  name: lecter safe
+  name: rifle safe
   components:
   - type: StorageFill
     contents:
@@ -195,6 +195,9 @@
       amount: 2
     - id: MagazineRifle
       amount: 4
+    - id: WeaponRifleDaito
+    - id: MagazineDMR
+      amount: 2
 
 - type: entity
   parent: [GunSafe, BaseRestrictedContraband]

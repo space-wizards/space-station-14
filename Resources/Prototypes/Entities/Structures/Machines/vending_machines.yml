@@ -265,6 +265,8 @@
     color: "#ffb0b0"
   - type: AccessReader
     access: [["HeadOfPersonnel"]]
+  - type: StealTarget #imp
+    stealGroup: PTech
 
 - type: entity
   parent: VendingMachine
@@ -936,6 +938,8 @@
     guides:
     - Security
     - Antagonists
+  - type: StealTarget #imp
+    stealGroup: SecTech
 
 - type: entity
   parent: VendingMachine
@@ -1520,6 +1524,8 @@
     color: "#326e3f"
   - type: AccessReader
     access: [["Hydroponics"]]
+  - type: StealTarget #imp
+    stealGroup: HyDrobe
 
 - type: entity
   parent: VendingMachine
@@ -1548,6 +1554,8 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Lawyer"]]
+  - type: StealTarget #imp
+    stealGroup: LawDrobe
 
 - type: entity
   parent: VendingMachine
@@ -1580,6 +1588,8 @@
     color: "#d82929"
   - type: AccessReader
     access: [["Security"]]
+  - type: StealTarget #imp
+    stealGroup: SecDrobe
 
 - type: entity
   parent: VendingMachine
@@ -1608,6 +1618,8 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Bar"]]
+  - type: StealTarget #imp
+    stealGroup: BarDrobe
 
 - type: entity
   parent: VendingMachine
@@ -1636,6 +1648,8 @@
     radius: 1.5
     energy: 1.6
     color: "#CCCCCC" #The holy C
+  - type: StealTarget #imp
+    stealGroup: PietyVend
 
 - type: entity
   parent: VendingMachine
@@ -1668,6 +1682,8 @@
     color: "#b89e2a"
   - type: AccessReader
     access: [["Cargo"]]
+  - type: StealTarget #imp
+    stealGroup: CargoDrobe
 
 - type: entity
   parent: VendingMachine
@@ -1696,6 +1712,8 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Medical"]]
+  - type: StealTarget #imp
+    stealGroup: MediDrobe
 
 - type: entity
   parent: VendingMachine
@@ -1724,6 +1742,9 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Chemistry"]]
+  - type: StealTarget #imp
+    stealGroup: ChemDrobe
+
 
 - type: entity
   parent: VendingMachine
@@ -1752,6 +1773,8 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Service"]]
+  - type: StealTarget #imp
+    stealGroup: CuraDrobe
 
 - type: entity
   parent: VendingMachine
@@ -1784,6 +1807,8 @@
     color: "#b89e2a"
   - type: AccessReader
     access: [["Engineering"]]
+  - type: StealTarget #imp
+    stealGroup: AtmosDrobe
 
 - type: entity
   parent: VendingMachine
@@ -1816,6 +1841,8 @@
     color: "#b89e2a"
   - type: AccessReader
     access: [["Engineering"]]
+  - type: StealTarget #imp
+    stealGroup: EngiDrobe
 
 - type: entity
   parent: VendingMachine
@@ -1844,6 +1871,8 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Kitchen"]]
+  - type: StealTarget #imp
+    stealGroup: ChefDrobe
 
 - type: entity
   parent: VendingMachine
@@ -1872,6 +1901,8 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Detective"]]
+  - type: StealTarget #imp
+    stealGroup: DetDrobe
 
 - type: entity
   parent: VendingMachine
@@ -1904,6 +1935,8 @@
     color: "#6927C5"
   - type: AccessReader
     access: [["Janitor"]]
+  - type: StealTarget #imp
+    stealGroup: JaniDrobe
 
 - type: entity
   parent: VendingMachine
@@ -1932,6 +1965,8 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Research"]]
+  - type: StealTarget #imp
+    stealGroup: SciDrobe
 
 - type: entity
   parent: VendingMachine
@@ -1992,6 +2027,8 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Research"]]
+  - type: StealTarget #imp
+    stealGroup: RoboDrobe
 
 - type: entity
   parent: VendingMachine
@@ -2020,6 +2057,8 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Medical"]]
+  - type: StealTarget #imp
+    stealGroup: GeneDrobe
 
 - type: entity
   parent: VendingMachine
@@ -2048,6 +2087,8 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Medical"]]
+  - type: StealTarget #imp
+    stealGroup: ViroDrobe
 
 - type: entity
   parent: VendingMachine

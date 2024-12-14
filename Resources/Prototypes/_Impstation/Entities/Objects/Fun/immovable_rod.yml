@@ -33,7 +33,7 @@
   description: Your best friend! Don't touch him though.
   components:
   - type: Sprite
-    sprite: Mobs/Pets/finfin.rsi
+    sprite: _Impstation/Mobs/Pets/finfin.rsi
     state: finfin
     rotation: 0
     noRot: false

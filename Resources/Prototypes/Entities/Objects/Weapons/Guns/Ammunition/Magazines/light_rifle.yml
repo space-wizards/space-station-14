@@ -14,7 +14,7 @@
       tags:
         - CartridgeLightRifle
     proto: CartridgeLightRifle
-    capacity: 30
+    capacity: 23
   - type: Item
     size: Small
   - type: ContainerContainer
@@ -36,14 +36,17 @@
 # Magazines
 - type: entity
   id: MagazineLightRifleBox
-  name: "L6 SAW magazine box (.30 rifle)"
+  name: "L6 SAW magazine box (.20 rifle)"
   parent: BaseMagazineLightRifle
   components:
   - type: Tag
     tags:
       - MagazineLightRifleBox
   - type: BallisticAmmoProvider
-    proto: CartridgeLightRifle
+    whitelist:
+      tags:
+        - CartridgeRifle
+    proto: CartridgeRifle
     capacity: 100
   - type: Item
   - type: Sprite
