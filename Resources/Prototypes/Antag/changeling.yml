@@ -1,4 +1,21 @@
 - type: entity
+  parent: MobHuman
+  id: MobLing
+  name: Urist McLing
+  components:
+  - type: ActionGrant
+    actions:
+    - ActionChangelingDevour
+    - ActionChangelingTransform
+  - type: UserInterface
+    interfaces:
+      enum.TransformUi.Key:
+        type: ChangelingTransformBoundUserInterface
+  - type: ChangelingTransform
+  - type: ChangelingDevour
+
+
+- type: entity
   id: ActionChangelingDevour
   name: "[color=red]Devour[/color]"
   description: Consume the essence of your victims and subsume their identity and mind into your own
@@ -17,8 +34,6 @@
   - type: InstantAction
     icon: { sprite : Interface/Actions/changeling.rsi, state: "transform" }
     event: !type:ChangelingTransformActionEvent
-  - type: UserInterface
-    interfaces:
-      enum.TransformUi.Key:
-        type: ChangelingTransformBoundUserInterface
+
+
 

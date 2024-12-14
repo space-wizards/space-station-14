@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Changeling.Devour;
 using Content.Shared.Chemistry.Reagent;
@@ -45,31 +46,62 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<ChangelingTransformComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformActionEvent>(OnTransformAction);
-        SubscribeLocalEvent<ChangelingTransformRadialMessage>(OnRadialmessage);
-        SubscribeNetworkEvent<ChangelingIdentityRequest>(OnIdentityRequest);
         SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformWindupDoAfterEvent>(OnSuccessfulTransform);
+        SubscribeLocalEvent<ChangelingTransformComponent, ChangelingTransformIdentitySelectMessage>(OnTransformSelected);
     }
 
     private void OnInit(EntityUid uid, ChangelingTransformComponent component, MapInitEvent init)
     {
-        _actionsSystem.AddAction(uid, ref component.ChangelingTransformActionEntity, component.ChangelingTransformAction);
+        if(!component.ChangelingTransformActionEntity.HasValue)
+            _actionsSystem.AddAction(uid, ref component.ChangelingTransformActionEntity, component.ChangelingTransformAction);
+        TryComp<UserInterfaceComponent>(component.ChangelingTransformActionEntity, out var comp);
+
+        var uiE = EnsureComp<UserInterfaceComponent>(uid);
+        _uiSystem.SetUi((uid, uiE), TransformUi.Key, new InterfaceData("ChangelingTransformBoundUserInterface"));
+
         var identityStorage = EnsureComp<ChangelingIdentityComponent>(uid);
-        if (identityStorage.ConsumedIdentities.Count > 0)
+        if (identityStorage.ConsumedIdentities.Count == 0)
             return;
         _changelingIdentitySystem.CloneToNullspace(uid, identityStorage, uid);
     }
 
-    private void OnTransformAction(EntityUid uid,
+    public virtual void OnTransformAction(EntityUid uid,
         ChangelingTransformComponent component,
         ChangelingTransformActionEvent args)
     {
         var user = args.Performer;
         _popupSystem.PopupPredicted(Loc.GetString("changeling-transform-attempt"), user, null, PopupType.MediumCaution);
 
+        if (!TryComp<UserInterfaceComponent>(uid, out var userInterface))
+            return;
+        if(!TryComp<ChangelingIdentityComponent>(uid, out var userIdentity))
+            return;
+        Dirty(uid, userIdentity);
+
+        if (!_uiSystem.IsUiOpen(uid, TransformUi.Key, args.Performer))
+        {
+            _uiSystem.OpenUi(uid, TransformUi.Key, args.Performer);
+            var x = userIdentity.ConsumedIdentities.Select(x =>
+            {
+                return new ChangelingIdentityData(GetNetEntity(x), Name(x), MetaData(x).EntityDescription);
+            }).ToList();
+            _uiSystem.SetUiState(uid, TransformUi.Key, new ChangelingTransformBoundUserInterfaceState(x));
+        }
+        else // if the UI is already opened and the command action is done again, transform into the last consumed identity
+        {
+            TransformPreviousConsumed(uid, component);
+            _uiSystem.CloseUi(uid, TransformUi.Key, args.Performer);
+        }
+    }
+
+    private void TransformPreviousConsumed(EntityUid uid, ChangelingTransformComponent component)
+    {
+        if(!TryComp<ChangelingIdentityComponent>(uid, out var identity))
+            return;
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
             uid,
             component.TransformWindup,
-            new ChangelingTransformWindupDoAfterEvent(),
+            new ChangelingTransformWindupDoAfterEvent(GetNetEntity(identity.LastConsumedEntityUid!.Value)),
             uid,
             used: uid)
         {
@@ -77,22 +109,25 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
             BreakOnWeightlessMove = true,
             DuplicateCondition = DuplicateConditions.None,
         });
-
-
-        // if (TryComp<UserInterfaceComponent>(component.ChangelingTransformActionEntity, out var userInterface))
-        // {
-        //     var isOpen = _uiSystem.IsUiOpen(userInterface.Owner, TransformUi.Key, user);
-        //     if (isOpen)
-        //     {
-        //         _uiSystem.CloseUi(userInterface.Owner, TransformUi.Key, user);
-        //     }
-        //     else
-        //     {
-        //         _uiSystem.OpenUi(userInterface.Owner, TransformUi.Key, user);
-        //     }
-        // }
     }
 
+    public void OnTransformSelected(EntityUid uid,
+        ChangelingTransformComponent component,
+        ChangelingTransformIdentitySelectMessage args)
+    {
+        var selectedIdentity = args.TargetIdentity;
+        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
+            uid,
+            component.TransformWindup,
+            new ChangelingTransformWindupDoAfterEvent(selectedIdentity),
+            uid,
+            used: uid)
+        {
+            BreakOnMove = true,
+            BreakOnWeightlessMove = true,
+            DuplicateCondition = DuplicateConditions.None,
+        });
+    }
     private void OnSuccessfulTransform(EntityUid uid,
         ChangelingTransformComponent component,
         ChangelingTransformWindupDoAfterEvent args)
@@ -111,14 +146,12 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         if(!TryComp<ChangelingIdentityComponent>(args.User, out var identityStorage))
             return;
 
-        var lastConsumed = identityStorage.LastConsumedEntityUid;
-        if (lastConsumed == null)
-            return;
+        var targetIdentity = GetEntity(args.TargetIdentity);
         if(!TryComp<DnaComponent>(uid, out var lastConsumedDna))
             return;
-        if (!TryComp<HumanoidAppearanceComponent>(lastConsumed, out var humanoid))
+        if (!TryComp<HumanoidAppearanceComponent>(targetIdentity, out var humanoid))
             return;
-        if (!TryComp<VocalComponent>(lastConsumed, out var lastConsumedVocals))
+        if (!TryComp<VocalComponent>(targetIdentity, out var lastConsumedVocals))
             return;
 
         //Handle species with the ability to wag their tail
@@ -127,12 +160,14 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
             _actionsSystem.RemoveAction(uid, waggingComp.ActionEntity);
             RemComp<WaggingComponent>(uid);
         }
-        if (HasComp<WaggingComponent>(lastConsumed)
+        if (HasComp<WaggingComponent>(targetIdentity)
             && !HasComp<WaggingComponent>(uid))
         {
             EnsureComp<WaggingComponent>(uid, out _);
         }
-        _humanoidAppearanceSystem.CloneAppearance((EntityUid)lastConsumed, args.User);
+
+        _humanoidAppearanceSystem.CloneAppearance(targetIdentity, args.User);
+
         currentDna.DNA = lastConsumedDna.DNA;
         currentVocals.EmoteSounds = lastConsumedVocals.EmoteSounds;
         currentVocals.Sounds = lastConsumedVocals.Sounds;
@@ -140,106 +175,94 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         currentVocals.ScreamId = lastConsumedVocals.ScreamId;
         currentVocals.Wilhelm = lastConsumedVocals.Wilhelm;
         currentVocals.WilhelmProbability = lastConsumedVocals.WilhelmProbability;
-        _metaSystem.SetEntityName(uid, Name((EntityUid)lastConsumed), raiseEvents: false);
-        _metaSystem.SetEntityDescription(uid, MetaData((EntityUid)lastConsumed).EntityDescription);
+
+        _metaSystem.SetEntityName(uid, Name(targetIdentity), raiseEvents: false);
+        _metaSystem.SetEntityDescription(uid, MetaData(targetIdentity).EntityDescription);
         TransformGrammarSet(uid, humanoid.Gender);
 
         _entityManager.Dirty(uid, currentAppearance);
         _entityManager.Dirty(uid, currentVocals);
     }
 
-    public virtual void TransformGrammarSet(EntityUid uid, Gender gender) { }
-
-    private void OnIdentityRequest(ChangelingIdentityRequest ev)
-    {
-    }
-
-
-    private void OnRadialmessage(ChangelingTransformRadialMessage ev)
-    {
-        if (!TryGetEntity(ev.Entity, out var target))
-            return;
-
-        ev.Event.User = ev.Actor;
-        RaiseLocalEvent(target.Value, (object) ev.Event);
-    }
-
-    private void OnGetIdentities(Entity<ChangelingTransformComponent> component, ref GetChangelingIdentitiesRadialEvent ev)
-    {
-
-    }
-}
-
-
-[Serializable, NetSerializable]
-public sealed class ChangelingIdentityRequest: EntityEventArgs
-{
-    public NetUserId ChannelId { get; }
-    public ChangelingIdentityRequest(NetUserId channelId)
-    {
-        ChannelId = channelId;
-    }
-}
-
-[Serializable, NetSerializable]
-public sealed class ChangelingIdentityMessageComposite
-{
-    public String? Dna;
-    public SpriteSpecifier? Sprite;
-    public String? Tooltip;
-}
-[Serializable, NetSerializable]
-public sealed class ChangelingIdentityResponse : EntityEventArgs
-{
-    public NetUserId ChannelId { get; }
-    public List<ChangelingIdentityMessageComposite> Identities { get; }
-
-    public ChangelingIdentityResponse(NetUserId channelId, List<ChangelingIdentityMessageComposite> identities)
-    {
-        ChannelId = channelId;
-        Identities = identities;
-    }
+    protected virtual void TransformGrammarSet(EntityUid uid, Gender gender) { }
 
 }
+
 
 public sealed partial class ChangelingTransformActionEvent : InstantActionEvent
 {
 
 }
-
-[Serializable, NetSerializable]
-public sealed class ChangelingTransformRadialMessage : BoundUserInterfaceMessage
-{
-    public ChangelingTransformTargetAction Event = default!;
-}
-public sealed class ChangelingTransformRadialOption : ChangelingTransformTargetAction
-{
-    public SpriteSpecifier? Sprite;
-
-    public string? Tooltip;
-
-    //public ChangelingTransformTargetAction Event = default!;
-}
-
-[Serializable, NetSerializable]
-public abstract class ChangelingTransformTargetAction
-{
-    [field: NonSerialized]
-    public EntityUid User { get; set; }
-}
-
-[ByRefEvent]
-public record struct GetChangelingIdentitiesRadialEvent()
-{
-    public List<ChangelingTransformRadialOption> Actions = new();
-}
-
 [Serializable, NetSerializable]
 public sealed partial class ChangelingTransformWindupDoAfterEvent : SimpleDoAfterEvent
 {
+    public NetEntity TargetIdentity;
 
+    public ChangelingTransformWindupDoAfterEvent(NetEntity targetIdentity)
+    {
+        TargetIdentity = targetIdentity;
+    }
+}
+[Serializable, NetSerializable]
+public sealed class ChangelingRelayedIdentitySelectMessageEvent : HandledEntityEventArgs
+{
+    public readonly NetEntity ActingEntity;
+    public NetEntity TargetIdentity { get; init; }
+
+    public ChangelingRelayedIdentitySelectMessageEvent(NetEntity targetIdentity, NetEntity actingEntity)
+    {
+        ActingEntity = actingEntity;
+        TargetIdentity = targetIdentity;
+    }
 }
 
+[Serializable, NetSerializable]
+public sealed class ChangelingNullspaceSpawnEvent : HandledEntityEventArgs
+{
+    public readonly NetEntity ClonedEntity;
+    public readonly NetEntity Origin;
+
+    public ChangelingNullspaceSpawnEvent(NetEntity clonedEntity, NetEntity origin)
+    {
+        ClonedEntity = clonedEntity;
+        Origin = origin;
+    }
+}
+[Serializable, NetSerializable]
+public sealed class ChangelingTransformIdentitySelectMessage : BoundUserInterfaceMessage
+{
+    public readonly NetEntity TargetIdentity;
+
+    public ChangelingTransformIdentitySelectMessage(NetEntity targetIdentity)
+    {
+        TargetIdentity = targetIdentity;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class ChangelingIdentityData
+{
+    public readonly NetEntity Identity;
+    public string Name;
+    public string Description;
+
+    public ChangelingIdentityData(NetEntity identity, string name, string description)
+    {
+        Identity = identity;
+        Name = name;
+        Description = description;
+    }
+}
+[Serializable, NetSerializable]
+public sealed class ChangelingTransformBoundUserInterfaceState : BoundUserInterfaceState
+{
+    public readonly List<ChangelingIdentityData> Identites;
+
+    public ChangelingTransformBoundUserInterfaceState(List<ChangelingIdentityData> identities)
+    {
+        Identites = identities;
+    }
+}
 [Serializable, NetSerializable]
 public enum TransformUi : byte
 {

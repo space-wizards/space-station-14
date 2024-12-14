@@ -9,6 +9,7 @@ using Content.Shared.Atmos.Rotting;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems;
+using Content.Shared.Changeling.Transform;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -18,6 +19,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Forensics;
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement.Components;
+using Content.Shared.Inventory;
 using Content.Shared.Materials;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.NameModifier.Components;
@@ -40,7 +42,6 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
 {
 
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
@@ -49,9 +50,8 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedBodySystem _bodySystem = default!;
     [Dependency] private readonly EntityManager _entityManager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedChangelingIdentitySystem _changelingIdentitySystem = default!;
-
+    [Dependency] private readonly InventorySystem _inventorySystem = default!;
 
     public override void Initialize()
     {
@@ -64,10 +64,12 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
     }
     private void OnInit(EntityUid uid, ChangelingDevourComponent component, MapInitEvent args)
     {
-        _actionsSystem.AddAction(uid, ref component.ChangelingDevourActionEntity, component.ChangelingDevourAction);
+        if(!component.ChangelingDevourActionEntity.HasValue)
+            _actionsSystem.AddAction(uid, ref component.ChangelingDevourActionEntity, component.ChangelingDevourAction);
         var identityStorage = EnsureComp<ChangelingIdentityComponent>(uid);
         if (identityStorage.ConsumedIdentities.Count > 0)
             return;
+        // RaiseLocalEvent(new ChangelingNullspaceSpawnEvent(GetNetEntity(uid), GetNetEntity(uid)));
         _changelingIdentitySystem.CloneToNullspace(uid, identityStorage, uid); // Clone yourself so you can transform back.
     }
     private void OnConsumeAttemptTick(EntityUid uid,
@@ -78,7 +80,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
         if (curTime < component.NextTick)
             return;
         ConsumeDamageTick(eventData.Event.Target, component, eventData.Event.User);
-        component.NextTick = curTime + TimeSpan.FromSeconds(1f);
+        component.NextTick += TimeSpan.FromSeconds(1f);
     }
 
     private void ConsumeDamageTick(EntityUid? target, ChangelingDevourComponent comp, EntityUid? user)
@@ -98,12 +100,15 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
     private void OnDevourAction(EntityUid uid, ChangelingDevourComponent component, ChangelingDevourActionEvent args)
     {
         Dirty(args.Performer, component);
+        if (!TryComp<ChangelingIdentityComponent>(uid, out var identityStorage))
+            return;
+        //Extremely scuffed method of initializing the entity on the client
+        // if (identityStorage.ConsumedIdentities.Count == 0)
+        //     _changelingIdentitySystem.CloneToNullspace(uid, identityStorage, uid); // Clone yourself so you can transform back.
 
         if (args.Handled || _whitelistSystem.IsWhitelistFailOrNull(component.Whitelist, args.Target))
             return;
         if (!HasComp<DamageableComponent>(args.Target))
-            return;
-        if(!TryComp<ContainerManagerComponent>(args.Target, out var containerManager))
             return;
 
         args.Handled = true;
@@ -115,19 +120,12 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
             return;
         }
 
-        if (containerManager.Containers.TryGetValue("outerClothing", out var outerClothing)
-            && outerClothing.Count > 0) // Somehow they don't have an outerClothing slot... somehow, so like... we'll just eat the target anyways
+        var ev = new ChangelingDevourAttemptEvent( component.DevourPreventionPercentageThreshold, SlotFlags.OUTERCLOTHING);
+        RaiseLocalEvent(target, ev, true);
+        if (ev.Protection)
         {
-            foreach (var item in outerClothing.ContainedEntities)
-            {
-                if (!TryComp<ArmorComponent>(item, out var armor)
-                    || armor.Modifiers.Coefficients["Slash"] < component.DevourPreventionPercentageThreshold
-                    || armor.Modifiers.Coefficients["Blunt"] < component.DevourPreventionPercentageThreshold
-                    || armor.Modifiers.Coefficients["Piercing"] < component.DevourPreventionPercentageThreshold)
-                    continue;
-                _popupSystem.PopupClient(Loc.GetString("changeling-attempt-failed-protected"), args.Performer, args.Performer, PopupType.Medium);
-                return;
-            }
+            _popupSystem.PopupClient(Loc.GetString("changeling-attempt-failed-protected"), uid, uid, PopupType.Medium);
+            return;
         }
 
         if (HasComp<ChangelingHuskedCorpseComponent>(target))
@@ -204,9 +202,9 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
         if (_mobState.IsDead(target.Value)
             && TryComp<BodyComponent>(target, out var body)
             && TryComp<HumanoidAppearanceComponent>(target, out _)
-            && TryComp<ChangelingIdentityComponent>(args.User, out var identityStorage)
-            && TryComp<ContainerManagerComponent>(args.Target, out var containerManager))
+            && TryComp<ChangelingIdentityComponent>(args.User, out var identityStorage))
         {
+            // RaiseLocalEvent(new ChangelingNullspaceSpawnEvent(GetNetEntity(target.Value), GetNetEntity(args.User)));
             _changelingIdentitySystem.CloneToNullspace(uid, identityStorage, target.Value);
             EnsureComp<ChangelingHuskedCorpseComponent>(target.Value);
 
@@ -215,15 +213,10 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
                 _entityManager.QueueDeleteEntity(organ.Id);
             }
 
-            if (containerManager.Containers.TryGetValue("jumpsuit", out var jumpsuit)
-                && jumpsuit.Count > 0)
+            if (_inventorySystem.TryGetSlotEntity(target.Value, "jumpsuit", out var item)
+                && TryComp<ButcherableComponent>(item, out var butcherable))
             {
-                foreach (var item in jumpsuit.ContainedEntities)
-                {
-                    if (!TryComp<ButcherableComponent>(item, out var butcherable))
-                        continue;
-                    RipClothing(target.Value, item, butcherable);
-                }
+                RipClothing(target.Value, item.Value, butcherable);
             }
         }
         Dirty(uid, component);
@@ -235,8 +228,23 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
     protected virtual void RipClothing(EntityUid uid, EntityUid item, ButcherableComponent butcherable) { }
 
 }
+/// <summary>
+/// Raised to check if Changelings devour attempt should be blocked, based on if the value is over the protectionThreshold
+/// </summary>
+public sealed class ChangelingDevourAttemptEvent : EntityEventArgs, IInventoryRelayEvent
+{
+    public SlotFlags TargetSlots { get; }
 
+    public readonly double ProtectionThreshold;
+    public bool Protection;
 
+    public ChangelingDevourAttemptEvent(double protectionThreshold, SlotFlags slots = ~SlotFlags.POCKET)
+    {
+        TargetSlots = slots;
+        ProtectionThreshold = protectionThreshold;
+    }
+
+}
 public sealed partial class ChangelingDevourActionEvent : EntityTargetActionEvent { }
 
 [Serializable, NetSerializable]

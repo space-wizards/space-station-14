@@ -1,28 +1,39 @@
-﻿using Content.Client.Store.Ui;
-using Content.Shared.Changeling.Devour;
+﻿
+
 using Content.Shared.Changeling.Transform;
+using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 
 namespace Content.Client.Changeling.Transform;
 
+[UsedImplicitly]
 public sealed class ChangelingTransformBoundUserInterface : BoundUserInterface
 {
-    private ChangelingTransformMenu? _menu;
-    public ChangelingTransformBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-        IoCManager.InjectDependencies(this);
-    }
+    private ChangelingTransformMenu? _window;
+
+    public ChangelingTransformBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey) { }
 
     protected override void Open()
     {
         base.Open();
-        _menu = this.CreateWindow<ChangelingTransformMenu>();
-        _menu.Owner(Owner);
-        // _menu.OnTransformMenuClicked += SendChangelingTransformRadialMessage;
+        _window = this.CreateWindow<ChangelingTransformMenu>();
+        _window.OnIdentitySelect += SendIdentitySelect;
     }
 
-    public void SendChangelingTransformRadialMessage(ChangelingTransformRadialMessage message)
+    protected override void UpdateState(BoundUserInterfaceState state)
     {
-        SendMessage(message);
+        base.UpdateState(state);
+
+        if (state is not ChangelingTransformBoundUserInterfaceState current)
+            return;
+
+        _window?.UpdateState(current);
     }
+
+    public void SendIdentitySelect(NetEntity identityId)
+    {
+        SendMessage(new ChangelingTransformIdentitySelectMessage(identityId));
+    }
+
+
 }

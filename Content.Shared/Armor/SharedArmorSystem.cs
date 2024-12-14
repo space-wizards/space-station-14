@@ -1,4 +1,5 @@
-﻿using Content.Shared.Damage;
+﻿using Content.Shared.Changeling.Devour;
+using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Inventory;
 using Content.Shared.Silicons.Borgs;
@@ -20,6 +21,7 @@ public abstract class SharedArmorSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ArmorComponent, InventoryRelayedEvent<DamageModifyEvent>>(OnDamageModify);
+        SubscribeLocalEvent<ArmorComponent, InventoryRelayedEvent<ChangelingDevourAttemptEvent>>(OnChangelingDevourAttempt);
         SubscribeLocalEvent<ArmorComponent, BorgModuleRelayedEvent<DamageModifyEvent>>(OnBorgDamageModify);
         SubscribeLocalEvent<ArmorComponent, GetVerbsEvent<ExamineVerb>>(OnArmorVerbExamine);
     }
@@ -27,6 +29,13 @@ public abstract class SharedArmorSystem : EntitySystem
     private void OnDamageModify(EntityUid uid, ArmorComponent component, InventoryRelayedEvent<DamageModifyEvent> args)
     {
         args.Args.Damage = DamageSpecifier.ApplyModifierSet(args.Args.Damage, component.Modifiers);
+    }
+
+    private void OnChangelingDevourAttempt(EntityUid uid, ArmorComponent component, InventoryRelayedEvent<ChangelingDevourAttemptEvent> args)
+    {
+        args.Args.Protection = component.Modifiers.Coefficients["Slash"] > args.Args.ProtectionThreshold
+                                || component.Modifiers.Coefficients["Blunt"] > args.Args.ProtectionThreshold
+                                || component.Modifiers.Coefficients["Piercing"] > args.Args.ProtectionThreshold;
     }
 
     private void OnBorgDamageModify(EntityUid uid, ArmorComponent component,
