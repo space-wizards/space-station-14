@@ -94,11 +94,16 @@ def get_last_changelog() -> str:
     most_recent = get_most_recent_workflow(session, github_repository, github_run)
     last_sha = most_recent["head_commit"]["id"]
     print(f"Last successful publish job was {most_recent['id']}: {last_sha}")
-    last_changelog_stream = get_last_changelog_by_sha(session, last_sha, github_repository)
+    last_changelog_stream = get_last_changelog_by_sha(
+        session, last_sha, github_repository
+    )
 
     return last_changelog_stream
 
-def get_last_changelog_by_sha(sess: requests.Session, sha: str, github_repository: str) -> str:
+
+def get_last_changelog_by_sha(
+    sess: requests.Session, sha: str, github_repository: str
+) -> str:
     """
     Use GitHub API to get the previous version of the changelog YAML (Actions builds are fetched with a shallow clone)
     """
@@ -143,6 +148,17 @@ def send_discord_webhook(content: str):
     response.raise_for_status()
 
 
+def format_entry_line(url: str, change: ChangelogEntry) -> str:
+    emoji = TYPES_TO_EMOJI.get(change["type"], "❓")
+    message = change["message"]
+    if url is not None:
+        line = f"{emoji} - {message} [PR]({url}) \n"
+    else:
+        line = f"{emoji} - {message}\n"
+
+    return line
+
+
 def send_entries(entries: Iterable[ChangelogEntry]) -> None:
     if not DISCORD_WEBHOOK_URL:
         print("No discord webhook URL found, skipping discord send")
@@ -159,14 +175,11 @@ def send_entries(entries: Iterable[ChangelogEntry]) -> None:
         group_content.write(f"**{name}** updated:\n")
 
         for entry in group:
+            url = entry.get("url")
+            if url and not url.strip():
+                url = None
             for change in entry["changes"]:
-                emoji = TYPES_TO_EMOJI.get(change["type"], "❓")
-                message = change["message"]
-                url = entry.get("url")
-                if url and url.strip():
-                    group_content.write(f"{emoji} - {message} [PR]({url}) \n")
-                else:
-                    group_content.write(f"{emoji} - {message}\n")
+                group_content.write(format_entry_line(url, change))
 
         group_text = group_content.getvalue()
         message_text = message_content.getvalue()
