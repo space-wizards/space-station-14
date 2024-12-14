@@ -14,6 +14,7 @@ using Content.Shared.Database;
 using Content.Shared.Mobs;
 using Content.Shared.Popups;
 using Content.Shared.Whitelist;
+using Content.Shared.Zombies;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Prototypes;
@@ -185,6 +186,9 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
     {
         if (args.NewMobState != MobState.Dead)
             return;
+
+        if (EntityManager.HasComponent<PendingZombieComponent>(args.Target))
+            return; // Keep your anomaly when becoming a zombie
 
         _anomaly.ChangeAnomalyHealth(ent, -2); //Shutdown it
     }
