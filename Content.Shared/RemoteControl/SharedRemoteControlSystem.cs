@@ -55,7 +55,10 @@ public abstract class SharedRemoteControlSystem : EntitySystem
 
     private void OnControllableInit(Entity<RemotelyControllableComponent> ent, ref ComponentInit args)
     {
-        _actions.AddAction(ent.Owner, ref ent.Comp.ReturnAction, ent.Comp.ReturnActionPrototype);
+        EntityUid? actionEnt = null;
+        _actions.AddAction(ent.Owner, ref actionEnt, ent.Comp.ReturnActionPrototype);
+        if (actionEnt != null)
+            ent.Comp.ReturnAction = actionEnt.Value;
     }
 
     private void OnControllableShutdown(Entity<RemotelyControllableComponent> ent, ref ComponentShutdown args)

@@ -61,6 +61,6 @@ public sealed partial class SpittableContainerComponent : Component
     [DataField, AutoNetworkedField]
     public string Storage = "storagebase";
 
-    public Container Container;
+    public Container Container = default!;
 }
 

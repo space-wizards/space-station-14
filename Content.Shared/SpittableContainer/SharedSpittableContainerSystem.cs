@@ -34,8 +34,8 @@ public abstract class SharedSpittableContainerSystem : EntitySystem
     {
         ent.Comp.Container = _containerSystem.EnsureContainer<Container>(ent, ent.Comp.Storage);
 
-        _actionsSystem.AddAction(ent, ref ent.Comp.SwallowActionEntity, ent.Comp.SwallowActionPrototype);
-        _actionsSystem.AddAction(ent, ref ent.Comp.SpitContainerActionEntity, ent.Comp.SpitContainerActionPrototype);
+        AddActionIfNeeded(ent.Owner, ref ent.Comp.SwallowActionEntity, ent.Comp.SwallowActionPrototype);
+        AddActionIfNeeded(ent.Owner, ref ent.Comp.SpitContainerActionEntity, ent.Comp.SpitContainerActionPrototype);
     }
 
     private void OnShutdown(Entity<SpittableContainerComponent> ent, ref ComponentShutdown args)
@@ -111,6 +111,17 @@ public abstract class SharedSpittableContainerSystem : EntitySystem
         _containerSystem.EmptyContainer(ent.Comp.Container);
 
         args.Handled = true;
+    }
+
+    private void AddActionIfNeeded(EntityUid ownerEntity, ref EntityUid? actionEntity, string? actionPrototype)
+    {
+        if (actionPrototype == null)
+            return;
+
+        EntityUid? actionUid = null;
+        _actionsSystem.AddAction(ownerEntity, ref actionUid, actionPrototype);
+        if (actionUid != null)
+            actionEntity = actionUid.Value;
     }
 }
 
