@@ -33,7 +33,7 @@ public partial class SharedGunSystem
     {
         slotEntity = null;
 
-        if (!Containers.TryGetContainingContainer(uid, out var container))
+        if (!Containers.TryGetContainingContainer((uid, null, null), out var container))
             return false;
         var user = container.Owner;
 
@@ -42,7 +42,7 @@ public partial class SharedGunSystem
 
         while (enumerator.NextItem(out var item))
         {
-            if (component.ProviderWhitelist == null || !component.ProviderWhitelist.IsValid(item, EntityManager))
+            if (_whitelistSystem.IsWhitelistFailOrNull(component.ProviderWhitelist, item))
                 continue;
 
             slotEntity = item;

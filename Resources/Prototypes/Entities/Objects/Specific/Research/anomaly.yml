@@ -9,11 +9,11 @@
     state: icon
   - type: ActivatableUI
     key: enum.AnomalyScannerUiKey.Key
-    closeOnHandDeselect: false
+    requireActiveHand: false
     inHandsOnly: true
   - type: UserInterface
     interfaces:
-      - key: enum.AnomalyScannerUiKey.Key
+      enum.AnomalyScannerUiKey.Key:
         type: AnomalyScannerBoundUserInterface
   - type: AnomalyScanner
   - type: GuideHelp
@@ -36,23 +36,23 @@
       - state: screen
         shader: unshaded
         visible: false
-        map: ["enum.PowerDeviceVisualLayers.Powered"]
+        map: ["enum.ToggleVisuals.Layer"]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.ProximityBeeperVisuals.Enabled:
-        enum.PowerDeviceVisualLayers.Powered:
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
           True: { visible: true }
           False: { visible: false }
+  - type: ItemToggle
   - type: ProximityBeeper
   - type: ProximityDetector
-    enabled: false
     range: 20
     criteria:
       components:
       - Anomaly
   - type: Beeper
-    enabled: false
+    isMuted: true
     minBeepInterval: 0.15
     maxBeepInterval: 1.00
     beepSound:
@@ -69,6 +69,7 @@
   - type: PowerCellDraw
     drawRate: 1
     useRate: 0
+  - type: ToggleCellDraw
 
 - type: entity
   id: AnomalyLocatorEmpty
@@ -102,6 +103,7 @@
   - type: PowerCellDraw
     drawRate: 1
     useRate: 0
+  - type: ToggleCellDraw
 
 - type: entity
   id: AnomalyLocatorWideEmpty
@@ -124,6 +126,9 @@
     state: icon
   - type: Item
     size: Large
+    storedSprite:
+      state: storage
+      sprite: Objects/Weapons/Melee/gorilla.rsi
   - type: MeleeWeapon
     attackRate: 0.5
     angle: 0
@@ -132,6 +137,8 @@
     damage:
       types:
         Blunt: 20
+    soundHit:
+      path: "/Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg"
   - type: CorePoweredThrower
   - type: MeleeThrowOnHit
     unanchorOnHit: true
@@ -148,3 +155,10 @@
   - type: ContainerContainer
     containers:
       core_slot: !type:ContainerSlot
+  - type: DamageOnAttackedProtection
+    damageProtection:
+      flatReductions:
+        Heat: 100
+        Cold: 100
+        Radiation: 100
+    slots: NONE

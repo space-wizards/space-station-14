@@ -1,3 +1,4 @@
+using Content.Shared.DoAfter;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
@@ -24,7 +25,7 @@ public sealed class SuitSensorStatus
     public bool IsAlive;
     public int? TotalDamage;
     public int? TotalDamageThreshold;
-    public float? DamagePercentage => TotalDamageThreshold == null || TotalDamage == null ? null : TotalDamage / TotalDamageThreshold;
+    public float? DamagePercentage => TotalDamageThreshold == null || TotalDamage == null ? null : TotalDamage / (float) TotalDamageThreshold;
     public NetCoordinates? Coordinates;
 }
 
@@ -66,4 +67,17 @@ public static class SuitSensorConstants
 
     ///Used by the CrewMonitoringServerSystem to send the status of all connected suit sensors to each crew monitor
     public const string NET_STATUS_COLLECTION = "suit-status-collection";
+}
+
+[Serializable, NetSerializable]
+public sealed partial class SuitSensorChangeDoAfterEvent : DoAfterEvent
+{
+    public SuitSensorMode Mode { get; private set; } = SuitSensorMode.SensorOff;
+
+    public SuitSensorChangeDoAfterEvent(SuitSensorMode mode)
+    {
+        Mode = mode;
+    }
+
+    public override DoAfterEvent Clone() => this;
 }

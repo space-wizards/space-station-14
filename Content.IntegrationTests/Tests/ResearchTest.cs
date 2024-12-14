@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Lathe;
 using Content.Shared.Research.Prototypes;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests;
@@ -52,6 +53,7 @@ public sealed class ResearchTest
         var server = pair.Server;
 
         var protoManager = server.ResolveDependency<IPrototypeManager>();
+        var compFact = server.ResolveDependency<IComponentFactory>();
 
         await server.WaitAssertion(() =>
         {
@@ -65,7 +67,7 @@ public sealed class ResearchTest
                 if (pair.IsTestPrototype(proto))
                     continue;
 
-                if (!proto.TryGetComponent<LatheComponent>(out var lathe))
+                if (!proto.TryGetComponent<LatheComponent>(out var lathe, compFact))
                     continue;
                 allLathes.Add(lathe);
             }
@@ -92,6 +94,26 @@ public sealed class ResearchTest
                     }
                 }
             });
+        });
+
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task AllLatheRecipesValidTest()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+
+        var server = pair.Server;
+        var proto = server.ResolveDependency<IPrototypeManager>();
+
+        Assert.Multiple(() =>
+        {
+            foreach (var recipe in proto.EnumeratePrototypes<LatheRecipePrototype>())
+            {
+                if (recipe.Result == null)
+                    Assert.That(recipe.ResultReagents, Is.Not.Null, $"Recipe '{recipe.ID}' has no result or result reagents.");
+            }
         });
 
         await pair.CleanReturnAsync();

@@ -884,3 +884,39 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+
+- type: construction
+  id: NoticeBoard
+  name: notice board
+  description: Wooden notice board, can store paper inside itself.
+  graph: NoticeBoard
+  startNode: start
+  targetNode: noticeBoard
+  category: construction-category-furniture
+  icon:
+    sprite: Structures/Wallmounts/noticeboard.rsi
+    state: noticeboard
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: true
+  conditions:
+    - !type:WallmountCondition
+
+- type: construction
+  id: Mannequin
+  name: mannequin
+  description: Wooden mannequin designed for clothing displaying
+  graph: Mannequin
+  startNode: start
+  targetNode: mannequin
+  category: construction-category-furniture
+  icon:
+    sprite: Structures/Decoration/mannequin.rsi
+    state: mannequin
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked

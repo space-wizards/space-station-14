@@ -19,7 +19,7 @@ public sealed partial class MindTests
         await using var pair = await PoolManager.GetServerClient(settings);
 
         // Client is connected with a valid entity & mind
-        Assert.That(pair.Client.EntMan.EntityExists(pair.Client.Player?.ControlledEntity));
+        Assert.That(pair.Client.EntMan.EntityExists(pair.Client.AttachedEntity));
         Assert.That(pair.Server.EntMan.EntityExists(pair.PlayerData?.Mind));
 
         // Delete **everything**
@@ -28,6 +28,12 @@ public sealed partial class MindTests
         await pair.RunTicksSync(5);
 
         Assert.That(pair.Server.EntMan.EntityCount, Is.EqualTo(0));
+
+        foreach (var ent in pair.Client.EntMan.GetEntities())
+        {
+            Console.WriteLine(pair.Client.EntMan.ToPrettyString(ent));
+        }
+
         Assert.That(pair.Client.EntMan.EntityCount, Is.EqualTo(0));
 
         // Create a new map.
@@ -36,7 +42,7 @@ public sealed partial class MindTests
         await pair.RunTicksSync(5);
 
         // Client is not attached to anything
-        Assert.That(pair.Client.Player?.ControlledEntity, Is.Null);
+        Assert.That(pair.Client.AttachedEntity, Is.Null);
         Assert.That(pair.PlayerData?.Mind, Is.Null);
 
         // Attempt to ghost
@@ -45,9 +51,9 @@ public sealed partial class MindTests
         await pair.RunTicksSync(10);
 
         // Client should be attached to a ghost placed on the new map.
-        Assert.That(pair.Client.EntMan.EntityExists(pair.Client.Player?.ControlledEntity));
+        Assert.That(pair.Client.EntMan.EntityExists(pair.Client.AttachedEntity));
         Assert.That(pair.Server.EntMan.EntityExists(pair.PlayerData?.Mind));
-        var xform = pair.Client.Transform(pair.Client.Player!.ControlledEntity!.Value);
+        var xform = pair.Client.Transform(pair.Client.AttachedEntity!.Value);
         Assert.That(xform.MapID, Is.EqualTo(new MapId(mapId)));
 
         await pair.CleanReturnAsync();

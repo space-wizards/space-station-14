@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: GasPipeBase
   abstract: true
   id: GasBinaryBase
@@ -31,6 +31,14 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: ExtensionCableReceiver
+  - type: LightningTarget
+    priority: 1
+  - type: ApcPowerReceiver
+    powerLoad: 200
+  - type: Rotatable
+  - type: Transform
+    noRot: false
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/pump.rsi
     layers:
@@ -49,9 +57,12 @@
   - type: PipeColorVisuals
   - type: GasPressurePump
     enabled: false
+  - type: ActivatableUI
+    key: enum.GasPressurePumpUiKey.Key
+  - type: ActivatableUIRequiresAnchor
   - type: UserInterface
     interfaces:
-      - key: enum.GasPressurePumpUiKey.Key
+      enum.GasPressurePumpUiKey.Key:
         type: GasPressurePumpBoundUserInterface
   - type: Construction
     graph: GasBinary
@@ -71,6 +82,14 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: ExtensionCableReceiver
+    - type: LightningTarget
+      priority: 1
+    - type: ApcPowerReceiver
+      powerLoad: 200
+    - type: Rotatable
+    - type: Transform
+      noRot: false
     - type: Sprite
       sprite: Structures/Piping/Atmospherics/pump.rsi
       layers:
@@ -92,7 +111,7 @@
       enabled: false
     - type: UserInterface
       interfaces:
-        - key: enum.GasVolumePumpUiKey.Key
+        enum.GasVolumePumpUiKey.Key:
           type: GasVolumePumpBoundUserInterface
     - type: Construction
       graph: GasBinary
@@ -197,6 +216,7 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: StationAiWhitelist
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/pump.rsi
     layers:
@@ -301,6 +321,7 @@
             In: { state: vent_in }
             Out: { state: vent_out }
             Welded: { state: vent_welded }
+            Lockout: { state: vent_lockout }
     - type: PipeColorVisuals
     - type: GasVentPump
       inlet: inlet
@@ -358,6 +379,7 @@
   - type: PipeColorVisuals
   - type: Rotatable
   - type: GasRecycler
+  - type: PipeRestrictOverlap
   - type: NodeContainer
     nodes:
       inlet:

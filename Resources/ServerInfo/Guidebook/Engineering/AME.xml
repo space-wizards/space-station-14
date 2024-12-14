@@ -1,26 +1,25 @@
 <Document>
-# Antimatter Engine (AME)
+  # Antimatter Engine (AME)
 
-The AME is one of the simplest engines available. You put together the multi-tile structure, stick some fuel into it, and you're all set. This doesn't mean it isn't potentially dangerous with overheating though.
+  The AME is one of the simplest engines available. You put together the multi-tile structure, stick some fuel into it, and you're all set. This doesn't mean it is perfectly safe though; you may need to deal with the AME overheating.
 
-## Construction
-<Box>Required parts:</Box>
-<Box>
-<GuideEntityEmbed Entity="AmeController"/>
-<GuideEntityEmbed Entity="AmePartFlatpack"/>
-<GuideEntityEmbed Entity="AmeJar"/>
-</Box>
+  ## Construction
+  <Box>Required parts:</Box>
+  <Box>
+  <GuideEntityEmbed Entity="AmeController"/>
+  <GuideEntityEmbed Entity="AmePartFlatpack"/>
+  <GuideEntityEmbed Entity="AmeJar"/>
+  </Box>
 
-To assemble an AME, start by wrenching down the controller on the far end of a HV wire. On most stations, there's catwalks to assist with this. From there, start putting down a 3x3 or larger square of AME parts in preparation for construction, making sure to maximize the number of "center" pieces that are surrounded on all 8 sides.
+  To assemble an AME, start by wrenching down the controller on the near end of a HV wire. On most stations, there's catwalks to assist with this. From there, start putting down a 3x3 or larger square of AME parts in preparation for construction, making sure to maximize the number of "center" pieces that are surrounded on all 8 sides.
 
-Once this is done, you can use a multitool to convert each AME part into shielding, which should form a finished AME configuration. From there, insert a fuel jar, set the fuel rate to [color=#a4885c]twice the core count or less[/color], and turn on injection.
+  Once this is done, you can use a multitool to convert each AME part into shielding, which should form a finished AME configuration. From there, insert a fuel jar, set the fuel rate to [color=#a4885c]twice the core count or less[/color], and turn on injection. Any more than this ratio will eventually result in the engine [color=#ff0000]overheating and[/color], shortly afterwards, [color=#ff0000]exploding[/color].
 
-## Fuel Economy
-The closer you are to the perfect ratio of [color=#a4885c]1:2[/color] (1 AME core to 2 fuel rate) the more efficient you'll be. You're cutting fuel efficiency to [color=#a4885c]50% and less[/color] if you're using more cores, but less fuel injection rate.
-For an example [color=#76db91]3 core and 6 fuel rate[/color] will generate [color=#76db91]240kW[/color], while [color=#f0684d]8 core 8 fuel rate[/color] will generate [color=#f0684d]160kW[/color]. Generating 80kW less while spending 2 more fuel each injection.
+  ## Fuel Economy
+  The closer you are to the perfect ratio of [color=#a4885c]1:2[/color] AME cores to fuel injection rate, the more efficient you'll be. You're cutting fuel efficiency to [color=#a4885c]50% and less[/color] if you're using more cores, but a lower fuel injection rate.
+  For an example, [color=#76db91]3 cores and 6 fuel injected[/color] will generate [color=#76db91]240kW[/color], while  [color=#f0684d]8 cores and 8 fuel injected[/color] will generate [color=#f0684d]160kW[/color]; you'd be generating 80kW less while spending 2 more fuel per injection.
 
-## Upgrading the AME
+  ## Upgrading the AME
 
-You can generally only upgrade the AME by getting more cores, which can be done by ordering more AME packages from [color=#a4885c]cargo[/color].
-
+  You can generally only upgrade the AME by installing more cores, which can be done by ordering more AME flatpacks from [color=#a4885c]Cargo[/color].
 </Document>

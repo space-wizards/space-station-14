@@ -15,7 +15,8 @@ news-write-ui-articles-label = Articles:
 news-write-ui-delete-text = Delete
 news-write-ui-publish-text = Publish
 news-write-ui-create-text = Create
-news-write-ui-cancel-text = Cancel
+news-write-ui-cancel-text = Clear
+news-write-ui-save-text = Save
 news-write-ui-preview-text = Preview
 news-write-ui-article-count-0 = 0 Articles
 news-write-ui-article-count-text = {$count} Articles
@@ -34,3 +35,4 @@ news-write-ui-richtext-tooltip = News articles support rich text
     {"[bullet/]bullet[/color]"}
 
 news-pda-notification-header = New news article
+news-publish-admin-announcement = {$actor} published news article {$title} by {$author}

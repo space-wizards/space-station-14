@@ -10,7 +10,7 @@ public sealed partial class SalvageDungeonModPrototype : IPrototype, IBiomeSpeci
 {
     [IdDataField] public string ID { get; } = default!;
 
-    [DataField("desc")] public string Description { get; private set; } = string.Empty;
+    [DataField("desc")] public LocId Description { get; private set; } = string.Empty;
 
     /// <inheridoc/>
     [DataField("cost")]
@@ -23,6 +23,6 @@ public sealed partial class SalvageDungeonModPrototype : IPrototype, IBiomeSpeci
     /// <summary>
     /// The config to use for spawning the dungeon.
     /// </summary>
-    [DataField("proto", customTypeSerializer: typeof(PrototypeIdSerializer<DungeonConfigPrototype>), required: true)]
-    public string Proto = string.Empty;
+    [DataField(required: true)]
+    public ProtoId<DungeonConfigPrototype> Proto = string.Empty;
 }

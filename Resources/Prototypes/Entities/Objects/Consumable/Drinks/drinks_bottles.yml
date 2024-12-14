@@ -3,6 +3,7 @@
   parent: DrinkBase
   id: DrinkBottlePlasticBaseFull
   abstract: true
+  suffix: Full
   components:
   - type: Tag
     tags:
@@ -38,6 +39,10 @@
   - type: PhysicalComposition
     materialComposition:
       Plastic: 100
+  - type: DnaSubstanceTrace
+  - type: PressurizedSolution
+    solution: drink
+  - type: Shakeable
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
@@ -76,7 +81,7 @@
   - type: Tool
     qualities:
     - Rolling
-    speed: 0.75 # not as good as a rolling pin but does the job
+    speedModifier: 0.75 # not as good as a rolling pin but does the job
   - type: PhysicalComposition
     materialComposition:
       Glass: 100
@@ -206,7 +211,7 @@
         - ReagentId: Cognac
           Quantity: 100
   - type: Label
-    currentLabel: cognac
+    currentLabel: reagent-name-cognac
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cognacbottle.rsi
   - type: Sealable
@@ -224,7 +229,7 @@
         - ReagentId: Cola
           Quantity: 100
   - type: Label
-    currentLabel: cola
+    currentLabel: reagent-name-cola
   - type: Sprite
     sprite: Objects/Consumable/Drinks/colabottle.rsi
   - type: Sealable
@@ -262,7 +267,7 @@
         - ReagentId: Gin
           Quantity: 100
   - type: Label
-    currentLabel: gin
+    currentLabel: reagent-name-gin
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ginbottle.rsi
   - type: Sealable
@@ -296,7 +301,7 @@
         - ReagentId: CoffeeLiqueur
           Quantity: 100
   - type: Label
-    currentLabel: coffee liqueur
+    currentLabel: reagent-name-coffeeliqueur
   - type: Sprite
     sprite: Objects/Consumable/Drinks/coffeeliqueurbottle.rsi
   - type: Sealable
@@ -358,6 +363,7 @@
   - type: Tag
     tags:
     - Wine
+    - DrinkBottle
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
@@ -372,7 +378,7 @@
         - ReagentId: Rum
           Quantity: 100
   - type: Label
-    currentLabel: rum
+    currentLabel: reagent-name-rum
   - type: Sprite
     sprite: Objects/Consumable/Drinks/rumbottle.rsi
   - type: Sealable
@@ -391,7 +397,7 @@
           Quantity: 100
   - type: Drink
   - type: Label
-    currentLabel: space mountain wind
+    currentLabel: reagent-name-space-mountain-wind
   - type: Sprite
     sprite: Objects/Consumable/Drinks/space_mountain_wind_bottle.rsi
   - type: Sealable
@@ -410,7 +416,7 @@
           Quantity: 100
   - type: Drink
   - type: Label
-    currentLabel: space-up
+    currentLabel: reagent-name-space-up
   - type: Sprite
     sprite: Objects/Consumable/Drinks/space-up_bottle.rsi
   - type: Sealable
@@ -428,7 +434,7 @@
         - ReagentId: Tequila
           Quantity: 100
   - type: Label
-    currentLabel: tequila
+    currentLabel: reagent-name-tequila
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tequillabottle.rsi
   - type: Sealable
@@ -446,7 +452,7 @@
         - ReagentId: Vermouth
           Quantity: 100
   - type: Label
-    currentLabel: vermouth
+    currentLabel: reagent-name-vermouth
   - type: Sprite
     sprite: Objects/Consumable/Drinks/vermouthbottle.rsi
   - type: Sealable
@@ -464,7 +470,7 @@
         - ReagentId: Vodka
           Quantity: 100
   - type: Label
-    currentLabel: vodka
+    currentLabel: reagent-name-vodka
   - type: Sprite
     sprite: Objects/Consumable/Drinks/vodkabottle.rsi
   - type: Sealable
@@ -482,7 +488,7 @@
         - ReagentId: Whiskey
           Quantity: 100
   - type: Label
-    currentLabel: whiskey
+    currentLabel: reagent-name-whiskey
   - type: Sprite
     sprite: Objects/Consumable/Drinks/whiskeybottle.rsi
   - type: Sealable
@@ -500,13 +506,14 @@
         - ReagentId: Wine
           Quantity: 100
   - type: Label
-    currentLabel: wine
+    currentLabel: reagent-name-wine
   - type: Sprite
     sprite: Objects/Consumable/Drinks/winebottle.rsi
   - type: Sealable
   - type: Tag
     tags:
     - Wine
+    - DrinkBottle
 
 # Small Bottles
 
@@ -532,6 +539,7 @@
   - type: Tag
     tags:
     - Beer
+    - DrinkBottle
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottleGlassBaseFull]
@@ -547,7 +555,7 @@
         - ReagentId: Beer
           Quantity: 150
   - type: Label
-    currentLabel: beer
+    currentLabel: reagent-name-beer
   - type: Sprite
     sprite: Objects/Consumable/Drinks/beer.rsi
   - type: Openable
@@ -555,7 +563,7 @@
   - type: Tag
     tags:
     - Beer
-
+    - DrinkBottle
 
 - type: entity
   parent: [DrinkBottleVisualsAll, DrinkBottlePlasticBaseFull]
@@ -591,7 +599,7 @@
         - ReagentId: Ale
           Quantity: 150
   - type: Label
-    currentLabel: ale
+    currentLabel: reagent-name-ale
   - type: Sprite
     sprite: Objects/Consumable/Drinks/alebottle.rsi
   - type: Openable
@@ -643,7 +651,7 @@
         - ReagentId: SodaWater
           Quantity: 150
   - type: Label
-    currentLabel: soda water
+    currentLabel: reagent-name-soda-water
 
 - type: entity
   parent: DrinkWaterBottleFull
@@ -659,7 +667,7 @@
         - ReagentId: TonicWater
           Quantity: 150
   - type: Label
-    currentLabel: tonic water
+    currentLabel: reagent-name-tonic-water
 
 - type: entity
   parent: [DrinkBottleVisualsOpenable, DrinkBottleGlassBaseFull]
@@ -674,7 +682,7 @@
         - ReagentId: Sake
           Quantity: 50
   - type: Label
-    currentLabel: Sake
+    currentLabel: reagent-name-sake
   - type: Sprite
     sprite: Objects/Consumable/Drinks/sakebottle.rsi
   - type: Sealable
@@ -696,7 +704,7 @@
           Quantity: 150
   - type: Drink
   - type: Label
-    currentLabel: lime juice
+    currentLabel: reagent-name-juice-lime
   - type: Sprite
     sprite: Objects/Consumable/Drinks/limejuice.rsi
 
@@ -715,14 +723,14 @@
           Quantity: 150
   - type: Drink
   - type: Label
-    currentLabel: orange juice
+    currentLabel: reagent-name-juice-orange
   - type: Sprite
     sprite: Objects/Consumable/Drinks/orangejuice.rsi
 
 - type: entity
   parent: [DrinkBottleVisualsOpenable, DrinkBottlePlasticBaseFull]
   id: DrinkCreamCartonXL
-  name: Milk Cream XL
+  name: milk cream XL
   description: It's cream. Made from milk. What else did you think you'd find in there?
   components:
   - type: SolutionContainerManager
@@ -734,7 +742,7 @@
           Quantity: 150
   - type: Drink
   - type: Label
-    currentLabel: cream
+    currentLabel: reagent-name-cream
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cream.rsi
 
@@ -744,8 +752,8 @@
   parent: DrinkBottlePlasticBaseFull
   id: DrinkSugarJug
   name: sugar jug
-  suffix: for drinks
-  description: some people put this in their coffee...
+  suffix: For Drinks, Full
+  description: Some people put this in their coffee...
   components:
   - type: SolutionContainerManager
     solutions:
@@ -760,7 +768,7 @@
   parent: DrinkBottlePlasticBaseFull
   id: DrinkLemonLimeJug
   name: lemon lime jug
-  description: a dual citrus sensation.
+  description: A dual citrus sensation.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -771,13 +779,13 @@
           Quantity: 300
   - type: Drink
   - type: Label
-    currentLabel: lemon-lime
+    currentLabel: reagent-name-lemon-lime
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
   id: DrinkMeadJug
   name: mead jug
-  description: storing mead in a plastic jug should be a crime.
+  description: Storing mead in a plastic jug should be a crime.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -788,13 +796,13 @@
           Quantity: 150
   - type: Drink
   - type: Label
-    currentLabel: mead
+    currentLabel: reagent-name-mead
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
   id: DrinkIceJug
   name: ice jug
-  description: stubborn water. pretty cool.
+  description: Stubborn water. Pretty cool.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -805,7 +813,7 @@
           Quantity: 300
   - type: Drink
   - type: Label
-    currentLabel: ice
+    currentLabel: reagent-name-ice
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
@@ -822,13 +830,13 @@
           Quantity: 300
   - type: Drink
   - type: Label
-    currentLabel: coconut water
+    currentLabel: reagent-name-coconut-water
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
   id: DrinkCoffeeJug
   name: coffee jug
-  description: wake up juice, of the heated kind.
+  description: Wake up juice, of the heated kind.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -839,13 +847,13 @@
           Quantity: 300
   - type: Drink
   - type: Label
-    currentLabel: coffee
+    currentLabel: reagent-name-coffee
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
   id: DrinkTeaJug
   name: tea jug
-  description: the drink of choice for the Bri'ish and hipsters.
+  description: The drink of choice for the Bri'ish and hipsters.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -856,13 +864,13 @@
           Quantity: 300
   - type: Drink
   - type: Label
-    currentLabel: tea
+    currentLabel: reagent-name-tea
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
   id: DrinkGreenTeaJug
   name: green tea jug
-  description: its like tea... but green! great for settling the stomach.
+  description: It's like tea... but green! great for settling the stomach.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -873,13 +881,13 @@
           Quantity: 300
   - type: Drink
   - type: Label
-    currentLabel: green tea
+    currentLabel: reagent-name-green-tea
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
   id: DrinkIcedTeaJug
   name: iced tea jug
-  description: for when the regular tea is too hot for you boohoo
+  description: For when the regular tea is too hot for you boohoo.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -889,12 +897,14 @@
         - ReagentId: IcedTea
           Quantity: 300
   - type: Drink
+  - type: Label
+    currentLabel: reagent-name-iced-tea
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
   id: DrinkDrGibbJug
   name: dr gibb. jug
-  description: yeah I don't know either...
+  description: Yeah I don't know either...
   components:
   - type: SolutionContainerManager
     solutions:
@@ -905,13 +915,13 @@
           Quantity: 300
   - type: Drink
   - type: Label
-    currentLabel: dr gibb
+    currentLabel: reagent-name-dr-gibb
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
   id: DrinkRootBeerJug
   name: root beer jug
-  description: this drink makes Australians giggle
+  description: This drink makes Australians giggle.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -922,13 +932,13 @@
           Quantity: 300
   - type: Drink
   - type: Label
-    currentLabel: root beer
+    currentLabel: reagent-name-root-beer
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull
   id: DrinkWaterMelonJuiceJug
   name: watermelon juice jug
-  description: May include leftover seeds
+  description: May include leftover seeds.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -939,7 +949,7 @@
           Quantity: 300
   - type: Drink
   - type: Label
-    currentLabel: watermelon juice
+    currentLabel: reagent-name-juice-watermelon
 
 - type: entity
   parent: DrinkBottlePlasticBaseFull

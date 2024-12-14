@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/eea0599511b088fdab9d43e562210cdbd51c6a98, storage and red-storage by Flareguy",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/eea0599511b088fdab9d43e562210cdbd51c6a98, cover is edited by Ubaser.",
   "size": {
     "x": 32,
     "y": 32
@@ -16,32 +16,41 @@
       "directions": 4
     },
     {
-      "name": "red-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "red-inhand-right",
-      "directions": 4
-    },
-    {
       "name": "icon"
-    },
-    {
-      "name": "red-icon"
     },
     {
       "name": "equipped-BELT",
       "directions": 4
     },
     {
-      "name": "red-equipped-BELT",
-      "directions": 4
-    },
-    {
       "name": "storage"
     },
     {
+      "name": "cover-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "cover-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "cover-icon"
+    },
+    {
+      "name": "cover-equipped-BELT",
+      "directions": 4
+    },
+    {
       "name": "red-storage"
+    },
+    {
+      "name": "green-storage"
+    },
+    {
+      "name": "orange-storage"
+    },
+    {
+      "name": "yellow-storage"
     }
   ]
 }

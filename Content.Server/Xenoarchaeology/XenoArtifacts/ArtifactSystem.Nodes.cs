@@ -1,15 +1,16 @@
 using System.Linq;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
+using Content.Shared.Whitelist;
 using Content.Shared.Xenoarchaeology.XenoArtifacts;
 using JetBrains.Annotations;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts;
 
 public sealed partial class ArtifactSystem
 {
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
+
     private const int MaxEdgesPerNode = 4;
 
     private readonly HashSet<int> _usedNodeIds = new();
@@ -19,26 +20,46 @@ public sealed partial class ArtifactSystem
     /// </summary>
     /// <param name="artifact"></param>
     /// <param name="allNodes"></param>
-    /// <param name="nodeAmount">The amount of nodes it has.</param>
-    private void GenerateArtifactNodeTree(EntityUid artifact, ref List<ArtifactNode> allNodes, int nodeAmount)
+    /// <param name="nodesToCreate">The amount of nodes it has.</param>
+    private void GenerateArtifactNodeTree(EntityUid artifact, List<ArtifactNode> allNodes, int nodesToCreate)
     {
-        if (nodeAmount < 1)
+        if (nodesToCreate < 1)
         {
-            Log.Error($"nodeAmount {nodeAmount} is less than 1. Aborting artifact tree generation.");
+            Log.Error($"nodesToCreate {nodesToCreate} is less than 1. Aborting artifact tree generation.");
             return;
         }
 
         _usedNodeIds.Clear();
 
+        var uninitializedNodes = new List<ArtifactNode> { new(){ Id = GetValidNodeId() } };
+        var createdNodes = 1;
 
-        var rootNode = new ArtifactNode
+        while (uninitializedNodes.Count > 0)
         {
-            Id = GetValidNodeId()
-        };
-        var uninitializedNodes = new List<ArtifactNode> { rootNode };
-        while (uninitializedNodes.Any())
-        {
-            GenerateNode(artifact, ref uninitializedNodes, ref allNodes, nodeAmount);
+            var node = uninitializedNodes[0];
+            uninitializedNodes.Remove(node);
+
+            node.Trigger = GetRandomTrigger(artifact, ref node);
+            node.Effect = GetRandomEffect(artifact, ref node);
+
+            var maxChildren = _random.Next(1, MaxEdgesPerNode - 1);
+
+            for (var i = 0; i < maxChildren; i++)
+            {
+                if (nodesToCreate <= createdNodes)
+                {
+                    break;
+                }
+
+                var child = new ArtifactNode {Id = GetValidNodeId(), Depth = node.Depth + 1};
+                node.Edges.Add(child.Id);
+                child.Edges.Add(node.Id);
+
+                uninitializedNodes.Add(child);
+                createdNodes++;
+            }
+
+            allNodes.Add(node);
         }
     }
 
@@ -51,44 +72,8 @@ public sealed partial class ArtifactSystem
         }
 
         _usedNodeIds.Add(id);
+
         return id;
-    }
-
-    /// <summary>
-    /// Generate an individual node on the tree.
-    /// </summary>
-    private void GenerateNode(EntityUid artifact, ref List<ArtifactNode> uninitializedNodes, ref List<ArtifactNode> allNodes, int targetNodeAmount)
-    {
-        if (!uninitializedNodes.Any())
-            return;
-
-        var node = uninitializedNodes.First();
-        uninitializedNodes.Remove(node);
-
-        //Generate the connected nodes
-        var maxEdges = Math.Max(1, targetNodeAmount - allNodes.Count - uninitializedNodes.Count - 1);
-        maxEdges = Math.Min(maxEdges, MaxEdgesPerNode);
-        var minEdges = Math.Clamp(targetNodeAmount - allNodes.Count - uninitializedNodes.Count - 1, 0, 1);
-
-        var edgeAmount = _random.Next(minEdges, maxEdges);
-
-        for (var i = 0; i < edgeAmount; i++)
-        {
-            var neighbor = new ArtifactNode
-            {
-                Depth = node.Depth + 1,
-                Id = GetValidNodeId()
-            };
-            node.Edges.Add(neighbor.Id);
-            neighbor.Edges.Add(node.Id);
-
-            uninitializedNodes.Add(neighbor);
-        }
-
-        node.Trigger = GetRandomTrigger(artifact, ref node);
-        node.Effect = GetRandomEffect(artifact, ref node);
-
-        allNodes.Add(node);
     }
 
     //yeah these two functions are near duplicates but i don't
@@ -97,7 +82,8 @@ public sealed partial class ArtifactSystem
     private string GetRandomTrigger(EntityUid artifact, ref ArtifactNode node)
     {
         var allTriggers = _prototype.EnumeratePrototypes<ArtifactTriggerPrototype>()
-            .Where(x => (x.Whitelist?.IsValid(artifact, EntityManager) ?? true) && (!x.Blacklist?.IsValid(artifact, EntityManager) ?? true)).ToList();
+            .Where(x => _whitelistSystem.IsWhitelistPassOrNull(x.Whitelist, artifact) &&
+            _whitelistSystem.IsBlacklistFailOrNull(x.Blacklist, artifact)).ToList();
         var validDepth = allTriggers.Select(x => x.TargetDepth).Distinct().ToList();
 
         var weights = GetDepthWeights(validDepth, node.Depth);
@@ -111,7 +97,8 @@ public sealed partial class ArtifactSystem
     private string GetRandomEffect(EntityUid artifact, ref ArtifactNode node)
     {
         var allEffects = _prototype.EnumeratePrototypes<ArtifactEffectPrototype>()
-            .Where(x => (x.Whitelist?.IsValid(artifact, EntityManager) ?? true) && (!x.Blacklist?.IsValid(artifact, EntityManager) ?? true)).ToList();
+            .Where(x => _whitelistSystem.IsWhitelistPassOrNull(x.Whitelist, artifact) &&
+            _whitelistSystem.IsBlacklistFailOrNull(x.Blacklist, artifact)).ToList();
         var validDepth = allEffects.Select(x => x.TargetDepth).Distinct().ToList();
 
         var weights = GetDepthWeights(validDepth, node.Depth);
@@ -159,6 +146,7 @@ public sealed partial class ArtifactSystem
                 return key;
             }
         }
+
         return _random.Pick(weights.Keys); //shouldn't happen
     }
 
@@ -194,13 +182,12 @@ public sealed partial class ArtifactSystem
                 EntityManager.RemoveComponent(uid, reg.Type);
             }
 
-            var comp = (Component) _componentFactory.GetComponent(reg);
-            comp.Owner = uid;
+            var comp = (Component)_componentFactory.GetComponent(reg);
 
-            var temp = (object) comp;
+            var temp = (object)comp;
             _serialization.CopyTo(entry.Component, ref temp);
             EntityManager.RemoveComponent(uid, temp!.GetType());
-            EntityManager.AddComponent(uid, (Component) temp!);
+            EntityManager.AddComponent(uid, (Component)temp!);
         }
 
         node.Discovered = true;
@@ -230,12 +217,11 @@ public sealed partial class ArtifactSystem
             // if the entity prototype contained the component originally
             if (entityPrototype?.Components.TryGetComponent(name, out var entry) ?? false)
             {
-                var comp = (Component) _componentFactory.GetComponent(name);
-                comp.Owner = uid;
-                var temp = (object) comp;
+                var comp = (Component)_componentFactory.GetComponent(name);
+                var temp = (object)comp;
                 _serialization.CopyTo(entry, ref temp);
                 EntityManager.RemoveComponent(uid, temp!.GetType());
-                EntityManager.AddComponent(uid, (Component) temp);
+                EntityManager.AddComponent(uid, (Component)temp);
                 continue;
             }
 

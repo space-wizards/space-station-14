@@ -15,6 +15,7 @@ public sealed class JetpackSystem : SharedJetpackSystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ClothingSystem _clothing = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedMapSystem _mapSystem = default!;
 
     public override void Initialize()
     {
@@ -63,21 +64,21 @@ public sealed class JetpackSystem : SharedJetpackSystem
 
     private void CreateParticles(EntityUid uid)
     {
+        var uidXform = Transform(uid);
         // Don't show particles unless the user is moving.
-        if (Container.TryGetContainingContainer(uid, out var container) &&
+        if (Container.TryGetContainingContainer((uid, uidXform, null), out var container) &&
             TryComp<PhysicsComponent>(container.Owner, out var body) &&
             body.LinearVelocity.LengthSquared() < 1f)
         {
             return;
         }
 
-        var uidXform = Transform(uid);
         var coordinates = uidXform.Coordinates;
-        var gridUid = coordinates.GetGridUid(EntityManager);
+        var gridUid = _transform.GetGrid(coordinates);
 
         if (TryComp<MapGridComponent>(gridUid, out var grid))
         {
-            coordinates = new EntityCoordinates(gridUid.Value, grid.WorldToLocal(coordinates.ToMapPos(EntityManager, _transform)));
+            coordinates = new EntityCoordinates(gridUid.Value, _mapSystem.WorldToLocal(gridUid.Value, grid, _transform.ToMapCoordinates(coordinates).Position));
         }
         else if (uidXform.MapUid != null)
         {

@@ -6,6 +6,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Shared.Verbs;
+using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
@@ -30,6 +31,7 @@ public abstract partial class SharedFultonSystem : EntitySystem
     [Dependency] private   readonly SharedPopupSystem _popup = default!;
     [Dependency] private   readonly SharedStackSystem _stack = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     [ValidatePrototypeId<EntityPrototype>] public const string EffectProto = "FultonEffect";
     protected static readonly Vector2 EffectOffset = Vector2.Zero;
@@ -151,7 +153,6 @@ public abstract partial class SharedFultonSystem : EntitySystem
         _doAfter.TryStartDoAfter(
             new DoAfterArgs(EntityManager, args.User, component.ApplyFultonDuration, ev, args.Target, args.Target, args.Used)
             {
-                CancelDuplicate = true,
                 MovementThreshold = 0.5f,
                 BreakOnMove = true,
                 Broadcast = true,
@@ -176,7 +177,7 @@ public abstract partial class SharedFultonSystem : EntitySystem
         if (!CanFulton(targetUid))
             return false;
 
-        if (component.Whitelist?.IsValid(targetUid, EntityManager) != true)
+        if (_whitelistSystem.IsWhitelistFailOrNull(component.Whitelist, targetUid))
             return false;
 
         return true;

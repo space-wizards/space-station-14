@@ -35,7 +35,6 @@ admin-notes-message-seen = Seen
 admin-notes-banned-from = Banned from
 admin-notes-the-server = the server
 admin-notes-permanently = permanently
-admin-notes-for = for {$player}
 admin-notes-days = {$days} days
 admin-notes-hours = {$hours} hours
 admin-notes-minutes = {$minutes} minutes
@@ -58,12 +57,22 @@ admin-note-editor-severity-medium = Medium
 admin-note-editor-severity-high = High
 admin-note-editor-expiry-checkbox = Permanent?
 admin-note-editor-expiry-checkbox-tooltip = Check this to make it expire
-admin-note-editor-expiry-label = Expires on:
+admin-note-editor-expiry-label = Expires in:
 admin-note-editor-expiry-label-params = Expires on: {$date} (in {$expiresIn})
 admin-note-editor-expiry-label-expired = Expired
-admin-note-editor-expiry-placeholder = Enter expiration date (yyyy-MM-dd HH:mm:ss)
+admin-note-editor-expiry-placeholder = Enter expiration time (integer).
 admin-note-editor-submit = Submit
 admin-note-editor-submit-confirm = Are you sure?
+
+# Time
+admin-note-button-minutes = Minutes
+admin-note-button-hours = Hours
+admin-note-button-days = Days
+admin-note-button-weeks = Weeks
+admin-note-button-months = Months
+admin-note-button-years = Years
+admin-note-button-centuries = Centuries
+
 
 # Verb
 admin-notes-verb-text = Open Admin Notes

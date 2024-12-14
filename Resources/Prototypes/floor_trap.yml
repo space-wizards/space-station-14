@@ -1,0 +1,116 @@
+- type: entity
+  id: CollideFloorTrap
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      sprite: Tiles/Misc/floortrap.rsi
+      state: floortrap
+    - type: Fixtures
+      fixtures:
+        floortrap:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.4,-0.4,0.4,0.4"
+          hard: false
+          mask:
+            - ItemMask
+          layer:
+            - SlipLayer
+    - type: Physics
+    - type: Tag
+      tags:
+        - HideContextMenu
+
+- type: entity
+  parent: CollideFloorTrap
+  id: CollideFloorTrapSpawn
+  name: floor trap spawn
+  abstract: true
+  components:
+    - type: Sprite
+      sprite: Tiles/Misc/floortrap.rsi
+      state: floortrapspawn
+
+- type: entity
+  parent: CollideFloorTrap
+  id: FloorTrapExplosion
+  name: explosion floor trap
+  components:
+    - type: TriggerOnCollide
+      fixtureID: floortrap
+    - type: ExplodeOnTrigger
+    - type: Explosive
+      explosionType: Default
+      totalIntensity: 20.0
+      intensitySlope: 5
+      maxIntensity: 4
+    - type: DeleteOnTrigger
+
+- type: entity
+  parent: CollideFloorTrap
+  id: FloorTrapEMP
+  name: EMP floor trap
+  components:
+    - type: TriggerOnCollide
+      fixtureID: floortrap
+    - type: EmpOnTrigger
+      range: 2
+      energyConsumption: 5000
+    - type: DeleteOnTrigger
+
+- type: entity
+  parent: CollideFloorTrapSpawn
+  id: SpawnFloorTrapCarp
+  suffix: Carp
+  components:
+    - type: TriggerOnCollide
+      fixtureID: floortrap
+    - type: SpawnOnTrigger
+      proto: MobCarp
+    - type: DeleteOnTrigger
+
+- type: entity
+  parent: CollideFloorTrapSpawn
+  id: SpawnFloorTrapBear
+  suffix: Bear
+  components:
+    - type: TriggerOnCollide
+      fixtureID: floortrap
+    - type: SpawnOnTrigger
+      proto: MobBearSpace
+    - type: DeleteOnTrigger
+
+- type: entity
+  parent: CollideFloorTrapSpawn
+  id: SpawnFloorTrapKangaroo
+  suffix: Kangaroo
+  components:
+    - type: TriggerOnCollide
+      fixtureID: floortrap
+    - type: SpawnOnTrigger
+      proto: MobKangarooSpace
+    - type: DeleteOnTrigger
+
+- type: entity
+  parent: CollideFloorTrapSpawn
+  id: SpawnFloorTrapXenoDrone
+  suffix: Xeno. Drone
+  components:
+    - type: TriggerOnCollide
+      fixtureID: floortrap
+    - type: SpawnOnTrigger
+      proto: MobXenoDrone
+    - type: DeleteOnTrigger
+
+- type: entity
+  parent: CollideFloorTrapSpawn
+  id: SpawnFloorTrapXenoBurrower
+  suffix: Xeno. Burrower
+  components:
+    - type: TriggerOnCollide
+      fixtureID: floortrap
+    - type: SpawnOnTrigger
+      proto: MobXeno
+    - type: DeleteOnTrigger

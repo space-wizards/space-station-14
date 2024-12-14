@@ -3,6 +3,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.VirtualItem;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
 
 namespace Content.Shared.Verbs
 {
@@ -55,60 +56,37 @@ namespace Content.Shared.Verbs
             return GetLocalVerbs(target, user, new List<Type>() { type }, force);
         }
 
+        /// <inheritdoc cref="GetLocalVerbs(Robust.Shared.GameObjects.EntityUid,Robust.Shared.GameObjects.EntityUid,System.Type,bool)"/>
+        public SortedSet<Verb> GetLocalVerbs(EntityUid target, EntityUid user, List<Type> types, bool force = false)
+        {
+            return GetLocalVerbs(target, user, types, out _, force);
+        }
+
         /// <summary>
         ///     Raises a number of events in order to get all verbs of the given type(s) defined in local systems. This
         ///     does not request verbs from the server.
         /// </summary>
-        public SortedSet<Verb> GetLocalVerbs(EntityUid target, EntityUid user, List<Type> types, bool force = false)
+        public SortedSet<Verb> GetLocalVerbs(EntityUid target, EntityUid user, List<Type> types,
+            out List<VerbCategory> extraCategories, bool force = false)
         {
             SortedSet<Verb> verbs = new();
+            extraCategories = new();
 
             // accessibility checks
-            bool canAccess = false;
-            if (force || target == user)
-                canAccess = true;
-            else if (_interactionSystem.InRangeUnobstructed(user, target))
-            {
-                // Note that being in a container does not count as an obstruction for InRangeUnobstructed
-                // Therefore, we need extra checks to ensure the item is actually accessible:
-                if (ContainerSystem.IsInSameOrParentContainer(user, target))
-                    canAccess = true;
-                else
-                    // the item might be in a backpack that the user has open
-                    canAccess = _interactionSystem.CanAccessViaStorage(user, target);
-            }
+            var canAccess = force || _interactionSystem.InRangeAndAccessible(user, target);
 
             // A large number of verbs need to check action blockers. Instead of repeatedly having each system individually
             // call ActionBlocker checks, just cache it for the verb request.
             var canInteract = force || _actionBlockerSystem.CanInteract(user, target);
+            var canComplexInteract = force || _actionBlockerSystem.CanComplexInteract(user);
 
-            EntityUid? @using = null;
-            if (TryComp(user, out HandsComponent? hands) && (force || _actionBlockerSystem.CanUseHeldEntity(user)))
-            {
-                // if we don't actually have any hands, pass in a null value for the events.
-                if (hands.Count == 0)
-                {
-                    hands = null;
-                }
-                else
-                {
-                    @using = hands.ActiveHandEntity;
-
-                    // Check whether the "Held" entity is a virtual pull entity. If yes, set that as the entity being "Used".
-                    // This allows you to do things like buckle a dragged person onto a surgery table, without click-dragging
-                    // their sprite.
-
-                    if (TryComp(@using, out VirtualItemComponent? pull))
-                    {
-                        @using = pull.BlockingEntity;
-                    }
-                }
-            }
+            _interactionSystem.TryGetUsedEntity(user, out var @using);
+            TryComp<HandsComponent>(user, out var hands);
 
             // TODO: fix this garbage and use proper generics or reflection or something else, not this.
             if (types.Contains(typeof(InteractionVerb)))
             {
-                var verbEvent = new GetVerbsEvent<InteractionVerb>(user, target, @using, hands, canInteract, canAccess);
+                var verbEvent = new GetVerbsEvent<InteractionVerb>(user, target, @using, hands, canInteract: canInteract, canComplexInteract: canComplexInteract, canAccess: canAccess, extraCategories);
                 RaiseLocalEvent(target, verbEvent, true);
                 verbs.UnionWith(verbEvent.Verbs);
             }
@@ -117,35 +95,35 @@ namespace Content.Shared.Verbs
                 && @using != null
                 && @using != target)
             {
-                var verbEvent = new GetVerbsEvent<UtilityVerb>(user, target, @using, hands, canInteract, canAccess);
+                var verbEvent = new GetVerbsEvent<UtilityVerb>(user, target, @using, hands, canInteract: canInteract, canComplexInteract: canComplexInteract, canAccess: canAccess, extraCategories);
                 RaiseLocalEvent(@using.Value, verbEvent, true); // directed at used, not at target
                 verbs.UnionWith(verbEvent.Verbs);
             }
 
             if (types.Contains(typeof(InnateVerb)))
             {
-                var verbEvent = new GetVerbsEvent<InnateVerb>(user, target, @using, hands, canInteract, canAccess);
+                var verbEvent = new GetVerbsEvent<InnateVerb>(user, target, @using, hands, canInteract: canInteract, canComplexInteract: canComplexInteract, canAccess: canAccess, extraCategories);
                 RaiseLocalEvent(user, verbEvent, true);
                 verbs.UnionWith(verbEvent.Verbs);
             }
 
             if (types.Contains(typeof(AlternativeVerb)))
             {
-                var verbEvent = new GetVerbsEvent<AlternativeVerb>(user, target, @using, hands, canInteract, canAccess);
+                var verbEvent = new GetVerbsEvent<AlternativeVerb>(user, target, @using, hands, canInteract: canInteract, canComplexInteract: canComplexInteract, canAccess: canAccess, extraCategories);
                 RaiseLocalEvent(target, verbEvent, true);
                 verbs.UnionWith(verbEvent.Verbs);
             }
 
             if (types.Contains(typeof(ActivationVerb)))
             {
-                var verbEvent = new GetVerbsEvent<ActivationVerb>(user, target, @using, hands, canInteract, canAccess);
+                var verbEvent = new GetVerbsEvent<ActivationVerb>(user, target, @using, hands, canInteract: canInteract, canComplexInteract: canComplexInteract, canAccess: canAccess, extraCategories);
                 RaiseLocalEvent(target, verbEvent, true);
                 verbs.UnionWith(verbEvent.Verbs);
             }
 
             if (types.Contains(typeof(ExamineVerb)))
             {
-                var verbEvent = new GetVerbsEvent<ExamineVerb>(user, target, @using, hands, canInteract, canAccess);
+                var verbEvent = new GetVerbsEvent<ExamineVerb>(user, target, @using, hands, canInteract: canInteract, canComplexInteract: canComplexInteract, canAccess: canAccess, extraCategories);
                 RaiseLocalEvent(target, verbEvent, true);
                 verbs.UnionWith(verbEvent.Verbs);
             }
@@ -153,7 +131,7 @@ namespace Content.Shared.Verbs
             // generic verbs
             if (types.Contains(typeof(Verb)))
             {
-                var verbEvent = new GetVerbsEvent<Verb>(user, target, @using, hands, canInteract, canAccess);
+                var verbEvent = new GetVerbsEvent<Verb>(user, target, @using, hands, canInteract: canInteract, canComplexInteract: canComplexInteract, canAccess: canAccess, extraCategories);
                 RaiseLocalEvent(target, verbEvent, true);
                 verbs.UnionWith(verbEvent.Verbs);
             }
@@ -161,7 +139,7 @@ namespace Content.Shared.Verbs
             if (types.Contains(typeof(EquipmentVerb)))
             {
                 var access = canAccess || _interactionSystem.CanAccessEquipment(user, target);
-                var verbEvent = new GetVerbsEvent<EquipmentVerb>(user, target, @using, hands, canInteract, access);
+                var verbEvent = new GetVerbsEvent<EquipmentVerb>(user, target, @using, hands, canInteract: canInteract, canComplexInteract: canComplexInteract, canAccess: canAccess, extraCategories);
                 RaiseLocalEvent(target, verbEvent);
                 verbs.UnionWith(verbEvent.Verbs);
             }
@@ -196,5 +174,28 @@ namespace Content.Shared.Verbs
             if (verb.DoContactInteraction ?? (verb.DefaultDoContactInteraction && _interactionSystem.InRangeUnobstructed(user, target)))
                 _interactionSystem.DoContactInteraction(user, target);
         }
+    }
+
+    // Does nothing on server
+    /// <summary>
+    /// Raised directed when trying to get the entity menu visibility for entities.
+    /// </summary>
+    [ByRefEvent]
+    public record struct MenuVisibilityEvent
+    {
+        public MapCoordinates TargetPos;
+        public MenuVisibility Visibility;
+    }
+
+    // Does nothing on server
+    [Flags]
+    public enum MenuVisibility
+    {
+        // What entities can a user see on the entity menu?
+        Default = 0,          // They can only see entities in FoV.
+        NoFov = 1 << 0,         // They ignore FoV restrictions
+        InContainer = 1 << 1,   // They can see through containers.
+        Invisible = 1 << 2,   // They can see entities without sprites and the "HideContextMenu" tag is ignored.
+        All = NoFov | InContainer | Invisible
     }
 }

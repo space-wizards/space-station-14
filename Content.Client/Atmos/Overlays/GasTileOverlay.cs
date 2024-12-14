@@ -190,7 +190,7 @@ namespace Content.Client.Atmos.Overlays
 
                     var (_, _, worldMatrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
                     state.drawHandle.SetTransform(worldMatrix);
-                    var floatBounds = invMatrix.TransformBox(in state.WorldBounds).Enlarged(grid.TileSize);
+                    var floatBounds = invMatrix.TransformBox(state.WorldBounds).Enlarged(grid.TileSize);
                     var localBounds = new Box2i(
                         (int) MathF.Floor(floatBounds.Left),
                         (int) MathF.Floor(floatBounds.Bottom),
@@ -249,7 +249,7 @@ namespace Content.Client.Atmos.Overlays
                 });
 
             drawHandle.UseShader(null);
-            drawHandle.SetTransform(Matrix3.Identity);
+            drawHandle.SetTransform(Matrix3x2.Identity);
         }
 
         private void DrawMapOverlay(

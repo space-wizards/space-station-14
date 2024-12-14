@@ -8,7 +8,10 @@
     solutions:
       drink:
         maxVol: 100
+  - type: MixableSolution
+    solution: drink
   - type: Drink
+  - type: Shakeable
   - type: FitsInDispenser
     solution: drink
   - type: DrawableSolution
@@ -26,11 +29,16 @@
     state: icon
   - type: UserInterface
     interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
   - type: PhysicalComposition
     materialComposition:
       Steel: 50
+  - type: DnaSubstanceTrace
+  - type: ReactionMixer
+    mixOnInteract: false
+    reactionTypes:
+    - Shake
 
 - type: entity
   parent: DrinkGlassBase
@@ -65,7 +73,7 @@
   parent: DrinkGlassBase
   id: DrinkJar
   name: jar
-  description: The hipster's cup
+  description: The hipster's cup.
   components:
   - type: Drink
   - type: Sprite
@@ -101,3 +109,63 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/jar_what.rsi
+
+- type: entity
+  id: BartenderMixer
+  abstract: true
+  components:
+  - type: DrainableSolution
+    solution: drink
+  - type: Drink
+  - type: DrawableSolution
+    solution: drink
+  - type: RefillableSolution
+    solution: drink
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: Spillable
+    solution: drink
+  - type: UserInterface
+    interfaces:
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
+
+- type: entity
+  parent: [BaseItem, BartenderMixer]
+  id: DrinkJigger
+  name: jigger
+  description: Like a shaker, but smaller. Used to control the amount of ingredients.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 20
+  - type: MixableSolution
+    solution: drink
+  - type: FitsInDispenser
+    solution: drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/jigger.rsi
+    state: icon
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 20
+
+- type: entity
+  parent: [BaseItem, BartenderMixer]
+  id: DrinkIceBucket
+  name: ice bucket
+  description: A special bucket of refreshy ice. Prohibited use for challenge with the same name!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Ice
+          Quantity: 200
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/icebucket.rsi
+    state: icon
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 75

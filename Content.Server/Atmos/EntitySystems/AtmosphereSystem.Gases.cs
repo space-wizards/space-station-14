@@ -2,6 +2,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Reactions;
 using Robust.Shared.Prototypes;
 using DependencyAttribute = Robust.Shared.IoC.DependencyAttribute;
 
@@ -278,6 +279,17 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             return true;
+        }
+
+        /// <summary>
+        ///     Compares two TileAtmospheres to see if they are within acceptable ranges for group processing to be enabled.
+        /// </summary>
+        public GasCompareResult CompareExchange(TileAtmosphere sample, TileAtmosphere otherSample)
+        {
+            if (sample.AirArchived == null || otherSample.AirArchived == null)
+                return GasCompareResult.NoExchange;
+
+            return CompareExchange(sample.AirArchived, otherSample.AirArchived);
         }
 
         /// <summary>

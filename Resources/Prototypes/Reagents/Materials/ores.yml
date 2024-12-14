@@ -25,6 +25,15 @@
   price: 0.2
 
 - type: material
+  id: RawDiamond
+  stackEntity: DiamondOre1
+  name: materials-raw-diamond
+  unit: materials-unit-piece
+  icon: { sprite: Objects/Materials/ore.rsi, state: diamond }
+  color: "#C9D8F2"
+  price: 0.5
+
+- type: material
   id: RawSilver
   stackEntity: SilverOre1
   name: materials-raw-silver

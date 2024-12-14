@@ -233,7 +233,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     1 mol of Tritium is required per X mol of oxygen.
         /// </summary>
-        public const float FrezonProductionTritRatio = 50.0f;
+        public const float FrezonProductionTritRatio = 8.0f;
 
         /// <summary>
         ///     1 / X of the tritium is converted into Frezon each tick
@@ -286,7 +286,8 @@ namespace Content.Shared.Atmos
         ///     (The pressure threshold is so low that it doesn't make sense to do any calculations,
         ///     so it just applies this flat value).
         /// </summary>
-        public const int LowPressureDamage = 4;
+        // Original value is 4, buff back when we have proper ways for players to deal with breaches.
+        public const int LowPressureDamage = 1;
 
         public const float WindowHeatTransferCoefficient = 0.1f;
 

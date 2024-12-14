@@ -12,6 +12,15 @@ store-category-allies = Allies
 store-category-job = Job
 store-category-wearables = Wearables
 store-category-pointless = Pointless
+store-discounted-items = Discounts
 
 # Revenant
 store-category-abilities = Abilities
+
+# Wizard
+store-caregory-spellbook-offensive = Offensive Spells
+store-caregory-spellbook-defensive = Defensive Spells
+store-caregory-spellbook-utility = Utility Spells
+store-caregory-spellbook-equipment = Wizard Equipment
+store-caregory-spellbook-events = Event Spells
+

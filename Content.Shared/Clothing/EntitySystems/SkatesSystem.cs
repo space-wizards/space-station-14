@@ -17,34 +17,28 @@ public sealed class SkatesSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SkatesComponent, GotEquippedEvent>(OnGotEquipped);
-        SubscribeLocalEvent<SkatesComponent, GotUnequippedEvent>(OnGotUnequipped);
+        SubscribeLocalEvent<SkatesComponent, ClothingGotEquippedEvent>(OnGotEquipped);
+        SubscribeLocalEvent<SkatesComponent, ClothingGotUnequippedEvent>(OnGotUnequipped);
     }
 
     /// <summary>
     /// When item is unequipped from the shoe slot, friction, aceleration and collide on impact return to default settings.
     /// </summary>
-    public void OnGotUnequipped(EntityUid uid, SkatesComponent component, GotUnequippedEvent args)
+    public void OnGotUnequipped(EntityUid uid, SkatesComponent component, ClothingGotUnequippedEvent args)
     {
-        if (!TryComp(args.Equipee, out MovementSpeedModifierComponent? speedModifier))
+        if (!TryComp(args.Wearer, out MovementSpeedModifierComponent? speedModifier))
             return;
 
-        if (args.Slot == "shoes")
-        {
-            _move.ChangeFriction(args.Equipee, MovementSpeedModifierComponent.DefaultFriction, MovementSpeedModifierComponent.DefaultFrictionNoInput, MovementSpeedModifierComponent.DefaultAcceleration, speedModifier);
-            _impact.ChangeCollide(args.Equipee, component.DefaultMinimumSpeed, component.DefaultStunSeconds, component.DefaultDamageCooldown, component.DefaultSpeedDamage);
-        }
+        _move.ChangeFriction(args.Wearer, MovementSpeedModifierComponent.DefaultFriction, MovementSpeedModifierComponent.DefaultFrictionNoInput, MovementSpeedModifierComponent.DefaultAcceleration, speedModifier);
+        _impact.ChangeCollide(args.Wearer, component.DefaultMinimumSpeed, component.DefaultStunSeconds, component.DefaultDamageCooldown, component.DefaultSpeedDamage);
     }
 
     /// <summary>
     /// When item is equipped into the shoe slot, friction, acceleration and collide on impact are adjusted.
     /// </summary>
-    private void OnGotEquipped(EntityUid uid, SkatesComponent component, GotEquippedEvent args)
+    private void OnGotEquipped(EntityUid uid, SkatesComponent component, ClothingGotEquippedEvent args)
     {
-        if (args.Slot == "shoes")
-        { 
-            _move.ChangeFriction(args.Equipee, component.Friction, component.FrictionNoInput, component.Acceleration);
-            _impact.ChangeCollide(args.Equipee, component.MinimumSpeed, component.StunSeconds, component.DamageCooldown, component.SpeedDamage);
-        }
+        _move.ChangeFriction(args.Wearer, component.Friction, component.FrictionNoInput, component.Acceleration);
+        _impact.ChangeCollide(args.Wearer, component.MinimumSpeed, component.StunSeconds, component.DamageCooldown, component.SpeedDamage);
     }
 }

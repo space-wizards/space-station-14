@@ -13,104 +13,63 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public const string InvokedPort = "link_port";
 
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<DeviceLinkSourceComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<DeviceLinkSourceComponent, ComponentStartup>(OnSourceStartup);
-        SubscribeLocalEvent<DeviceLinkSinkComponent, ComponentStartup>(OnSinkStartup);
         SubscribeLocalEvent<DeviceLinkSourceComponent, ComponentRemove>(OnSourceRemoved);
         SubscribeLocalEvent<DeviceLinkSinkComponent, ComponentRemove>(OnSinkRemoved);
     }
 
     #region Link Validation
 
-    private void OnInit(EntityUid uid, DeviceLinkSourceComponent component, ComponentInit args)
-    {
-        // Populate the output dictionary.
-        foreach (var (sinkUid, links) in component.LinkedPorts)
-        {
-            foreach (var link in links)
-            {
-                component.Outputs.GetOrNew(link.source).Add(sinkUid);
-            }
-        }
-    }
-
     /// <summary>
     /// Removes invalid links where the saved sink doesn't exist/have a sink component for example
     /// </summary>
-    private void OnSourceStartup(EntityUid sourceUid, DeviceLinkSourceComponent sourceComponent, ComponentStartup args)
+    private void OnSourceStartup(Entity<DeviceLinkSourceComponent> source, ref ComponentStartup args)
     {
         List<EntityUid> invalidSinks = new();
-        foreach (var sinkUid  in sourceComponent.LinkedPorts.Keys)
+        List<(string, string)> invalidLinks = new();
+        foreach (var (sink, links)  in source.Comp.LinkedPorts)
         {
-            if (!TryComp<DeviceLinkSinkComponent>(sinkUid, out var sinkComponent))
+            if (!TryComp(sink, out DeviceLinkSinkComponent? sinkComponent))
             {
-                invalidSinks.Add(sinkUid);
-                foreach (var savedSinks in sourceComponent.Outputs.Values)
-                {
-                    savedSinks.Remove(sinkUid);
-                }
-
+                invalidSinks.Add(sink);
                 continue;
             }
 
-            sinkComponent.LinkedSources.Add(sourceUid);
-        }
-
-        foreach (var invalidSink in invalidSinks)
-        {
-            sourceComponent.LinkedPorts.Remove(invalidSink);
-        }
-    }
-
-    /// <summary>
-    /// Same with <see cref="OnSourceStartup"/> but also checks that the saved ports are present on the sink
-    /// </summary>
-    private void OnSinkStartup(EntityUid sinkUid, DeviceLinkSinkComponent sinkComponent, ComponentStartup args)
-    {
-        List<EntityUid> invalidSources = new();
-        foreach (var sourceUid in sinkComponent.LinkedSources)
-        {
-            if (!TryComp<DeviceLinkSourceComponent>(sourceUid, out var sourceComponent))
+            foreach (var link in links)
             {
-                invalidSources.Add(sourceUid);
-                continue;
-            }
-
-            if (!sourceComponent.LinkedPorts.TryGetValue(sinkUid, out var linkedPorts))
-            {
-                foreach (var savedSinks in sourceComponent.Outputs.Values)
-                {
-                    savedSinks.Remove(sinkUid);
-                }
-                continue;
-            }
-
-            if (sinkComponent.Ports == null)
-                continue;
-
-            List<(string, string)> invalidLinks = new();
-            foreach (var link in linkedPorts)
-            {
-                if (!sinkComponent.Ports.Contains(link.sink))
+                if (sinkComponent.Ports.Contains(link.Sink) && source.Comp.Ports.Contains(link.Source))
+                    source.Comp.Outputs.GetOrNew(link.Source).Add(sink);
+                else
                     invalidLinks.Add(link);
             }
 
-            foreach (var invalidLink in invalidLinks)
+            foreach (var link in invalidLinks)
             {
-                linkedPorts.Remove(invalidLink);
-                sourceComponent.Outputs.GetValueOrDefault(invalidLink.Item1)?.Remove(sinkUid);
+                Log.Warning($"Device source {ToPrettyString(source)} contains invalid links to entity {ToPrettyString(sink)}: {link.Item1}->{link.Item2}");
+                links.Remove(link);
             }
+
+            if (links.Count == 0)
+            {
+                invalidSinks.Add(sink);
+                continue;
+            }
+
+            invalidLinks.Clear();
+            sinkComponent.LinkedSources.Add(source.Owner);
         }
 
-        foreach (var invalidSource in invalidSources)
+        foreach (var sink in invalidSinks)
         {
-            sinkComponent.LinkedSources.Remove(invalidSource);
+            source.Comp.LinkedPorts.Remove(sink);
+            Log.Warning($"Device source {ToPrettyString(source)} contains invalid sink: {ToPrettyString(sink)}");
         }
     }
     #endregion
@@ -118,26 +77,29 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
     /// <summary>
     /// Ensures that its links get deleted when a source gets removed
     /// </summary>
-    private void OnSourceRemoved(EntityUid uid, DeviceLinkSourceComponent component, ComponentRemove args)
+    private void OnSourceRemoved(Entity<DeviceLinkSourceComponent> source, ref ComponentRemove args)
     {
         var query = GetEntityQuery<DeviceLinkSinkComponent>();
-        foreach (var sinkUid in component.LinkedPorts.Keys)
+        foreach (var sinkUid in source.Comp.LinkedPorts.Keys)
         {
             if (query.TryGetComponent(sinkUid, out var sink))
-                RemoveSinkFromSourceInternal(uid, sinkUid, component, sink);
+                RemoveSinkFromSourceInternal(source, sinkUid, source, sink);
+            else
+                Log.Error($"Device source {ToPrettyString(source)} links to invalid entity: {ToPrettyString(sinkUid)}");
         }
     }
 
     /// <summary>
     /// Ensures that its links get deleted when a sink gets removed
     /// </summary>
-    private void OnSinkRemoved(EntityUid sinkUid, DeviceLinkSinkComponent sinkComponent, ComponentRemove args)
+    private void OnSinkRemoved(Entity<DeviceLinkSinkComponent> sink, ref ComponentRemove args)
     {
-        var query = GetEntityQuery<DeviceLinkSourceComponent>();
-        foreach (var linkedSource in sinkComponent.LinkedSources)
+        foreach (var sourceUid in sink.Comp.LinkedSources)
         {
-            if (query.TryGetComponent(sinkUid, out var source))
-                RemoveSinkFromSourceInternal(linkedSource, sinkUid, source, sinkComponent);
+            if (TryComp(sourceUid, out DeviceLinkSourceComponent? source))
+                RemoveSinkFromSourceInternal(sourceUid, sink, source, sink);
+            else
+                Log.Error($"Device sink {ToPrettyString(sink)} source list contains invalid entity: {ToPrettyString(sourceUid)}");
         }
     }
 
@@ -145,36 +107,36 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
     /// <summary>
     /// Convenience function to add several ports to an entity
     /// </summary>
-    public void EnsureSourcePorts(EntityUid uid, params string[] ports)
+    public void EnsureSourcePorts(EntityUid uid, params ProtoId<SourcePortPrototype>[] ports)
     {
         if (ports.Length == 0)
             return;
 
         var comp = EnsureComp<DeviceLinkSourceComponent>(uid);
-        comp.Ports ??= new HashSet<ProtoId<SourcePortPrototype>>();
-
         foreach (var port in ports)
         {
-            DebugTools.Assert(_prototypeManager.HasIndex<SourcePortPrototype>(port));
-            comp.Ports?.Add(port);
+            if (!_prototypeManager.HasIndex(port))
+                Log.Error($"Attempted to add invalid port {port} to {ToPrettyString(uid)}");
+            else
+                comp.Ports.Add(port);
         }
     }
 
     /// <summary>
     /// Convenience function to add several ports to an entity.
     /// </summary>
-    public void EnsureSinkPorts(EntityUid uid, params string[] ports)
+    public void EnsureSinkPorts(EntityUid uid, params ProtoId<SinkPortPrototype>[] ports)
     {
         if (ports.Length == 0)
             return;
 
         var comp = EnsureComp<DeviceLinkSinkComponent>(uid);
-        comp.Ports ??= new HashSet<string>();
-
         foreach (var port in ports)
         {
-            DebugTools.Assert(_prototypeManager.HasIndex<SinkPortPrototype>(port));
-            comp.Ports?.Add(port);
+            if (!_prototypeManager.HasIndex(port))
+                Log.Error($"Attempted to add invalid port {port} to {ToPrettyString(uid)}");
+            else
+                comp.Ports.Add(port);
         }
     }
 
@@ -184,13 +146,13 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
     /// <returns>A list of source port prototypes</returns>
     public List<SourcePortPrototype> GetSourcePorts(EntityUid sourceUid, DeviceLinkSourceComponent? sourceComponent = null)
     {
-        if (!Resolve(sourceUid, ref sourceComponent) || sourceComponent.Ports == null)
+        if (!Resolve(sourceUid, ref sourceComponent))
             return new List<SourcePortPrototype>();
 
         var sourcePorts = new List<SourcePortPrototype>();
         foreach (var port in sourceComponent.Ports)
         {
-            sourcePorts.Add(_prototypeManager.Index<SourcePortPrototype>(port));
+            sourcePorts.Add(_prototypeManager.Index(port));
         }
 
         return sourcePorts;
@@ -202,13 +164,13 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
     /// <returns>A list of sink port prototypes</returns>
     public List<SinkPortPrototype> GetSinkPorts(EntityUid sinkUid, DeviceLinkSinkComponent? sinkComponent = null)
     {
-        if (!Resolve(sinkUid, ref sinkComponent) || sinkComponent.Ports == null)
+        if (!Resolve(sinkUid, ref sinkComponent))
             return new List<SinkPortPrototype>();
 
         var sinkPorts = new List<SinkPortPrototype>();
         foreach (var port in sinkComponent.Ports)
         {
-            sinkPorts.Add(_prototypeManager.Index<SinkPortPrototype>(port));
+            sinkPorts.Add(_prototypeManager.Index(port));
         }
 
         return sinkPorts;
@@ -314,9 +276,6 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
         if (!Resolve(sourceUid, ref sourceComponent) || !Resolve(sinkUid, ref sinkComponent))
             return;
 
-        if (sourceComponent.Ports == null || sinkComponent.Ports == null)
-            return;
-
         if (!InRange(sourceUid, sinkUid, sourceComponent.Range))
         {
             if (userId != null)
@@ -390,7 +349,7 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
         else
         {
             Log.Error($"Attempted to remove link between {ToPrettyString(sourceUid)} and {ToPrettyString(sinkUid)}, but the sink component was missing.");
-            sourceComponent.LinkedPorts.Remove(sourceUid);
+            sourceComponent.LinkedPorts.Remove(sinkUid);
         }
     }
 
@@ -413,12 +372,10 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
 
         sinkComponent.LinkedSources.Remove(sourceUid);
         sourceComponent.LinkedPorts.Remove(sinkUid);
-        var outputLists = sourceComponent.Outputs.Values;
-        foreach (var outputList in outputLists)
+        foreach (var outputList in sourceComponent.Outputs.Values)
         {
             outputList.Remove(sinkUid);
         }
-
     }
 
     /// <summary>
@@ -435,9 +392,6 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
         DeviceLinkSinkComponent? sinkComponent = null)
     {
         if (!Resolve(sourceUid, ref sourceComponent) || !Resolve(sinkUid, ref sinkComponent))
-            return false;
-
-        if (sourceComponent.Ports == null || sinkComponent.Ports == null)
             return false;
 
         var outputs = sourceComponent.Outputs.GetOrNew(source);
@@ -529,7 +483,7 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
     private bool InRange(EntityUid sourceUid, EntityUid sinkUid, float range)
     {
         // TODO: This should be using an existing method and also coordinates inrange instead.
-        return Transform(sourceUid).MapPosition.InRange(Transform(sinkUid).MapPosition, range);
+        return _transform.GetMapCoordinates(sourceUid).InRange(_transform.GetMapCoordinates(sinkUid), range);
     }
 
     private void SendNewLinkEvent(EntityUid? user, EntityUid sourceUid, string source, EntityUid sinkUid, string sink)

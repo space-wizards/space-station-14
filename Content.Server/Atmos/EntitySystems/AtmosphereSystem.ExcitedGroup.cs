@@ -106,7 +106,7 @@ namespace Content.Server.Atmos.EntitySystems
                 if (tile?.Air == null)
                     continue;
 
-                tile.Air.CopyFromMutable(combined);
+                tile.Air.CopyFrom(combined);
                 InvalidateVisuals(ent, tile);
             }
 

@@ -20,6 +20,11 @@
     - state: welded
       visible: false
       map: ["enum.WeldableLayers.BaseWelded"]
+    - state: paper
+      visible: false
+      sprite: Structures/Storage/closet_labels.rsi
+      offset: "-0.065,0"
+      map: ["enum.PaperLabelVisuals.Layer"]
   - type: Destructible
     thresholds:
     - trigger:
@@ -45,7 +50,7 @@
             min: 1
             max: 2
   - type: Construction
-    graph: ClosetSteel
+    graph: ClosetSteelSecure
     node: done
     containers:
     - entity_storage
@@ -66,8 +71,3 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: Construction
-    graph: ClosetSteelSecure
-    node: done
-    containers:
-    - entity_storage

@@ -2,7 +2,7 @@
   id: AirAlarmElectronics
   parent: BaseElectronics
   name: air alarm electronics
-  description: An electronics board used in air alarms
+  description: An electronics board used in air alarms.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
@@ -17,7 +17,7 @@
   id: FireAlarmElectronics
   parent: BaseElectronics
   name: fire alarm electronics
-  description: An electronics board used in fire alarms
+  description: An electronics board used in fire alarms.
   components:
   - type: Item
     storedRotation: 0

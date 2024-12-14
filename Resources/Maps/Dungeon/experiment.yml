@@ -7444,13 +7444,6 @@ entities:
     - type: Transform
       pos: 32.5,14.5
       parent: 1653
-- proto: MachineTraversalDistorter
-  entities:
-  - uid: 1058
-    components:
-    - type: Transform
-      pos: 34.5,22.5
-      parent: 1653
 - proto: MaintenanceFluffSpawner
   entities:
   - uid: 867
@@ -7507,7 +7500,7 @@ entities:
     - type: Transform
       pos: 8.569059,28.508856
       parent: 1653
-- proto: MaterialDiamond
+- proto: MaterialDiamond1
   entities:
   - uid: 821
     components:

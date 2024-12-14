@@ -38,7 +38,6 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         SubscribeLocalEvent<EmbeddableProjectileComponent, ThrowDoHitEvent>(OnEmbedThrowDoHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ActivateInWorldEvent>(OnEmbedActivate);
         SubscribeLocalEvent<EmbeddableProjectileComponent, RemoveEmbeddedProjectileEvent>(OnEmbedRemove);
-        SubscribeLocalEvent<EmbeddableProjectileComponent, AttemptPacifiedThrowEvent>(OnAttemptPacifiedThrow);
     }
 
     private void OnEmbedActivate(EntityUid uid, EmbeddableProjectileComponent component, ActivateInWorldEvent args)
@@ -47,7 +46,7 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         if (component.RemovalTime == null)
             return;
 
-        if (args.Handled || !TryComp<PhysicsComponent>(uid, out var physics) || physics.BodyType != BodyType.Static)
+        if (args.Handled || !args.Complex || !TryComp<PhysicsComponent>(uid, out var physics) || physics.BodyType != BodyType.Static)
             return;
 
         args.Handled = true;
@@ -72,6 +71,8 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         TryComp<PhysicsComponent>(uid, out var physics);
         _physics.SetBodyType(uid, BodyType.Dynamic, body: physics, xform: xform);
         _transform.AttachToGridOrMap(uid, xform);
+        component.EmbeddedIntoUid = null;
+        Dirty(uid, component);
 
         // Reset whether the projectile has damaged anything if it successfully was removed
         if (TryComp<ProjectileComponent>(uid, out var projectile))
@@ -120,13 +121,18 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
         if (component.Offset != Vector2.Zero)
         {
-            _transform.SetLocalPosition(uid, xform.LocalPosition + xform.LocalRotation.RotateVec(component.Offset),
+            var rotation = xform.LocalRotation;
+            if (TryComp<ThrowingAngleComponent>(uid, out var throwingAngleComp))
+                rotation += throwingAngleComp.Angle;
+            _transform.SetLocalPosition(uid, xform.LocalPosition + rotation.RotateVec(component.Offset),
                 xform);
         }
 
         _audio.PlayPredicted(component.Sound, uid, null);
+        component.EmbeddedIntoUid = target;
         var ev = new EmbedEvent(user, target);
         RaiseLocalEvent(uid, ref ev);
+        Dirty(uid, component);
     }
 
     private void PreventCollision(EntityUid uid, ProjectileComponent component, ref PreventCollideEvent args)
@@ -150,14 +156,6 @@ public abstract partial class SharedProjectileSystem : EntitySystem
     private sealed partial class RemoveEmbeddedProjectileEvent : DoAfterEvent
     {
         public override DoAfterEvent Clone() => this;
-    }
-
-    /// <summary>
-    /// Prevent players with the Pacified status effect from throwing embeddable projectiles.
-    /// </summary>
-    private void OnAttemptPacifiedThrow(Entity<EmbeddableProjectileComponent> ent, ref AttemptPacifiedThrowEvent args)
-    {
-        args.Cancel("pacified-cannot-throw-embed");
     }
 }
 

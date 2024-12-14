@@ -1,10 +1,10 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Take from https://github.com/Skyrat-SS13/Skyrat-tg/blob/92377cd6203bc4d93a6e289d7b857e19bb6cf338/modular_skyrat/modules/indicators/icons/ssd_indicator.dmi",
+  "copyright": "Take from https://github.com/Skyrat-SS13/Skyrat-tg/blob/92377cd6203bc4d93a6e289d7b857e19bb6cf338/modular_skyrat/modules/indicators/icons/ssd_indicator.dmi and changed by Macoron",
   "size": {
-    "x": 32,
-    "y": 32
+    "x": 8,
+    "y": 8
   },
   "states": [
     {

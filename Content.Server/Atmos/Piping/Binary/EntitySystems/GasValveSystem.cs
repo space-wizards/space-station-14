@@ -52,8 +52,12 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnActivate(EntityUid uid, GasValveComponent component, ActivateInWorldEvent args)
         {
+            if (args.Handled || !args.Complex)
+                return;
+
             Toggle(uid, component);
             _audio.PlayPvs(component.ValveSound, uid, AudioParams.Default.WithVariation(0.25f));
+            args.Handled = true;
         }
 
         public void Set(EntityUid uid, GasValveComponent component, bool value)

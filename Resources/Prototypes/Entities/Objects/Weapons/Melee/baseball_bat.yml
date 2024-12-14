@@ -1,6 +1,6 @@
 - type: entity
   name: baseball bat
-  parent: BaseItem
+  parent: [BaseItem, BaseMinorContraband]
   id: BaseBallBat
   description: A robust baseball bat.
   components:
@@ -26,7 +26,7 @@
   - type: Tool
     qualities:
     - Rolling
-    speed: 0.75 # a bit unwieldly but does the job
+    speedModifier: 0.75 # a bit unwieldly but does the job
   - type: Clothing
     quickEquip: false
     slots:
@@ -36,6 +36,9 @@
     node: bat
   - type: UseDelay
     delay: 1
+  - type: PhysicalComposition
+    materialComposition:
+      Wood: 250
   - type: Tag
     tags:
     - BaseballBat

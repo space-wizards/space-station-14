@@ -82,7 +82,9 @@ namespace Content.Server.Storage.EntitySystems
 
             if (component.Sound != null)
             {
-                _audio.PlayPvs(component.Sound, uid);
+                // The entity is often deleted, so play the sound at its position rather than parenting
+                var coordinates = Transform(uid).Coordinates;
+                _audio.PlayPvs(component.Sound, coordinates);
             }
 
             component.Uses--;

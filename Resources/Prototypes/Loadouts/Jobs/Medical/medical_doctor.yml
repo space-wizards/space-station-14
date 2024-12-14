@@ -1,0 +1,177 @@
+# Senior Time
+- type: loadoutEffectGroup
+  id: SeniorPhysician
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChemist
+      time: 21600 #6 hrs
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobMedicalDoctor
+      time: 21600 #6 hrs
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Medical
+      time: 216000 # 60 hrs
+
+# Other Timers
+
+- type: loadoutEffectGroup
+  id: MedicalHeadMirrorTimer
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobMedicalDoctor
+      time: 108000 #30 hrs
+
+# Head
+
+- type: loadout
+  id: SeniorPhysicianBeret
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorPhysician
+  equipment:
+    head: ClothingHeadHatBeretSeniorPhysician
+
+- type: loadout
+  id: MedicalHeadMirror
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MedicalHeadMirrorTimer
+  equipment:
+    head: ClothingHeadMirror
+
+- type: loadout
+  id: MedicalBeret
+  equipment:
+    head: ClothingHeadHatBeretMedic
+
+- type: loadout
+  id: BlueSurgeryCap
+  equipment:
+    head: ClothingHeadHatSurgcapBlue
+
+- type: loadout
+  id: GreenSurgeryCap
+  equipment:
+    head: ClothingHeadHatSurgcapGreen
+
+- type: loadout
+  id: PurpleSurgeryCap
+  equipment:
+    head: ClothingHeadHatSurgcapPurple
+
+- type: loadout
+  id: NurseHat
+  equipment:
+    head: ClothingHeadNurseHat
+
+# Jumpsuit
+- type: loadout
+  id: MedicalDoctorJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMedicalDoctor
+
+- type: loadout
+  id: MedicalDoctorJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtMedicalDoctor
+
+- type: loadout
+  id: SeniorPhysicianJumpsuit
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorPhysician
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSeniorPhysician
+
+- type: loadout
+  id: SeniorPhysicianJumpskirt
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorPhysician
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtSeniorPhysician
+
+- type: loadout
+  id: MedicalBlueScrubs
+  equipment:
+    jumpsuit: UniformScrubsColorBlue
+
+- type: loadout
+  id: MedicalGreenScrubs
+  equipment:
+    jumpsuit: UniformScrubsColorGreen
+
+- type: loadout
+  id: MedicalPurpleScrubs
+  equipment:
+    jumpsuit: UniformScrubsColorPurple
+
+# Back
+- type: loadout
+  id: MedicalDoctorBackpack
+  equipment:
+    back: ClothingBackpackMedical
+
+- type: loadout
+  id: MedicalDoctorSatchel
+  equipment:
+    back: ClothingBackpackSatchelMedical
+
+- type: loadout
+  id: MedicalDoctorDuffel
+  equipment:
+    back: ClothingBackpackDuffelMedical
+
+# OuterClothing
+- type: loadout
+  id: MedicalDoctorWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterMed
+
+- type: loadout
+  id: SeniorPhysicianLabCoat
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorPhysician
+  equipment:
+    outerClothing: ClothingOuterCoatLabSeniorPhysician
+
+# Shoes
+- type: loadout
+  id: MedicalWinterBoots
+  equipment:
+    shoes: ClothingShoesBootsWinterMed
+
+# ID
+- type: loadout
+  id: MedicalDoctorPDA
+  equipment:
+    id: MedicalPDA
+
+- type: loadout
+  id: SeniorPhysicianPDA
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorPhysician
+  equipment:
+    id: SeniorPhysicianPDA
+
+# Gloves
+- type: loadout
+  id: NitrileGloves
+  equipment:
+    gloves: ClothingHandsGlovesNitrile
+
+#Masks
+- type: loadout
+  id: SterileMask
+  equipment:
+    mask: ClothingMaskSterile

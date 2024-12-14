@@ -29,6 +29,7 @@
     displayName: Jumpsuit
   - name: id
     slotTexture: id
+    fullTextureName: template_small
     slotFlags: IDCARD
     slotGroup: SecondHotbar
     stripTime: 6
@@ -44,6 +45,8 @@
     uiWindowPos: 2,0
     strippingWindowPos: 2,5
     dependsOn: outerClothing
+    dependsOnComponents:
+    - type: AllowSuitStorage
     displayName: Suit Storage
   - name: outerClothing
     slotTexture: suit

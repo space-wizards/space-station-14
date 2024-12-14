@@ -1,14 +1,15 @@
 using Content.Shared.Tag;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Construction.Steps
 {
     public sealed partial class MultipleTagsConstructionGraphStep : ArbitraryInsertConstructionGraphStep
     {
         [DataField("allTags")]
-        private List<string>? _allTags;
+        private List<ProtoId<TagPrototype>>? _allTags;
 
         [DataField("anyTags")]
-        private List<string>? _anyTags;
+        private List<ProtoId<TagPrototype>>? _anyTags;
 
         private static bool IsNullOrEmpty<T>(ICollection<T>? list)
         {
@@ -21,16 +22,12 @@ namespace Content.Shared.Construction.Steps
             if (IsNullOrEmpty(_allTags) && IsNullOrEmpty(_anyTags))
                 return false; // Step is somehow invalid, we return.
 
-            // No tags at all.
-            if (!entityManager.TryGetComponent(uid, out TagComponent? tags))
-                return false;
-
             var tagSystem = entityManager.EntitySysManager.GetEntitySystem<TagSystem>();
 
-            if (_allTags != null && !tagSystem.HasAllTags(tags, _allTags))
+            if (_allTags != null && !tagSystem.HasAllTags(uid, _allTags))
                 return false; // We don't have all the tags needed.
 
-            if (_anyTags != null && !tagSystem.HasAnyTag(tags, _anyTags))
+            if (_anyTags != null && !tagSystem.HasAnyTag(uid, _anyTags))
                 return false; // We don't have any of the tags needed.
 
             // This entity is valid!

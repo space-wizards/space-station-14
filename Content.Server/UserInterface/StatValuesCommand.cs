@@ -4,9 +4,9 @@ using Content.Server.Administration;
 using Content.Server.Cargo.Systems;
 using Content.Server.EUI;
 using Content.Server.Item;
+using Content.Server.Power.Components;
 using Content.Shared.Administration;
 using Content.Shared.Item;
-using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
 using Content.Shared.UserInterface;
 using Content.Shared.Weapons.Melee;
@@ -56,6 +56,9 @@ public sealed class StatValuesCommand : IConsoleCommand
             case "itemsize":
                 message = GetItem();
                 break;
+            case "drawrate":
+                message = GetDrawRateMessage();
+                break;
             default:
                 shell.WriteError(Loc.GetString("stat-values-invalid", ("arg", args[0])));
                 return;
@@ -70,7 +73,7 @@ public sealed class StatValuesCommand : IConsoleCommand
     {
         if (args.Length == 1)
         {
-            return CompletionResult.FromOptions(new[] { "cargosell", "lathesell", "melee" });
+            return CompletionResult.FromOptions(new[] { "cargosell", "lathesell", "melee", "itemsize", "drawrate" });
         }
 
         return CompletionResult.Empty;
@@ -220,13 +223,13 @@ public sealed class StatValuesCommand : IConsoleCommand
         {
             var cost = 0.0;
 
-            foreach (var (material, count) in proto.RequiredMaterials)
+            foreach (var (material, count) in proto.Materials)
             {
-                var materialPrice = _proto.Index<MaterialPrototype>(material).Price;
+                var materialPrice = _proto.Index(material).Price;
                 cost += materialPrice * count;
             }
 
-            var sell = priceSystem.GetEstimatedPrice(_proto.Index<EntityPrototype>(proto.Result));
+            var sell = priceSystem.GetLatheRecipePrice(proto);
 
             values.Add(new[]
             {
@@ -244,6 +247,46 @@ public sealed class StatValuesCommand : IConsoleCommand
                 Loc.GetString("stat-lathe-id"),
                 Loc.GetString("stat-lathe-cost"),
                 Loc.GetString("stat-lathe-sell"),
+            },
+            Values = values,
+        };
+
+        return state;
+    }
+
+    private StatValuesEuiMessage GetDrawRateMessage()
+    {
+        var values = new List<string[]>();
+        var powerName = _factory.GetComponentName(typeof(ApcPowerReceiverComponent));
+
+        foreach (var proto in _proto.EnumeratePrototypes<EntityPrototype>())
+        {
+            if (proto.Abstract ||
+                !proto.Components.TryGetValue(powerName,
+                    out var powerConsumer))
+            {
+                continue;
+            }
+
+            var comp = (ApcPowerReceiverComponent) powerConsumer.Component;
+
+            if (comp.Load == 0)
+                continue;
+
+            values.Add(new[]
+            {
+                proto.ID,
+                comp.Load.ToString(CultureInfo.InvariantCulture),
+            });
+        }
+
+        var state = new StatValuesEuiMessage
+        {
+            Title = Loc.GetString("stat-drawrate-values"),
+            Headers = new List<string>
+            {
+                Loc.GetString("stat-drawrate-id"),
+                Loc.GetString("stat-drawrate-rate"),
             },
             Values = values,
         };

@@ -18,7 +18,7 @@ public sealed class DispenserTest : InteractionTest
         ToggleNeedPower();
 
         // Insert beaker
-        await Interact("Beaker");
+        await InteractUsing("Beaker");
         Assert.That(Hands.ActiveHandEntity, Is.Null);
 
         // Open BUI

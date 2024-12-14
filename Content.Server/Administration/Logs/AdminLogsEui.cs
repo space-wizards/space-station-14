@@ -23,6 +23,7 @@ public sealed class AdminLogsEui : BaseEui
     [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IConfigurationManager _configuration = default!;
+    [Dependency] private readonly IEntityManager _e = default!;
 
     private readonly ISawmill _sawmill;
 
@@ -51,7 +52,7 @@ public sealed class AdminLogsEui : BaseEui
         };
     }
 
-    private int CurrentRoundId => EntitySystem.Get<GameTicker>().RoundId;
+    private int CurrentRoundId => _e.System<GameTicker>().RoundId;
 
     public override async void Opened()
     {

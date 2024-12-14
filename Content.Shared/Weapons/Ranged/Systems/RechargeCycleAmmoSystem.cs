@@ -18,6 +18,9 @@ public sealed class RechargeCycleAmmoSystem : EntitySystem
 
     private void OnRechargeCycled(EntityUid uid, RechargeCycleAmmoComponent component, ActivateInWorldEvent args)
     {
+        if (!args.Complex)
+            return;
+
         if (!TryComp<BasicEntityAmmoProviderComponent>(uid, out var basic) || args.Handled)
             return;
 

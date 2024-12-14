@@ -1,5 +1,6 @@
 using Content.Server.Gravity;
 using Content.Shared.Alert;
+using Content.Shared.Gravity;
 using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.Gravity
@@ -24,6 +25,9 @@ namespace Content.IntegrationTests.Tests.Gravity
   id: WeightlessGravityGeneratorDummy
   components:
   - type: GravityGenerator
+  - type: PowerCharge
+    windowTitle: gravity-generator-window-title
+    idlePower: 50
     chargeRate: 1000000000 # Set this really high so it discharges in a single tick.
     activePower: 500
   - type: ApcPowerReceiver
@@ -38,6 +42,7 @@ namespace Content.IntegrationTests.Tests.Gravity
 
             var entityManager = server.ResolveDependency<IEntityManager>();
             var alertsSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<AlertsSystem>();
+            var weightlessAlert = SharedGravitySystem.WeightlessAlert;
 
             EntityUid human = default;
 
@@ -56,7 +61,7 @@ namespace Content.IntegrationTests.Tests.Gravity
             await server.WaitAssertion(() =>
             {
                 // No gravity without a gravity generator
-                Assert.That(alertsSystem.IsShowingAlert(human, AlertType.Weightless));
+                Assert.That(alertsSystem.IsShowingAlert(human, weightlessAlert));
 
                 generatorUid = entityManager.SpawnEntity("WeightlessGravityGeneratorDummy", entityManager.GetComponent<TransformComponent>(human).Coordinates);
             });
@@ -66,7 +71,7 @@ namespace Content.IntegrationTests.Tests.Gravity
 
             await server.WaitAssertion(() =>
             {
-                Assert.That(alertsSystem.IsShowingAlert(human, AlertType.Weightless), Is.False);
+                Assert.That(alertsSystem.IsShowingAlert(human, weightlessAlert), Is.False);
 
                 // This should kill gravity
                 entityManager.DeleteEntity(generatorUid);
@@ -76,7 +81,7 @@ namespace Content.IntegrationTests.Tests.Gravity
 
             await server.WaitAssertion(() =>
             {
-                Assert.That(alertsSystem.IsShowingAlert(human, AlertType.Weightless));
+                Assert.That(alertsSystem.IsShowingAlert(human, weightlessAlert));
             });
 
             await pair.RunTicksSync(10);

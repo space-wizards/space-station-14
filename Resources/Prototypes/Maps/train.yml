@@ -2,8 +2,10 @@
   id: Train
   mapName: 'Train'
   mapPath: /Maps/train.yml
-  minPlayers: 10
-  maxPlayers: 50
+  maxRandomOffset: 0
+  randomRotation: false
+  minPlayers: 35
+  maxPlayers: 70
   stations:
     Train:
       stationProto: StandardNanotrasenStation
@@ -14,10 +16,8 @@
             !type:NanotrasenNameGenerator
             prefixCreator: 'ED'
         - type: StationEmergencyShuttle
-          emergencyShuttlePath: /Maps/Shuttles/emergency_omega.yml # To do - add railway station
+          emergencyShuttlePath: /Maps/Shuttles/emergency_omega.yml # TODO - add railway station
         - type: StationJobs
-          overflowJobs:
-            - Passenger
           availableJobs:
             #service
             Captain: [ 1, 1 ]
@@ -25,21 +25,22 @@
             Bartender: [ 1, 1 ]
             Botanist: [ 2, 2 ]
             Chef: [ 1, 1 ]
-            Janitor: [ 1, 2 ]
+            Janitor: [ 2, 2 ]
             Chaplain: [ 1, 1 ]
             Librarian: [ 1, 1 ]
             ServiceWorker: [ 2, 3 ]
             Detective: [ 1, 1 ]
             #engineering
             ChiefEngineer: [ 1, 1 ]
-            AtmosphericTechnician: [ 3, 3 ]
-            StationEngineer: [ 5, 5 ]
+            AtmosphericTechnician: [ 2, 2 ]
+            StationEngineer: [ 4, 4 ]
             TechnicalAssistant: [ 3, 3 ]
             #medical
             ChiefMedicalOfficer: [ 1, 1 ]
             Chemist: [ 2, 2 ]
-            MedicalDoctor: [ 3, 3 ]
+            MedicalDoctor: [ 2, 2 ]
             MedicalIntern: [ 2, 2 ]
+            Paramedic: [ 1, 1 ]
             #science
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 4, 4 ]
@@ -47,16 +48,17 @@
             #security
             HeadOfSecurity: [ 1, 1 ]
             Warden: [ 1, 1 ]
-            SecurityOfficer: [ 4, 4 ]
-            SecurityCadet: [ 2, 3 ]
+            SecurityOfficer: [ 6, 6 ]
+            SecurityCadet: [ 3, 3 ]
             Lawyer: [ 1, 2 ]
             #supply
             Quartermaster: [ 1, 1 ]
-            SalvageSpecialist: [ 2, 2 ]
-            CargoTechnician: [ 2, 2 ]
+            SalvageSpecialist: [ 3, 3 ]
+            CargoTechnician: [ 3, 3 ]
             #civilian
             Passenger: [ -1, -1 ]
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
             Borg: [ 2, 2 ]
+            Reporter: [ 1, 1 ]

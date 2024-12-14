@@ -43,9 +43,6 @@ public sealed class RandomSpriteSystem : SharedRandomSpriteSystem
         if (!Resolve(uid, ref clothing, false))
             return;
 
-        if (clothing.ClothingVisuals == null)
-            return;
-
         foreach (var slotPair in clothing.ClothingVisuals)
         {
             foreach (var keyColorPair in component.Selected)

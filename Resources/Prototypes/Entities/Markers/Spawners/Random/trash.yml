@@ -1,3 +1,31 @@
+- type: entityTable
+  id: GenericTrashItems
+  table: !type:GroupSelector
+    children:
+    - !type:GroupSelector
+      weight: 95
+      children:
+      - id: FoodPacketBoritosTrash
+      - id: FoodPacketCheesieTrash
+      - id: FoodPacketChipsTrash
+      - id: FoodPacketChocolateTrash
+      - id: FoodPacketChowMeinTrash
+      - id: FoodPacketCnDsTrash
+      - id: FoodPacketDanDanTrash
+      - id: FoodPacketPistachioTrash
+      - id: FoodPacketEnergyTrash
+      - id: FoodPacketPopcornTrash
+      - id: FoodPacketRaisinsTrash
+      - id: FoodPacketSemkiTrash
+      - id: FoodPacketSusTrash
+      - id: FoodPacketSyndiTrash
+      - id: BrokenBottle
+    - !type:GroupSelector
+      weight: 5
+      children:
+      - id: FoodPlateSmallTrash
+      - id: FoodBowlBigTrash
+
 - type: entity
   name: Trash Spawner
   id: RandomSpawner
@@ -9,32 +37,11 @@
         - state: red
         - sprite: Objects/Consumable/Food/snacks.rsi
           state: pistachio-trash
-    - type: RandomSpawner
-      rarePrototypes:
-        - PuddleVomit
-        - FoodPlateSmallTrash
-        - FoodBowlBigTrash
-      rareChance: 0.03
-      prototypes:
-#        - TrashCandy
-        - FoodPacketBoritosTrash
-        - FoodPacketCheesieTrash
-        - FoodPacketChipsTrash
-        - FoodPacketChocolateTrash
-        - FoodPacketChowMeinTrash
-        - FoodPacketCnDsTrash
-        - FoodPacketDanDanTrash
-        - FoodPacketEnergyTrash
-        - FoodPacketPistachioTrash
-#        - TrashPlasticBag
-        - FoodPacketPopcornTrash
-        - FoodPacketRaisinsTrash
-        - FoodPacketSemkiTrash
-        - FoodPacketSusTrash
-        - FoodPacketSyndiTrash
-        - BrokenBottle
-      chance: 0.5
+    - type: EntityTableSpawner
       offset: 0.2
+      table: !type:NestedSelector
+        tableId: GenericTrashItems
+        prob: 0.5
   placement:
     mode: AlignTileAny
 
@@ -45,5 +52,7 @@
   placement:
     mode: AlignTileAny
   components:
-  - type: RandomSpawner
-    chance: 1
+  - type: EntityTableSpawner
+    offset: 0.2
+    table: !type:NestedSelector
+      tableId: GenericTrashItems

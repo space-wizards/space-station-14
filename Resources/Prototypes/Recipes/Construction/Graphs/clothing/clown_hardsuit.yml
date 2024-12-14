@@ -1,4 +1,4 @@
-﻿- type: constructionGraph
+- type: constructionGraph
   id: ClownHardsuit
   start: start
   graph:
@@ -10,13 +10,13 @@
               amount: 5
               doAfter: 1
             - tag: SuitEVA
-              name: An EVA suit
+              name: an EVA suit
               icon:
                 sprite: Clothing/OuterClothing/Suits/eva.rsi
                 state: icon
               doAfter: 1
             - tag: HelmetEVA
-              name: An EVA helmet
+              name: an EVA helmet
               icon:
                 sprite: Clothing/Head/Helmets/eva.rsi
                 state: icon

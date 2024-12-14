@@ -1,3 +1,5 @@
+using Content.Shared.Weapons.Ranged.Components;
+
 namespace Content.Shared.Weapons.Ranged.Events;
 
 /// <summary>
@@ -15,7 +17,7 @@ public record struct ShotAttemptedEvent
     /// <summary>
     /// The gun being shot.
     /// </summary>
-    public EntityUid Used;
+    public Entity<GunComponent> Used;
 
     public bool Cancelled { get; private set; }
 

@@ -1,0 +1,12 @@
+- type: entity
+  parent: MagazineLightRifleBox # It goes in a saw, its funny.
+  id: MagazineFoamBox
+  name: ammunition box (foam)
+  components:
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - BulletFoam
+    proto: BulletFoam
+    capacity: 100

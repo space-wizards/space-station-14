@@ -34,7 +34,6 @@
 
 - type: entity
   id: ActionRgbLight
-  noSpawn: true
   components:
   - type: EntityTargetAction
     whitelist: { components: [ PointLight ] }

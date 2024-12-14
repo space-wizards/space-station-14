@@ -1,19 +1,21 @@
 using System.Numerics;
+using Content.Shared.Administration.Managers;
 using Content.Shared.Database;
 using Content.Shared.Follower.Components;
 using Content.Shared.Ghost;
 using Content.Shared.Hands;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Pulling.Events;
-using Content.Shared.Movement.Systems;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Events;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Follower;
@@ -26,6 +28,7 @@ public sealed class FollowerSystem : EntitySystem
     [Dependency] private readonly SharedJointSystem _jointSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
     [Dependency] private readonly INetManager _netMan = default!;
+    [Dependency] private readonly ISharedAdminManager _adminManager = default!;
 
     public override void Initialize()
     {
@@ -36,9 +39,25 @@ public sealed class FollowerSystem : EntitySystem
         SubscribeLocalEvent<FollowerComponent, PullStartedMessage>(OnPullStarted);
         SubscribeLocalEvent<FollowerComponent, EntityTerminatingEvent>(OnFollowerTerminating);
 
+        SubscribeLocalEvent<FollowedComponent, ComponentGetStateAttemptEvent>(OnFollowedAttempt);
         SubscribeLocalEvent<FollowerComponent, GotEquippedHandEvent>(OnGotEquippedHand);
         SubscribeLocalEvent<FollowedComponent, EntityTerminatingEvent>(OnFollowedTerminating);
         SubscribeLocalEvent<BeforeSaveEvent>(OnBeforeSave);
+    }
+
+    private void OnFollowedAttempt(Entity<FollowedComponent> ent, ref ComponentGetStateAttemptEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        // Clientside VV stay losing
+        var playerEnt = args.Player?.AttachedEntity;
+
+        if (playerEnt == null ||
+            !ent.Comp.Following.Contains(playerEnt.Value) && !HasComp<GhostComponent>(playerEnt.Value))
+        {
+            args.Cancelled = true;
+        }
     }
 
     private void OnBeforeSave(BeforeSaveEvent ev)
@@ -225,7 +244,7 @@ public sealed class FollowerSystem : EntitySystem
 
         if (_netMan.IsClient)
         {
-            _transform.DetachParentToNull(uid, xform);
+            _transform.DetachEntity(uid, xform);
             return;
         }
 
@@ -246,6 +265,40 @@ public sealed class FollowerSystem : EntitySystem
         {
             StopFollowingEntity(player, uid, followed);
         }
+    }
+
+    /// <summary>
+    /// Gets the entity with the most non-admin ghosts following it.
+    /// </summary>
+    public EntityUid? GetMostGhostFollowed()
+    {
+        EntityUid? picked = null;
+        var most = 0;
+
+        // Keep a tally of how many ghosts are following each entity
+        var followedEnts = new Dictionary<EntityUid, int>();
+
+        // Look for followers that are ghosts and are player controlled
+        var query = EntityQueryEnumerator<FollowerComponent, GhostComponent, ActorComponent>();
+        while (query.MoveNext(out _, out var follower, out _, out var actor))
+        {
+            // Exclude admins
+            if (_adminManager.IsAdmin(actor.PlayerSession))
+                continue;
+
+            var followed = follower.Following;
+            // Add new entry or increment existing
+            followedEnts.TryGetValue(followed, out var currentValue);
+            followedEnts[followed] = currentValue + 1;
+
+            if (followedEnts[followed] > most)
+            {
+                picked = followed;
+                most = followedEnts[followed];
+            }
+        }
+
+        return picked;
     }
 }
 

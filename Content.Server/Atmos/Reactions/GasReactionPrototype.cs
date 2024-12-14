@@ -1,22 +1,10 @@
 ﻿using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Reactions;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Atmos.Reactions
 {
-    [Flags]
-    public enum ReactionResult : byte
-    {
-        NoReaction = 0,
-        Reacting = 1,
-        StopReactions = 2,
-    }
-
-    public enum GasReaction : byte
-    {
-        Fire = 0,
-    }
-
     [Prototype("gasReaction")]
     public sealed partial class GasReactionPrototype : IPrototype
     {

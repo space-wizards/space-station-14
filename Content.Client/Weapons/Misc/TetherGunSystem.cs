@@ -82,7 +82,7 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
 
         const float BufferDistance = 0.1f;
 
-        if (TryComp<TransformComponent>(gun.TetherEntity, out var tetherXform) &&
+        if (TryComp(gun.TetherEntity, out TransformComponent? tetherXform) &&
             tetherXform.Coordinates.TryDistance(EntityManager, TransformSystem, coords, out var distance) &&
             distance < BufferDistance)
         {

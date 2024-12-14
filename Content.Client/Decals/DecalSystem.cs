@@ -56,34 +56,43 @@ namespace Content.Client.Decals
 
         private void OnHandleState(EntityUid gridUid, DecalGridComponent gridComp, ref ComponentHandleState args)
         {
-            if (args.Current is not DecalGridState state)
-                return;
-
             // is this a delta or full state?
             _removedChunks.Clear();
+            Dictionary<Vector2i, DecalChunk> modifiedChunks;
 
-            if (!state.FullState)
+            switch (args.Current)
             {
-                foreach (var key in gridComp.ChunkCollection.ChunkCollection.Keys)
+                case DecalGridDeltaState delta:
                 {
-                    if (!state.AllChunks!.Contains(key))
-                        _removedChunks.Add(key);
+                    modifiedChunks = delta.ModifiedChunks;
+                    foreach (var key in gridComp.ChunkCollection.ChunkCollection.Keys)
+                    {
+                        if (!delta.AllChunks.Contains(key))
+                            _removedChunks.Add(key);
+                    }
+
+                    break;
                 }
-            }
-            else
-            {
-                foreach (var key in gridComp.ChunkCollection.ChunkCollection.Keys)
+                case DecalGridState state:
                 {
-                    if (!state.Chunks.ContainsKey(key))
-                        _removedChunks.Add(key);
+                    modifiedChunks = state.Chunks;
+                    foreach (var key in gridComp.ChunkCollection.ChunkCollection.Keys)
+                    {
+                        if (!state.Chunks.ContainsKey(key))
+                            _removedChunks.Add(key);
+                    }
+
+                    break;
                 }
+                default:
+                    return;
             }
 
             if (_removedChunks.Count > 0)
                 RemoveChunks(gridUid, gridComp, _removedChunks);
 
-            if (state.Chunks.Count > 0)
-                UpdateChunks(gridUid, gridComp, state.Chunks);
+            if (modifiedChunks.Count > 0)
+                UpdateChunks(gridUid, gridComp, modifiedChunks);
         }
 
         private void OnChunkUpdate(DecalChunkUpdateEvent ev)

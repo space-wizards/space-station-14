@@ -1,15 +1,18 @@
 ## General stuff
 
 ui-options-title = Game Options
+ui-options-tab-accessibility = Accessibility
 ui-options-tab-graphics = Graphics
 ui-options-tab-controls = Controls
 ui-options-tab-audio = Audio
 ui-options-tab-network = Network
 ui-options-tab-misc = General
 
-ui-options-apply = Apply
-ui-options-reset-all = Reset All
-ui-options-default = Default
+ui-options-apply = Save & apply
+ui-options-reset-all = Reset changed
+ui-options-default = Reset to defaults
+
+ui-options-value-percent = { TOSTRING($value, "P0") }
 
 # Misc/General menu
 
@@ -35,9 +38,14 @@ ui-options-restart-sounds = Round Restart Sounds
 ui-options-event-music = Event Music
 ui-options-admin-sounds = Play Admin Sounds
 ui-options-volume-label = Volume
-ui-options-volume-percent = { TOSTRING($volume, "P0") }
 
 ## Graphics menu
+
+ui-options-display-label = Display
+ui-options-quality-label = Quality
+ui-options-misc-label = Misc
+ui-options-interface-label = Interface
+
 
 ui-options-show-held-item = Show held item next to cursor
 ui-options-show-combat-mode-indicators = Show combat mode indicators with cursor
@@ -46,13 +54,6 @@ ui-options-show-ooc-patron-color = Show OOC Patreon color
 ui-options-show-looc-on-head = Show LOOC chat above characters head
 ui-options-fancy-speech = Show names in speech bubbles
 ui-options-fancy-name-background = Add background to speech bubble names
-ui-options-enable-color-name = Add colors to character names
-ui-options-colorblind-friendly = Colorblind friendly mode
-ui-options-reduced-motion = Reduce motion of visual effects
-ui-options-chat-window-opacity = Chat window opacity
-ui-options-chat-window-opacity-percent = { TOSTRING($opacity, "P0") }
-ui-options-screen-shake-intensity = Screen shake intensity
-ui-options-screen-shake-percent = { TOSTRING($intensity, "P0") }
 ui-options-vsync = VSync
 ui-options-fullscreen = Fullscreen
 ui-options-lighting-label = Lighting Quality:
@@ -76,17 +77,24 @@ ui-options-hud-theme-clockwork = Clockwork
 ui-options-hud-theme-retro = Retro
 ui-options-hud-theme-minimalist = Minimalist
 ui-options-hud-theme-ashen = Ashen
+ui-options-hud-layout-default = Default
+ui-options-hud-layout-separated = Separated
 ui-options-vp-stretch = Stretch viewport to fit game window
-ui-options-vp-scale = Fixed viewport scale: x{ $scale }
+ui-options-vp-scale = Fixed viewport scale:
+ui-options-vp-scale-value = x{ $scale }
 ui-options-vp-integer-scaling = Prefer integer scaling (might cause black bars/clipping)
 ui-options-vp-integer-scaling-tooltip = If this option is enabled, the viewport will be scaled using an integer value
                                         at specific resolutions. While this results in crisp textures, it also often
                                         means that black bars appear at the top/bottom of the screen or that part
                                         of the viewport is not visible.
+ui-options-vp-vertical-fit = Vertical viewport fitting
+ui-options-vp-vertical-fit-tooltip = When enabled, the main viewport will ignore the horizontal axis entirely when
+                                     fitting to your screen. If your screen is smaller than the viewport, then this
+                                     will cause the viewport to be cut off on the horizontal axis.
 ui-options-vp-low-res = Low-resolution viewport
 ui-options-parallax-low-quality = Low-quality Parallax (background)
 ui-options-fps-counter = Show FPS counter
-ui-options-vp-width = Viewport width: { $width }
+ui-options-vp-width = Viewport width:
 ui-options-hud-layout = HUD layout:
 
 ## Controls menu
@@ -150,6 +158,9 @@ ui-options-function-try-pull-object = Pull object
 ui-options-function-move-pulled-object = Move pulled object
 ui-options-function-release-pulled-object = Release pulled object
 ui-options-function-point = Point at location
+ui-options-function-rotate-object-clockwise = Rotate clockwise
+ui-options-function-rotate-object-counterclockwise = Rotate counterclockwise
+ui-options-function-flip-object = Flip
 
 ui-options-function-focus-chat-input-window = Focus chat
 ui-options-function-focus-local-chat-window = Focus chat (IC)
@@ -169,6 +180,8 @@ ui-options-function-open-crafting-menu = Open crafting menu
 ui-options-function-open-inventory-menu = Open inventory
 ui-options-function-open-a-help = Open admin help
 ui-options-function-open-abilities-menu = Open action menu
+ui-options-function-open-emotes-menu = Open emotes menu
+ui-options-function-toggle-round-end-summary-window = Toggle round end summary window
 ui-options-function-open-entity-spawn-window = Open entity spawn menu
 ui-options-function-open-sandbox-window = Open sandbox menu
 ui-options-function-open-tile-spawn-window = Open tile spawn menu
@@ -192,7 +205,6 @@ ui-options-function-editor-rotate-object = Rotate
 ui-options-function-editor-flip-object = Flip
 ui-options-function-editor-copy-object = Copy
 
-ui-options-function-open-abilities-menu = Open action menu
 ui-options-function-show-debug-console = Open Console
 ui-options-function-show-debug-monitors = Show Debug Monitors
 ui-options-function-inspect-entity = Inspect Entity
@@ -262,3 +274,11 @@ ui-options-net-pvs-leave-tooltip = This limits the rate at which the client will
 ## Toggle window console command
 cmd-options-desc = Opens options menu, optionally with a specific tab selected.
 cmd-options-help = Usage: options [tab]
+
+## Accessibility menu
+
+ui-options-enable-color-name = Add colors to character names
+ui-options-colorblind-friendly = Colorblind friendly mode
+ui-options-reduced-motion = Reduce motion of visual effects
+ui-options-chat-window-opacity = Chat window opacity
+ui-options-screen-shake-intensity = Screen shake intensity

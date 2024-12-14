@@ -1,0 +1,72 @@
+# For mantles
+- type: loadoutEffectGroup
+  id: MasterCMO
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChiefMedicalOfficer
+      time: 72000 #20 hrs
+
+# Jumpsuit
+- type: loadout
+  id: ChiefMedicalOfficerJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCMO
+
+- type: loadout
+  id: ChiefMedicalOfficerJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtCMO
+
+- type: loadout
+  id: ChiefMedicalOfficerTurtleneckJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCMOTurtle
+
+- type: loadout
+  id: ChiefMedicalOfficerTurtleneckJumpskirt
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtCMOTurtle
+
+# Head
+- type: loadout
+  id: ChiefMedicalOfficerBeret
+  equipment:
+    head: ClothingHeadHatBeretCmo
+
+- type: loadout
+  id: CMOMedicalHeadMirror
+  equipment:
+    head: ClothingHeadMirror
+
+# Neck
+- type: loadout
+  id: ChiefMedicalOfficerCloak
+  equipment:
+    neck: ClothingCloakCmo
+
+- type: loadout
+  id: ChiefMedicalOfficerMantle
+  equipment:
+    neck: ClothingNeckMantleCMO
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: MasterCMO
+
+- type: startingGear
+  id: ChiefMedicalOfficerMantle
+  equipment:
+    neck: ClothingNeckMantleCMO
+
+# Outer clothing
+- type: loadout
+  id: ChiefMedicalOfficerLabCoat
+  equipment:
+    outerClothing: ClothingOuterCoatLabCmo
+
+- type: loadout
+  id: ChiefMedicalOfficerWintercoat
+  equipment:
+    outerClothing: ClothingOuterWinterCMO
+

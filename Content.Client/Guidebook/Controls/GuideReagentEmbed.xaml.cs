@@ -4,6 +4,7 @@ using Content.Client.Chemistry.EntitySystems;
 using Content.Client.Guidebook.Richtext;
 using Content.Client.Message;
 using Content.Client.UserInterface.ControlExtensions;
+using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
@@ -128,7 +129,7 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
 
                 var groupLabel = new RichTextLabel();
                 groupLabel.SetMarkup(Loc.GetString("guidebook-reagent-effects-metabolism-group-rate",
-                    ("group", group), ("rate", effect.MetabolismRate)));
+                    ("group", _prototype.Index<MetabolismGroupPrototype>(group).LocalizedName), ("rate", effect.MetabolismRate)));
                 var descriptionLabel = new RichTextLabel
                 {
                     Margin = new Thickness(25, 0, 10, 0)
@@ -139,7 +140,7 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
                 var i = 0;
                 foreach (var effectString in effect.EffectDescriptions)
                 {
-                    descMsg.AddMarkup(effectString);
+                    descMsg.AddMarkupOrThrow(effectString);
                     i++;
                     if (i < descriptionsCount)
                         descMsg.PushNewline();
@@ -156,12 +157,45 @@ public sealed partial class GuideReagentEmbed : BoxContainer, IDocumentTag, ISea
         }
         #endregion
 
+        #region PlantMetabolisms
+        if (_chemistryGuideData.ReagentGuideRegistry.TryGetValue(reagent.ID, out var guideEntryRegistryPlant) &&
+            guideEntryRegistryPlant.PlantMetabolisms != null &&
+            guideEntryRegistryPlant.PlantMetabolisms.Count > 0)
+        {
+            PlantMetabolismsDescriptionContainer.Children.Clear();
+            var metabolismLabel = new RichTextLabel();
+            metabolismLabel.SetMarkup(Loc.GetString("guidebook-reagent-plant-metabolisms-rate"));
+            var descriptionLabel = new RichTextLabel
+            {
+                Margin = new Thickness(25, 0, 10, 0)
+            };
+            var descMsg = new FormattedMessage();
+            var descriptionsCount = guideEntryRegistryPlant.PlantMetabolisms.Count;
+            var i = 0;
+            foreach (var effectString in guideEntryRegistryPlant.PlantMetabolisms)
+            {
+                descMsg.AddMarkupOrThrow(effectString);
+                i++;
+                if (i < descriptionsCount)
+                    descMsg.PushNewline();
+            }
+            descriptionLabel.SetMessage(descMsg);
+
+            PlantMetabolismsDescriptionContainer.AddChild(metabolismLabel);
+            PlantMetabolismsDescriptionContainer.AddChild(descriptionLabel);
+        }
+        else
+        {
+            PlantMetabolismsContainer.Visible = false;
+        }
+        #endregion
+
         GenerateSources(reagent);
 
         FormattedMessage description = new();
         description.AddText(reagent.LocalizedDescription);
         description.PushNewline();
-        description.AddMarkup(Loc.GetString("guidebook-reagent-physical-description",
+        description.AddMarkupOrThrow(Loc.GetString("guidebook-reagent-physical-description",
             ("description", reagent.LocalizedPhysicalDescription)));
         ReagentDescription.SetMessage(description);
     }

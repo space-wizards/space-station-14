@@ -17,6 +17,8 @@
     whitelist:
       tags:
       - Burnt
+      - Cigarette
+      - Cigar
     maxItemSize: Tiny
     grid:
     - 0,0,9,0

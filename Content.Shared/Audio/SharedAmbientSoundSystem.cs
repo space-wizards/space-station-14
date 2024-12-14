@@ -1,3 +1,4 @@
+using Content.Shared.Mobs;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
@@ -12,6 +13,7 @@ public abstract class SharedAmbientSoundSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<AmbientSoundComponent, ComponentGetState>(GetCompState);
         SubscribeLocalEvent<AmbientSoundComponent, ComponentHandleState>(HandleCompState);
+
         _query = GetEntityQuery<AmbientSoundComponent>();
     }
 

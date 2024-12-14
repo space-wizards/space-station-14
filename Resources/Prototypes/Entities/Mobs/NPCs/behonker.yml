@@ -10,6 +10,9 @@
       makeSentient: true
       name: ghost-role-information-behonker-name
       description: ghost-role-information-behonker-description
+      rules: ghost-role-information-antagonist-rules
+      raffle:
+        settings: default
     - type: GhostTakeoverAvailable
     - type: HTN
       rootTask:
@@ -76,15 +79,15 @@
         - id: BikeHorn
     - type: UserInterface
       interfaces:
-      - key: enum.StrippingUiKey.Key
-        type: StrippableBoundUserInterface
+        enum.StrippingUiKey.Key:
+          type: StrippableBoundUserInterface
     - type: MobThresholds
       thresholds:
         0: Alive
         500: Dead
     - type: Metabolizer
       solutionOnBody: false
-      updateFrequency: 0.25
+      updateInterval: 0.25
       metabolizerTypes: [ Dragon ]
       groups:
         - id: Medicine
@@ -107,9 +110,6 @@
         collection: BananiumHorn
         params:
           volume: 5
-      anomalyContactDamage:
-        types:
-          Radiation: 10
     - type: Input
       context: "human"
     - type: Bloodstream
@@ -155,9 +155,6 @@
   suffix: "Ice"
   components:
   - type: Anomaly
-    anomalyContactDamage:
-      types:
-        Cold: 10
   - type: ExplosionAnomaly
     supercriticalExplosion: Cryo
     explosionTotalIntensity: 1000
@@ -165,7 +162,6 @@
     explosionMaxTileIntensity: 10
   - type: ProjectileAnomaly
     projectilePrototype: ProjectileIcicle
-    targetNonSentientChance: 0.1
   - type: TempAffectingAnomaly
     tempChangePerSecond: -25
     hotspotExposeTemperature: -1000

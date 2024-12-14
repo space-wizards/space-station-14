@@ -113,7 +113,7 @@ public abstract class SharedStealthSystem : EntitySystem
 
     private void OnMove(EntityUid uid, StealthOnMoveComponent component, ref MoveEvent args)
     {
-        if (args.FromStateHandling)
+        if (_timing.ApplyingState)
             return;
 
         if (args.NewPosition.EntityId != args.OldPosition.EntityId)

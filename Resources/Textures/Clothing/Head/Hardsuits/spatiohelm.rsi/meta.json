@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Original by Emisse, modified by EmoGarbage404",
+  "copyright": "Original by Emisse, modified by EmoGarbage404. Vox states by Flareguy for SS14",
 
   "size": {
     "x": 32,
@@ -33,27 +33,15 @@
       "directions": 4
     },
     {
-      "name": "inhand-left",
+      "name": "equipped-head-vox",
       "directions": 4
     },
     {
-      "name": "inhand-left-unshaded",
+      "name": "equipped-head-light-vox",
       "directions": 4
     },
     {
-      "name": "inhand-left-light",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right-unshaded",
-      "directions": 4
-    },
-    {
-      "name": "inhand-right-light",
+      "name": "equipped-head-unshaded-vox",
       "directions": 4
     }
   ]

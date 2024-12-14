@@ -18,3 +18,8 @@ stat-lathe-sell = Sell price
 stat-item-values = Item sizes
 stat-item-id = ID
 stat-item-price = Size
+
+# Draw Rate
+stat-drawrate-values = APC draw rate
+stat-drawrate-id = ID
+stat-drawrate-rate = Draw Rate (W)

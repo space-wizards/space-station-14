@@ -1,4 +1,6 @@
 barsign-component-name = bar sign
+barsign-ui-menu = Bar Sign Configuration
+barsign-ui-set-label = Set Sign:
 
 # Bar signs prototypes
 

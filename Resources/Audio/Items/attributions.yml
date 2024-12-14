@@ -93,6 +93,16 @@
   copyright: "User Hanbaal on freesound.org. Converted to ogg by TheShuEd"
   source: "https://freesound.org/people/Hanbaal/sounds/178669/"
 
+- files: ["soda_shake.ogg"]
+  license: "CC-BY-NC-4.0"
+  copyright: "User mcmast on freesound.org. Converted and edited by Tayrtahn"
+  source: "https://freesound.org/people/mcmast/sounds/456703/"
+
+- files: ["soda_spray.ogg"]
+  license: "CC0-1.0"
+  copyright: "User Hajisounds on freesound.org. Converted and edited by Tayrtahn"
+  source: "https://freesound.org/people/Hajisounds/sounds/709149/"
+
 - files: ["newton_cradle.ogg"]
   license: "CC-BY-4.0"
   copyright: "User LoafDV on freesound.org. Converted to ogg end edited by lzk228"
@@ -117,3 +127,15 @@
   license: "CC0-1.0"
   copyright: "Original sound by stomachache on freesound.org, processed by vanilla"
   source: "https://freesound.org/s/262213/"
+
+- files:
+  - "sheath.ogg"
+  - "unsheath.ogg"
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation."
+  source: "https://github.com/tgstation/tgstation/blob/a7f525bce9a359ab5282fc754078cd4b5678a006/sound/items"
+
+- files: ["pen_click.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by dslrguide, converted to ogg and mono by Themias"
+  source: "https://freesound.org/people/dslrguide/sounds/321484"

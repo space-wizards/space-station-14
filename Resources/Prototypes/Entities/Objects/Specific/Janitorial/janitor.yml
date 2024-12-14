@@ -6,7 +6,17 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Janitorial/mop.rsi
-    state: mop
+    layers:
+      - state: mop
+      - map: ["enum.SolutionContainerLayers.Fill"]
+        state: fill-3
+        visible: false
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 3
+    fillBaseName: fill-
+    inHandsFillBaseName: -fill-
+    inHandsMaxFillLevels: 2
   - type: MeleeWeapon
     damage:
       types:
@@ -30,6 +40,9 @@
         maxVol: 100
   - type: UseDelay
     delay: 1
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 50
   - type: Tag
     tags:
       - Mop
@@ -37,6 +50,7 @@
   - type: GuideHelp
     guides:
     - Janitorial
+  - type: DnaSubstanceTrace
 
 - type: entity
   parent: BaseItem
@@ -46,7 +60,17 @@
   components:
     - type: Sprite
       sprite: Objects/Specific/Janitorial/advmop.rsi
-      state: advmop
+      layers:
+      - state: advmop
+      - map: ["enum.SolutionContainerLayers.Fill"]
+        state: fill-2
+        visible: false
+    - type: Appearance
+    - type: SolutionContainerVisuals
+      maxFillLevels: 2
+      fillBaseName: fill-
+      inHandsFillBaseName: -fill-
+      inHandsMaxFillLevels: 2
     - type: MeleeWeapon
       damage:
         types:
@@ -86,6 +110,7 @@
       tags:
         - Mop
         - MopAdv
+    - type: DnaSubstanceTrace
 
 - type: entity
   name: wet floor sign
@@ -103,6 +128,9 @@
       coefficients:
         Blunt: 0.95
         Slash: 0.95
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 50
   - type: Tag
     tags:
       - WetFloorSign
@@ -212,6 +240,7 @@
     embedOnThrow: True
   - type: ThrowingAngle
     angle: 0
+  - type: LandAtCursor
   - type: Ammo
     muzzleFlash: null
   - type: Projectile
@@ -221,6 +250,36 @@
       types:
         Blunt: 3
   - type: Plunger
+
+- type: entity
+  name: golden plunger
+  id: GoldenPlunger
+  parent: Plunger
+  description: A plunger with a plastic suction cup coated in a thin layer of gold given as a token of appreciation for years of service. Still used to unclog drains.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/golden_plunger.rsi
+    state: plunger
+  - type: Item
+    sprite: Objects/Specific/Janitorial/golden_plunger.rsi
+    heldPrefix: plunger
+  - type: Clothing
+    sprite: Objects/Specific/Janitorial/golden_plunger.rsi
+    slots:
+      - HEAD
+    clothingVisuals:
+      head:
+        - state: equipped-HELMET
+          offset: "0, 0.15625"
+  - type: PointLight
+    radius: 1.5
+    energy: 0.75
+    color: "#ffc20e"
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 50
+      Gold: 10
+      Wood: 25
 
 - type: weightedRandomEntity
   id: PlungerLoot
@@ -238,7 +297,15 @@
   components:
     - type: Sprite
       sprite: Objects/Specific/Janitorial/rag.rsi
-      state: rag
+      layers:
+      - state: rag
+      - map: ["enum.SolutionContainerLayers.Fill"]
+        state: fill-3
+        visible: false
+    - type: Appearance
+    - type: SolutionContainerVisuals
+      maxFillLevels: 3
+      fillBaseName: fill-
     - type: Spillable
       solution: absorbed
     - type: MeleeWeapon
@@ -267,3 +334,4 @@
     - type: CleansForensics
     - type: Fiber
       fiberColor: fibers-white
+    - type: DnaSubstanceTrace

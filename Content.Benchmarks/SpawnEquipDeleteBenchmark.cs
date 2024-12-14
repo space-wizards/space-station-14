@@ -32,7 +32,7 @@ public class SpawnEquipDeleteBenchmark
     public async Task SetupAsync()
     {
         ProgramShared.PathOffset = "../../../../";
-        PoolManager.Startup(null);
+        PoolManager.Startup();
         _pair = await PoolManager.GetServerClient();
         var server = _pair.Server;
 
@@ -58,7 +58,7 @@ public class SpawnEquipDeleteBenchmark
             for (var i = 0; i < N; i++)
             {
                 _entity = server.EntMan.SpawnAttachedTo(Mob, _coords);
-                _spawnSys.EquipStartingGear(_entity, _gear, null);
+                _spawnSys.EquipStartingGear(_entity, _gear);
                 server.EntMan.DeleteEntity(_entity);
             }
         });

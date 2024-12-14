@@ -1,6 +1,7 @@
 using Content.Shared.Access;
 using Content.Shared.Doors.Electronics;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Doors.Electronics;
@@ -18,6 +19,23 @@ public sealed class DoorElectronicsBoundUserInterface : BoundUserInterface
     protected override void Open()
     {
         base.Open();
+        _window = this.CreateWindow<DoorElectronicsConfigurationMenu>();
+        _window.OnAccessChanged += UpdateConfiguration;
+        Reset();
+    }
+
+    public override void OnProtoReload(PrototypesReloadedEventArgs args)
+    {
+        base.OnProtoReload(args);
+
+        if (!args.WasModified<AccessLevelPrototype>())
+            return;
+
+        Reset();
+    }
+
+    private void Reset()
+    {
         List<ProtoId<AccessLevelPrototype>> accessLevels = new();
 
         foreach (var accessLevel in _prototypeManager.EnumeratePrototypes<AccessLevelPrototype>())
@@ -29,10 +47,7 @@ public sealed class DoorElectronicsBoundUserInterface : BoundUserInterface
         }
 
         accessLevels.Sort();
-
-        _window = new DoorElectronicsConfigurationMenu(this, accessLevels, _prototypeManager);
-        _window.OnClose += Close;
-        _window.OpenCentered();
+        _window?.Reset(_prototypeManager, accessLevels);
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -42,14 +57,6 @@ public sealed class DoorElectronicsBoundUserInterface : BoundUserInterface
         var castState = (DoorElectronicsConfigurationState) state;
 
         _window?.UpdateState(castState);
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        base.Dispose(disposing);
-        if (!disposing) return;
-
-        _window?.Dispose();
     }
 
     public void UpdateConfiguration(List<ProtoId<AccessLevelPrototype>> newAccessList)

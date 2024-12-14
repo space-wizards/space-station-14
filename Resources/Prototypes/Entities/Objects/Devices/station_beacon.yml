@@ -30,8 +30,8 @@
     singleUser: true
   - type: UserInterface
     interfaces:
-    - key: enum.NavMapBeaconUiKey.Key
-      type: NavMapBeaconBoundUserInterface
+      enum.NavMapBeaconUiKey.Key:
+        type: NavMapBeaconBoundUserInterface
   - type: Item
     size: Small
   - type: SubFloorHide
@@ -136,6 +136,14 @@
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-vault
+
+- type: entity
+  parent: DefaultStationBeaconCommand
+  id: DefaultStationBeaconGateway
+  suffix: Gateway
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-gateway
 
 - type: entity
   parent: DefaultStationBeaconCommand
@@ -432,6 +440,14 @@
 
 - type: entity
   parent: DefaultStationBeaconEngineering
+  id: DefaultStationBeaconAnchor
+  suffix: Anchor
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-anchor
+
+- type: entity
+  parent: DefaultStationBeaconEngineering
   id: DefaultStationBeaconSingularity
   suffix: PA Control
   components:
@@ -631,3 +647,11 @@
   components:
   - type: NavMapBeacon
     defaultText: station-beacon-escape-pod
+
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconVox
+  suffix: Vox
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-vox

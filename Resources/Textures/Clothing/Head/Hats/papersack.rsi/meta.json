@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from Beestation at commit https://github.com/BeeStation/BeeStation-Hornet/commit/0bb49b1a97488349ee89308ad6a0904066e1c6f3",
+  "copyright": "Taken from Beestation at commit https://github.com/BeeStation/BeeStation-Hornet/commit/0bb49b1a97488349ee89308ad6a0904066e1c6f3. vox states by Flareguy",
   "size": {
     "x": 32,
     "y": 32
@@ -12,6 +12,10 @@
     },
     {
       "name": "equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "equipped-HELMET-vox",
       "directions": 4
     },
     {

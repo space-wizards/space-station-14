@@ -18,7 +18,7 @@ public sealed class ActionsAddedTest
     [Test]
     public async Task TestCombatActionsAdded()
     {
-        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, DummyTicker = false});
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, DummyTicker = false });
         var server = pair.Server;
         var client = pair.Client;
         var sEntMan = server.ResolveDependency<IEntityManager>();

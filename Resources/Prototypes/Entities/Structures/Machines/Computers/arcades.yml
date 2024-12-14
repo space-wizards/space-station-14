@@ -7,7 +7,6 @@
   components:
   - type: ApcPowerReceiver
     powerLoad: 350
-    priority: Low
   - type: ExtensionCableReceiver
   - type: PointLight
     radius: 1.8
@@ -70,8 +69,62 @@
   - type: PointLight
     color: "#e3a136"
   - type: SpaceVillainArcade
-    rewardAmount: 0
+    rewardMinAmount: 0
+    rewardMaxAmount: 0
     possibleRewards:
+    - Basketball
+    - BalloonNT
+    - BalloonCorgi
+    - BoxDonkSoftBox
+    - BoxCartridgeCap
+    - BeachBall
+    - CandyBucket
+    - CrayonBox
+    - ClothingHeadHatCowboyRed
+    - FoamCrossbow
+    - FoamBlade
+    - FoamCutlass
+    - Football
+    - GlowstickBase #green
+    - GlowstickBlue
+    - GlowstickYellow
+    - GlowstickPurple
+    - GlowstickRed
+    - HarmonicaInstrument
+    - OcarinaInstrument
+    - RecorderInstrument
+    - GunpetInstrument
+    - BirdToyInstrument
+    - MysteryFigureBox
+    - PlushieHampter
+    - PlushieLizard
+    - PlushieRainbowLizard
+    - PlushieAtmosian
+    - PlushieSpaceLizard
+    - PlushieNuke
+    - PlushieCarp
+    - PlushieMagicarp
+    - PlushieHolocarp
+    - PlushieRainbowCarp
+    - PlushieRatvar
+    - PlushieNar
+    - PlushieSnake
+    - PlushieArachind
+    - PlushieMoth
+    - PlushieHampter
+    - PlushiePenguin
+    - PlushieHuman
+    - PlushieRouny
+    - PlushieBee
+    - PlushieSlime
+    - PlushieGhost
+    - PlushieDiona
+    - PlushieSharkBlue
+    - PlushieVox
+    - PlushieXeno
+    - PlasticBanana
+    - RevolverCapGun
+    - SnapPopBox
     - ToyMouse
     - ToyAi
     - ToyNuke
@@ -91,44 +144,13 @@
     - ToySeraph
     - ToyDurand
     - ToySkeleton
-    - FoamCrossbow
-    - RevolverCapGun
-    - PlushieHampter
-    - PlushieLizard
-    - PlushieAtmosian
-    - PlushieSpaceLizard
-    - PlushieNuke
-    - PlushieCarp
-    - PlushieMagicarp
-    - PlushieHolocarp
-    - PlushieRainbowCarp
-    - PlushieRatvar
-    - PlushieNar
-    - PlushieSnake
-    - PlushieArachind
-    - Basketball
-    - Football
-    - PlushieRouny
-    - PlushieBee
-    - PlushieSlime
-    - BalloonNT
-    - BalloonCorgi
     - ToySword
-    - CrayonBox
-    - BoxDonkSoftBox
-    - BoxCartridgeCap
-    - HarmonicaInstrument
-    - OcarinaInstrument
-    - RecorderInstrument
-    - GunpetInstrument
-    - BirdToyInstrument
-    - PlushieXeno
-    - BeachBall
-    - PlushieMoth
-    - PlushieHampter
-    - PlushiePenguin
-    - PlushieHuman
-    - ClothingHeadHatCowboyRed
+    - ToyAmongPequeno
+    - ToyRubberDuck
+    - ToyHammer
+    - WeaponWaterPistol
+    - WhoopieCushion
+    - Whistle
   - type: WiresPanel
   - type: Wires
     layoutId: Arcade
@@ -136,18 +158,19 @@
   - type: ActivatableUI
     key: enum.SpaceVillainArcadeUiKey.Key
   - type: ActivatableUIRequiresPower
+  - type: StationAiWhitelist
   - type: UserInterface
     interfaces:
-      - key: enum.SpaceVillainArcadeUiKey.Key
+      enum.SpaceVillainArcadeUiKey.Key:
         type: SpaceVillainArcadeBoundUserInterface
-      - key: enum.WiresUiKey.Key
+      enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: Computer
     board: SpaceVillainArcadeComputerCircuitboard
   - type: Advertise
     pack: SpaceVillainAds
-    minWait: 60 # Arcades are noisy
-    maxWait: 240
+    minimumWait: 60 # Arcades are noisy
+    maximumWait: 240
   - type: SpeakOnUIClosed
     pack: SpaceVillainGoodbyes
 
@@ -180,17 +203,18 @@
   - type: ActivatableUI
     key: enum.BlockGameUiKey.Key
   - type: ActivatableUIRequiresPower
+  - type: StationAiWhitelist
   - type: UserInterface
     interfaces:
-      - key: enum.BlockGameUiKey.Key
+      enum.BlockGameUiKey.Key:
         type: BlockGameBoundUserInterface
-      - key: enum.WiresUiKey.Key
+      enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: Computer
     board: BlockGameArcadeComputerCircuitboard
   - type: Advertise
     pack: BlockGameAds
-    minWait: 60 # Arcades are noisy
-    maxWait: 240
+    minimumWait: 60 # Arcades are noisy
+    maximumWait: 240
   - type: SpeakOnUIClosed
     pack: BlockGameGoodbyes

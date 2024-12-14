@@ -32,7 +32,13 @@
   description: A handheld device used for remotely sending signals to objects within a small radius of about 50 meters.
   components:
   - type: Sprite
-    state: signaller2
+    state: advanced
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: advanced-inhand-left
+      right:
+      - state: advanced-inhand-right
   - type: WirelessNetworkConnection
     range: 50
   - type: StaticPrice

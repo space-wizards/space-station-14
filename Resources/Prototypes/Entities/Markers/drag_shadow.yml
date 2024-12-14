@@ -1,7 +1,7 @@
 - type: entity
   name: drag shadow
   id: dragshadow
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Tag
     tags:

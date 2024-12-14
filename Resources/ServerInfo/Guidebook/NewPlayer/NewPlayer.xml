@@ -1,0 +1,42 @@
+<Document>
+# Welcome to Space Station 14!
+
+You've just begun your shift aboard a Nanotrasen space station.
+You and your fellow crewmates are tasked with working together, surviving, and having fun!
+
+[bold]Make sure to follow all server rules.[/bold] You can ask questions or report rule breaks to the [color=#EB2D3A][bold]admin team[/bold][/color] by using the [bold]admin help menu[/bold]. ([italic]accessible by pressing [/italic][color=yellow][bold][keybind="OpenAHelp"/][/bold][/color])
+
+More detailed guides about [italic]specific jobs[/italic] and [italic]mechanics[/italic] can be found [textlink="here." link="SS14"/]
+
+This guide can be reopened at any time using [color=yellow][bold][keybind="OpenGuidebook"][/bold][/color].
+
+## Basic Controls
+The following are the controls you'll need for regular gameplay:
+
+- Run using [color=yellow][bold][keybind="MoveUp"][keybind="MoveLeft"][keybind="MoveDown"][keybind="MoveRight"][/bold][/color]. Hold down [color=yellow][bold][keybind="Walk"][/bold][/color] to walk
+
+- Examine the world around you with [color=yellow][bold][keybind="ExamineEntity"][/bold][/color]
+
+- Interact with the world using [color=yellow][bold][keybind="Use"][/bold][/color]
+
+- Hovering over an entity and pressing [color=yellow][bold][keybind="UseSecondary"][/bold][/color] shows the [italic]context menu[/italic], which contains additional interactions
+
+- Swap hands using [color=yellow][bold][keybind="SwapHands"][/bold][/color] and activate the currently held item with [color=yellow][bold][keybind="ActivateItemInHand"][/bold][/color]
+
+- Drop held items with [color=yellow][bold][keybind="Drop"][/bold][/color] or throw them using [color=yellow][bold][keybind="ThrowItemInHand"][/bold][/color]
+
+- Pull and release things with [color=yellow][bold][keybind="TryPullObject"][/bold][/color] and [color=yellow][bold][keybind="ReleasePulledObject"][/bold][/color]
+
+A more comprehensive list can be found on the [textlink="controls" link="Controls"] page.
+
+## What is SS14?
+Space Station 14 is a multiplayer game about paranoia and chaos on a space station and a remake of the cult-classic Space Station 13.
+
+Join dozens of other players on an intricately designed and simulated space station, immersing yourself in roleplay and dealing with threats along the way.
+
+SS14 is an [italic]open-source game[/italic] developed by people [bold]just like you![/bold]
+It receives [color=lime]daily updates[/color] and may at times be [color=#EB2D3A][bold]unstable.[/bold][/color]
+
+[italic]If you want to report bugs or help with development, join the discord and learn how to get started.[/italic]
+
+</Document>

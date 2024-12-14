@@ -8,7 +8,8 @@ using Robust.Shared.Map;
 
 namespace Content.Client.UserInterface.Controls;
 
-public sealed class ListContainer : Control
+[Virtual]
+public class ListContainer : Control
 {
     public const string StylePropertySeparation = "separation";
     public const string StyleClassListContainerButton = "list-container-button";
@@ -21,9 +22,26 @@ public sealed class ListContainer : Control
         set => _buttonGroup = value ? new ButtonGroup() : null;
     }
     public bool Toggle { get; set; }
+
+    /// <summary>
+    /// Called when creating a button on the UI.
+    /// The provided <see cref="ListContainerButton"/> is the generated button that Controls should be parented to.
+    /// </summary>
     public Action<ListData, ListContainerButton>? GenerateItem;
-    public Action<BaseButton.ButtonEventArgs?, ListData?>? ItemPressed;
-    public Action<GUIBoundKeyEventArgs, ListData?>? ItemKeyBindDown;
+
+    /// <inheritdoc cref="BaseButton.OnPressed"/>
+    public Action<BaseButton.ButtonEventArgs, ListData>? ItemPressed;
+
+    /// <summary>
+    /// Invoked when a KeyBind is pressed on a ListContainerButton.
+    /// </summary>
+    public Action<GUIBoundKeyEventArgs, ListData>? ItemKeyBindDown;
+
+    /// <summary>
+    /// Invoked when the selected item does not exist in the new data when PopulateList is called.
+    /// </summary>
+    public Action? NoItemSelected;
+
     public IReadOnlyList<ListData> Data => _data;
 
     private const int DefaultSeparation = 3;
@@ -72,11 +90,11 @@ public sealed class ListContainer : Control
         _vScrollBar.OnValueChanged += ScrollValueChanged;
     }
 
-    public void PopulateList(IReadOnlyList<ListData> data)
+    public virtual void PopulateList(IReadOnlyList<ListData> data)
     {
         if ((_itemHeight == 0 || _data is {Count: 0}) && data.Count > 0)
         {
-            ListContainerButton control = new(data[0]);
+            ListContainerButton control = new(data[0], 0);
             GenerateItem?.Invoke(data[0], control);
             control.Measure(Vector2Helpers.Infinity);
             _itemHeight = control.DesiredSize.Y;
@@ -97,7 +115,7 @@ public sealed class ListContainer : Control
         if (_selected != null && !data.Contains(_selected))
         {
             _selected = null;
-            ItemPressed?.Invoke(null, null);
+            NoItemSelected?.Invoke();
         }
     }
 
@@ -116,7 +134,7 @@ public sealed class ListContainer : Control
         if (_buttons.TryGetValue(data, out var button) && Toggle)
             button.Pressed = true;
         _selected = data;
-        button ??= new ListContainerButton(data);
+        button ??= new ListContainerButton(data, _data.IndexOf(data));
         OnItemPressed(new BaseButton.ButtonEventArgs(button,
             new GUIBoundKeyEventArgs(EngineKeyFunctions.UIClick, BoundKeyState.Up,
                 new ScreenCoordinates(0, 0, WindowId.Main), true, Vector2.Zero, Vector2.Zero)));
@@ -260,7 +278,7 @@ public sealed class ListContainer : Control
                         toRemove.Remove(data);
                     else
                     {
-                        button = new ListContainerButton(data);
+                        button = new ListContainerButton(data, i);
                         button.OnPressed += OnItemPressed;
                         button.OnKeyBindDown += args => OnItemKeyBindDown(button, args);
                         button.ToggleMode = Toggle;
@@ -360,11 +378,14 @@ public sealed class ListContainer : Control
 public sealed class ListContainerButton : ContainerButton, IEntityControl
 {
     public readonly ListData Data;
+
+    public readonly int Index;
     // public PanelContainer Background;
 
-    public ListContainerButton(ListData data)
+    public ListContainerButton(ListData data, int index)
     {
         Data = data;
+        Index = index;
         // AddChild(Background = new PanelContainer
         // {
         //     HorizontalExpand = true,

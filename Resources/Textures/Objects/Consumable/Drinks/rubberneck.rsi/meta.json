@@ -1,0 +1,28 @@
+{
+    "version": 1,
+    "size":
+    {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "https://tgstation13.org/wiki/images/archive/4/4e/20220514022531%21Rubberneck.png. Fill levels by Hanzdegloker on GitHub.",
+    "states":
+    [
+        {
+            "name": "icon"
+        },
+        {
+            "name": "icon_empty"
+        },
+        {
+            "name": "fill-1"
+        },
+        {
+            "name": "fill-2"
+        },
+        {
+            "name": "fill-3"
+        }
+    ]
+}

@@ -10,23 +10,21 @@
   - type: Sprite
     sprite: Clothing/Uniforms/procedural.rsi
     layers:
-    - state: base_torso_standart
+    - state: base_torso_standard
       map: [ "torso" ]
-    - state: base_leg_standart
+    - state: base_leg_standard
       map: [ "leg" ]
     - state: mask_null
       map: [ "decor" ]
     - state: mask_null
       map: [ "overlay" ]
   - type: Clothing
-    femaleMask: UniformTop
-    maleMask: UniformTop
     sprite: Clothing/Uniforms/procedural.rsi
     clothingVisuals:
       jumpsuit:
-      - state: base_torso_standart
+      - state: base_torso_standard
         map: [ "torso" ]
-      - state: base_leg_standart
+      - state: base_leg_standard
         map: [ "leg" ]
       - state: mask_null
         map: [ "decor" ]
@@ -42,7 +40,7 @@
     offset: 0
     prototypes:
     - ClothingUniformRandomArmless
-    - ClothingUniformRandomStandart
+    - ClothingUniformRandomStandard
     - ClothingUniformRandomBra
     - ClothingUniformRandomShorts
     - ClothingUniformRandomShirt
@@ -57,7 +55,7 @@
       - torso:
           base_torso_armless: Sixteen
         leg:
-          base_leg_standart: Sixteen
+          base_leg_standard: Sixteen
           base_leg_short: Sixteen
           base_leg_skirt: Sixteen
           base_leg_skirt_long: Sixteen
@@ -76,16 +74,16 @@
 
 - type: entity
   parent: ClothingUniformRandom
-  id: ClothingUniformRandomStandart
+  id: ClothingUniformRandomStandard
   name: colorful costume
   components:
   - type: RandomSprite
     available:
       - torso:
-          base_torso_standart: Sixteen
-          base_torso_standart2: Sixteen
+          base_torso_standard: Sixteen
+          base_torso_standard2: Sixteen
         leg:
-          base_leg_standart: Sixteen
+          base_leg_standard: Sixteen
           base_leg_short: Sixteen
           base_leg_skirt: Sixteen
           base_leg_skirt_long: Sixteen
@@ -100,15 +98,15 @@
           decor_torso_armless8: Sixteen
           decor_torso_armless9: Sixteen
           decor_torso_armless10: Sixteen
-          decor_torso_standart1: Sixteen
-          decor_torso_standart2: Sixteen
-          decor_torso_standart3: Sixteen
-          decor_torso_standart4: Sixteen
-          decor_torso_standart5: Sixteen
-          decor_torso_standart6: Sixteen
-          decor_torso_standart7: Sixteen
-          decor_torso_standart8: Sixteen
-          decor_torso_standart9: Sixteen
+          decor_torso_standard1: Sixteen
+          decor_torso_standard2: Sixteen
+          decor_torso_standard3: Sixteen
+          decor_torso_standard4: Sixteen
+          decor_torso_standard5: Sixteen
+          decor_torso_standard6: Sixteen
+          decor_torso_standard7: Sixteen
+          decor_torso_standard8: Sixteen
+          decor_torso_standard9: Sixteen
           mask_null: ""
 
 - type: entity
@@ -121,7 +119,7 @@
       - torso:
           base_torso_bra: Sixteen
         leg:
-          base_leg_standart: Sixteen
+          base_leg_standard: Sixteen
           base_leg_short: Sixteen
           base_leg_skirt: Sixteen
           base_leg_skirt_long: Sixteen
@@ -143,7 +141,7 @@
       - torso:
           mask_null: ""
         leg:
-          base_leg_standart: Sixteen
+          base_leg_standard: Sixteen
           base_leg_short: Sixteen
           base_leg_skirt: Sixteen
           base_leg_skirt_long: Sixteen
@@ -159,7 +157,7 @@
           base_torso_armless: Sixteen
           mask_null: ""
         leg:
-          base_leg_standart: Sixteen
+          base_leg_standard: Sixteen
           base_leg_short: Sixteen
         decor:
           base_torso_shirt: Sixteen

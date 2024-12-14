@@ -210,7 +210,7 @@ namespace Content.Server.Cloning
             }
             // end of genetic damage checks
 
-            var mob = Spawn(speciesPrototype.Prototype, Transform(uid).MapPosition);
+            var mob = Spawn(speciesPrototype.Prototype, _transformSystem.GetMapCoordinates(uid));
             _humanoidSystem.CloneAppearance(bodyToClone, mob);
 
             var ev = new CloningEvent(bodyToClone, mob);
@@ -231,7 +231,7 @@ namespace Content.Server.Cloning
 
             // TODO: Ideally, components like this should be components on the mind entity so this isn't necessary.
             // Add on special job components to the mob.
-            if (_jobs.MindTryGetJob(mindEnt, out _, out var prototype))
+            if (_jobs.MindTryGetJob(mindEnt, out var prototype))
             {
                 foreach (var special in prototype.Special)
                 {

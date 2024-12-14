@@ -7,7 +7,7 @@ This guide will give you a basic outline of the treatment options you have avail
 ## The Basics
 There are two ways to tell what's ailing someone: Taking a scan (with a health analyzer or a medical PDA), or examining them, with a shift-click, and clicking the heart symbol.
 
-It's best to do both, if possible, as some things (such as poison, or radiation) don't show up on examination, while others (such as blood levels) don't show up on an analyzer.
+Using a health analyzer is often more powerful than examination, as some things (such as poison, or radiation) don't show up on examination. However, using an analyzer has its drawbacks, as it makes noise and uses up a battery.
 <Box>
 <GuideEntityEmbed Entity="SignExamroom" Caption="examine patient"/>
 <GuideEntityEmbed Entity="MedicalPDA"/>
@@ -16,7 +16,7 @@ It's best to do both, if possible, as some things (such as poison, or radiation)
 </Box>
 
 ## Medication and Treatment Options
-Before we go any further, it's probably a good idea to go over damage types, and what will heal them The wiki has more extensive info available, but these are commonly used.
+Before we go any further, it's probably a good idea to go over damage types, and what will heal them. The wiki has more extensive info available, but these are commonly used.
 
 An important note: Most medication has an overdose level, which will cause harm to your patient. Chemicals also take time to metabolise in pill form, if you want things to act quickly, use a syringe.
 
@@ -56,14 +56,17 @@ If possible, buckle them to a medical bed, if you need time to treat them, strap
 <GuideEntityEmbed Entity="MedicalBed"/>
 <GuideEntityEmbed Entity="StasisBed"/>
 </Box>
-## Death and Revival
-You can't save them all, sometimes, death happens. Depending on the status of the body, if there's a soul present, and if the body has started rotting, there are a few things that can be done.
+## Assessing Corpses
+You can't save them all, sometimes, death happens. Depending on the [color=#a4885c]status[/color] of the body, there are a few things that can be done.
 
-1. Do they have a soul attached? You can tell if, when examining, the following phrase is displayed: "Their soul has departed." If this isn't displayed, consider storing the body in a morgue tray, or using them for biomass.
+1. Do they have a soul attached? You can tell if, when examining, the following phrase is displayed: "Their soul has departed." If this isn't displayed, there is still a player who can be revived.
 
 2. Is the body rotting? If it is, sadly, they'll have to be cloned. A rotting body can't be brought back with a defibrillator. (See Cloning)
 
-3. If they have a soul, and aren't rotten, it's possible to revive them. Not counting airloss, Defibrillator's can be used to revive patients under 200 total damage. Chemicals don't metabolise in the dead, but brute packs and ointment can still patch them up. Use them to bring their numbers down enough for revival.
+3. If they have a soul, and aren't rotten, it's possible to revive them. Consider storing the body in a morgue tray if you don't have enough time to revive someone, as the body will rot if you wait too long.
+
+## Revival
+Not counting airloss, Defibrillator's can be used to revive patients under 200 total damage. Chemicals don't metabolise in the dead, but brute packs and ointment can still patch them up. Use them to bring their numbers down enough for revival.
 
 <Box>
 <GuideEntityEmbed Entity="Brutepack"/>

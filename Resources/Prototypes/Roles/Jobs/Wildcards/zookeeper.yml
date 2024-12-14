@@ -14,11 +14,10 @@
   id: ZookeeperGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitSafari
-    back: ClothingBackpackFilled
     head: ClothingHeadSafari
     shoes: ClothingShoesColorWhite
     id: ZookeeperPDA
     ears: ClothingHeadsetService
-  innerClothingSkirt: ClothingUniformJumpsuitSafari
-  satchel: ClothingBackpackSatchelFilled
-  duffelbag: ClothingBackpackDuffelFilled
+  #storage:
+    #back:
+    #- Stuff

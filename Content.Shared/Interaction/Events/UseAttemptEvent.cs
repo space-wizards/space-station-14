@@ -1,12 +1,9 @@
 ﻿namespace Content.Shared.Interaction.Events
 {
-    public sealed class UseAttemptEvent : CancellableEntityEventArgs
+    public sealed class UseAttemptEvent(EntityUid uid, EntityUid used) : CancellableEntityEventArgs
     {
-        public UseAttemptEvent(EntityUid uid)
-        {
-            Uid = uid;
-        }
+        public EntityUid Uid { get; } = uid;
 
-        public EntityUid Uid { get; }
+        public EntityUid Used = used;
     }
 }

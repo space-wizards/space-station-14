@@ -54,7 +54,6 @@ public sealed partial class BiomePrototype : IPrototype, IInheritingPrototype
         foreach (var data in ChunkComponents.Values)
         {
             var comp = (Component) serialization.CreateCopy(data.Component, notNullableOverride: true);
-            comp.Owner = target; // look im sorry ok this .owner has to live until engine api exists
             entityManager.AddComponent(target, comp);
         }
     }

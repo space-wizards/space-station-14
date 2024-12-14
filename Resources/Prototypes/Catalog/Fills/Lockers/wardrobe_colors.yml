@@ -38,7 +38,7 @@
         amount: 3
       - id: ClothingUniformRandomArmless
         amount: 5
-      - id: ClothingUniformRandomStandart
+      - id: ClothingUniformRandomStandard
         amount: 5
       - id: ClothingUniformRandomBra
         amount: 5

@@ -1,3 +1,12 @@
+# Threshold prototypes for AtmosMonitors
+
+# NOTE: Warning thresholds are given as multipliers of the danger bound. For
+# example, if upperBound=10 (kPa) and upperWarnRound=0.5, that means the upper
+# warning threshold is actually 5 (kPa).
+#
+# As a result, all upperWarn's should be <1 and lowerWarn's should be >1,
+# otherwise the warning will never kick in.
+
 - type: alarmThreshold
   id: stationTemperature
   upperBound: !type:AlarmThresholdSetting
@@ -21,11 +30,7 @@
   lowerWarnAround: !type:AlarmThresholdSetting
     threshold: 1.05 # ~90 kPa
 
-# a reminder that all of these are percentages (where 1 is 100%),
-# so 0.01 is 1%,
-# 0.0001 is 0.01%
-# etc.
-
+# For gas concentrations, threshold=0.1 means 10%
 - type: alarmThreshold
   id: stationOxygen
   lowerBound: !type:AlarmThresholdSetting
@@ -36,17 +41,25 @@
 - type: alarmThreshold
   id: stationCO2
   upperBound: !type:AlarmThresholdSetting
-    threshold: 0.0025
+    threshold: 0.006
   upperWarnAround: !type:AlarmThresholdSetting
-    threshold: 0.5
+    threshold: 0.5 # minor gasping and airloss at 0.3%
 
 - type: alarmThreshold
   id: stationPlasma
   upperBound: !type:AlarmThresholdSetting
-    threshold: 0.00125
+    threshold: 0.005 # lightable beyond this concentration
   upperWarnAround: !type:AlarmThresholdSetting
     threshold: 0.5
 
+- type: alarmThreshold
+  id: stationTritium
+  upperBound: !type:AlarmThresholdSetting
+    threshold: 0.004 # lightable beyond this concentration
+  upperWarnAround: !type:AlarmThresholdSetting
+    threshold: 0.5
+
+# this is a hack, but 150% means never danger on water, but warn at 75%
 - type: alarmThreshold
   id: stationWaterVapor
   upperBound: !type:AlarmThresholdSetting
@@ -76,3 +89,17 @@
   id: danger # just any gas you don't want at all
   upperBound: !type:AlarmThresholdSetting
     threshold: 0.0001
+
+- type: alarmThreshold
+  id: voxOxygen
+  upperBound: !type:AlarmThresholdSetting
+    threshold: 0.02 # 2%
+  upperWarnAround: !type:AlarmThresholdSetting
+    threshold: 0.5 # 1%
+
+- type: alarmThreshold
+  id: voxNitrogen
+  lowerBound: !type:AlarmThresholdSetting
+    threshold: 0.8 # danger below 80% nitrogen
+  lowerWarnAround: !type:AlarmThresholdSetting
+    threshold: 1.125 # warning below 90%
