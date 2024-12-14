@@ -4,7 +4,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
-using System.Numerics;
 
 namespace Content.Server.Explosion.EntitySystems;
 

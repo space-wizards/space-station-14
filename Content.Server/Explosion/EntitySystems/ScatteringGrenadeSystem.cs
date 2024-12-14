@@ -1,7 +1,5 @@
 ﻿using Content.Shared.Explosion.Components;
-using Content.Shared.Interaction;
 using Content.Shared.Throwing;
-using Content.Shared.Whitelist;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -11,13 +9,12 @@ using Content.Shared.Explosion.EntitySystems;
 
 namespace Content.Server.Explosion.EntitySystems;
 
-public sealed class ScatteringGrenadeSystem : EntitySystem
+public sealed class ScatteringGrenadeSystem : SharedScatteringGrenadeSystem
 {
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
-    [Dependency] private readonly SharedScatteringGrenadeSystem _scatteringGrenadeSystem = default!;
 
     public override void Initialize()
     {

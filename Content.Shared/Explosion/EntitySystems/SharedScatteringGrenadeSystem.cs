@@ -5,7 +5,7 @@ using Robust.Shared.Containers;
 
 namespace Content.Shared.Explosion.EntitySystems;
 
-public sealed class SharedScatteringGrenadeSystem : EntitySystem
+public abstract class SharedScatteringGrenadeSystem : EntitySystem
 {
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
