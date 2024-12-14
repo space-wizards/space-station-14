@@ -2,6 +2,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.RemoteControl.Components;
+
 /// <summary>
 /// Indicates this entity is currently being remotely controlled by another entity.
 /// </summary>
@@ -26,24 +27,23 @@ public sealed partial class RemotelyControllableComponent : Component
     /// The ability used to return to the original body.
     /// </summary>
     [ViewVariables, AutoNetworkedField]
-    public EntityUid? ReturnAction = null;
+    public EntityUid? ReturnAction;
 
     /// <summary>
     /// Whether this entity is currently being controlled.
     /// </summary>
     [ViewVariables, AutoNetworkedField]
-    public bool IsControlled = false;
+    public bool IsControlled;
 
     /// <summary>
     /// Which RCRemote this is currently bound to.
     /// </summary>
     [ViewVariables, AutoNetworkedField]
-    public EntityUid? BoundRemote = null;
+    public EntityUid? BoundRemote;
 
     /// <summary>
     /// Which entity is currently remotely controlling this entity.
     /// </summary>
     [ViewVariables, AutoNetworkedField]
-    public EntityUid? Controller = null;
+    public EntityUid? Controller;
 }
-

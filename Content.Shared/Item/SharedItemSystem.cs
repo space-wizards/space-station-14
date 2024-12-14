@@ -123,7 +123,7 @@ public abstract class SharedItemSystem : EntitySystem
     {
         // show at end of message generally
         // If ExamineSize is set, use that. Otherwise, use the regular size.
-        var examinedSize = GetItemSizeLocale(component.ExamineSize == null ? component.Size : component.ExamineSize.Value);
+        var examinedSize = GetItemSizeLocale(component.ExamineSize ?? component.Size);
 
         args.PushMarkup(Loc.GetString("item-component-on-examine-size",
             ("size", examinedSize)), priority: -1);

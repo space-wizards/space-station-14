@@ -32,16 +32,16 @@ public abstract class SharedSpittableContainerSystem : EntitySystem
 
     private void OnInit(Entity<SpittableContainerComponent> ent, ref ComponentInit args)
     {
-        ent.Comp.Container = _containerSystem.EnsureContainer<Container>(ent.Owner, ent.Comp.Storage);
+        ent.Comp.Container = _containerSystem.EnsureContainer<Container>(ent, ent.Comp.Storage);
 
         AddActionIfNeeded(ent.Owner, ref ent.Comp.SwallowActionEntity, ent.Comp.SwallowActionPrototype);
-        AddActionIfNeeded(ent.Owner, ref ent.Comp.SwallowActionEntity, ent.Comp.SpitContainerActionPrototype);
+        AddActionIfNeeded(ent.Owner, ref ent.Comp.SpitContainerActionEntity, ent.Comp.SpitContainerActionPrototype);
     }
 
     private void OnShutdown(Entity<SpittableContainerComponent> ent, ref ComponentShutdown args)
     {
-        _actionsSystem.RemoveAction(ent.Owner, ent.Comp.SwallowActionEntity);
-        _actionsSystem.RemoveAction(ent.Owner, ent.Comp.SpitContainerActionEntity);
+        _actionsSystem.RemoveAction(ent, ent.Comp.SwallowActionEntity);
+        _actionsSystem.RemoveAction(ent, ent.Comp.SpitContainerActionEntity);
     }
 
     private void OnSwallowToContainerAction(Entity<SpittableContainerComponent> ent, ref SwallowToContainerActionEvent args)
@@ -56,7 +56,7 @@ public abstract class SharedSpittableContainerSystem : EntitySystem
             return;
         }
 
-        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, ent.Owner, ent.Comp.SwallowTime, new SwallowDoAfterEvent(), ent.Owner, target: args.Target, used: ent.Owner)
+        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, ent, ent.Comp.SwallowTime, new SwallowDoAfterEvent(), ent, target: args.Target, used: ent.Owner)
         {
             BreakOnMove = true,
             BreakOnDamage = true,
@@ -74,7 +74,7 @@ public abstract class SharedSpittableContainerSystem : EntitySystem
             return;
 
         if (ent.Comp.SoundEat != null)
-            _audioSystem.PlayPredicted(ent.Comp.SoundEat, ent.Owner, ent.Owner, ent.Comp.SoundEat.Params);
+            _audioSystem.PlayPredicted(ent.Comp.SoundEat, ent, ent, ent.Comp.SoundEat.Params);
 
         _containerSystem.InsertOrDrop(args.Target.Value, ent.Comp.Container);
 
@@ -88,11 +88,11 @@ public abstract class SharedSpittableContainerSystem : EntitySystem
 
         if (ent.Comp.Container.Count == 0)
         {
-            _popupSystem.PopupClient(Loc.GetString("spittable-container-spit-empty"), ent.Owner, ent.Owner);
+            _popupSystem.PopupClient(Loc.GetString("spittable-container-spit-empty"), ent, ent);
             return;
         }
 
-        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, ent.Owner, ent.Comp.SpitTime, new SpitFromContainerDoAfterEvent(), ent.Owner));
+        _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, ent, ent.Comp.SpitTime, new SpitFromContainerDoAfterEvent(), ent));
 
         args.Handled = true;
     }
@@ -103,7 +103,7 @@ public abstract class SharedSpittableContainerSystem : EntitySystem
             return;
 
         if (ent.Comp.ShowSpitPopup)
-            _popupSystem.PopupPredicted(Loc.GetString("spittable-container-spit", ("person", Identity.Entity(ent.Owner, EntityManager))), ent.Owner, ent.Owner);
+            _popupSystem.PopupPredicted(Loc.GetString("spittable-container-spit", ("person", Identity.Entity(ent.Owner, EntityManager))), ent, ent);
 
         if (ent.Comp.SoundSpit != null)
             _audioSystem.PlayPredicted(ent.Comp.SoundSpit, ent.Owner, ent.Owner, ent.Comp.SoundSpit.Params);

@@ -49,8 +49,8 @@ public sealed partial class SpittableContainerComponent : Component
     /// Where the entities go when it devours them, empties when it is butchered.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public string Storage = "storagebase"!;
+    public string Storage = "storagebase";
 
-    public Container Container = default!;
+    public Container Container;
 }
 

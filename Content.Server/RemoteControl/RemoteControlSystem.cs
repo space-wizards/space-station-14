@@ -4,5 +4,4 @@ namespace Content.Server.RemoteControl;
 
 public sealed class RemoteControlSystem : SharedRemoteControlSystem
 {
-
 }

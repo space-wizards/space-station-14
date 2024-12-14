@@ -1,6 +1,7 @@
 using Content.Shared.Actions;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mind;
@@ -49,20 +50,17 @@ public abstract class SharedRemoteControlSystem : EntitySystem
             || !args.IsInDetailsRange)
             return;
 
-        args.PushText(Loc.GetString("rc-controlled-examine", ("user", ent.Owner)));
+        args.PushText(Loc.GetString(ent.Comp.ExamineMessage, ("user", ent.Owner)));
     }
 
     private void OnControllableInit(Entity<RemotelyControllableComponent> ent, ref ComponentInit args)
     {
-        EntityUid? actionEnt = null;
-        _actions.AddAction(ent.Owner, ref actionEnt, ent.Comp.ReturnActionPrototype);
-        if (actionEnt != null)
-            ent.Comp.ReturnAction = actionEnt.Value;
+        _actions.AddAction(ent.Owner, ref ent.Comp.ReturnAction, ent.Comp.ReturnActionPrototype);
     }
 
     private void OnControllableShutdown(Entity<RemotelyControllableComponent> ent, ref ComponentShutdown args)
     {
-        _actions.RemoveAction(ent.Owner, ent.Comp.ReturnAction);
+        _actions.RemoveAction(ent, ent.Comp.ReturnAction);
     }
 
     private void OnMobStateChanged(Entity<RemotelyControllableComponent> ent, ref MobStateChangedEvent args)
@@ -82,7 +80,10 @@ public abstract class SharedRemoteControlSystem : EntitySystem
         remoteComp.BoundTo = args.Target;
         ent.Comp.BoundRemote = args.Used;
 
-        _popup.PopupClient(Loc.GetString("rc-remote-bound", ("entityName", Prototype(ent.Owner)?.Name ?? "Unknown")), args.User, args.User, PopupType.Medium);
+        _popup.PopupClient(Loc.GetString("rc-remote-bound", ("entityName", Identity.Name(ent, EntityManager))), args.User, args.User, PopupType.Medium);
+
+        Dirty(args.Used, remoteComp);
+        Dirty(ent, ent.Comp);
 
         args.Handled = true;
     }
@@ -120,8 +121,7 @@ public abstract class SharedRemoteControlSystem : EntitySystem
             return;
 
         var user = args.User;
-
-        ActivationVerb verb = new()
+        args.Verbs.Add(new ActivationVerb
         {
             Text = Loc.GetString("rc-remote-wipe-verb"),
             Act = () =>
@@ -129,9 +129,9 @@ public abstract class SharedRemoteControlSystem : EntitySystem
                 ent.Comp.BoundTo = null;
                 remotelyComp.BoundRemote = null;
                 _popup.PopupClient(Loc.GetString("rc-remote-wiped"), user, user, PopupType.Medium);
+                Dirty(ent, ent.Comp);
             }
-        };
-        args.Verbs.Add(verb);
+        });
     }
 
     private void OnUseInHand(Entity<RCRemoteComponent> ent, ref UseInHandEvent args)
@@ -142,7 +142,7 @@ public abstract class SharedRemoteControlSystem : EntitySystem
             return;
         }
 
-        if (!TryComp<RemotelyControllableComponent>(ent.Comp.BoundTo.Value, out var controllable))
+        if (!TryComp<RemotelyControllableComponent>(ent.Comp.BoundTo, out var controllable))
             return;
 
         if (!TryComp<MobStateComponent>(ent.Comp.BoundTo, out var mobState) || mobState.CurrentState != MobState.Alive)
@@ -150,6 +150,8 @@ public abstract class SharedRemoteControlSystem : EntitySystem
             _popup.PopupClient(Loc.GetString("rc-remote-fail"), args.User, args.User, PopupType.Medium);
             return;
         }
+
+        Dirty(ent, ent.Comp);
 
         TryRemoteControl((ent.Comp.BoundTo.Value, controllable), args.User);
 
@@ -169,7 +171,7 @@ public abstract class SharedRemoteControlSystem : EntitySystem
     private void OnRemoteDropped(Entity<RCRemoteComponent> ent, ref DroppedEvent args)
     {
         if (ent.Comp.BoundTo is null
-            || !HasComp<RemotelyControllableComponent>(ent.Comp.BoundTo.Value))
+            || !HasComp<RemotelyControllableComponent>(ent.Comp.BoundTo))
             return;
 
         TryStopRemoteControl(ent.Comp.BoundTo.Value);
@@ -183,13 +185,8 @@ public abstract class SharedRemoteControlSystem : EntitySystem
     /// <returns>True If control was given to the controller, otherwise False.</returns>
     public bool TryRemoteControl(Entity<RemotelyControllableComponent> ent, EntityUid controller)
     {
-        if (!HasComp<RemotelyControllableComponent>(ent.Owner))
-            return false;
-
         if (TryComp<SSDIndicatorComponent>(controller, out var ssd))
-        {
             ssd.Enabled = false;
-        }
 
         EnsureComp<RemoteControllerComponent>(controller, out var remoteController);
 
@@ -234,5 +231,4 @@ public abstract class SharedRemoteControlSystem : EntitySystem
 
 public sealed partial class RemoteControlReturnToBodyEvent : InstantActionEvent
 {
-
 }
