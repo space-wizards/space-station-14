@@ -878,7 +878,6 @@
     - RandomHumanoidVisitorReporter
     - RandomHumanoidVisitorServiceWorker
     - RandomHumanoidVisitorZookeeper
-    - MobSkeletonCloset
 
 - type: entity
   name: NanoTrasen visitor spawner

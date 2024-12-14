@@ -33,17 +33,6 @@
     revertOnDeath: true
 
 - type: polymorph
-  id: WizardForcedSkeleton
-  configuration:
-    entity: MobSkeletonPerson
-    forced: true
-    inventory: Drop
-    transferName: true
-    transferDamage: true
-    revertOnCrit: false
-    revertOnDeath: false
-
-- type: polymorph
   id: WizardForcedMonkey
   configuration:
     entity: MobMonkey
