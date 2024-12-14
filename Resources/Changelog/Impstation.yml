@@ -1,32 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Revenants can now be bigoted.
-    type: Add
-  id: 236
-  time: '2024-09-21T02:08:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/309
-- author: hivehum
-  changes:
-  - message: There is now a new antagonist that can show up in the middle of rounds...
-    type: Tweak
-  id: 237
-  time: '2024-09-21T02:11:26.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/303
-- author: starlighthowls
-  changes:
-  - message: moreeeee boat stuff
-    type: Tweak
-  id: 238
-  time: '2024-09-21T02:11:42.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/307
-- author: Tox3ct
-  changes:
-  - message: Added gray plushie. thui love keb piskun plushie
-    type: Add
-  id: 239
-  time: '2024-09-21T18:04:28.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/315
 - author: Pinkbat5
   changes:
   - message: HoPs rejoice! Brigmedic and roboticist can be selected as presets in
@@ -4534,3 +4506,32 @@
   id: 735
   time: '2024-12-14T14:49:43.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1020
+- author: EpicToast
+  changes:
+  - message: Swapped normal beds with medical beds on Packed.
+    type: Tweak
+  id: 736
+  time: '2024-12-14T20:47:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1013
+- author: irismessage
+  changes:
+  - message: Look at my tips boy
+    type: Fix
+  id: 737
+  time: '2024-12-14T20:48:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1027
+- author: Darkmajia, AftrLite
+  changes:
+  - message: 'Changelings can select a new evolution: Mindshield Patterns.'
+    type: Add
+  id: 738
+  time: '2024-12-14T20:47:45.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1003
+- author: EpicToast
+  changes:
+  - message: Updated Union Station, mostly around the medical department. See GitHub
+      for full changelog.
+    type: Tweak
+  id: 739
+  time: '2024-12-14T20:48:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1026
