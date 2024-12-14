@@ -35,8 +35,12 @@ def main():
         return
 
     if DEBUG:
+        # to debug this script locally, you can use
+        # a separate local file as the old changelog
         last_changelog_stream = DEBUG_CHANGELOG_FILE_OLD.read_text()
     else:
+        # when running this normally in a GitHub actions workflow,
+        # it will get the old changelog from the GitHub API
         last_changelog_stream = get_last_changelog()
 
     last_changelog = yaml.safe_load(last_changelog_stream)
@@ -150,6 +154,7 @@ def send_discord_webhook(lines: list[str]):
 
 
 def changelog_entries_to_message_lines(entries: Iterable[ChangelogEntry]) -> list[str]:
+    """Process structured changelog entries into a list of lines making up a formatted message."""
     message_lines = []
 
     for contributor_name, group in itertools.groupby(entries, lambda x: x["author"]):
@@ -179,6 +184,7 @@ def changelog_entries_to_message_lines(entries: Iterable[ChangelogEntry]) -> lis
 
 
 def send_message_lines(message_lines: list[str]):
+    """Join a list of message lines into chunks that are each below Discord's message length limit, and send them."""
     chunk_lines = []
     chunk_length = 0
 
