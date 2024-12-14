@@ -60,8 +60,8 @@
   - type: Stripping
   - type: UserInterface
     interfaces:
-    - key: enum.StrippingUiKey.Key
-      type: StrippableBoundUserInterface
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -80,7 +80,6 @@
       - CannotSuicide
       - DoorBumpOpener
       - FootstepSound
-      - ShoesRequiredStepTriggerImmune
   - type: Vocal
     sounds:
       Male: CluwneBeast
@@ -101,3 +100,4 @@
   - type: RandomMetadata
     nameSegments:
     - names_clown
+  - type: ProtectedFromStepTriggers

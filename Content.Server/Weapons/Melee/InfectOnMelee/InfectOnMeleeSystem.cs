@@ -1,5 +1,7 @@
 using Robust.Shared.Random;
+using Robust.Shared.Audio.Systems;
 using Content.Shared.Cluwne;
+using Content.Shared.Clumsy;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs.Systems;
@@ -29,10 +31,10 @@ public sealed class InfectOnMeleeSystem : EntitySystem
             foreach (var entity in args.HitEntities)
             {
                 if (HasComp<HumanoidAppearanceComponent>(entity)
-                && !_mob.IsDead(entity)
-                && _random.Prob(component.InfectionChance)
-                && !HasComp<ClumsyComponent>(entity)
-                && !HasComp<ZombieComponent>(entity))
+                    && !_mob.IsDead(entity)
+                    && _random.Prob(component.InfectionChance)
+                    && !HasComp<ClumsyComponent>(entity)
+                    && !HasComp<ZombieComponent>(entity))
                 {
                     _audio.PlayPvs(component.InfectionSound, uid);
                     EnsureComp<CluwneComponent>(entity);

@@ -77,13 +77,14 @@
 
 - type: polymorph
   id: ForcedCluwneBeast
-  entity: MobCluwneBeast
-  forced: true
-  inventory: None
-  revertOnDeath: false
-  revertOnCrit: false
-  transferName: false
-  transferDamage: false
+  configuration:
+    entity: MobCluwneBeast
+    forced: true
+    inventory: None
+    revertOnDeath: false
+    revertOnCrit: false
+    transferName: false
+    transferDamage: false
 
 # this is a test for transferring some visual appearance stuff
 - type: polymorph

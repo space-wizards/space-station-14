@@ -540,20 +540,6 @@
         maxAmount: 1
 
 - type: entity
-  id: ImmovableRodSpawn
-  parent: BaseGameRule
-  components:
-  - type: StationEvent
-    startAnnouncement: station-event-immovable-rod-start-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
-    weight: 5
-    duration: 1
-    earliestStart: 45
-    minimumPlayers: 20
-  - type: ImmovableRodRule
-
-- type: entity
   parent: BaseGameRule
   id: IonStorm
   components:

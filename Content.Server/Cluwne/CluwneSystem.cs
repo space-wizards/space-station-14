@@ -14,7 +14,7 @@ using Content.Server.Emoting.Systems;
 using Content.Server.Speech.EntitySystems;
 using Content.Shared.Cluwne;
 using Content.Shared.Interaction.Components;
-using Content.Server.NPC.Systems;
+using Content.Shared.NPC.Systems;
 using Robust.Shared.Audio.Systems;
 using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Clumsy;
@@ -58,8 +58,8 @@ public sealed class CluwneSystem : EntitySystem
             RemComp<CluwneComponent>(uid);
             RemComp<ClumsyComponent>(uid);
             RemComp<AutoEmoteComponent>(uid);
-            var damageSpec = new DamageSpecifier(_prototypeManager.Index<DamageGroupPrototype>("Genetic"), 300);
-            _damageableSystem.TryChangeDamage(uid, damageSpec);
+            var damageSpec = new DamageSpecifier(_proto.Index<DamageGroupPrototype>("Genetic"), 300);
+            _damageable.TryChangeDamage(uid, damageSpec);
         }
     }
 
@@ -73,6 +73,9 @@ public sealed class CluwneSystem : EntitySystem
         if (component.EmoteSoundsId == null)
             return;
         _proto.TryIndex(component.EmoteSoundsId, out EmoteSounds);
+        
+        var meta = MetaData(uid);
+        var name = meta.EntityName;
 
         EnsureComp<AutoEmoteComponent>(uid);
         _emote.AddEmote(uid, component.AutoEmoteSound);
@@ -87,7 +90,6 @@ public sealed class CluwneSystem : EntitySystem
             _faction.RemoveFaction(uid, "NanoTrasen", false);
             _faction.AddFaction(uid, "HonkNeutral");
         }
-
         else
         {
             Spawn(component.Portal, Transform(uid).Coordinates);
@@ -110,7 +112,6 @@ public sealed class CluwneSystem : EntitySystem
             _audio.PlayPvs(component.SpawnSound, uid);
             _chat.TrySendInGameICMessage(uid, "honks", InGameICChatType.Emote, ChatTransmitRange.Normal);
         }
-
         else if (_random.Prob(component.KnockChance))
         {
             _audio.PlayPvs(component.KnockSound, uid);

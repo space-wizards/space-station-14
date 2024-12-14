@@ -373,9 +373,6 @@
 
 - type: Tag
   id: CluwneBeastWearable
-
-- type: Tag #Ohioans die happy
-  id: Corn
   
 - type: Tag
   id: Cola
