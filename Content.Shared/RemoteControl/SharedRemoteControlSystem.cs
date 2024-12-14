@@ -126,9 +126,12 @@ public abstract class SharedRemoteControlSystem : EntitySystem
             Text = Loc.GetString("rc-remote-wipe-verb"),
             Act = () =>
             {
-                ent.Comp.BoundTo = null;
                 remotelyComp.BoundRemote = null;
+                Dirty(ent.Comp.BoundTo.Value, remotelyComp);
+
+                ent.Comp.BoundTo = null;
                 _popup.PopupClient(Loc.GetString("rc-remote-wiped"), user, user, PopupType.Medium);
+
                 Dirty(ent, ent.Comp);
             }
         });
@@ -185,6 +188,9 @@ public abstract class SharedRemoteControlSystem : EntitySystem
     /// <returns>True If control was given to the controller, otherwise False.</returns>
     public bool TryRemoteControl(Entity<RemotelyControllableComponent> ent, EntityUid controller)
     {
+        if (ent.Comp.IsControlled)
+            return false;
+        
         if (TryComp<SSDIndicatorComponent>(controller, out var ssd))
             ssd.Enabled = false;
 
