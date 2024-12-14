@@ -55,3 +55,11 @@
   color: "#ff75a8"
   requiredComponents:
   - Hivemind
+  
+- type: collectiveMind
+  id: Cluwne
+  name: collective-mind-cluwne
+  keycode: 'l'
+  color: "#39c675"
+  requiredComponents:
+  - Cluwne
