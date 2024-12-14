@@ -8,15 +8,16 @@
 import io
 import itertools
 import os
+from pathlib import Path
 from typing import Any, Iterable
 
 import requests
 import yaml
 
-GITHUB_API_URL = os.environ.get("GITHUB_API_URL", "https://api.github.com")
-GITHUB_REPOSITORY = os.environ["GITHUB_REPOSITORY"]
-GITHUB_RUN = os.environ["GITHUB_RUN_ID"]
-GITHUB_TOKEN = os.environ["GITHUB_TOKEN"]
+# GITHUB_API_URL = os.environ.get("GITHUB_API_URL", "https://api.github.com")
+# GITHUB_REPOSITORY = os.environ["GITHUB_REPOSITORY"]
+# GITHUB_RUN = os.environ["GITHUB_RUN_ID"]
+# GITHUB_TOKEN = os.environ["GITHUB_TOKEN"]
 
 # https://discord.com/developers/docs/resources/webhook
 DISCORD_SPLIT_LIMIT = 2000
@@ -33,15 +34,15 @@ def main():
     if not DISCORD_WEBHOOK_URL:
         return
 
-    session = requests.Session()
-    session.headers["Authorization"] = f"Bearer {GITHUB_TOKEN}"
-    session.headers["Accept"] = "Accept: application/vnd.github+json"
-    session.headers["X-GitHub-Api-Version"] = "2022-11-28"
+    # session = requests.Session()
+    # session.headers["Authorization"] = f"Bearer {GITHUB_TOKEN}"
+    # session.headers["Accept"] = "Accept: application/vnd.github+json"
+    # session.headers["X-GitHub-Api-Version"] = "2022-11-28"
 
-    most_recent = get_most_recent_workflow(session)
-    last_sha = most_recent["head_commit"]["id"]
-    print(f"Last successful publish job was {most_recent['id']}: {last_sha}")
-    last_changelog = yaml.safe_load(get_last_changelog(session, last_sha))
+    # most_recent = get_most_recent_workflow(session)
+    # last_sha = most_recent["head_commit"]["id"]
+    # print(f"Last successful publish job was {most_recent['id']}: {last_sha}")
+    last_changelog = yaml.safe_load(Path("../Changelog-Impstation-old.yml").read_text())
     with open(CHANGELOG_FILE, "r") as f:
         cur_changelog = yaml.safe_load(f)
 
