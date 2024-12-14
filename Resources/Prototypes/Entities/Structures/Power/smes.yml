@@ -117,7 +117,7 @@
   id: SMESAdvanced
   suffix: Advanced, 16MJ
   name: advanced SMES
-  description: A high-capacity superconducting magnetic energy storage (SMES) unit. This one boasts a larger capacity for powering stations.
+  description: An even-higher-capacity superconducting magnetic energy storage (SMES) unit.
   components:
   - type: Sprite
     sprite: Structures/Power/smes.rsi
@@ -134,8 +134,8 @@
     - map: [ "enum.SmesVisualLayers.Output" ]
       state: "smes-op1"
       shader: unshaded
-    - state: advancedsmes-open
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    - map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      state: advancedsmes-open
   - type: Machine
     board: SMESAdvancedMachineCircuitboard
   - type: Battery
@@ -147,7 +147,7 @@
     loadNode: output
     collectionName: smes
     sprite: Structures/Power/smes.rsi
-    state: static
+    state: advancedsmes-static
 
 - type: entity
   parent: SMESAdvanced
