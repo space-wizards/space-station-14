@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
-#
-# Sends updates to a Discord webhook for new changelog entries since the last GitHub Actions publish run.
-# Automatically figures out the last run and changelog contents with the GitHub API.
-#
+"""
+Sends updates to a Discord webhook for new changelog entries since the last GitHub Actions publish run.
+
+Automatically figures out the last run and changelog contents with the GitHub API.
+"""
 
 import io
 import itertools
@@ -172,4 +173,5 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
         send_discord(message_text)
 
 
-main()
+if __name__ == "__main__":
+    main()
