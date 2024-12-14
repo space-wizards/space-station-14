@@ -8,14 +8,15 @@
 import io
 import itertools
 import os
-import requests
-import yaml
 from typing import Any, Iterable
 
-GITHUB_API_URL    = os.environ.get("GITHUB_API_URL", "https://api.github.com")
+import requests
+import yaml
+
+GITHUB_API_URL = os.environ.get("GITHUB_API_URL", "https://api.github.com")
 GITHUB_REPOSITORY = os.environ["GITHUB_REPOSITORY"]
-GITHUB_RUN        = os.environ["GITHUB_RUN_ID"]
-GITHUB_TOKEN      = os.environ["GITHUB_TOKEN"]
+GITHUB_RUN = os.environ["GITHUB_RUN_ID"]
+GITHUB_TOKEN = os.environ["GITHUB_TOKEN"]
 
 # https://discord.com/developers/docs/resources/webhook
 DISCORD_SPLIT_LIMIT = 2000
@@ -23,26 +24,22 @@ DISCORD_WEBHOOK_URL = os.environ.get("DISCORD_WEBHOOK_URL")
 
 CHANGELOG_FILE = "Resources/Changelog/Impstation.yml"
 
-TYPES_TO_EMOJI = {
-    "Fix":    "🐛",
-    "Add":    "🆕",
-    "Remove": "❌",
-    "Tweak":  "⚒️"
-}
+TYPES_TO_EMOJI = {"Fix": "🐛", "Add": "🆕", "Remove": "❌", "Tweak": "⚒️"}
 
 ChangelogEntry = dict[str, Any]
+
 
 def main():
     if not DISCORD_WEBHOOK_URL:
         return
 
     session = requests.Session()
-    session.headers["Authorization"]        = f"Bearer {GITHUB_TOKEN}"
-    session.headers["Accept"]               = "Accept: application/vnd.github+json"
+    session.headers["Authorization"] = f"Bearer {GITHUB_TOKEN}"
+    session.headers["Accept"] = "Accept: application/vnd.github+json"
     session.headers["X-GitHub-Api-Version"] = "2022-11-28"
 
     most_recent = get_most_recent_workflow(session)
-    last_sha = most_recent['head_commit']['id']
+    last_sha = most_recent["head_commit"]["id"]
     print(f"Last successful publish job was {most_recent['id']}: {last_sha}")
     last_changelog = yaml.safe_load(get_last_changelog(session, last_sha))
     with open(CHANGELOG_FILE, "r") as f:
@@ -55,7 +52,7 @@ def main():
 def get_most_recent_workflow(sess: requests.Session) -> Any:
     workflow_run = get_current_run(sess)
     past_runs = get_past_runs(sess, workflow_run)
-    for run in past_runs['workflow_runs']:
+    for run in past_runs["workflow_runs"]:
         # First past successful run that isn't our current run.
         if run["id"] == workflow_run["id"]:
             continue
@@ -64,7 +61,9 @@ def get_most_recent_workflow(sess: requests.Session) -> Any:
 
 
 def get_current_run(sess: requests.Session) -> Any:
-    resp = sess.get(f"{GITHUB_API_URL}/repos/{GITHUB_REPOSITORY}/actions/runs/{GITHUB_RUN}")
+    resp = sess.get(
+        f"{GITHUB_API_URL}/repos/{GITHUB_REPOSITORY}/actions/runs/{GITHUB_RUN}"
+    )
     resp.raise_for_status()
     return resp.json()
 
@@ -73,10 +72,7 @@ def get_past_runs(sess: requests.Session, current_run: Any) -> Any:
     """
     Get all successful workflow runs before our current one.
     """
-    params = {
-        "status": "success",
-        "created": f"<={current_run['created_at']}"
-    }
+    params = {"status": "success", "created": f"<={current_run['created_at']}"}
     resp = sess.get(f"{current_run['workflow_url']}/runs", params=params)
     resp.raise_for_status()
     return resp.json()
@@ -89,16 +85,20 @@ def get_last_changelog(sess: requests.Session, sha: str) -> str:
     params = {
         "ref": sha,
     }
-    headers = {
-        "Accept": "application/vnd.github.raw"
-    }
+    headers = {"Accept": "application/vnd.github.raw"}
 
-    resp = sess.get(f"{GITHUB_API_URL}/repos/{GITHUB_REPOSITORY}/contents/{CHANGELOG_FILE}", headers=headers, params=params)
+    resp = sess.get(
+        f"{GITHUB_API_URL}/repos/{GITHUB_REPOSITORY}/contents/{CHANGELOG_FILE}",
+        headers=headers,
+        params=params,
+    )
     resp.raise_for_status()
     return resp.text
 
 
-def diff_changelog(old: dict[str, Any], cur: dict[str, Any]) -> Iterable[ChangelogEntry]:
+def diff_changelog(
+    old: dict[str, Any], cur: dict[str, Any]
+) -> Iterable[ChangelogEntry]:
     """
     Find all new entries not present in the previous publish.
     """
@@ -108,14 +108,12 @@ def diff_changelog(old: dict[str, Any], cur: dict[str, Any]) -> Iterable[Changel
 
 def get_discord_body(content: str):
     return {
-            "content": content,
-            # Do not allow any mentions.
-            "allowed_mentions": {
-                "parse": []
-            },
-            # SUPPRESS_EMBEDS
-            "flags": 1 << 2
-        }
+        "content": content,
+        # Do not allow any mentions.
+        "allowed_mentions": {"parse": []},
+        # SUPPRESS_EMBEDS
+        "flags": 1 << 2,
+    }
 
 
 def send_discord(content: str):
@@ -142,8 +140,8 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
 
         for entry in group:
             for change in entry["changes"]:
-                emoji = TYPES_TO_EMOJI.get(change['type'], "❓")
-                message = change['message']
+                emoji = TYPES_TO_EMOJI.get(change["type"], "❓")
+                message = change["message"]
                 url = entry.get("url")
                 if url and url.strip():
                     group_content.write(f"{emoji} - {message} [PR]({url}) \n")
@@ -165,7 +163,7 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
 
         # Flush the group to the message
         message_content.write(group_text)
-    
+
     # Clean up anything remaining
     message_text = message_content.getvalue()
     if len(message_text) > 0:
