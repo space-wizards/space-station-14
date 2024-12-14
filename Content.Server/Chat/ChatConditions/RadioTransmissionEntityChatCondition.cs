@@ -11,10 +11,10 @@ using Robust.Shared.Player;
 namespace Content.Server.Chat.ChatConditions;
 
 /// <summary>
-/// Checks if the consumer has a headset with the given channel key
+/// Checks if the consumer has a method to transmit radio messages
 /// </summary>
 [DataDefinition]
-public sealed partial class WearingHeadsetEntityChatCondition : EntityChatCondition
+public sealed partial class RadioTransmissionEntityChatCondition : EntityChatCondition
 {
 
     [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -34,7 +34,13 @@ public sealed partial class WearingHeadsetEntityChatCondition : EntityChatCondit
             {
                 if (_entityManager.TryGetComponent(headsetComponent.Headset, out EncryptionKeyHolderComponent? keys) &&
                     keys.Channels.Contains((string)radioChannel))
-
+                {
+                    returnConsumers.Add(consumer);
+                }
+            }
+            else if (_entityManager.TryGetComponent<IntrinsicRadioTransmitterComponent>((EntityUid)senderEntity, out var intrinsicRadioTransmitterComponent))
+            {
+                if (intrinsicRadioTransmitterComponent.Channels.Contains((string)radioChannel))
                 {
                     returnConsumers.Add(consumer);
                 }

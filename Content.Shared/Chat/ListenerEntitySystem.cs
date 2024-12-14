@@ -32,11 +32,11 @@ public abstract class ListenerEntitySystem<T> : EntitySystem where T : ListenerC
     protected void OnListenerConsumeEvent(EntityUid uid, T component, ListenerConsumeEvent args)
     {
         if (component.FilteredTypes == null || (component.FilteredTypes & args.ChatChannels) != 0)
-            OnListenerMessageReceived(uid, component, args.Message);
+            OnListenerMessageReceived(uid, component, args);
     }
 
     /// <summary>
     /// Runs the desired behavior for when a message has been recieved and accepted by the listening component.
     /// </summary>
-    public abstract void OnListenerMessageReceived(EntityUid uid, T component, FormattedMessage message);
+    public abstract void OnListenerMessageReceived(EntityUid uid, T component, ListenerConsumeEvent args);
 }

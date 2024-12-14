@@ -36,21 +36,16 @@ public sealed partial class ActiveTelecomsEntityChatCondition : EntityChatCondit
 
         var activeServer = radioPrototype.LongRange;
 
-        Logger.Debug("1: " + (string)radioChannel);
-
         if (activeServer == false)
         {
-            Logger.Debug("2: " + activeServer.ToString());
             var servers = _entityManager.EntityQuery<TelecomServerComponent, EncryptionKeyHolderComponent, ApcPowerReceiverComponent, TransformComponent>();
             var sourceMapId = sourceTransform.MapID;
             foreach (var (_, keys, power, transform) in servers)
             {
-                Logger.Debug("3: ");
                 if (transform.MapID == sourceMapId &&
                     power.Powered &&
                     keys.Channels.Contains(radioPrototype.ID))
                 {
-                    Logger.Debug("4: ");
                     activeServer = true;
                 }
             }

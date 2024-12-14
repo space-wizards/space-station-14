@@ -47,11 +47,16 @@ public partial class EntityChatCondition
     /// <returns>Hashset of consumers processed in this conditions and its subconditions.</returns>
     public HashSet<EntityUid> ProcessCondition(HashSet<EntityUid> consumers, Dictionary<Enum, object> channelParameters)
     {
-        var filtered = FilterConsumers(consumers, channelParameters);
-        Logger.Debug("fuck2:" + filtered.Count);
+        HashSet<EntityUid> filtered;
+
+        if (!Inverted)
+            filtered = FilterConsumers(consumers, channelParameters);
+        else
+            filtered = consumers.Except(FilterConsumers(consumers, channelParameters)).ToHashSet();
+
         if (Subconditions.Count > 0)
             filtered = IterateSubconditions(filtered, channelParameters);
-        Logger.Debug("fuck3:" + filtered.Count);
+
         return filtered;
     }
 
@@ -59,7 +64,6 @@ public partial class EntityChatCondition
     /// Iterate over all the subconditions and process them.
     /// </summary>
     /// <param name="consumers">The hashset of consumers that should be evaluated against.</param>
-    /// <param name="senderEntity">The entity the message originates from (if there is any). May be optionally used for the filter.</param>
     /// <returns>Hashset of consumers processed by the subconditions.</returns>
     private HashSet<EntityUid> IterateSubconditions(HashSet<EntityUid> consumers, Dictionary<Enum, object> channelParameters)
     {
@@ -70,12 +74,8 @@ public partial class EntityChatCondition
             if (changedConsumers.Count == consumers.Count)
                 return changedConsumers;
 
-            if (!condition.Inverted)
-                changedConsumers.UnionWith(condition.ProcessCondition(consumers, channelParameters));
-            else
-                changedConsumers.UnionWith(consumers.Except(condition.ProcessCondition(consumers, channelParameters)));
+            changedConsumers.UnionWith(condition.ProcessCondition(consumers, channelParameters));
         }
-
         return changedConsumers;
     }
 }

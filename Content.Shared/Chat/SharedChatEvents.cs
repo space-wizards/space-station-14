@@ -36,10 +36,13 @@ public sealed class ListenerConsumeEvent : EntityEventArgs
 
     public FormattedMessage Message;
 
-    public ListenerConsumeEvent(ChatChannel chatChannels, FormattedMessage message)
+    public Dictionary<Enum, object> ChannelParameters;
+
+    public ListenerConsumeEvent(ChatChannel chatChannels, FormattedMessage message, Dictionary<Enum, object> channelParameters)
     {
         ChatChannels = chatChannels;
         Message = message;
+        ChannelParameters = channelParameters;
     }
 }
 

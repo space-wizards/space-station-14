@@ -14,9 +14,10 @@
   consumeCollections:
   - consumeSessionChatConditions:
     - !type:AllSessionChatCondition
-      entityChatConditions:
-      - !type:RangeEntityChatCondition
-        maximumRange: 10
+      useEntityChatConditions: true
+    entityChatConditions:
+    - !type:RangeEntityChatCondition
+      maximumRange: 10
     collectionChatModifiers:
     - !type:MainMessageChatModifier
     - !type:EntityNameHeaderChatModifier
@@ -42,9 +43,10 @@
   consumeCollections:
   - consumeSessionChatConditions:
     - !type:AllSessionChatCondition
-      entityChatConditions:
-      - !type:RangeEntityChatCondition
-        maximumRange: 10
+      useEntityChatConditions: true
+    entityChatConditions:
+    - !type:RangeEntityChatCondition
+      maximumRange: 10
     collectionChatModifiers:
     - !type:MainMessageChatModifier
     - !type:EntityNameHeaderChatModifier
@@ -69,9 +71,10 @@
   - consumeSessionChatConditions: # Within hearing range
     - !type:IsGhostSessionChatCondition
     - !type:AllSessionChatCondition
-      entityChatConditions:
-      - !type:RangeEntityChatCondition
-        maximumRange: 2
+      useConsumeEntityChatConditions: true
+    consumeEntityChatConditions:
+    - !type:RangeEntityChatCondition
+      maximumRange: 2
     collectionChatModifiers:
     - !type:SanitizeRadioPrefixChatModifier
     - !type:MainMessageChatModifier
@@ -80,10 +83,11 @@
       colorKey: Whisper
   - consumeSessionChatConditions: # Whispering obfuscation
     - !type:AllSessionChatCondition
-      entityChatConditions:
-      - !type:RangeEntityChatCondition
-        minimumRange: 2
-        maximumRange: 5
+      useConsumeEntityChatConditions: true
+    consumeEntityChatConditions:
+    - !type:RangeEntityChatCondition
+      minimumRange: 2
+      maximumRange: 5
     collectionChatModifiers:
     - !type:SanitizeRadioPrefixChatModifier
     - !type:MainMessageChatModifier
@@ -104,7 +108,7 @@
   backupChildCommunicationChannels:
   - Dead #If dead, this should attempt the Dead channel
   chatChannels:
-  - Local
+  - Whisper
 
 - type: communicationChannel
   id: Emote
@@ -113,9 +117,10 @@
   consumeCollections:
   - consumeSessionChatConditions:
     - !type:AllSessionChatCondition
-      entityChatConditions:
-      - !type:RangeEntityChatCondition
-        maximumRange: 10
+      useConsumeEntityChatConditions: true
+    consumeEntityChatConditions:
+    - !type:RangeEntityChatCondition
+      maximumRange: 10
     collectionChatModifiers:
     - !type:MainMessageChatModifier
     - !type:EntityNameHeaderChatModifier
@@ -132,10 +137,12 @@
 - type: communicationChannel
   id: Dead
   publishSessionChatConditions:
+  - !type:IsAdminSessionChatCondition
   - !type:IsGhostSessionChatCondition
   consumeCollections:
   - consumeSessionChatConditions:
-    - !type:AllSessionChatCondition
+    - !type:IsAdminSessionChatCondition
+    - !type:IsGhostSessionChatCondition
     collectionChatModifiers:
     - !type:MainMessageChatModifier
     - !type:EntityNameHeaderChatModifier
@@ -154,7 +161,7 @@
   - !type:BubbleProviderChatModifier
     speechType: Say
   chatChannels:
-  - Local
+  - Dead
 
 - type: communicationChannel
   id: LOOC
@@ -192,12 +199,17 @@
   backupChildCommunicationChannels:
   - Dead #If dead & not Moderator, this should attempt the Dead channel
   chatChannels:
-  - Local
+  - LOOC
 
 - type: communicationChannel
   id: OOC
   publishSessionChatConditions:
+  - !type:IsAdminSessionChatCondition
+    subconditions:
+    - !type:AdminOOCEnabledSessionChatCondition
   - !type:AllSessionChatCondition
+    subconditions:
+    - !type:OOCEnabledSessionChatCondition
   consumeCollections:
   - consumeSessionChatConditions:
     - !type:AllSessionChatCondition
@@ -216,7 +228,7 @@
     targetNode: SessionNameHeader
     locString: ": "
   chatChannels:
-  - Local
+  - OOC
 
 # Start of Radios
 
@@ -232,14 +244,14 @@
         component: Sleeping
         inverted: true
         subconditions:
-        - !type:WearingHeadsetEntityChatCondition
+        - !type:RadioTransmissionEntityChatCondition
           subconditions:
           - !type:ActiveTelecomsEntityChatCondition
   consumeCollections:
   - consumeSessionChatConditions:
     - !type:AllSessionChatCondition
       entityChatConditions:
-      - !type:WearingHeadsetEntityChatCondition
+      - !type:RadioReceiverEntityChatCondition
     collectionChatModifiers:
     - !type:SanitizeRadioPrefixChatModifier
     - !type:MainMessageChatModifier
@@ -259,7 +271,7 @@
   backupChildCommunicationChannels:
   - Dead #If dead, this should attempt the Dead channel
   chatChannels:
-  - Local
+  - Radio
 
 - type: communicationChannel
   parent: RadioBase
@@ -375,10 +387,21 @@
   - consumeSessionChatConditions:
     - !type:AllSessionChatCondition
     collectionChatModifiers:
+    - !type:SessionNameHeaderChatModifier
     - !type:ColorFulltextChatModifier
       colorKey: AdminChat
+  clientChatModifiers:
+  - !type:InsertLoCChatModifier
+    targetNode: SessionNameHeader
+    locString: "ADMIN: "
+    afterNode: false
+  - !type:BoldTagChatModifier
+    targetNode: SessionNameHeader
+  - !type:InsertLoCChatModifier
+    targetNode: SessionNameHeader
+    locString: ": "
   chatChannels:
-  - Local
+  - AdminChat
 
 - type: communicationChannel
   id: AdminAlert
@@ -388,10 +411,11 @@
   - consumeSessionChatConditions:
     - !type:AllSessionChatCondition
     collectionChatModifiers:
+    - !type:BoldFulltextChatModifier
     - !type:ColorFulltextChatModifier
       colorKey: AdminAlert
   chatChannels:
-  - Local
+  - AdminAlert
 
 - type: communicationChannel
   id: Server # Server announcements to go out to all players.
@@ -404,10 +428,10 @@
     - !type:ColorFulltextChatModifier
       colorKey: Server
   chatChannels:
-  - Local
+  - Server
 
 - type: communicationChannel
-  id: GameMessage # Used to communicate non-diagetic
+  id: GameMessage # Used to communicate non-diagetic info
   publishSessionChatConditions:
   - !type:IsAdminSessionChatCondition
   consumeCollections:
@@ -417,11 +441,10 @@
     - !type:ColorFulltextChatModifier
       colorKey: IngameAnnouncement
   chatChannels:
-  - Local
-
+  - Notifications
 
 - type: communicationChannel
-  id: StationAnnouncement # Used to communicate non-diagetic
+  id: StationAnnouncement # Used for station announcements
   allowSessionMessages: false
   consumeCollections:
   - consumeSessionChatConditions:
@@ -430,4 +453,4 @@
     - !type:ColorFulltextChatModifier
       colorKey: IngameAnnouncement
   chatChannels:
-  - Local
+  - Announcements

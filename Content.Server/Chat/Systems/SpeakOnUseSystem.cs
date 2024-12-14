@@ -1,4 +1,5 @@
 using Content.Server.Chat;
+using Content.Server.Chat.Managers;
 using Content.Shared.Dataset;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Timing;
@@ -15,7 +16,7 @@ public sealed partial class SpeakOnUIClosedSystem : EntitySystem
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly IChatManager _chat = default!;
 
     public override void Initialize()
     {
@@ -36,7 +37,8 @@ public sealed partial class SpeakOnUIClosedSystem : EntitySystem
             return;
 
         var message = Loc.GetString(_random.Pick(messagePack.Values));
-        _chat.TrySendInGameICMessage(uid, message);
+
+        _chat.SendChannelMessage(Loc.GetString(message), "BubbleOnlySpeech", null, uid);
         _useDelay.TryResetDelay((uid, useDelay));
     }
 }

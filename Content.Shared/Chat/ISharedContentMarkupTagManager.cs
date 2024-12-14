@@ -16,11 +16,14 @@ public interface ISharedContentMarkupTagManager
         return ContentMarkupTagTypes.GetValueOrDefault(name);
     }
 
-    public bool TryGetContentMarkupTag(string name, Type[]? tagsAllowed, [NotNullWhen(true)] out IContentMarkupTag? tag)
+    /// <summary>
+    /// Try to get the markup tag with the provided name.
+    /// </summary>
+    /// <param name="name">The name of the markup tag to check for.</param>
+    /// <returns></returns>
+    public bool TryGetContentMarkupTag(string name, [NotNullWhen(true)] out IContentMarkupTag? tag)
     {
-        if (ContentMarkupTagTypes.TryGetValue(name, out var markupTag)
-            // Using a whitelist prevents new tags from sneaking in.
-            && (tagsAllowed == null || Array.IndexOf(tagsAllowed, markupTag.GetType()) != -1))
+        if (ContentMarkupTagTypes.TryGetValue(name, out var markupTag))
         {
             tag = markupTag;
             return true;
@@ -30,6 +33,12 @@ public interface ISharedContentMarkupTagManager
         return false;
     }
 
+    /// <summary>
+    /// Processes the message and applies the ContentMarkupTags.
+    /// </summary>
+    /// <param name="message">The input message.</param>
+    /// <param name="tagStack">If used iteratively, tagStack includes existing tags acting on the message.</param>
+    /// <returns></returns>
     public FormattedMessage ProcessMessage(FormattedMessage message, Stack<IContentMarkupTag>? tagStack = null)
     {
         var consumedNodes = tagStack ?? new Stack<IContentMarkupTag>();
@@ -42,27 +51,27 @@ public interface ISharedContentMarkupTagManager
         {
             var node = nodeEnumerator[i];
 
+            // Iteratively go through all nodes that have been consumed and are acting on the message.
             if (consumedNodes.Count > 0)
             {
                 var consumedNode = consumedNodes.First();
-                //foreach (var consumedNode in consumedNodes)
-                //{
+
                 var consumedNodeResult = node.Name != null
                     ? consumedNode.MarkupNodeProcessing(node)
                     : consumedNode.TextNodeProcessing(node);
+
                 if (consumedNodeResult != null)
                 {
-                    var testvar = string.Join("", consumedNodeResult);
-                    var secondtestvar = ProcessMessage(FormattedMessage.FromMarkupOrThrow(testvar), new Stack<IContentMarkupTag>(consumedNodes.Skip(1)));
-                    returnMessage.AddMessage(secondtestvar);
-                    nodeEnumerator.InsertRange(i, secondtestvar.Nodes);
-                    i += secondtestvar.Nodes.Count + 1;
+                    var iteratedMessage = ProcessMessage(FormattedMessage.FromMarkupOrThrow(string.Join("", consumedNodeResult)), new Stack<IContentMarkupTag>(consumedNodes.Skip(1)));
+                    returnMessage.AddMessage(iteratedMessage);
+                    nodeEnumerator.InsertRange(i, iteratedMessage.Nodes);
+                    i += iteratedMessage.Nodes.Count + 1;
                     continue;
                 }
             }
-            //}
 
-            if (node.Name != null && TryGetContentMarkupTag(node.Name, null, out var tag))
+            // Handles extracting the ContentMarkupTags and applies any processes that those tags have set.
+            if (node.Name != null && TryGetContentMarkupTag(node.Name, out var tag))
             {
                 if (!node.Closing)
                 {

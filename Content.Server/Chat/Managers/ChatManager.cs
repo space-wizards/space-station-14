@@ -50,7 +50,6 @@ internal sealed partial class ChatManager : IChatManager
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly PlayerRateLimitManager _rateLimitManager = default!;
-    [Dependency] private readonly ISharedContentMarkupTagManager _contentMarkupTagManager = default!;
 
     /// <summary>
     /// The maximum length a player-sent message can be sent
@@ -78,7 +77,6 @@ internal sealed partial class ChatManager : IChatManager
         if (_oocEnabled == val) return;
 
         _oocEnabled = val;
-        // CHAT-TODO: Get this (maybe move to ChatSystem?)
         DispatchServerAnnouncement(Loc.GetString(val ? "chat-manager-ooc-chat-enabled-message" : "chat-manager-ooc-chat-disabled-message"));
     }
 
@@ -87,7 +85,6 @@ internal sealed partial class ChatManager : IChatManager
         if (_adminOocEnabled == val) return;
 
         _adminOocEnabled = val;
-        // CHAT-TODO: Get this (maybe move to ChatSystem?)
         DispatchServerAnnouncement(Loc.GetString(val ? "chat-manager-admin-ooc-chat-enabled-message" : "chat-manager-admin-ooc-chat-disabled-message"));
     }
 
@@ -259,6 +256,10 @@ internal sealed partial class ChatManager : IChatManager
         if (communicationChannel.NonRepeatable && usedCommsChannels.Contains(communicationChannel))
             return;
 
+        // Check for rate limiting if it's a client sending the message
+        if (senderSession != null && HandleRateLimit(senderSession) != RateLimitStatus.Allowed)
+                return;
+
         // Set the channel parameters, and supply any custom ones if necessary.
         var compiledChannelParameters = communicationChannel.ChannelParameters;
         if (channelParameters != null)
@@ -295,7 +296,6 @@ internal sealed partial class ChatManager : IChatManager
         // If senderSession is null, it means the server is sending the message.
         if (senderSession != null)
         {
-            Logger.Debug("senderSession not null");
             var basePublishSessionChatCondition = new SessionChatCondition(communicationChannel.PublishSessionChatConditions, new List<EntityChatCondition>());
 
             var result = basePublishSessionChatCondition.ProcessCondition(new HashSet<ICommonSession>() { senderSession }, compiledChannelParameters);
@@ -303,15 +303,10 @@ internal sealed partial class ChatManager : IChatManager
             var allowPublish = false;
 
             if (result.Count > 0)
-            {
-                Logger.Debug("Count is over 0");
                 allowPublish = true;
-            }
 
             if (!allowPublish)
-            {
                 failedPublishing = true;
-            }
         }
         else if (!communicationChannel.AllowServerMessages)
         {
@@ -355,52 +350,48 @@ internal sealed partial class ChatManager : IChatManager
         var exemptSessions = new HashSet<ICommonSession>();
         var exemptEntities = new HashSet<EntityUid>();
 
-        // ConsumeCollections allow us to modify the message with different ChatModifiers based on the recipients
+        // We start by looking at player sessions and evaluating them.
+        // ConsumeCollections allow us to modify the message with different ChatModifiers based on the recipients.
         foreach (var consumeCollection in communicationChannel.ConsumeCollections)
         {
-            // We start by looking at sessions
-
             var eligibleConsumerSessions = new HashSet<ICommonSession>();
+
             if (consumeCollection.ConsumeSessionChatConditions.Count > 0)
             {
                 // The list of chat conditions is made into its own chat condition here, to more easily evaluate it iteratively.
-                var baseSessionChatCondition =
-                    new SessionChatCondition(consumeCollection.ConsumeSessionChatConditions, new List<EntityChatCondition>());
+                foreach (var consumeSessionChatCondition in consumeCollection.ConsumeSessionChatConditions)
+                {
+                    var baseSessionChatCondition =
+                        new SessionChatCondition(new List<SessionChatCondition>() { consumeSessionChatCondition }, consumeSessionChatCondition.UseConsumeEntityChatConditions ? consumeCollection.ConsumeEntityChatConditions : consumeSessionChatCondition.EntityChatConditions);
 
-                var filteredConsumers = baseSessionChatCondition.ProcessCondition(targetSessions ?? _playerManager.NetworkedSessions.ToHashSet(), compiledChannelParameters);
+                    var filteredConsumers = baseSessionChatCondition.ProcessCondition(targetSessions ?? _playerManager.NetworkedSessions.ToHashSet(), compiledChannelParameters);
 
-                if (filteredConsumers.Count > 0)
-                    eligibleConsumerSessions = filteredConsumers;
+                    if (filteredConsumers.Count > 0)
+                        eligibleConsumerSessions = filteredConsumers;
 
-                eligibleConsumerSessions.ExceptWith(exemptSessions);
-                exemptSessions.UnionWith(eligibleConsumerSessions);
+                    eligibleConsumerSessions.ExceptWith(exemptSessions);
+                    exemptSessions.UnionWith(eligibleConsumerSessions);
+                }
             }
 
+            // No consumers for this collection.
+            if (eligibleConsumerSessions.Count == 0)
+                continue;
 
-
-            //CHAT-TODO: Step 3.5
-            //Supply markup tags.
-
+            // Next, we apply any ChatModifiers from the collection.
             var consumerMessage = message;
-
             foreach (var markupSupplier in consumeCollection.CollectionChatModifiers)
             {
-                //CHAT-TODO: message needs to be converted to FormattedMessage
                 consumerMessage = markupSupplier.ProcessChatModifier(consumerMessage, compiledChannelParameters);
             }
 
-            //CHAT-TODO: Step 4
-            //Then, it applies the serversideMessageMutators. This should NOT be formatting and rarely text changes, unless strictly necessary (animal speak/whisper censorship)
-            Logger.Debug("Pre-step4: " + consumerMessage.ToMarkup());
-            consumerMessage = _contentMarkupTagManager.ProcessMessage(consumerMessage);
-            Logger.Debug("Post-step4: " + consumerMessage.ToMarkup());
+            // Comment: I don't know whether there will ever be a ContentMarkupTag that /needs/ to be done serverside.
+            // Any such behavior could just as well be done via a ChatModifier.
+            // So for now we're commenting it out.
 
+            // consumerMessage = _contentMarkupTagManager.ProcessMessage(consumerMessage);
 
-            if (eligibleConsumerSessions.Count > 0)
-            {
-                Logger.Debug("eligible: " + eligibleConsumerSessions.First().ToString()!);
-            }
-
+            // Off the message goes!
             ChatFormattedMessageToHashset(
                 consumerMessage,
                 communicationChannel,
@@ -409,20 +400,31 @@ internal sealed partial class ChatManager : IChatManager
                 communicationChannel.HideChat,
                 true //CHAT-TODO: Process properly
                 );
+
+            // Send out the message to any listening entities as well.
+            if (consumeCollection.ConsumeEntityChatConditions.Count > 0)
+            {
+                var getListenerEv = new GetListenerConsumerEvent();
+                _entityManager.EventBus.RaiseEvent(EventSource.Local, ref getListenerEv);
+
+                var baseEntityChatCondition = new EntityChatCondition(consumeCollection.ConsumeEntityChatConditions);
+
+                var filteredEntities = baseEntityChatCondition.ProcessCondition(getListenerEv.Entities, compiledChannelParameters);
+
+                filteredEntities.ExceptWith(exemptEntities);
+                exemptEntities.UnionWith(filteredEntities);
+
+                foreach (var consumerEntity in filteredEntities)
+                {
+                    var listenerConsumeEv =
+                        new ListenerConsumeEvent(communicationChannel.ChatChannels, consumerMessage, compiledChannelParameters);
+
+                    _entityManager.EventBus.RaiseLocalEvent(consumerEntity, listenerConsumeEv);
+                }
+            }
         }
 
-        var getListenerEv = new GetListenerConsumerEvent();
-        _entityManager.EventBus.RaiseEvent(EventSource.Local, ref getListenerEv);
-
-        foreach (var consumerEntity in getListenerEv.Entities)
-        {
-            var listenerConsumeEv = new ListenerConsumeEvent(communicationChannel.ChatChannels, new FormattedMessage());
-
-            _entityManager.EventBus.RaiseLocalEvent(consumerEntity, listenerConsumeEv);
-        }
-
-        // Finally the message also gets passed on to any other communication types (e.g. radio + whisper)
-
+        // Finally we pass it on to any child channels that should be included.
         var childChannels = HandleChildChannels(communicationChannel, communicationChannel.AlwaysChildCommunicationChannels);
         if (childChannels.Count > 0)
         {
@@ -434,7 +436,8 @@ internal sealed partial class ChatManager : IChatManager
                     senderSession,
                     senderEntity,
                     ref usedCommsChannels,
-                    targetSessions);
+                    targetSessions,
+                    channelParameters);
             }
         }
 
@@ -481,6 +484,9 @@ internal sealed partial class ChatManager : IChatManager
         var user = author == null ? null : EnsurePlayer(author);
         var netSource = _entityManager.GetNetEntity(source ?? default);
         user?.AddEntity(netSource);
+
+        if (string.IsNullOrEmpty(message.ToMarkup()))
+            return;
 
         var msg = new ChatMessage(channel, message, netSource, user?.Key, hideChat);
         _netManager.ServerSendToMany(new MsgChatMessage() { Message = msg }, clients.ToList());

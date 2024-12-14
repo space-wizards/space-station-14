@@ -59,13 +59,6 @@ public sealed partial class CommunicationChannelPrototype : IPrototype, IInherit
     public bool AllowServerMessages = true;
 
     /// <summary>
-    /// If true, sessions (i.e. players) may publish to this channel.
-    /// </summary>
-    [DataField]
-    [AlwaysPushInheritance]
-    public bool AllowSessionMessages = true;
-
-    /// <summary>
     /// If true, an entity does not need to be attached to publish to this channel.
     /// </summary>
     [DataField]

@@ -2,7 +2,6 @@
 using Content.Client.Chat.MarkupTags;
 using Content.Shared.Chat;
 using Content.Shared.Chat.ContentMarkupTags;
-using Content.Shared.Chat.Testing;
 
 namespace Content.Client.Chat.Managers;
 

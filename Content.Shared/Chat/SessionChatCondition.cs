@@ -14,6 +14,15 @@ public partial class SessionChatCondition
     public bool Inverted = false;
 
     /// <summary>
+    /// If true, the sessions' entities that pass this condition will also be evaluated against the consumerCollection's
+    /// ConsumeEntityChatConditions.
+    /// Only applicable when evaluating consumers, and not on any subcondition SessionChatConditions.
+    /// </summary>
+    [DataField]
+    [AlwaysPushInheritance]
+    public bool UseConsumeEntityChatConditions = false;
+
+    /// <summary>
     /// Defines conditions that act as logical operators on this condition's hashset of consumers.
     /// Any subcondition acts as "AND" operators on -this- condition's consumers.
     /// Relative to each other they act as "OR" operators (as they each only act on this condition's consumers).
@@ -55,20 +64,17 @@ public partial class SessionChatCondition
     /// <returns>Hashset of consumers processed in this conditions and its subconditions.</returns>
     public HashSet<ICommonSession> ProcessCondition(HashSet<ICommonSession> consumers, Dictionary<Enum, object> channelParameters)
     {
-        var filtered = new HashSet<ICommonSession>();
+        HashSet<ICommonSession> filtered;
+
         if (!Inverted)
             filtered = FilterConsumers(consumers, channelParameters);
         else
             filtered = consumers.Except(FilterConsumers(consumers, channelParameters)).ToHashSet();
 
-        Logger.Debug("eh? " + filtered.Count.ToString() + " subconditions: " + Subconditions.Count.ToString());
         if (Subconditions.Count > 0)
         {
             filtered = IterateSessionSubconditions(filtered, channelParameters);
-            Logger.Debug("eh2? " + filtered.Count.ToString());
         }
-
-        Logger.Debug("eh3? " + EntityChatConditions.Count.ToString());
 
         if (EntityChatConditions.Count > 0)
         {
@@ -97,12 +103,8 @@ public partial class SessionChatCondition
             if (changedConsumers.Count == consumers.Count)
                 return changedConsumers;
 
-            if (!condition.Inverted)
-                changedConsumers.UnionWith(condition.ProcessCondition(consumers, channelParameters));
-            else
-                changedConsumers.UnionWith(consumers.Except(condition.ProcessCondition(consumers, channelParameters)));
+            changedConsumers.UnionWith(condition.ProcessCondition(consumers, channelParameters));
         }
-
         return changedConsumers;
     }
 
@@ -113,7 +115,6 @@ public partial class SessionChatCondition
     /// <returns>Hashset of consumers processed by the subconditions.</returns>
     private HashSet<ICommonSession> IterateSessionSubconditions(HashSet<ICommonSession> consumers, Dictionary<Enum, object> channelParameters)
     {
-        Logger.Debug("getting tired: " + Subconditions.Count() + " " + consumers.Count());
         var changedConsumers = new HashSet<ICommonSession>();
         foreach (var condition in Subconditions)
         {
@@ -121,12 +122,7 @@ public partial class SessionChatCondition
             if (changedConsumers.Count == consumers.Count)
                 return changedConsumers;
 
-            Logger.Debug("wehehe " + changedConsumers.Count.ToString());
-            Logger.Debug("wehehetype " + condition.GetType().Name);
-
             changedConsumers.UnionWith(condition.ProcessCondition(consumers, channelParameters));
-
-            Logger.Debug("wehehe2 " + changedConsumers.Count.ToString());
         }
         return changedConsumers;
     }

@@ -236,9 +236,6 @@ namespace Content.Client.Chat.UI
                     MaxWidth = SpeechMaxWidth
                 };
 
-                // CHAT-TODO: All bubble building should be done via content markup
-                //label.SetMessage(ExtractAndFormatSpeechSubstring(message, "BubbleContent"));
-
                 var unfanciedPanel = new PanelContainer
                 {
                     StyleClasses = { "speechBox", speechStyleClass },

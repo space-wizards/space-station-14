@@ -3,7 +3,7 @@ using Content.Shared.Speech;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Chat.Testing;
+namespace Content.Shared.Chat.ContentMarkupTags;
 
 public sealed class SpeechVerbContentTag : IContentMarkupTag
 {

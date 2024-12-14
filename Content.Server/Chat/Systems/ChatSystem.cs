@@ -90,35 +90,32 @@ public sealed partial class ChatSystem : SharedChatSystem
 
     #region Cvar Subscription Notifications
 
-    // CHAT-TODO: See how you can implement this
     private void OnLoocEnabledChanged(bool val)
     {
         if (_loocEnabled == val) return;
 
         _loocEnabled = val;
-        //_chatManager.DispatchServerAnnouncement(
-        //    Loc.GetString(val ? "chat-manager-looc-chat-enabled-message" : "chat-manager-looc-chat-disabled-message"));
+        _chatManager.DispatchServerAnnouncement(
+            Loc.GetString(val ? "chat-manager-looc-chat-enabled-message" : "chat-manager-looc-chat-disabled-message"));
     }
 
-    // CHAT-TODO: See how you can implement this
     private void OnDeadLoocEnabledChanged(bool val)
     {
         if (_deadLoocEnabled == val) return;
 
         _deadLoocEnabled = val;
-        //_chatManager.DispatchServerAnnouncement(
-        //    Loc.GetString(val ? "chat-manager-dead-looc-chat-enabled-message" : "chat-manager-dead-looc-chat-disabled-message"));
+        _chatManager.DispatchServerAnnouncement(
+            Loc.GetString(val ? "chat-manager-dead-looc-chat-enabled-message" : "chat-manager-dead-looc-chat-disabled-message"));
     }
 
-    // CHAT-TODO: See how you can implement this
     private void OnCritLoocEnabledChanged(bool val)
     {
         if (_critLoocEnabled == val)
             return;
 
         _critLoocEnabled = val;
-        //_chatManager.DispatchServerAnnouncement(
-        //    Loc.GetString(val ? "chat-manager-crit-looc-chat-enabled-message" : "chat-manager-crit-looc-chat-disabled-message"));
+        _chatManager.DispatchServerAnnouncement(
+            Loc.GetString(val ? "chat-manager-crit-looc-chat-enabled-message" : "chat-manager-crit-looc-chat-disabled-message"));
     }
 
     private void OnGameChange(GameRunLevelChangedEvent ev)
@@ -143,13 +140,8 @@ public sealed partial class ChatSystem : SharedChatSystem
     ///     Sends an in-character chat message to relevant clients.
     /// </summary>
     /// <param name="source">The entity that is speaking</param>
-    /// <param name="message">The message being spoken or emoted</param>
-    /// <param name="desiredType">The chat type</param>
-    /// <param name="range">Conceptual range of transmission, if it shows in the chat window, if it shows to far-away ghosts or ghosts at all...</param>
-    /// <param name="shell"></param>
+    /// <param name="message">The message being spoken</param>
     /// <param name="player">The player doing the speaking</param>
-    /// <param name="nameOverride">The name to use for the speaking entity. Usually this should just be modified via <see cref="TransformSpeakerNameEvent"/>. If this is set, the event will not get raised.</param>
-    /// <param name="ignoreActionBlocker">If set to true, action blocker will not be considered for whether an entity can send this message.</param>
     public void TrySendInGameICMessage(
         EntityUid source,
         string message,
@@ -157,98 +149,14 @@ public sealed partial class ChatSystem : SharedChatSystem
         )
     {
         _chatManager.SendChannelMessage(message, "ICSpeech", player, source);
-
-        // CHAT-TODO: Handled by backup
-        /*if (HasComp<GhostComponent>(source))
-        {
-            // Ghosts can only send dead chat messages, so we'll forward it to InGame OOC.
-            TrySendInGameOOCMessage(source, message, InGameOOCChatType.Dead, range == ChatTransmitRange.HideChat, shell, player);
-            return;
-        }*/
-
-        // CHAT-TODO: Should be handled by the manager
-        //if (player != null && _chatManager.HandleRateLimit(player) != RateLimitStatus.Allowed)
-        //    return;
-
-        // Handled by entity check?
-        /*
-        // Sus
-        if (player?.AttachedEntity is { Valid: true } entity && source != entity)
-        {
-            return;
-        }*/
-
-        /* CHAT-TODO: Handled by conditions!
-        if (!CanSendInGame(message, shell, player))
-            return;
-        */
-
-        //ignoreActionBlocker = CheckIgnoreSpeechBlocker(source, ignoreActionBlocker);
-
-        // CHAT-TODO: This logging should probably be done in the manager directly!
-        /*if (player != null)
-        {
-            _chatManager.EnsurePlayer(player.UserId).AddEntity(GetNetEntity(source));
-        }*/
-
-        // CHAT-TODO: This is set by the channel prototype
-        /*if (desiredType == InGameICChatType.Speak && message.StartsWith(LocalPrefix))
-        {
-            // prevent radios and remove prefix.
-            checkRadioPrefix = false;
-            message = message[1..];
-        }*/
-
-        // CHAT-TODO: Markup!
-        /*
-        bool shouldCapitalize = (desiredType != InGameICChatType.Emote);
-        bool shouldPunctuate = _configurationManager.GetCVar(CCVars.ChatPunctuation);
-        // Capitalizing the word I only happens in English, so we check language here
-        bool shouldCapitalizeTheWordI = (!CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Parent.Name == "en")
-            || (CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Name == "en");
-
-        message = SanitizeInGameICMessage(source, message, out var emoteStr, shouldCapitalize, shouldPunctuate, shouldCapitalizeTheWordI);
-
-        // Was there an emote in the message? If so, send it.
-        if (player != null && emoteStr != message && emoteStr != null)
-        {
-            SendEntityEmote(source, emoteStr, range, nameOverride, ignoreActionBlocker);
-        }
-
-        // CHAT-TODO: This needs to have a check in the manager probably
-        // This can happen if the entire string is sanitized out.
-        if (string.IsNullOrEmpty(message))
-            return;
-        */
-
-        // CHAT-TODO: Handled by child channels
-        // This message may have a radio prefix, and should then be whispered to the resolved radio channel
-        /*if (checkRadioPrefix)
-        {
-            if (TryProccessRadioMessage(source, message, out var modMessage, out var channel))
-            {
-                SendEntityWhisper(source, modMessage, range, channel, nameOverride, hideLog, ignoreActionBlocker);
-                return;
-            }
-        }*/
-
-        // CHAT-TODO: Handled by channel prototype
-        // Otherwise, send whatever type.
-        /*
-        switch (desiredType)
-        {
-            case InGameICChatType.Speak:
-                SendEntitySpeak(source, message, range, nameOverride, hideLog, ignoreActionBlocker);
-                break;
-            case InGameICChatType.Whisper:
-                SendEntityWhisper(source, message, range, null, nameOverride, hideLog, ignoreActionBlocker);
-                break;
-            case InGameICChatType.Emote:
-                SendEntityEmote(source, message, range, nameOverride, hideLog: hideLog, ignoreActionBlocker: ignoreActionBlocker);
-                break;
-        }*/
     }
 
+    /// <summary>
+    ///     Sends an in-character OOC chat message to relevant clients (LOOC).
+    /// </summary>
+    /// <param name="source">The entity that is speaking</param>
+    /// <param name="message">The message being spoken</param>
+    /// <param name="player">The player doing the speaking</param>
     public void TrySendInGameOOCMessage(
         EntityUid source,
         string message,
@@ -256,49 +164,6 @@ public sealed partial class ChatSystem : SharedChatSystem
         )
     {
         _chatManager.SendChannelMessage(message, "LOOC", player, source);
-
-        /* CHAT-TODO: Will be handled by conditions
-        if (!CanSendInGame(message, shell, player))
-            return;
-
-        if (player != null && _chatManager.HandleRateLimit(player) != RateLimitStatus.Allowed)
-            return;
-
-        // It doesn't make any sense for a non-player to send in-game OOC messages, whereas non-players may be sending
-        // in-game IC messages.
-        if (player?.AttachedEntity is not { Valid: true } entity || source != entity)
-            return;
-            */
-
-        // CHAT-TODO: Will be handled by markup
-        //message = SanitizeInGameOOCMessage(message);
-
-        // CHAT-TODO: Handled by backup
-        /*
-        var sendType = type;
-        // If dead player LOOC is disabled, unless you are an admin with Moderator perms, send dead messages to dead chat
-        if ((_adminManager.IsAdmin(player) && _adminManager.HasAdminFlag(player, AdminFlags.Moderator)) // Override if admin
-            || _deadLoocEnabled
-            || (!HasComp<GhostComponent>(source) && !_mobStateSystem.IsDead(source))) // Check that player is not dead
-        {
-        }
-        else
-            sendType = InGameOOCChatType.Dead;*/
-
-        // If crit player LOOC is disabled, don't send the message at all.
-        //if (!_critLoocEnabled && _mobStateSystem.IsCritical(source))
-        //    return;
-
-        /*
-        switch (sendType)
-        {
-            case InGameOOCChatType.Dead:
-                SendDeadChat(source, player, message, hideChat);
-                break;
-            case InGameOOCChatType.Looc:
-                SendLOOC(source, player, message, hideChat);
-                break;
-        }*/
     }
 
     #region Utility
@@ -403,7 +268,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         return newMessage;
     }
 
-    // CHAT-TODO: This needs to be incorporated into a supplier
+    // CHAT-TODO: This needs to be incorporated into a chat modifier
     public string TransformSpeech(EntityUid sender, string message)
     {
         var ev = new TransformSpeechEvent(sender, message);
@@ -412,7 +277,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         return ev.Message;
     }
 
-    // CHAT-TODO: This needs to be incorporated into a supplier
+    // CHAT-TODO: This needs to be incorporated into a chat modifier
     public bool CheckIgnoreSpeechBlocker(EntityUid sender, bool ignoreBlocker)
     {
         if (ignoreBlocker)
@@ -424,17 +289,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         return ev.IgnoreBlocker;
     }
 
-    // CHAT-TODO: This needs to be incorporated into a supplier
-    private IEnumerable<INetChannel> GetDeadChatClients()
-    {
-        return Filter.Empty()
-            .AddWhereAttachedEntity(HasComp<GhostComponent>)
-            .Recipients
-            .Union(_adminManager.ActiveAdmins)
-            .Select(p => p.Channel);
-    }
-
-    // CHAT-TODO: This needs to be incorporated into a supplier
+    // CHAT-TODO: This needs to be incorporated into a chat modifier
     private string SanitizeMessagePeriod(string message)
     {
         if (string.IsNullOrEmpty(message))
@@ -508,28 +363,6 @@ public sealed partial class ChatSystem : SharedChatSystem
 
 
     // CHAT-TODO: This needs to be incorporated into a supplier
-    private string ObfuscateMessageReadability(string message, float chance)
-    {
-        var modifiedMessage = new StringBuilder(message);
-
-        for (var i = 0; i < message.Length; i++)
-        {
-            if (char.IsWhiteSpace((modifiedMessage[i])))
-            {
-                continue;
-            }
-
-            if (_random.Prob(1 - chance))
-            {
-                modifiedMessage[i] = '~';
-            }
-        }
-
-        return modifiedMessage.ToString();
-    }
-
-
-    // CHAT-TODO: This needs to be incorporated into a supplier
     public string BuildGibberishString(IReadOnlyList<char> charOptions, int length)
     {
         var sb = new StringBuilder();
@@ -543,14 +376,12 @@ public sealed partial class ChatSystem : SharedChatSystem
     #endregion
 
 
-    // CHAT-TODO: START OF THE CHAT REFACTOR
-
     #region Helper Messages
 
     /// <summary>
     /// Helper function to send a server-sent message to all players.
     /// Text is not escaped with this function.
-    /// CHAT-TODO: This one is missing functionality
+    /// CHAT-TODO: This one is missing functionality such as color override and announcement sound
     /// </summary>
     public void DispatchGlobalAnnouncement(
         string message,
@@ -570,7 +401,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     /// <summary>
     /// Helper function to send a server-sent message to sessions on a specific station.
     /// Text is not escaped with this function.
-    /// CHAT-TODO: This one is missing functionality
+    /// CHAT-TODO: This one is missing functionality such as color override and announcement sound
     /// </summary>
     public void DispatchStationAnnouncement(
         EntityUid source,
