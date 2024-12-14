@@ -12,7 +12,6 @@ namespace Content.Client.Instruments.UI
         public IEntityManager Entities => EntMan;
         [Dependency] public readonly IMidiManager MidiManager = default!;
         [Dependency] public readonly IFileDialogManager FileDialogManager = default!;
-        [Dependency] public new readonly IPlayerManager PlayerManager = default!;
         [Dependency] public readonly ILocalizationManager Loc = default!;
 
         public readonly InstrumentSystem Instruments;
