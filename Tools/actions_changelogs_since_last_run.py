@@ -193,6 +193,7 @@ def send_message_lines(message_lines: list[str]):
         new_chunk_length = chunk_length + line_length
 
         if new_chunk_length > DISCORD_SPLIT_LIMIT:
+            print("Split changelog and sending to discord")
             send_discord_webhook(chunk_lines)
 
             new_chunk_length = line_length
@@ -202,6 +203,7 @@ def send_message_lines(message_lines: list[str]):
         chunk_length = new_chunk_length
 
     if chunk_lines:
+        print("Sending final changelog to discord")
         send_discord_webhook(chunk_lines)
 
 
