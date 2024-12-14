@@ -369,10 +369,12 @@
       - BoxShotgunUranium
       - BoxShellTranquilizer
       - ExplosivePayload
+      - FullAutoConversionKit
       - GrenadeBlast
       - GrenadeEMP
       - GrenadeFlash
       - HoloprojectorSecurity
+      - HyperBurstConversionKit
       - MagazineBoxLightRifleIncendiary
       - MagazineBoxLightRifleUranium
       - MagazineBoxMagnumIncendiary
@@ -381,7 +383,11 @@
       - MagazineBoxPistolUranium
       - MagazineBoxRifleIncendiary
       - MagazineBoxRifleUranium
+      - MagazineDMRIncendiary
+      - MagazineDMRUranium
       - MagazineGrenadeEmpty
+      - MagazineLPistolIncendiary
+      - MagazineLPistolUranium
       - MagazineLightRifleIncendiary
       - MagazineLightRifleUranium
       - MagazinePistolIncendiary
@@ -724,6 +730,8 @@
       - MagazineBoxPistolPractice
       - MagazineBoxRifle
       - MagazineBoxRiflePractice
+      - MagazineDMR
+      - MagazineDMREmpty
       - MagazineLightRifle
       - MagazineLightRifleEmpty
       - MagazinePistol
@@ -774,6 +782,8 @@
       - MagazineBoxPistolUranium
       - MagazineBoxRifleIncendiary
       - MagazineBoxRifleUranium
+      - MagazineDMRIncendiary
+      - MagazineDMRUranium
       - MagazineGrenadeEmpty
       - MagazineLightRifleIncendiary
       - MagazineLightRifleUranium
@@ -851,8 +861,12 @@
         - MagazineBoxMagnum
         - MagazineBoxPistol
         - MagazineBoxRifle
+        - MagazineDMR
+        - MagazineDMREmpty
         - MagazineLightRifle
         - MagazineLightRifleEmpty
+        - MagazineLPistol
+        - MagazineLPistolEmpty
         - MagazinePistol
         - MagazinePistolEmpty
         - MagazineRifle

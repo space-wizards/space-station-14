@@ -57,6 +57,19 @@
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: true
   fizziness: 0.6
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.3
+      - !type:Emote
+        emote: Wuhey
+        showInChat: true
+        force: true
+        probability: 0.02
 
 - type: reagent
   id: BlueCuracao

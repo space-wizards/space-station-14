@@ -1,0 +1,442 @@
+- type: entity
+  parent: BaseThiefStealAnimalObjective
+  id: FinFinStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: AnimalFinFin
+  - type: Objective
+    difficulty: 2
+
+- type: entity
+  parent: BaseThiefStealStructureObjective
+  id: GeneratorStealObjective #tesla or singulo generator
+  components:
+  - type: NotJobRequirement
+    job: StationEngineer
+  - type: StealCondition
+    stealGroup: Generator
+    descriptionText: objective-condition-thief-generator-description
+  - type: Objective
+    difficulty: 1.5
+
+- type: entity
+  parent: BaseThiefStealCollectionObjective
+  id: CigaretteStealCollectionObjective
+  components:
+  - type: SpeciesRequirement
+    allowedSpecies:
+      - Gray
+  - type: StealCondition
+    stealGroup: Cigarettes
+    descriptionText: objective-condition-thief-cigarettes
+    minCollectionSize: 1
+    maxCollectionSize: 30
+    verifyMapExistence: false
+  - type: Objective
+    difficulty: 0.3
+
+- type: entity
+  parent: BaseThiefStealCollectionObjective
+  id: PositronicBrainStealCollectionObjective
+  components:
+  - type: SpeciesRequirement
+    allowedSpecies:
+      - SpElf
+  - type: NotJobRequirement
+    job: Scientist
+  - type: StealCondition
+    stealGroup: PositronicBrains
+    minCollectionSize: 1
+    maxCollectionSize: 3
+    verifyMapExistence: false
+  - type: Objective
+    difficulty: 2
+
+- type: entity
+  parent: BaseThiefStealCollectionObjective
+  id: AILawBoardStealCollectionObjective
+  components:
+  - type: NotJobRequirement
+    job: Scientist
+  - type: StealCondition
+    stealGroup: AILawBoard
+    minCollectionSize: 1
+    maxCollectionSize: 7
+  - type: Objective
+    difficulty: 1.6
+
+- type: entity
+  parent: BaseThiefStealStructureObjective
+  id: AICoreStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Scientist
+  - type: StealCondition
+    stealGroup: AICore
+  - type: Objective
+    difficulty: 2.5 #im making this high difficulty so its rare even though objectively it's pretty easy
+
+- type: entity
+  parent: BaseThiefStealStructureObjective
+  id: ParticleAcceleratorStealObjective #lol
+  components:
+  - type: NotJobRequirement
+    job: StationEngineer
+  - type: StealCondition
+    stealGroup: ParticleAccelerator
+    descriptionText: objective-condition-thief-multiply-structure-description
+    minCollectionSize: 1
+    maxCollectionSize: 5
+    verifyMapExistence: false
+  - type: Objective
+    difficulty: 2.5 #good luck dude
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: AtmosFireSuitStealObjective
+  components:
+  - type: SpeciesRequirement
+    allowedSpecies: #its tough out there being extremely vulnerable to fire
+      - Moth
+      - Diona
+      - Decapoid
+  - type: NotJobRequirement
+    job: AtmosphericTechnician
+  - type: StealCondition
+    stealGroup: FireSuit
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: MopBucketStealObjective
+  components:
+  - type: SpeciesRequirement
+    allowedSpecies:
+      - SlimePerson
+  - type: NotJobRequirement
+    job: Janitor
+  - type: StealCondition
+    stealGroup: StealMopBucket
+  - type: Objective
+    difficulty: 0.5
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: MedTekCartridgeStealObjective
+  components:
+  - type: NotJobRequirement
+    job: MedicalDoctor
+  - type: StealCondition
+    stealGroup: MedTekCartridge
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: LogProbeCartridgeStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Detective #you know. just in case
+  - type: StealCondition
+    stealGroup: LogProbeCartridge
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: AstroNavCartridgeStealObjective
+  components:
+  - type: NotJobRequirement
+    job: SalvageSpecialist
+  - type: StealCondition
+    stealGroup: AstroNavCartridge
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  parent: BaseThiefStealStructureObjective
+  id: PTechStealObjective
+  components:
+  - type: NotJobRequirement
+    job: HeadOfPersonnel
+  - type: StealCondition
+    stealGroup: PTech
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  parent: BaseThiefStealStructureObjective
+  id: SecTechStealObjective
+  components:
+  - type: NotJobRequirement
+    job: SecurityOfficer #you never know!
+  - type: StealCondition
+    stealGroup: SecTech
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  parent: BaseThiefStealStructureObjective
+  id: HyDrobeStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Botanist
+  - type: StealCondition
+    stealGroup: HyDrobe
+  - type: Objective
+    difficulty: 0.6
+
+- type: entity
+  parent: BaseThiefStealStructureObjective
+  id: LawDrobeStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Lawyer
+  - type: StealCondition
+    stealGroup: LawDrobe
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  parent: BaseThiefStealStructureObjective
+  id: SecDrobeStealObjective
+  components:
+  - type: NotJobRequirement
+    job: SecurityOfficer
+  - type: StealCondition
+    stealGroup: SecDrobe
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  parent: BaseThiefStealStructureObjective
+  id: BarDrobeStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Bartender
+  - type: StealCondition
+    stealGroup: BarDrobe
+  - type: Objective
+    difficulty: 0.7
+
+- type: entity
+  parent: BaseThiefStealStructureObjective
+  id: PietyVendStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Chaplain
+  - type: StealCondition
+    stealGroup: PietyVend
+  - type: Objective
+    difficulty: 0.5
+
+- type: entity
+  parent: BaseThiefStealStructureObjective
+  id: CargoDrobeStealObjective
+  components:
+  - type: NotJobRequirement
+    job: CargoTechnician
+  - type: StealCondition
+    stealGroup: CargoDrobe
+  - type: Objective
+    difficulty: 0.5
+
+- type: entity
+  parent: BaseThiefStealStructureObjective
+  id: MediDrobeStealObjective
+  components:
+  - type: NotJobRequirement
+    job: MedicalDoctor
+  - type: StealCondition
+    stealGroup: MediDrobe
+  - type: Objective
+    difficulty: 0.7
+
+- type: entity
+  parent: BaseThiefStealStructureObjective
+  id: ChemDrobeStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Chemist
+  - type: StealCondition
+    stealGroup: ChemDrobe
+  - type: Objective
+    difficulty: 0.7
+
+- type: entity
+  parent: BaseThiefStealStructureObjective
+  id: CuraDrobeStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Librarian
+  - type: StealCondition
+    stealGroup: CuraDrobe
+  - type: Objective
+    difficulty: 0.4
+
+- type: entity
+  parent: BaseThiefStealStructureObjective
+  id: AtmosDrobeStealObjective
+  components:
+  - type: NotJobRequirement
+    job: AtmosphericTechnician
+  - type: StealCondition
+    stealGroup: AtmosDrobe
+  - type: Objective
+    difficulty: 0.7
+
+- type: entity
+  parent: BaseThiefStealStructureObjective
+  id: EngiDrobeStealObjective
+  components:
+  - type: NotJobRequirement
+    job: StationEngineer
+  - type: StealCondition
+    stealGroup: EngiDrobe
+  - type: Objective
+    difficulty: 0.7
+
+- type: entity
+  parent: BaseThiefStealStructureObjective
+  id: ChefDrobeStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Chef
+  - type: StealCondition
+    stealGroup: ChefDrobe
+  - type: Objective
+    difficulty: 0.4
+
+- type: entity
+  parent: BaseThiefStealStructureObjective
+  id: DetDrobeStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Detective
+  - type: StealCondition
+    stealGroup: DetDrobe
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  parent: BaseThiefStealStructureObjective
+  id: JaniDrobeStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Janitor
+  - type: StealCondition
+    stealGroup: JaniDrobe
+  - type: Objective
+    difficulty: 0.5
+
+- type: entity
+  parent: BaseThiefStealStructureObjective
+  id: SciDrobeStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Scientist
+  - type: StealCondition
+    stealGroup: SciDrobe
+  - type: Objective
+    difficulty: 0.6
+
+- type: entity
+  parent: BaseThiefStealStructureObjective
+  id: RoboDrobeStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Scientist
+  - type: StealCondition
+    stealGroup: RoboDrobe
+  - type: Objective
+    difficulty: 0.6
+
+- type: entity
+  parent: BaseThiefStealStructureObjective
+  id: GeneDrobeStealObjective
+  components:
+  - type: NotJobRequirement
+    job: MedicalDoctor
+  - type: StealCondition
+    stealGroup: GeneDrobe
+  - type: Objective
+    difficulty: 0.6
+
+- type: entity
+  parent: BaseThiefStealStructureObjective
+  id: ViroDrobeStealObjective
+  components:
+  - type: NotJobRequirement
+    job: MedicalDoctor
+  - type: StealCondition
+    stealGroup: ViroDrobe
+  - type: Objective
+    difficulty: 0.6
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: ServiceTechFabStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: ServiceTechFab
+  - type: Objective
+    difficulty: 1
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: ShiningSpringStealObjective
+  components:
+  - type: NotJobRequirement
+    job: Janitor
+  - type: StealCondition
+    stealGroup: ShiningSpring
+  - type: Objective
+    difficulty: 0.5
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: ShipyardComputerCircuitboardStealObjective
+  components:
+  - type: NotJobRequirement
+    job: SalvageSpecialist
+  - type: StealCondition
+    stealGroup: ShipyardComputerCircuitboard
+  - type: Objective
+    difficulty: 0.7
+
+- type: entity
+  parent: BaseThiefStealCollectionObjective
+  id: ClothingCommandHeadsetStealObjective #imp edit: i'm branching this out from just the CMO's headset to all command headsets so there is less of a blatant kick-me sign on the CMO
+  components:
+  - type: StealCondition
+    stealGroup: CommandHeadset
+    minCollectionSize: 1
+    maxCollectionSize: 7
+  - type: Objective
+    difficulty: 1.5
+
+- type: entity
+  parent: BaseThiefStealCollectionObjective
+  id: PlushieStealCollectionObjective
+  components:
+  - type: StealCondition
+    stealGroup: Plushie
+    minCollectionSize: 12
+    maxCollectionSize: 50
+  - type: Objective
+    difficulty: 1.2
+
+- type: entity
+  parent: BaseThiefStealStructureObjective
+  id: SeedExtractorStealObjective
+  components:
+  - type: SpeciesRequirement
+    allowedSpecies:
+      - Diona
+  - type: NotJobRequirement
+    job: Botanist
+  - type: StealCondition
+    stealGroup: SeedExtractor
+  - type: Objective
+    difficulty: 0.5

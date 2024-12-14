@@ -32,6 +32,8 @@
   - type: Construction
     graph: UpgradeWeaponCleanerLake
     node: start
+  - type: StealTarget
+    stealGroup: ShiningSpring
 
 - type: entity
   name: remilitarised shining spring
@@ -58,7 +60,7 @@
       tags:
         - CartridgeRocket
     proto: MeteorUrist
-    
+
 - type: entity
   name: micro grappling gun
   parent: WeaponGrapplingGun

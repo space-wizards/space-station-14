@@ -292,3 +292,10 @@
         anchored:
           False: { state: anchored, visible: false }
           True: { state: anchored, visible: true }
+  - type: Climbing
+  - type: Clumsy
+    clumsySound:
+      path: /Audio/Effects/metal_thud3.ogg # the game gets really touchy about having that initial forward slash.
+    clumsyHypo: false
+    clumsyDefib: false
+    clumsyGuns: false

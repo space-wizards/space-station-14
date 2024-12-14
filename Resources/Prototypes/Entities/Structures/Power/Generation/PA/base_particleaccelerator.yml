@@ -28,6 +28,8 @@
   - type: GuideHelp
     guides: [ Singularity, Power ]
   - type: Appearance
+  - type: StealTarget #imp
+    stealGroup: ParticleAccelerator
 
 - type: entity
   id: ParticleAcceleratorFinishedPart

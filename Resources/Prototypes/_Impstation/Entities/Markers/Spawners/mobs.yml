@@ -313,3 +313,17 @@
     - type: ConditionalSpawner
       prototypes:
         - MobTckTck
+
+- type: entity
+  name: Pipi Spawner
+  id: SpawnMobCatKittenPipi
+  suffix: CMO's pet, steal target
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - state: ai
+  - type: ConditionalSpawner
+    prototypes:
+      - MobPipi

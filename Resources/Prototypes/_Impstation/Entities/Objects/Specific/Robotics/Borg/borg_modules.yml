@@ -1,6 +1,6 @@
 - type: entity
   id: BorgModuleTckTck
-  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  parent: [ BaseBorgModule, BaseProviderBorgModule, DecapoidEmpireContraband ]
   name: tck'tck power module
   components:
   - type: Sprite
@@ -21,7 +21,7 @@
 
 - type: entity
   id: BorgModuleTckTckEVA
-  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  parent: [ BaseBorgModule, BaseProviderBorgModule, DecapoidEmpireContraband ]
   name: tck'tck EVA module
   components:
   - type: Sprite
@@ -40,7 +40,7 @@
       
 - type: entity
   id: BorgModuleTckTckGun
-  parent: [ BaseBorgModule, BaseProviderBorgModule]
+  parent: [ BaseBorgModule, BaseProviderBorgModule, DecapoidEmpireContraband ]
   name: tck'tck gun module
   suffix: DO NOT MAP
   components:
@@ -50,7 +50,7 @@
     - state: icon-grappling-gun
   - type: ItemBorgModule
     items:
-    - WeaponPistolEchis
+    - WeaponPistolTckTck
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-weapon-module }
   - type: Tag
