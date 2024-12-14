@@ -15,10 +15,9 @@ from typing import Any, Iterable
 import requests
 import yaml
 
-# GITHUB_API_URL = os.environ.get("GITHUB_API_URL", "https://api.github.com")
-# GITHUB_REPOSITORY = os.environ["GITHUB_REPOSITORY"]
-# GITHUB_RUN = os.environ["GITHUB_RUN_ID"]
-# GITHUB_TOKEN = os.environ["GITHUB_TOKEN"]
+DEBUG = True
+DEBUG_CHANGELOG_FILE_OLD = Path("../Changelog-Impstation-old.yml")
+GITHUB_API_URL = os.environ.get("GITHUB_API_URL", "https://api.github.com")
 
 # https://discord.com/developers/docs/resources/webhook
 DISCORD_SPLIT_LIMIT = 2000
@@ -33,17 +32,15 @@ ChangelogEntry = dict[str, Any]
 
 def main():
     if not DISCORD_WEBHOOK_URL:
+        print("Discord webhook not set, skipping")
         return
 
-    # session = requests.Session()
-    # session.headers["Authorization"] = f"Bearer {GITHUB_TOKEN}"
-    # session.headers["Accept"] = "Accept: application/vnd.github+json"
-    # session.headers["X-GitHub-Api-Version"] = "2022-11-28"
+    if DEBUG:
+        last_changelog_stream = DEBUG_CHANGELOG_FILE_OLD.read_text()
+    else:
+        last_changelog_stream = get_last_changelog_github()
 
-    # most_recent = get_most_recent_workflow(session)
-    # last_sha = most_recent["head_commit"]["id"]
-    # print(f"Last successful publish job was {most_recent['id']}: {last_sha}")
-    last_changelog = yaml.safe_load(Path("../Changelog-Impstation-old.yml").read_text())
+    last_changelog = yaml.safe_load(last_changelog_stream)
     with open(CHANGELOG_FILE, "r") as f:
         cur_changelog = yaml.safe_load(f)
 
@@ -51,8 +48,10 @@ def main():
     send_to_discord(diff)
 
 
-def get_most_recent_workflow(sess: requests.Session) -> Any:
-    workflow_run = get_current_run(sess)
+def get_most_recent_workflow(
+    sess: requests.Session, github_repository: str, github_run: str
+) -> Any:
+    workflow_run = get_current_run(sess, github_repository, github_run)
     past_runs = get_past_runs(sess, workflow_run)
     for run in past_runs["workflow_runs"]:
         # First past successful run that isn't our current run.
@@ -62,9 +61,11 @@ def get_most_recent_workflow(sess: requests.Session) -> Any:
         return run
 
 
-def get_current_run(sess: requests.Session) -> Any:
+def get_current_run(
+    sess: requests.Session, github_repository: str, github_run: str
+) -> Any:
     resp = sess.get(
-        f"{GITHUB_API_URL}/repos/{GITHUB_REPOSITORY}/actions/runs/{GITHUB_RUN}"
+        f"{GITHUB_API_URL}/repos/{github_repository}/actions/runs/{github_run}"
     )
     resp.raise_for_status()
     return resp.json()
@@ -80,7 +81,24 @@ def get_past_runs(sess: requests.Session, current_run: Any) -> Any:
     return resp.json()
 
 
-def get_last_changelog(sess: requests.Session, sha: str) -> str:
+def get_last_changelog_github() -> str:
+    github_repository = os.environ["GITHUB_REPOSITORY"]
+    github_run = os.environ["GITHUB_RUN_ID"]
+    github_token = os.environ["GITHUB_TOKEN"]
+
+    session = requests.Session()
+    session.headers["Authorization"] = f"Bearer {github_token}"
+    session.headers["Accept"] = "Accept: application/vnd.github+json"
+    session.headers["X-GitHub-Api-Version"] = "2022-11-28"
+
+    most_recent = get_most_recent_workflow(session, github_repository, github_run)
+    last_sha = most_recent["head_commit"]["id"]
+    print(f"Last successful publish job was {most_recent['id']}: {last_sha}")
+    last_changelog_stream = get_last_changelog(session, last_sha, github_repository)
+
+    return last_changelog_stream
+
+def get_last_changelog(sess: requests.Session, sha: str, github_repository: str) -> str:
     """
     Use GitHub API to get the previous version of the changelog YAML (Actions builds are fetched with a shallow clone)
     """
@@ -90,7 +108,7 @@ def get_last_changelog(sess: requests.Session, sha: str) -> str:
     headers = {"Accept": "application/vnd.github.raw"}
 
     resp = sess.get(
-        f"{GITHUB_API_URL}/repos/{GITHUB_REPOSITORY}/contents/{CHANGELOG_FILE}",
+        f"{GITHUB_API_URL}/repos/{github_repository}/contents/{CHANGELOG_FILE}",
         headers=headers,
         params=params,
     )
