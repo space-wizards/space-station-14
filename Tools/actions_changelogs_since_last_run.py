@@ -38,14 +38,14 @@ def main():
     if DEBUG:
         last_changelog_stream = DEBUG_CHANGELOG_FILE_OLD.read_text()
     else:
-        last_changelog_stream = get_last_changelog_github()
+        last_changelog_stream = get_last_changelog()
 
     last_changelog = yaml.safe_load(last_changelog_stream)
     with open(CHANGELOG_FILE, "r") as f:
         cur_changelog = yaml.safe_load(f)
 
     diff = diff_changelog(last_changelog, cur_changelog)
-    send_to_discord(diff)
+    send_entries(diff)
 
 
 def get_most_recent_workflow(
@@ -81,7 +81,7 @@ def get_past_runs(sess: requests.Session, current_run: Any) -> Any:
     return resp.json()
 
 
-def get_last_changelog_github() -> str:
+def get_last_changelog() -> str:
     github_repository = os.environ["GITHUB_REPOSITORY"]
     github_run = os.environ["GITHUB_RUN_ID"]
     github_token = os.environ["GITHUB_TOKEN"]
@@ -94,11 +94,11 @@ def get_last_changelog_github() -> str:
     most_recent = get_most_recent_workflow(session, github_repository, github_run)
     last_sha = most_recent["head_commit"]["id"]
     print(f"Last successful publish job was {most_recent['id']}: {last_sha}")
-    last_changelog_stream = get_last_changelog(session, last_sha, github_repository)
+    last_changelog_stream = get_last_changelog_by_sha(session, last_sha, github_repository)
 
     return last_changelog_stream
 
-def get_last_changelog(sess: requests.Session, sha: str, github_repository: str) -> str:
+def get_last_changelog_by_sha(sess: requests.Session, sha: str, github_repository: str) -> str:
     """
     Use GitHub API to get the previous version of the changelog YAML (Actions builds are fetched with a shallow clone)
     """
@@ -136,14 +136,14 @@ def get_discord_body(content: str):
     }
 
 
-def send_discord(content: str):
+def send_discord_webhook(content: str):
     body = get_discord_body(content)
 
     response = requests.post(DISCORD_WEBHOOK_URL, json=body)
     response.raise_for_status()
 
 
-def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
+def send_entries(entries: Iterable[ChangelogEntry]) -> None:
     if not DISCORD_WEBHOOK_URL:
         print(f"No discord webhook URL found, skipping discord send")
         return
@@ -176,7 +176,7 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
         # If adding the text would bring it over the group limit then send the message and start a new one
         if message_length + group_length >= DISCORD_SPLIT_LIMIT:
             print("Split changelog  and sending to discord")
-            send_discord(message_text)
+            send_discord_webhook(message_text)
 
             # Reset the message
             message_content = io.StringIO()
@@ -188,7 +188,7 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
     message_text = message_content.getvalue()
     if len(message_text) > 0:
         print("Sending final changelog to discord")
-        send_discord(message_text)
+        send_discord_webhook(message_text)
 
 
 if __name__ == "__main__":
