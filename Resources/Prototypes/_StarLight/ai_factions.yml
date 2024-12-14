@@ -185,3 +185,20 @@
   - Revolutionary
   - Xeno
   - Changeling
+  
+- type: npcFaction
+  id: HonkHostile
+  hostile:
+  - NanoTrasen
+  - Syndicate
+  - Passive
+  - PetsNT
+  - Zombie
+
+- type: npcFaction
+  id: HonkNeutral
+  hostile:
+  - SimpleHostile
+  - Syndicate
+  - Xeno
+  - Zombie

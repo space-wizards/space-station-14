@@ -2466,6 +2466,13 @@
         180: Dead
     - type: Spider
       webPrototype: SpiderWebClown
+    - type: Tag
+      tags:
+      - DoorBumpOpener
+      - FootstepSound
+    - type: NpcFactionMember
+      factions:
+      - HonkHostile
     - type: MeleeWeapon
       altDisarm: false
       angle: 0
