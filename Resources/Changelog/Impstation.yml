@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Modified disposals room on Saltern to be more functional
-    type: Tweak
-  id: 232
-  time: '2024-09-19T20:23:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/302
 - author: TGRCDev
   changes:
   - message: Revenants can now Haunt, which reveals them and gives them a small amount
@@ -4535,3 +4528,13 @@
   id: 731
   time: '2024-12-13T21:34:03.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1014
+- author: DinnerCalzone
+  changes:
+  - message: Sterile swabs are now able to crafted from the service techfab.
+    type: Add
+  - message: The rolling pin's service techfab recipe now better reflects its crafting
+      menu recipe.
+    type: Tweak
+  id: 732
+  time: '2024-12-14T13:53:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1017
