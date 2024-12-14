@@ -1031,4 +1031,11 @@ Entries:
   id: 146
   time: '2024-12-12T15:49:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/152
+- author: Rinary,  brainfood
+  changes:
+  - message: Added Cult of the honkmother antag.
+    type: Add
+  id: 147
+  time: '2024-12-14T21:26:18.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/156
 
