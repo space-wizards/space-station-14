@@ -25,6 +25,7 @@ using Content.Shared.Ame.Components;
 using Content.Shared.Gravity;
 using Content.Shared.Localizations;
 using Robust.Client;
+using Robust.Client.Console;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Replays.Loading;
@@ -72,6 +73,7 @@ namespace Content.Client.Entry
         [Dependency] private readonly ILogManager _logManager = default!;
         [Dependency] private readonly DebugMonitorManager _debugMonitorManager = default!;
         [Dependency] private readonly TitleWindowManager _titleWindowManager = default!;
+        [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
 
         public override void Init()
         {

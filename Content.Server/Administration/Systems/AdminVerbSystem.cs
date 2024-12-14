@@ -112,14 +112,24 @@ namespace Content.Server.Administration.Systems
                 if (TryComp(args.Target, out ActorComponent? targetActor))
                 {
                     // AdminHelp
-                    Verb verb = new();
-                    verb.Text = Loc.GetString("ahelp-verb-get-data-text");
-                    verb.Category = VerbCategory.Admin;
-                    verb.Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/gavel.svg.192dpi.png"));
-                    verb.Act = () =>
+                    Verb verbA = new();
+                    verbA.Text = Loc.GetString("ahelp-verb-get-data-text");
+                    verbA.Category = VerbCategory.Admin;
+                    verbA.Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/gavel.svg.192dpi.png"));
+                    verbA.Act = () =>
                         _console.RemoteExecuteCommand(player, $"openahelp \"{targetActor.PlayerSession.UserId}\"");
-                    verb.Impact = LogImpact.Low;
-                    args.Verbs.Add(verb);
+                    verbA.Impact = LogImpact.Low;
+                    args.Verbs.Add(verbA);
+
+                    // MentorHelp
+                    Verb verbM = new();
+                    verbM.Text = Loc.GetString("mentorhelp-verb-get-data-text");
+                    verbM.Category = VerbCategory.Admin;
+                    verbM.Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/gavel.svg.192dpi.png"));
+                    verbM.Act = () =>
+                        _console.RemoteExecuteCommand(player, $"openmentorhelp \"{targetActor.PlayerSession.UserId}\"");
+                    verbM.Impact = LogImpact.Low;
+                    args.Verbs.Add(verbM);
 
                     // Subtle Messages
                     Verb prayerVerb = new();

@@ -32,6 +32,7 @@ public sealed class PlayerPanelEui : BaseEui
     private TimeSpan _playtime;
     private bool _frozen;
     private bool _canFreeze;
+    private bool _canMentorhelp;
     private bool _canAhelp;
 
     public PlayerPanelEui(LocatedPlayerData player)
@@ -64,7 +65,8 @@ public sealed class PlayerPanelEui : BaseEui
             _whitelisted,
             _canFreeze,
             _frozen,
-            _canAhelp);
+            _canAhelp,
+            _canMentorhelp);
     }
 
     private void OnPermsChanged(AdminPermsChangedEventArgs args)
@@ -203,6 +205,15 @@ public sealed class PlayerPanelEui : BaseEui
         else
         {
             _canAhelp = false;
+        }
+
+        if (_admins.HasAdminFlag(Player, AdminFlags.Mentorhelp))
+        {
+            _canMentorhelp = true;
+        }
+        else
+        {
+            _canMentorhelp = false;
         }
 
         StateDirty();

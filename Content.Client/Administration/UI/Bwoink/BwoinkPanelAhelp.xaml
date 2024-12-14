@@ -1,4 +1,5 @@
-﻿<BoxContainer
+<?xml version="1.0" encoding="windows-1251"?>
+<BoxContainer
     xmlns="https://spacestation14.io"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Orientation="Vertical"

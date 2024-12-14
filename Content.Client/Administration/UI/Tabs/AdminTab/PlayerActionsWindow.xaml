@@ -1,4 +1,4 @@
-﻿<DefaultWindow
+<DefaultWindow
     xmlns="https://spacestation14.io"
     xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
     Title="{Loc admin-player-actions-window-title}" MinSize="425 272">
@@ -11,6 +11,7 @@
         <cc:PlayerListControl Name="PlayerList" VerticalExpand="True" />
         <BoxContainer Orientation="Horizontal">
             <Button Name="SubmitKickButton" Text="{Loc admin-player-actions-kick}" Disabled="True"/>
+            <Button Name="SubmitMentorHelpButton" Text="{Loc admin-player-actions-mentorhelp}" Disabled="True"/>
             <Button Name="SubmitAHelpButton" Text="{Loc admin-player-actions-ahelp}" Disabled="True"/>
             <Button Name="SubmitRespawnButton" Text="{Loc admin-player-actions-respawn}" Disabled="True"/>
         </BoxContainer>

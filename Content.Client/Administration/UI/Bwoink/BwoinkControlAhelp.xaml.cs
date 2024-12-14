@@ -20,7 +20,7 @@ namespace Content.Client.Administration.UI.Bwoink
     /// This window connects to a BwoinkSystem channel. BwoinkSystem manages the rest.
     /// </summary>
     [GenerateTypedNameReferences]
-    public sealed partial class BwoinkControl : Control
+    public sealed partial class BwoinkControlAhelp : Control
     {
         [Dependency] private readonly IClientAdminManager _adminManager = default!;
         [Dependency] private readonly IClientConsoleHost _console = default!;
@@ -31,7 +31,7 @@ namespace Content.Client.Administration.UI.Bwoink
         private PlayerInfo? _currentPlayer;
         private readonly Dictionary<Button, ConfirmationData> _confirmations = new();
 
-        public BwoinkControl()
+        public BwoinkControlAhelp()
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);

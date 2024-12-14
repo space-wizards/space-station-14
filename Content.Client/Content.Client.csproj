@@ -23,6 +23,36 @@
     <ProjectReference Include="..\RobustToolbox\Robust.Client\Robust.Client.csproj" />
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Administration\UI\Bwoink\BwoinkControlAhelp.xaml.cs">
+      <DependentUpon>BwoinkControlAhelp.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Administration\UI\Bwoink\BwoinkPanelAhelp.xaml.cs">
+      <DependentUpon>BwoinkPanelAhelp.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Administration\UI\Bwoink\BwoinkWindowAhelp.xaml.cs">
+      <DependentUpon>BwoinkWindowAhelp.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Administration\UI\Bwoink\BwoinkWindowMentorhelp.xaml.cs">
+      <DependentUpon>BwoinkWindowMentorhelp.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
   <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />
+  <ItemGroup>
+    <EmbeddedResource Remove="Administration\UI\Bwoink\BwoinkControlMentorhelp.xaml" />
+    <EmbeddedResource Remove="Administration\UI\Bwoink\BwoinkPanelMentorhelp.xaml" />
+    <EmbeddedResource Remove="Administration\UI\Bwoink\BwoinkWindowMentorhelp.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Update="Administration\UI\Bwoink\BwoinkControlMentorhelp.xaml">
+      <Generator></Generator>
+    </AdditionalFiles>
+    <AdditionalFiles Update="Administration\UI\Bwoink\BwoinkPanelMentorhelp.xaml">
+      <Generator></Generator>
+    </AdditionalFiles>
+    <AdditionalFiles Update="Administration\UI\Bwoink\BwoinkWindowMentorhelp.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </AdditionalFiles>
+  </ItemGroup>
 </Project>

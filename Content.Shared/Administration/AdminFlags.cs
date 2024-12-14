@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Administration
+namespace Content.Shared.Administration
 {
     /// <summary>
     ///     Permissions that admins can have.
@@ -123,6 +123,11 @@
         ///     Lets you set the color of your OOC name.
         /// </summary>
         NameColor = 1 << 21,
+
+        /// <summary>
+        ///     Lets you use the mentor help system.
+        /// </summary>
+        Mentorhelp = 1 << 22,
 
         /// <summary>
         ///     Dangerous host permissions like scsi.
