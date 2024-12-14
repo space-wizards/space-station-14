@@ -14,7 +14,7 @@ from typing import Any, Iterable
 import requests
 import yaml
 
-DEBUG = True
+DEBUG = False
 DEBUG_CHANGELOG_FILE_OLD = Path("../Changelog-Impstation-old.yml")
 GITHUB_API_URL = os.environ.get("GITHUB_API_URL", "https://api.github.com")
 
@@ -171,7 +171,7 @@ def changelog_entries_to_message_lines(entries: Iterable[ChangelogEntry]) -> lis
 
                 # if a single line is longer than the limit, it needs to be truncated
                 if len(message) > DISCORD_SPLIT_LIMIT:
-                    message = message[: DISCORD_SPLIT_LIMIT - 100] + " [...]"
+                    message = message[: DISCORD_SPLIT_LIMIT - 100].rstrip() + " [...]"
 
                 if url is not None:
                     line = f"{emoji} - {message} [PR]({url}) \n"
