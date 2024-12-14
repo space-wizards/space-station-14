@@ -179,6 +179,7 @@ ui-options-function-open-context-menu = Open context menu
 ui-options-function-open-crafting-menu = Open crafting menu
 ui-options-function-open-inventory-menu = Open inventory
 ui-options-function-open-a-help = Open admin help
+ui-options-function-open-mentor-help = Open mentor help
 ui-options-function-open-abilities-menu = Open action menu
 ui-options-function-open-emotes-menu = Open emotes menu
 ui-options-function-toggle-round-end-summary-window = Toggle round end summary window
