@@ -11,15 +11,10 @@ namespace Content.Server.CloudEmotes.Commands
     public sealed class EmoteCommand : LocalizedCommands
     {
         [Dependency] private readonly IEntitySystemManager _entitySystems = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        protected readonly SharedTransformSystem _transformSystem;
+        [Dependency] private readonly IEntityManager _entityManager ??= default!;
+        protected readonly SharedTransformSystem _transformSystem ??= _entityManager.System<SharedTransformSystem>();
         public override string Command => "emote";
         public string[] emotes = { "lenny", "mark", "nervous" };
-
-        public EmoteCommand()
-        {
-            _transformSystem = _entityManager.System<SharedTransformSystem>();
-        }
         public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
             return args.Length switch
