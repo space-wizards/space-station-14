@@ -14,7 +14,7 @@ from typing import Any, Iterable
 import requests
 import yaml
 
-DEBUG = True
+DEBUG = False
 DEBUG_CHANGELOG_FILE_OLD = Path("../Changelog-Impstation-old.yml")
 GITHUB_API_URL = os.environ.get("GITHUB_API_URL", "https://api.github.com")
 
