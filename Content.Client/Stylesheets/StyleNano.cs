@@ -77,6 +77,7 @@ namespace Content.Client.Stylesheets
         public const string StyleClassLabelSecondaryColor = "LabelSecondaryColor";
         public const string StyleClassLabelBig = "LabelBig";
         public const string StyleClassLabelSmall = "LabelSmall";
+        public const string StyleClassLabelLCDBig = "LabelLCDBig";
         public const string StyleClassButtonBig = "ButtonBig";
 
         public const string StyleClassButtonHelp = "HelpButton";
@@ -150,6 +151,7 @@ namespace Content.Client.Stylesheets
         public const string StyleClassCrossButtonRed = "CrossButtonRed";
         public const string StyleClassButtonColorRed = "ButtonColorRed";
         public const string StyleClassButtonColorGreen = "ButtonColorGreen";
+        public const string StyleClassLockableButtonRed = "TemptingRedButton";
 
         public static readonly Color ChatBackgroundColor = Color.FromHex("#25252ADD");
 
@@ -328,10 +330,10 @@ namespace Content.Client.Stylesheets
             };
             topButtonSquare.SetPatchMargin(StyleBox.Margin.Horizontal, 0);
 
-            var chatChannelButtonTex = resCache.GetTexture("/Textures/Interface/Nano/rounded_button.svg.96dpi.png");
+            var roundedButton = resCache.GetTexture("/Textures/Interface/Nano/rounded_button.svg.96dpi.png");
             var chatChannelButton = new StyleBoxTexture
             {
-                Texture = chatChannelButtonTex,
+                Texture = roundedButton,
             };
             chatChannelButton.SetPatchMargin(StyleBox.Margin.All, 5);
             chatChannelButton.SetPadding(StyleBox.Margin.All, 2);
@@ -471,7 +473,13 @@ namespace Content.Client.Stylesheets
             var stripeBack = new StyleBoxTexture
             {
                 Texture = stripeBackTex,
-                Mode = StyleBoxTexture.StretchMode.Tile
+                Mode = StyleBoxTexture.StretchMode.Tile,
+                Modulate = Color.FromHex("#1e1e22")
+            };
+            var stripeBackWarning = new StyleBoxTexture {
+                Texture = stripeBackTex,
+                Mode = StyleBoxTexture.StretchMode.Tile,
+                Modulate = ConcerningOrangeFore
             };
 
             // Slider
@@ -514,6 +522,8 @@ namespace Content.Client.Stylesheets
 
             var boxFont13 = resCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13);
 
+            var lcdFontLarge = resCache.GetFont("/Fonts/7SegmentDisplayDigits.ttf", 20);
+
             var insetBack = new StyleBoxTexture
             {
                 Texture = buttonTex,
@@ -521,6 +531,24 @@ namespace Content.Client.Stylesheets
             };
             insetBack.SetPatchMargin(StyleBox.Margin.All, 10);
 
+            var panelMountBaseTex = resCache.GetTexture("/Textures/Interface/Diegetic/PanelMountBase.svg.96dpi.png");
+            var panelMountHighlightTex = resCache.GetTexture("/Textures/Interface/Diegetic/PanelMountHighlight.svg.96dpi.png");
+            var panelMountBaseStyleBox = new StyleBoxTexture
+            {
+                Texture = panelMountBaseTex,
+                PatchMarginLeft = 16,
+                PatchMarginTop = 16,
+                PatchMarginRight = 24,
+                PatchMarginBottom = 24
+            };
+            var panelMountHighlightStyleBox = new StyleBoxTexture
+            {
+                Texture = panelMountHighlightTex,
+                PatchMarginLeft = 16,
+                PatchMarginTop = 16,
+                PatchMarginRight = 24,
+                PatchMarginBottom = 24
+            };
             // Default paper background:
             var paperBackground = new StyleBoxTexture
             {
@@ -1251,6 +1279,9 @@ namespace Content.Client.Stylesheets
                         new StyleProperty(StripeBack.StylePropertyBackground, stripeBack),
                     }),
 
+                Element<StripeBack>().Class("StripeWarning")
+                    .Prop(StripeBack.StylePropertyBackground, stripeBackWarning),
+
                 // StyleClassItemStatus
                 new StyleRule(SelectorElement.Class(StyleClassItemStatus), new[]
                 {
@@ -1380,6 +1411,10 @@ namespace Content.Client.Stylesheets
 
                 Element<Label>().Class(StyleClassLabelSmall)
                  .Prop(Label.StylePropertyFont, notoSans10),
+
+                Element<Label>().Class(StyleClassLabelLCDBig)
+                    .Prop("font-color", DangerousRedFore)
+                    .Prop("font", lcdFontLarge),
                 // ---
 
                 // Different Background shapes ---
@@ -1394,6 +1429,7 @@ namespace Content.Client.Stylesheets
                 Element<PanelContainer>().Class("BackgroundOpenLeft")
                     .Prop(PanelContainer.StylePropertyPanel, BaseButtonOpenLeft)
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#25252A")),
+
                 // ---
 
                 // Dividers
@@ -1437,6 +1473,9 @@ namespace Content.Client.Stylesheets
                     .Prop("panel", new StyleBoxTexture(BaseButtonOpenBoth) { Padding = default })
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#2F2F3B")),
 
+                Element<PanelContainer>().Class("PanelBackgroundHighlight")
+                    .Prop("panel", new StyleBoxFlat(ButtonColorDefault)),
+
                 // Window Footer
                 Element<TextureRect>().Class("NTLogoDark")
                     .Prop(TextureRect.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Nano/ntlogo.svg.png"))
@@ -1454,8 +1493,21 @@ namespace Content.Client.Stylesheets
                 Element<TextureButton>().Class("CrossButtonRed").Pseudo(TextureButton.StylePseudoClassHover)
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#7F3636")),
 
+                //<todo.eoin Surely this is a mistake? One of the above or below probbly wanted StylePseudoClassPressed
+
                 Element<TextureButton>().Class("CrossButtonRed").Pseudo(TextureButton.StylePseudoClassHover)
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#753131")),
+
+                Element<TextureButton>().Class("CrossButtonDark")
+                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Nano/cross.svg.png"))
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#2b2b2b")),
+
+                Element<TextureButton>().Class("CrossButtonDark").Pseudo(TextureButton.StylePseudoClassHover)
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#7F3636")),
+
+                Element<TextureButton>().Class("CrossButtonDark").Pseudo(TextureButton.StylePseudoClassPressed)
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#753131")),
+
                 // ---
 
                 // Profile Editor
@@ -1659,7 +1711,54 @@ namespace Content.Client.Stylesheets
                     new[]
                     {
                         new StyleProperty(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Bwoink/un_pinned.png"))
+                    }),
+
+                /// Large red texture button
+                Element<TextureButton>().Class(StyleClassLockableButtonRed)
+                    .Prop(TextureButton.StylePropertyTexture, roundedButton)
+                    .Prop(Control.StylePropertyModulateSelf, DangerousRedFore),
+
+                Element<TextureButton>().Class(StyleClassLockableButtonRed)
+                    .Pseudo(ContainerButton.StylePseudoClassNormal)
+                        .Prop(Control.StylePropertyModulateSelf, DangerousRedFore),
+                Element<TextureButton>().Class(StyleClassLockableButtonRed)
+                    .Pseudo(ContainerButton.StylePseudoClassDisabled)
+                        .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Nano/rounded_locked_button.svg.96dpi.png"))
+                        .Prop(Control.StylePropertyModulateSelf, ButtonColorDisabled),
+                Element<TextureButton>().Class(StyleClassLockableButtonRed).Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorHoveredRed),
+
+
+                Element<TextureRect>().Class("ScrewHead")
+                    .Prop(TextureRect.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Diegetic/screw.svg.96dpi.png")),
+
+                // Layered image container styles
+
+                // Adds a raised border with rounded corners around a UI element
+                Element<LayeredImageContainer>().Class("PanelMount")
+                    .Prop(LayeredImageContainer.StylePropertyMinimumContentMargin, new Thickness(10, 10, 16, 16)),
+                Child().Parent(Element<LayeredImageContainer>().Class("PanelMount"))
+                    .Child(Element<PanelContainer>().Identifier("Foreground1"))
+                    .Prop(PanelContainer.StylePropertyPanel, panelMountBaseStyleBox)
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#25252a")),
+                Child().Parent(Element<LayeredImageContainer>().Class("PanelMount"))
+                    .Child(Element<PanelContainer>().Identifier("Foreground2"))
+                    .Prop(PanelContainer.StylePropertyPanel, panelMountHighlightStyleBox),
+
+                Child().Parent(Element<LayeredImageContainer>().Class("BrightAngleRectOutline"))
+                    .Child(Element<PanelContainer>().Identifier("Background1"))
+                    .Prop(PanelContainer.StylePropertyPanel, BaseAngleRect)
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#4a5466")),
+                Child().Parent(Element<LayeredImageContainer>().Class("BrightAngleRectOutline"))
+                    .Child(Element<PanelContainer>().Identifier("Background2"))
+                    .Prop(PanelContainer.StylePropertyPanel, new StyleBoxTexture {
+                            Texture = resCache.GetTexture("/Textures/Interface/Nano/button_outline.svg.96dpi.png"),
+                            PatchMarginLeft = 10,
+                            PatchMarginTop = 10,
+                            PatchMarginRight = 10,
+                            PatchMarginBottom = 10,
                     })
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#00000066")),
             }).ToList());
         }
     }

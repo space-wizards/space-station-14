@@ -1,4 +1,4 @@
-﻿using Content.Shared.CCVar;
+using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Communications;
 using Robust.Client.UserInterface;
@@ -77,21 +77,8 @@ namespace Content.Client.Communications.UI
 
             if (_menu != null)
             {
-                _menu.CanAnnounce = commsState.CanAnnounce;
-                _menu.CanBroadcast = commsState.CanBroadcast;
-                _menu.CanCall = commsState.CanCall;
-                _menu.CountdownStarted = commsState.CountdownStarted;
-                _menu.AlertLevelSelectable = commsState.AlertLevels != null && !float.IsNaN(commsState.CurrentAlertDelay) && commsState.CurrentAlertDelay <= 0;
-                _menu.CurrentLevel = commsState.CurrentAlert;
-                _menu.CountdownEnd = commsState.ExpectedCountdownEnd;
-
-                _menu.UpdateCountdown();
-                _menu.UpdateAlertLevels(commsState.AlertLevels, _menu.CurrentLevel);
-                _menu.AlertLevelButton.Disabled = !_menu.AlertLevelSelectable;
-                _menu.EmergencyShuttleButton.Disabled = !_menu.CanCall;
-                _menu.AnnounceButton.Disabled = !_menu.CanAnnounce;
-                _menu.BroadcastButton.Disabled = !_menu.CanBroadcast;
-            }
+                _menu.UpdateState(commsState);
+           }
         }
     }
 }
