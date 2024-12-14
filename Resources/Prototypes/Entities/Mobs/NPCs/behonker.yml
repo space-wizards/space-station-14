@@ -38,7 +38,7 @@
         collection: BikeHorn
     - type: NpcFactionMember
       factions:
-        - SimpleHostile
+        - HonkHostile
     - type: Speech
       speechVerb: Cluwne
     - type: CombatMode

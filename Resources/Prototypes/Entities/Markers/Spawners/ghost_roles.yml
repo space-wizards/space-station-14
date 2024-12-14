@@ -93,6 +93,25 @@
         state: radiation
 
 - type: entity
+  id: SpawnPointGhostCluwneBeast
+  name: ghost role spawn point
+  suffix: cluwnebeast
+  parent: MarkerBase
+  components:
+  - type: GhostRole
+    name: Cluwne Beast
+    description: Spread laughter and chaos by hitting and turning the crew into cluwnes.
+    rules: You are an antagonist, transform as many of the crew as you can into cluwnes.
+  - type: GhostRoleMobSpawner
+    prototype: MobCluwneBeast
+  - type: Sprite
+    sprite: Markers/jobs.rsi
+    layers:
+      - state: green
+      - sprite: Mobs/Aliens/cluwnebeast.rsi
+        state: icon
+
+- type: entity
   categories: [ HideSpawnMenu, Spawner ]
   parent: BaseAntagSpawner
   id: SpawnPointLoneNukeOperative

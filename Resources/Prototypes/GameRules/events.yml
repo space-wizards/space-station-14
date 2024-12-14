@@ -525,6 +525,21 @@
       collection: Paracusia
 
 - type: entity
+  id: CluwneBeastSpawn
+  parent: BaseGameRule
+  components:
+  - type: StationEvent
+    earliestStart: 40
+    minimumPlayers: 15
+    weight: 5
+    duration: 60
+    maxOccurrences: 1
+  - type: VentCrittersRule
+    entries:
+      - id: SpawnPointGhostCluwneBeast
+        prob: 1
+
+- type: entity
   parent: BaseGameRule
   id: IonStorm
   components:

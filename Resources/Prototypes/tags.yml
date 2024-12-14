@@ -372,6 +372,9 @@
   id: CluwneHorn
 
 - type: Tag
+  id: CluwneBeastWearable
+  
+- type: Tag
   id: Cola
 
 - type: Tag

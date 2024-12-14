@@ -1,0 +1,60 @@
+- type: inventoryTemplate
+  id: cluwnebeast
+  slots:
+    - name: pocket1
+      slotTexture: pocket
+      slotFlags: POCKET
+      slotGroup: MainHotbar
+      stripTime: 3
+      uiWindowPos: 0,3
+      strippingWindowPos: 0,4
+      displayName: Pocket 1
+      stripHidden: true
+    - name: pocket2
+      slotTexture: pocket
+      slotFlags: POCKET
+      slotGroup: MainHotbar
+      stripTime: 3
+      uiWindowPos: 2,3
+      strippingWindowPos: 1,4
+      displayName: Pocket 2
+      stripHidden: true
+    - name: neck
+      slotTexture: neck
+      slotFlags: NECK
+      uiWindowPos: 0,1
+      strippingWindowPos: 0,1
+      displayName: Neck
+      whitelist:
+        tags:
+          - CluwneBeastWearable
+    - name: mask
+      slotTexture: mask
+      slotFlags: MASK
+      uiWindowPos: 1,1
+      strippingWindowPos: 1,1
+      displayName: Mask
+      whitelist:
+        tags:
+          - PetWearable
+    - name: id
+      slotTexture: id
+      slotFlags: IDCARD
+      slotGroup: SecondHotbar
+      stripTime: 6
+      uiWindowPos: 2,1
+      strippingWindowPos: 2,4
+      displayName: ID
+    - name: ears
+      slotTexture: ears
+      slotFlags: EARS
+      stripTime: 3
+      uiWindowPos: 2,0
+      strippingWindowPos: 2,0
+      displayName: Ears
+    - name: head
+      slotTexture: head
+      slotFlags: HEAD
+      uiWindowPos: 1,0
+      strippingWindowPos: 1,0
+      displayName: Head

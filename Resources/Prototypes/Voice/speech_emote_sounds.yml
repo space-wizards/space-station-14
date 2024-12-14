@@ -478,6 +478,13 @@
       variation: 0.125
 
 - type: emoteSounds
+  id: CluwneBeast
+  sound:
+    collection: CluwneBeastScreams
+    params:
+      variation: 0.125
+
+- type: emoteSounds
   id: Cerberus
   sound:
     path: /Audio/Animals/cerberus.ogg
