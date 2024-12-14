@@ -6,7 +6,7 @@
   components:
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Pets/pipi.rsi
+    sprite: _Impstation/Mobs/Pets/pipi.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: pipi
@@ -59,7 +59,7 @@
     - CannotSuicide
     - VimPilot
   - type: StealTarget
-    stealGroup: AnimalPipi
+    stealGroup: AnimalNamedCat
 
 - type: entity
   name: Fin Fin
@@ -69,7 +69,7 @@
   components:
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Pets/finfin.rsi
+    sprite: _Impstation/Mobs/Pets/finfin.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: finfin
@@ -143,6 +143,8 @@
     - DoorBumpOpener
     - CannotSuicide
     - VimPilot
+  - type: StealTarget
+    stealGroup: AnimalFinFin
 
 - type: entity
   name: Goji

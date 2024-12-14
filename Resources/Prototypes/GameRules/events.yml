@@ -9,7 +9,7 @@
     - id: BureaucraticError
     - id: ClericalError
     - id: GasLeak
-    - id: GreytideVirus
+    # - id: GreytideVirus
     - id: IonStorm # its calm like 90% of the time smh
     - id: KudzuGrowth
     - id: MassHallucinations
@@ -472,7 +472,7 @@
   parent: BaseStationEventShortDelay
   components:
   - type: StationEvent
-    weight: 5
+    weight: 2 #imp. tf you mean this was weight 5
     minimumPlayers: 25
     reoccurrenceDelay: 20
   - type: GreytideVirusRule

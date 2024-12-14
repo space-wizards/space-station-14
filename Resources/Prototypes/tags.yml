@@ -13,6 +13,9 @@
   id: AirSensor
 
 - type: Tag
+  id: Aloe
+
+- type: Tag
   id: Ambrosia
 
 - type: Tag
@@ -31,6 +34,9 @@
   id: ATVKeys
 
 - type: Tag
+  id: Bagel
+
+- type: Tag
   id: Balloon
 
 - type: Tag
@@ -47,6 +53,9 @@
 
 - type: Tag
   id: BBQsauce
+
+- type: Tag
+  id: BearHide
 
 - type: Tag
   id: Bedsheet
@@ -420,6 +429,9 @@
   id: CrowbarRed
 
 - type: Tag
+  id: Crusher
+
+- type: Tag
   id: Cryobeaker
 
 - type: Tag
@@ -774,6 +786,9 @@
   id: JawsOfLife
 
 - type: Tag
+  id: Jug
+
+- type: Tag
   id: Kangaroo
 
 - type: Tag
@@ -946,6 +961,9 @@
   id: Mouse
 
 - type: Tag
+  id: Muffin
+
+- type: Tag
   id: Multitool
 
 - type: Tag
@@ -1095,6 +1113,9 @@
 
 - type: Tag
   id: ReinforcedGlassShard
+
+- type: Tag
+  id: RegenerativeMesh
 
 - type: Tag
   id: ReptilianFood
@@ -1269,6 +1290,9 @@
 
 - type: Tag
   id: Sunglasses
+
+- type: Tag
+  id: Suppermatter
 
 - type: Tag
   id: SurgeryTool

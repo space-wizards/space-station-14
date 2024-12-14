@@ -1,6 +1,6 @@
 - type: entity
   id: BorgModuleTckTck
-  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  parent: [ BaseBorgModule, BaseProviderBorgModule, DecapoidEmpireContraband ]
   name: tck'tck power module
   components:
   - type: Sprite
@@ -9,11 +9,50 @@
     - state: icon-cables
   - type: ItemBorgModule
     items:
+    - CableMVStackLingering10
     - CableApcStackLingering10
     - trayScanner
     - TckWrench
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: wire-module }
+  - type: Tag
+    tags:
+      - BorgModuleTckTck
+
+- type: entity
+  id: BorgModuleTckTckEVA
+  parent: [ BaseBorgModule, BaseProviderBorgModule, DecapoidEmpireContraband ]
+  name: tck'tck EVA module
+  components:
+  - type: Sprite
+    layers:
+    - state: generic
+    - state: icon-grappling-gun
+  - type: ItemBorgModule
+    items:
+    - WeaponGrapplingGunTckTck
+    - HandHeldMassScannerBorg
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: grappling-module }
+  - type: Tag
+    tags:
+      - BorgModuleTckTck
+      
+- type: entity
+  id: BorgModuleTckTckGun
+  parent: [ BaseBorgModule, BaseProviderBorgModule, DecapoidEmpireContraband ]
+  name: tck'tck gun module
+  suffix: DO NOT MAP
+  components:
+  - type: Sprite
+    layers:
+    - state: generic
+    - state: icon-grappling-gun
+  - type: ItemBorgModule
+    items:
+    - WeaponPistolTckTck
+  - type: BorgModuleIcon
+    icon: { sprite: Interface/Actions/actions_borg.rsi, state: syndicate-weapon-module }
   - type: Tag
     tags:
       - BorgModuleTckTck

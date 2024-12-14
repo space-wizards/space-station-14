@@ -776,3 +776,106 @@
     whitelist:
       tags:
       - ToothSharkminnow
+
+
+- type: cargoBounty
+  id: BountyRegenerativeMesh
+  reward: 12000
+  description: bounty-description-regenerative-mesh
+  entries:
+  - name: bounty-item-regenerative-mesh
+    amount: 60
+    whitelist:
+      tags:
+      - RegenerativeMesh
+
+- type: cargoBounty
+  id: BountyDonkPockets
+  reward: 8000
+  description: bounty-description-donk-pockets
+  entries:
+  - name: bounty-item-donk-pockets
+    amount: 12
+    whitelist:
+      tags:
+      - DonkPocket
+
+- type: cargoBounty
+  id: BountyJugs
+  reward: 4000
+  description: bounty-description-jugs
+  entries:
+  - name: bounty-item-jugs
+    amount: 5
+    whitelist:
+      tags:
+      - Jug
+
+- type: cargoBounty
+  id: BountyCrushers
+  reward: 10000
+  description: bounty-description-crushers
+  entries:
+  - name: bounty-item-crushers
+    amount: 1
+    whitelist:
+      tags:
+      - Crusher
+
+- type: cargoBounty
+  id: BountyAloeCream
+  reward: 6500
+  description: bounty-description-aloe-cream
+  entries:
+  - name: bounty-item-aloe-cream
+    amount: 6
+    whitelist:
+      tags:
+      - Aloe
+
+- type: cargoBounty
+  id: BountyBagels
+  reward: 11000
+  description: bounty-description-bagels
+  entries:
+  - name: bounty-item-bagels
+    amount: 9
+    whitelist:
+      tags:
+      - Bagel
+
+- type: cargoBounty
+  id: BountyBearHide
+  reward: 10000
+  description: bounty-description-bear-hide
+  entries:
+  - name: bounty-item-bear-hide
+    amount: 1
+    whitelist:
+      tags:
+      - BearHide
+
+- type: cargoBounty
+  id: BountyMuffins
+  reward: 11500
+  description: bounty-description-muffins
+  entries:
+  - name: bounty-item-muffins
+    amount: 8
+    whitelist:
+      tags:
+      - Muffin
+
+- type: cargoBounty
+  id: BountySuppermatter
+  reward: 20000
+  description: bounty-description-suppermatter
+  entries:
+  - name: bounty-item-suppermatter
+    amount: 1
+    whitelist:
+      tags:
+      - Suppermatter
+    blacklist:
+      tags:
+      - Slice #no cheating!

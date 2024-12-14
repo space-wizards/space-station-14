@@ -1,0 +1,20 @@
+- type: entity
+  parent: BaseItem
+  id: NanoChatCartridge
+  name: NanoChat cartridge
+  description: Lets you message other people!
+  components:
+  - type: Sprite
+    sprite: _DeltaV/Objects/Devices/cartridge.rsi
+    state: cart-chat
+  - type: UIFragment
+    ui: !type:NanoChatUi
+  - type: NanoChatCartridge
+  - type: Cartridge
+    programName: nano-chat-program-name
+    icon:
+      sprite: _DeltaV/Misc/program_icons.rsi
+      state: nanochat
+  - type: ActiveRadio
+    channels:
+    - Common

@@ -121,22 +121,6 @@
     # if ce flies a shittle to centcom you better find a way onto it
     requireDead: true
 
-- type: entity
-  parent: [BaseTraitorObjective, BaseKillObjective]
-  id: KillRandomTraitorSvSObjective # Used for rounds when basically every valid person will be a traitor.
-  description: Do it however you like, just make sure they don't make it to centcom.
-  components:
-  - type: Objective
-    difficulty: 1.75
-    unique: true
-  - type: TargetObjective
-    title: objective-condition-kill-person-title
-  - type: PickRandomTraitor
-  - type: ObjectiveBlacklistRequirement
-    blacklist:
-      component: null
-
-
 # social
 
 - type: entity
@@ -149,21 +133,6 @@
   - type: TargetObjective
     title: objective-condition-other-traitor-alive-title
   - type: RandomTraitorAlive
-
-- type: entity
-  parent: [BaseTraitorSvSSocialObjective, BaseKeepAliveObjective]
-  id: RandomTraitorAliveSvSObjective # Used for rounds when basically every valid person will be a traitor.
-  description: Identify yourself at your own risk. We just need them alive.
-  components:
-  - type: Objective
-    difficulty: 1.75
-    unique: true
-  - type: TargetObjective
-    title: objective-condition-other-traitor-alive-title
-  - type: RandomTraitorAlive
-  - type: ObjectiveBlacklistRequirement
-    blacklist:
-      component: null
 
 - type: entity
   parent: [BaseTraitorSocialObjective, BaseHelpProgressObjective]

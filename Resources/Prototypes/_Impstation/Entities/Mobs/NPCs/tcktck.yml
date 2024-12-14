@@ -228,19 +228,18 @@
       flatReductions:
         Heat: 10 # capable of touching light bulbs and stoves without feeling pain!
   - type: BorgChassis
-    maxModules: 2
+    maxModules: 3
     hasMindState: tcktck_e
     noMindState: tcktck_e_r
     moduleWhitelist:
       tags:
       - BorgModuleGeneric
-      - BorgModuleCargo
       - BorgModuleTckTck
   - type: ContainerFill
     containers:
       borg_module:
         - BorgModuleTckTck
-        - BorgModuleGrapplingGun
+        - BorgModuleTckTckEVA
   - type: ApcPowerReceiver
     needsPower: false
     powerLoad: 0
@@ -261,17 +260,42 @@
   - type: PowerSupplier
     supplyRate: 8000
     supplyRampTolerance: 2000
-    voltage: Apc
   - type: Anchorable
+  - type: PowerSwitchable
+    examineText: power-switchable-generator-examine
+    switchText: power-switchable-generator-switched
+    cables:
+    - voltage: LV
+      node: Apc
+    - voltage: MV
+      node: output_mv
+  - type: UseDelay
+    delay: 1
   - type: NodeContainer
     examinable: true
     nodes:
-      output:
+      output_lv:
         !type:CableDeviceNode
         nodeGroupID: Apc
+      output_mv:
+        !type:CableDeviceNode
+        nodeGroupID: MVPower
   - type: GhostRole
     makeSentient: true
     name: Tck'Tck
-    description: Power the station. Power the world.
+    description: Charge APCs, help with power, and keep everyone's batteries topped up.
     rules: ghost-role-information-silicon-rules
   - type: GhostTakeoverAvailable
+  - type: GenericVisualizer
+    visuals:
+      enum.AnchorVisuals.Anchored:
+        anchored:
+          False: { state: anchored, visible: false }
+          True: { state: anchored, visible: true }
+  - type: Climbing
+  - type: Clumsy
+    clumsySound:
+      path: /Audio/Effects/metal_thud3.ogg # the game gets really touchy about having that initial forward slash.
+    clumsyHypo: false
+    clumsyDefib: false
+    clumsyGuns: false

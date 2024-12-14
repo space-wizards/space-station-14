@@ -55,3 +55,10 @@
     - hisses
     - hisses.
     - hisses!
+
+- type: emote
+  id: Wuhey
+  name: chat-emote-name-wuhey
+  category: Vocal
+  icon: _Impstation/Interface/Emotes/wuhey.png
+  chatMessages: ["chat-emote-msg-wuhey"]

@@ -6,6 +6,10 @@
         <LineEdit Name="NameLineEdit" />
         <Label Name="CurrentJob" Text="{Loc 'agent-id-card-current-job'}" />
         <LineEdit Name="JobLineEdit" />
+        <!-- DeltaV - Add NanoChat number field -->
+        <Label Name="CurrentNumber" Text="{Loc 'agent-id-card-current-number'}" />
+        <LineEdit Name="NumberLineEdit" PlaceHolder="#0000" />
+        <!-- DeltaV end -->
         <Label Text="{Loc 'agent-id-card-job-icon-label'}"/>
         <GridContainer Name="IconGrid" Columns="10">
             <!-- Job icon buttons are generated in the code -->

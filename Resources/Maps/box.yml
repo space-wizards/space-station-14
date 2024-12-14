@@ -5753,7 +5753,6 @@ entities:
             color: '#FFFFFFFF'
             id: grasssnow
           decals:
-            3686: 2.9827948,-1.004494
             3687: -5.0156083,-0.99618006
         - node:
             color: '#A4610606'

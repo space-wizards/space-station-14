@@ -33,6 +33,12 @@
   id: Gastropod
 
 - type: Tag
+  id: MagazineBR
+
+- type: Tag
+  id: MagazineDMR
+
+- type: Tag
   id: MagazineLPistol
 
 - type: Tag

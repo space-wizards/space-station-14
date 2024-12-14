@@ -5,6 +5,7 @@
   description: OH FUCK IT'S BROS
   components:
     - type: VentCrawler
+      enterDelay: 1
     - type: Item
       size: Tiny
     - type: Sprite
@@ -138,6 +139,8 @@
   parent: MobRaccoon
   id: MobRaccoonGhost
   components:
+  - type: VentCrawler
+    enterDelay: 3
   - type: GhostRole
     makeSentient: true
     allowSpeech: true
@@ -163,6 +166,8 @@
   parent: MobPossum
   id: MobPossumGhost
   components:
+  - type: VentCrawler
+    enterDelay: 3
   - type: GhostRole
     makeSentient: true
     allowSpeech: true
