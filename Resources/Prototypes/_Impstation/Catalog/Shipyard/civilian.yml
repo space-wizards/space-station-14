@@ -4,7 +4,7 @@
   description: A small botanic vessel.
   price: 15000
   path:
-  - /Maps/_Impstation/Shuttles/botany.yml
+  - /Maps/_Impstation/Shuttles/Shipyard/botany.yml
   categories:
   - Small
   - Service
@@ -15,7 +15,7 @@
   description: A medium medical vessel.
   price: 50000
   path:
-  - /Maps/_Impstation/Shuttles/medical.yml
+  - /Maps/_Impstation/Shuttles/Shipyard/medical.yml
   categories:
   - Medium
   - Medical
@@ -26,7 +26,7 @@
   description: Just order Reach to come by from the depths of space.
   price: 300000
   path:
-  - /Maps/_Impstation/Shuttles/shuttle_reach.yml
+  - /Maps/_Impstation/Shuttles/Shipyard/shuttle_reach.yml
   categories:
   - Large
   - Experimental
