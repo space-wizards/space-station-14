@@ -11,20 +11,18 @@ public sealed class AtmosMonitoringConsoleBoundUserInterface : BoundUserInterfac
 
     protected override void Open()
     {
+        base.Open();
+
         _menu = new AtmosMonitoringConsoleWindow(this, Owner);
         _menu.OpenCentered();
         _menu.OnClose += Close;
-
-        EntMan.TryGetComponent<TransformComponent>(Owner, out var xform);
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
     {
         base.UpdateState(state);
 
-        var castState = (AtmosMonitoringConsoleBoundInterfaceState)state;
-
-        if (castState == null)
+        if (state is not AtmosMonitoringConsoleBoundInterfaceState castState)
             return;
 
         EntMan.TryGetComponent<TransformComponent>(Owner, out var xform);

@@ -4,6 +4,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Atmos.Components;
 
+/// <summary>
+/// Entities with this component appear on the 
+/// nav maps of atmos monitoring consoles
+/// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class AtmosMonitoringConsoleDeviceComponent : Component
 {
@@ -13,5 +17,5 @@ public sealed partial class AtmosMonitoringConsoleDeviceComponent : Component
     /// If null, no blip is drawn (i.e., null for pipes)
     /// </summary>
     [DataField, ViewVariables]
-    public ProtoId<NavMapBlipPrototype>? NavMapBlip { get; private set; } = null;
+    public ProtoId<NavMapBlipPrototype>? NavMapBlip = null;
 }

@@ -31,7 +31,6 @@ public sealed partial class AtmosMonitoringEntryContainer : BoxContainer
         // Load fonts
         var headerFont = new VectorFont(_cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Bold.ttf"), 11);
         var normalFont = new VectorFont(_cache.GetResource<FontResource>("/Fonts/NotoSansDisplay/NotoSansDisplay-Regular.ttf"), 11);
-        var smallFont = new VectorFont(_cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 10);
 
         // Set fonts
         TemperatureHeaderLabel.FontOverride = headerFont;
@@ -83,13 +82,16 @@ public sealed partial class AtmosMonitoringEntryContainer : BoxContainer
         var tempK = (FixedPoint2)updatedData.TemperatureData;
         var tempC = (FixedPoint2)TemperatureHelpers.KelvinToCelsius(tempK.Float());
 
-        TemperatureLabel.Text = Loc.GetString("atmos-alerts-window-temperature-value", ("valueInC", tempC), ("valueInK", tempK));
+        if (updatedData.TotalMolData > 1e-6f)
+            TemperatureLabel.Text = Loc.GetString("atmos-alerts-window-temperature-value", ("valueInC", tempC), ("valueInK", tempK));
+        else
+            TemperatureLabel.Text = Loc.GetString("atmos-alerts-window-invalid-value");
 
         // Update pressure
         PressureLabel.Text = Loc.GetString("atmos-alerts-window-pressure-value", ("value", (FixedPoint2)updatedData.PressureData));
 
         // Update total mol
-        TotalMolLabel.Text = Loc.GetString("atmos-alerts-window-total-mol-value", ("value", (FixedPoint2)updatedData.PressureData));
+        TotalMolLabel.Text = Loc.GetString("atmos-alerts-window-total-mol-value", ("value", (FixedPoint2)updatedData.TotalMolData));
 
         // Update other present gases
         GasGridContainer.RemoveAllChildren();

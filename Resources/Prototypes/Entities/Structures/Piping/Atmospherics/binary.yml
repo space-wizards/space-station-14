@@ -428,7 +428,7 @@
   - type: Machine
     board: GasRecyclerMachineCircuitboard
   - type: AtmosMonitoringConsoleDevice
-    navMapBlip: Thermoregulator
+    navMapBlip: GasValve
     
 - type: entity
   parent: GasBinaryBase

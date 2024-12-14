@@ -11,7 +11,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
@@ -30,8 +29,8 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
 
     private bool _autoScrollActive = false;
 
-    private ProtoId<NavMapBlipPrototype> _navMapConsolePid;
-    private ProtoId<NavMapBlipPrototype> _gasPipeSensorPid;
+    private ProtoId<NavMapBlipPrototype> _navMapConsoleProtoId = "NavMapConsole";
+    private ProtoId<NavMapBlipPrototype> _gasPipeSensorProtoId = "GasPipeSensor";
 
     public AtmosMonitoringConsoleWindow(AtmosMonitoringConsoleBoundUserInterface userInterface, EntityUid? owner)
     {
@@ -39,9 +38,6 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
         _entManager = IoCManager.Resolve<IEntityManager>();
         _protoManager = IoCManager.Resolve<IPrototypeManager>();
         _spriteSystem = _entManager.System<SpriteSystem>();
-
-        _navMapConsolePid = _protoManager.Index<NavMapBlipPrototype>("NavMapConsole");
-        _gasPipeSensorPid = _protoManager.Index<NavMapBlipPrototype>("GasPipeSensor");
 
         // Pass the owner to nav map
         _owner = owner;
@@ -110,7 +106,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
 
         foreach (var (netEnt, device) in console.AtmosDevices)
         {
-            if (device.NavMapBlip == _gasPipeSensorPid)
+            if (device.NavMapBlip == _gasPipeSensorProtoId)
                 continue;
 
             if (ShowPipeNetwork.Pressed)
@@ -131,7 +127,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
 
         foreach (var (netEnt, device) in console.AtmosDevices)
         {
-            if (device.NavMapBlip != _gasPipeSensorPid)
+            if (device.NavMapBlip != _gasPipeSensorProtoId)
                 return;
 
             if (ShowGasPipeSensors.Pressed)
@@ -169,9 +165,9 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
 
         if (consoleCoords != null && consoleNetEnt != null)
         {
-            var proto = _protoManager.Index(_navMapConsolePid);
+            var proto = _protoManager.Index(_navMapConsoleProtoId);
 
-            if (proto.TexturePaths != null && proto.TexturePaths.Any())
+            if (proto.TexturePaths != null && proto.TexturePaths.Length != 0)
             {
                 var texture = _spriteSystem.Frame0(new SpriteSpecifier.Texture(proto.TexturePaths[0]));
                 var blip = new NavMapBlip(consoleCoords.Value, texture, proto.Color, proto.Blinks, proto.Selectable);
@@ -211,11 +207,11 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
                 }
 
                 // Skip network devices if the toggled is off
-                if (!ShowPipeNetwork.Pressed && device.NavMapBlip != _gasPipeSensorPid)
+                if (!ShowPipeNetwork.Pressed && device.NavMapBlip != _gasPipeSensorProtoId)
                     continue;
 
                 // Skip gas pipe sensors if the toggle is off
-                if (!ShowGasPipeSensors.Pressed && device.NavMapBlip == _gasPipeSensorPid)
+                if (!ShowGasPipeSensors.Pressed && device.NavMapBlip == _gasPipeSensorProtoId)
                     continue;
 
                 AddTrackedEntityToNavMap(device);
@@ -227,7 +223,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
     {
         var proto = _protoManager.Index(metaData.NavMapBlip);
 
-        if (proto.TexturePaths == null || !proto.TexturePaths.Any())
+        if (proto.TexturePaths == null || proto.TexturePaths.Length == 0)
             return;
 
         var idx = Math.Clamp((int)metaData.Direction / 2, 0, proto.TexturePaths.Length - 1);
@@ -319,7 +315,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
             if (netEnt != focusEntity)
                 continue;
 
-            if (device.NavMapBlip != _gasPipeSensorPid)
+            if (device.NavMapBlip != _gasPipeSensorProtoId)
                 return;
 
             // Set new focus

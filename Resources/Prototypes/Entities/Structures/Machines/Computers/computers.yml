@@ -77,10 +77,10 @@
     key: enum.AtmosMonitoringConsoleUiKey.Key
   - type: UserInterface
     interfaces:
-        enum.AtmosMonitoringConsoleUiKey.Key:
-            type: AtmosMonitoringConsoleBoundUserInterface
-        enum.WiresUiKey.Key:
-            type: WiresBoundUserInterface
+      enum.AtmosMonitoringConsoleUiKey.Key:
+        type: AtmosMonitoringConsoleBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
 
 - type: entity
   parent: BaseComputer

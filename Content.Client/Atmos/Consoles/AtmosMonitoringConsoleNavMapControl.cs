@@ -4,7 +4,6 @@ using Content.Shared.Pinpointer;
 using Robust.Client.Graphics;
 using Robust.Shared.Collections;
 using Robust.Shared.Map.Components;
-using System;
 using System.Linq;
 using System.Numerics;
 
@@ -59,7 +58,7 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
     private void DrawPipeNetwork(DrawingHandleScreen handle, List<AtmosMonitoringConsoleLine> atmosPipeNetwork)
     {
         var offset = GetOffset();
-        var area = new Box2(-WorldRange, -WorldRange, WorldRange + 1f, WorldRange + 1f).Translated(offset);
+        offset = offset with { Y = -offset.Y };
 
         if (WorldRange / WorldMaxRange > 0.5f)
         {
@@ -67,8 +66,8 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
 
             foreach (var chunkedLine in atmosPipeNetwork)
             {
-                var start = ScalePosition(chunkedLine.Origin - new Vector2(offset.X, -offset.Y));
-                var end = ScalePosition(chunkedLine.Terminus - new Vector2(offset.X, -offset.Y));
+                var start = ScalePosition(chunkedLine.Origin - offset);
+                var end = ScalePosition(chunkedLine.Terminus - offset);
 
                 if (!pipeNetworks.TryGetValue(chunkedLine.Color, out var subNetwork))
                     subNetwork = new ValueList<Vector2>();
@@ -95,22 +94,22 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
                 var leftTop = ScalePosition(new Vector2
                     (Math.Min(chunkedLine.Origin.X, chunkedLine.Terminus.X) - 0.1f,
                     Math.Min(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) - 0.1f)
-                    - new Vector2(offset.X, -offset.Y));
+                    - offset);
 
                 var rightTop = ScalePosition(new Vector2
                     (Math.Max(chunkedLine.Origin.X, chunkedLine.Terminus.X) + 0.1f,
                     Math.Min(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) - 0.1f)
-                    - new Vector2(offset.X, -offset.Y));
+                    - offset);
 
                 var leftBottom = ScalePosition(new Vector2
                     (Math.Min(chunkedLine.Origin.X, chunkedLine.Terminus.X) - 0.1f,
                     Math.Max(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) + 0.1f)
-                    - new Vector2(offset.X, -offset.Y));
+                    - offset);
 
                 var rightBottom = ScalePosition(new Vector2
                     (Math.Max(chunkedLine.Origin.X, chunkedLine.Terminus.X) + 0.1f,
                     Math.Max(chunkedLine.Origin.Y, chunkedLine.Terminus.Y) + 0.1f)
-                    - new Vector2(offset.X, -offset.Y));
+                    - offset);
 
                 if (!pipeVertexUVs.TryGetValue(chunkedLine.Color, out var pipeVertexUV))
                     pipeVertexUV = new ValueList<Vector2>();

@@ -9,6 +9,10 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Atmos.Components;
 
+/// <summary>
+/// Entities capable of opening the atmos monitoring console UI
+/// require this component to function correctly
+/// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedAtmosMonitoringConsoleSystem))]
 public sealed partial class AtmosMonitoringConsoleComponent : Component
@@ -42,7 +46,7 @@ public sealed partial class AtmosMonitoringConsoleComponent : Component
     public Color NavMapWallColor;
 
     /// <summary>
-    /// The next time this component is dirtied, it will force the full satte
+    /// The next time this component is dirtied, it will force the full state
     /// to be sent to the client, instead of just the delta state
     /// </summary>
     [ViewVariables]
