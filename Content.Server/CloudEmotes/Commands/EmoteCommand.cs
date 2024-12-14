@@ -11,10 +11,11 @@ namespace Content.Server.CloudEmotes.Commands
     public sealed class EmoteCommand : LocalizedCommands
     {
         [Dependency] private readonly IEntitySystemManager _entitySystems = default!;
-        [Dependency] private readonly IEntityManager _entityManager ??= default!;
-        protected readonly SharedTransformSystem _transformSystem ??= _entityManager.System<SharedTransformSystem>();
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = _entitySystems.GetEntitySystem<SharedTransformSystem>()!;
         public override string Command => "emote";
         public string[] emotes = { "lenny", "mark", "nervous" };
+
         public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
             return args.Length switch
@@ -48,9 +49,9 @@ namespace Content.Server.CloudEmotes.Commands
             }
             // TODO THIS SHOULD ADD COMPONENT, AND THEN CLIENT SYSTEM WILL DRAW IT BASED ON COMPONENTS (AND WILL KEEP IT UPDATED ON NEW LOCATION DUE TO IT BEING IN COMP SAVED LIKE TETHER MOVING)
             var emote_name = args[0] = "CloudEmote" + char.ToUpper(args[0][0]) + args[0].Substring(1);
-            var pos = _transformSystem.GetMapCoordinates(player.AttachedEntity.Value);
+            var pos = _transform.GetMapCoordinates(player.AttachedEntity.Value);
             var emote_entity = _entityManager.Spawn(emote_name, pos);
-            _transformSystem.SetCoordinates(emote_entity, new EntityCoordinates(player.AttachedEntity.Value, new System.Numerics.Vector2(0f, 1f)));
+            _transform.SetCoordinates(emote_entity, new EntityCoordinates(player.AttachedEntity.Value, new System.Numerics.Vector2(0f, 1f)));
         }
     }
 }
