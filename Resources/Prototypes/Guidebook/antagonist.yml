@@ -6,7 +6,6 @@
   - Traitors
   - Changelings # goobstation - changelings
   - Heretics # goob - heretics
-  # impstation's changed both these antag pages to add info about metashield, so we should redirect to ours
   - NuclearOperatives
   - Zombies
   - Revolutionaries
@@ -17,34 +16,34 @@
 - type: guideEntry
   id: Traitors
   name: guide-entry-traitors
-  text: "/ServerInfo/_Impstation/Guidebook/Antagonist/Traitors.xml"
+  text: "/ServerInfo/Guidebook/Antagonist/Traitors.xml"
 
 - type: guideEntry
   id: NuclearOperatives
   name: guide-entry-nuclear-operatives
-  text: "/ServerInfo/_Impstation/Guidebook/Antagonist/Nuclear Operatives.xml"
+  text: "/ServerInfo/Guidebook/Antagonist/Nuclear Operatives.xml"
 
 - type: guideEntry
   id: Zombies
   name: guide-entry-zombies
-  text: "/ServerInfo/_Impstation/Guidebook/Antagonist/Zombies.xml"
+  text: "/ServerInfo/Guidebook/Antagonist/Zombies.xml"
 
 - type: guideEntry
   id: Revolutionaries
   name: guide-entry-revolutionaries
-  text: "/ServerInfo/_Impstation/Guidebook/Antagonist/Revolutionaries.xml"
+  text: "/ServerInfo/Guidebook/Antagonist/Revolutionaries.xml"
 
 - type: guideEntry
   id: MinorAntagonists
   name: guide-entry-minor-antagonists
-  text: "/ServerInfo/_Impstation/Guidebook/Antagonist/MinorAntagonists.xml"
+  text: "/ServerInfo/Guidebook/Antagonist/MinorAntagonists.xml"
 
 - type: guideEntry
   id: SpaceNinja
   name: guide-entry-space-ninja
-  text: "/ServerInfo/_Impstation/Guidebook/Antagonist/SpaceNinja.xml"
+  text: "/ServerInfo/Guidebook/Antagonist/SpaceNinja.xml"
 
 - type: guideEntry
   id: Thieves
   name: guide-entry-thieves
-  text: "/ServerInfo/_Impstation/Guidebook/Antagonist/Thieves.xml"
+  text: "/ServerInfo/Guidebook/Antagonist/Thieves.xml"
