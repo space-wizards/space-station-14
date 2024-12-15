@@ -44,7 +44,7 @@ public sealed class TemperatureSystem : EntitySystem
         SubscribeLocalEvent<TemperatureComponent, OnTemperatureChangeEvent>(EnqueueDamage);
         SubscribeLocalEvent<TemperatureComponent, AtmosExposedUpdateEvent>(OnAtmosExposedUpdate);
         SubscribeLocalEvent<TemperatureComponent, RejuvenateEvent>(OnRejuvenate);
-        SubscribeLocalEvent<AlertsComponent, OnTemperatureChangeEvent>(ServerAlert);
+        SubscribeLocalEvent<AlertsComponent, AtmosExposedUpdateEvent>(ServerAlert);
         SubscribeLocalEvent<TemperatureProtectionComponent, InventoryRelayedEvent<ModifyChangedTemperatureEvent>>(
             OnTemperatureChangeAttempt);
 
@@ -186,12 +186,18 @@ public sealed class TemperatureSystem : EntitySystem
         ForceChangeTemperature(uid, Atmospherics.T20C, comp);
     }
 
-    private void ServerAlert(EntityUid uid, AlertsComponent status, OnTemperatureChangeEvent args)
+    private void ServerAlert(EntityUid uid, AlertsComponent status, ref AtmosExposedUpdateEvent args)
     {
         ProtoId<AlertPrototype> type;
         float threshold;
         float idealTemp;
+        float coefficient;
 
+        // I'm 99% sure that there is a better way to do this, but i've already spent 3 hours trying to figure it out, and it works as intended.
+        var ev = new ModifyChangedTemperatureEvent(1.0f);
+        RaiseLocalEvent(uid, ev);
+        coefficient = ev.TemperatureDelta;
+    
         if (!TryComp<TemperatureComponent>(uid, out var temperature))
         {
             _alerts.ClearAlertCategory(uid, TemperatureAlertCategory);
@@ -209,7 +215,7 @@ public sealed class TemperatureSystem : EntitySystem
             idealTemp = (temperature.ColdDamageThreshold + temperature.HeatDamageThreshold) / 2;
         }
 
-        if (args.CurrentTemperature <= idealTemp)
+        if (args.GasMixture.Temperature <= idealTemp)
         {
             type = temperature.ColdAlert;
             threshold = temperature.ColdDamageThreshold;
@@ -222,7 +228,7 @@ public sealed class TemperatureSystem : EntitySystem
 
         // Calculates a scale where 1.0 is the ideal temperature and 0.0 is where temperature damage begins
         // The cold and hot scales will differ in their range if the ideal temperature is not exactly halfway between the thresholds
-        var tempScale = (args.CurrentTemperature - threshold) / (idealTemp - threshold);
+        var tempScale = (args.GasMixture.Temperature * coefficient - threshold) / (idealTemp * coefficient - threshold);
         switch (tempScale)
         {
             case <= 0f:
