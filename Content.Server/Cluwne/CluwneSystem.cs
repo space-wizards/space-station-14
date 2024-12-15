@@ -85,7 +85,7 @@ public sealed class CluwneSystem : EntitySystem
         {
             _popup.PopupEntity(Loc.GetString("cluwne-transform", ("target", uid)), uid, PopupType.LargeCaution);
             _audio.PlayPvs(component.SpawnSound, uid);
-            _meta.SetEntityName(uid, Loc.GetString("cluwne-name-prefix", ("target", name)), meta);
+            _meta.SetEntityName(uid, Loc.GetString("cluwne-name-prefix", ("baseName", name)), meta);
             SetOutfitCommand.SetOutfit(uid, "CluwneGear", EntityManager);
             _faction.RemoveFaction(uid, "NanoTrasen", false);
             _faction.AddFaction(uid, "HonkNeutral");
