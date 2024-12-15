@@ -115,6 +115,18 @@
       - state: passenger
 
 - type: entity
+  id: SpawnPointFrontiersman
+  parent: SpawnPointJobBase
+  name: frontiersman
+  components:
+  - type: SpawnPoint
+    job_id: Frontiersman
+  - type: Sprite
+    layers:
+      - state: green
+      - state: passenger
+
+- type: entity
   id: SpawnPointTechnicalAssistant
   parent: SpawnPointJobBase
   name: technical assistant
