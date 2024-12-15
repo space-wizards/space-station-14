@@ -81,8 +81,8 @@
     entity: MobCluwneBeast
     forced: true
     inventory: None
-    revertOnDeath: false
-    revertOnCrit: false
+    revertOnDeath: true
+    revertOnCrit: true
     transferName: false
     transferDamage: false
 
