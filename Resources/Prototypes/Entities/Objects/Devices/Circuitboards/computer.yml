@@ -29,12 +29,12 @@
       
 - type: entity
   parent: BaseComputerCircuitboard
-  id: AtmosMonitoringConsoleCircuitboard
+  id: AtmosMonitoringComputerCircuitboard
   name: atmospheric network monitor board
   description: A computer printed circuit board for an atmospheric network monitor.
   components:
     - type: ComputerBoard
-      prototype: AtmosMonitoringConsole    
+      prototype: ComputerAtmosMonitoring
 
 - type: entity
   parent: BaseComputerCircuitboard

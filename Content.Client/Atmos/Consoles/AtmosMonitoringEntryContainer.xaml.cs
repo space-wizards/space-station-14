@@ -1,4 +1,5 @@
 using Content.Client.Stylesheets;
+using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Consoles;
 using Content.Shared.FixedPoint;
@@ -122,12 +123,11 @@ public sealed partial class AtmosMonitoringEntryContainer : BoxContainer
                 var gasPercent = (FixedPoint2)0f;
                 gasPercent = percent * 100f;
 
-                if (!SharedAtmosAlertsComputerSystem.GasShorthands.TryGetValue(gas, out var gasShorthand))
-                    gasShorthand = "X";
+                var gasAbbreviation = Atmospherics.GasAbbreviations.GetValueOrDefault(gas, Loc.GetString("gas-unknown-abbreviation"));
 
                 var gasLabel = new Label()
                 {
-                    Text = Loc.GetString("atmos-alerts-window-other-gases-value", ("shorthand", gasShorthand), ("value", gasPercent)),
+                    Text = Loc.GetString("atmos-alerts-window-other-gases-value", ("shorthand", gasAbbreviation), ("value", gasPercent)),
                     FontOverride = normalFont,
                     HorizontalAlignment = HAlignment.Center,
                     VerticalAlignment = VAlignment.Center,
