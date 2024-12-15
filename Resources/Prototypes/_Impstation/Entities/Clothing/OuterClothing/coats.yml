@@ -1,8 +1,8 @@
 - type: entity
-  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, BaseCommandContraband]
+  parent: ClothingOuterCoatLabCmo
   id: ClothingOuterCoatCMO
-  name: chief medical officer's prestige labcoat
-  description: A Medical Labcoat for the Chief Medical Officer. The high collar acts as a splash guard for when a patient's veins are particularly leaky. 
+  name: chief medical officer's prestige lab coat
+  description: A medical lab coat for the Chief Medical Officer. The high collar acts as a splash guard for when a patient's veins are particularly leaky. 
   components:
   - type: Sprite
     sprite: _Impstation/Clothing/OuterClothing/Coats/cmoprestigecoat.rsi

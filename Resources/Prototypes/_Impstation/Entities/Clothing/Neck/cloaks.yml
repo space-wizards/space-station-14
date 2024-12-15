@@ -83,7 +83,7 @@
 
 - type: entity
   parent: ClothingCloakCmo
-  id: ClothingNeckCloakCmosgreatcloak
+  id: ClothingNeckCloakCmosGreatcloak
   name: chief medical officer's greatcloak
   description: "An ornate high collared great cloak. Good luck keeping it clean."
   components:
