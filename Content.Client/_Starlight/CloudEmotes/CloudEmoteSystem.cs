@@ -36,6 +36,8 @@ public sealed class CloudEmoteSystem : SharedCloudEmoteSystem
     private void update_position(EntityUid player, EntityUid emote)
     {
         var position = _transformSystem.GetWorldPosition(player);
+        var transcomp = _entityManager.GetComponent<TransformComponent>(player);
+
         _sawmill.Info("player.position" + position.ToString());
         var offset = _entityManager.GetComponent<SpriteComponent>(player).Bounds.Height;
       //  _transformSystem.SetCoordinates(emote, new EntityCoordinates(player, 0, offset));

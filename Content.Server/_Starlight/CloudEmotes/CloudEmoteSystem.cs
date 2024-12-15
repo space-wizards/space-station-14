@@ -48,6 +48,7 @@ public sealed class CloudEmoteSystem : SharedCloudEmoteSystem
         if (comp.Phase == 2)
         {
             _entMan.RemoveComponent<CloudEmoteActiveComponent>(player.Value);
+            Dirty(player.Value, comp);
             return;
         }
         
@@ -66,7 +67,6 @@ public sealed class CloudEmoteSystem : SharedCloudEmoteSystem
         }
 
         display(phase_entity_to_spawn, player.Value, comp);
-        
     }
 
     private void display(string phase_entity_to_spawn, EntityUid player, CloudEmoteActiveComponent comp)
@@ -75,8 +75,11 @@ public sealed class CloudEmoteSystem : SharedCloudEmoteSystem
             .GetMapCoordinates(player)
             .Offset(0, 0.7f);
         comp.Emote = Spawn(phase_entity_to_spawn, coords);
-        _entMan.GetComponent<CloudEmotePhaseComponent>(comp.Emote).Player = player;
         //_transformSystem.SetCoordinates(comp.Emote, new EntityCoordinates(player, new System.Numerics.Vector2(0f, 0.7f)));
+        var phase_comp = _entMan.GetComponent<CloudEmotePhaseComponent>(comp.Emote);
+        phase_comp.Player = player;
+        Dirty(comp.Emote, phase_comp);
+        Dirty(player, comp);
     }
 
     private void update_position(EntityUid player, EntityUid emote)
