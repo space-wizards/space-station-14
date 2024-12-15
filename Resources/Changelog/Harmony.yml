@@ -736,3 +736,25 @@ Entries:
     changes:
     - type: Add
       message: Added the Captain's Beret and Hawaiian Shirt.
+  - id: 233
+    author: liltenhead
+    time: '2024-12-13T13:25:52.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/233
+    changes:
+    - type: Tweak
+      message: Prisoner wardrobes now contain tank harnesses and passenger headsets.
+  - id: 229
+    author: Ermucat
+    time: '2024-12-15T17:04:49.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/229
+    changes:
+    - type: Add
+      message: Added more ways to obtain rubber duckies. Ducks are now included in toy
+        box and janitorial supplies crate cargo purchases
+  - id: 231
+    author: TheCrimsonJupiter
+    time: '2024-12-15T17:06:07.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/231
+    changes:
+    - type: Add
+      message: New clothes for the HoP
