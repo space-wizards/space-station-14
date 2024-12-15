@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TGRCDev
-  changes:
-  - message: Thief toolboxes now spawn a duffel bag to place your items in.
-    type: Tweak
-  id: 245
-  time: '2024-09-21T22:39:53.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/317
 - author: Darkmajia
   changes:
   - message: Cheap sunglasses, a black folder, a bar flask, and a newton cradle are
@@ -4530,3 +4523,10 @@
   id: 744
   time: '2024-12-15T12:55:10.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1032
+- author: SixValentine
+  changes:
+  - message: 50hr Greatcloak and Prestige Labcoat for the CMO to Swagger in.
+    type: Add
+  id: 745
+  time: '2024-12-15T14:54:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1036
