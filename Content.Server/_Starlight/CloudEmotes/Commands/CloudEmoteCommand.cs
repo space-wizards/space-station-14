@@ -4,7 +4,7 @@ using Robust.Shared.Console;
 using Content.Shared.Administration;
 using Robust.Shared.Map;
 using Robust.Server.GameObjects;
-using Content.Shared.CloudEmote;
+using Content.Shared._Starlight.CloudEmote;
 namespace Content.Server._Starlight.CloudEmotes.Commands
 {
     [UsedImplicitly]
