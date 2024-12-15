@@ -1,10 +1,21 @@
-
+- type: entity
+  id: CloudEmoteBlank
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: CloudEmotePhase
+  - type: TimedDespawn
+    lifetime: 4
+  - type: Tag
+    tags:
+      - HideContextMenu
+      
 - type: entity
   id: CloudEmoteStart
   categories: [ HideSpawnMenu ]
   components:
   - type: TimedDespawn
-    lifetime: 0.2
+    lifetime: 0.19 # starting and ending must be 0.01 shorter
+  - type: CloudEmotePhase
   - type: Sprite
     drawdepth: Effects
     noRot: true
@@ -23,8 +34,9 @@
   id: CloudEmoteEnd
   categories: [ HideSpawnMenu ]
   components:
+  - type: CloudEmotePhase
   - type: TimedDespawn
-    lifetime: 0.2
+    lifetime: 0.19 # starting and ending must be 0.01 shorter
   - type: Sprite
     drawdepth: Effects
     noRot: true
@@ -43,6 +55,7 @@
   id: CloudEmoteLenny
   categories: [ HideSpawnMenu ]
   components:
+  - type: CloudEmotePhase
   - type: TimedDespawn
     lifetime: 3
   - type: Sprite
@@ -63,6 +76,7 @@
   id: CloudEmoteMark
   categories: [ HideSpawnMenu ]
   components:
+  - type: CloudEmotePhase
   - type: TimedDespawn
     lifetime: 3
   - type: Sprite
@@ -83,6 +97,7 @@
   id: CloudEmoteNervous
   categories: [ HideSpawnMenu ]
   components:
+  - type: CloudEmotePhase
   - type: TimedDespawn
     lifetime: 3
   - type: Sprite
