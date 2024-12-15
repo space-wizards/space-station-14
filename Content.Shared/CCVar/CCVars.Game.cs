@@ -307,6 +307,12 @@ public sealed partial class CCVars
             CVarDef.Create("game.ipintel_request_backoff_seconds", 30, CVar.SERVERONLY);
 
         /// <summary>
+        /// How much time should pass before we attempt to cleanup the IPIntel table for old ip addresses?
+        /// </summary>
+        public static readonly CVarDef<int> GameIPIntelCleanupMins =
+            CVarDef.Create("game.ipintel_database_cleanup_mins", 15, CVar.SERVERONLY);
+
+        /// <summary>
         /// How long to store results in the cache before they must be retrieved again in days.
         /// </summary>
         public static readonly CVarDef<TimeSpan> GameIPIntelCacheLength =

@@ -2,18 +2,60 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using Content.Server.Chat.Managers;
 using Content.Server.Database;
 using Content.Shared.CCVar;
 using Content.Shared.Players.PlayTimeTracking;
+using Robust.Shared.Configuration;
 using Robust.Shared.Network;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Connection;
 
 // Handles checking/warning if the connecting IP address is sus.
-public sealed partial class ConnectionManager
+public sealed class IPIntel
 {
-    [Dependency] private readonly IHttpClientHolder _http = default!;
+     private readonly IHttpClientHolder _http;
+     private readonly IServerDbManager _db;
+     private readonly IConfigurationManager _cfg;
+     private readonly IChatManager _chatManager;
+     private readonly IGameTiming _gameTiming;
+
+    private ISawmill _sawmill;
+
+
+    public IPIntel(IHttpClientHolder http,
+        IServerDbManager db,
+        IConfigurationManager cfg,
+        ILogManager logManager,
+        IChatManager chatManager,
+        IGameTiming gameTiming)
+    {
+        _http = http;
+        _db = db;
+        _cfg = cfg;
+        _chatManager = chatManager;
+        _gameTiming = gameTiming;
+
+        _sawmill = logManager.GetSawmill("ipintel");
+
+        _cfg.OnValueChanged(CCVars.GameIPIntelEmail, b => _contactEmail = b, true);
+        _cfg.OnValueChanged(CCVars.GameIPIntelBase, b => _baseUrl = b, true);
+        _cfg.OnValueChanged(CCVars.GameIPIntelFlags, b => _flags = b, true);
+        _cfg.OnValueChanged(CCVars.GameIPIntelRejectUnknown, b => _rejectUnknown = b, true);
+        _cfg.OnValueChanged(CCVars.GameIPIntelRejectBad, b => _rejectBad = b, true);
+        _cfg.OnValueChanged(CCVars.GameIPIntelRejectRateLimited, b => _rejectLimited = b, true);
+        _cfg.OnValueChanged(CCVars.GameIPIntelMaxMinute, b => _requestLimitMinute = b, true);
+        _cfg.OnValueChanged(CCVars.GameIPIntelMaxDay, b => _requestLimitDay = b, true);
+        _cfg.OnValueChanged(CCVars.GameIPIntelBackOffSeconds, b => _backoffSeconds = b, true);
+        _cfg.OnValueChanged(CCVars.GameIPIntelCleanupMins, b => _cleanupMins = b, true);
+        _cfg.OnValueChanged(CCVars.GameIPIntelBadRating, b => _rating = b, true);
+        _cfg.OnValueChanged(CCVars.GameIPIntelCacheLength, b => _cacheDays = b, true);
+        _cfg.OnValueChanged(CCVars.GameIPIntelExemptPlaytime, b => _exemptPlaytime = b, true);
+        _cfg.OnValueChanged(CCVars.GameIPIntelAlertAdminReject, b => _alertAdminReject = b, true);
+        _cfg.OnValueChanged(CCVars.GameIPIntelAlertAdminWarnRating, b => _alertAdminWarn = b, true);
+    }
 
     public struct Ratelimited
     {
@@ -49,30 +91,13 @@ public sealed partial class ConnectionManager
     private int _requestLimitMinute;
     private int _requestLimitDay;
     private int _backoffSeconds;
+    private int _cleanupMins;
     private TimeSpan _cacheDays;
     private TimeSpan _exemptPlaytime;
     private float _rating;
     private float _alertAdminWarn;
 
-    private void InitializeIPIntel()
-    {
-        _cfg.OnValueChanged(CCVars.GameIPIntelEmail, b => _contactEmail = b, true);
-        _cfg.OnValueChanged(CCVars.GameIPIntelBase, b => _baseUrl = b, true);
-        _cfg.OnValueChanged(CCVars.GameIPIntelFlags, b => _flags = b, true);
-        _cfg.OnValueChanged(CCVars.GameIPIntelRejectUnknown, b => _rejectUnknown = b, true);
-        _cfg.OnValueChanged(CCVars.GameIPIntelRejectBad, b => _rejectBad = b, true);
-        _cfg.OnValueChanged(CCVars.GameIPIntelRejectRateLimited, b => _rejectLimited = b, true);
-        _cfg.OnValueChanged(CCVars.GameIPIntelMaxMinute, b => _requestLimitMinute = b, true);
-        _cfg.OnValueChanged(CCVars.GameIPIntelMaxDay, b => _requestLimitDay = b, true);
-        _cfg.OnValueChanged(CCVars.GameIPIntelBackOffSeconds, b => _backoffSeconds = b, true);
-        _cfg.OnValueChanged(CCVars.GameIPIntelBadRating, b => _rating = b, true);
-        _cfg.OnValueChanged(CCVars.GameIPIntelCacheLength, b => _cacheDays = b, true);
-        _cfg.OnValueChanged(CCVars.GameIPIntelExemptPlaytime, b => _exemptPlaytime = b, true);
-        _cfg.OnValueChanged(CCVars.GameIPIntelAlertAdminReject, b => _alertAdminReject = b, true);
-        _cfg.OnValueChanged(CCVars.GameIPIntelAlertAdminWarnRating, b => _alertAdminWarn = b, true);
-    }
-
-    private async Task<(bool IsBad, string Reason)> IsVpnOrProxy(NetConnectingArgs e)
+    public async Task<(bool IsBad, string Reason)> IsVpnOrProxy(NetConnectingArgs e)
     {
         // Check Exemption flags, let them skip if they have them.
         var flags = await _db.GetBanExemption(e.UserId);
@@ -148,7 +173,7 @@ public sealed partial class ConnectionManager
 
         if (request.StatusCode == HttpStatusCode.OK)
         {
-            await Task.Run(() => SaveCache(ip, score));
+            await Task.Run(() => _db.UpsertIPIntelCache(DateTime.UtcNow, ip, score));
             return ScoreCheck(score, e);
         }
 
@@ -278,17 +303,11 @@ public sealed partial class ConnectionManager
         return _rejectBad ? (true, Loc.GetString("ipintel-suspicious")) : (false, string.Empty);
     }
 
-    private async Task SaveCache(IPAddress ip, float score)
-    {
-        await _db.UpsertIPIntelCache(DateTime.UtcNow, ip, score);
-    }
-
     public void Update()
     {
         if (_gameTiming.RealTime >= _nextClean)
         {
-            // Fuck it we hardcode
-            _nextClean = _gameTiming.RealTime + TimeSpan.FromMinutes(15);
+            _nextClean = _gameTiming.RealTime + TimeSpan.FromMinutes(_cleanupMins);
             _db.CleanIPIntelCache(_cacheDays);
         }
     }
