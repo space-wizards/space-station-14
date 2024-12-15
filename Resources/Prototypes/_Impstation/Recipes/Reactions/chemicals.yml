@@ -43,6 +43,27 @@
     PhilosophersJuice: 1
     
 - type: reaction
+  id: Holium
+  impact: High
+  minTemp: 1000
+  reactants:
+    Carbon:
+      amount: 200
+    UncookedAnimalProteins:
+      amount: 50
+    Honk:
+      amount: 50
+    Anomalium:
+      amount: 50
+    Frezon:
+      amount: 50
+    PhilosophersJuice:
+      amount: 1
+      catalyst: true
+  products:
+    Holium: 1
+    
+- type: reaction
   id: Medium
   impact: Medium #lol
   reactants:
