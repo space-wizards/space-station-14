@@ -69,7 +69,7 @@
   - type: CommunicationsConsole
     canShuttle: false
     title: comms-console-announcement-title-station-ai
-    color: "#2ed2fd"
+    color: "#5ed7aa"
   - type: ShowJobIcons
 
 - type: entity
