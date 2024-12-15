@@ -9,7 +9,7 @@ public sealed class ChangelingTransformSystem : SharedChangelingTransformSystem
         base.Initialize();
     }
 
-    public override void OnTransformAction(EntityUid uid,
+    protected override void OnTransformAction(EntityUid uid,
         ChangelingTransformComponent component,
         ChangelingTransformActionEvent args)
     {

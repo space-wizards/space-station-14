@@ -20,6 +20,13 @@ public sealed class ChangelingTransformBoundUserInterface : BoundUserInterface
         _window.OnIdentitySelect += SendIdentitySelect;
     }
 
+    // protected override void Dispose(bool disposing)
+    // {
+    //     base.Dispose(disposing);
+    //     _window?.CleanUp(); // Tell the window to destroy all the Client Nullspace entities it made to allow spriteview
+    // }
+
+
     protected override void UpdateState(BoundUserInterfaceState state)
     {
         base.UpdateState(state);

@@ -15,7 +15,8 @@
             <!-- Icon and Description -->
             <GridContainer Margin="0 5" Columns="2">
                 <SpriteView OverrideDirection="South" Scale="2 2" Name="SpriteView" Access="Public" SetSize="64 64"/>
-                <Label Name="IdentityDescription" Text="Description"></Label>
+                <Label Name="Species" Text="Species"></Label>
+                <Label Name="SpeciesText" Text="SpeciesText"></Label>
             </GridContainer>
         </BoxContainer>
     </PanelContainer>

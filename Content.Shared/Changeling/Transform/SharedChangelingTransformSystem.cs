@@ -10,6 +10,8 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Content.Shared.Forensics;
 using Content.Shared.Humanoid;
+using Content.Shared.Humanoid.Markings;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.IdentityManagement;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.NameModifier.Components;
@@ -41,6 +43,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly SharedChangelingIdentitySystem _changelingIdentitySystem = default!;
 
+
     public override void Initialize()
     {
         base.Initialize();
@@ -60,17 +63,16 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         _uiSystem.SetUi((uid, uiE), TransformUi.Key, new InterfaceData("ChangelingTransformBoundUserInterface"));
 
         var identityStorage = EnsureComp<ChangelingIdentityComponent>(uid);
-        if (identityStorage.ConsumedIdentities.Count == 0)
+        if (identityStorage.ConsumedIdentities.Count > 0)
             return;
         _changelingIdentitySystem.CloneToNullspace(uid, identityStorage, uid);
     }
 
-    public virtual void OnTransformAction(EntityUid uid,
+    protected virtual void OnTransformAction(EntityUid uid,
         ChangelingTransformComponent component,
         ChangelingTransformActionEvent args)
     {
         var user = args.Performer;
-        _popupSystem.PopupPredicted(Loc.GetString("changeling-transform-attempt"), user, null, PopupType.MediumCaution);
 
         if (!TryComp<UserInterfaceComponent>(uid, out var userInterface))
             return;
@@ -81,10 +83,17 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         if (!_uiSystem.IsUiOpen(uid, TransformUi.Key, args.Performer))
         {
             _uiSystem.OpenUi(uid, TransformUi.Key, args.Performer);
+
             var x = userIdentity.ConsumedIdentities.Select(x =>
             {
-                return new ChangelingIdentityData(GetNetEntity(x), Name(x), MetaData(x).EntityDescription);
-            }).ToList();
+                TryComp<HumanoidAppearanceComponent>(x, out var appearance);
+                return new ChangelingIdentityData(GetNetEntity(x),
+                    Name(x),
+                    MetaData(x).EntityDescription,
+                    appearance!);
+            })
+                .ToList();
+
             _uiSystem.SetUiState(uid, TransformUi.Key, new ChangelingTransformBoundUserInterfaceState(x));
         }
         else // if the UI is already opened and the command action is done again, transform into the last consumed identity
@@ -98,6 +107,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
     {
         if(!TryComp<ChangelingIdentityComponent>(uid, out var identity))
             return;
+        _popupSystem.PopupPredicted(Loc.GetString("changeling-transform-attempt"), uid, null, PopupType.MediumCaution);
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
             uid,
             component.TransformWindup,
@@ -111,11 +121,13 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         });
     }
 
-    public void OnTransformSelected(EntityUid uid,
+    private void OnTransformSelected(EntityUid uid,
         ChangelingTransformComponent component,
         ChangelingTransformIdentitySelectMessage args)
     {
+        _uiSystem.CloseUi(uid, TransformUi.Key, uid);
         var selectedIdentity = args.TargetIdentity;
+        _popupSystem.PopupPredicted(Loc.GetString("changeling-transform-attempt"), uid, null, PopupType.MediumCaution);
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
             uid,
             component.TransformWindup,
@@ -203,31 +215,7 @@ public sealed partial class ChangelingTransformWindupDoAfterEvent : SimpleDoAfte
         TargetIdentity = targetIdentity;
     }
 }
-[Serializable, NetSerializable]
-public sealed class ChangelingRelayedIdentitySelectMessageEvent : HandledEntityEventArgs
-{
-    public readonly NetEntity ActingEntity;
-    public NetEntity TargetIdentity { get; init; }
 
-    public ChangelingRelayedIdentitySelectMessageEvent(NetEntity targetIdentity, NetEntity actingEntity)
-    {
-        ActingEntity = actingEntity;
-        TargetIdentity = targetIdentity;
-    }
-}
-
-[Serializable, NetSerializable]
-public sealed class ChangelingNullspaceSpawnEvent : HandledEntityEventArgs
-{
-    public readonly NetEntity ClonedEntity;
-    public readonly NetEntity Origin;
-
-    public ChangelingNullspaceSpawnEvent(NetEntity clonedEntity, NetEntity origin)
-    {
-        ClonedEntity = clonedEntity;
-        Origin = origin;
-    }
-}
 [Serializable, NetSerializable]
 public sealed class ChangelingTransformIdentitySelectMessage : BoundUserInterfaceMessage
 {
@@ -245,12 +233,25 @@ public sealed class ChangelingIdentityData
     public readonly NetEntity Identity;
     public string Name;
     public string Description;
+    //Literally everything about their looks because Nullspace doesn't network :pain:
+    public ProtoId<SpeciesPrototype> Species;
+    public Color SkinColor;
+    public Color EyeColor;
+    public Sex IdentitySex;
+    public Dictionary<HumanoidVisualLayers,CustomBaseLayerInfo> CustomBaseLayers;
+    public MarkingSet MarkingSet;
 
-    public ChangelingIdentityData(NetEntity identity, string name, string description)
+    public ChangelingIdentityData(NetEntity identity, string name, string description, HumanoidAppearanceComponent appearance)
     {
         Identity = identity;
         Name = name;
         Description = description;
+        Species = appearance.Species;
+        EyeColor = appearance.EyeColor;
+        SkinColor = appearance.SkinColor;
+        IdentitySex = appearance.Sex;
+        CustomBaseLayers = appearance.CustomBaseLayers;
+        MarkingSet = appearance.MarkingSet;
     }
 }
 [Serializable, NetSerializable]
