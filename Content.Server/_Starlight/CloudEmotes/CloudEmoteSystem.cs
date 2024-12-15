@@ -1,6 +1,7 @@
 using Robust.Server.GameObjects;
 using Robust.Shared.Spawners;
 using Content.Shared._Starlight.CloudEmote;
+using Robust.Shared.Map;
 
 namespace Content.Server._Starlight.CloudEmotes;
 
@@ -69,10 +70,10 @@ public sealed class CloudEmoteSystem : SharedCloudEmoteSystem
     {
         var coords = _transformSystem
             .GetMapCoordinates(player)
-            .Offset(0, 0.7);
+            .Offset(0, 0.7f);
         comp.Emote = Spawn(phase_entity_to_spawn, coords);
         _entMan.GetComponent<CloudEmotePhaseComponent>(comp.Emote).Player = player;
-        //update_position(player, comp.Emote);
+        _transformSystem.SetCoordinates(comp.Emote, new EntityCoordinates(player, new System.Numerics.Vector2(0f, 0.7f)));
     }
 
     private void update_position(EntityUid player, EntityUid emote)
