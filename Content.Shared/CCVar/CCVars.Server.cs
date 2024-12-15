@@ -48,9 +48,9 @@ public sealed partial class CCVars
     public static readonly CVarDef<string> ServerLobbyName =
         CVarDef.Create("server.lobby_name", "", CVar.REPLICATED | CVar.SERVER);
 
-    // <summary>
-    //  The width of the right side (chat) panel in the lobby
-    // </summary>
+    /// <summary>
+    ///     The width of the right side (chat) panel in the lobby
+    /// </summary>
     public static readonly CVarDef<int> ServerLobbyRightPanelWidth =
         CVarDef.Create("server.lobby_right_panel_width", 650, CVar.REPLICATED | CVar.SERVER);
 }
