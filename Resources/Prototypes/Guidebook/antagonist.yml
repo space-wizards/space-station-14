@@ -1,7 +1,7 @@
 - type: guideEntry
   id: Antagonists
   name: guide-entry-antagonists
-  text: "/ServerInfo/Guidebook/Antagonist/Antagonists.xml"
+  text: "/ServerInfo/_Impstation/Guidebook/Antagonist/Antagonists.xml"
   children:
   - Traitors
   - Changelings # goobstation - changelings
