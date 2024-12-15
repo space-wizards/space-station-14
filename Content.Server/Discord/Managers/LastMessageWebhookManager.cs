@@ -10,11 +10,6 @@ namespace Content.Server.Discord.Managers
     {
         [Dependency] private readonly DiscordWebhook _discordWebhook = default!;
 
-        public const int MaxMessageSize = 2000; // CAN'T BE MORE THAN 2000! DISCORD LIMIT.
-        private const int MaxMessagesPerBatch = 15;
-        private const int MessageDelayMs = 2000;
-        private const int RateLimitDelayMs = 60000;
-
         public void Initialize()
         {
             IoCManager.InjectDependencies(this);
@@ -25,11 +20,20 @@ namespace Content.Server.Discord.Managers
         /// </summary>
         /// <param name="webhookId">The identifier of the webhook to send messages to.</param>
         /// <param name="messages">The list of messages to be sent.</param>
+        /// <param name="MaxMessageSize">The maximum message size in characters.</param>
+        /// <param name="MaxMessagesPerBatch">The maximum amount of messages the webhook can send before the RateLimitDelayMs is used.</param>
+        /// <param name="MessageDelayMs">Delay between each message in ms.</param>
+        /// <param name="RateLimitDelayMs">Delay (in ms) after MaxMessagesPerBatch is exceeded.</param>
         /// <returns>A task representing the asynchronous operation.  :nerd:</returns>
-        public async Task SendMessagesAsync(WebhookIdentifier? webhookId, List<string> messages)
+        public async Task SendMessagesAsync(WebhookIdentifier? webhookId, List<string> messages, int MaxMessageSize, int MaxMessagesPerBatch, int MessageDelayMs, int RateLimitDelayMs)
         {
             if (_discordWebhook == null)
                 return;
+
+            if (MaxMessageSize > 2000)
+            {
+                throw new ArgumentOutOfRangeException("A discord webhook message can't contain more than 2000 characters.");
+            }
 
             if (webhookId == null || !webhookId.HasValue)
                 return;

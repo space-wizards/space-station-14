@@ -68,7 +68,6 @@ public sealed partial class ChatSystem : SharedChatSystem
     public const string DefaultAnnouncementSound = "/Audio/Announcements/announce.ogg";
 
     private bool _loocEnabled = true;
-    private bool _lastMessageWebhookEnabled = false;
     private bool _deadLoocEnabled;
     private bool _critLoocEnabled;
 
@@ -81,10 +80,6 @@ public sealed partial class ChatSystem : SharedChatSystem
         Subs.CVar(_configurationManager, CCVars.LoocEnabled, OnLoocEnabledChanged, true);
         Subs.CVar(_configurationManager, CCVars.DeadLoocEnabled, OnDeadLoocEnabledChanged, true);
         Subs.CVar(_configurationManager, CCVars.CritLoocEnabled, OnCritLoocEnabledChanged, true);
-        Subs.CVar(_configurationManager, CCVars.DiscordLastMessageBeforeDeathWebhook, value =>
-        {
-            if (!string.IsNullOrWhiteSpace(value)) _lastMessageWebhookEnabled = true;
-        }, true);
 
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameChange);
     }
@@ -240,10 +235,11 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (string.IsNullOrEmpty(message))
             return;
 
-        if (player != null && _lastMessageWebhookEnabled) // Do not add the message if not from a player or if webhook url not specified.
+        if (player != null) // Last Message Before Death System
         {
             HandleLastMessageBeforeDeath(source, player, message);
         }
+
         // This message may have a radio prefix, and should then be whispered to the resolved radio channel
         if (checkRadioPrefix)
         {
@@ -759,7 +755,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         if (player != null && source != null)
         {
-            _lastMessageBeforeDeathSystem.AddMessage(source, player, message, Identity.Name(source, EntityManager));
+            _lastMessageBeforeDeathSystem.AddMessage(source, player, message);
         }
     }
 
