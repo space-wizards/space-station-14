@@ -25,6 +25,9 @@
         sprite: Effects/cloud_emotes.rsi
         state: emote_start
   - type: EffectVisuals
+  - type: EmitSoundOnSpawn
+    sound: 
+      path: /Audio/_Starlight/Effects/CloudEmotes/pop.ogg
   - type: Tag
     tags:
       - HideContextMenu
