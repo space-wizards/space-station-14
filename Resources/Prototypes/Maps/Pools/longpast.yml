@@ -1,0 +1,4 @@
+- type: gameMapPool
+  id: LongPastPool
+  maps:
+  - MeteorArena

@@ -1,5 +1,5 @@
 job-name-warden = Warden
-job-name-security = Security Officer
+job-name-security = Security
 job-name-cadet = Security Cadet
 job-name-hos = Marshal
 job-name-detective = Detective
@@ -32,6 +32,7 @@ job-name-chaplain = Chaplain
 job-name-botanist = Botanist
 job-name-bartender = Bartender
 job-name-passenger = Citizen
+job-name-frontiersman = Frontiersman
 job-name-salvagespec = Expeditioneer
 job-name-basintech = Basin Technician
 job-name-pilot = Pilot
