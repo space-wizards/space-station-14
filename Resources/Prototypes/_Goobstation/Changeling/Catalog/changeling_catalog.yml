@@ -286,6 +286,20 @@
     stock: 1
 
 - type: listing
+  id: EvolutionMenuUtilityHivemindAccess
+  name: evolutionmenu-utility-hivemindaccess-name
+  description: evolutionmenu-utility-hivemindaccess-desc
+  icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: hivemind_access }
+  productAction: ActionHivemindAccess
+  cost:
+    EvolutionPoint: 1
+  categories:
+  - ChangelingAbilityUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
   id: EvolutionMenuUtilityLastResort
   name: evolutionmenu-utility-lastresort-name
   description: evolutionmenu-utility-lastresort-desc
@@ -314,13 +328,13 @@
     stock: 1
 
 - type: listing
-  id: EvolutionMenuUtilitySpacesuit
-  name: evolutionmenu-utility-spacesuit-name
-  description: evolutionmenu-utility-spacesuit-desc
-  icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: space_adaptation }
-  productAction: ActionToggleSpacesuit
+  id: EvolutionMenuUtilityMindshield
+  name: evolutionmenu-utility-mindshield-name
+  description: evolutionmenu-utility-mindshield-desc
+  icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: mindshield }
+  productAction: ActionToggleMindshieldFake
   cost:
-    EvolutionPoint: 2
+    EvolutionPoint: 1
   categories:
   - ChangelingAbilityUtility
   conditions:
@@ -328,13 +342,13 @@
     stock: 1
 
 - type: listing
-  id: EvolutionMenuUtilityHivemindAccess
-  name: evolutionmenu-utility-hivemindaccess-name
-  description: evolutionmenu-utility-hivemindaccess-desc
-  icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: hivemind_access }
-  productAction: ActionHivemindAccess
+  id: EvolutionMenuUtilitySpacesuit
+  name: evolutionmenu-utility-spacesuit-name
+  description: evolutionmenu-utility-spacesuit-desc
+  icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: space_adaptation }
+  productAction: ActionToggleSpacesuit
   cost:
-    EvolutionPoint: 1
+    EvolutionPoint: 2
   categories:
   - ChangelingAbilityUtility
   conditions:
