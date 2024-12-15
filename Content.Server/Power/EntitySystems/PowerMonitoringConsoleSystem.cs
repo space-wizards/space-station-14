@@ -1006,7 +1006,7 @@ internal sealed partial class PowerMonitoringConsoleSystem : SharedPowerMonitori
         Dirty(uid, component);
     }
 
-    private sealed class PowerStats
+    private struct PowerStats
     {
         public double PowerValue { get; set; }
         public double PowerSupplied { get; set; }
