@@ -19,7 +19,7 @@
 - type: loadout
   id: CMOGreatCloak
   equipment:
-    neck: ClothingNeckCloakCmosgreatcloak
+    neck: ClothingNeckCloakCmosGreatcloak
   effects:
   - !type:GroupLoadoutEffect
     proto: VeteranCMO
