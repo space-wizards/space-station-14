@@ -33,6 +33,15 @@ entities:
     - type: Broadphase
     - type: OccluderTree
     - type: LoadedMap
+    - type: Weather
+      weather:
+        Rain:
+          startTime: 0
+    - type: Gravity
+      gravityShakeSound: !type:SoundPathSpecifier
+        path: /Audio/Effects/alert.ogg
+      inherent: True
+      enabled: True
   - uid: 2
     components:
     - type: MetaData

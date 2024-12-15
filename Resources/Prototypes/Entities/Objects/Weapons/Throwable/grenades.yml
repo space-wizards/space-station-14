@@ -477,25 +477,33 @@
         volume: 12
 
 - type: entity
-  name: incendiary grenade
-  description: Grenade that releases super-heated plasma microparticles. Ignites nearby victims.
   parent: GrenadeBase
   id: IncendiaryGrenade
+  name: incendiary grenade
+  description: Releases superheated plasma microparticles upon detonation.
   components:
-  - type: ExplodeOnTrigger
-  - type: Explosive
-    explosionType: FireBomb
-    maxIntensity: 0.1
-    intensitySlope: 1
-    totalIntensity: 50 # about a ~4 tile radius
-    canCreateVacuum: false
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/pyrogrenade.rsi
+    layers:
+    - state: icon
+      map: ["enum.TriggerVisualLayers.Base"]
+  - type: ClusterGrenade
+    fillPrototype: PelletClusterIncendiaryNT
+    maxGrenadesCount: 15
+    grenadeType: enum.GrenadeType.Shoot
   - type: OnUseTimerTrigger
     beepSound:
       path: "/Audio/Effects/beep1.ogg"
       params:
         volume: 5
     initialBeepDelay: 0
-    beepInterval: 2 # 2 beeps total (at 0 and 2)
+    beepInterval: 2
+  - type: EmitSoundOnTrigger
+    sound:
+      path: "/Audio/Weapons/Guns/Gunshots/batrifle.ogg"
+  - type: ContainerContainer
+    containers:
+      cluster-payload: !type:Container
 
 - type: entity
   name: beachball

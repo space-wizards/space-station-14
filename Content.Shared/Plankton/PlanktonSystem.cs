@@ -1,179 +1,186 @@
-using Content.Server.Planktonics;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Components;
 using Robust.Shared.Random;
 using System;
 using System.Collections.Generic;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 
-namespace Content.Shared.Planktonics
+namespace Content.Shared.Plankton
 {
-  private void OnPlanktonCompInit(EntityUid uid, PlanktonComponent component, ComponentInit args)
-{
-    var random = new Random();
-
-    // Ensure we don't mess with existing logic for getting the reagent
-    var reagentId = solution.GetPrimaryReagentId(); // Keep this intact, as it's essential.
-    component.ReagentId = reagentId;
-
-    // If not in "SeaWater", mark as dead and exit
-    if (reagentId != "SeaWater")
+    public sealed class PlanktonSystem : EntitySystem
     {
-        component.IsAlive = false;
-        Log.Error("The plankton component died due to an invalid environment.");
-        return; // Exit early if the plankton isn't in the right environment
-    }
+        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+    //    [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default;
 
-    // Generate 3 plankton species with random characteristics and names
-    for (int i = 0; i < 3; i++)
-    {
-        // Randomly generate plankton name from static name lists
-        var firstName = PlanktonComponent.PlanktonFirstNames[random.Next(PlanktonComponent.PlanktonFirstNames.Length)];
-        var secondName = PlanktonComponent.PlanktonSecondNames[random.Next(PlanktonComponent.PlanktonSecondNames.Length)];
-        var planktonName = new PlanktonComponent.PlanktonName(firstName, secondName);
+        
+        
 
-        // Randomly generate 2-3 characteristics per plankton
-        int numCharacteristics = random.Next(2, 4);  // Randomly pick 2-3 characteristics
-        var possibleCharacteristics = Enum.GetValues(typeof(PlanktonComponent.PlanktonCharacteristics));
-        var selectedCharacteristics = new HashSet<PlanktonComponent.PlanktonCharacteristics>();
-
-        while (selectedCharacteristics.Count < numCharacteristics)
+        public override void Initialize()
         {
-            var randomCharacteristic = (PlanktonComponent.PlanktonCharacteristics)possibleCharacteristics.GetValue(random.Next(possibleCharacteristics.Length));
-             if ((selectedCharacteristics.Contains(PlanktonComponent.PlanktonCharacteristics.Cryophilic) &&
-                  selectedCharacteristics.Contains(PlanktonComponent.PlanktonCharacteristics.Pyrophilic)) ||
-                (randomCharacteristic == PlanktonComponent.PlanktonCharacteristics.Cryophilic &&
-                 selectedCharacteristics.Contains(PlanktonComponent.PlanktonCharacteristics.Pyrophilic)) ||
-                (randomCharacteristic == PlanktonComponent.PlanktonCharacteristics.Pyrophilic &&
-                 selectedCharacteristics.Contains(PlanktonComponent.PlanktonCharacteristics.Cryophilic)))
+            base.Initialize();
+            SubscribeLocalEvent<PlanktonComponent, ComponentInit>(OnPlanktonCompInit);
+        }
+
+        private void OnPlanktonCompInit(EntityUid uid, PlanktonComponent component, ComponentInit args)
+        {
+            var random = new System.Random();
+          //  var reagentId = reagentId.Prototype;
+
+           // component.ReagentId = reagentId;
+
+            //if (reagentId != SeaWater)
+           // {
+            //    component.IsAlive = false;
+            //    Log.Error("The plankton component died due to an invalid environment.");
+           //     return;
+          //  }
+
+            for (int i = 0; i < 3; i++)
             {
-                Log.Error("Dissallowed characteristic mix: Cryophilic and Pyrophilic cannot coexist.");
-                continue; // Exit early if there is a conflict
-            }
-            selectedCharacteristics.Add(randomCharacteristic);
-        }
+                var firstName = PlanktonComponent.PlanktonFirstNames[random.Next(PlanktonComponent.PlanktonFirstNames.Length)];
+                var secondName = PlanktonComponent.PlanktonSecondNames[random.Next(PlanktonComponent.PlanktonSecondNames.Length)];
+                var planktonName = new PlanktonComponent.PlanktonName(firstName, secondName);
 
-        // Combine characteristics using bitwise OR
-        PlanktonComponent.PlanktonCharacteristics combinedCharacteristics = 0;
-        foreach (var characteristic in selectedCharacteristics)
-        {
-            combinedCharacteristics |= characteristic;
-        }
+                // Randomly generate 2-3 characteristics per plankton
+                int numCharacteristics = random.Next(2, 4);  // Randomly pick 2-3 characteristics
+                var possibleCharacteristics = Enum.GetValues(typeof(PlanktonComponent.PlanktonCharacteristics));
+                var selectedCharacteristics = new HashSet<PlanktonComponent.PlanktonCharacteristics>();
 
-        // Create a new plankton species instance
-        var planktonInstance = new PlanktonComponent.PlanktonSpeciesInstance(
-            planktonName,
-            (PlanktonComponent.PlanktonDiet)random.Next(Enum.GetValues<PlanktonComponent.PlanktonDiet>().Length),
-            combinedCharacteristics,
-            1.0f // For now, just assign a default size
-        );
-
-        // Add the plankton species instance to the SpeciesInstances list
-        component.SpeciesInstances.Add(planktonInstance);
-
-        // Log the generated plankton species details
-        Log.Info($"Generated plankton species {planktonInstance.SpeciesName} with characteristics {combinedCharacteristics}");
-    }
-
-    // Log the total number of plankton species initialized
-    Log.Info($"Plankton component initialized with {component.SpeciesInstances.Count} species.");
-
-    // Check plankton interactions
-    PlanktonInteraction(uid);
+               while (selectedCharacteristics.Count < numCharacteristics)
+                {
+                    var characteristicValue = possibleCharacteristics.GetValue(random.Next(possibleCharacteristics.Length));
+                 if (characteristicValue != null)
+                 {
+                        var randomCharacteristic = (PlanktonComponent.PlanktonCharacteristics)characteristicValue;
+                        if ((selectedCharacteristics.Contains(PlanktonComponent.PlanktonCharacteristics.Cryophilic) &&
+                            selectedCharacteristics.Contains(PlanktonComponent.PlanktonCharacteristics.Pyrophilic)) ||
+                           (randomCharacteristic == PlanktonComponent.PlanktonCharacteristics.Cryophilic &&
+                          selectedCharacteristics.Contains(PlanktonComponent.PlanktonCharacteristics.Pyrophilic)) ||
+                         (randomCharacteristic == PlanktonComponent.PlanktonCharacteristics.Pyrophilic &&
+                          selectedCharacteristics.Contains(PlanktonComponent.PlanktonCharacteristics.Cryophilic)))
+                       {
+                         Log.Error("Disallowed characteristic mix: Cryophilic and Pyrophilic cannot coexist.");
+                            continue;
+                       }
+                       selectedCharacteristics.Add(randomCharacteristic);
+                 }
 }
 
 
+                PlanktonComponent.PlanktonCharacteristics combinedCharacteristics = 0;
+                foreach (var characteristic in selectedCharacteristics)
+                {
+                    combinedCharacteristics |= characteristic;
+                }
+
+                // Create a new plankton species instance
+                var planktonInstance = new PlanktonComponent.PlanktonSpeciesInstance(
+                    planktonName,
+                    (PlanktonComponent.PlanktonDiet)random.Next(Enum.GetValues<PlanktonComponent.PlanktonDiet>().Length),
+                    combinedCharacteristics,
+                    1.0f
+                );
+
+                // Add the plankton species instance to the SpeciesInstances list
+                component.SpeciesInstances.Add(planktonInstance);
+
+                Log.Info($"Generated plankton species {planktonInstance.SpeciesName} with characteristics {combinedCharacteristics}");
+            }
+
+            // Log the total number of plankton species initialized
+            Log.Info($"Plankton component initialized with {component.SpeciesInstances.Count} species.");
+
+            PlanktonInteraction(uid);
+        }
 
         private void PlanktonInteraction(EntityUid uid)
         {
-            if (!_entityManager.TryGetComponent(uid, out PlanktonComponent component))
+            if (!HasComp<PlanktonComponent>(uid))
             {
                 Log.Error($"No PlanktonComponent found for entity {uid}");
                 return;
             }
 
-            // Check for specific characteristics
+            var component = _entityManager.GetComponent<PlanktonComponent>(uid);
             CheckPlanktonCharacteristics(component);
         }
 
-        private void CheckPlanktonCharacteristics(PlanktonComponent component)
+       private void CheckPlanktonCharacteristics(PlanktonComponent component)
         {
-            if ((component.Characteristics & PlanktonComponent.PlanktonCharacteristics.Aggressive) != 0)
-            {
-                Log.Error("{planktonInstance.SpeciesName} is aggressive");
-                // Handle aggressive plankton interactions, e.g., attack nearby entities
-            }
+    foreach (var planktonInstance in component.SpeciesInstances)
+    {
+        if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.Aggressive) != 0)
+        {
+            Log.Error($"{planktonInstance.SpeciesName} is aggressive");
 
-            if ((component.Characteristics & PlanktonComponent.PlanktonCharacteristics.Bioluminescent) != 0)
-            {
-                Log.Info("{planktonInstance.SpeciesName} is bioluminescent");
-                // Handle bioluminescent plankton behavior, e.g., light up certain areas
-            }
-
-            if ((component.Characteristics & PlanktonComponent.PlanktonCharacteristics.Mimicry) != 0)
-            {
-                Log.Info("{planktonInstance.SpeciesName} is a mimic");
-                // Handle mimicry, plankton might disguise itself as something else
-            }
-
-            if ((component.Characteristics & PlanktonComponent.PlanktonCharacteristics.ChemicalProduction) != 0)
-            {
-                Log.Info("{planktonInstance.SpeciesName} produces chemicals");
-                // Handle chemical production, plankton might affect nearby entities with toxins or nutrients
-            }
-
-            if ((component.Characteristics & PlanktonComponent.PlanktonCharacteristics.MagneticField) != 0)
-            {
-                Log.Info("{planktonInstance.SpeciesName} produces a magnetic field");
-                // Handle magnetic field generation, affecting nearby electronic devices or entities
-            }
-
-            if ((component.Characteristics & PlanktonComponent.PlanktonCharacteristics.Hallucinogenic) != 0)
-            {
-                Log.Info("{planktonInstance.SpeciesName} makes you high");
-                // Handle hallucinogenic effects, plankton could cause status effects like confusion or hallucinations
-            }
-
-            if ((component.Characteristics & PlanktonComponent.PlanktonCharacteristics.PheromoneGlands) != 0)
-            {
-                Log.Info("{planktonInstance.SpeciesName} produces pheromones");
-                // Handle pheromone production, plankton might attract or repel other organisms
-            }
-
-            if ((component.Characteristics & PlanktonComponent.PlanktonCharacteristics.PolypColony) != 0)
-            {
-                Log.Info("{planktonInstance.SpeciesName} forms a polyp colony");
-                // Handle colony formation, plankton could form a larger entity or structure over time
-            }
-
-            if ((component.Characteristics & PlanktonComponent.PlanktonCharacteristics.AerosolSpores) != 0)
-            {
-                Log.Info("{planktonInstance.SpeciesName} produces spores");
-                // Handle aerosol spores, plankton might spread its spores over a wide area
-            }
-
-            if ((component.Characteristics & PlanktonComponent.PlanktonCharacteristics.HyperExoticSpecies) != 0)
-            {
-                Log.Info("{planktonInstance.SpeciesName} is hyper-exotic");
-                // Handle hyper-exotic species behavior, plankton could be highly specialized or rare
-            }
-
-            if ((component.Characteristics & PlanktonComponent.PlanktonCharacteristics.Sentience) != 0)
-            {
-                Log.Info("{planktonInstance.SpeciesName} is sentient");
-                // Handle sentience, plankton might have the ability to think or communicate
-            }
-
-            if ((component.Characteristics & PlanktonComponent.PlanktonCharacteristics.Pyrophilic) != 0)
-            {
-                Log.Info("{planktonInstance.SpeciesName} is happiest in heat");
-                // Handle pyrophilic behavior, plankton might thrive in hot environments
-            }
-
-            if ((component.Characteristics & PlanktonComponent.PlanktonCharacteristics.Cryophilic) != 0)
-            {
-                Log.Info("{planktonInstance.SpeciesName} is happiest in cold");
-                // Handle cryophilic behavior, plankton might thrive in cold environments
-            }
         }
+
+        if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.Bioluminescent) != 0)
+        {
+            Log.Info($"{planktonInstance.SpeciesName} is bioluminescent");
+      
+        }
+
+        if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.Mimicry) != 0)
+        {
+            Log.Info($"{planktonInstance.SpeciesName} is a mimic");
+  
+        }
+
+        if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.ChemicalProduction) != 0)
+        {
+            Log.Info($"{planktonInstance.SpeciesName} produces chemicals");
+  
+        }
+
+        if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.MagneticField) != 0)
+        {
+            Log.Info($"{planktonInstance.SpeciesName} produces a magnetic field");
+        }
+
+        if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.Hallucinogenic) != 0)
+        {
+            Log.Info($"{planktonInstance.SpeciesName} makes you high");
+        }
+
+        if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.PheromoneGlands) != 0)
+        {
+            Log.Info($"{planktonInstance.SpeciesName} produces pheromones");
+        }
+
+        if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.PolypColony) != 0)
+        {
+            Log.Info($"{planktonInstance.SpeciesName} forms a polyp colony");
+        }
+
+        if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.AerosolSpores) != 0)
+        {
+            Log.Info($"{planktonInstance.SpeciesName} produces spores");
+        }
+
+        if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.HyperExoticSpecies) != 0)
+        {
+            Log.Info($"{planktonInstance.SpeciesName} is hyper-exotic");
+        }
+
+        if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.Sentience) != 0)
+        {
+            Log.Info($"{planktonInstance.SpeciesName} is sentient");
+        }
+
+        if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.Pyrophilic) != 0)
+        {
+            Log.Info($"{planktonInstance.SpeciesName} is happiest in heat");
+        }
+
+        if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.Cryophilic) != 0)
+        {
+            Log.Info($"{planktonInstance.SpeciesName} is happiest in cold");
+        }
+    }
+}
+
     }
 }
