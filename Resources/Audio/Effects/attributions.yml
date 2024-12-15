@@ -236,3 +236,8 @@
   copyright: 'created by waveplaySFX on Freesound'
   license: "CC0-1.0"
   source: https://freesound.org/people/waveplaySFX/sounds/553744/
+  
+- files: ["door_chainlink_open.ogg", "door_chainlink_close.ogg"]
+  copyright: 'Created by Crowbar Collective for the game Black Mesa'
+  license: "Custom"
+  source: https://store.steampowered.com/app/362890/Black_Mesa/
