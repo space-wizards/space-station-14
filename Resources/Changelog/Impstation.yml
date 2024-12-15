@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Heretic equipment is now marked with a contraband tag.
-    type: Add
-  id: 244
-  time: '2024-09-21T22:38:24.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/318
 - author: TGRCDev
   changes:
   - message: Thief toolboxes now spawn a duffel bag to place your items in.
@@ -4530,3 +4523,10 @@
   id: 743
   time: '2024-12-15T12:53:53.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1031
+- author: DinnerCalzone
+  changes:
+  - message: Techfabs now play an animation when producing things.
+    type: Add
+  id: 744
+  time: '2024-12-15T12:55:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1032
