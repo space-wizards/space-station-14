@@ -163,13 +163,13 @@ namespace Content.Server.Entry
                 {
                     _euiManager.SendUpdates();
                     _voteManager.Update();
-                    _watchlistWebhookManager.Update();
                     break;
                 }
 
                 case ModUpdateLevel.FramePostEngine:
                     _updateManager.Update();
                     _playTimeTracking?.Update();
+                    _watchlistWebhookManager.Update();
                     break;
             }
         }
