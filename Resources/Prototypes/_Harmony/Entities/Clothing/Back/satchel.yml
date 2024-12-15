@@ -1,7 +1,7 @@
 ﻿- type: entity
   parent: [ClothingBackpackSatchel, BaseSyndicateContraband]
   id: ClothingSatchelSmugglers
-  name: smugglers satchel
+  name: smuggler's satchel
   description: A backpack so slim it can fit under the tiles of the station
   components:
   - type: Storage
