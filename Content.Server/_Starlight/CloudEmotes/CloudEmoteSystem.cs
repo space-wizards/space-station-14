@@ -32,7 +32,7 @@ public sealed class CloudEmoteSystem : SharedCloudEmoteSystem
                 display("CloudEmoteStart", uid, comp);
             }
 
-           // update_position(uid, comp.Emote); // Not the best solution, better use parenting like transformSystem.SetCoordinates        
+           // update_position(uid, comp.Emote); // Not the best solution, better use parenting like transformSystem.SetCoordinates        (move drawing to DoAfter)
         }
 
     }
