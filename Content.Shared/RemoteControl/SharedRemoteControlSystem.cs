@@ -28,7 +28,7 @@ public abstract class SharedRemoteControlSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<RemotelyControllableComponent, ComponentInit>(OnControllableInit);
+        SubscribeLocalEvent<RemotelyControllableComponent, MapInitEvent>(OnControllableInit);
         SubscribeLocalEvent<RemotelyControllableComponent, ComponentShutdown>(OnControllableShutdown);
         SubscribeLocalEvent<RemotelyControllableComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<RemotelyControllableComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
@@ -53,17 +53,14 @@ public abstract class SharedRemoteControlSystem : EntitySystem
         args.PushText(Loc.GetString(ent.Comp.ExamineMessage, ("user", ent.Owner)));
     }
 
-    private void OnControllableInit(Entity<RemotelyControllableComponent> ent, ref ComponentInit args)
+    private void OnControllableInit(Entity<RemotelyControllableComponent> ent, ref MapInitEvent args)
     {
-        EntityUid? actionEnt = null;
-        _actions.AddAction(ent.Owner, ref actionEnt, ent.Comp.ReturnActionPrototype);
-        if (actionEnt != null)
-            ent.Comp.ReturnAction = actionEnt.Value;
+        _actions.AddAction(ent.Owner, ref ent.Comp.ReturnActionEntity, ent.Comp.ReturnActionPrototype);
     }
 
     private void OnControllableShutdown(Entity<RemotelyControllableComponent> ent, ref ComponentShutdown args)
     {
-        _actions.RemoveAction(ent, ent.Comp.ReturnAction);
+        _actions.RemoveAction(ent, ent.Comp.ReturnActionEntity);
     }
 
     private void OnMobStateChanged(Entity<RemotelyControllableComponent> ent, ref MobStateChangedEvent args)
