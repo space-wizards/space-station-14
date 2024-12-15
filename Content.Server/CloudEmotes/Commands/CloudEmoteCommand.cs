@@ -49,18 +49,15 @@ namespace Content.Server.CloudEmotes.Commands
                 shell.WriteLine(LocalizationManager.GetString("cmd-emote-invalid-emote"));
                 return;
             }
-            // TODO CALL EVENT ON EFFECT ENDING AS DOES EMP
-            // TODO THIS SHOULD ADD COMPONENT, AND THEN CLIENT SYSTEM WILL DRAW IT BASED ON COMPONENTS (AND WILL KEEP IT UPDATED ON NEW LOCATION DUE TO IT BEING IN COMP SAVED LIKE TETHER MOVING)
+
+            if (_entityManager.HasComponent<CloudEmoteActiveComponent>(player.AttachedEntity.Value))
+            {
+                shell.WriteLine(LocalizationManager.GetString("cmd-emote-timeout"));
+                return;
+            }
             var emote_name = args[0] = "CloudEmote" + char.ToUpper(args[0][0]) + args[0].Substring(1);
-            //var pos = transformSystem.GetMapCoordinates(player.AttachedEntity.Value); // Sets position here
             var comp = _entityManager.AddComponent<CloudEmoteActiveComponent>(player.AttachedEntity.Value);
             comp.EmoteName = emote_name;
-            //pos = pos.Offset(0,0.7f);
-            
-            //var emote_entity = _entityManager.Spawn(emote_name, pos);
-            //var blank_emote = _entityManager.Spawn("CloudEmoteBlank", pos);
-            //transformSystem.SetCoordinates(blank_emote, new EntityCoordinates(player.AttachedEntity.Value, new System.Numerics.Vector2(0f, 0f))); // Pins blank to player here
-            //transformSystem.SetCoordinates(emote_entity, new EntityCoordinates(blank_emote, new System.Numerics.Vector2(0f, 0.7f))); // Pins effect to blank
         }
     }
 }

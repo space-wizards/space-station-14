@@ -30,8 +30,9 @@ public sealed class CloudEmoteSystem : SharedCloudEmoteSystem
                 comp.Phase += 1;
                 display("CloudEmoteStart", uid, comp);
             }
-            // modify constantly
+            update_position(uid, comp.Emote); // Not the best solution, better use parenting like transformSystem.SetCoordinates        
         }
+
     }
 
     private void OnChangePhase(EntityUid uid, CloudEmotePhaseComponent phase_comp, ref TimedDespawnEvent args)
@@ -70,5 +71,13 @@ public sealed class CloudEmoteSystem : SharedCloudEmoteSystem
             .Offset(0, 0);
         comp.Emote = Spawn(phase_entity_to_spawn, coords);
         _entMan.GetComponent<CloudEmotePhaseComponent>(comp.Emote).Player = player;
+        update_position(player, comp.Emote);
+    }
+
+    private void update_position(EntityUid player, EntityUid emote)
+    {
+        var position = _transformSystem.GetWorldPosition(player);
+        position.Y += offset;
+        _transformSystem.SetWorldPosition(emote, position);
     }
 }
