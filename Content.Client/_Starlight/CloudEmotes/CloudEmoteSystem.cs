@@ -12,11 +12,12 @@ using Content.Shared._Starlight.CloudEmote;
 using Robust.Client.GameObjects;
 using Robust.Shared.Map;
 
-public sealed class CloudEmoteSystem : SharedCloudEmoteSystem
+public sealed class CloudEmoteSystem : SharedCloudEmoteSystem // Ideally better to be replaced to Control, like SpeechBubble.cs
 {
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private readonly IEyeManager _eyeManager = default!;
     private ISawmill _sawmill = default!;
 
     public CloudEmoteSystem()
@@ -36,11 +37,15 @@ public sealed class CloudEmoteSystem : SharedCloudEmoteSystem
     private void update_position(EntityUid player, EntityUid emote)
     {
         var position = _transformSystem.GetWorldPosition(player);
-        var transcomp = _entityManager.GetComponent<TransformComponent>(player);
-
+        
         _sawmill.Info("player.position" + position.ToString());
-        var offset = _entityManager.GetComponent<SpriteComponent>(player).Bounds.Height;
-      //  _transformSystem.SetCoordinates(emote, new EntityCoordinates(player, 0, offset));
+        var playerHeight = _entityManager.GetComponent<SpriteComponent>(player).Bounds.Height;
+        
+        /* Adds camera rotation vector so no matter how you rotate camera it always stays. */
+        position += _eyeManager.CurrentEye.Rotation.ToWorldVec();
+        /* Multiplies by player height so it would appear on top */
+        position *= -playerHeight;
+
         var rotation = _transformSystem.GetWorldRotation(player); // Prototype dictates that only SpriteComponent automatically rotates, but not TransformComponent
         _sawmill.Info("position set to"+ position.ToString());
         _transformSystem.SetWorldPositionRotation(emote, position, rotation);
