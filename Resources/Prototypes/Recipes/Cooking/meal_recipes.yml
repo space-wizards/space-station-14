@@ -1474,6 +1474,7 @@
     Cream: 5
   solids:
     FoodCakePlain: 1
+    CandleSmall: 3
 
 - type: microwaveMealRecipe
   id: RecipeChocolateCake
