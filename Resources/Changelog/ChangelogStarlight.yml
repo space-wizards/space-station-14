@@ -1031,11 +1031,45 @@ Entries:
   id: 146
   time: '2024-12-12T15:49:12.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/152
-- author: Rinary,  brainfood
+- author: Rinary, brainfood
   changes:
   - message: Added Cult of the honkmother antag.
     type: Add
   id: 147
   time: '2024-12-14T21:26:18.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/156
-
+- author: Rinary
+  changes:
+  - message: Fixed complex interaction on CluwneBeast.
+    type: Fix
+  id: 148
+  time: '2024-12-15T11:11:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/ad5a167bf82455712e46f3b4db25b048f6ab328e
+- author: Rinary
+  changes:
+  - message: Now cluwnebeast has his own pda and id card.
+    type: Tweak
+  id: 149
+  time: '2024-12-15T11:11:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/ad5a167bf82455712e46f3b4db25b048f6ab328e
+- author: Rinary
+  changes:
+  - message: Now cluwnefied players go back to normal after crit or dead.
+    type: Tweak
+  id: 150
+  time: '2024-12-15T11:11:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/ad5a167bf82455712e46f3b4db25b048f6ab328e
+- author: Rinary
+  changes:
+  - message: Fixed bug when cluwnebeast has "error" texture.
+    type: Fix
+  id: 151
+  time: '2024-12-15T11:11:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/ad5a167bf82455712e46f3b4db25b048f6ab328e
+- author: Rinary
+  changes:
+  - message: Fixed bug when cluwnefied players has name "cluwnefied {$baseName}".
+    type: Fix
+  id: 152
+  time: '2024-12-15T11:11:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/ad5a167bf82455712e46f3b4db25b048f6ab328e
