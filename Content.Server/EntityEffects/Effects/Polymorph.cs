@@ -1,5 +1,6 @@
 using Content.Server.Polymorph.Components;
 using Content.Server.Polymorph.Systems;
+using Content.Shared._Impstation.Ghost;
 using Content.Shared.EntityEffects;
 using Content.Shared.Polymorph;
 using Robust.Shared.Prototypes;
@@ -27,7 +28,9 @@ public sealed partial class Polymorph : EntityEffect
         var polySystem = entityManager.System<PolymorphSystem>();
 
         // Make it into a prototype
-        entityManager.EnsureComponent<PolymorphableComponent>(uid);
-        polySystem.PolymorphEntity(uid, PolymorphPrototype);
+        //entityManager.EnsureComponent<PolymorphableComponent>(uid);
+        //polySystem.PolymorphEntity(uid, PolymorphPrototype);
+
+        entityManager.EnsureComponent<MediumComponent>(uid);
     }
 }
