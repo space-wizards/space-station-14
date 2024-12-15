@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Pinkbat5
-  changes:
-  - message: Added bronzeheart medal to Head of Security locker.
-    type: Add
-  id: 241
-  time: '2024-09-21T18:06:46.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/313
 - author: aada
   changes:
   - message: NanoTrasen has signed new contracts with expert staff across many departments.
@@ -4533,3 +4526,10 @@
   id: 740
   time: '2024-12-15T01:06:03.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1028
+- author: AvianMaiden
+  changes:
+  - message: Unique sounds to chain link fence gates!
+    type: Add
+  id: 741
+  time: '2024-12-15T12:20:33.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1034
