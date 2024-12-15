@@ -99,21 +99,13 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         var issuer = _random.Pick(_prototypeManager.Index(component.ObjectiveIssuers).Values);
 
         Note[]? code = null;
-        if (giveUplink)
-        {
-            var startingBalance = component.StartingBalance;
-            if (_jobs.MindTryGetJob(mindId, out _, out var prototype))
-                startingBalance = Math.Max(startingBalance - prototype.AntagAdvantage, 0);
+       if (giveUplink)
+    {
+        var implantPrototypeId = "UplinkImplantFull";
+        var implantSystem = _entityManager.System<SharedSubdermalImplantSystem>();
+        implantSystem.AddImplants(traitor, new HashSet<string> { implantPrototypeId });
 
-            var pda = _uplink.FindUplinkTarget(traitor);
-            if (pda == null || !_uplink.AddUplink(traitor, startingBalance))
-                return false;
-
-            code = EnsureComp<RingerUplinkComponent>(pda.Value).Code;
-            briefing = string.Format("{0}\n{1}", briefing,
-                Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", code).Replace("sharp", "#"))));
-        }
-
+    }
         _antag.SendBriefing(traitor, GenerateBriefing(component.SyndicateCodewords, code, issuer), null, component.GreetSoundNotification);
         component.TraitorMinds.Add(mindId);
 
