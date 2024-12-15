@@ -79,11 +79,14 @@ public sealed class LatheTest
                         Assert.That(protoMan.TryIndex(recipeId, out var recipeProto));
 
                         // Check each material called for by the recipe
-                        foreach (var (materialId, _) in recipeProto.Materials)
+                        foreach (var (materialId, quantity) in recipeProto.Materials)
                         {
                             Assert.That(protoMan.TryIndex(materialId, out var materialProto));
                             // Make sure the material is accepted by the lathe
                             Assert.That(acceptedMaterials, Does.Contain(materialId), $"Lathe {latheProto.ID} has recipe {recipeId} but does not accept any materials containing {materialId}");
+                            // Make sure the recipe doesn't call for more material than the lathe can hold
+                            if (storageComp.StorageLimit != null)
+                                Assert.That(quantity, Is.LessThanOrEqualTo(storageComp.StorageLimit), $"Lathe {latheProto.ID} has recipe {recipeId} which calls for {quantity} units of {materialId} but can only hold {storageComp.StorageLimit}");
                         }
                     }
                 }
