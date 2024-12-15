@@ -6,7 +6,9 @@
   - type: TimedDespawn
     lifetime: 4
   - type: Transform
-    noRot: false # intended
+    noRot: True # intended
+  - type: Sprite
+    noRot: True
   - type: EffectVisuals
   - type: Tag
     tags:

@@ -9,7 +9,8 @@ using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared._Starlight.CloudEmote;
-
+using Robust.Client.GameObjects;
+using Robust.Shared.Map;
 
 public sealed class CloudEmoteSystem : SharedCloudEmoteSystem
 {
@@ -28,18 +29,18 @@ public sealed class CloudEmoteSystem : SharedCloudEmoteSystem
         var query = _entityManager.EntityQueryEnumerator<CloudEmoteActiveComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
-            _sawmill.Info(comp.Phase.ToString());
+            update_position(uid, comp.Emote);
         }
     }
 
     private void update_position(EntityUid player, EntityUid emote)
     {
-        if (!Exists(emote))
-        {
-            
-            return;
-        }
         var position = _transformSystem.GetWorldPosition(player);
-        _transformSystem.SetWorldPosition(emote, position);
-    }            
+        _sawmill.Info("player.position" + position.ToString());
+        var offset = _entityManager.GetComponent<SpriteComponent>(player).Bounds.Height;
+      //  _transformSystem.SetCoordinates(emote, new EntityCoordinates(player, 0, offset));
+        var rotation = _transformSystem.GetWorldRotation(player); // Prototype dictates that only SpriteComponent automatically rotates, but not TransformComponent
+        _sawmill.Info("position set to"+ position.ToString());
+        _transformSystem.SetWorldPositionRotation(emote, position, rotation);
+    }    
 }
