@@ -758,3 +758,10 @@ Entries:
     changes:
     - type: Add
       message: New clothes for the HoP
+  - id: 234
+    author: jack-thedragon95
+    time: '2024-12-15T17:48:17.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/234
+    changes:
+    - type: Add
+      message: Added more vox masks SKREEEEEEE!!!!!
