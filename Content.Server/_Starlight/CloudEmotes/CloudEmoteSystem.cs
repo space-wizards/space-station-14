@@ -12,12 +12,13 @@ public sealed class CloudEmoteSystem : SharedCloudEmoteSystem
     [Dependency] private readonly EntityManager _entMan = default!;
     private float offset = 0.7f;
 
-    public const string EmpPulseEffectPrototype = "EffectEmpPulse";
+    private ISawmill _sawmill = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<CloudEmotePhaseComponent, TimedDespawnEvent>(OnChangePhase); 
+        _sawmill = Logger.GetSawmill("cloud_emotes_server");
     }
 
     public override void Update(float frameTime)
@@ -27,12 +28,14 @@ public sealed class CloudEmoteSystem : SharedCloudEmoteSystem
         var query = EntityQueryEnumerator<CloudEmoteActiveComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
-            if (comp.Phase == -1) { // Called only one time. This segment better be moved to OnAddedComponentEvent<CloudEmoteActiveComponent> if this thing exists
+            _sawmill.Info(comp.Phase.ToString());
+            if (comp.Phase == -1) { 
                 comp.Phase += 1;
                 display("CloudEmoteStart", uid, comp);
             }
+            
 
-           // update_position(uid, comp.Emote); // Not the best solution, better use parenting like transformSystem.SetCoordinates        (move drawing to DoAfter)
+           // update_position(uid, comp.Emote);
         }
 
     }
@@ -45,6 +48,7 @@ public sealed class CloudEmoteSystem : SharedCloudEmoteSystem
         if (comp.Phase == 2)
         {
             _entMan.RemoveComponent<CloudEmoteActiveComponent>(player.Value);
+            Dirty(player.Value, comp);
             return;
         }
         
@@ -63,17 +67,22 @@ public sealed class CloudEmoteSystem : SharedCloudEmoteSystem
         }
 
         display(phase_entity_to_spawn, player.Value, comp);
-        
+        Dirty(player.Value, comp);
+        Dirty(uid, phase_comp);
     }
 
-    private void display(string phase_entity_to_spawn, EntityUid player, CloudEmoteActiveComponent comp)
+    private void display(string phase_entity_to_spawn, EntityUid player, CloudEmoteActiveComponent comp) // PUT IT ALL TO SHARED
     {
         var coords = _transformSystem
             .GetMapCoordinates(player)
             .Offset(0, 0.7f);
         comp.Emote = Spawn(phase_entity_to_spawn, coords);
-        _entMan.GetComponent<CloudEmotePhaseComponent>(comp.Emote).Player = player;
-        _transformSystem.SetCoordinates(comp.Emote, new EntityCoordinates(player, new System.Numerics.Vector2(0f, 0.7f)));
+        var phase_comp = _entMan.GetComponent<CloudEmotePhaseComponent>(comp.Emote);
+        phase_comp.Player = player;
+        update_position(player, comp.Emote);
+        //_transformSystem.SetCoordinates(comp.Emote, new EntityCoordinates(player, new System.Numerics.Vector2(0f, 0.7f)));
+        Dirty(comp.Emote, phase_comp);
+        Dirty(player, comp);
     }
 
     private void update_position(EntityUid player, EntityUid emote)
