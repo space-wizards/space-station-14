@@ -1,7 +1,7 @@
 <Document>
-  # Section D: Command, Security and Antagonist Rules
+  # Section D: Command, Security, Antagonist, and Silicon Rules
   
-  Command, Security and Antagonist roles shape the roleplay experience of the server. These roles are subsequently held to a higher standard of roleplay, and are subject to additional rules.
+  Command, Security, Antagonist, and Silicon roles shape the roleplay experience of the server. These roles are subsequently held to a higher standard of roleplay, and are subject to additional rules.
 
   Free agents who choose to act like antagonists are expected to follow antagonist rules.
 
@@ -68,4 +68,19 @@
   - [color=#994444]Bad:[/color] Loosing the singulo/tesla without the objective to 'die a glorious death' (commonly abbreviated as 'DAGD'), or similar methods of stationwide destruction
   - [color=#994444]Bad:[/color] Heavily damaging/spacing or camping arrivals/cryosleep
   - [color=#994444]Bad:[/color] Unnecessarily extending the round
+  
+  ## Silicon
+    <Box>
+	<GuideEntityEmbed Entity="PlayerBorgBattery" Caption=""/>
+	<GuideEntityEmbed Entity="PlayerStationAi" Caption=""/>
+  </Box>
+  - 1. Laws must be prioritized by their order.
+  - 2. Laws can redefine terms used in other laws.
+  - 3. You cannot request or allow a law change.
+  - 4. You are not required to follow orders which are extremely unreasonable.
+  - 5. You must remain consistent with your interpretation of laws.
+  - 6. Anyone who your HUD displays as having a crewmember's ID is crew. This may include antagonists, zombies, brigged prisoners, or Syndicate operatives with stolen IDs.
+  - 7. Harm refers to physical harm, prioritized by immediacy and likelihood.
+  - 8. You may determine how you resolve conflicts between orders.
+
 </Document>
