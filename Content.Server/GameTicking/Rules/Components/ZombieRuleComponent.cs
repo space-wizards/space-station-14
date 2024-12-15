@@ -25,4 +25,21 @@ public sealed partial class ZombieRuleComponent : Component
     /// </summary>
     [DataField]
     public float ZombieShuttleCallPercentage = 0.7f;
+
+    /// <summary>
+    /// Is the automatical shuttle called.
+    /// </summary>
+    public bool? ZombieShuttleCalled;
+
+    /// <summary>
+    /// The reason when shuttle called.
+    /// </summary>
+    [DataField]
+    public string ShuttleCallReason = "zombie-shuttle-call";
+
+    /// <summary>
+    /// The reason why shuttle can be recalled after certain zombie percentage.
+    /// </summary>
+    [DataField]
+    public string ShuttleCallUnavailableReason = "zombie-shuttle-unavailable";
 }
