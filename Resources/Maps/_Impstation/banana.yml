@@ -1724,6 +1724,13 @@ entities:
       - 1137
       - 1535
       - 1565
+- proto: AirlockBrigGlassLocked
+  entities:
+  - uid: 2594
+    components:
+    - type: Transform
+      pos: -17.5,-5.5
+      parent: 2
 - proto: AirlockCaptainLocked
   entities:
   - uid: 29
@@ -2690,6 +2697,11 @@ entities:
       rot: 3.141592653589793 rad
       pos: -18.5,-5.5
       parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        2594:
+        - Start: Close
+        - Timer: Open
 - proto: Bucket
   entities:
   - uid: 177
@@ -8595,7 +8607,7 @@ entities:
       pos: 6.5,-3.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -57820.453
+      secondsUntilStateChange: -58088.348
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -14924,6 +14936,16 @@ entities:
     - type: Transform
       pos: -33.5,-15.5
       parent: 2
+  - uid: 2768
+    components:
+    - type: Transform
+      pos: -11.5,3.5
+      parent: 2
+  - uid: 2769
+    components:
+    - type: Transform
+      pos: -23.5,-10.5
+      parent: 2
 - proto: SecurityTechFab
   entities:
   - uid: 1963
@@ -18941,13 +18963,6 @@ entities:
     components:
     - type: Transform
       pos: 3.5,3.5
-      parent: 2
-- proto: WindoorSecureBrigLocked
-  entities:
-  - uid: 2594
-    components:
-    - type: Transform
-      pos: -17.5,-5.5
       parent: 2
 - proto: WindoorSecureCargoLocked
   entities:
