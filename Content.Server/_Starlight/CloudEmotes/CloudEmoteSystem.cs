@@ -34,8 +34,6 @@ public sealed class CloudEmoteSystem : SharedCloudEmoteSystem
                 display("CloudEmoteStart", uid, comp);
             }
             _sawmill.Info(comp.Emote.ToString());
-
-           // update_position(uid, comp.Emote); // Not the best solution, better use parenting like transformSystem.SetCoordinates        (move drawing to DoAfter)
         }
 
     }
@@ -75,7 +73,6 @@ public sealed class CloudEmoteSystem : SharedCloudEmoteSystem
             .GetMapCoordinates(player)
             .Offset(0, 0.7f);
         comp.Emote = Spawn(phase_entity_to_spawn, coords);
-        //_transformSystem.SetCoordinates(comp.Emote, new EntityCoordinates(player, new System.Numerics.Vector2(0f, 0.7f)));
         var phase_comp = _entMan.GetComponent<CloudEmotePhaseComponent>(comp.Emote);
         phase_comp.Player = player;
         Dirty(comp.Emote, phase_comp);
