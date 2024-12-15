@@ -10,7 +10,6 @@
     - id: NinjaSpawn
     - id: RevenantSpawn
     - id: GoblinStowawaysEvent # imp
-    - id: GoblinCastawaysEvent # imp
 
 - type: entity
   id: ChangelingAwakening

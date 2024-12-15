@@ -31,3 +31,28 @@
     Telecrystal: 20
   categories:
     - UplinkWeaponry
+
+- type: listing
+  id: uplinkNemesisBR
+  name: uplink-nemesis-br-name
+  description: uplink-nemesis-br-desc
+  icon: { sprite: /Textures/_Impstation/Objects/Weapons/Guns/Rifles/nemesis.rsi, state: icon }
+  productEntity: ClothingBackpackDuffelSyndicateFilledBR
+  discountCategory: veryRareDiscounts
+  discountDownTo:
+    Telecrystal: 13
+  cost:
+    Telecrystal: 19
+  categories:
+    - UplinkWeaponry
+
+- type: listing
+  id: UplinkMagazineRifleNemesis
+  name: uplink-rifle-magazine-nemesis-name
+  description: uplink-rifle-magazine-nemesis-desc
+  icon: { sprite: /Textures/_Impstation/Objects/Weapons/Guns/Ammunition/Magazine/Rifle/nemesismag.rsi, state: icon }
+  productEntity: MagazineBR
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkAmmo
