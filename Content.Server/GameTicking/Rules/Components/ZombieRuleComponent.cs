@@ -27,7 +27,7 @@ public sealed partial class ZombieRuleComponent : Component
     public float ZombieShuttleCallPercentage = 0.7f;
 
     /// <summary>
-    /// Is the automatical shuttle called.
+    /// Is the automatic shuttle called.
     /// </summary>
     public bool? ZombieShuttleCalled;
 
