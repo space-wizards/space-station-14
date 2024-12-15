@@ -52,3 +52,14 @@
     sprite: _Harmony/Clothing/Uniforms/Jumpsuit/det_blue.rsi
   - type: Clothing
     sprite: _Harmony/Clothing/Uniforms/Jumpsuit/det_blue.rsi
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpsuitHeadofPersonnelMessKitHarmony
+  name: head of personnel's mess kit
+  description: Blue jeans and a gold trimmed white shirt.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/hopmesskit.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Uniforms/Jumpsuit/hopmesskit.rsi

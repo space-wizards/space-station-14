@@ -116,9 +116,9 @@
   description: Perfect for dealing with paperwork and matters with bureaucracy.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/hop.rsi
+    sprite: _Harmony/Clothing/Hands/Gloves/hop.rsi # Harmony change. Resprite
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/hop.rsi
+    sprite: _Harmony/Clothing/Hands/Gloves/hop.rsi # Harmony change. Resprite
   - type: Fiber
     fiberMaterial: fibers-durathread
     fiberColor: fibers-black
