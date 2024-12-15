@@ -1,46 +1,4 @@
 ﻿Entries:
-- author: DevilishMilk
-  changes:
-  - message: Moths and mothroaches are now able to eat bandanas.
-    type: Tweak
-  id: 7200
-  time: '2024-08-24T23:30:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31405
-- author: PJB3005
-  changes:
-  - message: Fix the ChemVend jug names again
-    type: Fix
-  id: 7201
-  time: '2024-08-25T02:02:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31398
-- author: metalgearsloth
-  changes:
-  - message: Fix grids sometimes overlapping on roundstart.
-    type: Fix
-  id: 7202
-  time: '2024-08-25T04:48:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31413
-- author: themias
-  changes:
-  - message: Thin firelocks now respect rotation when built
-    type: Fix
-  id: 7203
-  time: '2024-08-25T04:57:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31371
-- author: IProduceWidgets
-  changes:
-  - message: Oasis Voxbox is no longer a pressure bomb. (Thanks Delta)
-    type: Fix
-  id: 7204
-  time: '2024-08-25T05:42:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31415
-- author: PopGamer46
-  changes:
-  - message: Security cadets now spawn with jackboots instead of combat boots
-    type: Tweak
-  id: 7205
-  time: '2024-08-25T06:58:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31419
 - author: ArtisticRoomba
   changes:
   - message: Added the greytide stamp. This stamp can be rarely found in maints lockers.
@@ -3918,3 +3876,47 @@
   id: 7699
   time: '2024-12-11T16:21:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32104
+- author: Winkarst-cpu
+  changes:
+  - message: The A.P.E. guidebook entry now contains information about Sigma particles
+      and transformation effects.
+    type: Tweak
+  id: 7700
+  time: '2024-12-12T14:24:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33558
+- author: lzk228
+  changes:
+  - message: Disabled evac after declaring nuke war is increased from 15 to 25 minutes.
+    type: Tweak
+  id: 7701
+  time: '2024-12-13T03:10:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33628
+- author: LevitatingTree
+  changes:
+  - message: Lizards can now eat the Five Alarm Burger!
+    type: Fix
+  id: 7702
+  time: '2024-12-13T13:53:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33848
+- author: Southbridge
+  changes:
+  - message: Paper documents now support the [mono] tag.
+    type: Add
+  id: 7703
+  time: '2024-12-13T14:24:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33830
+- author: yuitop
+  changes:
+  - message: Anchoring now has higher priority over stashing.
+    type: Tweak
+  id: 7704
+  time: '2024-12-13T23:00:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31779
+- author: Nimfar11
+  changes:
+  - message: Changes the colour of the Borg binary channel to a different shade of
+      blue.
+    type: Tweak
+  id: 7705
+  time: '2024-12-14T16:03:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33841
