@@ -14,6 +14,7 @@
   equipment:
     neck: ClothingNeckCloakHonk
     pocket1: CluwneHorn
+    id: CluwneBeastPDA
 
 - type: startingGear
   id: HoloClownGear

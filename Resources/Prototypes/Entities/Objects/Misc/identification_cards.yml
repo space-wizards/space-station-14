@@ -733,6 +733,19 @@
   - type: IdCard
     jobTitle: job-title-cluwne
   - type: Unremoveable
+  
+- type: entity
+  parent: IDCardStandard
+  id: CluwneBeastIDCard
+  name: cluwne ID card
+  suffix: Unremoveable
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idcluwne
+  - type: IdCard
+    jobTitle: job-title-cluwne
 
 - type: entity
   parent: EngineeringIDCard

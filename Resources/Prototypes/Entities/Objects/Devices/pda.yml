@@ -1085,6 +1085,29 @@
         tags:
         - Write
   - type: Unremoveable
+  
+- type: entity
+  parent: ClownPDA
+  id: CluwneBeastPDA
+  name: cluwne PDA
+  suffix: Unremoveable
+  description: Cursed cluwne PDA.
+  components:
+  - type: Pda
+    id: CluwneBeastIDCard
+    state: pda-cluwne
+  - type: PdaBorderColor
+    borderColor: "#1c8f4d"
+  - type: Icon
+    state: pda-cluwne
+    penSlot:
+      startingItem: CrayonGreen
+      ejectSound: /Audio/Items/bikehorn.ogg
+      priority: -1
+      whitelist:
+        tags:
+        - Write
+  - type: Unremoveable
 
 - type: entity
   parent: BasePDA
