@@ -26,10 +26,11 @@ public sealed class CloudEmoteSystem : SharedCloudEmoteSystem
         var query = EntityQueryEnumerator<CloudEmoteActiveComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
-            if (comp.Phase == -1) { // This segment must be moved to OnComponentAddedEvent<CloudEmoteActiveComponent> if this thing exists
+            if (comp.Phase == -1) { // Called only one time. This segment better be moved to OnAddedComponentEvent<CloudEmoteActiveComponent> if this thing exists
                 comp.Phase += 1;
                 display("CloudEmoteStart", uid, comp);
             }
+
             update_position(uid, comp.Emote); // Not the best solution, better use parenting like transformSystem.SetCoordinates        
         }
 
@@ -43,7 +44,7 @@ public sealed class CloudEmoteSystem : SharedCloudEmoteSystem
         if (comp.Phase == 2)
         {
             _entMan.RemoveComponent<CloudEmoteActiveComponent>(player.Value);
-            return; // TODO: implement destroy all
+            return;
         }
         
 
@@ -77,7 +78,6 @@ public sealed class CloudEmoteSystem : SharedCloudEmoteSystem
     private void update_position(EntityUid player, EntityUid emote)
     {
         var position = _transformSystem.GetWorldPosition(player);
-        position.Y += offset;
         _transformSystem.SetWorldPosition(emote, position);
     }
 }
