@@ -79,19 +79,23 @@ public sealed partial class AtmosMonitoringEntryContainer : BoxContainer
         NoDataLabel.Visible = false;
 
         // Update temperature
+        var isNotVacuum = updatedData.TotalMolData > 1e-6f;
         var tempK = (FixedPoint2)updatedData.TemperatureData;
         var tempC = (FixedPoint2)TemperatureHelpers.KelvinToCelsius(tempK.Float());
 
-        if (updatedData.TotalMolData > 1e-6f)
-            TemperatureLabel.Text = Loc.GetString("atmos-alerts-window-temperature-value", ("valueInC", tempC), ("valueInK", tempK));
-        else
-            TemperatureLabel.Text = Loc.GetString("atmos-alerts-window-invalid-value");
+        TemperatureLabel.Text = isNotVacuum ?
+            Loc.GetString("atmos-alerts-window-temperature-value", ("valueInC", tempC), ("valueInK", tempK)) :
+            Loc.GetString("atmos-alerts-window-invalid-value");
+
+        TemperatureLabel.FontColorOverride = isNotVacuum ? Color.DarkGray : StyleNano.DisabledFore;
 
         // Update pressure
         PressureLabel.Text = Loc.GetString("atmos-alerts-window-pressure-value", ("value", (FixedPoint2)updatedData.PressureData));
+        PressureLabel.FontColorOverride = isNotVacuum ? Color.DarkGray : StyleNano.DisabledFore;
 
         // Update total mol
         TotalMolLabel.Text = Loc.GetString("atmos-alerts-window-total-mol-value", ("value", (FixedPoint2)updatedData.TotalMolData));
+        TotalMolLabel.FontColorOverride = isNotVacuum ? Color.DarkGray : StyleNano.DisabledFore;
 
         // Update other present gases
         GasGridContainer.RemoveAllChildren();
