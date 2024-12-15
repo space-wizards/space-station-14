@@ -10,4 +10,11 @@ public sealed partial class LandMineComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier? Sound;
+
+    /// <summary>
+    /// Is the land mine armed and dangerous?
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool Armed;
+
 }
