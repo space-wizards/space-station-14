@@ -19,7 +19,7 @@ public sealed class CloudEmoteSystem : SharedCloudEmoteSystem // Ideally better 
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     private ISawmill _sawmill = default!;
-
+    private static readonly float GAP_SIZE = 0.3f;
     public CloudEmoteSystem()
     {
         _sawmill = Logger.GetSawmill("cloud_emotes");
@@ -37,17 +37,13 @@ public sealed class CloudEmoteSystem : SharedCloudEmoteSystem // Ideally better 
     private void update_position(EntityUid player, EntityUid emote)
     {
         var position = _transformSystem.GetWorldPosition(player);
-        
-        _sawmill.Info("player.position" + position.ToString());
         var playerHeight = _entityManager.GetComponent<SpriteComponent>(player).Bounds.Height;
         
         /* Adds camera rotation vector so no matter how you rotate camera it always stays. */
-        position += _eyeManager.CurrentEye.Rotation.ToWorldVec();
-        /* Multiplies by player height so it would appear on top */
-        position *= -playerHeight;
-
+        var offset = (-_eyeManager.CurrentEye.Rotation).ToWorldVec();
+        /* Multiplies by half of player height (because player's center is 0,0) and by GAP_SIZE */
+        offset *= -(playerHeight/2 + GAP_SIZE);
         var rotation = _transformSystem.GetWorldRotation(player); // Prototype dictates that only SpriteComponent automatically rotates, but not TransformComponent
-        _sawmill.Info("position set to"+ position.ToString());
-        _transformSystem.SetWorldPositionRotation(emote, position, rotation);
+        _transformSystem.SetWorldPositionRotation(emote, position+offset, rotation);
     }    
 }
