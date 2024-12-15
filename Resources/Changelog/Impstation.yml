@@ -1,16 +1,6 @@
 ﻿Entries:
 - author: Pinkbat5
   changes:
-  - message: HoPs rejoice! Brigmedic and roboticist can be selected as presets in
-      the ID card computer.
-    type: Add
-  - message: Scientists can now select the robotics PDA in their loadout.
-    type: Tweak
-  id: 240
-  time: '2024-09-21T18:06:03.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/312
-- author: Pinkbat5
-  changes:
   - message: Added bronzeheart medal to Head of Security locker.
     type: Add
   id: 241
@@ -4535,3 +4525,11 @@
   id: 739
   time: '2024-12-14T20:48:42.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1026
+- author: mqole
+  changes:
+  - message: The server rules have been updated! Please use your guidebook to review
+      them. Thank you to the community for submitting feedback!
+    type: Tweak
+  id: 740
+  time: '2024-12-15T01:06:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1028
