@@ -385,26 +385,6 @@ public partial class NavMapControl : MapGridControl
         if (PostWallDrawingAction != null)
             PostWallDrawingAction.Invoke(handle);
 
-        // Beacons
-        if (_beacons.Pressed)
-        {
-            var rectBuffer = new Vector2(5f, 3f);
-
-            // Calculate font size for current zoom level
-            var fontSize = (int) Math.Round(1 / WorldRange * DefaultDisplayedRange * UIScale * _targetFontsize, 0);
-            var font = new VectorFont(_cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Bold.ttf"), fontSize);
-
-            foreach (var beacon in _navMap.Beacons.Values)
-            {
-                var position = beacon.Position - offset;
-                position = ScalePosition(position with { Y = -position.Y });
-
-                var textDimensions = handle.GetDimensions(font, beacon.Text, 1f);
-                handle.DrawRect(new UIBox2(position - textDimensions / 2 - rectBuffer, position + textDimensions / 2 + rectBuffer), BackgroundColor);
-                handle.DrawString(font, position - textDimensions / 2, beacon.Text, beacon.Color);
-            }
-        }
-
         var curTime = Timing.RealTime;
         var blinkFrequency = 1f / 1f;
         var lit = curTime.TotalSeconds % blinkFrequency > blinkFrequency / 2f;
@@ -446,6 +426,26 @@ public partial class NavMapControl : MapGridControl
                 var positionOffset = new Vector2(scalingCoefficient * blip.Scale * blip.Texture.Width, scalingCoefficient * blip.Scale * blip.Texture.Height);
 
                 handle.DrawTextureRect(blip.Texture, new UIBox2(position - positionOffset, position + positionOffset), blip.Color);
+            }
+        }
+
+        // Beacons
+        if (_beacons.Pressed)
+        {
+            var rectBuffer = new Vector2(5f, 3f);
+
+            // Calculate font size for current zoom level
+            var fontSize = (int)Math.Round(1 / WorldRange * DefaultDisplayedRange * UIScale * _targetFontsize, 0);
+            var font = new VectorFont(_cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Bold.ttf"), fontSize);
+
+            foreach (var beacon in _navMap.Beacons.Values)
+            {
+                var position = beacon.Position - offset;
+                position = ScalePosition(position with { Y = -position.Y });
+
+                var textDimensions = handle.GetDimensions(font, beacon.Text, 1f);
+                handle.DrawRect(new UIBox2(position - textDimensions / 2 - rectBuffer, position + textDimensions / 2 + rectBuffer), BackgroundColor);
+                handle.DrawString(font, position - textDimensions / 2, beacon.Text, beacon.Color);
             }
         }
     }
