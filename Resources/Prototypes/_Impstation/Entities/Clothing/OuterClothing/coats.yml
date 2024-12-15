@@ -8,9 +8,9 @@
     sprite: _Impstation/Clothing/OuterClothing/Coats/cmoprestigecoat.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/OuterClothing/Coats/cmoprestigecoat.rsi
- # - type: Armor
- #   ush modifiers:
- #     coefficients:
- #       Caustic: 0.75
- # Commented out because for some reason this Armor value breaks the labcoat. It's the same as the standard CMO Labcoat and hopefully parenting fixes this 
- # If not: Inherit my legacy code boy. 
+  - type: Armor
+    modifiers:
+      coefficients:
+        Slash: 0.95
+        Heat: 0.95
+        Caustic: 0.65
