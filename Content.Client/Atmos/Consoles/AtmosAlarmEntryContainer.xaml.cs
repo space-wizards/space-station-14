@@ -1,7 +1,6 @@
 using Content.Client.Stylesheets;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
-using Content.Shared.Atmos.Consoles;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.FixedPoint;
 using Content.Shared.Temperature;
