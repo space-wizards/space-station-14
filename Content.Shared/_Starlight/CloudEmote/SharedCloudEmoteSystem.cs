@@ -1,6 +1,6 @@
 using Robust.Shared.Timing;
 
-namespace Content.Shared.CloudEmote;
+namespace Content.Shared._Starlight.CloudEmote;
 
 public abstract class SharedCloudEmoteSystem : EntitySystem
 {

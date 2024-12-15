@@ -2,7 +2,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Spawners;
 using Content.Shared.CloudEmote;
 
-namespace Content.Server.Emp;
+namespace Content.Server._Starlight.CloudEmotes;
 
 public sealed class CloudEmoteSystem : SharedCloudEmoteSystem
 {
