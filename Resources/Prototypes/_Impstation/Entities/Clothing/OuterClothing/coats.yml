@@ -12,3 +12,5 @@
  #   ush modifiers:
  #     coefficients:
  #       Caustic: 0.75
+ # Commented out because for some reason this Armor value breaks the labcoat. It's the same as the standard CMO Labcoat and hopefully parenting fixes this 
+ # If not: Inherit my legacy code boy. 
