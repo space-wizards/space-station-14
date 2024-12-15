@@ -765,3 +765,10 @@ Entries:
     changes:
     - type: Add
       message: Added more vox masks SKREEEEEEE!!!!!
+  - id: 228
+    author: Ermucat
+    time: '2024-12-15T18:21:28.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/228
+    changes:
+    - type: Add
+      message: Added Smuggler's Satchel, a stealthy syndicate item
