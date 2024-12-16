@@ -143,7 +143,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         {
             if (zombie is { ZombieShuttleCalled: false })
             {
-                if (zombie.ZombieShuttleCalled.Value)
+                if (zombie.ZombieShuttleCalled)
                 {
                     ev.Cancelled = true;
                     ev.Reason = Loc.GetString(zombie.ShuttleCallUnavailableReason);
