@@ -57,7 +57,7 @@ public sealed class ConveyorController : SharedConveyorController
         if (MetaData(uid).EntityLifeStage >= EntityLifeStage.Terminating)
             return;
 
-        if (!TryComp<PhysicsComponent>(uid, out var physics))
+        if (!PhysicsQuery.TryComp(uid, out var physics))
             return;
 
         _fixtures.DestroyFixture(uid, ConveyorFixture, body: physics);
@@ -87,13 +87,13 @@ public sealed class ConveyorController : SharedConveyorController
 
         else if (args.Port == component.ForwardPort)
         {
-            AwakenEntities(uid, component);
+            AwakenConveyor(uid);
             SetState(uid, ConveyorState.Forward, component);
         }
 
         else if (args.Port == component.ReversePort)
         {
-            AwakenEntities(uid, component);
+            AwakenConveyor(uid);
             SetState(uid, ConveyorState.Reverse, component);
         }
     }
@@ -108,7 +108,7 @@ public sealed class ConveyorController : SharedConveyorController
 
         component.State = state;
 
-        if (TryComp<PhysicsComponent>(uid, out var physics))
+        if (PhysicsQuery.TryComp(uid, out var physics))
             _broadphase.RegenerateContacts(uid, physics);
 
         UpdateAppearance(uid, component);
@@ -119,27 +119,27 @@ public sealed class ConveyorController : SharedConveyorController
     /// Awakens sleeping entities on the conveyor belt's tile when it's turned on.
     /// Fixes an issue where non-hard/sleeping entities refuse to wake up + collide if a belt is turned off and on again.
     /// </summary>
-    private void AwakenEntities(EntityUid uid, ConveyorComponent component)
+    protected override void AwakenConveyor(Entity<TransformComponent?> ent)
     {
-        var xformQuery = GetEntityQuery<TransformComponent>();
-        var bodyQuery = GetEntityQuery<PhysicsComponent>();
-
-        if (!xformQuery.TryGetComponent(uid, out var xform))
+        if (!XformQuery.Resolve(ent.Owner, ref ent.Comp))
             return;
+
+        var xform = ent.Comp;
 
         var beltTileRef = xform.Coordinates.GetTileRef(EntityManager, MapManager);
 
         if (beltTileRef != null)
         {
-            var intersecting = Lookup.GetLocalEntitiesIntersecting(beltTileRef.Value, 0f);
+            Intersecting.Clear();
+            Lookup.GetLocalEntitiesIntersecting(beltTileRef.Value.GridUid, beltTileRef.Value.GridIndices, Intersecting, 0f, flags: LookupFlags.Dynamic | LookupFlags.Sundries | LookupFlags.Approximate);
 
-            foreach (var entity in intersecting)
+            foreach (var entity in Intersecting)
             {
-                if (!bodyQuery.TryGetComponent(entity, out var physics))
+                if (!PhysicsQuery.TryGetComponent(entity, out var physics))
                     continue;
 
                 if (physics.BodyType != BodyType.Static)
-                    Physics.WakeBody(entity, body: physics);
+                    PhysicsSystem.WakeBody(entity, body: physics);
             }
         }
     }
