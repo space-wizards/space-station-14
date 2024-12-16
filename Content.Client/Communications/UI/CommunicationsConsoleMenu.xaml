@@ -14,31 +14,41 @@
                         </PanelContainer>
                         <PanelContainer StyleClasses="LowDivider" />
 
-                        <!-- Controls for sending announcements -->
-                        <Label StyleClasses="StatusFieldTitle" Align="Center"
-                            Text="{Loc 'comms-console-station-announcements-header'}" />
-                        <PanelContainer StyleClasses="PanelBackgroundHighlight" Margin="6">
-                            <PanelContainer StyleClasses="BackgroundDark" Margin="2" HorizontalExpand="True">
-                                <TextEdit Name="MessageInput"
-                                    Margin="2 0 0 0" MinHeight="100"
-                                    HorizontalExpand="True" VerticalExpand="True" />
-                            </PanelContainer>
-                        </PanelContainer>
+                        <TabContainer>
+                            <!-- Controls for sending announcements -->
+                            <BoxContainer Orientation="Vertical" TabContainer.TabTitle="{Loc 'comms-console-announce-tab-title'}">
+                                <Label StyleClasses="StatusFieldTitle" Align="Center"
+                                    Text="{Loc 'comms-console-station-announcements-header'}" />
+                                <PanelContainer StyleClasses="PanelBackgroundHighlight" Margin="6">
+                                    <PanelContainer StyleClasses="BackgroundDark" Margin="2" HorizontalExpand="True">
+                                        <TextEdit Name="RadioMessageInput"
+                                            Margin="2 0 0 0" MinHeight="100"
+                                            HorizontalExpand="True" VerticalExpand="True" />
+                                    </PanelContainer>
+                                </PanelContainer>
+                                <Button Name="AnnounceButton"
+                                    HorizontalExpand="True" Margin="6"
+                                    Text="{Loc 'comms-console-menu-announcement-button'}"
+                                    ToolTip="{Loc 'comms-console-menu-announcement-button-tooltip'}" />
+                            </BoxContainer>
 
-                        <BoxContainer Orientation="Horizontal">
-                            <Button Name="AnnounceButton"
-                                StyleClasses="OpenRight" HorizontalExpand="True"
-                                Text="{Loc 'comms-console-menu-announcement-button'}"
-                                ToolTip="{Loc 'comms-console-menu-announcement-button-tooltip'}" />
-                            <Button Name="BroadcastButton"
-                                StyleClasses="OpenLeft" Access="Public" HorizontalExpand="True"
-                                Text="{Loc 'comms-console-menu-broadcast-button'}"
-                                ToolTip="{Loc 'comms-console-menu-broadcast-button-tooltip'}" />
-                        </BoxContainer>
+                            <!-- Controls for putting messages on station screens (aka broadcasting) -->
+                            <BoxContainer Orientation="Vertical" TabContainer.TabTitle="{Loc 'comms-console-broadcast-tab-title'}">
+                                <Label StyleClasses="StatusFieldTitle" Align="Center"
+                                    Text="{Loc 'comms-console-station-broadcast-header'}" />
+                                <SpriteView Name="BroadcastEntityDisplay" Scale="4 4"/>
+                                <LineEdit Name="ScreenMessageInput" Margin="6 0 6 0"
+                                    PlaceHolder="{Loc 'comms-console-menu-broadcast-placeholder'}" />
+                                <Button Name="BroadcastButton"
+                                    HorizontalExpand="True" Margin="6"
+                                    Text="{Loc 'comms-console-menu-broadcast-button'}"
+                                    ToolTip="{Loc 'comms-console-menu-broadcast-button-tooltip'}" />
+                            </BoxContainer>
+                        </TabContainer>
 
-                        <!-- Info about the current alert level -->
                         <PanelContainer StyleClasses="LowDivider" Margin="0 12 0 12"/>
 
+                        <!-- Info about the current alert level -->
                         <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center">
                             <Label StyleClasses="StatusFieldTitle" Margin="0 0 9 0"
                                 Text="{Loc 'comms-console-alert-current-level-header'}" />
@@ -78,8 +88,7 @@
             <!-- Controls for calling, recalling and displaying info for he emergency shuttle -->
             <PanelContainer StyleClasses="PanelBackgroundBaseDark" Margin="20">
                 <BoxContainer Orientation="Vertical" Margin="8">
-                    <Label
-                        StyleClasses="FancyWindowTitle" Align="Center"
+                    <Label StyleClasses="FancyWindowTitle" Align="Center"
                         Text="{Loc 'comms-console-shuttle-controls-header'}" />
 
                     <GridContainer Margin="0 8 0 0" Columns="3" HorizontalAlignment="Center">

@@ -1,6 +1,7 @@
 # User interface
 comms-console-menu-title = Communications Console
 comms-console-menu-announcement-placeholder = Announcement text...
+comms-console-menu-broadcast-placeholder = Broadcast text...
 comms-console-menu-announcement-button = Announce over radio
 comms-console-menu-announcement-button-tooltip = Send your message as a station-wide radio announcement.
 comms-console-menu-broadcast-button = Display on screens
@@ -18,6 +19,9 @@ comms-console-shuttle-status-label = Arrival time
 comms-console-shuttle-controls-header = EMERGENCY SHUTTLE CONTROLS
 comms-console-alert-current-level-header = Alert level
 comms-console-station-announcements-header = Station Announcements
+comms-console-station-broadcast-header = Station Broadcast
+comms-console-announce-tab-title = Radio
+comms-console-broadcast-tab-title = Screen
 
 # Popup
 comms-console-permission-denied = Permission denied
