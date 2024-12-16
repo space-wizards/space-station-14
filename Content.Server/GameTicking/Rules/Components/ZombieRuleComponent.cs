@@ -29,7 +29,7 @@ public sealed partial class ZombieRuleComponent : Component
     /// <summary>
     /// Is the automatical shuttle called.
     /// </summary>
-    public bool? ZombieShuttleCalled;
+    public bool ZombieShuttleCalled = false;
 
     /// <summary>
     /// The reason when shuttle called.

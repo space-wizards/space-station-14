@@ -141,7 +141,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         var query = QueryActiveRules();
         while (query.MoveNext(out _, out _, out var zombie, out _))
         {
-            if (zombie is { ZombieShuttleCalled: not null })
+            if (zombie is { ZombieShuttleCalled: false })
             {
                 if (zombie.ZombieShuttleCalled.Value)
                 {
