@@ -277,6 +277,7 @@ namespace Content.Shared.Plankton
             if (planktonInstance.Size < 0)
             {
                 planktonInstance.Size = 0;
+                Log.Info($"{planktonInstance.SpeciesName} has been wiped out.");
                 // change IsAlive once the framework is finished
             }
 
