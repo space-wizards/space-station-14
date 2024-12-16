@@ -52,9 +52,9 @@
       types:
         Slash: 5
   - type: Temperature
-    heatDamageThreshold: 362
+    heatDamageThreshold: 400
     coldDamageThreshold: 282
-    preferredTemperatureMax: 400
+    preferredTemperatureMax: 382
     preferredTemperatureMin: 272
     currentTemperature: 310.15
     specificHeat: 42
