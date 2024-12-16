@@ -22,26 +22,15 @@ public abstract class SharedLandMineSystem : EntitySystem
         args.Verbs.Add(new AlternativeVerb
         {
             Text = Loc.GetString("land-mine-verb-begin"),
-            Disabled = IsArmed(component),
+            Disabled = component is {Armed:true},
             Priority = 10,
             Act = () =>
             {
-                Arm(uid, component);
+                component.Armed = true;
                 ChangeLandMineVisuals(uid, component);
             },
         });
     }
-
-    private void Arm(EntityUid uid, LandMineComponent component)
-    {
-        component.Armed = true;
-    }
-
-    private bool IsArmed(LandMineComponent component)
-    {
-        return component.Armed;
-    }
-
 
     private void ChangeLandMineVisuals(EntityUid uid, LandMineComponent component)
     {
