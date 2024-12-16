@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: CuteBoi
-  changes:
-  - message: Replaced small fans on most shuttles with directional fans.
-    type: Fix
-  id: 7217
-  time: '2024-08-26T22:24:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31495
-- author: 12rabbits
-  changes:
-  - message: The guidebook now remembers where you left off when re-opened.
-    type: Tweak
-  id: 7218
-  time: '2024-08-26T23:06:54.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31375
 - author: Dimastra
   changes:
   - message: Fixed meat kudzu not dealing damage.
@@ -3926,3 +3912,17 @@
   id: 7716
   time: '2024-12-16T16:27:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33253
+- author: goet
+  changes:
+  - message: Spaceshrooms can now be cooked on the electric grill.
+    type: Tweak
+  id: 7717
+  time: '2024-12-16T17:53:39.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31872
+- author: Beck Thompson
+  changes:
+  - message: Figures can now be activated with signals!
+    type: Add
+  id: 7718
+  time: '2024-12-16T18:52:09.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32769
