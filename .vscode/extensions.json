@@ -1,6 +1,11 @@
 {
     "recommendations": [
         "ms-dotnettools.csharp",
-        "editorconfig.editorconfig"
+        "editorconfig.editorconfig",
+        "ertanic.robust-lsp",
+        "GitHub.vscode-pull-request-github",
+        "eamodio.gitlens",
+        "macabeus.vscode-fluent",
+        "redhat.vscode-yaml"
     ]
 }
