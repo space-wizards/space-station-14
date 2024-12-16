@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Dimastra
-  changes:
-  - message: Fixed meat kudzu not dealing damage.
-    type: Fix
-  id: 7219
-  time: '2024-08-27T00:30:42.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31494
 - author: JIPDawg
   changes:
   - message: Gas miners are now indestructible, can be pulled and only anchored.
@@ -3926,3 +3919,12 @@
   id: 7718
   time: '2024-12-16T18:52:09.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32769
+- author: TheShuEd
+  changes:
+  - message: Christmas anomaly added
+    type: Add
+  - message: Christmas anomaly infection added
+    type: Add
+  id: 7719
+  time: '2024-12-16T19:23:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33889
