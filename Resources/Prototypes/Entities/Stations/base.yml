@@ -70,6 +70,12 @@
           - /Maps/Ruins/syndicate_dropship.yml
           - /Maps/Ruins/whiteship_ancient.yml
           - /Maps/Ruins/whiteship_bluespacejumper.yml
+          - /Maps/_Impstation/Ruins/science-satellite.yml #imp
+          - /Maps/_Impstation/Ruins/keyhole-court.yml #imp
+          - /Maps/_Impstation/Ruins/cozy-radio-planetoid.yml #imp
+          - /Maps/_Impstation/Ruins/spooky-garden-bubble.yml #imp
+          - /Maps/_Impstation/Ruins/snowy-sauna.yml #imp
+          - /Maps/_Impstation/Ruins/shuttle-repair-bay.yml #imp
         vgroid: !type:DungeonSpawnGroup
           minimumDistance: 300
           maximumDistance: 350
