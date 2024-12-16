@@ -36,6 +36,8 @@ namespace Content.Shared.Plankton
                 PerformAggressionCheck(); // move this to aggressive instead of it's own field on Update
                 CheckPlanktonDiet();
                 CheckPlanktonCharacteristics();
+                PlanktonHunger();
+                
 
                 _updateTimer = 0f;
             }
@@ -98,13 +100,14 @@ namespace Content.Shared.Plankton
                     planktonName,
                     (PlanktonComponent.PlanktonDiet)random.Next(Enum.GetValues<PlanktonComponent.PlanktonDiet>().Length),
                     combinedCharacteristics,
-                    1.0f
+                    1.0f,
+                    100f
                 );
 
                 // Add the plankton species instance to the SpeciesInstances list
                 component.SpeciesInstances.Add(planktonInstance);
 
-                Log.Info($"Generated plankton species {planktonInstance.SpeciesName} with characteristics {combinedCharacteristics}");
+                Log.Info($"Generated plankton species {planktonInstance.SpeciesName} with characteristics {combinedCharacteristics} and diet (planktonInstance.Diet");
             }
 
             // Log the total number of plankton species initialized
@@ -274,5 +277,19 @@ namespace Content.Shared.Plankton
 
             Log.Info($"Reduced size of {planktonInstance.SpeciesName} to {planktonInstance.CurrentSize}");
         }
+
+         private void PlanktonHunger(PlanktonComponent component)
+        {
+            foreach (var planktonInstance in component.SpeciesInstances)
+            {
+                if (planktonInstance.CurrentHunger > 0)
+                {
+                    var HungerLoss = 10f;
+                    planktonInstance.CurrentHunger -= HungerLoss;
+                    Log.Error($"{planktonInstance.SpeciesName} has lost 10 hunger");
+                }
+            }
+        }
+
     }
 }
