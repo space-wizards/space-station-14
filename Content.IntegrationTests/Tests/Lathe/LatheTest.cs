@@ -116,7 +116,7 @@ public sealed class LatheTest
         await using var pair = await PoolManager.GetServerClient();
 
         var server = pair.Server;
-        var proto = server.ResolveDependency<IPrototypeManager>();
+        var proto = server.ProtoMan;
 
         Assert.Multiple(() =>
         {
