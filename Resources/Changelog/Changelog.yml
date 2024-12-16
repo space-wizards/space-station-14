@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Winkarst-cpu
-  changes:
-  - message: The color of the science radio channel was changed.
-    type: Tweak
-  id: 7215
-  time: '2024-08-26T12:02:57.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31319
 - author: slarticodefast
   changes:
   - message: Fixed energy sword visuals.
@@ -3924,3 +3917,11 @@
   id: 7714
   time: '2024-12-16T15:25:06.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32802
+- author: SlamBamActionman
+  changes:
+  - message: Added Holy damage to the Chaplain's bible, holy water and the gohei,
+      which can be exclusively dealt to spirits.
+    type: Add
+  id: 7715
+  time: '2024-12-16T15:33:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32755
