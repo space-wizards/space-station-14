@@ -73,10 +73,10 @@
       walkSpeedModifier: 0.5
       sprintSpeedModifier: 0.5
       ignoreWhitelist:
-        tags:
+        components:
             - IgnoreSpiderWeb
     - type: Tag
-      tags: 
+      tags:
       - SpiderWeb
 
 - type: entity
@@ -165,5 +165,5 @@
           - ReagentId: Sugar
             Quantity: 2
     - type: Tag
-      tags: 
+      tags:
       - SpiderWeb

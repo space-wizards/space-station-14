@@ -253,6 +253,7 @@
     energy: 2
     color: "#4faffb"
   - type: NoSlip
+  - type: IgnoreSpiderWeb
   - type: Speech
     speechVerb: Arachnid
     speechSounds: Arachnid
@@ -264,11 +265,6 @@
       Unsexed: UnisexArachnid
   - type: TypingIndicator
     proto: spider
-  - type: Tag
-    tags:
-    - DoorBumpOpener
-    - FootstepSound
-    - IgnoreSpiderWeb
 
 - type: entity
   id: MobSpiderSpaceSalvage

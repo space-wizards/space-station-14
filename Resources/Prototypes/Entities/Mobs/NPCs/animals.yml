@@ -2370,6 +2370,7 @@
     destinationBlacklist:
       tags:
       - SpiderWeb
+  - type: IgnoreSpiderWeb
   - type: Bloodstream
     bloodMaxVolume: 150
     bloodReagent: CopperBlood
@@ -2388,7 +2389,6 @@
     tags:
     - DoorBumpOpener
     - FootstepSound
-    - IgnoreSpiderWeb
   - type: Prying # Open door from xeno.yml.
     pryPowered: true
     force: true
