@@ -58,6 +58,8 @@
   - type: Temperature # Moths hate the heat and thrive in the cold.
     heatDamageThreshold: 320
     coldDamageThreshold: 230
+    preferredTemperatureMax: 322
+    preferredTemperatureMin: 252
     currentTemperature: 310.15
     specificHeat: 46
     coldDamage:

@@ -27,6 +27,15 @@ public sealed partial class TemperatureComponent : Component
     public float ColdDamageThreshold = 260f;
 
     /// <summary>
+    /// Comfortable temperature range. Anything outside that range will give cold/hot alerts.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public float PreferredTemperatureMax = 322f;
+
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public float PreferredTemperatureMin = 262f;
+
+    /// <summary>
     /// Overrides HeatDamageThreshold if the entity's within a parent with the TemperatureDamageThresholdsComponent component.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]

@@ -204,26 +204,17 @@ public sealed class TemperatureSystem : EntitySystem
             return;
         }
 
-        if (TryComp<ThermalRegulatorComponent>(uid, out var regulator) &&
-            regulator.NormalBodyTemperature > temperature.ColdDamageThreshold &&
-            regulator.NormalBodyTemperature < temperature.HeatDamageThreshold)
-        {
-            idealTemp = regulator.NormalBodyTemperature;
-        }
-        else
-        {
-            idealTemp = (temperature.ColdDamageThreshold + temperature.HeatDamageThreshold) / 2;
-        }
+        idealTemp = (temperature.PreferredTemperatureMin + temperature.PreferredTemperatureMax) / 2;
 
         if (args.GasMixture.Temperature <= idealTemp)
         {
             type = temperature.ColdAlert;
-            threshold = temperature.ColdDamageThreshold;
+            threshold = temperature.PreferredTemperatureMin;
         }
         else
         {
             type = temperature.HotAlert;
-            threshold = temperature.HeatDamageThreshold;
+            threshold = temperature.PreferredTemperatureMax;
         }
 
         // Calculates a scale where 1.0 is the ideal temperature and 0.0 is where temperature damage begins
@@ -235,7 +226,7 @@ public sealed class TemperatureSystem : EntitySystem
                 _alerts.ShowAlert(uid, type, 3);
                 break;
 
-            case <= 0.4f:
+            case <= 0.3f:
                 _alerts.ShowAlert(uid, type, 2);
                 break;
 
