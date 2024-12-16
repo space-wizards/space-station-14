@@ -74,6 +74,11 @@ public sealed class WebPlacerSystem : SharedWebPlacerSystem
 
     private bool IsValidTile(EntityCoordinates coords, EntityWhitelist? whitelist, EntityWhitelist? blacklist, EntityUid grid, MapGridComponent gridComp)
     {
+        // Don't place webs in space
+        if (!_map.TryGetTileRef(grid, gridComp, coords, out var tileRef) ||
+            tileRef.IsSpace(_tile))
+            return false;
+
         // Don't place webs on webs
         if (blacklist != null)
             foreach (var entity in _lookup.GetEntitiesIntersecting(coords, LookupFlags.Uncontained))
@@ -89,11 +94,6 @@ public sealed class WebPlacerSystem : SharedWebPlacerSystem
 
             return false;
         }
-
-        // Don't place webs in space
-        if (!_map.TryGetTileRef(grid, gridComp, coords, out var tileRef) ||
-            tileRef.IsSpace(_tile))
-            return false;
 
         return true;
     }
