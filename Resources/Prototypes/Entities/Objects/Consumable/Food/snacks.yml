@@ -498,6 +498,25 @@
         - ReagentId: Theobromine
           Quantity: 3
 
+- type: entity
+  name: yammy-paste
+  parent: FoodSnackBase
+  id: FoodSnackCarbonPaste
+  description: A terrible tasting mass that can be digested by any organism.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - carbon
+  - type: Sprite
+    state: paste
+  - type: Item
+  - type: Food
+    trash:
+    - FoodPacketPasteTrash
+  - type: Tag
+    tags:
+    - Omnivorous
+
 # Trash
 
 - type: entity
@@ -693,3 +712,12 @@
     - Trash
   - type: Sprite
     state: mre-wrapper
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: FoodPacketTrash
+  id: FoodPacketPasteTrash
+  name: yammy-paste
+  components:
+  - type: Sprite
+    state: paste-trash
