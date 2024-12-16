@@ -304,6 +304,7 @@
     sprite: Objects/Fun/toys.rsi
     state: plushie_lizard
   - type: Item
+    sprite: GreyStation/Objects/Fun/toys.rsi
     heldPrefix: plushielizard
   - type: EmitSoundOnUse
     sound:
@@ -339,12 +340,12 @@
           Quantity: 10
         - ReagentId: JuiceThatMakesYouWeh
           Quantity: 10
-  - type: Clothing
-    quickEquip: false
-    sprite: Objects/Fun/toys.rsi
-    equippedPrefix: lizard
-    slots:
-    - HEAD
+#  - type: Clothing # GreyStation - Removed because not every plushie is capable of being a hat
+#    quickEquip: false
+#    sprite: Objects/Fun/toys.rsi
+#    equippedPrefix: lizard
+#    slots:
+#    - HEAD
   - type: Speech
     speechVerb: Reptilian # for pais (In the secret stash)
 
@@ -359,11 +360,11 @@
     energy: 2
   - type: RgbLightController
     layers: [ 0 ]
-  - type: Clothing
-    clothingVisuals:
-      head:
-      - state: lizard-equipped-HELMET
-        shader: unshaded
+#  - type: Clothing # GreyStation - Removed because not every plushie is capable of being a hat
+#    clothingVisuals:
+#      head:
+#      - state: lizard-equipped-HELMET
+#        shader: unshaded
 
 - type: entity
   parent: PlushieLizard
