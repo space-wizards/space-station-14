@@ -78,6 +78,7 @@ public abstract class SharedConveyorController : VirtualController
 
     private void OnConveyedStartup(Entity<ConveyedComponent> ent, ref ComponentStartup args)
     {
+        // We need waking / sleeping to work and don't want collisionwake interfering with us.
         EnsureComp<ActiveConveyedComponent>(ent);
         _wake.SetEnabled(ent.Owner, false);
     }
@@ -416,9 +417,6 @@ public abstract class SharedConveyorController : VirtualController
 
         while (contacts.MoveNext(out var contact))
         {
-            if (contact.Deleting)
-                continue;
-
             var other = contact.OtherEnt(ent.Owner);
 
             if (_conveyorQuery.HasComp(other))
