@@ -227,16 +227,16 @@
     laws: OverlordLawset
 
 - type: entity
-  id: DungeonMasterCircuitBoard
+  id: GameMasterCircuitBoard
   parent: BaseElectronics
-  name: law board (Dungeon Master)
-  description: An electronics board containing the Dungeon Master lawset.
+  name: law board (Game Master)
+  description: An electronics board containing the Game Master lawset.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
     state: std_mod
   - type: SiliconLawProvider
-    laws: DungeonMasterLawset
+    laws: GameMasterLawset
 
 - type: entity
   id: ArtistCircuitBoard
