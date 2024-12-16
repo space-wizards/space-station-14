@@ -30,6 +30,7 @@ public sealed class CloudEmoteSystem : SharedCloudEmoteSystem // Ideally better 
         var query = _entityManager.EntityQueryEnumerator<CloudEmoteActiveComponent>();
         while (query.MoveNext(out var uid, out var comp))
         {
+            if (!Exists(uid) || !(Exists(comp.Emote))) continue;
             update_position(uid, comp.Emote);
         }
     }

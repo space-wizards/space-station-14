@@ -5,6 +5,7 @@ using Content.Shared.Administration;
 using Robust.Shared.Map;
 using Robust.Server.GameObjects;
 using Content.Shared._Starlight.CloudEmote;
+using Content.Shared.Ghost;
 namespace Content.Server._Starlight.CloudEmotes.Commands
 {
     [UsedImplicitly]
@@ -40,6 +41,12 @@ namespace Content.Server._Starlight.CloudEmotes.Commands
             if (player?.AttachedEntity == null)
             {
                 shell.WriteLine(LocalizationManager.GetString("shell-only-players-can-run-this-command"));
+                return;
+            }
+
+            if (_entityManager.HasComponent<GhostComponent>(player.AttachedEntity))
+            {
+                shell.WriteLine(LocalizationManager.GetString("cmd-emote-ghost"));
                 return;
             }
 
