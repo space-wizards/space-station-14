@@ -33,7 +33,9 @@ namespace Content.Shared.Plankton
             // If it's time for the next update
             if (_updateTimer >= UpdateInterval)
             {
-                PerformAggressionCheck();
+                PerformAggressionCheck(); // move this to aggressive instead of it's own field on Update
+                CheckPlanktonDiet();
+                CheckPlanktonCharacteristics();
 
                 _updateTimer = 0f;
             }
@@ -121,6 +123,7 @@ namespace Content.Shared.Plankton
 
             var component = _entityManager.GetComponent<PlanktonComponent>(uid);
             CheckPlanktonCharacteristics(component);
+            CheckPlanktonDiet(component);
         }
 
        private void CheckPlanktonCharacteristics(PlanktonComponent component)
@@ -197,6 +200,40 @@ namespace Content.Shared.Plankton
         }
     }
 }
+
+        private void CheckPlanktonDiet(PlanktonComponent component)
+        {
+            foreach (var planktonInstance in component.SpeciesInstances)
+            {
+                if ((planktonInstance.Diet & PlanktonComponent.PlanktonDiet.Decomposer) != 0)
+                {
+                    Log.Error($"{planktonInstance.SpeciesName} eats other species");
+                    if (component.DeadPlankton > 0)
+                    {
+                        DecomposeCheck(planktonInstance, component);
+                    }
+
+                }
+            }
+        }
+
+         private void DecomposeCheck(PlanktonComponent.PlanktonSpeciesInstance planktonInstance, PlanktonComponent component)
+        {
+            float sizeGrowth = 0.1f;
+            component.DeadPlankton -= sizeGrowth;
+            // add satiation once made
+            
+            if (component.DeadPlankton < 0)
+            {
+                component.DeadPlankton = 0;
+                Log.Info($"All dead plankton have been eaten.");
+                // change IsAlive once the framework is finished
+            }
+            planktonInstance.CurrentSize += sizeGrowth;
+            Log.Info($"Increased size of {planktonInstance.SpeciesName} to {planktonInstance.CurrentSize} from decomposing food."};
+            
+        }
+        
         private void PerformAggressionCheck()
         {
             foreach (var planktonEntity in EntityManager.EntityQuery<PlanktonComponent>())
@@ -222,10 +259,11 @@ namespace Content.Shared.Plankton
             }
         }
 
-        private void ReducePlanktonSize(PlanktonComponent.PlanktonSpeciesInstance planktonInstance)
+        private void ReducePlanktonSize(PlanktonComponent.PlanktonSpeciesInstance planktonInstance, PlanktonComponent component)
         {
             float sizeReduction = 0.1f;
             planktonInstance.CurrentSize -= sizeReduction;
+            component.DeadPlankton += sizeReduction;
 
             if (planktonInstance.CurrentSize < 0)
             {
@@ -234,7 +272,7 @@ namespace Content.Shared.Plankton
                 // change IsAlive once the framework is finished
             }
 
-            Log.Info($"Reduced size of {planktonInstance.SpeciesName} to {planktonInstance.Size}");
+            Log.Info($"Reduced size of {planktonInstance.SpeciesName} to {planktonInstance.CurrentSize}");
         }
     }
 }
