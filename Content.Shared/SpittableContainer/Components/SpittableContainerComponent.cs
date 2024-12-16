@@ -5,6 +5,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.SpittableContainer.Components;
 
+/// <summary>
+/// Grants the entity actions to swallow and spit items out of a provided container).
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedSpittableContainerSystem))]
 public sealed partial class SpittableContainerComponent : Component

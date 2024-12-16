@@ -10,6 +10,10 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.SpittableContainer;
 
+/// <summary>
+/// Manages SpittableContainerComponent.
+/// Allows entities to swallow and spit items using a provided container with a granted action.
+/// </summary>
 public abstract class SharedSpittableContainerSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
@@ -118,12 +122,24 @@ public abstract class SharedSpittableContainerSystem : EntitySystem
     }
 }
 
+/// <summary>
+/// Raised on the user when using the Store action provided by SpittableContainerComponent.
+/// </summary>
 public sealed partial class SwallowToContainerActionEvent : EntityTargetActionEvent;
 
+/// <summary>
+/// Raised on the user when using the Spit action provided by SpittableContainerComponent.
+/// </summary>
 public sealed partial class SpitFromContainerActionEvent : InstantActionEvent;
 
+/// <summary>
+/// DoAfter that manages swallowing an item with the Store action.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed partial class SwallowDoAfterEvent : SimpleDoAfterEvent;
 
+/// <summary>
+/// DoAfter that manages spitting out an item with the Spit action.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed partial class SpitFromContainerDoAfterEvent : SimpleDoAfterEvent;

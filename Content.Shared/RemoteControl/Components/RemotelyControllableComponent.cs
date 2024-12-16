@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.RemoteControl.Components;
 
 /// <summary>
-/// Indicates this entity is currently being remotely controlled by another entity.
+/// Indicates this entity is able to be remotely controlled by another entity.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class RemotelyControllableComponent : Component

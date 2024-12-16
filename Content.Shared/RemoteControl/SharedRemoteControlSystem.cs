@@ -242,6 +242,9 @@ public abstract class SharedRemoteControlSystem : EntitySystem
     }
 }
 
+/// <summary>
+/// Raised on the entity when using the Return To Body action granted by RemotelyControllableComponent.
+/// </summary>
 public sealed partial class RemoteControlReturnToBodyEvent : InstantActionEvent
 {
 }

@@ -19,13 +19,13 @@ public sealed partial class RCRemoteComponent : Component
     /// Popup to show when the remote is used but not bound to any entity.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public LocId RemoteUnboundPopup = "rc-remote-unbound";
+    public LocId RemoteUnboundPopup = "rc-remote-not-synced";
 
     /// <summary>
     /// Popup to show when the remote is bound to an entity.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public LocId RemoteBoundToPopup = "rc-remote-bound";
+    public LocId RemoteBoundToPopup = "rc-remote-sync";
 
     /// <summary>
     /// Popup to show when the binding of the remote is wiped.
