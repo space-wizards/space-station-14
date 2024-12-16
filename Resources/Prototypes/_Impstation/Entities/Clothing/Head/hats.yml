@@ -153,5 +153,5 @@
     clothingVisuals:
       head:
       - state: equipped-HELMET
-        offset: "0, 0.25"
+        offset: "0, 0.15" #this shit is so fiddly and i don't understand it at all
     sprite: _Impstation/Clothing/Head/Hats/circusclownhat.rsi
