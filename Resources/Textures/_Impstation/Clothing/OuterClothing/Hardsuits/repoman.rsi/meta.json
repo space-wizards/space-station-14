@@ -1,6 +1,6 @@
 {
     "version": 1,
-    "license": "WTFPD",
+    "license": "CC-BY-SA-3.0",
     "copyright": "Sprited and coded by SixValentine for Impstation",
     "size": {
         "x": 32,
@@ -12,6 +12,10 @@
         },
         {
             "name": "equipped-OUTERCLOTHING",
+            "directions": 4
+        },
+        {
+            "name": "equipped-OUTERCLOTHING-vox",
             "directions": 4
         },
         {
