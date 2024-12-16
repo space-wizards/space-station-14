@@ -1108,4 +1108,11 @@ Entries:
   id: 157
   time: '2024-12-16T16:53:49.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/163
+- author: STARLIGHT TEAM
+  changes:
+  - message: The rules have been updated.
+    type: Tweak
+  id: 158
+  time: '2024-12-16T16:53:26.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/164
 
