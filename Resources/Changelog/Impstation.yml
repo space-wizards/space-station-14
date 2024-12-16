@@ -1,115 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Modified disposals room on Saltern to be more functional
-    type: Tweak
-  id: 232
-  time: '2024-09-19T20:23:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/302
-- author: TGRCDev
-  changes:
-  - message: Revenants can now Haunt, which reveals them and gives them a small amount
-      of stolen essence and a boost in essence regeneration for every person that
-      witnesses them.
-    type: Add
-  id: 233
-  time: '2024-09-20T01:52:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/293
-- author: TGRCDev
-  changes:
-  - message: Revenant's Haunt ability stuns itself for slightly longer, and has a
-      longer cooldown
-    type: Tweak
-  id: 234
-  time: '2024-09-20T16:18:43.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/305
-- author: aada
-  changes:
-  - message: Prescription lenses that can be slotted in and out of eyewear.
-    type: Add
-  - message: Near-sighted trait starts with extra-strength prescription lenses.
-    type: Add
-  - message: JamJar glasses have a stronger prescription.
-    type: Tweak
-  id: 235
-  time: '2024-09-20T16:18:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/304
-- author: hivehum
-  changes:
-  - message: Revenants can now be bigoted.
-    type: Add
-  id: 236
-  time: '2024-09-21T02:08:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/309
-- author: hivehum
-  changes:
-  - message: There is now a new antagonist that can show up in the middle of rounds...
-    type: Tweak
-  id: 237
-  time: '2024-09-21T02:11:26.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/303
-- author: starlighthowls
-  changes:
-  - message: moreeeee boat stuff
-    type: Tweak
-  id: 238
-  time: '2024-09-21T02:11:42.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/307
-- author: Tox3ct
-  changes:
-  - message: Added gray plushie. thui love keb piskun plushie
-    type: Add
-  id: 239
-  time: '2024-09-21T18:04:28.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/315
-- author: Pinkbat5
-  changes:
-  - message: HoPs rejoice! Brigmedic and roboticist can be selected as presets in
-      the ID card computer.
-    type: Add
-  - message: Scientists can now select the robotics PDA in their loadout.
-    type: Tweak
-  id: 240
-  time: '2024-09-21T18:06:03.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/312
-- author: Pinkbat5
-  changes:
-  - message: Added bronzeheart medal to Head of Security locker.
-    type: Add
-  id: 241
-  time: '2024-09-21T18:06:46.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/313
-- author: aada
-  changes:
-  - message: NanoTrasen has signed new contracts with expert staff across many departments.
-      The experts happen to also be clowns.
-    type: Add
-  - message: New clown prestige loadouts.
-    type: Add
-  id: 242
-  time: '2024-09-21T18:05:08.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/316
-- author: hivehum
-  changes:
-  - message: The Heretic greeting has more sauce.
-    type: Tweak
-  id: 243
-  time: '2024-09-21T22:38:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/320
-- author: Darkmajia
-  changes:
-  - message: Heretic equipment is now marked with a contraband tag.
-    type: Add
-  id: 244
-  time: '2024-09-21T22:38:24.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/318
-- author: TGRCDev
-  changes:
-  - message: Thief toolboxes now spawn a duffel bag to place your items in.
-    type: Tweak
-  id: 245
-  time: '2024-09-21T22:39:53.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/317
 - author: Darkmajia
   changes:
   - message: Cheap sunglasses, a black folder, a bar flask, and a newton cradle are
@@ -4535,3 +4424,109 @@
   id: 731
   time: '2024-12-13T21:34:03.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1014
+- author: DinnerCalzone
+  changes:
+  - message: Sterile swabs are now able to crafted from the service techfab.
+    type: Add
+  - message: The rolling pin's service techfab recipe now better reflects its crafting
+      menu recipe.
+    type: Tweak
+  id: 732
+  time: '2024-12-14T13:53:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1017
+- author: Darkmajia
+  changes:
+  - message: The brigmedic's hardsuit slows its user down less, and its resistances
+      have received adjustment.
+    type: Tweak
+  id: 733
+  time: '2024-12-14T13:56:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1021
+- author: Saeko-44
+  changes:
+  - message: Added three new vessels able to be purchased from the shipyard console.
+    type: Add
+  id: 734
+  time: '2024-12-14T13:55:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1012
+- author: TGRCdev
+  changes:
+  - message: Vapor tank continues to vaporize water when it's low on water.
+    type: Fix
+  - message: Vapor tank now properly updates the fill visuals as it vaporizes water.
+    type: Fix
+  id: 735
+  time: '2024-12-14T14:49:43.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1020
+- author: EpicToast
+  changes:
+  - message: Swapped normal beds with medical beds on Packed.
+    type: Tweak
+  id: 736
+  time: '2024-12-14T20:47:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1013
+- author: irismessage
+  changes:
+  - message: Look at my tips boy
+    type: Fix
+  id: 737
+  time: '2024-12-14T20:48:12.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1027
+- author: Darkmajia, AftrLite
+  changes:
+  - message: 'Changelings can select a new evolution: Mindshield Patterns.'
+    type: Add
+  id: 738
+  time: '2024-12-14T20:47:45.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1003
+- author: EpicToast
+  changes:
+  - message: Updated Union Station, mostly around the medical department. See GitHub
+      for full changelog.
+    type: Tweak
+  id: 739
+  time: '2024-12-14T20:48:42.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1026
+- author: mqole
+  changes:
+  - message: The server rules have been updated! Please use your guidebook to review
+      them. Thank you to the community for submitting feedback!
+    type: Tweak
+  id: 740
+  time: '2024-12-15T01:06:03.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1028
+- author: AvianMaiden
+  changes:
+  - message: Unique sounds to chain link fence gates!
+    type: Add
+  id: 741
+  time: '2024-12-15T12:20:33.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1034
+- author: Sha-Seng
+  changes:
+  - message: Riot crates now correctly have stun enforcers in them again
+    type: Tweak
+  id: 742
+  time: '2024-12-15T12:53:33.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1029
+- author: widgetbeck
+  changes:
+  - message: Fixed Gastropoids being unable to bump-open doors.
+    type: Fix
+  id: 743
+  time: '2024-12-15T12:53:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1031
+- author: DinnerCalzone
+  changes:
+  - message: Techfabs now play an animation when producing things.
+    type: Add
+  id: 744
+  time: '2024-12-15T12:55:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1032
+- author: SixValentine
+  changes:
+  - message: 50hr Greatcloak and Prestige Labcoat for the CMO to Swagger in.
+    type: Add
+  id: 745
+  time: '2024-12-15T14:54:56.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1036

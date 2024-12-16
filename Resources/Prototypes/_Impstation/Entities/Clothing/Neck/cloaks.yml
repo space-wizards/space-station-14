@@ -102,3 +102,13 @@
     clothingVisuals:
       neck:
       - state: equipped-NECK
+
+- type: entity
+  parent: ClothingCloakCmo
+  id: ClothingNeckCloakCmosGreatcloak
+  name: chief medical officer's greatcloak
+  description: "An ornate high collared great cloak. Good luck keeping it clean."
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Cloaks/cmogreatcloak.rsi
+

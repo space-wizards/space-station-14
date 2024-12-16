@@ -24,7 +24,7 @@
     sprite: Clothing/OuterClothing/Armor/riot.rsi
     state: icon
   product: CrateSecurityRiot
-  cost: 7500
+  cost: 6000 # Imp
   category: cargoproduct-category-name-armory
   group: market
 
