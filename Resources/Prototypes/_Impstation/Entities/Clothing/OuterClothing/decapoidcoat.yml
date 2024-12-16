@@ -1,0 +1,20 @@
+- type: entity
+  parent: [ClothingOuterBase, AllowSuitStorageClothingGasTanks, DecapoidEmpireContraband]
+  id: ClothingOuterDecapoidCoat
+  name: outrigger's coat
+  description: A lightweight coat for spacewalking without a hardsuit.
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: _Impstation/Clothing/OuterClothing/Misc/decapoidcoat.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Misc/decapoidcoat.rsi
+#  - type: ToggleableClothing
+#    clothingPrototype: ClothingNeckCloakDecapoid
+#    requiredSlot:
+#    - outerClothing
+#    slot: neck
+#  - type: ContainerContainer
+#    containers:
+#      toggleable-clothing: !type:ContainerSlot {}
