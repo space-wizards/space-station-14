@@ -189,6 +189,11 @@ public struct AtmosMonitoringConsoleEntry
     public Dictionary<Gas, float> GasData = new();
 
     /// <summary>
+    /// The color to be associated with the pipe network
+    /// </summary>
+    public Color Color;
+
+    /// <summary>
     /// Indicates whether the entity is powered
     /// </summary>
     public bool IsPowered = true;

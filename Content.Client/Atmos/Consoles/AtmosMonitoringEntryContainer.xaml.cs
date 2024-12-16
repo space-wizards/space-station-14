@@ -28,6 +28,9 @@ public sealed partial class AtmosMonitoringEntryContainer : BoxContainer
 
         Data = data;
 
+        // Modulate colored stripe
+        NetworkColorStripe.Modulate = data.Color;
+
         // Load fonts
         var headerFont = new VectorFont(_cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Bold.ttf"), 11);
         var normalFont = new VectorFont(_cache.GetResource<FontResource>("/Fonts/NotoSansDisplay/NotoSansDisplay-Regular.ttf"), 11);
@@ -58,6 +61,9 @@ public sealed partial class AtmosMonitoringEntryContainer : BoxContainer
             NetworkNameLabel.Text = Loc.GetString(updatedData.EntityName);
 
         Data = updatedData;
+
+        // Modulate colored stripe
+        NetworkColorStripe.Modulate = Data.Color;
 
         // Focus updates
         if (isFocus)

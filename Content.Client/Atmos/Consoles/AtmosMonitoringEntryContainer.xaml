@@ -9,7 +9,12 @@
     <Button Name="FocusButton" HorizontalExpand="True" VerticalExpand="True" Margin="0 0 6 8" StyleClasses="OpenLeft" Access="Public">
         <BoxContainer HorizontalExpand="True" VerticalExpand="True" Orientation="Vertical">
             <BoxContainer HorizontalExpand="True" VerticalExpand="True" Orientation="Horizontal" SetHeight="32">
-                <Label Name="NetworkNameLabel" Text="???" HorizontalExpand="True" HorizontalAlignment="Center"></Label>
+                <PanelContainer Name="NetworkColorStripe" HorizontalAlignment="Left" SetWidth="8" VerticalExpand="True" Margin="-8 -2 0 0">
+                    <PanelContainer.PanelOverride>
+                        <gfx:StyleBoxFlat BackgroundColor="#d7d7d7"/>
+                    </PanelContainer.PanelOverride>
+                </PanelContainer>
+                <Label Name="NetworkNameLabel" Text="???" HorizontalExpand="True" HorizontalAlignment="Center"/>
             </BoxContainer>
 
             <!-- Panel that appears on selecting the device -->

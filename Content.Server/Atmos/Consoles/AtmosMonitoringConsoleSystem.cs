@@ -200,6 +200,8 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
             netId == null)
             return null;
 
+        var pipeColor = TryComp<AtmosPipeColorComponent>(uid, out var colorComponent) ? colorComponent.Color : Color.White;
+
         // Name the entity based on its label, if available
         if (TryComp<LabelComponent>(uid, out var label) && label.CurrentLabel != null)
             name = label.CurrentLabel;
@@ -213,7 +215,8 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
         {
             entry = new AtmosMonitoringConsoleEntry(netEnt, GetNetCoordinates(xform.Coordinates), netId.Value, name, address)
             {
-                IsPowered = false
+                IsPowered = false,
+                Color = pipeColor
             };
 
             return entry;
@@ -238,6 +241,7 @@ public sealed class AtmosMonitoringConsoleSystem : SharedAtmosMonitoringConsoleS
             PressureData = pipeNode.Air.Pressure,
             TotalMolData = pipeNode.Air.TotalMoles,
             GasData = gasData,
+            Color = pipeColor
         };
 
         return entry;
