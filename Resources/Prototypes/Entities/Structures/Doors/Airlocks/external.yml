@@ -19,6 +19,8 @@
   - type: PaintableAirlock
     group: External
     department: null
+  - type: Wires
+    layoutId: AirlockExternal
 
 - type: entity
   parent: AirlockExternal

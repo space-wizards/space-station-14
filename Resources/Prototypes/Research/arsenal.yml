@@ -58,8 +58,8 @@
   cost: 5000
   recipeUnlocks:
   - MagazineShotgunBeanbag
-  - BoxShellTranquilizer 
-  - BoxBeanbag 
+  - BoxShellTranquilizer
+  - BoxBeanbag
   - WeaponDisabler
 
 - type: technology
@@ -115,6 +115,18 @@
   - ExplosivePayload
   - ChemicalPayload
 
+- type: technology
+  id: SpecialMeans
+  name: research-technology-special-means
+  icon:
+    sprite: Clothing/Back/Backpacks/electropack.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 1
+  cost: 5000
+  recipeUnlocks:
+  - ClothingBackpackElectropack
+
 # Tier 2
 
 - type: technology
@@ -144,7 +156,7 @@
 - type: technology
   id: BasicShuttleArmament
   name: research-technology-basic-shuttle-armament
-  icon: 
+  icon:
     sprite: Structures/Power/cage_recharger.rsi
     state: full
   discipline: Arsenal
@@ -189,11 +201,11 @@
   cost: 15000
   recipeUnlocks:
   - WeaponLaserSvalinn
-  
+
 - type: technology
   id: AdvancedShuttleWeapon
   name: research-technology-advanced-shuttle-weapon
-  icon: 
+  icon:
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Grenade/grenade_cartridge.rsi
     state: icon
   discipline: Arsenal

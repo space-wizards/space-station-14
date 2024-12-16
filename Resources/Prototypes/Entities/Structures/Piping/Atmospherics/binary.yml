@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: GasPipeBase
   abstract: true
   id: GasBinaryBase
@@ -31,6 +31,14 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: ExtensionCableReceiver
+  - type: LightningTarget
+    priority: 1
+  - type: ApcPowerReceiver
+    powerLoad: 200
+  - type: Rotatable
+  - type: Transform
+    noRot: false
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/pump.rsi
     layers:
@@ -49,10 +57,13 @@
   - type: PipeColorVisuals
   - type: GasPressurePump
     enabled: false
+  - type: ActivatableUI
+    key: enum.GasPressurePumpUiKey.Key
+  - type: ActivatableUIRequiresAnchor
   - type: UserInterface
     interfaces:
-        enum.GasPressurePumpUiKey.Key:
-          type: GasPressurePumpBoundUserInterface
+      enum.GasPressurePumpUiKey.Key:
+        type: GasPressurePumpBoundUserInterface
   - type: Construction
     graph: GasBinary
     node: pressurepump
@@ -71,6 +82,14 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: ExtensionCableReceiver
+    - type: LightningTarget
+      priority: 1
+    - type: ApcPowerReceiver
+      powerLoad: 200
+    - type: Rotatable
+    - type: Transform
+      noRot: false
     - type: Sprite
       sprite: Structures/Piping/Atmospherics/pump.rsi
       layers:
@@ -197,6 +216,7 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: StationAiWhitelist
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/pump.rsi
     layers:

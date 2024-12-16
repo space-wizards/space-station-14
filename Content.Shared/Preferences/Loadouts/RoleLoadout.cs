@@ -233,7 +233,7 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
         if (!protoManager.TryIndex(loadout, out var loadoutProto))
         {
             // Uhh
-            reason = FormattedMessage.FromMarkup("");
+            reason = FormattedMessage.FromMarkupOrThrow("");
             return false;
         }
 

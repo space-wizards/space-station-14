@@ -7,13 +7,13 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
-using Content.Shared.Explosion.EntitySystems;
+
 namespace Content.Server.Explosion.EntitySystems;
 
 // This partial part of the explosion system has all of the functions used to create the actual explosion map.
 // I.e, to get the sets of tiles & intensity values that describe an explosion.
 
-public sealed partial class ExplosionSystem : SharedExplosionSystem
+public sealed partial class ExplosionSystem
 {
     /// <summary>
     ///     This is the main explosion generating function.

@@ -4,6 +4,7 @@
   name: airlock
   description: It opens, it closes, and maybe crushes you.
   components:
+  - type: StationAiWhitelist
   - type: MeleeSound
     soundGroups:
       Brute:
@@ -19,6 +20,7 @@
     - state: closed_unlit
       shader: unshaded
       map: ["enum.DoorVisualLayers.BaseUnlit"]
+      visible: false
     - state: welded
       map: ["enum.WeldableLayers.BaseWelded"]
     - state: bolted_unlit
@@ -29,6 +31,11 @@
       shader: unshaded
     - state: panel_open
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    - state: electrified
+      sprite: Interface/Misc/ai_hud.rsi
+      shader: unshaded
+      visible: false
+      map: ["enum.ElectrifiedLayers.HUD"]
   - type: AnimationPlayer
   - type: Physics
   - type: Fixtures
@@ -71,6 +78,7 @@
   - type: DoorBolt
   - type: Appearance
   - type: WiresVisuals
+  - type: ElectrocutionHUDVisuals
   - type: ApcPowerReceiver
     powerLoad: 20
   - type: ExtensionCableReceiver
@@ -104,6 +112,8 @@
   - type: SpawnOnOverload
   - type: UserInterface
     interfaces:
+      enum.AiUi.Key:
+        type: StationAiBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: Airtight

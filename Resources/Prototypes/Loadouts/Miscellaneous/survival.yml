@@ -64,6 +64,26 @@
     back:
     - BoxHugNitrogen
 
+# Mime
+- type: loadout
+  id: EmergencyOxygenMime
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreather
+  storage:
+    back:
+    - BoxMime
+
+- type: loadout
+  id: EmergencyNitrogenMime
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NitrogenBreather
+  storage:
+    back:
+    - BoxMimeNitrogen
+
+
 # Engineering / Extended
 - type: loadout
   id: EmergencyOxygenExtended
@@ -167,6 +187,23 @@
     proto: OxygenBreather
   equipment:
     suitstorage: OxygenTankFilled
+
+# Species-appropriate Double Emergency Tank in Pocket 1
+- type: loadout
+  id: LoadoutSpeciesPocketDoubleNitrogen
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: NitrogenBreather
+  equipment:
+    pocket1: DoubleEmergencyNitrogenTankFilled
+
+- type: loadout
+  id: LoadoutSpeciesPocketDoubleOxygen
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: OxygenBreather
+  equipment:
+    pocket1: DoubleEmergencyOxygenTankFilled
 
 # Tank Harness
 - type: loadout

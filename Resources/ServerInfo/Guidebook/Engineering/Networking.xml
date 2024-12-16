@@ -3,7 +3,7 @@
   Some devices on the station need to communicate with each other, and they do this by utilizing device networking.
   With networking, machines and devices can send arbitrary data between each other.
   There are multiple networks that get used, such as the wireless and wired network.
-  Each network device has a frequency it receives on. PDAs for example, use the frequency: [color=green]220.2[/color]
+  Each network device has a frequency it receives on. PDAs, for example, use the frequency: [color=green]220.2[/color]
 
   Note: The following operations will require use of the Network Configurator to be performed:
 

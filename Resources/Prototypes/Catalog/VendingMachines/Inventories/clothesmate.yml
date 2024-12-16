@@ -53,6 +53,8 @@
     ClothingUniformJumpskirtCasualPurple: 2
     ClothingUniformJumpsuitCasualRed: 2
     ClothingUniformJumpskirtCasualRed: 2
+    ClothingUniformJumpsuitCasualGreen: 2
+    ClothingUniformJumpskirtCasualGreen: 2
     # DO NOT ADD MORE, USE UNIFORM DYING
     ClothingShoesColorBlack: 8
     ClothingShoesColorBrown: 4
@@ -84,6 +86,7 @@
     ClothingHandsGlovesColorWhite: 2
     ClothingHandsGlovesColorRed: 2
     ClothingHandsGlovesColorBlue: 2
+    ClothingHandsGlovesColorTeal: 2
     ClothingHandsGlovesColorGreen: 2
     ClothingHandsGlovesColorOrange: 2
     ClothingHandsGlovesColorPurple: 2

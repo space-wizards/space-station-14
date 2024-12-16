@@ -56,7 +56,7 @@
   id: OreBananium
   oreEntity: BananiumOre1
   minOreYield: 1
-  maxOreYield: 3
+  maxOreYield: 2
 
 - type: ore
   id: OreDiamond
@@ -83,8 +83,8 @@
 - type: ore
   id: OreArtifactFragment
   oreEntity: ArtifactFragment1
-  minOreYield: 2
-  maxOreYield: 4
+  minOreYield: 1
+  maxOreYield: 3
 
 - type: weightedRandomOre
   id: RandomOreDistributionStandard

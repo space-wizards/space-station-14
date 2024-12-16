@@ -144,41 +144,6 @@
       task: SimpleHostileCompound
 
 - type: entity
-  name: geras
-  description: A geras of a slime - the name is ironic, isn't it?
-  id: MobSlimesGeras
-  parent: BaseMobAdultSlimes
-  categories: [ HideSpawnMenu ]
-  components:
-  # they portable...
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 3
-    baseSprintSpeed: 5 # +.5 from normal movement speed
-  - type: MobThresholds
-    thresholds:
-      0: Alive
-      80: Dead # weak af tho
-  - type: NpcFactionMember
-    factions:
-    - NanoTrasen
-  - type: MultiHandedItem
-  - type: Item
-    size: Huge
-  - type: Sprite
-    color: "#FFFFFF55"
-  - type: MeleeWeapon
-    attackRate: 2
-    damage:
-      types:
-        Blunt: 4
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: blue_adult_slime
-      Dead:
-        Base: blue_adult_slime_dead
-
-- type: entity
   name: blue slime
   id: MobAdultSlimesBlue
   parent: MobAdultSlimes

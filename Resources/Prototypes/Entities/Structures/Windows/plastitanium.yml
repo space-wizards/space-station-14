@@ -1,19 +1,77 @@
 - type: entity
-  id: PlastitaniumWindow
+  id: PlastitaniumWindowBase
+  parent: BaseStructure
+  abstract: true
   name: plastitanium window
-  parent: Window
+  description: Don't smudge up the glass down there.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Window
+  components:
+  - type: RCDDeconstructable
+    deconstructable: false
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        collection: GlassSmack
+  - type: WallMount
+    arc: 360 # interact despite grilles
+  - type: Tag
+    tags:
+      - ForceFixRotations
+      - Window
+  - type: Physics
+    bodyType: Static
+  - type: ExaminableDamage
+    messages: WindowMessages
+  - type: InteractionPopup
+    interactSuccessString: comp-window-knock
+    messagePerceivedByOthers: comp-window-knock
+    interactSuccessSound:
+      path: /Audio/Effects/glass_knock.ogg
+  - type: Appearance
+  - type: StaticPrice
+    price: 100
+  - type: BlockWeather
+
+- type: entity
+  id: PlastitaniumWindowSquareBase
+  abstract: true
+  name: plastitanium window
+  parent: PlastitaniumWindowBase
   components:
   - type: Sprite
     drawdepth: WallTops
     sprite: Structures/Windows/plastitanium_window.rsi
   - type: Icon
     sprite: Structures/Windows/plastitanium_window.rsi
-  - type: Repairable
-    fuelCost: 15
-    doAfterDelay: 3
-  - type: Damageable
-    damageContainer: StructuralInorganic
-    damageModifierSet: RGlass
+    state: full
+  - type: IconSmooth
+    key: windows
+    base: ptwindow
+  - type: Airtight
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb {}
+        mask:
+        - FullTileMask
+        layer:
+        - GlassLayer
+
+- type: entity
+  id: PlastitaniumWindowIndestructible
+  name: plastitanium window
+  parent: PlastitaniumWindowSquareBase
+  suffix: indestructible
+
+- type: entity
+  id: PlastitaniumWindow
+  name: plastitanium window
+  parent: PlastitaniumWindowSquareBase
+  components:
   - type: Destructible
     thresholds:
     - trigger:
@@ -39,38 +97,37 @@
             max: 2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: IconSmooth
-    base: ptwindow
-  - type: Appearance
   - type: DamageVisuals
-    thresholds: [4, 8, 12]
-    damageDivisor: 28
+    thresholds: [5, 10, 20]
+    damageDivisor: 20
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks.rsi
-  - type: StaticPrice
-    price: 100
+  - type: Repairable
+    fuelCost: 15
+    doAfterDelay: 3
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: RGlass
 
 - type: entity
-  parent: ShuttleWindow
-  id: PlastitaniumWindowDiagonal
+  id: PlastitaniumWindowDiagonalBase
+  abstract: true
+  name: plastitanium window
+  parent: PlastitaniumWindowBase
   suffix: diagonal
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Window
   components:
   - type: Sprite
     drawdepth: WallTops
+    sprite: Structures/Windows/plastitanium_window_diagonal.rsi
+    state: state0
+  - type: Icon
     sprite: Structures/Windows/plastitanium_window_diagonal.rsi
     state: state0
   - type: IconSmooth
     mode: Diagonal
     key: windows
     base: state
-  - type: Icon
-    sprite: Structures/Windows/plastitanium_window_diagonal.rsi
-    state: state0
   - type: Fixtures
     fixtures:
       fix1:
@@ -89,6 +146,53 @@
     airBlockedDirection:
     - South
     - East
+
+- type: entity
+  id: PlastitaniumWindowDiagonalIndestructible
+  name: plastitanium window
+  parent: PlastitaniumWindowDiagonalBase
+  suffix: diagonal, indestructible
+
+- type: entity
+  id: PlastitaniumWindowDiagonal
+  name: plastitanium window
+  parent: PlastitaniumWindowDiagonalBase
+  suffix: diagonal
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1000
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WindowShatter
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassReinforced:
+            min: 1
+            max: 2
+          PartRodMetal:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: DamageVisuals
+    thresholds: [5, 10, 20]
+    damageDivisor: 20
+    trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks_diagonal.rsi
+  - type: Repairable
+    fuelCost: 15
+    doAfterDelay: 3
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: RGlass

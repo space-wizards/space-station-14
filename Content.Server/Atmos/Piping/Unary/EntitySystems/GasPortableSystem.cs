@@ -15,6 +15,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
     [UsedImplicitly]
     public sealed class GasPortableSystem : EntitySystem
     {
+        [Dependency] private readonly SharedMapSystem _mapSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
@@ -33,7 +34,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
 
             // If we can't find any ports, cancel the anchoring.
-            if(!FindGasPortIn(transform.GridUid, transform.Coordinates, out _))
+            if (!FindGasPortIn(transform.GridUid, transform.Coordinates, out _))
                 args.Cancel();
         }
 
@@ -43,11 +44,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
 
             portableNode.ConnectionsEnabled = args.Anchored;
-
-            if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
-            {
-                _appearance.SetData(uid, GasPortableVisuals.ConnectedState, args.Anchored, appearance);
-            }
         }
 
         public bool FindGasPortIn(EntityUid? gridId, EntityCoordinates coordinates, [NotNullWhen(true)] out GasPortComponent? port)
@@ -57,7 +53,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!TryComp<MapGridComponent>(gridId, out var grid))
                 return false;
 
-            foreach (var entityUid in grid.GetLocal(coordinates))
+            foreach (var entityUid in _mapSystem.GetLocal(gridId.Value, grid, coordinates))
             {
                 if (EntityManager.TryGetComponent(entityUid, out port))
                 {

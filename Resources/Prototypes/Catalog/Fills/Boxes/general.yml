@@ -85,6 +85,26 @@
         amount: 6
 
 - type: entity
+  name: holiday lighttube box
+  parent: BoxLightbulb
+  id: BoxLighttubeHoliday
+  components:
+  - type: StorageFill
+    contents:
+      - id: LightTubeCrystalRed # Its alternating on purpose for the light replacer.
+      - id: LightTubeCrystalGreen
+      - id: LightTubeCrystalRed
+      - id: LightTubeCrystalGreen
+      - id: LightTubeCrystalRed
+      - id: LightTubeCrystalGreen
+      - id: LightTubeCrystalRed
+      - id: LightTubeCrystalGreen
+      - id: LightTubeCrystalRed
+      - id: LightTubeCrystalGreen
+      - id: LightTubeCrystalRed
+      - id: LightTubeCrystalGreen
+
+- type: entity
   name: PDA box
   parent: BoxCardboard
   id: BoxPDA
@@ -340,7 +360,7 @@
 
 - type: entity
   name: syndicate encryption key box
-  parent: BoxEncryptionKeyPassenger
+  parent: [BoxEncryptionKeyPassenger, BaseSyndicateContraband]
   id: BoxEncryptionKeySyndie
   description: Two syndicate encryption keys for the price of one. Miniaturized for ease of use.
   components:
