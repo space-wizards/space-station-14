@@ -1,89 +1,4 @@
 ﻿Entries:
-- author: Winkarst-cpu
-  changes:
-  - message: The damage dealt by the folded chair can now be inspected.
-    type: Fix
-  id: 7195
-  time: '2024-08-24T00:16:26.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31378
-- author: EmoGarbage404
-  changes:
-  - message: The mining asteroid dungeons now spawn with more equipment, scrap, and
-      treasure in them.
-    type: Add
-  id: 7196
-  time: '2024-08-24T02:06:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31290
-- author: EmoGarbage404
-  changes:
-  - message: The salvage magnet can now pull in large chunks of space debris. Be wary
-      of space carp infestations!
-    type: Add
-  - message: The small asteroids and pieces of debris that generated around the station
-      have been removed.
-    type: Remove
-  - message: The salvage magnet now randomly picks what type of pulls will be offered
-      instead of always having a consistent number of each.
-    type: Tweak
-  id: 7197
-  time: '2024-08-24T02:09:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31113
-- author: Winkarst-cpu
-  changes:
-  - message: Now you can move the pointer in chat by holding down the arrow keys.
-    type: Fix
-  id: 7198
-  time: '2024-08-24T09:37:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31380
-- author: erohrs2
-  changes:
-  - message: Dinnerware Vending Machine access changed from "Service" to "Kitchen".
-    type: Tweak
-  id: 7199
-  time: '2024-08-24T15:56:44.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31225
-- author: DevilishMilk
-  changes:
-  - message: Moths and mothroaches are now able to eat bandanas.
-    type: Tweak
-  id: 7200
-  time: '2024-08-24T23:30:33.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31405
-- author: PJB3005
-  changes:
-  - message: Fix the ChemVend jug names again
-    type: Fix
-  id: 7201
-  time: '2024-08-25T02:02:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31398
-- author: metalgearsloth
-  changes:
-  - message: Fix grids sometimes overlapping on roundstart.
-    type: Fix
-  id: 7202
-  time: '2024-08-25T04:48:29.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31413
-- author: themias
-  changes:
-  - message: Thin firelocks now respect rotation when built
-    type: Fix
-  id: 7203
-  time: '2024-08-25T04:57:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31371
-- author: IProduceWidgets
-  changes:
-  - message: Oasis Voxbox is no longer a pressure bomb. (Thanks Delta)
-    type: Fix
-  id: 7204
-  time: '2024-08-25T05:42:19.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31415
-- author: PopGamer46
-  changes:
-  - message: Security cadets now spawn with jackboots instead of combat boots
-    type: Tweak
-  id: 7205
-  time: '2024-08-25T06:58:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31419
 - author: ArtisticRoomba
   changes:
   - message: Added the greytide stamp. This stamp can be rarely found in maints lockers.
@@ -3918,3 +3833,90 @@
   id: 7694
   time: '2024-12-09T17:12:57.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33505
+- author: ArtisticRoomba
+  changes:
+  - message: SMES now gives visual feedback for if the maintenance panel is open.
+    type: Fix
+  id: 7695
+  time: '2024-12-10T10:00:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33808
+- author: metalgearsloth
+  changes:
+  - message: Fix blank newlines on examine tooltips (e.g. tables).
+    type: Fix
+  id: 7696
+  time: '2024-12-10T13:45:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33813
+- author: slarticodefast
+  changes:
+  - message: Fixed the greytide virus event affecting non-station maps.
+    type: Fix
+  id: 7697
+  time: '2024-12-11T14:30:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33806
+- author: metalgearsloth
+  changes:
+  - message: Fix battery self-recharging items like the antique laser gun from mispredicting.
+    type: Fix
+  id: 7698
+  time: '2024-12-11T15:58:02.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33384
+- author: BramvanZijp
+  changes:
+  - message: The Head of Security's Energy Shotgun has regained its ability to self
+      recharge, but only if the weapon has not been discharged in the last 10 seconds.
+    type: Add
+  - message: The Head of Security's Energy Shotgun now has a varying amount of shots
+      depending on the firing mode.
+    type: Tweak
+  - message: Energy based weapons with differing energy consumption depending on the
+      fire-mode will now update the ammo counter on the HUD when switching between
+      fire-modes.
+    type: Fix
+  id: 7699
+  time: '2024-12-11T16:21:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32104
+- author: Winkarst-cpu
+  changes:
+  - message: The A.P.E. guidebook entry now contains information about Sigma particles
+      and transformation effects.
+    type: Tweak
+  id: 7700
+  time: '2024-12-12T14:24:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33558
+- author: lzk228
+  changes:
+  - message: Disabled evac after declaring nuke war is increased from 15 to 25 minutes.
+    type: Tweak
+  id: 7701
+  time: '2024-12-13T03:10:21.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33628
+- author: LevitatingTree
+  changes:
+  - message: Lizards can now eat the Five Alarm Burger!
+    type: Fix
+  id: 7702
+  time: '2024-12-13T13:53:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33848
+- author: Southbridge
+  changes:
+  - message: Paper documents now support the [mono] tag.
+    type: Add
+  id: 7703
+  time: '2024-12-13T14:24:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33830
+- author: yuitop
+  changes:
+  - message: Anchoring now has higher priority over stashing.
+    type: Tweak
+  id: 7704
+  time: '2024-12-13T23:00:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31779
+- author: Nimfar11
+  changes:
+  - message: Changes the colour of the Borg binary channel to a different shade of
+      blue.
+    type: Tweak
+  id: 7705
+  time: '2024-12-14T16:03:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33841
