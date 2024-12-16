@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: Added blueprints! These can be found by salvagers and inserted into an
-      autolathe in order to unlock new recipes.
-    type: Add
-  id: 7207
-  time: '2024-08-25T12:06:50.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31138
 - author: deltanedas
   changes:
   - message: Fixed borgs losing access when they run out of power.
@@ -3920,3 +3912,10 @@
   id: 7706
   time: '2024-12-16T11:52:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33678
+- author: psykana
+  changes:
+  - message: Zombies can now see initial infected
+    type: Add
+  id: 7707
+  time: '2024-12-16T11:53:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33665
