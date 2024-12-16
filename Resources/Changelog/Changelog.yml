@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Actions now activate on key-down, not key-up.
-    type: Tweak
-  id: 7209
-  time: '2024-08-25T12:36:22.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31191
 - author: PJB3005
   changes:
   - message: PACMAN and SUPERPACMAN now ramp their power output significantly faster.
@@ -3920,3 +3913,11 @@
   id: 7708
   time: '2024-12-16T12:08:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31108
+- author: Beck Thompson
+  changes:
+  - message: Added some new scrap that contains uranium and plasma that can be found
+      when salvaging!
+    type: Add
+  id: 7709
+  time: '2024-12-16T12:33:34.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32198
