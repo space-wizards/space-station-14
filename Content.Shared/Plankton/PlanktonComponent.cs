@@ -24,13 +24,15 @@ public partial class PlanktonComponent : Component
         public PlanktonDiet Diet { get; set; }
         public PlanktonCharacteristics Characteristics { get; set; }
         public float CurrentSize { get; set; }
+        public float CurrentHunger { get; set; }
 
-        public PlanktonSpeciesInstance(PlanktonName speciesName, PlanktonDiet diet, PlanktonCharacteristics characteristics, float currentSize)
+        public PlanktonSpeciesInstance(PlanktonName speciesName, PlanktonDiet diet, PlanktonCharacteristics characteristics, float currentSize, float CurrentHunger)
         {
             SpeciesName = speciesName;
             Diet = diet;
             Characteristics = characteristics;
             CurrentSize = currentSize;
+            CurrentHunger = 100f;
         }
     }
 
