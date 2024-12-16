@@ -225,11 +225,11 @@ namespace Content.Shared.Plankton
         private void ReducePlanktonSize(PlanktonComponent.PlanktonSpeciesInstance planktonInstance)
         {
             float sizeReduction = 0.1f;
-            planktonInstance.Size -= sizeReduction;
+            planktonInstance.CurrentSize -= sizeReduction;
 
-            if (planktonInstance.Size < 0)
+            if (planktonInstance.CurrentSize < 0)
             {
-                planktonInstance.Size = 0;
+                planktonInstance.CurrentSize = 0;
                 Log.Info($"{planktonInstance.SpeciesName} has been wiped out.");
                 // change IsAlive once the framework is finished
             }
