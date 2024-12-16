@@ -109,4 +109,24 @@ public sealed class LatheTest
 
         await pair.CleanReturnAsync();
     }
+
+    [Test]
+    public async Task AllLatheRecipesValidTest()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+
+        var server = pair.Server;
+        var proto = server.ResolveDependency<IPrototypeManager>();
+
+        Assert.Multiple(() =>
+        {
+            foreach (var recipe in proto.EnumeratePrototypes<LatheRecipePrototype>())
+            {
+                if (recipe.Result == null)
+                    Assert.That(recipe.ResultReagents, Is.Not.Null, $"Recipe '{recipe.ID}' has no result or result reagents.");
+            }
+        });
+
+        await pair.CleanReturnAsync();
+    }
 }
