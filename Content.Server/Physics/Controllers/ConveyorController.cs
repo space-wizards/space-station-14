@@ -1,7 +1,6 @@
 using Content.Server.DeviceLinking.Events;
 using Content.Server.DeviceLinking.Systems;
 using Content.Server.Materials;
-using Content.Server.Power.Components;
 using Content.Shared.Conveyor;
 using Content.Shared.Destructible;
 using Content.Shared.Maps;
@@ -10,7 +9,6 @@ using Content.Shared.Physics.Controllers;
 using Content.Shared.Power;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Physics.Controllers;
@@ -20,7 +18,6 @@ public sealed class ConveyorController : SharedConveyorController
     [Dependency] private readonly FixtureSystem _fixtures = default!;
     [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
     [Dependency] private readonly MaterialReclaimerSystem _materialReclaimer = default!;
-    [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
@@ -40,7 +37,7 @@ public sealed class ConveyorController : SharedConveyorController
     {
         _signalSystem.EnsureSinkPorts(uid, component.ReversePort, component.ForwardPort, component.OffPort);
 
-        if (TryComp<PhysicsComponent>(uid, out var physics))
+        if (PhysicsQuery.TryComp(uid, out var physics))
         {
             var shape = new PolygonShape();
             shape.SetAsBox(0.55f, 0.55f);
@@ -87,13 +84,11 @@ public sealed class ConveyorController : SharedConveyorController
 
         else if (args.Port == component.ForwardPort)
         {
-            AwakenConveyor(uid);
             SetState(uid, ConveyorState.Forward, component);
         }
 
         else if (args.Port == component.ReversePort)
         {
-            AwakenConveyor(uid);
             SetState(uid, ConveyorState.Reverse, component);
         }
     }
@@ -108,8 +103,10 @@ public sealed class ConveyorController : SharedConveyorController
 
         component.State = state;
 
-        if (PhysicsQuery.TryComp(uid, out var physics))
-            _broadphase.RegenerateContacts(uid, physics);
+        if (state != ConveyorState.Off)
+        {
+            WakeConveyed(uid);
+        }
 
         UpdateAppearance(uid, component);
         Dirty(uid, component);
@@ -117,7 +114,7 @@ public sealed class ConveyorController : SharedConveyorController
 
     /// <summary>
     /// Awakens sleeping entities on the conveyor belt's tile when it's turned on.
-    /// Fixes an issue where non-hard/sleeping entities refuse to wake up + collide if a belt is turned off and on again.
+    /// Need this as we might activate under CollisionWake entities and need to forcefully check them.
     /// </summary>
     protected override void AwakenConveyor(Entity<TransformComponent?> ent)
     {

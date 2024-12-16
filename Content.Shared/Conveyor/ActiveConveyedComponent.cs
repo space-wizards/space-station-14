@@ -1,10 +1,12 @@
+using Robust.Shared.GameStates;
+
 namespace Content.Shared.Conveyor;
 
 /// <summary>
 /// Indicates this entity is actively being conveyed.
 /// </summary>
-[RegisterComponent]
-public sealed class ActiveConveyedComponent : Component
+[RegisterComponent, NetworkedComponent]
+public sealed partial class ActiveConveyedComponent : Component
 {
 
 }

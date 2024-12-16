@@ -5,13 +5,13 @@ using Content.Shared.Movement.Systems;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Map.Events;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Threading;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Physics.Controllers;
 
@@ -19,12 +19,19 @@ public abstract class SharedConveyorController : VirtualController
 {
     /*
      * Conveyors move entities directly rather than using velocity as we don't want to interfere with other sources
-     * of velocity.
+     * of velocity, e.g. throwing, so we don't have to worry about tracking velocity sources every tick.
+     *
+     * This means we need a slim version of physics to handle this so the below handles:
+     * - Conveyor sleeping
+     * - Conveyor waking
      */
 
+    [Dependency] private   readonly IGameTiming _timing = default!;
     [Dependency] protected readonly IMapManager MapManager = default!;
     [Dependency] private   readonly IParallelManager _parallel = default!;
+    [Dependency] private   readonly CollisionWakeSystem _wake = default!;
     [Dependency] protected readonly EntityLookupSystem Lookup = default!;
+    [Dependency] private   readonly FixtureSystem _fixtures = default!;
     [Dependency] private   readonly RayCastSystem _ray = default!;
     [Dependency] private   readonly SharedGravitySystem _gravity = default!;
     [Dependency] private   readonly SharedMapSystem _maps = default!;
@@ -33,15 +40,12 @@ public abstract class SharedConveyorController : VirtualController
 
     private ConveyorJob _job;
 
-    private EntityQuery<MapGridComponent> _gridQuery;
+    private EntityQuery<ConveyorComponent> _conveyorQuery;
+    private EntityQuery<ConveyedComponent> _conveyedQuery;
     protected EntityQuery<PhysicsComponent> PhysicsQuery;
     protected EntityQuery<TransformComponent> XformQuery;
 
     protected HashSet<EntityUid> Intersecting = new();
-
-    private HashSet<Entity<ConveyorComponent>> _conveyors = new();
-
-    private List<Entity<ConveyorBlockerComponent>> _expiredBlockers = new();
 
     private ValueList<EntityUid> _ents = new();
 
@@ -53,22 +57,21 @@ public abstract class SharedConveyorController : VirtualController
     public override void Initialize()
     {
         _job = new ConveyorJob(this);
-        _gridQuery = GetEntityQuery<MapGridComponent>();
+        _conveyorQuery = GetEntityQuery<ConveyorComponent>();
+        _conveyedQuery = GetEntityQuery<ConveyedComponent>();
         PhysicsQuery = GetEntityQuery<PhysicsComponent>();
         XformQuery = GetEntityQuery<TransformComponent>();
 
         UpdatesAfter.Add(typeof(SharedMoverController));
 
         SubscribeLocalEvent<ConveyedComponent, ComponentStartup>(OnConveyedStartup);
+        SubscribeLocalEvent<ConveyedComponent, ComponentShutdown>(OnConveyedShutdown);
         SubscribeLocalEvent<ConveyedComponent, PhysicsWakeEvent>(OnConveyedWake);
         SubscribeLocalEvent<ConveyedComponent, PhysicsSleepEvent>(OnConveyedSleep);
 
         SubscribeLocalEvent<ConveyorComponent, StartCollideEvent>(OnConveyorStartCollide);
         SubscribeLocalEvent<ConveyorComponent, EndCollideEvent>(OnConveyorEndCollide);
-
-        SubscribeLocalEvent<ConveyorBlockerComponent, ComponentStartup>(OnBlockerStartup);
-        SubscribeLocalEvent<ConveyorBlockerComponent, EntityTerminatingEvent>(OnBlockerShutdown);
-        SubscribeLocalEvent<ConveyorBlockerComponent, MoveEvent>(OnBlockerMove);
+        SubscribeLocalEvent<ConveyorComponent, ComponentStartup>(OnConveyorStartup);
 
         base.Initialize();
     }
@@ -76,126 +79,96 @@ public abstract class SharedConveyorController : VirtualController
     private void OnConveyedStartup(Entity<ConveyedComponent> ent, ref ComponentStartup args)
     {
         EnsureComp<ActiveConveyedComponent>(ent);
+        _wake.SetEnabled(ent.Owner, false);
+    }
+
+    private void OnConveyedShutdown(Entity<ConveyedComponent> ent, ref ComponentShutdown args)
+    {
+        _wake.SetEnabled(ent.Owner, true);
     }
 
     private void OnConveyedWake(Entity<ConveyedComponent> ent, ref PhysicsWakeEvent args)
     {
+        if (_timing.ApplyingState)
+            return;
+
         EnsureComp<ActiveConveyedComponent>(ent);
     }
 
     private void OnConveyedSleep(Entity<ConveyedComponent> ent, ref PhysicsSleepEvent args)
     {
+        if (_timing.ApplyingState)
+            return;
+
         RemCompDeferred<ActiveConveyedComponent>(ent);
     }
 
-    private void OnBlockerStartup(Entity<ConveyorBlockerComponent> ent, ref ComponentStartup args)
+    private void OnConveyorStartup(Entity<ConveyorComponent> ent, ref ComponentStartup args)
     {
-        // If we serialize one that was shutting down then still handle it.
-        if (ent.Comp.Expired)
-        {
-            _expiredBlockers.Add(ent);
-        }
+        AwakenConveyor(ent.Owner);
     }
 
-    private void OnBlockerMove(Entity<ConveyorBlockerComponent> ent, ref MoveEvent args)
-    {
-        ExpireBlocker(ent);
-    }
-
-    private void OnBlockerShutdown(Entity<ConveyorBlockerComponent> ent, ref EntityTerminatingEvent args)
-    {
-        ExpireBlocker(ent);
-    }
-
-    private void ExpireBlocker(Entity<ConveyorBlockerComponent> ent)
-    {
-        var xform = Transform(ent.Owner);
-
-        if (xform.GridUid == null)
-            return;
-
-        // Query for conveyors on neighbouring tiles and awaken entities.
-        _conveyors.Clear();
-        // TODO: Move to physics system
-        var bounds = Lookup.GetAABBNoContainer(ent.Owner, xform.LocalPosition, xform.LocalRotation).Enlarged(0.15f);
-
-        Lookup.GetLocalEntitiesIntersecting(xform.GridUid.Value,
-            bounds,
-            _conveyors,
-            flags: LookupFlags.Static | LookupFlags.Sensors);
-
-        foreach (var conveyor in _conveyors)
-        {
-            if (TerminatingOrDeleted(conveyor.Owner))
-                continue;
-
-            AwakenConveyor(conveyor.Owner);
-        }
-
-        ent.Comp.Expired = true;
-        _expiredBlockers.Add(ent);
-    }
-
+    /// <summary>
+    /// Forcefully awakens all entities near the conveyor.
+    /// </summary>
     protected virtual void AwakenConveyor(Entity<TransformComponent?> ent)
     {
+    }
 
+    /// <summary>
+    /// Wakes all conveyed entities contacting this conveyor.
+    /// </summary>
+    protected void WakeConveyed(EntityUid conveyorUid)
+    {
+        var contacts = PhysicsSystem.GetContacts(conveyorUid);
+
+        while (contacts.MoveNext(out var contact))
+        {
+            var other = contact.OtherEnt(conveyorUid);
+
+            if (_conveyedQuery.HasComp(other))
+            {
+                PhysicsSystem.WakeBody(other);
+            }
+        }
     }
 
     private void OnConveyorStartCollide(EntityUid uid, ConveyorComponent component, ref StartCollideEvent args)
     {
         var otherUid = args.OtherEntity;
 
-        if (!args.OtherFixture.Hard || args.OtherBody.BodyType == BodyType.Static || component.State == ConveyorState.Off)
+        if (!args.OtherFixture.Hard || args.OtherBody.BodyType == BodyType.Static)
             return;
 
-        var conveyed = EnsureComp<ConveyedComponent>(otherUid);
-
-        if (conveyed.Colliding.Contains(uid))
-            return;
-
-        conveyed.Colliding.Add(uid);
-        Dirty(otherUid, conveyed);
+        EnsureComp<ConveyedComponent>(otherUid);
     }
 
     private void OnConveyorEndCollide(Entity<ConveyorComponent> ent, ref EndCollideEvent args)
     {
-        if (!TryComp(args.OtherEntity, out ConveyedComponent? conveyed))
+        if (!_conveyedQuery.HasComp(args.OtherEntity))
             return;
 
-        if (!conveyed.Colliding.Remove(ent.Owner))
+        if (IsConveyed(args.OtherEntity))
             return;
 
-        Dirty(args.OtherEntity, conveyed);
+        RemCompDeferred<ConveyedComponent>(args.OtherEntity);
+        RemCompDeferred<ActiveConveyedComponent>(args.OtherEntity);
     }
 
     public override void UpdateBeforeSolve(bool prediction, float frameTime)
     {
         base.UpdateBeforeSolve(prediction, frameTime);
 
-        foreach (var expired in _expiredBlockers)
-        {
-            RemComp<ConveyorBlockerComponent>(expired);
-        }
-
-        var blockerQuery = EntityQueryEnumerator<ConveyorBlockerComponent>();
-
-        _expiredBlockers.Clear();
-
         _job.FrameTime = frameTime;
         _job.Prediction = prediction;
         _job.Conveyed.Clear();
         _ents.Clear();
 
-        var query = EntityQueryEnumerator<ConveyedComponent, FixturesComponent, PhysicsComponent, TransformComponent>();
+        var query = EntityQueryEnumerator<ActiveConveyedComponent, ConveyedComponent, FixturesComponent, PhysicsComponent>();
 
-        while (query.MoveNext(out var uid, out var comp, out var fixtures, out var body, out var xform))
+        while (query.MoveNext(out var uid, out _, out var comp, out var fixtures, out var body))
         {
-            _job.Conveyed.Add(((uid, comp, fixtures, body, xform), Vector2.Zero, false));
-        }
-
-        for (var i = _job.Conveyors.Count; i < _job.Conveyed.Count; i++)
-        {
-            _job.Conveyors.Add(new HashSet<Entity<ConveyorComponent>>());
+            _job.Conveyed.Add(((uid, comp, fixtures, body, Transform(uid)), Vector2.Zero, false));
         }
 
         _parallel.ProcessNow(_job, _job.Conveyed.Count);
@@ -226,12 +199,16 @@ public abstract class SharedConveyorController : VirtualController
 
         foreach (var ent in _ents)
         {
+            RemComp<ActiveConveyedComponent>(ent);
             RemComp<ConveyedComponent>(ent);
         }
     }
 
+    /// <summary>
+    /// Gets the conveying direction for an entity.
+    /// </summary>
+    /// <returns>False if we should no longer be considered conveyed</returns>
     private bool TryConvey(Entity<ConveyedComponent, FixturesComponent, PhysicsComponent, TransformComponent> entity,
-        HashSet<Entity<ConveyorComponent>> conveyors,
         bool prediction,
         float frameTime,
         out Vector2 direction)
@@ -240,33 +217,13 @@ public abstract class SharedConveyorController : VirtualController
         var fixtures = entity.Comp2;
         var physics = entity.Comp3;
         var xform = entity.Comp4;
-        var contacting = entity.Comp1.Colliding.Count > 0;
-
-        if (!contacting)
-            return false;
 
         // Client moment
         if (!physics.Predict && prediction)
             return true;
 
-        if (physics.BodyType == BodyType.Static)
-            return false;
-
-        if (!_gridQuery.TryComp(xform.GridUid, out var grid))
+        if (xform.GridUid == null)
             return true;
-
-        var gridTile = _maps.TileIndicesFor(xform.GridUid.Value, grid, xform.Coordinates);
-
-        // Check for any conveyors on the attached tile.
-        // If your conveyor doesn't work at all then you may need Static here as a flag
-        Lookup.GetLocalEntitiesIntersecting(xform.GridUid.Value, gridTile, conveyors, gridComp: grid,
-            flags: LookupFlags.Static | LookupFlags.Sensors | LookupFlags.Approximate);
-
-        // No more conveyors.
-        if (conveyors.Count == 0)
-        {
-            return false;
-        }
 
         if (physics.BodyStatus == BodyStatus.InAir ||
             _gravity.IsWeightless(entity, physics, xform))
@@ -276,13 +233,29 @@ public abstract class SharedConveyorController : VirtualController
 
         Entity<ConveyorComponent> bestConveyor = default;
         var bestSpeed = 0f;
+        var contacts = PhysicsSystem.GetContacts((entity.Owner, fixtures));
+        var worldPos = TransformSystem.GetWorldPosition(entity.Owner);
 
-        foreach (var conveyor in conveyors)
+        while (contacts.MoveNext(out var contact))
         {
-            if (conveyor.Comp.Speed > bestSpeed && CanRun(conveyor))
+            if (!contact.IsTouching)
+                continue;
+
+            // Check if our center is over their fixture otherwise ignore it.
+            var other = contact.OtherEnt(entity.Owner);
+            var otherFixture = contact.OtherFixture(entity.Owner);
+            var otherWorldPos = PhysicsSystem.GetPhysicsTransform(other);
+
+            if (!_fixtures.TestPoint(otherFixture.Item2.Shape, otherWorldPos, worldPos))
+                continue;
+
+            if (!_conveyorQuery.TryComp(other, out var conveyor))
+                continue;
+
+            if (conveyor.Speed > bestSpeed && CanRun(conveyor))
             {
-                bestSpeed = conveyor.Comp.Speed;
-                bestConveyor = conveyor;
+                bestSpeed = conveyor.Speed;
+                bestConveyor = (other, conveyor);
             }
         }
 
@@ -332,8 +305,7 @@ public abstract class SharedConveyorController : VirtualController
                 if (contact.IsTouching && contact.Hard && Vector2.Dot(conveyorDirection, normal) > DirectionAmount)
                 {
                     direction = Vector2.Zero;
-                    AddBlocker(contact.OtherEnt(entity.Owner));
-                    return false;
+                    return true;
                 }
             }
 
@@ -358,10 +330,7 @@ public abstract class SharedConveyorController : VirtualController
                     {
                         // Can't go all the way so move partially and stop.
                         direction *= fraction;
-
-                        AddBlocker(uid);
-
-                        return false;
+                        return true;
                     }
                 }
             }
@@ -369,18 +338,6 @@ public abstract class SharedConveyorController : VirtualController
 
         return true;
     }
-
-    private void AddBlocker(EntityUid uid)
-    {
-        var blocker = EnsureComp<ConveyorBlockerComponent>(uid);
-
-        if (blocker.Expired)
-        {
-            blocker.Expired = false;
-            _expiredBlockers.Remove((uid, blocker));
-        }
-    }
-
     private static Vector2 Convey(Vector2 direction, float speed, float frameTime, Vector2 itemRelative)
     {
         if (speed == 0 || direction.Length() == 0)
@@ -424,7 +381,6 @@ public abstract class SharedConveyorController : VirtualController
         public int BatchSize => 16;
 
         public List<(Entity<ConveyedComponent, FixturesComponent, PhysicsComponent, TransformComponent> Entity, Vector2 Direction, bool Result)> Conveyed = new();
-        public List<HashSet<Entity<ConveyorComponent>>> Conveyors = new();
 
         public SharedConveyorController System;
 
@@ -438,16 +394,37 @@ public abstract class SharedConveyorController : VirtualController
 
         public void Execute(int index)
         {
-            var conveyors = Conveyors[index];
-            conveyors.Clear();
-
             var convey = Conveyed[index];
 
             var result = System.TryConvey(
                 (convey.Entity.Owner, convey.Entity.Comp1, convey.Entity.Comp2, convey.Entity.Comp3, convey.Entity.Comp4),
-                conveyors, Prediction, FrameTime, out var direction);
+                Prediction, FrameTime, out var direction);
 
             Conveyed[index] = (convey.Entity, direction, result);
         }
+    }
+
+    /// <summary>
+    /// Checks an entity's contacts to see if it's still being conveyed.
+    /// </summary>
+    private bool IsConveyed(Entity<FixturesComponent?> ent)
+    {
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return false;
+
+        var contacts = PhysicsSystem.GetContacts(ent.Owner);
+
+        while (contacts.MoveNext(out var contact))
+        {
+            if (contact.Deleting)
+                continue;
+
+            var other = contact.OtherEnt(ent.Owner);
+
+            if (_conveyorQuery.HasComp(other))
+                return true;
+        }
+
+        return false;
     }
 }
