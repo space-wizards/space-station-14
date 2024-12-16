@@ -30,7 +30,7 @@
   - type: DeathMatchRule
     rewardSpawns:
     - id: HealingToolbox
-    - id: ClothingOuterArmorBasicSlim
+    - id: ClothingOuterArmorBasic
       orGroup: loot
     - id: ClothingHeadHelmetBasic
       orGroup: loot
