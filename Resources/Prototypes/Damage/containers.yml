@@ -56,7 +56,7 @@
 - type: damageContainer
   id: ManifestedSpirit
   supportedGroups:
-    - Spiritual
+    - Supernatural
     - Brute
   supportedTypes:
     - Heat
@@ -64,11 +64,11 @@
     - Caustic
 
 - type: damageContainer
-  id: BiologicalSpiritual
+  id: BiologicalSupernatural
   supportedGroups:
   - Brute
   - Burn
   - Toxin
   - Airloss
   - Genetic
-  - Spiritual
+  - Supernatural
