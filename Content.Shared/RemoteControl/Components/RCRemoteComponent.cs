@@ -8,7 +8,6 @@ namespace Content.Shared.RemoteControl.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class RCRemoteComponent : Component
 {
-
     /// <summary>
     /// Popup to show when the entity bound to this remote is not accessible.
     /// Happens when the entity is Crit or Dead.
