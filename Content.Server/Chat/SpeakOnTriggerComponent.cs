@@ -1,6 +1,5 @@
 using Content.Shared.Dataset;
 using Robust.Shared.Prototypes;
-using Content.Shared.DeviceLinking;
 
 namespace Content.Server.Chat;
 
