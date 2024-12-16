@@ -1,13 +1,12 @@
 using Content.Server.Explosion.EntitySystems;
+using Content.Shared.LandMines;
 using Content.Shared.Popups;
 using Content.Shared.StepTrigger.Systems;
-using Content.Shared.Verbs;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.LandMines;
 
-public sealed class LandMineSystem : EntitySystem
+public sealed class LandMineSystem : SharedLandMineSystem
 {
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
@@ -15,32 +14,23 @@ public sealed class LandMineSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<LandMineComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAltVerbs);
+        base.Initialize();
         SubscribeLocalEvent<LandMineComponent, StepTriggeredOnEvent>(HandleStepOnTriggered);
         SubscribeLocalEvent<LandMineComponent, StepTriggeredOffEvent>(HandleStepOffTriggered);
 
         SubscribeLocalEvent<LandMineComponent, StepTriggerAttemptEvent>(HandleStepTriggerAttempt);
     }
 
-    /// <summary>
-    /// Adds a verb to prime the landmine to activate if somebody steps on it.
-    /// </summary>
-    private void OnGetAltVerbs(EntityUid uid, LandMineComponent component, GetVerbsEvent<AlternativeVerb> args)
+    public override void Arm(EntityUid uid, LandMineComponent component)
     {
-        if (!args.CanInteract || !args.CanAccess || args.Hands == null)
-            return;
-
-        args.Verbs.Add(new AlternativeVerb
-        {
-            Text = Loc.GetString("land-mine-verb-begin"),
-            Disabled = component is { Armed: true },
-            Priority = 10,
-            Act = () =>
-            {
-                component.Armed = true;
-            },
-        });
+        component.Armed = true;
     }
+
+    public override bool IsArmed(LandMineComponent component)
+    {
+        return component.Armed;
+    }
+
 
     private void HandleStepOnTriggered(EntityUid uid, LandMineComponent component, ref StepTriggeredOnEvent args)
     {
@@ -68,4 +58,5 @@ public sealed class LandMineSystem : EntitySystem
     {
         args.Continue = true;
     }
+
 }

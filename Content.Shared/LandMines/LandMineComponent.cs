@@ -1,6 +1,6 @@
 using Robust.Shared.Audio;
 
-namespace Content.Server.LandMines;
+namespace Content.Shared.LandMines;
 
 [RegisterComponent]
 public sealed partial class LandMineComponent : Component
