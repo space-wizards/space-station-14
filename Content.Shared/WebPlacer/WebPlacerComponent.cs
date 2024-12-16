@@ -3,7 +3,6 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.WebPlacer;
 
@@ -17,20 +16,20 @@ public sealed partial class WebPlacerComponent : Component
     /// <summary>
     /// Id of the entity getting spawned.
     /// </summary>
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string WebPrototype = "SpiderWeb";
+    [DataField]
+    public EntProtoId WebPrototype = "SpiderWeb";
 
     /// <summary>
     /// Id of the action that will be given.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    [DataField(customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string SpawnWebAction = "ActionSpiderWeb";
+    [DataField]
+    public EntProtoId SpawnWebAction = "ActionSpiderWeb";
 
     /// <summary>
     /// Action given to the player.
     /// </summary>
-    [ViewVariables]
+    //[ViewVariables]
     public EntityUid? ActionEntity;
 
     /// <summary>
@@ -69,9 +68,12 @@ public sealed partial class WebPlacerComponent : Component
     };
 
     // Localization files for popup text.
-    [DataField] public LocId MessageOffGrid = "spider-web-action-nogrid";
-    [DataField] public LocId MessageSuccess = "spider-web-action-success";
-    [DataField] public LocId MessageFail = "spider-web-action-fail";
+    [DataField]
+    public LocId MessageOffGrid = "spider-web-action-nogrid";
+    [DataField]
+    public LocId MessageSuccess = "spider-web-action-success";
+    [DataField]
+    public LocId MessageFail = "spider-web-action-fail";
 }
 
 public sealed partial class SpiderWebActionEvent : InstantActionEvent
