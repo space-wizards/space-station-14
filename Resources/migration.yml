@@ -485,6 +485,9 @@ CrateCrewMonitoringBoards: CrateCrewMonitoring
 # 2024-11-25
 CrateSlimepersonLifeSupport: CrateNitrogenInternals
 
+# 2024-12-01
+DungeonMasterCircuitBoard: GameMasterCircuitBoard
+
 # 2024-12-12
 FloraRockSolid01: FloraRockSolid
 FloraRockSolid02: FloraRockSolid
@@ -534,6 +537,3 @@ LightTree03: LightTree
 LightTree04: LightTree
 LightTree05: LightTree
 LightTree06: LightTree
-
-# 2024-12-16
-DungeonMasterCircuitBoard: GameMasterCircuitBoard
