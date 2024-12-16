@@ -197,53 +197,6 @@ namespace Content.Shared.Plankton
         }
     }
 }
-           private void PerformAggressionCheck()
-        {
-            // Loop through all Plankton entities
-            foreach (var planktonEntity in EntityManager.EntityQuery<PlanktonComponent>())
-            {
-                var component = planktonEntity.Value;
-
-                // Find all aggressive plankton instances
-                var aggressivePlanktonInstances = component.SpeciesInstances
-                    .Where(inst => (inst.Characteristics & PlanktonComponent.PlanktonCharacteristics.Aggressive) != 0)
-                    .ToList();
-
-                if (aggressivePlanktonInstances.Any())
-                {
-                    // For each aggressive plankton instance, reduce the size of all others
-                    foreach (var aggressivePlankton in aggressivePlanktonInstances)
-                    {
-                        foreach (var otherPlankton in component.SpeciesInstances)
-                        {
-                            // Don't reduce the size of the plankton instance itself
-                            if (aggressivePlankton == otherPlankton) continue;
-
-                            // Reduce the size of the other plankton instances
-                            ReducePlanktonSize(otherPlankton);
-                        }
-                    }
-                }
-            }
-        }
-
-        private void ReducePlanktonSize(PlanktonComponent.PlanktonSpeciesInstance planktonInstance)
-        {
-            // Example size reduction: decrease size by a fixed amount or percentage
-            float sizeReduction = 0.1f; // 10% reduction in size
-            planktonInstance.Size -= sizeReduction;
-
-            // Ensure size does not go below 0
-            if (planktonInstance.Size < 0)
-            {
-                planktonInstance.Size = 0;
-            }
-
-            Log.Info($"Reduced size of {planktonInstance.SpeciesName} to {planktonInstance.Size}");
-        }
-    }
-
-
         private void PerformAggressionCheck()
         {
             foreach (var planktonEntity in EntityManager.EntityQuery<PlanktonComponent>())
@@ -270,7 +223,7 @@ namespace Content.Shared.Plankton
         }
 
         private void ReducePlanktonSize(PlanktonComponent.PlanktonSpeciesInstance planktonInstance)
-        {e
+        {
             float sizeReduction = 0.1f;
             planktonInstance.Size -= sizeReduction;
 
