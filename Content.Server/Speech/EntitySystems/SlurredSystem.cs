@@ -61,9 +61,11 @@ public sealed class SlurredSystem : SharedSlurredSystem
         // This is pretty much ported from TG.
         foreach (var character in message)
         {
+            var modChar = character;
+
             if (_random.Prob(scale / 3f))
             {
-                var lower = char.ToLowerInvariant(character);
+                var lower = char.ToLowerInvariant(modChar);
                 var newString = lower switch
                 {
                     'o' => "u",
@@ -71,7 +73,7 @@ public sealed class SlurredSystem : SharedSlurredSystem
                     'a' => "ah",
                     'u' => "oo",
                     'c' => "k",
-                    _ => $"{character}",
+                    _ => $"{modChar}",
                 };
 
                 sb.Append(newString);
@@ -79,28 +81,42 @@ public sealed class SlurredSystem : SharedSlurredSystem
 
             if (_random.Prob(scale / 20f))
             {
-                if (character == ' ')
+                if (modChar == ' ')
                 {
                     sb.Append(Loc.GetString("slur-accent-confused"));
                 }
-                else if (character == '.')
+                else if (modChar == '.')
                 {
                     sb.Append(' ');
                     sb.Append(Loc.GetString("slur-accent-burp"));
                 }
             }
 
+            // Change lowercase character to uppercase and vice versa
+            if (_random.Prob(scale / 3f))
+            {
+                if (char.IsLower(modChar))
+                {
+                    modChar = char.ToUpper(modChar);
+                }
+                else if (char.IsUpper(modChar))
+                {
+                    modChar = char.ToLower(modChar);
+                }
+            }
+
+
             if (!_random.Prob(scale * 3/20))
             {
-                sb.Append(character);
+                sb.Append(modChar);
                 continue;
             }
 
             var next = _random.Next(1, 3) switch
             {
                 1 => "'",
-                2 => $"{character}{character}",
-                _ => $"{character}{character}{character}",
+                2 => $"{modChar}{modChar}",
+                _ => $"{modChar}{modChar}{modChar}",
             };
 
             sb.Append(next);
