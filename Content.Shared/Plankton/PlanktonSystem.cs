@@ -232,8 +232,8 @@ namespace Content.Shared.Plankton
                 Log.Info($"All dead plankton have been eaten.");
                 // change IsAlive once the framework is finished
             }
-            planktonInstance.CurrentSize += sizeGrowth;
-            Log.Info($"Increased size of {planktonInstance.SpeciesName} to {planktonInstance.CurrentSize} from decomposing food."};
+            planktonInstance.CurrentHunger += sizeGrowth;
+            Log.Info($"Increased satiation of {planktonInstance.SpeciesName} to {planktonInstance.CurrentHunger} from decomposing food. There is {component.DeadPlankton) food left."};
             
         }
         
