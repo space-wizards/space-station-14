@@ -1073,3 +1073,11 @@ Entries:
   id: 152
   time: '2024-12-15T11:11:00.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/commit/ad5a167bf82455712e46f3b4db25b048f6ab328e
+- author: Miracula
+  changes:
+  - message: Added cloud emotes
+    type: Add
+  id: 153
+  time: '2024-12-16T10:36:57.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/155
+
