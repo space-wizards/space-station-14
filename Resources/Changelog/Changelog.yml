@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed energy sword visuals.
-    type: Fix
-  id: 7216
-  time: '2024-08-26T13:00:52.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31478
 - author: CuteBoi
   changes:
   - message: Replaced small fans on most shuttles with directional fans.
@@ -3925,3 +3918,11 @@
   id: 7715
   time: '2024-12-16T15:33:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32755
+- author: Vexerot
+  changes:
+  - message: Security Belts and Security Carriers now provide 10% reduced explosion
+      damage to contents.
+    type: Tweak
+  id: 7716
+  time: '2024-12-16T16:27:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33253
