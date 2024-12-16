@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Cheap sunglasses, a black folder, a bar flask, and a newton cradle are
-      now available as common loadout items.
-    type: Add
-  - message: Adjusted the title of loadout windows.
-    type: Tweak
-  id: 246
-  time: '2024-09-22T16:58:00.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/324
 - author: Sha-Seng
   changes:
   - message: Captain now has a whole 50-hour prestige set (functionally identical!)
@@ -4530,3 +4520,10 @@
   id: 745
   time: '2024-12-15T14:54:56.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1036
+- author: EpicToast
+  changes:
+  - message: Core's vox box no longer siphons all the oxygen from the station.
+    type: Fix
+  id: 746
+  time: '2024-12-16T15:17:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1039
