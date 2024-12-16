@@ -1,0 +1,21 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Wit Studio - My friend Nokotan",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "plushie_deer_no_eyebrows"
+      },
+      {
+        "name": "plushie_deer_eyebrows"
+      },
+      {
+        "name": "vika_plush"
+      }
+	  
+    ]
+}

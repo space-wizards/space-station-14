@@ -1,0 +1,98 @@
+- type: entity
+  parent: BasePlushie
+  id: DeerPlushie
+  name: deer plushie
+  description: A very ordinary deer plush, nothing unordinary about it.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/toys.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/toys.rsi
+    state: plushie_deer_no_eyebrows
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Starlight/Items/Toys/deerplush_nun.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Starlight/Items/Toys/deerplush_nun.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Starlight/Items/Toys/deerplush_nun.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/_Starlight/Items/Toys/deerplush_nun.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/_Starlight/Items/Toys/deerplush_nun.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/_Starlight/Items/Toys/deerplush_nun.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: OddDeerPlushie
+  name: odd deer plushie
+  description: Shika noko noko noko koshi tan tan~
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/toys.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/toys.rsi
+    state: plushie_deer_eyebrows
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Starlight/Items/Toys/deerplush_nun.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Starlight/Items/Toys/deerplush_nun.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Starlight/Items/Toys/deerplush_nun.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/_Starlight/Items/Toys/deerplush_nun.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/_Starlight/Items/Toys/deerplush_nun.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/_Starlight/Items/Toys/deerplush_nun.ogg
+
+- type: entity
+  parent: BasePlushie
+  id: VikaPviPlushie
+  name: vika plushie
+  description: Worst Centcomm Operator ever.
+  components:
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Fun/toys.rsi
+  - type: Sprite
+    sprite: _Starlight/Objects/Fun/toys.rsi
+    state: vika_plush
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Starlight/Items/Toys/dogbark_vika.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Starlight/Items/Toys/dogbark_vika.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Starlight/Items/Toys/dogbark_vika.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/_Starlight/Items/Toys/dogbark_vika.ogg
+  - type: Food
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/_Starlight/Items/Toys/dogbark_vika.ogg
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit:
+      path: /Audio/_Starlight/Items/Toys/dogbark_vika.ogg
