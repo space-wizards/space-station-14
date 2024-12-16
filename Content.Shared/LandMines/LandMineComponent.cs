@@ -16,5 +16,10 @@ public sealed partial class LandMineComponent : Component
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool Armed = false;
+}
 
+[Serializable, NetSerializable]
+public enum LandMineVisuals
+{
+    Armed,
 }

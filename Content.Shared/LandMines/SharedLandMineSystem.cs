@@ -4,6 +4,8 @@ namespace Content.Shared.LandMines;
 
 public abstract class SharedLandMineSystem : EntitySystem
 {
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+
     public override void Initialize()
     {
         SubscribeLocalEvent<LandMineComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAltVerbs);
@@ -25,11 +27,19 @@ public abstract class SharedLandMineSystem : EntitySystem
             Act = () =>
             {
                 Arm(uid, component);
+                ChangeLandMineVisuals(uid, component);
             },
         });
     }
 
     public abstract void Arm(EntityUid uid, LandMineComponent component);
 
-    public abstract bool IsArmed(LandMineComponent component);
+
+    private void ChangeLandMineVisuals(EntityUid uid, LandMineComponent component)
+    {
+        if (!TryComp<AppearanceComponent>(uid, out var appearance))
+            return;
+
+        _appearance.SetData(uid, LandMineVisuals.Armed, component.Armed, appearance);
+    }
 }

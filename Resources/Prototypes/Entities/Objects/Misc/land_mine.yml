@@ -22,7 +22,21 @@
   - type: Sprite
     drawdepth: Items
     sprite: Objects/Misc/landmine.rsi
-    state: landmine
+    state: landmine-inactive
+    layers:
+      - state: landmine-inactive
+        map: [ "disarmed" ]
+        visible: true
+      - state: landmine
+        map: [ "armed" ]
+        visible: false
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.LandMineVisuals.Armed:
+        armed:
+          True: {visible: true}
+          False: {visible: false}
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -67,6 +81,22 @@
   parent: BaseLandMine
   id: LandMineExplosive
   components:
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 10
+    intensitySlope: 3
+    totalIntensity: 120 # about a ~4 tile radius
+    canCreateVacuum: false
+
+
+- type: entity
+  name: explosive mine (Armed)
+  parent: BaseLandMine
+  id: LandMineExplosiveArmed
+  components:
+  - type: LandMine
+    armed: true
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
