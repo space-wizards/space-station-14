@@ -193,11 +193,6 @@ public sealed class TemperatureSystem : EntitySystem
         float idealTemp;
         float coefficient;
 
-        // I'm 99% sure that there is a better way to do this, but i've already spent 3 hours trying to figure it out, and it works as intended.
-        var ev = new ModifyChangedTemperatureEvent(1.0f);
-        RaiseLocalEvent(uid, ev);
-        coefficient = ev.TemperatureDelta;
-    
         if (!TryComp<TemperatureComponent>(uid, out var temperature))
         {
             _alerts.ClearAlertCategory(uid, TemperatureAlertCategory);
@@ -210,11 +205,20 @@ public sealed class TemperatureSystem : EntitySystem
         {
             type = temperature.ColdAlert;
             threshold = temperature.PreferredTemperatureMin;
+            
+            // I'm 99% sure that there is a better way to do this, but i've already spent 3 hours trying to figure it out, and it works as intended.
+            var ev = new ModifyChangedTemperatureEvent(-1.0f);
+            RaiseLocalEvent(uid, ev);
+            coefficient = ev.TemperatureDelta * -1;
         }
         else
         {
             type = temperature.HotAlert;
             threshold = temperature.PreferredTemperatureMax;
+
+            var ev = new ModifyChangedTemperatureEvent(1.0f);
+            RaiseLocalEvent(uid, ev);
+            coefficient = ev.TemperatureDelta;
         }
 
         // Calculates a scale where 1.0 is the ideal temperature and 0.0 is where temperature damage begins
