@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Blackern5000
-  changes:
-  - message: Space scanning technology is now T1 industrial, this includes cyborg
-      GPS modules and handheld mass scanners.
-    type: Tweak
-  id: 7211
-  time: '2024-08-25T16:47:11.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31321
 - author: ShadowCommander
   changes:
   - message: Rollerbeds no longer buckle yourself when clicked on.
@@ -3923,3 +3915,10 @@
   id: 7710
   time: '2024-12-16T12:53:22.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32905
+- author: thetolbean
+  changes:
+  - message: Teleporting or dashing now causes you to stop pulling objects.
+    type: Tweak
+  id: 7711
+  time: '2024-12-16T14:09:20.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33252
