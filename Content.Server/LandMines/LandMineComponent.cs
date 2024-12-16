@@ -15,6 +15,6 @@ public sealed partial class LandMineComponent : Component
     /// Is the land mine armed and dangerous?
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public bool Armed;
+    public bool Armed = false;
 
 }
