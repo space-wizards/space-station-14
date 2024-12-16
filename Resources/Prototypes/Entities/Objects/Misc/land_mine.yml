@@ -78,10 +78,22 @@
 
 - type: entity
   name: explosive mine
+  suffix: armed
   parent: BaseLandMine
   id: LandMineExplosive
   components:
   - type: ExplodeOnTrigger
+  - type: LandMine
+    armed: True
+  - type: Sprite
+    state: landmine
+    layers:
+    - state: landmine-inactive
+      map: [ "disarmed" ]
+      visible: false
+    - state: landmine
+      map: [ "armed" ]
+      visible: true
   - type: Explosive
     explosionType: Default
     maxIntensity: 10
@@ -91,12 +103,13 @@
 
 
 - type: entity
-  name: explosive mine (Armed)
+  name: explosive mine
+  suffix: unarmed
   parent: BaseLandMine
-  id: LandMineExplosiveArmed
+  id: LandMineExplosiveUnarmed
   components:
   - type: LandMine
-    armed: true
+    armed: false
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
