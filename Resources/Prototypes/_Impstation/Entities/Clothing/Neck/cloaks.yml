@@ -82,7 +82,7 @@
     stealGroup: HeadCloak
 
 - type: entity
-  parent: [ClothingNeckBase]
+  parent: [ClothingNeckBase, DecapoidEmpireContraband]
   id: ClothingNeckCloakDecapoid
   name: outrigger's cloak
   description: A heat-shielded cloak for long walks in a vacuum. It's embroided with a glyph depicting a planet being broken in half.
