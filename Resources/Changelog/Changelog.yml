@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: ShadowCommander
-  changes:
-  - message: Rollerbeds no longer buckle yourself when clicked on.
-    type: Remove
-  id: 7212
-  time: '2024-08-25T17:09:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30001
 - author: lzk228
   changes:
   - message: Cotton dough added to the game! Check the guidebook for new recipes.
@@ -3922,3 +3915,10 @@
   id: 7711
   time: '2024-12-16T14:09:20.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33252
+- author: KieueCaprie
+  changes:
+  - message: The lizard plushie will now be visible when held in your hands!
+    type: Add
+  id: 7712
+  time: '2024-12-16T14:14:51.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32583
