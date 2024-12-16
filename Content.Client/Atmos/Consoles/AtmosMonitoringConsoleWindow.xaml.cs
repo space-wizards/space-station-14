@@ -29,6 +29,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
 
     private bool _autoScrollActive = false;
 
+    private readonly Color _unfocusedDeviceColor = Color.DimGray;
     private ProtoId<NavMapBlipPrototype> _navMapConsoleProtoId = "NavMapConsole";
     private ProtoId<NavMapBlipPrototype> _gasPipeSensorProtoId = "GasPipeSensor";
 
@@ -231,7 +232,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
         var color = proto.Color * metaData.PipeColor;
 
         if (_focusNetId != null && metaData.NetId != _focusNetId)
-            color *= Color.DimGray;
+            color *= _unfocusedDeviceColor;
 
         var blinks = proto.Blinks || _focusEntity == metaData.NetEntity;
         var coords = _entManager.GetCoordinates(metaData.NetCoordinates);

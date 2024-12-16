@@ -18,6 +18,9 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
 
     private const int ChunkSize = 4;
 
+    private readonly Color _basePipeNetColor = Color.LightGray;
+    private readonly Color _unfocusedPipeNetColor = Color.DimGray;
+
     private List<AtmosMonitoringConsoleLine> _atmosPipeNetwork = new();
     private Dictionary<Color, Color> _sRGBLookUp = new Dictionary<Color, Color>();
 
@@ -158,10 +161,10 @@ public sealed partial class AtmosMonitoringConsoleNavMapControl : NavMapControl
             foreach (var ((netId, hexColor), atmosPipeData) in chunk.AtmosPipeData)
             {
                 // Determine the correct coloration for the pipe
-                var color = Color.FromHex(hexColor) * Color.LightGray;
+                var color = Color.FromHex(hexColor) * _basePipeNetColor;
 
                 if (FocusNetId != null && FocusNetId != netId)
-                    color *= Color.DimGray;
+                    color *= _unfocusedPipeNetColor;
 
                 // Get the associated line look up tables
                 if (!_horizLines.TryGetValue(color, out var horizLines))
