@@ -72,10 +72,15 @@
       Dead:
         Base: dead
   - type: GhostTakeoverAvailable
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: true
     makeSentient: true
-    name: Cluwne Beast
-    description: Hide in the shadows, attack anything that moves and turn the crew into cluwnes.
-    rules: You are an antagonist, stalk your prey and turn the crew into friendly cluwnes!
+    name: ghost-role-information-cluwnebeast-name
+    description: ghost-role-information-cluwnebeast-description
+    rules: ghost-role-information-cluwnebeast-rules
+    raffle:
+      settings: default
   - type: Tag
     tags:
       - CannotSuicide

@@ -129,6 +129,10 @@ ghost-role-information-holoparasite-description = Listen to your owner. Don't ta
 ghost-role-information-holoclown-name = Holoclown
 ghost-role-information-holoclown-description = Listen to your owner. Utilize your pockets and hand to help your owner.
 
+ghost-role-information-cluwnebeast-name = Cluwne Beast
+ghost-role-information-cluwnebeast-description = Hide in the shadows, attack anything that moves and turn the crew into cluwnes.
+ghost-role-information-cluwnebeast-rules = You are an antagonist, stalk your prey and turn the crew into friendly cluwnes!
+
 ghost-role-information-ifrit-name = Ifrit
 ghost-role-information-ifrit-description = Listen to your owner. Don't tank damage. Punch people hard.
 

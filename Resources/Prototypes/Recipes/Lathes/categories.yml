@@ -42,6 +42,10 @@
 
 # Exosuit
 - type: latheCategory
+  id: Mech
+  name: lathe-category-mechs
+
+- type: latheCategory
   id: Vim
   name: lathe-category-mechs-vim
 

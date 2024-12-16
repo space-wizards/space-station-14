@@ -537,7 +537,7 @@
   - type: VentCrittersRule
     entries:
       - id: SpawnPointGhostCluwneBeast
-        prob: 1
+        prob: 0.001
 
 - type: entity
   parent: BaseGameRule
