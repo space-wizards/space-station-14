@@ -1219,3 +1219,14 @@
       amount: 1
   products:
     Cola: 4
+
+- type: reaction
+  id: Moffee
+  minTemp: 350
+  reactants:
+    Water:
+      amount: 2
+    Sugar:
+      amount: 1
+  products:
+    Moffee: 3

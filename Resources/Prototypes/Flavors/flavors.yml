@@ -1328,3 +1328,8 @@
   id: compressed-meat
   flavorType: Complex
   description: flavor-complex-compressed-meat
+
+- type: flavor
+  id: moffee
+  flavorType: Complex
+  description: flavor-complex-moffee

@@ -99,3 +99,6 @@ reagent-desc-white-gilgamesh = A sickening mixture of milk and beer. Makes you f
 
 reagent-name-mopwata = mopwata
 reagent-desc-mopwata = Dirty, stagnant mop water.
+
+reagent-name-moffee = moffee
+reagent-desc-moffee = It's actually short for "mock coffee," but no one means that when they say it.

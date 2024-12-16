@@ -1,0 +1,28 @@
+{
+	"version": 1,
+	"size": {
+		"x": 32,
+		"y": 32
+	},
+	"license": "CC-BY-SA-3.0",
+	"copyright": "Original hot_coffee sprite from https://github.com/discordia-space/CEV-Eris/tree/385fd6dcbd57498109f5758b4dc0ea2021ba0af8/icons/obj/drinks.dmi at commit 385fd6dcbd57498109f5758b4dc0ea2021ba0af8, recolored by OrnamentalFreak (GitHub)",
+	"states": [{
+            "name": "icon-0"
+        },
+        {
+            "name": "icon-1"
+        },
+		{
+            "name": "icon-2"
+        },
+		{
+            "name": "icon-3"
+        },
+		{
+            "name": "icon-4"
+        },
+		{
+            "name": "icon-vend"
+        }
+	]
+}
