@@ -132,7 +132,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
                 return;
 
             if (ShowGasPipeSensors.Pressed)
-                AddTrackedEntityToNavMap(device);
+                AddTrackedEntityToNavMap(device, true);
 
             else
                 NavMap.TrackedEntities.Remove(netEnt);
@@ -207,20 +207,22 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
                     NavMap.FocusNetId = _focusNetId;
                 }
 
+                var isSensor = device.NavMapBlip == _gasPipeSensorProtoId;
+
                 // Skip network devices if the toggled is off
-                if (!ShowPipeNetwork.Pressed && device.NavMapBlip != _gasPipeSensorProtoId)
+                if (!ShowPipeNetwork.Pressed && !isSensor)
                     continue;
 
                 // Skip gas pipe sensors if the toggle is off
-                if (!ShowGasPipeSensors.Pressed && device.NavMapBlip == _gasPipeSensorProtoId)
+                if (!ShowGasPipeSensors.Pressed && isSensor)
                     continue;
 
-                AddTrackedEntityToNavMap(device);
+                AddTrackedEntityToNavMap(device, isSensor);
             }
         }
     }
 
-    private void AddTrackedEntityToNavMap(AtmosDeviceNavMapData metaData)
+    private void AddTrackedEntityToNavMap(AtmosDeviceNavMapData metaData, bool isSensor = false)
     {
         var proto = _protoManager.Index(metaData.NavMapBlip);
 
@@ -229,7 +231,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
 
         var idx = Math.Clamp((int)metaData.Direction / 2, 0, proto.TexturePaths.Length - 1);
         var texture = proto.TexturePaths.Length > 0 ? proto.TexturePaths[idx] : proto.TexturePaths[0];
-        var color = proto.Color * metaData.PipeColor;
+        var color = isSensor ? proto.Color : proto.Color * metaData.PipeColor;
 
         if (_focusNetId != null && metaData.NetId != _focusNetId)
             color *= _unfocusedDeviceColor;
