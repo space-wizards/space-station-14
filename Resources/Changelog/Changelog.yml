@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: deltanedas
-  changes:
-  - message: Fixed borgs losing access when they run out of power.
-    type: Fix
-  id: 7208
-  time: '2024-08-25T12:17:03.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31392
 - author: metalgearsloth
   changes:
   - message: Actions now activate on key-down, not key-up.
@@ -3919,3 +3912,11 @@
   id: 7707
   time: '2024-12-16T11:53:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33665
+- author: Plykiya
+  changes:
+  - message: Bombs like stingers and clustergrenades now trigger when destroyed due
+      to damage.
+    type: Fix
+  id: 7708
+  time: '2024-12-16T12:08:08.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31108
