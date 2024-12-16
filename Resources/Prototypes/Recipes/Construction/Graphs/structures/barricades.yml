@@ -26,6 +26,38 @@
           steps:
             - tool: Prying
               doAfter: 5
+          edges:
+            - to: WoodWall
+              completed:
+              - !type:SnapToGrid
+                southRotation: true
+              conditions:
+              - !type:EntityAnchored { }
+              steps:
+              - material: WoodPlank
+                amount: 2
+                doAfter: 2
+        - to: woodWall
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: WoodPlank
+              amount: 2
+              doAfter: 2
+    - node: woodWall
+      entity: WallWood
+      edges:
+      - to: barricadefull
+        completed:
+        - !type:GivePrototype
+          prototype: MaterialWoodPlank1
+          amount: 2
+        steps:
+        - tool: Prying
+          doAfter: 10
 
 - type: constructionGraph
   id: BarricadeDirectional
