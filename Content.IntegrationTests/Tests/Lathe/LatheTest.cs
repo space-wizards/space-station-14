@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Prototypes;
+using Content.Shared.Research.Prototypes;
 using Content.Shared.Whitelist;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
@@ -73,8 +74,18 @@ public sealed class LatheTest
                         }
                     }
 
+                    // Collect all the recipes assigned to this lathe
+                    var recipes = new List<ProtoId<LatheRecipePrototype>>();
+                    recipes.AddRange(latheComp.StaticRecipes);
+                    recipes.AddRange(latheComp.DynamicRecipes);
+                    if (latheProto.TryGetComponent<EmagLatheRecipesComponent>(out var emagRecipesComp, compFactory))
+                    {
+                        recipes.AddRange(emagRecipesComp.EmagStaticRecipes);
+                        recipes.AddRange(emagRecipesComp.EmagDynamicRecipes);
+                    }
+
                     // Check each recipe assigned to this lathe
-                    foreach (var recipeId in latheComp.StaticRecipes)
+                    foreach (var recipeId in recipes)
                     {
                         Assert.That(protoMan.TryIndex(recipeId, out var recipeProto));
 
