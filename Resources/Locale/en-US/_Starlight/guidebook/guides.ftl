@@ -9,6 +9,7 @@ guide-entry-sl-rule-3-3 = Rule 3.3.
 guide-entry-sl-rule-3-4 = Rule 3.4.
 guide-entry-sl-rule-3-5 = Rule 3.5.
 guide-entry-sl-rule-3-6 = Rule 3.6.
+guide-entry-sl-rule-3-7 = Rule 3.7.
 guide-entry-sl-rule-4 = Rule 4
 guide-entry-sl-rule-5 = Rule 5
 guide-entry-sl-rule-6 = Rule 6
@@ -17,3 +18,6 @@ guide-entry-sl-rule-8 = Rule 8
 guide-entry-sl-rule-9 = Rule 9
 guide-entry-sl-rule-10 = Rule 10
 guide-entry-sl-rule-11 = Rule 11
+guide-entry-sl-rule-12 = Rule 12
+
+guide-entry-sl-clarification-1 = Clarification 1

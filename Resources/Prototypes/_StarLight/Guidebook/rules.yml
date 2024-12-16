@@ -4,6 +4,8 @@
   ruleEntry: true
   text: "/ServerInfo/Guidebook/ServerRules/StarlightRules.xml"
   
+# Rules
+  
 - type: guideEntry
   id: RuleSL0
   name: guide-entry-sl-rules
@@ -89,6 +91,15 @@
   text: "/ServerInfo/Guidebook/ServerRules/RulesSL/CoreRules/RuleSL11.xml"
   
 - type: guideEntry
+  id: RuleSL12
+  name: guide-entry-sl-rule-12
+  ruleEntry: true
+  priority: 12
+  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/CoreRules/RuleSL12.xml"
+  
+# Sub. Points
+  
+- type: guideEntry
   id: RuleSLRP1
   name: guide-entry-sl-rule-3-1
   ruleEntry: true
@@ -131,3 +142,19 @@
   ruleEntry: true
   priority: 6
   text: "/ServerInfo/Guidebook/ServerRules/RulesSL/RolePlayRules/RuleSLRP6.xml"
+  
+- type: guideEntry
+  id: RuleSLRP7
+  name: guide-entry-sl-rule-3-7
+  ruleEntry: true
+  priority: 7
+  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/RolePlayRules/RuleSLRP7.xml"
+  
+# Clarifications
+
+- type: guideEntry
+  id: RuleSLC1
+  name: guide-entry-sl-clarification-1
+  ruleEntry: true
+  priority: 1
+  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/Clarifications/RuleSLC1.xml"
