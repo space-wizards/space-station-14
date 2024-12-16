@@ -207,7 +207,7 @@ namespace Content.Shared.Plankton
             {
                 if ((planktonInstance.Diet & PlanktonComponent.PlanktonDiet.Decomposer) != 0)
                 {
-                    Log.Error($"{planktonInstance.SpeciesName} eats other species");
+                    Log.Error($"{planktonInstance.SpeciesName} eats dead plankton");
                     if (component.DeadPlankton > 0)
                     {
                         DecomposeCheck(planktonInstance, component);
