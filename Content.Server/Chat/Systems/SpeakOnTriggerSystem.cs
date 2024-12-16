@@ -20,15 +20,13 @@ public sealed class SpeakOnTriggerSystem : EntitySystem
 
     private void OnTrigger(Entity<SpeakOnTriggerComponent> ent, ref TriggerEvent args)
     {
-        if (args.Handled)
-            return;
-
         TrySpeak(ent);
+        args.Handled = true;
     }
 
     private void TrySpeak(Entity<SpeakOnTriggerComponent> ent)
     {
-        // If it doesn't have the user delay component, still send the message.
+        // If it doesn't have the use delay component, still send the message.
         if (TryComp<UseDelayComponent>(ent.Owner, out var useDelay) && _useDelay.IsDelayed((ent.Owner, useDelay)))
             return;
 

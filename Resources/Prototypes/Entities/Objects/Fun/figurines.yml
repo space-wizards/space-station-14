@@ -30,7 +30,7 @@
     range: 200
   - type: DeviceLinkSink
     ports:
-      - Trigger
+    - Trigger
 
 - type: entity
   parent: BaseFigurine
