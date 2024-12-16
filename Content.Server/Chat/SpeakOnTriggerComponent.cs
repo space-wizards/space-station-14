@@ -13,5 +13,5 @@ public sealed partial class SpeakOnTriggerComponent : Component
     ///     The identifier for the dataset prototype containing messages to be spoken by this entity.
     /// </summary>
     [DataField(required: true)]
-    public ProtoId<LocalizedDatasetPrototype> Pack { get; private set; }
+    public ProtoId<LocalizedDatasetPrototype> Pack = string.Empty;
 }
