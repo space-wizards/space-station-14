@@ -1,8 +1,7 @@
-using Content.Server.Animals.Components;
-using Content.Server.Popups;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.DoAfter;
+using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
@@ -12,18 +11,17 @@ using Content.Shared.Udder;
 using Content.Shared.Verbs;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Animals.Systems;
-
+namespace Content.Shared.Animals;
 /// <summary>
-///     Gives ability to produce milkable reagents, produces endless if the
-///     owner has no HungerComponent
+///     Gives the ability to produce milkable reagents;
+///     produces endlessly if the owner does not have a HungerComponent.
 /// </summary>
-internal sealed class UdderSystem : EntitySystem
+public sealed class UdderSystem : EntitySystem
 {
     [Dependency] private readonly HungerSystem _hunger = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
@@ -31,24 +29,35 @@ internal sealed class UdderSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<UdderComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<UdderComponent, GetVerbsEvent<AlternativeVerb>>(AddMilkVerb);
         SubscribeLocalEvent<UdderComponent, MilkingDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<UdderComponent, ExaminedEvent>(OnExamine);
+    }
+
+    private void OnMapInit(EntityUid uid, UdderComponent component, MapInitEvent args)
+    {
+        component.NextGrowth = _timing.CurTime + component.GrowthDelay;
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-
         var query = EntityQueryEnumerator<UdderComponent>();
-        var now = _timing.CurTime;
         while (query.MoveNext(out var uid, out var udder))
         {
-            if (now < udder.NextGrowth)
+            if (_timing.CurTime < udder.NextGrowth)
                 continue;
 
-            udder.NextGrowth = now + udder.GrowthDelay;
+            udder.NextGrowth += udder.GrowthDelay;
 
             if (_mobState.IsDead(uid))
+                continue;
+
+            if (!_solutionContainerSystem.ResolveSolution(uid, udder.SolutionName, ref udder.Solution, out var solution))
+                continue;
+
+            if (solution.AvailableVolume == 0)
                 continue;
 
             // Actually there is food digestion so no problem with instant reagent generation "OnFeed"
@@ -60,9 +69,6 @@ internal sealed class UdderSystem : EntitySystem
 
                 _hunger.ModifyHunger(uid, -udder.HungerUsage, hunger);
             }
-
-            if (!_solutionContainerSystem.ResolveSolution(uid, udder.SolutionName, ref udder.Solution))
-                continue;
 
             //TODO: toxins from bloodstream !?
             _solutionContainerSystem.TryAddReagent(udder.Solution.Value, udder.ReagentId, udder.QuantityPerUpdate, out _);
@@ -99,7 +105,7 @@ internal sealed class UdderSystem : EntitySystem
         var quantity = solution.Volume;
         if (quantity == 0)
         {
-            _popupSystem.PopupEntity(Loc.GetString("udder-system-dry"), entity.Owner, args.Args.User);
+            _popupSystem.PopupClient(Loc.GetString("udder-system-dry"), entity.Owner, args.Args.User);
             return;
         }
 
@@ -109,7 +115,7 @@ internal sealed class UdderSystem : EntitySystem
         var split = _solutionContainerSystem.SplitSolution(entity.Comp.Solution.Value, quantity);
         _solutionContainerSystem.TryAddSolution(targetSoln.Value, split);
 
-        _popupSystem.PopupEntity(Loc.GetString("udder-system-success", ("amount", quantity), ("target", Identity.Entity(args.Args.Used.Value, EntityManager))), entity.Owner,
+        _popupSystem.PopupClient(Loc.GetString("udder-system-success", ("amount", quantity), ("target", Identity.Entity(args.Args.Used.Value, EntityManager))), entity.Owner,
             args.Args.User, PopupType.Medium);
     }
 
@@ -133,5 +139,51 @@ internal sealed class UdderSystem : EntitySystem
             Priority = 2
         };
         args.Verbs.Add(verb);
+    }
+
+    /// <summary>
+    ///     Defines the text provided on examine.
+    ///     Changes depending on the amount of hunger the target has.
+    /// </summary>
+    private void OnExamine(Entity<UdderComponent> entity, ref ExaminedEvent args)
+    {
+
+        var entityIdentity = Identity.Entity(args.Examined, EntityManager);
+
+        string message;
+
+        // Check if the target has hunger, otherwise return not hungry.
+        if (!TryComp<HungerComponent>(entity, out var hunger))
+        {
+            message = Loc.GetString("udder-system-examine-none", ("entity", entityIdentity));
+            args.PushMarkup(message);
+            return;
+        }
+
+        // Choose the correct examine string based on HungerThreshold.
+        switch (_hunger.GetHungerThreshold(hunger))
+        {
+            case >= HungerThreshold.Overfed:
+                message = Loc.GetString("udder-system-examine-overfed", ("entity", entityIdentity));
+                break;
+
+            case HungerThreshold.Okay:
+                message = Loc.GetString("udder-system-examine-okay", ("entity", entityIdentity));
+                break;
+
+            case HungerThreshold.Peckish:
+                message = Loc.GetString("udder-system-examine-hungry", ("entity", entityIdentity));
+                break;
+
+            // There's a final hunger threshold called "dead" but animals don't actually die so we'll re-use this.
+            case <= HungerThreshold.Starving:
+                message = Loc.GetString("udder-system-examine-starved", ("entity", entityIdentity));
+                break;
+
+            default:
+                return;
+        }
+
+        args.PushMarkup(message);
     }
 }
