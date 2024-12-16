@@ -3,4 +3,4 @@ damage-group-burn = Burn
 damage-group-airloss = Airloss
 damage-group-toxin = Toxin
 damage-group-genetic = Genetic
-damage-group-supernatural = Supernatural
+damage-group-metaphysical = Metaphysical

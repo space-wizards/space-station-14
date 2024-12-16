@@ -41,10 +41,10 @@
   damageTypes:
     - Cellular
 
-# Supernatural damage types should be used very sparingly, and likely not affect normal crew entities.
+# Metaphysical damage types should be used very sparingly, and likely not affect normal crew entities.
 # Revenants and other ghost-like/demonic creatures are more fitting. Healing should never be available via medicine.
 - type: damageGroup
-  id: Supernatural
-  name: damage-group-supernatural
+  id: Metaphysical
+  name: damage-group-metaphysical
   damageTypes:
   - Holy
