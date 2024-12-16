@@ -32,7 +32,15 @@ public abstract class SharedLandMineSystem : EntitySystem
         });
     }
 
-    public abstract void Arm(EntityUid uid, LandMineComponent component);
+    private void Arm(EntityUid uid, LandMineComponent component)
+    {
+        component.Armed = true;
+    }
+
+    private bool IsArmed(LandMineComponent component)
+    {
+        return component.Armed;
+    }
 
 
     private void ChangeLandMineVisuals(EntityUid uid, LandMineComponent component)

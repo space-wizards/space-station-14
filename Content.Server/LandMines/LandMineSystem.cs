@@ -21,17 +21,6 @@ public sealed class LandMineSystem : SharedLandMineSystem
         SubscribeLocalEvent<LandMineComponent, StepTriggerAttemptEvent>(HandleStepTriggerAttempt);
     }
 
-    public override void Arm(EntityUid uid, LandMineComponent component)
-    {
-        component.Armed = true;
-    }
-
-    public override bool IsArmed(LandMineComponent component)
-    {
-        return component.Armed;
-    }
-
-
     private void HandleStepOnTriggered(EntityUid uid, LandMineComponent component, ref StepTriggeredOnEvent args)
     {
         if (!component.Armed)
@@ -58,5 +47,4 @@ public sealed class LandMineSystem : SharedLandMineSystem
     {
         args.Continue = true;
     }
-
 }

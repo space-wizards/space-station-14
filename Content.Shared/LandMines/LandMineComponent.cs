@@ -1,20 +1,22 @@
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.LandMines;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class LandMineComponent : Component
 {
     /// <summary>
     /// Trigger sound effect when stepping onto landmine
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public SoundSpecifier? Sound;
 
     /// <summary>
     /// Is the land mine armed and dangerous?
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
     public bool Armed = false;
 }
 
