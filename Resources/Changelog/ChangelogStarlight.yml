@@ -1094,3 +1094,18 @@ Entries:
   id: 155
   time: '2024-12-16T12:51:00.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/commit/5f548ea0aebeaf82a7570c68c7014660ba66cb51
+- author: Miracula
+  changes:
+  - message: Ghosts can't use cloud emotes anymore
+    type: Fix
+  id: 156
+  time: '2024-12-16T16:53:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/163
+- author: Miracula
+  changes:
+  - message: Minor cloud emotes fixes
+    type: Fix
+  id: 157
+  time: '2024-12-16T16:53:49.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/163
+
