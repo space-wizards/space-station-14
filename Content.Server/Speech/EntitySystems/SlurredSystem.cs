@@ -92,16 +92,16 @@ public sealed class SlurredSystem : SharedSlurredSystem
                 }
             }
 
-            // Change lowercase character to uppercase and vice versa
+            // Change lowercase characters to uppercase and vice versa
             if (_random.Prob(scale / 3f))
             {
                 if (char.IsLower(modChar))
                 {
-                    modChar = char.ToUpper(modChar);
+                    modChar = char.ToUpperInvariant(modChar);
                 }
                 else if (char.IsUpper(modChar))
                 {
-                    modChar = char.ToLower(modChar);
+                    modChar = char.ToLowerInvariant(modChar);
                 }
             }
 
