@@ -1080,4 +1080,17 @@ Entries:
   id: 153
   time: '2024-12-16T10:36:57.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/155
-
+- author: Rinary
+  changes:
+  - message: Fixed cluwnebeast spawn spamming.
+    type: Fix
+  id: 154
+  time: '2024-12-16T12:51:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/5f548ea0aebeaf82a7570c68c7014660ba66cb51
+- author: Rinary
+  changes:
+  - message: Fixed cluwnebeast ghost role.
+    type: Fix
+  id: 155
+  time: '2024-12-16T12:51:00.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/commit/5f548ea0aebeaf82a7570c68c7014660ba66cb51
