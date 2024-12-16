@@ -11,6 +11,9 @@ public partial class PlanktonComponent : Component
     [DataField("reagentId")]
     public ReagentId ReagentId { get; set; } = new ReagentId();
 
+     [DataField("deadPlankton")]
+    public DeadPlankton DeadPlankton { get; set; } = new DeadPlankton();
+
     // This holds all plankton species instances for this reagent
     public List<PlanktonSpeciesInstance> SpeciesInstances { get; set; } = new();
 
