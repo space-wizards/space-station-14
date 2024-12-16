@@ -141,17 +141,15 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         var query = QueryActiveRules();
         while (query.MoveNext(out _, out _, out var zombie, out _))
         {
-            if (zombie is { ZombieShuttleCalled: false })
-            {
-                if (zombie.ZombieShuttleCalled)
-                {
-                    ev.Cancelled = true;
-                    ev.Reason = Loc.GetString(zombie.ShuttleCallUnavailableReason);
-                    return;
-                }
-            }
+            if (!zombie.ZombieShuttleCalled)
+                continue;
+
+            ev.Cancelled = true;
+            ev.Reason = Loc.GetString(zombie.ShuttleCallUnavailableReason);
+            return;
         }
     }
+
 
     protected override void Started(EntityUid uid, ZombieRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
