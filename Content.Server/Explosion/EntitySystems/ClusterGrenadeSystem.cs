@@ -97,7 +97,7 @@ public sealed class ClusterGrenadeSystem : EntitySystem
                     switch (clug.GrenadeType)
                     {
                         case GrenadeType.Shoot:
-                            ShootProjectile(grenade, angle, clug, uid);
+                            ShootProjectile(grenade, angle, clug);
                             break;
                         case GrenadeType.Throw:
                             ThrowGrenade(grenade, angle, clug);
@@ -120,14 +120,14 @@ public sealed class ClusterGrenadeSystem : EntitySystem
         }
     }
 
-    private void ShootProjectile(EntityUid grenade, Angle angle, ClusterGrenadeComponent clug, EntityUid clugUid)
+    private void ShootProjectile(EntityUid grenade, Angle angle, ClusterGrenadeComponent clug)
     {
         var direction = angle.ToVec().Normalized();
 
         if (clug.RandomSpread)
             direction = _random.NextVector2().Normalized();
 
-        _gun.ShootProjectile(grenade, direction, Vector2.One.Normalized(), clugUid);
+        _gun.ShootProjectile(grenade, direction, Vector2.One.Normalized());
 
     }
 
