@@ -1968,13 +1968,6 @@ entities:
             color: '#FFFFFF7F'
             id: Dirt
           decals:
-            14972: 33,2
-        - node:
-            cleanable: True
-            zIndex: 5
-            color: '#FFFFFF7F'
-            id: Dirt
-          decals:
             1162: 21,-55
             1163: 20,-55
             1164: 21,-54
@@ -2089,6 +2082,7 @@ entities:
             14942: 40,11
             14966: 39,5
             14967: 37,9
+            14972: 33,2
         - node:
             cleanable: True
             zIndex: 5
@@ -4192,12 +4186,6 @@ entities:
             14950: 35,9
             14951: 35,8
             14952: 35,7
-        - node:
-            cleanable: True
-            zIndex: 5
-            color: '#FFFFFF7F'
-            id: DirtHeavy
-          decals:
             14973: 33,1
             14985: 37,9
             14986: 37,11
@@ -6558,12 +6546,6 @@ entities:
             14889: 14,-9
             14890: 12,-9
             14891: 13,-9
-        - node:
-            cleanable: True
-            zIndex: 5
-            color: '#FFFFFF7F'
-            id: DirtMedium
-          decals:
             14974: 33,3
             14975: 33,4
             14976: 35,2
@@ -99726,12 +99708,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: 5.5,-36.5
       parent: 2
-  - uid: 17543
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 16.5,-5.5
-      parent: 2
   - uid: 18095
     components:
     - type: Transform
@@ -101752,6 +101728,12 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -6.5,17.5
       parent: 2
+  - uid: 17543
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 17.5,-4.5
+      parent: 2
   - uid: 17649
     components:
     - type: Transform
@@ -101813,6 +101795,12 @@ entities:
     components:
     - type: Transform
       pos: 50.5,-51.5
+      parent: 2
+  - uid: 20705
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 14.5,4.5
       parent: 2
 - proto: PoweredSmallLightEmpty
   entities:
