@@ -5,9 +5,6 @@ namespace Content.Shared.Plankton;
 [RegisterComponent]
 public partial class PlanktonComponent : Component
 {
-    [DataField("isAlive"), ViewVariables(VVAccess.ReadWrite)]
-    public bool IsAlive = true; // Is the plankton alive?
-
     [DataField("reagentId")]
     public ReagentId ReagentId { get; set; } = new ReagentId();
 
@@ -25,14 +22,16 @@ public partial class PlanktonComponent : Component
         public PlanktonCharacteristics Characteristics { get; set; }
         public float CurrentSize { get; set; }
         public float CurrentHunger { get; set; }
+        public bool IsAlive { get; set; }
 
-        public PlanktonSpeciesInstance(PlanktonName speciesName, PlanktonDiet diet, PlanktonCharacteristics characteristics, float currentSize, float CurrentHunger)
+        public PlanktonSpeciesInstance(PlanktonName speciesName, PlanktonDiet diet, PlanktonCharacteristics characteristics, float currentSize, float CurrentHunger, bool IsAlive)
         {
             SpeciesName = speciesName;
             Diet = diet;
             Characteristics = characteristics;
             CurrentSize = currentSize;
             CurrentHunger = 100f;
+            IsAlive = true;
         }
     }
 

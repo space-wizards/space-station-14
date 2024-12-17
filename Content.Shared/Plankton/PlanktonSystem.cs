@@ -2,6 +2,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Components;
 using Robust.Shared.Random;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
@@ -33,11 +34,15 @@ namespace Content.Shared.Plankton
             // If it's time for the next update
             if (_updateTimer >= UpdateInterval)
             {
-                PerformAggressionCheck(); // move this to aggressive instead of it's own field on Update
-                CheckPlanktonDiet();
-                CheckPlanktonCharacteristics();
-                PlanktonHunger();
-                
+            foreach (var entity in EntityManager.EntityQuery<PlanktonComponent>())
+            {
+             PerformAggressionCheck(entity);  // Pass EntityUid instead of the component
+             CheckPlanktonDiet(entity);
+             CheckPlanktonCharacteristics(entity);
+             PlanktonHunger(entity);
+            }
+
+
 
                 _updateTimer = 0f;
             }
@@ -101,13 +106,14 @@ namespace Content.Shared.Plankton
                     (PlanktonComponent.PlanktonDiet)random.Next(Enum.GetValues<PlanktonComponent.PlanktonDiet>().Length),
                     combinedCharacteristics,
                     1.0f,
-                    100f
+                    100f,
+                    true
                 );
 
                 // Add the plankton species instance to the SpeciesInstances list
                 component.SpeciesInstances.Add(planktonInstance);
 
-                Log.Info($"Generated plankton species {planktonInstance.SpeciesName} with characteristics {combinedCharacteristics} and diet (planktonInstance.Diet");
+                Log.Info($"Generated plankton species {planktonInstance.SpeciesName} with characteristics {combinedCharacteristics} and diet {planktonInstance.Diet}");
             }
 
             // Log the total number of plankton species initialized
@@ -135,71 +141,58 @@ namespace Content.Shared.Plankton
     {
         if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.Aggressive) != 0)
         {
-            Log.Error($"{planktonInstance.SpeciesName} is aggressive");
 
         }
 
         if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.Bioluminescent) != 0)
         {
-            Log.Info($"{planktonInstance.SpeciesName} is bioluminescent");
-      
+
         }
 
         if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.Mimicry) != 0)
         {
-            Log.Info($"{planktonInstance.SpeciesName} is a mimic");
-  
+
         }
 
         if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.ChemicalProduction) != 0)
         {
-            Log.Info($"{planktonInstance.SpeciesName} produces chemicals");
-  
+
         }
 
         if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.MagneticField) != 0)
         {
-            Log.Info($"{planktonInstance.SpeciesName} produces a magnetic field");
         }
 
         if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.Hallucinogenic) != 0)
         {
-            Log.Info($"{planktonInstance.SpeciesName} makes you high");
         }
 
         if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.PheromoneGlands) != 0)
         {
-            Log.Info($"{planktonInstance.SpeciesName} produces pheromones");
         }
 
         if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.PolypColony) != 0)
         {
-            Log.Info($"{planktonInstance.SpeciesName} forms a polyp colony");
         }
 
         if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.AerosolSpores) != 0)
         {
-            Log.Info($"{planktonInstance.SpeciesName} produces spores");
         }
 
         if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.HyperExoticSpecies) != 0)
         {
-            Log.Info($"{planktonInstance.SpeciesName} is hyper-exotic");
         }
 
         if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.Sentience) != 0)
         {
-            Log.Info($"{planktonInstance.SpeciesName} is sentient");
         }
 
         if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.Pyrophilic) != 0)
         {
-            Log.Info($"{planktonInstance.SpeciesName} is happiest in heat");
         }
 
         if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.Cryophilic) != 0)
         {
-            Log.Info($"{planktonInstance.SpeciesName} is happiest in cold");
         }
     }
 }
@@ -210,10 +203,13 @@ namespace Content.Shared.Plankton
             {
                 if ((planktonInstance.Diet & PlanktonComponent.PlanktonDiet.Decomposer) != 0)
                 {
-                    Log.Error($"{planktonInstance.SpeciesName} eats dead plankton");
-                    if (component.DeadPlankton > 0)
+                    if (planktonInstance.IsAlive = true)
                     {
-                        DecomposeCheck(planktonInstance, component);
+                        Log.Info($"{planktonInstance.SpeciesName} is alive and a decomposer!");
+                        if (component.DeadPlankton > 0)
+                         {
+                                DecomposeCheck(planktonInstance, component);
+                         }
                     }
 
                 }
@@ -225,7 +221,7 @@ namespace Content.Shared.Plankton
             float sizeGrowth = 0.1f;
             component.DeadPlankton -= sizeGrowth;
             // add satiation once made
-            
+
             if (component.DeadPlankton < 0)
             {
                 component.DeadPlankton = 0;
@@ -233,15 +229,14 @@ namespace Content.Shared.Plankton
                 // change IsAlive once the framework is finished
             }
             planktonInstance.CurrentHunger += sizeGrowth;
-            Log.Info($"Increased satiation of {planktonInstance.SpeciesName} to {planktonInstance.CurrentHunger} from decomposing food. There is {component.DeadPlankton) food left."};
-            
+            Log.Info($"Increased satiation of {planktonInstance.SpeciesName} to {planktonInstance.CurrentHunger} from decomposing food. There is {component.DeadPlankton} food left.");
+
         }
-        
-        private void PerformAggressionCheck()
+
+        private void PerformAggressionCheck(PlanktonComponent component)
         {
             foreach (var planktonEntity in EntityManager.EntityQuery<PlanktonComponent>())
             {
-                var component = planktonEntity.Value;
 
                 var aggressivePlanktonInstances = component.SpeciesInstances
                     .Where(inst => (inst.Characteristics & PlanktonComponent.PlanktonCharacteristics.Aggressive) != 0)
@@ -255,7 +250,7 @@ namespace Content.Shared.Plankton
                         {
                             if (aggressivePlankton == otherPlankton) continue;
 
-                            ReducePlanktonSize(otherPlankton);
+                            ReducePlanktonSize(otherPlankton, component);
                         }
                     }
                 }
@@ -264,32 +259,44 @@ namespace Content.Shared.Plankton
 
         private void ReducePlanktonSize(PlanktonComponent.PlanktonSpeciesInstance planktonInstance, PlanktonComponent component)
         {
-            float sizeReduction = 0.1f;
-            planktonInstance.CurrentSize -= sizeReduction;
-            component.DeadPlankton += sizeReduction;
-
-            if (planktonInstance.CurrentSize < 0)
+            if (planktonInstance.IsAlive = true)
             {
+             float sizeReduction = 0.1f;
+             planktonInstance.CurrentSize -= sizeReduction;
+             component.DeadPlankton += sizeReduction;
+             Log.Info($"Reduced size of {planktonInstance.SpeciesName} to {planktonInstance.CurrentSize}");
+
+              if (planktonInstance.CurrentSize < 0)
+              {
                 planktonInstance.CurrentSize = 0;
                 Log.Info($"{planktonInstance.SpeciesName} has been wiped out.");
+                planktonInstance.IsAlive = false;
                 // change IsAlive once the framework is finished
+              }
             }
-
-            Log.Info($"Reduced size of {planktonInstance.SpeciesName} to {planktonInstance.CurrentSize}");
         }
 
          private void PlanktonHunger(PlanktonComponent component)
         {
             foreach (var planktonInstance in component.SpeciesInstances)
             {
-                if (planktonInstance.CurrentHunger > 0)
+                if (planktonInstance.IsAlive = true)
                 {
-                    var HungerLoss = 10f;
-                    planktonInstance.CurrentHunger -= HungerLoss;
-                    Log.Error($"{planktonInstance.SpeciesName} has lost 10 hunger");
+                    if (planktonInstance.CurrentHunger > 0)
+                    {
+                      var HungerLoss = 10f;
+                      planktonInstance.CurrentHunger -= HungerLoss;
+                      Log.Error($"{planktonInstance.SpeciesName} has lost 10 hunger. It is now at {planktonInstance.CurrentHunger}");
+                      if (planktonInstance.CurrentHunger < 0)
+                      {
+                         planktonInstance.CurrentHunger = 0f;
+                         planktonInstance.IsAlive = false;
+                      }
+                   }
                 }
             }
         }
 
     }
 }
+
