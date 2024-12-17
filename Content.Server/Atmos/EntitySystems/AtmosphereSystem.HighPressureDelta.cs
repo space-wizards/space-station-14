@@ -61,12 +61,11 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     foreach (var (id, fixture) in fixtures.Fixtures)
                     {
-                        if (component.TableLayerRemoved.TryGetValue(id, out var wasRemoved) && wasRemoved)
+                        if (component.TableLayerRemoved.Contains(id))
                         {
                             _physics.AddCollisionMask(uid, id, fixture, (int)CollisionGroup.TableLayer, manager: fixtures);
                         }
                     }
-
                 }
             }
 
@@ -85,21 +84,17 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var (id, fixture) in fixtures.Fixtures)
             {
-                // Mark fixtures that has TableLayer removed
+                // Mark fixtures that have TableLayer removed
                 if ((fixture.CollisionMask & (int)CollisionGroup.TableLayer) != 0)
-                    {
-                        component.TableLayerRemoved[id] = true;
-                        _physics.RemoveCollisionMask(uid, id, fixture, (int)CollisionGroup.TableLayer, manager: fixtures);
-                    }
+                {
+                    component.TableLayerRemoved.Add(id);
+                    _physics.RemoveCollisionMask(uid, id, fixture, (int)CollisionGroup.TableLayer, manager: fixtures);
+                }
                 else
-                    {
-                        if (!component.TableLayerRemoved.ContainsKey(id))
-                        {
-                            component.TableLayerRemoved[id] = false;
-                        }
-                    }
+                {
+                    component.TableLayerRemoved.Remove(id); // Ensure it is no longer marked as removed
+                }
             }
-
             // TODO: Make them dynamic type? Ehh but they still want movement so uhh make it non-predicted like weightless?
             // idk it's hard.
 

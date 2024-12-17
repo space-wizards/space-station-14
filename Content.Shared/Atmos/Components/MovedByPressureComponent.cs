@@ -29,6 +29,6 @@ public sealed partial class MovedByPressureComponent : Component
     public int LastHighPressureMovementAirCycle { get; set; } = 0;
 
     [DataField]
-    public Dictionary<string, bool> TableLayerRemoved = new();
+    public HashSet<string> TableLayerRemoved = new();
 }
 
