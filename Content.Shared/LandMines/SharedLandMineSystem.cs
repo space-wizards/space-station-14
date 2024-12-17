@@ -38,11 +38,12 @@ public abstract class SharedLandMineSystem : EntitySystem
     {
         if (!args.IsInDetailsRange || !comp.ShowStatusOnExamination)
             return;
-        using (args.PushGroup(nameof(LandMineComponent)))
-        {
-            if(comp.Armed)
-                args.PushMarkup(Loc.GetString("land-mine-armed", ("name", uid)));
-        }
+
+        if(comp.Armed)
+            args.PushMarkup(Loc.GetString("land-mine-armed", ("name", uid)));
+
+        if(!comp.Armed)
+            args.PushMarkup(Loc.GetString("land-mine-not-armed", ("name", uid)));
     }
     private void ChangeLandMineVisuals(EntityUid uid, LandMineComponent component)
     {
