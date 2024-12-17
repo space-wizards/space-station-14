@@ -301,7 +301,10 @@
   description: An adorable stuffed toy that resembles a lizardperson. Made by CentComm as a token initiative to combat speciesism in work environments. "Welcome your new colleagues as you do this plush, with open arms!"
   components:
   - type: Sprite
+    sprite: Objects/Fun/toys.rsi
     state: plushie_lizard
+  - type: Item
+    heldPrefix: plushielizard
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/weh.ogg
@@ -1647,3 +1650,4 @@
   - type: PhysicalComposition
     materialComposition:
       Plastic: 25
+      
