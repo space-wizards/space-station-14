@@ -26,17 +26,6 @@
           steps:
             - tool: Prying
               doAfter: 5
-          edges:
-            - to: WoodWall
-              completed:
-              - !type:SnapToGrid
-                southRotation: true
-              conditions:
-              - !type:EntityAnchored { }
-              steps:
-              - material: WoodPlank
-                amount: 2
-                doAfter: 2
         - to: woodWall
           completed:
             - !type:SnapToGrid
