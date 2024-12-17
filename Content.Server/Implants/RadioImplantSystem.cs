@@ -19,41 +19,40 @@ public sealed class RadioImplantSystem : EntitySystem
     /// <summary>
     /// If implanted with a radio implant, installs the necessary intrinsic radio components
     /// </summary>
-    private void OnImplantImplantedEvent(EntityUid uid, RadioImplantComponent comp, ref ImplantImplantedEvent ev)
+    private void OnImplantImplantedEvent(Entity<RadioImplantComponent> ent, ref ImplantImplantedEvent args)
     {
-        if (ev.Implanted == null)
+        if (args.Implanted == null)
             return;
 
-        var activeRadio = EnsureComp<ActiveRadioComponent>(ev.Implanted.Value);
-
-        foreach (var channel in comp.RadioChannels)
+        var activeRadio = EnsureComp<ActiveRadioComponent>(args.Implanted.Value);
+        foreach (var channel in ent.Comp.RadioChannels)
         {
             if (activeRadio.Channels.Add(channel))
-                comp.ActiveAddedChannels.Add(channel);
+                ent.Comp.ActiveAddedChannels.Add(channel);
         }
 
-        EnsureComp<IntrinsicRadioReceiverComponent>(ev.Implanted.Value);
+        EnsureComp<IntrinsicRadioReceiverComponent>(args.Implanted.Value);
 
-        var intrinsicRadioTransmitter = EnsureComp<IntrinsicRadioTransmitterComponent>(ev.Implanted.Value);
-        foreach (var channel in comp.RadioChannels)
+        var intrinsicRadioTransmitter = EnsureComp<IntrinsicRadioTransmitterComponent>(args.Implanted.Value);
+        foreach (var channel in ent.Comp.RadioChannels)
         {
             if (intrinsicRadioTransmitter.Channels.Add(channel))
-                comp.TransmitterAddedChannels.Add(channel);
+                ent.Comp.TransmitterAddedChannels.Add(channel);
         }
     }
 
     /// <summary>
     /// Removes intrinsic radio components once the Radio Implant is removed
     /// </summary>
-    private void OnRemove(EntityUid uid, RadioImplantComponent comp, EntGotRemovedFromContainerMessage args)
+    private void OnRemove(Entity<RadioImplantComponent> ent, ref EntGotRemovedFromContainerMessage args)
     {
         if (TryComp<ActiveRadioComponent>(args.Container.Owner, out var activeRadioComponent))
         {
-            foreach (var channel in comp.ActiveAddedChannels)
+            foreach (var channel in ent.Comp.ActiveAddedChannels)
             {
                 activeRadioComponent.Channels.Remove(channel);
             }
-            comp.ActiveAddedChannels.Clear();
+            ent.Comp.ActiveAddedChannels.Clear();
 
             if (activeRadioComponent.Channels.Count == FixedPoint2.Zero)
             {
@@ -64,11 +63,11 @@ public sealed class RadioImplantSystem : EntitySystem
         if (!TryComp<IntrinsicRadioTransmitterComponent>(args.Container.Owner, out var radioTransmitterComponent))
             return;
 
-        foreach (var channel in comp.TransmitterAddedChannels)
+        foreach (var channel in ent.Comp.TransmitterAddedChannels)
         {
             radioTransmitterComponent.Channels.Remove(channel);
         }
-        comp.TransmitterAddedChannels.Clear();
+        ent.Comp.TransmitterAddedChannels.Clear();
 
         if (radioTransmitterComponent is { Channels.Count: 0 } || activeRadioComponent is { Channels.Count: 0 })
         {

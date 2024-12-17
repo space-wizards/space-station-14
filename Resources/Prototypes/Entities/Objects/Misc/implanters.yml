@@ -181,7 +181,7 @@
 
 - type: entity
   id: RadioImplanter
-  suffix: radio
+  suffix: radio Syndicate
   parent: BaseImplantOnlyImplanterSyndi
   components:
   - type: Implanter
@@ -267,7 +267,7 @@
 
 - type: entity
   id: RadioImplanterCentcomm
-  suffix: radio
+  suffix: radio Centcomm
   parent: BaseImplantOnlyImplanter
   components:
   - type: Implanter
