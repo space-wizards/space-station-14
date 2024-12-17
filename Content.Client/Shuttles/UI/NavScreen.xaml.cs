@@ -17,6 +17,8 @@ public sealed partial class NavScreen : BoxContainer
 
     private EntityUid? _consoleEntity; // Entity of controlling console
     private EntityUid? _shuttleEntity;
+    public event Action? OnSignalButtonPressed;
+
 
     public NavScreen()
     {
@@ -29,13 +31,14 @@ public sealed partial class NavScreen : BoxContainer
 
         DockToggle.OnToggled += OnDockTogglePressed;
         DockToggle.Pressed = NavRadar.ShowDocks;
+
+        SignalButton.OnPressed += _ => OnSignalButtonPressed?.Invoke();
     }
 
     public void SetShuttle(EntityUid? shuttle)
     {
         _shuttleEntity = shuttle;
     }
-
     public void SetConsole(EntityUid? console)
     {
         _consoleEntity = console;
@@ -91,3 +94,4 @@ public sealed partial class NavScreen : BoxContainer
         GridAngularVelocity.Text = $"{-gridBody.AngularVelocity + 10f * float.Epsilon:0.0}";
     }
 }
+

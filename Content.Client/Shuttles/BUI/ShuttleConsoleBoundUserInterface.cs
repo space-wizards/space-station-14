@@ -4,6 +4,7 @@ using Content.Shared.Shuttles.Events;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 using Robust.Shared.Map;
+using static Content.Shared.Shuttles.Systems.SharedShuttleConsoleSystem;
 
 namespace Content.Client.Shuttles.BUI;
 
@@ -12,7 +13,6 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private ShuttleConsoleWindow? _window;
-
     public ShuttleConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
     }
@@ -26,6 +26,15 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
         _window.RequestBeaconFTL += OnFTLBeaconRequest;
         _window.DockRequest += OnDockRequest;
         _window.UndockRequest += OnUndockRequest;
+        var navScreen = FindChildByType<NavScreen>(_window);
+
+        if (navScreen != null)
+        {
+            navScreen.OnSignalButtonPressed += () =>
+            {
+                SendMessage(new ShuttleConsoleSignalButtonPressedMessage());
+            };
+        }
     }
 
     private void OnUndockRequest(NetEntity entity)
@@ -72,7 +81,6 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
             _window?.Dispose();
         }
     }
-
     protected override void UpdateState(BoundUserInterfaceState state)
     {
         base.UpdateState(state);
@@ -80,5 +88,23 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
             return;
 
         _window?.UpdateState(Owner, cState);
+    }
+
+    private T? FindChildByType<T>(Control parent) where T : class
+    {
+        foreach (var child in parent.Children)
+        {
+            if (child is T match)
+                return match;
+
+            if (child is Control container)
+            {
+                var result = FindChildByType<T>(container);
+                if (result != null)
+                    return result;
+            }
+        }
+
+        return null;
     }
 }
