@@ -18,6 +18,18 @@ public sealed partial class LandMineComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool Armed = false;
+
+    /// <summary>
+    /// Does it show its status on examination?
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ShowStatusOnExamination = true;
+
+    /// <summary>
+    /// Does it give the option to be arme ?
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool ShowVerbArm = true;
 }
 
 [Serializable, NetSerializable]

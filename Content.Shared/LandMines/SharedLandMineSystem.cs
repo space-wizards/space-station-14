@@ -18,7 +18,7 @@ public abstract class SharedLandMineSystem : EntitySystem
     /// </summary>
     private void OnGetAltVerbs(EntityUid uid, LandMineComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanInteract || !args.CanAccess || args.Hands == null)
+        if (!args.CanInteract || !args.CanAccess || args.Hands == null || !component.ShowVerbArm)
             return;
 
         args.Verbs.Add(new AlternativeVerb
@@ -36,7 +36,7 @@ public abstract class SharedLandMineSystem : EntitySystem
 
     private void OnExamine(EntityUid uid, LandMineComponent comp, ExaminedEvent args)
     {
-        if (!args.IsInDetailsRange)
+        if (!args.IsInDetailsRange || !comp.ShowStatusOnExamination)
             return;
         using (args.PushGroup(nameof(LandMineComponent)))
         {
