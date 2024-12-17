@@ -28,7 +28,6 @@
 - type: startingGear
   id: ClownGear
   equipment:
-    #mask: ClothingMaskClown #imp change, i don't know a better way to do this. clown visitors seem to still spawn with masks so i think it's fine.
     pocket1: BikeHorn
     pocket2: ClownRecorder
     id: ClownPDA
