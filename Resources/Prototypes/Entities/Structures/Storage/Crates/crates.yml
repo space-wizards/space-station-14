@@ -42,6 +42,11 @@
   - type: AntiRottingContainer
   - type: ExplosionResistance
     damageCoefficient: 0.50
+  - type: Construction
+    graph: CrateFreezer
+    node: done
+    containers:
+    - entity_storage
 
 - type: entity
   parent: CratePlastic

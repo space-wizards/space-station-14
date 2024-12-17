@@ -21,6 +21,17 @@
   objectType: Structure
 
 - type: construction
+  id: ClosetFreezer
+  name: freezer
+  graph: ClosetFreezer
+  startNode: start
+  targetNode: done
+  category: construction-category-storage
+  description: A tall steel box with freezing abilities.
+  icon: { sprite: Structures/Storage/closet.rsi, state: freezer_icon }
+  objectType: Structure
+
+- type: construction
   id: ClosetWall
   name: wall closet
   graph: ClosetWall
