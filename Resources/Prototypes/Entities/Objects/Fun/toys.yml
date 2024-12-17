@@ -424,7 +424,7 @@
   description: An adorable stuffed toy that resembles a lizardperson from an inversed dimension. Hew!
   components:
   - type: Sprite
-    state: plushie_lizard_mirrored_inversed
+    state: plushie_lizard_inversed
   - type: Item
     heldPrefix: plushielizardinversed
   - type: EmitSoundOnUse
