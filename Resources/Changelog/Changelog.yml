@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: Winkarst-cpu
   changes:
-  - message: Now the syndicate raid helmet is marked as a Syndicate contraband.
-    type: Fix
-  id: 7223
-  time: '2024-08-27T13:01:09.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31512
-- author: Winkarst-cpu
-  changes:
   - message: The explorer gas mask is now restricted to the cargo.
     type: Fix
   id: 7224
@@ -3928,3 +3921,10 @@
   id: 7722
   time: '2024-12-17T11:56:47.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33867
+- author: TiniestShark
+  changes:
+  - message: Adds in-hand sprites to the Anomaly Scanner.
+    type: Add
+  id: 7723
+  time: '2024-12-17T13:35:29.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33427
