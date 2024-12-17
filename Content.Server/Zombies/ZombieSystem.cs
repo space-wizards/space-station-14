@@ -77,7 +77,7 @@ namespace Content.Server.Zombies
         {
             // Pending zombies (e.g. infected non-zombies) do not remove their hosted anomaly on death.
             // Current zombies DO remove the anomaly on death.
-            args.Cancel();
+            args.Cancelled = true;
         }
 
         private void OnPendingMapInit(EntityUid uid, IncurableZombieComponent component, MapInitEvent args)

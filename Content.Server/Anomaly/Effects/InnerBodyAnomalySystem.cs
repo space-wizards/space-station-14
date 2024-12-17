@@ -187,7 +187,7 @@ public sealed class InnerBodyAnomalySystem : SharedInnerBodyAnomalySystem
             return;
 
         var ev = new BeforeRemoveAnomalyOnDeathEvent();
-        RaiseLocalEvent(args.Target, ev);
+        RaiseLocalEvent(args.Target, ref ev);
         if (ev.Cancelled)
             return;
 

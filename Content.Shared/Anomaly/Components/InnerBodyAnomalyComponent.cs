@@ -76,6 +76,5 @@ public sealed partial class InnerBodyAnomalyComponent : Component
 /// Raised directed at the host entity with the anomaly.
 /// Cancel this if you want to prevent the host from losing their anomaly on death.
 /// </summary>
-public sealed class BeforeRemoveAnomalyOnDeathEvent : CancellableEntityEventArgs
-{
-}
+[ByRefEvent]
+public record struct BeforeRemoveAnomalyOnDeathEvent(bool Cancelled = false);
