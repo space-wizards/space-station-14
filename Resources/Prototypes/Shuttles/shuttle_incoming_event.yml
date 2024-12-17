@@ -1,9 +1,4 @@
 - type: preloadedGrid
-  id: ShuttleStriker
-  path: /Maps/Shuttles/ShuttleEvent/striker.yml
-  copies: 2
-
-- type: preloadedGrid
   id: ShuttleCargoLost
   path: /Maps/Shuttles/ShuttleEvent/lost_cargo.yml
   copies: 2
@@ -67,6 +62,11 @@
 - type: preloadedGrid
   id: NTIncorporation
   path: /Maps/Shuttles/ShuttleEvent/incorporation.yml
+  copies: 1
+
+- type: preloadedGrid
+  id: Instigator
+  path: /Maps/Shuttles/ShuttleEvent/instigator.yml
   copies: 1
 
 - type: preloadedGrid

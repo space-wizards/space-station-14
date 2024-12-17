@@ -171,7 +171,7 @@
     Piercing: 0.8
     Cold: 0.8
     Heat: 0.2
-#   Holy: 3 If we ever get some holy or magic sort of damage type they should be vulnerable
+    Holy: 1.5
   flatReductions:
     Heat: 3
 
@@ -273,6 +273,7 @@
     Radiation: 0.0
     Shock: 0.8
     Bloodloss: 0.4
+    Holy: 1
 
 - type: damageModifierSet
   id: Cockroach
@@ -306,3 +307,8 @@
   id: PotassiumIodide
   coefficients:
     Radiation: 0.1
+
+- type: damageModifierSet
+  id: ManifestedSpirit
+  coefficients:
+    Holy: 2
