@@ -9,7 +9,7 @@ public sealed partial class ObjectInContainerPrecondition : HTNPrecondition
 {
     private ContainerSystem _containers = default!;
     [DataField(required: true)] public string Container;
-    [DataField] public bool Exists = false;
+    [DataField] public bool Exists = true;
 
     public override void Initialize(IEntitySystemManager sysManager)
     {

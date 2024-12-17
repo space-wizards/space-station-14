@@ -370,14 +370,6 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 return 0f;
             }
-            case TargetOnFireCon:
-                {
-                    if (TryComp(targetUid, out FlammableComponent? fire) && fire.OnFire)
-                        return 1f;
-                    return 0f;
-                }
-            default:
-                throw new NotImplementedException();
             case ItemNotClaimedCon:
             {
                 if (TryComp(targetUid, out TransporterMarkedComponent? mark) &&
@@ -386,6 +378,14 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 return 1f;
             }
+            case TargetOnFireCon:
+                {
+                    if (TryComp(targetUid, out FlammableComponent? fire) && fire.OnFire)
+                        return 1f;
+                    return 0f;
+                }
+            default:
+                throw new NotImplementedException();
         }
     }
 

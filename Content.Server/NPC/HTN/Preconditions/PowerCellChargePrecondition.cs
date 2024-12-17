@@ -5,7 +5,7 @@ namespace Content.Server.NPC.HTN.Preconditions;
 public sealed partial class PowerCellChargePrecondition : HTNPrecondition
 {
     private PowerCellSystem _powerCell = default!;
-    [DataField("greaterThan")] public bool GreaterThan;
+    [DataField("greaterThan")] public bool GreaterThan = false;
     [DataField("percent")] public float? Percentage;
     [DataField("watts")] public float? Watts;
 
