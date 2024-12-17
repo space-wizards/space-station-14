@@ -61,8 +61,11 @@
     enabled: true
     radius: 10
   - type: Appearance
-  - type: GuideHelp
-    guides: [ Singularity, Power ] # uhhh.. I would hoped they'd  have read the manual before ever getting in viewing distance...
+  - type: GuideHelp # Always strive to be helpful in trying times.
+    guides:
+    - SingularityEngine
+    - SingularityTeslaEngine
+    - Power
   - type: WarpPoint
     follow: true
     location: singularity
