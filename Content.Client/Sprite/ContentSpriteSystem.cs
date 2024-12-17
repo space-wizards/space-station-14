@@ -116,9 +116,9 @@ public sealed class ContentSpriteSystem : EntitySystem
         {
             Text = Loc.GetString("export-entity-verb-get-data-text"),
             Category = VerbCategory.Debug,
-            Act = async () =>
+            Act = () =>
             {
-                await Export(ev.Target);
+                Export(ev.Target);
             },
         };
 
