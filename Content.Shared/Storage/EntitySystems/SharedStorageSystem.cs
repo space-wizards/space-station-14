@@ -37,7 +37,6 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Content.Shared.Rounding;
-using Content.Shared.Storage;
 
 namespace Content.Shared.Storage.EntitySystems;
 
