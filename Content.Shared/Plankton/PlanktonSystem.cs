@@ -62,11 +62,11 @@ namespace Content.Shared.Plankton
           //  var reagentId = reagentId.Prototype;
 
            // component.ReagentId = reagentId;
-
+                        // Make this a check that happens with the rest of the characteristic checks, and include solution fraction so some chems can be introduced but not a ton of them.
             //if (reagentId != SeaWater)
            // {
             //    component.IsAlive = false;
-            //    Log.Error("The plankton component died due to an invalid environment.");
+            //    Log.Error($"The Plankton died due to not being immersed in Seawater");
            //     return;
           //  }
 
