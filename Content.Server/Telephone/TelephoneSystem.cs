@@ -15,7 +15,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using System;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
@@ -68,6 +67,8 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
     private void OnAttemptListen(Entity<TelephoneComponent> entity, ref ListenAttemptEvent args)
     {
         if (!IsTelephonePowered(entity) ||
+            !IsTelephoneEngaged(entity) ||
+            entity.Comp.Muted ||
             !_interaction.InRangeUnobstructed(args.Source, entity.Owner, 0))
         {
             args.Cancel();
@@ -96,7 +97,8 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         if (entity == args.TelephoneSource)
             return;
 
-        if (!IsTelephonePowered(entity))
+        if (!IsTelephonePowered(entity) ||
+            !IsSourceConnectedToReceiver(args.TelephoneSource, entity))
             return;
 
         var nameEv = new TransformSpeakerNameEvent(args.MessageSource, Name(args.MessageSource));
@@ -120,6 +122,18 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         while (query.MoveNext(out var uid, out var telephone))
         {
             var entity = new Entity<TelephoneComponent>(uid, telephone);
+
+            if (IsTelephoneEngaged(entity))
+            {
+                foreach (var receiver in telephone.LinkedTelephones)
+                {
+                    if (!IsSourceInRangeOfReceiver(entity, receiver) &&
+                        !IsSourceInRangeOfReceiver(receiver, entity))
+                    {
+                        EndTelephoneCall(entity, receiver);
+                    }
+                }
+            }
 
             switch (telephone.CurrentState)
             {
@@ -249,6 +263,18 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         RaiseLocalEvent(receiver, ref evReceiver);
     }
 
+    public void EndTelephoneCall(Entity<TelephoneComponent> source, Entity<TelephoneComponent> receiver)
+    {
+        source.Comp.LinkedTelephones.Remove(receiver);
+        receiver.Comp.LinkedTelephones.Remove(source);
+
+        if (!IsTelephoneEngaged(source))
+            EndTelephoneCalls(source);
+
+        if (!IsTelephoneEngaged(receiver))
+            EndTelephoneCalls(receiver);
+    }
+
     public void EndTelephoneCalls(Entity<TelephoneComponent> entity)
     {
         HandleEndingTelephoneCalls(entity, TelephoneState.EndingCall);
@@ -283,12 +309,11 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         SetTelephoneMicrophoneState(entity, false);
     }
 
-    public void SendTelephoneMessage(EntityUid messageSource, string message, Entity<TelephoneComponent> source, bool escapeMarkup = true)
+    private void SendTelephoneMessage(EntityUid messageSource, string message, Entity<TelephoneComponent> source, bool escapeMarkup = true)
     {
-        if (source.Comp.Muted ||
-            !IsTelephoneEngaged(source) ||
-            !IsTelephonePowered(source))
-            return;
+        // This method assumes that you've already checked that this
+        // telephone is able to transmit messages and that it can
+        // send messages to any telephones linked to it
 
         var ev = new TransformSpeakerNameEvent(messageSource, MetaData(messageSource).EntityName);
         RaiseLocalEvent(messageSource, ev);
@@ -331,9 +356,6 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
         foreach (var receiver in source.Comp.LinkedTelephones)
         {
-            if (!IsSourceAbleToReachReceiver(source, receiver))
-                continue;
-
             RaiseLocalEvent(receiver, ref evReceivedMessage);
             receiver.Comp.StateStartTime = _timing.CurTime;
         }
