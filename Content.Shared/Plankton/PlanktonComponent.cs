@@ -11,7 +11,6 @@ public partial class PlanktonComponent : Component
      [DataField("deadPlankton")]
     public float DeadPlankton { get; set; } = 0f;
 
-    // This holds all plankton species instances for this reagent
     public List<PlanktonSpeciesInstance> SpeciesInstances { get; set; } = new();
 
     // Define a class that represents each plankton species
