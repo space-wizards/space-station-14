@@ -567,5 +567,65 @@ Entries:
   id: 70
   time: '2024-10-16T22:24:31.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32844
+- author: BramvanZijp
+  changes:
+  - message: CC, ERT, Admin, and Deathsquad PDA's now have all departmental programs
+      pre-installed.
+    type: Tweak
+  id: 71
+  time: '2024-10-31T14:53:38.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32601
+- author: metalgearsloth
+  changes:
+  - message: Added on-call functionality for discord relay to get notified on unanswered
+      ahelps.
+    type: Add
+  id: 72
+  time: '2024-11-02T09:29:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30443
+- author: nikthechampiongr
+  changes:
+  - message: It is now possible to edit the AI's laws through its core and eye.
+    type: Fix
+  id: 73
+  time: '2024-11-02T13:21:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32461
+- author: Repo
+  changes:
+  - message: All role bans in a set are updated on edits now.
+    type: Fix
+  id: 74
+  time: '2024-11-12T21:03:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30659
+- author: Aquif
+  changes:
+  - message: tag:with toolshed command. It takes in a list of entities via pipe and
+      returns the entities from the list with the given tag.
+    type: Add
+  id: 75
+  time: '2024-11-13T23:27:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31751
+- author: Beck Thompson
+  changes:
+  - message: Notes now use duration instead of timestamps for note expiry times.
+    type: Tweak
+  id: 76
+  time: '2024-11-15T03:24:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33262
+- author: ScarKy0, GoldenCan
+  changes:
+  - message: Players that take over emagged/ion stormed borgs now correctly get assigned
+      the antag role.
+    type: Fix
+  id: 77
+  time: '2024-11-20T07:55:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33311
+- author: TokenStyle
+  changes:
+  - message: makeghostroleraffled admin command now works with few arguments!
+    type: Fix
+  id: 78
+  time: '2024-11-30T20:11:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31836
 Name: Admin
 Order: 1
