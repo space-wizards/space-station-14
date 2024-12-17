@@ -116,7 +116,7 @@
     transmissionRange: Long
     
 - type: entity
-  name: quantum entangled holopad
+  name: quantum entangling holopad
   description: "An experimental floor-mounted device for projecting holographic images at extreme distances."
   parent: Holopad
   id: HolopadUnlimitedRange

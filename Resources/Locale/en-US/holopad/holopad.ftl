@@ -1,5 +1,5 @@
 ﻿# Window headers
-holopad-window-title = Holopad
+holopad-window-title = {CAPITALIZE($title)}
 holopad-window-subtitle = [color=white][bold]Holographic communication system[/bold][/color]
 holopad-window-options = [color=darkgray][font size=10][italic]Please select an option from the list below[/italic][/font][/color]
 
