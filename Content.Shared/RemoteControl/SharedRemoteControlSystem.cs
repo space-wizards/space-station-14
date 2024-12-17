@@ -194,6 +194,11 @@ public abstract class SharedRemoteControlSystem : EntitySystem
         if (ent.Comp.IsControlled)
             return false;
 
+        // If the target already has a mind it cannot be controlled.
+        // Should probably be possible in the future but I can't see a use case outside of admeme or some mind control ability.
+        if (_mind.TryGetMind(ent, out var _, out var _))
+            return false;
+
         if (TryComp<SSDIndicatorComponent>(controller, out var ssd))
             ssd.Enabled = false;
 
