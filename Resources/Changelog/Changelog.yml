@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: Winkarst-cpu
   changes:
-  - message: Explosive ammunition is now marked as a contraband.
-    type: Fix
-  id: 7222
-  time: '2024-08-27T11:37:20.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31508
-- author: Winkarst-cpu
-  changes:
   - message: Now the syndicate raid helmet is marked as a Syndicate contraband.
     type: Fix
   id: 7223
@@ -3928,3 +3921,10 @@
   id: 7721
   time: '2024-12-17T10:06:33.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32032
+- author: pcaessayrs
+  changes:
+  - message: Anomaly hosts keep their anomaly when turning into a zombie.
+    type: Tweak
+  id: 7722
+  time: '2024-12-17T11:56:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33867
