@@ -23,6 +23,7 @@ public sealed class ContentSpriteSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IResourceManager _resManager = default!;
     [Dependency] private readonly IUserInterfaceManager _ui = default!;
+    [Dependency] private readonly IRuntimeLog _runtimeLog = default!;
 
     private ContentSpriteControl _control = new();
 
@@ -112,13 +113,21 @@ public sealed class ContentSpriteSystem : EntitySystem
         if (!_adminManager.IsAdmin())
             return;
 
+        var target = ev.Target;
         Verb verb = new()
         {
             Text = Loc.GetString("export-entity-verb-get-data-text"),
             Category = VerbCategory.Debug,
-            Act = () =>
+            Act = async () =>
             {
-                Export(ev.Target);
+                try
+                {
+                    await Export(target);
+                }
+                catch (Exception e)
+                {
+                    _runtimeLog.LogException(e, $"{nameof(ContentSpriteSystem)}.{nameof(Export)}");
+                }
             },
         };
 

@@ -7,12 +7,15 @@ using Content.Shared.Procedural;
 using Content.Shared.Radio;
 using Content.Shared.Salvage.Magnet;
 using Robust.Server.Maps;
+using Robust.Shared.Exceptions;
 using Robust.Shared.Map;
 
 namespace Content.Server.Salvage;
 
 public sealed partial class SalvageSystem
 {
+    [Dependency] private readonly IRuntimeLog _runtimeLog = default!;
+
     [ValidatePrototypeId<RadioChannelPrototype>]
     private const string MagnetChannel = "Supply";
 
@@ -43,7 +46,19 @@ public sealed partial class SalvageSystem
             return;
         }
 
-        TakeMagnetOffer((station.Value, dataComp), args.Index, (uid, component));
+        var index = args.Index;
+        async void TryTakeMagnetOffer()
+        {
+            try
+            {
+                await TakeMagnetOffer((station.Value, dataComp), index, (uid, component));
+            }
+            catch (Exception e)
+            {
+                _runtimeLog.LogException(e, $"{nameof(SalvageSystem)}.{nameof(TakeMagnetOffer)}");
+            }
+        }
+        TryTakeMagnetOffer();
     }
 
     private void OnMagnetStartup(EntityUid uid, SalvageMagnetComponent component, ComponentStartup args)
