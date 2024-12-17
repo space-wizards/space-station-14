@@ -70,3 +70,12 @@ public sealed partial class InnerBodyAnomalyComponent : Component
     [DataField]
     public string LayerMap = "inner_anomaly_layer";
 }
+
+/// <summary>
+/// Event broadcast when an anomaly is being removed because the host is dying.
+/// Raised directed at the host entity with the anomaly.
+/// Cancel this if you want to prevent the host from losing their anomaly on death.
+/// </summary>
+public sealed class BeforeRemoveAnomalyOnDeathEvent : CancellableEntityEventArgs
+{
+}
