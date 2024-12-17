@@ -246,11 +246,17 @@ public sealed class SolutionTransferSystem : EntitySystem
     {
         // Scale the current size of each species based on the transfer fraction.
         species.CurrentSize -= species.CurrentSize * transferFraction;
+        planktonSource.DeadPlankton -= planktonSource.DeadPlankton * transferFraction;
+
 
         // Ensure no species has negative size.
         if (species.CurrentSize < 0)
         {
             species.CurrentSize = 0;
+        }
+        if (planktonSource.DeadPlankton < 0)
+        {
+            planktonSource.DeadPlankton = 0;
         }
     }
 }
