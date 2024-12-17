@@ -7,9 +7,10 @@
     - !type:HTNPrimitiveTask
       operator: !type:UtilityOperator
         proto: NearbyTransporterCharger
-      preconditions:
-      - !type:PowerCellChargePrecondition
-        watts: 80
+#      preconditions:
+#      - !type:PowerCellChargePrecondition
+#        greaterThan: false
+#        watts: 80
 
     - !type:HTNPrimitiveTask
       operator: !type:UtilityOperator
