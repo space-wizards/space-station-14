@@ -17,7 +17,7 @@ teleporter-console-user-interface-no-teleporters = No teleporters
 teleporter-console-user-interface-flavor-left = In the event of bluespace gate instability, we are not responsible for your disintegration or teleportation to ashlands.
 teleporter-console-user-interface-flavor-right = v0.666
 
-	= Unknown Coordinates
+teleporter-name-unknown = Unknown Coordinates
 teleporter-name-center = Center
 teleporter-name-salvage = Salvage
 teleporter-name-medical = Medical

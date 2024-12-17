@@ -491,6 +491,7 @@
       enum.StorageUiKey.Key:
         type: StorageBoundUserInterface
   - type: StationTeleporterConsole
+    portalColor: "#81ddeb"
   - type: Storage
     grid:
     - 0,0,4,2

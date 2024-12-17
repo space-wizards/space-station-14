@@ -5,18 +5,18 @@
   description: The peak of bluespace technology. Giant teleporter that allow you to travel vast distances in the blink of an eye.
   components:
   - type: Sprite
-    sprite: Structures/Machines/gateway.rsi
-    noRot: true
+    sprite: Structures/Machines/station_teleporter.rsi
     layers:
-    - state: frame
-    - state: portal
-      shader: unshaded
-      visible: false
-      map: ["Portal"]
-    - state: on
+    - state: base
+    - state: powered
       shader: unshaded
       visible: false
       map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - sprite: Effects/portal.rsi
+      state: portal-gray
+      map: ["Portal"]
+      shader: unshaded
+      visible: false
   - type: ApcPowerReceiver
     powerLoad: 2500
     needsPower: true
@@ -70,7 +70,7 @@
   suffix: Center, Console Support
   components:
   - type: StationTeleporter
-    gateName: teleporter-name-center
+    teleporterName: teleporter-name-center
     autoLinkKey: Station
 
 - type: entity
@@ -79,7 +79,7 @@
   suffix: Salvage, Console Support
   components:
   - type: StationTeleporter
-    gateName: teleporter-name-salvage
+    teleporterName: teleporter-name-salvage
     autoLinkKey: StationSalvage
 
 - type: entity
@@ -88,7 +88,7 @@
   suffix: Medical, Console Support
   components:
   - type: StationTeleporter
-    gateName: teleporter-name-medical
+    teleporterName: teleporter-name-medical
     autoLinkKey: StationMedical
 
 - type: entity
@@ -97,7 +97,7 @@
   suffix: Engineering, Console Support
   components:
   - type: StationTeleporter
-    gateName: teleporter-name-engineering
+    teleporterName: teleporter-name-engineering
     autoLinkKey: StationEngineering
 
 - type: entity
@@ -106,7 +106,7 @@
   suffix: Security, Console Support
   components:
   - type: StationTeleporter
-    gateName: teleporter-name-security
+    teleporterName: teleporter-name-security
     autoLinkKey: StationSecurity
 
 - type: entity
@@ -115,7 +115,7 @@
   suffix: Science, Console Support
   components:
   - type: StationTeleporter
-    gateName: teleporter-name-science
+    teleporterName: teleporter-name-science
     autoLinkKey: StationScience
 
 - type: entity
@@ -124,5 +124,5 @@
   suffix: Cargo, Console Support
   components:
   - type: StationTeleporter
-    gateName: teleporter-name-cargo
+    teleporterName: teleporter-name-cargo
     autoLinkKey: StationCargo
