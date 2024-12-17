@@ -102,12 +102,7 @@
 
   - !type:CorridorClutterDunGen
     contents:
-    - id: FloraStalagmite1
-    - id: FloraStalagmite2
-    - id: FloraStalagmite3
-    - id: FloraStalagmite4
-    - id: FloraStalagmite5
-    - id: FloraStalagmite6
+    - id: FloraStalagmite
 
   - !type:BoundaryWallDunGen
 
