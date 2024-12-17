@@ -98756,6 +98756,11 @@ entities:
     - type: Transform
       pos: 6.5,15.5
       parent: 2
+  - uid: 20707
+    components:
+    - type: Transform
+      pos: 32.5,-58.5
+      parent: 2
 - proto: PlayerStationAi
   entities:
   - uid: 16136
