@@ -117,13 +117,15 @@
     
 - type: entity
   name: quantum entangled holopad
-  description: "A floor-mounted device for projecting holographic images at extreme distances."
+  description: "An experimental floor-mounted device for projecting holographic images at extreme distances."
   parent: Holopad
   id: HolopadUnlimitedRange
   suffix: Unlimited range
   components:
   - type: Telephone
-    transmissionRange: Unlimited  
+    transmissionRange: Unlimited
+  - type: AccessReader
+    access: [[]]
 
 # These are spawned by holopads
 - type: entity
