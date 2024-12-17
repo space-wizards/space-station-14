@@ -125,10 +125,11 @@
   - type: Telephone
     transmissionRange: Unlimited  
 
+# These are spawned by holopads
 - type: entity
   id: HolopadHologram
   categories: [ HideSpawnMenu ]
-  suffix: DO NOT MAP
+  suffix: DO NOT MAP    
   components:
   - type: Transform
     anchored: true
@@ -153,23 +154,3 @@
   - type: Tag
     tags:
     - HideContextMenu
-    
-- type: entity
-  id: StationAiHoloLocal
-  categories: [ HideSpawnMenu ]
-  suffix: DO NOT MAP
-  components:
-  - type: Transform
-    anchored: true
-  - type: WarpPoint
-    follow: true
-  - type: Eye
-  - type: ContentEye
-  - type: Examiner
-  - type: Actions
-  - type: Alerts
-  - type: FTLSmashImmune
-  - type: CargoSellBlacklist
-  - type: StationAiVision
-    range: 20
-    
