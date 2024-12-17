@@ -68,6 +68,8 @@
       sound:
         path: /Audio/Ambience/Objects/gas_vent.ogg
     - type: Weldable
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: GasVentOpening
     - type: GuideHelp
       guides:
       - AirVent
@@ -96,6 +98,8 @@
     - type: Construction
       graph: GasUnary
       node: passivevent
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: GasVentOpening
     - type: GuideHelp
       guides:
       - PassiveVent
@@ -148,6 +152,8 @@
       sound:
         path: /Audio/Ambience/Objects/gas_vent.ogg
     - type: Weldable
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: GasVentScrubber
     - type: GuideHelp
       guides:
       - AirScrubber
@@ -191,6 +197,8 @@
       visibleLayers:
       - enum.SubfloorLayers.FirstLayer
       - enum.LightLayers.Unshaded
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: GasVentOpening
     - type: GuideHelp
       guides:
       - AirInjector
@@ -238,6 +246,8 @@
       examinableAddress: true
     - type: WiredNetworkConnection
     - type: PowerSwitch
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: Thermoregulator
     - type: GuideHelp
       guides:
       - Thermomachines
@@ -446,6 +456,8 @@
   - type: ExaminableSolution
     solution: tank
   - type: PowerSwitch
+  - type: AtmosMonitoringConsoleDevice
+    navMapBlip: Thermoregulator
   - type: GuideHelp
     guides:
     - GasCondensing

@@ -73,6 +73,8 @@
     range: 5
     sound:
       path: /Audio/Ambience/Objects/gas_pump.ogg
+  - type: AtmosMonitoringConsoleDevice
+    navMapBlip: GasFlowRegulator
   - type: GuideHelp
     guides:
     - Pumps
@@ -133,6 +135,8 @@
       examinableAddress: true
       prefix: device-address-prefix-volume-pump
     - type: WiredNetworkConnection
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: GasFlowRegulator
     - type: GuideHelp
       guides:
       - Pumps
@@ -165,6 +169,8 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_hiss.ogg
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: GasValve
     - type: GuideHelp
       guides:
       - PassiveGate
@@ -216,6 +222,8 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_hiss.ogg
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: GasValve
     - type: GuideHelp
       guides:
       - ManualValve
@@ -278,6 +286,8 @@
     range: 5
     sound:
       path: /Audio/Ambience/Objects/gas_hiss.ogg
+  - type: AtmosMonitoringConsoleDevice
+    navMapBlip: GasValve
   - type: GuideHelp
     guides:
     - SignalValve
@@ -310,6 +320,8 @@
     - type: Construction
       graph: GasBinary
       node: port
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: GasVentOpening
     - type: GuideHelp
       guides:
       - GasCanisters
@@ -369,6 +381,8 @@
           pipeDirection: South
     - type: AmbientSound
       enabled: true
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: GasVentOpening
     - type: GuideHelp
       guides:
       - AirVent
@@ -434,6 +448,8 @@
         acts: ["Destruction"]
   - type: Machine
     board: GasRecyclerMachineCircuitboard
+  - type: AtmosMonitoringConsoleDevice
+    navMapBlip: GasValve
 
 - type: entity
   parent: GasBinaryBase
@@ -474,6 +490,8 @@
   - type: Construction
     graph: GasBinary
     node: radiator
+  - type: AtmosMonitoringConsoleDevice
+    navMapBlip: Thermoregulator
   - type: GuideHelp
     guides:
     - Radiators

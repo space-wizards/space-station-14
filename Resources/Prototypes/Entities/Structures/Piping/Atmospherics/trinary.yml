@@ -70,6 +70,8 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_hiss.ogg
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: GasFlowRegulator
     - type: GuideHelp
       guides:
       - MixingAndFiltering
@@ -161,6 +163,8 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_hiss.ogg
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: GasFlowRegulator
     - type: GuideHelp
       guides:
       - MixingAndFiltering
@@ -263,6 +267,8 @@
     - type: Construction
       graph: GasTrinary
       node: pneumaticvalve
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: GasFlowRegulator
     - type: GuideHelp
       guides:
       - PneumaticValve
