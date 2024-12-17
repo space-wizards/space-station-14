@@ -1,16 +1,15 @@
-using Content.Server.Animals.Components;
-using Content.Server.Nutrition;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Nutrition;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Animals.Systems;
+namespace Content.Shared.Animals;
 
 /// <summary>
-///     Gives ability to produce fiber reagents, produces endless if the
-///     owner has no HungerComponent
+///     Gives ability to produce fiber reagents;
+///     produces endlessly if the owner has no HungerComponent.
 /// </summary>
 public sealed class WoolySystem : EntitySystem
 {
@@ -24,6 +23,12 @@ public sealed class WoolySystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<WoolyComponent, BeforeFullyEatenEvent>(OnBeforeFullyEaten);
+        SubscribeLocalEvent<WoolyComponent, MapInitEvent>(OnMapInit);
+    }
+
+    private void OnMapInit(EntityUid uid, WoolyComponent component, MapInitEvent args)
+    {
+        component.NextGrowth = _timing.CurTime + component.GrowthDelay;
     }
 
     public override void Update(float frameTime)
@@ -31,15 +36,20 @@ public sealed class WoolySystem : EntitySystem
         base.Update(frameTime);
 
         var query = EntityQueryEnumerator<WoolyComponent>();
-        var now = _timing.CurTime;
         while (query.MoveNext(out var uid, out var wooly))
         {
-            if (now < wooly.NextGrowth)
+            if (_timing.CurTime < wooly.NextGrowth)
                 continue;
 
-            wooly.NextGrowth = now + wooly.GrowthDelay;
+            wooly.NextGrowth += wooly.GrowthDelay;
 
             if (_mobState.IsDead(uid))
+                continue;
+
+            if (!_solutionContainer.ResolveSolution(uid, wooly.SolutionName, ref wooly.Solution, out var solution))
+                continue;
+
+            if (solution.AvailableVolume == 0)
                 continue;
 
             // Actually there is food digestion so no problem with instant reagent generation "OnFeed"
@@ -51,9 +61,6 @@ public sealed class WoolySystem : EntitySystem
 
                 _hunger.ModifyHunger(uid, -wooly.HungerUsage, hunger);
             }
-
-            if (!_solutionContainer.ResolveSolution(uid, wooly.SolutionName, ref wooly.Solution))
-                continue;
 
             _solutionContainer.TryAddReagent(wooly.Solution.Value, wooly.ReagentId, wooly.Quantity, out _);
         }
