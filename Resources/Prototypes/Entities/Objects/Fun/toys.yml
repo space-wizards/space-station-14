@@ -425,6 +425,8 @@
   components:
   - type: Sprite
     state: plushie_lizard_mirrored_inversed
+  - type: Item
+    heldPrefix: plushielizardinversed
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/hew.ogg
@@ -1700,4 +1702,3 @@
   - type: PhysicalComposition
     materialComposition:
       Plastic: 25
-      
