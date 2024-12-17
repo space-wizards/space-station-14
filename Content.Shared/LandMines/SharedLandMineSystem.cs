@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Examine;
+using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
 
 namespace Content.Shared.LandMines;
@@ -50,6 +51,6 @@ public abstract class SharedLandMineSystem : EntitySystem
         if (!TryComp<AppearanceComponent>(uid, out var appearance))
             return;
 
-        _appearance.SetData(uid, LandMineVisuals.Armed, component.Armed, appearance);
+        _appearance.SetData(uid, ToggleVisuals.Toggled, component.Armed, appearance);
     }
 }

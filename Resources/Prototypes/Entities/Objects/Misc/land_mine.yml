@@ -22,21 +22,16 @@
   - type: Sprite
     drawdepth: Items
     sprite: Objects/Misc/landmine.rsi
-    state: landmine-inactive
     layers:
-      - state: landmine-inactive
-        map: [ "disarmed" ]
-        visible: true
-      - state: landmine
-        map: [ "armed" ]
-        visible: false
+    - state: landmine-inactive
+      map: [ "enum.ToggleVisuals.Layer" ]
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.LandMineVisuals.Armed:
-        armed:
-          True: {visible: true}
-          False: {visible: false}
+      enum.ToggleVisuals.Toggled:
+        enum.ToggleVisuals.Layer:
+          True: {state: landmine}
+          False: {state: landmine-inactive}
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -58,18 +53,29 @@
     stepOn: true
 
 - type: entity
+  id: LandMineKickUnarmed
   name: kick mine
   parent: BaseLandMine
-  id: LandMineKick
   components:
   - type: GhostKickUserOnTrigger
   - type: DeleteOnTrigger
 
 - type: entity
+  id: LandMineKick
+  suffix: armed
+  parent: LandMineKickUnarmed
+  components:
+  - type: LandMine
+    armed: true
+  - type: Sprite
+    layers:
+    - state: landmine
+
+- type: entity
   name: modular mine
   description: This bad boy could be packing any number of dangers. Or a bike horn.
   parent: BaseLandMine
-  id: LandMineModular
+  id: LandMineModularUnarmed
   components:
   - type: PayloadCase
   - type: Construction
@@ -77,9 +83,20 @@
     node: emptyCase
 
 - type: entity
+  id: LandMineModular
+  suffix: armed
+  parent: LandMineModularUnarmed
+  components:
+  - type: LandMine
+    armed: true
+  - type: Sprite
+    layers:
+    - state: landmine
+
+- type: entity
   name: explosive mine
   parent: BaseLandMine
-  id: LandMineExplosive
+  id: LandMineExplosiveUnarmed
   components:
   - type: ExplodeOnTrigger
   - type: Explosive
@@ -91,14 +108,11 @@
 
 - type: entity
   suffix: armed
-  parent: LandMineExplosive
-  id: LandMineExplosiveArmed
+  parent: LandMineExplosiveUnarmed
+  id: LandMineExplosive
   components:
   - type: LandMine
-    armed: True
+    armed: true
   - type: Sprite
     layers:
     - state: landmine
-      visible: true
-    - state: landmine-inactive
-      visible: false

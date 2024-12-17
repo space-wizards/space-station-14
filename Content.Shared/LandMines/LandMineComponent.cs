@@ -31,9 +31,3 @@ public sealed partial class LandMineComponent : Component
     [DataField, AutoNetworkedField]
     public bool ShowVerbArm = true;
 }
-
-[Serializable, NetSerializable]
-public enum LandMineVisuals
-{
-    Armed,
-}
