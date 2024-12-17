@@ -274,6 +274,7 @@ flavor-complex-mimosa = like an early brunch
 flavor-complex-moscowmule = like vodka and ginger ale
 flavor-complex-thesunalsorises = like an absinthe daiquiri
 flavor-complex-whiskeysour = like whiskey and egg
+flavor-complex-zombiecocktail = like eating brains
 flavor-complex-absinthe = like anise
 flavor-complex-blue-curacao = like orange flowers
 flavor-complex-acidspit = like French battery acid

@@ -312,3 +312,7 @@ reagent-desc-the-sun-also-rises = A strong cocktail mixed into a murky blend. A 
 
 reagent-name-whiskey-sour = whiskey sour 
 reagent-desc-whiskey-sour = What's the secret ingredient? Eggs. It's eggs.
+
+reagent-name-zombiecocktail = zombie
+reagent-desc-zombiecocktail = It gets in your head. Your he-eyeh-ead.
+

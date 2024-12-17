@@ -1383,3 +1383,9 @@
   id: whiskeysour
   flavorType: Complex
   description: flavor-complex-whiskeysour
+
+- type: flavor
+  id: zombiecocktail
+  flavorType: Complex
+  description: flavor-complex-zombiecocktail
+
