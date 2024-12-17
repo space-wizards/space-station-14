@@ -342,7 +342,10 @@
     - id: Lamp
       prob: 0.01
       orGroup: Useful
-    - id: FloraTreeLarge05
+    - id: FloraTreeLarge
+      prob: 0.01
+      orGroup: Useful
+    - id: LightTree #Funny mobs maybe
       prob: 0.01
       orGroup: Useful
     #notuseful

@@ -65,6 +65,8 @@ namespace Content.IntegrationTests.Tests
             "Gate",
             "Amber",
             "Loop"
+
+           
         };
 
         /// <summary>
