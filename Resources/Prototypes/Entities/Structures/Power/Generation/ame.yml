@@ -98,7 +98,9 @@
     containers:
       fuelSlot: !type:ContainerSlot
   - type: GuideHelp
-    guides: [ AME, Power ]
+    guides:
+    - AME
+    - Power
   - type: Electrified
     onHandInteract: false
     onInteractUsing: false
@@ -201,7 +203,9 @@
     graph: AmeShielding
     node: ameShielding
   - type: GuideHelp
-    guides: [ AME, Power ]
+    guides:
+      - AME
+      - Power
   - type: Electrified
     onHandInteract: false
     onInteractUsing: false

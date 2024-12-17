@@ -28,6 +28,10 @@
     - type: Tag
       tags:
         - AirSensor
+    - type: GuideHelp
+      guides:
+      - DeviceMonitoringAndControl
+      - AtmosphericsSystems
 
 - type: entity
   id: AirSensor

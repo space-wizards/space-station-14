@@ -70,6 +70,9 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_hiss.ogg
+    - type: GuideHelp
+      guides:
+      - MixingAndFiltering
 
 - type: entity
   parent: GasFilter
@@ -158,6 +161,9 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_hiss.ogg
+    - type: GuideHelp
+      guides:
+      - MixingAndFiltering
 
 - type: entity
   parent: GasMixer
@@ -257,3 +263,6 @@
     - type: Construction
       graph: GasTrinary
       node: pneumaticvalve
+    - type: GuideHelp
+      guides:
+      - PneumaticValve
