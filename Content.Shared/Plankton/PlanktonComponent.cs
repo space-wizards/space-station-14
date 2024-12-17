@@ -46,8 +46,6 @@ public partial class PlanktonComponent : Component
         Symbiotroph,
         Chemophage,
         Decomposer,
-        Cryophilic,
-        Pyrophilic,
         Scavenger
     }
 
