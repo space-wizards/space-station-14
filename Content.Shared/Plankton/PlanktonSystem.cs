@@ -165,6 +165,19 @@ namespace Content.Shared.Plankton
             }
         }
 
+         if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.Charged) != 0)
+        {
+            if (planktonInstance.IsAlive == true)
+            {
+                EntityManager.EnsureComponent<ElectrifiedComponent>(uid);
+                Log.Info($"{planktonInstance.SpeciesName} is shocking it's tank.")
+            }
+            else
+            {
+                _entityManager.RemoveComponent<ElectrifiedComponent>(uid);
+            }
+        }
+
         if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.Mimicry) != 0)
         {
 
@@ -177,15 +190,7 @@ namespace Content.Shared.Plankton
 
         if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.MagneticField) != 0)
         {
-            if (planktonInstance.IsAlive == true)
-            {
-                EntityManager.EnsureComponent<ElectrifiedComponent>(uid);
-                Log.Info($"{planktonInstance.SpeciesName} is shocking it's tank.")
-            }
-            else
-            {
-                _entityManager.RemoveComponent<ElectrifiedComponent>(uid);
-            }
+
         }
 
         if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.Hallucinogenic) != 0)
