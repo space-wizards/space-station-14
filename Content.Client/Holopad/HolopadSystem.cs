@@ -5,7 +5,6 @@ using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using System;
 using System.Linq;
 
 namespace Content.Client.Holopad;
@@ -13,8 +12,6 @@ namespace Content.Client.Holopad;
 public sealed class HolopadSystem : SharedHolopadSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
@@ -65,6 +62,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
         var targetPlayer = GetEntity(ev.TargetPlayer);
         var player = _playerManager.LocalSession?.AttachedEntity;
 
+        // Ignore the request if received by a player who isn't the target
         if (targetPlayer != player)
             return;
 
@@ -75,6 +73,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
         if (playerSprite.Visible)
         {
+            // Record the RSI paths, state names and shader paramaters of all visible layers
             for (int i = 0; i < playerSprite.AllLayers.Count(); i++)
             {
                 if (!playerSprite.TryGetLayer(i, out var layer))
@@ -112,6 +111,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
             }
         }
 
+        // Return the recorded data to the server
         var evResponse = new PlayerSpriteStateMessage(ev.TargetPlayer, spriteLayerData.ToArray());
         RaiseNetworkEvent(evResponse);
     }
