@@ -205,6 +205,7 @@ public sealed class SolutionTransferSystem : EntitySystem
             var planktonFraction = actualAmount / sourceSolution.Volume;
 
             TransferPlanktonFraction(planktonSource, planktonFraction);
+            Log.Info($"Transferred Plankton from {sourceEntity} to {targetEntity}.");
 
             foreach (var species in planktonSource.SpeciesInstances)
             {
@@ -247,6 +248,8 @@ public sealed class SolutionTransferSystem : EntitySystem
         // Scale the current size of each species based on the transfer fraction.
         species.CurrentSize -= species.CurrentSize * transferFraction;
         planktonSource.DeadPlankton -= planktonSource.DeadPlankton * transferFraction;
+        Log.Info($"Transferred {species.CurrentSize} of {species.SpeciesName} to target.");
+        Log.Info($"Transferred {planktonSource.DeadPlankton} of dead matter to target.");
 
 
         // Ensure no species has negative size.
@@ -269,6 +272,7 @@ public sealed class SolutionTransferSystem : EntitySystem
         if (!HasComp<PlanktonComponent>(targetEntity))
         {
             EntityManager.AddComponent<PlanktonComponent>(targetEntity);
+            Log.Info($"Added PlanktonComponent to {targetEntity}");
         }
 
         var planktonTarget = Comp<PlanktonComponent>(targetEntity);
