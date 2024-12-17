@@ -593,6 +593,9 @@
           Quantity: 5
         - ReagentId: Vitamin
           Quantity: 1
+  - type: Tag
+    tags:
+    - Meat
 
 # Tastes like bun, HEAT.
 

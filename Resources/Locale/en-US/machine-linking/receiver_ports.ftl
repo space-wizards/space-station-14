@@ -28,6 +28,9 @@ signal-port-description-doorbolt = Bolts door when HIGH.
 signal-port-name-trigger = Trigger
 signal-port-description-trigger = Triggers some mechanism on the device.
 
+signal-port-name-timer = Timer
+signal-port-description-timer = Starts the timer countdown of the device.
+
 signal-port-name-order-sender = Order sender
 signal-port-description-order-sender = Cargo console order sender
 

@@ -29,16 +29,6 @@
   group: market
 
 - type: cargoProduct
-  id: SecurityRiot
-  icon:
-    sprite: Clothing/OuterClothing/Armor/riot.rsi
-    state: icon
-  product: CrateSecurityRiot
-  cost: 7500
-  category: cargoproduct-category-name-security
-  group: market
-
-- type: cargoProduct
   id: SecuritySupplies
   icon:
     sprite: Objects/Storage/boxes.rsi

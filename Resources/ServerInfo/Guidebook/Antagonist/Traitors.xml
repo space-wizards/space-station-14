@@ -18,12 +18,17 @@
   By pressing [color=yellow][bold][keybind="OpenCharacterMenu"][/bold][/color], you'll see your personal uplink code. [bold]Setting your PDA's ringtone as this code will open the uplink.[/bold]
   Pressing [color=yellow][bold][keybind="OpenCharacterMenu"][/bold][/color] also lets you view your objectives and the codewords.
 
+  If you do not have a PDA when you are activated, an [color=cyan]uplink implant[/color] is provided [bold]for the full [color=red]TC[/color] price of the implant.[/bold]
+  It can be accessed from your hotbar.
   <Box>
     <GuideEntityEmbed Entity="PassengerPDA" Caption="PDA"/>
     <GuideEntityEmbed Entity="Telecrystal" Caption="Telecrystals"/>
+    <GuideEntityEmbed Entity="BaseUplinkRadio" Caption="Uplink Implant"/>
   </Box>
 
-  [bold]Make sure to close your uplink to prevent anyone else from seeing it.[/bold] You don't want [color=#cb0000]Security[/color] to get their hands on this premium selection of contraband!
+  [bold]Make sure to close your PDA uplink to prevent anyone else from seeing it.[/bold] You don't want [color=#cb0000]Security[/color] to get their hands on this premium selection of contraband!
+
+  Implanted uplinks are not normally accessible to other people, so they do not have any security measures. They can, however, be removed from you with an empty implanter.
 
   <Box>
     <GuideEntityEmbed Entity="WeaponPistolCobra" Caption="Weaponry"/>
