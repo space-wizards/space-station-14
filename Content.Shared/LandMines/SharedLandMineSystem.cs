@@ -24,7 +24,7 @@ public abstract class SharedLandMineSystem : EntitySystem
         args.Verbs.Add(new AlternativeVerb
         {
             Text = Loc.GetString("land-mine-verb-begin"),
-            Disabled = component is {Armed:true},
+            Disabled = component.Armed,
             Priority = 10,
             Act = () =>
             {
