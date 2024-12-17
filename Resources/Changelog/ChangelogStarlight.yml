@@ -1115,4 +1115,18 @@ Entries:
   id: 158
   time: '2024-12-16T16:53:26.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/164
+- author: Clone0401
+  changes:
+  - message: HoS's energy shotgun max shot capacity changed from 8 to 5.
+    type: Tweak
+  id: 159
+  time: '2024-12-17T05:23:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/166
+- author: Clone0401
+  changes:
+  - message: HoS's energy shotgun now recharges at a rate of 1 shot per 10 seconds.
+    type: Tweak
+  id: 160
+  time: '2024-12-17T05:23:14.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/166
 
