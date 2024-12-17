@@ -82,7 +82,6 @@
   id: LandMineExplosive
   components:
   - type: ExplodeOnTrigger
-  - type: LandMine
   - type: Explosive
     explosionType: Default
     maxIntensity: 10
@@ -91,7 +90,6 @@
     canCreateVacuum: false
 
 - type: entity
-  name: explosive mine
   suffix: armed
   parent: LandMineExplosive
   id: LandMineExplosiveArmed
