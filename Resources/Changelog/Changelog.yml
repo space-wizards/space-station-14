@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: SaphireLattice
-  changes:
-  - message: Safety Moth poster graphics for hardhats and pipes are no longer swapped
-      around
-    type: Fix
-  id: 7221
-  time: '2024-08-27T11:32:53.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31507
 - author: Winkarst-cpu
   changes:
   - message: Explosive ammunition is now marked as a contraband.
@@ -3929,3 +3921,10 @@
   id: 7720
   time: '2024-12-17T03:53:17.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32294
+- author: TheShuEd
+  changes:
+  - message: Added new map Gate
+    type: Add
+  id: 7721
+  time: '2024-12-17T10:06:33.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32032
