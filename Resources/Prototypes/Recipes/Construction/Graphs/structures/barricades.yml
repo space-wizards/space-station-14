@@ -41,8 +41,6 @@
           completed:
             - !type:SnapToGrid
               southRotation: true
-          conditions:
-            - !type:EntityAnchored {}
           steps:
             - material: WoodPlank
               amount: 2
