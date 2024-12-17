@@ -41,8 +41,7 @@ namespace Content.Shared.Plankton
             {
                 foreach (var entity in EntityManager.EntityQuery<PlanktonComponent>())
                 {
-                     CheckPlanktonDiet(entity);
-                     CheckPlanktonCharacteristics(entity);
+                     PlanktonInteraction(entity);
                 }
                 _updateTimer = 0f;
             }
