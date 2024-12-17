@@ -90,10 +90,6 @@ namespace Content.Server.Atmos.EntitySystems
                     component.TableLayerRemoved.Add(id);
                     _physics.RemoveCollisionMask(uid, id, fixture, (int)CollisionGroup.TableLayer, manager: fixtures);
                 }
-                else
-                {
-                    component.TableLayerRemoved.Remove(id); // Ensure it is no longer marked as removed
-                }
             }
             // TODO: Make them dynamic type? Ehh but they still want movement so uhh make it non-predicted like weightless?
             // idk it's hard.
