@@ -9,6 +9,7 @@ using Content.Shared.Verbs;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Content.Shared.Plankton;
+using System.Collections.Generic;
 
 
 namespace Content.Shared.Chemistry.EntitySystems;
@@ -23,6 +24,7 @@ public sealed class SolutionTransferSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
 
     /// <summary>
     ///     Default transfer amounts for the set-transfer verb.
@@ -223,24 +225,48 @@ public sealed class SolutionTransferSystem : EntitySystem
         _adminLogger.Add(LogType.Action, LogImpact.Medium,
             $"{ToPrettyString(user):player} transferred {SharedSolutionContainerSystem.ToPrettyString(solution)} to {ToPrettyString(targetEntity):target}, which now contains {SharedSolutionContainerSystem.ToPrettyString(targetSolution)}");
 
+        if (sourceSolution.Volume == 0) // if the container being poured is empty, remove the planktoncomponent.
+    {
+        if (HasComp<PlanktonComponent>(sourceEntity))
+        {
+            _entityManager.RemoveComponent<PlanktonComponent>(sourceEntity);
+        }
+    }
+
         return actualAmount;
     }
 
-     private void TransferPlanktonComponent(EntityUid sourceEntity, EntityUid targetEntity)
+    private void TransferPlanktonFraction(PlanktonComponent planktonSource, FixedPoint2 transferAmount, FixedPoint2 solutionVolume)
 {
-    // Check if the source entity has a PlanktonComponent
+    // Calculate the fraction of the solution that is being transferred.
+    // Example: If 50% of the solution is transferred, we transfer 50% of the plankton size.
+    float transferFraction = (float)(transferAmount / solutionVolume);
+    
+    foreach (var species in planktonSource.SpeciesInstances)
+    {
+        // Scale the current size of each species based on the transfer fraction.
+        species.CurrentSize -= species.CurrentSize * transferFraction;
+
+        // Ensure no species has negative size.
+        if (species.CurrentSize < 0)
+        {
+            species.CurrentSize = 0;
+        }
+    }
+}
+
+
+        private void TransferPlanktonComponent(EntityUid sourceEntity, EntityUid targetEntity)
+{
     if (TryComp<PlanktonComponent>(sourceEntity, out var planktonSource))
     {
-        // If the target entity doesn't have a PlanktonComponent, we add it
         if (!HasComp<PlanktonComponent>(targetEntity))
         {
             EntityManager.AddComponent<PlanktonComponent>(targetEntity);
         }
 
-        // Get the target's PlanktonComponent to transfer data to
         var planktonTarget = Comp<PlanktonComponent>(targetEntity);
 
-        // Copy simple properties directly
         planktonTarget.ReagentId = planktonSource.ReagentId;
         planktonTarget.DeadPlankton = planktonSource.DeadPlankton;
         planktonTarget.Diet = planktonSource.Diet;
@@ -263,6 +289,7 @@ public sealed class SolutionTransferSystem : EntitySystem
         }
     }
 }
+
 
     }
 }
