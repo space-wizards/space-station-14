@@ -21,6 +21,7 @@ shuttle-console-exclusion = Exclusion area
 shuttle-console-nav-settings = Settings
 shuttle-console-iff-toggle = Show IFF
 shuttle-console-dock-toggle = Show docks
+shuttle-console-signal-toggle = Give Signale
 
 # MAP
 

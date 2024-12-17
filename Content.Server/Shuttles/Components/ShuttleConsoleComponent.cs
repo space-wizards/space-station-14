@@ -1,5 +1,8 @@
 using System.Numerics;
 using Content.Shared.Shuttles.Components;
+using Content.Shared.DeviceLinking;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+
 
 namespace Content.Server.Shuttles.Components
 {
@@ -14,6 +17,9 @@ namespace Content.Server.Shuttles.Components
         /// </summary>
         [DataField("zoom")]
         public Vector2 Zoom = new(1.5f, 1.5f);
+
+        [DataField("linkingPort", customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>))]
+        public string LinkingPort = "ShuttleConsoleSender";
 
         /// <summary>
         /// Should this console have access to restricted FTL destinations?

@@ -82,8 +82,15 @@
   abstract: true
   components:
   - type: ShuttleConsole
+  - type: DeviceNetwork
+    deviceNetId: Wired
+  - type: DeviceList
   - type: ActivatableUI
     key: enum.ShuttleConsoleUiKey.Key
+  - type: DeviceLinkSource
+    range: 30
+    ports:
+      - ShuttleConsoleSender
   - type: UserInterface
     interfaces:
         enum.ShuttleConsoleUiKey.Key:

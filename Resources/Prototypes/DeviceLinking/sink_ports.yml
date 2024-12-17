@@ -82,6 +82,11 @@
   id: ArtifactAnalyzerReceiver
   name: signal-port-name-artifact-analyzer-receiver
   description: signal-port-description-artifact-analyzer-receiver
+  
+- type: sinkPort
+  id: ShuttleConsoleReceiver
+  name: signal-port-name-artifact-analyzer-receiver
+  description: signal-port-description-artifact-analyzer-receiver
 
 - type: sinkPort
   id: InputA
