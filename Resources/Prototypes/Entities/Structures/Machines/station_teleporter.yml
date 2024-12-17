@@ -1,0 +1,128 @@
+- type: entity
+  parent: [ BaseMachinePowered ]
+  id: StationTeleporter
+  name: stationary teleporter
+  description: The peak of bluespace technology. Giant teleporter that allow you to travel vast distances in the blink of an eye.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/gateway.rsi
+    noRot: true
+    layers:
+    - state: frame
+    - state: portal
+      shader: unshaded
+      visible: false
+      map: ["Portal"]
+    - state: on
+      shader: unshaded
+      visible: false
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+  - type: ApcPowerReceiver
+    powerLoad: 2500
+    needsPower: true
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+      enum.LinkedEntityVisuals.HasAnyLinks:
+        Portal:
+          True: { visible: true }
+          False: { visible: false }
+  - type: AmbientSound
+    enabled: false
+    sound:
+      path: /Audio/Ambience/ambi_gateway.ogg
+    range: 5
+    volume: 8
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+  - type: Transform
+    noRot: true
+  - type: Fixtures
+    fixtures:
+      portalFixture:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.48,0.25,0.48"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        hard: false
+  - type: Appearance
+  - type: StationTeleporter
+    portalLayerMap: "Portal"
+  - type: Portal
+    randomTeleport: false
+    canTeleportToOtherMaps: true
+  - type: PointLight
+    enabled: false
+    radius: 3
+    energy: 1
+  - type: LitOnPowered
+
+- type: entity
+  parent: StationTeleporter
+  id: StationTeleporterCenter
+  suffix: Center, Console Support
+  components:
+  - type: StationTeleporter
+    gateName: teleporter-name-center
+    autoLinkKey: Station
+
+- type: entity
+  parent: StationTeleporter
+  id: StationTeleporterSalvage
+  suffix: Salvage, Console Support
+  components:
+  - type: StationTeleporter
+    gateName: teleporter-name-salvage
+    autoLinkKey: StationSalvage
+
+- type: entity
+  parent: StationTeleporter
+  id: StationTeleporterMedical
+  suffix: Medical, Console Support
+  components:
+  - type: StationTeleporter
+    gateName: teleporter-name-medical
+    autoLinkKey: StationMedical
+
+- type: entity
+  parent: StationTeleporter
+  id: StationTeleporterEngineering
+  suffix: Engineering, Console Support
+  components:
+  - type: StationTeleporter
+    gateName: teleporter-name-engineering
+    autoLinkKey: StationEngineering
+
+- type: entity
+  parent: StationTeleporter
+  id: StationTeleporterSecurity
+  suffix: Security, Console Support
+  components:
+  - type: StationTeleporter
+    gateName: teleporter-name-security
+    autoLinkKey: StationSecurity
+
+- type: entity
+  parent: StationTeleporter
+  id: StationTeleporterScience
+  suffix: Science, Console Support
+  components:
+  - type: StationTeleporter
+    gateName: teleporter-name-science
+    autoLinkKey: StationScience
+
+- type: entity
+  parent: StationTeleporter
+  id: StationTeleporterCargo
+  suffix: Cargo, Console Support
+  components:
+  - type: StationTeleporter
+    gateName: teleporter-name-cargo
+    autoLinkKey: StationCargo

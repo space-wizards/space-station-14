@@ -1,14 +1,14 @@
-using Content.Shared.GatewayStation;
+using Content.Shared.StationTeleporter;
 using Robust.Client.UserInterface;
 
-namespace Content.Client.GatewayStation;
+namespace Content.Client.StationTeleporter;
 
-public sealed class StationGatewayBoundUserInterface : BoundUserInterface
+public sealed class StationTeleporterBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
-    private StationGatewayWindow? _menu;
+    private StationTeleporterWindow? _menu;
 
-    public StationGatewayBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+    public StationTeleporterBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
     }
 
@@ -27,7 +27,7 @@ public sealed class StationGatewayBoundUserInterface : BoundUserInterface
             }
         }
 
-        _menu = this.CreateWindow<StationGatewayWindow>();
+        _menu = this.CreateWindow<StationTeleporterWindow>();
         _menu.Set(this, stationName, gridUid);
     }
 
@@ -37,15 +37,15 @@ public sealed class StationGatewayBoundUserInterface : BoundUserInterface
 
         switch (state)
         {
-            case StationGatewayState st:
+            case StationTeleporterState st:
                 EntMan.TryGetComponent<TransformComponent>(Owner, out var xform);
-                _menu?.ShowGateways(st, Owner, xform?.Coordinates);
+                _menu?.ShowTeleporters(st, Owner, xform?.Coordinates);
                 break;
         }
     }
 
-    public void SendGatewayLinkChangeMessage(NetEntity? gate)
+    public void SendTeleporterLinkChangeMessage(NetEntity? teleporter)
     {
-        SendMessage(new StationGatewayGateClickMessage(gate));
+        SendMessage(new StationTeleporterClickMessage(teleporter));
     }
 }

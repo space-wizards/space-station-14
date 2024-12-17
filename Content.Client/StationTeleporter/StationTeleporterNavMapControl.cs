@@ -2,14 +2,14 @@ using System.Numerics;
 using Content.Client.Pinpointer.UI;
 using Robust.Client.Graphics;
 
-namespace Content.Client.GatewayStation;
+namespace Content.Client.StationTeleporter;
 
-public sealed partial class StationGatewayNavMapControl : NavMapControl
+public sealed partial class StationTeleporterNavMapControl : NavMapControl
 {
-    public HashSet<GatewayLinkLine> LinkLines = new();
+    public HashSet<TeleporterLinkLine> LinkLines = new();
 
     private readonly SharedTransformSystem _transformSystem;
-    public StationGatewayNavMapControl() : base()
+    public StationTeleporterNavMapControl() : base()
     {
         _transformSystem = EntManager.System<SharedTransformSystem>();
 
@@ -40,12 +40,12 @@ public sealed partial class StationGatewayNavMapControl : NavMapControl
     }
 }
 
-public struct GatewayLinkLine
+public struct TeleporterLinkLine
 {
     public readonly Vector2 Start;
     public readonly Vector2 End;
 
-    public GatewayLinkLine(Vector2 start, Vector2 end)
+    public TeleporterLinkLine(Vector2 start, Vector2 end)
     {
         Start = start;
         End = end;

@@ -1,23 +1,23 @@
-using Content.Server.GatewayStation.Systems;
+using Content.Server.StationTeleporter.Systems;
 using Robust.Shared.Audio;
 
-namespace Content.Server.GatewayStation.Components;
+namespace Content.Server.StationTeleporter.Components;
 
 /// <summary>
-/// Stores a reference to a specific Gateway. Can be inserted into the gateway control console so that the console can control this gateway
+/// Stores a reference to a specific teleporter. Can be inserted into the teleporter control console so that the console can control this teleporter
 /// </summary>
 [RegisterComponent]
-[Access(typeof(StationGatewaySystem))]
-public sealed partial class GatewayChipComponent : Component
+[Access(typeof(StationTeleporterSystem))]
+public sealed partial class TeleporterChipComponent : Component
 {
     [DataField]
-    public EntityUid? ConnectedGate;
+    public EntityUid? ConnectedTeleporter;
 
     [DataField]
     public string ConnectedName = string.Empty;
 
     /// <summary>
-    /// When initialized, it will attempt to contact a random gateway that has the same code. Can be used for pre-created gateways
+    /// When initialized, it will attempt to contact a random teleporter that has the same code. Can be used for pre-created teleporters
     /// </summary>
     // Not ProtoId<TagPrototype> because we can random generate this keys for expeditions
     [DataField]

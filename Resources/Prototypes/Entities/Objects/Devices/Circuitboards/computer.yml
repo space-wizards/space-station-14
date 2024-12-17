@@ -418,20 +418,20 @@
 
 - type: entity
   parent: BaseComputerCircuitboard
-  id: StationGatewayControlCircuitboard
-  name: gateway control console board
-  description: A computer printed circuit board for a gateway controlling console.
+  id: StationTeleportersControlCircuitboard
+  name: teleporters control console board
+  description: A computer printed circuit board for a teleporter controlling console.
   components:
     - type: Sprite
       state: cpu_command
     - type: ComputerBoard
-      prototype: ComputerGatewayStation
+      prototype: ComputerStationTeleportersControl
 
 - type: entity
   parent: BaseComputerCircuitboard
-  id: SyndicateGatewayControlCircuitboard
-  name: syndicate gateway control console board
-  description: A computer printed circuit board for a gateway controlling console.
+  id: SyndicateTeleportersControlCircuitboard
+  name: syndicate teleporters control console board
+  description: A computer printed circuit board for a teleporter controlling console.
   components:
     - type: ComputerBoard
-      prototype: ComputerGatewaySyndicate
+      prototype: ComputerSyndicateTeleportersControl

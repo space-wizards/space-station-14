@@ -1,13 +1,13 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
-               xmlns:ui="clr-namespace:Content.Client.GatewayStation"
+               xmlns:ui="clr-namespace:Content.Client.StationTeleporter"
                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-               Title="{Loc 'gateway-console-user-interface-title'}"
+               Title="{Loc 'teleporter-console-user-interface-title'}"
                Resizable="False"
                SetSize="1210 700"
                MinSize="1210 700">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal" VerticalExpand="True" HorizontalExpand="True">
-            <ui:StationGatewayNavMapControl Name="NavMap" HorizontalExpand="True" VerticalExpand="True" Margin="5 20"/>
+            <ui:StationTeleporterNavMapControl Name="NavMap" HorizontalExpand="True" VerticalExpand="True" Margin="5 20"/>
             <BoxContainer Orientation="Vertical" Margin="0 0 10 0">
                 <controls:StripeBack>
                     <PanelContainer>
@@ -15,18 +15,18 @@
                     </PanelContainer>
                 </controls:StripeBack>
 
-                <ScrollContainer Name="GatewaysScroller"
+                <ScrollContainer Name="TeleportersScroller"
                                  VerticalExpand="True"
                                  SetWidth="320"
                                  Margin="8, 8, 8, 8">
-                    <BoxContainer Name="GatewaysTable"
+                    <BoxContainer Name="TeleportersTable"
                                    Orientation="Vertical"
                                    HorizontalExpand="True"
                                    Margin="0 0 10 0">
                         <!-- Table rows are filled by code -->
                     </BoxContainer>
-                    <Label  Name="NoGatewayLabel"
-                            Text="{Loc 'gateway-console-user-interface-no-gateways'}"
+                    <Label  Name="NoTeleportersLabel"
+                            Text="{Loc 'teleporter-console-user-interface-no-teleporters'}"
                             StyleClasses="LabelHeading"
                             FontColorOverride="Red"
                             HorizontalAlignment="Center"
@@ -39,8 +39,8 @@
         <BoxContainer Orientation="Vertical">
             <PanelContainer StyleClasses="LowDivider" />
             <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
-                <Label Text="{Loc 'gateway-console-user-interface-flavor-left'}" StyleClasses="WindowFooterText" />
-                <Label Text="{Loc 'gateway-console-user-interface-flavor-right'}" StyleClasses="WindowFooterText"
+                <Label Text="{Loc 'teleporter-console-user-interface-flavor-left'}" StyleClasses="WindowFooterText" />
+                <Label Text="{Loc 'teleporter-console-user-interface-flavor-right'}" StyleClasses="WindowFooterText"
                         HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 5 0" />
                 <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
                         VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>

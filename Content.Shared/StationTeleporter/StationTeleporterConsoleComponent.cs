@@ -1,25 +1,25 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.GatewayStation;
+namespace Content.Shared.StationTeleporter;
 
 /// <summary>
-/// Console that allows you to manage the StationGatewayComponent
+/// Console that allows you to manage the StationTeleporterComponent
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[Access(typeof(SharedStationGatewaySystem))]
-public sealed partial class StationGatewayConsoleComponent : Component
+[Access(typeof(SharedStationTeleporterSystem))]
+public sealed partial class StationTeleporterConsoleComponent : Component
 {
     /// <summary>
     /// Selected via UI gate. Defines the behavior of the console.
     /// </summary>
     [DataField]
-    public EntityUid? SelectedGate;
+    public EntityUid? SelectedTeleporter;
 
     /// <summary>
     /// Portals created by this console will be colored in the specified color. This can be used to make Syndicate portals blood red.
     /// </summary>
     [DataField]
-    public Color GatewayColor = Color.White;
+    public Color PortalColor = Color.White;
 
     /// <summary>
     /// A storage from which all coordinate chips are scanned

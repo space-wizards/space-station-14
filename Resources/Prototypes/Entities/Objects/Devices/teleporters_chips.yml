@@ -1,24 +1,24 @@
 - type: entity
-  id: GatewayChipBlank
+  id: TeleporterChipBlank
   parent: BaseItem
   suffix: Blank
-  name: gateway chip
-  description: A chip with stored portal gate data. Insert it into the gate control console to be able to control it.
+  name: teleporter chip
+  description: A chip with stored teleporter coordinates. Insert it into the teleporter control console to be able to control it.
   components:
-  - type: GatewayChip
+  - type: TeleporterChip
   - type: Item
     size: Tiny
   - type: Sprite
-    sprite: Objects/Misc/gate_chip.rsi
+    sprite: Objects/Misc/teleporter_chips.rsi
     layers:
     - state: base
   - type: Tag
     tags:
-    - GatewayChip
+    - TeleporterChip
 
 - type: entity
-  id: GatewayChipStation
-  parent: GatewayChipBlank
+  id: TeleporterChipStation
+  parent: TeleporterChipBlank
   suffix: Station
   components:
   - type: Sprite
@@ -26,12 +26,12 @@
     - state: base
     - state: mark1
       color: "#D4D4D4"
-  - type: GatewayChip
+  - type: TeleporterChip
     autoLinkKey: Station
 
 - type: entity
-  id: GatewayChipSalvage
-  parent: GatewayChipBlank
+  id: TeleporterChipSalvage
+  parent: TeleporterChipBlank
   suffix: Salvage
   components:
   - type: Sprite
@@ -39,12 +39,12 @@
     - state: base
     - state: mark1
       color: "#8d1c99"
-  - type: GatewayChip
+  - type: TeleporterChip
     autoLinkKey: StationSalvage
 
 - type: entity
-  id: GatewayChipMedical
-  parent: GatewayChipBlank
+  id: TeleporterChipMedical
+  parent: TeleporterChipBlank
   suffix: Medical
   components:
   - type: Sprite
@@ -52,12 +52,12 @@
     - state: base
     - state: mark1
       color: "#52B4E9"
-  - type: GatewayChip
+  - type: TeleporterChip
     autoLinkKey: StationMedical
 
 - type: entity
-  id: GatewayChipEngineering
-  parent: GatewayChipBlank
+  id: TeleporterChipEngineering
+  parent: TeleporterChipBlank
   suffix: Engineering
   components:
   - type: Sprite
@@ -65,12 +65,12 @@
     - state: base
     - state: mark1
       color: "#EFB341"
-  - type: GatewayChip
+  - type: TeleporterChip
     autoLinkKey: StationEngineering
 
 - type: entity
-  id: GatewayChipSecurity
-  parent: GatewayChipBlank
+  id: TeleporterChipSecurity
+  parent: TeleporterChipBlank
   suffix: Security
   components:
   - type: Sprite
@@ -78,12 +78,12 @@
     - state: base
     - state: mark1
       color: "#DE3A3A"
-  - type: GatewayChip
+  - type: TeleporterChip
     autoLinkKey: StationSecurity
 
 - type: entity
-  id: GatewayChipScience
-  parent: GatewayChipBlank
+  id: TeleporterChipScience
+  parent: TeleporterChipBlank
   suffix: Science
   components:
   - type: Sprite
@@ -91,12 +91,12 @@
     - state: base
     - state: mark1
       color: "#D381C9"
-  - type: GatewayChip
+  - type: TeleporterChip
     autoLinkKey: StationScience
 
 - type: entity
-  id: GatewayChipCargo
-  parent: GatewayChipBlank
+  id: TeleporterChipCargo
+  parent: TeleporterChipBlank
   suffix: Cargo
   components:
   - type: Sprite
@@ -104,5 +104,5 @@
     - state: base
     - state: mark1
       color: "#A46106"
-  - type: GatewayChip
+  - type: TeleporterChip
     autoLinkKey: StationCargo

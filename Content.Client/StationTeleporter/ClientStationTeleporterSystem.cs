@@ -1,9 +1,9 @@
-using Content.Shared.GatewayStation;
+using Content.Shared.StationTeleporter;
 using Robust.Client.GameObjects;
 
-namespace Content.Client.GatewayStation;
+namespace Content.Client.StationTeleporter;
 
-public sealed class ClientStationGatewaySystem : SharedStationGatewaySystem
+public sealed class ClientStationTeleporterSystem : SharedStationTeleporterSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
@@ -11,15 +11,15 @@ public sealed class ClientStationGatewaySystem : SharedStationGatewaySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<StationGatewayComponent, AppearanceChangeEvent>(OnAppearanceChanged);
+        SubscribeLocalEvent<StationTeleporterComponent, AppearanceChangeEvent>(OnAppearanceChanged);
     }
 
-    private void OnAppearanceChanged(Entity<StationGatewayComponent> ent, ref AppearanceChangeEvent args)
+    private void OnAppearanceChanged(Entity<StationTeleporterComponent> ent, ref AppearanceChangeEvent args)
     {
         if (ent.Comp.PortalLayerMap is null)
             return;
 
-        if (!_appearance.TryGetData<Color>(ent, GatewayPortalVisual.Color, out var newColor))
+        if (!_appearance.TryGetData<Color>(ent, TeleporterPortalVisual.Color, out var newColor))
             return;
 
         if (!TryComp<SpriteComponent>(ent, out var sprite))

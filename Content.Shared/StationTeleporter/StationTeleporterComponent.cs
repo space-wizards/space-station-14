@@ -1,22 +1,22 @@
 using Robust.Shared.Audio;
 
-namespace Content.Shared.GatewayStation;
+namespace Content.Shared.StationTeleporter;
 
 /// <summary>
-/// Allows an entity to be displayed and managed using StationGatewayConsole
+/// Allows an entity to be displayed and managed using StationTeleporterConsole
 /// </summary>
 [RegisterComponent]
-[Access(typeof(SharedStationGatewaySystem))]
-public sealed partial class StationGatewayComponent : Component
+[Access(typeof(SharedStationTeleporterSystem))]
+public sealed partial class StationTeleporterComponent : Component
 {
     /// <summary>
-    /// Public name of the gateway displayed in the UI
+    /// Public name of the teleporter displayed in the UI
     /// </summary>
     [DataField]
-    public string GateName = "Unknown Coordinates";
+    public LocId TeleporterName = "teleporter-name-unknown";
 
     /// <summary>
-    /// When initialized, chip will attempt to contact a random gateway that has the same code. Can be used for pre-created gateways
+    /// When initialized, chip will attempt to contact a random teleporter that has the same code. Can be used for pre-created teleporers
     /// </summary>
     // Not ProtoId<TagPrototype> because we can random generate this keys for expeditions
     [DataField]

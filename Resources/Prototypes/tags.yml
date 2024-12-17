@@ -585,7 +585,7 @@
   id: GasVent
 
 - type: Tag
-  id: GatewayChip
+  id: TeleporterChip
 
 - type: Tag
   id: Gauze
