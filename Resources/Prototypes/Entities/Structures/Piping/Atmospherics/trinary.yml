@@ -272,3 +272,5 @@
     - type: GuideHelp
       guides:
       - PneumaticValve
+      - Pumps
+      - Valves

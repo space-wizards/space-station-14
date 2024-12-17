@@ -24,7 +24,7 @@
   At the start of the shift, the station is running off of purely [textlink="battery" link="PowerStorage"] power.
   This will at most last 5-10 minutes, depending on the station's power draw.
 
-  To extend this, you can start up the station's [textlink="Antimatter Engine" link="AME"], or [textlink="AME" link="AME."]
+  To extend this, you can start up the station's [textlink="Antimatter Engine" link="AME"], or [textlink="AME." link="AME"]
   This will extend the runtime of the station's batteries by a significant amount, giving you more time to setup the station's higher-tier [textlink="generators." link="Generators"]
   You can extend this even further by setting up [textlink="solar panels" link="SolarPanels"], which generate power for free.
 

@@ -20,7 +20,7 @@
   Forcing or vacuuming gas in or out using a [textlink="pump" link="Pumps"] will affect the entire network, not just the pipe it's connected to.
 
   Pipenets are only separated by devices capable of interrupting flow, or by certain devices.
-  For example, a [textlink="Pressure Pump" link="Pump"] will not allow gas to flow through it unless it's powered and has gas to pump.
+  For example, a [textlink="Pressure Pump" link="Pumps"] will not allow gas to flow through it unless it's powered and has gas to pump.
 
   Some examples of devices that separate pipe networks are:
   - [textlink="Pressure and Volumetric Pumps" link="Pumps"]
