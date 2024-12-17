@@ -1,0 +1,86 @@
+<Document>
+  # Section D: Command, Security, Antagonist, and Silicon Rules
+  
+  Command, Security, Antagonist, and Silicon roles shape the roleplay experience of the server. These roles are subsequently held to a higher standard of roleplay, and are subject to additional rules.
+
+  Free agents who choose to act like antagonists are expected to follow antagonist rules.
+
+  ## Command and Security
+  <Box>
+	<GuideEntityEmbed Entity="ToyFigurineSecurity" Caption=""/>
+	<GuideEntityEmbed Entity="ToyFigurineCaptain" Caption=""/>
+  </Box>
+  [color=#a4885c]1. Your character must act in a manner that Nanotrasen would reasonably hire them to this position.[/color]
+
+  Your character is presumed to be sane, competent in their duties, and able to make decisions to the benefit of the station.
+
+  - Giving away sensitive equipment should be avoided in these roles. Your character should value them deeply.
+  - Leeway is given to making deals with criminals if the deal benefits the safety or situation of the crew and station, or in the state of emergency or crisis.
+
+  [color=#a4885c]2. These departments are required to read and follow Space Law and Alert Procedures to the best of their ability.[/color]
+
+  Circumstances and context may permit you to break laws. However, the fact that this rule is malleable is not an excuse to ignore it entirely.
+
+  - Your character is expected to uphold the law and maintain order aboard the station. Do not engage in lawbreaking activity, and ensure all laws are followed.
+  - Security is expected to intervene in criminal activity where possible.
+  - Heads of departments are expected to report criminal activity to Security and should cooperate with law enforcement.
+
+  [color=#a4885c]3. Do not hire random crew to be your bodyguard(s), or promote unqualified crewmembers to Command positions.[/color]
+  
+  If you require bodyguards or security details, talk to the Security department. If you need new Command staff, talk to the personnel in that related department.
+
+  - Do not use OOC knowledge of a particular player's qualifications to justify promoting them. Even if you know a character has played a Command role before, this should not justify promoting the character if they are playing a role without departmental qualifications, such as passenger or intern.
+
+  [color=#a4885c]4. If you need to leave the round, let your team know.
+  
+  Notify your fellow crew and command via departmental radio and put your equipment in its proper places prior to going to cryo. If you need to leave IMMEDIATELY, please at least send an AHelp saying that you're leaving.
+
+  - [color=#ff0000]In the absence of a Captain,[/color] a department head may choose to pick a successor and give their ID and equipment to that character.
+
+  ## Antagonist
+  <Box>
+	<GuideEntityEmbed Entity="ToyFigurineNukie" Caption=""/>
+	<GuideEntityEmbed Entity="ToyFigurineSpaceDragon" Caption=""/>
+	<GuideEntityEmbed Entity="ToyFigurineRatKing" Caption=""/>
+	<GuideEntityEmbed Entity="ToyFigurineSlime" Caption=""/>
+  </Box>
+  [color=#a4885c]1. You should seek to make the round more engaging and fun by using antagonistic activity as a vehicle to drive the narrative of a round.[/color]
+
+  - Succeeding at your objectives or 'greentexting' should not be your goal, but rather telling the most interesting story for everyone involved.
+
+  [color=#a4885c]2. Antagonists are free to complete their objectives through committing proportional damage. Through roleplay, damage becomes more proportional.[/color]
+
+  - Killing players unrelated to your immediate objective in a manner that results in their round removal should be avoided. Crew that attempt to interfere with your objectives are exempt from this.
+  - If you are concerned as to whether or not what you're about to do is allowed, feel free to AHelp for clarification. Lack of administrator response does not constitute approval.
+
+  [color=#a4885c]3. Other antagonists are not necessarily your friends.[/color]
+  
+  Other antagonists are often free agents that you may negotiate with at your own risk.
+
+  - If you are a team antagonist, you must work with your partners to complete any shared objectives.
+  - If you have a team leader, such as a Nuclear Operative Commander or a Head Revolutionary, you must follow their instructions unless it would result in your guaranteed death.
+
+  [color=#a4885c]4. Purposefully using tactics that will make the round less fun for other players is strictly forbidden for all antagonists.[/color]
+  
+  - More leeway is given to station-destroying antagonists, such as nuclear operatives.
+  
+  Examples include:
+  - [color=#994444]Bad:[/color] Loosing the singulo/tesla without the objective to 'die a glorious death' (commonly abbreviated as 'DAGD'), or similar methods of stationwide destruction
+  - [color=#994444]Bad:[/color] Heavily damaging/spacing or camping arrivals/cryosleep
+  - [color=#994444]Bad:[/color] Unnecessarily extending the round
+  
+  ## Silicon
+    <Box>
+	<GuideEntityEmbed Entity="PlayerBorgBattery" Caption=""/>
+	<GuideEntityEmbed Entity="PlayerStationAi" Caption=""/>
+  </Box>
+  - 1. Laws must be prioritized by their order.
+  - 2. Laws can redefine terms used in other laws.
+  - 3. You cannot request or allow a law change.
+  - 4. You are not required to follow orders which are extremely unreasonable.
+  - 5. You must remain consistent with your interpretation of laws.
+  - 6. Anyone who your HUD displays as having a crewmember's ID is crew. This may include antagonists, zombies, brigged prisoners, or Syndicate operatives with stolen IDs.
+  - 7. Harm refers to physical harm, prioritized by immediacy and likelihood.
+  - 8. You may determine how you resolve conflicts between orders.
+
+</Document>

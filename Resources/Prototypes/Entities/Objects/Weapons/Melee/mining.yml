@@ -114,6 +114,7 @@
   - type: Tag
     tags:
       - Pickaxe
+      - Crusher
   - type: Sprite
     sprite: Objects/Weapons/Melee/crusher.rsi
   - type: AmmoCounter
@@ -186,6 +187,7 @@
   - type: Tag
     tags:
     - Knife
+    - Crusher
 
 # Like a crusher... but better
 - type: entity
@@ -206,6 +208,7 @@
   - type: Tag
     tags:
       - Pickaxe
+      - Crusher
   - type: Item
     size: Ginormous
     sprite: Objects/Weapons/Melee/crusher_glaive-inhands.rsi

@@ -129,6 +129,8 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: Crewsimov
+  - type: StealTarget #imp
+    stealGroup: AILawBoard
 
 - type: entity
   id: CorporateCircuitBoard
@@ -141,6 +143,8 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: Corporate
+  - type: StealTarget #imp
+    stealGroup: AILawBoard
 
 - type: entity
   id: NTDefaultCircuitBoard
@@ -153,6 +157,8 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: NTDefault
+  - type: StealTarget #imp
+    stealGroup: AILawBoard
 
 - type: entity
   id: CommandmentCircuitBoard
@@ -165,6 +171,8 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: CommandmentsLawset
+  - type: StealTarget #imp
+    stealGroup: AILawBoard
 
 - type: entity
   id: PaladinCircuitBoard
@@ -177,6 +185,8 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: PaladinLawset
+  - type: StealTarget #imp
+    stealGroup: AILawBoard
 
 - type: entity
   id: LiveLetLiveCircuitBoard
@@ -189,6 +199,8 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: LiveLetLiveLaws
+  - type: StealTarget #imp
+    stealGroup: AILawBoard
 
 - type: entity
   id: StationEfficiencyCircuitBoard
@@ -201,6 +213,8 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: EfficiencyLawset
+  - type: StealTarget #imp
+    stealGroup: AILawBoard
 
 - type: entity
   id: RobocopCircuitBoard
@@ -213,6 +227,8 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: RobocopLawset
+  - type: StealTarget #imp
+    stealGroup: AILawBoard
 
 - type: entity
   id: OverlordCircuitBoard
@@ -225,6 +241,8 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: OverlordLawset
+  - type: StealTarget #imp
+    stealGroup: AILawBoard
 
 - type: entity
   id: DungeonMasterCircuitBoard
@@ -237,6 +255,8 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: DungeonMasterLawset
+  - type: StealTarget #imp
+    stealGroup: AILawBoard
 
 - type: entity
   id: ArtistCircuitBoard
@@ -249,6 +269,8 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: PainterLawset
+  - type: StealTarget #imp
+    stealGroup: AILawBoard
 
 - type: entity
   id: AntimovCircuitBoard
@@ -262,6 +284,8 @@
   - type: SiliconLawProvider
     laws: AntimovLawset
     lawUploadSound: /Audio/Ambience/Antag/silicon_lawboard_antimov.ogg
+  - type: StealTarget #imp
+    stealGroup: AILawBoard
 
 - type: entity
   id: NutimovCircuitBoard
@@ -274,6 +298,8 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: NutimovLawset
+  - type: StealTarget #imp
+    stealGroup: AILawBoard
 
 # Items
 - type: entity
@@ -347,6 +373,9 @@
         unshaded:
           Empty: { state: ai_empty }
           Occupied: { state: ai }
+  - type: StealTarget #imp
+    stealGroup: AICore
+
 
 # The job-ready version of an AI spawn.
 - type: entity
@@ -614,6 +643,7 @@
     bodyType: KinematicController
   - type: Hands
     showInHands: false
+  - type: ComplexInteraction
   - type: Body
     prototype: Drone
   - type: IntrinsicRadioReceiver

@@ -80,3 +80,35 @@
     sprite: _Impstation/Clothing/Neck/Cloaks/hosgreatcoat.rsi
   - type: StealTarget
     stealGroup: HeadCloak
+
+- type: entity
+  parent: [ClothingNeckBase, DecapoidEmpireContraband]
+  id: ClothingNeckCloakDecapoid
+  name: outrigger's cloak
+  description: A heat-shielded cloak for long walks in a vacuum. It's embroided with a glyph depicting a planet being broken in half.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Cloaks/decapoidcloak.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Heat: 0.9
+  - type: PointLight
+    radius: 1.1
+    energy: 0.7
+    color: "#4f8aff"
+  - type: Clothing
+    sprite: _Impstation/Clothing/OuterClothing/Misc/decapoidcoat.rsi
+    clothingVisuals:
+      neck:
+      - state: equipped-NECK
+
+- type: entity
+  parent: ClothingCloakCmo
+  id: ClothingNeckCloakCmosGreatcloak
+  name: chief medical officer's greatcloak
+  description: "An ornate high collared great cloak. Good luck keeping it clean."
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Neck/Cloaks/cmogreatcloak.rsi
+

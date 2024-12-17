@@ -48,6 +48,8 @@
       collection: Ungh
     Weh:
       collection: Weh
+    Wuhey:
+      collection: Wuhey
     Ungh:
       collection: Ungh
     Gasp:
@@ -77,6 +79,8 @@
       collection: BikeHorn
     Weh:
       collection: Weh
+    Wuhey:
+      collection: Wuhey
     Ungh:
       collection: Ungh
     DefaultDeathgasp:

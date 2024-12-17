@@ -67,6 +67,8 @@
     - cig5
     - cig6
   - type: Appearance
+  - type: StealTarget #imp
+    stealGroup: Cigarettes
 
 - type: entity
   id: CigPackMixedBase
@@ -137,6 +139,8 @@
     - cig5
     - cig6
   - type: Appearance
+  - type: StealTarget #imp
+    stealGroup: Cigarettes
 
 - type: entity
   id: CigPackGreen
