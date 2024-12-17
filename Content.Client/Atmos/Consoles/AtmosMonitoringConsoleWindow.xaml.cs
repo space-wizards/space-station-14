@@ -129,7 +129,7 @@ public sealed partial class AtmosMonitoringConsoleWindow : FancyWindow
         foreach (var (netEnt, device) in console.AtmosDevices)
         {
             if (device.NavMapBlip != _gasPipeSensorProtoId)
-                return;
+                continue;
 
             if (ShowGasPipeSensors.Pressed)
                 AddTrackedEntityToNavMap(device, true);
