@@ -8,6 +8,8 @@ using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Content.Shared.Plankton;
+
 
 namespace Content.Shared.Chemistry.EntitySystems;
 
@@ -196,8 +198,24 @@ public sealed class SolutionTransferSystem : EntitySystem
 
         var actualAmount = FixedPoint2.Min(amount, FixedPoint2.Min(sourceSolution.Volume, targetSolution.AvailableVolume));
 
+        if (TryComp<PlanktonComponent>(sourceEntity, out var planktonSource))
+        {
+            var planktonFraction = actualAmount / sourceSolution.Volume;
+
+            TransferPlanktonFraction(planktonSource, planktonFraction);
+
+            foreach (var species in planktonSource.SpeciesInstances)
+            {
+                species.CurrentSize -= species.CurrentSize * planktonFraction;
+                if (species.CurrentSize < 0)
+                    species.CurrentSize = 0;
+            }
+        }
+        
         var solution = _solution.SplitSolution(source, actualAmount);
         _solution.AddSolution(target, solution);
+
+        TransferPlanktonComponent(sourceEntity, targetEntity);
 
         var ev = new SolutionTransferredEvent(sourceEntity, targetEntity, user, actualAmount);
         RaiseLocalEvent(targetEntity, ref ev);
@@ -207,6 +225,48 @@ public sealed class SolutionTransferSystem : EntitySystem
 
         return actualAmount;
     }
+
+     private void TransferPlanktonComponent(EntityUid sourceEntity, EntityUid targetEntity)
+{
+    // Check if the source entity has a PlanktonComponent
+    if (TryComp<PlanktonComponent>(sourceEntity, out var planktonSource))
+    {
+        // If the target entity doesn't have a PlanktonComponent, we add it
+        if (!HasComp<PlanktonComponent>(targetEntity))
+        {
+            EntityManager.AddComponent<PlanktonComponent>(targetEntity);
+        }
+
+        // Get the target's PlanktonComponent to transfer data to
+        var planktonTarget = Comp<PlanktonComponent>(targetEntity);
+
+        // Copy simple properties directly
+        planktonTarget.ReagentId = planktonSource.ReagentId;
+        planktonTarget.DeadPlankton = planktonSource.DeadPlankton;
+        planktonTarget.Diet = planktonSource.Diet;
+        planktonTarget.Characteristics = planktonSource.Characteristics;
+        planktonTarget.TemperatureToleranceLow = planktonSource.TemperatureToleranceLow;
+        planktonTarget.TemperatureToleranceHigh = planktonSource.TemperatureToleranceHigh;
+
+        // Add new species instances to the target's list without clearing it
+        foreach (var speciesInstance in planktonSource.SpeciesInstances)
+        {
+            var newSpeciesInstance = new PlanktonComponent.PlanktonSpeciesInstance(
+                speciesInstance.SpeciesName,
+                speciesInstance.Diet,
+                speciesInstance.Characteristics,
+                speciesInstance.CurrentSize,
+                speciesInstance.CurrentHunger,
+                speciesInstance.IsAlive
+            );
+            planktonTarget.SpeciesInstances.Add(newSpeciesInstance);
+        }
+    }
+}
+
+    }
+}
+
 }
 
 /// <summary>
