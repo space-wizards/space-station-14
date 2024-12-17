@@ -71,9 +71,13 @@
 
   Tesla Coils should be placed around the lightning ball to capture the lightning strikes, as well as to prevent the lightning from striking sensitive equipment further away.
 
-  Tesla Coils take damage every time they are struck by lightning, and will eventually break if not repaired. Be sure to monitor the condition of the Tesla Coils and repair them as needed.
+  Tesla Coils take damage every time they are struck by lightning, and will eventually break if not repaired.
+  Be sure to monitor the condition of the Tesla Coils and repair them as needed.
 
   Grounding rods, in contrast, do not take damage from lightning strikes.
+
+  When lightning strikes Tesla Coils, they fill an internal battery, which is rapidly discharged to the grid.
+  It will discharge this power even if there is no consumer to take it, so it's a good idea to have an SMES nearby to store the power and discharge it smoothly.
 
   ## Loosed Tesla (Tesloose)
   If the lightning ball escapes the containment field, it is referred to as a loosed tesla, or tesloose.

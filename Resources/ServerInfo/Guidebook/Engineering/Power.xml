@@ -13,7 +13,7 @@
     <GuideEntityEmbed Entity="APCBasic" Caption=""/>
   </Box>
 
-  There are many different aspects to Space Station 14's power system simulation, as well as Engineering's intended g[textlink="AME" link="AME"]play.
+  There are many different aspects to Space Station 14's power system simulation, as well as Engineering's intended gameplay.
 
   Some important information to keep in mind includes:
   - Station [textlink="generators" link="Generators"] are tiered and follow a hierarchy. The lower the tier, the less they are sustainable, but the easier they are to setup. The higher the tier, the more sustainable they are, but the more complex they are to setup.

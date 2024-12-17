@@ -46,11 +46,13 @@
     <GuideEntityEmbed Entity="FloorTileItemWhite" Caption=""/>
   </Box>
 
-  Head out into space with steel sheets and metal rods in hand, and once you're three or more tiles away from the station, click near or under you with the rods in hand.
+  Head out into space with steel sheets and metal rods in hand, and click on the edge of the station to place lattice.
 
-  This will place some lattice, which can then be turned into plating with steel sheets or floor tiles.
+  Place a line of lattice about 3-4 tiles away from the station, then start building a platform with lattice.
 
+  Keep doing this until you have a platform that is at least 3x3 in size, which is connected to the station via a single lattice line.
 
+  Once you're finished constructing the base of your shuttle, you can use wirecutters to snip the connecting lattice that joins your new ship and the station.
 
   This platform is considered a different grid from the station, and thus will not have any gravity or be static — it can move around freely.
 

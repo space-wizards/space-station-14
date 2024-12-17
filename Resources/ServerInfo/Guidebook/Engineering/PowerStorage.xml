@@ -1,8 +1,8 @@
 ﻿<Document>
   # Power Storage
-  Because of Power Ramping, it is important to have power storage devices to help flatten out spikes and dips in power usage, as well as to provide power in the event of a power deficit.
+  Because of [textlink="Power Ramping" link="Ramping"], it is important to have power storage devices to help flatten out spikes and dips in power usage, as well as to provide power in the event of a power deficit.
 
-  Each transformer for its respective power level (HV, MV, and LV) has an attached small power battery to handle minor spikes and dips; however, this is not viable in the case of a large grid deficit.
+  Each transformer for its respective power level ([color=orange]HV[/color], [color=yellow]MV[/color], and [color=green]LV[/color]) has an attached small power battery to handle minor spikes and dips; however, this is not viable in the case of a large grid deficit.
 
   ## SMES
 
@@ -12,8 +12,11 @@
     <GuideEntityEmbed Entity="SMESBasic"/>
   </Box>
 
-  In order to charge the SMES unit, HV power must be provided to a cable terminal pointing at the SMES unit. The SMES will draw power from the terminal and send power out from underneath.
-  The terminal will ensure that the HV input and HV output do not connect.
+  Each transformer for its respective power level ([color=orange]HV[/color], [color=yellow]MV[/color], and [color=green]LV[/color]) has an attached small power battery to handle minor spikes and dips; however, this is not viable in the case of a large grid deficit.
+
+  In order to charge the SMES unit, [color=orange]HV[/color] power must be provided to a cable terminal pointing at the SMES unit. The SMES will draw power from the terminal and send power out from underneath.
+
+  The terminal will ensure that the [color=orange]HV input[/color] and [color=orange]HV output[/color] do not connect.
 
   <Box HorizontalAlignment="Stretch">
     <Box>

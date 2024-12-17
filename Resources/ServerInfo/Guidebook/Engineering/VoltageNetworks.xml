@@ -1,7 +1,7 @@
 ﻿<Document>
   # Voltage Networks
   In Space Station 14, power distribution is divided into three separate voltage networks.
-  These networks are the Low Voltage Network, the Medium Voltage Network, and the High Voltage Network.
+  These networks are the [color=green]Low Voltage[/color] Network, the [color=Yellow]Medium Voltage[/color] Network, and the [color=orange]High Voltage[/color] Network.
 
   These networks power different types of machinery on the station.
 
@@ -12,7 +12,7 @@
   </Box>
 
   ## Low Voltage Network
-  The Low Voltage Network is used for powering almost all small machines on the station. This includes things like lights, computers, and other small devices.
+  The [color=green]Low Voltage[/color] Network is used for powering almost all small machines on the station. This includes things like lights, computers, and other small devices.
 
   <Box>
     <GuideEntityEmbed Entity="PoweredSmallLight" Caption=""/>
@@ -24,17 +24,17 @@
     <GuideEntityEmbed Entity="AlwaysPoweredWallLight" Caption=""/>
   </Box>
 
-  Low Voltage power is provided by APCs, which are wall-mounted devices that convert power from the Medium Voltage Network to Low Voltage.
+  [color=green]Low Voltage[/color] power is provided by APCs, which are wall-mounted devices that convert power from the [color=Yellow]Medium Voltage[/color] Network to [color=green]Low Voltage[/color].
 
   <Box>
     <GuideEntityEmbed Entity="APCBasic"/>
   </Box>
 
-  Low Voltage wire doesn't have to be directly run to every machine, as it can power multiple machines as long as the wire is close enough to the machine.
+  [color=green]Low Voltage[/color] wire doesn't have to be directly run to every machine, as it can power multiple machines as long as the wire is close enough to the machine.
 
   ## Medium Voltage Network
-  The Medium Voltage Network is used for powering APCs and other power-hungry machinery that can only accept Medium Voltage power.
-  The Particle Accelerator is an example, as it operates on Medium Voltage power.
+  The [color=Yellow]Medium Voltage[/color] Network is used for powering APCs and other power-hungry machinery that can only accept [color=Yellow]Medium Voltage[/color] power.
+  The Particle Accelerator is an example, as it operates on [color=Yellow]Medium Voltage[/color] power.
 
   <Box>
     <GuideEntityEmbed Entity="ParticleAcceleratorEndCap" Caption="" Margin="0"/>
@@ -60,7 +60,7 @@
     [color=#999999][italic]The Particle Accelerator[italic][/color]
   </Box>
 
-  Medium Voltage power is provided by Substations, which are large machines that convert power from the High Voltage Network to Medium Voltage.
+  [color=Yellow]Medium Voltage[/color] power is provided by Substations, which are large machines that convert power from the [color=Orange]High Voltage[/color] Network to [color=Yellow]Medium Voltage[/color].
 
   There are also wallmount variants of these substations for compact spaces, like shuttles.
   <Box HorizontalAlignment="Stretch">
@@ -73,9 +73,9 @@
   </Box>
 
   ## High Voltage Network
-  The High Voltage Network is used for moving large amount of power across the station. It is used to power most power handling equipment, such as SMES units and Substations.
+  The [color=Orange]High Voltage[/color] Network is used for moving large amount of power across the station. It is used to power most power handling equipment, such as SMES units and Substations.
 
-  Most high-output generators output power to the High Voltage Network.
+  Most high-output generators output power to the [color=Orange]High Voltage[/color] Network.
 
   <Box>
     <GuideEntityEmbed Entity="SMESBasic"/>
@@ -87,8 +87,8 @@
   ## Shock Damage
   If you are shocked by a cable carrying power, you will take damage. The amount of damage you take is based on the voltage of the cable that shocked you.
 
-  Low voltage cables will deal less damage than medium voltage cables, which will deal less damage than high voltage cables.
+  [color=green]Low Voltage[/color] cables will deal less damage than [color=Yellow]Medium Voltage[/color] cables, which will deal less damage than [color=Orange]High Voltage[/color] cables.
 
-  Energized high voltage and medium voltage cabling hurts, so be sure to wear insulated gloves when working with it.
+  Energized [color=Orange]High Voltage[/color] and [color=Yellow]Medium Voltage[/color] cabling hurts, so be sure to wear insulated gloves when working with it.
 
 </Document>
