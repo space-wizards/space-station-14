@@ -1,0 +1,72 @@
+# Imp Station's custom salvage wrecks, keeping the structure of the base file
+
+# for reference on how to prototype a wreck:
+#- type: salvageMap
+#  id: NameOfWreck
+#  mapPath: /Maps/Salvage/file-of-wreck.yml
+#  sizeString: salvage-map-wreck-size-(small/medium/large)
+# "Small" maps are considered 7x7 but see the AI Sat; use your best judgement
+# "Medium" maps are considered max 15x15 but see Wafflez; use your best judgement
+# Large has no considered max size, but don't go totally overboard; think StationStation
+
+# Impwreck Content Pack 1 - by Sleiphros
+
+- type: salvageMap
+  id: SmallSaucerWreck
+  mapPath: /Maps/_Impstation/Salvage/saucer-wreck.yml
+  sizeString: salvage-map-wreck-size-small
+  
+- type: salvageMap
+  id: SmallSwordsmanGrove
+  mapPath: /Maps/_Impstation/Salvage/swordsman-grove.yml
+  sizeString: salvage-map-wreck-size-small
+  
+- type: salvageMap
+  id: SmallRusticBarracks
+  mapPath: /Maps/_Impstation/Salvage/rustic-barracks.yml
+  sizeString: salvage-map-wreck-size-small
+  
+- type: salvageMap
+  id: SmallMediBotAmbulance
+  mapPath: /Maps/_Impstation/Salvage/build-a-bot-ambulance.yml
+  sizeString: salvage-map-wreck-size-small
+  
+- type: salvageMap
+  id: SmallClothingStore
+  mapPath: /Maps/_Impstation/Salvage/clothing-store.yml
+  sizeString: salvage-map-wreck-size-small
+  
+- type: salvageMap
+  id: MediumCarYacht
+  mapPath: /Maps/_Impstation/Salvage/car-yacht.yml
+  sizeString: salvage-map-wreck-size-medium
+
+- type: salvageMap
+  id: MediumPermaChunk
+  mapPath: /Maps/_Impstation/Salvage/perma-breakout.yml
+  sizeString: salvage-map-wreck-size-medium
+  
+- type: salvageMap
+  id: MediumRobustStorage
+  mapPath: /Maps/_Impstation/Salvage/robust-storage-solutions.yml
+  sizeString: salvage-map-wreck-size-medium
+  
+- type: salvageMap
+  id: MediumArcadeParty
+  mapPath: /Maps/_Impstation/Salvage/arcade-party-shuttle.yml
+  sizeString: salvage-map-wreck-size-medium
+  
+- type: salvageMap
+  id: MediumMeteoredCargo
+  mapPath: /Maps/_Impstation/Salvage/meteored-cargo-bay.yml
+  sizeString: salvage-map-wreck-size-medium
+  
+- type: salvageMap
+  id: LargeFoggyMeatTown
+  mapPath: /Maps/_Impstation/Salvage/foggy-meat-town.yml
+  sizeString: salvage-map-wreck-size-large
+  
+- type: salvageMap
+  id: LargeSwordGauntlet
+  mapPath: /Maps/_Impstation/Salvage/sword-gauntlet.yml
+  sizeString: salvage-map-wreck-size-large
