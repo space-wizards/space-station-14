@@ -347,6 +347,27 @@
     popupText: powered-light-component-burn-hand
 
 - type: entity
+  id: PoweredDimSmallLight
+  suffix: Dim
+  parent: PoweredSmallLightEmpty
+  components:
+  - type: Sprite
+    state: base
+  - type: PointLight
+    enabled: true
+    radius: 5
+    energy: 0.5
+    softness: 3
+    color: "#ba473f"
+  - type: PoweredLight
+    hasLampOnSpawn: DimLightBulb
+  - type: DamageOnInteract
+    damage:
+      types:
+        Heat: 1
+    popupText: powered-light-component-burn-hand
+
+- type: entity
   id: PoweredSmallLight
   suffix: ""
   parent: PoweredSmallLightEmpty
