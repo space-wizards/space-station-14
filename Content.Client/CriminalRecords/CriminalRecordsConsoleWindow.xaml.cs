@@ -43,7 +43,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
     public Action? OnHistoryClosed;
     public Action<SecurityStatus, string>? OnDialogConfirmed;
 
-    public Action<int>? OnStatusFilterPressed;
+    public Action<SecurityStatus>? OnStatusFilterPressed;
     private uint _maxLength;
     private bool _access;
     private uint? _selectedKey;
@@ -52,6 +52,8 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
     private DialogWindow? _reasonDialog;
 
     private StationRecordFilterType _currentFilterType;
+
+    private SecurityStatus _currentCrewListFilter;
 
     public CriminalRecordsConsoleWindow(EntityUid console, uint maxLength, IPlayerManager playerManager, IPrototypeManager prototypeManager, IRobustRandom robustRandom, AccessReaderSystem accessReader)
     {
@@ -68,6 +70,8 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         _maxLength = maxLength;
         _currentFilterType = StationRecordFilterType.Name;
 
+        _currentCrewListFilter = SecurityStatus.None;
+
         OpenCentered();
 
         foreach (var item in Enum.GetValues<StationRecordFilterType>())
@@ -78,6 +82,12 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         foreach (var status in Enum.GetValues<SecurityStatus>())
         {
             AddStatusSelect(status);
+        }
+
+        //Populate status to filter crew list
+        foreach (var item in Enum.GetValues<SecurityStatus>())
+        {
+            CrewListFilter.AddItem(GetCrewListFilterLocals(item), (int)item);
         }
 
         OnClose += () => _reasonDialog?.Close();
@@ -106,6 +116,20 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
             }
         };
 
+        //Select Status to filter crew
+        CrewListFilter.OnItemSelected += eventArgs =>
+        {
+            var type = (SecurityStatus)eventArgs.Id;
+
+            if (_currentCrewListFilter != type)
+            {
+                _currentCrewListFilter = type;
+
+                StatusFilterPressed(type);
+
+            }
+        };
+
         FilterText.OnTextEntered += args =>
         {
             FilterListingOfRecords(args.Text);
@@ -121,50 +145,15 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
             if (_selectedRecord is { } record)
                 OnHistoryUpdated?.Invoke(record, _access, true);
         };
-
-        var statusFilterButtonGroup = new ButtonGroup();
-
-        AllListToggle.Group = statusFilterButtonGroup;
-
-        //Need to get the CurrentTab and set correct button to be active
-
-        AllListToggle.OnToggled += _ =>
-        {
-            StatusFilterPressed(0);
-        };
-
-        WantedListToggle.Group = statusFilterButtonGroup;
-        WantedListToggle.OnToggled += _ =>
-        {
-            StatusFilterPressed(1);
-        };
-
-        ParoleListToggle.Group = statusFilterButtonGroup;
-        ParoleListToggle.OnToggled += _ =>
-        {
-            StatusFilterPressed(2);
-        };
-
-        DetainedListToggle.Group = statusFilterButtonGroup;
-        DetainedListToggle.OnToggled += _ =>
-        {
-            StatusFilterPressed(3);
-        };
     }
 
-    public void StatusFilterPressed(int tab)
+    public void StatusFilterPressed(SecurityStatus statusSelected)
     {
-        OnStatusFilterPressed?.Invoke(tab);
+        OnStatusFilterPressed?.Invoke(statusSelected);
     }
 
     public void UpdateState(CriminalRecordsConsoleState state)
     {
-        //Set the correct button to be active
-        AllListToggle.Pressed = state.CurrentTab == 0;
-        WantedListToggle.Pressed = state.CurrentTab == 1;
-        ParoleListToggle.Pressed = state.CurrentTab == 2;
-        DetainedListToggle.Pressed = state.CurrentTab == 3;
-
         if (state.Filter != null)
         {
             if (state.Filter.Type != _currentFilterType)
@@ -179,9 +168,8 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         }
 
         _selectedKey = state.SelectedKey;
-
         FilterType.SelectId((int)_currentFilterType);
-
+        CrewListFilter.SelectId((int)_currentCrewListFilter);
         NoRecords.Visible = state.RecordListing == null || state.RecordListing.Count == 0;
         PopulateRecordListing(state.RecordListing);
 
@@ -211,7 +199,7 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
         }
     }
 
-    private void PopulateRecordListing(Dictionary<uint, string>? listing, SecurityStatus? filterSecStatus = null)
+    private void PopulateRecordListing(Dictionary<uint, string>? listing)
     {
         if (listing == null)
         {
@@ -370,9 +358,25 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
             _ => "SecurityIconNone"
         };
     }
-
     private string GetTypeFilterLocals(StationRecordFilterType type)
     {
         return Loc.GetString($"criminal-records-{type.ToString().ToLower()}-filter");
+    }
+
+    private string GetCrewListFilterLocals(SecurityStatus type)
+    {
+        string result;
+
+        // If "NONE" override to "show all"
+        if (type == SecurityStatus.None)
+        {
+            result = Loc.GetString("criminal-records-console-show-all");
+        }
+        else
+        {
+            result = Loc.GetString($"criminal-records-status-{type.ToString().ToLower()}");
+        }
+
+        return result;
     }
 }

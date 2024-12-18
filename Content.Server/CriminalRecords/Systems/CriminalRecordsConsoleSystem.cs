@@ -14,6 +14,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Security.Components;
 using System.Linq;
+using Content.Shared.Roles.Jobs;
 
 namespace Content.Server.CriminalRecords.Systems;
 
@@ -29,6 +30,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
     [Dependency] private readonly StationRecordsSystem _records = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+
     public override void Initialize()
     {
         SubscribeLocalEvent<CriminalRecordsConsoleComponent, RecordModifiedEvent>(UpdateUserInterface);
@@ -60,7 +62,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
     }
     private void OnStatusFilterPressed(Entity<CriminalRecordsConsoleComponent> ent, ref CriminalRecordSetStatusFilter msg)
     {
-        ent.Comp.CurrentTab = msg.Tab;
+        ent.Comp.FilterStatus = msg.FilterStatus;
         UpdateUserInterface(ent);
     }
 
@@ -112,19 +114,22 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
 
         var name = _records.RecordName(key.Value);
         var officer = Loc.GetString("criminal-records-console-unknown-officer");
+        var jobName = "unknown criim job";
+
+        _records.TryGetRecord<GeneralStationRecord>(key.Value, out var entry);
+        if (entry != null)
+            jobName = entry.JobTitle;
 
         var tryGetIdentityShortInfoEvent = new TryGetIdentityShortInfoEvent(null, mob.Value);
         RaiseLocalEvent(tryGetIdentityShortInfoEvent);
         if (tryGetIdentityShortInfoEvent.Title != null)
-        {
             officer = tryGetIdentityShortInfoEvent.Title;
-        }
 
         (string, object)[] args;
         if (reason != null)
-            args = new (string, object)[] { ("name", name), ("officer", officer), ("reason", reason) };
+            args = new (string, object)[] { ("name", name), ("officer", officer), ("reason", reason), ("job", jobName) };
         else
-            args = new (string, object)[] { ("name", name), ("officer", officer) };
+            args = new (string, object)[] { ("name", name), ("officer", officer), ("job", jobName) };
 
         // figure out which radio message to send depending on transition
         var statusString = (oldStatus, msg.Status) switch
@@ -196,22 +201,16 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             _ui.SetUiState(uid, CriminalRecordsConsoleKey.Key, new CriminalRecordsConsoleState());
             return;
         }
+
         // get the listing of records to display
         var listing = _records.BuildListing((owningStation.Value, stationRecords), console.Filter);
 
-        // if the a filter toggle is set, filter the listing
-        var statusMap = new Dictionary<int, SecurityStatus>
+        // filter the listing by the selected criminal record status
+        //if NONE, dont filter by status, just show all crew
+        if (console.FilterStatus != SecurityStatus.None)
         {
-            { 1, SecurityStatus.Wanted },
-            { 2, SecurityStatus.Paroled },
-            { 3, SecurityStatus.Detained }
-        };
-
-        if (statusMap.TryGetValue(console.CurrentTab, out var status))
-        {
-            // filter the listing by the status
-            listing = _records.BuildListing((owningStation.Value, stationRecords), console.Filter)
-                .Where(x => _records.TryGetRecord<CriminalRecord>(new StationRecordKey(x.Key, owningStation.Value), out var record) && record.Status == status)
+            listing = listing
+                .Where(x => _records.TryGetRecord<CriminalRecord>(new StationRecordKey(x.Key, owningStation.Value), out var record) && record.Status == console.FilterStatus)
                 .ToDictionary(x => x.Key, x => x.Value);
         }
 
@@ -225,8 +224,8 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
             state.SelectedKey = id;
         }
 
-        //Set the Current Tab aka the filter status type for the records list
-        state.CurrentTab = console.CurrentTab;
+        // Set the Current Tab aka the filter status type for the records list
+        state.FilterStatus = console.FilterStatus;
 
         _ui.SetUiState(uid, CriminalRecordsConsoleKey.Key, state);
     }

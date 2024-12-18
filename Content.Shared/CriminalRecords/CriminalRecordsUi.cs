@@ -35,10 +35,9 @@ public sealed class CriminalRecordsConsoleState : BoundUserInterfaceState
     /// Currently selected crewmember record key.
     /// </summary>
     public uint? SelectedKey = null;
-
     public CriminalRecord? CriminalRecord = null;
     public GeneralStationRecord? StationRecord = null;
-    public int CurrentTab = 0;
+    public SecurityStatus FilterStatus = SecurityStatus.None;
     public readonly Dictionary<uint, string>? RecordListing;
     public readonly StationRecordsFilter? Filter;
 
@@ -111,10 +110,10 @@ public sealed class CriminalRecordDeleteHistory : BoundUserInterfaceMessage
 
 public sealed class CriminalRecordSetStatusFilter : BoundUserInterfaceMessage
 {
-    public readonly int Tab;
-    public CriminalRecordSetStatusFilter(int tab)
+    public readonly SecurityStatus FilterStatus;
+    public CriminalRecordSetStatusFilter(SecurityStatus newFilterStatus)
     {
-        Tab = tab;
+        FilterStatus = newFilterStatus;
     }
 }
 
