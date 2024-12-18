@@ -627,5 +627,13 @@ Entries:
   id: 78
   time: '2024-11-30T20:11:44.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31836
+- author: slarticodefast
+  changes:
+  - message: Health scanning a slime as an aghost will no longer insert the scanner
+      into their inventory.
+    type: Fix
+  id: 79
+  time: '2024-12-18T00:12:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33884
 Name: Admin
 Order: 1
