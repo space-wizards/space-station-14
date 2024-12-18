@@ -75,3 +75,14 @@
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/hos_pro.rsi
   - type: Clothing
     sprite: _Impstation/Clothing/Uniforms/Jumpsuit/hos_pro.rsi
+
+- type: entity
+  parent: [ClothingUniformBase]
+  id: ClothingUniformCircusClown
+  name: circus clown jumpsuit
+  description: A replica of the regalia of the great Googoo Funnyball, who tragically disappeared in a mysterious circus fire.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/circusclown.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Uniforms/Jumpsuit/circusclown.rsi

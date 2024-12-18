@@ -204,6 +204,8 @@
   id: JobClown
   groups:
   - ClownHead
+  - ClownMask #imp
+  - ClownNeck #imp
   - ClownJumpsuit
   - ClownOuterClothing
   - ClownShoes
