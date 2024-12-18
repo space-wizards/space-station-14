@@ -37,3 +37,17 @@
       - state: green
       - state: ntrep
       - state: jobicon
+      
+- type: entity
+  id: SpawnPointIAA
+  parent: SpawnPointJobBase
+  name: internal affairs agent
+  components:
+  - type: SpawnPoint
+    job_id: IAA
+  - type: Sprite
+    sprite: _Starlight/Markers/jobs.rsi
+    layers:
+      - state: green
+      - state: iaa
+      - state: jobicon

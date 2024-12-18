@@ -19,6 +19,7 @@
           availableJobs:
             #command
             Captain: [ 1, 1 ]
+            NanoTrasenRepresentative: [ 1, 1 ]
             #service
             HeadOfPersonnel: [ 1, 1 ]
             Bartender: [ 1, 2 ]
@@ -66,3 +67,4 @@
             Borg: [ 2, 2 ]
             #law
             Magistrate: [ 1, 1 ]
+            IAA: [ 2, 2 ]

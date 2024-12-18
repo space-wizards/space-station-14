@@ -28,6 +28,7 @@
             ServiceWorker: [ 2, 2 ]
             Zookeeper: [ 1, 1 ]
             Reporter: [ 1, 1 ]
+            NanoTrasenRepresentative: [ 1, 1 ]
             #engineering
             ChiefEngineer: [ 1, 1 ]
             AtmosphericTechnician: [ 3, 3 ]
@@ -66,3 +67,4 @@
             Borg: [ 2, 2 ]
             #law
             Magistrate: [ 1, 1 ]
+            IAA: [ 2, 2 ]
