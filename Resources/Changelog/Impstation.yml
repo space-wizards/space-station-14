@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Pinkbat5
-  changes:
-  - message: Pink Alert now has an alarm sound.
-    type: Add
-  id: 262
-  time: '2024-09-25T19:38:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/340
 - author: Sha-Seng
   changes:
   - message: Made the captain's winter coat match the uniform since like three people
@@ -4519,3 +4512,11 @@
   id: 761
   time: '2024-12-18T18:43:29.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1065
+- author: Darkmajia
+  changes:
+  - message: Lowpop rounds with thief as a main antagonist can roll additional thieves
+      and a potential heretic with enough population.
+    type: Add
+  id: 762
+  time: '2024-12-18T19:08:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1033
