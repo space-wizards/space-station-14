@@ -73,6 +73,9 @@
   - type: Sprite
     sprite: Structures/barricades.rsi
     state: barricade
+  - type: Construction
+    graph: BarricadeCovering
+    node: barricadecover
 
 #Directional Barricade
 - type: entity
