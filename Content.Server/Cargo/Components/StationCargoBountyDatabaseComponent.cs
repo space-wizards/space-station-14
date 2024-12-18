@@ -22,6 +22,13 @@ public sealed partial class StationCargoBountyDatabaseComponent : Component
     public List<CargoBountyData> Bounties = new();
 
     /// <summary>
+    /// A list of all the bounties that have been completed or
+    /// skipped for a station.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public List<CargoBountyHistoryData> History = new();
+
+    /// <summary>
     /// Used to determine unique order IDs
     /// </summary>
     [DataField]
