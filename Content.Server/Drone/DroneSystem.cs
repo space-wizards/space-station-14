@@ -10,6 +10,7 @@ using Content.Shared.Emoting;
 using Content.Shared.Examine;
 using Content.Shared.Ghost;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
@@ -38,6 +39,7 @@ namespace Content.Server.Drone
         public override void Initialize()
         {
             base.Initialize();
+			SubscribeLocalEvent<DroneComponent, UseAttemptEvent>(OnUseAttempt);
             SubscribeLocalEvent<DroneComponent, InteractionAttemptEvent>(OnInteractionAttempt);
             SubscribeLocalEvent<DroneComponent, UserOpenActivatableUIAttemptEvent>(OnActivateUIAttempt);
             SubscribeLocalEvent<DroneComponent, MobStateChangedEvent>(OnMobStateChanged);
@@ -48,17 +50,28 @@ namespace Content.Server.Drone
             SubscribeLocalEvent<DroneComponent, ThrowAttemptEvent>(OnThrowAttempt);
         }
 
+		private void OnUseAttempt(EntityUid uid, DroneComponent component, UseAttemptEvent args) // imp special. blacklist. this one *does* prevent actions. it would probably be best if this read from the component or something.
+		{
+			if ((_tagSystem.HasAnyTag(args.Used, "Syringe", "HighRiskItem")) && NonDronesInRange(uid, component)) 
+			{
+				component.IsItemBlacklisted = true;
+				args.Cancel();
+			}
+		}
+
+	/// Imp. changed OnInteractionAttempt
+
         private void OnInteractionAttempt(EntityUid uid, DroneComponent component, ref InteractionAttemptEvent args)
         {
-            if (args.Target != null && !HasComp<UnremoveableComponent>(args.Target) && NonDronesInRange(uid, component))
-                args.Cancelled = true;
-
-            if (HasComp<ItemComponent>(args.Target) && !HasComp<UnremoveableComponent>(args.Target))
-            {
-                if (!_tagSystem.HasAnyTag(args.Target.Value, "DroneUsable", "Trash"))
-                    args.Cancelled = true;
-            }
-        }
+		    if ((_gameTiming.CurTime >= component.NextProximityAlert) && args.Target != null && NonDronesInRange(uid, component))
+			{
+				if (!_tagSystem.HasAnyTag(args.Target.Value, "DroneUsable", "Trash")) /// tag whitelist. sends proximity warning popup if the item isn't whitelisted. Doesn't prevent actions.
+				{
+					component.NextProximityAlert = _gameTiming.CurTime + component.ProximityDelay;
+					component.IsItemBlacklisted = false;
+				}
+			}
+		}
 
         private void OnActivateUIAttempt(EntityUid uid, DroneComponent component, UserOpenActivatableUIAttemptEvent args)
         {
@@ -132,11 +145,20 @@ namespace Content.Server.Drone
                 // Return true if the entity is/was controlled by a player and is not a drone or ghost.
                 if (HasComp<MindContainerComponent>(entity) && !HasComp<DroneComponent>(entity) && !HasComp<GhostComponent>(entity))
                 {
-                    // Filter out dead ghost roles. Dead normal players are intended to block.
-                    if ((TryComp<MobStateComponent>(entity, out var entityMobState) && HasComp<GhostTakeoverAvailableComponent>(entity) && _mobStateSystem.IsDead(entity, entityMobState)))
+                    // imp change. this filters out all dead entities.
+                    if ((TryComp<MobStateComponent>(entity, out var entityMobState) && _mobStateSystem.IsDead(entity, entityMobState)))
                         continue;
                     if (_gameTiming.IsFirstTimePredicted)
-                        _popupSystem.PopupEntity(Loc.GetString("drone-too-close", ("being", Identity.Entity(entity, EntityManager))), uid, uid);
+					{
+                        if (!component.IsItemBlacklisted)
+							_popupSystem.PopupEntity(Loc.GetString("drone-too-close", ("being", Identity.Entity(entity, EntityManager))), uid, uid);
+						
+						else
+						{
+							_popupSystem.PopupEntity(Loc.GetString("drone-cant-use", ("being", Identity.Entity(entity, EntityManager))), uid, uid);
+							component.IsItemBlacklisted = false;
+						}
+					}
                     return true;
                 }
             }
