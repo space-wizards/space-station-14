@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Added new lobby art by lazy :)
-    type: Add
-  id: 259
-  time: '2024-09-25T19:35:56.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/344
-- author: starlighthowls
-  changes:
-  - message: whale things you know how it is
-    type: Tweak
-  id: 260
-  time: '2024-09-25T19:36:40.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/343
 - author: Sha-Seng
   changes:
   - message: Adjusted veteran captain set sprites
@@ -4511,3 +4497,25 @@
   id: 758
   time: '2024-12-18T18:39:44.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1056
+- author: widgetbeck
+  changes:
+  - message: Drones are no longer blocked from interacting with items when near any
+      mob - Instead, they will receive a proximity warning popup. They also have a
+      small blacklist of items that are potentially harmful.
+    type: Tweak
+  - message: Changed the wording of Drone laws.
+    type: Tweak
+  - message: Fixed Drones failing to spawn with their tools.
+    type: Fix
+  - message: Drones can no longer be Emagged.
+    type: Remove
+  id: 759
+  time: '2024-12-18T18:41:58.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1063
+- author: AftrLite
+  changes:
+  - message: Cosmic Cult Assets for ongoing dev.
+    type: Add
+  id: 760
+  time: '2024-12-18T18:41:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1061
