@@ -1,4 +1,4 @@
-using Content.Server._Impstation.Traits.Assorted;
+using Content.Server._Impstation.Traits;
 using Content.Server.Atmos.Rotting;
 using Content.Server.Chat.Systems;
 using Content.Server.DoAfter;
