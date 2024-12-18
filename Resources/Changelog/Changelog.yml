@@ -1,54 +1,4 @@
 ﻿Entries:
-- author: Aeshus
-  changes:
-  - message: The Health Analyzer now displays the patient's picture, species, and
-      current status.
-    type: Add
-  id: 7225
-  time: '2024-08-27T14:57:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30834
-- author: Aeshus
-  changes:
-  - message: Cryosleep no longer gives arrival shuttle directions.
-    type: Fix
-  id: 7226
-  time: '2024-08-27T15:02:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30888
-- author: Winkarst-cpu
-  changes:
-  - message: Nukie plushie is now not a contraband item.
-    type: Fix
-  id: 7227
-  time: '2024-08-27T16:49:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31516
-- author: Winkarst-cpu
-  changes:
-  - message: Now AKMS is restricted to the security department.
-    type: Fix
-  id: 7228
-  time: '2024-08-27T16:54:48.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31519
-- author: metalgearsloth
-  changes:
-  - message: Added warp points for AI.
-    type: Add
-  id: 7229
-  time: '2024-08-28T05:58:27.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31559
-- author: metalgearsloth
-  changes:
-  - message: Fix AI being ejectable.
-    type: Fix
-  id: 7230
-  time: '2024-08-28T07:09:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31561
-- author: metalgearsloth
-  changes:
-  - message: Fix whitelist
-    type: Fix
-  id: 7231
-  time: '2024-08-28T07:11:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31563
 - author: metalgearsloth
   changes:
   - message: Add shutters, windoors, etc to AI interaction whitelist.
@@ -3929,3 +3879,58 @@
   id: 7724
   time: '2024-12-17T19:18:15.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32711
+- author: Golinth
+  changes:
+  - message: AMEs larger than 2 cores now produce more power, instead of less.
+    type: Tweak
+  id: 7725
+  time: '2024-12-17T23:56:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32825
+- author: ArtisticRoomba, AugustSun
+  changes:
+  - message: New Advanced SMES, an SMES with a 16 MJ capacity. It can be researched
+      at Industrial T2, Advanced Powercells.
+    type: Add
+  id: 7726
+  time: '2024-12-17T23:58:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33757
+- author: Allen, lzk228
+  changes:
+  - message: Made Gun Safes a craftable object (10 steel, 5 lv cable, 10 plasteel)
+    type: Add
+  id: 7727
+  time: '2024-12-18T11:26:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32694
+- author: MilenVolf
+  changes:
+  - message: Clicking on a buckled mob now unbuckles it, rather than hugging/petting
+      it.
+    type: Fix
+  id: 7728
+  time: '2024-12-18T14:26:58.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33635
+- author: SlamBamActionman
+  changes:
+  - message: Slimes no longer deal Cellular damage.
+    type: Tweak
+  id: 7729
+  time: '2024-12-18T15:05:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33104
+- author: Redbookcase
+  changes:
+  - message: Standardized Mercenary gear's contraband status.
+    type: Tweak
+  id: 7730
+  time: '2024-12-18T15:13:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33647
+- author: ArtisticRoomba
+  changes:
+  - message: New plushie, named "drazil plushie". Based on an inverted lizard plushie.
+      It can be rarely found in maints lockers. Hew!
+    type: Add
+  - message: New reagent, Juice that makes you Hew. It can be made from juicing inverted
+      lizard plushies. Hew!
+    type: Add
+  id: 7731
+  time: '2024-12-18T16:31:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33776
