@@ -138,7 +138,8 @@ public sealed class RadioSystem : EntitySystem
             iconId = "JobIconBorg";
             jobName = Loc.GetString("job-name-borg");
         }
-        else if (HasComp<StationAiHeldComponent>(messageSource))
+        
+        if (HasComp<StationAiHeldComponent>(messageSource))
         {
             iconId = "JobIconStationAi";
             jobName = Loc.GetString("job-name-station-ai");
