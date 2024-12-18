@@ -1,19 +1,18 @@
 - type: trait
+  id: PainInsensitivity
+  name: trait-pain-insensitivity-name
+  description: trait-pain-insensitivity-desc
+  category: Disabilities
+  components:
+    - type: PainInsensitivity
+
+- type: trait
   id: RandomUnrevivable
   name: trait-random-unrevivable-name
   description: trait-random-unrevivable-desc
   category: Disabilities
   components:
     - type: RandomUnrevivable
-
-- type: trait
-  id: Unborgable
-  name: trait-unborgable-name
-  description: trait-unborgable-desc
-  category: Disabilities
-  components:
-    - type: Unborgable
-  organ: Brain
 
 - type: trait
   id: SGDrequired
@@ -28,3 +27,12 @@
           tags:
             - SGD
       failMessage: sgdrequired-cant-speak
+
+- type: trait
+  id: Unborgable
+  name: trait-unborgable-name
+  description: trait-unborgable-desc
+  category: Disabilities
+  components:
+    - type: Unborgable
+  organ: Brain
