@@ -282,7 +282,7 @@
 
 - type: entity
   parent: Holopad
-  id: HolopadCommandHOP
+  id: HolopadCommandHop
   suffix: HoP
   components:
   - type: Label
@@ -290,7 +290,7 @@
 
 - type: entity
   parent: Holopad
-  id: HolopadCommandCMO
+  id: HolopadCommandCmo
   suffix: CMO
   components:
   - type: Label
@@ -298,7 +298,7 @@
 
 - type: entity
   parent: Holopad
-  id: HolopadCommandQM
+  id: HolopadCommandQm
   suffix: QM
   components:
   - type: Label
@@ -306,7 +306,7 @@
 
 - type: entity
   parent: Holopad
-  id: HolopadCommandCE
+  id: HolopadCommandCe
   suffix: CE
   components:
   - type: Label
@@ -314,7 +314,7 @@
 
 - type: entity
   parent: Holopad
-  id: HolopadCommandRD
+  id: HolopadCommandRd
   suffix: RD
   components:
   - type: Label
@@ -322,7 +322,7 @@
 
 - type: entity
   parent: Holopad
-  id: HolopadCommandHOS
+  id: HolopadCommandHos
   suffix: HoS
   components:
   - type: Label
@@ -388,7 +388,7 @@
 
 - type: entity
   parent: Holopad
-  id: HolopadMedicalChem
+  id: HolopadMedicalChemistry
   suffix: Chemistry
   components:
   - type: Label
@@ -502,7 +502,7 @@
 
 - type: entity
   parent: Holopad
-  id: HolopadEngineeringAtmosTEG
+  id: HolopadEngineeringAtmosTeg
   suffix: TEG
   components:
   - type: Label
@@ -729,7 +729,7 @@
 # AI
 - type: entity
   parent: Holopad
-  id: HolopadAICore
+  id: HolopadAiCore
   suffix: AI Core
   components:
   - type: Label
@@ -737,7 +737,7 @@
 
 - type: entity
   parent: Holopad
-  id: HolopadAIMain
+  id: HolopadAiMain
   suffix: AI Main
   components:
   - type: Label
@@ -745,7 +745,7 @@
 
 - type: entity
   parent: Holopad
-  id: HolopadAIUpload
+  id: HolopadAiUpload
   suffix: AI Upload
   components:
   - type: Label
@@ -753,7 +753,7 @@
 
 - type: entity
   parent: Holopad
-  id: HolopadAIBackupPower
+  id: HolopadAiBackupPower
   suffix: AI Backup Power
   components:
   - type: Label
@@ -761,7 +761,7 @@
 
 - type: entity
   parent: Holopad
-  id: HolopadAIEntrance
+  id: HolopadAiEntrance
   suffix: AI Entrance
   components:
   - type: Label
@@ -769,7 +769,7 @@
 
 - type: entity
   parent: Holopad
-  id: HolopadAIChute
+  id: HolopadAiChute
   suffix: AI Chute
   components:
   - type: Label
@@ -778,7 +778,7 @@
 # Long Range
 - type: entity
   parent: HolopadLongRange
-  id: HolopadCargoATS
+  id: HolopadCargoAts
   suffix: ATS
   components:
   - type: Label
