@@ -1,26 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Adjusted command mask sprite for lizards based on player feedbaaack
-    type: Tweak
-  id: 254
-  time: '2024-09-24T21:43:40.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/333
-- author: KingMudkipIII
-  changes:
-  - message: The drink Vox & Rocks now works properly, and wont OD you.
-    type: Fix
-  id: 255
-  time: '2024-09-24T21:43:25.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/331
-- author: formlessnameless
-  changes:
-  - message: Lowpop rounds that roll heretic will no longer get sent back to lobby
-      if there aren't enough players
-    type: Fix
-  id: 256
-  time: '2024-09-24T22:02:03.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/336
 - author: Darkmajia
   changes:
   - message: Mobs will no longer ignore changelings and heretics.
@@ -4511,3 +4489,25 @@
   id: 753
   time: '2024-12-18T04:07:49.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1058
+- author: TheGrimbeeper
+  changes:
+  - message: artifact gridwide knockdown (too buggy, can't replicate locally)
+    type: Remove
+  id: 754
+  time: '2024-12-18T18:37:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1054
+- author: honeyed-lemons
+  changes:
+  - message: Sending PDA messages is map based instead of station based
+    type: Tweak
+  id: 755
+  time: '2024-12-18T18:37:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1055
+- author: ATDoop
+  changes:
+  - message: Added a new clown outfit! Includes a neck ruffle and clown nose, have
+      fun mixing and matching!!
+    type: Add
+  id: 756
+  time: '2024-12-18T18:36:33.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1045
