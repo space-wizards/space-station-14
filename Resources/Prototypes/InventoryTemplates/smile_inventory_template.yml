@@ -4,7 +4,7 @@
   - name: head
     slotTexture: head
     slotFlags: HEAD
-    uiWindowPos: 1,2
+    uiWindowPos: 0,1
     strippingWindowPos: 0,0
     displayName: Head
   # Commented since that would need specific art for smile, at least for the breathing mask and gas tanks

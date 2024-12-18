@@ -731,7 +731,7 @@
       head:
         sizeMaps:
           32:
-            sprite: Mobs/Pets/smile_displacement.rsi
+            sprite: Mobs/Pets/smile/smile_displacement.rsi
             state: head
   - type: MobThresholds
     thresholds:
@@ -778,7 +778,7 @@
         Caustic: 1
   - type: MultiHandedItem
   - type: Item
-    sprite: Mobs/Pets/smile.rsi
+    sprite: Mobs/Pets/smile/smile.rsi
     size: Huge
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-slime
