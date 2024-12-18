@@ -1,0 +1,11 @@
+- type: palette
+  id: Balloons
+  name: Balloons
+  colors:
+    red: "#fd538d"
+    pink: "#ff16ca"
+    green: "#66fd53"
+    cyanish: "#45ff80"
+    yellow: "#fff65b"
+    orange: "#ff16ca"
+    blue: "#500bfb"
