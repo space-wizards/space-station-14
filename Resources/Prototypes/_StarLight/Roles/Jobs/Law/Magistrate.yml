@@ -50,3 +50,9 @@
     ears: ClothingHeadsetAltCommand
     head: ClothingHeadHatPwig
     pocket1: Flash
+  storage:
+    back:
+#    - RubberStampMagistrate
+    - ClothingNeckLawyerbadge
+    - GavelHammer
+    - GavelBlock
