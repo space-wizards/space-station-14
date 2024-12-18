@@ -98517,7 +98517,7 @@ entities:
   - uid: 6989
     components:
     - type: MetaData
-      desc: At first glance it's the real deal, but after careful inspection it appears this is an EDM album. Strong 6 to a light 7.
+      desc: At first glance it's the real deal, but after careful examination it appears this is an EDM album. Strong 6 to a light 7.
     - type: Transform
       pos: 47.54206,-8.527592
       parent: 2
@@ -110419,6 +110419,43 @@ entities:
     - type: Transform
       pos: -32.5,-32.5
       parent: 2
+- proto: SMESAdvanced
+  entities:
+  - uid: 2499
+    components:
+    - type: Transform
+      pos: -1.5,-18.5
+      parent: 2
+  - uid: 2776
+    components:
+    - type: Transform
+      pos: -2.5,-18.5
+      parent: 2
+  - uid: 8444
+    components:
+    - type: Transform
+      pos: -30.5,24.5
+      parent: 2
+  - uid: 8838
+    components:
+    - type: Transform
+      pos: 46.5,3.5
+      parent: 2
+  - uid: 10400
+    components:
+    - type: Transform
+      pos: -43.5,-55.5
+      parent: 2
+  - uid: 15942
+    components:
+    - type: Transform
+      pos: -62.5,-8.5
+      parent: 2
+  - uid: 16111
+    components:
+    - type: Transform
+      pos: -3.5,-18.5
+      parent: 2
 - proto: SMESBasic
   entities:
   - uid: 2314
@@ -110427,16 +110464,6 @@ entities:
       name: Bridge SMES
     - type: Transform
       pos: -10.5,-53.5
-      parent: 2
-  - uid: 2499
-    components:
-    - type: Transform
-      pos: -3.5,-18.5
-      parent: 2
-  - uid: 2776
-    components:
-    - type: Transform
-      pos: -2.5,-18.5
       parent: 2
   - uid: 6542
     components:
@@ -110451,37 +110478,6 @@ entities:
       name: Gravity Generator SMES
     - type: Transform
       pos: 21.5,-8.5
-      parent: 2
-  - uid: 8444
-    components:
-    - type: Transform
-      pos: -30.5,24.5
-      parent: 2
-  - uid: 8838
-    components:
-    - type: MetaData
-      name: North East Solars SMES
-    - type: Transform
-      pos: 46.5,3.5
-      parent: 2
-  - uid: 10400
-    components:
-    - type: MetaData
-      name: South West Solars SMES
-    - type: Transform
-      pos: -43.5,-55.5
-      parent: 2
-  - uid: 15942
-    components:
-    - type: MetaData
-      name: AI Satellite SMES
-    - type: Transform
-      pos: -62.5,-8.5
-      parent: 2
-  - uid: 16111
-    components:
-    - type: Transform
-      pos: -1.5,-18.5
       parent: 2
 - proto: SMESMachineCircuitboard
   entities:
