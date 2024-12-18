@@ -1,0 +1,64 @@
+- type: gameMap
+  id: Convex
+  mapName: 'Convex'
+  mapPath: /Maps/convex.yml
+  minPlayers: 75
+  stations:
+    Convex:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: '{0} Convex Recreational Complex {1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14-SM'
+        - type: StationEmergencyShuttle
+          emergencyShuttlePath: /Maps/Shuttles/emergency_delta.yml
+        - type: StationJobs
+          availableJobs:
+            #service
+            Captain: [ 1, 1 ]
+            HeadOfPersonnel: [ 1, 1 ]
+            Bartender: [ 2, 2 ]
+            Botanist: [ 3, 3 ]
+            Chef: [ 2, 2 ]
+            Janitor: [ 3, 3 ]
+            Chaplain: [ 1, 1 ]
+            Librarian: [ 1, 1 ]
+            ServiceWorker: [ 3, 3 ]
+            Reporter: [ 1, 2 ]
+            #engineering
+            ChiefEngineer: [ 1, 1 ]
+            AtmosphericTechnician: [ 3, 3 ]
+            StationEngineer: [ 5, 5 ]
+            TechnicalAssistant: [ 4, 4 ]
+            #medical
+            ChiefMedicalOfficer: [ 1, 1 ]
+            Chemist: [ 3, 3 ]
+            MedicalDoctor: [ 6, 6 ]
+            Paramedic: [ 1, 1 ]
+            MedicalIntern: [ 4, 4 ]
+            #science
+            ResearchDirector: [ 1, 1 ]
+            Scientist: [ 5, 5 ]
+            ResearchAssistant: [ 6, 6 ]
+            #security
+            HeadOfSecurity: [ 1, 1 ]
+            Warden: [ 1, 1 ]
+            SecurityOfficer: [ 8, 8 ]
+            Detective: [ 1, 1 ]
+            SecurityCadet: [ 4, 4 ]
+            Lawyer: [ 2, 2 ]
+            #supply
+            Quartermaster: [ 1, 1 ]
+            SalvageSpecialist: [ 3, 3 ]
+            CargoTechnician: [ 4, 4 ]
+            #civilian
+            Passenger: [ -1, -1 ]
+            Clown: [ 1, 1 ]
+            Mime: [ 1, 1 ]
+            Musician: [ 1, 1 ]
+            Boxer: [2, 2]
+            #silicon
+            StationAi: [ 1, 1 ]
+            Borg: [ 3, 3 ]
