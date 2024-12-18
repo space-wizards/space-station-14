@@ -1,7 +1,7 @@
 - type: entity
   id: BaseCartridgeCaselessRifle
   name: cartridge (.25 rifle)
-  parent: BaseCartridge
+  parent: [ BaseCartridge, BaseRestrictedContraband ]
   abstract: true
   components:
   - type: Tag

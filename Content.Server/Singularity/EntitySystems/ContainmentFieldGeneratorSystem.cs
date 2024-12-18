@@ -31,12 +31,13 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, StartCollideEvent>(HandleGeneratorCollide);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, ExaminedEvent>(OnExamine);
-        SubscribeLocalEvent<ContainmentFieldGeneratorComponent, InteractHandEvent>(OnInteract);
+        SubscribeLocalEvent<ContainmentFieldGeneratorComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, AnchorStateChangedEvent>(OnAnchorChanged);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, ReAnchorEvent>(OnReanchorEvent);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, ComponentRemove>(OnComponentRemoved);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, EventHorizonAttemptConsumeEntityEvent>(PreventBreach);
+        SubscribeLocalEvent<ContainmentFieldGeneratorComponent, MapInitEvent>(OnMapInit);
     }
 
     public override void Update(float frameTime)
@@ -61,6 +62,12 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
     #region Events
 
+    private void OnMapInit(Entity<ContainmentFieldGeneratorComponent> generator, ref MapInitEvent args)
+    {
+        if (generator.Comp.Enabled)
+            ChangeFieldVisualizer(generator);
+    }
+
     /// <summary>
     /// A generator receives power from a source colliding with it.
     /// </summary>
@@ -83,7 +90,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
             args.PushMarkup(Loc.GetString("comp-containment-off"));
     }
 
-    private void OnInteract(Entity<ContainmentFieldGeneratorComponent> generator, ref InteractHandEvent args)
+    private void OnActivate(Entity<ContainmentFieldGeneratorComponent> generator, ref ActivateInWorldEvent args)
     {
         if (args.Handled)
             return;
