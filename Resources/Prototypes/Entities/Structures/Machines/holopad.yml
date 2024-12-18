@@ -331,7 +331,7 @@
 # Science
 - type: entity
   parent: Holopad
-  id: HolopadAnomaly
+  id: HolopadScienceAnomaly
   suffix: Anomaly
   components:
   - type: Label
@@ -339,7 +339,7 @@
 
 - type: entity
   parent: Holopad
-  id: HolopadArtifact
+  id: HolopadScienceArtifact
   suffix: Artifact
   components:
   - type: Label
@@ -347,7 +347,7 @@
 
 - type: entity
   parent: Holopad
-  id: HolopadRobotics
+  id: HolopadScienceRobotics
   suffix: Robotics
   components:
   - type: Label
@@ -364,7 +364,7 @@
 - type: entity
   parent: Holopad
   id: HolopadScienceFront
-  suffix: R&D
+  suffix: Sci Front
   components:
   - type: Label
     currentLabel: Science - Front
@@ -437,7 +437,7 @@
 - type: entity
   parent: Holopad
   id: HolopadMedicalFront
-  suffix: Virology
+  suffix: Med Front
   components:
   - type: Label
     currentLabel: Medical - Front
