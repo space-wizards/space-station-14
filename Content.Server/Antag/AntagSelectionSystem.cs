@@ -88,7 +88,6 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
     private void OnPlayerSpawning(RulePlayerSpawningEvent args)
     {
         var pool = args.PlayerPool;
-        var playerNetIds = args.PlayerPool.Select(o => o.UserId).ToHashSet();
 
         var query = QueryAllRules();
         while (query.MoveNext(out var uid, out var comp, out _))
