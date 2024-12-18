@@ -1106,7 +1106,7 @@
   parent: BaseWall
   id: WallWood
   name: wood wall
-  description: A wooden wall. Built by adding wood to a barricade.
+  description: The traditional greytide defense.
   components:
   - type: Sprite
     sprite: Structures/Walls/wood.rsi
