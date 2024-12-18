@@ -5,6 +5,7 @@
   description: The peak of bluespace technology. Giant teleporter that allow you to travel vast distances in the blink of an eye.
   components:
   - type: Sprite
+    noRot: true
     sprite: Structures/Machines/station_teleporter.rsi
     layers:
     - state: base
