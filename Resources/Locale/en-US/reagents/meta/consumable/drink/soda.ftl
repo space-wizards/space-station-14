@@ -23,7 +23,7 @@ reagent-name-lemon-lime = lemon-lime
 reagent-desc-lemon-lime = tangy lime and lemon soda
 
 reagent-name-lemon-lime-cranberry = lemon-lime-cranberry
-reagent-desc-lemon-lime-cranberry = tart cranberry, Christmas, and a hint of lemon and lime
+reagent-desc-lemon-lime-cranberry = Tart cranberry, Christmas, and a hint of lemon and lime.
 
 reagent-name-pwr-game = Pwr Game
 reagent-desc-pwr-game = The only drink with the PWR that true gamers crave. When a gamer talks about gamerfuel, this is what they're literally referring to.
