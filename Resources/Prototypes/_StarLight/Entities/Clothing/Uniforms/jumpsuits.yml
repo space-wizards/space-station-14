@@ -25,3 +25,13 @@
   name: Contortionist's Jumpsuit
   components:
   - type: VentCrawClothing
+  
+- type: entity
+  parent: ClothingUniformBase
+  id: MagistrateUniformSuit
+  name: Magistrate's Jumpsuit
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/magistrate.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/magistrate.rsi

@@ -1,0 +1,7 @@
+- type: jobIcon
+  parent: JobIcon
+  id: JobIconMagistrate
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: Magistrate
+  jobName: job-name-magistrate

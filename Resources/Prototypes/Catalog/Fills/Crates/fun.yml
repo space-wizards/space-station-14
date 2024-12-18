@@ -39,7 +39,7 @@
     - id: PlushieMoth
     - id: PlushieArachind
     - id: PlushiePenguin
-//STARLIGHT-Start
+#STARLIGHT-Start
     - !type:GroupSelector
       children:
       - id: DeerPlushie
@@ -47,7 +47,7 @@
       - id: OddDeerPlushie
         weight: 1
     - id: VikaPviPlushie
-//STARLIGHT-End
+#STARLIGHT-End
 
 - type: entity
   id: CrateFunPlushie

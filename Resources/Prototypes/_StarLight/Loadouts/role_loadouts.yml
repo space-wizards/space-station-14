@@ -8,3 +8,10 @@
   - ScientistShoes
   - Survival
   - Trinkets
+  
+- type: roleLoadout
+  id: JobMagistrate
+  groups:
+  - CommonBackpack
+  - Survival
+  - Trinkets

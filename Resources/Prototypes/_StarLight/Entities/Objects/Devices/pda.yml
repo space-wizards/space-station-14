@@ -17,3 +17,22 @@
       path: "/Audio/Items/Medical/healthscanner.ogg"
     damageContainers:
     - Silicon
+    
+- type: entity
+  parent: BasePDA
+  id: MagistratePDA
+  name: magistrate PDA
+  components:
+  - type: Pda
+    id: MagistrateIDCard
+    state: pda-captain
+    penSlot:
+      startingItem: Pen
+      priority: -1
+      whitelist:
+        tags:
+        - Write
+  - type: PdaBorderColor
+    borderColor: "#7C5D00"
+  - type: Icon
+    state: pda-captain

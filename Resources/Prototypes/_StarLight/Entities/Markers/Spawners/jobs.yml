@@ -9,3 +9,17 @@
     layers:
       - state: green
       - state: roboticist
+      
+- type: entity
+  id: SpawnPointMagistrate
+  parent: SpawnPointJobBase
+  name: Magistrate
+  components:
+  - type: SpawnPoint
+    job_id: Magistrate
+  - type: Sprite
+    sprite: _Starlight/Markers/jobs.rsi
+    layers:
+      - state: green
+      - state: magistrate
+      - state: jobicon
