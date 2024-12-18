@@ -11922,7 +11922,7 @@ entities:
       pos: 24.5,16.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -32469.803
+      secondsUntilStateChange: -32550.387
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -85219,7 +85219,7 @@ entities:
       pos: -34.5,-14.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -26658.34
+      secondsUntilStateChange: -26738.924
       state: Closing
   - uid: 15010
     components:
@@ -85712,7 +85712,7 @@ entities:
       pos: -4.5,-71.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -18406.07
+      secondsUntilStateChange: -18486.654
       state: Closing
 - proto: Fireplace
   entities:
@@ -89263,7 +89263,7 @@ entities:
       pos: 14.5,-77.5
       parent: 8364
     - type: AtmosPipeColor
-      color: '#03FCD3FF'
+      color: '#990000FF'
 - proto: GasPipeSensorWaste
   entities:
   - uid: 16914
@@ -91300,7 +91300,7 @@ entities:
       pos: 14.5,-76.5
       parent: 8364
     - type: AtmosPipeColor
-      color: '#03FCD3FF'
+      color: '#990000FF'
   - uid: 15876
     components:
     - type: Transform
