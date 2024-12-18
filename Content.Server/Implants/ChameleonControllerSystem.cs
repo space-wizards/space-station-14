@@ -1,5 +1,6 @@
 ﻿using Content.Server.Clothing.Systems;
 using Content.Server.Preferences.Managers;
+using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
@@ -36,7 +37,7 @@ public sealed class ChameleonControllerSystem : EntitySystem
     /// <summary>
     ///     Switches all the chamelean clothing that the implant user is wearing to look like the selected job.
     /// </summary>
-       private void ChangeChameleonClothingToJob(EntityUid user, ProtoId<JobPrototype> job)
+    private void ChangeChameleonClothingToJob(EntityUid user, ProtoId<JobPrototype> job)
     {
         if (!_proto.TryIndex(job, out var jobPrototype))
             return;
@@ -59,7 +60,7 @@ public sealed class ChameleonControllerSystem : EntitySystem
             return;
 
         // Does the job even exist?
-        var jobProtoId = "Job"+job.Id;
+        var jobProtoId = LoadoutSystem.GetJobPrototype(job.Id);
         if (!_proto.HasIndex<RoleLoadoutPrototype>(jobProtoId))
             return;
 
@@ -80,11 +81,10 @@ public sealed class ChameleonControllerSystem : EntitySystem
 
             // Either get the gear from the loadout, or the starting gear.
             var proto = _stationSpawningSystem.GetGearForSlot(loadout, slot.Name) ?? ((IEquipmentLoadout) startingGearPrototype).GetGear(slot.Name);
-            if (proto == "")
+            if (proto == string.Empty)
                 continue;
 
             _chameleonClothingSystem.SetSelectedPrototype(containedUid.Value, proto, true, chameleonClothingComponent);
         }
     }
-
 }

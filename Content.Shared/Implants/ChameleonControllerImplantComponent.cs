@@ -5,12 +5,14 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Implants;
+
 /// <summary>
 ///     Will allow anyone implanted with the implant to have more control over their chameleon clothing and items.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 public sealed partial class ChameleonControllerImplantComponent : Component
 {
+
 }
 
 /// <summary>
@@ -26,7 +28,6 @@ public enum ChameleonControllerKey : byte
 
 [Serializable, NetSerializable]
 public sealed class ChameleonControllerBuiState : BoundUserInterfaceState;
-
 
 /// <summary>
 ///     Triggered when the user clicks on a job in the menu.

@@ -20,7 +20,6 @@ public sealed class SharedChameleonControllerSystem : EntitySystem
             return;
 
         _uiSystem.OpenUi(implant.Value, ChameleonControllerKey.Key, ev.Performer);
-        _uiSystem.SetUiState(implant.Value,ChameleonControllerKey.Key, new ChameleonControllerBuiState());
+        _uiSystem.SetUiState(implant.Value, ChameleonControllerKey.Key, new ChameleonControllerBuiState());
     }
-
 }

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Content.Shared.Clothing;
 using Content.Shared.Implants;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
@@ -18,7 +19,6 @@ public sealed class ChameleonControllerBoundUserInterface : BoundUserInterface
 
     public ChameleonControllerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
-
     }
 
     protected override void Open()
@@ -35,15 +35,18 @@ public sealed class ChameleonControllerBoundUserInterface : BoundUserInterface
         if (state is not ChameleonControllerBuiState)
             return;
 
-        var targets = _prototypeManager.EnumeratePrototypes<JobPrototype>();
+        var jobProtos = _prototypeManager.EnumeratePrototypes<JobPrototype>();
         var validList = new List<JobPrototype>();
-        foreach (var target in targets)
+
+        // Only add stuff that actually has clothing! We don't want stuff like AI or borgs.
+        foreach (var job in jobProtos)
         {
-            if (target.StartingGear == null || !_prototypeManager.HasIndex<RoleLoadoutPrototype>("Job" + target.ID))
+            if (job.StartingGear == null || !_prototypeManager.HasIndex<RoleLoadoutPrototype>(LoadoutSystem.GetJobPrototype(job.ID)))
                 continue;
 
-            validList.Add(target);
+            validList.Add(job);
         }
+
         _menu?.UpdateState(validList.AsEnumerable());
     }
 

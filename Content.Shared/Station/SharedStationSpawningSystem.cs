@@ -194,7 +194,7 @@ public abstract class SharedStationSpawningSystem : EntitySystem
                     return null;
 
                 var gear = ((IEquipmentLoadout) loadoutPrototype).GetGear(slot);
-                if (gear != "")
+                if (gear != string.Empty)
                     return gear;
             }
         }
