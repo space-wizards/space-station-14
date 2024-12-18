@@ -434,15 +434,15 @@ public sealed partial class CargoSystem
     }
 
     [PublicAPI]
-    public bool TryRemoveBounty(EntityUid uid, string dataId, StationCargoBountyDatabaseComponent? component = null)
+    public bool TryRemoveBounty(EntityUid uid, string dataId, StationCargoBountyDatabaseComponent? component = null, EntityUid? actor = null)
     {
         if (!TryGetBountyFromId(uid, dataId, out var data, component))
             return false;
 
-        return TryRemoveBounty(uid, data.Value, component);
+        return TryRemoveBounty(uid, data.Value, component, actor);
     }
 
-    public bool TryRemoveBounty(EntityUid uid, CargoBountyData data, StationCargoBountyDatabaseComponent? component = null)
+    public bool TryRemoveBounty(EntityUid uid, CargoBountyData data, StationCargoBountyDatabaseComponent? component = null, EntityUid? actor = null)
     {
         if (!Resolve(uid, ref component))
             return false;
@@ -451,6 +451,15 @@ public sealed partial class CargoSystem
         {
             if (component.Bounties[i].Id == data.Id)
             {
+                string? actorName = default;
+                if (actor != null)
+                {
+                    var getIdentityEvent = new TryGetIdentityShortInfoEvent(uid, actor.Value);
+                    RaiseLocalEvent(getIdentityEvent);
+                    actorName = getIdentityEvent.Title;
+                }
+
+                component.History.Add(new CargoBountyHistoryData(data, _gameTiming.CurTime, actorName));
                 component.Bounties.RemoveAt(i);
                 return true;
             }
