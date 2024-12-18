@@ -12214,6 +12214,16 @@ entities:
       container: 19898
 - proto: AirAlarm
   entities:
+  - uid: 15205
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 16.5,-49.5
+      parent: 2
+    - type: DeviceList
+      devices:
+      - 9455
+      - 9454
   - uid: 29
     components:
     - type: Transform
@@ -13542,18 +13552,6 @@ entities:
     - type: Transform
       pos: 11.5,-10.5
       parent: 2
-- proto: AirAlarmVox
-  entities:
-  - uid: 15205
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 16.5,-49.5
-      parent: 2
-    - type: DeviceList
-      devices:
-      - 9455
-      - 9454
 - proto: AirCanister
   entities:
   - uid: 790
