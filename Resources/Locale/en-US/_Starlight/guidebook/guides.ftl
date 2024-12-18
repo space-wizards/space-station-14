@@ -20,7 +20,7 @@ guide-entry-sl-rule-9 = Rule 9
 guide-entry-sl-rule-10 = Rule 10
 guide-entry-sl-rule-11 = Rule 11
 guide-entry-sl-rule-12 = Rule 12
-guide-entry-sl-rule-12 = Rule 13
+guide-entry-sl-rule-13 = Rule 13
 
 guide-entry-sl-silicon-1 = Sil.Rule 1
 guide-entry-sl-silicon-2 = Sil.Rule 2
