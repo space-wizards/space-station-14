@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: starlighthowls
-  changes:
-  - message: wwwaaooouuuwwgghhh (<-whale noises)
-    type: Tweak
-  id: 253
-  time: '2024-09-24T21:43:03.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/335
 - author: Sha-Seng
   changes:
   - message: Adjusted command mask sprite for lizards based on player feedbaaack
@@ -4511,3 +4504,10 @@
   id: 752
   time: '2024-12-17T12:03:06.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1053
+- author: FlippenPage
+  changes:
+  - message: Drone gibs fixed 4 real this time. please.
+    type: Fix
+  id: 753
+  time: '2024-12-18T04:07:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1058
