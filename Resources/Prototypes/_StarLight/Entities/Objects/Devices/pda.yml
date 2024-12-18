@@ -36,3 +36,22 @@
     borderColor: "#7C5D00"
   - type: Icon
     state: pda-captain
+    
+- type: entity
+  parent: BasePDA
+  id: NanoTrasenRepresentativePDA
+  name: NanoTrasen representative PDA
+  components:
+  - type: Pda
+    id: NanoTrasenRepresentativeIDCard
+    state: pda-captain
+    penSlot:
+      startingItem: Pen
+      priority: -1
+      whitelist:
+        tags:
+        - Write
+  - type: PdaBorderColor
+    borderColor: "#7C5D00"
+  - type: Icon
+    state: pda-captain

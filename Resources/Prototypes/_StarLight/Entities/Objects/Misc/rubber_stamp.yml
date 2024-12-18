@@ -10,3 +10,16 @@
   - type: Sprite
     sprite: _Starlight/Objects/Misc/stamps.rsi
     state: stamp-magistrate
+    
+- type: entity
+  name: NT representative's rubber stamp
+  parent: RubberStampBase
+  id: RubberStampNtrep
+  components:
+  - type: Stamp
+    stampedName: NanoTrasen Representative
+    stampedColor: "#fcc032"
+    stampState: "paper_stamp-ntrep"
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/stamps.rsi
+    state: stamp-ntrep

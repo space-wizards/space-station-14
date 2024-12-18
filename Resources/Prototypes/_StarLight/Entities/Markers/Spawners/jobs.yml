@@ -23,3 +23,17 @@
       - state: green
       - state: magistrate
       - state: jobicon
+      
+- type: entity
+  id: SpawnPointNtrep
+  parent: SpawnPointJobBase
+  name: NanoTrasen representative
+  components:
+  - type: SpawnPoint
+    job_id: NanoTrasenRepresentative
+  - type: Sprite
+    sprite: _Starlight/Markers/jobs.rsi
+    layers:
+      - state: green
+      - state: ntrep
+      - state: jobicon

@@ -15,3 +15,12 @@
   - CommonBackpack
   - Survival
   - Trinkets
+  
+- type: roleLoadout
+  id: JobNanoTrasenRepresentative
+  groups:
+  - NanoTrasenRepresentativeJumpsuit
+  - CommonBackpack
+  - Trinkets
+  - Survival
+  - GroupSpeciesBreathTool

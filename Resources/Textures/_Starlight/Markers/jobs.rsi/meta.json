@@ -15,6 +15,9 @@
     },
 	{
 	  "name": "magistrate"
-	}
+	},
+    {
+      "name": "ntrep"
+    }
   ]
 }

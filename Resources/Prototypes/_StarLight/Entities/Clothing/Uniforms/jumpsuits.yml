@@ -35,3 +35,25 @@
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/magistrate.rsi
   - type: Clothing
     sprite: _Starlight/Clothing/Uniforms/Jumpsuit/magistrate.rsi
+    
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitNtrep
+  name: nt representive suit
+  description: That suit that is better not to see.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/ntrep.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/ntrep.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitNtrepFormal
+  name: nt representive formal suit
+  description: That suit that is better not to see.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/ntrepformal.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Uniforms/Jumpsuit/ntrepformal.rsi

@@ -6,3 +6,6 @@
   
 - type: playTimeTracker
   id: JobMagistrate
+  
+- type: playTimeTracker
+  id: JobNanoTrasenRepresentative
