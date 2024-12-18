@@ -783,6 +783,7 @@
   - type: Tag
     tags:
       - CannotSuicide
+      - EmagImmune
 
 # onestar is kinda fucked cause the loadout component is broken. sooo they gotta find guns somewhere i guess. /shrug.
 - type: entity
