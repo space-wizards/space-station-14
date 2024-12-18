@@ -1,5 +1,13 @@
 - type: jobIcon
   parent: JobIcon
+  id: JobIconIAA
+  icon:
+    sprite: /Textures/Interface/Misc/job_icons.rsi
+    state: IAA
+  jobName: job-name-iaa
+
+- type: jobIcon
+  parent: JobIcon
   id: JobIconMagistrate
   icon:
     sprite: /Textures/Interface/Misc/job_icons.rsi

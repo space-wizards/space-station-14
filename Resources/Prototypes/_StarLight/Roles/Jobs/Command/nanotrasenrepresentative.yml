@@ -50,7 +50,7 @@
     head: ClothingHeadHatCapNtrep
     id: NanoTrasenRepresentativePDA
     ears: ClothingHeadsetAltCommand
-    outerclothing: ClothingOuterCoatNtrep
+    outerClothing: ClothingOuterCoatNtrep
   storage:
     back:
     - RubberStampNtrep

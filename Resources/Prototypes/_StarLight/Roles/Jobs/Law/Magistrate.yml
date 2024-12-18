@@ -47,7 +47,7 @@
     gloves: ClothingHandsGlovesColorWhite
     outerClothing: ClothingOuterRobesJudge
     id: MagistratePDA
-    ears: ClothingHeadsetAltCommand
+    ears: ClothingHeadsetMagistrate
     head: ClothingHeadHatPwig
   storage:
     back:
