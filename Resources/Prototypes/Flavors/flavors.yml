@@ -675,6 +675,11 @@
   description: flavor-complex-lemon-lime-soda
 
 - type: flavor
+  id: lemonlimecranberrysoda
+  flavorType: Complex
+  description: flavor-complex-lemon-lime-cranberry-soda
+
+- type: flavor
   id: pwrgamesoda
   flavorType: Complex
   description: flavor-complex-pwr-game-soda

@@ -132,6 +132,8 @@
       amount: 2
     - id: DrinkLemonLimeCan
       amount: 2
+    - id: DrinkLemonLimeCranberryCan
+      amount: 2
     - id: DrinkFourteenLokoCan
       amount: 2
 
@@ -152,6 +154,8 @@
       - id: DrinkIcedTeaCan
         amount: 4
       - id: DrinkLemonLimeCan
+        amount: 4
+      - id: DrinkLemonLimeCranberryCan
         amount: 4
       - id: DrinkFourteenLokoCan
         amount: 4

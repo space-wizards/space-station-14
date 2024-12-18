@@ -154,6 +154,24 @@
 
 - type: entity
   parent: DrinkCanBaseFull
+  id: DrinkLemonLimeCranberryCan
+  name: lemon-lime-cranberry can
+  description: Y'all want a cranberry soda? Drink in moderation. A limited run for the holidays!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: LemonLimeCranberry
+          Quantity: 30
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/lemon-lime-cranberry.rsi
+  - type: Item
+    sprite: Objects/Consumable/Drinks/lemon-lime-cranberry.rsi
+
+- type: entity
+  parent: DrinkCanBaseFull
   id: DrinkGrapeCan
   name: grape soda can
   description: Sweetened drink with a grape flavor and a deep purple color.
