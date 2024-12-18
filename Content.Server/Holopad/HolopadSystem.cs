@@ -119,7 +119,12 @@ public sealed class HolopadSystem : SharedHolopadSystem
             var source = GetLinkedHolopads(receiver).FirstOrNull();
 
             if (source != null)
+            {
+                if (_stationAiSystem.TryGetStationAiCore(args.Actor, out var stationAiCore) && stationAiCore != null)
+                    _userInterfaceSystem.CloseUi(receiver.Owner, HolopadUiKey.AiRequestWindow, args.Actor);
+
                 ActivateProjector(source.Value, args.Actor);
+            }
 
             return;
         }
