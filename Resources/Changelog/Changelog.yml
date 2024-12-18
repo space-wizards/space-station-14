@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Aeshus
-  changes:
-  - message: Cryosleep no longer gives arrival shuttle directions.
-    type: Fix
-  id: 7226
-  time: '2024-08-27T15:02:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30888
 - author: Winkarst-cpu
   changes:
   - message: Nukie plushie is now not a contraband item.
@@ -3928,3 +3921,11 @@
   id: 7725
   time: '2024-12-17T23:56:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32825
+- author: ArtisticRoomba, AugustSun
+  changes:
+  - message: New Advanced SMES, an SMES with a 16 MJ capacity. It can be researched
+      at Industrial T2, Advanced Powercells.
+    type: Add
+  id: 7726
+  time: '2024-12-17T23:58:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33757
