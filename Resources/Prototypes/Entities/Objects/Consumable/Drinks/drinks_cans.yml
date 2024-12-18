@@ -137,7 +137,7 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkLemonLimeCan
-  name: lemon-lime can
+  name: Smite can
   description: You wanted ORANGE. It gave you Lemon-Lime.
   components:
   - type: SolutionContainerManager
@@ -155,8 +155,8 @@
 - type: entity
   parent: DrinkCanBaseFull
   id: DrinkLemonLimeCranberryCan
-  name: lemon-lime-cranberry can
-  description: Y'all want a cranberry soda? Drink in moderation. A limited run for the holidays!
+  name: Smite Cranberry can
+  description: Y'all want a Smite Cranberry? Beloved by administrators everywhere. Drink in moderation. A limited run for the holidays!
   components:
   - type: SolutionContainerManager
     solutions:
