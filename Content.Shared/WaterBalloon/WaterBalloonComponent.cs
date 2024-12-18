@@ -1,18 +1,15 @@
-using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.WaterBalloon;
 
 [RegisterComponent]
 public sealed partial class WaterBalloonComponent : Component
 {
+    /// <summary>
+    /// Holds the entity thats gonna be spawned after the empty balloon is full
+    /// </summary>
     [DataField]
-    public FixedPoint2 MaxVolume = 10;
-
-    [DataField]
-    public bool Filled = false;
-
-    [DataField]
-    public string FilledPrototype = "FilledWaterBalloon";
+    public EntProtoId FilledPrototype = "FilledWaterBalloon";
 
 }

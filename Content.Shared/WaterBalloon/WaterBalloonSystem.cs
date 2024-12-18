@@ -26,7 +26,7 @@ public sealed class WaterBalloonSystem : EntitySystem
     {
         if (_gameTiming.IsFirstTimePredicted)  //prevents bad prediction shenanigans
         {
-            if (ent.Comp.MaxVolume == args.Solution.Volume)
+            if (args.Solution.MaxVolume == args.Solution.Volume)
             {
                 if (args.Solution.Name == null)
                     return;
