@@ -19,5 +19,10 @@ guide-entry-sl-rule-9 = Rule 9
 guide-entry-sl-rule-10 = Rule 10
 guide-entry-sl-rule-11 = Rule 11
 guide-entry-sl-rule-12 = Rule 12
+guide-entry-sl-rule-12 = Rule 13
+
+guide-entry-sl-silicon-1 = Sil.Rule 1
+guide-entry-sl-silicon-2 = Sil.Rule 2
+guide-entry-sl-silicon-3 = Sil.Rule 3
 
 guide-entry-sl-clarification-1 = Clarification 1

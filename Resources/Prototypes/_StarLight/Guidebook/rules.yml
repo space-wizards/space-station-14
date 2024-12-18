@@ -97,6 +97,13 @@
   priority: 12
   text: "/ServerInfo/Guidebook/ServerRules/RulesSL/CoreRules/RuleSL12.xml"
   
+- type: guideEntry
+  id: RuleSL13
+  name: guide-entry-sl-rule-13
+  ruleEntry: true
+  priority: 13
+  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/CoreRules/RuleSL13.xml"
+  
 # Sub. Points
   
 - type: guideEntry
@@ -149,6 +156,29 @@
   ruleEntry: true
   priority: 7
   text: "/ServerInfo/Guidebook/ServerRules/RulesSL/RolePlayRules/RuleSLRP7.xml"
+  
+# Silicon
+
+- type: guideEntry
+  id: RuleSLS1
+  name: guide-entry-sl-silicon-1
+  ruleEntry: true
+  priority: 1
+  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/Silicon/RuleSLS1.xml"
+  
+- type: guideEntry
+  id: RuleSLS2
+  name: guide-entry-sl-silicon-2
+  ruleEntry: true
+  priority: 2
+  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/Silicon/RuleSLS2.xml"
+  
+- type: guideEntry
+  id: RuleSLS3
+  name: guide-entry-sl-silicon-3
+  ruleEntry: true
+  priority: 3
+  text: "/ServerInfo/Guidebook/ServerRules/RulesSL/Silicon/RuleSLS3.xml"
   
 # Clarifications
 
