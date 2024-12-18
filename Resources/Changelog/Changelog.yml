@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: metalgearsloth
   changes:
-  - message: Fix whitelist
-    type: Fix
-  id: 7231
-  time: '2024-08-28T07:11:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31563
-- author: metalgearsloth
-  changes:
   - message: Add shutters, windoors, etc to AI interaction whitelist.
     type: Tweak
   id: 7232
@@ -3930,3 +3923,14 @@
   id: 7730
   time: '2024-12-18T15:13:40.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33647
+- author: ArtisticRoomba
+  changes:
+  - message: New plushie, named "drazil plushie". Based on an inverted lizard plushie.
+      It can be rarely found in maints lockers. Hew!
+    type: Add
+  - message: New reagent, Juice that makes you Hew. It can be made from juicing inverted
+      lizard plushies. Hew!
+    type: Add
+  id: 7731
+  time: '2024-12-18T16:31:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33776
