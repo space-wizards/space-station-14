@@ -1,28 +1,6 @@
 ﻿Entries:
 - author: Winkarst-cpu
   changes:
-  - message: The explorer gas mask is now restricted to the cargo.
-    type: Fix
-  id: 7224
-  time: '2024-08-27T13:19:38.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31514
-- author: Aeshus
-  changes:
-  - message: The Health Analyzer now displays the patient's picture, species, and
-      current status.
-    type: Add
-  id: 7225
-  time: '2024-08-27T14:57:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30834
-- author: Aeshus
-  changes:
-  - message: Cryosleep no longer gives arrival shuttle directions.
-    type: Fix
-  id: 7226
-  time: '2024-08-27T15:02:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30888
-- author: Winkarst-cpu
-  changes:
   - message: Nukie plushie is now not a contraband item.
     type: Fix
   id: 7227
@@ -3928,3 +3906,26 @@
   id: 7723
   time: '2024-12-17T13:35:29.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33427
+- author: chromiumboy
+  changes:
+  - message: Holopads are now available, allowing you to communicate holographically
+      with the rest of the crew
+    type: Add
+  id: 7724
+  time: '2024-12-17T19:18:15.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32711
+- author: Golinth
+  changes:
+  - message: AMEs larger than 2 cores now produce more power, instead of less.
+    type: Tweak
+  id: 7725
+  time: '2024-12-17T23:56:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32825
+- author: ArtisticRoomba, AugustSun
+  changes:
+  - message: New Advanced SMES, an SMES with a 16 MJ capacity. It can be researched
+      at Industrial T2, Advanced Powercells.
+    type: Add
+  id: 7726
+  time: '2024-12-17T23:58:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33757
