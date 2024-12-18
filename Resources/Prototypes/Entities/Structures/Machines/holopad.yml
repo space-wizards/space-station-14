@@ -503,7 +503,7 @@
 - type: entity
   parent: Holopad
   id: HolopadEngineeringAtmosTEG
-  suffix: Atmos TEG
+  suffix: TEG
   components:
   - type: Label
     currentLabel: Atmos - TEG
