@@ -7732,6 +7732,16 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -26.5,-40.5
       parent: 30
+  - uid: 9483
+    components:
+    - type: Transform
+      pos: -4.5,-42.5
+      parent: 30
+    - type: DeviceList
+      devices:
+      - 7443
+      - 7098
+      - 11281
   - uid: 9671
     components:
     - type: Transform
@@ -9329,17 +9339,6 @@ entities:
       - 8335
       - 11280
       - 9839
-  - uid: 22824
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -7.5,-46.5
-      parent: 30
-    - type: DeviceList
-      devices:
-      - 7443
-      - 7098
-      - 11281
   - uid: 22825
     components:
     - type: Transform
@@ -33997,6 +33996,11 @@ entities:
     - type: Transform
       pos: -16.5,-34.5
       parent: 30
+  - uid: 9524
+    components:
+    - type: Transform
+      pos: -3.5,-47.5
+      parent: 30
   - uid: 9534
     components:
     - type: Transform
@@ -38462,16 +38466,6 @@ entities:
     - type: Transform
       pos: -4.5,-46.5
       parent: 30
-  - uid: 22886
-    components:
-    - type: Transform
-      pos: -3.5,-46.5
-      parent: 30
-  - uid: 22887
-    components:
-    - type: Transform
-      pos: -2.5,-46.5
-      parent: 30
   - uid: 22888
     components:
     - type: Transform
@@ -38531,6 +38525,21 @@ entities:
     components:
     - type: Transform
       pos: -7.5,-45.5
+      parent: 30
+  - uid: 22980
+    components:
+    - type: Transform
+      pos: -4.5,-47.5
+      parent: 30
+  - uid: 22981
+    components:
+    - type: Transform
+      pos: -2.5,-47.5
+      parent: 30
+  - uid: 22982
+    components:
+    - type: Transform
+      pos: -1.5,-47.5
       parent: 30
 - proto: CableHVStack
   entities:
@@ -46528,11 +46537,6 @@ entities:
     - type: Transform
       pos: -9.5,-56.5
       parent: 30
-  - uid: 11278
-    components:
-    - type: Transform
-      pos: -4.5,-44.5
-      parent: 30
   - uid: 11314
     components:
     - type: Transform
@@ -49026,6 +49030,11 @@ entities:
     components:
     - type: Transform
       pos: 21.5,-38.5
+      parent: 30
+  - uid: 22979
+    components:
+    - type: Transform
+      pos: -4.5,-44.5
       parent: 30
 - proto: Chair
   entities:
@@ -65019,7 +65028,7 @@ entities:
     - type: DeviceNetwork
       deviceLists:
       - 13959
-      - 22824
+      - 9483
       - 13957
   - uid: 11282
     components:
@@ -89537,7 +89546,7 @@ entities:
       parent: 30
     - type: DeviceNetwork
       deviceLists:
-      - 22824
+      - 9483
     - type: AtmosPipeColor
       color: '#0055CCFF'
   - uid: 7569
@@ -91291,7 +91300,7 @@ entities:
       parent: 30
     - type: DeviceNetwork
       deviceLists:
-      - 22824
+      - 9483
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 7100
@@ -95255,6 +95264,16 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -18.5,-57.5
       parent: 30
+  - uid: 9959
+    components:
+    - type: Transform
+      pos: -7.5,-46.5
+      parent: 30
+  - uid: 9961
+    components:
+    - type: Transform
+      pos: -6.5,-46.5
+      parent: 30
   - uid: 9973
     components:
     - type: Transform
@@ -95342,6 +95361,11 @@ entities:
     components:
     - type: Transform
       pos: 23.5,-16.5
+      parent: 30
+  - uid: 10548
+    components:
+    - type: Transform
+      pos: -5.5,-46.5
       parent: 30
   - uid: 10553
     components:
@@ -95588,6 +95612,11 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -28.5,-76.5
+      parent: 30
+  - uid: 11278
+    components:
+    - type: Transform
+      pos: -4.5,-46.5
       parent: 30
   - uid: 11279
     components:
@@ -99108,6 +99137,11 @@ entities:
     components:
     - type: Transform
       pos: -6.5,-49.5
+      parent: 30
+  - uid: 22824
+    components:
+    - type: Transform
+      pos: -8.5,-46.5
       parent: 30
   - uid: 22875
     components:
@@ -116211,6 +116245,31 @@ entities:
     components:
     - type: Transform
       pos: -6.5,-48.5
+      parent: 30
+  - uid: 22886
+    components:
+    - type: Transform
+      pos: -4.5,-46.5
+      parent: 30
+  - uid: 22887
+    components:
+    - type: Transform
+      pos: -5.5,-46.5
+      parent: 30
+  - uid: 22976
+    components:
+    - type: Transform
+      pos: -6.5,-46.5
+      parent: 30
+  - uid: 22977
+    components:
+    - type: Transform
+      pos: -7.5,-46.5
+      parent: 30
+  - uid: 22978
+    components:
+    - type: Transform
+      pos: -8.5,-46.5
       parent: 30
 - proto: ResearchAndDevelopmentServer
   entities:
@@ -140699,11 +140758,6 @@ entities:
     - type: Transform
       pos: -42.5,-0.5
       parent: 30
-  - uid: 9483
-    components:
-    - type: Transform
-      pos: -5.5,-46.5
-      parent: 30
   - uid: 9485
     components:
     - type: Transform
@@ -140728,11 +140782,6 @@ entities:
     components:
     - type: Transform
       pos: -3.5,-42.5
-      parent: 30
-  - uid: 9524
-    components:
-    - type: Transform
-      pos: -6.5,-46.5
       parent: 30
   - uid: 9525
     components:
@@ -140909,16 +140958,6 @@ entities:
     - type: Transform
       pos: -9.5,-15.5
       parent: 30
-  - uid: 9959
-    components:
-    - type: Transform
-      pos: -7.5,-46.5
-      parent: 30
-  - uid: 9961
-    components:
-    - type: Transform
-      pos: -8.5,-46.5
-      parent: 30
   - uid: 9962
     components:
     - type: Transform
@@ -140953,11 +140992,6 @@ entities:
     components:
     - type: Transform
       pos: -3.5,-45.5
-      parent: 30
-  - uid: 10548
-    components:
-    - type: Transform
-      pos: -4.5,-46.5
       parent: 30
   - uid: 10549
     components:
