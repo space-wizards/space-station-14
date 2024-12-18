@@ -1,19 +1,20 @@
 - type: gameMap
-  id: Oasis
-  mapName: 'Oasis'
-  mapPath: /Maps/Oasis.yml
-  minPlayers: 70
+  id: StarlightMarathon
+  mapName: 'Marathon Station'
+  mapPath: /Maps/_Starlight/Stations/Marathon.yml
+  minPlayers: 35
+  maxPlayers: 70
   stations:
-    Oasis:
+    Marathon:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
-          mapNameTemplate: '{0} Oasis {1}'
+          mapNameTemplate: '{0} Marathon Station {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
-            prefixCreator: 'B'
+            prefixCreator: '14'
         - type: StationEmergencyShuttle
-          emergencyShuttlePath: /Maps/Shuttles/emergency_accordia.yml
+          emergencyShuttlePath: /Maps/Shuttles/emergency_rod.yml
         - type: StationJobs
           availableJobs:
             #service
@@ -22,44 +23,45 @@
             Bartender: [ 2, 2 ]
             Botanist: [ 2, 3 ]
             Chef: [ 2, 2 ]
-            Janitor: [ 3, 3 ]
+            Janitor: [ 1, 2 ]
             Chaplain: [ 1, 1 ]
             Librarian: [ 1, 1 ]
             ServiceWorker: [ 2, 2 ]
-            Zookeeper: [ 1, 1 ]
-            Reporter: [ 1, 1 ]
             #engineering
             ChiefEngineer: [ 1, 1 ]
             AtmosphericTechnician: [ 3, 3 ]
-            StationEngineer: [ 5, 5 ]
-            TechnicalAssistant: [ 4, 4 ]
+            StationEngineer: [ 4, 4 ]
+            TechnicalAssistant: [ 3, 3 ]
             #medical
             ChiefMedicalOfficer: [ 1, 1 ]
             Chemist: [ 2, 2 ]
-            MedicalDoctor: [ 6, 6 ]
-            Paramedic: [ 2, 2 ]
-            MedicalIntern: [ 4, 4 ]
+            MedicalDoctor: [ 4, 4 ]
+            MedicalIntern: [ 3, 3 ]
             Psychologist: [ 1, 1 ]
+            Paramedic: [ 1, 1 ]
             #science
             ResearchDirector: [ 1, 1 ]
-            Scientist: [ 5, 5 ]
-            ResearchAssistant: [ 6, 6 ]
-            StationAi: [ 1, 1 ]
-            Borg: [ 2, 2 ]
+            Scientist: [ 4, 4 ]
+            ResearchAssistant: [ 3, 3 ]
+            Roboticist: [ 1, 1 ]
             #security
             HeadOfSecurity: [ 1, 1 ]
             Warden: [ 1, 1 ]
-            SecurityOfficer: [ 8, 8 ]
+            SecurityOfficer: [ 4, 4 ]
             Detective: [ 1, 1 ]
             SecurityCadet: [ 4, 4 ]
-            Lawyer: [ 3, 3 ]
             Brigmedic: [ 1, 1 ]
             #supply
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 6, 6 ]
-            CargoTechnician: [ 4, 4 ]
+            CargoTechnician: [ 3, 3 ]
             #civilian
             Passenger: [ -1, -1 ]
             Clown: [ 1, 1 ]
             Mime: [ 1, 1 ]
             Musician: [ 1, 1 ]
+            #silicon
+            StationAi: [ 1, 1 ]
+            Borg: [ 2, 2 ]
+            #law
+            Magistrate: [ 1, 1 ]

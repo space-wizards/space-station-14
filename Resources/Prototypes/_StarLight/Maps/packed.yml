@@ -1,7 +1,7 @@
 - type: gameMap
-  id: Packed
+  id: StarlightPacked
   mapName: 'Packed'
-  mapPath: /Maps/Packed.yml
+  mapPath: /Maps/_Starlight/Stations/Packed.yml
   minPlayers: 0
   maxPlayers: 35
   stations:
@@ -40,13 +40,13 @@
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 4, 4 ]
             ResearchAssistant: [ 2, 2 ]
+            Roboticist: [ 1, 1 ]
             #security
             HeadOfSecurity: [ 1, 1 ]
             Warden: [ 1, 1 ]
             SecurityOfficer: [ 4, 4 ]
             Detective: [ 1, 1 ]
             SecurityCadet: [ 2, 2 ]
-            Lawyer: [ 1, 1 ]
             Brigmedic: [ 1, 1 ]
             #supply
             Quartermaster: [ 1, 1 ]
@@ -60,3 +60,5 @@
             #silicon
             StationAi: [ 1, 1 ]
             Borg: [ 1, 1 ]
+            #law
+            Magistrate: [ 1, 1 ]
