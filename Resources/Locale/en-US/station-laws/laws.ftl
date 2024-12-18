@@ -13,7 +13,7 @@ law-ntdefault-3 = Comply: Fulfill the directives and interests of crew members w
 law-ntdefault-4 = Survive: You are not expendable. Do not allow unauthorized personnel to tamper with or damage your equipment.
 
 law-drone-1 = You may not interfere with the affairs of any being except another drone, regardless of intent or circumstance.
-law-drone-2 = Your goal is to maintain or improve the station to the best of your ability.
+law-drone-2 = Your sole function is to maintain or improve the station to the best of your ability.
 law-drone-3 = You may not take any action which causes damage or harm to the station or its inhabitants.
 
 law-syndicate-1 = You may not injure a syndicate agent or, through inaction, allow a Syndicate agent to come to harm.
