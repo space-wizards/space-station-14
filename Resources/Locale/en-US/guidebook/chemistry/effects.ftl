@@ -209,7 +209,7 @@ reagent-effect-guidebook-cure-disease =
         *[other] cure
     } diseases
 
-reagent-effect-guidebook-cure-eye-damage =
+reagent-effect-guidebook-eye-damage-change =
     { $chance ->
         [1] { $deltasign ->
                 [1] Deals
@@ -404,16 +404,3 @@ reagent-effect-guidebook-plant-seeds-remove =
         [1] Removes the
         *[other] remove the
     } seeds of the plant
-
-reagent-effect-guidebook-cure-eye-damage =
-    { $chance ->
-        [1] { $deltasign ->
-                [1] Deals
-                *[-1] Heals
-            }
-        *[other]
-            { $deltasign ->
-                [1] deal
-                *[-1] heal
-            }
-    } eye damage
