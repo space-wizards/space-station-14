@@ -277,6 +277,11 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
     public void EndTelephoneCalls(Entity<TelephoneComponent> entity)
     {
+        // No need to end any calls if the telephone is already ending a call or idle
+        if (entity.Comp.CurrentState == TelephoneState.EndingCall ||
+            entity.Comp.CurrentState == TelephoneState.Idle)
+            return;
+
         HandleEndingTelephoneCalls(entity, TelephoneState.EndingCall);
 
         var ev = new TelephoneCallEndedEvent();
@@ -285,14 +290,15 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
     public void TerminateTelephoneCalls(Entity<TelephoneComponent> entity)
     {
+        // No need to terminate any calls if the telephone is idle
+        if (entity.Comp.CurrentState == TelephoneState.Idle)
+            return;
+
         HandleEndingTelephoneCalls(entity, TelephoneState.Idle);
     }
 
     private void HandleEndingTelephoneCalls(Entity<TelephoneComponent> entity, TelephoneState newState)
     {
-        if (entity.Comp.CurrentState == newState)
-            return;
-
         foreach (var linkedTelephone in entity.Comp.LinkedTelephones)
         {
             if (!linkedTelephone.Comp.LinkedTelephones.Remove(entity))
