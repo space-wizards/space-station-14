@@ -1062,12 +1062,13 @@
 - type: artifactEffect
   id: EffectGridKnockdown
   targetDepth: 4
-  effectHint: artifact-effect-hint-stationwide-disruption
+  effectHint: artifact-effect-hint-environment
   effectProb: 0.6
   components:
   - type: KnockdownArtifact
-    entireGrid: true
+    entireGrid: false
     knockdownTime: 2.5
+    range: 15
 
 - type: artifactEffect
   id: EffectSingulo
