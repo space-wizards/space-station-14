@@ -63,12 +63,7 @@
   - type: RandomSpawner
     offset: 0.3
     prototypes:
-      - FloraStalagmite1
-      - FloraStalagmite2
-      - FloraStalagmite3
-      - FloraStalagmite4
-      - FloraStalagmite5
-      - FloraStalagmite6
+      - FloraStalagmite
     chance: 0.9
 
 - type: entity
@@ -84,10 +79,5 @@
   - type: RandomSpawner
     offset: 0.3
     prototypes:
-      - FloraGreyStalagmite1
-      - FloraGreyStalagmite2
-      - FloraGreyStalagmite3
-      - FloraGreyStalagmite4
-      - FloraGreyStalagmite5
-      - FloraGreyStalagmite6
+      - FloraGreyStalagmite
     chance: 0.9

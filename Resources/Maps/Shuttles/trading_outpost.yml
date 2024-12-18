@@ -98,6 +98,7 @@ entities:
             189: 4,-12
             190: 5,-12
             191: 6,-12
+            192: 5,2
         - node:
             color: '#FFFFFFFF'
             id: Delivery
@@ -567,6 +568,32 @@ entities:
     components:
     - type: Transform
       pos: -2.5,-6.5
+      parent: 2
+- proto: ButtonFrameCaution
+  entities:
+  - uid: 108
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 11.5,-7.5
+      parent: 2
+  - uid: 110
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -0.5,-7.5
+      parent: 2
+  - uid: 120
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -0.5,-1.5
+      parent: 2
+  - uid: 121
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 11.5,-1.5
       parent: 2
 - proto: CableApcExtension
   entities:
@@ -4299,6 +4326,19 @@ entities:
     - type: Transform
       pos: 11.5,9.5
       parent: 2
+- proto: HolopadLongRange
+  entities:
+  - uid: 546
+    components:
+    - type: MetaData
+      name: long-range holopad (Automated Trade Station)
+    - type: Transform
+      pos: 5.5,2.5
+      parent: 2
+    - type: Label
+      currentLabel: Automated Trade Station
+    - type: NameModifier
+      baseName: long-range holopad
 - proto: NewtonCradle
   entities:
   - uid: 65
@@ -4727,31 +4767,9 @@ entities:
     - type: Transform
       pos: 7.5,3.5
       parent: 2
-- proto: SignalSwitchDirectional
+- proto: SignalButtonDirectional
   entities:
-  - uid: 108
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 11.5,-1.5
-      parent: 2
-    - type: DeviceLinkSource
-      linkedPorts:
-        289:
-        - On: Open
-        - Off: Close
-  - uid: 110
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -0.5,-1.5
-      parent: 2
-    - type: DeviceLinkSource
-      linkedPorts:
-        288:
-        - On: Open
-        - Off: Close
-  - uid: 120
+  - uid: 545
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
@@ -4760,9 +4778,18 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         290:
-        - On: Open
-        - Off: Close
-  - uid: 121
+        - Pressed: Toggle
+  - uid: 549
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -0.5,-1.5
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        288:
+        - Pressed: Toggle
+  - uid: 550
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
@@ -4771,8 +4798,19 @@ entities:
     - type: DeviceLinkSource
       linkedPorts:
         279:
-        - On: Open
-        - Off: Close
+        - Pressed: Toggle
+  - uid: 551
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 11.5,-1.5
+      parent: 2
+    - type: DeviceLinkSource
+      linkedPorts:
+        289:
+        - Pressed: Toggle
+- proto: SignalSwitchDirectional
+  entities:
   - uid: 128
     components:
     - type: Transform

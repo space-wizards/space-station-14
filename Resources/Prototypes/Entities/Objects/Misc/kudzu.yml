@@ -134,12 +134,12 @@
       offset: 0.2
       chance: 0.05
       prototypes:
-      - LightTree01
-      - LightTree02
-      - LightTree03
-      - LightTree04
-      - LightTree05
-      - LightTree06
+      - LightTree #TODO: transform into EntityTable with weight
+      - LightTree
+      - LightTree
+      - LightTree
+      - LightTree
+      - LightTree
       - CrystalCyan
       rarePrototypes:
       - AnomalyFloraBulb

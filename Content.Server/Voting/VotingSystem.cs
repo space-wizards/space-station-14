@@ -13,6 +13,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using System.Threading.Tasks;
+using Content.Shared.Players.PlayTimeTracking;
 
 namespace Content.Server.Voting;
 
@@ -26,6 +27,7 @@ public sealed class VotingSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly JobSystem _jobs = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly ISharedPlaytimeManager _playtimeManager = default!;
 
     public override void Initialize()
     {
@@ -109,10 +111,13 @@ public sealed class VotingSystem : EntitySystem
         }
 
         // Must be whitelisted
-        if (!await _dbManager.GetWhitelistStatusAsync(initiator.UserId))
+        if (!await _dbManager.GetWhitelistStatusAsync(initiator.UserId) && _cfg.GetCVar(CCVars.VotekickInitiatorWhitelistedRequirement))
             return false;
 
-        return true;
+        // Must be eligible to vote
+        var playtime = _playtimeManager.GetPlayTimes(initiator);
+        return playtime.TryGetValue(PlayTimeTrackingShared.TrackerOverall, out TimeSpan overallTime) && (overallTime >= TimeSpan.FromHours(_cfg.GetCVar(CCVars.VotekickEligibleVoterPlaytime))
+            || !_cfg.GetCVar(CCVars.VotekickInitiatorTimeRequirement));
     }
 
     /// <summary>
