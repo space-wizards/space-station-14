@@ -1,0 +1,107 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+               xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+               xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+               Resizable="False"
+               MaxSize="400 800"
+               MinSize="400 150">
+    <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
+
+        <BoxContainer Name="ControlsLockOutContainer" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" ReservesSpace="False" Visible="False">
+            <!-- Header text -->
+            <controls:StripeBack>
+                <PanelContainer>
+                    <RichTextLabel Name="EmergencyBroadcastText" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10 10 10 10" ReservesSpace="False"/>
+                </PanelContainer>
+            </controls:StripeBack>
+            
+            <Label Text="{Loc 'holopad-window-controls-locked-out'}" HorizontalAlignment="Center" Margin="10 5 10 0" ReservesSpace="False"/>
+            <RichTextLabel Name="LockOutIdText" HorizontalAlignment="Center" Margin="10 5 10 0" ReservesSpace="False"/>
+            <Label Name="LockOutCountDownText" Text="{Loc 'holopad-window-controls-unlock-countdown'}" HorizontalAlignment="Center" Margin="10 15 10 10" ReservesSpace="False"/>
+        </BoxContainer>
+
+        <BoxContainer Name="ControlsContainer" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" ReservesSpace="False">
+        
+            <!-- Active call controls (either this or the call placement controls will be active) -->
+            <BoxContainer Name="ActiveCallControlsContainer" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" ReservesSpace="False">
+
+                <!-- Header text -->
+                <BoxContainer MinHeight="60" Orientation="Vertical" VerticalAlignment="Center">
+                    <Label Name="CallStatusText" Margin="10 5 10 0" ReservesSpace="False"/>
+                    <RichTextLabel Name="CallerIdText" HorizontalAlignment="Center" Margin="0 0 0 0" ReservesSpace="False"/>
+                </BoxContainer>
+
+                <!-- Controls (the answer call button is absent when the phone is not ringing) -->
+                <GridContainer Columns="2" ReservesSpace="False">
+                    <Control HorizontalExpand="True" Margin="10 0 2 5">
+                        <Button Name="AnswerCallButton" Text="{Loc 'holopad-window-answer-call'}" StyleClasses="OpenRight" Margin="0 0 0 5" Disabled="True"/>
+                    </Control>
+                    <Control HorizontalExpand="True" Margin="2 0 10 5">
+                        <Button Name="EndCallButton" Text="{Loc 'holopad-window-end-call'}" StyleClasses="OpenLeft" Margin="0 0 0 5" Disabled="True"/>
+                    </Control>
+                </GridContainer>
+
+            </BoxContainer>
+
+            <!-- Call placement controls (either this or the active call controls will be active) -->
+            <BoxContainer Name="CallPlacementControlsContainer" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" ReservesSpace="False">
+
+                <controls:StripeBack>
+                    <PanelContainer>
+                        <BoxContainer Orientation="Vertical">
+                            <RichTextLabel Name="SubtitleText" HorizontalAlignment="Center" Margin="0 5 0 0"/>
+                            <RichTextLabel Name="OptionsText" HorizontalAlignment="Center" Margin="0 0 0 5"/>
+                        </BoxContainer>
+                    </PanelContainer>
+                </controls:StripeBack>
+
+                <!-- Request the station AI or activate the holopad projector (only one of these should be active at a time) -->
+                <BoxContainer Name="RequestStationAiContainer" Orientation="Vertical" ReservesSpace="False" Visible="False">
+                    <Button Name="RequestStationAiButton" Text="{Loc 'holopad-window-request-station-ai'}" Margin="10 5 10 5" Disabled="False"/>
+                </BoxContainer>
+
+                <BoxContainer Name="ActivateProjectorContainer" Orientation="Vertical" ReservesSpace="False" Visible="False">
+                    <Button Name="ActivateProjectorButton" Text="{Loc 'holopad-window-activate-projector'}" Margin="10 5 10 5" Disabled="False"/>
+                </BoxContainer>
+
+                <!-- List of contactable holopads (the list is created in C#) -->
+                <BoxContainer Name="HolopadContactListContainer" Orientation="Vertical" Margin="10 0 10 5" ReservesSpace="False" Visible="False">
+                    <PanelContainer Name="HolopadContactListHeaderPanel">
+                        <Label Text="{Loc 'holopad-window-select-contact-from-list'}" HorizontalAlignment="Center" Margin="0 3 0 3"/>
+                    </PanelContainer>
+                
+                    <PanelContainer Name="HolopadContactListPanel">
+                        <ScrollContainer HorizontalExpand="True" VerticalExpand="True" Margin="8, 8, 8, 8" MinHeight="256">
+
+                            <!-- If there is no data yet, this will be displayed -->
+                            <BoxContainer Name="FetchingAvailableHolopadsContainer" HorizontalAlignment="Center" HorizontalExpand="True" VerticalExpand="True" ReservesSpace="False">
+                                <Label Text="{Loc 'holopad-window-fetching-contacts-list'}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </BoxContainer>
+
+                            <!-- Container for the contacts -->
+                            <BoxContainer Name="ContactsList" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Margin="10 0 10 0"/>
+                        </ScrollContainer>
+                    </PanelContainer>
+                </BoxContainer>
+
+                <!-- Button to start an emergency broadcast (the user requires a certain level of access to interact with it) -->
+                <BoxContainer Name="StartBroadcastContainer" Orientation="Vertical" ReservesSpace="False" Visible="False">
+                    <Button Name="StartBroadcastButton" Text="{Loc 'holopad-window-emergency-broadcast'}" Margin="10 0 10 5" Disabled="False" ReservesSpace="False"/>
+                </BoxContainer>
+
+            </BoxContainer>
+        </BoxContainer>
+
+        <!-- Footer -->
+        <BoxContainer Orientation="Vertical">
+            <PanelContainer StyleClasses="LowDivider" />
+            <BoxContainer Orientation="Horizontal" Margin="10 2 5 0" VerticalAlignment="Bottom">
+                <Label Text="{Loc 'holopad-window-flavor-left'}" StyleClasses="WindowFooterText" />
+                <Label Text="{Loc 'holopad-window-flavor-right'}" StyleClasses="WindowFooterText"
+                        HorizontalAlignment="Right" HorizontalExpand="True"  Margin="0 0 5 0" />
+                <TextureRect StyleClasses="NTLogoDark" Stretch="KeepAspectCentered"
+                        VerticalAlignment="Center" HorizontalAlignment="Right" SetSize="19 19"/>
+            </BoxContainer>
+        </BoxContainer>
+    </BoxContainer>
+
+</controls:FancyWindow>

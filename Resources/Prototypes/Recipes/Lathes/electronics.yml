@@ -99,6 +99,11 @@
   result: DoorElectronics
 
 - type: latheRecipe
+  parent: BaseCheapElectronicsRecipe
+  id: FreezerElectronics
+  result: FreezerElectronics
+
+- type: latheRecipe
   parent: BaseElectronicsRecipe
   id: AirAlarmElectronics
   result: AirAlarmElectronics
@@ -393,6 +398,11 @@
   parent: BaseCircuitboardRecipe
   id: SMESMachineCircuitboard
   result: SMESMachineCircuitboard
+
+- type: latheRecipe
+  parent: BaseGoldCircuitboardRecipe
+  id: SMESAdvancedMachineCircuitboard
+  result: SMESAdvancedMachineCircuitboard
 
 - type: latheRecipe
   parent: BaseCircuitboardRecipe

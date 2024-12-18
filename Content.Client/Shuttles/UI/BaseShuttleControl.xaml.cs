@@ -116,7 +116,7 @@ public partial class BaseShuttleControl : MapGridControl
         }
     }
 
-    protected void DrawGrid(DrawingHandleScreen handle, Matrix3x2 matrix, Entity<MapGridComponent> grid, Color color, float alpha = 0.01f)
+    protected void DrawGrid(DrawingHandleScreen handle, Matrix3x2 gridToView, Entity<MapGridComponent> grid, Color color, float alpha = 0.01f)
     {
         var rator = Maps.GetAllTilesEnumerator(grid.Owner, grid.Comp);
         var minimapScale = MinimapScale;
@@ -264,7 +264,7 @@ public partial class BaseShuttleControl : MapGridControl
         Extensions.EnsureLength(ref _allVertices, totalData);
 
         _drawJob.MidPoint = midpoint;
-        _drawJob.Matrix = matrix;
+        _drawJob.Matrix = gridToView;
         _drawJob.MinimapScale = minimapScale;
         _drawJob.Vertices = gridData.Vertices;
         _drawJob.ScaledVertices = _allVertices;
@@ -286,7 +286,7 @@ public partial class BaseShuttleControl : MapGridControl
 
     private record struct GridDrawJob : IParallelRobustJob
     {
-        public int BatchSize => 16;
+        public int BatchSize => 64;
 
         public float MinimapScale;
         public Vector2 MidPoint;
@@ -297,12 +297,7 @@ public partial class BaseShuttleControl : MapGridControl
 
         public void Execute(int index)
         {
-            var vert = Vertices[index];
-            var adjustedVert = Vector2.Transform(vert, Matrix);
-            adjustedVert = adjustedVert with { Y = -adjustedVert.Y };
-
-            var scaledVert = ScalePosition(adjustedVert, MinimapScale, MidPoint);
-            ScaledVertices[index] = scaledVert;
+            ScaledVertices[index] = Vector2.Transform(Vertices[index], Matrix);
         }
     }
 }

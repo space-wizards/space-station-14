@@ -1,4 +1,5 @@
 #nullable enable
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.GameTicking;
@@ -120,8 +121,8 @@ public sealed class NukeOpsTest
         Assert.That(roleSys.MindHasRole<NukeopsRoleComponent>(mind));
         Assert.That(factionSys.IsMember(player, "Syndicate"), Is.True);
         Assert.That(factionSys.IsMember(player, "NanoTrasen"), Is.False);
-        var roles = roleSys.MindGetAllRoles(mind);
-        var cmdRoles = roles.Where(x => x.Prototype == "NukeopsCommander" && x.Component is NukeopsRoleComponent);
+        var roles = roleSys.MindGetAllRoleInfo(mind);
+        var cmdRoles = roles.Where(x => x.Prototype == "NukeopsCommander");
         Assert.That(cmdRoles.Count(), Is.EqualTo(1));
 
         // The second dummy player should be a medic
@@ -131,8 +132,8 @@ public sealed class NukeOpsTest
         Assert.That(roleSys.MindHasRole<NukeopsRoleComponent>(dummyMind));
         Assert.That(factionSys.IsMember(dummyEnts[1], "Syndicate"), Is.True);
         Assert.That(factionSys.IsMember(dummyEnts[1], "NanoTrasen"), Is.False);
-        roles = roleSys.MindGetAllRoles(dummyMind);
-        cmdRoles = roles.Where(x => x.Prototype == "NukeopsMedic" && x.Component is NukeopsRoleComponent);
+        roles = roleSys.MindGetAllRoleInfo(dummyMind);
+        cmdRoles = roles.Where(x => x.Prototype == "NukeopsMedic");
         Assert.That(cmdRoles.Count(), Is.EqualTo(1));
 
         // The other two players should have just spawned in as normal.
@@ -141,13 +142,14 @@ public sealed class NukeOpsTest
         void CheckDummy(int i)
         {
             var ent = dummyEnts[i];
-            var mind = mindSys.GetMind(ent)!.Value;
+            var mindCrew = mindSys.GetMind(ent)!.Value;
             Assert.That(entMan.HasComponent<NukeOperativeComponent>(ent), Is.False);
-            Assert.That(roleSys.MindIsAntagonist(mind), Is.False);
-            Assert.That(roleSys.MindHasRole<NukeopsRoleComponent>(mind), Is.False);
+            Assert.That(roleSys.MindIsAntagonist(mindCrew), Is.False);
+            Assert.That(roleSys.MindHasRole<NukeopsRoleComponent>(mindCrew), Is.False);
             Assert.That(factionSys.IsMember(ent, "Syndicate"), Is.False);
             Assert.That(factionSys.IsMember(ent, "NanoTrasen"), Is.True);
-            Assert.That(roleSys.MindGetAllRoles(mind).Any(x => x.Component is NukeopsRoleComponent), Is.False);
+            var nukeroles = new List<string>() { "Nukeops", "NukeopsMedic", "NukeopsCommander" };
+            Assert.That(roleSys.MindGetAllRoleInfo(mindCrew).Any(x => nukeroles.Contains(x.Prototype)), Is.False);
         }
 
         // The game rule exists, and all the stations/shuttles/maps are properly initialized
@@ -238,7 +240,8 @@ public sealed class NukeOpsTest
             for (var i = 0; i < nukies.Length - 1; i++)
             {
                 entMan.DeleteEntity(nukies[i]);
-                Assert.That(roundEndSys.IsRoundEndRequested, Is.False,
+                Assert.That(roundEndSys.IsRoundEndRequested,
+                    Is.False,
                     $"The round ended, but {nukies.Length - i - 1} nukies are still alive!");
             }
             // Delete the last nukie and make sure the round ends.
