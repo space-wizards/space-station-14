@@ -95,9 +95,12 @@ public struct CloningEvent
     public readonly EntityUid Source;
     public readonly EntityUid Target;
 
-    public CloningEvent(EntityUid source, EntityUid target)
+    public readonly EntityUid Mind;
+
+    public CloningEvent(EntityUid source, EntityUid target, EntityUid mind)
     {
         Source = source;
         Target = target;
+        Mind = mind;
     }
 }

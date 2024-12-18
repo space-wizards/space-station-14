@@ -213,7 +213,7 @@ namespace Content.Server.Cloning
             var mob = Spawn(speciesPrototype.Prototype, _transformSystem.GetMapCoordinates(uid));
             _humanoidSystem.CloneAppearance(bodyToClone, mob);
 
-            var ev = new CloningEvent(bodyToClone, mob);
+            var ev = new CloningEvent(bodyToClone, mob, mindEnt);
             RaiseLocalEvent(bodyToClone, ref ev);
 
             if (!ev.NameHandled)

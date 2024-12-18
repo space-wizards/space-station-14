@@ -4,6 +4,7 @@ using Content.Server.Body.Systems;
 using Content.Server.Chat;
 using Content.Server.Chat.Systems;
 using Content.Server.Emoting.Systems;
+using Content.Server.Roles;
 using Content.Server.Speech.EntitySystems;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Bed.Sleep;
@@ -275,7 +276,7 @@ namespace Content.Server.Zombies
         ///     this currently only restore the name and skin/eye color from before zombified
         ///     TODO: completely rethink how zombies are done to allow reversal.
         /// </remarks>
-        public bool UnZombify(EntityUid source, EntityUid target, ZombieComponent? zombiecomp)
+        public bool UnZombify(EntityUid source, EntityUid target, EntityUid mind, ZombieComponent? zombiecomp)
         {
             if (!Resolve(source, ref zombiecomp))
                 return false;
@@ -292,13 +293,16 @@ namespace Content.Server.Zombies
             _humanoidAppearance.SetSkinColor(target, zombiecomp.BeforeZombifiedSkinColor, false);
             _bloodstream.ChangeBloodReagent(target, zombiecomp.BeforeZombifiedBloodReagent);
 
+            // Remove the zombie role from the mind (so the clone won't have zombie role antag status)
+            _roles.MindTryRemoveRole<ZombieRoleComponent>(mind);
+
             _nameMod.RefreshNameModifiers(target);
             return true;
         }
 
         private void OnZombieCloning(EntityUid uid, ZombieComponent zombiecomp, ref CloningEvent args)
         {
-            if (UnZombify(args.Source, args.Target, zombiecomp))
+            if (UnZombify(args.Source, args.Target, args.Mind, zombiecomp))
                 args.NameHandled = true;
         }
     }
