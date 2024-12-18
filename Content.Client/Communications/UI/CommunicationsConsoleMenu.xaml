@@ -1,138 +1,32 @@
 <comms:CommunicationsConsoleMenu xmlns="https://spacestation14.io"
     xmlns:comms="clr-namespace:Content.Client.Communications.UI"
+    xmlns:widgets="clr-namespace:Content.Client.Communications.UI.Widgets"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     MouseFilter="Stop" MinSize="400 660" SetWidth="450">
     <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
         <controls:LayeredImageContainer StyleClasses="BrightAngleRectOutline" VerticalExpand="True">
             <BoxContainer Orientation="Vertical" Margin="12 8 12 12" VerticalExpand="True">
                 <TextureButton Name="CloseButton" StyleClasses="CrossButtonDark" HorizontalAlignment="Right" Margin="0 0 0 6"/>
-                    <BoxContainer Orientation="Vertical" VerticalExpand="True">
-                        <PanelContainer StyleClasses="WindowHeadingBackground">
-                            <Label Text="{Loc 'comms-console-menu-title'}" StyleClasses="FancyWindowTitle" />
-                        </PanelContainer>
-                        <PanelContainer StyleClasses="windowPanel" VerticalExpand="True">
-                            <BoxContainer Orientation="Vertical" VerticalExpand="True">
-                                <PanelContainer StyleClasses="LowDivider" />
+                <BoxContainer Orientation="Vertical" VerticalExpand="True">
+                    <PanelContainer StyleClasses="WindowHeadingBackground">
+                        <Label Text="{Loc 'comms-console-menu-title'}" StyleClasses="FancyWindowTitle" />
+                    </PanelContainer>
+                    <PanelContainer StyleClasses="windowPanel" VerticalExpand="True">
+                        <BoxContainer Orientation="Vertical" VerticalExpand="True">
+                            <PanelContainer StyleClasses="LowDivider" />
 
-                                <TabContainer VerticalExpand="True">
-                                    <!-- Controls for sending announcements -->
-                                    <BoxContainer Orientation="Vertical" VerticalExpand="True"
-                                        TabContainer.TabTitle="{Loc 'comms-console-announce-tab-title'}">
-                                        <Label StyleClasses="StatusFieldTitle" Align="Center"
-                                            Text="{Loc 'comms-console-station-announcements-header'}" />
-                                        <PanelContainer StyleClasses="PanelBackgroundHighlight"
-                                            Margin="6" VerticalExpand="True">
-                                            <PanelContainer StyleClasses="BackgroundDark" Margin="2"
-                                                HorizontalExpand="True" VerticalExpand="True">
-                                                <TextEdit Name="RadioMessageInput"
-                                                    Margin="2 0 0 0" MinHeight="100"
-                                                    HorizontalExpand="True" VerticalExpand="True" />
-                                            </PanelContainer>
-                                        </PanelContainer>
-                                        <Button Name="AnnounceButton"
-                                            HorizontalExpand="True" Margin="6"
-                                            Text="{Loc 'comms-console-menu-announcement-button'}"
-                                            ToolTip="{Loc 'comms-console-menu-announcement-button-tooltip'}" />
-                                    </BoxContainer>
+                            <widgets:MessagingControls Name="MessagingControls" VerticalExpand="True" />
 
-                                    <!-- Controls for putting messages on station screens (aka broadcasting) -->
-                                    <BoxContainer Orientation="Vertical" VerticalExpand="True"
-                                        TabContainer.TabTitle="{Loc 'comms-console-broadcast-tab-title'}">
-                                        <Label StyleClasses="StatusFieldTitle" Align="Center" VAlign="Top"
-                                            VerticalExpand="True" VerticalAlignment="Top"
-                                            Text="{Loc 'comms-console-station-broadcast-header'}" />
-                                        <SpriteView Name="BroadcastEntityDisplay" Scale="4 4" />
-                                        <LineEdit Name="ScreenMessageInput" Margin="6 0 6 0"
-                                            PlaceHolder="{Loc 'comms-console-menu-broadcast-placeholder'}" />
-                                        <Button Name="BroadcastButton"
-                                            HorizontalExpand="True" Margin="6"
-                                            Text="{Loc 'comms-console-menu-broadcast-button'}"
-                                            ToolTip="{Loc 'comms-console-menu-broadcast-button-tooltip'}" />
-                                    </BoxContainer>
-                                </TabContainer>
+                            <controls:HSpacer Spacing="20" />
 
-                                <controls:HSpacer Spacing="20" />
-
-                                <!-- Info about the current alert level -->
-                                <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <Label StyleClasses="StatusFieldTitle" Margin="0 0 9 0"
-                                        Text="{Loc 'comms-console-alert-current-level-header'}" />
-                                    <Label Name="CurrentAlertLevelLabel" Margin="9 0 0 0"/>
-                                </BoxContainer>
-
-                                <Label Name="CurrentAlertLevelFlavorLabel" Align="Center" />
-
-                                <!-- Controls for changing the alert level -->
-                                <BoxContainer Orientation="Horizontal" Margin="9 12 9 6">
-                                    <OptionButton Name="AlertLevelButton" StyleClasses="OpenRight"
-                                        ToolTip="{Loc 'comms-console-menu-alert-level-button-tooltip'}"
-                                        HorizontalExpand="True" SizeFlagsStretchRatio="4" Access="Public" />
-                                    <Button Name="ConfirmAlertLevelButton" StyleClasses="OpenLeft"
-                                        HorizontalExpand="True" SizeFlagsStretchRatio="1"
-                                        Text="{Loc 'comms-console-confirm-alert-level-button'}"
-                                        Disabled="True" />
-                                </BoxContainer>
-                            </BoxContainer>
-                        </PanelContainer>
+                            <widgets:AlertLevelControls Name="AlertLevelControls" />
+                        </BoxContainer>
+                    </PanelContainer>
                 </BoxContainer>
             </BoxContainer>
         </controls:LayeredImageContainer>
 
-        <controls:StripeBack
-            HasTopEdge="False" HasBottomEdge="False"
-            StyleClasses="StripeWarning">
+        <widgets:ShuttleControls Name="ShuttleControls" />
 
-            <TextureRect StyleClasses="ScrewHead" TextureScale="0.25 0.25"
-                HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4"/>
-            <TextureRect StyleClasses="ScrewHead" TextureScale="0.25 0.25"
-                HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"/>
-            <TextureRect StyleClasses="ScrewHead" TextureScale="0.25 0.25"
-                HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="4"/>
-            <TextureRect StyleClasses="ScrewHead" TextureScale="0.25 0.25"
-                HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="4"/>
-
-            <!-- Controls for calling, recalling and displaying info for he emergency shuttle -->
-            <PanelContainer StyleClasses="PanelBackgroundBaseDark" Margin="20">
-                <BoxContainer Orientation="Vertical" Margin="8">
-                    <Label StyleClasses="FancyWindowTitle" Align="Center"
-                        Text="{Loc 'comms-console-shuttle-controls-header'}" />
-
-                    <!-- This contains some blank `Controls` to act as dummys. This is because the
-                        GridContainer will always left-align the children, while we want them centered.
-                        The dummy Controls will attempt to take an even amount of space each, which
-                        will re-center our real controls -->
-                    <GridContainer Margin="0 8 0 0" Columns="7" HorizontalExpand="True">
-                        <!-- Row 1: the buttons themselves -->
-                        <Control HorizontalExpand="True" />
-                        <controls:LayeredImageContainer StyleClasses="PanelMount">
-                            <TextureButton Name="EmergencyShuttleCallButton"
-                                StyleClasses="TemptingRedButton" MinSize="60 60"
-                                ToolTip="{Loc 'comms-console-menu-call-shuttle'}" />
-                        </controls:LayeredImageContainer>
-                        <Control HorizontalExpand="True" />
-                        <controls:LayeredImageContainer StyleClasses="PanelMount" VerticalAlignment="Center">
-                            <Label Name="CountdownLabel" StyleClasses="LabelLCDBig" ReservesSpace="True" Margin="6"/>
-                        </controls:LayeredImageContainer>
-                        <Control HorizontalExpand="True" />
-                        <controls:LayeredImageContainer StyleClasses="PanelMount">
-                            <TextureButton Name="EmergencyShuttleRecallButton"
-                                StyleClasses="TemptingRedButton" MinSize="60 60"
-                                ToolTip="{Loc 'comms-console-menu-recall-shuttle'}" />
-                        </controls:LayeredImageContainer>
-                        <Control HorizontalExpand="True" />
-
-                        <!-- Row 2: The labels for the buttons -->
-                        <Control HorizontalExpand="True" />
-                        <Label Text="{Loc 'comms-console-call-button-label'}" Align="Center" />
-                        <Control HorizontalExpand="True" />
-                        <Label Text="{Loc 'comms-console-shuttle-status-label'}" Align="Center" />
-                        <Control HorizontalExpand="True" />
-                        <Label Text="{Loc 'comms-console-recall-button-label'}" Align="Center" />
-                        <Control HorizontalExpand="True" />
-
-                    </GridContainer>
-                </BoxContainer>
-            </PanelContainer>
-        </controls:StripeBack>
     </BoxContainer>
 </comms:CommunicationsConsoleMenu>

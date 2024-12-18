@@ -1,11 +1,8 @@
-using Content.Client.Communications;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Communications;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.Client.Communications.UI
 {
@@ -25,10 +22,11 @@ namespace Content.Client.Communications.UI
             base.Open();
 
             _menu = this.CreateWindow<CommunicationsConsoleMenu>();
-            _menu.OnAnnounce += AnnounceButtonPressed;
-            _menu.OnBroadcast += BroadcastButtonPressed;
-            _menu.OnAlertLevel += AlertLevelSelected;
-            _menu.OnEmergencyLevel += EmergencyShuttleButtonPressed;
+            _menu.OnRadioAnnounce += RadioAnnounceButtonPressed;
+            _menu.OnScreenBroadcast += ScreenBroadcastButtonPressed;
+            _menu.OnAlertLevelChanged += AlertLevelSelected;
+            _menu.OnShuttleCalled += CallShuttle;
+            _menu.OnShuttleRecalled += RecallShuttle;
 
             if (EntMan.TryGetComponent<CommunicationsConsoleComponent>(Owner, out var console))
             {
@@ -38,29 +36,17 @@ namespace Content.Client.Communications.UI
 
         public void AlertLevelSelected(string level)
         {
-            if (_menu!.AlertLevelSelectable)
-            {
-                _menu.CurrentLevel = level;
-                SendMessage(new CommunicationsConsoleSelectAlertLevelMessage(level));
-            }
+            SendMessage(new CommunicationsConsoleSelectAlertLevelMessage(level));
         }
 
-        public void EmergencyShuttleButtonPressed()
-        {
-            if (_menu!.CountdownStarted)
-                RecallShuttle();
-            else
-                CallShuttle();
-        }
-
-        public void AnnounceButtonPressed(string message)
+        public void RadioAnnounceButtonPressed(string message)
         {
             var maxLength = _cfg.GetCVar(CCVars.ChatMaxAnnouncementLength);
             var msg = SharedChatSystem.SanitizeAnnouncement(message, maxLength);
             SendMessage(new CommunicationsConsoleAnnounceMessage(msg));
         }
 
-        public void BroadcastButtonPressed(string message)
+        public void ScreenBroadcastButtonPressed(string message)
         {
             SendMessage(new CommunicationsConsoleBroadcastMessage(message));
         }
@@ -85,7 +71,7 @@ namespace Content.Client.Communications.UI
             if (_menu != null)
             {
                 _menu.UpdateState(commsState);
-           }
+            }
         }
     }
 }
