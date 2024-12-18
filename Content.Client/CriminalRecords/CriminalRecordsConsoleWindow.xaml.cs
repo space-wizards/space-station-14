@@ -167,6 +167,11 @@ public sealed partial class CriminalRecordsConsoleWindow : FancyWindow
             }
         }
 
+        if (state.FilterStatus != _currentCrewListFilter)
+        {
+            _currentCrewListFilter = state.FilterStatus;
+        }
+
         _selectedKey = state.SelectedKey;
         FilterType.SelectId((int)_currentFilterType);
         CrewListFilter.SelectId((int)_currentCrewListFilter);

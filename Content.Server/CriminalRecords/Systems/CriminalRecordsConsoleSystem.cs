@@ -120,8 +120,8 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         }
 
         // will probably never fail given the checks above
-        var name = _records.RecordName(key.Value);
-        var officer = Loc.GetString("criminal-records-console-unknown-officer");
+        name = _records.RecordName(key.Value);
+        officer = Loc.GetString("criminal-records-console-unknown-officer");
         var jobName = "unknown criim job";
 
         _records.TryGetRecord<GeneralStationRecord>(key.Value, out var entry);
@@ -132,7 +132,7 @@ public sealed class CriminalRecordsConsoleSystem : SharedCriminalRecordsConsoleS
         RaiseLocalEvent(tryGetIdentityShortInfoEvent);
         if (tryGetIdentityShortInfoEvent.Title != null)
             officer = tryGetIdentityShortInfoEvent.Title;
-            
+
         _criminalRecords.TryChangeStatus(key.Value, msg.Status, msg.Reason, officer);
 
         (string, object)[] args;
