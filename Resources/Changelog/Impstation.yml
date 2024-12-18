@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Adjusted veteran captain set sprites
-    type: Tweak
-  id: 261
-  time: '2024-09-25T19:37:14.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/339
 - author: Pinkbat5
   changes:
   - message: Pink Alert now has an alarm sound.
@@ -4519,3 +4512,10 @@
   id: 760
   time: '2024-12-18T18:41:24.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1061
+- author: honeyed-lemons
+  changes:
+  - message: Holopads!
+    type: Add
+  id: 761
+  time: '2024-12-18T18:43:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1065
