@@ -4,6 +4,7 @@ using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.Chat.Systems;
+using Content.Server.Chat.Systems.ChatSystem;
 using Content.Shared.Chat;
 using Content.Shared.Mind;
 using Content.Shared.Roles;
@@ -13,7 +14,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using static Content.Server.Chat.Systems.ChatSystem;
 
 namespace Content.Server.Silicons.StationAi;
 
