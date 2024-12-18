@@ -1,7 +1,6 @@
 - type: entity
   parent: BaseItem
   id: EmptyWaterBalloon
-  suffix: Empty
   name: empty water balloon
   description: Fill it up to reveal it's true color!
   components:
@@ -30,9 +29,9 @@
 - type: entity
   parent: BaseItem
   id: FilledWaterBalloon
-  suffix: do not spawn :c 
+  suffix: DO NOT SPAWN 
   name: water balloon
-  description: ready to splash your enemies!
+  description: Ready to splash your enemies!
   components:
   - type: Sprite
     sprite: Objects/Fun/water_balloons.rsi
@@ -73,7 +72,7 @@
         damage: 5
       behaviors:
       - !type:SpillBehavior 
-        solution: food
+        solution: balloon
       - !type:PlaySoundBehavior
         sound:
           path: /Audio/Effects/Fluids/splash.ogg
