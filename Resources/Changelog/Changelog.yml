@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: Winkarst-cpu
   changes:
-  - message: Nukie plushie is now not a contraband item.
-    type: Fix
-  id: 7227
-  time: '2024-08-27T16:49:17.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31516
-- author: Winkarst-cpu
-  changes:
   - message: Now AKMS is restricted to the security department.
     type: Fix
   id: 7228
@@ -3929,3 +3922,10 @@
   id: 7726
   time: '2024-12-17T23:58:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33757
+- author: Allen, lzk228
+  changes:
+  - message: Made Gun Safes a craftable object (10 steel, 5 lv cable, 10 plasteel)
+    type: Add
+  id: 7727
+  time: '2024-12-18T11:26:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32694
