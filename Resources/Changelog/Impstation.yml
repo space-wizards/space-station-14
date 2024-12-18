@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Mobs will no longer ignore changelings and heretics.
-    type: Fix
-  id: 257
-  time: '2024-09-25T19:33:52.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/332
-- author: Darkmajia
-  changes:
-  - message: Job loadout slots now display in a consistent order.
-    type: Tweak
-  id: 258
-  time: '2024-09-25T19:34:03.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/342
 - author: hivehum
   changes:
   - message: Added new lobby art by lazy :)
@@ -4511,3 +4497,17 @@
   id: 756
   time: '2024-12-18T18:36:33.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1045
+- author: DinnerCalzone
+  changes:
+  - message: Amber Station's emergency shuttle should no longer arrive with no power.
+    type: Fix
+  id: 757
+  time: '2024-12-18T18:40:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1060
+- author: TGRCdev & suyo
+  changes:
+  - message: new trait! pain insensitivity
+    type: Add
+  id: 758
+  time: '2024-12-18T18:39:44.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1056
