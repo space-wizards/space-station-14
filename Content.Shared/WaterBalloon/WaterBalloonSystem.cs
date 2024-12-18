@@ -24,15 +24,12 @@ public sealed class WaterBalloonSystem : EntitySystem
     /// </summary>
     private void CheckIfFull(Entity<WaterBalloonComponent> ent, ref SolutionContainerChangedEvent args)
     {
-        if (_gameTiming.IsFirstTimePredicted)  //prevents bad prediction shenanigans
+        if (_gameTiming.IsFirstTimePredicted  //prevents bad prediction shenanigans
+            && args.Solution.MaxVolume == args.Solution.Volume
+            && args.Solution.Name != null)
         {
-            if (args.Solution.MaxVolume == args.Solution.Volume)
-            {
-                if (args.Solution.Name == null)
-                    return;
+            TieBalloon(ent, args.Solution, args.Solution.Name);  //send the entity solution and its name
 
-                TieBalloon(ent, args.Solution, args.Solution.Name);  //send the entity solution and its name 
-            }
         }
     }
 
