@@ -137,7 +137,7 @@ entities:
           version: 6
         1,-3:
           ind: 1,-3
-          tiles: eQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAATQAAAAAATQAAAAAATQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAATQAAAAAATQAAAAAATQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAATQAAAAAATQAAAAAATQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAATQAAAAAATQAAAAAATQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAATQAAAAAATQAAAAAATQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAaQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAdQAAAAACdQAAAAADdQAAAAABdQAAAAACdQAAAAAAeQAAAAAALAAAAAAALAAAAAAALAAAAAAAeQAAAAAAbAAAAAACbAAAAAABbAAAAAADbAAAAAACeQAAAAAAeQAAAAAAdQAAAAACdQAAAAABdQAAAAABdQAAAAAAdQAAAAACWQAAAAABLAAAAAAALAAAAAAALAAAAAAAeQAAAAAAbAAAAAAAbAAAAAACbAAAAAABbAAAAAACeQAAAAAAaQAAAAAAdQAAAAAAdQAAAAABdQAAAAAAdQAAAAAAdQAAAAADeQAAAAAALAAAAAAALAAAAAAALAAAAAAAeQAAAAAAbAAAAAACWQAAAAADWQAAAAACWQAAAAAAaQAAAAAAeQAAAAAAJgAAAAADJgAAAAABdQAAAAADJgAAAAACJgAAAAADeQAAAAAALAAAAAAALAAAAAAALAAAAAAAbAAAAAABbAAAAAABWQAAAAABWQAAAAAAWQAAAAACHQAAAAABeQAAAAAAJgAAAAABJgAAAAADdQAAAAACJgAAAAADJgAAAAAAeQAAAAAAUgAAAAABLAAAAAAALAAAAAAAeQAAAAAAbAAAAAADWQAAAAAAWQAAAAACWQAAAAAB
+          tiles: eQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAATQAAAAAATQAAAAAATQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAATQAAAAAATQAAAAAATQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAATQAAAAAATQAAAAAATQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAATQAAAAAATQAAAAAATQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAATQAAAAAATQAAAAAATQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeAAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAaQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAeQAAAAAAdQAAAAACdQAAAAADdQAAAAABdQAAAAACdQAAAAAAeQAAAAAALAAAAAAALAAAAAAALAAAAAAAeQAAAAAAbAAAAAACbAAAAAABbAAAAAADbAAAAAACeQAAAAAAeQAAAAAAdQAAAAACdQAAAAABdQAAAAABdQAAAAAAdQAAAAACWQAAAAABLAAAAAAALAAAAAAALAAAAAAAeQAAAAAAbAAAAAAAbAAAAAACbAAAAAABbAAAAAACeQAAAAAAaQAAAAAAdQAAAAAAdQAAAAABdQAAAAAAdQAAAAAAdQAAAAADeQAAAAAALAAAAAAALAAAAAAALAAAAAAAeQAAAAAAbAAAAAACWQAAAAADWQAAAAACWQAAAAAAaQAAAAAAeQAAAAAAJgAAAAADJgAAAAABdQAAAAADJgAAAAACJgAAAAADeQAAAAAALAAAAAAALAAAAAAALAAAAAAAbAAAAAABbAAAAAABWQAAAAABWQAAAAAAWQAAAAADHQAAAAABeQAAAAAAJgAAAAABJgAAAAADdQAAAAACJgAAAAADJgAAAAAAeQAAAAAAUgAAAAABLAAAAAAALAAAAAAAeQAAAAAAbAAAAAADWQAAAAAAWQAAAAACWQAAAAAB
           version: 6
         1,0:
           ind: 1,0
@@ -1698,7 +1698,6 @@ entities:
             id: Caution
           decals:
             1680: 66,-22
-            2436: 31,-34
             2615: 9,-74
         - node:
             color: '#3B393B85'
@@ -11923,7 +11922,7 @@ entities:
       pos: 24.5,16.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -29187.068
+      secondsUntilStateChange: -32469.803
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -13691,8 +13690,6 @@ entities:
       pos: -23.5,-67.5
       parent: 8364
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 22588
   - uid: 22591
@@ -64596,11 +64593,6 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 54.5,1.5
       parent: 8364
-  - uid: 10817
-    components:
-    - type: Transform
-      pos: 56.5,2.5
-      parent: 8364
   - uid: 10818
     components:
     - type: Transform
@@ -64790,6 +64782,11 @@ entities:
     components:
     - type: Transform
       pos: 2.7203026,-11.488351
+      parent: 8364
+  - uid: 28111
+    components:
+    - type: Transform
+      pos: 56.5,2.5
       parent: 8364
 - proto: ChairOfficeLight
   entities:
@@ -70507,6 +70504,18 @@ entities:
       linkedPorts:
         21199:
         - ArtifactAnalyzerSender: ArtifactAnalyzerReceiver
+- proto: ComputerAtmosMonitoring
+  entities:
+  - uid: 19021
+    components:
+    - type: Transform
+      pos: -7.5,-61.5
+      parent: 8364
+  - uid: 19028
+    components:
+    - type: Transform
+      pos: 7.5,-46.5
+      parent: 8364
 - proto: computerBodyScanner
   entities:
   - uid: 2390
@@ -85210,7 +85219,7 @@ entities:
       pos: -34.5,-14.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -23375.605
+      secondsUntilStateChange: -26658.34
       state: Closing
   - uid: 15010
     components:
@@ -85703,7 +85712,7 @@ entities:
       pos: -4.5,-71.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -15123.337
+      secondsUntilStateChange: -18406.07
       state: Closing
 - proto: Fireplace
   entities:
@@ -86900,7 +86909,7 @@ entities:
       pos: 29.5,-34.5
       parent: 8364
     - type: AtmosPipeColor
-      color: '#990000FF'
+      color: '#03FCD3FF'
 - proto: GasMinerCarbonDioxide
   entities:
   - uid: 16807
@@ -87325,6 +87334,8 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 33.5,-33.5
       parent: 8364
+    - type: AtmosPipeColor
+      color: '#03FCD3FF'
   - uid: 5258
     components:
     - type: Transform
@@ -87657,6 +87668,8 @@ entities:
     - type: Transform
       pos: 40.5,8.5
       parent: 8364
+    - type: AtmosPipeColor
+      color: '#990000FF'
   - uid: 10443
     components:
     - type: Transform
@@ -88019,6 +88032,8 @@ entities:
       rot: 3.141592653589793 rad
       pos: 29.5,-35.5
       parent: 8364
+    - type: AtmosPipeColor
+      color: '#03FCD3FF'
   - uid: 20067
     components:
     - type: Transform
@@ -88056,12 +88071,16 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 30.5,-35.5
       parent: 8364
+    - type: AtmosPipeColor
+      color: '#03FCD3FF'
   - uid: 22545
     components:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 29.5,-33.5
       parent: 8364
+    - type: AtmosPipeColor
+      color: '#03FCD3FF'
   - uid: 22744
     components:
     - type: Transform
@@ -88854,6 +88873,8 @@ entities:
       rot: 3.141592653589793 rad
       pos: 32.5,-34.5
       parent: 8364
+    - type: AtmosPipeColor
+      color: '#03FCD3FF'
   - uid: 26099
     components:
     - type: Transform
@@ -88924,6 +88945,8 @@ entities:
     - type: Transform
       pos: 30.5,-33.5
       parent: 8364
+    - type: AtmosPipeColor
+      color: '#03FCD3FF'
   - uid: 23026
     components:
     - type: Transform
@@ -89048,6 +89071,8 @@ entities:
     - type: Transform
       pos: 32.5,-33.5
       parent: 8364
+    - type: AtmosPipeColor
+      color: '#03FCD3FF'
   - uid: 24724
     components:
     - type: Transform
@@ -89174,6 +89199,81 @@ entities:
       parent: 8364
     - type: AtmosPipeColor
       color: '#0055CCFF'
+- proto: GasPipeSensor
+  entities:
+  - uid: 17381
+    components:
+    - type: MetaData
+      name: gas pipe sensor (Cryogenics)
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 31.5,-33.5
+      parent: 8364
+    - type: AtmosPipeColor
+      color: '#03FCD3FF'
+    - type: Label
+      currentLabel: Cryogenics
+    - type: NameModifier
+      baseName: gas pipe sensor
+  - uid: 19020
+    components:
+    - type: MetaData
+      name: gas pipe sensor (TEG Mix)
+    - type: Transform
+      pos: 17.5,-58.5
+      parent: 8364
+    - type: AtmosPipeColor
+      color: '#947507FF'
+    - type: Label
+      currentLabel: TEG Mix
+    - type: NameModifier
+      baseName: gas pipe sensor
+- proto: GasPipeSensorDistribution
+  entities:
+  - uid: 10817
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 6.5,-47.5
+      parent: 8364
+    - type: AtmosPipeColor
+      color: '#0055CCFF'
+- proto: GasPipeSensorMixedAir
+  entities:
+  - uid: 17864
+    components:
+    - type: Transform
+      pos: 20.5,-62.5
+      parent: 8364
+- proto: GasPipeSensorTEGCold
+  entities:
+  - uid: 7418
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 20.5,-72.5
+      parent: 8364
+    - type: AtmosPipeColor
+      color: '#03FCD3FF'
+- proto: GasPipeSensorTEGHot
+  entities:
+  - uid: 16396
+    components:
+    - type: Transform
+      pos: 14.5,-77.5
+      parent: 8364
+    - type: AtmosPipeColor
+      color: '#03FCD3FF'
+- proto: GasPipeSensorWaste
+  entities:
+  - uid: 16914
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: 6.5,-48.5
+      parent: 8364
+    - type: AtmosPipeColor
+      color: '#990000FF'
 - proto: GasPipeStraight
   entities:
   - uid: 3
@@ -89647,14 +89747,6 @@ entities:
       parent: 8364
     - type: AtmosPipeColor
       color: '#0335FCFF'
-  - uid: 4228
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 20.5,-72.5
-      parent: 8364
-    - type: AtmosPipeColor
-      color: '#03FCD3FF'
   - uid: 4498
     components:
     - type: Transform
@@ -89932,6 +90024,8 @@ entities:
       rot: 3.141592653589793 rad
       pos: 30.5,-34.5
       parent: 8364
+    - type: AtmosPipeColor
+      color: '#03FCD3FF'
   - uid: 5255
     components:
     - type: Transform
@@ -90396,14 +90490,6 @@ entities:
       parent: 8364
     - type: AtmosPipeColor
       color: '#0055CCFF'
-  - uid: 7418
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 6.5,-48.5
-      parent: 8364
-    - type: AtmosPipeColor
-      color: '#990000FF'
   - uid: 8216
     components:
     - type: Transform
@@ -91437,14 +91523,6 @@ entities:
       parent: 8364
     - type: AtmosPipeColor
       color: '#0055CCFF'
-  - uid: 16914
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: 14.5,-77.5
-      parent: 8364
-    - type: AtmosPipeColor
-      color: '#03FCD3FF'
   - uid: 16915
     components:
     - type: Transform
@@ -92153,14 +92231,6 @@ entities:
       parent: 8364
     - type: AtmosPipeColor
       color: '#0055CCFF'
-  - uid: 17381
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 6.5,-47.5
-      parent: 8364
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
   - uid: 17383
     components:
     - type: Transform
@@ -92357,12 +92427,6 @@ entities:
       parent: 8364
     - type: AtmosPipeColor
       color: '#0055CCFF'
-  - uid: 19060
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 31.5,-33.5
-      parent: 8364
   - uid: 19066
     components:
     - type: Transform
@@ -92517,13 +92581,6 @@ entities:
     components:
     - type: Transform
       pos: 20.5,-63.5
-      parent: 8364
-    - type: AtmosPipeColor
-      color: '#03FCD3FF'
-  - uid: 22740
-    components:
-    - type: Transform
-      pos: 20.5,-62.5
       parent: 8364
     - type: AtmosPipeColor
       color: '#03FCD3FF'
@@ -107426,13 +107483,6 @@ entities:
       parent: 8364
     - type: AtmosPipeColor
       color: '#947507FF'
-  - uid: 26071
-    components:
-    - type: Transform
-      pos: 17.5,-58.5
-      parent: 8364
-    - type: AtmosPipeColor
-      color: '#947507FF'
   - uid: 26082
     components:
     - type: Transform
@@ -108318,6 +108368,8 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 40.5,7.5
       parent: 8364
+    - type: AtmosPipeColor
+      color: '#990000FF'
   - uid: 14212
     components:
     - type: Transform
@@ -110691,6 +110743,8 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 39.5,8.5
       parent: 8364
+    - type: AtmosPipeColor
+      color: '#990000FF'
   - uid: 3798
     components:
     - type: Transform
@@ -110728,6 +110782,8 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 39.5,7.5
       parent: 8364
+    - type: AtmosPipeColor
+      color: '#990000FF'
   - uid: 15045
     components:
     - type: Transform
@@ -110993,7 +111049,7 @@ entities:
       pos: 40.5,6.5
       parent: 8364
     - type: AtmosPipeColor
-      color: '#0055CCFF'
+      color: '#990000FF'
   - uid: 13813
     components:
     - type: Transform
@@ -111139,7 +111195,7 @@ entities:
       pos: 33.5,-34.5
       parent: 8364
     - type: AtmosPipeColor
-      color: '#0055CCFF'
+      color: '#03FCD3FF'
   - uid: 26081
     components:
     - type: MetaData
@@ -111162,6 +111218,8 @@ entities:
     - type: Transform
       pos: 33.5,-32.5
       parent: 8364
+    - type: AtmosPipeColor
+      color: '#03FCD3FF'
   - uid: 20141
     components:
     - type: Transform
@@ -111595,8 +111653,6 @@ entities:
       pos: -23.5,-69.5
       parent: 8364
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 22588
     - type: AtmosPipeColor
@@ -112892,8 +112948,6 @@ entities:
       pos: -22.5,-68.5
       parent: 8364
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 22588
     - type: AtmosPipeColor
@@ -113859,12 +113913,15 @@ entities:
       color: '#990000FF'
   - uid: 25318
     components:
+    - type: MetaData
+      name: air scrubber
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -58.5,0.5
       parent: 8364
     - type: AtmosPipeColor
       color: '#990000FF'
+    - type: Label
   - uid: 25324
     components:
     - type: Transform
@@ -121936,6 +121993,681 @@ entities:
     - type: Transform
       pos: 10.513089,-49.606483
       parent: 8364
+- proto: Holopad
+  entities:
+  - uid: 4228
+    components:
+    - type: MetaData
+      name: holopad (Library Meeting)
+    - type: Transform
+      pos: 56.5,2.5
+      parent: 8364
+    - type: Label
+      currentLabel: Library Meeting
+    - type: NameModifier
+      baseName: holopad
+  - uid: 19029
+    components:
+    - type: MetaData
+      name: holopad (Brig)
+    - type: Transform
+      pos: -1.5,27.5
+      parent: 8364
+    - type: Label
+      currentLabel: Brig
+    - type: NameModifier
+      baseName: holopad
+  - uid: 19060
+    components:
+    - type: MetaData
+      name: holopad (Captain's Office)
+    - type: Transform
+      pos: 9.5,-14.5
+      parent: 8364
+    - type: Label
+      currentLabel: Captain's Office
+    - type: NameModifier
+      baseName: holopad
+  - uid: 19079
+    components:
+    - type: MetaData
+      name: holopad (AI Upload)
+    - type: Transform
+      pos: -0.5,-13.5
+      parent: 8364
+    - type: Label
+      currentLabel: AI Upload
+    - type: NameModifier
+      baseName: holopad
+  - uid: 22740
+    components:
+    - type: MetaData
+      name: holopad (Bridge)
+    - type: Transform
+      pos: -1.5,-7.5
+      parent: 8364
+    - type: Label
+      currentLabel: Bridge
+    - type: NameModifier
+      baseName: holopad
+  - uid: 23046
+    components:
+    - type: MetaData
+      name: holopad (Command Conference)
+    - type: Transform
+      pos: -10.5,-14.5
+      parent: 8364
+    - type: Label
+      currentLabel: Command Conference
+    - type: NameModifier
+      baseName: holopad
+  - uid: 23250
+    components:
+    - type: MetaData
+      name: holopad (HoP's Office)
+    - type: Transform
+      pos: -9.5,-23.5
+      parent: 8364
+    - type: Label
+      currentLabel: HoP's Office
+    - type: NameModifier
+      baseName: holopad
+  - uid: 23260
+    components:
+    - type: MetaData
+      name: holopad (Cargo)
+    - type: Transform
+      pos: -26.5,-23.5
+      parent: 8364
+    - type: Label
+      currentLabel: Cargo
+    - type: NameModifier
+      baseName: holopad
+  - uid: 25350
+    components:
+    - type: MetaData
+      name: holopad (QM's Office)
+    - type: Transform
+      pos: -32.5,-29.5
+      parent: 8364
+    - type: Label
+      currentLabel: QM's Office
+    - type: NameModifier
+      baseName: holopad
+  - uid: 26071
+    components:
+    - type: MetaData
+      name: holopad (Cargo Loading Dock)
+    - type: Transform
+      pos: -38.5,-29.5
+      parent: 8364
+    - type: Label
+      currentLabel: Cargo Loading Dock
+    - type: NameModifier
+      baseName: holopad
+  - uid: 27921
+    components:
+    - type: MetaData
+      name: holopad (Salvage)
+    - type: Transform
+      pos: -26.5,-34.5
+      parent: 8364
+    - type: Label
+      currentLabel: Salvage
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28084
+    components:
+    - type: MetaData
+      name: holopad (CE's Office)
+    - type: Transform
+      pos: -3.5,-64.5
+      parent: 8364
+    - type: Label
+      currentLabel: CE's Office
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28085
+    components:
+    - type: MetaData
+      name: holopad (Engineering Proper)
+    - type: Transform
+      pos: 2.5,-68.5
+      parent: 8364
+    - type: Label
+      currentLabel: Engineering Proper
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28086
+    components:
+    - type: MetaData
+      name: holopad (Engineering Locker Room)
+    - type: Transform
+      pos: 3.5,-62.5
+      parent: 8364
+    - type: Label
+      currentLabel: Engineering Locker Room
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28087
+    components:
+    - type: MetaData
+      name: holopad (Engineering Break Room)
+    - type: Transform
+      pos: 6.5,-53.5
+      parent: 8364
+    - type: Label
+      currentLabel: Engineering Break Room
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28090
+    components:
+    - type: MetaData
+      name: holopad (Engineering Front Desk)
+    - type: Transform
+      pos: 5.5,-42.5
+      parent: 8364
+    - type: Label
+      currentLabel: Engineering Front Desk
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28091
+    components:
+    - type: MetaData
+      name: holopad (Atmospherics)
+    - type: Transform
+      pos: 16.5,-56.5
+      parent: 8364
+    - type: Label
+      currentLabel: Atmospherics
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28092
+    components:
+    - type: MetaData
+      name: holopad (TEG)
+    - type: Transform
+      pos: 15.5,-73.5
+      parent: 8364
+    - type: Label
+      currentLabel: TEG
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28093
+    components:
+    - type: MetaData
+      name: holopad (Warden's Office)
+    - type: Transform
+      pos: 1.5,32.5
+      parent: 8364
+    - type: Label
+      currentLabel: Warden's Office
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28094
+    components:
+    - type: MetaData
+      name: holopad (Security Break Room)
+    - type: Transform
+      pos: 14.5,33.5
+      parent: 8364
+    - type: Label
+      currentLabel: Security Break Room
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28095
+    components:
+    - type: MetaData
+      name: holopad (HoS's Office)
+    - type: Transform
+      pos: 14.5,38.5
+      parent: 8364
+    - type: Label
+      currentLabel: HoS's Office
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28096
+    components:
+    - type: MetaData
+      name: holopad (Courtroom)
+    - type: Transform
+      pos: 15.5,25.5
+      parent: 8364
+    - type: Label
+      currentLabel: Courtroom
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28097
+    components:
+    - type: MetaData
+      name: holopad (Interrogation)
+    - type: Transform
+      pos: -14.5,32.5
+      parent: 8364
+    - type: Label
+      currentLabel: Interrogation
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28098
+    components:
+    - type: MetaData
+      name: holopad (Detective's Office)
+    - type: Transform
+      pos: -4.5,15.5
+      parent: 8364
+    - type: Label
+      currentLabel: Detective's Office
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28099
+    components:
+    - type: MetaData
+      name: holopad (Lawyer's Office)
+    - type: Transform
+      pos: -12.5,15.5
+      parent: 8364
+    - type: Label
+      currentLabel: Lawyer's Office
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28100
+    components:
+    - type: MetaData
+      name: holopad (EVA)
+    - type: Transform
+      pos: -11.5,4.5
+      parent: 8364
+    - type: Label
+      currentLabel: EVA
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28101
+    components:
+    - type: MetaData
+      name: holopad (Showroom)
+    - type: Transform
+      pos: 9.5,-26.5
+      parent: 8364
+    - type: Label
+      currentLabel: Showroom
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28102
+    components:
+    - type: MetaData
+      name: holopad (Chemistry)
+    - type: Transform
+      pos: 20.5,-19.5
+      parent: 8364
+    - type: Label
+      currentLabel: Chemistry
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28103
+    components:
+    - type: MetaData
+      name: holopad (Medical Front Desk)
+    - type: Transform
+      pos: 30.5,-20.5
+      parent: 8364
+    - type: Label
+      currentLabel: Medical Front Desk
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28104
+    components:
+    - type: MetaData
+      name: holopad (Medical Examination)
+    - type: Transform
+      pos: 31.5,-28.5
+      parent: 8364
+    - type: Label
+      currentLabel: Medical Examination
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28105
+    components:
+    - type: MetaData
+      name: holopad (Medical Cryogenics)
+    - type: Transform
+      pos: 31.5,-34.5
+      parent: 8364
+    - type: Label
+      currentLabel: Medical Cryogenics
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28106
+    components:
+    - type: MetaData
+      name: holopad (CMO's Office)
+    - type: Transform
+      pos: 35.5,-42.5
+      parent: 8364
+    - type: Label
+      currentLabel: CMO's Office
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28107
+    components:
+    - type: MetaData
+      name: holopad (Virology)
+    - type: Transform
+      pos: 42.5,-56.5
+      parent: 8364
+    - type: Label
+      currentLabel: Virology
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28108
+    components:
+    - type: MetaData
+      name: holopad (Bar)
+    - type: Transform
+      pos: 30.5,-5.5
+      parent: 8364
+    - type: Label
+      currentLabel: Bar
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28109
+    components:
+    - type: MetaData
+      name: holopad (Theatre)
+    - type: Transform
+      pos: 21.5,4.5
+      parent: 8364
+    - type: Label
+      currentLabel: Theatre
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28110
+    components:
+    - type: MetaData
+      name: holopad (Botany)
+    - type: Transform
+      pos: 46.5,-7.5
+      parent: 8364
+    - type: Label
+      currentLabel: Botany
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28112
+    components:
+    - type: MetaData
+      name: holopad (Library)
+    - type: Transform
+      pos: 59.5,-9.5
+      parent: 8364
+    - type: Label
+      currentLabel: Library
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28113
+    components:
+    - type: MetaData
+      name: holopad (Chapel)
+    - type: Transform
+      pos: 69.5,-6.5
+      parent: 8364
+    - type: Label
+      currentLabel: Chapel
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28114
+    components:
+    - type: MetaData
+      name: holopad (R&D)
+    - type: Transform
+      pos: 71.5,-22.5
+      parent: 8364
+    - type: Label
+      currentLabel: R&D
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28115
+    components:
+    - type: MetaData
+      name: holopad (Robotics)
+    - type: Transform
+      pos: 60.5,-21.5
+      parent: 8364
+    - type: Label
+      currentLabel: Robotics
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28116
+    components:
+    - type: MetaData
+      name: holopad (RD's Office)
+    - type: Transform
+      pos: 71.5,-36.5
+      parent: 8364
+    - type: Label
+      currentLabel: RD's Office
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28117
+    components:
+    - type: MetaData
+      name: holopad (North Artifacts)
+    - type: Transform
+      pos: 79.5,-24.5
+      parent: 8364
+    - type: Label
+      currentLabel: North Artifacts
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28118
+    components:
+    - type: MetaData
+      name: holopad (South Artifacts)
+    - type: Transform
+      pos: 75.5,-45.5
+      parent: 8364
+    - type: Label
+      currentLabel: South Artifacts
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28119
+    components:
+    - type: MetaData
+      name: holopad (Anomaly Lab)
+    - type: Transform
+      pos: 71.5,-51.5
+      parent: 8364
+    - type: Label
+      currentLabel: Anomaly Lab
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28120
+    components:
+    - type: MetaData
+      name: holopad (Kitchen)
+    - type: Transform
+      pos: 36.5,-8.5
+      parent: 8364
+    - type: Label
+      currentLabel: Kitchen
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28121
+    components:
+    - type: MetaData
+      name: holopad (Mailroom)
+    - type: Transform
+      pos: -21.5,-17.5
+      parent: 8364
+    - type: Label
+      currentLabel: Mailroom
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28122
+    components:
+    - type: MetaData
+      name: holopad (Morgue)
+    - type: Transform
+      pos: 44.5,-19.5
+      parent: 8364
+    - type: Label
+      currentLabel: Morgue
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28123
+    components:
+    - type: MetaData
+      name: holopad (Perma)
+    - type: Transform
+      pos: -7.5,49.5
+      parent: 8364
+    - type: Label
+      currentLabel: Perma
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28124
+    components:
+    - type: MetaData
+      name: holopad (AI Sat Airlock)
+    - type: Transform
+      pos: 28.5,-80.5
+      parent: 8364
+    - type: Label
+      currentLabel: AI Sat Airlock
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28125
+    components:
+    - type: MetaData
+      name: holopad (AI Sat Lobby)
+    - type: Transform
+      pos: 28.5,-85.5
+      parent: 8364
+    - type: Label
+      currentLabel: AI Sat Lobby
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28126
+    components:
+    - type: MetaData
+      name: holopad (AI Core)
+    - type: Transform
+      pos: 28.5,-108.5
+      parent: 8364
+    - type: Label
+      currentLabel: AI Core
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28127
+    components:
+    - type: MetaData
+      name: holopad (Tools)
+    - type: Transform
+      pos: -42.5,3.5
+      parent: 8364
+    - type: Label
+      currentLabel: Tools
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28128
+    components:
+    - type: MetaData
+      name: holopad (Security Arrivals Checkpoint)
+    - type: Transform
+      pos: -59.5,4.5
+      parent: 8364
+    - type: Label
+      currentLabel: Security Arrivals Checkpoint
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28129
+    components:
+    - type: MetaData
+      name: holopad (Vault)
+    - type: Transform
+      pos: -31.5,4.5
+      parent: 8364
+    - type: Label
+      currentLabel: Vault
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28130
+    components:
+    - type: MetaData
+      name: holopad (Janitor)
+    - type: Transform
+      pos: 4.5,-34.5
+      parent: 8364
+    - type: Label
+      currentLabel: Janitor
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28131
+    components:
+    - type: MetaData
+      name: holopad (Tech Vault)
+    - type: Transform
+      pos: -6.5,-36.5
+      parent: 8364
+    - type: Label
+      currentLabel: Tech Vault
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28134
+    components:
+    - type: MetaData
+      name: holopad (Telecoms)
+    - type: Transform
+      pos: -13.5,-53.5
+      parent: 8364
+    - type: Label
+      currentLabel: Telecoms
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28135
+    components:
+    - type: MetaData
+      name: holopad (Security Evac)
+    - type: Transform
+      pos: 79.5,-2.5
+      parent: 8364
+    - type: Label
+      currentLabel: Security Evac
+    - type: NameModifier
+      baseName: holopad
+  - uid: 28136
+    components:
+    - type: MetaData
+      name: holopad (Surgery)
+    - type: Transform
+      pos: 20.5,-35.5
+      parent: 8364
+    - type: Label
+      currentLabel: Surgery
+    - type: NameModifier
+      baseName: holopad
+- proto: HolopadLongRange
+  entities:
+  - uid: 28088
+    components:
+    - type: MetaData
+      name: long-range holopad (Cargo Loading Dock)
+    - type: Transform
+      pos: -38.5,-25.5
+      parent: 8364
+    - type: Label
+      currentLabel: Cargo Loading Dock
+    - type: NameModifier
+      baseName: long-range holopad
+  - uid: 28089
+    components:
+    - type: MetaData
+      name: long-range holopad (Bridge)
+    - type: Transform
+      pos: 0.5,-7.5
+      parent: 8364
+    - type: Label
+      currentLabel: Bridge
+    - type: NameModifier
+      baseName: long-range holopad
 - proto: HospitalCurtainsOpen
   entities:
   - uid: 2213
@@ -126413,12 +127145,12 @@ entities:
   - uid: 17674
     components:
     - type: Transform
-      pos: 7.542186,-46.412346
+      pos: 12.267465,-49.63015
       parent: 8364
   - uid: 17765
     components:
     - type: Transform
-      pos: 7.542186,-46.412346
+      pos: 12.18934,-49.50515
       parent: 8364
   - uid: 19346
     components:
@@ -126444,12 +127176,12 @@ entities:
   - uid: 22564
     components:
     - type: Transform
-      pos: 7.542186,-46.412346
+      pos: 12.236215,-49.50515
       parent: 8364
   - uid: 22686
     components:
     - type: Transform
-      pos: 7.542186,-46.412346
+      pos: 12.236215,-49.5989
       parent: 8364
   - uid: 26640
     components:
@@ -127334,6 +128066,14 @@ entities:
     - type: Transform
       pos: 11.5,-37.5
       parent: 8364
+- proto: PosterLegitJustAWeekAway
+  entities:
+  - uid: 28137
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 19.5,-28.5
+      parent: 8364
 - proto: PosterLegitLoveIan
   entities:
   - uid: 5776
@@ -127668,10 +128408,10 @@ entities:
       parent: 8364
 - proto: PottedPlant27
   entities:
-  - uid: 19079
+  - uid: 28133
     components:
     - type: Transform
-      pos: -7.5,-61.5
+      pos: -5.5,-65.5
       parent: 8364
 - proto: PottedPlant29
   entities:
@@ -133065,11 +133805,6 @@ entities:
     - type: Transform
       pos: -12.5,-72.5
       parent: 8364
-  - uid: 16396
-    components:
-    - type: Transform
-      pos: 7.5,-46.5
-      parent: 8364
   - uid: 16450
     components:
     - type: Transform
@@ -133219,6 +133954,11 @@ entities:
     components:
     - type: Transform
       pos: 34.5,-90.5
+      parent: 8364
+  - uid: 28132
+    components:
+    - type: Transform
+      pos: 12.5,-49.5
       parent: 8364
 - proto: RadiationCollector
   entities:
@@ -140205,12 +140945,12 @@ entities:
   - uid: 17672
     components:
     - type: Transform
-      pos: 7.510936,-46.443596
+      pos: 12.704965,-49.520775
       parent: 8364
   - uid: 17691
     components:
     - type: Transform
-      pos: 7.510936,-46.443596
+      pos: 12.673715,-49.520775
       parent: 8364
   - uid: 19345
     components:
@@ -140240,12 +140980,12 @@ entities:
   - uid: 22559
     components:
     - type: Transform
-      pos: 7.510936,-46.443596
+      pos: 12.68934,-49.489525
       parent: 8364
   - uid: 22567
     components:
     - type: Transform
-      pos: 7.510936,-46.443596
+      pos: 12.68934,-49.50515
       parent: 8364
   - uid: 22927
     components:
@@ -141507,11 +142247,6 @@ entities:
     components:
     - type: Transform
       pos: 42.5,-43.5
-      parent: 8364
-  - uid: 17864
-    components:
-    - type: Transform
-      pos: 37.5,-25.5
       parent: 8364
 - proto: SignConference
   entities:
