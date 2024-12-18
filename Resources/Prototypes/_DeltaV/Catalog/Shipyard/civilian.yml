@@ -4,7 +4,7 @@
   description: A small mining vessel.
   price: 17000
   path:
-  - /Maps/Shuttles/mining.yml
+  - /Maps/_Impstation/Shuttles/Shipyard/reclaimer.yml
   categories:
   - Small
   - Mining
