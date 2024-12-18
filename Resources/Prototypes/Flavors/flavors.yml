@@ -1270,6 +1270,11 @@
   description: flavor-weh
 
 - type: flavor
+  id: hew
+  flavorType: Base
+  description: flavor-hew
+
+- type: flavor
   id: fishops
   flavorType: Complex
   description: flavor-complex-fishops
