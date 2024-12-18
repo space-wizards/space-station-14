@@ -85,7 +85,7 @@
               amount: 2
               doAfter: 3
     - node: barricadecover
-      entity: BarricadeCover
+      entity: BarricadeBlock
       edges:
         - to: start
           completed:
