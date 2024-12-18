@@ -817,19 +817,13 @@ entities:
     - type: Transform
       pos: -3.5,-2.5
       parent: 173
-- proto: HolopadLongRange
+- proto: HolopadCargoShuttle
   entities:
   - uid: 186
     components:
-    - type: MetaData
-      name: long-range holopad (Cargo Shuttle)
     - type: Transform
       pos: -2.5,5.5
       parent: 173
-    - type: Label
-      currentLabel: Cargo Shuttle
-    - type: NameModifier
-      baseName: long-range holopad
 - proto: LockableButtonCargo
   entities:
   - uid: 182

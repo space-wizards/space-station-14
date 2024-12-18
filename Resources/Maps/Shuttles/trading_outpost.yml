@@ -4326,19 +4326,13 @@ entities:
     - type: Transform
       pos: 11.5,9.5
       parent: 2
-- proto: HolopadLongRange
+- proto: HolopadCargoAts
   entities:
   - uid: 546
     components:
-    - type: MetaData
-      name: long-range holopad (Automated Trade Station)
     - type: Transform
       pos: 5.5,2.5
       parent: 2
-    - type: Label
-      currentLabel: Automated Trade Station
-    - type: NameModifier
-      baseName: long-range holopad
 - proto: NewtonCradle
   entities:
   - uid: 65
