@@ -65,6 +65,9 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
     }
     private void OnDoAfterAbductorReturn(Entity<AbductorScientistComponent> ent, ref AbductorReturnDoAfterEvent args)
     {
+        if (args.Handled || args.Cancelled)
+            return;
+        
         _color.RaiseEffect(Color.FromHex("#BA0099"), new List<EntityUid>(1) { ent }, Filter.Pvs(ent, entityManager: EntityManager));
         if (_pullingSystem.IsPulling(ent))
         {

@@ -1,0 +1,12 @@
+- type: gameMapPool
+  id: DefaultStarlightMapPool
+  maps:
+  - StarlightBagel
+  - StarlightBox
+  - StarlightCog
+  - StarlightFland
+  - StarlightMarathon
+  - StarlightMeta
+  - StarlightOasis
+  - StarlightOmega
+  - StarlightPacked

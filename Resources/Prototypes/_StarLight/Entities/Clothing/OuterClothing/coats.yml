@@ -1,0 +1,21 @@
+- type: entity
+  parent: ClothingOuterStorageFoldableBase
+  id: ClothingOuterCoatNtrep
+  name: nt representive jacket
+  description: A fancy black jacket, standart issue to Nanotrasen Representives.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/OuterClothing/Coats/ntrep.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/OuterClothing/Coats/ntrep.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.8
+
+- type: entity
+  parent: [ClothingOuterStorageFoldableBaseOpened, ClothingOuterCoatNtrep]
+  id: ClothingOuterCoatNtrepOpen
+  name: nt representive jacket

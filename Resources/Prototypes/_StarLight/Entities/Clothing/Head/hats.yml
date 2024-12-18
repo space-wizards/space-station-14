@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCapNtrep
+  name: nt representive cap
+  description: The cap of justice over command!
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Head/Hats/ntrep.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Head/Hats/ntrep.rsi

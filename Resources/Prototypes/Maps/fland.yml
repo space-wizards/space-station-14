@@ -1,7 +1,7 @@
 - type: gameMap
   id: Fland
   mapName: 'Fland Installation'
-  mapPath: /Maps/_Starlight/Stations/Fland.yml
+  mapPath: /Maps/Fland.yml
   minPlayers: 70
   stations:
     Fland:

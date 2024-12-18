@@ -1,7 +1,7 @@
 - type: gameMap
   id: Omega
   mapName: 'Omega'
-  mapPath: /Maps/_Starlight/Stations/Omega.yml
+  mapPath: /Maps/Omega.yml
   minPlayers: 0
   maxPlayers: 35
   stations:

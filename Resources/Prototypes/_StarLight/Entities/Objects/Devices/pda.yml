@@ -17,3 +17,55 @@
       path: "/Audio/Items/Medical/healthscanner.ogg"
     damageContainers:
     - Silicon
+    
+- type: entity
+  parent: BasePDA
+  id: MagistratePDA
+  name: magistrate PDA
+  components:
+  - type: Pda
+    id: MagistrateIDCard
+    state: pda-captain
+    penSlot:
+      startingItem: Pen
+      priority: -1
+      whitelist:
+        tags:
+        - Write
+  - type: PdaBorderColor
+    borderColor: "#7C5D00"
+  - type: Icon
+    state: pda-captain
+    
+- type: entity
+  parent: BasePDA
+  id: NanoTrasenRepresentativePDA
+  name: NanoTrasen representative PDA
+  components:
+  - type: Pda
+    id: NanoTrasenRepresentativeIDCard
+    state: pda-captain
+    penSlot:
+      startingItem: Pen
+      priority: -1
+      whitelist:
+        tags:
+        - Write
+  - type: PdaBorderColor
+    borderColor: "#7C5D00"
+  - type: Icon
+    state: pda-captain
+    
+- type: entity
+  parent: BasePDA
+  id: IAAPDA
+  name: internal affairs agent PDA
+  description: Corporation and profit are best friends.
+  components:
+    - type: Pda
+      id: IAAIDCard
+      state: pda-lawyer
+    - type: PdaBorderColor
+      borderColor: "#6f6192"
+    - type: Icon
+      state: pda-lawyer
