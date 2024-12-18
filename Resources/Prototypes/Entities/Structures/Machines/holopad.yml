@@ -90,7 +90,7 @@
   - type: WiresVisuals
   - type: Wires
     boardName: wires-board-name-holopad
-    layoutId: Holopad 
+    layoutId: Holopad
   - type: Destructible
     thresholds:
     - trigger:
@@ -104,7 +104,7 @@
         node: machineFrame
       - !type:DoActsBehavior
         acts: ["Destruction"]
- 
+
 - type: entity
   name: long-range holopad
   description: "A floor-mounted device for projecting holographic images to other devices that are far away."
@@ -114,7 +114,7 @@
   components:
   - type: Telephone
     transmissionRange: Long
-    
+
 - type: entity
   name: quantum entangling holopad
   description: "An experimental floor-mounted device for projecting holographic images at extreme distances."
@@ -131,7 +131,7 @@
 - type: entity
   id: HolopadHologram
   categories: [ HideSpawnMenu ]
-  suffix: DO NOT MAP    
+  suffix: DO NOT MAP
   components:
   - type: Transform
     anchored: true
@@ -156,3 +156,673 @@
   - type: Tag
     tags:
     - HideContextMenu
+
+## Mapping prototypes
+# General
+- type: entity
+  parent: Holopad
+  id: HolopadGeneralTools
+  suffix: Tools
+  components:
+  - type: Label
+    currentLabel: General - Tools
+
+- type: entity
+  parent: Holopad
+  id: HolopadGeneralCryosleep
+  suffix: Cryosleep
+  components:
+  - type: Label
+    currentLabel: General - Cryosleep
+
+- type: entity
+  parent: Holopad
+  id: HolopadGeneralTheater
+  suffix: Theater
+  components:
+  - type: Label
+    currentLabel: General - Theater
+
+- type: entity
+  parent: Holopad
+  id: HolopadGeneralDisposals
+  suffix: Disposals
+  components:
+  - type: Label
+    currentLabel: General - Disposals
+
+- type: entity
+  parent: Holopad
+  id: HolopadGeneralEVAStorage
+  suffix: EVA Storage
+  components:
+  - type: Label
+    currentLabel: General - EVA Storage
+
+- type: entity
+  parent: Holopad
+  id: HolopadGeneralLounge
+  suffix: Lounge
+  components:
+  - type: Label
+    currentLabel: General - Lounge
+
+- type: entity
+  parent: Holopad
+  id: HolopadGeneralArcade
+  suffix: Arcade
+  components:
+  - type: Label
+    currentLabel: General - Arcade
+
+- type: entity
+  parent: Holopad
+  id: HolopadGeneralEvac
+  suffix: Evac
+  components:
+  - type: Label
+    currentLabel: General - Evac
+
+- type: entity
+  parent: Holopad
+  id: HolopadGeneralArrivals
+  suffix: Arrivals
+  components:
+  - type: Label
+    currentLabel: General - Arrivals
+
+# Command
+- type: entity
+  parent: Holopad
+  id: HolopadCommandBridge
+  suffix: Bridge
+  components:
+  - type: Label
+    currentLabel: Command - Bridge
+
+- type: entity
+  parent: Holopad
+  id: HolopadCommandVault
+  suffix: Vault
+  components:
+  - type: Label
+    currentLabel: Command - Vault
+
+- type: entity
+  parent: Holopad
+  id: HolopadCommandBridgeHallway
+  suffix: Bridge Hallway
+  components:
+  - type: Label
+    currentLabel: Command - Bridge Hallway
+
+- type: entity
+  parent: Holopad
+  id: HolopadCommandMeetingRoom
+  suffix: Command Meeting
+  components:
+  - type: Label
+    currentLabel: Command - Meeting Room
+
+- type: entity
+  parent: Holopad
+  id: HolopadCommandLounge
+  suffix: Command Lounge
+  components:
+  - type: Label
+    currentLabel: Command - Lounge
+
+- type: entity
+  parent: Holopad
+  id: HolopadCommandCaptain
+  suffix: Captain
+  components:
+  - type: Label
+    currentLabel: Command - Captain
+
+- type: entity
+  parent: Holopad
+  id: HolopadCommandHOP
+  suffix: HoP
+  components:
+  - type: Label
+    currentLabel: Command - HoP
+
+- type: entity
+  parent: Holopad
+  id: HolopadCommandCMO
+  suffix: CMO
+  components:
+  - type: Label
+    currentLabel: Command - CMO
+
+- type: entity
+  parent: Holopad
+  id: HolopadCommandQM
+  suffix: QM
+  components:
+  - type: Label
+    currentLabel: Command - QM
+
+- type: entity
+  parent: Holopad
+  id: HolopadCommandCE
+  suffix: CE
+  components:
+  - type: Label
+    currentLabel: Command - CE
+
+- type: entity
+  parent: Holopad
+  id: HolopadCommandRD
+  suffix: RD
+  components:
+  - type: Label
+    currentLabel: Command - RD
+
+- type: entity
+  parent: Holopad
+  id: HolopadCommandHOS
+  suffix: HoS
+  components:
+  - type: Label
+    currentLabel: Command - HoS
+
+# Science
+- type: entity
+  parent: Holopad
+  id: HolopadAnomaly
+  suffix: Anomaly
+  components:
+  - type: Label
+    currentLabel: Science - Anomaly
+
+- type: entity
+  parent: Holopad
+  id: HolopadArtifact
+  suffix: Artifact
+  components:
+  - type: Label
+    currentLabel: Science - Artifact
+
+- type: entity
+  parent: Holopad
+  id: HolopadRobotics
+  suffix: Robotics
+  components:
+  - type: Label
+    currentLabel: Science - Robotics
+
+- type: entity
+  parent: Holopad
+  id: HolopadScienceRND
+  suffix: R&D
+  components:
+  - type: Label
+    currentLabel: Science - R&D
+
+- type: entity
+  parent: Holopad
+  id: HolopadScienceFront
+  suffix: R&D
+  components:
+  - type: Label
+    currentLabel: Science - Front
+
+- type: entity
+  parent: Holopad
+  id: HolopadScienceBreakroom
+  suffix: Sci Breakroom
+  components:
+  - type: Label
+    currentLabel: Science - Breakroom
+
+# Medical
+- type: entity
+  parent: Holopad
+  id: HolopadMedicalMedbay
+  suffix: Medbay
+  components:
+  - type: Label
+    currentLabel: Medical - Medbay
+
+- type: entity
+  parent: Holopad
+  id: HolopadMedicalChem
+  suffix: Chemistry
+  components:
+  - type: Label
+    currentLabel: Medical - Chemistry
+
+- type: entity
+  parent: Holopad
+  id: HolopadMedicalCryopods
+  suffix: Cryopods
+  components:
+  - type: Label
+    currentLabel: Medical - Cryopods
+
+- type: entity
+  parent: Holopad
+  id: HolopadMedicalMorgue
+  suffix: Morgue
+  components:
+  - type: Label
+    currentLabel: Medical - Morgue
+
+- type: entity
+  parent: Holopad
+  id: HolopadMedicalSurgery
+  suffix: Surgery
+  components:
+  - type: Label
+    currentLabel: Medical - Surgery
+
+- type: entity
+  parent: Holopad
+  id: HolopadMedicalParamed
+  suffix: Paramedic
+  components:
+  - type: Label
+    currentLabel: Medical - Paramedic
+
+- type: entity
+  parent: Holopad
+  id: HolopadMedicalVirology
+  suffix: Virology
+  components:
+  - type: Label
+    currentLabel: Medical - Virology
+
+- type: entity
+  parent: Holopad
+  id: HolopadMedicalFront
+  suffix: Virology
+  components:
+  - type: Label
+    currentLabel: Medical - Front
+
+- type: entity
+  parent: Holopad
+  id: HolopadMedicalBreakroom
+  suffix: Med Breakroom
+  components:
+  - type: Label
+    currentLabel: Medical - Breakroom
+
+# Cargo
+- type: entity
+  parent: Holopad
+  id: HolopadCargoFront
+  suffix: Cargo Front
+  components:
+  - type: Label
+    currentLabel: Cargo - Front
+
+- type: entity
+  parent: Holopad
+  id: HolopadCargoBay
+  suffix: Cargo Bay
+  components:
+  - type: Label
+    currentLabel: Cargo - Cargo Bay
+
+- type: entity
+  parent: Holopad
+  id: HolopadCargoSalvageBay
+  suffix: Salvage Bay
+  components:
+  - type: Label
+    currentLabel: Cargo - Salvage Bay
+
+- type: entity
+  parent: Holopad
+  id: HolopadCargoBreakroom
+  suffix: Cargo Breakroom
+  components:
+  - type: Label
+    currentLabel: Cargo - Breakroom
+
+# Engineering
+- type: entity
+  parent: Holopad
+  id: HolopadEngineeringAtmosFront
+  suffix: Atmos Front
+  components:
+  - type: Label
+    currentLabel: Atmos - Front
+
+- type: entity
+  parent: Holopad
+  id: HolopadEngineeringAtmosMain
+  suffix: Atmos Main
+  components:
+  - type: Label
+    currentLabel: Atmos - Main
+
+- type: entity
+  parent: Holopad
+  id: HolopadEngineeringAtmosTEG
+  suffix: Atmos TEG
+  components:
+  - type: Label
+    currentLabel: Atmos - TEG
+
+- type: entity
+  parent: Holopad
+  id: HolopadEngineeringStorage
+  suffix: Engi Storage
+  components:
+  - type: Label
+    currentLabel: Engineering - Storage
+
+- type: entity
+  parent: Holopad
+  id: HolopadEngineeringBreakroom
+  suffix: Engi Breakroom
+  components:
+  - type: Label
+    currentLabel: Engineering - Breakroom
+
+- type: entity
+  parent: Holopad
+  id: HolopadEngineeringFront
+  suffix: Engi Front
+  components:
+  - type: Label
+    currentLabel: Engineering - Front
+
+- type: entity
+  parent: Holopad
+  id: HolopadEngineeringTelecoms
+  suffix: Engi Telecoms
+  components:
+  - type: Label
+    currentLabel: Engineering - Telecoms
+
+- type: entity
+  parent: Holopad
+  id: HolopadEngineeringTechVault
+  suffix: Engi Tech Vault
+  components:
+  - type: Label
+    currentLabel: Engineering - Tech Vault
+
+# Security
+- type: entity
+  parent: Holopad
+  id: HolopadSecurityFront
+  suffix: Sec Front
+  components:
+  - type: Label
+    currentLabel: Security - Front
+
+- type: entity
+  parent: Holopad
+  id: HolopadSecurityBrig
+  suffix: Brig
+  components:
+  - type: Label
+    currentLabel: Security - Brig
+
+- type: entity
+  parent: Holopad
+  id: HolopadSecurityWarden
+  suffix: Warden
+  components:
+  - type: Label
+    currentLabel: Security - Warden
+
+- type: entity
+  parent: Holopad
+  id: HolopadSecurityInterrogation
+  suffix: Interrogation
+  components:
+  - type: Label
+    currentLabel: Security - Interrogation
+
+- type: entity
+  parent: Holopad
+  id: HolopadSecurityBreakroom
+  suffix: Breakroom
+  components:
+  - type: Label
+    currentLabel: Security - Breakroom
+
+- type: entity
+  parent: Holopad
+  id: HolopadSecurityDetective
+  suffix: Detective
+  components:
+  - type: Label
+    currentLabel: Security - Detective
+
+- type: entity
+  parent: Holopad
+  id: HolopadSecurityPerma
+  suffix: Perma
+  components:
+  - type: Label
+    currentLabel: Security - Perma
+
+- type: entity
+  parent: Holopad
+  id: HolopadSecurityCourtroom
+  suffix: Courtroom
+  components:
+  - type: Label
+    currentLabel: Security - Courtroom
+
+- type: entity
+  parent: Holopad
+  id: HolopadSecurityLawyer
+  suffix: Lawyer
+  components:
+  - type: Label
+    currentLabel: Security - Lawyer
+
+- type: entity
+  parent: Holopad
+  id: HolopadSecurityArmory
+  suffix: Armory
+  components:
+  - type: Label
+    currentLabel: Security - Armory
+
+# Service
+- type: entity
+  parent: Holopad
+  id: HolopadServiceJanitor
+  suffix: Janitor
+  components:
+  - type: Label
+    currentLabel: Service - Janitor
+
+- type: entity
+  parent: Holopad
+  id: HolopadServiceBar
+  suffix: Bar
+  components:
+  - type: Label
+    currentLabel: Service - Bar
+
+- type: entity
+  parent: Holopad
+  id: HolopadServiceKitchen
+  suffix: Kitchen
+  components:
+  - type: Label
+    currentLabel: Service - Kitchen
+
+- type: entity
+  parent: Holopad
+  id: HolopadServiceBotany
+  suffix: Botany
+  components:
+  - type: Label
+    currentLabel: Service - Botany
+
+- type: entity
+  parent: Holopad
+  id: HolopadServiceChapel
+  suffix: Chapel
+  components:
+  - type: Label
+    currentLabel: Service - Chapel
+
+- type: entity
+  parent: Holopad
+  id: HolopadServiceLibrary
+  suffix: Library
+  components:
+  - type: Label
+    currentLabel: Service - Library
+
+- type: entity
+  parent: Holopad
+  id: HolopadServiceNewsroom
+  suffix: Newsroom
+  components:
+  - type: Label
+    currentLabel: Service - Newsroom
+
+- type: entity
+  parent: Holopad
+  id: HolopadServiceZookeeper
+  suffix: Zookeeper
+  components:
+  - type: Label
+    currentLabel: Service - Zookeeper
+
+- type: entity
+  parent: Holopad
+  id: HolopadServiceBoxer
+  suffix: Boxer
+  components:
+  - type: Label
+    currentLabel: Service - Boxer
+
+- type: entity
+  parent: Holopad
+  id: HolopadServiceClown
+  suffix: Clown
+  components:
+  - type: Label
+    currentLabel: Service - Clown
+
+- type: entity
+  parent: Holopad
+  id: HolopadServiceMusician
+  suffix: Musician
+  components:
+  - type: Label
+    currentLabel: Service - Musician
+
+- type: entity
+  parent: Holopad
+  id: HolopadServiceMime
+  suffix: Mime
+  components:
+  - type: Label
+    currentLabel: Service - Mime
+
+# AI
+- type: entity
+  parent: Holopad
+  id: HolopadAICore
+  suffix: AI Core
+  components:
+  - type: Label
+    currentLabel: AI - Core
+
+- type: entity
+  parent: Holopad
+  id: HolopadAIMain
+  suffix: AI Main
+  components:
+  - type: Label
+    currentLabel: AI - Main
+
+- type: entity
+  parent: Holopad
+  id: HolopadAIUpload
+  suffix: AI Upload
+  components:
+  - type: Label
+    currentLabel: AI - Upload
+
+- type: entity
+  parent: Holopad
+  id: HolopadAIBackupPower
+  suffix: AI Backup Power
+  components:
+  - type: Label
+    currentLabel: AI - Backup Power
+
+- type: entity
+  parent: Holopad
+  id: HolopadAIEntrance
+  suffix: AI Entrance
+  components:
+  - type: Label
+    currentLabel: AI - Entrance
+
+- type: entity
+  parent: Holopad
+  id: HolopadAIChute
+  suffix: AI Chute
+  components:
+  - type: Label
+    currentLabel: AI - Chute
+
+# Long Range
+- type: entity
+  parent: HolopadLongRange
+  id: HolopadCargoATS
+  suffix: ATS
+  components:
+  - type: Label
+    currentLabel: Cargo - ATS
+
+- type: entity
+  parent: HolopadLongRange
+  id: HolopadCommandBridgeLongRange
+  suffix: Station Bridge
+  components:
+  - type: Label
+    currentLabel: Station - Bridge
+
+- type: entity
+  parent: HolopadLongRange
+  id: HolopadCargoBayLongRange
+  suffix: Station Cargo Bay
+  components:
+  - type: Label
+    currentLabel: Station - Cargo Bay
+
+- type: entity
+  parent: HolopadLongRange
+  id: HolopadCargoShuttle
+  suffix: Cargo Shuttle
+  components:
+  - type: Label
+    currentLabel: Cargo - Shuttle
+
+- type: entity
+  parent: HolopadLongRange
+  id: HolopadCentCommEvacShuttle
+  suffix: Evac Shuttle
+  components:
+  - type: Label
+    currentLabel: CentComm - Evacuation Shuttle
+
+
+# Map Specific
+# For holopads that only fit specific maps. For example: Bagel has Clown, Mime and Musician merged into one.
+- type: entity
+  parent: Holopad
+  id: HolopadServiceClownMime
+  suffix: Clown/Mime
+  components:
+  - type: Label
+    currentLabel: Service - Clown/Mime
