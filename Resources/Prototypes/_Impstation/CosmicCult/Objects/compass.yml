@@ -1,0 +1,28 @@
+- type: entity
+  name: compass of stars
+  parent: [ BaseCosmicCultContraband ]
+  categories: [ HideSpawnMenu ]
+  id: AbilityCosmicCultTool
+  description: A strange tool that resembles an astrolabe - an ancient form of astrological device.
+  components:
+  - type: Unremoveable
+  - type: Item
+  - type: Sprite
+    sprite: _Impstation/CosmicCult/Objects/compass.rsi
+    state: icon
+  - type: Appearance
+  - type: UseDelay
+  - type: PointLight
+    enabled: true
+    radius: 1
+    energy: 1
+    color: "#42a4ae"
+  - type: Prying
+    speedModifier: 0.9
+    pryPowered: true
+    useSound: /Audio/_Impstation/CosmicCult/compass_dooropen.ogg
+  - type: Tool
+    qualities:
+    - Prying
+  - type: DisarmMalus
+    malus: 0
