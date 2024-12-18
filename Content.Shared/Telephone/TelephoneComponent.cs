@@ -197,7 +197,8 @@ public enum TelephoneVolume : byte
 public enum TelephoneRange : byte
 {
     Grid,       // Can call grid/map range telephones that are on the same grid 
-    Map,        // Can call grid/map range telephones that are on the same map 
-    Long,       // Can only long range telephones that are on a different map
+    Map,        // Can call grid/map range telephones that are on the same map
+    Local,      // Can call grid/map/long-range telephones that are on the same map
+    Long,       // Can only call other long range telephones that are on a different grid
     Unlimited   // Can call any telephone
 }

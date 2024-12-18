@@ -437,16 +437,18 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         switch (source.Comp.TransmissionRange)
         {
             case TelephoneRange.Grid:
-                return sourceXform.GridUid != null &&
-                    receiverXform.GridUid == sourceXform.GridUid &&
+                return receiverXform.GridUid == sourceXform.GridUid &&
                     receiver.Comp.TransmissionRange != TelephoneRange.Long;
 
             case TelephoneRange.Map:
                 return sourceXform.MapID == receiverXform.MapID &&
                     receiver.Comp.TransmissionRange != TelephoneRange.Long;
 
+            case TelephoneRange.Local:
+                return sourceXform.MapID == receiverXform.MapID;
+
             case TelephoneRange.Long:
-                return sourceXform.MapID != receiverXform.MapID &&
+                return receiverXform.GridUid != sourceXform.GridUid &&
                     receiver.Comp.TransmissionRange == TelephoneRange.Long;
 
             case TelephoneRange.Unlimited:

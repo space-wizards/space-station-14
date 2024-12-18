@@ -370,6 +370,7 @@
           Occupied: { state: ai }
   - type: Telephone
     listeningRange: 0
+    transmissionRange: Local
     speakerVolume: Speak
     unlistedNumber: true
     requiresPower: false
