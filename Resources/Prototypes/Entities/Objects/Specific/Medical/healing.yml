@@ -74,6 +74,7 @@
   - type: Tag
     tags:
     - Ointment
+    - RegenerativeMesh
   - type: Sprite
     state: regenerative-mesh
   - type: Item
@@ -318,6 +319,9 @@
   - type: Stack
     stackType: AloeCream
     count: 10
+  - type: Tag
+    tags:
+      - Aloe
 
 - type: entity
   parent: BaseHealingItem

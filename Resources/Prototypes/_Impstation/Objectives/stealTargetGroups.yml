@@ -1,0 +1,265 @@
+- type: stealTargetGroup
+  id: AnimalFinFin
+  name: steal-target-groups-finfin
+  sprite:
+    sprite: _Impstation/Mobs/Pets/finfin.rsi
+    state: finfin
+
+- type: stealTargetGroup
+  id: Generator #singulo or tesla generator
+  name: steal-target-groups-generator
+  sprite:
+    sprite: Structures/Power/Generation/Singularity/generator.rsi
+    state: icon
+
+- type: stealTargetGroup
+  id: Cigarettes
+  name: steal-target-groups-cigarettes
+  sprite:
+    sprite: _Impstation/Objects/Consumable/Smokeables/Cigarettes/Packs/newport.rsi
+    state: closed
+
+- type: stealTargetGroup
+  id: PositronicBrains
+  name: steal-target-groups-positronicbrains
+  sprite:
+    sprite: Objects/Specific/Robotics/mmi.rsi
+    state: posibrain
+
+- type: stealTargetGroup
+  id: AILawBoard
+  name: steal-target-groups-ailawboard
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: std_mod
+
+- type: stealTargetGroup
+  id: CommandHeadset
+  name: steal-target-groups-commandheadset
+  sprite:
+    sprite: Clothing/Ears/Headsets/medical.rsi
+    state: icon_alt
+
+- type: stealTargetGroup
+  id: AICore
+  name: steal-target-groups-aicore
+  sprite:
+    sprite: Mobs/Silicon/station_ai.rsi
+    state: ai
+
+- type: stealTargetGroup
+  id: ParticleAccelerator
+  name: steal-target-groups-particleaccelerator
+  sprite:
+    sprite: Structures/Power/Generation/PA/control_box.rsi
+    state: unwired
+
+- type: stealTargetGroup
+  id: FireSuit
+  name: steal-target-groups-firesuit
+  sprite:
+    sprite: Clothing/OuterClothing/Suits/atmos_firesuit.rsi
+    state: icon
+
+- type: stealTargetGroup
+  id: StealMopBucket
+  name: steal-target-groups-mopbucket
+  sprite:
+    sprite: Objects/Specific/Janitorial/janitorial.rsi
+    state: mopbucket
+
+- type: stealTargetGroup
+  id: MedTekCartridge
+  name: steal-target-groups-medtekcartridge
+  sprite:
+    sprite: Objects/Devices/cartridge.rsi
+    state: cart-med
+
+- type: stealTargetGroup
+  id: LogProbeCartridge
+  name: steal-target-groups-logprobecartridge
+  sprite:
+    sprite: Objects/Devices/cartridge.rsi
+    state: cart-log
+
+- type: stealTargetGroup
+  id: AstroNavCartridge
+  name: steal-target-groups-astronavcartridge
+  sprite:
+    sprite: Objects/Devices/cartridge.rsi
+    state: cart-nav
+
+- type: stealTargetGroup
+  id: PTech
+  name: steal-target-groups-ptech
+  sprite:
+    sprite: Structures/Machines/VendingMachines/cart.rsi
+    state: broken
+
+- type: stealTargetGroup
+  id: SecTech
+  name: steal-target-groups-sectech
+  sprite:
+    sprite: Structures/Machines/VendingMachines/sec.rsi
+    state: broken
+
+- type: stealTargetGroup
+  id: HyDrobe
+  name: steal-target-groups-hydrobe
+  sprite:
+    sprite: Structures/Machines/VendingMachines/hydrobe.rsi
+    state: broken
+
+- type: stealTargetGroup
+  id: LawDrobe
+  name: steal-target-groups-lawdrobe
+  sprite:
+    sprite: Structures/Machines/VendingMachines/lawdrobe.rsi
+    state: broken
+
+- type: stealTargetGroup
+  id: SecDrobe
+  name: steal-target-groups-secdrobe
+  sprite:
+    sprite: Structures/Machines/VendingMachines/secdrobe.rsi
+    state: broken
+
+- type: stealTargetGroup
+  id: BarDrobe
+  name: steal-target-groups-bardrobe
+  sprite:
+    sprite: Structures/Machines/VendingMachines/bardrobe.rsi
+    state: broken
+
+- type: stealTargetGroup
+  id: PietyVend
+  name: steal-target-groups-pietyvend
+  sprite:
+    sprite: Structures/Machines/VendingMachines/chapdrobe.rsi
+    state: broken
+
+- type: stealTargetGroup
+  id: CargoDrobe
+  name: steal-target-groups-cargodrobe
+  sprite:
+    sprite: Structures/Machines/VendingMachines/cargodrobe.rsi
+    state: broken
+
+- type: stealTargetGroup
+  id: MediDrobe
+  name: steal-target-groups-medidrobe
+  sprite:
+    sprite: Structures/Machines/VendingMachines/medidrobe.rsi
+    state: broken
+
+- type: stealTargetGroup
+  id: ChemDrobe
+  name: steal-target-groups-chemdrobe
+  sprite:
+    sprite: Structures/Machines/VendingMachines/chemdrobe.rsi
+    state: broken
+
+- type: stealTargetGroup
+  id: CuraDrobe
+  name: steal-target-groups-curadrobe
+  sprite:
+    sprite: Structures/Machines/VendingMachines/curadrobe.rsi
+    state: broken
+
+- type: stealTargetGroup
+  id: AtmosDrobe
+  name: steal-target-groups-atmosdrobe
+  sprite:
+    sprite: Structures/Machines/VendingMachines/atmosdrobe.rsi
+    state: broken
+
+- type: stealTargetGroup
+  id: EngiDrobe
+  name: steal-target-groups-engidrobe
+  sprite:
+    sprite: Structures/Machines/VendingMachines/engidrobe.rsi
+    state: broken
+
+- type: stealTargetGroup
+  id: ChefDrobe
+  name: steal-target-groups-chefdrobe
+  sprite:
+    sprite: Structures/Machines/VendingMachines/chefdrobe.rsi
+    state: broken
+
+- type: stealTargetGroup
+  id: DetDrobe
+  name: steal-target-groups-detdrobe
+  sprite:
+    sprite: Structures/Machines/VendingMachines/detdrobe.rsi
+    state: broken
+
+- type: stealTargetGroup
+  id: JaniDrobe
+  name: steal-target-groups-janidrobe
+  sprite:
+    sprite: Structures/Machines/VendingMachines/janidrobe.rsi
+    state: broken
+
+- type: stealTargetGroup
+  id: SciDrobe
+  name: steal-target-groups-scidrobe
+  sprite:
+    sprite: Structures/Machines/VendingMachines/scidrobe.rsi
+    state: broken
+
+- type: stealTargetGroup
+  id: RoboDrobe
+  name: steal-target-groups-robodrobe
+  sprite:
+    sprite: Structures/Machines/VendingMachines/robodrobe.rsi
+    state: broken
+
+- type: stealTargetGroup
+  id: GeneDrobe
+  name: steal-target-groups-genedrobe
+  sprite:
+    sprite: Structures/Machines/VendingMachines/genedrobe.rsi
+    state: broken
+
+- type: stealTargetGroup
+  id: ViroDrobe
+  name: steal-target-groups-virodrobe
+  sprite:
+    sprite: Structures/Machines/VendingMachines/virodrobe.rsi
+    state: broken
+
+- type: stealTargetGroup
+  id: ServiceTechFab
+  name: steal-target-groups-servicetechfab
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: service
+
+- type: stealTargetGroup
+  id: ShiningSpring
+  name: steal-target-groups-shiningspring
+  sprite:
+    sprite: Objects/Weapons/Guns/Launchers/cleaner_lake.rsi
+    state: icon
+
+- type: stealTargetGroup
+  id: ShipyardComputerCircuitboard
+  name: steal-target-groups-shipyardcomputercircuitboard
+  sprite:
+    sprite: Objects/Misc/module.rsi
+    state: cpu_supply
+
+- type: stealTargetGroup
+  id: Plushie
+  name: steal-target-groups-plushie
+  sprite:
+    sprite: Objects/Fun/toys.rsi
+    state: plushie_bug
+
+- type: stealTargetGroup
+  id: SeedExtractor
+  name: steal-target-groups-seedextractor
+  sprite:
+    sprite: Structures/Machines/seed_extractor.rsi
+    state: seedextractor

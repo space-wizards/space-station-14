@@ -47,6 +47,9 @@
       - sweet
   - type: Item
     size: Tiny
+  - type: Tag
+    tags:
+      - Muffin
 
 - type: entity
   name: berry muffin

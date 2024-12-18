@@ -22,6 +22,10 @@
     {
       "name": "tcktck_e_r",
       "directions": 4
+    },
+    {
+      "name": "anchored",
+      "directions": 4
     }
   ]
 }

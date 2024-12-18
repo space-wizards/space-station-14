@@ -1,0 +1,48 @@
+<BoxContainer
+    xmlns="https://spacestation14.io"
+    xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    HorizontalExpand="True">
+    <Button Name="ChatButton"
+            StyleClasses="ButtonSquare"
+            HorizontalExpand="True"
+            MaxSize="137 64"
+            Margin="0 1">
+        <BoxContainer Orientation="Horizontal"
+                      HorizontalExpand="True"
+                      VerticalExpand="True"
+                      MinWidth="132"
+                      Margin="6 4"
+                      VerticalAlignment="Center">
+            <!-- Unread indicator dot -->
+            <PanelContainer Name="UnreadIndicator"
+                            MinSize="8 8"
+                            MaxSize="8 8"
+                            VerticalAlignment="Center"
+                            Margin="0 0 6 0">
+                <PanelContainer.PanelOverride>
+                    <graphics:StyleBoxFlat
+                        BackgroundColor="#17c622"
+                        BorderColor="#0f7a15" />
+                </PanelContainer.PanelOverride>
+            </PanelContainer>
+
+            <!-- Text container -->
+            <BoxContainer Orientation="Vertical"
+                          HorizontalExpand="True"
+                          VerticalExpand="True"
+                          VerticalAlignment="Center">
+                <RichTextLabel Name="NameLabel"
+                               StyleClasses="LabelHeading"
+                               HorizontalExpand="True"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Margin="0 -2 0 0" />
+                <Label Name="JobLabel"
+                       StyleClasses="LabelSubText"
+                       HorizontalExpand="True"
+                       ClipText="False"
+                       HorizontalAlignment="Center" />
+            </BoxContainer>
+        </BoxContainer>
+    </Button>
+</BoxContainer>

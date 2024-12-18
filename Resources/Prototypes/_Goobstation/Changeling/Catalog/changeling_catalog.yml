@@ -1,4 +1,4 @@
-# combat
+# Combat
 
 - type: listing
   id: EvolutionMenuCombatArmblade
@@ -7,7 +7,7 @@
   icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: armblade }
   productAction: ActionToggleArmblade
   cost:
-    EvolutionPoint: 4
+    EvolutionPoint: 2
   categories:
   - ChangelingAbilityCombat
   conditions:
@@ -21,7 +21,7 @@
   icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: bone_shard }
   productAction: ActionCreateBoneShard
   cost:
-    EvolutionPoint: 3
+    EvolutionPoint: 2
   categories:
   - ChangelingAbilityCombat
   conditions:
@@ -35,7 +35,7 @@
   icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: chitinous_armor }
   productAction: ActionToggleChitinousArmor
   cost:
-    EvolutionPoint: 4
+    EvolutionPoint: 1
   categories:
   - ChangelingAbilityCombat
   conditions:
@@ -49,7 +49,7 @@
   icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: organic_shield }
   productAction: ActionToggleOrganicShield
   cost:
-    EvolutionPoint: 2
+    EvolutionPoint: 1
   categories:
   - ChangelingAbilityCombat
   conditions:
@@ -63,7 +63,7 @@
   icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: shriek_dissonant }
   productAction: ActionShriekDissonant
   cost:
-    EvolutionPoint: 2
+    EvolutionPoint: 1
   categories:
   - ChangelingAbilityCombat
   conditions:
@@ -77,7 +77,7 @@
   icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: shriek_resonant }
   productAction: ActionShriekResonant
   cost:
-    EvolutionPoint: 2
+    EvolutionPoint: 1
   categories:
   - ChangelingAbilityCombat
   conditions:
@@ -91,7 +91,7 @@
   icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: strained_muscles }
   productAction: ActionToggleStrainedMuscles
   cost:
-    EvolutionPoint: 2
+    EvolutionPoint: 1
   categories:
   - ChangelingAbilityCombat
   conditions:
@@ -112,7 +112,7 @@
 #  - !type:ListingLimitedStockCondition
 #    stock: 1
 
-# sting
+# Sting
 
 - type: listing
   id: EvolutionMenuStingBlind
@@ -121,7 +121,7 @@
   icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: sting_blind }
   productAction: ActionStingBlind
   cost:
-    EvolutionPoint: 4
+    EvolutionPoint: 2
   categories:
   - ChangelingAbilitySting
   conditions:
@@ -135,7 +135,7 @@
   icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: sting_cryo }
   productAction: ActionStingCryo
   cost:
-    EvolutionPoint: 4
+    EvolutionPoint: 2
   categories:
   - ChangelingAbilitySting
   conditions:
@@ -149,7 +149,7 @@
   icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: sting_lethargic }
   productAction: ActionStingLethargic
   cost:
-    EvolutionPoint: 4
+    EvolutionPoint: 2
   categories:
   - ChangelingAbilitySting
   conditions:
@@ -163,7 +163,7 @@
   icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: sting_mute }
   productAction: ActionStingMute
   cost:
-    EvolutionPoint: 4
+    EvolutionPoint: 2
   categories:
   - ChangelingAbilitySting
   conditions:
@@ -177,7 +177,7 @@
   icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: sting_armblade }
   productAction: ActionStingFakeArmblade
   cost:
-    EvolutionPoint: 5
+    EvolutionPoint: 1
   categories:
   - ChangelingAbilitySting
   conditions:
@@ -198,7 +198,7 @@
 #   - !type:ListingLimitedStockCondition
 #     stock: 1
 
-# utility
+# Utility
 
 - type: listing
   id: EvolutionMenuUtilityPanacea
@@ -207,7 +207,7 @@
   icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: anatomic_panacea }
   productAction: ActionAnatomicPanacea
   cost:
-    EvolutionPoint: 2
+    EvolutionPoint: 1
   categories:
   - ChangelingAbilityUtility
   conditions:
@@ -221,7 +221,7 @@
   icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: augmented_eyesight }
   productAction: ActionAugmentedEyesight
   cost:
-    EvolutionPoint: 4
+    EvolutionPoint: 2
   categories:
   - ChangelingAbilityUtility
   conditions:
@@ -235,7 +235,7 @@
   icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: biodegrade }
   productAction: ActionBiodegrade
   cost:
-    EvolutionPoint: 4
+    EvolutionPoint: 2
   categories:
   - ChangelingAbilityUtility
   conditions:
@@ -263,7 +263,8 @@
   icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: epinephrine_overdose }
   productAction: ActionEphedrineOverdose
   cost:
-    EvolutionPoint: 4
+    # i'm a hater and this will get removed down the line anyway. it's strictly superior to strained muscles
+    EvolutionPoint: 3
   categories:
   - ChangelingAbilityUtility
   conditions:
@@ -277,7 +278,21 @@
   icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: fleshmend }
   productAction: ActionFleshmend
   cost:
-    EvolutionPoint: 5
+    EvolutionPoint: 2
+  categories:
+  - ChangelingAbilityUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: EvolutionMenuUtilityHivemindAccess
+  name: evolutionmenu-utility-hivemindaccess-name
+  description: evolutionmenu-utility-hivemindaccess-desc
+  icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: hivemind_access }
+  productAction: ActionHivemindAccess
+  cost:
+    EvolutionPoint: 1
   categories:
   - ChangelingAbilityUtility
   conditions:
@@ -291,7 +306,7 @@
   icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: last_resort }
   productAction: ActionLastResort
   cost:
-    EvolutionPoint: 2
+    EvolutionPoint: 1
   categories:
   - ChangelingAbilityUtility
   conditions:
@@ -305,7 +320,21 @@
   icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: lesser_form }
   productAction: ActionToggleLesserForm
   cost:
-    EvolutionPoint: 2
+    EvolutionPoint: 1
+  categories:
+  - ChangelingAbilityUtility
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1
+
+- type: listing
+  id: EvolutionMenuUtilityMindshield
+  name: evolutionmenu-utility-mindshield-name
+  description: evolutionmenu-utility-mindshield-desc
+  icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: mindshield }
+  productAction: ActionToggleMindshieldFake
+  cost:
+    EvolutionPoint: 1
   categories:
   - ChangelingAbilityUtility
   conditions:
@@ -318,20 +347,6 @@
   description: evolutionmenu-utility-spacesuit-desc
   icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: space_adaptation }
   productAction: ActionToggleSpacesuit
-  cost:
-    EvolutionPoint: 4
-  categories:
-  - ChangelingAbilityUtility
-  conditions:
-  - !type:ListingLimitedStockCondition
-    stock: 1
-
-- type: listing
-  id: EvolutionMenuUtilityHivemindAccess
-  name: evolutionmenu-utility-hivemindaccess-name
-  description: evolutionmenu-utility-hivemindaccess-desc
-  icon: { sprite: _Goobstation/Changeling/changeling_abilities.rsi, state: hivemind_access }
-  productAction: ActionHivemindAccess
   cost:
     EvolutionPoint: 2
   categories:

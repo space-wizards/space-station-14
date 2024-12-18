@@ -1,0 +1,55 @@
+<cartridges:NanoChatMessageBubble
+    xmlns="https://spacestation14.io"
+    xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    xmlns:cartridges="clr-namespace:Content.Client._DeltaV.CartridgeLoader.Cartridges"
+    HorizontalExpand="True">
+
+    <BoxContainer Name="MessageContainer"
+                  Orientation="Horizontal"
+                  HorizontalExpand="True">
+        <!-- Left spacer for other's messages -->
+        <Control Name="LeftSpacer"
+                 MinSize="12 0" />
+
+        <!-- Message panel -->
+        <BoxContainer Name="MessageBox"
+                      Orientation="Vertical"
+                      MaxWidth="320"
+                      HorizontalExpand="True">
+            <PanelContainer Name="MessagePanel"
+                            MaxWidth="320"
+                            HorizontalExpand="True">
+                <PanelContainer.PanelOverride>
+                    <graphics:StyleBoxFlat
+                        ContentMarginLeftOverride="10"
+                        ContentMarginRightOverride="10"
+                        ContentMarginTopOverride="6"
+                        ContentMarginBottomOverride="6"
+                        BorderThickness="1">
+                        <!-- Colors set in code based on message sender -->
+                    </graphics:StyleBoxFlat>
+                </PanelContainer.PanelOverride>
+
+                <RichTextLabel Name="MessageText"
+                               HorizontalExpand="True" />
+            </PanelContainer>
+
+            <!-- Delivery failed text -->
+            <Label Name="DeliveryFailedLabel"
+                   Text="{Loc nano-chat-delivery-failed}"
+                   StyleClasses="LabelSmall"
+                   HorizontalExpand="True"
+                   HorizontalAlignment="Right"
+                   Margin="10 2 10 0"
+                   Visible="False" />
+        </BoxContainer>
+
+        <!-- Right spacer for own messages -->
+        <Control Name="RightSpacer"
+                 MinSize="12 0" />
+
+        <!-- Flexible space for alignment -->
+        <Control Name="FlexSpace"
+                 HorizontalExpand="True" />
+    </BoxContainer>
+</cartridges:NanoChatMessageBubble>

@@ -9,10 +9,30 @@
                               BorderColor="#5a5a5a"
                               BorderThickness="0 0 0 1"/>
         </PanelContainer.PanelOverride>
-        <BoxContainer Orientation="Horizontal" Margin="4 8">
-            <Label Align="Right" SetWidth="26" ClipText="True" Text="{Loc 'log-probe-label-number'}"/>
-            <Label Align="Center" SetWidth="100" ClipText="True" Text="{Loc 'log-probe-label-time'}"/>
-            <Label Align="Left" SetWidth="390" ClipText="True" Text="{Loc 'log-probe-label-accessor'}"/>
+        <BoxContainer Orientation="Vertical" Margin="4 8">
+            <!-- DeltaV begin - Add title label -->
+            <Label Name="TitleLabel"
+                   Text="{Loc 'log-probe-header-access'}"
+                   StyleClasses="LabelHeading"
+                   HorizontalAlignment="Center"
+                   Margin="0 0 0 8"/>
+            <!-- DeltaV end -->
+
+            <!-- DeltaV begin - Add card number display -->
+            <Label Name="CardNumberLabel"
+                   StyleClasses="LabelSubText"
+                   HorizontalAlignment="Center"
+                   Margin="0 0 0 8"
+                   Visible="False"/>
+            <!-- DeltaV end -->
+
+            <!-- DeltaV begin - Adjust column headers -->
+            <BoxContainer Orientation="Horizontal">
+                <Label Align="Right" SetWidth="26" ClipText="True" Text="{Loc 'log-probe-label-number'}"/>
+                <Label Align="Center" SetWidth="100" ClipText="True" Text="{Loc 'log-probe-label-time'}"/>
+                <Label Name="ContentLabel" Align="Left" SetWidth="390" ClipText="True" Text="{Loc 'log-probe-label-accessor'}"/>
+            </BoxContainer>
+            <!-- DeltaV end -->
         </BoxContainer>
     </PanelContainer>
     <ScrollContainer VerticalExpand="True" HScrollEnabled="True">

@@ -1,0 +1,52 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+               Title="{Loc nano-chat-new-title}"
+               MinSize="300 200">
+    <PanelContainer StyleClasses="AngleRect">
+        <BoxContainer Orientation="Vertical" Margin="4">
+            <!-- Number input -->
+            <BoxContainer Orientation="Vertical" Margin="0 4">
+                <Label Text="{Loc nano-chat-number-label}"
+                       StyleClasses="LabelHeading" />
+                <PanelContainer StyleClasses="ButtonSquare">
+                    <LineEdit Name="NumberInput"
+                              PlaceHolder="{Loc nano-chat-number-placeholder}" />
+                </PanelContainer>
+            </BoxContainer>
+
+            <!-- Name input -->
+            <BoxContainer Orientation="Vertical" Margin="0 4">
+                <Label Text="{Loc nano-chat-name-label}"
+                       StyleClasses="LabelHeading" />
+                <PanelContainer StyleClasses="ButtonSquare">
+                    <LineEdit Name="NameInput"
+                              PlaceHolder="{Loc nano-chat-name-placeholder}" />
+                </PanelContainer>
+            </BoxContainer>
+
+            <!-- Job input (optional) -->
+            <BoxContainer Orientation="Vertical" Margin="0 4">
+                <Label Text="{Loc nano-chat-job-label}"
+                       StyleClasses="LabelHeading" />
+                <PanelContainer StyleClasses="ButtonSquare">
+                    <LineEdit Name="JobInput"
+                              PlaceHolder="{Loc nano-chat-job-placeholder}" />
+                </PanelContainer>
+            </BoxContainer>
+
+            <!-- Action buttons -->
+            <BoxContainer Orientation="Horizontal"
+                          HorizontalAlignment="Right"
+                          Margin="0 8 0 0">
+                <Button Name="CancelButton"
+                        Text="{Loc nano-chat-cancel}"
+                        StyleClasses="OpenRight"
+                        MinSize="80 0" />
+                <Button Name="CreateButton"
+                        Text="{Loc nano-chat-create}"
+                        StyleClasses="OpenLeft"
+                        MinSize="80 0"
+                        Disabled="True" />
+            </BoxContainer>
+        </BoxContainer>
+    </PanelContainer>
+</DefaultWindow>
