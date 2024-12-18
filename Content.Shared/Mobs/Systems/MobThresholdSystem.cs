@@ -37,6 +37,9 @@ public sealed class MobThresholdSystem : EntitySystem
             component.CurrentThresholdState,
             component.StateAlertDict,
             component.ShowOverlays,
+            component.ShowBruteOverlay,
+            component.ShowAirlossOverlay,
+            component.ShowCritOverlay,
             component.AllowRevives);
     }
 
