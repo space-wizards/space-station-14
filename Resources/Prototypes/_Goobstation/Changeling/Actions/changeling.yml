@@ -1,6 +1,5 @@
-# abilities
+# Starting
 
-# starting
 - type: entity
   id: ActionEvolutionMenu
   name: Open Evolution Menu
@@ -133,7 +132,8 @@
     useInLesserForm: true
     useInLastResort: true
 
-# combat
+# Combat
+
 - type: entity
   id: ActionToggleArmblade
   name: Toggle Arm Blade
@@ -253,7 +253,8 @@
     chemicalCost: 0
     useInLesserForm: true
 
-# stings
+# Stings
+
 - type: entity
   id: ActionStingBlind
   name: Blind Sting
@@ -401,7 +402,8 @@
     chemicalCost: 0
     useInLastResort: true
 
-# utility
+# Utility
+
 - type: entity
   id: ActionAnatomicPanacea
   name: Anatomic Panacea
@@ -510,6 +512,24 @@
     useInLesserForm: true
 
 - type: entity
+  id: ActionHivemindAccess
+  name: Hivemind Access
+  description: We tune our chemical receptors for hivemind communication.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    checkConsciousness: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: hivemind_access
+    event: !type:ActionHivemindAccessEvent {}
+  - type: ChangelingAction
+    chemicalCost: 0
+    useInLesserForm: true
+
+- type: entity
   id: ActionLastResort
   name: Last Resort
   parent: BaseSuicideAction
@@ -547,6 +567,24 @@
     chemicalCost: 20
 
 - type: entity
+  id: ActionToggleMindshieldFake
+  name: Toggle Mindshield Patterns
+  description: We shape our mental patterns to imitate a mindshield implantation.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 1
+    checkCanInteract: false
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Changeling/changeling_abilities.rsi
+      state: mindshield
+    event: !type:ActionMindshieldFakeEvent {}
+  - type: ChangelingAction
+    chemicalCost: 0
+    useInLesserForm: true
+
+- type: entity
   id: ActionToggleSpacesuit
   name: Toggle Space Adaptation
   description: We prepare our cells to resist barotrauma. Costs a small amount of chemicals.
@@ -561,21 +599,3 @@
     event: !type:ActionSpacesuitEvent {}
   - type: ChangelingAction
     chemicalCost: 20
-
-- type: entity
-  id: ActionHivemindAccess
-  name: Hivemind Access
-  description: We tune our chemical receptors for hivemind communication.
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: InstantAction
-    checkCanInteract: false
-    checkConsciousness: false
-    itemIconStyle: NoItem
-    icon:
-      sprite: _Goobstation/Changeling/changeling_abilities.rsi
-      state: hivemind_access
-    event: !type:ActionHivemindAccessEvent {}
-  - type: ChangelingAction
-    chemicalCost: 0
-    useInLesserForm: true

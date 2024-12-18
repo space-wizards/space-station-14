@@ -26262,6 +26262,12 @@ entities:
     - type: Transform
       pos: -4.5,23.5
       parent: 30
+  - uid: 9848
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -19.5,-13.5
+      parent: 30
 - proto: DisposalTrunk
   entities:
   - uid: 1163

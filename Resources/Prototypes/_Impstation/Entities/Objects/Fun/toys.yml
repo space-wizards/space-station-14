@@ -197,3 +197,29 @@
         reagents:
         - ReagentId: Mucin
           Quantity: 10
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieImp
+  name: imp plushie
+  description: Huh? Who's this stoner?
+  components:
+  - type: Sprite
+    state: plushie_imp
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/_Impstation/Voice/Misc/wuhey.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Impstation/Voice/Misc/wuhey.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/_Impstation/Voice/Misc/wuhey.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/_Impstation/Voice/Misc/wuhey.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/_Impstation/Voice/Misc/wuhey.ogg
+  - type: Food
+    requiresSpecialDigestion: true

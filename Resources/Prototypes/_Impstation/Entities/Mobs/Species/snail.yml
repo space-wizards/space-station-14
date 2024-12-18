@@ -115,6 +115,7 @@
   - type: Tag
     tags:
       - Gastropod
+      - DoorBumpOpener
   - type: Inventory
     templateId: snail
     displacements:
