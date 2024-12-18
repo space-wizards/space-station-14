@@ -706,11 +706,11 @@
 - type: reagent
   id: BlindToxin
   name: reagent-name-blind-toxin
-  desc: reagent-name-blind-toxin
-  group: Medicine
-  physicalDesc: reagent-physical-desc-translucent
+  desc: reagent-desc-blind-toxin
+  group: Toxins
+  physicalDesc: reagent-physical-desc-blinding
   flavor: medicine
-  color: "#404040"
+  color: "#848484"
   metabolisms:
     Poison:
       effects:
