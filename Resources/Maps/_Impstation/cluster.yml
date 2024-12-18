@@ -5805,7 +5805,7 @@ entities:
       pos: -4.5,45.5
       parent: 1
     - type: Door
-      secondsUntilStateChange: -2649.2234
+      secondsUntilStateChange: -2713.8862
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -44275,7 +44275,6 @@ entities:
   - uid: 11095
     components:
     - type: Transform
-      rot: 3.141592653589793 rad
       pos: -37.5,0.5
       parent: 1
     - type: AtmosPipeColor
@@ -44552,18 +44551,6 @@ entities:
       parent: 1
     - type: AtmosPipeColor
       color: '#990000FF'
-  - uid: 11152
-    components:
-    - type: Transform
-      anchored: False
-      rot: 3.141592653589793 rad
-      pos: -37.5,0.5
-      parent: 1
-    - type: AtmosPipeColor
-      color: '#0055CCFF'
-    - type: Physics
-      canCollide: True
-      bodyType: Dynamic
   - uid: 11153
     components:
     - type: Transform
@@ -70685,7 +70672,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: -15.5,-27.5
       parent: 1
-- proto: ToolboxArtistic
+- proto: ToolboxArtisticFilled
   entities:
   - uid: 8226
     components:

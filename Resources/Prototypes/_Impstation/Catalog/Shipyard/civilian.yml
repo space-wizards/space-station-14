@@ -1,0 +1,32 @@
+- type: vessel
+  id: Botany
+  name: Botany Ship
+  description: A small botanic vessel.
+  price: 15000
+  path:
+  - /Maps/_Impstation/Shuttles/Shipyard/botany.yml
+  categories:
+  - Small
+  - Service
+
+- type: vessel
+  id: Medical
+  name: Medical Ship
+  description: A medium medical vessel.
+  price: 50000
+  path:
+  - /Maps/_Impstation/Shuttles/Shipyard/medical.yml
+  categories:
+  - Medium
+  - Medical
+
+- type: vessel
+  id: Reach
+  name: NTSC Reach Transport QT-900
+  description: Just order Reach to come by from the depths of space.
+  price: 300000
+  path:
+  - /Maps/_Impstation/Shuttles/Shipyard/shuttle_reach.yml
+  categories:
+  - Large
+  - Experimental

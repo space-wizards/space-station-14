@@ -369,10 +369,12 @@
       - BoxShotgunUranium
       - BoxShellTranquilizer
       - ExplosivePayload
+      - FullAutoConversionKit
       - GrenadeBlast
       - GrenadeEMP
       - GrenadeFlash
       - HoloprojectorSecurity
+      - HyperBurstConversionKit
       - MagazineBoxLightRifleIncendiary
       - MagazineBoxLightRifleUranium
       - MagazineBoxMagnumIncendiary
@@ -381,7 +383,11 @@
       - MagazineBoxPistolUranium
       - MagazineBoxRifleIncendiary
       - MagazineBoxRifleUranium
+      - MagazineDMRIncendiary
+      - MagazineDMRUranium
       - MagazineGrenadeEmpty
+      - MagazineLPistolIncendiary
+      - MagazineLPistolUranium
       - MagazineLightRifleIncendiary
       - MagazineLightRifleUranium
       - MagazinePistolIncendiary
@@ -707,6 +713,8 @@
   - type: Lathe
     idleState: icon
     runningState: icon
+    unlitIdleState: unlit
+    unlitRunningState: unlit-building
     staticRecipes:
       - BoxLethalshot
       - BoxShotgunPractice
@@ -724,6 +732,8 @@
       - MagazineBoxPistolPractice
       - MagazineBoxRifle
       - MagazineBoxRiflePractice
+      - MagazineDMR
+      - MagazineDMREmpty
       - MagazineLightRifle
       - MagazineLightRifleEmpty
       - MagazinePistol
@@ -774,6 +784,8 @@
       - MagazineBoxPistolUranium
       - MagazineBoxRifleIncendiary
       - MagazineBoxRifleUranium
+      - MagazineDMRIncendiary
+      - MagazineDMRUranium
       - MagazineGrenadeEmpty
       - MagazineLightRifleIncendiary
       - MagazineLightRifleUranium
@@ -843,6 +855,8 @@
     - type: Lathe
       idleState: icon
       runningState: icon
+      unlitIdleState: unlit
+      unlitRunningState: unlit-building
       staticRecipes:
         - BoxLethalshot
         - BoxShotgunSlug
@@ -851,8 +865,12 @@
         - MagazineBoxMagnum
         - MagazineBoxPistol
         - MagazineBoxRifle
+        - MagazineDMR
+        - MagazineDMREmpty
         - MagazineLightRifle
         - MagazineLightRifleEmpty
+        - MagazineLPistol
+        - MagazineLPistolEmpty
         - MagazinePistol
         - MagazinePistolEmpty
         - MagazineRifle
@@ -891,6 +909,8 @@
   - type: Lathe
     idleState: icon
     runningState: icon
+    unlitIdleState: unlit
+    unlitRunningState: unlit-building
     staticRecipes:
       - Brutepack
       - Ointment

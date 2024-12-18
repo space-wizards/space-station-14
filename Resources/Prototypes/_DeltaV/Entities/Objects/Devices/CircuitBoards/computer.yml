@@ -8,3 +8,5 @@
     state: cpu_supply
   - type: ComputerBoard
     prototype: ComputerShipyard
+  - type: StealTarget #imp
+    stealGroup: ShipyardComputerCircuitboard

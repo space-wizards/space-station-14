@@ -32,6 +32,8 @@
   - type: Construction
     graph: UpgradeWeaponCleanerLake
     node: start
+  - type: StealTarget
+    stealGroup: ShiningSpring
 
 - type: entity
   name: remilitarised shining spring
@@ -58,3 +60,23 @@
       tags:
         - CartridgeRocket
     proto: MeteorUrist
+
+- type: entity
+  name: micro grappling gun
+  parent: WeaponGrapplingGun
+  id: WeaponGrapplingGunTckTck
+  components:
+    - type: Sprite
+      sprite: _Impstation/Objects/Weapons/Guns/Launchers/micrograpple.rsi
+      layers:
+        - state: base
+        - state: base-unshaded
+          map: [ "unshaded" ]
+          visible: true
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.TetherVisualsStatus.Key:
+          unshaded:
+            True: { state: base-unshaded }
+            False: { state: base-unshaded-off }
