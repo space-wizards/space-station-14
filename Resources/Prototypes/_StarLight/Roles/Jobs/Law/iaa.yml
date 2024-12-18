@@ -9,14 +9,13 @@
     time: 36000 # 10h
   - !type:DepartmentTimeRequirement
     department: Security
-    time: 18000 # 5h
+    time: 36000 # 10h
   startingGear: IAAGear
   icon: "JobIconIAA"
   supervisors: job-supervisors-magistrate
   canBeAntag: false
   displayWeight: 40
   access:
-  - Command
   - Service
   - Brig
   - Maintenance
