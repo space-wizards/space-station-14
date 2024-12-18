@@ -43,7 +43,6 @@ criminal-records-console-not-wanted = {$officer} cleared the wanted status of {$
 criminal-records-console-paroled = {$name} ({$job}) has been released on parole by {$officer}.
 criminal-records-console-not-parole = {$officer} cleared the parole status of {$name} ({$job}).
 criminal-records-console-unknown-officer = <unknown>
-criminal-records-console-unknown-officer = <unknown>
 
 ## Filters
 
