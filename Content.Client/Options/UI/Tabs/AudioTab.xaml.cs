@@ -65,8 +65,6 @@ public sealed partial class AudioTab : Control
         Control.AddOptionCheckBox(CCVars.AdminSoundsEnabled, AdminSoundsCheckBox);
         Control.AddOptionCheckBox(CCVars.BwoinkSoundEnabled, BwoinkSoundCheckBox);
 
-        UpdateAdminButtonsVisibility();
-
         Control.Initialize();
     }
 
@@ -74,6 +72,7 @@ public sealed partial class AudioTab : Control
     {
         base.EnteredTree();
         _admin.AdminStatusUpdated += UpdateAdminButtonsVisibility;
+        UpdateAdminButtonsVisibility();
     }
 
     protected override void ExitedTree()
