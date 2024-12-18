@@ -19,6 +19,9 @@ public sealed partial class CargoBountyMenu : FancyWindow
 
     public void UpdateEntries(List<CargoBountyData> bounties, TimeSpan untilNextSkip)
     {
+        MasterTabContainer.SetTabTitle(0, Loc.GetString("bounty-console-tab-available-label"));
+        MasterTabContainer.SetTabTitle(1, Loc.GetString("bounty-console-tab-history-label"));
+
         BountyEntriesContainer.Children.Clear();
         foreach (var b in bounties)
         {
