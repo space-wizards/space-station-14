@@ -1,0 +1,12 @@
+- type: entity
+  name: magistrate stamp
+  parent: RubberStampBase
+  id: RubberStampMagistrat
+  components:
+  - type: Stamp
+    stampedName: Magistrate
+    stampedColor: "#FF5297"
+    stampState: "paper_stamp-magistrat"
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/stamps.rsi
+    state: stamp-magistrate
