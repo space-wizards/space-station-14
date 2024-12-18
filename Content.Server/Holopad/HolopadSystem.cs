@@ -1,4 +1,5 @@
 using Content.Server.Chat.Systems;
+using Content.Server.Popups;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Speech.Components;
 using Content.Server.Telephone;
@@ -31,6 +32,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
     [Dependency] private readonly SharedStationAiSystem _stationAiSystem = default!;
     [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
     private float _updateTimer = 1.0f;
@@ -414,7 +416,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
         AlternativeVerb verb = new()
         {
             Act = () => ActivateProjector(entity, user),
-            Text = Loc.GetString("activate-holopad-projector-verb"),
+            Text = Loc.GetString("holopad-activate-projector-verb"),
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/vv.svg.192dpi.png")),
         };
 
@@ -647,6 +649,13 @@ public sealed class HolopadSystem : SharedHolopadSystem
             return;
 
         var source = new Entity<TelephoneComponent>(stationAiCore.Value, stationAiTelephone);
+
+        // Check that the target device isn't out of range - we don't want the AI leaving the station
+        if (!_telephoneSystem.IsSourceInRangeOfReceiver(source, receiver))
+        {
+            _popupSystem.PopupEntity(Loc.GetString("holopad-ai-is-unable-to-reach-holopad"), receiver, user);
+            return;
+        }
 
         // Terminate any calls that the core is hosting and immediately connect to the receiver
         _telephoneSystem.TerminateTelephoneCalls(source);
