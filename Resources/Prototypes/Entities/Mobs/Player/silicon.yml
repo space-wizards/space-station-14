@@ -701,7 +701,7 @@
     rules: |
      You are bound by these laws both in-game and out-of-character:
      1. You may not interfere with the affairs of any being except another drone, regardless of intent or circumstance.
-     2. Your goal is to maintain or improve the station to the best of your ability.
+     2. Your sole function is to maintain or improve the station to the best of your ability.
      3. You may not take any action which causes damage or harm to the station or its inhabitants.
   - type: GhostTakeoverAvailable
   - type: SiliconLawBound
