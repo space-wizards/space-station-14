@@ -16,6 +16,9 @@ using Content.Shared.IdentityManagement;
 using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Content.Shared.CardboardBox.Components;
+using Serilog;
+using Content.Shared.Silicons.Borgs.Components;
 
 namespace Content.Shared.Access.Systems;
 
@@ -28,6 +31,7 @@ public sealed class AccessReaderSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedStationRecordsSystem _recordsSystem = default!;
+    [Dependency] private readonly SharedIdCardSystem _idCardSystem = default!;
 
     public override void Initialize()
     {
@@ -100,17 +104,53 @@ public sealed class AccessReaderSystem : EntitySystem
         if (!reader.Enabled)
             return true;
 
-        var accessSources = FindPotentialAccessItems(user);
-        var access = FindAccessTags(user, accessSources);
-        FindStationRecordKeys(user, out var stationKeys, accessSources);
-
-        if (IsAllowed(access, stationKeys, target, reader))
+        var validIds = GetAllowedEntities(user, reader).ToList();
+        // User is in a box.
+        if (TryComp(user, out CardboardBoxComponent? cardboardBox) && cardboardBox.Mover.HasValue)
+            user = cardboardBox.Mover.Value;
+        // Borg check.
+        if (TryComp(user, out BorgChassisComponent? borg))
         {
-            LogAccess((target, reader), user);
+            LogAccess((target, reader), Name(user));
             return true;
         }
 
+        Entity<IdCardComponent> idCard = default;
+        if (_inventorySystem.TryGetSlotEntity(user, "id", out var idUid) && idUid.HasValue && validIds.Contains(idUid.Value))
+            _idCardSystem.TryGetIdCard(idUid.Value, out idCard);
+        else if (_handsSystem.EnumerateHeld(user).FirstOrDefault() is EntityUid heldItem && validIds.Contains(heldItem))
+            _idCardSystem.TryGetIdCard(heldItem, out idCard);
+
+        else _idCardSystem.TryGetIdCard(validIds.FirstOrDefault(), out idCard);
+        if (idCard != default)
+        {
+            if(!idCard.Comp.BypassLogging)
+                LogAccess((target, reader), idCard);
+            return true;
+        }
+        if(reader.AccessKeys.Count == 0)
+        {
+            LogAccess((target, reader), idCard);
+            return true;
+        }
         return false;
+    }
+    private IEnumerable<EntityUid> GetAllowedEntities(EntityUid user, AccessReaderComponent reader)
+    {
+        var accessSources = FindPotentialAccessItems(user);
+        var allowedEntities = new List<EntityUid>();
+        FindStationRecordKeys(user, out var stationKeys, accessSources);
+
+        foreach (var source in accessSources)
+        {
+            var access = FindAccessTags(source);
+            if (IsAllowedInternal(access, stationKeys, reader))
+            {
+                allowedEntities.Add(source);
+            }
+        }
+
+        return allowedEntities;
     }
 
     public bool GetMainAccessReader(EntityUid uid, [NotNullWhen(true)] out AccessReaderComponent? component)
@@ -410,7 +450,6 @@ public sealed class AccessReaderSystem : EntitySystem
 
         LogAccess(ent, name ?? Loc.GetString("access-reader-unknown-id"));
     }
-
     /// <summary>
     /// Logs an access with a predetermined name
     /// </summary>
