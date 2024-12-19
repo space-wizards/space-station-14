@@ -1,9 +1,11 @@
 using Content.Shared.Damage;
 using Robust.Shared.Audio;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Server.ImmovableRod;
 
 [RegisterComponent]
+[AutoGenerateComponentPause]
 public sealed partial class ImmovableRodComponent : Component
 {
     public int MobCount = 0;
@@ -55,4 +57,12 @@ public sealed partial class ImmovableRodComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public LocId EviscerationPopup = "immovable-rod-penetrated-mob";
+
+    /// <summary>
+    ///     The time between gib popups
+    /// </summary>
+    public TimeSpan EviscerationPopupDelay = TimeSpan.FromMilliseconds(200);
+
+    [AutoPausedField]
+    public TimeSpan NextEviscerationPopup = new();
 }
