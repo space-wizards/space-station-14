@@ -473,6 +473,8 @@
       state: teleporters_station
     - map: ["computerLayerKeys"]
       state: telesci_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
   - type: ApcPowerReceiver
     powerLoad: 500
   - type: PointLight
