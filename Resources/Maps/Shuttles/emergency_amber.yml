@@ -3202,19 +3202,13 @@ entities:
     - type: Transform
       pos: -3.584198,-9.54459
       parent: 1
-- proto: HolopadLongRange
+- proto: HolopadCentCommEvacShuttle
   entities:
   - uid: 438
     components:
-    - type: MetaData
-      name: long-range holopad (Escape Shuttle)
     - type: Transform
       pos: 1.5,7.5
       parent: 1
-    - type: Label
-      currentLabel: Escape Shuttle
-    - type: NameModifier
-      baseName: long-range holopad
 - proto: HoloprojectorSecurity
   entities:
   - uid: 496

@@ -548,6 +548,22 @@
   - type: Label
     currentLabel: holopad-engineering-tech-vault
 
+- type: entity
+  parent: Holopad
+  id: HolopadEngineeringAME
+  suffix: AME
+  components:
+  - type: Label
+    currentLabel: holopad-engineering-ame
+
+- type: entity
+  parent: Holopad
+  id: HolopadEngineeringPower
+  suffix: Power
+  components:
+  - type: Label
+    currentLabel: holopad-engineering-power
+
 # Security
 - type: entity
   parent: Holopad
@@ -584,7 +600,7 @@
 - type: entity
   parent: Holopad
   id: HolopadSecurityBreakroom
-  suffix: Breakroom
+  suffix: Sec Breakroom
   components:
   - type: Label
     currentLabel: holopad-security-breakroom
@@ -628,6 +644,22 @@
   components:
   - type: Label
     currentLabel: holopad-security-armory
+
+- type: entity
+  parent: Holopad
+  id: HolopadSecurityLockerRoom
+  suffix: Sec Locker Room
+  components:
+  - type: Label
+    currentLabel: holopad-security-locker-room
+
+- type: entity
+  parent: Holopad
+  id: HolopadSecurityBrigMed
+  suffix: Brig Med
+  components:
+  - type: Label
+    currentLabel: holopad-security-brig-med
 
 # Service
 - type: entity
@@ -677,6 +709,14 @@
   components:
   - type: Label
     currentLabel: holopad-service-library
+
+- type: entity
+  parent: Holopad
+  id: HolopadServiceGameRoom
+  suffix: Game Room
+  components:
+  - type: Label
+    currentLabel: holopad-service-gameroom
 
 - type: entity
   parent: Holopad
