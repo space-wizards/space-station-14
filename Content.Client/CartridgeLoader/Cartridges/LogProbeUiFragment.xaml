@@ -18,4 +18,9 @@
     <ScrollContainer VerticalExpand="True" HScrollEnabled="True">
         <BoxContainer Orientation="Vertical" Name="ProbedDeviceContainer"/>
     </ScrollContainer>
+    <BoxContainer Orientation="Horizontal" Margin="4 8">
+        <Button Name="PrintButton" HorizontalAlignment="Left" Text="{Loc 'log-probe-print-button'}" Disabled="True"/>
+        <BoxContainer HorizontalExpand="True"/>
+        <Label Name="EntityName" Align="Right"/>
+    </BoxContainer>
 </cartridges:LogProbeUiFragment>
