@@ -712,11 +712,11 @@
 
 - type: entity
   parent: Holopad
-  id: HolopadGeneralGameRoom
+  id: HolopadServiceGameRoom
   suffix: Game Room
   components:
   - type: Label
-    currentLabel: holopad-general-gameroom
+    currentLabel: holopad-service-gameroom
 
 - type: entity
   parent: Holopad
