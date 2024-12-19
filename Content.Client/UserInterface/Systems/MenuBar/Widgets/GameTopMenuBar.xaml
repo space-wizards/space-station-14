@@ -20,6 +20,7 @@
         BoundKey = "{x:Static ic:EngineKeyFunctions.EscapeMenu}"
         ToolTip="{Loc 'game-hud-open-escape-menu-button-tooltip'}"
         MinSize="70 64"
+        SizeFlagsStretchRatio="70"
         HorizontalExpand="True"
         AppendStyleClass="{x:Static style:StyleBase.ButtonOpenRight}"
         />
@@ -30,6 +31,7 @@
         ToolTip="{Loc 'game-hud-open-guide-menu-button-tooltip'}"
         BoundKey = "{x:Static is:ContentKeyFunctions.OpenGuidebook}"
         MinSize="42 64"
+        SizeFlagsStretchRatio="42"
         HorizontalExpand="True"
         AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
         />
@@ -40,6 +42,7 @@
         ToolTip="{Loc 'game-hud-open-character-menu-button-tooltip'}"
         BoundKey = "{x:Static is:ContentKeyFunctions.OpenCharacterMenu}"
         MinSize="42 64"
+        SizeFlagsStretchRatio="42"
         HorizontalExpand="True"
         AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
         />
@@ -50,6 +53,7 @@
         ToolTip="{Loc 'game-hud-open-emotes-menu-button-tooltip'}"
         BoundKey = "{x:Static is:ContentKeyFunctions.OpenEmotesMenu}"
         MinSize="42 64"
+        SizeFlagsStretchRatio="42"
         HorizontalExpand="True"
         AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
         />
@@ -60,6 +64,7 @@
         BoundKey = "{x:Static is:ContentKeyFunctions.OpenCraftingMenu}"
         ToolTip="{Loc 'game-hud-open-crafting-menu-button-tooltip'}"
         MinSize="42 64"
+        SizeFlagsStretchRatio="42"
         HorizontalExpand="True"
         AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
         />
@@ -70,6 +75,7 @@
         BoundKey = "{x:Static is:ContentKeyFunctions.OpenActionsMenu}"
         ToolTip="{Loc 'game-hud-open-actions-menu-button-tooltip'}"
         MinSize="42 64"
+        SizeFlagsStretchRatio="42"
         HorizontalExpand="True"
         AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
         />
@@ -80,6 +86,7 @@
         BoundKey = "{x:Static is:ContentKeyFunctions.OpenAdminMenu}"
         ToolTip="{Loc 'game-hud-open-admin-menu-button-tooltip'}"
         MinSize="42 64"
+        SizeFlagsStretchRatio="42"
         HorizontalExpand="True"
         AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
         />
@@ -90,6 +97,7 @@
         BoundKey = "{x:Static is:ContentKeyFunctions.OpenSandboxWindow}"
         ToolTip="{Loc 'game-hud-open-sandbox-menu-button-tooltip'}"
         MinSize="42 64"
+        SizeFlagsStretchRatio="42"
         HorizontalExpand="True"
         AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
         />
@@ -100,6 +108,7 @@
         BoundKey = "{x:Static is:ContentKeyFunctions.OpenAHelp}"
         ToolTip="{Loc 'ui-options-function-open-a-help'}"
         MinSize="42 64"
+        SizeFlagsStretchRatio="42"
         HorizontalExpand="True"
         AppendStyleClass="{x:Static style:StyleBase.ButtonOpenLeft}"
         />
