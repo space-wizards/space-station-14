@@ -1,6 +1,6 @@
-using Robust.Shared.Serialization;
 using Content.Shared.Cargo.Prototypes;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Cargo;
 
@@ -13,26 +13,25 @@ public readonly partial record struct CargoBountyHistoryData
     /// <summary>
     /// A unique id used to identify the bounty
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public string Id { get; init; } = string.Empty;
 
     /// <summary>
     /// Optional name of the actor that skipped the bounty.
     /// Only set when the bounty has been skipped.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public string? ActorName { get; init; } = default;
 
     /// <summary>
     /// Time when this bounty was completed or skipped
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public TimeSpan Timestamp { get; init; } = TimeSpan.MinValue;
 
     /// <summary>
     /// The prototype containing information about the bounty.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField(required: true)]
     public ProtoId<CargoBountyPrototype> Bounty { get; init; } = string.Empty;
 
