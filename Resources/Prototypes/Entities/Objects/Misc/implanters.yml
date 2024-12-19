@@ -196,6 +196,14 @@
       implant: EmpImplant
 
 - type: entity
+  id: SmokeScreenImplanter
+  suffix: smoke screen
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+  - type: Implanter
+    implant: SmokeScreenImplant
+
+- type: entity
   id: ScramImplanter
   suffix: scram
   parent: BaseImplantOnlyImplanterSyndi
