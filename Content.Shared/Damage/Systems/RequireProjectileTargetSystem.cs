@@ -31,7 +31,7 @@ public sealed class RequireProjectileTargetSystem : EntitySystem
         {
             // Prevents shooting out of while inside of crates
             var shooter = projectile.Shooter;
-            if (!shooter.HasValue)
+            if (!shooter.HasValue || shooter.Value == EntityUid.Invalid)
                 return;
 
             // ProjectileGrenades delete the entity that's shooting the projectile,
