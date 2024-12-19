@@ -33,7 +33,8 @@ public sealed class SSDIndicatorSystem : EntitySystem
             !_mobState.IsDead(uid) &&
             !HasComp<ActiveNPCComponent>(uid) &&
             TryComp<MindContainerComponent>(uid, out var mindContainer) &&
-            mindContainer.ShowExamineInfo)
+            mindContainer.ShowExamineInfo &&
+            component.Enabled)
         {
             args.StatusIcons.Add(_prototype.Index(component.Icon));
         }
