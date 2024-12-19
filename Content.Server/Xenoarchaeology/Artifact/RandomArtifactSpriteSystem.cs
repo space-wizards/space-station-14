@@ -19,26 +19,8 @@ public sealed class RandomArtifactSpriteSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<RandomArtifactSpriteComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<RandomArtifactSpriteComponent, ArtifactActivatedEvent>(OnActivated);
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var query = EntityQueryEnumerator<RandomArtifactSpriteComponent, AppearanceComponent>();
-        while (query.MoveNext(out var uid, out var component, out var appearance))
-        {
-            if (component.ActivationStart == null)
-                continue;
-
-            var timeDif = _time.CurTime - component.ActivationStart.Value;
-            if (timeDif.Seconds >= component.ActivationTime)
-            {
-                _appearance.SetData(uid, SharedArtifactsVisuals.IsActivated, false, appearance);
-                component.ActivationStart = null;
-            }
-        }
+        SubscribeLocalEvent<RandomArtifactSpriteComponent, ArtifactUnlockingStartedEvent>(UnlockingStageStarted);
+        SubscribeLocalEvent<RandomArtifactSpriteComponent, ArtifactUnlockingFinishedEvent>(UnlockingStageFinished);
     }
 
     private void OnMapInit(EntityUid uid, RandomArtifactSpriteComponent component, MapInitEvent args)
@@ -48,9 +30,13 @@ public sealed class RandomArtifactSpriteSystem : EntitySystem
         _item.SetHeldPrefix(uid, "ano" + randomSprite.ToString("D2")); //set item artifact inhands
     }
 
-    private void OnActivated(EntityUid uid, RandomArtifactSpriteComponent component, ref ArtifactActivatedEvent args)
+    private void UnlockingStageStarted(Entity<RandomArtifactSpriteComponent> ent, ref ArtifactUnlockingStartedEvent args)
     {
-        _appearance.SetData(uid, SharedArtifactsVisuals.IsActivated, true);
-        component.ActivationStart = _time.CurTime;
+        _appearance.SetData(ent, SharedArtifactsVisuals.IsActivated, true);
+    }
+
+    private void UnlockingStageFinished(Entity<RandomArtifactSpriteComponent> ent, ref ArtifactUnlockingFinishedEvent args)
+    {
+        _appearance.SetData(ent, SharedArtifactsVisuals.IsActivated, false);
     }
 }

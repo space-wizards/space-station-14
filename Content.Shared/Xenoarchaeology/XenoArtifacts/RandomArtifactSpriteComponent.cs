@@ -1,4 +1,4 @@
-﻿namespace Content.Shared.Xenoarchaeology.XenoArtifacts;
+namespace Content.Shared.Xenoarchaeology.XenoArtifacts;
 
 [RegisterComponent]
 public sealed partial class RandomArtifactSpriteComponent : Component
@@ -11,6 +11,4 @@ public sealed partial class RandomArtifactSpriteComponent : Component
 
     [DataField("activationTime")]
     public double ActivationTime = 2.0;
-
-    public TimeSpan? ActivationStart;
 }

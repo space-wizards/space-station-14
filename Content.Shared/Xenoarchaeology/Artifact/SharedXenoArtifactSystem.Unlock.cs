@@ -14,6 +14,8 @@ public abstract partial class SharedXenoArtifactSystem
     private void InitializeUnlock()
     {
         _unlockingQuery = GetEntityQuery<XenoArtifactUnlockingComponent>();
+
+        SubscribeLocalEvent<XenoArtifactUnlockingComponent, MapInitEvent>(OnUnlockingStarted);
     }
 
     /// <summary> Finish unlocking phase when the time is up. </summary>
@@ -70,9 +72,6 @@ public abstract partial class SharedXenoArtifactSystem
             if (activated)
             {
                 _audio.PlayPvs(ent.Comp1.ActivationSound, ent.Owner);
-
-                var unlockingFinishedEvent = new ArtifactActivatedEvent();
-                RaiseLocalEvent(ent.Owner, ref unlockingFinishedEvent);
             }
         }
         else
@@ -85,12 +84,14 @@ public abstract partial class SharedXenoArtifactSystem
 
         var unlockingComponent = ent.Comp1;
         RemComp(ent, unlockingComponent);
+        RiseUnlockingFinished(ent, node);
         artifactComponent.NextUnlockTime = _timing.CurTime + artifactComponent.UnlockStateRefractory;
     }
 
     public void CancelUnlockingState(Entity<XenoArtifactUnlockingComponent, XenoArtifactComponent> ent)
     {
         RemComp(ent, ent.Comp1);
+        RiseUnlockingFinished(ent, null);
     }
 
     /// <summary>
@@ -125,10 +126,33 @@ public abstract partial class SharedXenoArtifactSystem
 
         return node != null;
     }
+
+    private void OnUnlockingStarted(Entity<XenoArtifactUnlockingComponent> ent, ref MapInitEvent args)
+    {
+        var unlockingStartedEvent = new ArtifactUnlockingStartedEvent();
+        RaiseLocalEvent(ent.Owner, ref unlockingStartedEvent);
+    }
+
+    private void RiseUnlockingFinished(
+        Entity<XenoArtifactUnlockingComponent, XenoArtifactComponent> ent,
+        Entity<XenoArtifactNodeComponent>? node
+    )
+    {
+        var unlockingFinishedEvent = new ArtifactUnlockingFinishedEvent(node);
+        RaiseLocalEvent(ent.Owner, ref unlockingFinishedEvent);
+    }
+
 }
 
 /// <summary>
-/// Event of artifact node finishing unlocking and getting 1 or more node activated.
+/// Event for starting artifact unlocking stage.
 /// </summary>
 [ByRefEvent]
-public record struct ArtifactActivatedEvent(EntityUid ArtifactUid);
+public record struct ArtifactUnlockingStartedEvent;
+
+/// <summary>
+/// Event for finishing artifact unlocking stage.
+/// </summary>
+/// <param name="UnlockedNode">Node which were unlocked. Null if stage was finished without new unlocks.</param>
+[ByRefEvent]
+public record struct ArtifactUnlockingFinishedEvent(EntityUid? UnlockedNode);
