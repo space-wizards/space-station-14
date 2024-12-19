@@ -11,6 +11,7 @@ player-panel-copy-username = Copy
 player-panel-show-notes = Notes
 player-panel-show-bans = Show Bans
 player-panel-help = Ahelp
+player-panel-mentorhelp = MentorHelp
 player-panel-freeze-and-mute = Freeze & Mute
 player-panel-freeze = Freeze
 player-panel-unfreeze = Unfreeze

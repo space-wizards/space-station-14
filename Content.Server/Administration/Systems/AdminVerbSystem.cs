@@ -120,7 +120,17 @@ namespace Content.Server.Administration.Systems
                         _console.RemoteExecuteCommand(player, $"openahelp \"{targetActor.PlayerSession.UserId}\"");
                     verbA.Impact = LogImpact.Low;
                     args.Verbs.Add(verbA);
-                    
+
+                    // MentorHelp
+                    Verb verbM = new();
+                    verbM.Text = Loc.GetString("mentorhelp-verb-get-data-text");
+                    verbM.Category = VerbCategory.Admin;
+                    verbM.Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/gavel.svg.192dpi.png"));
+                    verbM.Act = () =>
+                        _console.RemoteExecuteCommand(player, $"openmentorhelp \"{targetActor.PlayerSession.UserId}\"");
+                    verbM.Impact = LogImpact.Low;
+                    args.Verbs.Add(verbM);
+
                     // Subtle Messages
                     Verb prayerVerb = new();
                     prayerVerb.Text = Loc.GetString("prayer-verbs-subtle-message");
