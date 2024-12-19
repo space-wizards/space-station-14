@@ -292,3 +292,16 @@
   icon:
     sprite: Objects/Fun/toys.rsi
     state: fabric-scrap-salad
+    
+- type: construction
+  name: improvised pistol
+  id: improvisedpistol
+  graph: ImprovisedPistolGraph
+  startNode: start
+  targetNode: pistol
+  category: construction-category-weapons
+  objectType: Item
+  description: A pistol kitbashed from whatever can be found. Ammo not included.
+  icon:
+    sprite: _Impstation/Objects/Weapons/Guns/Pistols/improvpistol.rsi
+    state: icon
