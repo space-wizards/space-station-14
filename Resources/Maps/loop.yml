@@ -10859,7 +10859,7 @@ entities:
   - uid: 15200
     components:
     - type: Transform
-      pos: -57.608055,42.841152
+      pos: -59.461235,42.816093
       parent: 2
 - proto: BoxBeaker
   entities:
@@ -11086,7 +11086,7 @@ entities:
   - uid: 15202
     components:
     - type: Transform
-      pos: -57.514305,42.450527
+      pos: -59.679985,42.45672
       parent: 2
 - proto: BoxNitrileGloves
   entities:
@@ -32894,15 +32894,15 @@ entities:
       parent: 2
 - proto: CarbonDioxideCanister
   entities:
-  - uid: 64
-    components:
-    - type: Transform
-      pos: 6.5,20.5
-      parent: 2
   - uid: 798
     components:
     - type: Transform
       pos: 16.5,13.5
+      parent: 2
+  - uid: 9693
+    components:
+    - type: Transform
+      pos: 10.5,22.5
       parent: 2
 - proto: Carpet
   entities:
@@ -40761,7 +40761,7 @@ entities:
       pos: -9.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -232555.16
+      secondsUntilStateChange: -232643.31
       state: Opening
   - uid: 6747
     components:
@@ -40769,7 +40769,7 @@ entities:
       pos: -8.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -232555.86
+      secondsUntilStateChange: -232644.02
       state: Opening
   - uid: 6749
     components:
@@ -40777,7 +40777,7 @@ entities:
       pos: -6.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -232554.42
+      secondsUntilStateChange: -232642.58
       state: Opening
   - uid: 6750
     components:
@@ -40785,7 +40785,7 @@ entities:
       pos: -5.5,51.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -232553.8
+      secondsUntilStateChange: -232641.95
       state: Opening
 - proto: CyberPen
   entities:
@@ -74350,6 +74350,11 @@ entities:
       parent: 2
 - proto: PlasmaCanister
   entities:
+  - uid: 80
+    components:
+    - type: Transform
+      pos: 5.5,20.5
+      parent: 2
   - uid: 783
     components:
     - type: Transform
@@ -74358,12 +74363,7 @@ entities:
   - uid: 1398
     components:
     - type: Transform
-      pos: 10.5,23.5
-      parent: 2
-  - uid: 1399
-    components:
-    - type: Transform
-      pos: 10.5,22.5
+      pos: 6.5,20.5
       parent: 2
 - proto: PlasmaReinforcedWindowDirectional
   entities:
@@ -74977,6 +74977,11 @@ entities:
     - type: Transform
       pos: -24.5,58.5
       parent: 2
+  - uid: 8768
+    components:
+    - type: Transform
+      pos: -57.5,41.5
+      parent: 2
   - uid: 9021
     components:
     - type: Transform
@@ -75131,11 +75136,6 @@ entities:
     components:
     - type: Transform
       pos: -61.5,39.5
-      parent: 2
-  - uid: 14899
-    components:
-    - type: Transform
-      pos: -59.5,42.5
       parent: 2
   - uid: 14901
     components:
@@ -75485,6 +75485,12 @@ entities:
     components:
     - type: Transform
       pos: 20.5,37.5
+      parent: 2
+  - uid: 9766
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -47.5,38.5
       parent: 2
   - uid: 9807
     components:
@@ -76372,12 +76378,6 @@ entities:
     components:
     - type: Transform
       pos: -54.5,43.5
-      parent: 2
-  - uid: 13253
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -48.5,38.5
       parent: 2
   - uid: 13254
     components:
@@ -89008,6 +89008,11 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -1.5,66.5
       parent: 2
+  - uid: 1399
+    components:
+    - type: Transform
+      pos: -59.5,42.5
+      parent: 2
   - uid: 1553
     components:
     - type: Transform
@@ -89724,11 +89729,6 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -52.5,2.5
-      parent: 2
-  - uid: 15201
-    components:
-    - type: Transform
-      pos: -57.5,42.5
       parent: 2
   - uid: 15204
     components:
@@ -103728,10 +103728,10 @@ entities:
       parent: 2
 - proto: WaterVaporCanister
   entities:
-  - uid: 80
+  - uid: 64
     components:
     - type: Transform
-      pos: 5.5,20.5
+      pos: 10.5,23.5
       parent: 2
   - uid: 784
     components:
