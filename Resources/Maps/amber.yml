@@ -95220,7 +95220,7 @@ entities:
     - type: Transform
       pos: -4.5,-52.5
       parent: 2
-- proto: HolopadGeneralGameRoom
+- proto: HolopadServiceGameRoom
   entities:
   - uid: 11044
     components:
