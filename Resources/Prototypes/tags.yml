@@ -1241,6 +1241,9 @@
   id: Taser
 
 - type: Tag
+  id: TeleporterChip
+
+- type: Tag
   id: TimerBrigElectronics
 
 - type: Tag

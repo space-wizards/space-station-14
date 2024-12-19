@@ -30,3 +30,4 @@
   - type: HandTeleporter
     firstPortalPrototype: PortalGatewayBlue
     secondPortalPrototype: PortalGatewayOrange
+    allowPortalsOnDifferentGrids: true
