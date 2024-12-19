@@ -3153,7 +3153,6 @@ entities:
             4084: 24,-24
             4085: 27,-25
             4091: 25,-28
-            4205: 27,-36
             4206: 28,-34
         - node:
             color: '#FFFFFFFF'
@@ -3174,7 +3173,6 @@ entities:
             426: 40,-41
             427: 40,-40
             428: 41,-40
-            483: 30,-37
             484: 31,-36
             618: 18,-31
             619: 19,-29
@@ -3235,6 +3233,9 @@ entities:
             4076: 29,-27
             4086: 24,-25
             4184: 28,-32
+            4272: 24,-36
+            4273: 25,-37
+            4274: 30,-37
         - node:
             cleanable: True
             angle: 1.5707963267948966 rad
@@ -3327,10 +3328,13 @@ entities:
             4191: 25,-32
             4192: 28,-34
             4193: 28,-33
-            4196: 24,-36
-            4197: 25,-37
             4198: 27,-37
             4199: 26,-37
+            4284: 22,-36
+            4285: 26,-37
+            4286: 24,-37
+            4287: 28,-36
+            4288: 32,-37
         - node:
             cleanable: True
             angle: 1.5707963267948966 rad
@@ -3370,7 +3374,6 @@ entities:
             485: 31,-37
             489: 32,-36
             490: 32,-35
-            499: 22,-37
             500: 20,-37
             501: 17,-36
             502: 18,-35
@@ -3527,9 +3530,14 @@ entities:
             4186: 24,-33
             4187: 24,-35
             4188: 28,-35
-            4200: 27,-36
             4203: 26,-36
             4204: 25,-32
+            4275: 30,-36
+            4276: 28,-37
+            4277: 28,-36
+            4278: 27,-37
+            4279: 27,-36
+            4280: 25,-36
         - node:
             cleanable: True
             angle: 3.141592653589793 rad
@@ -3560,7 +3568,6 @@ entities:
             479: 21,-37
             480: 18,-36
             486: 31,-35
-            487: 30,-36
             614: 21,-28
             615: 14,-26
             616: 13,-25
@@ -3617,8 +3624,9 @@ entities:
             3954: 46,34
             4077: 29,-28
             4088: 25,-25
-            4194: 28,-37
-            4195: 25,-36
+            4281: 25,-36
+            4282: 24,-37
+            4283: 22,-37
         - node:
             cleanable: True
             angle: 1.5707963267948966 rad
@@ -4041,18 +4049,14 @@ entities:
             color: '#EFC24193'
             id: HalfTileOverlayGreyscale180
           decals:
-            4178: 28,-37
             4179: 27,-37
             4180: 26,-37
-            4181: 25,-37
-            4182: 24,-37
         - node:
             color: '#EFCC4193'
             id: HalfTileOverlayGreyscale180
           decals:
             333: 16,-37
             334: 17,-37
-            340: 30,-37
             343: 16,-29
             344: 15,-29
             345: 14,-29
@@ -4066,6 +4070,13 @@ entities:
             460: 20,-44
             461: 21,-44
             462: 22,-44
+        - node:
+            color: '#EFCF5093'
+            id: HalfTileOverlayGreyscale180
+          decals:
+            4267: 25,-37
+            4268: 28,-37
+            4269: 24,-37
         - node:
             color: '#FA750096'
             id: HalfTileOverlayGreyscale180
@@ -4587,7 +4598,6 @@ entities:
             color: '#EFCC4193'
             id: QuarterTileOverlayGreyscale
           decals:
-            311: 30,-36
             328: 17,-34
         - node:
             color: '#0E7F1BFF'
@@ -5390,7 +5400,6 @@ entities:
             color: '#EFCC4193'
             id: QuarterTileOverlayGreyscale90
           decals:
-            314: 22,-36
             318: 18,-35
             359: 22,-27
         - node:
@@ -5779,7 +5788,7 @@ entities:
             3014: 46,33
             3533: 6,33
             3919: 18,-46
-            4163: 24,-36
+            4255: 24,-36
         - node:
             color: '#FFFFFFFF'
             id: WarnCornerSmallNW
@@ -5788,7 +5797,7 @@ entities:
             2560: 41,-49
             2974: 53,33
             3920: 24,-46
-            4162: 28,-36
+            4254: 28,-36
         - node:
             color: '#FFFFFFFF'
             id: WarnCornerSmallSE
@@ -5835,15 +5844,10 @@ entities:
             1012: 21,-34
             1013: 21,-30
             2426: 61,-9
-        - node:
-            cleanable: True
-            color: '#FFFFFFFF'
-            id: WarnFullGreyscale
-          decals:
-            4207: 29,-37
-            4214: 29,-36
-            4215: 23,-37
-            4216: 23,-36
+            4257: 23,-36
+            4258: 23,-37
+            4259: 29,-36
+            4260: 29,-37
         - node:
             color: '#FFFFFFFF'
             id: WarnLineE
@@ -5908,15 +5912,10 @@ entities:
             1889: 9,-4
             3170: 23,-40
             3171: 17,-40
-        - node:
-            cleanable: True
-            color: '#FFFFFFFF'
-            id: WarnLineGreyscaleE
-          decals:
-            4209: 28,-36
-            4210: 28,-37
-            4217: 22,-36
-            4218: 22,-37
+            4261: 28,-36
+            4262: 28,-37
+            4263: 22,-36
+            4264: 22,-37
         - node:
             color: '#52B4E996'
             id: WarnLineGreyscaleN
@@ -6004,15 +6003,10 @@ entities:
             1898: 8,-10
             3169: 19,-40
             3177: 25,-40
-        - node:
-            cleanable: True
-            color: '#FFFFFFFF'
-            id: WarnLineGreyscaleW
-          decals:
-            4211: 30,-37
-            4213: 30,-36
-            4219: 24,-36
-            4220: 24,-37
+            4265: 30,-36
+            4266: 30,-37
+            4270: 24,-36
+            4271: 24,-37
         - node:
             color: '#FFFFFFFF'
             id: WarnLineN
@@ -6037,6 +6031,7 @@ entities:
             4164: 25,-32
             4165: 26,-32
             4166: 27,-32
+            4256: 22,-37
         - node:
             color: '#FFFFFFFF'
             id: WarnLineS
@@ -6110,9 +6105,9 @@ entities:
             3916: 21,-46
             3917: 22,-46
             3918: 23,-46
-            4167: 25,-36
             4168: 26,-36
-            4169: 27,-36
+            4252: 25,-36
+            4253: 27,-36
         - node:
             color: '#FED83DFF'
             id: WarningLine
@@ -6120,7 +6115,6 @@ entities:
             0: 19,-37
             1: 20,-37
             2: 21,-37
-            3: 22,-37
             5: 18,-37
         - node:
             angle: 1.5707963267948966 rad
@@ -6507,9 +6501,6 @@ entities:
             648: 16.544615,-35.22728
             649: 17.183504,-34.74117
             650: 17.502949,-35.222652
-            680: 30.325054,-36.104
-            681: 30.856304,-36.604
-            682: 21.875406,-36.6665
         - node:
             color: '#47422E3E'
             id: footprint
@@ -6527,7 +6518,6 @@ entities:
             530: 20.730148,-37.89044
             531: 21.209316,-37.64739
             532: 21.056538,-37.286278
-            533: 21.227804,-36.8777
             534: 20.790304,-36.912422
             535: 20.873638,-36.572144
         - node:
@@ -6540,8 +6530,6 @@ entities:
             538: 21.352804,-37.419365
             539: 20.998638,-37.009644
             540: 20.53336,-36.822144
-            541: 21.276415,-36.558254
-            542: 21.200026,-36.23881
             543: 20.727804,-36.07909
             544: 20.838915,-35.481865
             545: 20.991693,-35.842976
@@ -6608,7 +6596,6 @@ entities:
             668: 18.78239,-35.983646
             669: 19.25114,-36.702396
             670: 20.266766,-36.03052
-            671: 21.485516,-36.56177
             672: 20.25114,-36.514896
         - node:
             angle: 3.141592653589793 rad
@@ -6745,6 +6732,13 @@ entities:
       container: 10847
 - proto: ActionToggleLight
   entities:
+  - uid: 8692
+    components:
+    - type: Transform
+      parent: 13472
+    - type: InstantAction
+      originalIconColor: '#FFFFFFFF'
+      container: 13472
   - uid: 13568
     components:
     - type: Transform
@@ -43813,7 +43807,7 @@ entities:
   - uid: 15327
     components:
     - type: Transform
-      pos: 9.916731,-42.40345
+      pos: 10.590071,-42.418964
       parent: 2
 - proto: DrinkShaker
   entities:
@@ -68150,8 +68144,24 @@ entities:
   - uid: 13472
     components:
     - type: Transform
-      pos: 9.400621,-42.048656
+      pos: 9.418196,-42.27834
       parent: 2
+    - type: HandheldLight
+      toggleActionEntity: 8692
+    - type: ContainerContainer
+      containers:
+        cell_slot: !type:ContainerSlot
+          showEnts: False
+          occludes: True
+          ent: null
+        actions: !type:Container
+          showEnts: False
+          occludes: True
+          ents:
+          - 8692
+    - type: Physics
+      canCollide: True
+    - type: ActionsContainer
 - proto: LampInterrogator
   entities:
   - uid: 13567
@@ -69393,6 +69403,14 @@ entities:
     - type: Transform
       pos: 43.5,19.5
       parent: 2
+- proto: PaperOffice
+  entities:
+  - uid: 15337
+    components:
+    - type: Transform
+      rot: -3.141592653589793 rad
+      pos: 9.980696,-42.55959
+      parent: 2
 - proto: ParticleAcceleratorControlBoxUnfinished
   entities:
   - uid: 4800
@@ -69545,6 +69563,12 @@ entities:
     components:
     - type: Transform
       pos: 51.110676,4.5944533
+      parent: 2
+  - uid: 15338
+    components:
+    - type: Transform
+      rot: -3.141592653589793 rad
+      pos: 10.268833,-42.383278
       parent: 2
 - proto: PersonalAI
   entities:
@@ -78736,6 +78760,16 @@ entities:
     - type: Transform
       pos: 37.5,33.5
       parent: 2
+  - uid: 15335
+    components:
+    - type: Transform
+      pos: 25.5,-33.5
+      parent: 2
+  - uid: 15336
+    components:
+    - type: Transform
+      pos: 27.5,-33.5
+      parent: 2
 - proto: SmokingPipeFilledTobacco
   entities:
   - uid: 11946
@@ -79622,10 +79656,10 @@ entities:
       parent: 2
 - proto: SpawnPointChiefEngineer
   entities:
-  - uid: 8692
+  - uid: 15339
     components:
     - type: Transform
-      pos: 11.5,-34.5
+      pos: 10.5,-41.5
       parent: 2
 - proto: SpawnPointChiefMedicalOfficer
   entities:
@@ -82735,16 +82769,6 @@ entities:
     - type: Transform
       pos: 70.5,27.5
       parent: 2
-  - uid: 13473
-    components:
-    - type: Transform
-      pos: 10.5,-42.5
-      parent: 2
-  - uid: 13475
-    components:
-    - type: Transform
-      pos: 9.5,-42.5
-      parent: 2
 - proto: TableCounterWood
   entities:
   - uid: 9735
@@ -83358,6 +83382,16 @@ entities:
     - type: Transform
       rot: 1.5707963267948966 rad
       pos: 9.5,18.5
+      parent: 2
+  - uid: 13473
+    components:
+    - type: Transform
+      pos: 9.5,-42.5
+      parent: 2
+  - uid: 13475
+    components:
+    - type: Transform
+      pos: 10.5,-42.5
       parent: 2
 - proto: TargetClown
   entities:
