@@ -18,3 +18,10 @@ bounty-console-flavor-right = v1.4
 
 bounty-manifest-header = [font size=14][bold]Official cargo bounty manifest[/bold] (ID#{$id})[/font]
 bounty-manifest-list-start = Item manifest:
+
+bounty-console-tab-available-label = Available
+bounty-console-tab-history-label = History
+bounty-console-history-notice-completed-label = {$time} - Completed
+bounty-console-history-notice-skipped-label = {$time} - Skipped by {$id}
+bounty-console-history-completed-label = [color=limegreen]Completed[/color]
+bounty-console-history-skipped-label = [color=red]Skipped[/color]
