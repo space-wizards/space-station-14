@@ -2,10 +2,9 @@
   id: XenoArtifactEffectsDefaultTable
   table: !type:GroupSelector
     children:
-    - id: XenoArtifactEffectUniversalIntercom
-      weight: 10.0
-    - id: XenoArtifactStorage
-      weight: 10.0
+    # hijacks use key, prevents from using artifact, sadly
+    #- id: XenoArtifactEffectUniversalIntercom
+    #  weight: 10.0
     - id: XenoArtifactSolutionStorage
       weight: 10.0
     - id: XenoArtifactPhasing
@@ -14,12 +13,8 @@
       weight: 4.0
     - id: XenoArtifactSpeedUp
       weight: 4.0
-    - id: XenoArtifactDrill
-      weight: 6.0
     - id: XenoArtifactGhost
       weight: 2.0
-    - id: XenoArtifactMultitool
-      weight: 10.0
     - id: XenoArtifactEffectBadFeeling
       weight: 10.0
     - id: XenoArtifactEffectGoodFeeling
@@ -29,7 +24,7 @@
     - id: XenoArtifactEffectLightFlicker
       weight: 10.0
     - id: XenoArtifactPotassiumWave
-      weight: 10.0
+      weight: 7.0
     - id: XenoArtifactFloraSpawn
       weight: 10.0
     - id: XenoArtifactChemicalPuddle
@@ -109,17 +104,17 @@
     - id: XenoArtifactBoom
       weight: 5.0
     - id: XenoArtifactEffectCreationGasPlasma
-      weight: 5.0
+      weight: 2.0
     - id: XenoArtifactEffectCreationGasTritium
-      weight: 5.0
+      weight: 2.0
     - id: XenoArtifactEffectCreationGasAmmonia
-      weight: 10.0
+      weight: 3.0
     - id: XenoArtifactEffectCreationGasFrezon
       weight: 1.0
     - id: XenoArtifactEffectCreationGasNitrousOxide
-      weight: 10.0
+      weight: 4.0
     - id: XenoArtifactEffectCreationGasCarbonDioxide
-      weight: 10.0
+      weight: 4.0
 
 - type: entityTable
   id: XenoArtifactEffectsHandheldOnlyTable
@@ -129,12 +124,10 @@
     #  weight 10.0 # removed until we have value-based system
     #- id: XenoArtifactGun
     #  weight 4.0 #it conflicts with default interaction - it should activate artifact nodes
-    - id: XenoArtifactDrill
-      weight: 10
     - id: XenoArtifactMultitool
-      weight: 10
-    - id: XenoArtifactStorage
-      weight: 10
+      weight: 10.0
+    - id: XenoArtifactDrill
+      weight: 10.0
 
 - type: entity
   id: BaseXenoArtifactEffect

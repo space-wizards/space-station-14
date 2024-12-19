@@ -53,10 +53,10 @@
       children:
       - !type:NestedSelector
         tableId: XenoArtifactEffectsDefaultTable
-        weight: 58
+        weight: 54
       - !type:NestedSelector
         tableId: XenoArtifactEffectsHandheldOnlyTable
-        weight: 3
+        weight: 2
 
 - type: entity
   parent: BaseXenoArtifactItem

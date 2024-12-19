@@ -34,6 +34,7 @@
   components:
   - type: XATCompNearby
     requireComponentWithName: ActiveInstrument
+    radius: 2
 
 - type: xenoArchTrigger
   id: TriggerHeat
@@ -147,7 +148,7 @@
   components:
   - type: XATDamageThresholdReached
     typesNeeded:
-      Radiation: 100
+      Radiation: 20
   # TODO: legendary microwave trigger
 
 - type: xenoArchTrigger
