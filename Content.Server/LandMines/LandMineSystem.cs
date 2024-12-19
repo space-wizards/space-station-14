@@ -1,12 +1,12 @@
 using Content.Server.Explosion.EntitySystems;
+using Content.Shared.LandMines;
 using Content.Shared.Popups;
 using Content.Shared.StepTrigger.Systems;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.LandMines;
 
-public sealed class LandMineSystem : EntitySystem
+public sealed class LandMineSystem : SharedLandMineSystem
 {
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
@@ -14,6 +14,7 @@ public sealed class LandMineSystem : EntitySystem
 
     public override void Initialize()
     {
+        base.Initialize();
         SubscribeLocalEvent<LandMineComponent, StepTriggeredOnEvent>(HandleStepOnTriggered);
         SubscribeLocalEvent<LandMineComponent, StepTriggeredOffEvent>(HandleStepOffTriggered);
 
@@ -22,6 +23,9 @@ public sealed class LandMineSystem : EntitySystem
 
     private void HandleStepOnTriggered(EntityUid uid, LandMineComponent component, ref StepTriggeredOnEvent args)
     {
+        if (!component.Armed)
+            return;
+
         _popupSystem.PopupCoordinates(
             Loc.GetString("land-mine-triggered", ("mine", uid)),
             Transform(uid).Coordinates,
@@ -33,6 +37,9 @@ public sealed class LandMineSystem : EntitySystem
 
     private void HandleStepOffTriggered(EntityUid uid, LandMineComponent component, ref StepTriggeredOffEvent args)
     {
+        if (!component.Armed)
+            return;
+
         _trigger.Trigger(uid, args.Tripper);
     }
 
