@@ -39,8 +39,11 @@ public sealed partial class StationTeleporterConsoleWindow : FancyWindow
 
     public void Set(StationTeleporterConsoleBoundUserInterface userInterface, string stationName, EntityUid? mapUid)
     {
-        _ringTexture = _spriteSystem.Frame0(new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/ring.png")));
-        _ringFilledTexture = _spriteSystem.Frame0(new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/ring_filled.png")));
+        _ringTexture =
+            _spriteSystem.Frame0(new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/ring.png")));
+        _ringFilledTexture =
+            _spriteSystem.Frame0(
+                new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/ring_filled.png")));
 
         if (_entManager.TryGetComponent<TransformComponent>(mapUid, out var xform))
             NavMap.MapUid = xform.GridUid;
@@ -227,10 +230,9 @@ public sealed partial class StationTeleporterConsoleWindow : FancyWindow
                 if (mapId1 == MapId.Nullspace || mapId2 == MapId.Nullspace)
                     return;
 
-                NavMap.LinkLines.Add(
-                    new TeleporterLinkLine(
-                        _xformSystem.ToMapCoordinates(coordsOne.Value).Position,
-                        _xformSystem.ToMapCoordinates(coordTwo.Value).Position));
+                NavMap.DrawLines.Add((
+                    _xformSystem.ToMapCoordinates(coordsOne.Value).Position,
+                    _xformSystem.ToMapCoordinates(coordTwo.Value).Position));
             }
         }
     }
@@ -245,7 +247,7 @@ public sealed partial class StationTeleporterConsoleWindow : FancyWindow
         TeleportersTable.RemoveAllChildren();
         NavMap.TrackedCoordinates.Clear();
         NavMap.TrackedEntities.Clear();
-        NavMap.LinkLines.Clear();
+        NavMap.DrawLines.Clear();
     }
 
     private void UpdateTeleportersTable()
@@ -273,6 +275,7 @@ public sealed partial class StationTeleporterConsoleWindow : FancyWindow
         }
     }
 }
+
 public sealed class TeleporterButton : Button
 {
     public int IndexInTable;
