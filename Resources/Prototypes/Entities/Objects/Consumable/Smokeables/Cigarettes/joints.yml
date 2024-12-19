@@ -24,11 +24,11 @@
   - type: SolutionContainerManager
     solutions:
       smokable:
-        maxVol: 30
+        maxVol: 40
         reagents:
           - ReagentId: THC
             Quantity: 20
-            
+
 - type: entity
   id: JointRainbow
   parent: Joint
@@ -42,7 +42,7 @@
   - type: SolutionContainerManager
     solutions:
       smokable:
-        maxVol: 20
+        maxVol: 40
         reagents:
         - ReagentId: SpaceDrugs
           Quantity: 4
@@ -83,7 +83,7 @@
   - type: SolutionContainerManager
     solutions:
       smokable:
-        maxVol: 30
+        maxVol: 40
         reagents:
           - ReagentId: THC
             Quantity: 20
@@ -101,7 +101,7 @@
   - type: SolutionContainerManager
     solutions:
       smokable:
-        maxVol: 20
+        maxVol: 40
         reagents:
         - ReagentId: SpaceDrugs
           Quantity: 4
