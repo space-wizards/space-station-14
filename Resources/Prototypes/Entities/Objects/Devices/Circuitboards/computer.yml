@@ -422,10 +422,10 @@
   name: teleporters control console board
   description: A computer printed circuit board for a teleporter controlling console.
   components:
-    - type: Sprite
-      state: cpu_command
-    - type: ComputerBoard
-      prototype: ComputerStationTeleportersControl
+  - type: Sprite
+    state: cpu_command
+  - type: ComputerBoard
+    prototype: ComputerStationTeleportersControl
 
 - type: entity
   parent: BaseComputerCircuitboard
