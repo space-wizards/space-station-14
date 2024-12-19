@@ -143,6 +143,7 @@
     priority: 1
   - type: StaticPrice
     price: 500
+  - type: PowerGridCheckNotify
 
 # APC under construction
 - type: entity
