@@ -36,7 +36,7 @@ public sealed class PlankonScannerSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void AddScanVerb(EntityUid uid, PlanktonScannerComponent component, GetVerbsEvent<UtilityVerb> args)
+    private void AddScanVerb(EntityUid uid, PlanktonScannerComponent scanner, GetVerbsEvent<UtilityVerb> args)
     {
         if (!args.CanAccess)
             return;
@@ -48,7 +48,7 @@ public sealed class PlankonScannerSystem : EntitySystem
         {
             Act = () =>
             {
-                CreatePopup(uid, args.Target, plankton);
+                CreatePopup(uid, args.Target, plankton, scanner);
             },
             Text = Loc.GetString("plankton-scan-tooltip")
         };
@@ -78,7 +78,7 @@ public sealed class PlankonScannerSystem : EntitySystem
     // Add the species names and status to the message if there are any
     if (planktonNames.Count > 0)
     {
-        message += "\nSpecies names:\n" + string.Join("\n", planktonNames) + "Amount of dead plankton: {component.DeadPlankton}";
+        message += "\nSpecies names:\n" + string.Join("\n", planktonNames) + $"\nAmount of dead plankton: {component.DeadPlankton}";
     }
 
     _popupSystem.PopupEntity(messagePopup, target);
