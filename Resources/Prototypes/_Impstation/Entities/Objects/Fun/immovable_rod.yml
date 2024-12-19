@@ -80,6 +80,12 @@
     state: icon
     rotation: 0
     noRot: false
+  - type: ImmovableRod
+    hitSound:
+      collection: HollowPlastic
+      params:
+        volume: 20
+        variation: 0.125
   - type: PointLight
     radius: 3
     color: red
