@@ -16,7 +16,7 @@ public sealed partial class StationTeleporterComponent : Component
     public LocId TeleporterName = "teleporter-name-unknown";
 
     /// <summary>
-    /// When initialized, chip will attempt to contact a random teleporter that has the same code. Can be used for pre-created teleporers
+    /// When initialized, a chip will attempt to contact a random teleporter that has the same code. Can be used for pre-created teleporters
     /// </summary>
     // Not ProtoId<TagPrototype> because we can random generate this keys for expeditions
     [DataField]
