@@ -75,10 +75,10 @@ public sealed class PlankonScannerSystem : EntitySystem
     var messagePopup = Loc.GetString("plankton-scan-popup",
         ("count", $"{component.SpeciesInstances.Count}"));
 
-    // Add the species names to the message if there are any
+    // Add the species names and status to the message if there are any
     if (planktonNames.Count > 0)
     {
-        message += "\nSpecies names:\n" + string.Join("\n", planktonNames);
+        message += "\nSpecies names:\n" + string.Join("\n", planktonNames) + "Amount of dead plankton: {component.DeadPlankton}";
     }
 
     _popupSystem.PopupEntity(messagePopup, target);
