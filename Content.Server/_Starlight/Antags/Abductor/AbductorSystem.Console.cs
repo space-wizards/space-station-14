@@ -92,6 +92,9 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
     }
     private void OnDoAfterAttract(Entity<AbductorComponent> ent, ref AbductorAttractDoAfterEvent args)
     {
+        if (args.Handled || args.Cancelled)
+            return;
+        
         var victim = GetEntity(args.Victim);
         if (_pullingSystem.IsPulling(victim))
         {

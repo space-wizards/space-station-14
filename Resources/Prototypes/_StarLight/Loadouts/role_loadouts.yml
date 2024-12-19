@@ -8,3 +8,29 @@
   - ScientistShoes
   - Survival
   - Trinkets
+  
+- type: roleLoadout
+  id: JobMagistrate
+  groups:
+  - CommonBackpack
+  - Survival
+  - Trinkets
+  
+- type: roleLoadout
+  id: JobNanoTrasenRepresentative
+  groups:
+  - NanoTrasenRepresentativeJumpsuit
+  - CommonBackpack
+  - Trinkets
+  - Survival
+  - GroupSpeciesBreathTool
+  
+- type: roleLoadout
+  id: JobIAA
+  groups:
+  - LawyerNeck
+  - LawyerJumpsuit
+  - CommonBackpack
+  - Trinkets
+  - Survival
+  - GroupSpeciesBreathTool

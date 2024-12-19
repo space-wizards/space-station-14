@@ -1,7 +1,7 @@
 - type: gameMap
   id: Packed
   mapName: 'Packed'
-  mapPath: /Maps/_Starlight/Stations/Packed.yml
+  mapPath: /Maps/packed.yml
   minPlayers: 0
   maxPlayers: 35
   stations:

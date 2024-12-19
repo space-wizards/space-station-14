@@ -28,3 +28,11 @@
   - RoboticistBackpack
   - RoboticistSatchel
   - RoboticistDuffel
+  
+- type: loadoutGroup
+  id: NanoTrasenRepresentativeJumpsuit
+  name: loadout-group-nanotrasenrepresentative-jumpsuit
+  loadouts:
+  - NanoTrasenRepresentativeJumpsuit
+  - NanoTrasenRepresentativeJumpskirt
+  - NanoTrasenRepresentativeJumpsuitFormal

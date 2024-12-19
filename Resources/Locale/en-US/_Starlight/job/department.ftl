@@ -1,0 +1,1 @@
+department-Law = Law Department

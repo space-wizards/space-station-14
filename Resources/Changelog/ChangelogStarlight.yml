@@ -1129,4 +1129,74 @@ Entries:
   id: 160
   time: '2024-12-17T05:23:14.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/166
+- author: Rinary
+  changes:
+  - message: Added magistrate as a new role.
+    type: Add
+  id: 161
+  time: '2024-12-18T16:16:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/169
+- author: Rinary
+  changes:
+  - message: Added NanoTrasen representive as a new role.
+    type: Add
+  id: 162
+  time: '2024-12-18T16:16:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/169
+- author: Rinary
+  changes:
+  - message: Added internal affairs agent as a new role.
+    type: Add
+  id: 163
+  time: '2024-12-18T16:16:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/169
+- author: Rinary
+  changes:
+  - message: Added law department.
+    type: Add
+  id: 164
+  time: '2024-12-18T16:16:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/169
+- author: Rinary
+  changes:
+  - message: Added law department radio channel.
+    type: Add
+  id: 165
+  time: '2024-12-18T16:16:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/169
+- author: Rinary
+  changes:
+  - message: Added roboticist role to all maps.
+    type: Add
+  id: 166
+  time: '2024-12-18T16:16:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/169
+- author: Rinary
+  changes:
+  - message: Removed lawyer.
+    type: Remove
+  id: 167
+  time: '2024-12-18T16:16:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/169
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added rule 13.
+    type: Add
+  id: 168
+  time: '2024-12-18T16:16:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/169
+- author: STARLIGHT TEAM
+  changes:
+  - message: Fixed rule 4.
+    type: Fix
+  id: 169
+  time: '2024-12-18T16:16:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/169
+- author: STARLIGHT TEAM
+  changes:
+  - message: Added rule 4.8.
+    type: Add
+  id: 170
+  time: '2024-12-18T16:16:52.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/169
 

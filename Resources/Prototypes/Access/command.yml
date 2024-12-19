@@ -17,6 +17,8 @@
   - Captain
   - HeadOfPersonnel
   - Cryogenics
+  - Magistrate
+  - Ntrep
 
 - type: accessLevel
   id: EmergencyShuttleRepealAll

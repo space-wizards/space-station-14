@@ -21,3 +21,20 @@
     - WhitelistChameleon
   - type: IdentityBlocker
     coverage: EYES
+    
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesSunGlassesHudSkill
+  name: skills sunglasses
+  description: Sunglusses with a build-in skills HUD, showing the employment history of nearby NT crew members.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Clothing/Eyes/Glasses/sunhudskill.rsi
+  - type: Clothing
+    sprite: _Starlight/Clothing/Eyes/Glasses/sunhudskill.rsi
+  - type: FlashImmunity
+  - type: ShowJobIcons
+  - type: ShowMindShieldIcons
+  - type: ShowCriminalRecordIcons
+  - type: EyeProtection
+    protectionTime: 5

@@ -1,0 +1,6 @@
+- type: radioChannel
+  id: Law
+  name: chat-radio-law
+  keycode: "l"
+  frequency: 1780
+  color: "#ff178b"
