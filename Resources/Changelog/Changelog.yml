@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: coolboy911
-  changes:
-  - message: wide-spectrum anomaly locator is now included in cyborg's anomaly module
-    type: Add
-  id: 7236
-  time: '2024-08-28T12:36:31.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31427
 - author: deltanedas
   changes:
   - message: You can now build carp statues with luxury materials.
@@ -3937,3 +3930,11 @@
   id: 7735
   time: '2024-12-19T11:31:13.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33792
+- author: Plykiya
+  changes:
+  - message: Cargo armor crate now correctly indicates that it contains bulletproof
+      vests.
+    type: Fix
+  id: 7736
+  time: '2024-12-19T17:21:28.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33414
