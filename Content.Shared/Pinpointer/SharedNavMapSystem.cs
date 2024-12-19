@@ -1,11 +1,17 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using System.Runtime.CompilerServices;
+using Content.Shared.Maps;
 using Content.Shared.Tag;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Pinpointer;
 
@@ -22,8 +28,12 @@ public abstract class SharedNavMapSystem : EntitySystem
     public const int WallMask = AllDirMask << (int) NavMapChunkType.Wall;
     public const int FloorMask = AllDirMask << (int) NavMapChunkType.Floor;
 
+    [Robust.Shared.IoC.Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Robust.Shared.IoC.Dependency] private readonly IRobustRandom _random = default!;
     [Robust.Shared.IoC.Dependency] private readonly TagSystem _tagSystem = default!;
     [Robust.Shared.IoC.Dependency] private readonly INetManager _net = default!;
+    [Robust.Shared.IoC.Dependency] private readonly IGameTiming _timing = default!;
+    [Robust.Shared.IoC.Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     private static readonly ProtoId<TagPrototype>[] WallTags = {"Wall", "Window"};
     private EntityQuery<NavMapDoorComponent> _doorQuery;
@@ -34,6 +44,9 @@ public abstract class SharedNavMapSystem : EntitySystem
 
         // Data handling events
         SubscribeLocalEvent<NavMapComponent, ComponentGetState>(OnGetState);
+
+        SubscribeAllEvent<NavMapWarpRequest>(OnNavMapWarp);
+
         _doorQuery = GetEntityQuery<NavMapDoorComponent>();
     }
 
@@ -130,6 +143,38 @@ public abstract class SharedNavMapSystem : EntitySystem
         }
 
         return regionOverlays;
+    }
+
+    public void RequestWarpTo(EntityUid uid, Vector2 target)
+    {
+        var message = new NavMapWarpRequest(GetNetEntity(uid), target);
+        RaisePredictiveEvent(message);
+    }
+
+    private void OnNavMapWarp(NavMapWarpRequest args)
+    {
+        var uid = GetEntity(args.Uid);
+
+        // This was only tested with the AI Eye but should theoretically work with any other future remote-controlled things
+        if (TryComp<EyeComponent>(uid, out var eye) && eye.Target is not null)
+            uid = eye.Target.Value;
+
+        if (!TryComp<NavMapWarpComponent>(uid, out var warpComp) || _timing.CurTime < warpComp.NextWarpAllowed)
+            return;
+
+        warpComp.NextWarpAllowed = _timing.CurTime + TimeSpan.FromSeconds(warpComp.Delay);
+        var xform = Transform(uid);
+
+        if (xform.MapUid is null)
+            return;
+
+        _audio.PlayPredicted(warpComp.Sounds,
+            uid,
+            uid,
+            AudioParams.Default.WithVariation(warpComp.PitchVariation));
+
+        // This was designed for incorporeal entities, thus there aren't any collision checks or anything
+        _transformSystem.SetCoordinates(uid, xform, new EntityCoordinates(xform.MapUid.Value, args.Target));
     }
 
     #region: Event handling
