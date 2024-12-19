@@ -6,6 +6,7 @@ using Content.Shared.Arcade;
 using Content.Shared.Power;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
+using SpeakOnUIClosedComponent = Content.Shared.Advertise.Components.SpeakOnUIClosedComponent;
 
 namespace Content.Server.Arcade.BlockGame;
 
