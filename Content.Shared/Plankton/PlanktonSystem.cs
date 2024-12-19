@@ -1,6 +1,7 @@
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Components;
 using Robust.Shared.Random;
+using Robust.Shared.GameObjects;
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace Content.Shared.Plankton
 
         private const float UpdateInterval = 1f; // Interval in seconds
         private const float HungerInterval = 5f;
-        
+
         private float _updateTimer = 0f;
         private float _hungerTimer = 0f;
 
@@ -41,7 +42,8 @@ namespace Content.Shared.Plankton
             {
                 foreach (var entity in EntityManager.EntityQuery<PlanktonComponent>())
                 {
-                     PlanktonInteraction(entity);
+                    EntityUid uid = entity.Owner;  // entity.Owner is the EntityUid
+                    PlanktonInteraction(uid);
                 }
                 _updateTimer = 0f;
             }
@@ -121,13 +123,14 @@ namespace Content.Shared.Plankton
                 // Add the plankton species instance to the SpeciesInstances list
                 component.SpeciesInstances.Add(planktonInstance);
 
-                Log.Info($"Generated plankton species {planktonInstance.SpeciesName} with characteristics {combinedCharacteristics} and diet {planktonInstance.Diet}");
+                planktonInstance.IsAlive = true;
+                planktonInstance.CurrentHunger = 50f;
+
+                Log.Info($"Generated plankton species {planktonInstance.SpeciesName} with characteristics {combinedCharacteristics} and diet {planktonInstance.Diet}. Is alive is {planktonInstance.IsAlive}");
             }
 
             // Log the total number of plankton species initialized
             Log.Info($"Plankton component initialized with {component.SpeciesInstances.Count} species.");
-
-            PlanktonInteraction(uid);
         }
 
         private void PlanktonInteraction(EntityUid uid)
@@ -137,7 +140,6 @@ namespace Content.Shared.Plankton
                 Log.Error($"No PlanktonComponent found for entity {uid}");
                 return;
             }
-
             var component = _entityManager.GetComponent<PlanktonComponent>(uid);
             CheckPlanktonCharacteristics(component, uid);
             CheckPlanktonDiet(component, uid);
@@ -149,33 +151,25 @@ namespace Content.Shared.Plankton
     {
         if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.Aggressive) != 0)
         {
-            PerformAggressionCheck(uid);
+            PerformAggressionCheck(component);
         }
 
         if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.Bioluminescent) != 0)
         {
-            if (planktonInstance.IsAlive == true)
-            {
-                EntityManager.EnsureComponent<PointLightComponent>(uid);
-                Log.Info($"{planktonInstance.SpeciesName} is actively glowing.")
-            }
-            else
-            {
-                _entityManager.RemoveComponent<PointLightComponent>(uid);
-            }
+           // if (planktonInstance.IsAlive == true)
+           // {
+          //      EntityManager.EnsureComponent<PointLightComponent>(uid);
+          //      Log.Info($"{planktonInstance.SpeciesName} is actively glowing.");
+           // }
+           // else
+         //   {
+          //      _entityManager.RemoveComponent<PointLightComponent>(uid);
+          //  }
         }
 
          if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.Charged) != 0)
         {
-            if (planktonInstance.IsAlive == true)
-            {
-                EntityManager.EnsureComponent<ElectrifiedComponent>(uid);
-                Log.Info($"{planktonInstance.SpeciesName} is shocking it's tank.")
-            }
-            else
-            {
-                _entityManager.RemoveComponent<ElectrifiedComponent>(uid);
-            }
+
         }
 
         if ((planktonInstance.Characteristics & PlanktonComponent.PlanktonCharacteristics.Mimicry) != 0)
@@ -231,15 +225,26 @@ namespace Content.Shared.Plankton
         {
             foreach (var planktonInstance in component.SpeciesInstances)
             {
-                if ((planktonInstance.Diet & PlanktonComponent.PlanktonDiet.Decomposer) != 0)
+
+
+
+                if (planktonInstance.Diet == PlanktonComponent.PlanktonDiet.Decomposer)
                 {
-                    if (planktonInstance.IsAlive == true)
+                    if (planktonInstance.IsAlive)
                     {
-                        Log.Info($"{planktonInstance.SpeciesName} is alive and a decomposer!");
                         if (component.DeadPlankton > 0)
                          {
-                                DecomposeCheck(planktonInstance, component);
+                            DecomposeCheck(planktonInstance, component);
                          }
+                    }
+
+                }
+
+                if (planktonInstance.Diet == PlanktonComponent.PlanktonDiet.Carnivore)
+                {
+                    if (planktonInstance.IsAlive)
+                    {
+                        PerformCarnivoreCheck(component);
                     }
 
                 }
@@ -263,76 +268,122 @@ namespace Content.Shared.Plankton
         }
 
         private void PerformAggressionCheck(PlanktonComponent component)
+{
+
+    // Collect all plankton instances that need to be deleted
+    var planktonToRemove = new List<PlanktonComponent.PlanktonSpeciesInstance>();
+
+    foreach (var planktonEntity in EntityManager.EntityQuery<PlanktonComponent>())
+    {
+        var aggressivePlanktonInstances = component.SpeciesInstances
+            .Where(inst => (inst.Characteristics & PlanktonComponent.PlanktonCharacteristics.Aggressive) != 0)
+            .ToList();
+
+        if (aggressivePlanktonInstances.Any())
         {
-            foreach (var planktonEntity in EntityManager.EntityQuery<PlanktonComponent>())
+            foreach (var aggressivePlankton in aggressivePlanktonInstances)
             {
-
-                var aggressivePlanktonInstances = component.SpeciesInstances
-                    .Where(inst => (inst.Characteristics & PlanktonComponent.PlanktonCharacteristics.Aggressive) != 0)
-                    .ToList();
-
-                 var carnivorousPlanktonInstances = component.SpeciesInstances
-                    .Where(inst => (inst.Diet & PlanktonComponent.PlanktonDiet.Carnivore) != 0)
-                    .ToList();
-
-                if (aggressivePlanktonInstances.Any())
+                foreach (var otherPlankton in component.SpeciesInstances)
                 {
-                    foreach (var aggressivePlankton in aggressivePlanktonInstances)
-                    {
-                        if (aggressivePlankton.IsAlive == true)
-                        {
-                        foreach (var otherPlankton in component.SpeciesInstances)
-                        {
-                            if (aggressivePlankton == otherPlankton) continue;
+                    if (aggressivePlankton == otherPlankton) continue;
 
-                            ReducePlanktonSizeAggression(otherPlankton, component, aggressivePlankton);
-                        }
-                        }
+                    if (otherPlankton.IsAlive && aggressivePlankton.IsAlive == true)
+                    {
+                    ReducePlanktonSizeAggression(otherPlankton, component, aggressivePlankton);
+                    }
+                    if (!otherPlankton.IsAlive)
+                    {
+                        Log.Error($"{aggressivePlankton.SpeciesName}'s target is dead.");
                     }
 
-                if (carnivorousPlanktonInstances.Any())
-                {
-                    foreach (var carnivorousPlankton in carnivorousPlanktonInstances)
+                    // Check if the plankton instance should be removed (e.g., it was wiped out)
+                    if (otherPlankton.CurrentSize <= 0)
                     {
-                        if (carnivorousPlankton.IsAlive == true)
-                        {
-                        foreach (var otherPlankton in component.SpeciesInstances)
-                        {
-                            if (carnivorousPlankton == otherPlankton) continue;
-
-                            ReducePlanktonSizeCarnivorous(otherPlankton, component, carnivorousPlankton);
-                        }
-                        }
+                        planktonToRemove.Add(otherPlankton);
                     }
-                }
                 }
             }
         }
+    }
+
+
+
+    // Remove the dead plankton species instances after the loop
+    foreach (var plankton in planktonToRemove)
+    {
+        plankton.IsAlive = false;
+    }
+}
+
+
+     private void PerformCarnivoreCheck(PlanktonComponent component)
+{
+    Log.Info($"Performing canivore check");
+    // Collect all plankton instances that need to be deleted
+    var planktonToRemoveCarnivore = new List<PlanktonComponent.PlanktonSpeciesInstance>();
+
+    foreach (var planktonEntity in EntityManager.EntityQuery<PlanktonComponent>())
+    {
+
+        var carnivorousPlanktonInstances = component.SpeciesInstances
+            .Where(inst => (inst.Diet == PlanktonComponent.PlanktonDiet.Carnivore))
+            .ToList();
+
+        if (carnivorousPlanktonInstances.Any())
+        {
+            foreach (var carnivorousPlankton in carnivorousPlanktonInstances)
+            {
+                foreach (var otherPlankton in component.SpeciesInstances)
+                {
+                    if (carnivorousPlankton == otherPlankton) continue;
+                    if (otherPlankton.IsAlive == true && carnivorousPlankton.IsAlive == true)
+                    {
+                        ReducePlanktonSizeCarnivorous(otherPlankton, component, carnivorousPlankton);
+                    }
+
+                    if (!otherPlankton.IsAlive)
+                    {
+                        Log.Error($"{carnivorousPlankton.SpeciesName} will start starving soon due to killing all prey.");
+                    }
+
+                    // Check if the plankton instance should be removed
+                    if (otherPlankton.CurrentSize <= 0)
+                    {
+                        planktonToRemoveCarnivore.Add(otherPlankton);
+                    }
+                }
+            }
+        }
+    }
+
+
+
+    // Remove the dead plankton species instances after the loop
+    foreach (var plankton in planktonToRemoveCarnivore)
+    {
+        plankton.IsAlive = false;
+    }
+}
+
 
 
         private void ReducePlanktonSizeCarnivorous(PlanktonComponent.PlanktonSpeciesInstance planktonInstance, PlanktonComponent component, PlanktonComponent.PlanktonSpeciesInstance carnivorousPlankton)
         {
-            if (planktonInstance.IsAlive == true && carnivorousPlankton.IsAlive == true)
-            {
              float food = 0.5f;
              planktonInstance.CurrentSize -= food;
              Log.Info($"Reduced size of {planktonInstance.SpeciesName} to {planktonInstance.CurrentSize} via being predated on by {carnivorousPlankton.SpeciesName}");
              carnivorousPlankton.CurrentHunger += food;
+             Log.Info($"{carnivorousPlankton.SpeciesName} is now at {carnivorousPlankton.CurrentHunger} after hunting");
 
               if (planktonInstance.CurrentSize < 0)
               {
                 planktonInstance.CurrentSize = 0;
                 Log.Info($"{planktonInstance.SpeciesName} has been wiped out by {carnivorousPlankton.SpeciesName}.");
-                planktonInstance.IsAlive = false;
-                // change IsAlive once the framework is finished
               }
-            }
         }
 
         private void ReducePlanktonSizeAggression(PlanktonComponent.PlanktonSpeciesInstance planktonInstance, PlanktonComponent component, PlanktonComponent.PlanktonSpeciesInstance aggressivePlankton)
         {
-            if (planktonInstance.IsAlive == true && aggressivePlankton.IsAlive == true)
-            {
              float sizeReduction = 0.1f;
              planktonInstance.CurrentSize -= sizeReduction;
              component.DeadPlankton += sizeReduction;
@@ -342,10 +393,8 @@ namespace Content.Shared.Plankton
               {
                 planktonInstance.CurrentSize = 0;
                 Log.Info($"{planktonInstance.SpeciesName} has been wiped out by {aggressivePlankton.SpeciesName}.");
-                planktonInstance.IsAlive = false;
                 // change IsAlive once the framework is finished
               }
-            }
         }
 
          private void PlanktonHunger(PlanktonComponent component)
@@ -354,13 +403,14 @@ namespace Content.Shared.Plankton
             {
             if (planktonInstance.IsAlive == true)
             {
-                if (planktonInstance.CurrentHunger <= 50f)
+                if (planktonInstance.CurrentHunger <= 0)
                 {
                     // If hunger is 0 or less, plankton dies
                     if (planktonInstance.CurrentHunger <= 0f)
                     {
                         planktonInstance.CurrentHunger = 0f;
                         planktonInstance.IsAlive = false;
+                        component.DeadPlankton = planktonInstance.CurrentSize;
                         Log.Error($"{planktonInstance.SpeciesName} has starved to death.");
                     }
                 }
@@ -372,19 +422,18 @@ namespace Content.Shared.Plankton
                     planktonInstance.CurrentHunger = Math.Max(0f, planktonInstance.CurrentHunger);  // Ensure it doesn't go below 0
 
                     Log.Error($"{planktonInstance.SpeciesName} has lost {HungerLoss} hunger. It is now at {planktonInstance.CurrentHunger}");
-                    }
+                }
 
             // Ensure hunger doesn't exceed 50 and log if full
-            if (planktonInstance.CurrentHunger >= 50f)
+            if (planktonInstance.CurrentHunger >= 51f)
             {
                 planktonInstance.CurrentHunger = 50f;  // Clamp the hunger to a maximum of 50
                 Log.Error($"{planktonInstance.SpeciesName} is full.");
             }
-        }
-    }
+           }
+           }
 }
 
-
-    }
+}
 }
 

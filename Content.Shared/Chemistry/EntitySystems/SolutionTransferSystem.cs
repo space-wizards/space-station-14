@@ -202,10 +202,8 @@ public sealed class SolutionTransferSystem : EntitySystem
 
         if (TryComp<PlanktonComponent>(sourceEntity, out var planktonSource))
         {
-            var planktonFraction = actualAmount / sourceSolution.Volume;
-
-            TransferPlanktonFraction(planktonSource, planktonFraction);
-            Log.Info($"Transferred Plankton from {sourceEntity} to {targetEntity}.");
+            var PlanktonFraction = actualAmount / sourceSolution.Volume;
+            float planktonFraction = (float)PlanktonFraction;
 
             foreach (var species in planktonSource.SpeciesInstances)
             {
@@ -214,7 +212,7 @@ public sealed class SolutionTransferSystem : EntitySystem
                     species.CurrentSize = 0;
             }
         }
-        
+
         var solution = _solution.SplitSolution(source, actualAmount);
         _solution.AddSolution(target, solution);
 
@@ -237,32 +235,6 @@ public sealed class SolutionTransferSystem : EntitySystem
         return actualAmount;
     }
 
-    private void TransferPlanktonFraction(PlanktonComponent planktonSource, FixedPoint2 transferAmount, FixedPoint2 solutionVolume)
-{
-    // Calculate the fraction of the solution that is being transferred.
-    // Example: If 50% of the solution is transferred, we transfer 50% of the plankton size.
-    float transferFraction = (float)(transferAmount / solutionVolume);
-    
-    foreach (var species in planktonSource.SpeciesInstances)
-    {
-        // Scale the current size of each species based on the transfer fraction.
-        species.CurrentSize -= species.CurrentSize * transferFraction;
-        planktonSource.DeadPlankton -= planktonSource.DeadPlankton * transferFraction;
-        Log.Info($"Transferred {species.CurrentSize} of {species.SpeciesName} to target.");
-        Log.Info($"Transferred {planktonSource.DeadPlankton} of dead matter to target.");
-
-
-        // Ensure no species has negative size.
-        if (species.CurrentSize < 0)
-        {
-            species.CurrentSize = 0;
-        }
-        if (planktonSource.DeadPlankton < 0)
-        {
-            planktonSource.DeadPlankton = 0;
-        }
-    }
-}
 
 
         private void TransferPlanktonComponent(EntityUid sourceEntity, EntityUid targetEntity)
@@ -302,9 +274,6 @@ public sealed class SolutionTransferSystem : EntitySystem
 
 
     }
-}
-
-}
 
 /// <summary>
 /// Raised when attempting to transfer from one solution to another.
