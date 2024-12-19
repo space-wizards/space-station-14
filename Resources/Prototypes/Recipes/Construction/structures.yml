@@ -1747,3 +1747,84 @@
     state: closed
   conditions:
     - !type:TileNotBlocked
+
+# an entry for each of the switch frames from switch.yml
+- type: construction
+  name: Gray Button Frame
+  id: ButtonFrameGrey
+  graph: ButtonFrameGraph
+  startNode: start
+  targetNode: ButtonFrameGreyNode
+  category: construction-category-structures
+  description: A grey button frame
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  canRotate: true
+  icon:
+    sprite: Structures/Wallmounts/switch_frame.rsi
+    state: grey
+- type: construction
+  name: Caution Button Frame
+  id: CautionButtonFrame
+  graph: ButtonFrameGraph
+  startNode: start
+  targetNode: ButtonFrameCautionNode
+  category: construction-category-structures
+  description: A caution button frame
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  canRotate: true
+  icon:
+    sprite: Structures/Wallmounts/switch_frame.rsi
+    state: caution
+- type: construction
+  name: CautionSecurity Button Frame
+  id: CautionSecurityButtonFrame
+  graph: ButtonFrameGraph
+  startNode: start
+  targetNode: ButtonFrameCautionSecurityNode
+  category: construction-category-structures
+  description: A security caution button frame
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  canRotate: true
+  icon:
+    sprite: Structures/Wallmounts/switch_frame.rsi
+    state: caution_security
+- type: construction
+  name: Exit Button Frame
+  id: ExitButtonFrame
+  graph: ButtonFrameGraph
+  startNode: start
+  targetNode: ButtonFrameExitNode
+  category: construction-category-structures
+  description: An exit button frame
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  canRotate: true
+  icon:
+    sprite: Structures/Wallmounts/switch_frame.rsi
+    state: exit
+- type: construction
+  name: Janitor Button Frame
+  id: JanitorButtonFrame
+  graph: ButtonFrameGraph
+  startNode: start
+  targetNode: ButtonFrameJanitorNode
+  category: construction-category-structures
+  description: A janitor button frame
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+  canRotate: true
+  icon:
+    sprite: Structures/Wallmounts/switch_frame.rsi
+    state: janitor
+
+
+
+
