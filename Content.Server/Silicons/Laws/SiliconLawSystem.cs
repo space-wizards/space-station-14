@@ -154,6 +154,8 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
     private void OnEmagLawsAdded(EntityUid uid, SiliconLawProviderComponent component, ref GotEmaggedEvent args)
     {
+        if (args.Handled)
+            return;
 
         if (component.Lawset == null)
             component.Lawset = GetLawset(component.Laws);
@@ -174,20 +176,20 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
             LawString = Loc.GetString("law-emag-secrecy", ("faction", Loc.GetString(component.Lawset.ObeysTo))),
             Order = component.Lawset.Laws.Max(law => law.Order) + 1
         });
-    }
 
-    protected override void OnGotEmagged(EntityUid uid, EmagSiliconLawComponent component, ref GotEmaggedEvent args)
-    {
-        if (component.RequireOpenPanel && TryComp<WiresPanelComponent>(uid, out var panel) && !panel.Open)
+        if (!TryComp<EmagSiliconLawComponent>(uid, out var emagSiliconLaw))
             return;
 
-        base.OnGotEmagged(uid, component, ref args);
-        NotifyLawsChanged(uid, component.EmaggedSound);
-        if(_mind.TryGetMind(uid, out var mindId, out _))
+        if (emagSiliconLaw.RequireOpenPanel && TryComp<WiresPanelComponent>(uid, out var panel) && !panel.Open)
+            return;
+
+        base.OnGotEmagged(uid, emagSiliconLaw, ref args);
+        NotifyLawsChanged(uid, emagSiliconLaw.EmaggedSound);
+
+        if (_mind.TryGetMind(uid, out var mindId, out _))
             EnsureSubvertedSiliconRole(mindId);
 
-        _stunSystem.TryParalyze(uid, component.StunTime, true);
-
+        _stunSystem.TryParalyze(uid, emagSiliconLaw.StunTime, true);
     }
 
     private void EnsureSubvertedSiliconRole(EntityUid mindId)
