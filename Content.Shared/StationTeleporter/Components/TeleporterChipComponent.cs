@@ -1,11 +1,12 @@
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.StationTeleporter.Components;
 
 /// <summary>
 /// Stores a reference to a specific teleporter. Can be inserted into the teleporter control console so that the console can control this teleporter
 /// </summary>
-[RegisterComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedStationTeleporterSystem))]
 public sealed partial class TeleporterChipComponent : Component
 {
