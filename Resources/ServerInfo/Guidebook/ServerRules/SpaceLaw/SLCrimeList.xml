@@ -643,7 +643,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        This covers places like telecomms, head offices, security zones, command areas, the vault and armory.
+        All secured areas are defined within the "High Security Areas" section of space law.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -716,7 +716,7 @@
 
   ## Extreme Crimes
   - The maximum sentence per extreme crime is 15 minutes.
-  - Particularly violent offenders may be placed in perma. (Attacking officers in an attempt to escape prison)
+  - Particularly violent offenders may be placed in permanent confinement. (Attacking officers in an attempt to escape prison)
   - Attempted murder and murder are linked crimes and cannot be stacked together.
   - Attempted murderers should be granted a more lenient sentence than a murderer.
   <Table Columns="4">
@@ -752,7 +752,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        While rare, this charge can be bumped to an execution if the suspect has repeatedly attempted to break out of the permanent brig. Includes people breaking others out.
+        While rare, this charge can be bumped to an execution if the suspect has repeatedly attempted to break out of the communal brig. Includes people breaking others out.
       </Box>
     </ColorBox>
     <ColorBox>
@@ -857,7 +857,7 @@
     </ColorBox>
     <ColorBox>
       <Box HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="2">
-        Applies if the suspect is excessively uncooperative or the implant fails to function due to the mental state of the prisoner already being too far gone. If the implant fails execution is heavily recommended.
+        Applies if the suspect is excessively uncooperative or the implant fails to function due to the mental state of the prisoner already being too far gone. If the implant fails an expedited execution is heavily recommended.
       </Box>
     </ColorBox>
     <ColorBox>
