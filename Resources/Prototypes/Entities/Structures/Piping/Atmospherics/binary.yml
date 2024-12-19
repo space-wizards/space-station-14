@@ -59,7 +59,6 @@
     enabled: false
   - type: ActivatableUI
     key: enum.GasPressurePumpUiKey.Key
-  - type: ActivatableUIRequiresAnchor
   - type: UserInterface
     interfaces:
       enum.GasPressurePumpUiKey.Key:
