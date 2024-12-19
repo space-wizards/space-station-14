@@ -874,8 +874,15 @@
     drawdepth: Mobs
     sprite: Mobs/Pets/breaddog.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: base
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: breaddog
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: breaddog-moving
+    noMovementLayers:
+      movement:
+        state: breaddog
   - type: Fixtures
     fixtures:
       fix1:
