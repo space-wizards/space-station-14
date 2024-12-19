@@ -1,49 +1,4 @@
 ﻿Entries:
-- author: KingMudkipIII
-  changes:
-  - message: Hummingbird's delight now requires shaking instead of stirring, so it
-      doesnt interfere with lemonade.
-    type: Fix
-  id: 248
-  time: '2024-09-22T16:57:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/322
-- author: Darkmajia
-  changes:
-  - message: The scarfening is upon us. Check the neck loadout of your favorite job!
-    type: Add
-  id: 249
-  time: '2024-09-22T17:19:55.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/325
-- author: TGRCDev
-  changes:
-  - message: Guns that are animated by a revenant no longer close their own bolt by
-      default.
-    type: Tweak
-  id: 250
-  time: '2024-09-23T03:09:34.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/329
-- author: Sha-Seng
-  changes:
-  - message: The HoS can now choose to start with the Security Gas Mask if they miss
-      it
-    type: Add
-  - message: The new HoS mask is now a Tiny item as intended so it stops deleting
-      the flare from the survival box
-    type: Tweak
-  - message: Added a Flippo lighter to loadout trinkets for everyone
-    type: Add
-  - message: Command Flask added to ALL command survival boxes
-    type: Fix
-  id: 251
-  time: '2024-09-23T03:09:10.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/328
-- author: aada
-  changes:
-  - message: Clown apron.
-    type: Add
-  id: 252
-  time: '2024-09-24T21:43:13.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/334
 - author: starlighthowls
   changes:
   - message: wwwaaooouuuwwgghhh (<-whale noises)
@@ -4517,3 +4472,42 @@
   id: 747
   time: '2024-12-16T15:20:21.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1042
+- author: mqole
+  changes:
+  - message: the imp has become a marketable plushie.
+    type: Add
+  id: 748
+  time: '2024-12-17T11:44:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1048
+- author: TheGrimbeeper
+  changes:
+  - message: Holium can no longer spew out of the vents
+    type: Remove
+  id: 749
+  time: '2024-12-17T11:57:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1050
+- author: Sleiphros
+  changes:
+  - message: New wrecks of all different available sizes can be pulled in by the salvage
+      magnet!
+    type: Add
+  - message: New ruins, derelicts and satellites have been drifting near the station
+      recently...
+    type: Add
+  id: 750
+  time: '2024-12-17T12:01:33.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1049
+- author: CrystalClover
+  changes:
+  - message: Altered Grey Wide eyes to make it more visually consistent
+    type: Tweak
+  id: 751
+  time: '2024-12-17T12:01:07.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1052
+- author: DinnerCalzone
+  changes:
+  - message: Amber Station has been updated to incorporate changes from upstream.
+    type: Tweak
+  id: 752
+  time: '2024-12-17T12:03:06.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1053
