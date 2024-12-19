@@ -3,7 +3,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.StationTeleporter;
 
-public sealed class ClientStationTeleporterSystem : SharedStationTeleporterSystem
+public sealed class StationTeleporterSystem : SharedStationTeleporterSystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
@@ -19,7 +19,7 @@ public sealed class ClientStationTeleporterSystem : SharedStationTeleporterSyste
         if (ent.Comp.PortalLayerMap is null)
             return;
 
-        if (!_appearance.TryGetData<Color>(ent, TeleporterPortalVisual.Color, out var newColor))
+        if (!_appearance.TryGetData<Color>(ent, TeleporterPortalVisuals.Color, out var newColor))
             return;
 
         if (!TryComp<SpriteComponent>(ent, out var sprite))

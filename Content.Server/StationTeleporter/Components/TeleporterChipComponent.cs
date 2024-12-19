@@ -10,9 +10,15 @@ namespace Content.Server.StationTeleporter.Components;
 [Access(typeof(StationTeleporterSystem))]
 public sealed partial class TeleporterChipComponent : Component
 {
+    /// <summary>
+    /// Uid of the teleporter this chip is synced with.
+    /// </summary>
     [DataField]
     public EntityUid? ConnectedTeleporter;
 
+    /// <summary>
+    /// The name of the teleporter the chip has synced is copied into this field. This information is used when examining the chip.
+    /// </summary>
     [DataField]
     public string ConnectedName = string.Empty;
 

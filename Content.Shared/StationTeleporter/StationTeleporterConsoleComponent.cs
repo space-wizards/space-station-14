@@ -5,7 +5,7 @@ namespace Content.Shared.StationTeleporter;
 /// <summary>
 /// Console that allows you to manage the StationTeleporterComponent
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
 [Access(typeof(SharedStationTeleporterSystem))]
 public sealed partial class StationTeleporterConsoleComponent : Component
 {
@@ -27,7 +27,7 @@ public sealed partial class StationTeleporterConsoleComponent : Component
     [DataField]
     public string ChipStorageName = "storagebase";
 
-    [DataField]
+    [DataField, AutoPausedField]
     public TimeSpan NextUpdateTime = TimeSpan.Zero;
 
     [DataField]

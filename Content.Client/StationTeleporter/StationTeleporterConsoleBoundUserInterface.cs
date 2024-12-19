@@ -3,12 +3,12 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.StationTeleporter;
 
-public sealed class StationTeleporterBoundUserInterface : BoundUserInterface
+public sealed class StationTeleporterConsoleBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
-    private StationTeleporterWindow? _menu;
+    private StationTeleporterConsoleWindow? _menu;
 
-    public StationTeleporterBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+    public StationTeleporterConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
     }
 
@@ -27,7 +27,7 @@ public sealed class StationTeleporterBoundUserInterface : BoundUserInterface
             }
         }
 
-        _menu = this.CreateWindow<StationTeleporterWindow>();
+        _menu = this.CreateWindow<StationTeleporterConsoleWindow>();
         _menu.Set(this, stationName, gridUid);
     }
 

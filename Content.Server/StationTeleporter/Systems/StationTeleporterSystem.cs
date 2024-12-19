@@ -124,8 +124,8 @@ public sealed class StationTeleporterSystem : SharedStationTeleporterSystem
                     if (_link.TryLink(teleporter.Value, ent.Comp.SelectedTeleporter.Value))
                         stationTeleporterComponent.LastLink = ent.Comp.SelectedTeleporter.Value;
 
-                    _appearanceSys.SetData(teleporter.Value, TeleporterPortalVisual.Color, ent.Comp.PortalColor);
-                    _appearanceSys.SetData(ent.Comp.SelectedTeleporter.Value, TeleporterPortalVisual.Color, ent.Comp.PortalColor);
+                    _appearanceSys.SetData(teleporter.Value, TeleporterPortalVisuals.Color, ent.Comp.PortalColor);
+                    _appearanceSys.SetData(ent.Comp.SelectedTeleporter.Value, TeleporterPortalVisuals.Color, ent.Comp.PortalColor);
                 }
                 ent.Comp.SelectedTeleporter = null;
             }
@@ -176,7 +176,7 @@ public sealed class StationTeleporterSystem : SharedStationTeleporterSystem
 
     private void UpdateUserInterface(Entity<StationTeleporterConsoleComponent> ent)
     {
-        if (!_uiSystem.IsUiOpen(ent.Owner, StationTeleporterUIKey.Key))
+        if (!_uiSystem.IsUiOpen(ent.Owner, StationTeleporterConsoleUIKey.Key))
             return;
 
         // The grid must have a NavMapComponent to visualize the map in the UI
@@ -223,7 +223,7 @@ public sealed class StationTeleporterSystem : SharedStationTeleporterSystem
                         powered));
             }
         }
-        _uiSystem.SetUiState(ent.Owner, StationTeleporterUIKey.Key, new StationTeleporterState(teleportersData, GetNetEntity(ent.Comp.SelectedTeleporter)));
+        _uiSystem.SetUiState(ent.Owner, StationTeleporterConsoleUIKey.Key, new StationTeleporterState(teleportersData, GetNetEntity(ent.Comp.SelectedTeleporter)));
     }
 
     private void OnChipInit(Entity<TeleporterChipComponent> chip, ref MapInitEvent args)

@@ -485,11 +485,11 @@
     board: StationTeleportersControlCircuitboard
   - type: ActivatableUIRequiresAccess
   - type: ActivatableUI
-    key: enum.StationTeleporterUIKey.Key
+    key: enum.StationTeleporterConsoleUIKey.Key
   - type: UserInterface
     interfaces:
-      enum.StationTeleporterUIKey.Key:
-        type: StationTeleporterBoundUserInterface
+      enum.StationTeleporterConsoleUIKey.Key:
+        type: StationTeleporterConsoleBoundUserInterface
       enum.StorageUiKey.Key:
         type: StorageBoundUserInterface
       enum.WiresUiKey.Key:

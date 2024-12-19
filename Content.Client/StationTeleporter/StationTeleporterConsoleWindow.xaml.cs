@@ -14,7 +14,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client.StationTeleporter;
 
 [GenerateTypedNameReferences]
-public sealed partial class StationTeleporterWindow : FancyWindow
+public sealed partial class StationTeleporterConsoleWindow : FancyWindow
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     private readonly SpriteSystem _spriteSystem;
@@ -26,7 +26,7 @@ public sealed partial class StationTeleporterWindow : FancyWindow
     private Texture? _ringTexture;
     private Texture? _ringFilledTexture;
 
-    public StationTeleporterWindow()
+    public StationTeleporterConsoleWindow()
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
@@ -37,7 +37,7 @@ public sealed partial class StationTeleporterWindow : FancyWindow
         NavMap.TrackedEntitySelectedAction += ClickTeleporterOnNavMap;
     }
 
-    public void Set(StationTeleporterBoundUserInterface userInterface, string stationName, EntityUid? mapUid)
+    public void Set(StationTeleporterConsoleBoundUserInterface userInterface, string stationName, EntityUid? mapUid)
     {
         _ringTexture = _spriteSystem.Frame0(new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/ring.png")));
         _ringFilledTexture = _spriteSystem.Frame0(new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/ring_filled.png")));

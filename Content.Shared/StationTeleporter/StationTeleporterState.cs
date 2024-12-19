@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.StationTeleporter;
 
 [Serializable, NetSerializable]
-public enum StationTeleporterUIKey
+public enum StationTeleporterConsoleUIKey
 {
     Key
 }
@@ -57,7 +57,7 @@ public sealed class StationTeleporterClickMessage : BoundUserInterfaceMessage
 }
 
 [Serializable, NetSerializable]
-public enum TeleporterPortalVisual
+public enum TeleporterPortalVisuals
 {
     Color,
 }
