@@ -237,6 +237,8 @@
       path: /Audio/Voice/Diona/diona_scream.ogg
     Laugh:
       collection: DionaLaugh
+    Chirp:
+      path: /Audio/Animals/nymph_chirp.ogg
     Honk:
       collection: BikeHorn
     Weh:
