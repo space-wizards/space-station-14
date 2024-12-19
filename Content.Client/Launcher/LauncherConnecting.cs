@@ -20,6 +20,9 @@ namespace Content.Client.Launcher
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IClipboardManager _clipboard = default!;
+        [Dependency] private readonly ILogManager _logManager = default!;
+        private ISawmill _sawmill = default!;
+        private const string SawmillName = "launcher_connecting";
 
         private LauncherConnectingGui? _control;
 
@@ -59,6 +62,8 @@ namespace Content.Client.Launcher
 
         protected override void Startup()
         {
+            _sawmill = _logManager.GetSawmill(SawmillName);
+
             _control = new LauncherConnectingGui(this, _random, _prototypeManager, _cfg, _clipboard);
 
             _userInterfaceManager.StateRoot.AddChild(_control);
@@ -115,12 +120,12 @@ namespace Content.Client.Launcher
                 }
                 else
                 {
-                    Logger.InfoS("launcher-ui", $"Redial not possible, no Ss14Address");
+                    _sawmill.Info("launcher-ui", $"Redial not possible, no Ss14Address");
                 }
             }
             catch (Exception ex)
             {
-                Logger.ErrorS("launcher-ui", $"Redial exception: {ex}");
+                _sawmill.Error("launcher-ui", $"Redial exception: {ex}");
             }
             return false;
         }

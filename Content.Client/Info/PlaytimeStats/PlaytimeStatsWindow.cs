@@ -12,7 +12,10 @@ namespace Content.Client.Info.PlaytimeStats;
 public sealed partial class PlaytimeStatsWindow : FancyWindow
 {
     [Dependency] private readonly JobRequirementsManager _jobRequirementsManager = default!;
-    private ISawmill _sawmill = Logger.GetSawmill("PlaytimeStatsWindow");
+    [Dependency] private readonly ILogManager _logManager = default!;
+    private ISawmill _sawmill = default!;
+    private const string SawmillName = "ui.playtime_stats";
+
     private readonly Color _altColor = Color.FromHex("#292B38");
     private readonly Color _defaultColor = Color.FromHex("#2F2F3B");
     private bool _useAltColor;
@@ -24,6 +27,7 @@ public sealed partial class PlaytimeStatsWindow : FancyWindow
 
         PopulatePlaytimeHeader();
         PopulatePlaytimeData();
+        _sawmill = _logManager.GetSawmill(SawmillName);
     }
 
     private void PopulatePlaytimeHeader()

@@ -10,6 +10,10 @@ namespace Content.Client.UserInterface.Controls
     [Virtual]
     public abstract class SlotControl : Control, IEntityControl
     {
+        [Dependency] private readonly ILogManager _logManager = default!;
+        private ISawmill _sawmill = default!;
+        private const string SawmillName = "slot";
+
         public static int DefaultButtonSize = 64;
 
         public TextureRect ButtonRect { get; }
@@ -34,7 +38,7 @@ namespace Content.Client.UserInterface.Controls
                 //this auto registers the button with it's parent container when it's set
                 if (_slotNameSet)
                 {
-                    Logger.Warning("Tried to set slotName after init for:" + Name);
+                    _sawmill.Warning("Tried to set slotName after init for:" + Name);
                     return;
                 }
                 _slotNameSet = true;
@@ -193,6 +197,8 @@ namespace Content.Client.UserInterface.Controls
 
             HighlightTexturePath = "slot_highlight";
             BlockedTexturePath = "blocked";
+
+            _sawmill = _logManager.GetSawmill(SawmillName);
         }
 
         public void ClearHover()

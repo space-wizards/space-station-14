@@ -77,15 +77,12 @@ namespace Content.Server.Voting
         [Dependency] private readonly VoteWebhooks _voteWebhooks = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
 
-        private ISawmill _sawmill = default!;
-
         private const int MaxArgCount = 10;
 
         public override string Command => "customvote";
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            _sawmill = Logger.GetSawmill("vote");
 
             if (args.Length < 3 || args.Length > MaxArgCount)
             {
