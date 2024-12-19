@@ -105,11 +105,11 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
-# here
+
 - type: construction
   name: wood wall
   id: WoodWall
-  graph: Girder
+  graph: Barricade
   startNode: start
   targetNode: woodWall
   category: construction-category-structures

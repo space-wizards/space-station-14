@@ -1106,13 +1106,14 @@
   parent: BaseWall
   id: WallWood
   name: wood wall
+  description: The traditional greytide defense.
   components:
   - type: Sprite
     sprite: Structures/Walls/wood.rsi
   - type: Icon
     sprite: Structures/Walls/wood.rsi
   - type: Construction
-    graph: Girder
+    graph: Barricade
     node: woodWall
   - type: Destructible
     thresholds:
@@ -1133,7 +1134,7 @@
         sound:
           collection: WoodDestroyHeavy
       - !type:ChangeConstructionNodeBehavior
-        node: girder
+        node: Barricade
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: IconSmooth
