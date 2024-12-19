@@ -15,13 +15,13 @@ public sealed partial class CargoBountyMenu : FancyWindow
     public CargoBountyMenu()
     {
         RobustXamlLoader.Load(this);
+
+        MasterTabContainer.SetTabTitle(0, Loc.GetString("bounty-console-tab-available-label"));
+        MasterTabContainer.SetTabTitle(1, Loc.GetString("bounty-console-tab-history-label"));
     }
 
     public void UpdateEntries(List<CargoBountyData> bounties, List<CargoBountyHistoryData> history, TimeSpan untilNextSkip)
     {
-        MasterTabContainer.SetTabTitle(0, Loc.GetString("bounty-console-tab-available-label"));
-        MasterTabContainer.SetTabTitle(1, Loc.GetString("bounty-console-tab-history-label"));
-
         BountyEntriesContainer.Children.Clear();
         foreach (var b in bounties)
         {
