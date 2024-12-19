@@ -311,7 +311,7 @@ public sealed class FoodSystem : EntitySystem
             //Not deleting whole stack piece will make troubles with grinding object
             if (stack.Count > 1)
             {
-                _stack.SetCount(entity.Owner, stack.Count - 1);
+                _stack.SetCount((entity.Owner, stack), stack.Count - 1);
                 _solutionContainer.TryAddSolution(soln.Value, split);
                 return;
             }
