@@ -176,6 +176,7 @@
     - /Audio/Ambience/ambiruin7.ogg
     - /Audio/Ambience/voyage_neverending.ogg
     - /Audio/Ambience/unanchored.ogg
+    - /Audio/Ambience/ashwalking.ogg
 
 - type: soundCollection
   id: AmbienceRuins
