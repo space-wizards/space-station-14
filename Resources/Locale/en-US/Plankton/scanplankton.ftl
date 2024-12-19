@@ -1,2 +1,2 @@
-plankton-scan-popup = Plankton species present: {$id}
+plankton-scan-popup = Number of plankton species present: {$count}, 
 plankton-scan-tooltip = Scan plankton sample
