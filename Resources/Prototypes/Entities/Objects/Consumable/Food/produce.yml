@@ -577,10 +577,50 @@
       reagents:
       - ReagentId: JuiceLemon
         Quantity: 10
+  - type: SliceableFood
+    count: 4
+    slice: FoodLemonWedge
   - type: Tag
     tags:
     - Lemon
     - Fruit
+  - type: FoodSequenceElement
+    entries:
+      Burger: Lemon
+      Taco: Lemon
+
+- type: entity
+  name: lemon wedge
+  parent: FoodProduceBase
+  id: FoodLemonWedge
+  description: When life gives you lemons, use them as garnish.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - sour
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 2
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 1
+        - ReagentId: Vitamin
+          Quantity: 1
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/lemon.rsi
+    state: wedge
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceLemon
+        Quantity: 2
+  - type: Tag
+    tags:
+    - LemonGarnish
+    - Fruit
+    - Slice
+    - DrinkGarnish
   - type: FoodSequenceElement
     entries:
       Burger: Lemon
@@ -639,10 +679,41 @@
       reagents:
       - ReagentId: JuiceLime
         Quantity: 10
+  - type: SliceableFood
+    count: 4
+    slice: FoodLimeWedge
   - type: Tag
     tags:
     - Lime
     - Fruit
+  - type: FoodSequenceElement
+    entries:
+      Burger: Lime
+      Taco: Lime
+
+- type: entity
+  name: lime wedge
+  parent: FoodLemonWedge
+  id: FoodLimeWedge
+  description: Cures Space Scurvy, allows you to act like a Space Pirate.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - sour
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/lime.rsi
+    state: wedge
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceLime
+        Quantity: 2
+  - type: Tag
+    tags:
+    - LimeGarnish
+    - Fruit
+    - Slice
+    - DrinkGarnish
   - type: FoodSequenceElement
     entries:
       Burger: Lime
@@ -2523,7 +2594,9 @@
         Quantity: 5
   - type: Tag
     tags:
+    - Cherry
     - Fruit
+    - DrinkGarnish
   - type: FoodSequenceElement
     entries:
       Taco: Cherry
