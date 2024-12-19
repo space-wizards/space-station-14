@@ -38820,6 +38820,8 @@ entities:
     - type: Transform
       pos: -41.5,-7.5
       parent: 4812
+    - type: FaxMachine
+      name: Engineering
 - proto: FaxMachineCaptain
   entities:
   - uid: 7298
