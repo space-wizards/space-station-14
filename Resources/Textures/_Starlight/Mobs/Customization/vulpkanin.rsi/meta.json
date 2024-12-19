@@ -16,6 +16,22 @@
             "directions": 4
         },
         {
+            "name": "pawsocks_arms",
+            "directions": 4
+        },
+        {
+            "name": "pawsocks_feet",
+            "directions": 4
+        },
+        {
+            "name": "pawsocks_hands",
+            "directions": 4
+        },
+        {
+            "name": "pawsocks_legs",
+            "directions": 4
+        },
+        {
             "name": "vulp_tail",
             "directions": 4
         },
