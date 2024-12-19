@@ -7,6 +7,7 @@ using Content.Shared.Verbs;
 using Robust.Shared.Prototypes;
 using Content.Server.Paper;
 using Robust.Server.GameObjects;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.Plankton;
 
@@ -15,6 +16,7 @@ public sealed class PlankonScannerSystem : EntitySystem
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly PaperSystem _paper = default!;
+    [Dependency] private readonly MetaDataSystem _metaSystem = default!;
 
     public override void Initialize()
     {
@@ -60,13 +62,17 @@ public sealed class PlankonScannerSystem : EntitySystem
         && !_useDelay.TryResetDelay((uid, useDelay), true))
         return;
 
-    // Collect plankton species names
-    var planktonNames = component.SpeciesInstances
-        .Select(species => species.SpeciesName.ToString())  // Use the ToString method of PlanktonName
+    // Collects plankton species names from the target
+    var planktonNames = component.SpeciesInstances 
+        .Select(species => species.SpeciesName.ToString())
         .ToList();
 
-    // Prepare the popup message
+    // Header for the paper report
     var message = Loc.GetString("plankton-scan-popup",
+        ("count", $"{component.SpeciesInstances.Count}"));
+
+    // Same as the paper report header, but just the popup.
+    var messagePopup = Loc.GetString("plankton-scan-popup",
         ("count", $"{component.SpeciesInstances.Count}"));
 
     // Add the species names to the message if there are any
@@ -75,7 +81,7 @@ public sealed class PlankonScannerSystem : EntitySystem
         message += "\nSpecies names:\n" + string.Join("\n", planktonNames);
     }
 
-    _popupSystem.PopupEntity(message, target);
+    _popupSystem.PopupEntity(messagePopup, target);
 
     var report = Spawn(scanner.PlanktonReportEntityId, Transform(uid).Coordinates);
     _metaSystem.SetEntityName(report, Loc.GetString("plankton-analysis-report-title", ("id", $"Plankton Scan Report")));
