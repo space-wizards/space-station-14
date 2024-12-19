@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using Content.Server.Administration.Managers;
@@ -194,6 +195,14 @@ namespace Content.Server.Connection
                 // Or hardware ID checks disabled.
                 hwId = null;
             }
+
+            // THIS IS A WIP
+            var asn = await IpToAsn(addr.ToString());
+            if (asn == null)
+            {
+                _sawmill.Warning("ASN lookup failed, bypassing this step.");
+            }
+            // THIS IS A WIP
 
             var modernHwid = e.UserData.ModernHWIds;
 
@@ -404,6 +413,12 @@ namespace Content.Server.Connection
             var assigned = new NetUserId(Guid.NewGuid());
             await _db.AssignUserIdAsync(name, assigned);
             return assigned;
+        }
+
+        private async Task<string?> IpToAsn(string ip)
+        {
+            // This will be implemented later
+            return null;
         }
     }
 }
