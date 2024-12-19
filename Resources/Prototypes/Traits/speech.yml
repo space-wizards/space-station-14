@@ -60,8 +60,7 @@
   category: SpeechTraits
   cost: 1
   components:
-  - type: ReplacementAccent
-    accent: italian
+  - type: ItalianAccent
 
 - type: trait
   id: FrenchAccent
