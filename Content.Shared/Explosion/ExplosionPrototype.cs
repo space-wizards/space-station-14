@@ -16,6 +16,9 @@ namespace Content.Shared.Explosion;
 [Prototype("explosion")]
 public sealed partial class ExplosionPrototype : IPrototype
 {
+    private const string SawmillName = "explosion";
+    private static ISawmill Sawmill => IoCManager.Resolve<ILogManager>().GetSawmill(SawmillName);
+
     [IdDataField]
     public string ID { get; private set; } = default!;
 
@@ -117,7 +120,7 @@ public sealed partial class ExplosionPrototype : IPrototype
     {
         if (_tileBreakChance.Length == 0 || _tileBreakChance.Length != _tileBreakIntensity.Length)
         {
-            Logger.Error($"Malformed tile break chance definitions for explosion prototype: {ID}");
+            Sawmill.Error($"Malformed tile break chance definitions for explosion prototype: {ID}");
             return 0;
         }
 

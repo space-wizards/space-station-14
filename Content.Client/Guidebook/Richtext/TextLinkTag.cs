@@ -11,6 +11,11 @@ namespace Content.Client.Guidebook.RichText;
 [UsedImplicitly]
 public sealed class TextLinkTag : IMarkupTag
 {
+    [Dependency] private readonly ILogManager _logManager = default!;
+    private const string SawmillName = "ui.markup.link";
+    private ISawmill Sawmill => _log ??= _logManager.GetSawmill(SawmillName);
+    private ISawmill? _log;
+
     public string Name => "textlink";
 
     public Control? Control;
@@ -60,7 +65,7 @@ public sealed class TextLinkTag : IMarkupTag
             handler.HandleClick(link);
             return;
         }
-        Logger.Warning($"Warning! No valid ILinkClickHandler found.");
+        Sawmill.Warning($"Warning! No valid ILinkClickHandler found.");
     }
 }
 

@@ -63,8 +63,9 @@ public sealed class PlayTimeTrackingManager : ISharedPlaytimeManager, IPostInjec
     [Dependency] private readonly ITaskManager _task = default!;
     [Dependency] private readonly IRuntimeLog _runtimeLog = default!;
     [Dependency] private readonly UserDbDataManager _userDb = default!;
-
+    [Dependency] private readonly ILogManager _logManager = default!;
     private ISawmill _sawmill = default!;
+    private const string SawmillName = "play_time";
 
     // List of players that need some kind of update (refresh timers or resend).
     private ValueList<ICommonSession> _playersDirty;
@@ -85,7 +86,7 @@ public sealed class PlayTimeTrackingManager : ISharedPlaytimeManager, IPostInjec
 
     public void Initialize()
     {
-        _sawmill = Logger.GetSawmill("play_time");
+        _sawmill = _logManager.GetSawmill(SawmillName);
 
         _net.RegisterNetMessage<MsgPlayTime>();
 
