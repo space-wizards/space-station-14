@@ -40,7 +40,6 @@ namespace Content.Server.Drone
         {
             base.Initialize();
 			SubscribeLocalEvent<DroneComponent, UseAttemptEvent>(OnUseAttempt);
-            SubscribeLocalEvent<DroneComponent, InteractionAttemptEvent>(OnInteractionAttempt);
             SubscribeLocalEvent<DroneComponent, UserOpenActivatableUIAttemptEvent>(OnActivateUIAttempt);
             SubscribeLocalEvent<DroneComponent, MobStateChangedEvent>(OnMobStateChanged);
             SubscribeLocalEvent<DroneComponent, ExaminedEvent>(OnExamined);
@@ -50,25 +49,21 @@ namespace Content.Server.Drone
             SubscribeLocalEvent<DroneComponent, ThrowAttemptEvent>(OnThrowAttempt);
         }
 
-		private void OnUseAttempt(EntityUid uid, DroneComponent component, UseAttemptEvent args) // imp special. blacklist. this one *does* prevent actions. it would probably be best if this read from the component or something.
+		// Imp. this replaces OnInteractionAttempt from the upstream version of DroneSystem.
+		private void OnUseAttempt(EntityUid uid, DroneComponent component, UseAttemptEvent args) 
 		{
-			if ((_tagSystem.HasAnyTag(args.Used, "Syringe", "HighRiskItem")) && NonDronesInRange(uid, component)) 
+			if ((_gameTiming.CurTime >= component.NextProximityAlert) && args.Used != null && NonDronesInRange(uid, component))
 			{
-				component.IsItemBlacklisted = true;
-				args.Cancel();
-			}
-		}
-
-	/// Imp. changed OnInteractionAttempt
-
-        private void OnInteractionAttempt(EntityUid uid, DroneComponent component, ref InteractionAttemptEvent args)
-        {
-		    if ((_gameTiming.CurTime >= component.NextProximityAlert) && args.Target != null && NonDronesInRange(uid, component))
-			{
-				if (!_tagSystem.HasAnyTag(args.Target.Value, "DroneUsable", "Trash")) /// tag whitelist. sends proximity warning popup if the item isn't whitelisted. Doesn't prevent actions.
+				if (_tagSystem.HasAnyTag(args.Used, "Syringe", "HighRiskItem")) // imp special. blacklist. this one *does* prevent actions. it would probably be best if this read from the component or something.
+				{
+					args.Cancel();
+					_popupSystem.PopupEntity(Loc.GetString("drone-cant-use", ("being", component.NearestEnt)), uid, uid);
+				}
+				
+				else if (!_tagSystem.HasAnyTag(args.Used, "DroneUsable", "Trash")) /// tag whitelist. sends proximity warning popup if the item isn't whitelisted. Doesn't prevent actions.
 				{
 					component.NextProximityAlert = _gameTiming.CurTime + component.ProximityDelay;
-					component.IsItemBlacklisted = false;
+					_popupSystem.PopupEntity(Loc.GetString("drone-too-close", ("being", component.NearestEnt)), uid, uid);
 				}
 			}
 		}
@@ -150,14 +145,7 @@ namespace Content.Server.Drone
                         continue;
                     if (_gameTiming.IsFirstTimePredicted)
 					{
-                        if (!component.IsItemBlacklisted)
-							_popupSystem.PopupEntity(Loc.GetString("drone-too-close", ("being", Identity.Entity(entity, EntityManager))), uid, uid);
-						
-						else
-						{
-							_popupSystem.PopupEntity(Loc.GetString("drone-cant-use", ("being", Identity.Entity(entity, EntityManager))), uid, uid);
-							component.IsItemBlacklisted = false;
-						}
+						component.NearestEnt = Identity.Entity(entity, EntityManager); // imp. instead of doing popups in here, set a variable to the nearest entity for use elsewhere.
 					}
                     return true;
                 }

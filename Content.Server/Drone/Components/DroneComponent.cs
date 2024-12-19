@@ -10,6 +10,6 @@ namespace Content.Server.Drone.Components
 		
 		public TimeSpan NextProximityAlert = new();
 		
-		public bool IsItemBlacklisted = false;
+		public EntityUid NearestEnt = default!;
     }
 }
