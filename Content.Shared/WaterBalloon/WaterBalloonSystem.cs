@@ -1,6 +1,5 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Sprite;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using Robust.Shared.Containers;
