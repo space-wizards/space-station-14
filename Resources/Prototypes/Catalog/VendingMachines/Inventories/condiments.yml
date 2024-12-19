@@ -18,3 +18,8 @@
     KnifePlastic: 10
     FoodPlatePlastic: 10
     FoodPlateSmallPlastic: 10
+  contrabandInventory:
+    FoodShakerSalt: 1
+    FoodShakerPepper: 1
+    FoodCondimentBottleKetchup: 1
+    ReagentContainerMayo: 1
