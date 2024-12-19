@@ -1,0 +1,14 @@
+﻿- type: entity
+  parent: BaseItem
+  id: PlanktonScanner
+  name: plankton scanner
+  description: The planktologist's bread and butter. Capable of scanning a plankton sample and outputting basic information.
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Xenoarchaeology/node_scanner.rsi
+      state: icon
+    - type: Item
+      sprite: Objects/Specific/Xenoarchaeology/node_scanner.rsi
+    - type: PlanktonScanner
+    - type: UseDelay
+      delay: 3
