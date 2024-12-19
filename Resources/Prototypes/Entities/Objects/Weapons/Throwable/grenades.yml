@@ -81,6 +81,9 @@
     guides:
     - Security
     - Antagonists
+  - type: Tag
+    tags:
+    - GrenadeFlashBang
 
 - type: entity
   id: GrenadeFlashEffect
@@ -106,6 +109,22 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/syndgrenade.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.1
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 10
+      behaviors:
+      - !type:TimerStartBehavior
+    - trigger:
+        !type:DamageTrigger
+        damage: 45
+      behaviors:
+      - !type:TriggerBehavior
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
   - type: OnUseTimerTrigger
     delay: 5
   - type: ExplodeOnTrigger
@@ -328,7 +347,7 @@
           Primed: { state: primed }
           # Unprimed: <Use state determined by enum.ConstructionVisuals.Layer>
   - type: StaticPrice
-    price: 25
+    price: 75
 
 - type: entity
   name: EMP grenade
@@ -373,7 +392,7 @@
       path: /Audio/Effects/hallelujah.ogg
 
 - type: entity
-  parent: [ GrenadeBase, BaseMinorContraband ]
+  parent: [ GrenadeBase, BaseRestrictedContraband ]
   id: SmokeGrenade
   name: smoke grenade
   description: A tactical grenade that releases a large, long-lasting cloud of smoke when used.
@@ -391,7 +410,7 @@
       path: /Audio/Items/smoke_grenade_prime.ogg
 
 - type: entity
-  parent: SmokeGrenade
+  parent: [ BaseCivilianContraband, SmokeGrenade ]
   id: CleanerGrenade
   name: cleanade
   description: Special grenade for janitors, releasing large cloud of space cleaner foam.
@@ -424,7 +443,7 @@
         Quantity: 50
 
 - type: entity
-  parent: SmokeGrenade
+  parent: [ BaseEngineeringContraband, SmokeGrenade ]
   id: MetalFoamGrenade
   name: metal foam grenade
   description: An emergency tool used for patching up holes. Almost as good as real walls.

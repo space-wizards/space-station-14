@@ -44,7 +44,7 @@ public sealed class ArtifactElectricityTriggerSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (!_toolSystem.HasQuality(args.Used, "Pulsing"))
+        if (!_toolSystem.HasQuality(args.Used, SharedToolSystem.PulseQuality))
             return;
 
         args.Handled = _artifactSystem.TryActivateArtifact(uid, args.User);

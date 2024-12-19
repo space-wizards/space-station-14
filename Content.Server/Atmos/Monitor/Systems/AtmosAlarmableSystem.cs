@@ -7,6 +7,7 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.Power;
 using Content.Shared.Tag;
 using Robust.Server.Audio;
 using Robust.Server.GameObjects;

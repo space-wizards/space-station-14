@@ -17,7 +17,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
+        damage: 300
       behaviors: #excess damage, don't spawn entities.
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -26,7 +26,7 @@
           collection: WindowShatter
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 150
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -48,7 +48,7 @@
     node: reinforcedPlasmaWindow
   - type: Appearance
   - type: DamageVisuals
-    thresholds: [4, 8, 12]
+    thresholds: [5, 10, 20]
     damageDivisor: 6
     trackAllDamage: true
     damageOverlay:
@@ -77,22 +77,24 @@
     node: plasmaReinforcedWindowDirectional
   - type: Appearance
   - type: DamageVisuals
-    thresholds: [4, 8, 12]
-    damageDivisor: 36
+    thresholds: [5, 10, 20]
+    damageDivisor: 3
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks_directional.rsi
+  - type: RadiationBlocker
+    resistance: 2
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 1000
+        damage: 150
       behaviors: #excess damage, don't spawn entities.
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
-        damage: 600
+        damage: 75
       behaviors:
       - !type:PlaySoundBehavior
         sound:

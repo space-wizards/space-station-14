@@ -54,8 +54,8 @@
     boardName: wires-board-name-cryopod
     layoutId: CryoPod
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageContainer: StructuralInorganic
+    damageModifierSet: StructuralMetallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -79,6 +79,8 @@
         !type:PortablePipeNode
         nodeGroupID: Pipe
         pipeDirection: South
+  - type: AtmosMonitoringConsoleDevice
+    navMapBlip: Thermoregulator
   - type: ItemSlots
     slots:
       beakerSlot:
@@ -96,7 +98,7 @@
         type: WiresBoundUserInterface
   - type: ActivatableUI
     key: enum.HealthAnalyzerUiKey.Key
-    requireHands: false
+    requiresComplex: false
   - type: ActivatableUIRequiresPower
   - type: PointLight
     color: "#3a807f"

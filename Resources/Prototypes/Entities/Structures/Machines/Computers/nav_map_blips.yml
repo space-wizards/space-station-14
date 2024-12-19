@@ -1,0 +1,56 @@
+# All consoles
+- type: navMapBlip
+  id: NavMapConsole
+  blinks: true
+  color: Cyan
+  texturePaths:
+  - "/Textures/Interface/NavMap/beveled_circle.png"
+
+# Atmos monitoring console
+- type: navMapBlip
+  id: GasPipeSensor
+  selectable: true
+  color: "#ffcd00"
+  texturePaths:
+  - "/Textures/Interface/NavMap/beveled_star.png"
+  
+- type: navMapBlip
+  id: GasVentOpening
+  scale: 0.6667
+  color: LightGray
+  texturePaths:
+  - "/Textures/Interface/NavMap/beveled_square.png"
+  
+- type: navMapBlip
+  id: GasVentScrubber
+  scale: 0.6667
+  color: LightGray
+  texturePaths:
+  - "/Textures/Interface/NavMap/beveled_circle.png"
+  
+- type: navMapBlip
+  id: GasFlowRegulator
+  scale: 0.75
+  color: LightGray
+  texturePaths:
+  - "/Textures/Interface/NavMap/beveled_arrow_south.png"
+  - "/Textures/Interface/NavMap/beveled_arrow_east.png"
+  - "/Textures/Interface/NavMap/beveled_arrow_north.png"
+  - "/Textures/Interface/NavMap/beveled_arrow_west.png"
+  
+- type: navMapBlip
+  id: GasValve
+  scale: 0.6667
+  color: LightGray
+  texturePaths:
+  - "/Textures/Interface/NavMap/beveled_diamond_north_south.png"
+  - "/Textures/Interface/NavMap/beveled_diamond_east_west.png"
+  - "/Textures/Interface/NavMap/beveled_diamond_north_south.png"   
+  - "/Textures/Interface/NavMap/beveled_diamond_east_west.png"
+  
+- type: navMapBlip
+  id: Thermoregulator
+  scale: 0.6667
+  color: LightGray
+  texturePaths:
+  - "/Textures/Interface/NavMap/beveled_hexagon.png"

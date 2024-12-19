@@ -1,9 +1,9 @@
 - type: entity
   name: toilet
-  id: ToiletEmpty
-  suffix: Empty
+  id: BaseToilet
   parent: [ DisposalUnitBase, SeatBase ]
   description: The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean.
+  abstract: true
   components:
   - type: Sprite
     sprite: Structures/Furniture/toilet.rsi
@@ -62,9 +62,6 @@
         - MachineMask
         layer:
         - None
-  - type: Construction
-    graph: Toilet
-    node: toilet
   - type: PlungerUse
   - type: Appearance
   - type: SecretStash
@@ -76,7 +73,7 @@
   - type: Drain
     autoDrain: false
   - type: StaticPrice
-    price: 25
+    price: 100
   - type: UserInterface
     interfaces:
       enum.DisposalUnitUiKey.Key:
@@ -111,6 +108,17 @@
           Closed: { state: disposal-closed }
 
 - type: entity
+  name: toilet
+  description: The HT-451, a torque rotation-based, waste disposal unit for small matter. This one seems remarkably clean.
+  id: ToiletEmpty
+  parent: BaseToilet
+  suffix: Empty
+  components:
+  - type: Construction
+    graph: Toilet
+    node: toilet
+
+- type: entity
   id: ToiletDirtyWater
   parent: ToiletEmpty
   suffix: Dirty Water
@@ -124,5 +132,62 @@
         reagents:
         - ReagentId: Water
           Quantity: 180
+        - ReagentId: GastroToxin
+          Quantity: 20
+
+- type: entity
+  id: ToiletGoldenEmpty
+  parent: BaseToilet
+  name: golden toilet
+  description: The HT-451G is the gold version of the device. It says on the side that it is made of the purest Mercurian gold and a real leather seat.
+  suffix: Empty
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/golden_toilet.rsi
+  - type: StaticPrice
+    price: 1500
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+          params:
+            volume: -6
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          IngotGold1:
+            min: 5
+            max: 5
+
+- type: entity
+  id: ToiletGoldenDirtyWater
+  parent: ToiletGoldenEmpty
+  suffix: Dirty Water, StealTarget
+  components:
+  - type: StealTarget
+    stealGroup: ToiletGoldenDirtyWater
+  - type: SolutionContainerManager
+    solutions:
+      drainBuffer:
+        maxVol: 100
+      tank:
+        maxVol: 500
+        reagents:
+        - ReagentId: Water
+          Quantity: 160
+        - ReagentId: Gold
+          Quantity: 20
         - ReagentId: GastroToxin
           Quantity: 20

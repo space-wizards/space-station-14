@@ -15,6 +15,9 @@
   - type: Utensil
     types:
       - Knife
+  - type: Tool
+    qualities:
+    - Slicing
 
 - type: entity
   name: captain's sabre
@@ -40,6 +43,11 @@
     tags:
     - CaptainSabre
   - type: DisarmMalus
+  - type: SentienceTarget
+    flavorKind: station-event-random-sentience-flavor-inanimate
+    weight: 0.0002 # 5,000 times less likely than 1 regular animal
+  - type: PirateAccent
+    # not putting a BlockMovement component here cause that's funny.
 
 - type: entity
   name: katana
@@ -156,7 +164,7 @@
   - type: DisarmMalus
 
 - type: entity
-  name: Throngler
+  name: throngler
   parent: [ BaseSword, BaseMajorContraband ]
   id: Throngler
   description: Why would you make this?

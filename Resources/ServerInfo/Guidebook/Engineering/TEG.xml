@@ -3,7 +3,7 @@
 
   The TEG generates power by exchanging heat between hot and cold gases. On the station, hot gas is usually created by burning plasma, and an array of heat-exchanging pipes in space radiates away heat to cool down circulated gases.
 
-  The TEG relies heavily on atmospherics piping. The only truly special component about it is the generator core and circulators; the rest is all off-the-shelf atmospherics equipment. Note that while the exact layout may vary significantly depending on station, the general components and setup are usually the same.
+  The TEG relies heavily on atmospherics piping. The only truly special component about it is the generator core and circulators; the rest is all off-the-shelf atmospherics equipment. Note that while the exact layout may vary significantly depending on the station, the general components and setup are usually the same.
 
   ## Generator
 
@@ -54,7 +54,7 @@
     <GuideEntityEmbed Entity="GasThermoMachineHeaterEnabled" Caption="" Rotation="180" Margin="0"/>
   </Box>
   - The Gas input is pretty self-explanatory; this is where you will input the O2-Plasma mix to be burnt. A 2:1 (67/33) ratio of Oxygen to Plasma is recommended for the hottest burn.
-  - The High-pressure pump serves 2 purposes; first, it prevents the burn from backwashing into the supply pipe, which would be.. bad, for many reasons. Second, it maintains a positive pressure in the following pipe segment, which is important to allow the burn to continue, especially since hot gases expand.
+  - The High-pressure pump serves 2 purposes; first, it prevents the burn from backwashing into the supply pipe, which would be... bad, for many reasons. Second, it maintains a positive pressure in the following pipe segment, which is important to allow the burn to continue, especially since hot gases expand.
   - The Pipe segment is where the burn actually occurs; to start it off, one can use a heater to increase the temperature up to the ignition temperature of Plasma. Afterwards, the reaction should be self-sustaining, so long as the Pressure and Moles supplied remains high enough. [color=#a4885c]Be warned[/color]; if you wish to remove the heater, it will carry some of this superheated gas with it, transferring it to the next pipenet you connect it to. Best to space the gas through a space vent, if you must.
   - The Low-pressure pump (whose pressure should be [italic]slightly lower[/italic] than the input pump) prevents [italic]all[/italic] the gas from passing through the circulator, which could result in the loss of the Moles required to sustain a burn.
   - The Circulator is where this generated heat will flow to the cold loop; afterwards, feel free to space the waste gases.
@@ -106,7 +106,7 @@
   The space vent (designated as a blast door to space on one side of the burn chamber) allows waste gases to be expelled and destroyed. Open this every now and then to keep the pressure under control, or to space excess input gas.
 
   The scrubber array filters out all the burnt gasses and sends them through the TEG. Note that using default settings on the scrubbers is a bad idea, as valuable plasma will be filtered out too.
-  Instead, use a network configurator to connect all the scrubbers to a nearby air alarm, and set the air alarm's scrubber settings to scrub everything except Oxygen and Plasma, and to siphon air aswell. This ensures that as much heat as available can be collected and sent to the TEG.
+  Instead, use a network configurator to connect all the scrubbers to a nearby air alarm, and set the air alarm's scrubber settings to scrub everything except Oxygen and Plasma, and to siphon air as well. This ensures that as much heat as available can be collected and sent to the TEG.
 
   Note that these are just two of many ways you can setup the hot loop; [color=#a4885c]feel free to mix and match setups as needed![/color] Volume pumps in replacement of pressure pumps, radiator loops for heat collection, or even a Pyroclastic anomaly to provide said heat! The stars are the limit!
 
@@ -118,7 +118,7 @@
 
   ## The Water Cooler
 
-  An equally naive method as the Pipe Burn, this simply involves taking some useless gas (in this case, Water Vapour) and flowing it through the TEG and into space. It's dirt-cheap and simple, at the cost of efficiency and permanant loss of gas.
+  An equally naive method as the Pipe Burn, this simply involves taking some useless gas (in this case, Water Vapour) and flowing it through the TEG and into space. It's dirt-cheap and simple, at the cost of efficiency and permanent loss of gas.
 
   Setting this up is so simple, even Hamlet could manage it. Just take an output of a gas (here, Water Vapour), send it through the Cold side of the TEG, and then vent it into space.
 

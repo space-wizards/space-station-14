@@ -8,7 +8,6 @@
     contents:
     - id: FoodBoxPizzaFilled
       amount: 4
-    - id: KnifePlastic
     - id: LidSalami
       prob: 0.01
 
@@ -22,8 +21,6 @@
     contents:
     - id: FoodBoxPizzaFilled
       amount: 16
-    - id: KnifePlastic
-      amount: 4
     - id: LidSalami
       prob: 0.04
 

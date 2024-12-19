@@ -658,7 +658,7 @@ public record struct CommandPermissionsUnassignedError(CommandSpec Command) : IC
 {
     public FormattedMessage DescribeInner()
     {
-        return FormattedMessage.FromMarkup($"The command {Command.FullName()} is missing permission flags and cannot be executed.");
+        return FormattedMessage.FromMarkupOrThrow($"The command {Command.FullName()} is missing permission flags and cannot be executed.");
     }
 
     public string? Expression { get; set; }
@@ -671,7 +671,7 @@ public record struct NoPermissionError(CommandSpec Command) : IConError
 {
     public FormattedMessage DescribeInner()
     {
-        return FormattedMessage.FromMarkup($"You do not have permission to execute {Command.FullName()}");
+        return FormattedMessage.FromMarkupOrThrow($"You do not have permission to execute {Command.FullName()}");
     }
 
     public string? Expression { get; set; }

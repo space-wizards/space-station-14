@@ -13,7 +13,7 @@ WARNING: This is not an automatically generated list, things here may become out
 - Tortila Dough = 15 Cornmeal, 10 Water
 - Tofu = 5 Enzyme (Catalyst), 30 Soy Milk
 - Pie Dough = 2 Eggs (12u), 15 Flour, 5 Table Salt
-- Cake Batter = 2 Eggs(12u), 15 flour, 5 Sugar
+- Cake Batter = 2 Eggs(12u), 15 flour, 5 Sugar, 5 Milk
 - Vegan Cake Batter = 15 Soy Milk, 15 Flour, 5 Sugar
 - Butter = 30 Milk, 5 Table Salt (Catalyst)
 - Cheese Wheel = 5 Enzyme (Catalyst), 40 Milk
@@ -22,9 +22,15 @@ WARNING: This is not an automatically generated list, things here may become out
 - Chocolate = 6 Cocoa Powder, 2 Milk, 2 Sugar
 - Uncooked Animal Protein: Grind Raw Meat
 
+Buzz! Don't forget about Moth diet!
+- Cotton Dough = 5 Flour, 10 Fabric, 10 Water
+- Cotton bread baked the same as default but with cotton dough instead
+- Cotton Pizza: Microwave 1 Flat Cotton Dough and 4 Cotton Bolls for 30 Seconds
+
 <Box>
 <GuideEntityEmbed Entity="FoodDough"/>
 <GuideEntityEmbed Entity="FoodDoughCornmeal"/>
+<GuideEntityEmbed Entity="FoodDoughCotton"/>
 <GuideEntityEmbed Entity="FoodTofu"/>
 <GuideEntityEmbed Entity="FoodDoughPie"/>
 <GuideEntityEmbed Entity="FoodCakeBatter"/>

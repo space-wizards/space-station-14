@@ -7,6 +7,7 @@
   - type: Sprite
     layers:
     - state: closed
+      map: ["closeLayer"]
     - state: open
       map: ["openLayer"]
       visible: false
@@ -75,6 +76,7 @@
   - type: Sprite
     layers:
     - state: closed
+      map: ["closeLayer"]
     - state: open
       map: ["openLayer"]
       visible: false
