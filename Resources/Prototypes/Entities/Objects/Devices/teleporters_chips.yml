@@ -3,7 +3,7 @@
   parent: BaseItem
   suffix: Blank
   name: teleporter chip
-  description: A chip with stored teleporter coordinates. Insert it into the teleporter control console to be able to control it.
+  description: A chip that can store teleporter coordinates. Insert it into the teleporter control console to be able to control the linked portal.
   components:
   - type: TeleporterChip
   - type: Item
