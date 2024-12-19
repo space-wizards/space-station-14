@@ -19,7 +19,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Slippery;
 
-[UsedImplicitly] 
+[UsedImplicitly]
 public sealed class SlipperySystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
@@ -83,7 +83,7 @@ public sealed class SlipperySystem : EntitySystem
     {
         if (HasComp<SpeedModifiedByContactComponent>(args.OtherEntity))
             _speedModifier.AddModifiedEntity(args.OtherEntity);
-    } 
+    }
 
     private bool CanSlip(EntityUid uid, EntityUid toSlip)
     {
@@ -96,7 +96,7 @@ public sealed class SlipperySystem : EntitySystem
         if (HasComp<KnockedDownComponent>(other) && !component.SuperSlippery)
             return;
 
-        var attemptEv = new SlipAttemptEvent();
+        var attemptEv = new SlipAttemptEvent(uid);
         RaiseLocalEvent(other, attemptEv);
         if (attemptEv.SlowOverSlippery)
             _speedModifier.AddModifiedEntity(other);
@@ -148,7 +148,14 @@ public sealed class SlipAttemptEvent : EntityEventArgs, IInventoryRelayEvent
 
     public bool SlowOverSlippery;
 
+    public EntityUid? SlipCausingEntity;
+
     public SlotFlags TargetSlots { get; } = SlotFlags.FEET;
+
+    public SlipAttemptEvent(EntityUid? slipCausingEntity)
+    {
+        SlipCausingEntity = slipCausingEntity;
+    }
 }
 
 /// <summary>
