@@ -862,7 +862,7 @@
   metabolisms:
     Medicine:
       effects:
-      - !type:ChemEyeDamageChange
+      - !type:ChemChangeEyeDamage
 
 - type: reagent
   id: Cognizine

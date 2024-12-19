@@ -714,5 +714,5 @@
   metabolisms:
     Poison:
       effects:
-      - !type:ChemEyeDamageChange
+      - !type:ChemChangeEyeDamage
         amount: 1

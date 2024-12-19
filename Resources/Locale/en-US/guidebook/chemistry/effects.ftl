@@ -209,7 +209,7 @@ reagent-effect-guidebook-cure-disease =
         *[other] cure
     } diseases
 
-reagent-effect-guidebook-eye-damage-change =
+reagent-effect-guidebook-change-eye-damage =
     { $chance ->
         [1] { $deltasign ->
                 [1] Deals
