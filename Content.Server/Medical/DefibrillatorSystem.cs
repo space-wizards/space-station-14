@@ -23,7 +23,6 @@ using Content.Shared.Timing;
 using Content.Shared.Toggleable;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Medical;
 
@@ -32,7 +31,6 @@ namespace Content.Server.Medical;
 /// </summary>
 public sealed class DefibrillatorSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ChatSystem _chatManager = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
@@ -44,9 +42,9 @@ public sealed class DefibrillatorSystem : EntitySystem
     [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -59,6 +57,7 @@ public sealed class DefibrillatorSystem : EntitySystem
     {
         if (args.Handled || args.Target is not { } target)
             return;
+
         args.Handled = TryStartZap(uid, target, args.User, component);
     }
 
@@ -102,7 +101,7 @@ public sealed class DefibrillatorSystem : EntitySystem
             return false;
         }
 
-        if (_timing.CurTime < component.NextZapTime)
+        if (!TryComp(uid, out UseDelayComponent? useDelay) || _useDelay.IsDelayed((uid, useDelay), component.DelayId))
             return false;
 
         if (!TryComp<MobStateComponent>(target, out var mobState))
@@ -181,8 +180,10 @@ public sealed class DefibrillatorSystem : EntitySystem
 
         _audio.PlayPvs(component.ZapSound, uid);
         _electrocution.TryDoElectrocution(target, null, component.ZapDamage, component.WritheDuration, true, ignoreInsulation: true);
-        component.NextZapTime = _timing.CurTime + component.ZapDelay;
-        _appearance.SetData(uid, DefibrillatorVisuals.Ready, false);
+        if (!TryComp<UseDelayComponent>(uid, out var useDelay))
+            return;
+        _useDelay.SetLength((uid, useDelay), component.ZapDelay, component.DelayId);
+        _useDelay.TryResetDelay((uid, useDelay), id: component.DelayId);
 
         ICommonSession? session = null;
 
@@ -239,21 +240,5 @@ public sealed class DefibrillatorSystem : EntitySystem
         // TODO clean up this clown show above
         var ev = new TargetDefibrillatedEvent(user, (uid, component));
         RaiseLocalEvent(target, ref ev);
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var query = EntityQueryEnumerator<DefibrillatorComponent>();
-        while (query.MoveNext(out var uid, out var defib))
-        {
-            if (defib.NextZapTime == null || _timing.CurTime < defib.NextZapTime)
-                continue;
-
-            _audio.PlayPvs(defib.ReadySound, uid);
-            _appearance.SetData(uid, DefibrillatorVisuals.Ready, true);
-            defib.NextZapTime = null;
-        }
     }
 }
