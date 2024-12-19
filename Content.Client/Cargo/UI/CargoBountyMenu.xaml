@@ -13,22 +13,20 @@
             </PanelContainer.PanelOverride>
             <TabContainer Name="MasterTabContainer" VerticalExpand="True" HorizontalExpand="True">
                 <ScrollContainer HScrollEnabled="False"
-                                HorizontalExpand="True"
-                                VerticalExpand="True">
+                                 HorizontalExpand="True"
+                                 VerticalExpand="True">
                     <BoxContainer Name="BountyEntriesContainer"
-                                Orientation="Vertical"
-                                VerticalExpand="True"
-                                HorizontalExpand="True">
-                    </BoxContainer>
+                                  Orientation="Vertical"
+                                  VerticalExpand="True"
+                                  HorizontalExpand="True" />
                 </ScrollContainer>
                 <ScrollContainer HScrollEnabled="False"
-                                HorizontalExpand="True"
-                                VerticalExpand="True">
+                                 HorizontalExpand="True"
+                                 VerticalExpand="True">
                     <BoxContainer Name="BountyHistoryContainer"
-                                Orientation="Vertical"
-                                VerticalExpand="True"
-                                HorizontalExpand="True">
-                    </BoxContainer>
+                                  Orientation="Vertical"
+                                  VerticalExpand="True"
+                                  HorizontalExpand="True" />
                 </ScrollContainer>
             </TabContainer>
         </PanelContainer>
