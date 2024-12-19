@@ -14,10 +14,41 @@ public sealed partial class ResearchSystem
     private void InitializeConsole()
     {
         SubscribeLocalEvent<ResearchConsoleComponent, ConsoleUnlockTechnologyMessage>(OnConsoleUnlock);
+        SubscribeLocalEvent<ResearchConsoleComponent, ConsoleRediscoverTechnologyMessage>(OnRediscoverTechnology);
         SubscribeLocalEvent<ResearchConsoleComponent, BeforeActivatableUIOpenEvent>(OnConsoleBeforeUiOpened);
         SubscribeLocalEvent<ResearchConsoleComponent, ResearchServerPointsChangedEvent>(OnPointsChanged);
         SubscribeLocalEvent<ResearchConsoleComponent, ResearchRegistrationChangedEvent>(OnConsoleRegistrationChanged);
         SubscribeLocalEvent<ResearchConsoleComponent, TechnologyDatabaseModifiedEvent>(OnConsoleDatabaseModified);
+    }
+
+    private void OnRediscoverTechnology(
+        EntityUid uid,
+        ResearchConsoleComponent console,
+        ConsoleRediscoverTechnologyMessage args
+    )
+    {
+        var act = args.Actor;
+
+        if (!this.IsPowered(uid, EntityManager))
+            return;
+
+        if (!HasAccess(uid, act))
+        {
+            _popup.PopupEntity(Loc.GetString("research-console-no-access-popup"), act);
+            return;
+        }
+
+        if (!TryGetClientServer(uid, out var serverEnt, out var serverComponent))
+            return;
+
+        var rediscoverCost = serverComponent.RediscoverCost;
+        if (rediscoverCost > serverComponent.Points)
+            return;
+
+        ModifyServerPoints(serverEnt.Value, -rediscoverCost);
+        UpdateTechnologyCards(serverEnt.Value);
+        SyncClientWithServer(uid);
+        UpdateConsoleInterface(uid);
     }
 
     private void OnConsoleUnlock(EntityUid uid, ResearchConsoleComponent component, ConsoleUnlockTechnologyMessage args)
@@ -30,7 +61,7 @@ public sealed partial class ResearchSystem
         if (!PrototypeManager.TryIndex<TechnologyPrototype>(args.Id, out var technologyPrototype))
             return;
 
-        if (TryComp<AccessReaderComponent>(uid, out var access) && !_accessReader.IsAllowed(act, uid, access))
+        if (!HasAccess(uid, act))
         {
             _popup.PopupEntity(Loc.GetString("research-console-no-access-popup"), act);
             return;
@@ -52,7 +83,7 @@ public sealed partial class ResearchSystem
             );
             _radio.SendRadioMessage(uid, message, component.AnnouncementChannel, uid, escapeMarkup: false);
         }
-       
+
         SyncClientWithServer(uid);
         UpdateConsoleInterface(uid, component);
     }
@@ -72,11 +103,11 @@ public sealed partial class ResearchSystem
         if (TryGetClientServer(uid, out _, out var serverComponent, clientComponent))
         {
             var points = clientComponent.ConnectedToServer ? serverComponent.Points : 0;
-            state = new ResearchConsoleBoundInterfaceState(points);
+            state = new ResearchConsoleBoundInterfaceState(points, serverComponent.RediscoverCost);
         }
         else
         {
-            state = new ResearchConsoleBoundInterfaceState(default);
+            state = new ResearchConsoleBoundInterfaceState(default, default);
         }
 
         _uiSystem.SetUiState(uid, ResearchConsoleUiKey.Key, state);
@@ -100,4 +131,8 @@ public sealed partial class ResearchSystem
         UpdateConsoleInterface(uid, component);
     }
 
+    private bool HasAccess(EntityUid uid, EntityUid act)
+    {
+        return TryComp<AccessReaderComponent>(uid, out var access) && _accessReader.IsAllowed(act, uid, access);
+    }
 }
