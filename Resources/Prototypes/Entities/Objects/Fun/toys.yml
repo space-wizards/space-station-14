@@ -1120,6 +1120,8 @@
     heldPrefix: bask
   - type: TileFrictionModifier
     modifier: 0.5
+  - type: Dunkable
+    dunkability: 3
 
 - type: entity
   parent: BaseItem
@@ -1134,6 +1136,8 @@
     size: Small
     sprite: Objects/Fun/toys.rsi
     heldPrefix: footb
+  - type: Dunkable
+    dunkability: 2.5
 
 - type: entity
   parent: BaseItem
@@ -1153,6 +1157,8 @@
     heldPrefix: beachb
   - type: TileFrictionModifier
     modifier: 0.05
+  - type: Dunkable
+    dunkability: 1.5
 
 - type: entity
   parent: BaseItem
@@ -1650,4 +1656,3 @@
   - type: PhysicalComposition
     materialComposition:
       Plastic: 25
-      

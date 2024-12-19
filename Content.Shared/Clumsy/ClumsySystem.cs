@@ -2,6 +2,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Chemistry.Hypospray.Events;
 using Content.Shared.Climbing.Components;
 using Content.Shared.Climbing.Events;
+using Content.Shared.Containers;
 using Content.Shared.Damage;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Medical;
@@ -31,6 +32,7 @@ public sealed class ClumsySystem : EntitySystem
         SubscribeLocalEvent<ClumsyComponent, SelfBeforeDefibrillatorZapsEvent>(BeforeDefibrillatorZapsEvent);
         SubscribeLocalEvent<ClumsyComponent, SelfBeforeGunShotEvent>(BeforeGunShotEvent);
         SubscribeLocalEvent<ClumsyComponent, SelfBeforeClimbEvent>(OnBeforeClimbEvent);
+        SubscribeLocalEvent<ClumsyComponent, ThrownIntoContainerThrowerEvent>(OnBeforeThrownIntoContainerThrowerEvent);
     }
 
     // If you add more clumsy interactions add them in this section!
@@ -38,7 +40,7 @@ public sealed class ClumsySystem : EntitySystem
     private void BeforeHyposprayEvent(Entity<ClumsyComponent> ent, ref SelfBeforeHyposprayInjectsEvent args)
     {
         // Clumsy people sometimes inject themselves! Apparently syringes are clumsy proof...
-    
+
         // checks if ClumsyHypo is false, if so, skips.
         if (!ent.Comp.ClumsyHypo)
             return;
@@ -54,7 +56,7 @@ public sealed class ClumsySystem : EntitySystem
     private void BeforeDefibrillatorZapsEvent(Entity<ClumsyComponent> ent, ref SelfBeforeDefibrillatorZapsEvent args)
     {
         // Clumsy people sometimes defib themselves!
-        
+
         // checks if ClumsyDefib is false, if so, skips.
         if (!ent.Comp.ClumsyDefib)
             return;
@@ -137,9 +139,17 @@ public sealed class ClumsySystem : EntitySystem
                 ent,
                 null);
         }
-
         args.Cancel();
     }
+
+    private void OnBeforeThrownIntoContainerThrowerEvent(Entity<ClumsyComponent> ent, ref ThrownIntoContainerThrowerEvent args)
+    {
+        if (ent.Comp.ThrowIntoContainerChance == null)
+            return;
+
+        args.Modifier *= ent.Comp.ThrowIntoContainerChance.Value;
+    }
+
     #endregion
 
     #region Helper functions

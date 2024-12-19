@@ -1,22 +1,22 @@
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Containers;
+namespace Content.Shared.Containers;
 
 /// <summary>
 /// Allows objects to fall inside the Container when thrown
 /// </summary>
-[RegisterComponent]
-[Access(typeof(ThrowInsertContainerSystem))]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class ThrowInsertContainerComponent : Component
 {
     [DataField(required: true)]
     public string ContainerId = string.Empty;
 
     /// <summary>
-    /// Throw chance of hitting into the container
+    /// Probability of missing the container
     /// </summary>
     [DataField]
-    public float Probability = 0.75f;
+    public float BaseHitProbability = 0.25f;
 
     /// <summary>
     /// Sound played when an object is throw into the container.
@@ -33,3 +33,15 @@ public sealed partial class ThrowInsertContainerComponent : Component
     [DataField]
     public LocId MissLocString = "container-thrown-missed";
 }
+
+/// <summary>
+///     Event raised on the item when it's been thrown into a container.
+/// </summary>
+[ByRefEvent]
+public record struct ThrownIntoContainerEvent(float Modifier);
+
+/// <summary>
+///     Event raised on the person who threw an item into a container.
+/// </summary>
+[ByRefEvent]
+public record struct ThrownIntoContainerThrowerEvent(float Modifier);

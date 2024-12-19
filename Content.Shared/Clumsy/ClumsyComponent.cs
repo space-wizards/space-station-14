@@ -60,6 +60,12 @@ public sealed partial class ClumsyComponent : Component
     public SoundSpecifier GunShootFailSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg");
 
     /// <summary>
+    ///     Modifier for throwing items into containers. Set to null for no modifier!
+    /// </summary>
+    [DataField]
+    public float? ThrowIntoContainerChance = 0.025f;
+
+    /// <summary>
     ///      Whether or not to apply Clumsy to hyposprays.
     /// </summary>
     [DataField, AutoNetworkedField]

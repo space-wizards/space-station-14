@@ -42,4 +42,10 @@ public sealed partial class BlindableComponent : Component
     /// </description>
     [Access(Other = AccessPermissions.ReadWriteExecute)]
     public bool GraceFrame = false;
+
+    /// <summery>
+    ///     The percentage to decrease the probability of throwing an item into a container per level of blindness.
+    /// </summery>
+    [Access(Other = AccessPermissions.ReadWriteExecute)]
+    public float DecreaseThrowChancePerBlindness = 0.15f;
 }
