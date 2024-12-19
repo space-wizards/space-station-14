@@ -1,9 +1,13 @@
 marking-PawSocks-pawsocks = Paw Socks
 marking-PawSocks = Paw Socks
 marking-PawSocksFeet = Paw Socks (Feet)
+marking-PawSocksFeet-pawsocks_feet = Paw Socks
 marking-PawSocksLegs = Paw Socks (Legs)
+marking-PawSocksLegs-pawsocks_legs = Paw Socks
 marking-PawSocksHands = Paw Socks (Hands)
-marking-PawSocksArms = Paw Socks (Arms) 
+marking-PawSocksHands-pawsocks_hands = Paw Socks
+marking-PawSocksArms = Paw Socks (Arms)
+marking-PawSocksArms-pawsocks_arms = Paw Socks
 marking-FoxTail-vulp_tail = Fox Tail (base)
 marking-FoxTail = Fox Tail (tip)
 marking-FoxTail-vulp_tail_inner = Fox Tail (tip)
