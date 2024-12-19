@@ -1,0 +1,66 @@
+- type: entity
+  parent: BaseItem
+  id: PetriDish
+  name: petri dish
+  description: This makes you feel well-cultured.
+  components:
+  - type: Tag
+    tags:
+    - Dish
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.CellContainerVisuals.DishVisibility:
+        enum.CellContainerVisuals.DishLayer:
+          True:
+            visible: true
+          False:
+            visible: false
+  - type: Sprite
+    sprite: Objects/Specific/Xenobiology/petri_dish.rsi
+    layers:
+    - state: icon-back
+    - map: ["enum.CellContainerVisuals.DishLayer"]
+      state: cells
+      visible: false
+    - state: icon
+  - type: Item
+    sprite: Objects/Specific/Xenobiology/petri_dish.rsi
+  - type: CellContainer
+    allowModifiers: false
+    allowCollection: false
+    toolsTransferWhitelist:
+      components:
+      - CellCollector
+  - type: CellContainerVisuals
+
+- type: entity
+  parent: PetriDish
+  id: PetriDishMurine
+  suffix: Murine
+  components:
+  - type: CellGeneration
+    cells:
+    - Murine
+
+- type: entity
+  parent: PetriDish
+  id: PetriDishAll
+  suffix: All
+  components:
+  - type: CellGeneration
+    cells:
+    - Murine
+    - Galliform
+    - Bovine
+    - Feliform
+    - Canid
+    - Ursine
+    - Cyprinid
+    - CartilaginousCyprinid
+    - Ophidic
+    - Anura
+    - Caudata
+    - Atypical
+    - Aphid
+    - Pseudoarachnoid

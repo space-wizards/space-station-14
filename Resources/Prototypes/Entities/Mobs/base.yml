@@ -5,6 +5,7 @@
   id: BaseMob
   abstract: true
   components:
+  - type: CellContainer
   - type: Sprite
     noRot: true
     drawdepth: Mobs
