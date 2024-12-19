@@ -28,13 +28,7 @@ public sealed partial class TeleporterChipComponent : Component
     /// Not ProtoId<TagPrototype> because we can randomly generate this key for expeditions.
     /// </remarks>
     [DataField, AutoNetworkedField]
-    public string? AutoLinkKey = null;
-
-    /// <summary>
-    /// If AutoLinkKey is not empty, but the link failed to be set up, this entity will be automatically deleted
-    /// </summary>
-    [DataField]
-    public bool DeleteOnFailedLink = true;
+    public string? AutoLinkKey;
 
     [DataField]
     public SoundSpecifier RecordSound = new SoundPathSpecifier("/Audio/Machines/high_tech_confirm.ogg")

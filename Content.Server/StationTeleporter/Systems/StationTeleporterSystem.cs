@@ -5,7 +5,6 @@ namespace Content.Server.StationTeleporter.Systems;
 
 public sealed class StationTeleporterSystem : SharedStationTeleporterSystem
 {
-
     public override void Initialize()
     {
         base.Initialize();
@@ -32,7 +31,10 @@ public sealed class StationTeleporterSystem : SharedStationTeleporterSystem
             successLink = true;
             break;
         }
-        if (!successLink && chip.Comp.DeleteOnFailedLink)
-            QueueDel(chip);
+
+        if (!successLink)
+        {
+            chip.Comp.AutoLinkKey = null;
+        }
     }
 }
