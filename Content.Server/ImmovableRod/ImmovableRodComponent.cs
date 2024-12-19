@@ -49,4 +49,10 @@ public sealed partial class ImmovableRodComponent : Component
     /// </summary>
     [DataField]
     public DamageSpecifier? Damage;
+
+    /// <summary>
+    ///     The string used when the rod gibs a mob.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public LocId EviscerationPopup = "immovable-rod-penetrated-mob";
 }
