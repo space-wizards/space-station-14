@@ -905,33 +905,323 @@
     sound:
       path: /Audio/Voice/Human/malescream_5.ogg
 
+# Moff
 - type: entity
   parent: BasePlushie
-  id: PlushieMoth
-  name: moth plushie
-  description: Cute and fluffy moth plushie. Enjoy, bz!
+  id: BasePlushieMoth
+  abstract: true
   components:
   - type: Sprite
-    state: plushie_moth
+    sprite: Objects/Fun/moff_plushie.rsi
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Voice/Moth/moth_chitter.ogg
   - type: EmitSoundOnLand
     sound:
-      path: /Audio/Voice/Moth/moth_chitter.ogg
+      path: /Audio/Voice/Moth/moth_scream.ogg
   - type: EmitSoundOnActivate
     sound:
-      path: /Audio/Voice/Moth/moth_chitter.ogg
+      path: /Audio/Voice/Moth/moth_squeak.ogg
   - type: EmitSoundOnTrigger
     sound:
-      path: /Audio/Voice/Moth/moth_chitter.ogg
+      path: /Audio/Voice/Moth/moth_squeak.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Voice/Moth/moth_scream.ogg
   - type: MeleeWeapon
     soundHit:
-      path: /Audio/Voice/Moth/moth_chitter.ogg
+      path: /Audio/Voice/Moth/moth_squeak.ogg
   - type: Food
     requiresSpecialDigestion: true
     useSound:
       path: /Audio/Voice/Moth/moth_chitter.ogg
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 10
+  - type: SolutionContainerManager #More food for moff from moff
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 15
+
+- type: entity
+  parent: BasePlushieMoth
+  id: PlushieMoth
+  name: moff plushie
+  description: Cute and fluffy moff plushie. Enjoy, bzzz!
+  components:
+  - type: Sprite
+    state: moff
+  - type: Item
+    heldPrefix: moff
+
+- type: entity
+  parent: BasePlushieMoth
+  id: PlushieMothRandom
+  name: moff plushie
+  suffix: Random
+  description: An adorable mothperson plushie. Bzz, this fluffy is *squeaks!*
+  components:
+  - type: Sprite
+    state: moff_all
+  - type: Item
+    heldPrefix: moff
+  - type: RandomSpawner
+    offset: 0
+    prototypes:
+      - PlushieMoth
+      - PlushieMothMedic
+      - PlushieMothEngie
+      - PlushieMothSyndie
+    chance: 0.9
+    rarePrototypes:
+      - PlushieMothRainbow
+      - PlushieMothsician
+      - PlushieMothBar
+      - PlushieMothBluespace
+      - PlushieMothrror
+    rareChance: 0.1
+
+# Safety Moth™ ^^
+- type: entity
+  parent: BasePlushieMoth
+  id: PlushieMothMedic
+  name: medic moff plushie
+  description: An adorable mothperson plushie, official toy from Safety Moth™ series. Brought to you by your friends at Nanotrasen. Bzz, this fluffy is medical!
+  components:
+  - type: Sprite
+    state: moff
+  - type: Item
+    heldPrefix: moff
+  - type: SpeakOnUse
+    pack: PlushiesMothMedic
+  - type: UseDelay
+    delay: 5
+
+- type: entity
+  parent: BasePlushieMoth
+  id: PlushieMothEngie
+  name: engie moff plushie
+  description: An adorable mothperson plushie, official toy from Safety Moth™ series. Brought to you by your friends at Nanotrasen. Bzz, this fluffy is engineering!
+  components:
+  - type: Appearance
+  - type: Sprite
+    layers:
+      - map: [ "enum.MoffVisualLayers.Base" ]
+      - state: safety_moth-engineer_helmet
+        map: [ "enum.MoffVisualLayers.Helmet" ]
+      - state: safety_moth-helmet-on
+        shader: unshaded
+        visible: false
+        map: [ "enum.MoffVisualLayers.Light" ]
+  - type: Icon
+    sprite: Objects/Fun/moff_plushie.rsi
+    state: safety_moth-engineer
+  - type: RandomSprite
+    available:
+      - enum.MoffVisualLayers.helmet:
+          safety_moth-engineer_helmet_orange: ""
+          safety_moth-engineer_helmet: ""
+  - type: PointLight
+    enabled: false
+    radius: 2
+    energy: 1.5
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    netsync: false
+  - type: UnpoweredFlashlight
+  - type: Item
+    heldPrefix: moff
+  - type: SpeakOnUse
+    pack: PlushiesMothEngie
+  - type: UseDelay
+    delay: 5
+
+- type: entity
+  parent: BasePlushieMoth
+  id: PlushieMothSyndie
+  name: syndie moff plushie
+  description: An adorable mothperson plushie, non-official toy from Syndie Moth™ series . Brought to you by your friends at the Syndicate. Bzz, this fluffy is terrorist!
+  components:
+  - type: Sprite
+    state: moff
+  - type: Item
+    heldPrefix: moff
+  - type: SpeakOnUse
+    pack: PlushiesMothSyndie
+  - type: UseDelay
+    delay: 5
+  
+
+- type: entity
+  parent: BasePlushieMoth
+  id: PlushieMothRainbow
+  name: moff rainbow plushie
+  description: An adorable mothperson plushie. Bzz, this fluffy is rainbow!
+  components:
+  - type: RgbLightController
+    layers: [ 0 ]
+  - type: Sprite
+    state: moff
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: moff-inhand-left
+        shader: unshaded
+      right:
+      - state: moff-inhand-right
+        shader: unshaded
+  - type: PointLight #More light for moff
+    radius: 2
+    energy: 2.5
+  - type: Extractable #:clueless:
+    juiceSolution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 5
+      - ReagentId: Lipolicide
+        Quantity: 2.5
+      - ReagentId: Happiness
+        Quantity: 2.5
+  - type: SolutionContainerManager 
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+        - ReagentId: Lipolicide
+          Quantity: 2.5
+        - ReagentId: Happiness
+          Quantity: 2.5
+
+- type: entity
+  parent: BasePlushieMoth
+  id: PlushieMothsician
+  name: moff musician plushie
+  description: A plushie depicting an adorable mothperson with a tiny synthesizer and tiny glasses. Bz-bz-bzzzz!
+  components:
+  - type: Sprite
+    state: moffsician
+  - type: Item
+    heldPrefix: moffsician
+  - type: EmitSoundOnUse #Music for musician moff!
+    sound:
+      path: /Audio/Jukebox/sunset.ogg
+      params:
+        volume: -12
+        maxDistance: 7
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Jukebox/sunset.ogg
+      params:
+        volume: -12
+        maxDistance: 7
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Jukebox/sunset.ogg
+      params:
+        volume: -12
+        maxDistance: 7
+  - type: UseDelay
+    delay: 600.0 #10 minutes
+
+- type: entity
+  parent: BasePlushieMoth
+  id: PlushieMothBar
+  name: moff bartender plushie
+  description: A plushie depicting an adorable mothperson with a tiny tophat and tiny kevlar vest. Bzzz...
+  components:
+  - type: Sprite
+    state: moffbar
+  - type: Item
+    heldPrefix: moffbar
+  - type: EmitSoundOnLand #Somewhat masochistic moff
+    sound:
+      path: /Audio/Voice/Moth/moth_laugh.ogg
+  - type: Extractable #Or just drunk =]
+    juiceSolution:
+      reagents:
+      - ReagentId: Fiber
+        Quantity: 7.5
+      - ReagentId: Ethanol
+        Quantity: 2.5
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
+        - ReagentId: Ethanol
+          Quantity: 5
+
+- type: entity
+  parent: BasePlushieMoth
+  id: PlushieMothBluespace
+  name: moff bluespace plushie
+  description: An adorable mothperson plushie. Bzz, this fluffy is teleporting!
+  components:
+  - type: Sprite
+    state: moff_bluespace
+  - type: Item
+    heldPrefix: moff_bluespace
+  - type: RandomWalk #"Teleportation"
+    minSpeed: 500
+    maxSpeed: 500
+    minStepCooldown: 30
+    maxStepCooldown: 60
+
+- type: entity
+  parent: BasePlushieMoth
+  id: PlushieMothrror
+  name: broken moff plushie #Bz- ERROR!!!
+  description: Bzzror! Something went wrong.
+  components:
+  - type: Sprite
+    state: moffrror
+  - type: Item
+    heldPrefix: moffrror
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Talk/speak_3.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Voice/Talk/speak_3_ask.ogg
+  - type: EmitSoundOnActivate
+    sound:
+      path: /Audio/Voice/Talk/speak_3.ogg
+  - type: EmitSoundOnTrigger
+    sound:
+      path: /Audio/Voice/Talk/speak_3.ogg
+  - type: EmitSoundOnCollide
+    sound:
+      path: /Audio/Voice/Talk/speak_3_ask.ogg
+  - type: MeleeWeapon
+    soundHit:
+      path: /Audio/Voice/Talk/speak_3_exclaim.ogg
+  - type: Food #Broken. . .
+    requiresSpecialDigestion: true
+    useSound:
+      path: /Audio/Voice/Talk/speak_3_ask.ogg
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceThatMakesYouWeh
+        Quantity: 15
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 5
+        - ReagentId: JuiceThatMakesYouWeh
+          Quantity: 5
 
 ## Cheapo Figurines
 
