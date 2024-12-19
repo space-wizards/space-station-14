@@ -19,15 +19,12 @@ public sealed class StationTeleporterSystem : SharedStationTeleporterSystem
 
         var query = EntityQueryEnumerator<StationTeleporterComponent>();
         var successLink = false;
-        while (query.MoveNext(out var uid, out var teleporters))
+        while (query.MoveNext(out var uid, out var teleporter))
         {
-            if (teleporters.AutoLinkKey is null || teleporters.AutoLinkKey != chip.Comp.AutoLinkKey)
+            if (teleporter.AutoLinkKey is null || teleporter.AutoLinkKey != chip.Comp.AutoLinkKey)
                 continue;
 
-            chip.Comp.ConnectedTeleporter = uid;
-            chip.Comp.ConnectedName = Loc.GetString(teleporters.TeleporterName);
-            Dirty(chip);
-
+            ConnectChipToTeleporter(chip, (uid, teleporter));
             successLink = true;
             break;
         }

@@ -1,6 +1,7 @@
 using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Labels.Components;
 using Content.Shared.Pinpointer;
 using Content.Shared.Popups;
 using Content.Shared.Power;
@@ -26,9 +27,13 @@ public abstract class SharedStationTeleporterSystem : EntitySystem
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
 
+    protected EntityQuery<LabelComponent> LabelQuery;
+
     public override void Initialize()
     {
         base.Initialize();
+
+        LabelQuery = GetEntityQuery<LabelComponent>();
 
         SubscribeLocalEvent<StationTeleporterConsoleComponent, BoundUIOpenedEvent>(OnUIOpened);
         SubscribeLocalEvent<StationTeleporterConsoleComponent, StationTeleporterClickMessage>(OnUIPortalClicked);
@@ -142,12 +147,16 @@ public abstract class SharedStationTeleporterSystem : EntitySystem
 
                 cachedTeleporters.Add(chipComp.ConnectedTeleporter.Value);
 
+                var teleporterName = LabelQuery.TryComp(chipComp.ConnectedTeleporter.Value, out var label)
+                    ? label.CurrentLabel ?? Loc.GetString("teleporter-name-unknown")
+                    : Loc.GetString("teleporter-name-unknown");
+
                 teleportersData.Add(
                     new(GetNetEntity(chipComp.ConnectedTeleporter.Value),
                         GetNetCoordinates(Transform(chipComp.ConnectedTeleporter.Value).Coordinates),
                         GetNetEntity(chipComp.ConnectedTeleporter.Value),
                         GetNetCoordinates(linkCoord),
-                        Loc.GetString(teleporter.TeleporterName),
+                        Loc.GetString(teleporterName),
                         powered));
             }
         }
@@ -159,7 +168,7 @@ public abstract class SharedStationTeleporterSystem : EntitySystem
         UpdateUserInterface(ent);
     }
 
-    private void OnInteractUsing(Entity<StationTeleporterComponent> ent, ref InteractUsingEvent args)
+    private void OnInteractUsing(Entity<StationTeleporterComponent> teleporter, ref InteractUsingEvent args)
     {
         if (args.Handled)
             return;
@@ -167,18 +176,23 @@ public abstract class SharedStationTeleporterSystem : EntitySystem
         if (!TryComp<TeleporterChipComponent>(args.Used, out var chip))
             return;
 
-        if (chip.ConnectedTeleporter is not null)
-        {
-            _popup.PopupEntity(Loc.GetString("teleporter-console-chip-already-recorded"), ent, args.User);
-            return;
-        }
+        ConnectChipToTeleporter((args.Used, chip), teleporter);
 
-        chip.ConnectedTeleporter = ent;
-        chip.ConnectedName = Loc.GetString(ent.Comp.TeleporterName);
-        _popup.PopupPredicted(Loc.GetString("teleporter-console-chip-record"), ent, args.User);
+        _popup.PopupPredicted(Loc.GetString("teleporter-console-chip-record"), teleporter, args.User);
         Audio.PlayPredicted(chip.RecordSound, args.Used, args.User);
 
         args.Handled = true;
+    }
+
+    protected void ConnectChipToTeleporter(Entity<TeleporterChipComponent> chip, Entity<StationTeleporterComponent> teleporter)
+    {
+        chip.Comp.ConnectedTeleporter = teleporter;
+
+        chip.Comp.ConnectedName = LabelQuery.TryComp(teleporter, out var label)
+            ? label.CurrentLabel ?? Loc.GetString("teleporter-name-unknown")
+            : Loc.GetString("teleporter-name-unknown");
+
+        Dirty(chip);
     }
 
     private void OnChipExamined(Entity<TeleporterChipComponent> ent, ref ExaminedEvent args)
@@ -188,18 +202,18 @@ public abstract class SharedStationTeleporterSystem : EntitySystem
             : Loc.GetString("teleporter-console-chip-examine-null"));
     }
 
-
     private void OnLinkedChanged(Entity<StationTeleporterComponent> ent, ref LinkedEntityChangedEvent args)
     {
+        var xform = Transform(ent);
         if (args.NewLinks.Count > 0)
         {
             _ambient.SetAmbience(ent, true);
-            Audio.PlayPvs(ent.Comp.LinkSound, ent);
+            Audio.PlayPvs(ent.Comp.LinkSound, xform.Coordinates);
         }
         else
         {
             _ambient.SetAmbience(ent, false);
-            Audio.PlayPvs(ent.Comp.UnlinkSound, ent);
+            Audio.PlayPvs(ent.Comp.UnlinkSound, xform.Coordinates);
         }
     }
 

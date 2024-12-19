@@ -10,12 +10,6 @@ namespace Content.Shared.StationTeleporter.Components;
 public sealed partial class StationTeleporterComponent : Component
 {
     /// <summary>
-    /// Public name of the teleporter displayed in the UI
-    /// </summary>
-    [DataField]
-    public LocId TeleporterName = "teleporter-name-unknown";
-
-    /// <summary>
     /// When initialized, a chip will attempt to contact a random teleporter that has the same code. Can be used for pre-created teleporters
     /// </summary>
     // Not ProtoId<TagPrototype> because we can random generate this keys for expeditions

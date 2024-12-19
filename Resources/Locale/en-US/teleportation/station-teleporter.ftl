@@ -1,5 +1,4 @@
 teleporter-console-slot-name = Disk
-teleporter-console-chip-already-recorded = Coordinates are already stored in this chip!
 teleporter-console-chip-record = Coordinates saved!
 
 teleporter-console-chip-examine-recorded = [color=#f5b942]Recorded coordinates: {$portal}[/color]
