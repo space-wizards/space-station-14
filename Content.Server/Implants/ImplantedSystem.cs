@@ -1,4 +1,5 @@
-﻿using Content.Shared.Implants.Components;
+using Content.Server.Body.Components;
+using Content.Shared.Implants.Components;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Implants;
@@ -9,6 +10,7 @@ public sealed partial class ImplanterSystem
     {
         SubscribeLocalEvent<ImplantedComponent, ComponentInit>(OnImplantedInit);
         SubscribeLocalEvent<ImplantedComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<ImplantedComponent, BeingGibbedEvent>(OnGibbed);
     }
 
     private void OnImplantedInit(EntityUid uid, ImplantedComponent component, ComponentInit args)
@@ -20,6 +22,12 @@ public sealed partial class ImplanterSystem
     private void OnShutdown(EntityUid uid, ImplantedComponent component, ComponentShutdown args)
     {
         //If the entity is deleted, get rid of the implants
+        _container.CleanContainer(component.ImplantContainer);
+    }
+
+    private void OnGibbed(EntityUid uid, ImplantedComponent component, BeingGibbedEvent args)
+    {
+        //If the entity is gibbed, get rid of the implants
         _container.CleanContainer(component.ImplantContainer);
     }
 }
