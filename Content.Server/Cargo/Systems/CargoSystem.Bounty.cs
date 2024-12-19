@@ -98,7 +98,7 @@ public sealed partial class CargoSystem
             return;
         }
 
-        if (!TryRemoveBounty(station, bounty.Value, null, args.Actor))
+        if (!TryRemoveBounty(station, bounty.Value, args.Actor))
             return;
 
         FillBountyDatabase(station);
@@ -437,33 +437,33 @@ public sealed partial class CargoSystem
     }
 
     [PublicAPI]
-    public bool TryRemoveBounty(EntityUid uid, string dataId, StationCargoBountyDatabaseComponent? component = null, EntityUid? actor = null)
+    public bool TryRemoveBounty(Entity<StationCargoBountyDatabaseComponent?> ent, string dataId, EntityUid? actor = null)
     {
-        if (!TryGetBountyFromId(uid, dataId, out var data, component))
+        if (!TryGetBountyFromId(ent.Owner, dataId, out var data, ent.Comp))
             return false;
 
-        return TryRemoveBounty(uid, data.Value, component, actor);
+        return TryRemoveBounty(ent, data.Value, actor);
     }
 
-    public bool TryRemoveBounty(EntityUid uid, CargoBountyData data, StationCargoBountyDatabaseComponent? component = null, EntityUid? actor = null)
+    public bool TryRemoveBounty(Entity<StationCargoBountyDatabaseComponent?> ent, CargoBountyData data, EntityUid? actor = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(ent, ref ent.Comp))
             return false;
 
-        for (var i = 0; i < component.Bounties.Count; i++)
+        for (var i = 0; i < ent.Comp.Bounties.Count; i++)
         {
-            if (component.Bounties[i].Id == data.Id)
+            if (ent.Comp.Bounties[i].Id == data.Id)
             {
                 string? actorName = default;
                 if (actor != null)
                 {
-                    var getIdentityEvent = new TryGetIdentityShortInfoEvent(uid, actor.Value);
+                    var getIdentityEvent = new TryGetIdentityShortInfoEvent(ent.Owner, actor.Value);
                     RaiseLocalEvent(getIdentityEvent);
                     actorName = getIdentityEvent.Title;
                 }
 
-                component.History.Add(new CargoBountyHistoryData(data, _gameTiming.CurTime, actorName));
-                component.Bounties.RemoveAt(i);
+                ent.Comp.History.Add(new CargoBountyHistoryData(data, _gameTiming.CurTime, actorName));
+                ent.Comp.Bounties.RemoveAt(i);
                 return true;
             }
         }
