@@ -112,7 +112,7 @@
           - ReagentId: Nicotine
             Quantity: 10
           - ReagentId: Iron
-            Quantity: 10
+            Quantity: 20
 
 - type: entity
   id: CigaretteTricordrazine
@@ -127,7 +127,7 @@
           - ReagentId: Nicotine
             Quantity: 10
           - ReagentId: Tricordrazine
-            Quantity: 10
+            Quantity: 20
 
 - type: entity
   id: CigaretteDylovene
@@ -142,7 +142,7 @@
           - ReagentId: Nicotine
             Quantity: 10
           - ReagentId: Dylovene
-            Quantity: 10
+            Quantity: 20
 
 - type: entity
   id: CigaretteDermaline
@@ -157,7 +157,7 @@
           - ReagentId: Nicotine
             Quantity: 10
           - ReagentId: Dermaline
-            Quantity: 10
+            Quantity: 20
 
 - type: entity
   id: CigaretteArithrazine
@@ -172,7 +172,7 @@
           - ReagentId: Nicotine
             Quantity: 10
           - ReagentId: Arithrazine
-            Quantity: 10
+            Quantity: 20
 
 - type: entity
   id: CigaretteIpecac
@@ -187,7 +187,7 @@
           - ReagentId: Nicotine
             Quantity: 10
           - ReagentId: Ipecac
-            Quantity: 2
+            Quantity: 4
 
 - type: entity
   id: CigaretteBicaridine
@@ -202,7 +202,7 @@
           - ReagentId: Nicotine
             Quantity: 10
           - ReagentId: Bicaridine
-            Quantity: 10
+            Quantity: 20
 
 - type: entity
   id: CigaretteDexalin
@@ -217,7 +217,7 @@
           - ReagentId: Nicotine
             Quantity: 10
           - ReagentId: Dexalin
-            Quantity: 10
+            Quantity: 20
 
 - type: entity
   id: CigarettePax
@@ -232,7 +232,7 @@
           - ReagentId: Nicotine
             Quantity: 10
           - ReagentId: Pax
-            Quantity: 2
+            Quantity: 4
 
 - type: entity
   id: CigaretteBbqSauce
@@ -247,7 +247,7 @@
           - ReagentId: Nicotine
             Quantity: 10
           - ReagentId: BbqSauce
-            Quantity: 10
+            Quantity: 20
 
 - type: entity
   id: CigaretteBlackPepper
@@ -262,7 +262,7 @@
           - ReagentId: Nicotine
             Quantity: 10
           - ReagentId: Blackpepper
-            Quantity: 10
+            Quantity: 20
 
 - type: entity
   id: CigaretteCapsaicinOil
@@ -277,7 +277,7 @@
           - ReagentId: Nicotine
             Quantity: 10
           - ReagentId: CapsaicinOil
-            Quantity: 10
+            Quantity: 20
 
 - type: entity
   id: CigaretteBread
@@ -290,7 +290,7 @@
         maxVol: 40
         reagents:
           - ReagentId: Nicotine
-            Quantity: 10
+            Quantity: 20
 
 - type: entity
   id: CigaretteMilk
@@ -305,7 +305,7 @@
           - ReagentId: Nicotine
             Quantity: 10
           - ReagentId: Milk
-            Quantity: 10
+            Quantity: 20
 
 - type: entity
   id: CigaretteBanana
@@ -320,7 +320,7 @@
           - ReagentId: Nicotine
             Quantity: 10
           - ReagentId: BananaHonk
-            Quantity: 10
+            Quantity: 20
 
 - type: entity
   id: CigaretteSpaceDrugs
@@ -335,7 +335,7 @@
           - ReagentId: Nicotine
             Quantity: 10
           - ReagentId: SpaceDrugs
-            Quantity: 10
+            Quantity: 20
 
 - type: entity
   id: CigaretteMuteToxin
@@ -350,7 +350,7 @@
           - ReagentId: Nicotine
             Quantity: 10
           - ReagentId: MuteToxin
-            Quantity: 2
+            Quantity: 4
 
 - type: entity
   id: CigaretteMold
@@ -365,7 +365,7 @@
           - ReagentId: Nicotine
             Quantity: 10
           - ReagentId: Mold
-            Quantity: 2
+            Quantity: 4
 
 - type: entity
   id: CigaretteLicoxide
@@ -380,7 +380,7 @@
           - ReagentId: Nicotine
             Quantity: 10
           - ReagentId: Licoxide
-            Quantity: 5
+            Quantity: 10
 
 - type: entity
   id: CigaretteWeldingFuel
@@ -395,7 +395,7 @@
           - ReagentId: Nicotine
             Quantity: 10
           - ReagentId: WeldingFuel
-            Quantity: 5
+            Quantity: 10
 
 - type: entity
   id: CigaretteTHC
@@ -410,4 +410,4 @@
           - ReagentId: Nicotine
             Quantity: 10
           - ReagentId: THC
-            Quantity: 5
+            Quantity: 10
