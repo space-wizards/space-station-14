@@ -2,7 +2,7 @@
   parent: [ BaseMachinePowered ]
   id: StationTeleporter
   name: stationary teleporter
-  description: The peak of bluespace technology. Giant teleporter that allow you to travel vast distances in the blink of an eye.
+  description: The peak of bluespace technology. A giant teleporter that allow you to travel vast distances in the blink of an eye.
   components:
   - type: Sprite
     noRot: true
