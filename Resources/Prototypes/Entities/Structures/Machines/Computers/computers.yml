@@ -549,6 +549,8 @@
       state: teleporters_syndicate
     - map: ["computerLayerKeys"]
       state: syndie_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
   - type: PointLight
     color: "#c61414"
   - type: Computer
