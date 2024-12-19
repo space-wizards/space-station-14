@@ -70,6 +70,24 @@
 
 - type: entity
   parent: [BoxCardboard, BaseSyndicateContraband]
+  id: AnimalFriendsKit
+  name: animal friends kit
+  description: Contains 5 doses of Subjuzine to convert animals into your henchmen. Just add blood!
+  components:
+  - type: Sprite
+    layers:
+      - state: box_of_doom
+      - state: syringe
+  - type: StorageFill
+    contents:
+      - id: MouseCube
+        amount: 2
+      - id: Syringe
+      - id: SubjuzineChemistryVial
+      - id: PaperWrittenAnimalFriendsKit
+
+- type: entity
+  parent: [BoxCardboard, BaseSyndicateContraband]
   id: CombatBakeryKit
   name: combat bakery kit
   description: A kit of clandestine baked weapons.
