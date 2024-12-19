@@ -1,3 +1,5 @@
+using Content.Shared.Whitelist;
+
 namespace Content.Server.Drone.Components
 {
     [RegisterComponent]
@@ -11,5 +13,11 @@ namespace Content.Server.Drone.Components
 		public TimeSpan NextProximityAlert = new();
 		
 		public EntityUid NearestEnt = default!;
+		
+		[DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
+		public EntityWhitelist? Whitelist;
+		
+		[DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
+		public EntityWhitelist? Blacklist;
     }
 }

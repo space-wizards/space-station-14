@@ -21,6 +21,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
+using Content.Shared.Whitelist;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Drone
@@ -35,6 +36,7 @@ namespace Content.Server.Drone
         [Dependency] private readonly InnateToolSystem _innateToolSystem = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+		[Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
         public override void Initialize()
         {
@@ -54,13 +56,13 @@ namespace Content.Server.Drone
 		{
 			if ((_gameTiming.CurTime >= component.NextProximityAlert) && args.Used != null && NonDronesInRange(uid, component))
 			{
-				if (_tagSystem.HasAnyTag(args.Used, "Syringe", "HighRiskItem")) // imp special. blacklist. this one *does* prevent actions. it would probably be best if this read from the component or something.
+				if (_whitelist.IsBlacklistPass(component.Blacklist, args.Used)) // imp special. blacklist. this one *does* prevent actions. it would probably be best if this read from the component or something.
 				{
 					args.Cancel();
 					_popupSystem.PopupEntity(Loc.GetString("drone-cant-use", ("being", component.NearestEnt)), uid, uid);
 				}
 				
-				else if (!_tagSystem.HasAnyTag(args.Used, "DroneUsable", "Trash")) /// tag whitelist. sends proximity warning popup if the item isn't whitelisted. Doesn't prevent actions.
+				else if (_whitelist.IsWhitelistPass(component.Whitelist, args.Used)) /// tag whitelist. sends proximity warning popup if the item isn't whitelisted. Doesn't prevent actions.
 				{
 					component.NextProximityAlert = _gameTiming.CurTime + component.ProximityDelay;
 					_popupSystem.PopupEntity(Loc.GetString("drone-too-close", ("being", component.NearestEnt)), uid, uid);

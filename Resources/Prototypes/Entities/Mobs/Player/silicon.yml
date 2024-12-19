@@ -70,10 +70,6 @@
     canShuttle: false
     title: comms-console-announcement-title-station-ai
     color: "#2ed2fd"
-  - type: HolographicAvatar
-    layerData:
-    - sprite: Mobs/Silicon/station_ai.rsi
-      state: default
   - type: ShowJobIcons
 
 - type: entity
@@ -379,19 +375,7 @@
           Occupied: { state: ai }
   - type: StealTarget #imp
     stealGroup: AICore
-  - type: Telephone
-    listeningRange: 0
-    speakerVolume: Speak
-    unlistedNumber: true
-    requiresPower: false
-  - type: Holopad
-  - type: StationAiWhitelist
-  - type: UserInterface
-    interfaces:
-      enum.HolopadUiKey.AiRequestWindow:
-        type: HolopadBoundUserInterface
-      enum.HolopadUiKey.AiActionWindow:
-        type: HolopadBoundUserInterface
+
 
 # The job-ready version of an AI spawn.
 - type: entity
@@ -473,28 +457,6 @@
     - state: ai_camera
       shader: unshaded
       map: ["base"]
-
-# The holographic representation of the AI that is projected from a holopad.
-- type: entity
-  id: StationAiHoloLocal
-  name: AI hologram
-  description: A holographic representation of an AI.
-  categories: [ HideSpawnMenu ]
-  suffix: DO NOT MAP
-  components:
-  - type: Transform
-    anchored: true
-  - type: WarpPoint
-    follow: true
-  - type: Eye
-  - type: ContentEye
-  - type: Examiner
-  - type: Actions
-  - type: Alerts
-  - type: FTLSmashImmune
-  - type: CargoSellBlacklist
-  - type: StationAiVision
-    range: 20
 
 # Borgs
 - type: entity
@@ -716,7 +678,17 @@
   id: Drone
   parent: PlayerSiliconBase
   components:
-  - type: Drone # this system still sucks but its not as stupid anymore
+  - type: Drone # this system has too much going on, it should really be like three different components
+    whitelist:
+      tags:
+      - DroneUsable
+      - Trash
+    blacklist:
+      tags:
+      - Syringe
+      - HighRiskItem
+      components:
+      - Contraband
   - type: Loadout # imp special. this replaces the InnateTool component.
     prototypes:
       - StartingGearDroneTools
@@ -739,7 +711,7 @@
     rules: |
      You are bound by these laws both in-game and out-of-character:
      1. You may not interfere with the affairs of any being except another drone, regardless of intent or circumstance.
-     2. Your sole function is to maintain or improve the station to the best of your ability.
+     2. Your goal is to maintain or improve the station to the best of your ability.
      3. You may not take any action which causes damage or harm to the station or its inhabitants.
   - type: GhostTakeoverAvailable
   - type: SiliconLawBound
