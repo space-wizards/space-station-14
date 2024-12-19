@@ -1,25 +1,24 @@
-using Content.Server.StationTeleporter.Systems;
 using Robust.Shared.Audio;
 
-namespace Content.Server.StationTeleporter.Components;
+namespace Content.Shared.StationTeleporter.Components;
 
 /// <summary>
 /// Stores a reference to a specific teleporter. Can be inserted into the teleporter control console so that the console can control this teleporter
 /// </summary>
-[RegisterComponent]
-[Access(typeof(StationTeleporterSystem))]
+[RegisterComponent, AutoGenerateComponentState]
+[Access(typeof(SharedStationTeleporterSystem))]
 public sealed partial class TeleporterChipComponent : Component
 {
     /// <summary>
     /// Uid of the teleporter this chip is synced with.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityUid? ConnectedTeleporter;
 
     /// <summary>
     /// The name of the teleporter the chip has synced is copied into this field. This information is used when examining the chip.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public string ConnectedName = string.Empty;
 
     /// <summary>
@@ -28,7 +27,7 @@ public sealed partial class TeleporterChipComponent : Component
     /// <remarks>
     /// Not ProtoId<TagPrototype> because we can randomly generate this key for expeditions.
     /// </remarks>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public string? AutoLinkKey = null;
 
     /// <summary>

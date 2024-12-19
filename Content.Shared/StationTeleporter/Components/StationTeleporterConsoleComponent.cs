@@ -1,6 +1,6 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.StationTeleporter;
+namespace Content.Shared.StationTeleporter.Components;
 
 /// <summary>
 /// Console that allows you to manage the StationTeleporterComponent

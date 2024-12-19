@@ -3,6 +3,7 @@ teleporter-console-chip-already-recorded = Coordinates are already stored in thi
 teleporter-console-chip-record = Coordinates saved!
 
 teleporter-console-chip-examine-recorded = [color=#f5b942]Recorded coordinates: {$portal}[/color]
+teleporter-console-chip-examine-null = [color=#f5b942]Recorded coordinates: None[/color]
 
 # UI
 
