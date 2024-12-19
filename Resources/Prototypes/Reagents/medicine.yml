@@ -610,7 +610,7 @@
         - !type:CureZombieInfection
           conditions:
             - !type:ReagentThreshold
-              min: 10
+              min: 9
 
 - type: reagent
   id: AmbuzolPlus
@@ -1169,7 +1169,7 @@
         conditions:
         - !type:ReagentThreshold
           min: 12
-          
+
 - type: reagent
   id: Opporozidone #Name based of an altered version of the startreck chem "Opporozine"
   name: reagent-name-opporozidone
