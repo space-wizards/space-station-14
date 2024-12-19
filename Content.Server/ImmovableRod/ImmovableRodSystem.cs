@@ -112,7 +112,7 @@ public sealed class ImmovableRodSystem : EntitySystem
         if (TryComp<BodyComponent>(ent, out var body))
         {
             component.MobCount++;
-            _popup.PopupEntity(Loc.GetString("immovable-rod-penetrated-mob", ("rod", uid), ("mob", ent)), uid, PopupType.LargeCaution);
+            _popup.PopupEntity(Loc.GetString(component.EviscerationPopup, ("rod", uid), ("mob", ent)), uid, PopupType.LargeCaution);
 
             if (!component.ShouldGib)
             {
