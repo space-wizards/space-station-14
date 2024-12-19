@@ -305,6 +305,10 @@
     - pancakes7
     - pancakes8
     - pancakes9
+  - type: UserInterface
+    interfaces:
+      enum.StackCustomSplitUiKey.Key:
+        type: StackCustomSplitBoundUserInterface
   - type: Sprite
     state: pancakes1
     layers:
