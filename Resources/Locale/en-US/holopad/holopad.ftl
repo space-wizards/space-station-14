@@ -38,7 +38,7 @@ holopad-hologram-name = hologram of {THE($name)}
 
 # Holopad actions
 holopad-activate-projector-verb = Activate holopad projector
-holopad-ai-is-unable-to-interface-with-holopad = You are unable to interface with the distant holopad, it is too far from your core.
+holopad-ai-is-unable-to-reach-holopad = You are unable to interface with the distant holopad, it is too far from your core.
 
 # Mapping prototypes
 # General

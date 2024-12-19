@@ -453,7 +453,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         switch (source.Comp.TransmissionRange)
         {
             case TelephoneRange.Grid:
-                return receiverXform.GridUid == sourceXform.GridUid;
+                return sourceXform.GridUid == receiverXform.GridUid;
 
             case TelephoneRange.Map:
                 return sourceXform.MapID == receiverXform.MapID;
