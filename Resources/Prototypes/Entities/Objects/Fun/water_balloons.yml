@@ -36,14 +36,14 @@
   - type: Sprite
     sprite: Objects/Fun/water_balloons.rsi
     layers:
-      - state: icon_inflated_fill-1
-        map: ["enum.SolutionContainerLayers.Fill"]
-      - state: icon_inflated
-        map: [ "spriteMap" ]
+    - state: icon_inflated_fill-1
+      map: ["enum.SolutionContainerLayers.Fill"]
+    - state: icon_inflated
+      map: [ "spriteMap" ]
   - type: RandomSprite
     available:
-      - spriteMap:
-          icon_inflated: Balloons
+    - spriteMap:
+        icon_inflated: Balloons
   - type: Item
     size: Normal
   - type: SolutionContainerManager
@@ -89,7 +89,7 @@
   - type: Sprite
     sprite: Objects/Fun/water_balloons.rsi
     layers:
-      - state: water_balloon_box
+    - state: water_balloon_box
   - type: Item
     size: Normal
     inhandVisuals:
