@@ -8,6 +8,7 @@ using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.StationTeleporter.Components;
 using Content.Shared.Teleportation.Systems;
+using Content.Shared.Timing;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -26,6 +27,7 @@ public abstract class SharedStationTeleporterSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly UseDelaySystem _useDelay = default!;
 
     protected EntityQuery<LabelComponent> LabelQuery;
 
@@ -172,6 +174,13 @@ public abstract class SharedStationTeleporterSystem : EntitySystem
     {
         if (args.Handled)
             return;
+
+        //Prevent spamming
+        if (TryComp<UseDelayComponent>(args.Used, out var useDelayComp) &&
+            _useDelay.IsDelayed((args.Used, useDelayComp)))
+            return;
+        
+        _useDelay.TryResetDelay(args.Used);
 
         if (!TryComp<TeleporterChipComponent>(args.Used, out var chip))
             return;
