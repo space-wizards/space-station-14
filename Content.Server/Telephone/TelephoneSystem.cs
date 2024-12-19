@@ -277,9 +277,8 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
     public void EndTelephoneCalls(Entity<TelephoneComponent> entity)
     {
-        // No need to end any calls if the telephone is already ending a call or idle
-        if (entity.Comp.CurrentState == TelephoneState.EndingCall ||
-            entity.Comp.CurrentState == TelephoneState.Idle)
+        // No need to end any calls if the telephone is already ending a call
+        if (entity.Comp.CurrentState == TelephoneState.EndingCall)
             return;
 
         HandleEndingTelephoneCalls(entity, TelephoneState.EndingCall);
