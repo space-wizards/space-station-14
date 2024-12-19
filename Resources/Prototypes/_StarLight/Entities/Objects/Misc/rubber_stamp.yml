@@ -1,7 +1,7 @@
 - type: entity
   name: magistrate stamp
   parent: RubberStampBase
-  id: RubberStampMagistrat
+  id: RubberStampMagistrate
   suffix: DO NOT MAP
   components:
   - type: Stamp

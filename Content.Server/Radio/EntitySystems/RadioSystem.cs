@@ -117,7 +117,7 @@ public sealed class RadioSystem : EntitySystem
                 if (TryComp<IdCardComponent>(item, out var id))
                 {
                     iconId = id.JobIcon;
-                    jobName = id.JobTitle;
+                    jobName = id.LocalizedJobTitle;
                     break;
                 }
 
@@ -127,7 +127,7 @@ public sealed class RadioSystem : EntitySystem
                     && TryComp(pda.ContainedId, out id))
                 {
                     iconId = id.JobIcon;
-                    jobName = id.JobTitle;
+                    jobName = id.LocalizedJobTitle;
                     break;
                 }
             }
