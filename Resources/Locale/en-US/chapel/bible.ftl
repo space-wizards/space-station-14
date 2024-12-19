@@ -2,7 +2,15 @@ bible-heal-success-self = You hit {THE($target)} with {THE($bible)}, and their w
 bible-heal-success-others = {CAPITALIZE(THE($user))} hits {THE($target)} with {THE($bible)}, and their wounds close in a flash of holy light!
 bible-heal-success-none-self = You hit {THE($target)} with {THE($bible)}, but they have no wounds you can heal!
 bible-heal-success-none-others = {CAPITALIZE(THE($user))} hits {THE($target)} with {THE($bible)}!
+bible-eye-success-only-self = You hit {THE($target)} with {THE($bible)}, and their eyes regain some focus!
+bible-eye-success-only-others = {CAPITALIZE(THE($user))} hits {THE($target)} with {THE($bible)}, and their eyes regain some focus!
+bible-heal-success-full-self = You hit {THE($target)} with {THE($bible)}, and their wounds close and eyes regain focus in a flash of holy light!
+bible-heal-success-full-others = {CAPITALIZE(THE($user))} hits {THE($target)} with {THE($bible)}, and their wounds close and eyes regain focus in a flash of holy light!
 
+bible-heal-success-partial-self = You hit {THE($target)} with {THE($bible)}, and their wounds close in a flash of holy light, but their eyes remain glossy!
+bible-heal-success-partial-others = {CAPITALIZE(THE($user))} hits {THE($target)} with {THE($bible)}, and their wounds close in a flash of holy light, but their eyes remain glossy!
+
+bible-eye-fail-self = You hit {THE($target)} with {THE($bible)}, but their eyes remaing glossy!
 bible-heal-fail-self = You hit {THE($target)} with {THE($bible)}, and it lands with a sad thwack, dazing {OBJECT($target)}!
 bible-heal-fail-others = {CAPITALIZE(THE($user))} hits {THE($target)} with {THE($bible)}, and it lands with a sad thack, dazing {OBJECT($target)}!
 bible-sizzle = The book sizzles in your hands!
