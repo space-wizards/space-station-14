@@ -34,19 +34,16 @@ public sealed partial class BountyHistoryEntry : BoxContainer
         RewardLabel.SetMarkup(Loc.GetString("bounty-console-reward-label", ("reward", bountyPrototype.Reward)));
         IdLabel.SetMarkup(Loc.GetString("bounty-console-id-label", ("id", bounty.Id)));
 
-        var stationTime = bounty.Timestamp.ToString(@"hh\:mm\:ss");
+        TimestampLabel.SetMarkup(bounty.Timestamp.ToString(@"hh\:mm\:ss"));
 
         if (bounty.Result == CargoBountyHistoryData.BountyResult.Completed)
         {
-            StatusLabel.SetMarkup(Loc.GetString("bounty-console-history-completed-label"));
-            NoticeLabel.SetMarkup(Loc.GetString("bounty-console-history-notice-completed-label", ("time", stationTime)));
+            NoticeLabel.SetMarkup(Loc.GetString("bounty-console-history-notice-completed-label"));
         }
         else
         {
-            StatusLabel.SetMarkup(Loc.GetString("bounty-console-history-skipped-label"));
             NoticeLabel.SetMarkup(Loc.GetString("bounty-console-history-notice-skipped-label",
-                ("id", bounty.ActorName ?? ""),
-                ("time", stationTime)));
+                ("id", bounty.ActorName ?? "")));
         }
     }
 }

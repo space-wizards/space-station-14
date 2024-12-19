@@ -21,7 +21,5 @@ bounty-manifest-list-start = Item manifest:
 
 bounty-console-tab-available-label = Available
 bounty-console-tab-history-label = History
-bounty-console-history-notice-completed-label = {$time} - Completed
-bounty-console-history-notice-skipped-label = {$time} - Skipped by {$id}
-bounty-console-history-completed-label = [color=limegreen]Completed[/color]
-bounty-console-history-skipped-label = [color=red]Skipped[/color]
+bounty-console-history-notice-completed-label = [color=limegreen]Completed[/color]
+bounty-console-history-notice-skipped-label = [color=red]Skipped[/color] by {$id}
