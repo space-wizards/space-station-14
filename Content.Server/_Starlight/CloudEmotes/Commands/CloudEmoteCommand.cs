@@ -1,11 +1,14 @@
 ﻿using System.Linq;
-using JetBrains.Annotations;
-using Robust.Shared.Console;
-using Content.Shared.Administration;
-using Robust.Shared.Map;
-using Robust.Server.GameObjects;
 using Content.Shared._Starlight.CloudEmote;
+using Content.Shared.Administration;
 using Content.Shared.Ghost;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
+using JetBrains.Annotations;
+using Robust.Server.GameObjects;
+using Robust.Shared.Console;
+using Robust.Shared.Map;
+
 namespace Content.Server._Starlight.CloudEmotes.Commands
 {
     [UsedImplicitly]
@@ -41,6 +44,12 @@ namespace Content.Server._Starlight.CloudEmotes.Commands
             if (player?.AttachedEntity == null)
             {
                 shell.WriteLine(LocalizationManager.GetString("shell-only-players-can-run-this-command"));
+                return;
+            }
+            
+            if (!_entityManager.TryComponent<MobStateComponent>(player, out var state) && state == MobState.Critical || MobState.Dead)
+            {
+                shell.WriteLine(LocalizationManager.GetString("shell-only-alive-can-run-this-command"));
                 return;
             }
 
