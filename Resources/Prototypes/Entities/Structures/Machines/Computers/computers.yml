@@ -490,6 +490,8 @@
         type: StationTeleporterBoundUserInterface
       enum.StorageUiKey.Key:
         type: StorageBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
   - type: StationTeleporterConsole
     portalColor: "#81ddeb"
   - type: Storage
