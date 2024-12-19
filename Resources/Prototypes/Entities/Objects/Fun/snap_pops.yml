@@ -33,6 +33,7 @@
     maxIntensity: 0.01
     intensitySlope: 1
     totalIntensity: 0.01
+    canThrowItems: false
 
 - type: entity
   parent: BaseStorageItem
