@@ -240,9 +240,6 @@ binds:
 - function: OpenAHelp
   type: State
   key: F1
-- function: OpenMentorHelp
-  type: State
-  key: F2
 - function: OpenInventoryMenu
   type: State
   key: I
@@ -476,10 +473,10 @@ binds:
   key: B
 - function: TakeScreenshot
   type: State
-  key: F12
+  key: F2
 - function: TakeScreenshotNoUI
   type: State
-  key: F12
+  key: F2
   mod1: Shift
 - function: GuiTabNavigateNext
   type: State

@@ -64,6 +64,12 @@ public sealed partial class UseFreedomImplantEvent : InstantActionEvent
 
 }
 
+public sealed partial class UseAdrenalImplantEvent : InstantActionEvent
+{
+
+}
+
+
 /// <summary>
 /// Used for triggering trigger events on the implant via action
 /// </summary>

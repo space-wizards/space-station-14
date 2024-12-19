@@ -16,8 +16,7 @@ public sealed class PlayerPanelEuiState(NetUserId guid,
     bool? whitelisted,
     bool canFreeze,
     bool frozen,
-    bool canAhelp,
-    bool canMentorhelp)
+    bool canAhelp)
     : EuiStateBase
 {
     public readonly NetUserId Guid = guid;
@@ -31,7 +30,6 @@ public sealed class PlayerPanelEuiState(NetUserId guid,
     public readonly bool CanFreeze = canFreeze;
     public readonly bool Frozen = frozen;
     public readonly bool CanAhelp = canAhelp;
-    public readonly bool CanMentorhelp = canMentorhelp;
 }
 
 
