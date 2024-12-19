@@ -230,7 +230,7 @@ public sealed partial class StationTeleporterConsoleWindow : FancyWindow
                 if (mapId1 == MapId.Nullspace || mapId2 == MapId.Nullspace)
                     return;
 
-                NavMap.DrawLines.Add((
+                NavMap.LinkedTeleportersCoordinates.Add((
                     _xformSystem.ToMapCoordinates(coordsOne.Value).Position,
                     _xformSystem.ToMapCoordinates(coordTwo.Value).Position));
             }
@@ -247,7 +247,7 @@ public sealed partial class StationTeleporterConsoleWindow : FancyWindow
         TeleportersTable.RemoveAllChildren();
         NavMap.TrackedCoordinates.Clear();
         NavMap.TrackedEntities.Clear();
-        NavMap.DrawLines.Clear();
+        NavMap.LinkedTeleportersCoordinates.Clear();
     }
 
     private void UpdateTeleportersTable()

@@ -6,7 +6,7 @@ namespace Content.Client.StationTeleporter;
 
 public sealed partial class StationTeleporterNavMapControl : NavMapControl
 {
-    public HashSet<(Vector2, Vector2)> DrawLines = new();
+    public HashSet<(Vector2, Vector2)> LinkedTeleportersCoordinates = new();
 
     private readonly SharedTransformSystem _transformSystem;
 
@@ -23,11 +23,9 @@ public sealed partial class StationTeleporterNavMapControl : NavMapControl
         PostWallDrawingAction += DrawAllTeleporterLinks;
     }
 
-    protected override void Draw(DrawingHandleScreen handle)
+    private void DrawAllTeleporterLinks(DrawingHandleScreen handle)
     {
-        base.Draw(handle);
-
-        foreach (var link in DrawLines) //TODO: Its work fine with all Maps expect Dev. Not sure why.
+        foreach (var link in LinkedTeleportersCoordinates)
         {
             if (_xform is null)
                 continue;
@@ -38,12 +36,7 @@ public sealed partial class StationTeleporterNavMapControl : NavMapControl
             var pos2 = Vector2.Transform(link.Item2, _transformSystem.GetInvWorldMatrix(_xform)) - Offset;
             pos2 = ScalePosition(new Vector2(pos2.X, -pos2.Y));
 
-            handle.DrawLine(pos1, pos2, Color.Aqua); //TODO: optimize Draw calls
+            handle.DrawLine(pos1, pos2, Color.Aqua);
         }
-    }
-
-
-    private void DrawAllTeleporterLinks(DrawingHandleScreen handle)
-    {
     }
 }
