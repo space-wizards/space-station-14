@@ -19,7 +19,9 @@ public sealed partial class TeleporterChipComponent : Component
     /// <summary>
     /// When initialized, it will attempt to contact a random teleporter that has the same code. Can be used for pre-created teleporters
     /// </summary>
-    // Not ProtoId<TagPrototype> because we can random generate this keys for expeditions
+    /// <remarks>
+    /// Not ProtoId<TagPrototype> because we can randomly generate this key for expeditions.
+    /// </remarks>
     [DataField]
     public string? AutoLinkKey = null;
 
