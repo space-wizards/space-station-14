@@ -585,9 +585,6 @@
   id: GasVent
 
 - type: Tag
-  id: TeleporterChip
-
-- type: Tag
   id: Gauze
 
 - type: Tag
@@ -1242,6 +1239,9 @@
 
 - type: Tag
   id: Taser
+
+- type: Tag
+  id: TeleporterChip
 
 - type: Tag
   id: TimerBrigElectronics
