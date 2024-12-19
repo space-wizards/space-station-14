@@ -28,7 +28,7 @@
   description: A delicious and spongy little cake.
   components:
   - type: Food
-    trash: 
+    trash:
     - FoodPlateMuffinTin
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/misc.rsi
@@ -610,6 +610,38 @@
           Quantity: 0.5
 
 - type: entity
+  name: cotton chèvre chaud
+  parent: FoodBakedChevreChaud
+  id: FoodBakedChevreChaudCotton
+  description: A disk of slightly melted chèvre flopped on top of a... cotton crostini, and toasted all-round.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - bread
+    - nutty
+    - creamy
+    - smokey
+    - cotton
+  - type: Sprite
+    state: chevrechaud-cotton
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: Tag
+    tags:
+    - ClothMade
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 1
+        - ReagentId: Fiber
+          Quantity: 1
+        - ReagentId: Vitamin
+          Quantity: 0.5
+
+- type: entity
   name: brownies
   parent: FoodBakedBase
   id: FoodBakedBrownieBatch
@@ -771,3 +803,35 @@
     damage:
       types:
         Blunt: 0 # so the damage stats icon doesn't immediately give away the syndie ones
+
+- type: entity
+  name: cotton croissant
+  parent: FoodBakedCroissant
+  id: FoodBakedCroissantCotton
+  description: Buttery, flaky, fibery goodness.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - bread
+    - butter
+    - cotton
+  - type: Sprite
+    state: croissant-cotton
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: Tag
+    tags:
+    - ClothMade
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 7
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 1.5
+        - ReagentId: Fiber
+          Quantity: 1.5
+        - ReagentId: Butter
+          Quantity: 2
+        - ReagentId: Vitamin
+          Quantity: 1
