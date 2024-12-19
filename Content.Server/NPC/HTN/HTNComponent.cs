@@ -37,6 +37,9 @@ public sealed partial class HTNComponent : NPCComponent
     [ViewVariables(VVAccess.ReadWrite)]
     public float PlanAccumulator = 0f;
 
+    [DataField]
+    public bool ConstantlyReplan = true;
+
     [ViewVariables]
     public HTNPlanJob? PlanningJob = null;
 
