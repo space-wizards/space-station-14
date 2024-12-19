@@ -1,5 +1,6 @@
 using Content.Shared.FixedPoint;
 using Content.Shared.Smoking;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Nutrition.Components
@@ -32,5 +33,11 @@ namespace Content.Shared.Nutrition.Components
         public string LitPrefix = "lit";
         [DataField("unlitPrefix")]
         public string UnlitPrefix = "unlit";
+
+        [DataField]
+        public SoundSpecifier? LightSound = new SoundPathSpecifier("/Audio/Effects/cig_light.ogg");
+
+        [DataField]
+        public SoundSpecifier? SnuffSound = new SoundPathSpecifier("/Audio/Effects/cig_snuff.ogg");
     }
 }
