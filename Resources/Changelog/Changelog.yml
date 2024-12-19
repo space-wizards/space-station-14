@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: lunarcomets
-  changes:
-  - message: updated AI job icon
-    type: Tweak
-  id: 7233
-  time: '2024-08-28T08:18:51.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31565
 - author: lzk228
   changes:
   - message: Added black suspenders for mime.
@@ -3935,3 +3928,11 @@
   id: 7732
   time: '2024-12-19T00:11:59.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33922
+- author: Crotalus, ArtisticRoomba
+  changes:
+  - message: Battery levels of applicable devices are now shown in the Power Monitoring
+      Console!
+    type: Add
+  id: 7733
+  time: '2024-12-19T00:46:36.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33854
