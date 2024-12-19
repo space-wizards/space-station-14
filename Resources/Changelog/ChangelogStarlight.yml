@@ -1199,4 +1199,11 @@ Entries:
   id: 170
   time: '2024-12-18T16:16:52.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/169
+- author: GnarlyGnoll
+  changes:
+  - message: More markings for Vulpkanin
+    type: Add
+  id: 171
+  time: '2024-12-19T16:35:19.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/177
 
