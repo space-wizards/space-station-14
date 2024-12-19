@@ -369,6 +369,10 @@
           Empty: { state: ai_empty }
           Occupied: { state: ai }
   - type: Telephone
+    compatibleRanges:
+    - Grid
+    - Map
+    - Unlimited
     listeningRange: 0
     speakerVolume: Speak
     unlistedNumber: true
