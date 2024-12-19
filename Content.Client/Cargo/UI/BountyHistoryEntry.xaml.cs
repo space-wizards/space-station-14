@@ -47,8 +47,4 @@ public sealed partial class BountyHistoryEntry : BoxContainer
                 ("time", stationTime)));
         }
     }
-    protected override void FrameUpdate(FrameEventArgs args)
-    {
-        base.FrameUpdate(args);
-    }
 }
