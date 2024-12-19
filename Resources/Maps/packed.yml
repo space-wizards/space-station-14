@@ -10066,6 +10066,23 @@ entities:
     - type: Transform
       pos: 28.5,-39.5
       parent: 2
+- proto: AmePartFlatpack
+  entities:
+  - uid: 15328
+    components:
+    - type: Transform
+      pos: 28.354391,-41.23593
+      parent: 2
+  - uid: 15329
+    components:
+    - type: Transform
+      pos: 28.416891,-41.64218
+      parent: 2
+  - uid: 15330
+    components:
+    - type: Transform
+      pos: 28.698141,-41.39218
+      parent: 2
 - proto: AnomalyScanner
   entities:
   - uid: 1838
@@ -18433,12 +18450,7 @@ entities:
   - uid: 10038
     components:
     - type: Transform
-      pos: 27.5,-32.5
-      parent: 2
-  - uid: 10039
-    components:
-    - type: Transform
-      pos: 28.5,-32.5
+      pos: 28.5,-31.5
       parent: 2
   - uid: 10040
     components:
@@ -21899,6 +21911,26 @@ entities:
     components:
     - type: Transform
       pos: 26.5,-31.5
+      parent: 2
+  - uid: 15331
+    components:
+    - type: Transform
+      pos: 27.5,-31.5
+      parent: 2
+  - uid: 15332
+    components:
+    - type: Transform
+      pos: 28.5,-34.5
+      parent: 2
+  - uid: 15333
+    components:
+    - type: Transform
+      pos: 28.5,-33.5
+      parent: 2
+  - uid: 15334
+    components:
+    - type: Transform
+      pos: 28.5,-32.5
       parent: 2
 - proto: CableApcStack
   entities:
@@ -73063,6 +73095,11 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 6.5,40.5
+      parent: 2
+  - uid: 10039
+    components:
+    - type: Transform
+      pos: 28.5,-41.5
       parent: 2
   - uid: 10303
     components:
