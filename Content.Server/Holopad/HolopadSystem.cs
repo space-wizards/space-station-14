@@ -120,8 +120,18 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
             if (source != null)
             {
+                // Close any AI request windows
                 if (_stationAiSystem.TryGetStationAiCore(args.Actor, out var stationAiCore) && stationAiCore != null)
                     _userInterfaceSystem.CloseUi(receiver.Owner, HolopadUiKey.AiRequestWindow, args.Actor);
+
+                // Try to warn the AI if the source of the call is out of its range
+                if (TryComp<TelephoneComponent>(stationAiCore, out var stationAiTelephone) &&
+                    TryComp<TelephoneComponent>(source, out var sourceTelephone) &&
+                    !_telephoneSystem.IsSourceInRangeOfReceiver((stationAiCore.Value.Owner, stationAiTelephone), (source.Value.Owner, sourceTelephone)))
+                {
+                    _popupSystem.PopupEntity(Loc.GetString("holopad-ai-is-unable-to-reach-holopad"), receiver, args.Actor);
+                    return;
+                }
 
                 ActivateProjector(source.Value, args.Actor);
             }
@@ -655,12 +665,8 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
         var source = new Entity<TelephoneComponent>(stationAiCore.Value, stationAiTelephone);
 
-        // Check that the target device isn't out of range - we don't want the AI leaving the station
         if (!_telephoneSystem.IsSourceInRangeOfReceiver(source, receiver))
-        {
-            _popupSystem.PopupEntity(Loc.GetString("holopad-ai-is-unable-to-reach-holopad"), receiver, user);
             return;
-        }
 
         // Terminate any calls that the core is hosting and immediately connect to the receiver
         _telephoneSystem.TerminateTelephoneCalls(source);
