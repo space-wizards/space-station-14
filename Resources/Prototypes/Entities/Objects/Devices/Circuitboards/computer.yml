@@ -431,7 +431,7 @@
   parent: BaseComputerCircuitboard
   id: SyndicateTeleportersControlCircuitboard
   name: syndicate teleporters control console board
-  description: A computer printed circuit board for a teleporter controlling console.
+  description: A computer printed circuit board for a teleporter control console.
   components:
   - type: ComputerBoard
     prototype: ComputerSyndicateTeleportersControl
