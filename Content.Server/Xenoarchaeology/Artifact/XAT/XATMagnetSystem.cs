@@ -48,7 +48,7 @@ public sealed class XATMagnetSystem : BaseQueryUpdateXATSystem<XATMagnetComponen
             if (!itemToggle.Activated)
                 continue;
 
-            if (!_transform.InRange(xform.Coordinates, Transform(artifact).Coordinates, node.Comp1.MagnetRange))
+            if (!_transform.InRange(xform.Coordinates, Transform(artifact).Coordinates, node.Comp1.MagbootsRange))
                 continue;
 
             Trigger(artifact, node);
