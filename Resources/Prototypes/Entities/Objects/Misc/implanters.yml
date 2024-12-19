@@ -254,3 +254,11 @@
   components:
     - type: Implanter
       implant: MindShieldImplant
+
+- type: entity
+  id: ChameleonControllerImplanter
+  suffix: chameleon controller
+  parent: BaseImplantOnlyImplanterSyndi
+  components:
+  - type: Implanter
+    implant: ChameleonControllerImplant
