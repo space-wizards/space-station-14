@@ -30,11 +30,13 @@ public record CommandReceivedEventArgs
     public SocketMessage Message { get; init; } = default!;
 }
 
+/// <summary>
+/// Handles the connection to Discord and provides methods to interact with it.
+/// </summary>
 public sealed class DiscordLink : IPostInjectInit
 {
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IConfigurationManager _configuration = default!;
-    [Dependency] private readonly IReflectionManager _reflectionManager = default!;
 
     /// <summary>
     ///    The Discord client. This is null if the bot is not connected.
@@ -83,6 +85,13 @@ public sealed class DiscordLink : IPostInjectInit
     {
         _configuration.OnValueChanged(CCVars.DiscordGuildId, OnGuildIdChanged, true);
         _configuration.OnValueChanged(CCVars.DiscordPrefix, OnPrefixChanged, true);
+
+        if (_configuration.GetCVar(CCVars.DiscordToken) is not { } token || token == string.Empty)
+        {
+            _sawmill.Info("No Discord token specified, not connecting.");
+            return;
+        }
+
         _client = new DiscordSocketClient(new DiscordSocketConfig()
         {
             GatewayIntents = GatewayIntents.All
@@ -91,16 +100,8 @@ public sealed class DiscordLink : IPostInjectInit
         _client.MessageReceived += OnCommandReceivedInternal;
         _client.MessageReceived += OnMessageReceivedInternal;
 
-        if (_configuration.GetCVar(CCVars.DiscordToken) is not { } token || token == string.Empty)
-        {
-            _sawmill.Info("No Discord token specified, not connecting.");
-            // The Bot is not connected, so we need to set the client to null, because some methods check if the bot is connected using a null check on the client.
-            _client = null;
-            return;
-        }
-
         // If the Guild ID is empty OR the prefix is empty, we don't want to connect to Discord.
-        if (_configuration.GetCVar(CCVars.DiscordGuildId) == string.Empty || _configuration.GetCVar(CCVars.DiscordPrefix) == string.Empty)
+        if (_guildId == 0 || BotPrefix == string.Empty)
         {
             // This is a warning, not info, because it's a configuration error.
             // It is valid to not have a Discord token set which is why the above check is an info.
@@ -154,7 +155,7 @@ public sealed class DiscordLink : IPostInjectInit
         _configuration.UnsubValueChanged(CCVars.DiscordPrefix, OnPrefixChanged);
     }
 
-    public void PostInject()
+    void IPostInjectInit.PostInject()
     {
         _sawmill = _logManager.GetSawmill("discord.link");
         _sawmillNet = _logManager.GetSawmill("discord.link.log");
