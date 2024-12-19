@@ -40,4 +40,17 @@ public sealed partial class CCVars
     /// </remarks>
     public static readonly CVarDef<int> ServerUptimeRestartMinutes =
         CVarDef.Create("server.uptime_restart_minutes", 0, CVar.SERVERONLY);
+
+    /// <summary>
+    ///     This will be the title shown in the lobby
+    ///     If empty, the title will be {ui-lobby-title} + the server's full name from the hub
+    /// </summary>
+    public static readonly CVarDef<string> ServerLobbyName =
+        CVarDef.Create("server.lobby_name", "", CVar.REPLICATED | CVar.SERVER);
+
+    /// <summary>
+    ///     The width of the right side (chat) panel in the lobby
+    /// </summary>
+    public static readonly CVarDef<int> ServerLobbyRightPanelWidth =
+        CVarDef.Create("server.lobby_right_panel_width", 650, CVar.REPLICATED | CVar.SERVER);
 }
