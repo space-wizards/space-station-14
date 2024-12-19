@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by IProduceWidgets (github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "cattree"
+    },
+    {
+      "name": "cattree-beige"
+    },
+    {
+      "name": "cattree-black"
+    },
+    {
+      "name": "cattree-blue"
+    },
+    {
+      "name": "cattree-cyan"
+    },
+    {
+      "name": "cattree-gamble"
+    },
+	{
+      "name": "cattree-green"
+    },
+	{
+      "name": "cattree-pink"
+    },
+	{
+      "name": "cattree-purple"
+    },
+	{
+      "name": "cattree-red"
+    },
+	{
+      "name": "cattree-skyblue"
+    },
+	{
+      "name": "cattree-white"
+    }
+  ]
+}
