@@ -174,6 +174,8 @@
       amount: 4
     - id: MagazinePistol
       amount: 8
+    - id: ClothingNeckSecurityBadge
+      amount: 4
 
 - type: entity
   parent: [GunSafeBaseSecure, BaseRestrictedContraband]
