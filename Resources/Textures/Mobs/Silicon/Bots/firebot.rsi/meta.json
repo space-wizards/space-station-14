@@ -5,14 +5,18 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/tgstation/tgstation/commit/eba0d62005e7754dd8b1c88e45cd949c360774d5",
+  "copyright": "Modified from the original fire extinguisher sprite (taken from https://github.com/tgstation/tgstation at commit 9bebd81ae0b0a7f952b59886a765c681205de31f) by RumiTiger",
   "states": [
     {
-      "name": "firebot",
+      "name": "firebot"
+    },
+    {
+      "name": "glow",
       "delays": [
         [
-          0.5,
-          0.2
+          2,
+          0.1,
+          0.1
         ]
       ]
     }

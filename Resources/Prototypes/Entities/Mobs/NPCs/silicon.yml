@@ -116,7 +116,12 @@
   components:
   - type: Sprite
     sprite: Mobs/Silicon/Bots/firebot.rsi
-    state: firebot
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: firebot
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: glow
+      shader: unshaded
   - type: Construction
     graph: FireBot
     node: bot
