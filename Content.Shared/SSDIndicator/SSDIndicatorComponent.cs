@@ -12,11 +12,14 @@ namespace Content.Shared.SSDIndicator;
 [AutoGenerateComponentState]
 public sealed partial class SSDIndicatorComponent : Component
 {
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
+    [AutoNetworkedField]
+    public bool Enabled = true;
+
+    [ViewVariables]
     [AutoNetworkedField]
     public bool IsSSD = true;
 
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public ProtoId<SsdIconPrototype> Icon = "SSDIcon";
 }
