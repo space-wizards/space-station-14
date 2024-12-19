@@ -107,11 +107,20 @@
   categories:
   - UplinkWeaponry
 
+- type: entityTable
+  id: ToolBoxTurretFilledUplinkEntityTable
+  table: !type:GroupSelector
+    children:
+    - id: ToolboxElectricalTurretFilled
+    - id: ToolboxEmergencyTurretFilled
+    - id: ToolboxMechanicalTurretFilled
+
 - type: listing
   id: UplinkDisposableTurret
   name: uplink-disposable-turret-name
   description: uplink-disposable-turret-desc
-  productEntity: ToolboxElectricalTurretFilled
+  productEntityTable: !type:NestedSelector
+    tableId: ToolBoxTurretFilledUplinkEntityTable
   discountCategory: usualDiscounts
   discountDownTo:
     Telecrystal: 3
