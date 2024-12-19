@@ -439,4 +439,8 @@ public enum LogType
     /// A ghost warped to an entity through the ghost warp menu.
     /// </summary>
     GhostWarp = 95,
+    /// <summary>
+    /// Artifact node got activated.
+    /// </summary>
+    ArtifactNode = 96
 }
