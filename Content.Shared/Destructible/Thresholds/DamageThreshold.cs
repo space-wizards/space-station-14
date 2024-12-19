@@ -1,13 +1,13 @@
-using Content.Server.Destructible.Thresholds.Behaviors;
-using Content.Server.Destructible.Thresholds.Triggers;
 using Content.Shared.Damage;
+using Content.Shared.Destructible.Thresholds.Behaviors;
+using Content.Shared.Destructible.Thresholds.Triggers;
 
-namespace Content.Server.Destructible.Thresholds
+namespace Content.Shared.Destructible.Thresholds
 {
     [DataDefinition]
     public sealed partial class DamageThreshold
     {
-        [DataField("behaviors")]
+        [DataField("behaviors", serverOnly: true)]
         private List<IThresholdBehavior> _behaviors = new();
 
         /// <summary>
@@ -19,7 +19,7 @@ namespace Content.Server.Destructible.Thresholds
         /// <summary>
         ///     Whether or not this threshold has already been triggered.
         /// </summary>
-        [DataField("triggered")]
+        [DataField]
         public bool Triggered { get; private set; }
 
         /// <summary>
@@ -28,21 +28,21 @@ namespace Content.Server.Destructible.Thresholds
         ///     and then damaged to reach this threshold once again.
         ///     It will not repeatedly trigger as damage rises beyond that.
         /// </summary>
-        [DataField("triggersOnce")]
-        public bool TriggersOnce { get; set; }
+        [DataField]
+        public bool TriggersOnce;
 
         /// <summary>
         ///     The trigger that decides if this threshold has been reached.
         /// </summary>
-        [DataField("trigger")]
-        public IThresholdTrigger? Trigger { get; set; }
+        [DataField]
+        public IThresholdTrigger? Trigger;
 
         /// <summary>
         ///     Behaviors to activate once this threshold is triggered.
         /// </summary>
         [ViewVariables] public IReadOnlyList<IThresholdBehavior> Behaviors => _behaviors;
 
-        public bool Reached(DamageableComponent damageable, DestructibleSystem system)
+        public bool Reached(DamageableComponent damageable, EntityManager entManager)
         {
             if (Trigger == null)
             {
@@ -56,11 +56,11 @@ namespace Content.Server.Destructible.Thresholds
 
             if (OldTriggered)
             {
-                OldTriggered = Trigger.Reached(damageable, system);
+                OldTriggered = Trigger.Reached(damageable, entManager);
                 return false;
             }
 
-            if (!Trigger.Reached(damageable, system))
+            if (!Trigger.Reached(damageable, entManager))
             {
                 return false;
             }
@@ -73,13 +73,7 @@ namespace Content.Server.Destructible.Thresholds
         ///     Triggers this threshold.
         /// </summary>
         /// <param name="owner">The entity that owns this threshold.</param>
-        /// <param name="system">
-        ///     An instance of <see cref="DestructibleSystem"/> to get dependency and
-        ///     system references from, if relevant.
-        /// </param>
-        /// <param name="entityManager"></param>
-        /// <param name="cause"></param>
-        public void Execute(EntityUid owner, DestructibleSystem system, IEntityManager entityManager, EntityUid? cause)
+        public void Execute(EntityUid owner, IDependencyCollection collection, EntityManager entityManager, EntityUid? cause)
         {
             Triggered = true;
 
@@ -89,7 +83,7 @@ namespace Content.Server.Destructible.Thresholds
                 if (!entityManager.EntityExists(owner))
                     return;
 
-                behavior.Execute(owner, system, cause);
+                behavior.Execute(owner, collection, entityManager, cause);
             }
         }
     }
