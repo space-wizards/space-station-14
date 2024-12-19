@@ -199,6 +199,29 @@
     - !type:TargetInLOSOrCurrentCon
       curve: !type:BoolCurve
 
+- type: utilityQuery
+  id: NearbyTransporterCharger
+  query:
+  - !type:ComponentQuery
+    components:
+    - type: TransporterCharger
+  considerations:
+  - !type:TargetDistanceCon
+    curve: !type:PresetCurve
+      preset: TargetDistance
+
+
+- type: utilityQuery
+  id: NearbyTransporterProvider
+  query:
+  - !type:ComponentQuery
+    components:
+    - type: TransporterProvider
+  considerations:
+  - !type:TargetDistanceCon
+    curve: !type:PresetCurve
+      preset: TargetDistance
+
 #- type: utilityQuery
 #  id: NearbyShoes
 #  query:
