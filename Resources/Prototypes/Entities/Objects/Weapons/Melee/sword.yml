@@ -98,6 +98,8 @@
     - Back
     - Belt
   - type: Reflect
+    slotFlags:
+      - NONE
 
 - type: entity
   name: machete
