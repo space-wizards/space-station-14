@@ -1,8 +1,9 @@
 - type: entity
   parent: [ BaseMachinePowered ]
   id: StationTeleporter
-  name: stationary teleporter
+  name: teleporter
   description: The peak of bluespace technology. A giant teleporter that allow you to travel vast distances in the blink of an eye.
+  suffix: Unknown Coordinates, Without Autolink
   components:
   - type: Sprite
     noRot: true
@@ -67,70 +68,64 @@
 
 - type: entity
   parent: StationTeleporter
-  id: StationTeleporterCenter
-  suffix: Center, Console Support
+  id: StationTeleporterNanotrasen
+  suffix: Unknown Coordinates, Nanotrasen Network
   components:
   - type: StationTeleporter
-    autoLinkKey: Station
+    autoLinkKey: Nanotrasen
+
+- type: entity
+  parent: StationTeleporterNanotrasen
+  id: StationTeleporterCenter
+  suffix: Center, Nanotrasen
+  components:
   - type: Label
     currentLabel: teleporter-name-center
 
 - type: entity
-  parent: StationTeleporter
+  parent: StationTeleporterNanotrasen
   id: StationTeleporterSalvage
-  suffix: Salvage, Console Support
+  suffix: Salvage, Nanotrasen
   components:
-  - type: StationTeleporter
-    autoLinkKey: StationSalvage
   - type: Label
     currentLabel: teleporter-name-salvage
 
 - type: entity
-  parent: StationTeleporter
+  parent: StationTeleporterNanotrasen
   id: StationTeleporterMedical
-  suffix: Medical, Console Support
+  suffix: Medical, Nanotrasen
   components:
-  - type: StationTeleporter
-    autoLinkKey: StationMedical
   - type: Label
     currentLabel: teleporter-name-medical
 
 - type: entity
-  parent: StationTeleporter
+  parent: StationTeleporterNanotrasen
   id: StationTeleporterEngineering
-  suffix: Engineering, Console Support
+  suffix: Engineering, Nanotrasen
   components:
-  - type: StationTeleporter
-    autoLinkKey: StationEngineering
   - type: Label
     currentLabel: teleporter-name-engineering
 
 - type: entity
-  parent: StationTeleporter
+  parent: StationTeleporterNanotrasen
   id: StationTeleporterSecurity
-  suffix: Security, Console Support
+  suffix: Security, Nanotrasen
   components:
-  - type: StationTeleporter
-    autoLinkKey: StationSecurity
   - type: Label
     currentLabel: teleporter-name-security
 
 - type: entity
-  parent: StationTeleporter
+  parent: StationTeleporterNanotrasen
   id: StationTeleporterScience
-  suffix: Science, Console Support
+  suffix: Science, Nanotrasen
   components:
-  - type: StationTeleporter
-    autoLinkKey: StationScience
   - type: Label
     currentLabel: teleporter-name-science
 
 - type: entity
-  parent: StationTeleporter
+  parent: StationTeleporterNanotrasen
   id: StationTeleporterCargo
-  suffix: Cargo, Console Support
+  suffix: Cargo, Nanotrasen
   components:
-  - type: StationTeleporter
-    autoLinkKey: StationCargo
   - type: Label
     currentLabel: teleporter-name-cargo

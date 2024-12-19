@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.StationTeleporter.Components;
 
@@ -9,6 +10,18 @@ namespace Content.Shared.StationTeleporter.Components;
 [Access(typeof(SharedStationTeleporterSystem))]
 public sealed partial class StationTeleporterConsoleComponent : Component
 {
+    /// <summary>
+    /// When initialized, teleporters can automatically generate chips in this console if they have matching AutoLinkKey
+    /// </summary>
+    [DataField]
+    public string? AutoLinkKey = null;
+
+    /// <summary>
+    /// It is these chips that will appear in the console and automatically communicate with the teleporters
+    /// </summary>
+    [DataField]
+    public EntProtoId? AutoLinkChipsProto = "TeleporterChipBlank";
+
     /// <summary>
     /// Selected via UI gate. Defines the behavior of the console.
     /// </summary>

@@ -22,15 +22,6 @@ public sealed partial class TeleporterChipComponent : Component
     [DataField, AutoNetworkedField]
     public string ConnectedName = string.Empty;
 
-    /// <summary>
-    /// When initialized, it will attempt to contact a random teleporter that has the same code. Can be used for pre-created teleporters
-    /// </summary>
-    /// <remarks>
-    /// Not ProtoId<TagPrototype> because we can randomly generate this key for expeditions.
-    /// </remarks>
-    [DataField, AutoNetworkedField]
-    public string? AutoLinkKey;
-
     [DataField]
     public SoundSpecifier RecordSound = new SoundPathSpecifier("/Audio/Machines/high_tech_confirm.ogg")
     {

@@ -175,11 +175,9 @@ public abstract class SharedStationTeleporterSystem : EntitySystem
         if (args.Handled)
             return;
 
-        //Prevent spamming
         if (TryComp<UseDelayComponent>(args.Used, out var useDelayComp) &&
             _useDelay.IsDelayed((args.Used, useDelayComp)))
             return;
-        
         _useDelay.TryResetDelay(args.Used);
 
         if (!TryComp<TeleporterChipComponent>(args.Used, out var chip))

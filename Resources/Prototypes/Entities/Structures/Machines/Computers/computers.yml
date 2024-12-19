@@ -525,18 +525,10 @@
 - type: entity
   parent: ComputerStationTeleportersControl
   id: ComputerStationTeleportersControlFilled
-  suffix: Filled, All Chips
+  suffix: Autofilled, Nanotrasen Network
   components:
-  - type: ContainerFill
-    containers:
-      storagebase:
-      - TeleporterChipStation
-      - TeleporterChipSalvage
-      - TeleporterChipMedical
-      - TeleporterChipEngineering
-      - TeleporterChipSecurity
-      - TeleporterChipScience
-      - TeleporterChipCargo
+  - type: StationTeleporterConsole
+    autoLinkKey: Nanotrasen
   
 - type: entity
   parent: ComputerStationTeleportersControl

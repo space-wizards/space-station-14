@@ -9,29 +9,26 @@ public sealed class StationTeleporterSystem : SharedStationTeleporterSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<TeleporterChipComponent, MapInitEvent>(OnChipInit);
+        SubscribeLocalEvent<StationTeleporterConsoleComponent, MapInitEvent>(OnConsoleInit);
     }
 
-    private void OnChipInit(Entity<TeleporterChipComponent> chip, ref MapInitEvent args)
+    private void OnConsoleInit(Entity<StationTeleporterConsoleComponent> ent, ref MapInitEvent args)
     {
-        if (chip.Comp.AutoLinkKey is null)
+        if (ent.Comp.AutoLinkKey is null || ent.Comp.AutoLinkChipsProto is null)
             return;
 
         var query = EntityQueryEnumerator<StationTeleporterComponent>();
-        var successLink = false;
-        while (query.MoveNext(out var uid, out var teleporter))
+        while (query.MoveNext(out var teleporterUid, out var teleporter))
         {
-            if (teleporter.AutoLinkKey is null || teleporter.AutoLinkKey != chip.Comp.AutoLinkKey)
+            if (teleporter.AutoLinkKey is null || ent.Comp.AutoLinkKey != teleporter.AutoLinkKey)
                 continue;
 
-            ConnectChipToTeleporter(chip, (uid, teleporter));
-            successLink = true;
-            break;
-        }
-
-        if (!successLink)
-        {
-            chip.Comp.AutoLinkKey = null;
+            //Spawn chip inside this console
+            var chipEnt = SpawnInContainerOrDrop(ent.Comp.AutoLinkChipsProto, ent, ent.Comp.ChipStorageName);
+            if (TryComp<TeleporterChipComponent>(chipEnt, out var chipComp))
+            {
+                ConnectChipToTeleporter((chipEnt, chipComp), (teleporterUid, teleporter));
+            }
         }
     }
 }

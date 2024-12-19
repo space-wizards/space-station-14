@@ -10,9 +10,8 @@ namespace Content.Shared.StationTeleporter.Components;
 public sealed partial class StationTeleporterComponent : Component
 {
     /// <summary>
-    /// When initialized, a chip will attempt to contact a random teleporter that has the same code. Can be used for pre-created teleporters
+    /// When initialized, the chip from this teleporter will be automatically generated inside all consoles with the same AutoLinkKey
     /// </summary>
-    // Not ProtoId<TagPrototype> because we can random generate this keys for expeditions
     [DataField]
     public string? AutoLinkKey = null;
 
