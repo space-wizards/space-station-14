@@ -28,7 +28,6 @@ public sealed class PlayerPanelEui : BaseEui
         PlayerPanel.OnOpenBanPanel += id => _console.ExecuteCommand($"banpanel \"{id}\"");
         PlayerPanel.OnOpenBans += id => _console.ExecuteCommand($"banlist \"{id}\"");
         PlayerPanel.OnAhelp += id => _console.ExecuteCommand($"openahelp \"{id}\"");
-        PlayerPanel.OnMentorhelp += id => _console.ExecuteCommand($"openmentorhelp \"{id}\"");
         PlayerPanel.OnWhitelistToggle += (id, whitelisted) =>
         {
             _console.ExecuteCommand(whitelisted ? $"whitelistremove \"{id}\"" : $"whitelistadd \"{id}\"");
@@ -68,7 +67,6 @@ public sealed class PlayerPanelEui : BaseEui
         PlayerPanel.SetSharedConnections(s.SharedConnections);
         PlayerPanel.SetFrozen(s.CanFreeze, s.Frozen);
         PlayerPanel.SetAhelp(s.CanAhelp);
-        PlayerPanel.SetMentorhelp(s.CanMentorhelp);
         PlayerPanel.SetButtons();
     }
 }

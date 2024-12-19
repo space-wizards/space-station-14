@@ -21,7 +21,6 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
             RobustXamlLoader.Load(this);
 
             SubmitKickButton.OnPressed += SubmitKickButtonOnPressed;
-            SubmitMentorHelpButton.OnPressed += SubmitMentorhelpButtonOnPressed;
             SubmitAHelpButton.OnPressed += SubmitAhelpButtonOnPressed;
             SubmitRespawnButton.OnPressed += SubmitRespawnButtonOnPressed;
             PlayerList.OnSelectionChanged += OnListOnOnSelectionChanged;
@@ -35,7 +34,6 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
             _selectedPlayer = obj;
             var disableButtons = _selectedPlayer == null;
             SubmitKickButton.Disabled = disableButtons;
-            SubmitMentorHelpButton.Disabled = disableButtons;
             SubmitAHelpButton.Disabled = disableButtons;
             SubmitRespawnButton.Disabled = disableButtons;
         }
@@ -59,15 +57,6 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
 
             IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(
                 $"openahelp \"{_selectedPlayer.SessionId}\"");
-        }
-
-        private void SubmitMentorhelpButtonOnPressed(BaseButton.ButtonEventArgs obj)
-        {
-            if (_selectedPlayer == null)
-                return;
-
-            IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(
-                $"openmentorhelp \"{_selectedPlayer.SessionId}\"");
         }
 
         private void SubmitRespawnButtonOnPressed(BaseButton.ButtonEventArgs obj)

@@ -1,0 +1,64 @@
+- type: entity
+  id: ActionDamageAttack
+  name: Болевой удар в живот
+  description: Молниеносный удар ладонью в живот противника, наносит чистый урон.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Mally/arkalyseActions.rsi
+      state: punch
+    event: !type:DamageAtackArkalyseActionEvent {}
+    useDelay: 3
+
+- type: entity
+  id: ActionMutedAttack
+  name: Удар в горло
+  description: Удар в горло, перекрывающий дыхательные пути.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Mally/arkalyseActions.rsi
+      state: mute
+    event: !type:MutedAtackArkalyseActionEvent {}
+    useDelay: 3 
+
+- type: entity
+  id: ActionStunAttack
+  name: Удар оверхенд
+  description: Гибридый удар в голову противника, сшибающий того с ног.
+  noSpawn: true
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Mally/arkalyseActions.rsi
+      state: kick
+    event: !type:StunedAtackArkalyseActionEvent {}
+    useDelay: 3
+
+- type: entity
+  parent: ClothingHandsButcherable
+  id: ClothingHandsGlovesArkalyse
+  name: перчатки "Аркалис"
+  description: Перчатки подпитанные наномашинными, которые усиливают удары носителя.
+  components:
+  - type: ArkalyseGloves
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/powerglove.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/powerglove.rsi
+  - type: Fiber
+    fiberMaterial: fibers-nanomachines
+
+- type: entity
+  parent: BaseItem
+  id: BookArkalyse
+  name: мануал "Аркалис"
+  description: Фанфик про Лоуда и смотрителя
+  components:
+    - type: Sprite
+      sprite: Mally/arkalyseBook.rsi
+      layers:
+      - state: icon
+    - type: GiveArkalyse

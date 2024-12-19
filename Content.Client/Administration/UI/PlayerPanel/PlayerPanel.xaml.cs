@@ -18,7 +18,6 @@ public sealed partial class PlayerPanel : FancyWindow
     public event Action<NetUserId?>? OnOpenNotes;
     public event Action<NetUserId?>? OnOpenBans;
     public event Action<NetUserId?>? OnAhelp;
-    public event Action<NetUserId?>? OnMentorhelp;
     public event Action<string?>? OnKick;
     public event Action<NetUserId?>? OnOpenBanPanel;
     public event Action<NetUserId?, bool>? OnWhitelistToggle;
@@ -43,7 +42,6 @@ public sealed partial class PlayerPanel : FancyWindow
         NotesButton.OnPressed += _ => OnOpenNotes?.Invoke(TargetPlayer);
         ShowBansButton.OnPressed += _ => OnOpenBans?.Invoke(TargetPlayer);
         AhelpButton.OnPressed += _ => OnAhelp?.Invoke(TargetPlayer);
-        MentorhelpButton.OnPressed += _ => OnMentorhelp?.Invoke(TargetPlayer);
 
         WhitelistToggle.OnPressed += _ =>
         {
@@ -118,11 +116,6 @@ public sealed partial class PlayerPanel : FancyWindow
     public void SetAhelp(bool canAhelp)
     {
         AhelpButton.Disabled = !canAhelp;
-    }
-
-    public void SetMentorhelp(bool canMentorhelp)
-    {
-        MentorhelpButton.Disabled = !canMentorhelp;
     }
 
     public void SetButtons()
