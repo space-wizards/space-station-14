@@ -6,20 +6,20 @@ namespace Content.Server.Power.Components
     [ComponentProtoName("PowerProvider")]
     public sealed partial class ApcPowerProviderComponent : BaseApcNetComponent
     {
-        [ViewVariables] public List<ApcPowerReceiverComponent> LinkedReceivers { get; } = new();
+        [ViewVariables] public List<EntityUid> LinkedReceivers { get; } = new();
 
-        public void AddReceiver(ApcPowerReceiverComponent receiver)
+        public void AddReceiver(Entity<ApcPowerReceiverComponent> receiver)
         {
             LinkedReceivers.Add(receiver);
-            receiver.NetworkLoad.LinkedNetwork = default;
+            receiver.Comp.NetworkLoad.LinkedNetwork = default;
 
             Net?.QueueNetworkReconnect();
         }
 
-        public void RemoveReceiver(ApcPowerReceiverComponent receiver)
+        public void RemoveReceiver(Entity<ApcPowerReceiverComponent> receiver)
         {
             LinkedReceivers.Remove(receiver);
-            receiver.NetworkLoad.LinkedNetwork = default;
+            receiver.Comp.NetworkLoad.LinkedNetwork = default;
 
             Net?.QueueNetworkReconnect();
         }
