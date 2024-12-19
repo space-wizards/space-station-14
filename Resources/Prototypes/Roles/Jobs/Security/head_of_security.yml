@@ -24,6 +24,7 @@
   - External
   - Detective
   - Cryogenics
+  - Brigmedic
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
