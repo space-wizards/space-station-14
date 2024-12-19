@@ -1334,6 +1334,9 @@
   id: Window
 
 - type: Tag
+  id: WindowDirectional # differentiate for wall mounting
+
+- type: Tag
   id: Wine
 
 - type: Tag
