@@ -62,9 +62,9 @@ public sealed class PlankonScannerSystem : EntitySystem
         && !_useDelay.TryResetDelay((uid, useDelay), true))
         return;
 
-    // Collects plankton species names from the target
-    var planktonNames = component.SpeciesInstances 
-        .Select(species => species.SpeciesName.ToString())
+    // Collects plankton species and living status from the target
+    var planktonNames = component.SpeciesInstances
+        .Select(species => $"{species.SpeciesName} - {(species.IsAlive ? "ALIVE" : "DEAD")}")
         .ToList();
 
     // Header for the paper report
