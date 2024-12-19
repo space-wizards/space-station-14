@@ -21,17 +21,18 @@ public sealed class MutationSystem : EntitySystem
     /// <summary>
     /// For each random mutation, see if it occurs on this plant this check.
     /// </summary>
-    /// <param name="seed"></param>
-    /// <param name="severity"></param>
-    public void CheckRandomMutations(EntityUid plantHolder, ref SeedData seed, float severity)
+    public void CheckRandomMutations(EntityUid plant, ref SeedData seed, float severity)
     {
         foreach (var mutation in _randomMutations.mutations)
         {
             if (Random(Math.Min(mutation.BaseOdds * severity, 1.0f)))
             {
+                if (!seed.Unique)
+                    seed = seed.Clone();
+
                 if (mutation.AppliesToPlant)
                 {
-                    var args = new EntityEffectBaseArgs(plantHolder, EntityManager);
+                    var args = new EntityEffectBaseArgs(plant, EntityManager);
                     mutation.Effect.Effect(args);
                 }
                 // Stat adjustments do not persist by being an attached effect, they just change the stat.
@@ -39,20 +40,6 @@ public sealed class MutationSystem : EntitySystem
                     seed.Mutations.Add(mutation);
             }
         }
-    }
-
-    /// <summary>
-    /// Checks all defined mutations against a seed to see which of them are applied.
-    /// </summary>
-    public void MutateSeed(EntityUid plantHolder, ref SeedData seed, float severity)
-    {
-        if (!seed.Unique)
-        {
-            Log.Error($"Attempted to mutate a shared seed");
-            return;
-        }
-
-        CheckRandomMutations(plantHolder, ref seed, severity);
     }
 
     public SeedData Cross(SeedData a, SeedData b)
@@ -65,8 +52,6 @@ public sealed class MutationSystem : EntitySystem
         CrossFloat(ref result.WaterConsumption, a.WaterConsumption);
         CrossFloat(ref result.IdealHeat, a.IdealHeat);
         CrossFloat(ref result.HeatTolerance, a.HeatTolerance);
-        CrossFloat(ref result.IdealLight, a.IdealLight);
-        CrossFloat(ref result.LightTolerance, a.LightTolerance);
         CrossFloat(ref result.ToxinsTolerance, a.ToxinsTolerance);
         CrossFloat(ref result.LowPressureTolerance, a.LowPressureTolerance);
         CrossFloat(ref result.HighPressureTolerance, a.HighPressureTolerance);
