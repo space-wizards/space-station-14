@@ -90,7 +90,7 @@
   - type: WiresVisuals
   - type: Wires
     boardName: wires-board-name-holopad
-    layoutId: Holopad 
+    layoutId: Holopad
   - type: Destructible
     thresholds:
     - trigger:
