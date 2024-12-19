@@ -98,6 +98,7 @@
     reflectProb: 1
     reflects:
       - Energy
+    reflectingInHands: false
 
 - type: entity
   parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseSyndicateContraband ]
