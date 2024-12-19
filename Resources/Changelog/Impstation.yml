@@ -1,22 +1,6 @@
 ﻿Entries:
 - author: hivehum
   changes:
-  - message: Added any iota of useful information at all to the Gray species page.
-    type: Add
-  - message: Roleplay Rule 4 (Metashield) has been split into Roleplay Rule 4-1 (Relationships
-      between rounds) and Roleplay Rule 4-2
-    type: Add
-  - message: Ported the Alert Procedure article from Delta V, modified to match the
-      content of our fork.
-    type: Add
-  - message: Core Rule 13 has been substantially cut down and the naming guidelines
-      are now on each respective species.
-    type: Tweak
-  id: 264
-  time: '2024-09-25T19:41:19.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/276
-- author: hivehum
-  changes:
   - message: Pink Alert now has a new alarm in certain circumstances.
     type: Tweak
   id: 265
@@ -4519,3 +4503,10 @@
   id: 763
   time: '2024-12-19T12:59:29.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1074
+- author: honeyed-lemons
+  changes:
+  - message: Add Holopads to Fland, Box, Xeno, and the Reclaimer
+    type: Add
+  id: 764
+  time: '2024-12-19T17:36:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1068
