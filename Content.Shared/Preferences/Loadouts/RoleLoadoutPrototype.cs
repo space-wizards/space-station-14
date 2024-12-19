@@ -20,7 +20,7 @@ public sealed partial class RoleLoadoutPrototype : IPrototype
     /// Should we use a random name for this loadout?
     /// </summary>
     [DataField]
-    public ProtoId<DatasetPrototype>? NameDataset;
+    public ProtoId<LocalizedDatasetPrototype>? NameDataset;
 
     // Not required so people can set their names.
     /// <summary>

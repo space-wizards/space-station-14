@@ -590,5 +590,58 @@ Entries:
   id: 73
   time: '2024-11-02T13:21:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32461
+- author: Repo
+  changes:
+  - message: All role bans in a set are updated on edits now.
+    type: Fix
+  id: 74
+  time: '2024-11-12T21:03:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/30659
+- author: Aquif
+  changes:
+  - message: tag:with toolshed command. It takes in a list of entities via pipe and
+      returns the entities from the list with the given tag.
+    type: Add
+  id: 75
+  time: '2024-11-13T23:27:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31751
+- author: Beck Thompson
+  changes:
+  - message: Notes now use duration instead of timestamps for note expiry times.
+    type: Tweak
+  id: 76
+  time: '2024-11-15T03:24:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33262
+- author: ScarKy0, GoldenCan
+  changes:
+  - message: Players that take over emagged/ion stormed borgs now correctly get assigned
+      the antag role.
+    type: Fix
+  id: 77
+  time: '2024-11-20T07:55:12.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33311
+- author: TokenStyle
+  changes:
+  - message: makeghostroleraffled admin command now works with few arguments!
+    type: Fix
+  id: 78
+  time: '2024-11-30T20:11:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31836
+- author: slarticodefast
+  changes:
+  - message: Health scanning a slime as an aghost will no longer insert the scanner
+      into their inventory.
+    type: Fix
+  id: 79
+  time: '2024-12-18T00:12:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33884
+- author: slarticodefast
+  changes:
+  - message: The panic bunker now only automatically disables when an admin with the
+      'Admin' permission is online instead of any permission.
+    type: Tweak
+  id: 80
+  time: '2024-12-18T13:15:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33879
 Name: Admin
 Order: 1
