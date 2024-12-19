@@ -8,6 +8,8 @@ using Robust.Shared.Prototypes;
 using Content.Server.Paper;
 using Robust.Server.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Plankton;
 
@@ -17,6 +19,7 @@ public sealed class PlankonScannerSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly PaperSystem _paper = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     public override void Initialize()
     {
@@ -85,6 +88,7 @@ public sealed class PlankonScannerSystem : EntitySystem
 
     var report = Spawn(scanner.PlanktonReportEntityId, Transform(uid).Coordinates);
     _metaSystem.SetEntityName(report, Loc.GetString("plankton-analysis-report-title", ("id", $"Plankton Scan Report")));
+    _audioSystem.PlayPvs(comp.PrintSound, uid);
 
     _paper.SetContent(report, message.ToMarkup());
 }
