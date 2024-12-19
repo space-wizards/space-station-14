@@ -104,6 +104,15 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (!CanPickupToHand(uid, entity, hand, checkActionBlocker, handsComp, item))
             return false;
 
+        var gotAttempt = new GotAttemptedHandPickupEvent(uid, entity, hand);
+        var didAttempt = new DidAttemptedHandPickupEvent(uid, entity, hand);
+
+        RaiseLocalEvent(entity, gotAttempt, false);
+        RaiseLocalEvent(uid, didAttempt, false);
+
+        if (gotAttempt.Cancelled || didAttempt.Cancelled)
+            return false;
+
         if (animate)
         {
             var xform = Transform(uid);
