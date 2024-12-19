@@ -28,7 +28,9 @@ public abstract partial class SharedXenoArtifactSystem
     /// </summary>
     private void OnNodeMapInit(Entity<XenoArtifactNodeComponent> ent, ref MapInitEvent args)
     {
-        SetNodeDurability((ent, ent), ent.Comp.MaxDurability - ent.Comp.MaxDurabilityCanDecreaseBy.Next(RobustRandom));
+        XenoArtifactNodeComponent nodeComponent = ent;
+        nodeComponent.MaxDurability -= nodeComponent.MaxDurabilityCanDecreaseBy.Next(RobustRandom);
+        SetNodeDurability((ent, ent), nodeComponent.MaxDurability);
     }
 
     /// <summary> Gets node component by node entity uid. </summary>
