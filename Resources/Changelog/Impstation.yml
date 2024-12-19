@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Made the captain's winter coat match the uniform since like three people
-      asked
-    type: Tweak
-  id: 263
-  time: '2024-09-25T19:35:18.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/338
 - author: hivehum
   changes:
   - message: Added any iota of useful information at all to the Gray species page.
@@ -4520,3 +4512,10 @@
   id: 762
   time: '2024-12-18T19:08:01.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1033
+- author: Darkmajia
+  changes:
+  - message: Gastropoids can fly shuttles again.
+    type: Fix
+  id: 763
+  time: '2024-12-19T12:59:29.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1074
