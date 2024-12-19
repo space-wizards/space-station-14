@@ -6,6 +6,7 @@
   },
   "license": "CC-BY-SA-3.0",
   "copyright": "Created by Alekshhh for SS14.",
+  "metaAtlas": false,
   "states": [
     {
       "name": "honkmother",
