@@ -47,7 +47,7 @@ namespace Content.Server._Starlight.CloudEmotes.Commands
                 return;
             }
             
-            if (!_entityManager.TryGetComponent<MobStateComponent>(player, out var state) && state == MobState.Critical || MobState.Dead)
+            if (!_entityManager.TryGetComponent<MobStateComponent>(player.AttachedEntity, out var state) && state.CurrentState == MobState.Critical || MobState.Dead)
             {
                 shell.WriteLine(LocalizationManager.GetString("shell-only-alive-can-run-this-command"));
                 return;
