@@ -21,6 +21,9 @@ public sealed class MedibotSystem : EntitySystem
 
     private void OnEmagged(EntityUid uid, EmaggableMedibotComponent comp, ref GotEmaggedEvent args)
     {
+        if (args.Handled)
+            return;
+
         if (!TryComp<MedibotComponent>(uid, out var medibot))
             return;
 

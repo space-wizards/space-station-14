@@ -137,6 +137,9 @@ public abstract class SharedPinpointerSystem : EntitySystem
 
     private void OnEmagged(EntityUid uid, PinpointerComponent component, ref GotEmaggedEvent args)
     {
+        if (args.Handled)
+            return;
+
         args.Handled = true;
         component.CanRetarget = true;
     }
