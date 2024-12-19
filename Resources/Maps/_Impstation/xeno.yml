@@ -81839,6 +81839,181 @@ entities:
     - type: Transform
       pos: 28.5,-65.5
       parent: 2
+- proto: HolopadAiCore
+  entities:
+  - uid: 19116
+    components:
+    - type: Transform
+      pos: 91.5,-45.5
+      parent: 2
+- proto: HolopadCargoBayLongRange
+  entities:
+  - uid: 19100
+    components:
+    - type: Transform
+      pos: 24.5,-99.5
+      parent: 2
+- proto: HolopadCargoFront
+  entities:
+  - uid: 19099
+    components:
+    - type: Transform
+      pos: 24.5,-92.5
+      parent: 2
+- proto: HolopadCargoSalvageBay
+  entities:
+  - uid: 19101
+    components:
+    - type: Transform
+      pos: 52.5,-100.5
+      parent: 2
+- proto: HolopadCommandBridge
+  entities:
+  - uid: 19105
+    components:
+    - type: Transform
+      pos: -51.5,-45.5
+      parent: 2
+- proto: HolopadCommandBridgeLongRange
+  entities:
+  - uid: 19115
+    components:
+    - type: Transform
+      pos: -50.5,-45.5
+      parent: 2
+- proto: HolopadCommandCaptain
+  entities:
+  - uid: 19106
+    components:
+    - type: Transform
+      pos: -42.5,-52.5
+      parent: 2
+- proto: HolopadCommandCe
+  entities:
+  - uid: 19104
+    components:
+    - type: Transform
+      pos: -29.5,-61.5
+      parent: 2
+- proto: HolopadCommandCmo
+  entities:
+  - uid: 19096
+    components:
+    - type: Transform
+      pos: 11.5,-17.5
+      parent: 2
+- proto: HolopadCommandHop
+  entities:
+  - uid: 19097
+    components:
+    - type: Transform
+      pos: 14.5,-59.5
+      parent: 2
+- proto: HolopadCommandHos
+  entities:
+  - uid: 19112
+    components:
+    - type: Transform
+      pos: 67.5,-31.5
+      parent: 2
+- proto: HolopadCommandQm
+  entities:
+  - uid: 19111
+    components:
+    - type: Transform
+      pos: 9.5,-87.5
+      parent: 2
+- proto: HolopadCommandRd
+  entities:
+  - uid: 19094
+    components:
+    - type: Transform
+      pos: -21.5,-19.5
+      parent: 2
+- proto: HolopadEngineeringFront
+  entities:
+  - uid: 19103
+    components:
+    - type: Transform
+      pos: -13.5,-58.5
+      parent: 2
+- proto: HolopadMedicalChemistry
+  entities:
+  - uid: 19098
+    components:
+    - type: Transform
+      pos: 19.5,-74.5
+      parent: 2
+- proto: HolopadMedicalMedbay
+  entities:
+  - uid: 19095
+    components:
+    - type: Transform
+      pos: 12.5,-28.5
+      parent: 2
+- proto: HolopadScienceFront
+  entities:
+  - uid: 19093
+    components:
+    - type: Transform
+      pos: -5.5,-22.5
+      parent: 2
+- proto: HolopadSecurityFront
+  entities:
+  - uid: 19110
+    components:
+    - type: Transform
+      pos: 65.5,-51.5
+      parent: 2
+- proto: HolopadSecurityPerma
+  entities:
+  - uid: 19114
+    components:
+    - type: Transform
+      pos: 46.5,-19.5
+      parent: 2
+- proto: HolopadSecurityWarden
+  entities:
+  - uid: 19113
+    components:
+    - type: Transform
+      pos: 59.5,-43.5
+      parent: 2
+- proto: HolopadServiceBar
+  entities:
+  - uid: 19108
+    components:
+    - type: Transform
+      pos: 30.5,-46.5
+      parent: 2
+- proto: HolopadServiceBotany
+  entities:
+  - uid: 19117
+    components:
+    - type: Transform
+      pos: 1.5,-55.5
+      parent: 2
+- proto: HolopadServiceChapel
+  entities:
+  - uid: 19107
+    components:
+    - type: Transform
+      pos: -22.5,-40.5
+      parent: 2
+- proto: HolopadServiceKitchen
+  entities:
+  - uid: 19109
+    components:
+    - type: Transform
+      pos: 41.5,-40.5
+      parent: 2
+- proto: HolopadServiceLibrary
+  entities:
+  - uid: 19102
+    components:
+    - type: Transform
+      pos: -2.5,-67.5
+      parent: 2
 - proto: HoloprojectorSecurity
   entities:
   - uid: 7145
