@@ -32,6 +32,12 @@ public sealed partial class ChameleonClothingComponent : Component
     /// </summary>
     [ViewVariables]
     public EntityUid? User;
+
+    /// <summary>
+    ///     Filter possible chameleon options by a tag in addition to WhitelistChameleon.
+    /// </summary>
+    [DataField]
+    public string? RequireTag;
 }
 
 [Serializable, NetSerializable]
@@ -39,11 +45,13 @@ public sealed class ChameleonBoundUserInterfaceState : BoundUserInterfaceState
 {
     public readonly SlotFlags Slot;
     public readonly string? SelectedId;
+    public readonly string? RequiredTag;
 
-    public ChameleonBoundUserInterfaceState(SlotFlags slot, string? selectedId)
+    public ChameleonBoundUserInterfaceState(SlotFlags slot, string? selectedId, string? requiredTag)
     {
         Slot = slot;
         SelectedId = selectedId;
+        RequiredTag = requiredTag;
     }
 }
 
