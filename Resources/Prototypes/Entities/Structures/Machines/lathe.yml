@@ -590,7 +590,6 @@
     - BorgModuleAnomaly
     - BorgModuleGardening
     - BorgModuleHarvesting
-    - BorgModuleDefibrillator
     - BorgModuleAdvancedTreatment
     - RipleyHarness
     - RipleyLArm
