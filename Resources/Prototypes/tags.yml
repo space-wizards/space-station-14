@@ -1178,6 +1178,9 @@
   id: SpiderCraft
 
 - type: Tag
+  id: SpiderWeb
+
+- type: Tag
   id: SpookyFog
 
 - type: Tag
