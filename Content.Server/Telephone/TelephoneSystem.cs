@@ -437,25 +437,26 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
     public bool IsSourceInRangeOfReceiver(Entity<TelephoneComponent> source, Entity<TelephoneComponent> receiver)
     {
+        // Check if the source and receiver have compatible transmision / reception bandwidths
+        if (!source.Comp.CompatibleRanges.Contains(receiver.Comp.TransmissionRange))
+            return false;
+
         var sourceXform = Transform(source);
         var receiverXform = Transform(receiver);
+
+        // Check if we should ignore a device thats on the same grid
+        if (source.Comp.IgnoreTelephonesOnSameGrid &&
+            source.Comp.TransmissionRange != TelephoneRange.Grid &&
+            receiverXform.GridUid == sourceXform.GridUid)
+            return false;
 
         switch (source.Comp.TransmissionRange)
         {
             case TelephoneRange.Grid:
-                return receiverXform.GridUid == sourceXform.GridUid &&
-                    receiver.Comp.TransmissionRange != TelephoneRange.Long;
+                return receiverXform.GridUid == sourceXform.GridUid;
 
             case TelephoneRange.Map:
-                return sourceXform.MapID == receiverXform.MapID &&
-                    receiver.Comp.TransmissionRange != TelephoneRange.Long;
-
-            case TelephoneRange.Local:
                 return sourceXform.MapID == receiverXform.MapID;
-
-            case TelephoneRange.Long:
-                return receiverXform.GridUid != sourceXform.GridUid &&
-                    receiver.Comp.TransmissionRange == TelephoneRange.Long;
 
             case TelephoneRange.Unlimited:
                 return true;
