@@ -2,10 +2,12 @@ using Content.Shared.EntityTable.ValueSelector;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.EntityTable.EntitySelectors;
 
 [ImplicitDataDefinitionForInheritors, UsedImplicitly(ImplicitUseTargetFlags.WithInheritors)]
+[Serializable, NetSerializable]
 public abstract partial class EntityTableSelector
 {
     /// <summary>
