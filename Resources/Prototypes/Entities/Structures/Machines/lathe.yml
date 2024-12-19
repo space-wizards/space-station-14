@@ -201,6 +201,8 @@
       - WetFloorSign
       - ClothingHeadHatCone
       - FreezerElectronics
+      - CassetteTape
+      - TapeRecorder
   - type: EmagLatheRecipes
     emagStaticRecipes:
       - BoxLethalshot
