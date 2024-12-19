@@ -433,5 +433,5 @@
   name: syndicate teleporters control console board
   description: A computer printed circuit board for a teleporter controlling console.
   components:
-    - type: ComputerBoard
-      prototype: ComputerSyndicateTeleportersControl
+  - type: ComputerBoard
+    prototype: ComputerSyndicateTeleportersControl
