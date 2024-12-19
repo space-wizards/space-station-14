@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Add shutters, windoors, etc to AI interaction whitelist.
-    type: Tweak
-  id: 7232
-  time: '2024-08-28T07:39:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31564
 - author: lunarcomets
   changes:
   - message: updated AI job icon
@@ -3934,3 +3927,11 @@
   id: 7731
   time: '2024-12-18T16:31:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33776
+- author: FairlySadPanda August-Sun Eric156
+  changes:
+  - message: Smite Cranberry is now available wherever lemon-lime soda is sold, just
+      for the holidays. This includes a certain jolly anomaly.
+    type: Add
+  id: 7732
+  time: '2024-12-19T00:11:59.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33922
