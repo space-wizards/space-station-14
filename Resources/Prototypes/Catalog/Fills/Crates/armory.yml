@@ -2,7 +2,7 @@
   id: CrateArmorySMG
   parent: [ CrateWeaponSecure, BaseRestrictedContraband ]
   name: SMG crate
-  description: Contains two high-powered, semiautomatic rifles with four mags. Requires Armory access to open.
+  description: Contains two WT550 submachine guns and four top-mounted magazines. Requires Armory access to open.
   components:
   - type: StorageFill
     contents:
@@ -15,7 +15,7 @@
   id: CrateArmoryShotgun
   parent: [ CrateWeaponSecure, BaseRestrictedContraband ]
   name: shotgun crate
-  description: For when the enemy absolutely needs to be replaced with lead. Contains two Enforcer Combat Shotguns, and some standard shotgun shells. Requires Armory access to open.
+  description: For when the enemy absolutely needs to be replaced with lead. Contains two Enforcer Shotguns, and three pellet shell boxes. Requires Armory access to open.
   components:
   - type: StorageFill
     contents:
@@ -74,7 +74,7 @@
   id: CrateSecurityRiot
   parent: [ CrateWeaponSecure, BaseRestrictedContraband ]
   name: swat crate
-  description: Contains two sets of riot armor, helmets, shields, and enforcers loaded with beanbags. Extra ammo is included. Requires Armory access to open.
+  description: Contains two sets of riot armor, helmets, shields, and Enforcers loaded with beanbags. Two beanbag shell boxes are included. Requires Armory access to open.
   components:
   - type: StorageFill
     contents:
