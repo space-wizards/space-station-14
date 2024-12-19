@@ -7,12 +7,15 @@ using Content.Shared.Ghost;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Players;
+using Content.Shared.Roles;
+using Content.Server.Roles.Jobs;
 using Robust.Server.GameStates;
 using Robust.Server.Player;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.Ghost.Roles.Components;
 
 namespace Content.Server.Mind;
 
@@ -24,7 +27,9 @@ public sealed class MindSystem : SharedMindSystem
     [Dependency] private readonly GhostSystem _ghosts = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly PvsOverrideSystem _pvsOverride = default!;
+    [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
 
+    [Dependency] private readonly JobSystem _jobs = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -176,32 +181,32 @@ public sealed class MindSystem : SharedMindSystem
         }
     }
 
-    public override void TransferTo(EntityUid mindId, EntityUid? entity, bool ghostCheckOverride = false, bool createGhost = true,
+    public override void TransferTo(EntityUid mindToTransfer, EntityUid? targetEntity, bool ghostCheckOverride = false, bool createGhost = true,
         MindComponent? mind = null)
     {
-        if (mind == null && !Resolve(mindId, ref mind))
+        if (mind == null && !Resolve(mindToTransfer, ref mind))
             return;
 
-        if (entity == mind.OwnedEntity)
+        if (targetEntity == mind.OwnedEntity)
             return;
 
-        Dirty(mindId, mind);
+        Dirty(mindToTransfer, mind);
         MindContainerComponent? component = null;
         var alreadyAttached = false;
 
-        if (entity != null)
+        if (targetEntity != null)
         {
-            component = EnsureComp<MindContainerComponent>(entity.Value);
+            component = EnsureComp<MindContainerComponent>(targetEntity.Value);
 
             if (component.HasMind)
                 _ghosts.OnGhostAttempt(component.Mind.Value, false);
 
-            if (TryComp<ActorComponent>(entity.Value, out var actor))
+            if (TryComp<ActorComponent>(targetEntity.Value, out var actor))
             {
                 // Happens when transferring to your currently visited entity.
                 if (actor.PlayerSession != mind.Session)
                 {
-                    throw new ArgumentException("Visit target already has a session.", nameof(entity));
+                    throw new ArgumentException("Visit target already has a session.", nameof(targetEntity));
                 }
 
                 alreadyAttached = true;
@@ -218,9 +223,9 @@ public sealed class MindSystem : SharedMindSystem
                 ? _gameTicker.GetObserverSpawnPoint().ToMap(EntityManager, _transform)
                 : _transform.GetMapCoordinates(mind.OwnedEntity.Value);
 
-            entity = Spawn(GameTicker.ObserverPrototypeName, position);
-            component = EnsureComp<MindContainerComponent>(entity.Value);
-            var ghostComponent = Comp<GhostComponent>(entity.Value);
+            targetEntity = Spawn(GameTicker.ObserverPrototypeName, position);
+            component = EnsureComp<MindContainerComponent>(targetEntity.Value);
+            var ghostComponent = Comp<GhostComponent>(targetEntity.Value);
             _ghosts.SetCanReturnToBody(ghostComponent, false);
         }
 
@@ -229,10 +234,10 @@ public sealed class MindSystem : SharedMindSystem
         {
             oldContainer.Mind = null;
             mind.OwnedEntity = null;
-            Entity<MindComponent> mindEnt = (mindId, mind);
+            Entity<MindComponent> mindEnt = (mindToTransfer, mind);
             Entity<MindContainerComponent> containerEnt = (oldEntity.Value, oldContainer);
             RaiseLocalEvent(oldEntity.Value, new MindRemovedMessage(mindEnt, containerEnt));
-            RaiseLocalEvent(mindId, new MindGotRemovedEvent(mindEnt, containerEnt));
+            RaiseLocalEvent(mindToTransfer, new MindGotRemovedEvent(mindEnt, containerEnt));
             Dirty(oldEntity.Value, oldContainer);
         }
 
@@ -242,35 +247,35 @@ public sealed class MindSystem : SharedMindSystem
             // Set VisitingEntity null first so the removal of VisitingMind doesn't get through Unvisit() and delete what we're visiting.
             // Yes this control flow sucks.
             mind.VisitingEntity = null;
-            RemComp<VisitingMindComponent>(entity!.Value);
+            RemComp<VisitingMindComponent>(targetEntity!.Value);
         }
         else if (mind.VisitingEntity != null
               && (ghostCheckOverride // to force mind transfer, for example from ControlMobVerb
                   || !TryComp(mind.VisitingEntity!, out GhostComponent? ghostComponent) // visiting entity is not a Ghost
                   || !ghostComponent.CanReturnToBody))  // it is a ghost, but cannot return to body anyway, so it's okay
         {
-            RemoveVisitingEntity(mindId, mind);
+            RemoveVisitingEntity(mindToTransfer, mind);
         }
 
         // Player is CURRENTLY connected.
         var session = GetSession(mind);
         if (session != null && !alreadyAttached && mind.VisitingEntity == null)
         {
-            _players.SetAttachedEntity(session, entity, true);
-            DebugTools.Assert(session.AttachedEntity == entity, $"Failed to attach entity.");
-            Log.Info($"Session {session.Name} transferred to entity {entity}.");
+            _players.SetAttachedEntity(session, targetEntity, true);
+            DebugTools.Assert(session.AttachedEntity == targetEntity, $"Failed to attach entity.");
+            Log.Info($"Session {session.Name} transferred to entity {targetEntity}.");
         }
 
-        if (entity != null)
+        if (targetEntity != null)
         {
-            component!.Mind = mindId;
-            mind.OwnedEntity = entity;
+            component!.Mind = mindToTransfer;
+            mind.OwnedEntity = targetEntity;
             mind.OriginalOwnedEntity ??= GetNetEntity(mind.OwnedEntity);
-            Entity<MindComponent> mindEnt = (mindId, mind);
-            Entity<MindContainerComponent> containerEnt = (entity.Value, component);
-            RaiseLocalEvent(entity.Value, new MindAddedMessage(mindEnt, containerEnt));
-            RaiseLocalEvent(mindId, new MindGotAddedEvent(mindEnt, containerEnt));
-            Dirty(entity.Value, component);
+            Entity<MindComponent> mindEnt = (mindToTransfer, mind);
+            Entity<MindContainerComponent> containerEnt = (targetEntity.Value, component);
+            RaiseLocalEvent(targetEntity.Value, new MindAddedMessage(mindEnt, containerEnt));
+            RaiseLocalEvent(mindToTransfer, new MindGotAddedEvent(mindEnt, containerEnt));
+            Dirty(targetEntity.Value, component);
         }
     }
 
@@ -360,7 +365,15 @@ public sealed class MindSystem : SharedMindSystem
             return;
         }
 
+        TryGetMind(target, out var targetMindId, out var targetMind);
+        _jobs.MindTryGetJobId(targetMindId, out var targetJobProtoId);
+        _jobs.MindTryGetJobId(mindId, out var originalJobProtoId);
+        TryComp<GhostRoleComponent>(target, out var ghostRole);
+        var targetJob = targetJobProtoId ?? ghostRole?.JobProto ?? originalJobProtoId;
+
         MakeSentientCommand.MakeSentient(target, EntityManager);
         TransferTo(mindId, target, ghostCheckOverride: true, mind: mind);
+
+        _roleSystem.MindAddJobRole(mindId, mind, silent:false, targetJob);
     }
 }
