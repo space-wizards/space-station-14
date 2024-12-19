@@ -9,6 +9,7 @@ using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Light.Components;
 using Content.Server.Light.Components;
+using Content.Shared.Verbs;
 
 namespace Content.Shared.Plankton
 {
@@ -29,6 +30,7 @@ namespace Content.Shared.Plankton
         {
             base.Initialize();
             SubscribeLocalEvent<PlanktonComponent, ComponentInit>(OnPlanktonCompInit);
+            SubscribeLocalEvent<PlanktonComponent, GetVerbsEvent<ActivationVerb>>(TogglePlanktonGeneration);
         }
 
          public override void Update(float frameTime)
@@ -59,6 +61,24 @@ namespace Content.Shared.Plankton
         }
 
         private void OnPlanktonCompInit(EntityUid uid, PlanktonComponent component, ComponentInit args)
+        {
+            Log.Info($"Plankton component initialized");
+        }
+
+        private void TogglePlanktonGeneration(EntityUid uid, PlanktonComponent component, GetVerbsEvent<ActivationVerb> args)
+    {
+        ActivationVerb verb = new()
+        {
+            Text = Loc.GetString("toggle-plankton-generation-verb"),
+            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/light.svg.192dpi.png")),
+            Act = () => PlanktonGeneration(uid, component),
+            Priority = -1
+        };
+
+        args.Verbs.Add(verb);
+    }
+
+        private void PlanktonGeneration(EntityUid uid, PlanktonComponent component)
         {
             var random = new System.Random();
           //  var reagentId = reagentId.Prototype;
@@ -123,10 +143,11 @@ namespace Content.Shared.Plankton
                 // Add the plankton species instance to the SpeciesInstances list
                 component.SpeciesInstances.Add(planktonInstance);
 
+                // confirms full hunger and alive status is sucessfully applied upon generation. The instance dislikes doing it itself.
                 planktonInstance.IsAlive = true;
                 planktonInstance.CurrentHunger = 50f;
 
-                Log.Info($"Generated plankton species {planktonInstance.SpeciesName} with characteristics {combinedCharacteristics} and diet {planktonInstance.Diet}. Is alive is {planktonInstance.IsAlive}");
+                Log.Info($"Generated plankton species {planktonInstance.SpeciesName} with characteristics {combinedCharacteristics} and diet {planktonInstance.Diet}.");
             }
 
             // Log the total number of plankton species initialized
