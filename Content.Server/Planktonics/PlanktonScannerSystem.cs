@@ -4,6 +4,9 @@ using Content.Server.Xenoarchaeology.XenoArtifacts;
 using Content.Shared.Interaction;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
+using Robust.Shared.Prototypes;
+using Content.Server.Paper;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.Plankton;
 
@@ -11,6 +14,7 @@ public sealed class PlankonScannerSystem : EntitySystem
 {
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly PaperSystem _paper = default!;
 
     public override void Initialize()
     {
