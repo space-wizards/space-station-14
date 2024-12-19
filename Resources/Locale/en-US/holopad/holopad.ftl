@@ -37,7 +37,8 @@ holopad-window-flavor-right = v3.0.9
 holopad-hologram-name = hologram of {THE($name)}
 
 # Holopad actions
-activate-holopad-projector-verb = Activate holopad projector
+holopad-activate-projector-verb = Activate holopad projector
+holopad-ai-is-unable-to-reach-holopad = You are unable to interface with the source of the call, it is too far from your core.
 
 # Mapping prototypes
 # General
