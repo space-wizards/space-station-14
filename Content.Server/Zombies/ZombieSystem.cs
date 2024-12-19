@@ -226,10 +226,8 @@ namespace Content.Server.Zombies
 
         private void OnMeleeHit(EntityUid uid, ZombieComponent component, MeleeHitEvent args)
         {
+            // this prevents a player using a zombie mouse as a weapon to infect people
             if (!TryComp<ZombieComponent>(args.User, out _))
-                return;
-
-            if (!args.HitEntities.Any())
                 return;
 
             foreach (var entity in args.HitEntities)
@@ -240,20 +238,14 @@ namespace Content.Server.Zombies
                 if (!TryComp<MobStateComponent>(entity, out var mobState))
                     continue;
 
-                if (HasComp<ZombieComponent>(entity))
+                var canZombify = !HasComp<ZombieComponent>(entity) && !HasComp<ZombieImmuneComponent>(entity);
+                if (canZombify && !HasComp<NonSpreaderZombieComponent>(args.User) && _random.Prob(GetZombieInfectionChance(entity, component)))
                 {
-                    args.BonusDamage = -args.BaseDamage;
-                }
-                else
-                {
-                    if (!HasComp<ZombieImmuneComponent>(entity) && !HasComp<NonSpreaderZombieComponent>(args.User) && _random.Prob(GetZombieInfectionChance(entity, component)))
-                    {
-                        EnsureComp<PendingZombieComponent>(entity);
-                        EnsureComp<ZombifyOnDeathComponent>(entity);
-                    }
+                    EnsureComp<PendingZombieComponent>(entity);
+                    EnsureComp<ZombifyOnDeathComponent>(entity);
                 }
 
-                if (_mobState.IsIncapacitated(entity, mobState) && !HasComp<ZombieComponent>(entity) && !HasComp<ZombieImmuneComponent>(entity))
+                if (_mobState.IsIncapacitated(entity, mobState) && canZombify)
                 {
                     ZombifyEntity(entity);
                     args.BonusDamage = -args.BaseDamage;
