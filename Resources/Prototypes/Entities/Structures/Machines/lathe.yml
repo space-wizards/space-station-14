@@ -152,6 +152,7 @@
       - LedLightBulb
       - DimLightBulb
       - Bucket
+      - Ashtray
       - DrinkMug
       - DrinkMugMetal
       - DrinkGlass
