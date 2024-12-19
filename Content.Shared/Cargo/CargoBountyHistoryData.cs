@@ -17,8 +17,13 @@ public readonly partial record struct CargoBountyHistoryData
     public string Id { get; init; } = string.Empty;
 
     /// <summary>
-    /// Optional name of the actor that skipped the bounty.
-    /// Only set when the bounty has been skipped.
+    /// Whether this bounty was completed or skipped.
+    /// </summary>
+    [DataField]
+    public BountyResult Result { get; init; } = BountyResult.Completed;
+
+    /// <summary>
+    /// Optional name of the actor that completed/skipped the bounty.
     /// </summary>
     [DataField]
     public string? ActorName { get; init; } = default;
@@ -35,11 +40,23 @@ public readonly partial record struct CargoBountyHistoryData
     [DataField(required: true)]
     public ProtoId<CargoBountyPrototype> Bounty { get; init; } = string.Empty;
 
-    public CargoBountyHistoryData(CargoBountyData bounty, TimeSpan timestamp, string? actorName)
+    public CargoBountyHistoryData(CargoBountyData bounty, BountyResult result, TimeSpan timestamp, string? actorName)
     {
         Bounty = bounty.Bounty;
+        Result = result;
         Id = bounty.Id;
         ActorName = actorName;
         Timestamp = timestamp;
+    }
+
+    /// <summary>
+    /// Covers how a bounty was actually finished.
+    ///     Completed - Bounty was actually fulfilled and the goods sold
+    ///     Skipped - Bounty was explicitly skipped by some actor
+    /// </summary>
+    public enum BountyResult
+    {
+        Completed = 0,
+        Skipped = 1,
     }
 }

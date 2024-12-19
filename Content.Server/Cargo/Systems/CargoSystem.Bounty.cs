@@ -98,7 +98,7 @@ public sealed partial class CargoSystem
             return;
         }
 
-        if (!TryRemoveBounty(station, bounty.Value, args.Actor))
+        if (!TryRemoveBounty(station, bounty.Value, true, args.Actor))
             return;
 
         FillBountyDatabase(station);
@@ -182,7 +182,7 @@ public sealed partial class CargoSystem
                 continue;
             }
 
-            TryRemoveBounty(station, bounty.Value);
+            TryRemoveBounty(station, bounty.Value, false);
             FillBountyDatabase(station);
             _adminLogger.Add(LogType.Action, LogImpact.Low, $"Bounty \"{bounty.Value.Bounty}\" (id:{bounty.Value.Id}) was fulfilled");
         }
@@ -437,15 +437,21 @@ public sealed partial class CargoSystem
     }
 
     [PublicAPI]
-    public bool TryRemoveBounty(Entity<StationCargoBountyDatabaseComponent?> ent, string dataId, EntityUid? actor = null)
+    public bool TryRemoveBounty(Entity<StationCargoBountyDatabaseComponent?> ent,
+        string dataId,
+        bool skipped,
+        EntityUid? actor = null)
     {
         if (!TryGetBountyFromId(ent.Owner, dataId, out var data, ent.Comp))
             return false;
 
-        return TryRemoveBounty(ent, data.Value, actor);
+        return TryRemoveBounty(ent, data.Value, skipped, actor);
     }
 
-    public bool TryRemoveBounty(Entity<StationCargoBountyDatabaseComponent?> ent, CargoBountyData data, EntityUid? actor = null)
+    public bool TryRemoveBounty(Entity<StationCargoBountyDatabaseComponent?> ent,
+        CargoBountyData data,
+        bool skipped,
+        EntityUid? actor = null)
     {
         if (!Resolve(ent, ref ent.Comp))
             return false;
@@ -462,7 +468,12 @@ public sealed partial class CargoSystem
                     actorName = getIdentityEvent.Title;
                 }
 
-                ent.Comp.History.Add(new CargoBountyHistoryData(data, _gameTiming.CurTime, actorName));
+                ent.Comp.History.Add(new CargoBountyHistoryData(data,
+                    skipped
+                        ? CargoBountyHistoryData.BountyResult.Skipped
+                        : CargoBountyHistoryData.BountyResult.Completed,
+                    _gameTiming.CurTime,
+                    actorName));
                 ent.Comp.Bounties.RemoveAt(i);
                 return true;
             }
