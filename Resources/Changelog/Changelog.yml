@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Beck Thompson
-  changes:
-  - message: Gold and silver ring, gold and silver diamond ring, gold and silver gem
-      ring. They all can be obtained in salvage loot pools.
-    type: Add
-  id: 7241
-  time: '2024-08-28T20:48:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31372
 - author: RumiTiger
   changes:
   - message: Cherry has been added to the game!
@@ -3937,3 +3929,11 @@
   id: 7740
   time: '2024-12-20T21:26:56.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/31251
+- author: J C Denton
+  changes:
+  - message: Syndicate and NanoTrasen NPCs and turrets are now hostile to Dragons
+      and Carps
+    type: Tweak
+  id: 7741
+  time: '2024-12-20T21:38:27.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32515
