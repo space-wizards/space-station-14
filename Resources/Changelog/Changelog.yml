@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: Fixed the nuke disk being marked 'left behind' when escaping with it
-      on the shuttle
-    type: Fix
-  id: 7240
-  time: '2024-08-28T20:05:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31602
 - author: Beck Thompson
   changes:
   - message: Gold and silver ring, gold and silver diamond ring, gold and silver gem
@@ -3938,3 +3930,10 @@
   id: 7739
   time: '2024-12-20T20:34:53.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33970
+- author: Beck Thompson
+  changes:
+  - message: Defibrillator cooldowns are now clearly visible.
+    type: Tweak
+  id: 7740
+  time: '2024-12-20T21:26:56.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31251
