@@ -58,7 +58,7 @@ public sealed class ImmovableRodSystem : EntitySystem
         if (EntityManager.TryGetComponent(uid, out PhysicsComponent? phys))
         {
             _physics.SetLinearDamping(uid, phys, 0f);
-            _physics.SetFriction(uid, phys, 0f);
+            _physics.SetFriction(uid, phys, 0.01f);
             _physics.SetBodyStatus(uid, phys, BodyStatus.InAir);
 
             var xform = Transform(uid);

@@ -12,13 +12,13 @@ public sealed partial class ImmovableRodComponent : Component
     public SoundSpecifier Sound = new SoundCollectionSpecifier("MetalSlam");
 
     [DataField("hitSoundProbability")]
-    public float HitSoundProbability = 0.1f;
+    public float HitSoundProbability = 0.9f;
 
     [DataField("minSpeed")]
-    public float MinSpeed = 10f;
+    public float MinSpeed = 1f;
 
     [DataField("maxSpeed")]
-    public float MaxSpeed = 35f;
+    public float MaxSpeed = 60f;
 
     /// <remarks>
     ///     Stuff like wizard rods might want to set this to false, so that they can set the velocity themselves.
@@ -36,17 +36,17 @@ public sealed partial class ImmovableRodComponent : Component
     ///     With this set to true, rods will automatically set the tiles under them to space.
     /// </summary>
     [DataField("destroyTiles")]
-    public bool DestroyTiles = true;
+    public bool DestroyTiles = false;
 
     /// <summary>
     ///     If true, this will gib & delete bodies
     /// </summary>
     [DataField]
-    public bool ShouldGib = true;
+    public bool ShouldGib = false;
 
     /// <summary>
     ///     Damage done, if not gibbing
     /// </summary>
     [DataField]
-    public DamageSpecifier? Damage;
+    public DamageSpecifier? 70;
 }
