@@ -291,7 +291,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             {
                 NavMap.TrackedEntities.TryAdd(sensor.SuitSensorUid,
                     new NavMapBlip
-                    (CoordinatesToLocal(coordinates!.Value),
+                    (CoordinatesToLocal(coordinates.Value),
                     _blipTexture,
                     (_trackedEntity == null || sensor.SuitSensorUid == _trackedEntity) ? Color.LimeGreen : Color.LimeGreen * Color.DimGray,
                     sensor.SuitSensorUid == _trackedEntity));
@@ -436,15 +436,13 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
         {
             return refCoords;
         }
-        else
-        {
-            var refEntToWorld = _transformSystem.GetWorldMatrix(refCoords.EntityId);
-            var refPosition = Vector2.Transform(refCoords.Position, refEntToWorld);
 
-            var worldToMonitor = _transformSystem.GetInvWorldMatrix((EntityUid)NavMap.MapUid);
-            var refInMonitor = Vector2.Transform(refPosition, worldToMonitor);
-            return new EntityCoordinates((EntityUid)NavMap.MapUid, refInMonitor);
-        }
+        var refEntToWorld = _transformSystem.GetWorldMatrix(refCoords.EntityId);
+        var refPosition = Vector2.Transform(refCoords.Position, refEntToWorld);
+
+        var worldToMonitor = _transformSystem.GetInvWorldMatrix((EntityUid)NavMap.MapUid);
+        var refInMonitor = Vector2.Transform(refPosition, worldToMonitor);
+        return new EntityCoordinates((EntityUid)NavMap.MapUid, refInMonitor);
     }
 
     private void ClearOutDatedData()
