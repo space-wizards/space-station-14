@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.LandMines;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent]
 public sealed partial class LandMineComponent : Component
 {
     /// <summary>
@@ -12,22 +12,4 @@ public sealed partial class LandMineComponent : Component
     /// </summary>
     [DataField]
     public SoundSpecifier? Sound;
-
-    /// <summary>
-    /// Is the land mine armed and dangerous?
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool Armed = false;
-
-    /// <summary>
-    /// Does it show its status on examination?
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool ShowStatusOnExamination = true;
-
-    /// <summary>
-    /// Does it give the option to be arme ?
-    /// </summary>
-    [DataField, AutoNetworkedField]
-    public bool ShowVerbArm = true;
 }

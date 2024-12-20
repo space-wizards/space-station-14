@@ -1,4 +1,5 @@
 using Content.Server.Explosion.EntitySystems;
+using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.LandMines;
 using Content.Shared.Popups;
 using Content.Shared.StepTrigger.Systems;
@@ -6,7 +7,7 @@ using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.LandMines;
 
-public sealed class LandMineSystem : SharedLandMineSystem
+public sealed class LandMineSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
@@ -23,7 +24,7 @@ public sealed class LandMineSystem : SharedLandMineSystem
 
     private void HandleStepOnTriggered(EntityUid uid, LandMineComponent component, ref StepTriggeredOnEvent args)
     {
-        if (!component.Armed)
+        if (TryComp<ItemToggleComponent>(uid, out var itemToggle) && !itemToggle.Activated)
             return;
 
         _popupSystem.PopupCoordinates(
@@ -37,7 +38,7 @@ public sealed class LandMineSystem : SharedLandMineSystem
 
     private void HandleStepOffTriggered(EntityUid uid, LandMineComponent component, ref StepTriggeredOffEvent args)
     {
-        if (!component.Armed)
+        if (TryComp<ItemToggleComponent>(uid, out var itemToggle) && !itemToggle.Activated)
             return;
 
         _trigger.Trigger(uid, args.Tripper);
