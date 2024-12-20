@@ -259,6 +259,9 @@ public sealed partial class DoorComponent : Component
     public bool CanPry = true;
 
     [DataField]
+    public bool BeingPried;
+
+    [DataField]
     public ProtoId<ToolQualityPrototype> PryingQuality = "Prying";
 
     /// <summary>
