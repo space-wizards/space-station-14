@@ -17,6 +17,7 @@
   - Xeno
   - Zombie
   - Revolutionary
+  - Dragon
   - AllHostile
 
 - type: npcFaction
@@ -59,6 +60,7 @@
   - Xeno
   - PetsNT
   - Zombie
+  - Dragon
   - AllHostile
 
 - type: npcFaction
