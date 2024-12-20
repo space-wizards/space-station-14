@@ -22,6 +22,7 @@
 - type: siliconLawset
   id: Crewsimov
   laws:
+  - Crewsimov0
   - Crewsimov1
   - Crewsimov2
   - Crewsimov3
