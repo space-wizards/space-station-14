@@ -83,6 +83,20 @@ public sealed class PlankonScannerSystem : EntitySystem
         if (!TryComp(ent, out var component))
         return;
 
+        string ScanModeStatus;
+        
+        if (component.AnalysisMode)
+        {
+            ScanModeStatus = "analysis-mode-toggle-off";
+        }
+        else
+        {
+            ScanModeStatus = "analysis-mode-toggle-on";
+        }
+        
+        var messageSwitch = Loc.GetString(ScanModeStatus);
+        
+        _popupSystem.PopupEntity(messageSwitch, ent);
         component.AnalysisMode = !component.AnalysisMode;
     }
 
