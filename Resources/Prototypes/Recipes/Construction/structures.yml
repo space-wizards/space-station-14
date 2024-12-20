@@ -113,7 +113,7 @@
   startNode: start
   targetNode: woodWall
   category: construction-category-structures
-  description: Keeps the air in and the greytide out.
+  description: The best chance of a colony thriving starts with this.
   icon:
     sprite: Structures/Walls/wood.rsi
     state: full
