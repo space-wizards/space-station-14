@@ -784,7 +784,7 @@
   description: bounty-description-regenerative-mesh
   entries:
   - name: bounty-item-regenerative-mesh
-    amount: 60
+    amount: 30
     whitelist:
       tags:
       - RegenerativeMesh
