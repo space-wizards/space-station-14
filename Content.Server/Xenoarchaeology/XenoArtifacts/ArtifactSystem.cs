@@ -74,7 +74,7 @@ public sealed partial class ArtifactSystem : EntitySystem
         var sumValue = component.NodeTree.Sum(n => GetNodePointValue(n, component, getMaxPrice));
         var fullyExploredBonus = component.NodeTree.All(x => x.Triggered) || getMaxPrice ? 1.25f : 1;
 
-        return (int) (sumValue * fullyExploredBonus) - component.ConsumedPoints;
+        return (int) (sumValue * fullyExploredBonus) - component.ConsumedPoints + 100;
     }
 
     /// <summary>
@@ -118,7 +118,7 @@ public sealed partial class ArtifactSystem : EntitySystem
         var effectProto = _prototype.Index<ArtifactEffectPrototype>(node.Effect);
 
         var nodeDanger = (node.Depth + effectProto.TargetDepth + triggerProto.TargetDepth) / 3;
-        return component.PointsPerNode * MathF.Pow(component.PointDangerMultiplier, nodeDanger) * valueDeduction;
+        return component.PointsPerNode * MathF.Pow(component.PointDangerMultiplier, nodeDanger) * valueDeduction - 5;
     }
 
     /// <summary>
