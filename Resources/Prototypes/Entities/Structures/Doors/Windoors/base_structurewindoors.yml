@@ -239,11 +239,6 @@
     - state: panel_open
       map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       visible: false
-    - state: electrified
-      sprite: Interface/Misc/ai_hud.rsi
-      shader: unshaded
-      visible: false
-      map: [ "enum.ElectrifiedLayers.HUD" ]
   - type: Destructible
     thresholds:
     - trigger:
@@ -300,11 +295,6 @@
     - state: panel_open
       map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       visible: false
-    - state: electrified
-      sprite: Interface/Misc/ai_hud.rsi
-      shader: unshaded
-      visible: false
-      map: ["enum.ElectrifiedLayers.HUD"]
   - type: Destructible
     thresholds:
     - trigger:
@@ -366,11 +356,6 @@
     - state: panel_open
       map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       visible: false
-    - state: electrified
-      sprite: Interface/Misc/ai_hud.rsi
-      shader: unshaded
-      visible: false
-      map: [ "enum.ElectrifiedLayers.HUD" ]
   - type: Destructible
     thresholds:
     - trigger:
@@ -427,11 +412,6 @@
     - state: panel_open
       map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       visible: false
-    - state: electrified
-      sprite: Interface/Misc/ai_hud.rsi
-      shader: unshaded
-      visible: false
-      map: [ "enum.ElectrifiedLayers.HUD" ]
   - type: Destructible
     thresholds:
     - trigger:
