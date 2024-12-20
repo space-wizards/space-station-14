@@ -42,7 +42,7 @@ public sealed partial class DefibrillatorComponent : Component
     /// <summary>
     ///     Cooldown after using the defibrillator.
     /// </summary>
-    [DataField("zapDelay")]
+    [DataField]
     public TimeSpan ZapDelay = TimeSpan.FromSeconds(5);
 
     /// <summary>
