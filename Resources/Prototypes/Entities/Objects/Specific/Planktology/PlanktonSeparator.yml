@@ -1,7 +1,7 @@
 - type: entity
   id: PlanktonSeparator
   parent: [StorageTank, StructureWheeled]
-  name: water tank
+  name: plankton separator
   description: A liquid tank with an advanced filter, capable to divvying up plankton species.
   suffix: Empty
   components:
