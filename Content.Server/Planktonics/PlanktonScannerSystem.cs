@@ -86,10 +86,20 @@ public sealed class PlankonScannerSystem : EntitySystem
         message += "\nSpecies names:\n" + string.Join("\n", planktonNames) + $"\nAmount of dead plankton: {component.DeadPlankton}";
     }
 
-    if (planktonNames.CurrentSize >=50)
+    if (species.CurrentSize >=50)
     {
-        var reward = Spawn(scanner.PlanktonRewardEntityId, Transform(uid).Coordinates);
-        _popupSystem.PopupEntity(rewardPopup, target);
+        if ((species.Characteristics & PlanktonComponent.PlanktonCharacteristics.HyperExoticSpecies) != 0)
+        {
+            var rewardSuper = Spawn(scanner.PlanktonAdvancedRewardEntityId, Transform(uid).Coordinates);
+            _popupSystem.PopupEntity(rewardPopup, target);
+        }
+        else
+        {
+
+        
+            var reward = Spawn(scanner.PlanktonRewardEntityId, Transform(uid).Coordinates);
+            _popupSystem.PopupEntity(rewardPopup, target);
+        }
     }
 
     _popupSystem.PopupEntity(messagePopup, target);
