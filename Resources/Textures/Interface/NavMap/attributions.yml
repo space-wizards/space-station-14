@@ -1,0 +1,59 @@
+- files: ["beveled_arrow_east.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by chromiumboy"
+  source: "https://github.com/chromiumboy"
+
+- files: ["beveled_arrow_north.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by chromiumboy"
+  source: "https://github.com/chromiumboy"
+
+- files: ["beveled_arrow_south.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by chromiumboy"
+  source: "https://github.com/chromiumboy"
+
+- files: ["beveled_arrow_west.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by chromiumboy"
+  source: "https://github.com/chromiumboy"
+
+- files: ["beveled_circle.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by chromiumboy"
+  source: "https://github.com/chromiumboy"
+
+- files: ["beveled_diamond.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by chromiumboy"
+  source: "https://github.com/chromiumboy"
+
+- files: ["beveled_diamond_east_west.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by chromiumboy"
+  source: "https://github.com/chromiumboy"
+
+- files: ["beveled_diamond_north_south.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by chromiumboy"
+  source: "https://github.com/chromiumboy"
+
+- files: ["beveled_hexagon.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by chromiumboy"
+  source: "https://github.com/chromiumboy"
+
+- files: ["beveled_square.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by chromiumboy"
+  source: "https://github.com/chromiumboy"
+
+- files: ["beveled_star.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by chromiumboy"
+  source: "https://github.com/chromiumboy"
+
+- files: ["beveled_triangle.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Created by chromiumboy"
+  source: "https://github.com/chromiumboy"
