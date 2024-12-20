@@ -44,7 +44,7 @@ namespace Content.Client.Chemistry.UI
             // Pill rsi file should have states named as pill1, pill2, and so on.
             var resourcePath = new ResPath(PillsRsiPath);
             var pillTypeGroup = new ButtonGroup();
-            PillTypeButtons = new Button[20];
+            PillTypeButtons = new Button[22];
             for (uint i = 0; i < PillTypeButtons.Length; i++)
             {
                 // For every button decide which stylebase to have
