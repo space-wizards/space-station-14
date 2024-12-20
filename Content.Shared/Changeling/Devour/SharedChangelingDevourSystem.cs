@@ -67,10 +67,8 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
         if(!component.ChangelingDevourActionEntity.HasValue)
             _actionsSystem.AddAction(uid, ref component.ChangelingDevourActionEntity, component.ChangelingDevourAction);
         var identityStorage = EnsureComp<ChangelingIdentityComponent>(uid);
-        if (identityStorage.ConsumedIdentities.Count > 0)
-            return;
         // RaiseLocalEvent(new ChangelingNullspaceSpawnEvent(GetNetEntity(uid), GetNetEntity(uid)));
-        _changelingIdentitySystem.CloneToNullspace(uid, identityStorage, uid); // Clone yourself so you can transform back.
+        _changelingIdentitySystem.CloneLingStart(uid, identityStorage); // Clone yourself so you can transform back.
     }
     private void OnConsumeAttemptTick(EntityUid uid,
         ChangelingDevourComponent component,
@@ -102,10 +100,6 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
         Dirty(args.Performer, component);
         if (!TryComp<ChangelingIdentityComponent>(uid, out var identityStorage))
             return;
-        //Extremely scuffed method of initializing the entity on the client
-        // if (identityStorage.ConsumedIdentities.Count == 0)
-        //     _changelingIdentitySystem.CloneToNullspace(uid, identityStorage, uid); // Clone yourself so you can transform back.
-
         if (args.Handled || _whitelistSystem.IsWhitelistFailOrNull(component.Whitelist, args.Target))
             return;
         if (!HasComp<DamageableComponent>(args.Target))
@@ -204,7 +198,6 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
             && TryComp<HumanoidAppearanceComponent>(target, out _)
             && TryComp<ChangelingIdentityComponent>(args.User, out var identityStorage))
         {
-            // RaiseLocalEvent(new ChangelingNullspaceSpawnEvent(GetNetEntity(target.Value), GetNetEntity(args.User)));
             _changelingIdentitySystem.CloneToNullspace(uid, identityStorage, target.Value);
             EnsureComp<ChangelingHuskedCorpseComponent>(target.Value);
 

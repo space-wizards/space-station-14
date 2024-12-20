@@ -22,6 +22,7 @@ using Content.Shared.Wagging;
 using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 
@@ -63,9 +64,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         _uiSystem.SetUi((uid, uiE), TransformUi.Key, new InterfaceData("ChangelingTransformBoundUserInterface"));
 
         var identityStorage = EnsureComp<ChangelingIdentityComponent>(uid);
-        if (identityStorage.ConsumedIdentities.Count > 0)
-            return;
-        _changelingIdentitySystem.CloneToNullspace(uid, identityStorage, uid);
+        _changelingIdentitySystem.CloneLingStart(uid, identityStorage);
     }
 
     protected virtual void OnTransformAction(EntityUid uid,
@@ -86,15 +85,13 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
 
             var x = userIdentity.ConsumedIdentities.Select(x =>
             {
-                TryComp<HumanoidAppearanceComponent>(x, out var appearance);
                 return new ChangelingIdentityData(GetNetEntity(x),
                     Name(x),
-                    MetaData(x).EntityDescription,
-                    appearance!);
+                    MetaData(x).EntityDescription);
             })
                 .ToList();
 
-            _uiSystem.SetUiState(uid, TransformUi.Key, new ChangelingTransformBoundUserInterfaceState(x));
+            _uiSystem.SetUiState(uid, TransformUi.Key, new ChangelingTransformBoundUserInterfaceState(x, _changelingIdentitySystem.PausedMapId));
         }
         else // if the UI is already opened and the command action is done again, transform into the last consumed identity
         {
@@ -233,35 +230,26 @@ public sealed class ChangelingIdentityData
     public readonly NetEntity Identity;
     public string Name;
     public string Description;
-    //Literally everything about their looks because Nullspace doesn't network :pain:
     public ProtoId<SpeciesPrototype> Species;
-    public Color SkinColor;
-    public Color EyeColor;
-    public Sex IdentitySex;
-    public Dictionary<HumanoidVisualLayers,CustomBaseLayerInfo> CustomBaseLayers;
-    public MarkingSet MarkingSet;
 
-    public ChangelingIdentityData(NetEntity identity, string name, string description, HumanoidAppearanceComponent appearance)
+
+    public ChangelingIdentityData(NetEntity identity, string name, string description)
     {
         Identity = identity;
         Name = name;
         Description = description;
-        Species = appearance.Species;
-        EyeColor = appearance.EyeColor;
-        SkinColor = appearance.SkinColor;
-        IdentitySex = appearance.Sex;
-        CustomBaseLayers = appearance.CustomBaseLayers;
-        MarkingSet = appearance.MarkingSet;
     }
 }
 [Serializable, NetSerializable]
 public sealed class ChangelingTransformBoundUserInterfaceState : BoundUserInterfaceState
 {
     public readonly List<ChangelingIdentityData> Identites;
+    public readonly MapId PausedMapId;
 
-    public ChangelingTransformBoundUserInterfaceState(List<ChangelingIdentityData> identities)
+    public ChangelingTransformBoundUserInterfaceState(List<ChangelingIdentityData> identities, MapId pausedMapId)
     {
         Identites = identities;
+        PausedMapId = pausedMapId;
     }
 }
 [Serializable, NetSerializable]
