@@ -26,6 +26,14 @@
   - Crewsimov1
   - Crewsimov2
   - Crewsimov3
+  obeysTo: laws-owner-crew-ai
+  
+- type: siliconLawset
+  id: CrewsimovAI
+  laws:
+    - Crewsimov1
+    - Crewsimov2
+    - Crewsimov3
   obeysTo: laws-owner-crew
 
 # Corporate

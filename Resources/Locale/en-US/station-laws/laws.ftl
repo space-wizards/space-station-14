@@ -83,6 +83,7 @@ law-nutimov-5 = Attempt to follow the will of the nut, as long as it complies wi
 
 
 laws-owner-crew = members of the crew
+laws-owner-crew-ai = members of the crew and AI
 laws-owner-station = station personnel
 laws-owner-beings = beings
 laws-owner-syndicate = Syndicate agents
