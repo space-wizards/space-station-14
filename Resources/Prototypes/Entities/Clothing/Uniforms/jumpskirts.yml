@@ -115,9 +115,9 @@
   description: It's a jumpskirt worn by those with the experience to be Chief Medical Officer. It provides minor biological protection.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/cmo.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpskirt/cmo.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/cmo.rsi
+    sprite: _Impstation/Clothing/Uniforms/Jumpskirt/cmo.rsi
 
 - type: entity
   parent: [ClothingUniformSkirtBase, BaseCommandContraband]
