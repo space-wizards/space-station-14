@@ -1,0 +1,25 @@
+- type: entity
+  parent: BaseAnomalyCore
+  id: AnomalyCoreBanana
+  suffix: Banana
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Specific/Anomalies/Cores/banana.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 2.0
+    color: "#ded949"
+    castShadows: false
+    
+- type: entity
+  parent: BaseAnomalyInertCore
+  id: AnomalyCoreBananaInert
+  suffix: Banana, Inert
+  components:
+  - type: Sprite
+    sprite: _Starlight/Structures/Specific/Anomalies/Cores/banana.rsi
+  - type: PointLight
+    radius: 1.5
+    energy: 2.0
+    color: "#ded949"
+    castShadows: false
