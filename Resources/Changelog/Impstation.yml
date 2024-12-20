@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: AftrLite
-  changes:
-  - message: Extra shoe options for Captain, Mime, Musician, Lawyer, Librarian, Bartender,
-      Psychologist, Paramedic, Detective, Reporter, Chief Engie, Chief Medical, &
-      Research Director!
-    type: Add
-  id: 276
-  time: '2024-09-28T00:14:00.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/355
 - author: KingMudkipIII
   changes:
   - message: 'Added a new drink: Cotton Bool!'
@@ -4524,3 +4515,13 @@
   id: 775
   time: '2024-12-20T16:36:55.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1077
+- author: Pinkbat5, AftrLite
+  changes:
+  - message: Heads of Security now start with extra-strength antidepressants in their
+      locker.
+    type: Add
+  - message: Pill canisters now have a new sprite.
+    type: Tweak
+  id: 776
+  time: '2024-12-20T16:38:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1084
