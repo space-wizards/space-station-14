@@ -1206,4 +1206,94 @@ Entries:
   id: 171
   time: '2024-12-19T16:35:19.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/177
-
+- author: Rinary
+  changes:
+  - message: Fixed magistrate stamp, now magistrate work normal.
+    type: Fix
+  id: 172
+  time: '2024-12-20T12:53:03.000000+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fix rule 13.
+    type: Fix
+  id: 173
+  time: '2024-12-20T12:53:28.000000+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed emoting when player in crit or died.
+    type: Fix
+  id: 174
+  time: '2024-12-20T12:53:57.000000+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed abductor tools.
+    type: Fix
+  id: 175
+  time: '2024-12-20T12:54:31.000000+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed changeling lasser form, now it has faction.
+    type: Fix
+  id: 176
+  time: '2024-12-20T12:54:52.000000+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed electrified doors spamming at console.
+    type: Fix
+  id: 177
+  time: '2024-12-20T12:55:37.000000+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed job names missing at radio channel icon.
+    type: Fix
+  id: 178
+  time: '2024-12-20T12:56:16.000000+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Changed smites icon, changed explosion smite icon
+    type: Tweak
+  id: 179
+  time: '2024-12-20T12:56:58.000000+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Added electrify admin trick.
+    type: Add
+  id: 180
+  time: '2024-12-20T12:57:16.000000+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Added brigmedic access.
+    type: Add
+  id: 181
+  time: '2024-12-20T12:57:34.000000+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed starlight accesses missing at id card console.
+    type: Fix
+  id: 182
+  time: '2024-12-20T12:57:55.000000+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed rotateable atms while anchored.
+    type: Fix
+  id: 183
+  time: '2024-12-20T12:58:19.000000+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed missing law radio channel access at command headset.
+    type: Fix
+  id: 184
+  time: '2024-12-20T12:58:56.000000+00:00'
+  url: 'null'
