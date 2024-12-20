@@ -258,7 +258,7 @@ public sealed partial class DoorComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite)]
     public bool CanPry = true;
 
-    [DataField]
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]
     public bool BeingPried;
 
     [DataField]
