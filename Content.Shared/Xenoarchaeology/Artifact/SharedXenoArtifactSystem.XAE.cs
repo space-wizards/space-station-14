@@ -59,7 +59,8 @@ public abstract partial class SharedXenoArtifactSystem
         EntityCoordinates coordinates
     )
     {
-        if (artifact.Comp.Suppressed)
+        XenoArtifactComponent xenoArtifactComponent = artifact;
+        if (xenoArtifactComponent.Suppressed)
             return false;
 
         if (TryComp<UseDelayComponent>(artifact, out var delay) && !_useDelay.TryResetDelay((artifact, delay), true))
@@ -74,7 +75,20 @@ public abstract partial class SharedXenoArtifactSystem
         if (!success)
         {
             _popup.PopupClient(Loc.GetString("artifact-activation-fail"), artifact, user);
+            return false;
         }
+
+        // we raised event for each node activation,
+        // now we raise event for artifact itself. For animations and stuff.
+        var ev = new XenoArtifactActivatedEvent(
+            artifact,
+            user,
+            target,
+            coordinates
+        );
+        RaiseLocalEvent(artifact, ref ev);
+
+        _audio.PlayPvs(xenoArtifactComponent.ForceActivationSoundSpecifier, artifact);
 
         return true;
     }
@@ -129,6 +143,14 @@ public abstract partial class SharedXenoArtifactSystem
 public readonly record struct XenoArtifactNodeActivatedEvent(
     Entity<XenoArtifactComponent> Artifact,
     Entity<XenoArtifactNodeComponent> Node,
+    EntityUid? User,
+    EntityUid? Target,
+    EntityCoordinates Coordinates
+);
+
+[ByRefEvent]
+public readonly record struct XenoArtifactActivatedEvent(
+    Entity<XenoArtifactComponent> Artifact,
     EntityUid? User,
     EntityUid? Target,
     EntityCoordinates Coordinates

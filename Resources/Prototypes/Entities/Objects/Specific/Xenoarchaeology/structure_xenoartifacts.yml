@@ -14,13 +14,16 @@
     - state: ano30
       map: [ "enum.ArtifactsVisualLayers.Base" ]
     - state: ano30_on
-      map: [ "enum.ArtifactsVisualLayers.Effect" ]
+      map: [ "enum.ArtifactsVisualLayers.UnlockingEffect" ]
+      visible: false
+    - state: artifact-activation
+      map: [ "enum.ArtifactsVisualLayers.ActivationEffect" ]
       visible: false
   - type: RandomArtifactSprite
     maxSprite: 36
   - type: RandomSprite
     available:
-    - enum.ArtifactsVisualLayers.Effect:
+    - enum.ArtifactsVisualLayers.UnlockingEffect:
         ano01_on: Rainbow
   - type: Transform
     noRot: true

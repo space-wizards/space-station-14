@@ -462,7 +462,9 @@
         children:
         - !type:NestedSelector
           tableId: GenericTrashItems
+          weight: 35
         - !type:AllSelector
+          weight: 1
           children:
           - id: ToySpawner
 

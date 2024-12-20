@@ -1,6 +1,7 @@
 using Content.Shared.Destructible.Thresholds;
 using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.Xenoarchaeology.Artifact.Prototypes;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -139,4 +140,16 @@ public sealed partial class XenoArtifactComponent : Component
     [DataField]
     public ProtoId<WeightedRandomXenoArchTriggerPrototype> TriggerWeights = "DefaultTriggers";
     #endregion
+
+    /// <summary>
+    /// Sound effect to be played when artifact node is force-activated.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier? ForceActivationSoundSpecifier = new SoundCollectionSpecifier("ArtifactForceActivation")
+    {
+        Params = new()
+        {
+            Variation = 0.1f
+        }
+    };
 }

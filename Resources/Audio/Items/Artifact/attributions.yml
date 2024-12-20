@@ -2,3 +2,11 @@
   license: "CC-BY-4.0"
   copyright: "Created by Garuda1982, split into individual files and converted to OGG and Mono by EmoGarbage404 (github)"
   source: "https://freesound.org/people/Garuda1982/sounds/560310/"
+- files: ["artifact-activation-fail1.ogg"]
+  license: "CC-BY-NC-3.0"
+  copyright: "Created by GabrieleKkj, split and converted by fildrance"
+  source: "https://freesound.org/people/GabrieleKkj/sounds/264370/"
+- files: ["artifact-force-activated1.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by brunoboselli, split and converted by fildrance"
+  source: "https://freesound.org/people/brunoboselli/sounds/457294/"

@@ -62,7 +62,9 @@ public abstract partial class SharedXenoArtifactSystem
     public void FinishUnlockingState(Entity<XenoArtifactUnlockingComponent, XenoArtifactComponent> ent)
     {
         string unlockAttemptResultMsg;
-        var artifactComponent = ent.Comp2;
+        XenoArtifactComponent artifactComponent = ent;
+        XenoArtifactUnlockingComponent unlockingComponent = ent;
+
         if (TryGetNodeFromUnlockState(ent, out var node))
         {
             SetNodeUnlocked((ent, artifactComponent), node.Value);
@@ -70,19 +72,17 @@ public abstract partial class SharedXenoArtifactSystem
             var activated = ActivateNode((ent, artifactComponent), node.Value, null, null, Transform(ent).Coordinates, false);
 
             if (activated)
-            {
-                _audio.PlayPvs(ent.Comp1.ActivationSound, ent.Owner);
-            }
+                _audio.PlayPvs(unlockingComponent.UnlockActivationSuccessfulSound, ent.Owner);
         }
         else
         {
+            _audio.PlayPvs(unlockingComponent.UnlockActivationFailedSound, ent.Owner);
             unlockAttemptResultMsg = "artifact-unlock-state-end-failure";
         }
 
         if (_net.IsServer)
             _popup.PopupEntity(Loc.GetString(unlockAttemptResultMsg), ent);
 
-        var unlockingComponent = ent.Comp1;
         RemComp(ent, unlockingComponent);
         RiseUnlockingFinished(ent, node);
         artifactComponent.NextUnlockTime = _timing.CurTime + artifactComponent.UnlockStateRefractory;

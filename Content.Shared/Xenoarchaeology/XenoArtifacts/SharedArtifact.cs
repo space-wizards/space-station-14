@@ -6,5 +6,6 @@ namespace Content.Shared.Xenoarchaeology.XenoArtifacts;
 public enum SharedArtifactsVisuals : byte
 {
     SpriteIndex,
-    IsActivated
+    IsActivated,
+    IsUnlocking
 }
