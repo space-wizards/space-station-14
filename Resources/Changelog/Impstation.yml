@@ -1,14 +1,6 @@
 ﻿Entries:
 - author: Sha-Seng
   changes:
-  - message: HoP can now spawn with laceup shoes, leather shoes, and yakuza shoes
-      in addition to the stupid brown sneakers
-    type: Add
-  id: 270
-  time: '2024-09-26T06:46:24.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/350
-- author: Sha-Seng
-  changes:
   - message: Captain winter coat hood now matches the coat's new (captain-blue) colors
     type: Tweak
   id: 271
@@ -4518,3 +4510,19 @@
   id: 769
   time: '2024-12-19T17:40:35.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1072
+- author: DVDPlayerOfDiscordFame
+  changes:
+  - message: new Improvised Pistol that can be hand-crafted. It can use a variety
+      of magazines and ammo types!
+    type: Add
+  - message: 1 conversion kit of each type added to the Mk58 Safe, now called the
+      Pistol Safe
+    type: Add
+  - message: adjusted Research and Cargo costs for the .22 Auto Pistol items
+    type: Tweak
+  - message: .22 auto Security Techfab recipes have been adjusted. "Advanced Pistol
+      Munitions" has been removed.
+    type: Tweak
+  id: 770
+  time: '2024-12-20T15:39:23.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1076
