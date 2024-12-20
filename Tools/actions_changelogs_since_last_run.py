@@ -99,7 +99,7 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
         for emoji, messages in changes_by_type.items():
             for message in messages:
                 embed["description"] += f"\n {emoji} {message}"
-        
+                
         urls = [entry.get("url") for entry in group if entry.get("url")]
         if urls:
             embed["description"] += f"\n\n[GitHub Pull Request]({urls[0]})"
