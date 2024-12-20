@@ -60,13 +60,10 @@ public abstract partial class SharedToolSystem : EntitySystem
             RaiseLocalEvent((object) ev);
     }
 
-    private void OnExamine(EntityUid uid, ToolComponent? tool, ExaminedEvent args)
+    private void OnExamine(Entity<ToolComponent> ent, ref ExaminedEvent args)
     {
-        if (!Resolve(uid, ref tool))
-            return;
-
         // If the tool has no qualities, exit early
-        if (tool.Qualities.Count == 0)
+        if (ent.Comp.Qualities.Count == 0)
             return;
 
         var message = new FormattedMessage();
@@ -75,7 +72,7 @@ public abstract partial class SharedToolSystem : EntitySystem
         var toolQualities = new List<string>();
 
         // Loop through tool qualities and add localized names to the list
-        foreach (var toolQuality in tool.Qualities)
+        foreach (var toolQuality in ent.Comp.Qualities)
         {
             if (_protoMan.TryIndex<ToolQualityPrototype>(toolQuality ?? string.Empty, out var protoToolQuality))
             {
@@ -84,7 +81,7 @@ public abstract partial class SharedToolSystem : EntitySystem
         }
 
         // Combine the qualities into a single string and localize the final message
-        string qualitiesString = string.Join(", ", toolQualities);
+        var qualitiesString = string.Join(", ", toolQualities);
 
         // Add the localized message to the FormattedMessage object
         message.AddMarkupPermissive(Loc.GetString("tool-component-qualities", ("qualities", qualitiesString)));
