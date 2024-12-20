@@ -3,5 +3,7 @@ plankton-scan-tooltip = Scan plankton sample
 plankton-analysis-report-title = Plankton sample overview
 plankton-reward-popup = The analyzer prints a disk full of data!
 toggle-analysis-verb-get-data-text = Toggle final analysis mode
-analysis-mode-on = Analysis Mode is [color=red]off[/color]
-analysis-mode-off = Analysis Mode is [color=green]on[/color]
+analysis-mode-on = It is in[color=purple]Analysis Mode[/color]
+analysis-mode-off = It is in [color=cyan]Scan Mode[/color]
+analysis-mode-toggle-off = The scanner is switched to scan mode!
+analysis-mode-toggle-on = The scanner is switched to analysis mode!
