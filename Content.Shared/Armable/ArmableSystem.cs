@@ -28,9 +28,9 @@ public sealed class ArmableSystem : EntitySystem
             return;
 
         if(itemToggle.Activated)
-            args.PushMarkup(Loc.GetString("land-mine-armed", ("name", uid)));
+            args.PushMarkup(Loc.GetString("examine-armed", ("name", uid)));
         else
-            args.PushMarkup(Loc.GetString("land-mine-not-armed", ("name", uid)));
+            args.PushMarkup(Loc.GetString("examine-not-armed", ("name", uid)));
     }
 
     /// <summary>
