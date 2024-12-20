@@ -385,11 +385,14 @@ namespace Content.Shared.Plankton
         var carnivorousPlanktonInstances = component.SpeciesInstances
             .Where(inst => (inst.Diet == PlanktonComponent.PlanktonDiet.Carnivore))
             .ToList();
+        
 
         if (carnivorousPlanktonInstances.Any())
         {
             foreach (var carnivorousPlankton in carnivorousPlanktonInstances)
             {
+                 int carnivoreCount = carnivorousPlankton.CurrentSize;  // Total number of carnivores
+                 float huntMultiplier = carnivoreCount * 0.1f;
                 foreach (var otherPlankton in component.SpeciesInstances)
                 {
                     if (carnivorousPlankton == otherPlankton) continue;
@@ -403,6 +406,9 @@ namespace Content.Shared.Plankton
                         Log.Error($"{carnivorousPlankton.SpeciesName} will start starving soon due to killing all prey.");
                     }
 
+                    float sizeReduction = 0.5f * huntMultiplier;  // Multiply by the number of carnivores
+                    ReducePlanktonSizeCarnivorous(otherPlankton,
+                    
                     // Check if the plankton instance should be removed
                     if (otherPlankton.CurrentSize <= 0)
                     {
@@ -424,12 +430,11 @@ namespace Content.Shared.Plankton
 
 
 
-        private void ReducePlanktonSizeCarnivorous(PlanktonComponent.PlanktonSpeciesInstance planktonInstance, PlanktonComponent component, PlanktonComponent.PlanktonSpeciesInstance carnivorousPlankton)
+        private void ReducePlanktonSizeCarnivorous(PlanktonComponent.PlanktonSpeciesInstance planktonInstance, PlanktonComponent component, PlanktonComponent.PlanktonSpeciesInstance carnivorousPlankton, float sizeReduction)
         {
-             float food = 0.5f;
-             planktonInstance.CurrentSize -= food;
+             planktonInstance.CurrentSize -= sizeReduction;
              Log.Info($"Reduced size of {planktonInstance.SpeciesName} to {planktonInstance.CurrentSize} via being predated on by {carnivorousPlankton.SpeciesName}");
-             carnivorousPlankton.CurrentHunger += food;
+             carnivorousPlankton.CurrentHunger += sizeReduction;
              Log.Info($"{carnivorousPlankton.SpeciesName} is now at {carnivorousPlankton.CurrentHunger} after hunting");
 
               if (planktonInstance.CurrentSize <= 0)
