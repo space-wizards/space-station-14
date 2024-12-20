@@ -136,6 +136,7 @@ public sealed class PlankonScannerSystem : EntitySystem
         {
             var rewardSuper = Spawn(scanner.PlanktonAdvancedRewardEntityId, Transform(uid).Coordinates);
             _popupSystem.PopupEntity(rewardPopup, target);
+            _audioSystem.PlayPvs(comp.PrintSound, uid);
         }
         else
         {
@@ -143,8 +144,18 @@ public sealed class PlankonScannerSystem : EntitySystem
         
             var reward = Spawn(scanner.PlanktonRewardEntityId, Transform(uid).Coordinates);
             _popupSystem.PopupEntity(rewardPopup, target);
+            _audioSystem.PlayPvs(comp.PrintSound, uid);
         }
     }
+    else 
+    {
+        if (species.CurrentSize < 50)  _popupSystem.PopupEntity("plankton-too-small-alert", target);
+    }
+   }
+   else
+   {
+       if (planktonNames.Count > 1)  _popupSystem.PopupEntity("too-many-plankton-alert", target);
+       if (planktonNames.Count == 0)  _popupSystem.PopupEntity("no-plankton-alert", target);
    }
  if (!scanner.AnalysisMode)
 {
