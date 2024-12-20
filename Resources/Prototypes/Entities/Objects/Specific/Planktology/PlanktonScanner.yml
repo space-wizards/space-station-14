@@ -11,4 +11,4 @@
       sprite: Objects/Specific/Xenoarchaeology/node_scanner.rsi
     - type: PlanktonScanner
     - type: UseDelay
-      delay: 3
+      delay: 15
