@@ -142,6 +142,7 @@ public sealed class PlankonScannerSystem : EntitySystem
 
     _paper.SetContent(report, message.ToMarkup());
 }
+}
 
     private void OnExamine(EntityUid uid, PlanktonScannerComponent component, ExaminedEvent args)
     {
