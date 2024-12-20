@@ -406,7 +406,7 @@ namespace Content.Shared.Plankton
                         Log.Error($"{carnivorousPlankton.SpeciesName} will start starving soon due to killing all prey.");
                     }
 
-                    float sizeReduction = 0.5f * huntMultiplier;  // Multiply by the number of carnivores
+                    float sizeReduction = 0.5f + huntMultiplier;  // Multiply by the number of carnivores
                     ReducePlanktonSizeCarnivorous(otherPlankton,
                     
                     // Check if the plankton instance should be removed
