@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: starlighthowls
-  changes:
-  - message: cruise is haunted now
-    type: Add
-  id: 274
-  time: '2024-09-28T00:14:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/358
 - author: hivehum
   changes:
   - message: The evacuation shuttle now takes 20 minutes to arrive when the station
@@ -4523,3 +4516,12 @@
   id: 773
   time: '2024-12-20T16:26:29.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1080
+- author: widgetbeck
+  changes:
+  - message: Removed gollylad's out-of-theme black jumpsuit.
+    type: Remove
+  - message: Some changes to the Goblin Castaways event to give it its own identity.
+    type: Tweak
+  id: 774
+  time: '2024-12-20T16:28:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1083
