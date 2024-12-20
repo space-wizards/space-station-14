@@ -6,6 +6,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Maps;
 using Content.Shared.ShadowDimension;
+using Content.Shared.Tag;
 using Robust.Shared.CPUJob.JobQueues;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -26,9 +27,12 @@ public sealed class SpawnShadowDimensionJob : Job<bool>
     private readonly StationSystem _stationSystem;
     private readonly SharedMapSystem _map;
     private readonly ITileDefinitionManager _tileDefManager;
+    private readonly TileSystem _tileSystem;
+    private readonly EntityLookupSystem _lookup;
+    private readonly TagSystem _tag;
 
     public readonly EntityUid Station;
-    private readonly ShadowDimensionParams _missionParams;
+    private readonly ShadowDimensionParams _shadowParams;
 
     private readonly ISawmill _sawmill;
 
@@ -45,8 +49,11 @@ public sealed class SpawnShadowDimensionJob : Job<bool>
         StationSystem stationSystem,
         SharedMapSystem map,
         ITileDefinitionManager tileDefManager,
+        TileSystem tileSystem,
+        EntityLookupSystem lookup,
+        TagSystem tagSystem,
         EntityUid station,
-        ShadowDimensionParams missionParams,
+        ShadowDimensionParams shadowParams,
         CancellationToken cancellation = default) : base(maxTime, cancellation)
     {
         _entManager = entManager;
@@ -59,8 +66,11 @@ public sealed class SpawnShadowDimensionJob : Job<bool>
         _stationSystem = stationSystem;
         _map = map;
         _tileDefManager = tileDefManager;
+        _tileSystem = tileSystem;
+        _lookup = lookup;
+        _tag = tagSystem;
         Station = station;
-        _missionParams = missionParams;
+        _shadowParams = shadowParams;
         _sawmill = logManager.GetSawmill("shadow_dimension_job");
     }
 
@@ -75,26 +85,43 @@ public sealed class SpawnShadowDimensionJob : Job<bool>
             return false;
 
         //Create new map and set name
-        var mapUid = _map.CreateMap(out var mapId, runMapInit: false);
+        var shadowMapUid = _map.CreateMap(out var shadowMapId, runMapInit: false);
         var stationMetaData = _entManager.EnsureComponent<MetaDataComponent>(Station);
         _metaData.SetEntityName(
-            mapUid,
+            shadowMapUid,
             $"Shadow side of {stationMetaData.EntityName}"); //TODO: Localize it
 
-        _sawmill.Debug("shadow_dimension", $"Spawning station {stationMetaData.EntityName} shadow side with seed {_missionParams.Seed}");
-        var random = new Random(_missionParams.Seed);
+        _sawmill.Debug("shadow_dimension", $"Spawning station {stationMetaData.EntityName} shadow side with seed {_shadowParams.Seed}");
+        var random = new Random(_shadowParams.Seed);
 
-        var grid = _mapManager.CreateGridEntity(mapId);
+        var shadowGrid = _mapManager.CreateGridEntity(shadowMapId);
 
+        //Set Station silhouette tiles
         var stationTiles = _map.GetAllTilesEnumerator(stationGrid.Value, stationGridComp);
         var shadowTiles = new List<(Vector2i Index, Tile Tile)>();
         var tileDef = _tileDefManager["FloorChromite"];
         while (stationTiles.MoveNext(out var tileRef))
         {
-            shadowTiles.Add((tileRef.Value.GridIndices, new Tile(tileDef.TileId))); //TODO tile variation
+            shadowTiles.Add((tileRef.Value.GridIndices, new Tile(tileDef.TileId, variant: _tileSystem.PickVariant((ContentTileDefinition) tileDef, random))));
         }
+        _map.SetTiles(shadowGrid, shadowTiles);
 
-        _map.SetTiles(grid, shadowTiles);
+        //Set shadow dimension entities
+
+        HashSet<Entity<TagComponent, TransformComponent>> taggedEntities = new();
+        _lookup.GetChildEntities(stationGrid.Value, taggedEntities);
+
+        foreach (var tagged in taggedEntities)
+        {
+            foreach (var replacement in _shadowParams.Replacements)
+            {
+                if (!_tag.HasTag(tagged.Owner, replacement.Key))
+                    continue;
+                var coord = new EntityCoordinates(shadowMapUid, tagged.Comp2.Coordinates.Position);
+                _entManager.SpawnEntity(replacement.Value, coord);
+                break; //Prevent multiple entities from tag spawning
+            }
+        }
         return true;
     }
 }

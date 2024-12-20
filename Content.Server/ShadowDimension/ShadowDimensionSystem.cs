@@ -4,6 +4,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Maps;
 using Content.Shared.ShadowDimension;
+using Content.Shared.Tag;
 using Robust.Shared.CPUJob.JobQueues;
 using Robust.Shared.CPUJob.JobQueues.Queues;
 using Robust.Shared.Map;
@@ -26,6 +27,9 @@ public sealed partial class ShadowDimensionSystem : SharedShadowDimensionSystem
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly ITileDefinitionManager _tileManager = default!;
+    [Dependency] private readonly TileSystem _tileSystem = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
 
     private readonly JobQueue _jobQueue = new();
     private readonly List<(SpawnShadowDimensionJob Job, CancellationTokenSource CancelToken)> _jobs = new();
@@ -58,7 +62,7 @@ public sealed partial class ShadowDimensionSystem : SharedShadowDimensionSystem
 
     private void OnStationInit(Entity<StationShadowDimensionComponent> ent, ref StationPostInitEvent args)
     {
-        var testParams = new ShadowDimensionParams {Seed = _random.Next()};
+        var testParams = new ShadowDimensionParams {Seed = _random.Next(), Replacements = ent.Comp.Replacements};
 
         SpawnStationShadowDimension(ent, testParams);
     }
@@ -79,6 +83,9 @@ public sealed partial class ShadowDimensionSystem : SharedShadowDimensionSystem
             _stationSystem,
             _mapSystem,
             _tileManager,
+            _tileSystem,
+            _lookup,
+            _tag,
             station,
             shadowParams,
             cancelToken.Token);

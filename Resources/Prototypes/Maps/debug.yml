@@ -22,7 +22,6 @@
     Dev:
       stationProto: StandardNanotrasenStation
       components:
-        - type: StationShadowDimension #TODO remove
         - type: StationNameSetup
           mapNameTemplate: "Dev"
         - type: StationJobs

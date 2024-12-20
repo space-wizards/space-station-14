@@ -1,3 +1,5 @@
+using Content.Shared.Tag;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.ShadowDimension;
@@ -10,4 +12,5 @@ public abstract class SharedShadowDimensionSystem : EntitySystem
 public sealed record ShadowDimensionParams
 {
     public int Seed;
+    public Dictionary<ProtoId<TagPrototype>, EntProtoId> Replacements = new();
 }
