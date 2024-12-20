@@ -37,10 +37,17 @@ public sealed partial class CargoBountyMenu : FancyWindow
         });
 
         BountyHistoryContainer.Children.Clear();
-        foreach (var h in history)
+        if (history.Count == 0)
         {
-            var entry = new BountyHistoryEntry(h);
-            BountyHistoryContainer.AddChild(entry);
+            NoHistoryLabel.Visible = true;
+        }
+        else
+        {
+            NoHistoryLabel.Visible = false;
+            foreach (var h in history)
+            {
+                BountyHistoryContainer.AddChild(new BountyHistoryEntry(h));
+            }
         }
     }
 }

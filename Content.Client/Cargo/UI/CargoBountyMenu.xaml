@@ -23,6 +23,10 @@
                 <ScrollContainer HScrollEnabled="False"
                                  HorizontalExpand="True"
                                  VerticalExpand="True">
+                    <Label Name="NoHistoryLabel"
+                           Text="{Loc 'bounty-console-history-empty-label'}"
+                           Visible="False"
+                           Align="Center" />
                     <BoxContainer Name="BountyHistoryContainer"
                                   Orientation="Vertical"
                                   VerticalExpand="True"
