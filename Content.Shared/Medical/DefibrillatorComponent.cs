@@ -80,12 +80,6 @@ public sealed partial class DefibrillatorComponent : Component
 }
 
 [Serializable, NetSerializable]
-public enum DefibrillatorVisuals : byte
-{
-    Ready
-}
-
-[Serializable, NetSerializable]
 public sealed partial class DefibrillatorZapDoAfterEvent : SimpleDoAfterEvent
 {
 
