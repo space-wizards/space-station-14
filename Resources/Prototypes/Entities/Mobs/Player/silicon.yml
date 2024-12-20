@@ -129,7 +129,7 @@
     sprite: Objects/Misc/module.rsi
     state: std_mod
   - type: SiliconLawProvider
-    laws: Crewsimov
+    laws: CrewsimovAI
 
 - type: entity
   id: CorporateCircuitBoard
@@ -378,7 +378,7 @@
   - type: BlockMovement
     blockInteraction: false
   - type: SiliconLawProvider
-    laws: Crewsimov
+    laws: CrewsimovAI
   - type: SiliconLawBound
   - type: ActionGrant
     actions:
