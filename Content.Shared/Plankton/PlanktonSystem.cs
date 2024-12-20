@@ -92,6 +92,8 @@ namespace Content.Shared.Plankton
            //     return;
           //  }
 
+            //  var reagentId = solution.GetPrimaryReagentId(uid);
+
             for (int i = 0; i < 3; i++)
             {
                 var firstName = PlanktonComponent.PlanktonFirstNames[random.Next(PlanktonComponent.PlanktonFirstNames.Length)];
