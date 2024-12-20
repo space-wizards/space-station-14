@@ -18,6 +18,7 @@
       department: Command
       time: 180000 # 50 hrs
 
+# Jumpsuit
 - type: loadout
   id: CaptainEveningAttire
   equipment:
@@ -26,6 +27,13 @@
   - !type:GroupLoadoutEffect
     proto: VeteranCap
 
+# Head
+- type: loadout
+  id: CaptainBeret
+  equipment:
+    head: ClothingHeadHatBeretCaptain
+
+# Glasses
 - type: loadout
   id: CaptainVisor
   equipment:
@@ -34,6 +42,7 @@
   - !type:GroupLoadoutEffect
     proto: VeteranCap
 
+# Neck
 - type: loadout
   id: CaptainGreatcoat
   equipment:
@@ -42,23 +51,7 @@
   - !type:GroupLoadoutEffect
     proto: VeteranCap
 
-# Command Veteran backpacks are used by all command
-- type: loadout
-  id: CommandVeteranBackpack
-  equipment:
-    back: ClothingBackpackCommandveteran
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranCommand
-
-- type: loadout
-  id: CommandVeteranSatchel
-  equipment:
-    back: ClothingBackpackSatchelCommandveteran
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranCommand
-
+# Outer clothing
 - type: loadout
   id: CaptainRepeller
   equipment:
@@ -67,6 +60,7 @@
   - !type:GroupLoadoutEffect
     proto: VeteranCap
 
+# Gloves
 - type: loadout
   id: CaptainFlightGloves
   equipment:
@@ -75,6 +69,7 @@
   - !type:GroupLoadoutEffect
     proto: VeteranCap
 
+# Shoes
 - type: loadout
   id: CaptainJumpBoots
   equipment:
@@ -82,11 +77,3 @@
   effects:
   - !type:GroupLoadoutEffect
     proto: VeteranCap
-
-- type: loadout
-  id: CommandVeteranHeadset
-  equipment:
-    ears: ClothingHeadsetCommandveteran
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: VeteranCommand
