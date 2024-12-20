@@ -10,6 +10,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
+using Content.Shared.Examine;
 
 namespace Content.Server.Plankton;
 
@@ -25,6 +26,8 @@ public sealed class PlankonScannerSystem : EntitySystem
     {
         SubscribeLocalEvent<PlanktonScannerComponent, BeforeRangedInteractEvent>(OnBeforeRangedInteract);
         SubscribeLocalEvent<PlanktonScannerComponent, GetVerbsEvent<UtilityVerb>>(AddScanVerb);
+        SubscribeLocalEvent<PlanktonScannerComponent, GetVerbsEvent<ActivationVerb>>(AddToggleAnalysisVerb);
+        SubscribeLocalEvent<PlanktonScannerComponent, ExaminedEvent>(OnExamine);
     }
 
     private void OnBeforeRangedInteract(EntityUid uid, PlanktonScannerComponent component, BeforeRangedInteractEvent args)
@@ -59,6 +62,30 @@ public sealed class PlankonScannerSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
+    private void AddToggleAnalysisVerb(EntityUid uid, PlanktonScannerComponent component, GetVerbsEvent<ActivationVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract)
+            return;
+
+        ActivationVerb verb = new()
+        {
+            Text = Loc.GetString("toggle-analysis-verb-get-data-text"),
+            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/light.svg.192dpi.png")),
+            Act = () => TryToggleAnalysis((uid, component), args.User),
+            Priority = -1 // For things like PDA's, Open-UI and other verbs that should be higher priority.
+        };
+
+        args.Verbs.Add(verb);
+    }
+
+    public void TryToggleAnalysis(Entity<PlanktonScannerComponent?> ent, EntityUid? user = null, bool quiet = false)
+    {
+        if (!TryComp(ent, out var component))
+        return;
+
+        component.AnalysisMode = !component.AnalysisMode;
+    }
+
     private void CreatePopup(EntityUid uid, EntityUid target, PlanktonComponent component, PlanktonScannerComponent scanner)
 {
     if (TryComp(uid, out UseDelayComponent? useDelay)
@@ -86,7 +113,10 @@ public sealed class PlankonScannerSystem : EntitySystem
         message += "\nSpecies names:\n" + string.Join("\n", planktonNames) + $"\nAmount of dead plankton: {component.DeadPlankton}";
     }
 
-    if (species.CurrentSize >=50)
+   if (planktonNames.Count == 1 && scanner.AnalysisMode)
+   {
+    var species = component.SpeciesInstances.First();
+    if (species.CurrentSize >= 50)
     {
         if ((species.Characteristics & PlanktonComponent.PlanktonCharacteristics.HyperExoticSpecies) != 0)
         {
@@ -101,6 +131,7 @@ public sealed class PlankonScannerSystem : EntitySystem
             _popupSystem.PopupEntity(rewardPopup, target);
         }
     }
+   }
 
     _popupSystem.PopupEntity(messagePopup, target);
 
@@ -110,5 +141,17 @@ public sealed class PlankonScannerSystem : EntitySystem
 
     _paper.SetContent(report, message.ToMarkup());
 }
+
+    private void OnExamine(EntityUid uid, PlanktonScannerComponent component, ExaminedEvent args)
+    {
+        if (!args.IsInDetailsRange)
+            return;
+
+        var text = component.AnalysisMode 
+        ? "analysis-mode-on" 
+        : "analysis-mode-off";
+
+        args.PushMarkup(Loc.GetString(text));
+    }
 
 }
