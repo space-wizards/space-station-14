@@ -1304,4 +1304,11 @@ Entries:
   id: 185
   time: '2024-12-20T20:36:05.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/179
+- author: Rinary
+  changes:
+  - message: Added banana anomaly
+    type: Add
+  id: 186
+  time: '2024-12-20T21:00:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/180
 
