@@ -41,3 +41,5 @@
       spawns:
       - MobMonkey
       - TrashBananaPeel
+  - type: RadiationSource
+    intensity: 2
