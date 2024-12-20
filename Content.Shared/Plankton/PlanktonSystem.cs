@@ -392,7 +392,7 @@ namespace Content.Shared.Plankton
             foreach (var carnivorousPlankton in carnivorousPlanktonInstances)
             {
                  int carnivoreCount = carnivorousPlankton.CurrentSize;  // Total number of carnivores
-                 float huntMultiplier = carnivoreCount * 0.1f;
+                 float huntMultiplier = carnivoreCount * 0.05f;
                 foreach (var otherPlankton in component.SpeciesInstances)
                 {
                     if (carnivorousPlankton == otherPlankton) continue;
