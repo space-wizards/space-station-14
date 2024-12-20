@@ -1297,3 +1297,11 @@ Entries:
   id: 184
   time: '2024-12-20T12:58:56.000000+00:00'
   url: 'null'
+- author: Rinary
+  changes:
+  - message: Now any npc can unbuckle himself.
+    type: Tweak
+  id: 185
+  time: '2024-12-20T20:36:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/179
+
