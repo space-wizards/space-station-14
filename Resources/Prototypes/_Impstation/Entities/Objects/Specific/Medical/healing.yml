@@ -1,0 +1,47 @@
+#HoS happy pills & pillbottle
+- type: entity
+  name: pill
+  suffix: Psicodine 18u Happiness 2u
+  parent: Pill
+  id: PillLacedPsicodine
+  components:
+  - type: Pill
+    pillType: 21
+  - type: Sprite
+    state: pill22
+  - type: Label
+    currentLabel: psicodine 20u
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Psicodine
+          Quantity: 18
+        - ReagentId: Happiness
+          Quantity: 2
+
+- type: entity
+  name: head of security's pill canister
+  parent: [PillCanister, BaseCommandContraband]
+  description: A sturdy bottle of extra-strength antidepressants, custom-formulated to quell even the strongest nervous breakdowns and murderous urges. Issued regardless of the results of any psych eval. Just another perk of the job!
+  id: PillCanisterHOS
+  suffix: Psicodine 18u Happiness 2u, 5
+  components:
+  - type: Label
+    currentLabel: psicodine 20u
+  - type: StorageFill
+    contents:
+    - id: PillLacedPsicodine
+      amount: 5
+  - type: Sprite
+    sprite: _Impstation/Objects/Specific/Chemistry/pills_canister.rsi
+    state: pill_canister-hos
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: pill_canister-hos-inhand-left
+      right:
+      - state: pill_canister-hos-inhand-right
+  - type: StealTarget
+    stealGroup: SecPillCanister
