@@ -134,6 +134,10 @@
   name: immovable mop
   description: Hurled like a javelin, with the power of a thousand furious janitors.
   components:
+  - type: ImmovableRod
+    randomizeVelocity: false
+    maxSpeed: 0
+    eviscerationPopup: immovable-rod-penetrated-mob-mop
   - type: Sprite
     sprite: Objects/Specific/Janitorial/mop.rsi
     state: mop
@@ -146,6 +150,10 @@
   name: immovable shark
   description: SHARK TORNADO!
   components:
+  - type: ImmovableRod
+    randomizeVelocity: false
+    maxSpeed: 0
+    eviscerationPopup: immovable-rod-penetrated-mob-shark
   - type: Sprite
     sprite: Objects/Fun/sharkplush.rsi
     state: blue
@@ -158,6 +166,10 @@
   name: immovable clown
   description: Ejected from the neighbouring station one solar system over. HONK!
   components:
+  - type: ImmovableRod
+    randomizeVelocity: false
+    maxSpeed: 0
+    eviscerationPopup: immovable-rod-penetrated-mob-clown
   - type: Sprite
     sprite: Markers/jobs.rsi
     state: clown
@@ -170,6 +182,10 @@
   name: immovable banana
   description: At least you won't slip on it.
   components:
+  - type: ImmovableRod
+    randomizeVelocity: false
+    maxSpeed: 0
+    eviscerationPopup: immovable-rod-penetrated-mob-banana
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi
     state: produce
@@ -181,6 +197,10 @@
   name: immovable hammer
   description: Bwoink.
   components:
+  - type: ImmovableRod
+    randomizeVelocity: false
+    maxSpeed: 0
+    eviscerationPopup: immovable-rod-penetrated-mob-hammer
   - type: Sprite
     sprite: Objects/Weapons/Melee/sledgehammer.rsi
     state: icon
@@ -193,6 +213,10 @@
   name: immovable throngler
   description: If you catch it, you can keep it.
   components:
+  - type: ImmovableRod
+    randomizeVelocity: false
+    maxSpeed: 0
+    eviscerationPopup: immovable-rod-penetrated-mob-throngler
   - type: Sprite
     sprite: Objects/Weapons/Melee/Throngler2.rsi
     state: icon
@@ -205,6 +229,10 @@
   name: immovable gibstick
   description: What did you expect?
   components:
+  - type: ImmovableRod
+    randomizeVelocity: false
+    maxSpeed: 0
+    eviscerationPopup: immovable-rod-penetrated-mob-gibstick
   - type: Sprite
     sprite: Objects/Weapons/Melee/debug.rsi
     state: icon
@@ -217,6 +245,10 @@
   name: immovable weh
   description: WEH!
   components:
+  - type: ImmovableRod
+    randomizeVelocity: false
+    maxSpeed: 0
+    eviscerationPopup: immovable-rod-penetrated-mob-weh
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: plushie_lizard
