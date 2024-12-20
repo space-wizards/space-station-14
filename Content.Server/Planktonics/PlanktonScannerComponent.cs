@@ -12,4 +12,7 @@ public sealed partial class PlanktonScannerComponent : Component
 
     [DataField("planktonRewardEntityId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string PlanktonRewardEntityId = "ResearchDisk5000";
+
+    [DataField("planktonAdvancedRewardEntityId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string PlanktonAdvancedRewardEntityId = "ResearchDisk10000";
 }
