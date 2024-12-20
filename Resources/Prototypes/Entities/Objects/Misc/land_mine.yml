@@ -95,7 +95,6 @@
     activated: true
     onActivate: false
   - type: Armable
-    armed: true
   - type: Sprite
     layers:
     - state: landmine
@@ -122,7 +121,6 @@
     activated: true
     onActivate: false
   - type: Armable
-    armed: true
   - type: Sprite
     layers:
     - state: landmine
