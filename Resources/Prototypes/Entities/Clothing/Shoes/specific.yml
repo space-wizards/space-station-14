@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: [ClothingShoesBaseButcherable, BaseCivilianContraband]
   id: ClothingShoesChef
   name: chef shoes
   description: Sturdy shoes that minimize injury from falling objects or knives.
@@ -12,7 +12,7 @@
 # stuff common to all clown & jester shoes
 - type: entity
   abstract: true
-  parent: [ClothingShoesBaseButcherable, ClothingSlotBase]
+  parent: [ClothingShoesBaseButcherable, ClothingSlotBase, BaseCivilianContraband]
   id: ClothingShoesClownBase
   components:
   - type: ItemSlots

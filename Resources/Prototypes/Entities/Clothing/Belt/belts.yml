@@ -81,7 +81,7 @@
   - type: Appearance
 
 - type: entity
-  parent: ClothingBeltStorageBase
+  parent: [ClothingBeltStorageBase, BaseCommandContraband]
   id: ClothingBeltChiefEngineer
   name: chief engineer's toolbelt
   description: Holds tools, looks snazzy.
@@ -245,7 +245,7 @@
   - type: Appearance
 
 - type: entity
-  parent: ClothingBeltStorageBase
+  parent: [ClothingBeltStorageBase, BaseMedicalContraband]
   id: ClothingBeltMedical
   name: medical belt
   description: Can hold various medical equipment.
@@ -379,7 +379,7 @@
   - type: Appearance
 
 - type: entity
-  parent: ClothingBeltStorageBase
+  parent: [ClothingBeltStorageBase, BaseCivilianContraband]
   id: ClothingBeltChef
   name: chef belt
   description: A belt used to hold kitchen knives and condiments for quick access.

@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ClothingNeckBase, BaseCentcommContraband]
   id: ClothingNeckCloakCentcom
   name: central commander's cloak
   description: A pompous and elite green cloak with a nice gold trim, tailored specifically to the Central Commander. It's so heavy, the gold trim might be real.
@@ -127,7 +127,7 @@
     stealGroup: HeadCloak
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ClothingNeckBase, BaseCargoContraband]
   id: ClothingNeckCloakMiner
   name: miner's cloak
   description: Worn by the most skilled miners, for one who has moved mountains and filled valleys.
@@ -272,7 +272,7 @@
     sprite: Clothing/Neck/Cloaks/enby.rsi
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ClothingNeckBase, BaseCivilianContraband]
   id: ClothingNeckCloakPan
   name: chef's cloak
   description: Meant to be worn alongside a frying pan.

@@ -110,7 +110,7 @@
   - type: FingerprintMask
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: [ClothingHandsBase, BaseCommandContraband]
   id: ClothingHandsGlovesHop
   name: papercut-proof gloves
   description: Perfect for dealing with paperwork and matters with bureaucracy.
@@ -415,7 +415,7 @@
     price: 0
 
 - type: entity
-  parent: ClothingHandsBase
+  parent: [ClothingHandsBase, BaseSecurityContraband]
   id: ClothingHandsGlovesForensic
   name: forensic gloves
   description: Do not leave fibers or fingerprints. If you work without them, you're A TERRIBLE DETECTIVE.

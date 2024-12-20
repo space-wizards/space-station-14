@@ -1,7 +1,7 @@
 - type: entity
   name: chemistry bag
   id: ChemBag
-  parent: BaseStorageItem
+  parent: [BaseStorageItem, BaseMedicalContraband]
   description: A bag for storing chemistry products, such as pills, pill canisters, bottles, and syringes.
   components:
   - type: Sprite

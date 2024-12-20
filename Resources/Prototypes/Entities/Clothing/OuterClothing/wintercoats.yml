@@ -51,7 +51,7 @@
         ents: []
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: [ClothingOuterWinterCoatToggleable, BaseEngineeringContraband]
   id: ClothingOuterWinterAtmos
   name: atmospherics winter coat
   components:
@@ -74,7 +74,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterEngineer
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: [ClothingOuterWinterCoatToggleable, BaseCivilianContraband]
   id: ClothingOuterWinterBar
   name: bartender winter coat
   components:
@@ -120,7 +120,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterCaptain
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: [ClothingOuterWinterCoatToggleable, BaseCargoContraband]
   id: ClothingOuterWinterCargo
   name: cargo winter coat
   components:
@@ -189,7 +189,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterCentcom
 
 - type: entity
-  parent: ClothingOuterWinterCoat
+  parent: [ClothingOuterWinterCoat, BaseCivilianContraband]
   id: ClothingOuterWinterChef
   name: chef's freezer coat
   description: A coat specifically designed for work inside cold storage, sorely needed by cold-blooded lizard chefs.
@@ -211,7 +211,7 @@
       - state: CHEF-equipped-OUTERCLOTHING
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: [ClothingOuterWinterCoatToggleable, BaseMedicalContraband]
   id: ClothingOuterWinterChem
   name: chemistry winter coat
   components:
@@ -281,7 +281,7 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatclown.rsi
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: [ClothingOuterWinterCoatToggleable, BaseEngineeringContraband]
   id: ClothingOuterWinterEngi
   name: engineering winter coat
   components:
@@ -304,7 +304,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterEngineer
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: [ClothingOuterWinterCoatToggleable, BaseMedicalContraband]
   id: ClothingOuterWinterGen
   name: genetics winter coat
   components:
@@ -397,7 +397,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterHOS
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: [ClothingOuterWinterCoatToggleable, BaseCivilianContraband]
   id: ClothingOuterWinterHydro
   name: hydroponics winter coat
   components:
@@ -420,7 +420,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterHydro
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: [ClothingOuterWinterCoatToggleable, BaseCivilianContraband]
   id: ClothingOuterWinterJani
   name: janitorial winter coat
   components:
@@ -450,7 +450,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterJani
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: [ClothingOuterWinterCoatToggleable, BaseMedicalContraband]
   id: ClothingOuterWinterMed
   name: medical winter coat
   components:
@@ -503,7 +503,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterMime
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: [ClothingOuterWinterCoatToggleable, BaseCargoContraband]
   id: ClothingOuterWinterMiner
   name: mining winter coat
   components:
@@ -526,7 +526,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterMiner
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: [ClothingOuterWinterCoatToggleable, BaseMedicalContraband]
   id: ClothingOuterWinterPara
   name: paramedic winter coat
   components:
@@ -610,7 +610,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterRD
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: [ClothingOuterWinterCoatToggleable, BaseScienceContraband]
   id: ClothingOuterWinterRobo
   name: robotics winter coat
   components:
@@ -634,7 +634,7 @@
 
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: [ClothingOuterWinterCoatToggleable, BaseScienceContraband]
   id: ClothingOuterWinterSci
   name: science winter coat
   components:
@@ -687,7 +687,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterSec
 
 - type: entity
-  parent: ClothingOuterWinterCoatToggleable
+  parent: [ClothingOuterWinterCoatToggleable, BaseMedicalContraband]
   id: ClothingOuterWinterViro
   name: virology winter coat
   components:
@@ -819,7 +819,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterSyndie
 
 - type: entity
-  parent: ClothingOuterWinterCoat
+  parent: [ClothingOuterWinterCoat, BaseCivilianContraband]
   id: ClothingOuterWinterMusician
   name: musician's winter coat
   description: An oversized, plasticine space tuxedo that'll have people asking "do you know me?"

@@ -58,7 +58,7 @@
     sprite: Clothing/Head/Bandanas/blue.rsi
 
 - type: entity
-  parent: ClothingMaskBandanaBase
+  parent: [ClothingMaskBandanaBase, BaseCivilianContraband]
   id: ClothingMaskBandBotany
   name: botany bandana
   description: A botany bandana to make you look cool, made from natural fibers.
