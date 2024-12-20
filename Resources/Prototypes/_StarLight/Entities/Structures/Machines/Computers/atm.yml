@@ -36,4 +36,4 @@
     energy: 1.6
     color: "#57A3F7"
   - type: Rotatable
-    rotateWhileAnchored: true
+    rotateWhileAnchored: false

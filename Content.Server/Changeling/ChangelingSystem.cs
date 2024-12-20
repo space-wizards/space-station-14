@@ -37,6 +37,8 @@ using Content.Shared.Inventory;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Mind;
+using Content.Shared.NPC.Components;
+using Content.Shared.NPC.Systems;
 using Content.Server.Objectives.Components;
 using Content.Server.Light.EntitySystems;
 using Content.Shared.Eye.Blinding.Systems;
@@ -99,6 +101,7 @@ public sealed partial class ChangelingSystem : EntitySystem
     [Dependency] private readonly SharedPuddleSystem _puddle = default!;
     [Dependency] private readonly StunSystem _stun = default!;
     [Dependency] private readonly SharedJitteringSystem _jitter = default!;
+    [Dependency] private readonly NpcFactionSystem _factionSystem = default!;
 
     public EntProtoId ArmbladePrototype = "ArmBladeChangeling";
     public EntProtoId FakeArmbladePrototype = "FakeArmBladeChangeling";
@@ -514,6 +517,7 @@ public sealed partial class ChangelingSystem : EntitySystem
             Comp<DnaComponent>(newEnt).DNA = data.DNA;
             _humanoid.CloneAppearance(data.Appearance.Owner, newEnt);
             _metaData.SetEntityName(newEnt, data.Name);
+            _factionSystem.Up(uid, newEnt);
             var message = Loc.GetString("changeling-transform-finish", ("target", data.Name));
             _popup.PopupEntity(message, newEnt, newEnt);
         }

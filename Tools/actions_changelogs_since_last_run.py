@@ -99,7 +99,7 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
             for message in messages:
                 embed["description"] += f"\n {emoji} {message}"
         
-        if url is not None:
+        if url is not None and url is not 'null':
             embed["description"] += f"\n \n[GitHub Pull Request]({url})"
 
         send_discord(embed)

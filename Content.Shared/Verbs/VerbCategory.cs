@@ -63,7 +63,7 @@ namespace Content.Shared.Verbs
             new("verb-categories-rotate", "/Textures/Interface/VerbIcons/refresh.svg.192dpi.png", iconsOnly: true) { Columns = 5 };
 
         public static readonly VerbCategory Smite =
-            new("verb-categories-smite", "/Textures/Interface/VerbIcons/smite.svg.192dpi.png", iconsOnly: true) { Columns = 6 };
+            new("verb-categories-smite", "/Textures/Interface/VerbIcons/boom.svg.192dpi.png", iconsOnly: true) { Columns = 6 };
         public static readonly VerbCategory Tricks =
             new("verb-categories-tricks", "/Textures/Interface/AdminActions/tricks.png", iconsOnly: true) { Columns = 5 };
 

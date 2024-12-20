@@ -106,6 +106,8 @@ admin-smite-pacify-description = Makes the target a pacifist.
 
 admin-trick-unbolt-description = Unbolts the targetted airlock.
 admin-trick-bolt-description = Bolts the targetted airlock.
+admin-trick-electrify-description = Electrify the targetted airlock.
+admin-trick-unelectrify-description = Unelectrify the targetted airlock.
 admin-trick-emergency-access-on-description = Turns on emergency access for the targetted airlock.
 admin-trick-emergency-access-off-description = Turns off emergency access for the targetted airlock.
 admin-trick-make-indestructible-description = Makes the given object indestructible, effectively godmode.
