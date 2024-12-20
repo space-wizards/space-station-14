@@ -349,3 +349,35 @@
         conditions:
         - !type:ReagentThreshold
           min: 50
+
+- type: reagent
+  id: JuiceThatMakesYouHew
+  name: reagent-name-hew
+  group: Toxins
+  desc: reagent-desc-hew
+  physicalDesc: reagent-physical-desc-inversed
+  flavor: hew
+  color: "#a64dc5"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.25
+      effects:
+      - !type:Emote
+        emote: Hew
+        showInChat: true
+        force: true
+        probability: 0.5
+      - !type:Polymorph
+        prototype: ArtifactLizard
+        conditions:
+        - !type:OrganType
+          type: Animal
+          shouldHave: false
+        - !type:ReagentThreshold
+          min: 50
+      - !type:AdjustReagent
+        reagent: JuiceThatMakesYouHew
+        amount: -20
+        conditions:
+        - !type:ReagentThreshold
+          min: 50
