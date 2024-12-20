@@ -3,6 +3,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using System.Linq;
 using System.Numerics;
+using Content.Shared.Input;
 using Robust.Client.Graphics;
 using Robust.Shared.Input;
 
@@ -15,6 +16,11 @@ public class RadialMenu : BaseWindow
     /// Contextual button used to traverse through previous layers of the radial menu
     /// </summary>
     public RadialMenuContextualCentralTextureButton ContextualButton { get; }
+
+    /// <summary>
+    /// Button that represents outer area of menu (closes menu on outside clicks).
+    /// </summary>
+    public RadialMenuOuterAreaButton MenuOuterAreaButton { get; }
 
     /// <summary>
     /// Set a style class to be applied to the contextual button when it is set to move the user back through previous layers of the radial menu
@@ -86,15 +92,12 @@ public class RadialMenu : BaseWindow
             VerticalAlignment = VAlignment.Center,
             SetSize = new Vector2(64f, 64f),
         };
+        MenuOuterAreaButton = new RadialMenuOuterAreaButton();
 
-        ContextualButton.OnButtonUp += args =>
-        {
-            // this button uses enableAllKeybinds mode, which propagates more events,
-            // then just click, but we need only click and only once per user interaction
-            if (args.Event.Function == EngineKeyFunctions.UIClick)
-                ReturnToPreviousLayer();
-        };
+        ContextualButton.OnButtonUp += _ => ReturnToPreviousLayer();
+        MenuOuterAreaButton.OnButtonUp += _ => Close();
         AddChild(ContextualButton);
+        AddChild(MenuOuterAreaButton);
 
         // Hide any further add children, unless its promoted to the active layer
         OnChildAdded += child =>
@@ -108,9 +111,11 @@ public class RadialMenu : BaseWindow
     {
         if (child is RadialContainer { Visible: true } container)
         {
-            ContextualButton.ParentCenter = MinSize * 0.5f;
+            var parentCenter = MinSize * 0.5f;
+            ContextualButton.ParentCenter = parentCenter;
+            MenuOuterAreaButton.ParentCenter = parentCenter;
             ContextualButton.InnerRadius = container.CalculatedRadius * container.InnerRadiusMultiplier;
-            ContextualButton.OuterRadius = container.CalculatedRadius * container.OuterRadiusMultiplier;
+            MenuOuterAreaButton.OuterRadius = container.CalculatedRadius * container.OuterRadiusMultiplier;
         }
     }
 
@@ -130,7 +135,7 @@ public class RadialMenu : BaseWindow
 
     private Control? GetCurrentActiveLayer()
     {
-        var children = Children.Where(x => x != ContextualButton);
+        var children = Children.Where(x => x != ContextualButton && x != MenuOuterAreaButton);
 
         if (!children.Any())
             return null;
@@ -152,7 +157,7 @@ public class RadialMenu : BaseWindow
 
         foreach (var child in Children)
         {
-            if (child == ContextualButton)
+            if (child == ContextualButton || child == MenuOuterAreaButton)
                 continue;
 
             // Hide layers which are not of interest
@@ -195,7 +200,7 @@ public class RadialMenu : BaseWindow
         // Hide all children except the contextual button
         foreach (var child in Children)
         {
-            if (child != ContextualButton)
+            if (child != ContextualButton && child != MenuOuterAreaButton)
                 child.Visible = false;
         }
 
@@ -210,25 +215,39 @@ public class RadialMenu : BaseWindow
 }
 
 /// <summary>
+/// Base class for radial menu buttons. Excludes all actions except clicks and alt-clicks
+/// from interactions.
+/// </summary>
+[Virtual]
+public class RadialMenuTextureButtonBase : TextureButton
+{
+    /// <inheritdoc />
+    protected RadialMenuTextureButtonBase()
+    {
+        EnableAllKeybinds = true;
+    }
+
+    /// <inheritdoc />
+    protected override void KeyBindUp(GUIBoundKeyEventArgs args)
+    {
+        if (args.Function == EngineKeyFunctions.UIClick
+            || args.Function == ContentKeyFunctions.AltActivateItemInWorld)
+            base.KeyBindUp(args);
+    }
+}
+
+/// <summary>
 /// Special button for closing radial menu or going back between radial menu levels.
 /// Is looking like just <see cref="TextureButton "/> but considers whole space around
 /// itself (til radial menu buttons) as itself in case of clicking. But this 'effect'
 /// works only if control have parent, and ActiveContainer property is set.
 /// Also considers all space outside of radial menu buttons as itself for clicking.
 /// </summary>
-public sealed class RadialMenuContextualCentralTextureButton : TextureButton
+public sealed class RadialMenuContextualCentralTextureButton : RadialMenuTextureButtonBase
 {
     public float InnerRadius { get; set; }
 
-    public float OuterRadius { get; set; }
-
     public Vector2? ParentCenter { get; set; }
-
-    /// <inheritdoc />
-    public RadialMenuContextualCentralTextureButton()
-    {
-        EnableAllKeybinds = true;
-    }
 
     /// <inheritdoc />
     protected override bool HasPoint(Vector2 point)
@@ -240,20 +259,41 @@ public sealed class RadialMenuContextualCentralTextureButton : TextureButton
 
         var distSquared = (point + Position - ParentCenter.Value).LengthSquared();
 
-        // Button space is inside half of container radius / or outside double of its radius.
-        // half of radius and double the radius are radial menu concentric circles that are
-        // created by radial menu buttons.
-        var outerRadiusSquared = OuterRadius * OuterRadius;
         var innerRadiusSquared = InnerRadius * InnerRadius;
 
         // comparing to squared values is faster then making sqrt
-        return distSquared > outerRadiusSquared || distSquared < innerRadiusSquared;
+        return distSquared < innerRadiusSquared;
     }
 }
 
+/// <summary>
+/// Menu button for outer area of radial menu (covers everything 'outside').
+/// </summary>
+public sealed class RadialMenuOuterAreaButton : RadialMenuTextureButtonBase
+{
+    public float OuterRadius { get; set; }
+
+    public Vector2? ParentCenter { get; set; }
+
+    /// <inheritdoc />
+    protected override bool HasPoint(Vector2 point)
+    {
+        if (ParentCenter == null)
+        {
+            return base.HasPoint(point);
+        }
+
+        var distSquared = (point + Position - ParentCenter.Value).LengthSquared();
+
+        var outerRadiusSquared = OuterRadius * OuterRadius;
+
+        // comparing to squared values is faster, then making sqrt
+        return distSquared > outerRadiusSquared;
+    }
+}
 
 [Virtual]
-public class RadialMenuTextureButton : TextureButton
+public class RadialMenuTextureButton : RadialMenuTextureButtonBase
 {
     /// <summary>
     /// Upon clicking this button the radial menu will be moved to the named layer
