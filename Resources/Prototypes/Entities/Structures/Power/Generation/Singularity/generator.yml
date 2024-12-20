@@ -33,4 +33,7 @@
   - type: Pullable
   - type: GuideHelp
     guides: [ Singularity, Power ]
+  - type: Tag
+    tags:
+    - ShadowSideLootEpic
 

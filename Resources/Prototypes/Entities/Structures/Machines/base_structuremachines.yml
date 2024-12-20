@@ -41,6 +41,10 @@
       - !type:PlaySoundBehavior
         sound:
           collection: MetalBreak
+  - type: Tag
+    tags:
+    - Structure
+    - ShadowSideLoot
 
 - type: entity
   abstract: true

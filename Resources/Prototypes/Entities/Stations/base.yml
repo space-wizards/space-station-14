@@ -138,5 +138,9 @@
   components:
     - type: StationShadowDimension
       replacements:
-        Wall: ShadowKudzuWeak
-        Window: Paper
+        Wall: FloorChromiteChasm
+        Window: ShadowDimensionFillSpawner
+        Pipe: ShadowDimensionFillSpawner
+        # Loot zone
+        ShadowSideLoot: ShadowDimensionLootSpawner
+        ShadowSideLootEpic: ShadowDimensionEpicLootSpawner # Add it to unique strucures, like NuclearBomb or TeslaGenerator
