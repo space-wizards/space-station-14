@@ -670,7 +670,7 @@
 
 - type: entity
   id: SecurityTechFab
-  parent: BaseLatheLube
+  parent: [BaseLatheLube, BaseRestrictedContraband]
   name: security techfab
   description: Prints equipment for use by security crew.
   components:

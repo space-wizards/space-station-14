@@ -1,6 +1,6 @@
 - type: entity
   abstract: true
-  parent: BaseItem
+  parent: [BaseItem, BaseRestrictedContraband]
   id: BaseMagazineBoxLightRifle
   name: ammunition box (.30 rifle)
   components:

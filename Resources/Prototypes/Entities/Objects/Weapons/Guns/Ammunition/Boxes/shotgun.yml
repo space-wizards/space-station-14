@@ -32,7 +32,7 @@
 
 # Shotgun Shells
 - type: entity
-  parent: AmmoProviderShotgunShell
+  parent: [AmmoProviderShotgunShell, BaseCivilianSecurityContraband]
   id: BoxBeanbag
   name: shell box (beanbag)
   components:

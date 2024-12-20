@@ -154,7 +154,7 @@
 - type: entity
   id: LockerSyndicate
   name: armory closet
-  parent: ClosetSteelBase
+  parent: [ClosetSteelBase, BaseSyndicateContraband]
   description: It's a storage unit.
   components:
   - type: Appearance

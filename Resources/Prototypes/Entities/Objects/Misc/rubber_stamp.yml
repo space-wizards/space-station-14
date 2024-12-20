@@ -52,7 +52,7 @@
 
 - type: entity
   name: CentComm rubber stamp
-  parent: RubberStampBase
+  parent: [RubberStampBase, BaseCentcommContraband]
   id: RubberStampCentcom
   suffix: DO NOT MAP
   components:
@@ -65,7 +65,7 @@
 
 - type: entity
   name: chaplain's rubber stamp
-  parent: RubberStampBase
+  parent: [RubberStampBase, BaseCivilianContraband]
   id: RubberStampChaplain
   suffix: DO NOT MAP
   components:
@@ -78,7 +78,7 @@
 
 - type: entity
   name: lawyer's rubber stamp
-  parent: RubberStampBase
+  parent: [RubberStampBase, BaseCivilianContraband]
   id: RubberStampLawyer
   suffix: DO NOT MAP
   components:
@@ -91,7 +91,7 @@
 
 - type: entity
   name: clown's rubber stamp
-  parent: RubberStampBase
+  parent: [RubberStampBase, BaseCivilianContraband]
   id: RubberStampClown
   suffix: DO NOT MAP
   components:
@@ -159,7 +159,7 @@
 
 - type: entity
   name: mime's rubber stamp
-  parent: RubberStampBase
+  parent: [RubberStampBase, BaseCivilianContraband]
   id: RubberStampMime
   suffix: DO NOT MAP
   components:
@@ -287,13 +287,13 @@
 
 - type: entity
   name: psychologist's rubber stamp
-  parent: RubberStampBase
+  parent: [RubberStampBase, BaseMedicalContraband]
   id: RubberStampPsychologist
   suffix: DO NOT MAP
   description: A rubber stamp for stamping important documents. Prescribe those treatments!
   components:
   - type: Stamp
-    stampedName: stamp-component-stamped-name-psychologist 
+    stampedName: stamp-component-stamped-name-psychologist
     stampedColor: "#5B97BC"
     stampState: "paper_stamp-psychologist"
   - type: Sprite

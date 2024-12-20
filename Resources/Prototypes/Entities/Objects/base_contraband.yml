@@ -157,6 +157,14 @@
   - type: Contraband
     allowedDepartments: [ Medical, Science ]
 
+- type: entity
+  id: BaseCivilianSecurityContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Security, Civilian ]
+
 # for ~objective items
 - type: entity
   id: BaseGrandTheftContraband
