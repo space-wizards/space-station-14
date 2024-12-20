@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: The evacuation shuttle now takes 20 minutes to arrive when the station
-      alert level is Pink.
-    type: Tweak
-  id: 275
-  time: '2024-09-28T00:15:11.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/361
 - author: AftrLite
   changes:
   - message: Extra shoe options for Captain, Mime, Musician, Lawyer, Librarian, Bartender,
@@ -4525,3 +4517,10 @@
   id: 774
   time: '2024-12-20T16:28:09.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1083
+- author: RosySaturniidae
+  changes:
+  - message: tweaked the colors on the cmo's jumpsuit/skirt
+    type: Tweak
+  id: 775
+  time: '2024-12-20T16:36:55.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1077
