@@ -4,6 +4,7 @@
   components:
   - type: Clickable
   - type: InteractionOutline
+  - type: ItemToggle
   - type: Anchorable
   - type: Pullable
   - type: MovedByPressure
@@ -48,6 +49,7 @@
         path: /Audio/Effects/beep_landmine.ogg
         params:
             maxDistance: 10
+  - type: Armable
   - type: StepTrigger
     requiredTriggeredSpeed: 0
     stepOn: true
@@ -65,8 +67,10 @@
   suffix: armed
   parent: LandMineKickUnarmed
   components:
-  - type: LandMine
-    armed: true
+  - type: ItemToggle
+    activated: true
+    onActivate: false
+  - type: Armable
   - type: Sprite
     layers:
     - state: landmine
@@ -87,7 +91,10 @@
   suffix: armed
   parent: LandMineModularUnarmed
   components:
-  - type: LandMine
+  - type: ItemToggle
+    activated: true
+    onActivate: false
+  - type: Armable
     armed: true
   - type: Sprite
     layers:
@@ -111,7 +118,10 @@
   parent: LandMineExplosiveUnarmed
   id: LandMineExplosive
   components:
-  - type: LandMine
+  - type: ItemToggle
+    activated: true
+    onActivate: false
+  - type: Armable
     armed: true
   - type: Sprite
     layers:

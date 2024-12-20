@@ -167,9 +167,6 @@
         mask:
         - ItemMask
   - type: LandMine
-    showStatusOnExamination: false
-    showVerbArm: false
-    armed: true
     sound:
       path: /Audio/Effects/beep_landmine.ogg
       params:
