@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: PopGamer46
-  changes:
-  - message: Fixed shuttles not being able to FTL onto the station
-    type: Fix
-  id: 7238
-  time: '2024-08-28T13:22:21.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31569
 - author: themias
   changes:
   - message: Defibs batteries no longer drain when switched off
@@ -3938,3 +3931,10 @@
   id: 7737
   time: '2024-12-20T14:35:55.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33971
+- author: VlaDOS1408
+  changes:
+  - message: The Communication Console UI is now resizable.
+    type: Fix
+  id: 7738
+  time: '2024-12-20T16:17:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33655
