@@ -2,6 +2,7 @@ using System.Threading;
 using Content.Server.Station.Events;
 using Content.Server.Station.Systems;
 using Content.Shared.Construction.EntitySystems;
+using Content.Shared.Maps;
 using Content.Shared.ShadowDimension;
 using Robust.Shared.CPUJob.JobQueues;
 using Robust.Shared.CPUJob.JobQueues.Queues;
@@ -24,6 +25,7 @@ public sealed partial class ShadowDimensionSystem : SharedShadowDimensionSystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileManager = default!;
 
     private readonly JobQueue _jobQueue = new();
     private readonly List<(SpawnShadowDimensionJob Job, CancellationTokenSource CancelToken)> _jobs = new();
@@ -76,6 +78,7 @@ public sealed partial class ShadowDimensionSystem : SharedShadowDimensionSystem
             _transform,
             _stationSystem,
             _mapSystem,
+            _tileManager,
             station,
             shadowParams,
             cancelToken.Token);
