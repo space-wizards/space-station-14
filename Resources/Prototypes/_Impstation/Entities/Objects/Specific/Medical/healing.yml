@@ -25,7 +25,7 @@
   name: head of security's pill canister
   parent: [PillCanister, BaseCommandContraband]
   description: A sturdy bottle of extra-strength antidepressants, custom-formulated to quell even the strongest nervous breakdowns and murderous urges. Issued regardless of the results of any psych eval. Just another perk of the job!
-  id: PillCanisterHoS
+  id: PillCanisterHOS
   suffix: Psicodine 18u Happiness 2u, 5
   components:
   - type: Label
@@ -43,3 +43,5 @@
       - state: pill_canister-hos-inhand-left
       right:
       - state: pill_canister-hos-inhand-right
+  - type: StealTarget
+    stealGroup: SecPillCanister

@@ -263,3 +263,10 @@
   sprite:
     sprite: Structures/Machines/seed_extractor.rsi
     state: seedextractor
+
+- type: stealTargetGroup
+  id: SecPillCanister
+  name: steal-target-groups-secpillcanister
+  sprite:
+    sprite: _Impstation/Objects/Specific/Chemistry/pills_canister.rsi
+    state: pill_canister-hos

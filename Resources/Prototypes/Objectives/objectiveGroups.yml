@@ -101,6 +101,7 @@
     ServiceTechFabStealObjective: 1
     ShiningSpringStealObjective: 1
     ShipyardComputerCircuitboardStealObjective: 1
+    SecPillCanisterStealObjective: 1
 
 - type: weightedRandom
   id: ThiefObjectiveGroupStructure
