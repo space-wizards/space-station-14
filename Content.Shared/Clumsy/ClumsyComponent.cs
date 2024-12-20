@@ -24,14 +24,14 @@ public sealed partial class ClumsyComponent : Component
     ///     If a system needs to use something else, add a new variable in the component, do not modify this percentage.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float ClumsyDefaultCheck = 0.5f;
+    public float ClumsyDefaultCheck = 0.4f;
 
     /// <summary>
     ///     Default stun time.
     ///     If a system needs to use something else, add a new variable in the component, do not modify this number.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public TimeSpan ClumsyDefaultStunTime = TimeSpan.FromSeconds(2.5);
+    public TimeSpan ClumsyDefaultStunTime = TimeSpan.FromSeconds(3.2);
 
     // Specific options
 
@@ -45,7 +45,7 @@ public sealed partial class ClumsyComponent : Component
     ///     Stun time after failing to shoot a gun.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public TimeSpan GunShootFailStunTime = TimeSpan.FromSeconds(3);
+    public TimeSpan GunShootFailStunTime = TimeSpan.FromSeconds(5.3);
 
     /// <summary>
     ///     Stun time after failing to shoot a gun.
@@ -63,13 +63,13 @@ public sealed partial class ClumsyComponent : Component
     ///      Whether or not to apply Clumsy to hyposprays.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool ClumsyHypo = true;
+    public bool ClumsyHypo = false;
 
     /// <summary>
     ///      Whether or not to apply Clumsy to defibs.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public bool ClumsyDefib = true;
+    public bool ClumsyDefib = false;
 
     /// <summary>
     ///      Whether or not to apply Clumsy to guns.
@@ -90,13 +90,13 @@ public sealed partial class ClumsyComponent : Component
     public LocId HypoFailedMessage = "hypospray-component-inject-self-clumsy-message";
 
     [DataField]
-    public LocId GunFailedMessage = "gun-clumsy";
+    public LocId GunFailedMessage = "OW";
 
     [DataField]
-    public LocId VaulingFailedMessageSelf = "bonkable-success-message-user";
+    public LocId VaulingFailedMessageSelf = "cheers lad";
 
     [DataField]
-    public LocId VaulingFailedMessageOthers = "bonkable-success-message-others";
+    public LocId VaulingFailedMessageOthers = "someones clumsy!";
 
     [DataField]
     public LocId VaulingFailedMessageForced = "forced-bonkable-success-message";

@@ -106,28 +106,28 @@
 
 - type: anomalyBehavior
   id: Fast
-  earnPointModifier: 1.9
-  pulseFrequencyModifier: 0.5
+  earnPointModifier: 4.3
+  pulseFrequencyModifier: 0.1
   description: anomaly-behavior-fast
 
 - type: anomalyBehavior
   id: Strenght
-  pulsePowerModifier: 1.5
-  earnPointModifier: 1.4
+  pulsePowerModifier: 2.6
+  earnPointModifier: 1.1
   description: anomaly-behavior-strenght
 
 - type: anomalyBehavior
   id: Inconstancy
-  earnPointModifier: 1.7
+  earnPointModifier: 1.8
   description: anomaly-behavior-inconstancy
   components:
   - type: ShuffleParticlesAnomaly
     shuffleOnPulse: true
-    prob: 1
+    prob: 1.2
 
 - type: anomalyBehavior
   id: InconstancyParticle
-  earnPointModifier: 1.8
+  earnPointModifier: 1.9
   description: anomaly-behavior-inconstancy
   components:
   - type: ShuffleParticlesAnomaly
@@ -136,19 +136,19 @@
 
 - type: anomalyBehavior
   id: Jumping
-  earnPointModifier: 1.8
+  earnPointModifier: 5.3
   description: anomaly-behavior-moving
   components:
   - type: ChaoticJump
-    jumpMinInterval: 15
+    jumpMinInterval: 5
     jumpMaxInterval: 25
     rangeMin: 1
-    rangeMax: 4
+    rangeMax: 9
     effect: PuddleSparkle
 
 - type: anomalyBehavior
   id: FullUnknown
-  earnPointModifier: 1.9
+  earnPointModifier: 2.9
   description: anomaly-behavior-secret
   components:
   - type: SecretDataAnomaly
@@ -157,7 +157,7 @@
 
 - type: anomalyBehavior
   id: Invisibility
-  earnPointModifier: 1.6
+  earnPointModifier: 2.2
   description: anomaly-behavior-invisibility
   components:
   - type: Stealth

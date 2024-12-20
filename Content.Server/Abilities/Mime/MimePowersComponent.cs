@@ -47,7 +47,7 @@ namespace Content.Server.Abilities.Mime
         /// How long it takes the mime to get their powers back
         /// </summary>
         [DataField("vowCooldown")]
-        public TimeSpan VowCooldown = TimeSpan.FromMinutes(5);
+        public TimeSpan VowCooldown = TimeSpan.FromMinutes(10);
 
         [DataField]
         public ProtoId<AlertPrototype> VowAlert = "VowOfSilence";

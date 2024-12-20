@@ -106,7 +106,7 @@
   components:
   - type: StationEvent
     weight: 44
-    earliestStart: 2
+    earliestStart: 0
     minimumPlayers: 0
   - type: MeteorSwarm
     announcement: null
@@ -115,11 +115,11 @@
     meteors:
       MeteorSpaceDust: 1
     waves:
-      min: 2
-      max: 3
+      min: 1
+      max: 6
     meteorsPerWave:
       min: 3
-      max: 5
+      max: 10
 
 - type: entity
   parent: GameRuleMeteorSwarm
@@ -147,11 +147,11 @@
   components:
   - type: StationEvent
     weight: 18
-    minimumPlayers: 15
+    minimumPlayers: 0
   - type: MeteorSwarm
     meteors:
-      MeteorSmall: 7
-      MeteorMedium: 3
+      MeteorSmall: 5
+      MeteorMedium: 2
 
 - type: entity
   parent: GameRuleMeteorSwarm
@@ -189,11 +189,11 @@
     meteors:
       MeteorUrist: 1
     waves:
-      min: 3
-      max: 3
+      min: 1
+      max: 7
     meteorsPerWave:
-      min: 10
-      max: 10
+      min: 20
+      max: 40
 
 - type: entity
   id: ImmovableRodSpawn

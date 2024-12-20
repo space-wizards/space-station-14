@@ -66,13 +66,13 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     private const float RecursiveDamageMultiplier = 0.75f;
     private const float RecursiveTimeMultiplier = 0.8f;
 
-    private const float ParalyzeTimeMultiplier = 1f;
+    private const float ParalyzeTimeMultiplier = 2f;
 
     private const float StutteringTimeMultiplier = 1.5f;
 
-    private const float JitterTimeMultiplier = 0.75f;
+    private const float JitterTimeMultiplier = 1.75f;
     private const float JitterAmplitude = 80f;
-    private const float JitterFrequency = 8f;
+    private const float JitterFrequency = 20f;
 
     public override void Initialize()
     {
