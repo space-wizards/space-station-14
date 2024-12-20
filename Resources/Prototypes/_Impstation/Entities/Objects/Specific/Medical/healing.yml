@@ -6,9 +6,9 @@
   id: PillLacedPsicodine
   components:
   - type: Pill
-    pillType: 16
+    pillType: 21
   - type: Sprite
-    state: pill17
+    state: pill22
   - type: Label
     currentLabel: psicodine 20u
   - type: SolutionContainerManager
