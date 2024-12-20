@@ -164,7 +164,7 @@
   name: grey cap
 
 - type: entity
-  parent: ClothingHeadHeadHatBaseFlippable
+  parent: [ClothingHeadHeadHatBaseFlippable, BaseCivilianContraband]
   id: ClothingHeadHatMimesoft
   name: mime cap
   description: "It's a baseball hat in a tasteless white colour."
@@ -239,7 +239,7 @@
   name: red cap
 
 - type: entity
-  parent: ClothingHeadHeadHatBaseFlippable
+  parent: [ClothingHeadHeadHatBaseFlippable, BaseRestrictedContraband]
   id: ClothingHeadHatSecsoft
   name: security cap
   description: It's a robust baseball hat in tasteful red colour.
@@ -271,7 +271,7 @@
   name: yellow cap
 
 - type: entity
-  parent: ClothingHeadHeadHatBaseFlippable
+  parent: [ClothingHeadHeadHatBaseFlippable, BaseSyndicateContraband]
   id: ClothingHeadHatBizarreSoft
   name: troublemaker's cap
   description: A truly.. bizarre accessory.

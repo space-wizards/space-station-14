@@ -171,7 +171,7 @@
     sprite: Clothing/Head/Hats/beret_physician.rsi
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseMedicalSecurityContraband]
   id: ClothingHeadHatBeretBrigmedic
   name: brigmedical beret
   description: White beret, looks like a cream pie on the head.
@@ -346,7 +346,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseSyndicateContraband]
   id: ClothingHeadHatOutlawHat
   name: outlaw's hat
   description: A hat that makes you look like you carry a notched pistol, numbered one and nineteen more.

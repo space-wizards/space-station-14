@@ -137,7 +137,7 @@
 
 - type: entity
   name: captain's thoughts
-  parent: Paper
+  parent: [Paper, BaseCommandContraband]
   id: PaperCaptainsThoughts
   description: "A page of the captain's journal. In luxurious lavender."
   components:
@@ -276,7 +276,7 @@
     - state: paper_words
 
 - type: entity
-  parent: Paper
+  parent: [Paper, BaseMajorContraband]
   id: NukeCodePaper
   name: nuclear authentication codes
   components:
@@ -292,7 +292,7 @@
 
 - type: entity
   id: BoxFolderNuclearCodes
-  parent: BaseItem
+  parent: [BaseItem, BaseMajorContraband]
   name: nuclear code folder
   components:
   - type: Sprite
@@ -446,7 +446,7 @@
 - type: entity
   id: BoxFolderCentCom
   name: CentComm folder
-  parent: BoxFolderBase
+  parent: [BoxFolderBase, BaseCentcommContraband]
   suffix: DO NOT MAP
   description: CentComm's miserable little pile of secrets!
   components:
@@ -516,7 +516,7 @@
 
 - type: entity
   id: BoxFolderCentComClipboard
-  parent: BoxFolderClipboard
+  parent: [BoxFolderClipboard, BaseCentcommContraband]
   name: CentComm clipboard
   description: A luxurious clipboard upholstered with green velvet. Often seen carried by CentComm officials, seldom seen actually used.
   components:

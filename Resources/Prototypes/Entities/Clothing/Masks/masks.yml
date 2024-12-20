@@ -139,7 +139,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingMaskBreathMedical
+  parent: [ClothingMaskBreathMedical, BaseMedicalSecurityContraband]
   id: ClothingMaskBreathMedicalSecurity
   name: military-style medical mask
   description: A medical mask with a small layer of protection against damage and viruses, similar to the one used in the medical units of the first corporate war.

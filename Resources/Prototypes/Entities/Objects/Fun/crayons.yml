@@ -58,7 +58,7 @@
     - Trash
 
 - type: entity
-  parent: Crayon
+  parent: [Crayon, BaseCivilianContraband]
   id: CrayonMime
   name: mime crayon
   components:

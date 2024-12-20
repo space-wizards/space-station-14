@@ -250,7 +250,7 @@
 - type: entity
   id: MindShieldImplanter
   suffix: mindshield
-  parent: BaseImplantOnlyImplanter
+  parent: [BaseImplantOnlyImplanter, BaseSecurityCommandContraband]
   components:
     - type: Implanter
       implant: MindShieldImplant

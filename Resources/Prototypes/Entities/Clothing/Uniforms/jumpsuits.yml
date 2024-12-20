@@ -201,7 +201,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/genetics.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ClothingUniformBase, BaseCivilianContraband]
   id: ClothingUniformJumpsuitClown
   name: clown suit
   description: HONK!
@@ -233,7 +233,7 @@
         Radiation: 0.8
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ClothingUniformBase, BaseCivilianContraband]
   id: ClothingUniformJumpsuitJester
   name: jester suit
   description: A jolly dress, well suited to entertain your master, nuncle.
@@ -463,7 +463,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/paramedic.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ClothingUniformBase, BaseMedicalSecurityContraband]
   id: ClothingUniformJumpsuitBrigmedic
   name: brigmedic jumpsuit
   description: This uniform is issued to qualified personnel who have been trained. No one cares that the training took half a day.
@@ -691,7 +691,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/librarian.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ClothingUniformBase, BaseCivilianContraband]
   id: ClothingUniformJumpsuitCurator
   name: sensible suit
   description: It's sensible. Too sensible...

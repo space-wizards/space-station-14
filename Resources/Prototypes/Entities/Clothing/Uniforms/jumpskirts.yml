@@ -277,7 +277,7 @@
     sprite: Clothing/Uniforms/Jumpskirt/paramedic.rsi
 
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent: [ClothingUniformSkirtBase, BaseMedicalSecurityContraband]
   id: ClothingUniformJumpskirtBrigmedic
   name: brigmedic jumpskirt
   description: This uniform is issued to qualified personnel who have been trained. No one cares that the training took half a day.
@@ -886,7 +886,7 @@
       sprite: Clothing/Uniforms/Jumpskirt/psychologist.rsi
 
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent: [ClothingUniformSkirtBase, BaseCivilianContraband]
   id: ClothingUniformJumpskirtClown
   name: clown skirt
   description: HONK!
