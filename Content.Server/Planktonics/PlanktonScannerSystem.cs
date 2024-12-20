@@ -132,7 +132,8 @@ public sealed class PlankonScannerSystem : EntitySystem
         }
     }
    }
-
+ if (!scanner.AnalysisMode)
+{
     _popupSystem.PopupEntity(messagePopup, target);
 
     var report = Spawn(scanner.PlanktonReportEntityId, Transform(uid).Coordinates);
