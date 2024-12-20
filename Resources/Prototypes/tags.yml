@@ -931,6 +931,9 @@
   id: MimeHappyHonk
 
 - type: Tag
+  id: MimeHardsuit
+
+- type: Tag
   id: MindShield
 
 - type: Tag
@@ -1256,6 +1259,9 @@
   id: SpiderCraft
 
 - type: Tag
+  id: SpiderMeat
+
+- type: Tag
   id: SpookyFog
 
 - type: Tag
@@ -1329,6 +1335,9 @@
 
 - type: Tag
   id: Taser
+
+- type: Tag
+  id: Telecrystal
 
 - type: Tag
   id: TimerBrigElectronics

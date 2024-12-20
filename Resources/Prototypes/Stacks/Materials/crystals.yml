@@ -3,3 +3,7 @@
   name: telecrystal
   icon: Objects/Specific/Syndicate/telecrystal.rsi
   spawn: Telecrystal1
+  components:
+  - type: Tag
+    tags:
+      - Telecrystal
