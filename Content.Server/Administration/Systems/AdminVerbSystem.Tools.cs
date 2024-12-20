@@ -104,8 +104,8 @@ public sealed partial class AdminVerbSystem
                     },
                     Impact = LogImpact.Medium,
                     Message = Loc.GetString(electrified.Enabled
-                        ? "admin-trick-electrify-description"
-                        : "admin-trick-unelectrify-description"),
+                        ? "admin-trick-unelectrify-description"
+                        : "admin-trick-electrify-description"),
                     Priority = (int) (electrified.Enabled ? TricksVerbPriorities.Unelectrify : TricksVerbPriorities.Electrify),
                 };
                 args.Verbs.Add(electrify);
