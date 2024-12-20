@@ -20,6 +20,8 @@
     sprite: Clothing/Shoes/Boots/jackboots.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Boots/jackboots.rsi
+  - type: ClothingSlowOnDamageModifier
+    modifier: 0.5
 
 - type: entity
   parent: ClothingShoesBaseButcherable
@@ -71,7 +73,7 @@
     sprite: Clothing/Shoes/Boots/highheelboots.rsi
 
 - type: entity
-  parent: ClothingShoesMilitaryBase
+  parent: [ ClothingShoesMilitaryBase ]
   id: ClothingShoesBootsMerc
   name: mercenary boots
   description: Boots that have gone through many conflicts and that have proven their combat reliability.
@@ -185,6 +187,10 @@
         reagents:
         - ReagentId: Fiber
           Quantity: 10
+  - type: Butcherable
+    spawned:
+    - id: MaterialWebSilk1
+      amount: 2
   - type: Construction
     graph: WebObjects
     node: boots
@@ -202,6 +208,8 @@
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepSpurs
+      params:
+        variation: 0.09
 
 - type: entity
   parent: ClothingShoesBootsCowboyBrown

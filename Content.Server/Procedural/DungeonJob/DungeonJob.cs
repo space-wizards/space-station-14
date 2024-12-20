@@ -4,6 +4,7 @@ using Content.Server.Decals;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
+using Content.Server.Shuttles.Systems;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Maps;
 using Content.Shared.Procedural;
@@ -51,6 +52,8 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
     private readonly EntityUid _gridUid;
     private readonly MapGridComponent _grid;
 
+    private readonly EntityCoordinates? _targetCoordinates;
+
     private readonly ISawmill _sawmill;
 
     public DungeonJob(
@@ -70,6 +73,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
         EntityUid gridUid,
         int seed,
         Vector2i position,
+        EntityCoordinates? targetCoordinates = null,
         CancellationToken cancellation = default) : base(maxTime, cancellation)
     {
         _sawmill = sawmill;
@@ -94,6 +98,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
         _gridUid = gridUid;
         _seed = seed;
         _position = position;
+        _targetCoordinates = targetCoordinates;
     }
 
     /// <summary>
@@ -151,6 +156,12 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
         // To make it slightly more deterministic treat this RNG as separate ig.
 
         // Post-processing after finishing loading.
+        if (_targetCoordinates != null)
+        {
+            var oldMap = _xformQuery.Comp(_gridUid).MapUid;
+            _entManager.System<ShuttleSystem>().TryFTLProximity(_gridUid, _targetCoordinates.Value);
+            _entManager.DeleteEntity(oldMap);
+        }
 
         // Defer splitting so they don't get spammed and so we don't have to worry about tracking the grid along the way.
         _grid.CanSplit = true;
@@ -219,7 +230,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
                 dungeons.AddRange(await GenerateExteriorDungen(position, exterior, reservedTiles, random));
                 break;
             case FillGridDunGen fill:
-                dungeons.Add(await GenerateFillDunGen(data, reservedTiles));
+                dungeons.Add(await GenerateFillDunGen(fill, data, reservedTiles));
                 break;
             case JunctionDunGen junc:
                 await PostGen(junc, data, dungeons[^1], reservedTiles, random);
@@ -238,6 +249,9 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
                 break;
             case MobsDunGen mob:
                 await PostGen(mob, dungeons[^1], random);
+                break;
+            case EntityTableDunGen entityTable:
+                await PostGen(entityTable, dungeons[^1], random);
                 break;
             case NoiseDistanceDunGen distance:
                 dungeons.Add(await GenerateNoiseDistanceDunGen(position, distance, reservedTiles, seed, random));

@@ -1,4 +1,4 @@
-using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Server.Atmos.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.NPC.Queries;
 using Content.Server.NPC.Queries.Considerations;
@@ -7,6 +7,7 @@ using Content.Server.NPC.Queries.Queries;
 using Content.Server.Nutrition.Components;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Storage.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Fluids.Components;
@@ -47,7 +48,7 @@ public sealed class NPCUtilitySystem : EntitySystem
     [Dependency] private readonly OpenableSystem _openable = default!;
     [Dependency] private readonly PuddleSystem _puddle = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutions = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutions = default!;
     [Dependency] private readonly WeldableSystem _weldable = default!;
     [Dependency] private readonly ExamineSystemShared _examine = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
@@ -351,6 +352,12 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 return 0f;
             }
+            case TargetOnFireCon:
+                {
+                    if (TryComp(targetUid, out FlammableComponent? fire) && fire.OnFire)
+                        return 1f;
+                    return 0f;
+                }
             default:
                 throw new NotImplementedException();
         }

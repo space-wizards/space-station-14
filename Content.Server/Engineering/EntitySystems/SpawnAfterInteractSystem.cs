@@ -4,6 +4,7 @@ using Content.Shared.Coordinates.Helpers;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
+using Content.Shared.Physics;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Shared.Map.Components;
@@ -15,6 +16,7 @@ namespace Content.Server.Engineering.EntitySystems
     {
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
+        [Dependency] private readonly TurfSystem _turfSystem = default!;
 
         public override void Initialize()
         {
@@ -36,7 +38,7 @@ namespace Content.Server.Engineering.EntitySystems
 
             bool IsTileClear()
             {
-                return tileRef.Tile.IsEmpty == false && !tileRef.IsBlockedTurf(true);
+                return tileRef.Tile.IsEmpty == false && !_turfSystem.IsTileBlocked(tileRef, CollisionGroup.MobMask);
             }
 
             if (!IsTileClear())

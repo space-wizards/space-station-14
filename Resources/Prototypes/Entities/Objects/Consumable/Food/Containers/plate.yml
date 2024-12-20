@@ -178,3 +178,27 @@
     materialComposition:
       Steel: 60
   - type: SpaceGarbage
+
+# Muffin Tin
+
+- type: entity
+  name: muffin tin
+  parent: BaseItem
+  id: FoodPlateMuffinTin
+  description: A cheap foil tin for muffins.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/plates.rsi
+    state: muffin-tin
+  - type: Item
+    size: Small
+    shape:
+    - 0,0,1,0
+    storedOffset: 0,-3
+  - type: Tag
+    tags:
+    - Trash
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 30
+  - type: SpaceGarbage

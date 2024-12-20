@@ -7,7 +7,7 @@
     issuer: objective-issuer-thief
   - type: RoleRequirement
     roles:
-      components:
+      mindRoles:
       - ThiefRole
 
 - type: entity
@@ -52,17 +52,6 @@
     difficulty: 2 # it's hard to hide
 
 # Collections
-
-- type: entity
-  parent: BaseThiefStealCollectionObjective
-  id: FigurineStealCollectionObjective
-  components:
-  - type: StealCondition
-    stealGroup: Figurines
-    minCollectionSize: 10
-    maxCollectionSize: 18 #will be limited to the number of figures on the station anyway.
-  - type: Objective
-    difficulty: 0.25
 
 - type: entity
   parent: BaseThiefStealCollectionObjective
@@ -129,7 +118,7 @@
   - type: StealCondition
     stealGroup: IDCard
     minCollectionSize: 5
-    maxCollectionSize: 15
+    maxCollectionSize: 10
     verifyMapExistence: false
   - type: Objective
     difficulty: 0.7
@@ -183,6 +172,15 @@
     stealGroup: ClothingHeadHatWarden
   - type: Objective
     difficulty: 1.2
+
+- type: entity
+  parent: BaseThiefStealObjective
+  id: WantedListCartridgeStealObjective
+  components:
+  - type: StealCondition
+    stealGroup: WantedListCartridge
+  - type: Objective
+    difficulty: 1
 
 - type: entity                                      #Medical subgroup
   parent: BaseThiefStealObjective
@@ -261,17 +259,6 @@
   - type: Objective
     difficulty: 0.7
 
-- type: entity
-  parent: BaseThiefStealObjective
-  id: SalvageShuttleCircuitboardStealObjective
-  components:
-  - type: NotJobRequirement
-    job: SalvageSpecialist
-  - type: StealCondition
-    stealGroup: SalvageShuttleConsoleCircuitboard
-  - type: Objective
-    difficulty: 0.7
-
 - type: entity                                      #Service subgroup
   parent: BaseThiefStealObjective
   id: ClothingEyesHudBeerStealObjective
@@ -313,17 +300,6 @@
     job: Captain
   - type: StealCondition
     stealGroup: ClothingNeckClownmedal
-  - type: Objective
-    difficulty: 1
-
-- type: entity
-  parent: BaseThiefStealObjective
-  id: ClothingNeckShockCollarStealObjective
-  components:
-  - type: NotJobRequirement
-    job: Warden
-  - type: StealCondition
-    stealGroup: ClothingNeckShockCollar
   - type: Objective
     difficulty: 1
 

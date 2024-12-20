@@ -326,6 +326,15 @@
 
 - type: entity
   parent: BaseSign
+  id: SignBath
+  name: bathroom sign
+  description: A sign indicating the bathroom.
+  components:
+  - type: Sprite
+    state: bath
+
+- type: entity
+  parent: BaseSign
   id: SignKitchen
   name: kitchen sign
   description: The heart of the home. And disease.
@@ -757,6 +766,14 @@
     state: cans
 
 - type: entity
+  parent: SignCans
+  id: SignCansScience
+  suffix: science
+  components:
+  - type: Sprite
+    state: cans_sci
+
+- type: entity
   parent: BaseSign
   id: SignShipDock
   name: evac sign
@@ -1090,7 +1107,15 @@
   - type: Sprite
     state: medium_secure
 
-
+# TODO: make a fancier version of this sign
+- type: entity
+  parent: BaseSign
+  id: SignVox
+  name: vox area sign
+  description: A sign indicating that the area ahead is intended for Vox crew members and does not have an oxygen atmosphere.
+  components:
+  - type: Sprite
+    state: vox
 
 # Atmos Warnings
 
@@ -1228,6 +1253,7 @@
   components:
   - type: Sprite
     state: nanotrasen_sign1
+    snapCardinals: false
 
 - type: entity
   parent: BaseSign
@@ -1237,6 +1263,7 @@
   components:
   - type: Sprite
     state: nanotrasen_sign2
+    snapCardinals: false
 
 - type: entity
   parent: BaseSign
@@ -1246,6 +1273,7 @@
   components:
   - type: Sprite
     state: nanotrasen_sign3
+    snapCardinals: false
 
 - type: entity
   parent: BaseSign
@@ -1255,6 +1283,7 @@
   components:
   - type: Sprite
     state: nanotrasen_sign4
+    snapCardinals: false
 
 - type: entity
   parent: BaseSign
@@ -1264,6 +1293,7 @@
   components:
   - type: Sprite
     state: nanotrasen_sign5
+    snapCardinals: false
 
 - type: entity
   parent: BaseSign

@@ -1,5 +1,5 @@
 using Content.Server.Chemistry.Components;
-using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
@@ -10,7 +10,7 @@ namespace Content.Server.Chemistry.EntitySystems;
 
 public sealed class SolutionRandomFillSystem : EntitySystem
 {
-    [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutionsSystem = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -37,7 +37,8 @@ public sealed class SolutionRandomFillSystem : EntitySystem
             return;
         }
 
-        var target = _solutionsSystem.EnsureSolutionEntity(entity.Owner, entity.Comp.Solution, pick.quantity, null, out _);
-        _solutionsSystem.TryAddReagent(target, reagent, quantity, out _);
+        _solutionsSystem.EnsureSolutionEntity(entity.Owner, entity.Comp.Solution, out var target , pick.quantity);
+        if(target.HasValue)
+            _solutionsSystem.TryAddReagent(target.Value, reagent, quantity);
     }
 }

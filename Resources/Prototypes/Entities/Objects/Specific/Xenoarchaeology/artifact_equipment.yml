@@ -54,8 +54,8 @@
     - type: PlaceableSurface
       isPlaceable: false
     - type: Damageable
-      damageContainer: Inorganic
-      damageModifierSet: Metallic
+      damageContainer: StructuralInorganic
+      damageModifierSet: StructuralMetallicStrong
     - type: Destructible
       thresholds:
         - trigger:
@@ -71,6 +71,9 @@
         whitelist:
           components:
             - Paper
+        blacklist:
+          tags:
+          - Book
     - type: Appearance
     - type: EntityStorageVisuals
       stateDoorOpen: artifact_container_open
@@ -91,7 +94,7 @@
           enum.PaperLabelVisuals.Layer:
             True: { offset: "0.0,0.3125" }
             False: { offset: "0.0,0.0" }
-            
+
     - type: LockVisuals
     - type: ItemSlots
     - type: ContainerContainer

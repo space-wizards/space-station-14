@@ -7,6 +7,10 @@
   components:
   - type: Item
     size: Tiny
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/pins.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Misc/pins.rsi
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -15,14 +19,9 @@
   description: Be gay do crime.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Misc/pins.rsi
-    layers:
-    - state: lgbt
+    state: lgbt
   - type: Clothing
-    sprite: Clothing/Neck/Misc/pins.rsi
-    clothingVisuals:
-      neck:
-      - state: lgbt-equipped
+    equippedPrefix: lgbt
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -31,14 +30,9 @@
   description: Be aro do crime.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Misc/pins.rsi
-    layers:
-    - state: aro
+    state: aro
   - type: Clothing
-    sprite: Clothing/Neck/Misc/pins.rsi
-    clothingVisuals:
-      neck:
-      - state: aro-equipped
+    equippedPrefix: aro
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -47,14 +41,9 @@
   description: Be ace do crime.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Misc/pins.rsi
-    layers:
-    - state: asex
+    state: asex
   - type: Clothing
-    sprite: Clothing/Neck/Misc/pins.rsi
-    clothingVisuals:
-      neck:
-      - state: asex-equipped
+    equippedPrefix: asex
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -63,14 +52,20 @@
   description: Be bi do crime.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Misc/pins.rsi
-    layers:
-    - state: bi
+    state: bi
   - type: Clothing
-    sprite: Clothing/Neck/Misc/pins.rsi
-    clothingVisuals:
-      neck:
-      - state: bi-equipped
+    equippedPrefix: bi
+
+- type: entity
+  parent: ClothingNeckPinBase
+  id: ClothingNeckGayPin
+  name: gay pin
+  description: Be gay~ do crime.
+  components:
+  - type: Sprite
+    state: gay
+  - type: Clothing
+    equippedPrefix: gay
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -79,14 +74,9 @@
   description: Be intersex do crime.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Misc/pins.rsi
-    layers:
-    - state: inter
+    state: inter
   - type: Clothing
-    sprite: Clothing/Neck/Misc/pins.rsi
-    clothingVisuals:
-      neck:
-      - state: inter-equipped
+    equippedPrefix: inter
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -95,14 +85,9 @@
   description: Be lesbian do crime.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Misc/pins.rsi
-    layers:
-    - state: les
+    state: les
   - type: Clothing
-    sprite: Clothing/Neck/Misc/pins.rsi
-    clothingVisuals:
-      neck:
-      - state: les-equipped
+    equippedPrefix: les
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -111,14 +96,9 @@
   description: "01100010 01100101 00100000 01100101 01101110 01100010 01111001 00100000 01100100 01101111 00100000 01100011 01110010 01101001 01101101 01100101"
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Misc/pins.rsi
-    layers:
-    - state: non
+    state: non
   - type: Clothing
-    sprite: Clothing/Neck/Misc/pins.rsi
-    clothingVisuals:
-      neck:
-      - state: non-equipped
+    equippedPrefix: non
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -127,14 +107,9 @@
   description: Be pan do crime.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Misc/pins.rsi
-    layers:
-    - state: pan
+    state: pan
   - type: Clothing
-    sprite: Clothing/Neck/Misc/pins.rsi
-    clothingVisuals:
-      neck:
-      - state: pan-equipped
+    equippedPrefix: pan
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -143,14 +118,9 @@
   description: Be trans do crime.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Misc/pins.rsi
-    layers:
-    - state: trans
+    state: trans
   - type: Clothing
-    sprite: Clothing/Neck/Misc/pins.rsi
-    clothingVisuals:
-      neck:
-      - state: trans-equipped
+    equippedPrefix: trans
  
 - type: entity
   parent: ClothingNeckPinBase
@@ -159,14 +129,9 @@
   description: Be autism do crime.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Misc/autismpin.rsi
-    layers:
-    - state: autism
+    state: autism
   - type: Clothing
-    sprite: Clothing/Neck/Misc/autismpin.rsi
-    clothingVisuals:
-      neck:
-      - state: autism-equipped
+    equippedPrefix: autism
 
 - type: entity
   parent: ClothingNeckPinBase
@@ -175,11 +140,6 @@
   description: Be autism do warcrime.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Misc/goldautismpin.rsi
-    layers:
-    - state: goldautism
+    state: goldautism
   - type: Clothing
-    sprite: Clothing/Neck/Misc/goldautismpin.rsi
-    clothingVisuals:
-      neck:
-      - state: goldautism-equipped
+    equippedPrefix: goldautism

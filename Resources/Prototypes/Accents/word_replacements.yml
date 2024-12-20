@@ -437,6 +437,17 @@
     chatsan-word-54: chatsan-replacement-54
     chatsan-word-55: chatsan-replacement-55
     chatsan-word-56: chatsan-replacement-56
+    chatsan-word-57: chatsan-replacement-57
+    chatsan-word-58: chatsan-replacement-58
+    chatsan-word-59: chatsan-replacement-59
+    chatsan-word-60: chatsan-replacement-60
+    chatsan-word-61: chatsan-replacement-61
+    chatsan-word-62: chatsan-replacement-62
+    chatsan-word-63: chatsan-replacement-63
+    chatsan-word-64: chatsan-replacement-64
+    chatsan-word-65: chatsan-replacement-65
+    chatsan-word-66: chatsan-replacement-66
+    chatsan-word-67: chatsan-replacement-67
 
 - type: accent
   id: liar
@@ -576,3 +587,22 @@
     accent-russian-words-4: accent-russian-words-replace-4
     accent-russian-words-5: accent-russian-words-replace-5
     accent-russian-words-6: accent-russian-words-replace-6
+
+- type: accent
+  id: skeleton
+  wordReplacements:
+    accent-skeleton-words-1: accent-skeleton-words-replace-1
+    accent-skeleton-words-2: accent-skeleton-words-replace-2
+    accent-skeleton-words-3: accent-skeleton-words-replace-3
+    accent-skeleton-words-3-2: accent-skeleton-words-replace-3
+    accent-skeleton-words-3-3: accent-skeleton-words-replace-3
+    accent-skeleton-words-4: accent-skeleton-words-replace-4
+    accent-skeleton-words-4-2: accent-skeleton-words-replace-4
+    accent-skeleton-words-5: accent-skeleton-words-replace-5
+    accent-skeleton-words-5-2: accent-skeleton-words-replace-5
+    accent-skeleton-words-5-3: accent-skeleton-words-replace-5
+    accent-skeleton-words-5-4: accent-skeleton-words-replace-5
+    accent-skeleton-words-6: accent-skeleton-words-replace-6
+    accent-skeleton-words-7: accent-skeleton-words-replace-7
+    accent-skeleton-words-8: accent-skeleton-words-replace-8
+    accent-skeleton-words-9: accent-skeleton-words-replace-9
