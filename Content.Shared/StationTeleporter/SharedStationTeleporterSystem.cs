@@ -7,6 +7,7 @@ using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.StationTeleporter.Components;
+using Content.Shared.Teleportation.Components;
 using Content.Shared.Teleportation.Systems;
 using Content.Shared.Timing;
 using Robust.Shared.Audio.Systems;
@@ -16,7 +17,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.StationTeleporter;
 
-public abstract class SharedStationTeleporterSystem : EntitySystem
+public abstract partial class SharedStationTeleporterSystem : EntitySystem
 {
     [Dependency] private readonly SharedAmbientSoundSystem _ambient = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -35,10 +36,9 @@ public abstract class SharedStationTeleporterSystem : EntitySystem
     {
         base.Initialize();
 
-        LabelQuery = GetEntityQuery<LabelComponent>();
+        InitializeUI();
 
-        SubscribeLocalEvent<StationTeleporterConsoleComponent, BoundUIOpenedEvent>(OnUIOpened);
-        SubscribeLocalEvent<StationTeleporterConsoleComponent, StationTeleporterClickMessage>(OnUIPortalClicked);
+        LabelQuery = GetEntityQuery<LabelComponent>();
 
         SubscribeLocalEvent<StationTeleporterComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<StationTeleporterComponent, LinkedEntityChangedEvent>(OnLinkedChanged);
@@ -64,12 +64,6 @@ public abstract class SharedStationTeleporterSystem : EntitySystem
         }
     }
 
-    private void OnUIPortalClicked(Entity<StationTeleporterConsoleComponent> ent, ref StationTeleporterClickMessage args)
-    {
-        ConsoleInteract(ent, ref args);
-        UpdateUserInterface(ent);
-    }
-
     private void ConsoleInteract(Entity<StationTeleporterConsoleComponent> ent, ref StationTeleporterClickMessage args)
     {
         var teleporter = GetEntity(args.Teleporter);
@@ -80,13 +74,14 @@ public abstract class SharedStationTeleporterSystem : EntitySystem
         if (!_power.IsPowered(teleporter.Value))
             return;
 
-        if (!TryComp<StationTeleporterComponent>(teleporter.Value, out var stationTeleporterComponent))
-            return;
+        TryComp<StationTeleporterComponent>(teleporter.Value, out var stationTeleporterComponent);
 
-        if (_link.GetLink(teleporter.Value, out var linkedTeleporter)) //If the pressed teleporter is linked to another - cut this connection.
+        if (_link.GetLink(teleporter.Value,
+                out var linkedTeleporter)) //If the pressed teleporter is linked to another - cut this connection.
         {
             _link.TryUnlink(teleporter.Value, linkedTeleporter.Value);
-            stationTeleporterComponent.LastLink = null;
+            if (stationTeleporterComponent is not null)
+                stationTeleporterComponent.LastLink = null;
         }
         else //If the pressed teleporter is not connected to anything...
         {
@@ -96,78 +91,24 @@ public abstract class SharedStationTeleporterSystem : EntitySystem
             }
             else // And we have a selected teleporter - tie them together.
             {
-                if (ent.Comp.SelectedTeleporter != teleporter.Value && _power.IsPowered(ent.Comp.SelectedTeleporter.Value))
+                if (ent.Comp.SelectedTeleporter != teleporter.Value &&
+                    _power.IsPowered(ent.Comp.SelectedTeleporter.Value))
                 {
                     if (_link.TryLink(teleporter.Value, ent.Comp.SelectedTeleporter.Value))
-                        stationTeleporterComponent.LastLink = ent.Comp.SelectedTeleporter.Value;
+                    {
+                        if (stationTeleporterComponent is not null)
+                            stationTeleporterComponent.LastLink = ent.Comp.SelectedTeleporter.Value;
+                    }
 
                     _appearance.SetData(teleporter.Value, TeleporterPortalVisuals.Color, ent.Comp.PortalColor);
-                    _appearance.SetData(ent.Comp.SelectedTeleporter.Value, TeleporterPortalVisuals.Color, ent.Comp.PortalColor);
+                    _appearance.SetData(ent.Comp.SelectedTeleporter.Value,
+                        TeleporterPortalVisuals.Color,
+                        ent.Comp.PortalColor);
                 }
+
                 ent.Comp.SelectedTeleporter = null;
             }
         }
-    }
-
-    private void UpdateUserInterface(Entity<StationTeleporterConsoleComponent> ent)
-    {
-        if (!_uiSystem.IsUiOpen(ent.Owner, StationTeleporterConsoleUIKey.Key))
-            return;
-
-        // The grid must have a NavMapComponent to visualize the map in the UI
-        var xform = Transform(ent);
-
-        if (xform.GridUid != null)
-            EnsureComp<NavMapComponent>(xform.GridUid.Value);
-
-        //Send data
-        List<StationTeleporterStatus> teleportersData = new();
-        var cachedTeleporters = new List<EntityUid>(); //Prevent UI teleporters dublication
-
-        if (_container.TryGetContainer(ent, ent.Comp.ChipStorageName, out var container))
-        {
-            foreach (var chip in container.ContainedEntities)
-            {
-                if (!TryComp<TeleporterChipComponent>(chip, out var chipComp))
-                    continue;
-
-                if (!EntityManager.EntityExists(chipComp.ConnectedTeleporter))
-                    continue;
-
-                if (!TryComp<StationTeleporterComponent>(chipComp.ConnectedTeleporter, out var teleporter))
-                    continue;
-
-                if (cachedTeleporters.Contains(chipComp.ConnectedTeleporter.Value))
-                    continue;
-
-                var powered = _power.IsPowered(chipComp.ConnectedTeleporter.Value);
-
-                _link.GetLink(chipComp.ConnectedTeleporter.Value, out var linkedTeleporter);
-                EntityCoordinates? linkCoord = null;
-                if (linkedTeleporter is not null)
-                    linkCoord = Transform(linkedTeleporter.Value).Coordinates;
-
-                cachedTeleporters.Add(chipComp.ConnectedTeleporter.Value);
-
-                var teleporterName = LabelQuery.TryComp(chipComp.ConnectedTeleporter.Value, out var label)
-                    ? label.CurrentLabel ?? Loc.GetString("teleporter-name-unknown")
-                    : Loc.GetString("teleporter-name-unknown");
-
-                teleportersData.Add(
-                    new(GetNetEntity(chipComp.ConnectedTeleporter.Value),
-                        GetNetCoordinates(Transform(chipComp.ConnectedTeleporter.Value).Coordinates),
-                        GetNetEntity(chipComp.ConnectedTeleporter.Value),
-                        GetNetCoordinates(linkCoord),
-                        Loc.GetString(teleporterName),
-                        powered));
-            }
-        }
-        _uiSystem.SetUiState(ent.Owner, StationTeleporterConsoleUIKey.Key, new StationTeleporterState(teleportersData, GetNetEntity(ent.Comp.SelectedTeleporter)));
-    }
-
-    private void OnUIOpened(Entity<StationTeleporterConsoleComponent> ent, ref BoundUIOpenedEvent args)
-    {
-        UpdateUserInterface(ent);
     }
 
     private void OnInteractUsing(Entity<StationTeleporterComponent> teleporter, ref InteractUsingEvent args)
@@ -191,7 +132,8 @@ public abstract class SharedStationTeleporterSystem : EntitySystem
         args.Handled = true;
     }
 
-    protected void ConnectChipToTeleporter(Entity<TeleporterChipComponent> chip, Entity<StationTeleporterComponent> teleporter)
+    protected void ConnectChipToTeleporter(Entity<TeleporterChipComponent> chip,
+        Entity<StationTeleporterComponent> teleporter)
     {
         chip.Comp.ConnectedTeleporter = teleporter;
 
@@ -246,5 +188,4 @@ public abstract class SharedStationTeleporterSystem : EntitySystem
             _link.TryLink(ent, ent.Comp.LastLink.Value);
         }
     }
-
 }

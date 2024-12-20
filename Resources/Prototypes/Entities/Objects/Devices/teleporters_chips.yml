@@ -16,6 +16,6 @@
       color: "#D4D4D4"
   - type: Tag
     tags:
-    - TeleporterChip
+    - FitInTeleporterConsole
   - type: UseDelay #Prevent link spamming
     delay: 1.5

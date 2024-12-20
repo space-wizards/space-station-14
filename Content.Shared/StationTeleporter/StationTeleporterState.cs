@@ -24,18 +24,16 @@ public sealed class StationTeleporterState : BoundUserInterfaceState
 [Serializable, NetSerializable]
 public sealed class StationTeleporterStatus
 {
-    public StationTeleporterStatus(NetEntity teleporterUid, NetCoordinates coordinates, NetEntity teleporterLinkedUid, NetCoordinates? link, string name, bool powered)
+    public StationTeleporterStatus(NetEntity teleporterUid, NetCoordinates coordinates, NetCoordinates? link, string name, bool powered)
     {
         TeleporterUid = teleporterUid;
         Coordinates = coordinates;
-        TeleporterLinkedUid = teleporterLinkedUid;
         LinkCoordinates = link;
         Name = name;
         Powered = powered;
     }
 
     public NetEntity TeleporterUid;
-    public NetEntity TeleporterLinkedUid;
     public NetCoordinates? Coordinates;
     public NetCoordinates? LinkCoordinates;
     public string Name;

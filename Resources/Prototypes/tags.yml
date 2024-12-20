@@ -537,6 +537,9 @@
   id: FireHelmet
 
 - type: Tag
+  id: FitInTeleporterConsole
+
+- type: Tag
   id: Flare
 
 - type: Tag
@@ -1239,9 +1242,6 @@
 
 - type: Tag
   id: Taser
-
-- type: Tag
-  id: TeleporterChip
 
 - type: Tag
   id: TimerBrigElectronics

@@ -499,14 +499,14 @@
   - type: Storage
     grid:
     - 0,0,4,2
-    maxItemSize: Tiny
+    maxItemSize: Small
     storageOpenSound: /Audio/Machines/door_lock_off.ogg
     storageCloseSound: /Audio/Machines/door_lock_on.ogg
     storageInsertSound: /Audio/Machines/id_insert.ogg
     storageRemoveSound: /Audio/Machines/id_swipe.ogg
     whitelist:
       tags:
-      - TeleporterChip
+      - FitInTeleporterConsole
   - type: ContainerContainer
     containers:
       storagebase: !type:Container

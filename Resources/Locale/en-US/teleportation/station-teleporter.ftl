@@ -18,6 +18,9 @@ teleporter-console-user-interface-flavor-left = In the event of bluespace gate i
 teleporter-console-user-interface-flavor-right = v0.666
 
 teleporter-name-unknown = Unknown Coordinates
+teleporter-name-rd-first = RD Portable portal red
+teleporter-name-rd-second = RD Portable portal blue
+
 teleporter-name-center = Center
 teleporter-name-salvage = Salvage
 teleporter-name-medical = Medical
