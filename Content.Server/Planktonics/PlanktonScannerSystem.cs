@@ -78,10 +78,18 @@ public sealed class PlankonScannerSystem : EntitySystem
     var messagePopup = Loc.GetString("plankton-scan-popup",
         ("count", $"{component.SpeciesInstances.Count}"));
 
+    var rewardPopup = Loc.GetString("plankton-reward-popup");
+
     // Add the species names and status to the message if there are any
     if (planktonNames.Count > 0)
     {
         message += "\nSpecies names:\n" + string.Join("\n", planktonNames) + $"\nAmount of dead plankton: {component.DeadPlankton}";
+    }
+
+    if (planktonNames.CurrentSize >=50)
+    {
+        var reward = Spawn(scanner.PlanktonRewardEntityId, Transform(uid).Coordinates);
+        _popupSystem.PopupEntity(rewardPopup, target);
     }
 
     _popupSystem.PopupEntity(messagePopup, target);
