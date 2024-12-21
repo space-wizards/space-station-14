@@ -24,6 +24,13 @@
     damageUnholy: ## What damage is dealt when a chaplain hits an unholy creature
       groups:
         Burn: 20
+  - type: MeleeWeapon
+    soundHit:
+      collection: Punch
+    damage:
+      types:
+        Holy: 25
+        Blunt: 1
   - type: Prayable
     bibleUserOnly: true
   - type: Summonable

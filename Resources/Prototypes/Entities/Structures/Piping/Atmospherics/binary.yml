@@ -57,10 +57,13 @@
   - type: PipeColorVisuals
   - type: GasPressurePump
     enabled: false
+  - type: ActivatableUI
+    key: enum.GasPressurePumpUiKey.Key
+  - type: ActivatableUIRequiresAnchor
   - type: UserInterface
     interfaces:
-        enum.GasPressurePumpUiKey.Key:
-          type: GasPressurePumpBoundUserInterface
+      enum.GasPressurePumpUiKey.Key:
+        type: GasPressurePumpBoundUserInterface
   - type: Construction
     graph: GasBinary
     node: pressurepump
@@ -70,6 +73,8 @@
     range: 5
     sound:
       path: /Audio/Ambience/Objects/gas_pump.ogg
+  - type: AtmosMonitoringConsoleDevice
+    navMapBlip: GasFlowRegulator
   - type: VentCrawTube
     containerId: VentCrawTube
   - type: VentCrawTransit
@@ -133,6 +138,8 @@
       examinableAddress: true
       prefix: device-address-prefix-volume-pump
     - type: WiredNetworkConnection
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: GasFlowRegulator
     - type: VentCrawTube
       containerId: VentCrawTube
     - type: VentCrawTransit
@@ -168,6 +175,8 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_hiss.ogg
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: GasValve
     - type: VentCrawTube
       containerId: VentCrawTube
     - type: VentCrawTransit
@@ -222,6 +231,8 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_hiss.ogg
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: GasValve
     - type: VentCrawTube
       containerId: VentCrawTube
     - type: VentCrawTransit
@@ -287,6 +298,8 @@
     range: 5
     sound:
       path: /Audio/Ambience/Objects/gas_hiss.ogg
+  - type: AtmosMonitoringConsoleDevice
+    navMapBlip: GasValve
   - type: VentCrawTube
     containerId: VentCrawTube
   - type: VentCrawTransit
@@ -322,6 +335,8 @@
     - type: Construction
       graph: GasBinary
       node: port
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: GasVentOpening
     - type: VentCrawTube
       containerId: VentCrawTube
     - type: VentCrawJunction
@@ -386,7 +401,9 @@
           pipeDirection: South
     - type: AmbientSound
       enabled: true
-
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: GasVentOpening
+      
 - type: entity
   parent: [ BaseMachine, ConstructibleMachine ]
   id: GasRecycler
@@ -448,7 +465,9 @@
         acts: ["Destruction"]
   - type: Machine
     board: GasRecyclerMachineCircuitboard
-
+  - type: AtmosMonitoringConsoleDevice
+    navMapBlip: GasValve
+    
 - type: entity
   parent: GasBinaryBase
   id: HeatExchanger
@@ -488,3 +507,5 @@
   - type: Construction
     graph: GasBinary
     node: radiator
+  - type: AtmosMonitoringConsoleDevice
+    navMapBlip: Thermoregulator

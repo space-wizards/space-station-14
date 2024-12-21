@@ -2,3 +2,5 @@
 ui-verb-toggle-open = Toggle UI
 ui-vote-secret-map = Secret
 verb-instrument-openui = Play Music
+
+ui-needs-anchor = Anchor it first!
