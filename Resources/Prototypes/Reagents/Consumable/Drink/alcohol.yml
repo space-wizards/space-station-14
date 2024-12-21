@@ -64,7 +64,7 @@
         factor: 2
       - !type:AdjustReagent
         reagent: Ethanol
-        amount: 0.3
+        amount: 0.06
       - !type:Emote
         emote: Wuhey
         showInChat: true
