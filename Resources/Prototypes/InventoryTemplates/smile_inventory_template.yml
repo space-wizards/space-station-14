@@ -7,23 +7,3 @@
     uiWindowPos: 0,1
     strippingWindowPos: 0,0
     displayName: Head
-  # Commented since that would need specific art for smile, at least for the breathing mask and gas tanks
-  #- name: mask
-  #  slotTexture: mask
-  #  slotFlags: MASK
-  #  uiWindowPos: 0,2
-  #  strippingWindowPos: 1,1
-  #  displayName: Mask
-  #  whitelist:
-  #    tags:
-  #    - PetWearable
-  #- name: suitstorage
-  #  slotTexture: suit_storage
-  #  slotFlags: SUITSTORAGE
-  #  stripTime: 3
-  #  uiWindowPos: 0,1
-  #  strippingWindowPos: 2,5
-  #  displayName: Suit Storage
-  #  whitelist:
-  #    components:
-  #    - GasTank

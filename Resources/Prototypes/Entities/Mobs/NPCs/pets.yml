@@ -722,7 +722,6 @@
     - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
       state: aslime-_3
       shader: unshaded
-    #- map: [ "mask" ] breathing mask sprites need new versions for smile
     - map: [ "head" ]
   - type: Inventory
     speciesId: slime
@@ -731,7 +730,7 @@
       head:
         sizeMaps:
           32:
-            sprite: Mobs/Pets/smile/smile_displacement.rsi
+            sprite: Mobs/Pets/Smile/smile_displacement.rsi
             state: head
   - type: MobThresholds
     thresholds:
@@ -778,7 +777,7 @@
         Caustic: 1
   - type: MultiHandedItem
   - type: Item
-    sprite: Mobs/Pets/smile/smile.rsi
+    sprite: Mobs/Pets/Smile/smile.rsi
     size: Huge
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-slime
