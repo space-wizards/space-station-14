@@ -4,7 +4,10 @@ using Content.Server.Shuttles.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
+using Content.Shared.Roles;
+using Content.Shared.Roles.Jobs;
 using Robust.Shared.Configuration;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Objectives.Systems;
@@ -16,8 +19,10 @@ public sealed class KillPersonConditionSystem : EntitySystem
 {
     [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
     [Dependency] private readonly IConfigurationManager _config = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly SharedRoleSystem _role = default!;
     [Dependency] private readonly TargetObjectiveSystem _target = default!;
 
     public override void Initialize()
@@ -52,8 +57,22 @@ public sealed class KillPersonConditionSystem : EntitySystem
         if (target.Target != null)
             return;
 
-        // no other humans to kill
+        // TODO: make a reusable filter system to avoid duplication with PickRandomHead or any future objectives
         var allHumans = _mind.GetAliveHumans(args.MindId);
+        if (comp.RoleWhitelist is {} whitelist)
+            allHumans.RemoveWhere(mindId => !_role.MindHasMatchingRole((mindId.Owner, mindId.Comp), whitelist));
+        if (comp.RoleBlacklist is {} blacklist)
+            allHumans.RemoveWhere(mindId => _role.MindHasMatchingRole((mindId.Owner, mindId.Comp), blacklist));
+
+        if (comp.OnlyChoosableJobs)
+        {
+            allHumans.RemoveWhere(mindId => !(
+                _role.MindHasRole<JobRoleComponent>((mindId.Owner, mindId.Comp), out var role) &&
+                role?.Comp1.JobPrototype is {} jobId &&
+                _proto.Index(jobId).SetPreference));
+        }
+
+        // no other humans to kill
         if (allHumans.Count == 0)
         {
             args.Cancelled = true;
