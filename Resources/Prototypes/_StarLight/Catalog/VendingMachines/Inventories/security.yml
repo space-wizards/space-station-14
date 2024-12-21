@@ -21,3 +21,27 @@
   - !type:ListingLimitedStockCondition
     stock: 4
   - !type:BuyerAccessCondition
+
+- type: listing
+  id: WeaponPistolN1984
+  productEntity: N1984
+  cost:
+    NTCredit: 600
+  categories:
+  - SLSecurity
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+  - !type:BuyerAccessCondition
+
+- type: listing
+  id: BaseMagazineMagnum
+  productEntity: .45 Magazine
+  cost:
+    NTCredit: 100
+  categories:
+  - SLSecurity
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 6
+  - !type:BuyerAccessCondition
