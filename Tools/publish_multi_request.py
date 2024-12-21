@@ -3,6 +3,7 @@
 import requests
 import os
 import subprocess
+import xml.etree.ElementTree as ET
 from typing import Iterable
 
 PUBLISH_TOKEN = os.environ["PUBLISH_TOKEN"]
@@ -69,24 +70,20 @@ def get_files_to_publish() -> Iterable[str]:
 
 def get_engine_version():
     try:
-        proc = subprocess.run(
-            ["git", "describe", "--tags", "--abbrev=0", "--always"],
-            stdout=subprocess.PIPE,
-            cwd="RobustToolbox",
-            check=True,
-            encoding="UTF-8"
-        )
-        return proc.stdout.strip()
-    except subprocess.CalledProcessError:
-        print("No annotated tags found. Using latest commit hash as engine version.")
-        proc = subprocess.run(
-            ["git", "rev-parse", "HEAD"],
-            stdout=subprocess.PIPE,
-            cwd="RobustToolbox",
-            check=True,
-            encoding="UTF-8"
-        )
-        return proc.stdout.strip()
+        version_file = "RobustToolbox/MSBuild/Robust.Engine.Version.props"
+        
+        tree = ET.parse(version_file)
+        root = tree.getroot()
+        
+        version = root.find(".//Version")
+        
+        if version is None or not version.text:
+            raise ValueError(f"Version not found in {version_file}")
+        
+        return version.text.strip()
+    except Exception as e:
+        print(f"Error reading version from {version_file}: {e}")
+        raise
 
 
 if __name__ == '__main__':
