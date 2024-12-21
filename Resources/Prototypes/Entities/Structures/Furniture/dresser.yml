@@ -281,6 +281,31 @@
       - id: PlushieLizard
         prob: 0.03
         orGroup: dresserthirdloot
+      # Many moff, but prob less
+      - id: PlushieMoth
+        prob: 0.02
+        orGroup: dresserthirdloot
+      - id: PlushieMothMedic
+        prob: 0.02
+        orGroup: dresserthirdloot
+      - id: PlushieMothEngie
+        prob: 0.02
+        orGroup: dresserthirdloot
+      - id: PlushieMothSyndie
+        prob: 0.02
+        orGroup: dresserthirdloot
+      - id: PlushieMothBar
+        prob: 0.01
+        orGroup: dresserthirdloot
+      - id: PlushieMothsician
+        prob: 0.01
+        orGroup: dresserthirdloot
+      - id: PlushieMothRainbow
+        prob: 0.01
+        orGroup: dresserthirdloot
+      - id: PlushieMothBluespace
+        prob: 0.01
+        orGroup: dresserthirdloot
       - id: ClothingOuterSuitShrineMaiden
         prob: 0.03
         orGroup: dressersecondloot

@@ -38,9 +38,24 @@
     - id: PlushieDiona
     - id: PlushieXeno
     - id: PlushieHampter
-    - id: PlushieMoth
+    - !type:GroupSelector
+      children:
+      - id: PlushieMoth
+      - id: PlushieMothMedic
+      - id: PlushieMothEngie
+      - id: PlushieMothSyndie
+      - id: PlushieMothrror
+        weight: 0.1
     - id: PlushieArachind
     - id: PlushiePenguin
+
+- type: entityTable
+  id: SafetyMothsPlushieTable
+  table: !type:GroupSelector
+    children:
+      - id: PlushieMothMedic
+      - id: PlushieMothEngie
+      - id: PlushieMothSyndie
 
 - type: entity
   id: CrateFunPlushie
@@ -54,6 +69,23 @@
         tableId: AllPlushiesTable
         rolls: !type:ConstantNumberSelector
           value: 10
+
+- type: entity
+  id: CrateFunMothPlushieBulk
+  parent: CratePlastic
+  name: bulk moff plushie crate
+  description: A buncha soft Moth plushies. Throw them around, eat them, play with them! And then wonder how you're gonna explain this purchase to NT... *chitters!*
+  components:
+  - type: StorageFill
+    contents:
+      - id: PlushieMoth
+        amount: 5
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: SafetyMothsPlushieTable
+        rolls: !type:ConstantNumberSelector
+          value: 1
 
 - type: entity
   id: CrateFunLizardPlushieBulk

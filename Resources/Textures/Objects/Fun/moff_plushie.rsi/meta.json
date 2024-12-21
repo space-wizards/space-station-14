@@ -1,0 +1,110 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Part taken from https://github.com/BeeStation/BeeStation-Hornet/pull/6866, part from https://github.com/BeeStation/BeeStation-Hornet/pull/10387, part made by Miyugi, some characters original from AspEv (https://www.artstation.com/artwork/ykmK9O)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "moff"
+    },
+    {
+      "name": "moff-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "moff-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "moffsician"
+    },
+    {
+      "name": "moffsician-inhand-left",
+      "directions": 4,
+	  "_comment": "made by Miyugi"
+    },
+	  {
+      "name": "moffsician-inhand-right",
+      "directions": 4,
+	  "_comment": "made by Miyugi"
+    },
+    {
+      "name": "moffbar"
+    },
+    {
+      "name": "moffbar-inhand-left",
+      "directions": 4,
+	  "_comment": "made by Miyugi"
+    },
+	  {
+      "name": "moffbar-inhand-right",
+      "directions": 4,
+	  "_comment": "made by Miyugi"
+    },
+    {
+      "name": "moffrror"
+    },
+    {
+      "name": "moffrror-inhand-left",
+      "directions": 4
+    },
+	  {
+      "name": "moffrror-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "moff_bluespace",
+    "_comment": "from https://github.com/BeeStation/BeeStation-Hornet/pull/10387"
+    },
+    {
+      "name": "moff_bluespace-inhand-left",
+      "directions": 4
+    },
+	  {
+      "name": "moff_bluespace-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "safety_moth_engineer"
+    },
+	  {
+      "name": "safety_moth-engineer_helmet"
+    },
+	  {
+      "name": "safety_moth-engineer_helmet_orange"
+    },
+    {
+      "name": "safety_moth-helmet-on"
+    },
+    {
+      "name": "moff_all",
+        "delays": [
+          [
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.25
+          ]
+        ]
+      }
+    ]
+  }
