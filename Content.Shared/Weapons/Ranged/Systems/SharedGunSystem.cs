@@ -507,8 +507,9 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (sprite == null)
             return;
 
-        var ev = new MuzzleFlashEvent(GetNetEntity(gun), sprite, worldAngle);
-        CreateEffect(gun, ev, gun);
+        var userNetEntity = user != null ? GetNetEntity(user) : null;
+        var ev = new MuzzleFlashEvent(GetNetEntity(gun), sprite, worldAngle, userNetEntity);
+        CreateEffect(gun, ev, user);
     }
 
     public void CauseImpulse(EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, EntityUid user, PhysicsComponent userPhysics)
