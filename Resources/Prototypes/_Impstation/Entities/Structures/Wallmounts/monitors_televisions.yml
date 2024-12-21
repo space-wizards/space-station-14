@@ -1,0 +1,26 @@
+- type: entity
+  parent: WallmountTelevision
+  id: WallmountTelevisionMini
+  suffix: entertainment
+  name: mini television
+  description: Finally, some decent reception around here...
+  components:
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: Structures/Machines/computers.rsi
+    layers:
+      - map: ["computerLayerBody"]
+        state: telescreen_frame
+      - map: ["computerLayerScreen"]
+        state: telescreen
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.20,-0.10,0.25,0.35"
+        density: 250
+        mask:
+          - FullTileMask
+        layer:
+          - WallLayer

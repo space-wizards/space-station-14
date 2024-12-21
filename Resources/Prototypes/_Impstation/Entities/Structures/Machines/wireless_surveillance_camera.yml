@@ -1,0 +1,47 @@
+- type: entity
+  id: SurveillanceWirelessCameraPocket
+  name: long-range handheld camera
+  parent: BaseItem
+  description: A handheld wireless camera set to the entertainment frequency.
+  components:
+    - type: InteractionOutline
+    - type: Eye
+    - type: WirelessNetworkConnection
+      range: 500
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.2
+          density: 20
+          mask:
+            - MachineMask
+          layer:
+            - BulletImpassable
+    - type: SurveillanceCameraMicrophone
+      blacklist:
+        components:
+          - SurveillanceCamera
+          - SurveillanceCameraMonitor
+          - RadioSpeaker
+    - type: ActiveListener
+      range: 10
+    - type: UserInterface
+      interfaces:
+        enum.SurveillanceCameraSetupUiKey.Camera:
+          type: SurveillanceCameraSetupBoundUi
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      receiveFrequencyId: SurveillanceCameraEntertainment
+      transmitFrequencyId: SurveillanceCamera
+    - type: SurveillanceCamera
+      networkSet: true
+    - type: Item
+      size: Small
+    - type: Sprite
+      noRot: true
+      sprite: Structures/monitors.rsi
+      layers:
+        - map: [ "enum.SurveillanceCameraVisualsKey.Key" ]
+          state: television
