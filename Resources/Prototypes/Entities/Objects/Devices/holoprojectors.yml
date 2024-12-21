@@ -107,7 +107,7 @@
         name: power-cell-slot-component-slot-name-default
 
 - type: entity
-  parent: Holoprojector
+  parent: [Holoprojector, BaseRestrictedContraband]
   id: HoloprojectorSecurity
   name: holobarrier projector
   description: Creates a solid but fragile holographic barrier.

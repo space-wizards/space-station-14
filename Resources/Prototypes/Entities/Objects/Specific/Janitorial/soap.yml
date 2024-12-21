@@ -145,7 +145,7 @@
   name: soaplet
   id: SoapletSyndie
   categories: [ HideSpawnMenu ]
-  parent: Soap
+  parent: [Soap, BaseSyndicateContraband]
   description: A tiny piece of syndicate soap.
   components:
   - type: Sprite

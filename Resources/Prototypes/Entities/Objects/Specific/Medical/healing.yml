@@ -724,7 +724,7 @@
 
 - type: entity
   name: romerol pill
-  parent: Pill
+  parent: [Pill, BaseMajorContraband]
   id: PillRomerol
   components:
   - type: SolutionContainerManager
@@ -1017,7 +1017,7 @@
 #this is where all the syringes are so i didn't know where to put it
 - type: entity
   suffix: romerol
-  parent: PrefilledSyringe
+  parent: [PrefilledSyringe, BaseMajorContraband]
   id: SyringeRomerol
   components:
   - type: Label

@@ -69,7 +69,7 @@
 
 #(Bartender) vest
 - type: entity
-  parent: ClothingOuterBase
+  parent: [ClothingOuterBase, BaseCivilianContraband]
   id: ClothingOuterVest
   name: vest
   description: A thick vest with a rubbery, water-resistant shell.

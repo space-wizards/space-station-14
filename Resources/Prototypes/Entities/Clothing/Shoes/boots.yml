@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: [ClothingShoesBaseButcherable, BaseEngineeringContraband]
   id: ClothingShoesBootsWork
   name: workboots
   description: Engineering lace-up work boots for the especially blue-collar.
@@ -24,7 +24,7 @@
     modifier: 0.5
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: [ClothingShoesBaseButcherable, BaseCargoContraband]
   id: ClothingShoesBootsSalvage
   name: salvage boots
   description: Steel-toed salvage boots for salvaging in hazardous environments.
@@ -36,7 +36,7 @@
   - type: Matchbox
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: [ClothingShoesBaseButcherable, BaseCivilianContraband]
   id: ClothingShoesBootsPerformer
   name: performer's boots
   description: These boots provide great traction for when you're up on stage.
@@ -105,7 +105,7 @@
     sprite: Clothing/Shoes/Boots/winterboots.rsi
 
 - type: entity
-  parent: ClothingShoesBaseWinterBoots
+  parent: [ClothingShoesBaseWinterBoots, BaseCargoContraband]
   id: ClothingShoesBootsWinterCargo
   name: cargo winter boots
   components:
@@ -115,7 +115,7 @@
     sprite: Clothing/Shoes/Boots/winterbootscargo.rsi
 
 - type: entity
-  parent: ClothingShoesBaseWinterBoots
+  parent: [ClothingShoesBaseWinterBoots, BaseEngineeringContraband]
   id: ClothingShoesBootsWinterEngi
   name: engineering winter boots
   components:
@@ -125,7 +125,7 @@
     sprite: Clothing/Shoes/Boots/winterbootsengi.rsi
 
 - type: entity
-  parent: ClothingShoesBaseWinterBoots
+  parent: [ClothingShoesBaseWinterBoots, BaseMedicalContraband]
   id: ClothingShoesBootsWinterMed
   name: medical winter boots
   components:
@@ -135,7 +135,7 @@
     sprite: Clothing/Shoes/Boots/winterbootsmed.rsi
 
 - type: entity
-  parent: ClothingShoesBaseWinterBoots
+  parent: [ClothingShoesBaseWinterBoots, BaseScienceContraband]
   id: ClothingShoesBootsWinterSci
   name: science winter boots
   components:

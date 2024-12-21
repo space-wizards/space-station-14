@@ -88,7 +88,7 @@
 
 - type: entity
   id: BaseBorgModuleSyndicate
-  parent: BaseBorgModule
+  parent: [BaseBorgModule, BaseSyndicateContraband]
   abstract: true
   components:
     - type: Tag
@@ -97,7 +97,7 @@
 
 - type: entity
   id: BaseBorgModuleSyndicateAssault
-  parent: BaseBorgModule
+  parent: [BaseBorgModule, BaseSyndicateContraband]
   abstract: true
   components:
     - type: Tag

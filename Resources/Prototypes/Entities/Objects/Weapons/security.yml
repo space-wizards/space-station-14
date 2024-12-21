@@ -128,7 +128,7 @@
 
 - type: entity
   name: flash
-  parent: [BaseItem, BaseSecurityScienceCommandContraband]
+  parent: [BaseItem, BaseSecurityCommandContraband]
   id: Flash
   description: An ultrabright flashbulb with a trigger, which causes the victim to be dazed and lose their eyesight for a moment. Useless when burnt out.
   components:
@@ -174,7 +174,7 @@
 
 - type: entity
   name: flash
-  parent: Flash
+  parent: [BaseSecurityScienceCommandContraband, Flash]
   suffix: 2 charges
   id: SciFlash
   components:

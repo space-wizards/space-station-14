@@ -64,7 +64,7 @@
     verbImage: null
 
 - type: entity
-  parent: PhoneInstrument
+  parent: [PhoneInstrument, BaseSyndicateContraband]
   id: PhoneInstrumentSyndicate
   name: blood-red phone
   description: For evil people to call their friends.

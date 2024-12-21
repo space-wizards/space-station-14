@@ -15,7 +15,7 @@
     - ClothMade
 
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ClothingNeckBase, BaseRestrictedContraband]
   id: ClothingNeckTieDet
   name: detective's tie
   description: A loosely tied necktie, a perfect accessory for the over-worked detective.
@@ -24,9 +24,9 @@
     sprite: Clothing/Neck/Ties/dettie.rsi
   - type: Clothing
     sprite: Clothing/Neck/Ties/dettie.rsi
-    
+
 - type: entity
-  parent: ClothingNeckBase
+  parent: [ClothingNeckBase, BaseScienceContraband]
   id: ClothingNeckTieSci
   name: scientist's tie
   description: Why do we all have to wear these ridiculous ties?

@@ -28,14 +28,14 @@
     state: NT_flag
 
 - type: entity
-  parent: BaseFlag
+  parent: [BaseFlag, BaseSyndicateContraband]
   id: SyndieFlag
   name: syndicate flag
   description: Smells bloody. Death to NT!
   components:
   - type: Sprite
     state: syndie_flag
-    
+
 - type: entity
   parent: BaseFlag
   id: LGBTQFlag
@@ -44,7 +44,7 @@
   components:
   - type: Sprite
     state: lgbtq_flag
-    
+
 - type: entity
   parent: BaseFlag
   id: PirateFlag

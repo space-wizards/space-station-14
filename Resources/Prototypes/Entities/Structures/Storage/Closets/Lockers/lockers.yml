@@ -404,7 +404,7 @@
 - type: entity
   id: LockerSyndicatePersonal
   name: armory closet
-  parent: LockerBaseSecure
+  parent: [LockerBaseSecure, BaseSyndicateContraband]
   description: It's a personal storage unit for operative gear.
   components:
   - type: Appearance
