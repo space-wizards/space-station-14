@@ -6,7 +6,7 @@
     requirement:
       !type:RoleTimeRequirement
       role: JobHeadOfSecurity
-      time: 90000 #50 hrs
+      time: 90000 #25 hrs
 
 - type: loadout
   id: HeadofSecurityVeteranHeadset
