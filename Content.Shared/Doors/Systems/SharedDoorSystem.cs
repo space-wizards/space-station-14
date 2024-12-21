@@ -245,7 +245,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         }
         else if (door.State == DoorState.Open)
         {
-            door.BeingPried = true;
+            door.IsBeingPried = true;
             _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User)} pried {ToPrettyString(uid)} closed");
             StartClosing(uid, door, args.User, true);
         }
@@ -487,13 +487,13 @@ public abstract partial class SharedDoorSystem : EntitySystem
             door.NextStateChange = GameTiming.CurTime + door.OpenTimeTwo;
             door.State = DoorState.Open;
             AppearanceSystem.SetData(uid, DoorVisuals.State, DoorState.Open);
-            door.BeingPried = false;
+            door.IsBeingPried = false;
             Dirty(uid, door);
             return false;
         }
 
         door.Partial = true;
-        door.BeingPried = false;
+        door.IsBeingPried = false;
         SetCollidable(uid, true, door, physics);
         door.NextStateChange = GameTiming.CurTime + door.CloseTimeTwo;
         Dirty(uid, door);

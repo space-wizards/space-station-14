@@ -259,7 +259,7 @@ public sealed partial class DoorComponent : Component
     public bool CanPry = true;
 
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]
-    public bool BeingPried;
+    public bool IsBeingPried;
 
     [DataField]
     public ProtoId<ToolQualityPrototype> PryingQuality = "Prying";
