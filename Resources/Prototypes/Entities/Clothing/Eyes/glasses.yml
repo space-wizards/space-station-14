@@ -188,7 +188,7 @@
   parent: [ClothingEyesBase, BaseCommandContraband]
   id: ClothingEyesGlassesCommand
   name: administration glasses
-  description: Upgraded sunglasses that provide flash immunity and show ID card status. 
+  description: Upgraded sunglasses that provide flash immunity and show ID card status.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/commandglasses.rsi
