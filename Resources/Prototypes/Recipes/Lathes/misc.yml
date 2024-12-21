@@ -212,3 +212,36 @@
   completetime: 3
   materials:
     Plastic: 200
+
+- type: latheRecipe
+  abstract: true
+  id: BaseToolbox
+  category: Tools
+  completetime: 3
+  materials:
+    Steel: 500
+
+- type: latheRecipe
+  parent: BaseToolbox
+  id: ToolboxEmergency
+  result: ToolboxEmergency
+
+- type: latheRecipe
+  parent: BaseToolbox
+  id: ToolboxMechanical
+  result: ToolboxMechanical
+
+- type: latheRecipe
+  parent: BaseToolbox
+  id: ToolboxElectrical
+  result: ToolboxElectrical
+
+- type: latheRecipe
+  parent: BaseToolbox
+  id: ToolboxArtistic
+  result: ToolboxArtistic
+
+- type: latheRecipe
+  parent: BaseToolbox
+  id: ToolboxSyndicate
+  result: ToolboxSyndicate

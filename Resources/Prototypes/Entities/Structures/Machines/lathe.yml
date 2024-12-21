@@ -201,6 +201,10 @@
       - WetFloorSign
       - ClothingHeadHatCone
       - FreezerElectronics
+      - ToolboxEmergency
+      - ToolboxMechanical
+      - ToolboxElectrical
+      - ToolboxArtistic
   - type: EmagLatheRecipes
     emagStaticRecipes:
       - BoxLethalshot
@@ -226,6 +230,7 @@
       - RiotShield
       - SpeedLoaderMagnum
       - SpeedLoaderMagnumEmpty
+      - ToolboxSyndicate
   - type: BlueprintReceiver
     whitelist:
       tags:
