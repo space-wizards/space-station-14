@@ -2,7 +2,7 @@
   id: SurveillanceWirelessCameraPocket
   name: handheld quantum camera
   parent: BaseItem
-  description: Bring the station's eyes with you with this wireless camera set to the entertainment frequency.
+  description: "A wireless handheld camera boasting an impressive range. They're watching you. Maybe."
   suffix: entertainment, mapping only
   components:
     - type: InteractionOutline
@@ -15,8 +15,9 @@
           - SurveillanceCamera
           - SurveillanceCameraMonitor
           - RadioSpeaker
-    - type: ActiveListener
       range: 1 #only has a built-in mic
+    - type: ActiveListener
+      range: 1 
     - type: UserInterface
       interfaces:
         enum.SurveillanceCameraSetupUiKey.Camera:
