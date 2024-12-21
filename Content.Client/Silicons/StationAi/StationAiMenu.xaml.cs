@@ -54,7 +54,6 @@ public sealed partial class StationAiMenu : RadialMenu
             // TODO: This radial boilerplate is quite annoying
             var button = new StationAiMenuButton(action.Event)
             {
-                StyleClasses = { "RadialMenuButton" },
                 SetSize = new Vector2(64f, 64f),
                 ToolTip = action.Tooltip != null ? Loc.GetString(action.Tooltip) : null,
             };
@@ -121,7 +120,7 @@ public sealed partial class StationAiMenu : RadialMenu
     }
 }
 
-public sealed class StationAiMenuButton(BaseStationAiAction action) : RadialMenuTextureButton
+public sealed class StationAiMenuButton(BaseStationAiAction action) : RadialMenuTextureButtonWithSector
 {
     public BaseStationAiAction Action = action;
 }
