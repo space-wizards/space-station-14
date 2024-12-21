@@ -76,8 +76,6 @@ def get_engine_version():
             check=True,
             encoding="UTF-8"
         )
-        tag = proc.stdout.strip()
-        assert tag.startswith("v")
         return proc.stdout.strip()
     except subprocess.CalledProcessError:
         print("No annotated tags found. Using latest commit hash as engine version.")
