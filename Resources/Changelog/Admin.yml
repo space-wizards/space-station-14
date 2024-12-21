@@ -620,5 +620,28 @@ Entries:
   id: 77
   time: '2024-11-20T07:55:12.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33311
+- author: TokenStyle
+  changes:
+  - message: makeghostroleraffled admin command now works with few arguments!
+    type: Fix
+  id: 78
+  time: '2024-11-30T20:11:44.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/31836
+- author: slarticodefast
+  changes:
+  - message: Health scanning a slime as an aghost will no longer insert the scanner
+      into their inventory.
+    type: Fix
+  id: 79
+  time: '2024-12-18T00:12:35.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33884
+- author: slarticodefast
+  changes:
+  - message: The panic bunker now only automatically disables when an admin with the
+      'Admin' permission is online instead of any permission.
+    type: Tweak
+  id: 80
+  time: '2024-12-18T13:15:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33879
 Name: Admin
 Order: 1
