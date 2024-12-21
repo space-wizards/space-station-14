@@ -42,17 +42,19 @@ public sealed class ActionChargesSystem : EntitySystem
         Dirty(ent);
     }
 
-    public void AddCharges(Entity<ActionChargesComponent?> action, int removeCharges)
+    public void AddCharges(Entity<ActionChargesComponent?> action, int addCharges)
     {
-        if (removeCharges == 0 || !Resolve(action.Owner, ref action.Comp, false))
+        if (addCharges == 0)
             return;
+
+        action.Comp ??= EnsureComp<ActionChargesComponent>(action.Owner);
 
         var oldCharges = GetCurrentCharges((action.Owner, action.Comp, null));
 
         if (oldCharges == null)
             return;
 
-        var charges = Math.Clamp(oldCharges.Value - removeCharges, 0, action.Comp.MaxCharges);
+        var charges = Math.Clamp(oldCharges.Value + addCharges, 0, action.Comp.MaxCharges);
 
         if (oldCharges == charges)
             return;
@@ -82,8 +84,7 @@ public sealed class ActionChargesSystem : EntitySystem
 
     public void SetCharges(Entity<ActionChargesComponent?> action, int value)
     {
-        if (!Resolve(action.Owner, ref action.Comp, false))
-            return;
+        action.Comp ??= EnsureComp<ActionChargesComponent>(action.Owner);
 
         var adjusted = Math.Clamp(value, 0, action.Comp.MaxCharges);
 
