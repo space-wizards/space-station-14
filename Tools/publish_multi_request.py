@@ -70,7 +70,7 @@ def get_files_to_publish() -> Iterable[str]:
 def get_engine_version():
     try:
         proc = subprocess.run(
-            ["git", "describe", "--tags", "--abbrev=0"],
+            ["git", "describe", "--tags", "--abbrev=0", "--always"],
             stdout=subprocess.PIPE,
             cwd="RobustToolbox",
             check=True,
