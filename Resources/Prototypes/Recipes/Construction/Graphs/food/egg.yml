@@ -5,12 +5,6 @@
   graph:
   - node: start
     edges:
-    - to: boiled
-      steps:
-      - minTemperature: 344
-  - node: boiled
-    entity: FoodEggBoiled
-    edges:
     - to: explode
       completed:
       - !type:DamageEntity
