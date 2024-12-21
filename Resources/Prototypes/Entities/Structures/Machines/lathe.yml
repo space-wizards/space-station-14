@@ -226,6 +226,7 @@
       - RiotShield
       - SpeedLoaderMagnum
       - SpeedLoaderMagnumEmpty
+      - WeaponProtoKineticAccelerator
   - type: BlueprintReceiver
     whitelist:
       tags:
@@ -337,7 +338,6 @@
       - SyringeBluespace
       - WeaponForceGun
       - WeaponLaserSvalinn
-      - WeaponProtoKineticAccelerator
       - WeaponTetherGun
       - ClothingBackpackHolding
       - ClothingBackpackSatchelHolding
@@ -353,6 +353,7 @@
       - DeviceQuantumSpinInverter
   - type: EmagLatheRecipes
     emagDynamicRecipes:
+      - BorgModuleFauna
       - BoxBeanbag
       - BoxShotgunIncendiary
       - BoxShotgunUranium
@@ -392,6 +393,9 @@
       - WeaponLaserCannon
       - WeaponLaserCarbine
       - WeaponXrayCannon
+      - WeaponCrusher
+      - WeaponCrusherDagger
+      - WeaponCrusherGlaive
 
 - type: entity
   id: ProtolatheHyperConvection
@@ -732,8 +736,10 @@
       - WeaponDisablerPractice
       - WeaponFlareGunSecurity
       - WeaponLaserCarbinePractice
+      - WeaponProtoKineticAccelerator
       - Zipties
     dynamicRecipes:
+      - BorgModuleFauna
       - BoxBeanbag
       - BoxShotgunIncendiary
       - BoxShotgunUranium
@@ -784,6 +790,9 @@
       - WeaponLaserCannon
       - WeaponLaserCarbine
       - WeaponXrayCannon
+      - WeaponCrusher
+      - WeaponCrusherDagger
+      - WeaponCrusherGlaive
   - type: MaterialStorage
     whitelist:
       tags:
