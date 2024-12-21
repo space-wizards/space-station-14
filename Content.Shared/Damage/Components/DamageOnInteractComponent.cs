@@ -44,4 +44,46 @@ public sealed partial class DamageOnInteractComponent : Component
     /// </summary>
     [DataField, AutoNetworkedField]
     public bool IsDamageActive = true;
+
+    /// <summary>
+    /// Whether the thing should be thrown from its current position when they interact with the entity
+    /// </summary>
+    [DataField]
+    public bool Throw = false;
+
+    /// <summary>
+    /// The speed applied to the thing when it is thrown
+    /// </summary>
+    [DataField]
+    public int ThrowSpeed = 10;
+
+    /// <summary>
+    /// Time between being able to interact with this entity
+    /// </summary>
+    [DataField]
+    public uint InteractTimer = 0;
+
+    /// <summary>
+    /// Tracks the last time this entity was interacted with, but only if the interaction resulted in the user taking damage
+    /// </summary>
+    [DataField]
+    public TimeSpan LastInteraction = TimeSpan.Zero;
+
+    /// <summary>
+    /// Tracks the time that this entity can be interacted with, but only if the interaction resulted in the user taking damage
+    /// </summary>
+    [DataField]
+    public TimeSpan NextInteraction = TimeSpan.Zero;
+
+    /// <summary>
+    /// Probability that the user will be stunned when they interact with with this entity and took damage
+    /// </summary>
+    [DataField]
+    public float StunChance = 0.0f;
+
+    /// <summary>
+    /// Duration, in seconds, of the stun applied to the user when they interact with the entity and took damage
+    /// </summary>
+    [DataField]
+    public float StunSeconds = 0.0f;
 }
