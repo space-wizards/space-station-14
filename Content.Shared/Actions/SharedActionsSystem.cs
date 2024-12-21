@@ -36,6 +36,11 @@ public abstract class SharedActionsSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<InstantActionComponent, MapInitEvent>(OnActionMapInit);
+        SubscribeLocalEvent<EntityTargetActionComponent, MapInitEvent>(OnActionMapInit);
+        SubscribeLocalEvent<WorldTargetActionComponent, MapInitEvent>(OnActionMapInit);
+        SubscribeLocalEvent<EntityWorldTargetActionComponent, MapInitEvent>(OnActionMapInit);
+        
         SubscribeLocalEvent<InstantActionComponent, ComponentShutdown>(OnActionShutdown);
         SubscribeLocalEvent<EntityTargetActionComponent, ComponentShutdown>(OnActionShutdown);
         SubscribeLocalEvent<WorldTargetActionComponent, ComponentShutdown>(OnActionShutdown);
@@ -64,6 +69,11 @@ public abstract class SharedActionsSystem : EntitySystem
         SubscribeLocalEvent<EntityWorldTargetActionComponent, GetActionDataEvent>(OnGetActionData);
 
         SubscribeAllEvent<RequestPerformActionEvent>(OnActionRequest);
+    }
+
+    private void OnActionMapInit(EntityUid uid, BaseActionComponent component, MapInitEvent args)
+    {
+        component.OriginalIconColor = component.IconColor;
     }
 
     private void OnActionShutdown(EntityUid uid, BaseActionComponent component, ComponentShutdown args)
