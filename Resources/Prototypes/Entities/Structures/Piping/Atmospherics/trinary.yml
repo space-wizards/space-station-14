@@ -70,6 +70,8 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_hiss.ogg
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: GasFlowRegulator
     - type: VentCrawTube
       containerId: VentCrawTube
     - type: VentCrawJunction
@@ -178,6 +180,8 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_hiss.ogg
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: GasFlowRegulator
     - type: VentCrawTube
       containerId: VentCrawTube
     - type: VentCrawJunction
@@ -297,6 +301,8 @@
     - type: Construction
       graph: GasTrinary
       node: pneumaticvalve
+    - type: AtmosMonitoringConsoleDevice
+      navMapBlip: GasFlowRegulator
     - type: VentCrawTube
       containerId: VentCrawTube
     - type: VentCrawJunction

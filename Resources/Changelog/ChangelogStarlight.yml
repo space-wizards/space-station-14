@@ -1297,3 +1297,45 @@ Entries:
   id: 184
   time: '2024-12-20T12:58:56.000000+00:00'
   url: 'null'
+- author: Rinary
+  changes:
+  - message: Now any npc can unbuckle himself.
+    type: Tweak
+  id: 185
+  time: '2024-12-20T20:36:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/179
+- author: Rinary
+  changes:
+  - message: Added banana anomaly
+    type: Add
+  id: 186
+  time: '2024-12-20T21:00:24.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/180
+- author: Rinary
+  changes:
+  - message: Removed changeling transform sting.
+    type: Remove
+  id: 187
+  time: '2024-12-21T15:38:05.024242+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed ntrep access missing.
+    type: Fix
+  id: 188
+  time: '2024-12-21T15:38:16.500280+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed brigmedic spawnpoint.
+    type: Fix
+  id: 189
+  time: '2024-12-21T15:38:28.479340+00:00'
+  url: 'null'
+- author: STARLIGHT TEAM
+  changes:
+  - message: Upstream
+    type: Tweak
+  id: 190
+  time: '2024-12-21T15:38:54.121846+00:00'
+  url: 'null'

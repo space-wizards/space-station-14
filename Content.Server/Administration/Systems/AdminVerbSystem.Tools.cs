@@ -104,8 +104,8 @@ public sealed partial class AdminVerbSystem
                     },
                     Impact = LogImpact.Medium,
                     Message = Loc.GetString(electrified.Enabled
-                        ? "admin-trick-electrify-description"
-                        : "admin-trick-unelectrify-description"),
+                        ? "admin-trick-unelectrify-description"
+                        : "admin-trick-electrify-description"),
                     Priority = (int) (electrified.Enabled ? TricksVerbPriorities.Unelectrify : TricksVerbPriorities.Electrify),
                 };
                 args.Verbs.Add(electrify);
@@ -226,6 +226,7 @@ public sealed partial class AdminVerbSystem
                         var recharger = EnsureComp<BatterySelfRechargerComponent>(args.Target);
                         recharger.AutoRecharge = true;
                         recharger.AutoRechargeRate = battery.MaxCharge; // Instant refill.
+                        recharger.AutoRechargePause = false; // No delay.
                     },
                     Impact = LogImpact.Medium,
                     Message = Loc.GetString("admin-trick-infinite-battery-object-description"),
@@ -625,6 +626,7 @@ public sealed partial class AdminVerbSystem
 
                         recharger.AutoRecharge = true;
                         recharger.AutoRechargeRate = battery.MaxCharge; // Instant refill.
+                        recharger.AutoRechargePause = false; // No delay.
                     }
                 },
                 Impact = LogImpact.Extreme,

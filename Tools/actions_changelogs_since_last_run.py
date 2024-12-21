@@ -64,11 +64,12 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
     entries = sorted(entries, key=lambda x: (x["author"], x["time"]))
     sent_ids = []
 
-    for (author, time_str), group in itertools.groupby(entries, key=lambda x: (x["author"], x["time"])):
+    for author, group in itertools.groupby(entries, key=lambda x: x["author"]):
+        group = list(group)
         try:
-            time = datetime.strptime(time_str, "%Y-%m-%dT%H:%M:%S.%f%z")
+            time = datetime.strptime(group[0]["time"], "%Y-%m-%dT%H:%M:%S.%f%z")
         except ValueError:
-            print(f"Invalid time format for entry by {author}: {time_str}")
+            print(f"Invalid time format for entry by {author}: {group[0]['time']}")
             continue
 
         embed = {
@@ -86,7 +87,7 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
             for change in entry["changes"]:
                 emoji = TYPES_TO_EMOJI.get(change['type'], "❓")
                 url = entry.get("url")
-                
+
                 message = change["message"]
                 if emoji not in changes_by_type:
                     changes_by_type[emoji] = []
@@ -98,13 +99,16 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
         for emoji, messages in changes_by_type.items():
             for message in messages:
                 embed["description"] += f"\n {emoji} {message}"
+                
+        urls = [entry.get("url") for entry in group if entry.get("url") and "https://" in entry.get("url")]
         
-        if url is not None and url is not 'null':
-            embed["description"] += f"\n \n[GitHub Pull Request]({url})"
+        if urls:
+            embed["description"] += f"\n\n[GitHub Pull Request]({urls[0]})"
 
         send_discord(embed)
 
     update_sent_ids(SENT_IDS_FILE, [{"id": eid} for eid in sent_ids])
+
 
 
 

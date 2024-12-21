@@ -35,6 +35,7 @@
     - Atmospherics
     - Cargo
     - Medical
+    - Ntrep
   special:
     - !type:AddImplantSpecial
       implants: [MindShieldImplant]

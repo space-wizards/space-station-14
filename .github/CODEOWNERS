@@ -2,49 +2,30 @@
 
 # Sorting by path instead of by who added it one day :(
 # this isn't how codeowners rules work pls read the first comment instead of trying to force a sorting order
-/Resources/ConfigPresets/WizardsDen/  @Chief-Engineer
 
-# Moony's Gargantuan List Of Things She Cares About, or MGLOTSCA for short.
-# You need to add your name to these entries, not make a new one, if you care about them.
-/Content.*/Toolshed/ @moonheart08
-**/Toolshed/** @moonheart08
-*Command.cs @moonheart08
-/Content.*/Administration/ @moonheart08 @DrSmugleaf @Chief-Engineer
-/Content.*/Station/ @moonheart08
-/Content.*/Maps/ @moonheart08
-/Content.*/GameTicking/ @moonheart08 @EmoGarbage404
-/Resources/ServerInfo/ @moonheart08 @Chief-Engineer
-/Resources/ServerInfo/Guidebook/ @moonheart08 @EmoGarbage404
-/Resources/ServerInfo/Guidebook/ServerRules/ @Chief-Engineer
-/Resources/engineCommandPerms.yml @moonheart08 @Chief-Engineer
-/Resources/clientCommandPerms.yml @moonheart08 @Chief-Engineer
+/Resources/ConfigPresets/WizardsDen/  @nikthechampiongr
+/Content.*/Administration/ @DrSmugleaf @nikthechampiongr
+/Resources/ServerInfo/ @nikthechampiongr
+/Resources/ServerInfo/Guidebook/ServerRules/ @nikthechampiongr
 
 /Resources/Prototypes/Maps/** @Emisse
 
 /Resources/Prototypes/Body/ @DrSmugleaf # suffering
 /Resources/Prototypes/Entities/Mobs/Player/ @DrSmugleaf
 /Resources/Prototypes/Entities/Mobs/Species/ @DrSmugleaf
-/Resources/Prototypes/Guidebook/rules.yml @Chief-Engineer
+/Resources/Prototypes/Guidebook/rules.yml @nikthechampiongr
 /Content.*/Body/ @DrSmugleaf
 /Content.YAMLLinter @DrSmugleaf
 /Content.Shared/Damage/ @DrSmugleaf
 
-/Content.*/Anomaly/ @EmoGarbage404 @TheShuEd
-/Content.*/Lathe/ @EmoGarbage404
-/Content.*/Materials/ @EmoGarbage404
-/Content.*/Mech/ @EmoGarbage404
-/Content.*/Research/ @EmoGarbage404
-/Content.*/Stack/ @EmoGarbage404
-/Content.*/Xenoarchaeology/ @EmoGarbage404
-/Content.*/Zombies/ @EmoGarbage404
-/Resources/Prototypes/Entities/Structures/Specific/anomalies.yml @EmoGarbage404 @TheShuEd
-/Resources/Prototypes/Research/ @EmoGarbage404
+/Content.*/Anomaly/ @TheShuEd
+/Resources/Prototypes/Entities/Structures/Specific/anomalies.yml @TheShuEd
 
 /Content.*/Forensics/ @ficcialfaint
 
 # SKREEEE
 /Content.*.Database/ @PJB3005 @DrSmugleaf
-/Content.Shared.Database/Log*.cs @PJB3005 @DrSmugleaf @Chief-Engineer
+/Content.Shared.Database/Log*.cs @PJB3005 @DrSmugleaf @nikthechampiongr
 /Pow3r/ @PJB3005
 /Content.Server/Power/Pow3r/ @PJB3005
 
@@ -52,7 +33,7 @@
 /Content.*/Atmos/ @Partmedia
 /Content.*/Botany/ @Partmedia
 
-#Jezi
+# Jezi
 /Content.*/Medical @Jezithyr
 /Content.*/Body @Jezithyr
 
