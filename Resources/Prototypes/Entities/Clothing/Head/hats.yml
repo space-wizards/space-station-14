@@ -43,7 +43,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseRestrictedContraband]
   id: ClothingHeadHatBeretSecurity
   name: security beret
   description: A stylish clothing option for security officers.
@@ -59,7 +59,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseRestrictedContraband]
   id: ClothingHeadHatSecurityTrooper
   name: trooper hat
   description: A campaign hat for the Nanotrasen Troopers, comes with a case too, but you lost it.
@@ -85,7 +85,7 @@
       sprite: Clothing/Head/Hats/casa.rsi
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseRestrictedContraband]
   id: ClothingHeadHatBeretRND
   name: scientific beret
   description: A beret for real scientists.
@@ -101,7 +101,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseRestrictedContraband]
   id: ClothingHeadHatBeretEngineering
   name: engineering beret
   description: A beret with the engineering insignia emblazoned on it. For engineers that are more inclined towards style than safety.
@@ -117,7 +117,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseCommandContraband]
   id: ClothingHeadHatBeretQM
   name: quartermaster's beret
   description: A beret with the cargo's insignia emblazoned on it. For quartermasters that are more inclined towards style.
@@ -133,7 +133,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseCommandContraband]
   id: ClothingHeadHatBeretHoS
   name: head of security's beret
   description: A black beret with a commander's rank emblem. For officers that are more inclined towards style than safety.
@@ -149,7 +149,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseRestrictedContraband]
   id: ClothingHeadHatBeretWarden
   name: warden's beret
   description: A corporate blue beret with a warden's rank emblem. For officers that are more inclined towards style than safety.
@@ -160,7 +160,7 @@
     sprite: Clothing/Head/Hats/beret_warden.rsi
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseMedicalContraband]
   id: ClothingHeadHatBeretSeniorPhysician
   name: physician beret
   description: Donning the colours of medical and chemistry, physicians are the pride of this department!
@@ -246,7 +246,7 @@
     sprite: Clothing/Head/Hats/centcom.rsi
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseCivilianContraband]
   id: ClothingHeadHatChef
   name: chef's hat
   description: "It's a hat used by chefs to keep hair out of your food. Judging by the food in the mess, they don't work."
@@ -536,7 +536,7 @@
     sprite: Clothing/Head/Hats/violetwizard.rsi
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseRestrictedContraband]
   id: ClothingHeadHatWarden
   name: warden's cap
   description: A police officer's Hat. This hat emphasizes that you are THE LAW
@@ -692,7 +692,7 @@
     sprite: Clothing/Head/Hats/fishcap.rsi
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseMedicalContraband]
   id: ClothingHeadNurseHat
   name: nurse hat
   description: Somehow I feel I'm not supposed to leave this place.
@@ -730,7 +730,7 @@
     sprite: Clothing/Head/Hats/safarihat.rsi
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseCivilianContraband]
   id: ClothingHeadHatJester
   name: jester hat
   description: A hat with bells, to add some merriness to the suit.
@@ -885,7 +885,7 @@
   - type: Tag
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseCommandContraband]
   id: ClothingHeadHatCapcap
   name: cap cap
   description: A grand, stylish captain cap.
@@ -1124,7 +1124,7 @@
         acts: [ "Destruction" ]
 
 - type: entity
-  parent: ClothingHeadBase
+  parent: [ClothingHeadBase, BaseMedicalContraband]
   id: ClothingHeadHatBeretMedic
   name: medical beret
   description: White beret that encourages you to be clean.
