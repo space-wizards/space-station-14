@@ -361,7 +361,7 @@
   description: An advanced machine that heats gas in connected pipes. Has the side effect of leaking heat into the surrounding area. Hot as Hell!
   components:
   - type: Sprite
-    sprite: Impstation/Structures/Piping/Atmospherics/hellfirethermomachine.rsi
+    sprite: _Impstation/Structures/Piping/Atmospherics/hellfirethermomachine.rsi
   - type: GasThermoMachine
     maxTemperature: 1193.15
     heatCapacity: 40000
