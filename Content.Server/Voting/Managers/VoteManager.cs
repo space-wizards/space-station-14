@@ -144,7 +144,6 @@ namespace Content.Server.Voting.Managers
             var remQueue = new RemQueue<int>();
             foreach (var v in _votes.Values)
             {
-                // Logger.Debug($"{_timing.ServerTime}");
                 if (_timing.RealTime >= v.EndTime)
                     EndVote(v);
 

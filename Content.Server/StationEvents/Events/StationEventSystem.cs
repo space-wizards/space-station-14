@@ -22,14 +22,15 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : ICompo
     [Dependency] protected readonly ChatSystem ChatSystem = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] protected readonly StationSystem StationSystem = default!;
-
+    [Dependency] private readonly ILogManager _logManager = default!;
     protected ISawmill Sawmill = default!;
+    private new const string SawmillName = "stationevents";
 
     public override void Initialize()
     {
         base.Initialize();
 
-        Sawmill = Logger.GetSawmill("stationevents");
+        Sawmill = _logManager.GetSawmill(SawmillName);
     }
 
     /// <inheritdoc/>

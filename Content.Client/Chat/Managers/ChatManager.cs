@@ -13,11 +13,13 @@ internal sealed class ChatManager : IChatManager
     [Dependency] private readonly IClientAdminManager _adminMgr = default!;
     [Dependency] private readonly IEntitySystemManager _systems = default!;
 
+    [Dependency] private readonly ILogManager _logManager = default!;
     private ISawmill _sawmill = default!;
+    private const string SawmillName = "chat";
 
     public void Initialize()
     {
-        _sawmill = Logger.GetSawmill("chat");
+        _sawmill = _logManager.GetSawmill(SawmillName);
         _sawmill.Level = LogLevel.Info;
     }
 
