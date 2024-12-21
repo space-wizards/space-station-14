@@ -5,28 +5,46 @@
         "y": 32
     },
     "license": "CC-BY-NC-SA-4.0",
-    "copyright": "Created by github user moonheart08.",
+    "copyright": "Original sprite by github user moonheart08, redrawn by github user joshepvodka.",
     "states": [
         {
             "name": "icon"
         },
         {
-            "name": "icon-front"
+            "name": "fill-1"
         },
         {
-            "name": "fill1"
+            "name": "fill-2"
         },
         {
-            "name": "fill2"
+            "name": "fill-3"
         },
         {
-            "name": "fill3"
+            "name": "fill-4"
         },
         {
-            "name": "fill4"
+            "name": "fill-5"
         },
         {
-            "name": "fill5"
+            "name": "fill-6"
+        },
+        {
+            "name": "lemon"
+        },
+        {
+            "name": "lime"
+        },
+        {
+            "name": "cherry"
+        },
+        {
+            "name": "umbrella"
+        },
+        {
+            "name": "straw"
+        },
+        {
+            "name": "toothpick"
         }
     ]
 }
