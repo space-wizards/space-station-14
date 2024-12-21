@@ -40,10 +40,8 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
         mobDna.DNA = targetDna.DNA;
         _metaSystem.SetEntityName(mob, Name(target));
         _metaSystem.SetEntityDescription(mob, MetaData(target).EntityDescription);
-        comp.ConsumedIdentities?.Add(mob);
+        comp.ConsumedIdentities.Add(mob);
         comp.LastConsumedEntityUid = mob;
-        Log.Debug("spawn");
-        EntityManager.StartEntity(mob);
         Dirty(uid, comp);
         HandlePvsOverride(uid, comp, mob);
     }

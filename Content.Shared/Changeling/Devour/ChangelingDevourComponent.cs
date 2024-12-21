@@ -1,4 +1,5 @@
 using Content.Shared.Damage;
+using Content.Shared.FixedPoint;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -55,11 +56,11 @@ public sealed partial class ChangelingDevourComponent : Component
     [DataField, AutoNetworkedField]
     public DamageSpecifier DamagePerTick = new()
     {
-        DamageDict = new()
+        DamageDict = new Dictionary<string, FixedPoint2>
         {
             { "Slash", 10},
             { "Piercing", 10 },
-            { "Blunt", 5 }
+            { "Blunt", 5 },
         }
     };
     [DataField, AutoNetworkedField]
