@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: More items can be put in the candy bowl.
-    type: Tweak
-  id: 278
-  time: '2024-09-28T00:12:40.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/359
 - author: Darkmajia
   changes:
   - message: Brigmedics now spawn with a survival box.
@@ -4523,3 +4516,12 @@
   id: 777
   time: '2024-12-20T16:54:25.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1087
+- author: AftrLite
+  changes:
+  - message: Ongoing respriting efforts. Keep an eye out!
+    type: Tweak
+  - message: Fixed the InHands for Chaplain's Null Rod quiver's arrow.
+    type: Fix
+  id: 778
+  time: '2024-12-21T11:31:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1085
