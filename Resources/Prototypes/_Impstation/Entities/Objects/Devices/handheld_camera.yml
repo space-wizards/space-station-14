@@ -2,7 +2,7 @@
   id: SurveillanceWirelessCameraPocket
   name: handheld quantum camera
   parent: BaseItem
-  description: "A wireless handheld camera boasting an impressive range. They're watching you. Maybe."
+  description: "A wireless handheld camera boasting an impressive range, tuned to the Entertainment frequency. They're watching you. Maybe."
   suffix: entertainment, mapping only
   components:
     - type: InteractionOutline
