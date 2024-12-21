@@ -36,8 +36,7 @@ public sealed class SprayPainterSystem : SharedSprayPainterSystem
             return;
 
         Audio.PlayPvs(ent.Comp.SpraySound, ent);
-
-        _pipeColor.SetColor(target, color, args.Color);
+        _pipeColor.SetColor((target, color), args.Color);
 
         args.Handled = true;
     }

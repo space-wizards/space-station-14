@@ -16,7 +16,7 @@ public sealed partial class AtmosPipeColorComponent : Component
     public Color ColorVV
     {
         get => Color;
-        set => IoCManager.Resolve<IEntityManager>().System<AtmosPipeColorSystem>().SetColor(Owner, this, value);
+        set => IoCManager.Resolve<IEntityManager>().System<AtmosPipeColorSystem>().SetColor((Owner, this), value);
     }
 }
 

@@ -16,39 +16,39 @@ public sealed class AtmosPipeColorSystem : EntitySystem
         SubscribeLocalEvent<AtmosPipeColorComponent, ComponentShutdown>(OnShutdown);
     }
 
-    private void OnStartup(EntityUid uid, AtmosPipeColorComponent component, ComponentStartup args)
+    private void OnStartup(Entity<AtmosPipeColorComponent> item, ref ComponentStartup args)
     {
-        if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+        if (!TryComp<AppearanceComponent>(item.Owner, out var appearance))
             return;
 
-        _appearance.SetData(uid, PipeColorVisuals.Color, component.Color, appearance);
+        _appearance.SetData(item.Owner, PipeColorVisuals.Color, item.Comp.Color, appearance);
     }
 
-    private void OnShutdown(EntityUid uid, AtmosPipeColorComponent component, ComponentShutdown args)
+    private void OnShutdown(Entity<AtmosPipeColorComponent> item, ref ComponentShutdown args)
     {
-        if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+        if (!TryComp<AppearanceComponent>(item.Owner, out var appearance))
             return;
 
-        _appearance.SetData(uid, PipeColorVisuals.Color, Color.White, appearance);
+        _appearance.SetData(item.Owner, PipeColorVisuals.Color, Color.White, appearance);
     }
 
-    public void SetColor(EntityUid uid, AtmosPipeColorComponent component, Color color)
+    public void SetColor(Entity<AtmosPipeColorComponent> item, Color color)
     {
-        component.Color = color;
+        item.Comp.Color = color;
 
-        if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+        if (!TryComp<AppearanceComponent>(item.Owner, out var appearance))
             return;
 
-        if (EntityManager.TryGetComponent(uid, out AtmosPipeColorComponent? colorSync))
+        if (!TryComp<AtmosPipeColorComponent>(item.Owner, out var colorSync))
         {
             if (colorSync != null)
             {
                 colorSync.Color = color;
-                Dirty(uid, colorSync);
+                Dirty(item.Owner, colorSync);
             }
         }
 
-        _appearance.SetData(uid, PipeColorVisuals.Color, color, appearance);
+        _appearance.SetData(item.Owner, PipeColorVisuals.Color, color, appearance);
     }
 }
 

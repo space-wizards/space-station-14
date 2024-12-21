@@ -15,11 +15,11 @@ public sealed class PipeColorVisualizerSystem : VisualizerSystem<PipeColorVisual
         SubscribeLocalEvent<PipeColorVisualsComponent, GetInhandVisualsEvent>(OnGetVisuals);
     }
 
-    private void OnGetVisuals(EntityUid uid, PipeColorVisualsComponent item, GetInhandVisualsEvent args)
+    private void OnGetVisuals(Entity<PipeColorVisualsComponent> item, ref GetInhandVisualsEvent args)
     {
         foreach (var (key, layerData) in args.Layers)
         {
-            if (TryComp(uid, out AtmosPipeColorComponent? pipeColor))
+            if (TryComp(item.Owner, out AtmosPipeColorComponent? pipeColor))
             {
                 layerData.Color = pipeColor.Color;
             }
