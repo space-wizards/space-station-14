@@ -86,6 +86,7 @@
   - ChiefEngineer
   - StationEngineer
   - TechnicalAssistant
+  - ERTEngineer
 
 - type: department
   id: Medical
@@ -99,6 +100,8 @@
   - MedicalIntern
   - Psychologist
   - Paramedic
+  - ERTMedical
+  - CBURN
 
 - type: department
   id: Security
@@ -112,6 +115,9 @@
   - SecurityOfficer
   - Detective
   - Warden
+  - CBURN
+  - ERTSecurity
+  - DeathSquad
 
 - type: department
   id: Science
