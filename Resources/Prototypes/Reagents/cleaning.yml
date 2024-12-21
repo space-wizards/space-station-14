@@ -39,6 +39,54 @@
     - !type:CleanDecalsReaction {}
 
 - type: reagent
+  id: UniversalSolvent
+  name: reagent-name-universal-solvent
+  desc: reagent-desc-universal-solvent
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor:
+  color: "#c8ff69" # Everyone is accustomed to this color being the safe foam, so... >:D
+  recognizable: false
+  boilingPoint: 147.0
+  meltingPoint: -11.0
+  tileReactions:
+    - !type:CleanTileReaction {} # It still cleans, just the scope of what it cleans is... larger...
+    - !type:CleanDecalsReaction {}
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        ignoreResistances: false
+        damage:
+          types:
+            Caustic: 4 # High skin contact damage to remain effective against internals users.
+      - !type:PopupMessage
+        type: Local
+        visualType: LargeCaution
+        messages: [ "universalsolvent-effect-skin" ]
+        probability: 0.33
+      - !type:Emote
+        emote: Scream
+        probability: 0.5
+  metabolisms:
+    Poison:
+      metabolismRate : 3.00
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Caustic: 6 # 2 damage per unit
+      - !type:PopupMessage
+        type: Local
+        visualType: LargeCaution
+        messages: [ "universalsolvent-effect-organs" ]
+        probability: 0.33
+      - !type:Emote
+        emote: Scream
+        probability: 0.3
+
+- type: reagent
   id: SoapReagent
   name: reagent-name-soap
   desc: reagent-desc-soap
