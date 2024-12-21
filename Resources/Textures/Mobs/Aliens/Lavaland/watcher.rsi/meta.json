@@ -16,6 +16,10 @@
       "directions": 4
     },
     {
+      "name": "unshaded-eye",
+      "directions": 4
+    },
+    {
       "name": "dead"
     },
     {
