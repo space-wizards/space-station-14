@@ -1,3 +1,4 @@
+using Content.Shared.Containers;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Rejuvenate;
@@ -15,6 +16,15 @@ public sealed class BlindableSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<BlindableComponent, RejuvenateEvent>(OnRejuvenate);
         SubscribeLocalEvent<BlindableComponent, EyeDamageChangedEvent>(OnDamageChanged);
+        SubscribeLocalEvent<BlindableComponent, ThrownIntoContainerThrowerEvent>(OnBeforeThrownIntoContainerThrowerEvent);
+    }
+
+    private void OnBeforeThrownIntoContainerThrowerEvent(Entity<BlindableComponent> ent, ref ThrownIntoContainerThrowerEvent args)
+    {
+        if (ent.Comp.IsBlind)
+            args.Modifier = 0;
+        else
+            args.Modifier *= Math.Max(1 - ent.Comp.EyeDamage*ent.Comp.DecreaseThrowChancePerBlindness, 0);
     }
 
     private void OnRejuvenate(Entity<BlindableComponent> ent, ref RejuvenateEvent args)
