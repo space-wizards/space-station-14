@@ -49,7 +49,7 @@ public sealed class ChangelingTransformSystem : SharedChangelingTransformSystem
             || !TryComp<BodyEmotesComponent>(uid, out var existingBodyEmotes))
             return;
 
-        _bodyEmotesSystem.Clone(existingBodyEmotes, targetBodyEmotes);
+        BodyEmotesSystem.Replace(existingBodyEmotes, targetBodyEmotes);
 
     }
     protected override void StartSound(EntityUid uid, ChangelingTransformComponent component, SoundSpecifier? sound)

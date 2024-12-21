@@ -174,7 +174,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         currentSpeech.AllowedEmotes = targetConsumedSpeech.AllowedEmotes;
         currentSpeech.AudioParams = targetConsumedSpeech.AudioParams;
 
-        _typingIndicatorSystem.Replace(currentTypingIndicator, targetConsumedTypingIndicator);
+        SharedTypingIndicatorSystem.Replace(currentTypingIndicator, targetConsumedTypingIndicator);
 
         _metaSystem.SetEntityName(uid, Name(targetIdentity), raiseEvents: false);
         _metaSystem.SetEntityDescription(uid, MetaData(targetIdentity).EntityDescription);

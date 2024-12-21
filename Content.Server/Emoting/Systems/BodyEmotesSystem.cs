@@ -52,7 +52,7 @@ public sealed class BodyEmotesSystem : EntitySystem
     /// </summary>
     /// <param name="component">The original BodyEmotesComponent</param>
     /// <param name="clone">The Target BodyEmotesComponent state</param>
-    public void Clone(BodyEmotesComponent component, BodyEmotesComponent clone)
+    public static void Replace(BodyEmotesComponent component, BodyEmotesComponent clone)
     {
         component.Sounds = clone.Sounds;
         component.SoundsId = clone.SoundsId;
