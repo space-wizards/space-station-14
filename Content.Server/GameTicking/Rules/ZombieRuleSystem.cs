@@ -134,7 +134,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     }
 
     /// <summary>
-    ///     Doesn't let to recall the shuttle. No roundstalling
+    ///     Doesn't let the shuttle be recalled, stopping round-stalling.
     /// </summary>
     private void OnShuttleCallAttempt(ref CommunicationConsoleCallShuttleAttemptEvent ev)
     {
