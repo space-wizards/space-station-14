@@ -10,7 +10,7 @@ namespace Content.Shared.Starlight.Medical.Surgery;
 public sealed partial class CustomLimbVisualizerComponent : Component
 {
     [DataField, AutoNetworkedField]
-    public Dictionary<HumanoidVisualLayers, EntityUid?> Layers = [];
+    public Dictionary<HumanoidVisualLayers, NetEntity?> Layers = [];
 
     [DataField]
     public HashSet<HumanoidVisualLayers> CachedLayers = [];

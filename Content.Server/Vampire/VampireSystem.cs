@@ -300,7 +300,7 @@ public sealed partial class VampireSystem : EntitySystem
                 {
                     component.actionEntities[actionId] = new AbilityInfo(_entityManager.GetNetEntity(uid), _entityManager.GetNetEntity(actionEntity.Value));
                     if (powerId != null && !component.UnlockedPowers.ContainsKey(powerId))
-                        component.UnlockedPowers.Add(powerId, actionEntity.Value);
+                        component.UnlockedPowers.Add(powerId, GetNetEntity(actionEntity.Value));
                 }
             }
         }

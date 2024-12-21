@@ -20,6 +20,18 @@ jobs:
     - uses: actions/checkout@v3.6.0
       with:
         submodules: 'recursive'
+        fetch-depth: 0
+        
+    - name: Fetch all tags and branches (RobustToolbox)
+      run: |
+        cd RobustToolbox
+        git fetch --all --tags
+
+    - name: Debug tags for RobustToolbox
+      run: |
+        cd RobustToolbox
+        git tag
+        
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v3.2.0
       with:

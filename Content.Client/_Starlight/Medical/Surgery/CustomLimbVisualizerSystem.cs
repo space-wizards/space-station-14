@@ -45,13 +45,13 @@ public sealed class CustomLimbVisualizerSystem : EntitySystem
 
         foreach (var item in ent.Comp.Layers)
         {
-            if (!item.Value.HasValue || !TryComp<SpriteComponent>(item.Value, out var layerSprite))
+            if (!item.Value.HasValue || !TryComp<SpriteComponent>(GetEntity(item.Value), out var layerSprite))
             {
                 if (repeat) Timer.Spawn(TimeSpan.FromMilliseconds(150), () => OnChanged(ent, false));
                 return;
             }
             string? state = null;
-            if (TryComp<ItemComponent>(item.Value, out var itemComp) && itemComp.HeldPrefix is not null)
+            if (TryComp<ItemComponent>(GetEntity(item.Value), out var itemComp) && itemComp.HeldPrefix is not null)
                 state = $"{itemComp.HeldPrefix}-";
 
             var offset = Vector2.Zero;

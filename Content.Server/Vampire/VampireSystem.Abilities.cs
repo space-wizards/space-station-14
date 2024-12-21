@@ -829,7 +829,7 @@ public sealed partial class VampireSystem
         if (!vampire.UnlockedPowers.TryGetValue(name, out var ability))
             return null;
 
-        return ability;
+        return GetEntity(ability);
     }
 
     /// <summary>
