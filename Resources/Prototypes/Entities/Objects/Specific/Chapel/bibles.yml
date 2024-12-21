@@ -73,6 +73,7 @@
       types:
         Caustic: 50
     failChance: 0
+    eyeHealChance: 0 # Makes it so that it can not heal eye damage
     locPrefix: "necro"
     healSound: "/Audio/Effects/lightburn.ogg"
   - type: Summonable
