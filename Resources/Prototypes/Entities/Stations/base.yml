@@ -133,14 +133,8 @@
     - type: StationEventEligible # For when someone makes this more granular in the future.
 
 - type: entity
-  id: BaseStationShadowDimension
+  id: BaseStationAlternateDimension
   abstract: true
   components:
-    - type: StationShadowDimension
-      replacements:
-        Wall: ShadowDimensionBarrierSpawner
-        Window: ShadowDimensionFillSpawner
-        Pipe: ShadowDimensionFillSpawner
-        # Loot zone
-        ShadowSideLoot: ShadowDimensionLootSpawner
-        ShadowSideLootEpic: ShadowDimensionEpicLootSpawner # Add it to unique strucures, like NuclearBomb or TeslaGenerator
+    - type: StationAlternateDimension
+      dimension: Shadowlands

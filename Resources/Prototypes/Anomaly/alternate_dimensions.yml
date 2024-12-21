@@ -1,0 +1,17 @@
+
+- type: alternateDimension
+  id: Shadowlands
+  defaultTile: FloorChromite
+  mapComponents:
+  - type: Parallax
+    parallax: Darkness
+  gridComponents:
+  - type: Gravity
+    enabled: true
+  replacements:
+    Wall: ShadowDimensionBarrierSpawner
+    Window: ShadowDimensionFillSpawner
+    Pipe: ShadowDimensionFillSpawner
+    # Loot zone
+    ShadowSideLoot: ShadowDimensionLootSpawner
+    ShadowSideLootEpic: ShadowDimensionEpicLootSpawner

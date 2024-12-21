@@ -4,10 +4,8 @@ using System.Threading.Tasks;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Construction.EntitySystems;
-using Content.Shared.Gravity;
 using Content.Shared.Maps;
-using Content.Shared.Parallax;
-using Content.Shared.ShadowDimension;
+using Content.Shared.AlternateDimension;
 using Content.Shared.Tag;
 using Robust.Shared.CPUJob.JobQueues;
 using Robust.Shared.Map;
@@ -15,17 +13,14 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
-namespace Content.Server.ShadowDimension;
+namespace Content.Server.AlternateDimension;
 
-public sealed class SpawnShadowDimensionJob : Job<bool>
+public sealed class SpawnAlternateDimensionJob : Job<bool>
 {
     private readonly IEntityManager _entManager;
-    private readonly IGameTiming _timing;
     private readonly IMapManager _mapManager;
     private readonly IPrototypeManager _prototypeManager;
-    private readonly AnchorableSystem _anchorable;
     private readonly MetaDataSystem _metaData;
-    private readonly SharedTransformSystem _xforms;
     private readonly StationSystem _stationSystem;
     private readonly SharedMapSystem _map;
     private readonly ITileDefinitionManager _tileDefManager;
@@ -34,20 +29,17 @@ public sealed class SpawnShadowDimensionJob : Job<bool>
     private readonly TagSystem _tag;
 
     public readonly EntityUid Station;
-    private readonly ShadowDimensionParams _shadowParams;
+    private readonly AlternateDimensionParams _alternateParams;
 
     private readonly ISawmill _sawmill;
 
-    public SpawnShadowDimensionJob(
+    public SpawnAlternateDimensionJob(
         double maxTime,
         IEntityManager entManager,
-        IGameTiming timing,
         ILogManager logManager,
         IMapManager mapManager,
         IPrototypeManager protoManager,
-        AnchorableSystem anchorable,
         MetaDataSystem metaData,
-        SharedTransformSystem xform,
         StationSystem stationSystem,
         SharedMapSystem map,
         ITileDefinitionManager tileDefManager,
@@ -55,16 +47,13 @@ public sealed class SpawnShadowDimensionJob : Job<bool>
         EntityLookupSystem lookup,
         TagSystem tagSystem,
         EntityUid station,
-        ShadowDimensionParams shadowParams,
+        AlternateDimensionParams alternateParams,
         CancellationToken cancellation = default) : base(maxTime, cancellation)
     {
         _entManager = entManager;
-        _timing = timing;
         _mapManager = mapManager;
         _prototypeManager = protoManager;
-        _anchorable = anchorable;
         _metaData = metaData;
-        _xforms = xform;
         _stationSystem = stationSystem;
         _map = map;
         _tileDefManager = tileDefManager;
@@ -72,7 +61,7 @@ public sealed class SpawnShadowDimensionJob : Job<bool>
         _lookup = lookup;
         _tag = tagSystem;
         Station = station;
-        _shadowParams = shadowParams;
+        _alternateParams = alternateParams;
         _sawmill = logManager.GetSawmill("shadow_dimension_job");
     }
 
@@ -86,6 +75,9 @@ public sealed class SpawnShadowDimensionJob : Job<bool>
         if (!_entManager.TryGetComponent<MapGridComponent>(stationGrid, out var stationGridComp))
             return false;
 
+        if (!_prototypeManager.TryIndex(_alternateParams.Dimension, out var indexedDimension))
+            return false;
+
         //Create new map and set name
         var shadowMapUid = _map.CreateMap(out var shadowMapId, runMapInit: false);
         var stationMetaData = _entManager.EnsureComponent<MetaDataComponent>(Station);
@@ -93,27 +85,27 @@ public sealed class SpawnShadowDimensionJob : Job<bool>
             shadowMapUid,
             $"Shadow side of {stationMetaData.EntityName}"); //TODO: Localize it
 
-        _sawmill.Debug("shadow_dimension", $"Spawning station {stationMetaData.EntityName} shadow side with seed {_shadowParams.Seed}");
-        var random = new Random(_shadowParams.Seed);
+        _sawmill.Debug("shadow_dimension", $"Spawning station {stationMetaData.EntityName} shadow side with seed {_alternateParams.Seed}");
+        var random = new Random(_alternateParams.Seed);
+
+        //Add map components
+        if (indexedDimension.MapComponents is not null)
+            _entManager.AddComponents(shadowMapUid, indexedDimension.MapComponents);
+
+        //Set Station grid silhouette tiles
         var shadowGrid = _mapManager.CreateGridEntity(shadowMapId);
-
-        //Gravity
-        _entManager.EnsureComponent<GravityComponent>(shadowGrid, out var gravityComp);
-        gravityComp.Enabled = true;
-
-        //Parallax
-        _entManager.EnsureComponent<ParallaxComponent>(shadowMapUid, out var parallaxComp);
-        parallaxComp.Parallax = "Darkness";
-
-        //Set Station silhouette tiles
         var stationTiles = _map.GetAllTilesEnumerator(stationGrid.Value, stationGridComp);
         var shadowTiles = new List<(Vector2i Index, Tile Tile)>();
-        var tileDef = _tileDefManager[_shadowParams.DefaultTile];
+        var tileDef = _tileDefManager[indexedDimension.DefaultTile];
         while (stationTiles.MoveNext(out var tileRef))
         {
             shadowTiles.Add((tileRef.Value.GridIndices, new Tile(tileDef.TileId, variant: _tileSystem.PickVariant((ContentTileDefinition) tileDef, random))));
         }
         _map.SetTiles(shadowGrid, shadowTiles);
+
+        //Add grid components
+        if (indexedDimension.GridComponents is not null)
+            _entManager.AddComponents(shadowGrid, indexedDimension.GridComponents);
 
         //Set shadow dimension entities
         HashSet<Entity<TagComponent, TransformComponent>> taggedEntities = new();
@@ -121,7 +113,7 @@ public sealed class SpawnShadowDimensionJob : Job<bool>
 
         foreach (var tagged in taggedEntities)
         {
-            foreach (var replacement in _shadowParams.Replacements)
+            foreach (var replacement in indexedDimension.Replacements)
             {
                 if (!_tag.HasTag(tagged.Owner, replacement.Key))
                     continue;
