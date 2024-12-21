@@ -2707,7 +2707,7 @@
   components:
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Pets/corgi.rsi
+    sprite: Mobs/Pets/corgi/corgi.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: corgi
@@ -2767,7 +2767,7 @@
   components:
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Pets/corgi.rsi
+    sprite: Mobs/Pets/corgi/corgi.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: narsian
@@ -2828,7 +2828,7 @@
   components:
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Pets/corgi.rsi
+    sprite: Mobs/Pets/corgi/corgi.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: puppy
