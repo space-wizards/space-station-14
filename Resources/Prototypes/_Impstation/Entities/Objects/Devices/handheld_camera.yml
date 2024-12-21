@@ -32,3 +32,5 @@
       sprite: _Impstation/Objects/Devices/hand_camera.rsi
       layers:
       - state: icon
+      - state: icon_unshaded
+        shader: unshaded

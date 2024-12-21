@@ -19,6 +19,17 @@
       ]
     },
     {
+      "name": "icon_unshaded",
+      "delays": [
+        [
+          0.35,
+          0.35,
+          0.35,
+          0.35
+        ]
+      ]
+    },
+    {
       "name": "inhand-left",
       "directions": 4
     },
