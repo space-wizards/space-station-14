@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Winkarst-cpu
-  changes:
-  - message: Now railings render over tables.
-    type: Tweak
-  id: 7245
-  time: '2024-08-29T03:04:43.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31589
 - author: metalgearsloth
   changes:
   - message: Fix storage UI being buggy.
@@ -3937,3 +3930,10 @@
   id: 7744
   time: '2024-12-21T02:14:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33950
+- author: JustinWinningham
+  changes:
+  - message: Wood walls no longer require girders and are built from barricades instead.
+    type: Tweak
+  id: 7745
+  time: '2024-12-21T03:28:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33902
