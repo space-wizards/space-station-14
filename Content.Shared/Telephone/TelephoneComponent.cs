@@ -1,4 +1,5 @@
 using Content.Shared.Chat;
+using Content.Shared.Speech;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -91,6 +92,12 @@ public sealed partial class TelephoneComponent : Component
     /// </summary>
     [DataField]
     public bool UnlistedNumber = false;
+
+    /// <summary>
+    /// Speech is relayed through this entity instead of the telephone
+    /// </summary>
+    [DataField]
+    public Entity<SpeechComponent>? Speaker = null;
 
     /// <summary>
     /// Telephone number for this device
