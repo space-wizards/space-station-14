@@ -116,7 +116,7 @@ namespace Content.Server.Kitchen.EntitySystems
                         scaledSolution.ScaleSolution(fitsCount);
                         solution = scaledSolution;
 
-                        _stackSystem.SetCount(item, stack.Count - fitsCount); // Setting to 0 will QueueDel
+                        _stackSystem.SetCount((item, stack), stack.Count - fitsCount); // Setting to 0 will QueueDel
                     }
                     else
                     {
