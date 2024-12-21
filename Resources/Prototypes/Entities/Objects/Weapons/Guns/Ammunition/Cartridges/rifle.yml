@@ -29,44 +29,23 @@
 - type: entity
   id: CartridgeRiflePractice
   name: cartridge (.20 rifle practice)
-  parent: BaseCartridgeRifle
+  parent: [BaseCartridgePractice, BaseCartridgeRifle]
   components:
   - type: CartridgeAmmo
     proto: BulletRiflePractice
-  - type: Sprite
-    layers:
-      - state: base
-        map: [ "enum.AmmoVisualLayers.Base" ]
-      - state: tip
-        map: [ "enum.AmmoVisualLayers.Tip" ]
-        color: "#dbdbdb"
 
 - type: entity
   id: CartridgeRifleIncendiary
   name: cartridge (.20 rifle incendiary)
-  parent: BaseCartridgeRifle
+  parent: [BaseCartridgeIncendiary,  BaseCartridgeRifle]
   components:
   - type: CartridgeAmmo
     proto: BulletRifleIncendiary
-  - type: Sprite
-    layers:
-      - state: base
-        map: [ "enum.AmmoVisualLayers.Base" ]
-      - state: tip
-        map: [ "enum.AmmoVisualLayers.Tip" ]
-        color: "#ff6e52"
 
 - type: entity
   id: CartridgeRifleUranium
   name: cartridge (.20 rifle uranium)
-  parent: BaseCartridgeRifle
+  parent: [BaseCartridgeUranium, BaseCartridgeRifle]
   components:
   - type: CartridgeAmmo
     proto: BulletRifleUranium
-  - type: Sprite
-    layers:
-      - state: base
-        map: [ "enum.AmmoVisualLayers.Base" ]
-      - state: tip
-        map: [ "enum.AmmoVisualLayers.Tip" ]
-        color: "#65fe08"
