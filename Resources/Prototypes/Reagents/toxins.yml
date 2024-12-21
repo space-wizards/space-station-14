@@ -702,3 +702,17 @@
           shouldHave: false
         walkSpeedModifier: 0.4
         sprintSpeedModifier: 0.4
+
+- type: reagent
+  id: BlindToxin
+  name: reagent-name-blind-toxin
+  desc: reagent-desc-blind-toxin
+  group: Toxins
+  physicalDesc: reagent-physical-desc-blinding
+  flavor: medicine
+  color: "#848484"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:ChemChangeEyeDamage
+        amount: 1
