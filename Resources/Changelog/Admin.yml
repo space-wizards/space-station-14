@@ -643,5 +643,19 @@ Entries:
   id: 80
   time: '2024-12-18T13:15:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33879
+- author: ElectroJr
+  changes:
+  - message: Some toolshed command permissions have changed. The "emplace" and "iterate"
+      command no longer require QUER` permissions, they now match the "do" command
+      and only require DEBUG. Several previously unrestricted commands now require
+      the DEBUG flag.
+    type: Tweak
+  - message: Toolshed command parsing has changed. In particular, command substitution
+      (using the output of a command in place of another command's argument) now requires
+      that the command be wrapped in curly braces
+    type: Tweak
+  id: 81
+  time: '2024-12-21T07:02:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33980
 Name: Admin
 Order: 1

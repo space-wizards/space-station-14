@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix storage UI being buggy.
-    type: Fix
-  id: 7246
-  time: '2024-08-29T03:23:37.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31616
 - author: MisterMecky
   changes:
   - message: Changed strange pill possible reagents. They are no longer mostly composed
@@ -3937,3 +3930,11 @@
   id: 7745
   time: '2024-12-21T03:28:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33902
+- author: ElectroJr
+  changes:
+  - message: Toolshed console commands have been reworked. Some old commands may no
+      longer work.
+    type: Tweak
+  id: 7746
+  time: '2024-12-21T06:45:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33598
