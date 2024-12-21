@@ -2,7 +2,7 @@
 # CaselessRifle
 - type: entity
   name: box of magazines
-  parent: BoxCardboard
+  parent: [BoxCardboard, BaseRestrictedContraband]
   id: BoxMagazine
   description: A box full of magazines.
   components:
@@ -170,7 +170,7 @@
 
 - type: entity
   name: box of (.50 beanbag) ammo drums
-  parent: BoxMagazine
+  parent: [BaseCivilianSecurityContraband, BoxMagazine]
   id: BoxMagazineShotgunBeanbag
   description: A box full of (.50 beanbag) ammo drums.
   components:
