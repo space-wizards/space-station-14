@@ -1109,6 +1109,12 @@
   id: SecwayKeys
 
 - type: Tag
+  id: ShadowSideLoot
+
+- type: Tag
+  id: ShadowSideLootEpic
+
+- type: Tag
   id: Sheet
 
 - type: Tag

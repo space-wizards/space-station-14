@@ -26,4 +26,7 @@
         - Opaque
   - type: Anchorable
   #- type: GuideHelp # TODO - add Tesla Guide
+  - type: Tag
+    tags:
+    - ShadowSideLootEpic
 

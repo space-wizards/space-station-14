@@ -102,6 +102,9 @@
                 min: 2
                 max: 4
   #- type: GuideHelp # TODO - add Tesla Guide
+  - type: Tag
+    tags:
+    - ShadowSideLoot
 
 - type: entity
   id: TeslaGroundingRod

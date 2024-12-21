@@ -1,0 +1,13 @@
+- type: parallax
+  id: Darkness
+  layers:
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_wizard_stars"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars_purple.toml"
+      slowness: 0.696625
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_wizard_stars"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars-2_purple.toml"
+      slowness: 0.896625

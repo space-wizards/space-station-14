@@ -3,8 +3,6 @@
   abstract: true
   parent: [ BaseMob, BaseShadow ]
   components:
-  - type: Sprite
-    color: "#793a80dd"
   - type: PointLight
     color: "#793a80dd"
     radius: 1.1
@@ -44,11 +42,11 @@
   description: A lovely piece of darkness. Hope he doesn't bring you a curse.
   components:
   - type: Sprite
-    drawdepth: Mobs
     sprite: Mobs/Pets/cat.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: cat
+      color: "#793a80dd"
   - type: Physics
   - type: ReplacementAccent
     accent: cat
@@ -65,3 +63,42 @@
   - type: Tag
     tags:
     - VimPilot
+
+- type: entity
+  name: shadow watcher
+  parent: 
+  - BaseShadowMob
+  - FlyingMobBase 
+  id: MobWatcherShadow
+  description: A silent observer watching for intruders in the shadow dimension.
+  components:
+  - type: Sprite
+    sprite: Mobs/Aliens/Lavaland/watcher.rsi
+    layers:
+    - state: base
+      color: "#793a80dd"
+    - state: unshaded
+      shader: unshaded
+      color: "#2d0c30dd"
+    - state: unshaded-eye
+      shader: unshaded
+      color: "#b450bf"
+  - type: Portal
+    arrivalSound: /Audio/Items/hiss.ogg
+    departureSound: /Audio/Items/hiss.ogg
+  - type: AmbientSound
+    range: 6
+    volume: -3
+    sound:
+      path: /Audio/Ambience/anomaly_scary.ogg
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.30
+        density: 80
+        mask:
+        - FlyingMobMask
+        layer:
+        - FlyingMobLayer
