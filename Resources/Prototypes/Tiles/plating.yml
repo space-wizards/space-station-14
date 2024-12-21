@@ -87,14 +87,3 @@
   isSpace: true
   itemDrop: PartRodMetal1
   heatCapacity: 10000
-
-- type: tile
-  id: PlatingBurnt
-  name: tiles-plating
-  sprite: /Textures/deprecated.rsi/deprecated.png
-  baseTurf: Lattice
-  isSubfloor: true
-  footstepSounds:
-    collection: FootstepPlating
-  friction: 0.3
-  heatCapacity: 10000

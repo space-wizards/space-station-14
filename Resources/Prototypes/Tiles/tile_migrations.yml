@@ -63,10 +63,10 @@
 # Burnt tiles now exist, but they don't use the tiles system. They're decals.
 # There's presently no way to add decals over existing tiles, so this will have to suffice for now.
 
-#- type: tileAlias
-#  id: PlatingBurnt
-#  target: PlatingDamaged
+- type: tileAlias
+  id: PlatingBurnt
+  target: PlatingDamaged
 
-#- type: tileAlias
-#  id: FloorSteelBurnt
-#  target: FloorSteelDamaged
+- type: tileAlias
+  id: FloorSteelBurnt
+  target: FloorSteelDamaged
