@@ -178,26 +178,28 @@ namespace Content.Shared.Friction
             if (!xform.Coordinates.IsValid(EntityManager))
                 return 0.0f;
 
+            var gridUid = xform.GridUid;
+
             // If not on a grid then return the map's friction.
-            if (!_gridQuery.TryGetComponent(xform.GridUid, out var grid))
+            if (!_gridQuery.TryGetComponent(gridUid, out var grid))
             {
                 return _frictionQuery.TryGetComponent(xform.MapUid, out var friction)
                     ? friction.Modifier
                     : DefaultFriction;
             }
 
-            var tile = _map.GetTileRef(xform.GridUid.Value, grid, xform.Coordinates);
+            var tile = _map.GetTileRef(gridUid.Value, grid, xform.Coordinates);
 
             // If it's a map but on an empty tile then just assume it has gravity.
             if (tile.Tile.IsEmpty &&
-                HasComp<MapComponent>(xform.GridUid) &&
-                (!TryComp<GravityComponent>(xform.GridUid, out var gravity) || gravity.Enabled))
+                HasComp<MapComponent>(gridUid) &&
+                (!TryComp<GravityComponent>(gridUid, out var gravity) || gravity.Enabled))
             {
                 return DefaultFriction;
             }
 
             // If there's an anchored ent that modifies friction then fallback to that instead.
-            var anc = grid.GetAnchoredEntitiesEnumerator(tile.GridIndices);
+            var anc = _map.GetAnchoredEntitiesEnumerator(gridUid.Value, grid, tile.GridIndices);
 
             while (anc.MoveNext(out var tileEnt))
             {
