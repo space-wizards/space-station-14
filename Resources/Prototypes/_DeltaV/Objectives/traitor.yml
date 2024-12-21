@@ -11,3 +11,21 @@
     title: objective-condition-teach-person-title
   - type: PickRandomPerson
   - type: TeachLessonCondition
+# Base
+# teach lesson
+- type: entity
+  abstract: true
+  parent: BaseTargetObjective
+  id: BaseTeachLessonObjective
+  components:
+  - type: Objective
+    unique: false
+    icon:
+      sprite: Objects/Weapons/Melee/fireaxe.rsi
+      state: icon
+  - type: TeachLessonCondition
+  - type: CodeCondition
+  - type: ObjectiveBlacklistRequirement
+    blacklist:
+      components:
+      - SocialObjective
