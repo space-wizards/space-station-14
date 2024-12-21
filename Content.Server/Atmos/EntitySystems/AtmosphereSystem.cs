@@ -107,7 +107,7 @@ public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
         var query = EntityQueryEnumerator<AtmosExposedComponent, TransformComponent>();
         while (query.MoveNext(out var uid, out _, out var transform))
         {
-            var air = GetContainingMixture((uid, transform));
+            var air = GetContainingMixture((uid, transform), ignoreExposed: false, excite: true);
 
             if (air == null)
                 continue;
