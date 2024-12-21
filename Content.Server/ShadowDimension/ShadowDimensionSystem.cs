@@ -62,7 +62,12 @@ public sealed partial class ShadowDimensionSystem : SharedShadowDimensionSystem
 
     private void OnStationInit(Entity<StationShadowDimensionComponent> ent, ref StationPostInitEvent args)
     {
-        var testParams = new ShadowDimensionParams {Seed = _random.Next(), Replacements = ent.Comp.Replacements};
+        var testParams = new ShadowDimensionParams
+        {
+            Seed = _random.Next(),
+            Replacements = ent.Comp.Replacements,
+            DefaultTile = ent.Comp.DefaultTile
+        };
 
         SpawnStationShadowDimension(ent, testParams);
     }

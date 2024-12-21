@@ -4,7 +4,9 @@ using System.Threading.Tasks;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Construction.EntitySystems;
+using Content.Shared.Gravity;
 using Content.Shared.Maps;
+using Content.Shared.Parallax;
 using Content.Shared.ShadowDimension;
 using Content.Shared.Tag;
 using Robust.Shared.CPUJob.JobQueues;
@@ -96,10 +98,19 @@ public sealed class SpawnShadowDimensionJob : Job<bool>
 
         var shadowGrid = _mapManager.CreateGridEntity(shadowMapId);
 
+        //Gravity
+        _entManager.EnsureComponent<GravityComponent>(shadowGrid, out var gravityComp);
+        gravityComp.Enabled = true;
+
+        //Parallax
+        _entManager.EnsureComponent<ParallaxComponent>(shadowMapUid, out var parallaxComp);
+        parallaxComp.Parallax = "Darkness";
+
+
         //Set Station silhouette tiles
         var stationTiles = _map.GetAllTilesEnumerator(stationGrid.Value, stationGridComp);
         var shadowTiles = new List<(Vector2i Index, Tile Tile)>();
-        var tileDef = _tileDefManager["FloorChromite"];
+        var tileDef = _tileDefManager[_shadowParams.DefaultTile];
         while (stationTiles.MoveNext(out var tileRef))
         {
             shadowTiles.Add((tileRef.Value.GridIndices, new Tile(tileDef.TileId, variant: _tileSystem.PickVariant((ContentTileDefinition) tileDef, random))));
@@ -122,6 +133,11 @@ public sealed class SpawnShadowDimensionJob : Job<bool>
                 break; //Prevent multiple entities from tag spawning
             }
         }
+
+        //Final
+        _mapManager.DoMapInitialize(shadowMapId);
+        _mapManager.SetMapPaused(shadowMapId, false);
+
         return true;
     }
 }
