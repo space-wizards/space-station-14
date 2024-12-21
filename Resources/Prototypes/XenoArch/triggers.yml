@@ -45,7 +45,7 @@
     triggerOnHigherTemp: true
   - type: XATDamageThresholdReached
     typesNeeded:
-      Heat: 50
+      Heat: 20
 # This kinda trivializes the difficulty.
 #  - type: XATToolUse
 #    requiredTool: Welding
@@ -61,7 +61,7 @@
     triggerOnHigherTemp: false
   - type: XATDamageThresholdReached
     typesNeeded:
-      Cold: 50
+      Cold: 20
 
 - type: xenoArchTrigger
   id: TriggerNoOxygen
@@ -177,7 +177,7 @@
   components:
   - type: XATDamageThresholdReached
     groupsNeeded:
-      Brute: 150
+      Brute: 20
 
 - type: xenoArchTrigger
   id: TriggerInteraction
