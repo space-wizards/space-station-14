@@ -139,10 +139,7 @@ public abstract partial class SharedMoverController : VirtualController
         // Update relative movement
         if (mover.LerpTarget < Timing.CurTime)
         {
-            if (TryUpdateRelative(mover, xform))
-            {
-                Dirty(uid, mover);
-            }
+            TryUpdateRelative((uid, mover), xform);
         }
 
         LerpRotation(uid, mover, frameTime);
