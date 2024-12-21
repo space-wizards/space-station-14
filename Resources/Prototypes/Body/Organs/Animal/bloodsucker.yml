@@ -1,25 +1,22 @@
 - type: entity
-  id: OrganBloodsuckerStomach
   parent: OrganAnimalStomach
-  name: stomach
+  id: OrganBloodsuckerStomach
   categories: [ HideSpawnMenu ]
   components:
   - type: Metabolizer
     metabolizerTypes: [ Bloodsucker ]
 
 - type: entity
-  id: OrganBloodsuckerLiver
   parent: OrganAnimalLiver
-  name: liver
+  id: OrganBloodsuckerLiver
   categories: [ HideSpawnMenu ]
   components:
   - type: Metabolizer
     metabolizerTypes: [ Bloodsucker ]
 
 - type: entity
-  id: OrganBloodsuckerHeart
   parent: OrganAnimalHeart
-  name: heart
+  id: OrganBloodsuckerHeart
   categories: [ HideSpawnMenu ]
   components:
   - type: Metabolizer
