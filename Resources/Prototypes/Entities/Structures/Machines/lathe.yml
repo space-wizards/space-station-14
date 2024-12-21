@@ -524,6 +524,7 @@
       - MassMediaCircuitboard
       - ReagentGrinderIndustrialMachineCircuitboard
       - JukeboxCircuitBoard
+      - SMESAdvancedMachineCircuitboard
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - ShuttleGunDusterCircuitboard
@@ -985,6 +986,8 @@
       - ClothingUniformJumpskirtHoP
       - ClothingUniformJumpsuitTurtleneckHoPHarmony # Harmony
       - ClothingUniformJumpskirtTurtleneckHoPHarmony #Harmony
+      - ClothingUniformJumpsuitHoPMessKitHarmony #Harmony
+      - ClothingUniformJumpskirtHoPMessKitHarmony #Harmony
       - ClothingHeadHatBeretHoS
       - ClothingHeadHatHoshat
       - ClothingHeadHatHoSWidebrimHarmony # Harmony
@@ -1225,7 +1228,7 @@
       staticRecipes:
         - SheetSteel
         - SheetGlass1
-        - SheetRGlass
+        - SheetRGlassRaw
         - SheetPlasma1
         - SheetPGlass1
         - SheetRPGlass1
@@ -1251,7 +1254,7 @@
     staticRecipes:
       - SheetSteel
       - SheetGlass1
-      - SheetRGlass
+      - SheetRGlassRaw
       - SheetPlasma1
       - SheetPGlass1
       - SheetRPGlass1

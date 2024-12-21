@@ -14,12 +14,12 @@
         - CrystalPink
         - CrystalPink
         - ShadowPortal
-        - ShadowTree01
-        - ShadowTree02
-        - ShadowTree03
-        - ShadowTree04
-        - ShadowTree05
-        - ShadowTree06
+        - ShadowTree #TODO: transform into EntityTable with weight
+        - ShadowTree
+        - ShadowTree
+        - ShadowTree
+        - ShadowTree
+        - ShadowTree
       rareChance: 0.05
       rarePrototypes:
         - MobCatShadow

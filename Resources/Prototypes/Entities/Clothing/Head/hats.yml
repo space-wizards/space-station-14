@@ -182,7 +182,7 @@
     sprite: Clothing/Head/Hats/beret_brigmedic.rsi
 
 - type: entity
-  parent: [ ClothingHeadBase, BaseRestrictedContraband ]
+  parent: [ ClothingHeadBase ]
   id: ClothingHeadHatBeretMerc
   name: mercenary beret
   description: Olive beret, the badge depicts a jackal on a rock.
@@ -322,9 +322,9 @@
   description: A grand, stylish head of personnel's cap.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/hopcap.rsi
+    sprite: _Harmony/Clothing/Head/Hats/hopcap.rsi # Harmony change. Resprite
   - type: Clothing
-    sprite: Clothing/Head/Hats/hopcap.rsi
+    sprite: _Harmony/Clothing/Head/Hats/hopcap.rsi # Harmony change. Resprite
   - type: Tag
     tags:
     - ClothMade

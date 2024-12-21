@@ -170,9 +170,9 @@
   description: Rather bland and inoffensive. Perfect for vanishing off the face of the universe.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/hop.rsi
+    sprite: _Harmony/Clothing/Uniforms/Jumpskirt/hop.rsi # Harmony change. Resprite
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/hop.rsi
+    sprite: _Harmony/Clothing/Uniforms/Jumpskirt/hop.rsi # Harmony change. Resprite
 
 - type: entity
   parent: [ClothingUniformSkirtBase, BaseCommandContraband]

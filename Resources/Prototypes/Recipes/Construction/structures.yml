@@ -1481,7 +1481,7 @@
   startNode: start
   targetNode: groundLight
   category: construction-category-structures
-  description: A ground light fixture. Use light bulbs.
+  description: A ground light fixture. Use light tubes.
   icon:
     sprite: Structures/Lighting/LightPosts/small_light_post.rsi
     state: base
