@@ -35,11 +35,11 @@ public sealed partial class ZombieRuleComponent : Component
     /// The reason why the emergency shuttle is called.
     /// </summary>
     [DataField]
-    public string ShuttleCallReason = "zombie-shuttle-call";
+    public LocId ShuttleCallReason = "zombie-shuttle-call";
 
     /// <summary>
     /// The reason why the emergency shuttle cannot be recalled after certain a zombie percentage.
     /// </summary>
     [DataField]
-    public string ShuttleCallUnavailableReason = "zombie-shuttle-unavailable";
+    public LocId ShuttleCallUnavailableReason = "zombie-shuttle-unavailable";
 }
