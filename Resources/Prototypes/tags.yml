@@ -1337,9 +1337,6 @@
   id: Taser
 
 - type: Tag
-  id: Telecrystal
-
-- type: Tag
   id: TimerBrigElectronics
 
 - type: Tag

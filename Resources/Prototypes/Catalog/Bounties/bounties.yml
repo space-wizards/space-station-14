@@ -908,17 +908,6 @@
       - MimeHardsuit
 
 - type: cargoBounty
-  id: BountyTelecrystal #might get removed eventually teehee
-  reward: 8000
-  description: bounty-description-telecrystal
-  entries:
-  - name: bounty-item-telecrystal
-    amount: 1
-    whitelist:
-      tags:
-      - Telecrystal
-
-- type: cargoBounty
   id: BountySpiderMeat
   reward: 7000
   description: bounty-description-spider-meat

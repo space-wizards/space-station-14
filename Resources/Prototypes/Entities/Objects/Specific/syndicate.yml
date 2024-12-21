@@ -22,9 +22,6 @@
   - type: Currency
     price:
       Telecrystal: 1
-  - type: Tag
-    tags:
-      - Telecrystal
 
 - type: entity
   parent: Telecrystal

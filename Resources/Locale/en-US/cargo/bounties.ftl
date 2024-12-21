@@ -79,7 +79,6 @@ bounty-item-muffins = Muffins
 bounty-item-suppermatter = Suppermatter
 bounty-item-crystal = Crystals
 bounty-item-mime-hardsuit = Mime Hardsuit
-bounty-item-telecrystal = Telecrystal
 bounty-item-spider-meat = Slab of Spider Meat
 
 bounty-description-artifact = NanoTrasen is in some hot water for stealing artifacts from non-spacefaring planets. Return one and we'll compensate you for it.
@@ -162,5 +161,4 @@ bounty-description-muffins = We've got a load of civilians here from the syndica
 bounty-description-suppermatter = OH MY GOD NANOTRASEN HAS FINALLY MADE THE TECH AVAILABLE I CAN FINALLY POWER THE STATION PLEASE SEND IT TO ME NOW BEFORE WE GO OFFLINE PERMANENTLY
 bounty-description-crystal = The station-standard fluorescent lights are so dull, it's making the clown depressed. Send us some color, please?
 bounty-description-mime-hardsuit = ERROR: Automatic transcription failed! No data provided.
-bounty-description-telecrystal = Is... this thing on? Thank God. Listen, I'm 1 TC off of an emag, could you send me one real quick? Thanks a ton.
 bounty-description-spider-meat = H-hey... My mom disappeared on your station... Can you look for her? Um... If you find her, could you send her back home? Thanks... *sniffle*
