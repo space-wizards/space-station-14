@@ -1,0 +1,9 @@
+- type: entity
+  id: LoadoutDummyDarts
+  categories: [ HideSpawnMenu ]
+  name: three darts
+  description: A set of three colorful darts to throw at targets or people!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Darts/loadout.rsi
+    state: icon
