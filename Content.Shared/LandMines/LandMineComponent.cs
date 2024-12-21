@@ -1,6 +1,8 @@
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
-namespace Content.Server.LandMines;
+namespace Content.Shared.LandMines;
 
 [RegisterComponent]
 public sealed partial class LandMineComponent : Component
@@ -8,6 +10,6 @@ public sealed partial class LandMineComponent : Component
     /// <summary>
     /// Trigger sound effect when stepping onto landmine
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField]
     public SoundSpecifier? Sound;
 }
