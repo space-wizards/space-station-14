@@ -1,0 +1,38 @@
+- type: entity
+  parent: BaseItem
+  id: PortDropPodConsole
+  name: DropPod console
+  description: A portable console for controlling the movement of the DropPod.
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Syndicate/droppodconsole.rsi
+      state: console
+    - type: DropPodConsole
+    - type: ActivatableUI
+      key: enum.DropPodUiKey.Key
+    - type: UserInterface
+      interfaces:
+        enum.DropPodUiKey.Key:
+          type: DropPodBoundUi
+
+
+- type: entity
+  parent: PortDropPodConsole
+  id: PortDropPodConsoleADMIN
+  name: DropPod console
+  description: A convenient version that allows you to move the capsule in just 1 second! Our scientists from the Research Institute are such good fellows.
+  suffix: ADMIN
+  components:
+    - type: DropPodConsole
+      time: 1
+      text: "Attention! A hostile corporation is trying to move an object to your station... The travel time is 1 seconds. The approximate coordinates of the movement are as follows: "
+
+- type: entity
+  parent: PortDropPodConsole
+  id: PortDropPodConsoleDEBUG
+  name: DropPod console
+  description: A portable console that is needed to play with teleportation. The Central Command will not notice your movement.
+  suffix: DEBUG
+  components:
+    - type: DropPodConsole
+      announcement: false
