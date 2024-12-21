@@ -10,6 +10,7 @@ using Content.Shared.Emoting;
 using Content.Shared.Examine;
 using Content.Shared.Ghost;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
@@ -20,6 +21,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
+using Content.Shared.Whitelist;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Drone
@@ -34,11 +36,12 @@ namespace Content.Server.Drone
         [Dependency] private readonly InnateToolSystem _innateToolSystem = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+		[Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
 
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<DroneComponent, InteractionAttemptEvent>(OnInteractionAttempt);
+			SubscribeLocalEvent<DroneComponent, UseAttemptEvent>(OnUseAttempt);
             SubscribeLocalEvent<DroneComponent, UserOpenActivatableUIAttemptEvent>(OnActivateUIAttempt);
             SubscribeLocalEvent<DroneComponent, MobStateChangedEvent>(OnMobStateChanged);
             SubscribeLocalEvent<DroneComponent, ExaminedEvent>(OnExamined);
@@ -48,17 +51,42 @@ namespace Content.Server.Drone
             SubscribeLocalEvent<DroneComponent, ThrowAttemptEvent>(OnThrowAttempt);
         }
 
-        private void OnInteractionAttempt(EntityUid uid, DroneComponent component, ref InteractionAttemptEvent args)
-        {
-            if (args.Target != null && !HasComp<UnremoveableComponent>(args.Target) && NonDronesInRange(uid, component))
-                args.Cancelled = true;
-
-            if (HasComp<ItemComponent>(args.Target) && !HasComp<UnremoveableComponent>(args.Target))
-            {
-                if (!_tagSystem.HasAnyTag(args.Target.Value, "DroneUsable", "Trash"))
-                    args.Cancelled = true;
-            }
-        }
+		// Imp. this replaces OnInteractionAttempt from the upstream version of DroneSystem.
+		private void OnUseAttempt(EntityUid uid, DroneComponent component, UseAttemptEvent args) 
+		{
+			if (args.Used != null && NonDronesInRange(uid, component))
+			{
+				if (_whitelist.IsBlacklistPass(component.Blacklist, args.Used)) // imp special. blacklist. this one *does* prevent actions. it would probably be best if this read from the component or something.
+				{
+					args.Cancel();
+					if (_gameTiming.CurTime >= component.NextProximityAlert)
+					{
+						_popupSystem.PopupEntity(Loc.GetString("drone-cant-use-nearby", ("being", component.NearestEnt)), uid, uid);
+						component.NextProximityAlert = _gameTiming.CurTime + component.ProximityDelay;
+					}
+				}
+				
+				else if (_whitelist.IsWhitelistPass(component.Whitelist, args.Used)) /// tag whitelist. sends proximity warning popup if the item isn't whitelisted. Doesn't prevent actions.
+				{
+					component.NextProximityAlert = _gameTiming.CurTime + component.ProximityDelay;
+					if (_gameTiming.CurTime >= component.NextProximityAlert)
+					{
+						_popupSystem.PopupEntity(Loc.GetString("drone-too-close", ("being", component.NearestEnt)), uid, uid);
+						component.NextProximityAlert = _gameTiming.CurTime + component.ProximityDelay;
+					}
+				}
+			}
+			
+			else if (args.Used != null && _whitelist.IsBlacklistPass(component.Blacklist, args.Used))
+			{
+				args.Cancel();
+				if (_gameTiming.CurTime >= component.NextProximityAlert)
+				{
+					_popupSystem.PopupEntity(Loc.GetString("drone-cant-use"), uid, uid);
+					component.NextProximityAlert = _gameTiming.CurTime + component.ProximityDelay;
+				}
+			}
+		}
 
         private void OnActivateUIAttempt(EntityUid uid, DroneComponent component, UserOpenActivatableUIAttemptEvent args)
         {
@@ -132,11 +160,13 @@ namespace Content.Server.Drone
                 // Return true if the entity is/was controlled by a player and is not a drone or ghost.
                 if (HasComp<MindContainerComponent>(entity) && !HasComp<DroneComponent>(entity) && !HasComp<GhostComponent>(entity))
                 {
-                    // Filter out dead ghost roles. Dead normal players are intended to block.
-                    if ((TryComp<MobStateComponent>(entity, out var entityMobState) && HasComp<GhostTakeoverAvailableComponent>(entity) && _mobStateSystem.IsDead(entity, entityMobState)))
+                    // imp change. this filters out all dead entities.
+                    if ((TryComp<MobStateComponent>(entity, out var entityMobState) && _mobStateSystem.IsDead(entity, entityMobState)))
                         continue;
                     if (_gameTiming.IsFirstTimePredicted)
-                        _popupSystem.PopupEntity(Loc.GetString("drone-too-close", ("being", Identity.Entity(entity, EntityManager))), uid, uid);
+					{
+						component.NearestEnt = Identity.Entity(entity, EntityManager); // imp. instead of doing popups in here, set a variable to the nearest entity for use elsewhere.
+					}
                     return true;
                 }
             }

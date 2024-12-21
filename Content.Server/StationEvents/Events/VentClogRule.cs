@@ -42,10 +42,12 @@ public sealed class VentClogRule : StationEventSystem<VentClogRuleComponent>
         if (!TryGetRandomStation(out var chosenStation))
             return;
 
-        // TODO: "safe random" for chems. Right now this includes admin chemicals.
         var allReagents = PrototypeManager.EnumeratePrototypes<ReagentPrototype>()
             .Where(x => !x.Abstract)
             .Select(x => x.ID).ToList();
+
+        // 'Safe random' for chems, excludes chems in the blacklist defined in the component
+        allReagents.RemoveAll(r => component.BlacklistedVentChemicals.Any(a => a == r));
 
         foreach (var (_, transform) in EntityManager.EntityQuery<GasVentPumpComponent, TransformComponent>())
         {

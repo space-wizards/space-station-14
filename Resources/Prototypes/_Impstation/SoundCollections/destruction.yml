@@ -1,0 +1,8 @@
+- type: soundCollection
+  id: HollowPlastic
+  files: 
+  - /Audio/_Impstation/Effects/hollow_plastic1.ogg
+  - /Audio/_Impstation/Effects/hollow_plastic2.ogg
+  - /Audio/_Impstation/Effects/hollow_plastic3.ogg
+  - /Audio/_Impstation/Effects/hollow_plastic4.ogg
+  - /Audio/_Impstation/Effects/hollow_plastic5.ogg

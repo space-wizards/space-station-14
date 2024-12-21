@@ -6,6 +6,11 @@
     ClothingHeadHatJesterAlt: 1
     ClothingUniformJumpsuitJesterAlt: 1
     ClothingShoesJester: 2
+    ClothingHeadHatCircusClown: 1 #imp
+    ClothingMaskClownNose: 3 #imp
+    ClothingNeckRuffle: 2 #imp
+    ClothingUniformCircusClown: 1 #imp
+    ClothingShoesCircus: 2 #imp
     ClothingOuterWinterClown: 1
     ClothingOuterWinterMime: 1
     ClothingOuterWinterMusician: 1

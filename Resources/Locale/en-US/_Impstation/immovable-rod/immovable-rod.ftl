@@ -1,0 +1,11 @@
+immovable-rod-penetrated-mob-mop = {CAPITALIZE(THE($mob))} has been scrubbed clean of this existence!
+immovable-rod-penetrated-mob-shark = {CAPITALIZE(THE($rod))} chomped {CAPITALIZE(THE($mob))}!
+immovable-rod-penetrated-mob-clown = {CAPITALIZE(THE($rod))} has claimed {CAPITALIZE(THE($mob))}'s soul for the Honkmother.
+immovable-rod-penetrated-mob-banana = {CAPITALIZE(THE($mob))} slipped and fell. Badly.
+immovable-rod-penetrated-mob-hammer = {CAPITALIZE(THE($mob))} got bwoinked!
+immovable-rod-penetrated-mob-throngler = {CAPITALIZE(THE($mob))} did not win the lottery.
+immovable-rod-penetrated-mob-gibstick = {CAPITALIZE(THE($rod))} did about what you would expect to {CAPITALIZE(THE($mob))}.
+immovable-rod-penetrated-mob-weh = WEH!
+immovable-rod-penetrated-mob-finfin = {CAPITALIZE(THE($mob))} came and saw him.
+immovable-rod-penetrated-mob-gondal = {CAPITALIZE(THE($mob))}'s eardrums exploded. Badly.
+immovable-rod-penetrated-mob-hollowbarrel = {CAPITALIZE(THE($mob))} died with no honor!
