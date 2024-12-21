@@ -27,9 +27,9 @@
     entries:
     - settings:
         spawnOnPulse: true
-        minAmount: 4
-        maxAmount: 12
-        maxRange: 6
+        minAmount: 6
+        maxAmount: 15
+        maxRange: 4
       spawns:
       - TrashBananaPeel
       - FloorBananiumEntity
@@ -37,7 +37,7 @@
         spawnOnSuperCritical: true
         minAmount: 5
         maxAmount: 12
-        maxRange: 4
+        maxRange: 6
       spawns:
       - MobMonkey
   - type: RadiationSource
