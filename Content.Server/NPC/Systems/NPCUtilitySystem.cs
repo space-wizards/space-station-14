@@ -489,6 +489,22 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 foreach (var ent in entities)
                 {
+                    bool removed = false;
+
+                    foreach (var comp in compFilter.ExcludedComponents)
+                    {
+                        if (!HasComp(ent, comp.Value.Component.GetType()))
+                            continue;
+
+                        _entityList.Add(ent);
+                        removed = true;
+                        break;
+                    }
+
+                    // If first foreach removed the entity, just skip the other foreach
+                    if (removed)
+                        continue;
+
                     foreach (var comp in compFilter.Components)
                     {
                         if (HasComp(ent, comp.Value.Component.GetType()))
@@ -579,5 +595,13 @@ public readonly record struct UtilityResult(Dictionary<EntityUid, float> Entitie
             return EntityUid.Invalid;
 
         return Entities.MinBy(x => x.Value).Key;
+    }
+
+    /// <summary>
+    /// Returns a GetEnumerable sorted in descending score.
+    /// </summary>
+    public IEnumerable<KeyValuePair<EntityUid, float>> GetEnumerable()
+    {
+        return Entities.OrderByDescending(x => x.Value);
     }
 }
