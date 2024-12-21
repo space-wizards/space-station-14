@@ -194,7 +194,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
     private bool TryCallTelephone(Entity<TelephoneComponent> source, Entity<TelephoneComponent> receiver, EntityUid user, TelephoneCallOptions? options = null)
     {
-        if (!IsSourceAbleToReachReceiver(source, receiver))
+        if (!IsSourceAbleToReachReceiver(source, receiver) && options?.IgnoreRange != true)
             return false;
 
         if (IsTelephoneEngaged(receiver) &&
@@ -277,6 +277,10 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
     public void EndTelephoneCalls(Entity<TelephoneComponent> entity)
     {
+        // No need to end any calls if the telephone is already ending a call
+        if (entity.Comp.CurrentState == TelephoneState.EndingCall)
+            return;
+
         HandleEndingTelephoneCalls(entity, TelephoneState.EndingCall);
 
         var ev = new TelephoneCallEndedEvent();
@@ -285,14 +289,15 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
     public void TerminateTelephoneCalls(Entity<TelephoneComponent> entity)
     {
+        // No need to terminate any calls if the telephone is idle
+        if (entity.Comp.CurrentState == TelephoneState.Idle)
+            return;
+
         HandleEndingTelephoneCalls(entity, TelephoneState.Idle);
     }
 
     private void HandleEndingTelephoneCalls(Entity<TelephoneComponent> entity, TelephoneState newState)
     {
-        if (entity.Comp.CurrentState == newState)
-            return;
-
         foreach (var linkedTelephone in entity.Comp.LinkedTelephones)
         {
             if (!linkedTelephone.Comp.LinkedTelephones.Remove(entity))
@@ -431,23 +436,26 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
     public bool IsSourceInRangeOfReceiver(Entity<TelephoneComponent> source, Entity<TelephoneComponent> receiver)
     {
+        // Check if the source and receiver have compatible transmision / reception bandwidths
+        if (!source.Comp.CompatibleRanges.Contains(receiver.Comp.TransmissionRange))
+            return false;
+
         var sourceXform = Transform(source);
         var receiverXform = Transform(receiver);
+
+        // Check if we should ignore a device thats on the same grid
+        if (source.Comp.IgnoreTelephonesOnSameGrid &&
+            source.Comp.TransmissionRange != TelephoneRange.Grid &&
+            receiverXform.GridUid == sourceXform.GridUid)
+            return false;
 
         switch (source.Comp.TransmissionRange)
         {
             case TelephoneRange.Grid:
-                return sourceXform.GridUid != null &&
-                    receiverXform.GridUid == sourceXform.GridUid &&
-                    receiver.Comp.TransmissionRange != TelephoneRange.Long;
+                return sourceXform.GridUid == receiverXform.GridUid;
 
             case TelephoneRange.Map:
-                return sourceXform.MapID == receiverXform.MapID &&
-                    receiver.Comp.TransmissionRange != TelephoneRange.Long;
-
-            case TelephoneRange.Long:
-                return sourceXform.MapID != receiverXform.MapID &&
-                    receiver.Comp.TransmissionRange == TelephoneRange.Long;
+                return sourceXform.MapID == receiverXform.MapID;
 
             case TelephoneRange.Unlimited:
                 return true;
