@@ -114,7 +114,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
             return;
         }
 
-        var ev = new ChangelingDevourAttemptEvent( component.DevourPreventionPercentageThreshold, SlotFlags.OUTERCLOTHING);
+        var ev = new ChangelingDevourAttemptEvent(component.DevourPreventionPercentageThreshold, SlotFlags.OUTERCLOTHING);
         RaiseLocalEvent(target, ev, true);
         if (ev.Protection)
         {

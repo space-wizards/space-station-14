@@ -1,22 +1,8 @@
-﻿<controls:FancyWindow xmlns="https://spacestation14.io"
-                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                      xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-                      Title="{Loc 'changeling-transform-menu-title'}"
-                      MinSize="700 700">
-    <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True">
-        <PanelContainer Margin="5 5">
-            <PanelContainer.PanelOverride>
-                <gfx:StyleBoxFlat BackgroundColor="#050505" />
-            </PanelContainer.PanelOverride>
-            <ScrollContainer
-                HScrollEnabled="False"
-                MinSize="0 600"
-                SizeFlagsStretchRatio="2"
-                VerticalExpand="True">
-                <BoxContainer Name="IdentitiesGrid" Orientation="Vertical" MinSize="460 200">
-
-                </BoxContainer>
-            </ScrollContainer>
-        </PanelContainer>
-    </BoxContainer>
-</controls:FancyWindow>
+﻿<ui:RadialMenu
+    xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+    CloseButtonStyleClass="RadialMenuCloseButton"
+    VerticalExpand="True"
+    HorizontalExpand="True">
+    <ui:RadialContainer Name="Main">
+    </ui:RadialContainer>
+</ui:RadialMenu>

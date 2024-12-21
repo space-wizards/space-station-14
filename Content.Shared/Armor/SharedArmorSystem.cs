@@ -33,9 +33,11 @@ public abstract class SharedArmorSystem : EntitySystem
 
     private void OnChangelingDevourAttempt(EntityUid uid, ArmorComponent component, InventoryRelayedEvent<ChangelingDevourAttemptEvent> args)
     {
-        args.Args.Protection = component.Modifiers.Coefficients["Slash"] > args.Args.ProtectionThreshold
-                                || component.Modifiers.Coefficients["Blunt"] > args.Args.ProtectionThreshold
-                                || component.Modifiers.Coefficients["Piercing"] > args.Args.ProtectionThreshold;
+        var slash = component.Modifiers.Coefficients.ContainsKey("Slash") && component.Modifiers.Coefficients["Slash"] < 1f - args.Args.ProtectionThreshold;
+        var blunt = component.Modifiers.Coefficients.ContainsKey("Blunt") && component.Modifiers.Coefficients["Blunt"] < 1f - args.Args.ProtectionThreshold;
+        var pierce = component.Modifiers.Coefficients.ContainsKey("Piercing") && component.Modifiers.Coefficients["Piercing"] < 1f - args.Args.ProtectionThreshold;
+
+        args.Args.Protection = slash || blunt ||  pierce;
     }
 
     private void OnBorgDamageModify(EntityUid uid, ArmorComponent component,
