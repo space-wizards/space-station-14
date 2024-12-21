@@ -964,6 +964,10 @@
       - ClothingUniformJumpskirtCMO
       - ClothingUniformJumpsuitCMOTurtle
       - ClothingUniformJumpskirtCMOTurtle
+      - ClothingUniformJumpsuitCommandGeneric
+      - ClothingUniformJumpskirtCommandGeneric
+      - ClothingHeadHatCommandsoft
+      - ClothingHeadHatBeretCommand
       - ClothingUniformJumpsuitDetective
       - ClothingUniformJumpskirtDetective
       - ClothingUniformJumpsuitEngineering
