@@ -16,7 +16,7 @@ public sealed partial class Medium : EntityEffect
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
     {
-        return "Grants whoever drinks this the ability to see ghosts";
+        return "Grants whoever drinks this the ability to see ghosts for a while";
     }
 
     public override void Effect(EntityEffectBaseArgs args)
@@ -24,7 +24,6 @@ public sealed partial class Medium : EntityEffect
         var entityManager = args.EntityManager;
         var uid = args.TargetEntity;
 
-        // Make it into a prototype
         entityManager.EnsureComponent<MediumComponent>(uid);
     }
 }

@@ -68,11 +68,11 @@
   impact: Medium #lol
   reactants:
     AquamDivinos:
-      amount: 50
+      amount: 1
     Oculine:
-      amount: 50
+      amount: 1
     THC:
-      amount: 50
+      amount: 1
     PhilosophersJuice:
       amount: 1
       catalyst: true

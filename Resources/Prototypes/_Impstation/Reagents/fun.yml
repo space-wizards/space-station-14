@@ -135,3 +135,6 @@
     Poison:
       effects:
       - !type:Medium
+        conditions:
+        - !type:ReagentThreshold
+          min: 20

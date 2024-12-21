@@ -5,6 +5,7 @@ using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind;
+using Content.Server.Polymorph.Components;
 using Content.Server.Roles.Jobs;
 using Content.Server.Warps;
 using Content.Shared._Impstation.Ghost;
@@ -29,6 +30,7 @@ using Content.Shared.Storage.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
@@ -100,6 +102,22 @@ namespace Content.Server.Ghost
             SubscribeLocalEvent<MediumComponent, ComponentStartup>(OnMediumStartup);
             SubscribeLocalEvent<MediumComponent, MapInitEvent>(OnMapInitMedium);
             SubscribeLocalEvent<MediumComponent, ComponentShutdown>(OnMediumShutdown);
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            var query = EntityQueryEnumerator<MediumComponent>();
+            while (query.MoveNext(out var uid, out var comp))
+            {
+                comp.CurrentMediumTime += frameTime;
+
+                if (comp.CurrentMediumTime > comp.MediumTime)
+                {
+                    EntityManager.RemoveComponent<MediumComponent>(uid);
+                }
+            }
         }
 
         private void OnGhostHearingAction(EntityUid uid, GhostComponent component, ToggleGhostHearingActionEvent args)
