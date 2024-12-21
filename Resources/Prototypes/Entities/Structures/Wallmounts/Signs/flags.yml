@@ -17,7 +17,7 @@
     alwaysCombustible: true
     damage:
       types:
-        Heat: 1
+        Heat: 20
   - type: FireVisuals
     sprite: Effects/fire.rsi
     normalState: fire
