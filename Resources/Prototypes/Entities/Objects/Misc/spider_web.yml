@@ -1,3 +1,4 @@
+# Default prototype used by WebPlacerComponent
 - type: entity
   id: SpiderWeb
   name: spider web
@@ -16,15 +17,14 @@
       sprite: Objects/Misc/spiderweb.rsi
       layers:
         - state: spider_web_1
-          map: ["spiderWebLayer"]
+          map: [ "enum.DamageStateVisualLayers.Base" ]
       drawdepth: WallMountedItems
+    - type: RandomSprite
+      available:
+        - enum.DamageStateVisualLayers.Base:
+            spider_web_1: ""
+            spider_web_2: ""
     - type: Appearance
-    - type: GenericVisualizer
-      visuals:
-        enum.SpiderWebVisuals.Variant:
-          spiderWebLayer:
-            1:  {state: spider_web_1}
-            2:  {state: spider_web_2}
     - type: Clickable
     - type: Transform
       anchored: true
@@ -69,13 +69,15 @@
       groups:
         Flammable: [Touch]
         Extinguish: [Touch]
-    - type: SpiderWebObject
     - type: SpeedModifierContacts
       walkSpeedModifier: 0.5
       sprintSpeedModifier: 0.5
       ignoreWhitelist:
         components:
             - IgnoreSpiderWeb
+    - type: Tag
+      tags:
+      - SpiderWeb
 
 - type: entity
   id: SpiderWebClown
@@ -95,15 +97,14 @@
       sprite: Objects/Misc/spiderweb.rsi
       layers:
         - state: spider_web_clown_1
-          map: ["spiderWebLayer"]
+          map: [ "enum.DamageStateVisualLayers.Base" ]
       drawdepth: WallMountedItems
+    - type: RandomSprite
+      available:
+        - enum.DamageStateVisualLayers.Base:
+            spider_web_clown_1: ""
+            spider_web_clown_2: ""
     - type: Appearance
-    - type: GenericVisualizer
-      visuals:
-        enum.SpiderWebVisuals.Variant:
-          spiderWebLayer:
-            1:  {state: spider_web_clown_1}
-            2:  {state: spider_web_clown_2}
     - type: Clickable
     - type: Transform
       anchored: true
@@ -152,7 +153,6 @@
       groups:
         Flammable: [Touch]
         Extinguish: [Touch]
-    - type: SpiderWebObject
     - type: FlavorProfile
       flavors:
         - sweet
@@ -164,3 +164,6 @@
           reagents:
           - ReagentId: Sugar
             Quantity: 2
+    - type: Tag
+      tags:
+      - SpiderWeb
