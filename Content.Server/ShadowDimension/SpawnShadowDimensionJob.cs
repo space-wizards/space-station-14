@@ -95,7 +95,6 @@ public sealed class SpawnShadowDimensionJob : Job<bool>
 
         _sawmill.Debug("shadow_dimension", $"Spawning station {stationMetaData.EntityName} shadow side with seed {_shadowParams.Seed}");
         var random = new Random(_shadowParams.Seed);
-
         var shadowGrid = _mapManager.CreateGridEntity(shadowMapId);
 
         //Gravity
@@ -105,7 +104,6 @@ public sealed class SpawnShadowDimensionJob : Job<bool>
         //Parallax
         _entManager.EnsureComponent<ParallaxComponent>(shadowMapUid, out var parallaxComp);
         parallaxComp.Parallax = "Darkness";
-
 
         //Set Station silhouette tiles
         var stationTiles = _map.GetAllTilesEnumerator(stationGrid.Value, stationGridComp);
@@ -118,7 +116,6 @@ public sealed class SpawnShadowDimensionJob : Job<bool>
         _map.SetTiles(shadowGrid, shadowTiles);
 
         //Set shadow dimension entities
-
         HashSet<Entity<TagComponent, TransformComponent>> taggedEntities = new();
         _lookup.GetChildEntities(stationGrid.Value, taggedEntities);
 
@@ -130,7 +127,7 @@ public sealed class SpawnShadowDimensionJob : Job<bool>
                     continue;
                 var coord = new EntityCoordinates(shadowMapUid, tagged.Comp2.Coordinates.Position);
                 _entManager.SpawnEntity(replacement.Value, coord);
-                break; //Prevent multiple entities from tag spawning
+                break;
             }
         }
 
