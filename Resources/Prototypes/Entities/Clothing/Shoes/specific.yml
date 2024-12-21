@@ -119,6 +119,7 @@
   - type: SpeedModifierContactCapClothing
     maxContactSprintSlowdown: 0.7
     maxContactWalkSlowdown: 0.7
+  - type: NonStickSurface
 
 - type: entity
   parent: [ClothingShoesBaseButcherable, BaseMajorContraband]

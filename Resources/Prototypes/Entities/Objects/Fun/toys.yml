@@ -1588,45 +1588,6 @@
     - Banana
 
 - type: entity
-  parent: DrinkBase
-  id: CrazyGlue
-  name: crazy glue
-  description:  A bottle of crazy glue manufactured by Honk! Co.
-  components:
-  - type: Openable
-    sound:
-      collection: packetOpenSounds
-  - type: Sprite
-    sprite: Objects/Fun/glue.rsi
-    state: icon
-    layers:
-      - state: icon
-        map: ["enum.OpenableVisuals.Layer"]
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.OpenableVisuals.Opened:
-        enum.OpenableVisuals.Layer:
-          True: {state: "icon_open"}
-          False: {state: "icon"}
-  - type: Glue
-    consumptionUnit: 10
-  - type: Item
-    sprite: Objects/Fun/glue.rsi
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 100
-        reagents:
-        - ReagentId: SpaceGlue
-          Quantity: 100
-  - type: TrashOnSolutionEmpty
-    solution: drink
-  - type: Tag
-    tags:
-      - DrinkSpaceGlue
-
-- type: entity
   parent: BaseItem
   id: NewtonCradle
   name: newton cradle
