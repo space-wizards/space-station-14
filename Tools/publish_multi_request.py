@@ -80,7 +80,7 @@ def get_engine_version():
         if version is None or not version.text:
             raise ValueError(f"Version not found in {version_file}")
         
-        return (f"v{version.text.strip()}")
+        return version.text.strip()
     except Exception as e:
         print(f"Error reading version from {version_file}: {e}")
         raise
