@@ -53,41 +53,6 @@ public abstract partial class SharedStationAiSystem
         _xforms.DropNextTo(core.Comp.RemoteEntity.Value, core.Owner) ;
     }
 
-    /// <summary>
-    /// Tries to get the entity held in the AI core using StationAiCore.
-    /// </summary>
-    private bool TryGetHeld(Entity<StationAiCoreComponent?> entity, out EntityUid held)
-    {
-        held = EntityUid.Invalid;
-
-        if (!Resolve(entity.Owner, ref entity.Comp))
-            return false;
-
-        if (!_containers.TryGetContainer(entity.Owner, StationAiCoreComponent.Container, out var container) ||
-            container.ContainedEntities.Count == 0)
-            return false;
-
-        held = container.ContainedEntities[0];
-        return true;
-    }
-
-    /// <summary>
-    /// Tries to get the entity held in the AI using StationAiHolder.
-    /// </summary>
-    private bool TryGetHeldFromHolder(Entity<StationAiHolderComponent?> entity, out EntityUid held)
-    {
-        held = EntityUid.Invalid;
-
-        if (!Resolve(entity.Owner, ref entity.Comp))
-            return false;
-
-        if (!_containers.TryGetContainer(entity.Owner, StationAiHolderComponent.Container, out var container) ||
-            container.ContainedEntities.Count == 0)
-            return false;
-
-        held = container.ContainedEntities[0];
-        return true;
-    }
 
     private bool TryGetCore(EntityUid ent, out Entity<StationAiCoreComponent?> core)
     {
@@ -168,10 +133,10 @@ public abstract partial class SharedStationAiSystem
         var verb = new AlternativeVerb
         {
             Text = isOpen ? Loc.GetString("ai-close") : Loc.GetString("ai-open"),
-            Act = () => 
+            Act = () =>
             {
                 // no need to show menu if device is not powered.
-                if (!PowerReceiver.IsPowered(ent.Owner))
+                if (!_powerReceiver.IsPowered(ent.Owner))
                 {
                     ShowDeviceNotRespondingPopup(user);
                     return;
@@ -193,6 +158,42 @@ public abstract partial class SharedStationAiSystem
     private void ShowDeviceNotRespondingPopup(EntityUid toEntity)
     {
         _popup.PopupClient(Loc.GetString("ai-device-not-responding"), toEntity, PopupType.MediumCaution);
+    }
+
+    /// <summary>
+    /// Tries to get the entity held in the AI core using StationAiCore.
+    /// </summary>
+    public bool TryGetHeld(Entity<StationAiCoreComponent?> ent, out EntityUid held)
+    {
+        held = EntityUid.Invalid;
+
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return false;
+
+        if (!_containers.TryGetContainer(ent.Owner, StationAiCoreComponent.Container, out var container) ||
+            container.ContainedEntities.Count == 0)
+            return false;
+
+        held = container.ContainedEntities[0];
+        return true;
+    }
+
+    /// <summary>
+    /// Tries to get the entity held in the AI using StationAiHolder.
+    /// </summary>
+    public bool TryGetHeldFromHolder(Entity<StationAiHolderComponent?> ent, out EntityUid held)
+    {
+        held = EntityUid.Invalid;
+
+        if (!Resolve(ent.Owner, ref ent.Comp))
+            return false;
+
+        if (!_containers.TryGetContainer(ent.Owner, StationAiHolderComponent.Container, out var container) ||
+            container.ContainedEntities.Count == 0)
+            return false;
+
+        held = container.ContainedEntities[0];
+        return true;
     }
 }
 
