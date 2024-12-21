@@ -725,7 +725,7 @@
     - map: [ "head" ]
   - type: Inventory
     speciesId: slime
-    templateId: smile
+    templateId: head
     displacements:
       head:
         sizeMaps:
