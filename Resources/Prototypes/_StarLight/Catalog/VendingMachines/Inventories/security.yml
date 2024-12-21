@@ -24,19 +24,19 @@
 
 - type: listing
   id: WeaponPistolN1984
-  productEntity: N1984
+  productEntity: WeaponPistolN1984
   cost:
     NTCredit: 600
   categories:
   - SLSecurity
   conditions:
   - !type:ListingLimitedStockCondition
-    stock: 2
+    stock: 3
   - !type:BuyerAccessCondition
-
+  
 - type: listing
-  id: BaseMagazineMagnum
-  productEntity: .45 Magazine
+  id: MagazineMagnumPractice
+  productEntity: MagazineMagnumPractice
   cost:
     NTCredit: 100
   categories:
@@ -44,4 +44,16 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 6
+  - !type:BuyerAccessCondition
+
+- type: listing
+  id: ClothingHandsGlovesCombat
+  productEntity: ClothingHandsGlovesCombat
+  cost:
+    NTCredit: 399
+  categories:
+  - SLSecurity
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
   - !type:BuyerAccessCondition
