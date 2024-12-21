@@ -16,7 +16,7 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
     /// nullspace
     /// </summary>
     /// <param name="uid">The ling to startup</param>
-    /// <param name="component">the The ChangelingIdentityComponent attached to the ling</param>
+    /// <param name="component">The ChangelingIdentityComponent attached to the ling</param>
     public void CloneLingStart(EntityUid uid, ChangelingIdentityComponent component)
     {
         if (component.ConsumedIdentities.Count > 0)
@@ -42,13 +42,11 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
         _metaSystem.SetEntityDescription(mob, MetaData(target).EntityDescription);
         comp.ConsumedIdentities.Add(mob);
         comp.LastConsumedEntityUid = mob;
+        SetPaused(mob, true);
         Dirty(uid, comp);
-        HandlePvsOverride(uid, comp, mob);
+        HandlePvsOverride(uid, mob);
     }
 
-    protected virtual void HandlePvsOverride(EntityUid uid, ChangelingIdentityComponent component, EntityUid target)
-    {
-
-    }
+    protected virtual void HandlePvsOverride(EntityUid uid, EntityUid target) { }
 
 }

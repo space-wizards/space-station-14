@@ -45,4 +45,16 @@ public sealed class BodyEmotesSystem : EntitySystem
 
         return _chat.TryPlayEmoteSound(uid, component.Sounds, emote);
     }
+
+    /// <summary>
+    /// Clone another body Emotes Component, useful for assuming someone elses identity or otherwise changing your
+    /// species
+    /// </summary>
+    /// <param name="component">The original BodyEmotesComponent</param>
+    /// <param name="clone">The Target BodyEmotesComponent state</param>
+    public void Clone(BodyEmotesComponent component, BodyEmotesComponent clone)
+    {
+        component.Sounds = clone.Sounds;
+        component.SoundsId = clone.SoundsId;
+    }
 }

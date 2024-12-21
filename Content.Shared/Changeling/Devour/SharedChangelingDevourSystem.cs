@@ -10,6 +10,8 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Whitelist;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -84,25 +86,27 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
         args.Handled = true;
         var target = args.Target;
 
-        if (HasComp<RottingComponent>(target)) // if the Target is rotting, don't eat it
+        if (HasComp<RottingComponent>(target))
         {
-            _popupSystem.PopupClient(Loc.GetString("changeling-attempt-failed-rotting"), args.Performer, args.Performer, PopupType.Medium);
+            _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-rotting"), args.Performer, args.Performer, PopupType.Medium);
             return;
         }
 
-        var ev = new ChangelingDevourAttemptEvent(component.DevourPreventionPercentageThreshold, SlotFlags.OUTERCLOTHING);
+        var ev = new ChangelingDevourAttemptEvent(component.DevourPreventionPercentageThreshold, SlotFlags.OUTERCLOTHING); // Check the Targets outerclothes for Mitigation coefficents
         RaiseLocalEvent(target, ev, true);
         if (ev.Protection)
         {
-            _popupSystem.PopupClient(Loc.GetString("changeling-attempt-failed-protected"), uid, uid, PopupType.Medium);
+            _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-protected"), uid, uid, PopupType.Medium);
             return;
         }
 
         if (HasComp<ChangelingHuskedCorpseComponent>(target))
         {
-            _popupSystem.PopupClient(Loc.GetString("changeling-devour-failed-husk"), args.Performer, args.Performer);
+            _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-husk"), args.Performer, args.Performer);
             return;
         }
+
+        StartSound(uid, component, component.DevourWindupNoise);
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, uid, component.DevourWindupTime, new ChangelingDevourWindupDoAfterEvent(), uid, target: target, used: uid)
         {
             BreakOnMove = true,
@@ -117,18 +121,17 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
         var curTime = _timing.CurTime;
         args.Handled = true;
 
-
         if (args.Cancelled)
         {
+
+            StopSound(uid, component);
             return;
         }
-        Dirty(args.User, component);
         _popupSystem.PopupPredicted(Loc.GetString("changeling-devour-begin-consume"),
             args.User,
             null,
             PopupType.LargeCaution);
-        StartSound(uid, component);
-
+        StartSound(uid, component, component.ConsumeNoise);
         component.NextTick = curTime + TimeSpan.FromSeconds(1);
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
@@ -156,10 +159,8 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
 
         if (args.Cancelled)
         {
-            if (component.CurrentDevourSound != null)
-            {
-                StopSound(uid, component);
-            }
+
+            StopSound(uid, component);
             return;
         }
 
@@ -171,7 +172,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
         _popupSystem.PopupPredicted(Loc.GetString("changeling-devour-consume-complete"), args.User, null, PopupType.LargeCaution);
         if (_mobState.IsDead(target.Value)
             && TryComp<BodyComponent>(target, out var body)
-            && TryComp<HumanoidAppearanceComponent>(target, out _)
+            && HasComp<HumanoidAppearanceComponent>(target)
             && TryComp<ChangelingIdentityComponent>(args.User, out var identityStorage))
         {
             _changelingIdentitySystem.CloneToNullspace(uid, identityStorage, target.Value);
@@ -191,7 +192,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
         Dirty(uid, component);
     }
 
-    protected virtual void StartSound(EntityUid uid, ChangelingDevourComponent component){ }
+    protected virtual void StartSound(EntityUid uid, ChangelingDevourComponent component, SoundSpecifier? sound){ }
     protected virtual void StopSound(EntityUid uid, ChangelingDevourComponent component) { }
 
     protected virtual void RipClothing(EntityUid uid, EntityUid item, ButcherableComponent butcherable) { }

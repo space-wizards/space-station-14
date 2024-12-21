@@ -90,4 +90,9 @@ public abstract class SharedTypingIndicatorSystem : EntitySystem
 
         _appearance.SetData(uid, TypingIndicatorVisuals.IsTyping, isEnabled, appearance);
     }
+
+    public void Replace(TypingIndicatorComponent component, TypingIndicatorComponent otherComponent)
+    {
+        component.TypingIndicatorPrototype = otherComponent.TypingIndicatorPrototype;
+    }
 }

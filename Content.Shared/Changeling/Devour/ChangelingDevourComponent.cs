@@ -22,15 +22,19 @@ public sealed partial class ChangelingDevourComponent : Component
     [DataField, AutoNetworkedField]
     public EntityWhitelist? Whitelist = new()
     {
-        Components = new[]
-        {
+        Components =
+        [
             "MobState",
-            "HumanoidAppearance"
-        }
+            "HumanoidAppearance",
+        ],
     };
 
     [DataField, AutoNetworkedField]
-    public SoundSpecifier? ConsumeNoise = new SoundPathSpecifier("/Audio/Ambience/Antag/strawmeme.ogg");
+    public SoundSpecifier? ConsumeNoise = new SoundCollectionSpecifier("ChangelingDevourConsume");
+
+    [DataField, AutoNetworkedField]
+    public SoundSpecifier? DevourWindupNoise = new SoundCollectionSpecifier("ChangelingDevourWindup");
+
 
     /// <summary>
     /// The windup time before the changeling begins to engage in devouring the identity of a target
@@ -61,7 +65,7 @@ public sealed partial class ChangelingDevourComponent : Component
             { "Slash", 10},
             { "Piercing", 10 },
             { "Blunt", 5 },
-        }
+        },
     };
     [DataField, AutoNetworkedField]
     public TimeSpan NextTick;

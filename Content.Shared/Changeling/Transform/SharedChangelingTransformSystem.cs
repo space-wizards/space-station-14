@@ -1,12 +1,15 @@
 using System.Linq;
 using Content.Shared.Actions;
+using Content.Shared.Chat.TypingIndicator;
 using Content.Shared.DoAfter;
 using Content.Shared.Speech.Components;
 using Robust.Shared.Serialization;
 using Content.Shared.Forensics;
 using Content.Shared.Humanoid;
 using Content.Shared.Popups;
+using Content.Shared.Speech;
 using Content.Shared.Wagging;
+using Robust.Shared.Audio;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components.Localization;
 
@@ -23,6 +26,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedChangelingIdentitySystem _changelingIdentitySystem = default!;
+    [Dependency] private readonly SharedTypingIndicatorSystem _typingIndicatorSystem = default!;
 
 
     public override void Initialize()
@@ -82,6 +86,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         if(!TryComp<ChangelingIdentityComponent>(uid, out var identity))
             return;
         _popupSystem.PopupPredicted(Loc.GetString("changeling-transform-attempt"), uid, null, PopupType.MediumCaution);
+        StartSound(uid, component, component.TransformAttemptNoise);
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
             uid,
             component.TransformWindup,
@@ -102,6 +107,7 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         _uiSystem.CloseUi(uid, TransformUi.Key, uid);
         var selectedIdentity = args.TargetIdentity;
         _popupSystem.PopupPredicted(Loc.GetString("changeling-transform-attempt"), uid, null, PopupType.MediumCaution);
+        StartSound(uid, component, component.TransformAttemptNoise);
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
             uid,
             component.TransformWindup,
@@ -119,23 +125,23 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         ChangelingTransformWindupDoAfterEvent args)
     {
         args.Handled = true;
+        StopSound(uid, component);
         if (args.Cancelled)
             return;
-        if(!TryComp<HumanoidAppearanceComponent>(uid, out var currentAppearance))
-            return;
-        if(!TryComp<VocalComponent>(uid, out var currentVocals))
-            return;
-        if(!TryComp<DnaComponent>(uid, out var currentDna))
-            return;
-        if(!HasComp<GrammarComponent>(uid))
+        if (!TryComp<HumanoidAppearanceComponent>(uid, out var currentAppearance)
+           || !TryComp<VocalComponent>(uid, out var currentVocals)
+           || !TryComp<SpeechComponent>(uid, out var currentSpeech)
+           || !TryComp<DnaComponent>(uid, out var currentDna)
+           || !TryComp<TypingIndicatorComponent>(uid, out var currentTypingIndicator)
+           || !HasComp<GrammarComponent>(uid))
             return;
 
         var targetIdentity = GetEntity(args.TargetIdentity);
-        if(!TryComp<DnaComponent>(uid, out var lastConsumedDna))
-            return;
-        if (!TryComp<HumanoidAppearanceComponent>(targetIdentity, out var humanoid))
-            return;
-        if (!TryComp<VocalComponent>(targetIdentity, out var lastConsumedVocals))
+        if(!TryComp<DnaComponent>(uid, out var targetConsumedDna)
+           || !TryComp<HumanoidAppearanceComponent>(targetIdentity, out var targetConsumedHumanoid)
+           || !TryComp<VocalComponent>(targetIdentity, out var targetConsumedVocals)
+           || !TryComp<TypingIndicatorComponent>(targetIdentity, out var targetConsumedTypingIndicator)
+           || !TryComp<SpeechComponent>(targetIdentity, out var targetConsumedSpeech))
             return;
 
         //Handle species with the ability to wag their tail
@@ -152,24 +158,37 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
 
         _humanoidAppearanceSystem.CloneAppearance(targetIdentity, args.User);
 
-        currentDna.DNA = lastConsumedDna.DNA;
-        currentVocals.EmoteSounds = lastConsumedVocals.EmoteSounds;
-        currentVocals.Sounds = lastConsumedVocals.Sounds;
-        currentVocals.ScreamAction = lastConsumedVocals.ScreamAction;
-        currentVocals.ScreamId = lastConsumedVocals.ScreamId;
-        currentVocals.Wilhelm = lastConsumedVocals.Wilhelm;
-        currentVocals.WilhelmProbability = lastConsumedVocals.WilhelmProbability;
+        TransformBodyEmotes(uid, targetIdentity);
+
+        currentDna.DNA = targetConsumedDna.DNA;
+        currentVocals.EmoteSounds = targetConsumedVocals.EmoteSounds;
+        currentVocals.Sounds = targetConsumedVocals.Sounds;
+        currentVocals.ScreamAction = targetConsumedVocals.ScreamAction;
+        currentVocals.ScreamId = targetConsumedVocals.ScreamId;
+        currentVocals.Wilhelm = targetConsumedVocals.Wilhelm;
+        currentVocals.WilhelmProbability = targetConsumedVocals.WilhelmProbability;
+
+        currentSpeech.SpeechSounds = targetConsumedSpeech.SpeechSounds;
+        currentSpeech.SpeechVerb = targetConsumedSpeech.SpeechVerb;
+        currentSpeech.SuffixSpeechVerbs = targetConsumedSpeech.SuffixSpeechVerbs;
+        currentSpeech.AllowedEmotes = targetConsumedSpeech.AllowedEmotes;
+        currentSpeech.AudioParams = targetConsumedSpeech.AudioParams;
+
+        _typingIndicatorSystem.Replace(currentTypingIndicator, targetConsumedTypingIndicator);
 
         _metaSystem.SetEntityName(uid, Name(targetIdentity), raiseEvents: false);
         _metaSystem.SetEntityDescription(uid, MetaData(targetIdentity).EntityDescription);
-        TransformGrammarSet(uid, humanoid.Gender);
+        TransformGrammarSet(uid, targetConsumedHumanoid.Gender);
 
-        _entityManager.Dirty(uid, currentAppearance);
-        _entityManager.Dirty(uid, currentVocals);
+        Dirty(uid, currentAppearance);
+        Dirty(uid, currentVocals);
+        Dirty(uid, currentSpeech);
     }
 
+    protected virtual void TransformBodyEmotes(EntityUid uid, EntityUid target) { }
     protected virtual void TransformGrammarSet(EntityUid uid, Gender gender) { }
-
+    protected virtual void StartSound(EntityUid uid, ChangelingTransformComponent component, SoundSpecifier? sound) { }
+    protected virtual void StopSound(EntityUid uid, ChangelingTransformComponent component) { }
 }
 
 

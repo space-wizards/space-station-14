@@ -24,6 +24,7 @@ using Content.Shared.Popups;
 using Content.Shared.Storage;
 using Content.Shared.Whitelist;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Map;
@@ -39,14 +40,16 @@ public sealed class ChangelingDevourSystem : SharedChangelingDevourSystem
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
-    protected override void StartSound(EntityUid uid, ChangelingDevourComponent component)
+    protected override void StartSound(EntityUid uid, ChangelingDevourComponent component, SoundSpecifier? sound)
     {
-        component.CurrentDevourSound = _audioSystem.PlayPvs(component.ConsumeNoise, uid)!.Value.Entity;
+        if(sound is not null)
+            component.CurrentDevourSound = _audioSystem.PlayPvs(sound, uid)!.Value.Entity;
     }
 
     protected override void StopSound(EntityUid uid, ChangelingDevourComponent component)
     {
-        _audioSystem.Stop(component.CurrentDevourSound);
+        if (component.CurrentDevourSound is not null)
+            _audioSystem.Stop(component.CurrentDevourSound);
         component.CurrentDevourSound = null;
     }
 

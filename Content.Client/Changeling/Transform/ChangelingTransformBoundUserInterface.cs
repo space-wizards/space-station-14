@@ -15,6 +15,7 @@ public sealed class ChangelingTransformBoundUserInterface : BoundUserInterface
     {
         base.Open();
         _window = this.CreateWindow<ChangelingTransformMenu>();
+
         _window.OnIdentitySelect += SendIdentitySelect;
     }
     protected override void UpdateState(BoundUserInterfaceState state)
