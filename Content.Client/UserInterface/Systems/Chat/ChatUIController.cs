@@ -837,6 +837,17 @@ public sealed class ChatUIController : UIController
             }
         }
 
+        var popupHighlight = UIManager.ActiveScreen?.GetWidget<ChatBox>()?.ChatInput.HighlightButton.Popup
+                             ?? UIManager.ActiveScreen?.GetWidget<ResizableChatBox>()?.ChatInput.HighlightButton.Popup;
+
+        if (popupHighlight?.Words != null)
+        {
+            foreach (var word in popupHighlight.Words)
+            {
+                msg.WrappedMessage = SharedChatSystem.InjectTagAroundString(msg, word, "color", popupHighlight.ColorWords.ToHex());
+            }
+        }
+
         // Log all incoming chat to repopulate when filter is un-toggled
         if (!msg.HideChat)
         {
