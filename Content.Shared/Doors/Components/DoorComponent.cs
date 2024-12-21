@@ -300,7 +300,8 @@ public sealed partial class DoorComponent : Component
     /// <summary>
     /// Is true if the door is currently opening or closing due to being pried.
     /// </summary>
-    public bool IsPried;
+    [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadOnly)]
+    public bool IsBeingPried;
 }
 
 [Serializable, NetSerializable]

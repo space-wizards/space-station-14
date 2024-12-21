@@ -173,13 +173,13 @@ public abstract partial class SharedDoorSystem : EntitySystem
         {
             case DoorState.Opening:
                 _activeDoors.Add((uid, door));
-                door.IsPried = isPried;
+                door.IsBeingPried = isPried;
                 door.NextStateChange = GameTiming.CurTime + door.OpenTimeOne;
                 break;
 
             case DoorState.Closing:
                 _activeDoors.Add((uid, door));
-                door.IsPried = isPried;
+                door.IsBeingPried = isPried;
                 door.NextStateChange = GameTiming.CurTime + door.CloseTimeOne;
                 break;
 
@@ -195,14 +195,14 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
             case DoorState.Open:
                 door.Partial = false;
-                door.IsPried = false;
+                door.IsBeingPried = false;
                 if (door.NextStateChange == null)
                     _activeDoors.Remove((uid, door));
                 break;
             case DoorState.Closed:
                 // May want to keep the door around to re-check for opening if we got a contact during closing.
                 door.Partial = false;
-                door.IsPried = false;
+                door.IsBeingPried = false;
                 break;
         }
 
@@ -524,6 +524,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
             door.NextStateChange = GameTiming.CurTime + door.OpenTimeTwo;
             door.State = DoorState.Open;
             AppearanceSystem.SetData(uid, DoorVisuals.State, DoorState.Open);
+            door.IsBeingPried = false;
             Dirty(uid, door);
             return false;
         }
