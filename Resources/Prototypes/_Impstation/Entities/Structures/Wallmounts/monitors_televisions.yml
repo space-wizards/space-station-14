@@ -1,4 +1,4 @@
-- type: entity
+- type: entity #this one is a little fucked up but I needed a teeny screen for mapping
   parent: WallmountTelevision
   id: WallmountTelevisionMini
   suffix: entertainment
@@ -13,14 +13,18 @@
         state: telescreen_frame
       - map: ["computerLayerScreen"]
         state: telescreen
-  - type: Fixtures
+  - type: Fixtures #this whole bit is so that you can open it way easier
     fixtures:
       fix1:
         shape:
           !type:PhysShapeAabb
-          bounds: "-0.20,-0.10,0.25,0.35"
+          bounds: "-0.75,-0.75,0.75,0.75"
         density: 250
         mask:
           - FullTileMask
         layer:
           - WallLayer
+  - type: WallMount
+    arc: 360
+  - type: Physics
+    canCollide: false

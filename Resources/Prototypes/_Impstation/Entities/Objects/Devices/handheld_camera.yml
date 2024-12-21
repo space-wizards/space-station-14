@@ -1,24 +1,14 @@
 - type: entity
   id: SurveillanceWirelessCameraPocket
-  name: long-range handheld camera
+  name: handheld quantum camera
   parent: BaseItem
-  description: A handheld wireless camera set to the entertainment frequency.
+  description: Bring the station's eyes with you with this wireless camera set to the entertainment frequency.
+  suffix: entertainment, mapping only
   components:
     - type: InteractionOutline
     - type: Eye
     - type: WirelessNetworkConnection
-      range: 500
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeCircle
-            radius: 0.2
-          density: 20
-          mask:
-            - MachineMask
-          layer:
-            - BulletImpassable
+      range: 1000 #should be pretty much map-wide
     - type: SurveillanceCameraMicrophone
       blacklist:
         components:
@@ -26,7 +16,7 @@
           - SurveillanceCameraMonitor
           - RadioSpeaker
     - type: ActiveListener
-      range: 10
+      range: 1 #only has a built-in mic
     - type: UserInterface
       interfaces:
         enum.SurveillanceCameraSetupUiKey.Camera:
@@ -37,11 +27,7 @@
       transmitFrequencyId: SurveillanceCamera
     - type: SurveillanceCamera
       networkSet: true
-    - type: Item
-      size: Small
     - type: Sprite
-      noRot: true
-      sprite: Structures/monitors.rsi
+      sprite: _Impstation/Objects/Devices/hand_camera.rsi
       layers:
-        - map: [ "enum.SurveillanceCameraVisualsKey.Key" ]
-          state: television
+      - state: icon
