@@ -270,21 +270,6 @@
     {
       "name": "ano11-inhand-right",
 	  "directions": 4
-    },
-    {
-     "name": "artifact-activation",
-     "delays": [
-        [
-            0.100,
-            0.100,
-            0.100,
-            0.100,
-            0.100,
-            0.100,
-            0.100,
-            0.100
-        ]
-     ]
     }
   ]
 }

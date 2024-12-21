@@ -16,6 +16,7 @@
       map: [ "enum.ArtifactsVisualLayers.UnlockingEffect" ]
       visible: false
     - state: artifact-activation
+      sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
       map: [ "enum.ArtifactsVisualLayers.ActivationEffect" ]
       visible: false
   - type: Physics
