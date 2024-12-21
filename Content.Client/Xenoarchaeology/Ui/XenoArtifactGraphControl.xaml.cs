@@ -52,6 +52,7 @@ public sealed partial class XenoArtifactGraphControl : BoxContainer
     public Color ActiveNodeColor { get; set; } = Color.Plum;
     public Color UnlockedNodeColor { get; set; } = Color.White;
     public Color HoveredNodeColor { get; set; } = Color.DimGray;
+    public Color UnlockableNodeColor { get; set; } = Color.LightSlateGray;
 
     public void SetArtifact(Entity<XenoArtifactComponent>? artifact)
     {
@@ -82,10 +83,11 @@ public sealed partial class XenoArtifactGraphControl : BoxContainer
         _hoveredNode = null;
         if (_artifact == null)
             return;
+        var artifact = _artifact.Value;
 
-        var maxDepth = _artifactSystem.GetAllNodes(_artifact.Value)
+        var maxDepth = _artifactSystem.GetAllNodes(artifact)
                                       .Max(s => s.Comp.Depth);
-        var segments = _artifactSystem.GetSegments(_artifact.Value);
+        var segments = _artifactSystem.GetSegments(artifact);
 
         var bottomLeft = Position // the position
                          + new Vector2(0, Size.Y * UIScale) // the scaled height of the control
@@ -120,13 +122,21 @@ public sealed partial class XenoArtifactGraphControl : BoxContainer
                     // selecting color for node based on its state
                     var node = nodes[i];
                     var color = LockedNodeColor;
-                    if (_artifactSystem.IsNodeActive(_artifact.Value, node))
+                    if (_artifactSystem.IsNodeActive(artifact, node))
                     {
                         color = ActiveNodeColor;
                     }
                     else if (!node.Comp.Locked)
                     {
                         color = UnlockedNodeColor;
+                    }
+                    else
+                    {
+                        var directPredecessorNodes = _artifactSystem.GetDirectPredecessorNodes((artifact, artifact), node);
+                        if (directPredecessorNodes.Count == 0 || directPredecessorNodes.All(x => !x.Comp.Locked))
+                        {
+                            color = UnlockableNodeColor;
+                        }
                     }
 
                     var pos = GetNodePos(node, ySpacing, segments, ref bottomLeft);
@@ -151,7 +161,7 @@ public sealed partial class XenoArtifactGraphControl : BoxContainer
             foreach (var node in segment)
             {
                 var from = GetNodePos(node, ySpacing, segments, ref bottomLeft) + new Vector2(0, -NodeRadius);
-                var successorNodes = _artifactSystem.GetDirectSuccessorNodes((_artifact.Value, _artifact.Value.Comp), node);
+                var successorNodes = _artifactSystem.GetDirectSuccessorNodes((artifact, artifact), node);
                 foreach (var successorNode in successorNodes)
                 {
                     var color = node.Comp.Locked
