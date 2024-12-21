@@ -90,7 +90,7 @@ public sealed partial class VampireComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     [AutoNetworkedField]
-    public Dictionary<string, EntityUid?> UnlockedPowers = new();
+    public Dictionary<string, NetEntity?> UnlockedPowers = new();
     
     /// <summary>
     /// All abilities

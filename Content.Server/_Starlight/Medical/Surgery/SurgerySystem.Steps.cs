@@ -313,7 +313,7 @@ public sealed partial class SurgerySystem : SharedSurgerySystem
                 return;
 
             var vizualizer = EnsureComp<CustomLimbVisualizerComponent>(args.Body);
-            vizualizer.Layers[layer.Value] = itemId;
+            vizualizer.Layers[layer.Value] = GetNetEntity(itemId);
             Dirty(args.Body, vizualizer);
 
         }
