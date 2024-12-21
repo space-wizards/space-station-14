@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Chemistry;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
@@ -62,6 +63,8 @@ public abstract partial class SharedXenoArtifactSystem
         if (_timing.CurTime < ent.Comp.NextUnlockTime)
             return;
 
+        var index = GetIndex(ent, node);
+
         if (!_unlockingQuery.TryGetComponent(ent, out var unlockingComp))
         {
             unlockingComp = EnsureComp<XenoArtifactUnlockingComponent>(ent);
@@ -71,7 +74,18 @@ public abstract partial class SharedXenoArtifactSystem
             if (_net.IsServer)
                 _popup.PopupEntity(Loc.GetString("artifact-unlock-state-begin"), ent);
         }
-        var index = GetIndex(ent, node);
+        else
+        {
+            var predecessorNodeIndices = GetPredecessorNodes((ent, ent), index);
+            var successorNodeIndices = GetSuccessorNodes((ent, ent), index);
+            if(unlockingComp.TriggeredNodeIndexes.Count == 0
+               || unlockingComp.TriggeredNodeIndexes.All(
+                   x => predecessorNodeIndices.Contains(x) || successorNodeIndices.Contains(x)
+                )
+               )
+                // we add time on each new trigger, if it is not going to fail us
+                unlockingComp.EndTime += ent.Comp.UnlockStateIncrementPerNode;
+        }
 
         if (unlockingComp.TriggeredNodeIndexes.Add(index))
         {
