@@ -5,7 +5,7 @@ using Content.Shared.Mind;
 using Content.Shared.Objectives.Components;
 using DeltaV.Server.Objectives.Components;
 
-namespace DeltaV.Content.Server.Objectives.Systems;
+namespace Content.Server.Objectives.Systems;
 
 /// <summary>
 /// Handles teach a lesson condition logic, does not assign target.
