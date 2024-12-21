@@ -67,11 +67,27 @@ def get_files_to_publish() -> Iterable[str]:
         yield os.path.join(RELEASE_DIR, file)
 
 
-def get_engine_version() -> str:
-    proc = subprocess.run(["git", "describe","--tags", "--abbrev=0"], stdout=subprocess.PIPE, cwd="RobustToolbox", check=True, encoding="UTF-8")
-    tag = proc.stdout.strip()
-    assert tag.startswith("v")
-    return tag[1:] # Cut off v prefix.
+def get_engine_version():
+    try:
+        proc = subprocess.run(
+            ["git", "describe", "--tags", "--abbrev=0"],
+            stdout=subprocess.PIPE,
+            cwd="RobustToolbox",
+            check=True,
+            encoding="UTF-8"
+        )
+        assert proc.stdout.strip().startswith("v")
+        return proc.stdout.strip()
+    except subprocess.CalledProcessError:
+        print("No annotated tags found. Using latest commit hash as engine version.")
+        proc = subprocess.run(
+            ["git", "rev-parse", "HEAD"],
+            stdout=subprocess.PIPE,
+            cwd="RobustToolbox",
+            check=True,
+            encoding="UTF-8"
+        )
+        return proc.stdout.strip()
 
 
 if __name__ == '__main__':
