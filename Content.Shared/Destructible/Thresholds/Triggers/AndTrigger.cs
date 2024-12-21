@@ -1,6 +1,6 @@
 using Content.Shared.Damage;
 
-namespace Content.Server.Destructible.Thresholds.Triggers
+namespace Content.Shared.Destructible.Thresholds.Triggers
 {
     /// <summary>
     ///     A trigger that will activate when all of its triggers have activated.
@@ -9,14 +9,14 @@ namespace Content.Server.Destructible.Thresholds.Triggers
     [DataDefinition]
     public sealed partial class AndTrigger : IThresholdTrigger
     {
-        [DataField("triggers")]
-        public List<IThresholdTrigger> Triggers { get; set; } = new();
+        [DataField]
+        public List<IThresholdTrigger> Triggers = new();
 
-        public bool Reached(DamageableComponent damageable, DestructibleSystem system)
+        public bool Reached(DamageableComponent damageable, EntityManager entManager)
         {
             foreach (var trigger in Triggers)
             {
-                if (!trigger.Reached(damageable, system))
+                if (!trigger.Reached(damageable, entManager))
                 {
                     return false;
                 }

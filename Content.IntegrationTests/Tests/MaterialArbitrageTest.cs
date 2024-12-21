@@ -9,6 +9,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Construction.Components;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
+using Content.Shared.Destructible;
 using Content.Shared.FixedPoint;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
