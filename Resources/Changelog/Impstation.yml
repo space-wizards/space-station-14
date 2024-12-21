@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: Artifacts can now spawn non-random books (e.g Book of Nar'sie, Parker's
-      TEG guide, etc)
-    type: Add
-  - message: Added some parts of The Great Gatsby by F. Scott Fitzgerald, which is
-      under public domain. By sections, I mean Added the entirety of The Great Gatsby
-      by F. Scott Fitzgerald, which is under public domain.
-    type: Add
-  id: 282
-  time: '2024-09-28T00:13:26.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/354
-- author: Sha-Seng
-  changes:
-  - message: A new prestige neck item for quartermasters
-    type: Add
-  - message: Some veteran captain sprite adjustments
-    type: Tweak
-  id: 283
-  time: '2024-09-28T00:47:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/364
 - author: formlessnameless
   changes:
   - message: Made the upstream Frezon and N2O nerfs around half as harsh. If it's
@@ -4531,3 +4510,21 @@
   id: 781
   time: '2024-12-21T11:41:49.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1089
+- author: AftrLite
+  changes:
+  - message: Fixed Freezer/Heater sprites, which got accidentally reverted.
+    type: Fix
+  id: 782
+  time: '2024-12-21T15:08:45.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1095
+- author: kipdotnet
+  changes:
+  - message: Added the Mini Television for mapping.
+    type: Add
+  - message: Added the handheld quantum camera for mapping.
+    type: Add
+  - message: Updated banana.
+    type: Tweak
+  id: 783
+  time: '2024-12-21T15:09:21.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1092
