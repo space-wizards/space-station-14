@@ -426,6 +426,7 @@
   id: BountyTrash
   reward: 500
   description: bounty-description-trash
+  allowArbitrage: true # its trash, why would you buy things for it
   entries:
   - name: bounty-item-trash
     amount: 10
