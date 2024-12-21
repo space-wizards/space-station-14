@@ -43,7 +43,6 @@
   - type: MovementSpeedModifier
   - type: RequireProjectileTarget
     active: False
-  - type: LightSensitive
 
 - type: entity
   save: false
