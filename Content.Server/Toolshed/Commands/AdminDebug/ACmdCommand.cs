@@ -22,13 +22,9 @@ public sealed class ACmdCommand : ToolshedCommand
     }
 
     [CommandImplementation("caninvoke")]
-    public bool CanInvoke(
-        [CommandInvocationContext] IInvocationContext ctx,
-        [PipedArgument] CommandSpec command,
-        [CommandArgument] ValueRef<ICommonSession> player
-        )
+    public bool CanInvoke(IInvocationContext ctx, [PipedArgument] CommandSpec command, ICommonSession player)
     {
         // Deliberately discard the error.
-        return ((IPermissionController) _adminManager).CheckInvokable(command, player.Evaluate(ctx), out var err);
+        return ((IPermissionController) _adminManager).CheckInvokable(command, player, out _);
     }
 }
