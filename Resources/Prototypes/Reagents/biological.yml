@@ -250,3 +250,9 @@
         damage:
           types:
             Cellular: 2
+
+- type: reagent
+  id: SentientGreyMatter
+  parent: GreyMatter
+  name: reagent-name-sentient-grey-matter
+  desc: reagent-desc-sentient-grey-matter
