@@ -1,0 +1,36 @@
+- type: entity
+  id: ActionRCBackToBody
+  name: Back to body
+  description: Stops remotely controlling this entity.
+  components:
+  - type: InstantAction
+    priority: -10
+    itemIconStyle: BigAction
+    icon:
+      sprite: Interface/Actions/remote_control.rsi
+      state: return
+    event: !type:RemoteControlReturnToBodyEvent
+
+- type: entity
+  id: ActionContainerSwallow
+  name: Store
+  description: Store an item in your storage.
+  components:
+  - type: EntityTargetAction
+    icon: { sprite : Interface/Actions/spittable_container.rsi, state: eat }
+    iconOn: { sprite : Interface/Actions/spittable_container.rsi, state: eat-on }
+    event: !type:SwallowToContainerActionEvent
+    priority: -9
+
+- type: entity
+  id: ActionContainerSpit
+  name: Spit
+  description: Spit all items from your storage.
+  components:
+  - type: InstantAction
+    priority: -8
+    itemIconStyle: BigAction
+    icon:
+      sprite: Interface/Actions/spittable_container.rsi
+      state: spit
+    event: !type:SpitFromContainerActionEvent

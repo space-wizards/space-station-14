@@ -122,8 +122,11 @@ public abstract class SharedItemSystem : EntitySystem
     private void OnExamine(EntityUid uid, ItemComponent component, ExaminedEvent args)
     {
         // show at end of message generally
+        // If ExamineSize is set, use that. Otherwise, use the regular size.
+        var examinedSize = GetItemSizeLocale(component.ExamineSize ?? component.Size);
+
         args.PushMarkup(Loc.GetString("item-component-on-examine-size",
-            ("size", GetItemSizeLocale(component.Size))), priority: -1);
+            ("size", examinedSize)), priority: -1);
     }
 
     public ItemSizePrototype GetSizePrototype(ProtoId<ItemSizePrototype> id)
