@@ -55,6 +55,9 @@
               collection: MetalBreak
     - type: StaticPrice
       price: 300
+    - type: GuideHelp
+      guides:
+      - ShuttleCraft
   placement:
     mode: SnapgridCenter
 
