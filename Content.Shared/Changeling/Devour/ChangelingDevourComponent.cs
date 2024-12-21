@@ -24,11 +24,12 @@ public sealed partial class ChangelingDevourComponent : Component
         Components = new[]
         {
             "MobState",
+            "HumanoidAppearance"
         }
     };
 
     [DataField, AutoNetworkedField]
-    public SoundSpecifier? ConsumeTickNoise = new SoundPathSpecifier("/Audio/Ambience/Antag/strawmeme.ogg");
+    public SoundSpecifier? ConsumeNoise = new SoundPathSpecifier("/Audio/Ambience/Antag/strawmeme.ogg");
 
     /// <summary>
     /// The windup time before the changeling begins to engage in devouring the identity of a target

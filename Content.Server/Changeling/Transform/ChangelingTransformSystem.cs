@@ -14,16 +14,9 @@ namespace Content.Server.Changeling.Transform;
 
 public sealed class ChangelingTransformSystem : SharedChangelingTransformSystem
 {
-    [Dependency] private readonly EntityManager _entityManager = default!;
-    [Dependency] private readonly MetaDataSystem _metaSystem = default!;
     [Dependency] private readonly GrammarSystem _grammarSystem = default!;
     [Dependency] private readonly IdentitySystem _identitySystem = default!;
-    [Dependency] private readonly ActionsSystem _actionSystem = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-    }
 
     protected override void TransformGrammarSet(EntityUid uid, Gender gender)
     {

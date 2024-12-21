@@ -28,8 +28,7 @@ public sealed partial class ChangelingTransformMenu : RadialMenu
             {
                 StyleClasses = { "RadialMenuButton" },
                 SetSize = new Vector2(64, 64),
-                ToolTip = identity.Name,
-                entity = identity.Identity,
+                ToolTip = identity.Name
             };
 
             var entView = new SpriteView()
@@ -49,9 +48,8 @@ public sealed partial class ChangelingTransformMenu : RadialMenu
             Main.AddChild(button);
         }
     }
-
 }
+
 public sealed class ChangelingTransformMenuButton : RadialMenuTextureButton
 {
-    public NetEntity entity { get; set; }
 }

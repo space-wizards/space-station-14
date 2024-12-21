@@ -1,38 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Content.Shared.Actions;
-using Content.Shared.Armor;
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Body.Components;
-using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems;
-using Content.Shared.Changeling.Transform;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Prototypes;
-using Content.Shared.Devour;
-using Content.Shared.Devour.Components;
 using Content.Shared.DoAfter;
-using Content.Shared.Forensics;
 using Content.Shared.Humanoid;
-using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Inventory;
-using Content.Shared.Materials;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.NameModifier.Components;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
-using Content.Shared.Speech.Components;
-using Content.Shared.Wagging;
 using Content.Shared.Whitelist;
-using Robust.Shared.Audio;
-using Robust.Shared.Audio.Components;
-using Robust.Shared.Audio.Systems;
-using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -67,7 +44,6 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
         if(!component.ChangelingDevourActionEntity.HasValue)
             _actionsSystem.AddAction(uid, ref component.ChangelingDevourActionEntity, component.ChangelingDevourAction);
         var identityStorage = EnsureComp<ChangelingIdentityComponent>(uid);
-        // RaiseLocalEvent(new ChangelingNullspaceSpawnEvent(GetNetEntity(uid), GetNetEntity(uid)));
         _changelingIdentitySystem.CloneLingStart(uid, identityStorage); // Clone yourself so you can transform back.
     }
     private void OnConsumeAttemptTick(EntityUid uid,
@@ -238,13 +214,20 @@ public sealed class ChangelingDevourAttemptEvent : EntityEventArgs, IInventoryRe
     }
 
 }
-public sealed partial class ChangelingDevourActionEvent : EntityTargetActionEvent { }
+
+public sealed partial class ChangelingDevourActionEvent : EntityTargetActionEvent
+{
+}
 
 [Serializable, NetSerializable]
-public sealed partial class ChangelingDevourWindupDoAfterEvent : SimpleDoAfterEvent { }
+public sealed partial class ChangelingDevourWindupDoAfterEvent : SimpleDoAfterEvent
+{
+}
 
 [Serializable, NetSerializable]
-public sealed partial class ChangelingDevourConsumeDoAfterEvent : SimpleDoAfterEvent { }
+public sealed partial class ChangelingDevourConsumeDoAfterEvent : SimpleDoAfterEvent
+{
+}
 
 
 

@@ -1,29 +1,14 @@
 using System.Linq;
 using Content.Shared.Actions;
-using Content.Shared.Changeling.Devour;
-using Content.Shared.Chemistry.Reagent;
 using Content.Shared.DoAfter;
-using Content.Shared.Mind;
 using Content.Shared.Speech.Components;
-using Robust.Shared.Network;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
 using Content.Shared.Forensics;
 using Content.Shared.Humanoid;
-using Content.Shared.Humanoid.Markings;
-using Content.Shared.Humanoid.Prototypes;
-using Content.Shared.IdentityManagement;
-using Content.Shared.IdentityManagement.Components;
-using Content.Shared.NameModifier.Components;
-using Content.Shared.NameModifier.EntitySystems;
 using Content.Shared.Popups;
-using Content.Shared.Prototypes;
 using Content.Shared.Wagging;
-using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components.Localization;
-using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 
 
 namespace Content.Shared.Changeling.Transform;
@@ -33,15 +18,10 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly EntityManager _entityManager = default!;
-    [Dependency] private readonly SharedMindSystem _mindSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidAppearanceSystem = default!;
-    [Dependency] private readonly NameModifierSystem _nameModifierSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaSystem = default!;
-    [Dependency] private readonly GrammarSystem _grammarSystem = default!;
-    [Dependency] private readonly SharedIdentitySystem _identitySystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly SharedChangelingIdentitySystem _changelingIdentitySystem = default!;
 
 
@@ -71,8 +51,6 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         ChangelingTransformComponent component,
         ChangelingTransformActionEvent args)
     {
-        var user = args.Performer;
-
         if (!TryComp<UserInterfaceComponent>(uid, out var userInterface))
             return;
         if(!TryComp<ChangelingIdentityComponent>(uid, out var userIdentity))
@@ -86,12 +64,11 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
             var x = userIdentity.ConsumedIdentities.Select(x =>
             {
                 return new ChangelingIdentityData(GetNetEntity(x),
-                    Name(x),
-                    MetaData(x).EntityDescription);
+                    Name(x));
             })
                 .ToList();
 
-            _uiSystem.SetUiState(uid, TransformUi.Key, new ChangelingTransformBoundUserInterfaceState(x, _changelingIdentitySystem.PausedMapId));
+            _uiSystem.SetUiState(uid, TransformUi.Key, new ChangelingTransformBoundUserInterfaceState(x));
         }
         else // if the UI is already opened and the command action is done again, transform into the last consumed identity
         {
@@ -151,8 +128,6 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         if(!TryComp<DnaComponent>(uid, out var currentDna))
             return;
         if(!HasComp<GrammarComponent>(uid))
-            return;
-        if(!TryComp<ChangelingIdentityComponent>(args.User, out var identityStorage))
             return;
 
         var targetIdentity = GetEntity(args.TargetIdentity);
@@ -229,27 +204,21 @@ public sealed class ChangelingIdentityData
 {
     public readonly NetEntity Identity;
     public string Name;
-    public string Description;
-    public ProtoId<SpeciesPrototype> Species;
 
 
-    public ChangelingIdentityData(NetEntity identity, string name, string description)
+    public ChangelingIdentityData(NetEntity identity, string name)
     {
         Identity = identity;
         Name = name;
-        Description = description;
     }
 }
 [Serializable, NetSerializable]
 public sealed class ChangelingTransformBoundUserInterfaceState : BoundUserInterfaceState
 {
     public readonly List<ChangelingIdentityData> Identites;
-    public readonly MapId PausedMapId;
-
-    public ChangelingTransformBoundUserInterfaceState(List<ChangelingIdentityData> identities, MapId pausedMapId)
+    public ChangelingTransformBoundUserInterfaceState(List<ChangelingIdentityData> identities)
     {
         Identites = identities;
-        PausedMapId = pausedMapId;
     }
 }
 [Serializable, NetSerializable]

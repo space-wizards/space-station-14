@@ -35,33 +35,13 @@ namespace Content.Server.Changeling.Devour;
 
 public sealed class ChangelingDevourSystem : SharedChangelingDevourSystem
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
-    [Dependency] private readonly GrammarSystem _grammarSystem = default!;
-    [Dependency] private readonly MetaDataSystem _metaSystem = default!;
-    [Dependency] private readonly IdentitySystem _identitySystem = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
-    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly EntityManager _entityManager = default!;
-    [Dependency] private readonly MaterialStorageSystem _materialStorage = default!;
-    [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
-    public override void Initialize()
-    {
-        base.Initialize();
-
-    }
 
     protected override void StartSound(EntityUid uid, ChangelingDevourComponent component)
     {
-        component.CurrentDevourSound = _audioSystem.PlayPvs(component.ConsumeTickNoise, uid)!.Value.Entity;
+        component.CurrentDevourSound = _audioSystem.PlayPvs(component.ConsumeNoise, uid)!.Value.Entity;
     }
 
     protected override void StopSound(EntityUid uid, ChangelingDevourComponent component)
