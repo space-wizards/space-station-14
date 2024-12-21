@@ -396,6 +396,25 @@ public abstract partial class SharedDoorSystem : EntitySystem
         Dirty(uid, door);
 
     }
+
+    /// <summary>
+    /// Opens and then bolts a door.
+    /// Different from emagging this does not remove the access reader, so it can be repaired by simply unbolting the door.
+    /// </summary>
+    public bool TryOpenAndBolt(EntityUid uid, DoorComponent? door = null, AirlockComponent? airlock = null)
+    {
+        if (!Resolve(uid, ref door, ref airlock))
+            return false;
+
+        if (IsBolted(uid) || !airlock.Powered || door.State != DoorState.Closed)
+        {
+            return false;
+        }
+
+        SetState(uid, DoorState.Emagging, door);
+
+        return true;
+    }
     #endregion
 
     #region Closing
@@ -700,6 +719,8 @@ public abstract partial class SharedDoorSystem : EntitySystem
         }
 
         door.NextStateChange = GameTiming.CurTime + delay.Value;
+        Dirty(uid, door);
+
         _activeDoors.Add((uid, door));
     }
 

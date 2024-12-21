@@ -6,7 +6,6 @@
     - physics
     - player
     - splat
-    - emplace
     - bin
     - extremes
     - reduce
@@ -19,113 +18,88 @@
     - iota
     - rep
     - to
-    - iterate
 
 - Flags: DEBUG
   Commands:
     - comp
     - delete
-    - do
+    - with
+    - prototyped
     - named
     - paused
-    - with
-    - count
+    - emplace
+    - do
+    - iterate
     - select
     - where
-    - prototyped
+    - count
     - types
-    - ecscomp
     - actor
     - spawn
+    - replace
     - mappos
     - pos
     - tp
     - allcomps
-    - replace
     - entitysystemupdateorder
     - mind
-
-- Flags: HOST
-  Commands:
-    - methods
-    - ioc
-
-- Commands:
     - fuck
-    - ent
-    - as
-    - buildinfo
-    - help
-    - explain
-    - cmd
-    - stopwatch
-    - self
-    - search
-    - isnull
-    - help
-    - isempty
-    - any
-    - unique
-    - cd
-    - ls
-    - loc
-    - vars
     - '=>'
-    - first
-    - val
-    - '+'
-    - '-'
-    - '*'
-    - '/'
-    - 'min'
-    - 'max'
-    - '&'
-    - '|'
-    - '^'
-    - 'neg'
-    - '<'
-    - '>'
-    - '<='
-    - '>='
-    - '=='
-    - '!='
-    - f
-    - i
-    - s
-    - b
-    - '+/'
-    - '-/'
-    - '*/'
-    - '//'
-    - join
-    - append
     - '?'
     - 'or?'
     - '??'
     - rng
-    - 'sum'
+    - self
+    - sum
     - take
-    - curtick
-    - curtime
-    - realtime
-    - servertime
-    - more
+    - join
+    - search
+    - first
+    - unique
+    - any
+    - contains
+    - isnull
+    - isempty
+    - cd
+    - ls
+    - stopwatch
+    - append
+    - min
+    - max
+    - average
+    - '+'
+    - '-'
+    - '*'
+    - '/'
     - '%'
     - '%/'
     - '&~'
     - '|~'
     - '^~'
     - '~'
-    - 'abs'
-    - 'average'
-    - 'bibytecount'
-    - 'shortestbitlength'
-    - 'countleadzeros'
-    - 'counttrailingzeros'
-    - 'fpi'
-    - 'fe'
-    - 'ftau'
-    - 'fepsilon'
+    - '<'
+    - '>'
+    - '<='
+    - '>='
+    - '=='
+    - '!='
+    - '+/'
+    - '-/'
+    - '*/'
+    - '//'
+    - '&'
+    - '|'
+    - '^'
+    - neg
+    - abs
+    - bibytecount
+    - shortestbitlength
+    - countleadzeros
+    - counttrailingzeros
+    - fpi
+    - fe
+    - ftau
+    - fepsilon
     - dpi
     - de
     - dtau
@@ -181,3 +155,29 @@
     - atanpi
     - pick
     - tee
+
+- Flags: HOST
+  Commands:
+    - methods
+    - ioc
+
+- Commands:
+    - ent
+    - f
+    - i
+    - s
+    - b
+    - as
+    - var
+    - vars
+    - val
+    - help
+    - explain
+    - cmd
+    - buildinfo
+    - loc
+    - curtick
+    - curtime
+    - realtime
+    - servertime
+    - more
