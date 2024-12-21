@@ -1,15 +1,1 @@
-﻿# teach lesson
-- type: entity
-  abstract: true
-  parent: BaseTargetObjective
-  id: BaseTeachLessonObjective
-  components:
-  - type: Objective
-    unique: false
-    icon:
-      sprite: Objects/Weapons/Melee/fireaxe.rsi
-      state: icon
-  - type: ObjectiveBlacklistRequirement
-    blacklist:
-      components:
-      - SocialObjective
+﻿
