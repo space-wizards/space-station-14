@@ -18,7 +18,7 @@
     alwaysCombustible: true
     damage:
       types:
-        Heat: 1
+        Heat: 10
   - type: FireVisuals
     sprite: Effects/fire.rsi
     normalState: fire-flag
@@ -59,7 +59,7 @@
     alwaysCombustible: true
     damage:
       types:
-        Heat: 1
+        Heat: 10
   - type: FireVisuals
     sprite: Effects/fire.rsi
     normalState: fire-flag
@@ -100,7 +100,7 @@
     alwaysCombustible: true
     damage:
       types:
-        Heat: 1
+        Heat: 10
   - type: FireVisuals
     sprite: Effects/fire.rsi
     normalState: fire-flag
@@ -141,7 +141,7 @@
     alwaysCombustible: true
     damage:
       types:
-        Heat: 1
+        Heat: 10
   - type: FireVisuals
     sprite: Effects/fire.rsi
     normalState: fire-flag
@@ -181,7 +181,7 @@
     alwaysCombustible: true
     damage:
       types:
-        Heat: 1
+        Heat: 10
   - type: FireVisuals
     sprite: Effects/fire.rsi
     normalState: fire-flag
