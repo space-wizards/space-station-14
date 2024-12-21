@@ -19,3 +19,9 @@ public sealed partial class AtmosPipeColorComponent : Component
         set => IoCManager.Resolve<IEntityManager>().System<AtmosPipeColorSystem>().SetColor(Owner, this, value);
     }
 }
+
+[ByRefEvent]
+public record struct AtmosPipeColorChangedEvent(Color color)
+{
+    public Color Color = color;
+}
