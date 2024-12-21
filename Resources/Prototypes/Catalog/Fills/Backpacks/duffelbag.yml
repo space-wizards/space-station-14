@@ -209,6 +209,7 @@
         - id: ClothingHeadsetChameleon
         - id: ClothingShoesChameleon
         - id: BarberScissors
+        - id: ChameleonControllerImplanter
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
