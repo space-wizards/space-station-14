@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by IProduceWidgets (github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "sobadge"
+    },
+	{
+      "name": "largebadge"
+    },
+	{
+      "name": "sherrifstar"
+    },
+    {
+      "name": "equipped-NECK",
+      "directions": 4
+    }
+  ]
+}
