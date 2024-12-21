@@ -183,30 +183,30 @@
   parent: BasePlushie
   id: PlushieHampter
   name: hampter plushie
-  description: A cute stuffed toy that resembles a hamster. Its face looks squished.
+  description: A cute stuffed toy that resembles a hamster. He looks sad...
   components:
   - type: Sprite
     state: plushie_hampter
   - type: EmitSoundOnUse
     sound:
-      path: /Audio/Items/Toys/mousesqueek.ogg
+      path: /Audio/Items/Toys/sad_hamster.ogg
   - type: EmitSoundOnLand
     sound:
-      path: /Audio/Items/Toys/mousesqueek.ogg
+      path: /Audio/Items/Toys/sad_hamster.ogg
   - type: EmitSoundOnActivate
     sound:
-      path: /Audio/Items/Toys/mousesqueek.ogg
+      path: /Audio/Items/Toys/sad_hamster.ogg
   - type: EmitSoundOnTrigger
     sound:
-      path: /Audio/Items/Toys/mousesqueek.ogg
+      path: /Audio/Items/Toys/sad_hamster.ogg
   - type: Food
     requiresSpecialDigestion: true
     useSound:
-      path: /Audio/Items/Toys/mousesqueek.ogg
+      path: /Audio/Items/Toys/sad_hamster.ogg
   - type: MeleeWeapon
     wideAnimationRotation: 180
     soundHit:
-      path: /Audio/Items/Toys/mousesqueek.ogg
+      path: /Audio/Items/Toys/sad_hamster.ogg
 
 - type: entity
   parent: PlushieBee
