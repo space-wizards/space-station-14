@@ -7,6 +7,7 @@ using Content.Shared.Objectives.Components;
 using Content.Shared.Objectives.Systems;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
+using Content.Shared.Roles.Jobs;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
@@ -15,6 +16,8 @@ using Content.Server.Objectives.Commands;
 using Content.Shared.Prototypes;
 using Content.Shared.Roles.Jobs;
 using Robust.Server.Player;
+using System.Diagnostics.CodeAnalysis;
+using Content.Server.GameTicking.Rules;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives;
@@ -27,6 +30,7 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
     [Dependency] private readonly SharedJobSystem _job = default!;
+    [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
 
     private IEnumerable<string>? _objectives;
 
@@ -295,6 +299,66 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
             .Select(p => p.ID)
             .Order();
     }
+
+    /// <summary>
+    ///     Will return the name and job of the given entity. If the entity doesn't have a name or job will return
+    ///     "Unknown" instead.
+    /// </summary>
+    public (string, string) TryGetJobAndName(EntityUid? uid, MindComponent? mind = null)
+    {
+        var name = "Unknown";
+        if (uid != null && Resolve(uid.Value, ref mind) && mind.CharacterName != null)
+            name = mind.CharacterName;
+
+        var job = _job.MindTryGetJobName(uid);
+
+        return (name, job);
+    }
+
+
+    /// <summary>
+    ///     Will return true if the given entity has the given objective and false otherwise.
+    ///     Will also return a list of all objectives of the given type on the mind.
+    /// </summary>
+    public bool GetObjectives(EntityUid? mindId, string proto, [NotNullWhen(true)] out List<EntityUid> objectives, MindComponent? mind = null)
+    {
+        objectives = new List<EntityUid>();
+
+        if (mindId == null)
+            return false;
+
+        if (!Resolve(mindId.Value, ref mind))
+            return false;
+
+        foreach (var objective in mind.Objectives)
+        {
+            if (Prototype(objective)?.ID == proto)
+                objectives.Add(objective);
+        }
+
+        return objectives.Count != 0;
+    }
+
+    /// <summary>
+    ///     Returns a list of (traitor, objective) pairs where the objective matches the objectiveProto.
+    ///     If a traitor has multiple valid objectives, the list will contain more than one entry with the same traitor.
+    /// </summary>
+    public List<(EntityUid, EntityUid)> GetAllOtherTratorsWithObjective(MindComponent mind, string objectiveProto)
+    {
+        var traitors = _traitorRule.GetOtherTraitorMindsAliveAndConnected(mind)
+            .Select(pair => pair.Item1)
+            .ToHashSet();
+
+        var validTrators = new List<(EntityUid, EntityUid)>();
+
+        foreach (var traitor in traitors)
+            if (GetObjectives(traitor, objectiveProto, out var objList))
+                foreach (var objective in objList)
+                    validTrators.Add((traitor, objective));
+
+        return validTrators;
+    }
+
 }
 
 /// <summary>

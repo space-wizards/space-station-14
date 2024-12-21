@@ -1,0 +1,14 @@
+- type: weightedRandom
+  id: BasicDocumentWeights
+  weights:
+    ArrestLogsDocument: 1
+    RadioLogsDocument: 1
+    StationMaintenceReportDocument: 1
+    ResesarchReportDocument: 1
+    MedicalLogsDocument: 1
+    SupplyReportDocument: 1
+    CentralCommandReportDocument: .75
+    CentralCommandAuditDocument: .75
+    NuclearDeviceMaintainceReportDocument: .5
+    ArmoryInspectionReportDocument: 1
+    VaultInspectionReportDocument: 1
