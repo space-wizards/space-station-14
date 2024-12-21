@@ -22,6 +22,18 @@
     RobustHarvest: 1
 
 - type: reaction
+  id: Sedin
+  reactants:
+    Cryoxadone:
+      amount: 1
+    RobustHarvest:
+      amount: 3
+    Diethylamine: 
+      amount: 3
+  products:
+    Sedin: 1
+
+- type: reaction
   id: Left4Zed
   reactants:
     EZNutrient:

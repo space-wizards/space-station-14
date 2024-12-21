@@ -38,20 +38,25 @@ public sealed class ClientFoodSequenceSystem : SharedFoodSequenceSystem
             if (state.Sprite is null)
                 continue;
 
-            counter++;
-
             var keyCode = $"food-layer-{counter}";
             start.Comp.RevealedLayers.Add(keyCode);
 
-            var index = sprite.LayerMapReserveBlank(keyCode);
+            sprite.LayerMapTryGet(start.Comp.TargetLayerMap, out var index);
 
-            //Set image
+            if (start.Comp.InverseLayers)
+                index++;
+
+            sprite.AddBlankLayer(index);
+            sprite.LayerMapSet(keyCode, index);
             sprite.LayerSetSprite(index, state.Sprite);
+            sprite.LayerSetScale(index, state.Scale);
 
             //Offset the layer
             var layerPos = start.Comp.StartPosition;
-            layerPos += start.Comp.Offset * counter;
+            layerPos += (start.Comp.Offset * counter) + state.LocalOffset;
             sprite.LayerSetOffset(index, layerPos);
+
+            counter++;
         }
     }
 }

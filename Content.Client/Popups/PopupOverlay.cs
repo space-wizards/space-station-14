@@ -74,8 +74,14 @@ public sealed class PopupOverlay : Overlay
             return;
 
         var matrix = args.ViewportControl.GetWorldToScreenMatrix();
-        var viewPos = new MapCoordinates(args.WorldAABB.Center, args.MapId);
         var ourEntity = _playerMgr.LocalEntity;
+        var viewPos = new MapCoordinates(args.WorldAABB.Center, args.MapId);
+        var ourPos = args.WorldBounds.Center;
+        if (ourEntity != null)
+        {
+            viewPos = _transform.GetMapCoordinates(ourEntity.Value);
+            ourPos = viewPos.Position;
+        }
 
         foreach (var popup in _popup.WorldLabels)
         {
@@ -84,7 +90,7 @@ public sealed class PopupOverlay : Overlay
             if (mapPos.MapId != args.MapId)
                 continue;
 
-            var distance = (mapPos.Position - args.WorldBounds.Center).Length();
+            var distance = (mapPos.Position - ourPos).Length();
 
             // Should handle fade here too wyci.
             if (!args.WorldBounds.Contains(mapPos.Position) || !_examine.InRangeUnOccluded(viewPos, mapPos, distance,

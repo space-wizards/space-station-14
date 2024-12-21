@@ -1,12 +1,24 @@
 - type: entity
-  abstract: true
   parent: BaseItem
-  id: BaseLogicItem
+  id: LogicEmptyCircuit
+  name: empty circuit
+  description: Something seems to be missing.
   components:
   - type: Sprite
     sprite: Objects/Devices/gates.rsi
+    layers:
+    - state: base
   - type: Anchorable
   - type: Rotatable
+  - type: Construction
+    graph: LogicGate
+    node: empty
+
+- type: entity
+  abstract: true
+  parent: LogicEmptyCircuit
+  id: BaseLogicItem
+  components:
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
@@ -23,6 +35,16 @@
   - type: Sprite
     layers:
     - state: base
+    - state: logic
+    - state: logic_a
+      visible: false
+      map: [ "enum.LogicGateLayers.InputA" ]
+    - state: logic_b
+      visible: false
+      map: [ "enum.LogicGateLayers.InputB" ]
+    - state: logic_o
+      visible: false
+      map: [ "enum.LogicGateLayers.Output" ]
     - state: or
       map: [ "enum.LogicGateLayers.Gate" ]
   - type: LogicGate
@@ -38,7 +60,6 @@
     lastSignals:
       Output: false
   - type: Construction
-    graph: LogicGate
     node: logic_gate
   - type: Appearance
   - type: GenericVisualizer
@@ -51,7 +72,18 @@
           Nor: { state: nor }
           Nand: { state: nand }
           Xnor: { state: xnor }
-
+      enum.LogicGateVisuals.InputA:
+        enum.LogicGateLayers.InputA:
+          True: { visible: true }
+          False: { visible: false }
+      enum.LogicGateVisuals.InputB:
+        enum.LogicGateLayers.InputB:
+          True: { visible: true }
+          False: { visible: false }
+      enum.LogicGateVisuals.Output:
+        enum.LogicGateLayers.Output:
+          True: { visible: true }
+          False: { visible: false }
 - type: entity
   parent: LogicGateOr
   id: LogicGateAnd
@@ -60,6 +92,16 @@
   - type: Sprite
     layers:
     - state: base
+    - state: logic
+    - state: logic_a
+      visible: false
+      map: [ "enum.LogicGateLayers.InputA" ]
+    - state: logic_b
+      visible: false
+      map: [ "enum.LogicGateLayers.InputB" ]
+    - state: logic_o
+      visible: false
+      map: [ "enum.LogicGateLayers.Output" ]
     - state: and
       map: [ "enum.LogicGateLayers.Gate" ]
   - type: LogicGate
@@ -73,6 +115,16 @@
   - type: Sprite
     layers:
     - state: base
+    - state: logic
+    - state: logic_a
+      visible: false
+      map: [ "enum.LogicGateLayers.InputA" ]
+    - state: logic_b
+      visible: false
+      map: [ "enum.LogicGateLayers.InputB" ]
+    - state: logic_o
+      visible: false
+      map: [ "enum.LogicGateLayers.Output" ]
     - state: xor
       map: [ "enum.LogicGateLayers.Gate" ]
   - type: LogicGate
@@ -86,6 +138,16 @@
   - type: Sprite
     layers:
     - state: base
+    - state: logic
+    - state: logic_a
+      visible: false
+      map: [ "enum.LogicGateLayers.InputA" ]
+    - state: logic_b
+      visible: false
+      map: [ "enum.LogicGateLayers.InputB" ]
+    - state: logic_o
+      visible: false
+      map: [ "enum.LogicGateLayers.Output" ]
     - state: nor
       map: [ "enum.LogicGateLayers.Gate" ]
   - type: LogicGate
@@ -99,6 +161,16 @@
   - type: Sprite
     layers:
     - state: base
+    - state: logic
+    - state: logic_a
+      visible: false
+      map: [ "enum.LogicGateLayers.InputA" ]
+    - state: logic_b
+      visible: false
+      map: [ "enum.LogicGateLayers.InputB" ]
+    - state: logic_o
+      visible: false
+      map: [ "enum.LogicGateLayers.Output" ]
     - state: nand
       map: [ "enum.LogicGateLayers.Gate" ]
   - type: LogicGate
@@ -112,6 +184,16 @@
   - type: Sprite
     layers:
     - state: base
+    - state: logic
+    - state: logic_a
+      visible: false
+      map: [ "enum.LogicGateLayers.InputA" ]
+    - state: logic_b
+      visible: false
+      map: [ "enum.LogicGateLayers.InputB" ]
+    - state: logic_o
+      visible: false
+      map: [ "enum.LogicGateLayers.Output" ]
     - state: xnor
       map: [ "enum.LogicGateLayers.Gate" ]
   - type: LogicGate
@@ -124,7 +206,9 @@
   description: Splits rising and falling edges into unique pulses and detects how edgy you are.
   components:
   - type: Sprite
-    state: edge_detector
+    layers:
+    - state: base
+    - state: edge_detector
   - type: EdgeDetector
   - type: DeviceLinkSink
     ports:
@@ -137,7 +221,6 @@
       OutputHigh: false
       OutputLow: false
   - type: Construction
-    graph: LogicGate
     node: edge_detector
 
 - type: entity
@@ -147,7 +230,9 @@
   description: Generates signals in response to powernet changes. Can be cycled between cable voltages.
   components:
   - type: Sprite
-    state: power_sensor
+    layers:
+    - state: base
+    - state: power_sensor
   - type: PowerSensor
   - type: PowerSwitchable
     examineText: power-sensor-voltage-examine
@@ -183,5 +268,25 @@
       PowerCharging: false
       PowerDischarging: false
   - type: Construction
-    graph: LogicGate
     node: power_sensor
+
+- type: entity
+  parent: BaseLogicItem
+  id: MemoryCell
+  name: memory cell
+  description: A D-Latch circuit that stores a signal which can be changed depending on input and enable ports.
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+    - state: memory_cell
+  - type: MemoryCell
+  - type: DeviceLinkSink
+    ports:
+    - MemoryInput
+    - MemoryEnable
+  - type: DeviceLinkSource
+    ports:
+    - Output
+  - type: Construction
+    node: memory_cell

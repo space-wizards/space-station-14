@@ -69,15 +69,61 @@
 
 - type: entity
   id: MobTomatoKiller
-  parent: 
+  parent:
   - BaseSimpleMob
   - MobDamageable
+  - MobPolymorphable
   - MobBloodstream
   - MobFlammable
   - MobCombat
   name: tomato killer
   description: Looks like it's not you eating tomatoes today, it's the tomatoes eating you.
   components:
+  - type: GhostRole
+    prob: 0.05
+    makeSentient: true
+    allowSpeech: true
+    name: ghost-role-information-tomatokiller-name
+    description: ghost-role-information-tomatokiller-description
+    rules: ghost-role-information-familiar-rules
+    raffle:
+      settings: short
+  - type: GhostTakeoverAvailable
+  - type: CanEscapeInventory
+    baseResistTime: 3
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+    reactions:
+    - reagents: [ Water ]
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        damage:
+          groups:
+            Brute: -0.25
+    - reagents: [ Blood ]
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        damage:
+          groups:
+            Brute: -0.5
+            Burn: -0.5
+    - reagents: [ RobustHarvest ]
+      methods: [ Touch ]
+      effects:
+      - !type:HealthChange
+        scaleByQuantity: true
+        damage:
+          groups:
+            Brute: -2
+            Burn: -2
+  - type: ReplacementAccent
+    accent: tomatoKiller
   - type: Item
   - type: NpcFactionMember
     factions:
@@ -90,7 +136,7 @@
       components:
       - HumanoidAppearance
   - type: Sprite
-    sprite: Mobs/Demons/tomatokiller.rsi 
+    sprite: Mobs/Demons/tomatokiller.rsi
     noRot: true
     layers:
       - map: [ "enum.DamageStateVisualLayers.Base" ]
