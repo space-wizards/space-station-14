@@ -61,7 +61,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         List<MetamorphRecipePrototype> availableRecipes = new();
         foreach (var recipe in _proto.EnumeratePrototypes<MetamorphRecipePrototype>())
         {
-            if (recipe.Key != start.Comp.Key)
+            if (recipe.Key != start.Comp.Key) //Checking against recipes in sequence_metamorph.yml
                 continue;
 
             bool allowed = true;
@@ -115,7 +115,7 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
         if (elementFood.RequireDead && _mobState.IsAlive(element))
             return false;
 
-        //looking for a suitable FoodSequence prototype
+        //looking for a suitable FoodSequence prototype within food_sequence_element.yml
         if (!element.Comp.Entries.TryGetValue(start.Comp.Key, out var elementProto))
             return false;
         if (!_proto.TryIndex(elementProto, out var elementIndexed))
@@ -128,16 +128,16 @@ public sealed class FoodSequenceSystem : SharedFoodSequenceSystem
                 _popup.PopupEntity(Loc.GetString("food-sequence-no-space"), start, user.Value);
             return false;
         }
-
+        /* H:Objective: SpriteComponent Compliance        Should generate a new var for tryComp to store into otherwise it throws a fit? or maybe... VV */
         //Generate new visual layer
         var flip = start.Comp.AllowHorizontalFlip && _random.Prob(0.5f);
         var layer = new FoodSequenceVisualLayer(elementIndexed,
-            _random.Pick(elementIndexed.Sprites),
+            _random.Pick(elementIndexed.Sprites),       /* H:this particular bit would have to be altered for compliance with SpriteComponents, but... it might not be so hard. VV */
             new Vector2(flip ? -elementIndexed.Scale.X : elementIndexed.Scale.X, elementIndexed.Scale.Y),
             new Vector2(
                 _random.NextFloat(start.Comp.MinLayerOffset.X, start.Comp.MaxLayerOffset.X),
                 _random.NextFloat(start.Comp.MinLayerOffset.Y, start.Comp.MaxLayerOffset.Y))
-        );
+        );                                              /* H:since this shit doesn't fuck around too hard with Components, I can bootleg SpriteComponent into just... accessing them?*/
 
         start.Comp.FoodLayers.Add(layer);
         Dirty(start);
