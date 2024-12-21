@@ -1,0 +1,39 @@
+- type: entity
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  id: BaseTransporterCharger
+  abstract: true
+  components:
+  - type: Sprite
+    snapCardinals: true
+    layers:
+    - state: icon
+  - type: Appearance
+  - type: TransporterCharger
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+
+- type: entity
+  parent: BaseTransporterCharger
+  id: TransporterProvider
+  name: Provider
+  description: A machine that tells transporters to send the items in it to a receiver.
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Cargo/Transporters/provider.rsi
+    - type: TransporterProvider
+
+- type: entity
+  parent: BaseTransporterCharger
+  id: TransporterReceiver
+  name: Receiver
+  description: A machine that transporters bring items to.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Cargo/Transporters/receiver.rsi
+  - type: TransporterReceiver
