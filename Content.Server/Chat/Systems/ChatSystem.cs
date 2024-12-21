@@ -247,7 +247,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         switch (desiredType)
         {
             case InGameICChatType.Speak:
-                SendEntitySpeak(source, message, range, nameOverride, hideLog, ignoreActionBlocker);
+                SendEntitySpeak(source, message, range, null, nameOverride, hideLog, ignoreActionBlocker);
                 break;
             case InGameICChatType.Whisper:
                 SendEntityWhisper(source, message, range, null, nameOverride, hideLog, ignoreActionBlocker);
@@ -412,6 +412,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         EntityUid source,
         string originalMessage,
         ChatTransmitRange range,
+        RadioChannelPrototype? channel,
         string? nameOverride,
         bool hideLog = false,
         bool ignoreActionBlocker = false
@@ -419,6 +420,13 @@ public sealed partial class ChatSystem : SharedChatSystem
     {
         if (!_actionBlocker.CanSpeak(source) && !ignoreActionBlocker)
             return;
+
+        // if the user is forced to whisper, they will whisper
+        if (TransformSpeechType(source, InGameICChatType.Speak) == InGameICChatType.Whisper)
+        {
+            SendEntityWhisper(source, originalMessage, ChatTransmitRange.Normal, channel, nameOverride, hideLog, ignoreActionBlocker);
+            return;
+        }
 
         var message = TransformSpeech(source, originalMessage);
 
@@ -454,7 +462,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         SendInVoiceRange(ChatChannel.Local, message, wrappedMessage, source, range);
 
-        var ev = new EntitySpokeEvent(source, message, null, null);
+        var ev = new EntitySpokeEvent(source, message, channel, null);
         RaiseLocalEvent(source, ev, true);
 
         // To avoid logging any messages sent by entities that are not players, like vendors, cloning, etc.
@@ -493,7 +501,15 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (!_actionBlocker.CanSpeak(source) && !ignoreActionBlocker)
             return;
 
+        // if the user is forced to speak, make them speak!
+        if (TransformSpeechType(source, InGameICChatType.Whisper) == InGameICChatType.Speak)
+        {
+            SendEntitySpeak(source, originalMessage, ChatTransmitRange.Normal, channel, nameOverride, hideLog, ignoreActionBlocker);
+            return;
+        }
+
         var message = TransformSpeech(source, FormattedMessage.RemoveMarkupOrThrow(originalMessage));
+
         if (message.Length == 0)
             return;
 
@@ -779,6 +795,14 @@ public sealed partial class ChatSystem : SharedChatSystem
         return ev.Message;
     }
 
+    private InGameICChatType TransformSpeechType(EntityUid sender, InGameICChatType chatType)
+    {
+        var ev = new TransformSpeechTypeEvent(sender, chatType);
+        RaiseLocalEvent(sender, ev);
+
+        return ev.ChatType;
+    }
+
     public bool CheckIgnoreSpeechBlocker(EntityUid sender, bool ignoreBlocker)
     {
         if (ignoreBlocker)
@@ -911,7 +935,7 @@ public record ExpandICChatRecipientsEvent(EntityUid Source, float VoiceRange, Di
 }
 
 /// <summary>
-///     Raised broadcast in order to transform speech.transmit
+///     Raised broadcast in order to transform speech.
 /// </summary>
 public sealed class TransformSpeechEvent : EntityEventArgs
 {
@@ -923,6 +947,15 @@ public sealed class TransformSpeechEvent : EntityEventArgs
         Sender = sender;
         Message = message;
     }
+}
+
+/// <summary>
+/// Raised to transform speech, ideally betweeen whisper and local
+/// </summary>
+public sealed class TransformSpeechTypeEvent(EntityUid sender, InGameICChatType chatType) : EntityEventArgs
+{
+    public EntityUid Sender = sender;
+    public InGameICChatType ChatType = chatType;
 }
 
 public sealed class CheckIgnoreSpeechBlockerEvent : EntityEventArgs
