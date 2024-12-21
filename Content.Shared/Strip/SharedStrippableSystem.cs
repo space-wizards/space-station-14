@@ -206,7 +206,10 @@ public abstract class SharedStrippableSystem : EntitySystem
         var (time, stealth) = GetStripTimeModifiers(user, target, held, slotDef.StripTime);
 
         if (!stealth)
-            _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner-insert", ("user", Identity.Entity(user, EntityManager)), ("item", user.Comp.ActiveHandEntity!.Value)), target, target, PopupType.Large);
+            _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner-insert",
+                                                        ("user", Identity.Entity(user, EntityManager)),
+                                                        ("item", user.Comp.ActiveHandEntity!.Value)),
+                                                        target, target, PopupType.Large);
 
         var prefix = stealth ? "stealthily " : "";
         _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):actor} is trying to {prefix}place the item {ToPrettyString(held):item} in {ToPrettyString(target):target}'s {slot} slot");
@@ -298,7 +301,10 @@ public abstract class SharedStrippableSystem : EntitySystem
             if (IsStripHidden(slotDef, user))
                 _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner-hidden", ("slot", slot)), target, target, PopupType.Large);
             else
-                _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner", ("user", Identity.Entity(user, EntityManager)), ("item", item)), target, target, PopupType.Large);
+                _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner",
+                                                            ("user", Identity.Entity(user, EntityManager)),
+                                                            ("item", item)),
+                                                            target, target, PopupType.Large);
         }
 
         var prefix = stealth ? "stealthily " : "";
@@ -402,7 +408,10 @@ public abstract class SharedStrippableSystem : EntitySystem
         var (time, stealth) = GetStripTimeModifiers(user, target, null, targetStrippable.HandStripDelay);
 
         if (!stealth)
-            _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner-insert-hand", ("user", Identity.Entity(user, EntityManager)), ("item", user.Comp.ActiveHandEntity!.Value)), target, target, PopupType.Large);
+            _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner-insert-hand",
+                                                        ("user", Identity.Entity(user, EntityManager)),
+                                                        ("item", user.Comp.ActiveHandEntity!.Value)),
+                                                        target, target, PopupType.Large);
 
         var prefix = stealth ? "stealthily " : "";
         _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):actor} is trying to {prefix}place the item {ToPrettyString(held):item} in {ToPrettyString(target):target}'s hands");
@@ -504,7 +513,10 @@ public abstract class SharedStrippableSystem : EntitySystem
         var (time, stealth) = GetStripTimeModifiers(user, target, null, targetStrippable.HandStripDelay);
 
         if (!stealth)
-            _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner", ("user", Identity.Entity(user, EntityManager)), ("item", item)), target, target);
+            _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner",
+                                                        ("user", Identity.Entity(user, EntityManager)),
+                                                        ("item", item)),
+                                                        target, target);
 
         var prefix = stealth ? "stealthily " : "";
         _adminLogger.Add(LogType.Stripping, LogImpact.Low, $"{ToPrettyString(user):actor} is trying to {prefix}strip the item {ToPrettyString(item):item} from {ToPrettyString(target):target}'s hands");
