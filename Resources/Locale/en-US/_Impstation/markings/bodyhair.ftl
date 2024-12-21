@@ -1,8 +1,8 @@
-marking-BodyhairHumanMale-human_bodyhair_male = Bodyhair
-marking-BodyhairHumanMale = Bodyhair
+marking-BodyhairHumanMale-human_bodyhair_male = Body Hair
+marking-BodyhairHumanMale = Body Hair
 
-marking-BodyhairHumanFemale-human_bodyhair_female = Bodyhair
-marking-BodyhairHumanFemale = Bodyhair
+marking-BodyhairHumanFemale-human_bodyhair_female = Body Hair
+marking-BodyhairHumanFemale = Body Hair
 
-marking-BodyhairSpelf-spelf_bodyhair = Bodyhair
-marking-BodyhairSpelf = Bodyhair
+marking-BodyhairSpelf-spelf_bodyhair = Body Hair
+marking-BodyhairSpelf = Body Hair
