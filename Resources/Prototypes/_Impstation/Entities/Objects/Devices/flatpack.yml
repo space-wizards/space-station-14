@@ -21,12 +21,3 @@
   components:
   - type: Flatpack
     entity: ChemMaster
-
-- type: entity
-  parent: BaseFlatpack
-  id: WirelessCameraMovableFlatpack
-  name: wireless movable camera flatpack
-  description: A flatpack used for constructing a wireless movable entertainment camera.
-  components:
-  - type: Flatpack
-    entity: SurveillanceWirelessCameraMovableConstructed
