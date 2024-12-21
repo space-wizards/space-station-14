@@ -1,0 +1,48 @@
+# 20C air mix planet atmosphere
+- type: entity
+  parent: Map
+  id: MapAtmos
+  components:
+  - type: MapAtmosphere
+    space: False
+    mixture:
+      volume: 2500
+      immutable: True
+      temperature: 293.15
+      moles:
+      - 21.824879
+      - 82.10312
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+
+# -25C air mix planet atmosphere
+- type: entity
+  parent: MapAtmos
+  id: MapAtmosCold
+  components:
+  - type: MapAtmosphere
+    mixture:
+      volume: 2500
+      immutable: True
+      temperature: 248.15
+      moles:
+      - 21.824879
+      - 82.10312
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
