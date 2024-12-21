@@ -1,0 +1,15 @@
+- type: entity
+  parent: ClothingShoesClown
+  id: ClothingShoesCircus
+  name: circus clown shoes
+  description: Wow, were these bells harvested from the great jinglebeasts of the tittering plains? No. That would be stupid.
+  components:
+    - type: Sprite
+      sprite: _Impstation/Clothing/Shoes/Specific/circusclownshoes.rsi
+    - type: Clothing
+      sprite: _Impstation/Clothing/Shoes/Specific/circusclownshoes.rsi
+    - type: FootstepModifier
+      footstepSoundCollection:
+        collection: FootstepJester
+        params:
+          variation: 0.07 #copied from the existing jester shoes

@@ -2,7 +2,7 @@
   parent: [BaseMob, StripableInventoryBase]
   id: MobTckTck
   name: tck'tck
-  description: A borg-like entity manufactured by the Decapoid Empire. Contains a recharger port, and provides power when anchored.
+  description: A borg-like entity manufactured by the Decapoid Empire. Provides 8KW of power when anchored, and has a charger port for power cells.
   components:
   - type: Reactive
     groups:
@@ -31,10 +31,17 @@
     baseWalkSpeed : 2.5
     baseSprintSpeed : 4.5
   - type: Sprite
+    sprite: _Impstation/Mobs/Silicon/Bots/tcktck.rsi
     layers:
-    - map: ["enum.DamageStateVisualLayers.Base"]
-      state: tcktck
-      sprite: _Impstation/Mobs/Silicon/Bots/tcktck.rsi
+    - state: tcktck
+      map: ["enum.BorgVisualLayers.Body", "movement"]
+    - state: tcktck_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      visible: false
+    - state: light
+      shader: unshaded
+      map: ["light","enum.BorgVisualLayers.LightStatus"]
+      visible: false
   - type: RotationVisuals
     horizontalRotation: 90
   - type: MobState
@@ -76,6 +83,7 @@
     actions:
     - ActionViewLaws
   - type: SiliconLawProvider
+    canBeSubverted: false
     laws: Tcksimov
   - type: Inventory
     templateId: borg
@@ -220,11 +228,18 @@
       flatReductions:
         Heat: 10 # capable of touching light bulbs and stoves without feeling pain!
   - type: BorgChassis
-    maxModules: 1
+    maxModules: 3
+    hasMindState: tcktck_e
+    noMindState: tcktck_e_r
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleTckTck
   - type: ContainerFill
     containers:
       borg_module:
         - BorgModuleTckTck
+        - BorgModuleTckTckEVA
   - type: ApcPowerReceiver
     needsPower: false
     powerLoad: 0
@@ -241,24 +256,46 @@
         ejectOnInteract: true
         whitelist:
           components:
-          - HitscanBatteryAmmoProvider
-          - ProjectileBatteryAmmoProvider
-          - Stunbaton
-          - PowerCell
+          - PowerCell #just power cells no guns
   - type: PowerSupplier
     supplyRate: 8000
     supplyRampTolerance: 2000
-    voltage: Apc
   - type: Anchorable
+  - type: PowerSwitchable
+    examineText: power-switchable-generator-examine
+    switchText: power-switchable-generator-switched
+    cables:
+    - voltage: LV
+      node: Apc
+    - voltage: MV
+      node: output_mv
+  - type: UseDelay
+    delay: 1
   - type: NodeContainer
     examinable: true
     nodes:
-      output:
+      output_lv:
         !type:CableDeviceNode
         nodeGroupID: Apc
+      output_mv:
+        !type:CableDeviceNode
+        nodeGroupID: MVPower
   - type: GhostRole
     makeSentient: true
     name: Tck'Tck
-    description: Power the station. Power the world.
+    description: Charge APCs, help with power, and keep everyone's batteries topped up.
     rules: ghost-role-information-silicon-rules
   - type: GhostTakeoverAvailable
+  - type: GenericVisualizer
+    visuals:
+      enum.AnchorVisuals.Anchored:
+        anchored:
+          False: { state: anchored, visible: false }
+          True: { state: anchored, visible: true }
+  - type: Climbing
+  - type: Clumsy
+    clumsySound:
+      path: /Audio/Effects/metal_thud3.ogg # the game gets really touchy about having that initial forward slash.
+    clumsyHypo: false
+    clumsyDefib: false
+    clumsyGuns: false

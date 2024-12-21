@@ -115,6 +115,10 @@
   - type: Tag
     tags:
       - Gastropod
+      - CanPilot
+      - FootstepSound
+      - DoorBumpOpener
+      - AnomalyHost
   - type: Inventory
     templateId: snail
     displacements:

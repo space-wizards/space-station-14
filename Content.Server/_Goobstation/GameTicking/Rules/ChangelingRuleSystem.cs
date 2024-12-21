@@ -70,14 +70,14 @@ public sealed partial class ChangelingRuleSystem : GameRuleSystem<ChangelingRule
         _npcFaction.AddFaction(target, ChangelingFactionId);
 
         // make sure it's initial chems are set to max
-        EnsureComp<ChangelingComponent>(target);
+        var changelingComp = EnsureComp<ChangelingComponent>(target);
 
         // add store
         var store = EnsureComp<StoreComponent>(target);
         foreach (var category in rule.StoreCategories)
             store.Categories.Add(category);
         store.CurrencyWhitelist.Add(Currency);
-        store.Balance.Add(Currency, 16);
+        store.Balance.Add(Currency, changelingComp.MaxEvolutionPoints);
 
         rule.ChangelingMinds.Add(mindId);
 

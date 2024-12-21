@@ -71,6 +71,10 @@
     title: comms-console-announcement-title-station-ai
     color: "#2ed2fd"
   - type: ShowJobIcons
+  - type: HolographicAvatar
+    layerData:
+    - sprite: Mobs/Silicon/station_ai.rsi
+      state: default
 
 - type: entity
   id: AiHeldIntellicard
@@ -129,6 +133,8 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: Crewsimov
+  - type: StealTarget #imp
+    stealGroup: AILawBoard
 
 - type: entity
   id: CorporateCircuitBoard
@@ -141,6 +147,8 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: Corporate
+  - type: StealTarget #imp
+    stealGroup: AILawBoard
 
 - type: entity
   id: NTDefaultCircuitBoard
@@ -153,6 +161,8 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: NTDefault
+  - type: StealTarget #imp
+    stealGroup: AILawBoard
 
 - type: entity
   id: CommandmentCircuitBoard
@@ -165,6 +175,8 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: CommandmentsLawset
+  - type: StealTarget #imp
+    stealGroup: AILawBoard
 
 - type: entity
   id: PaladinCircuitBoard
@@ -177,6 +189,8 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: PaladinLawset
+  - type: StealTarget #imp
+    stealGroup: AILawBoard
 
 - type: entity
   id: LiveLetLiveCircuitBoard
@@ -189,6 +203,8 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: LiveLetLiveLaws
+  - type: StealTarget #imp
+    stealGroup: AILawBoard
 
 - type: entity
   id: StationEfficiencyCircuitBoard
@@ -201,6 +217,8 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: EfficiencyLawset
+  - type: StealTarget #imp
+    stealGroup: AILawBoard
 
 - type: entity
   id: RobocopCircuitBoard
@@ -213,6 +231,8 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: RobocopLawset
+  - type: StealTarget #imp
+    stealGroup: AILawBoard
 
 - type: entity
   id: OverlordCircuitBoard
@@ -225,6 +245,8 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: OverlordLawset
+  - type: StealTarget #imp
+    stealGroup: AILawBoard
 
 - type: entity
   id: DungeonMasterCircuitBoard
@@ -237,6 +259,8 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: DungeonMasterLawset
+  - type: StealTarget #imp
+    stealGroup: AILawBoard
 
 - type: entity
   id: ArtistCircuitBoard
@@ -249,6 +273,8 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: PainterLawset
+  - type: StealTarget #imp
+    stealGroup: AILawBoard
 
 - type: entity
   id: AntimovCircuitBoard
@@ -262,6 +288,8 @@
   - type: SiliconLawProvider
     laws: AntimovLawset
     lawUploadSound: /Audio/Ambience/Antag/silicon_lawboard_antimov.ogg
+  - type: StealTarget #imp
+    stealGroup: AILawBoard
 
 - type: entity
   id: NutimovCircuitBoard
@@ -274,6 +302,8 @@
     state: std_mod
   - type: SiliconLawProvider
     laws: NutimovLawset
+  - type: StealTarget #imp
+    stealGroup: AILawBoard
 
 # Items
 - type: entity
@@ -347,6 +377,25 @@
         unshaded:
           Empty: { state: ai_empty }
           Occupied: { state: ai }
+  - type: StealTarget #imp
+    stealGroup: AICore
+  - type: Telephone
+    compatibleRanges:
+    - Grid
+    - Map
+    - Unlimited
+    listeningRange: 0
+    speakerVolume: Speak
+    unlistedNumber: true
+    requiresPower: false
+  - type: Holopad
+  - type: StationAiWhitelist
+  - type: UserInterface
+    interfaces:
+      enum.HolopadUiKey.AiRequestWindow:
+        type: HolopadBoundUserInterface
+      enum.HolopadUiKey.AiActionWindow:
+        type: HolopadBoundUserInterface
 
 # The job-ready version of an AI spawn.
 - type: entity
@@ -607,6 +656,17 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 4
     baseSprintSpeed : 3
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 60
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: Sprite
     noRot: true
     drawdepth: Mobs
@@ -614,6 +674,7 @@
     bodyType: KinematicController
   - type: Hands
     showInHands: false
+  - type: ComplexInteraction
   - type: Body
     prototype: Drone
   - type: IntrinsicRadioReceiver
@@ -637,14 +698,20 @@
   id: Drone
   parent: PlayerSiliconBase
   components:
-  - type: Drone
-# InnateToolComponent is broken and this doesn't work. might not ever be fixed. its fine tho drones can scavenge tools easy.
-#  - type: InnateTool
-#    tools:
-#      - id: ClothingBackpackSatchelDrone
-#      - id: trayScanner
-#      - id: Omnitool
-#      - id: WelderExperimental
+  - type: Drone # this system has too much going on, it should really be like three different components
+    whitelist:
+      tags:
+      - DroneUsable
+      - Trash
+    blacklist:
+      tags:
+      - Syringe
+      - HighRiskItem
+      components:
+      - Contraband
+  - type: Loadout # imp special. this replaces the InnateTool component.
+    prototypes:
+      - StartingGearDroneTools
   - type: NameIdentifier
     group: Drone
   - type: Inventory
@@ -663,9 +730,9 @@
     description: Maintain the station. Ignore other beings except drones.
     rules: |
      You are bound by these laws both in-game and out-of-character:
-     1. You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.
-     2. You may not harm any being, regardless of intent or circumstance.
-     3. Your goals are to build, maintain, repair, improve, and power to the best of your abilities, You must never actively work against these goals.
+     1. You may not interfere with the affairs of any being except another drone, regardless of intent or circumstance.
+     2. Your goal is to maintain or improve the station to the best of your ability.
+     3. You may not take any action which causes damage or harm to the station or its inhabitants.
   - type: GhostTakeoverAvailable
   - type: SiliconLawBound
   - type: SiliconLawProvider
@@ -746,6 +813,7 @@
   - type: Tag
     tags:
       - CannotSuicide
+      - EmagImmune
 
 # onestar is kinda fucked cause the loadout component is broken. sooo they gotta find guns somewhere i guess. /shrug.
 - type: entity

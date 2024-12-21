@@ -1,8 +1,8 @@
 - type: gameMap
   id: Amber
   mapName: 'Amber'
-  mapPath: /Maps/amber.yml
-  minPlayers: 7
+  mapPath: /Maps/_Impstation/amber.yml
+  minPlayers: 15
   maxPlayers: 50
   stations:
     Amber:
@@ -51,6 +51,7 @@
             Detective: [ 1, 1 ]
             SecurityCadet: [ 1, 1 ]
             Lawyer: [ 1, 1 ]
+            Brigmedic: [ 1, 1 ]
             #supply
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 2, 3 ]

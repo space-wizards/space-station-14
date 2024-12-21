@@ -74,4 +74,38 @@
             Genetic: 5
       - !type:ModifyBleedAmount
         amount: -1
-
+        
+- type: reagent
+  id: AquamDivinos
+  name: reagent-name-aquamdivinos
+  group: Medicine
+  desc: reagent-desc-aquamdivinos
+  physicalDesc: reagent-physical-desc-holy
+  flavor: holy
+  color: "#B4D1F0"
+  metabolisms:
+    Medicine:
+      metabolismRate: 0.1
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Blunt: -0.2
+            Poison: -0.2
+            Heat: -0.2
+            Shock: -0.2
+            Cold: -0.2
+      - !type:AdjustReagent
+        conditions:
+        - !type:ReagentThreshold
+          reagent: AquaAvari
+          min: 1
+        reagent: AquaAvari
+        amount: -1
+  reactiveEffects:
+    Extinguish:
+      methods: [ Touch ]
+      effects:
+      - !type:ExtinguishReaction
+  tileReactions:
+  - !type:ExtinguishTileReaction { }

@@ -13,3 +13,13 @@
   components:
   - type: Contraband
     allowedDepartments: [ Civilian ]
+
+# For non-sanctioned decapoid tech
+- type: entity
+  id: DecapoidEmpireContraband
+  abstract: true
+  components:
+  - type: Contraband
+    severity: DecapoidEmpire
+    # no dept is authorized to have
+    allowedDepartments: null

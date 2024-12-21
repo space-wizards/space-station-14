@@ -2,12 +2,11 @@ using Content.Shared._Impstation.Decapoids;
 using Content.Shared.Atmos;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
-using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Decapoids.Components;
 
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent]
 [AutoGenerateComponentPause]
 public sealed partial class VaporizerComponent : Component
 {

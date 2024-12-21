@@ -27,10 +27,10 @@
       path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
   - type: BallisticAmmoProvider
     capacity: 10
-    proto: CartridgeLightRifle
+    proto: CartridgeRifle
     whitelist:
       tags:
-      - CartridgeLightRifle
+      - CartridgeRifle
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
@@ -42,7 +42,7 @@
   name: Kardashev-Mosin
   parent: [BaseWeaponSniper, BaseGunWieldable, BaseSyndicateContraband]
   id: WeaponSniperMosin
-  description: A weapon for hunting, or endless trench warfare. There's a bayonet at the end, and the heft of the rifle could do some damage. Uses .30 rifle ammo.
+  description: A weapon for hunting, or endless trench warfare. There's a bayonet at the end, and the heft of the rifle could do some damage. Uses .20 rifle ammo.
 # Melee and gun components don't play nice; description will change when fixed. Melee components also disabled for the time being
   components:
   - type: Gun

@@ -24,6 +24,7 @@
         amount: 2
       - id: RemoteSignaller
         amount: 2
+      - id: ClothingHeadsetWarden
       - id: ClothingOuterHardsuitBrigmedic
 
 - type: entity
@@ -52,6 +53,7 @@
       - id: RemoteSignaller
         amount: 2
       - id: ClothingOuterHardsuitBrigmedic
+      - id: ClothingHeadsetWarden
       - id: TicketPad #imp special
 
 - type: entity
@@ -173,19 +175,23 @@
 - type: entity
   parent: [GunSafe, BaseRestrictedContraband]
   id: GunSafePistolMk58
-  name: mk58 safe
+  name: pistol safe
   components:
   - type: StorageFill
     contents:
     - id: WeaponPistolMk58
       amount: 4
+    - id: FullAutoConversionKit
+    - id: HyperBurstConversionKit
     - id: MagazinePistol
       amount: 8
+    - id: MagazineLPistol
+      amount: 4
 
 - type: entity
   parent: [GunSafe, BaseRestrictedContraband]
   id: GunSafeRifleLecter
-  name: lecter safe
+  name: rifle safe
   components:
   - type: StorageFill
     contents:
@@ -193,6 +199,9 @@
       amount: 2
     - id: MagazineRifle
       amount: 4
+    - id: WeaponRifleDaito
+    - id: MagazineDMR
+      amount: 2
 
 - type: entity
   parent: [GunSafe, BaseRestrictedContraband]

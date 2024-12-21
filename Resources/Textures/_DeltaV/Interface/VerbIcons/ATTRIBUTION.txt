@@ -1,0 +1,2 @@
+bell.svg taken from https://coreui.io/icons/
+Licensed under CC BY 4.0

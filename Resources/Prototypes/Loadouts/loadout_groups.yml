@@ -146,6 +146,7 @@
   loadouts:
   - CaptainHead
   - CaptainCap
+  - CaptainBeret # imp
   - CaptainCrusherCap #imp
 
 - type: loadoutGroup
@@ -639,6 +640,7 @@
   loadouts:
   - JesterHat
   - JesterAltHat
+  - CircusClownHat #imp
 
 - type: loadoutGroup
   id: ClownJumpsuit
@@ -648,6 +650,16 @@
   - ClownSkirt
   - JesterSuit
   - JesterAltSuit
+  - CirclusClownSuit #imp
+
+#imp
+- type: loadoutGroup
+  id: ClownMask
+  name: loadout-group-clown-mask
+  minLimit: 1
+  loadouts:
+  - ClownMask
+  - ClownNose
 
 - type: loadoutGroup
   id: ClownBackpack
@@ -656,6 +668,13 @@
   - ClownBackpack
   - ClownSatchel
   - ClownDuffel
+
+- type: loadoutGroup
+  id: ClownNeck
+  name: loadout-group-clown-neck
+  minLimit: 0
+  loadouts:
+  - NeckRuffle
 
 - type: loadoutGroup
   id: ClownOuterClothing
@@ -671,6 +690,7 @@
   loadouts:
   - ClownShoes
   - JesterShoes
+  - CircusClownShoes
 
 - type: loadoutGroup
   id: SurvivalClown
@@ -1616,6 +1636,7 @@
   loadouts:
   - ChiefMedicalOfficerLabCoat
   - ChiefMedicalOfficerWintercoat
+  - CMOPrestigeLabcoat #IMP
 
 - type: loadoutGroup
   id: ChiefMedicalOfficerNeck
@@ -1624,6 +1645,7 @@
   loadouts:
   - ChiefMedicalOfficerCloak
   - ChiefMedicalOfficerMantle
+  - CMOGreatCloak #IMP
   - ScarfLightBlue
 
 - type: loadoutGroup
