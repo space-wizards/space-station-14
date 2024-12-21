@@ -20,7 +20,7 @@ public partial class AmmoComponent : Component, IShootable
 /// <summary>
 /// Spawns another prototype to be shot instead of itself.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(fieldDeltas: true)]
 public sealed partial class CartridgeAmmoComponent : AmmoComponent
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("proto", required: true)]
