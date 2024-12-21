@@ -1,6 +1,7 @@
 ﻿using System.Collections.Immutable;
 using System.Net;
 using Content.Server.IP;
+using Content.Shared.Database;
 using Robust.Shared.Network;
 
 namespace Content.Server.Database;
@@ -52,9 +53,28 @@ public static class BanMatcher
             return true;
         }
 
-        return player.HWId is { Length: > 0 } hwIdVar
-               && ban.HWId != null
-               && hwIdVar.AsSpan().SequenceEqual(ban.HWId.Value.AsSpan());
+        switch (ban.HWId?.Type)
+        {
+            case HwidType.Legacy:
+                if (player.HWId is { Length: > 0 } hwIdVar
+                    && hwIdVar.AsSpan().SequenceEqual(ban.HWId.Hwid.AsSpan()))
+                {
+                    return true;
+                }
+                break;
+            case HwidType.Modern:
+                if (player.ModernHWIds is { Length: > 0 } modernHwIdVar)
+                {
+                    foreach (var hwid in modernHwIdVar)
+                    {
+                        if (hwid.AsSpan().SequenceEqual(ban.HWId.Hwid.AsSpan()))
+                            return true;
+                    }
+                }
+                break;
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -73,9 +93,14 @@ public static class BanMatcher
         public IPAddress? Address;
 
         /// <summary>
-        /// The hardware ID of the player.
+        /// The LEGACY hardware ID of the player. Corresponds with <see cref="NetUserData.HWId"/>.
         /// </summary>
         public ImmutableArray<byte>? HWId;
+
+        /// <summary>
+        /// The modern hardware IDs of the player. Corresponds with <see cref="NetUserData.ModernHWIds"/>.
+        /// </summary>
+        public ImmutableArray<ImmutableArray<byte>>? ModernHWIds;
 
         /// <summary>
         /// Exemption flags the player has been granted.

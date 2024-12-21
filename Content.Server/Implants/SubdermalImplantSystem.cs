@@ -109,6 +109,10 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
         if (TryComp<PullableComponent>(ent, out var pull) && _pullingSystem.IsPulled(ent, pull))
             _pullingSystem.TryStopPull(ent, pull);
 
+        // Check if the user is pulling anything, and drop it if so
+        if (TryComp<PullerComponent>(ent, out var puller) && TryComp<PullableComponent>(puller.Pulling, out var pullable))
+            _pullingSystem.TryStopPull(puller.Pulling.Value, pullable);
+
         var xform = Transform(ent);
         var targetCoords = SelectRandomTileInRange(xform, implant.TeleportRadius);
 

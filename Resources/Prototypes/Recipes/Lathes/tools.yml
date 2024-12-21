@@ -1,40 +1,51 @@
+# Base prototypes
+
 - type: latheRecipe
+  abstract: true
+  id: BaseToolRecipe
+  category: Tools
+  completetime: 2
+  materials:
+    Steel: 200
+    Plastic: 50
+
+- type: latheRecipe
+  abstract: true
+  parent: BaseToolRecipe
+  id: BaseBigToolRecipe
+  materials:
+    Steel: 800
+    Glass: 300
+
+# Recipes
+
+- type: latheRecipe
+  parent: BaseToolRecipe
   id: Wirecutter
+  result: Wirecutter
   icon:
     sprite: Objects/Tools/wirecutters.rsi
     state: cutters-map
-  result: Wirecutter
-  category: Tools
-  completetime: 2
-  materials:
-    Steel: 200
-    Plastic: 50
 
 - type: latheRecipe
+  parent: BaseToolRecipe
   id: Screwdriver
+  result: Screwdriver
   icon:
     sprite: Objects/Tools/screwdriver.rsi
     state: screwdriver-map
-  result: Screwdriver
-  category: Tools
-  completetime: 2
-  materials:
-    Steel: 200
-    Plastic: 50
 
 - type: latheRecipe
+  parent: BaseToolRecipe
   id: Welder
   result: Welder
-  category: Tools
-  completetime: 2
   materials:
     Steel: 400
 
 - type: latheRecipe
+  parent: BaseToolRecipe
   id: Wrench
   result: Wrench
-  category: Tools
-  completetime: 2
   materials:
     Steel: 200
 
@@ -42,155 +53,122 @@
   id: CableStack
   result: CableApcStack1
   category: Parts
-  completetime: 2
+  completetime: 0.1
   materials:
     Steel: 30
 
 - type: latheRecipe
+  parent: CableStack
   id: CableMVStack
   result: CableMVStack1
-  category: Parts
-  completetime: 2
-  materials:
-    Steel: 30
 
 - type: latheRecipe
+  parent: CableStack
   id: CableHVStack
   result: CableHVStack1
-  category: Parts
-  completetime: 2
-  materials:
-    Steel: 30
 
 - type: latheRecipe
+  parent: BaseToolRecipe
   id: CrowbarGreen
   result: CrowbarGreen
-  category: Tools
-  completetime: 2
   materials:
     Steel: 200
 
 - type: latheRecipe
+  parent: BaseToolRecipe
   id: Pickaxe
   result: Pickaxe
-  category: Tools
   completetime: 4
   materials:
     Steel: 1000
     Wood: 500
 
 - type: latheRecipe
+  parent: BaseToolRecipe
   id: Shovel
   result: Shovel
-  category: Tools
-  completetime: 2
   materials:
     Steel: 200
     Wood: 100
 
 - type: latheRecipe
+  parent: BaseToolRecipe
   id: Multitool
   result: Multitool
-  category: Tools
-  completetime: 2
   materials:
     Steel: 200
     Plastic: 200
 
 - type: latheRecipe
+  parent: Multitool
   id: NetworkConfigurator
   result: NetworkConfigurator
-  category: Tools
-  completetime: 2
-  materials:
-    Steel: 200
-    Plastic: 200
 
 - type: latheRecipe
+  parent: BaseToolRecipe
   id: PowerDrill
   result: PowerDrill
-  category: Tools
-  completetime: 2
   materials:
     Steel: 600
     Plastic: 200
 
 - type: latheRecipe
+  parent: BaseToolRecipe
   id: RCD
   result: RCDEmpty
-  category: Tools
   completetime: 4
   materials:
     Steel: 1000
     Plastic: 300
 
 - type: latheRecipe
+  parent: BaseToolRecipe
   id: RCDAmmo
   result: RCDAmmo
-  category: Tools
-  completetime: 2.4
   materials:
     Steel: 500
     Plastic: 250
 
 - type: latheRecipe
+  parent: BaseBigToolRecipe
   id: HandHeldMassScanner
   result: HandHeldMassScannerEmpty
-  category: Tools
-  completetime: 2
-  materials:
-    Steel: 800
-    Glass: 300
 
 - type: latheRecipe
+  parent: BaseBigToolRecipe
   id: HandheldGPSBasic
   result: HandheldGPSBasic
-  category: Tools
-  completetime: 2
-  materials:
-    Steel: 800
-    Glass: 300
 
 - type: latheRecipe
+  parent: BaseBigToolRecipe
   id: TRayScanner
   result: trayScanner
-  category: Tools
-  completetime: 2
-  materials:
-    Steel: 800
-    Glass: 300
 
 - type: latheRecipe
+  parent: BaseBigToolRecipe
   id: GasAnalyzer
   result: GasAnalyzer
-  category: Tools
-  completetime: 2
-  materials:
-    Steel: 800
-    Glass: 300
 
 - type: latheRecipe
+  parent: BaseToolRecipe
   id: SprayPainter
   result: SprayPainter
-  category: Tools
-  completetime: 2
   materials:
     Steel: 300
     Plastic: 100
 
 - type: latheRecipe
+  parent: BaseToolRecipe
   id: UtilityBelt
   result: ClothingBeltUtility
-  category: Tools
-  completetime: 2
   materials:
     Cloth: 100
     Steel: 50
 
 - type: latheRecipe
+  parent: BaseToolRecipe
   id: HolofanProjector
   result: HolofanProjectorEmpty
-  category: Tools
   completetime: 8
   materials:
     Steel: 300
@@ -198,18 +176,18 @@
     Plastic: 50
 
 - type: latheRecipe
+  parent: BaseToolRecipe
   id: WelderExperimental
   result: WelderExperimental
-  category: Tools
   completetime: 6
   materials:
     Steel: 800
     Plasma: 200
 
 - type: latheRecipe
+  parent: BaseToolRecipe
   id: JawsOfLife
   result: JawsOfLife
-  category: Tools
   completetime: 6
   materials:
     Steel: 1000
@@ -218,9 +196,9 @@
     Gold: 50
 
 - type: latheRecipe
+  parent: BaseToolRecipe
   id: HoloprojectorField
   result: HoloprojectorFieldEmpty
-  category: Tools
   completetime: 3
   materials:
     Steel: 500
@@ -228,9 +206,9 @@
     Glass: 100
 
 - type: latheRecipe
+  parent: BaseToolRecipe
   id: WeaponParticleDecelerator
   result: WeaponParticleDecelerator
-  category: Tools
   completetime: 6
   materials:
     Steel: 750
