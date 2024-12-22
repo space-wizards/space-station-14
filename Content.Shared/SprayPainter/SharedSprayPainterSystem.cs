@@ -60,8 +60,6 @@ public abstract class SharedSprayPainterSystem : EntitySystem
 
     private void OnDoorDoAfter(Entity<SprayPainterComponent> ent, ref SprayPainterDoorDoAfterEvent args)
     {
-        ent.Comp.AirlockDoAfter = null;
-
         if (args.Handled || args.Cancelled)
             return;
 
@@ -116,9 +114,6 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (!TryComp<SprayPainterComponent>(args.Used, out var painter) || painter.AirlockDoAfter != null)
-            return;
-
         var group = Proto.Index<AirlockGroupPrototype>(ent.Comp.Group);
 
         var style = Styles[painter.Index];
@@ -138,9 +133,6 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         if (!DoAfter.TryStartDoAfter(doAfterEventArgs, out var id))
             return;
 
-        // since we are now spraying an airlock prevent spraying more at the same time
-        // pipes ignore this
-        painter.AirlockDoAfter = id;
         args.Handled = true;
 
         // Log the attempt
