@@ -277,15 +277,10 @@
   
 - type: entity
   name: pizza box
-  parent: FoodBoxPizza
+  parent: FoodBoxPizzaFilled
   id: FoodBoxPizzaCotton
   suffix: Filled
   components:
-  - type: Sprite
-    layers:
-    - state: box
-    - state: box-open
-      map: ["enum.StorageVisualLayers.Door"]
   - type: StorageFill
     contents:
     - id: FoodPizzaCotton
