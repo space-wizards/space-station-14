@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: starlighthowls
-  changes:
-  - message: some tiny spooky whale fixes
-    type: Fix
-  id: 287
-  time: '2024-10-01T02:30:30.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/368
 - author: AftrLite
   changes:
   - message: You can now unlock a special golden personal AI trinket. This requires
@@ -4522,3 +4515,13 @@
   id: 786
   time: '2024-12-22T10:44:48.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1037
+- author: honeyed-lemons
+  changes:
+  - message: Bodyhair for Humans, Dwarves, and Thaven!
+    type: Add
+  - message: Tweaked male human body texture side views to match front facing texture
+      better
+    type: Tweak
+  id: 787
+  time: '2024-12-22T14:19:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1096
