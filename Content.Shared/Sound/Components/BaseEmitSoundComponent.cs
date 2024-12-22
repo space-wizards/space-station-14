@@ -14,4 +14,11 @@ public abstract partial class BaseEmitSoundComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField(required: true)]
     public SoundSpecifier? Sound;
+
+    /// <summary>
+    /// Play the sound at the position instead of parented to the source entity.
+    /// Useful if the entity is deleted after.
+    /// </summary>
+    [DataField]
+    public bool Positional;
 }
