@@ -23,8 +23,8 @@
   - !type:BuyerAccessCondition
 
 - type: listing
-  id: WeaponPistolN1984
-  productEntity: WeaponPistolN1984
+  id: WeaponPistolN1987
+  productEntity: WeaponPistolN1987
   cost:
     NTCredit: 600
   categories:
