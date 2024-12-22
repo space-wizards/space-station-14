@@ -118,6 +118,7 @@
   - CBURN
   - ERTSecurity
   - DeathSquad
+  - ERTLeader
 
 - type: department
   id: Science

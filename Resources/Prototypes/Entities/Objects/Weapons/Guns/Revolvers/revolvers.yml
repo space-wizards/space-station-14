@@ -95,7 +95,7 @@
 
 - type: entity
   name: Mateba
-  parent: [BaseWeaponRevolver, BaseMajorContraband]
+  parent: [BaseWeaponRevolver, BaseCentcommContraband]
   id: WeaponRevolverMateba
   description: The iconic sidearm of the dreaded death squads. Uses .45 magnum ammo.
   components:

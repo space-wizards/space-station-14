@@ -187,7 +187,7 @@
   abstract: true
   components:
   - type: Contraband
-    allowedDepartments: [ CentralCommand, Security ]
+    allowedDepartments: [ Security, CentralCommand ]
 
 # for ~objective items
 - type: entity

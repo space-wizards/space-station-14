@@ -12,7 +12,7 @@
     sprite: Objects/Storage/boxes.rsi
 
 - type: entity
-  parent: BaseAmmoProvider
+  parent: [BaseAmmoProvider, BaseRestrictedContraband]
   id: AmmoProviderShotgunShell
   abstract: true
   components:
