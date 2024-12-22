@@ -9,3 +9,4 @@ changeling-devour-consume-failed-not-dead = This body yet lives! We cannot consu
 changeling-devour-consume-complete = Our uncanny mouth retreats, biomass consumed.
 
 changeling-transform-attempt = Bones snap, muscles tear, one flesh becomes another.
+changeling-husked-corpse = [color=red]{ CAPITALIZE(POSS-ADJ($target)) } corpse looks to have had all of { POSS-ADJ($target) } organs forcibly and violently removed [/color]
