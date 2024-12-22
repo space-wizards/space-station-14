@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Fixed Saltern.
-    type: Fix
-  id: 285
-  time: '2024-09-29T15:42:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/370
 - author: Sha-Seng
   changes:
   - message: Updated captain prestige set flavor text to help you visualize the real
@@ -4523,3 +4516,10 @@
   id: 784
   time: '2024-12-21T15:12:02.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1094
+- author: honeyed-lemons
+  changes:
+  - message: Fixes Ventcrawling
+    type: Fix
+  id: 785
+  time: '2024-12-22T10:40:19.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1099
