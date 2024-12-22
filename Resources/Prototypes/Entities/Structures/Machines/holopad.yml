@@ -21,7 +21,7 @@
     powerLoad: 300
   - type: StationAiVision
   - type: Sprite
-    sprite: Structures/Machines/holopad.rsi
+    sprite: Structures/Machines/Holopad/basic_holopad.rsi
     drawdepth: FloorObjects
     snapCardinals: true
     layers:
@@ -104,20 +104,22 @@
         node: machineFrame
       - !type:DoActsBehavior
         acts: ["Destruction"]
- 
+
 - type: entity
   name: long-range holopad
   description: "A floor-mounted device for projecting holographic images to similar devices that are far away."
   parent: Holopad
   id: HolopadLongRange
   components:
+  - type: Sprite
+    sprite: Structures/Machines/Holopad/long_range_holopad.rsi
   - type: Telephone
     transmissionRange: Map
     compatibleRanges:
     - Map
     - Unlimited
     ignoreTelephonesOnSameGrid: true
-    
+
 - type: entity
   name: quantum entangling holopad
   description: "An floor-mounted device for projecting holographic images to similar devices at extreme distances."
