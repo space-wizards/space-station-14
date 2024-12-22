@@ -114,6 +114,9 @@ public abstract class SharedSprayPainterSystem : EntitySystem
         if (args.Handled)
             return;
 
+        if (!TryComp<SprayPainterComponent>(args.Used, out var painter))
+            return;
+
         var group = Proto.Index<AirlockGroupPrototype>(ent.Comp.Group);
 
         var style = Styles[painter.Index];
