@@ -3,14 +3,6 @@
   id: MobLing
   name: Urist McLing
   components:
-  - type: ActionGrant
-    actions:
-    - ActionChangelingDevour
-    - ActionChangelingTransform
-  - type: UserInterface
-    interfaces:
-      enum.TransformUi.Key:
-        type: ChangelingTransformBoundUserInterface
   - type: ChangelingTransform
   - type: ChangelingDevour
 

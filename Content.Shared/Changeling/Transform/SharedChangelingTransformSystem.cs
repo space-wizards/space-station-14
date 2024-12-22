@@ -125,9 +125,11 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         ChangelingTransformWindupDoAfterEvent args)
     {
         args.Handled = true;
+
         StopSound(uid, component);
         if (args.Cancelled)
             return;
+
         if (!TryComp<HumanoidAppearanceComponent>(uid, out var currentAppearance)
            || !TryComp<VocalComponent>(uid, out var currentVocals)
            || !TryComp<SpeechComponent>(uid, out var currentSpeech)
@@ -140,7 +142,6 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         if(!TryComp<DnaComponent>(uid, out var targetConsumedDna)
            || !TryComp<HumanoidAppearanceComponent>(targetIdentity, out var targetConsumedHumanoid)
            || !TryComp<VocalComponent>(targetIdentity, out var targetConsumedVocals)
-           || !TryComp<TypingIndicatorComponent>(targetIdentity, out var targetConsumedTypingIndicator)
            || !TryComp<SpeechComponent>(targetIdentity, out var targetConsumedSpeech))
             return;
 
@@ -174,7 +175,9 @@ public abstract partial class SharedChangelingTransformSystem : EntitySystem
         currentSpeech.AllowedEmotes = targetConsumedSpeech.AllowedEmotes;
         currentSpeech.AudioParams = targetConsumedSpeech.AudioParams;
 
-        SharedTypingIndicatorSystem.Replace(currentTypingIndicator, targetConsumedTypingIndicator);
+        // Make sure the target Identity has a Typing indicator, if the identity is human or dwarf and never had a mind it'll never have a typingIndicatorComponent
+        EnsureComp<TypingIndicatorComponent>(targetIdentity, out var targetTypingIndicator);
+        SharedTypingIndicatorSystem.Replace(currentTypingIndicator, targetTypingIndicator);
 
         _metaSystem.SetEntityName(uid, Name(targetIdentity), raiseEvents: false);
         _metaSystem.SetEntityDescription(uid, MetaData(targetIdentity).EntityDescription);

@@ -45,17 +45,23 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
     {
         if(!component.ChangelingDevourActionEntity.HasValue)
             _actionsSystem.AddAction(uid, ref component.ChangelingDevourActionEntity, component.ChangelingDevourAction);
+
         var identityStorage = EnsureComp<ChangelingIdentityComponent>(uid);
+
         _changelingIdentitySystem.CloneLingStart(uid, identityStorage); // Clone yourself so you can transform back.
     }
+
     private void OnConsumeAttemptTick(EntityUid uid,
         ChangelingDevourComponent component,
         DoAfterAttemptEvent<ChangelingDevourConsumeDoAfterEvent> eventData)
     {
         var curTime = _timing.CurTime;
+
         if (curTime < component.NextTick)
             return;
+
         ConsumeDamageTick(eventData.Event.Target, component, eventData.Event.User);
+
         component.NextTick += TimeSpan.FromSeconds(1f);
     }
 
@@ -66,6 +72,7 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
 
         if (!TryComp<DamageableComponent>(target, out var damage))
             return;
+
         if (damage.DamagePerGroup.TryGetValue("Brute", out var val) && val < comp.DevourConsumeDamageCap)
         {
             _damageable.TryChangeDamage(target, comp.DamagePerTick, true, true, damage, user);
@@ -75,16 +82,17 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
 
     private void OnDevourAction(EntityUid uid, ChangelingDevourComponent component, ChangelingDevourActionEvent args)
     {
-        Dirty(args.Performer, component);
-        if (!TryComp<ChangelingIdentityComponent>(uid, out var identityStorage))
-            return;
-        if (args.Handled || _whitelistSystem.IsWhitelistFailOrNull(component.Whitelist, args.Target))
-            return;
-        if (!HasComp<DamageableComponent>(args.Target))
+
+        if (args.Handled || _whitelistSystem.IsWhitelistFailOrNull(component.Whitelist, args.Target)
+                         || !TryComp<ChangelingIdentityComponent>(uid, out var identityStorage)
+                         || !HasComp<DamageableComponent>(args.Target))
             return;
 
         args.Handled = true;
         var target = args.Target;
+
+        if(target == uid)
+            return; // don't eat yourself
 
         if (HasComp<RottingComponent>(target))
         {
@@ -93,7 +101,9 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
         }
 
         var ev = new ChangelingDevourAttemptEvent(component.DevourPreventionPercentageThreshold, SlotFlags.OUTERCLOTHING); // Check the Targets outerclothes for Mitigation coefficents
+
         RaiseLocalEvent(target, ev, true);
+
         if (ev.Protection)
         {
             _popupSystem.PopupClient(Loc.GetString("changeling-devour-attempt-failed-protected"), uid, uid, PopupType.Medium);
@@ -107,12 +117,14 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
         }
 
         StartSound(uid, component, component.DevourWindupNoise);
+
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, uid, component.DevourWindupTime, new ChangelingDevourWindupDoAfterEvent(), uid, target: target, used: uid)
         {
             BreakOnMove = true,
             BlockDuplicate = true,
             DuplicateCondition = DuplicateConditions.None,
         });
+
         _popupSystem.PopupPredicted(Loc.GetString("changeling-devour-begin-windup"), args.Performer, null, PopupType.MediumCaution);
 
     }
@@ -121,17 +133,18 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
         var curTime = _timing.CurTime;
         args.Handled = true;
 
-        if (args.Cancelled)
-        {
+        StopSound(uid, component);
 
-            StopSound(uid, component);
+        if (args.Cancelled)
             return;
-        }
+
         _popupSystem.PopupPredicted(Loc.GetString("changeling-devour-begin-consume"),
             args.User,
             null,
             PopupType.LargeCaution);
+
         StartSound(uid, component, component.ConsumeNoise);
+
         component.NextTick = curTime + TimeSpan.FromSeconds(1);
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager,
@@ -147,7 +160,6 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
             BlockDuplicate = true,
             DuplicateCondition = DuplicateConditions.None,
         });
-
     }
     private void OnDevourConsume(EntityUid uid, ChangelingDevourComponent component, ChangelingDevourConsumeDoAfterEvent args)
     {
@@ -157,19 +169,19 @@ public abstract partial class SharedChangelingDevourSystem : EntitySystem
         if (target == null)
             return;
 
-        if (args.Cancelled)
-        {
+        StopSound(uid, component);
 
-            StopSound(uid, component);
+        if (args.Cancelled)
             return;
-        }
 
         if (!_mobState.IsDead((EntityUid)target))
         {
             _popupSystem.PopupClient(Loc.GetString("changeling-devour-consume-failed-not-dead"), args.User,  args.User, PopupType.Medium);
             return;
         }
+
         _popupSystem.PopupPredicted(Loc.GetString("changeling-devour-consume-complete"), args.User, null, PopupType.LargeCaution);
+
         if (_mobState.IsDead(target.Value)
             && TryComp<BodyComponent>(target, out var body)
             && HasComp<HumanoidAppearanceComponent>(target)

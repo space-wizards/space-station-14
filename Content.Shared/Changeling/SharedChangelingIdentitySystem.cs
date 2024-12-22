@@ -21,27 +21,32 @@ public abstract partial class SharedChangelingIdentitySystem : EntitySystem
     {
         if (component.ConsumedIdentities.Count > 0)
             return;
+
         CloneToNullspace(uid, component, uid);
     }
 
     public void CloneToNullspace(EntityUid uid, ChangelingIdentityComponent comp, EntityUid target)
     {
-        if (!TryComp<HumanoidAppearanceComponent>(target, out var humanoid))
-            return; // whatever body was to be cloned, was not a humanoid
-        if (!_prototype.TryIndex(humanoid.Species, out var speciesPrototype))
-            return;
-        if (!TryComp<DnaComponent>(target, out var targetDna))
+        if (!TryComp<HumanoidAppearanceComponent>(target, out var humanoid)
+            || !_prototype.TryIndex(humanoid.Species, out var speciesPrototype)
+            ||!TryComp<DnaComponent>(target, out var targetDna))
             return;
 
         var mob = Spawn(speciesPrototype.Prototype, MapCoordinates.Nullspace);
+
         _humanoidSystem.CloneAppearance(target, mob);
+
         if (!TryComp<DnaComponent>(mob, out var mobDna))
             return;
+
         mobDna.DNA = targetDna.DNA;
+
         _metaSystem.SetEntityName(mob, Name(target));
         _metaSystem.SetEntityDescription(mob, MetaData(target).EntityDescription);
         comp.ConsumedIdentities.Add(mob);
+
         comp.LastConsumedEntityUid = mob;
+
         SetPaused(mob, true);
         Dirty(uid, comp);
         HandlePvsOverride(uid, mob);
