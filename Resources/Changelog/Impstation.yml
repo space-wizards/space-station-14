@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Updated captain prestige set flavor text to help you visualize the real
-      object...
-    type: Tweak
-  id: 286
-  time: '2024-10-01T02:29:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/371
 - author: starlighthowls
   changes:
   - message: some tiny spooky whale fixes
@@ -4523,3 +4515,10 @@
   id: 785
   time: '2024-12-22T10:40:19.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1099
+- author: Saeko-44
+  changes:
+  - message: Medium, a new chemical that allows one to see ghosts
+    type: Add
+  id: 786
+  time: '2024-12-22T10:44:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1037
