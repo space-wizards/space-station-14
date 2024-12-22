@@ -596,6 +596,7 @@
     - BorgModuleTool
     - BorgModuleBartender
     - BorgModulePaper
+    - BorgModuleArtistic #imp special
     - CyborgEndoskeleton
     - LeftArmBorg
     - RightArmBorg
