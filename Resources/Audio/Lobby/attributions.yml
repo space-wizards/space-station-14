@@ -19,6 +19,11 @@
   source: "https://idlethumbs.bandcamp.com/track/space-asshole"
   # The source is a direct link the the track, but not the "main" bandcamp of the author. Hence the link is also included separately in the copyright.
 
+- files: ["skubstep.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "skubstep by finket."
+  source: "https://soundcloud.com/finket/skubstep-extended"
+
 - files: ["atomicamnesiammx.ogg"]
   license: "CC-BY-NC-SA-3.0"
   copyright: "Atomic Amnesia MMX by Philip Dyer. Converted from MP3 to OGG."
