@@ -76,7 +76,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
         SubscribeLocalEvent<HolopadUserComponent, ComponentShutdown>(OnHolopadUserShutdown);
 
         // Misc events
-        SubscribeLocalEvent<HolopadUserComponent, EmoteEvent>(OnEmote);
+        // SubscribeLocalEvent<HolopadUserComponent, EmoteEvent>(OnEmote); Commented out due to a bug with ALL spectators hearing the emotes during broadcasts. Will be re-enabled after chat refactor.
         SubscribeLocalEvent<HolopadUserComponent, JumpToCoreEvent>(OnJumpToCore);
         SubscribeLocalEvent<HolopadComponent, GetVerbsEvent<AlternativeVerb>>(AddToggleProjectorVerb);
         SubscribeLocalEvent<HolopadComponent, EntRemovedFromContainerMessage>(OnAiRemove);
@@ -368,7 +368,8 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
     #region: Misc events
 
-    private void OnEmote(Entity<HolopadUserComponent> entity, ref EmoteEvent args)
+    // Commented out due to a bug with ALL spectators hearing the emotes during broadcasts. Will be re-enabled after chat refactor.
+    /*private void OnEmote(Entity<HolopadUserComponent> entity, ref EmoteEvent args)
     {
         foreach (var linkedHolopad in entity.Comp.LinkedHolopads)
         {
@@ -393,7 +394,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
                 _chatSystem.TryEmoteWithChat(receiver.Comp.Hologram.Value, args.Emote, ChatTransmitRange.Normal, false, name, true, true);
             }
         }
-    }
+    }*/
 
     private void OnJumpToCore(Entity<HolopadUserComponent> entity, ref JumpToCoreEvent args)
     {
