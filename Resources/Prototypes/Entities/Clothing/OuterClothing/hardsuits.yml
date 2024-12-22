@@ -1014,6 +1014,9 @@
   name: red mime hardsuit # Imp
   description: A custom-made mime hardsuit.
   components:
+  - type: Tag
+    tags:
+      - MimeHardsuit
   - type: Sprite
     sprite: Clothing/OuterClothing/Hardsuits/mime.rsi
   - type: Clothing

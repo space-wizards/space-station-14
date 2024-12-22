@@ -77,6 +77,9 @@ bounty-item-bagels = Bagels
 bounty-item-bear-hide = Space Bear Hide
 bounty-item-muffins = Muffins
 bounty-item-suppermatter = Suppermatter
+bounty-item-crystal = Crystals
+bounty-item-mime-hardsuit = Mime Hardsuit
+bounty-item-spider-meat = Slab of Spider Meat
 
 bounty-description-artifact = NanoTrasen is in some hot water for stealing artifacts from non-spacefaring planets. Return one and we'll compensate you for it.
 bounty-description-baseball-bat = Baseball fever is going on at CentComm! Be a dear and ship them some baseball bats, so that management can live out their childhood dream.
@@ -156,3 +159,6 @@ bounty-description-bagels = It's breakfast time.
 bounty-description-bear-hide = The Space Chicago Space Bears' mascot costumes were destroyed in a fire, and there's going to be a riot if Spacey The Bear can't make an appearance at the big game.
 bounty-description-muffins = We've got a load of civilians here from the syndicate who just lost their homes in a raid. Send us some muffins for our complimentary Apology Service.
 bounty-description-suppermatter = OH MY GOD NANOTRASEN HAS FINALLY MADE THE TECH AVAILABLE I CAN FINALLY POWER THE STATION PLEASE SEND IT TO ME NOW BEFORE WE GO OFFLINE PERMANENTLY
+bounty-description-crystal = The station-standard fluorescent lights are so dull, it's making the clown depressed. Send us some color, please?
+bounty-description-mime-hardsuit = ERROR: Automatic transcription failed! No data provided.
+bounty-description-spider-meat = H-hey... My mom disappeared on your station... Can you look for her? Um... If you find her, could you send her back home? Thanks... *sniffle*
