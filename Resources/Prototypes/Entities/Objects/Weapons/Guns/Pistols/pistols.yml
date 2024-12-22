@@ -256,3 +256,48 @@
         whitelist:
           tags:
             - CartridgeMagnum
+
+- type: entity
+  name: N1987
+  parent: [BaseWeaponPistol, BaseRestrictedContraband]
+  id: WeaponPistolN1987 # the spaces in description are for formatting.
+  description: Modified N1984 for security use.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Pistols/N1984.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-0
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Pistols/N1984.rsi
+  - type: Gun
+    minAngle: 1
+    maxAngle: 20
+    angleIncrease: 8
+    angleDecay: 9
+    fireRate: 4
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/mk58.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        startingItem: 
+        insertSound: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+            - MagazineMagnum
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        startingItem: 
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeMagnum
