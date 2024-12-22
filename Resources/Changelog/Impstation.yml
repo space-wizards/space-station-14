@@ -1,13 +1,4 @@
 ﻿Entries:
-- author: AftrLite
-  changes:
-  - message: You can now unlock a special golden personal AI trinket. This requires
-      10 hours Silicon playtime and 420 hours overall playtime. Good luck. It's very
-      shiny.
-    type: Add
-  id: 288
-  time: '2024-10-01T02:31:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/366
 - author: Sha-Seng
   changes:
   - message: Command gets unique oxygen and nitrogen tanks to match new cosmetic gear
@@ -4525,3 +4516,11 @@
   id: 787
   time: '2024-12-22T14:19:15.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1096
+- author: EpicToast
+  changes:
+  - message: Updates to Core, Packed, Meta, Barratry, Reach, and Union (holopads,
+      pipe sensors, and other changes). See PR for full changelog.
+    type: Add
+  id: 788
+  time: '2024-12-22T14:20:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1098
