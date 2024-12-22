@@ -378,15 +378,22 @@ public abstract partial class SharedXenoArtifactSystem
     /// </summary>
     public void UpdateNodeResearchValue(Entity<XenoArtifactNodeComponent> node)
     {
-        if (node.Comp.Attached == null)
+        XenoArtifactNodeComponent nodeComponent = node;
+        if (nodeComponent.Attached == null)
         {
-            node.Comp.ResearchValue = 0;
+            nodeComponent.ResearchValue = 0;
             return;
         }
 
-        var artifact = _xenoArtifactQuery.Get(GetEntity(node.Comp.Attached.Value));
+        var artifact = _xenoArtifactQuery.Get(GetEntity(nodeComponent.Attached.Value));
 
-        var durabilityPenalty = 1f - MathF.Pow((float) node.Comp.Durability / node.Comp.MaxDurability, 2);
-        node.Comp.ResearchValue = (int) (Math.Pow(1.25, GetPredecessorNodes((artifact, artifact), node).Count) * node.Comp.BasePointValue * durabilityPenalty);
+        var nonactiveNodes = GetActiveNodes(artifact);
+        var durabilityEffect = MathF.Pow((float)nodeComponent.Durability / nodeComponent.MaxDurability, 2);
+        var durabilityMultiplier = nonactiveNodes.Contains(node)
+            ? 1f - durabilityEffect
+            : 1f + durabilityEffect;
+
+        var predecessorNodes = GetPredecessorNodes((artifact, artifact), node);
+        nodeComponent.ResearchValue = (int)(Math.Pow(1.25, predecessorNodes.Count) * nodeComponent.BasePointValue * durabilityMultiplier);
     }
 }
