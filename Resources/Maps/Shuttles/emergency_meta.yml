@@ -57,8 +57,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -4239,8 +4237,7 @@ entities:
     - type: Transform
       parent: 122
     - type: Physics
-      canCollide: False
-    - type: Fixtures
+      canCollide: false
       fixtures:
         fix1:
           shape: !type:PolygonShape
@@ -4279,8 +4276,7 @@ entities:
     - type: Transform
       parent: 125
     - type: Physics
-      canCollide: False
-    - type: Fixtures
+      canCollide: false
       fixtures:
         fix1:
           shape: !type:PolygonShape
@@ -4319,8 +4315,7 @@ entities:
     - type: Transform
       parent: 125
     - type: Physics
-      canCollide: False
-    - type: Fixtures
+      canCollide: false
       fixtures:
         fix1:
           shape: !type:PolygonShape
@@ -4359,8 +4354,7 @@ entities:
     - type: Transform
       parent: 129
     - type: Physics
-      canCollide: False
-    - type: Fixtures
+      canCollide: false
       fixtures:
         fix1:
           shape: !type:PolygonShape
@@ -4399,8 +4393,7 @@ entities:
     - type: Transform
       parent: 129
     - type: Physics
-      canCollide: False
-    - type: Fixtures
+      canCollide: false
       fixtures:
         fix1:
           shape: !type:PolygonShape
@@ -4439,8 +4432,7 @@ entities:
     - type: Transform
       parent: 726
     - type: Physics
-      canCollide: False
-    - type: Fixtures
+      canCollide: false
       fixtures:
         fix1:
           shape: !type:PolygonShape
@@ -4479,8 +4471,7 @@ entities:
     - type: Transform
       parent: 726
     - type: Physics
-      canCollide: False
-    - type: Fixtures
+      canCollide: false
       fixtures:
         fix1:
           shape: !type:PolygonShape
@@ -4519,8 +4510,7 @@ entities:
     - type: Transform
       parent: 726
     - type: Physics
-      canCollide: False
-    - type: Fixtures
+      canCollide: false
       fixtures:
         fix1:
           shape: !type:PolygonShape
@@ -4559,8 +4549,7 @@ entities:
     - type: Transform
       parent: 726
     - type: Physics
-      canCollide: False
-    - type: Fixtures
+      canCollide: false
       fixtures:
         fix1:
           shape: !type:PolygonShape
@@ -4599,8 +4588,7 @@ entities:
     - type: Transform
       parent: 726
     - type: Physics
-      canCollide: False
-    - type: Fixtures
+      canCollide: false
       fixtures:
         fix1:
           shape: !type:PolygonShape
@@ -4666,8 +4654,7 @@ entities:
     - type: Transform
       parent: 122
     - type: Physics
-      canCollide: False
-    - type: Fixtures
+      canCollide: false
       fixtures:
         fix1:
           shape: !type:PolygonShape
@@ -4706,8 +4693,7 @@ entities:
     - type: Transform
       parent: 125
     - type: Physics
-      canCollide: False
-    - type: Fixtures
+      canCollide: false
       fixtures:
         fix1:
           shape: !type:PolygonShape
@@ -6451,7 +6437,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 22.5,-5.5
       parent: 1
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           shape: !type:PolygonShape
@@ -6513,7 +6499,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 22.5,-2.5
       parent: 1
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           shape: !type:PolygonShape
@@ -6575,7 +6561,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 22.5,-3.5
       parent: 1
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           shape: !type:PolygonShape
@@ -6648,7 +6634,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 22.5,-0.5
       parent: 1
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           shape: !type:PolygonShape
@@ -6775,7 +6761,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -5.5,-7.5
       parent: 1
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           shape: !type:PolygonShape
@@ -6837,7 +6823,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -5.5,-8.5
       parent: 1
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           shape: !type:PolygonShape
@@ -6921,7 +6907,7 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -5.5,-2.5
       parent: 1
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           shape: !type:PolygonShape

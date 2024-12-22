@@ -29,9 +29,9 @@ public sealed class ThrusterSystem : EntitySystem
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly AmbientSoundSystem _ambient = default!;
-    [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly SharedPointLightSystem _light = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     // Essentially whenever thruster enables we update the shuttle's available impulses which are used for movement.
@@ -295,7 +295,7 @@ public sealed class ThrusterSystem : EntitySystem
                 {
                     var shape = new PolygonShape();
                     shape.Set(component.BurnPoly);
-                    _fixtureSystem.TryCreateFixture(uid, shape, BurnFixture, hard: false, collisionLayer: (int)CollisionGroup.FullTileMask, body: physicsComponent);
+                    _physics.TryCreateFixture(uid, shape, BurnFixture, hard: false, collisionLayer: (int)CollisionGroup.FullTileMask, body: physicsComponent);
                 }
 
                 break;
@@ -410,7 +410,7 @@ public sealed class ThrusterSystem : EntitySystem
 
         if (EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent))
         {
-            _fixtureSystem.DestroyFixture(uid, BurnFixture, body: physicsComponent);
+            _physics.DestroyFixture(uid, BurnFixture, body: physicsComponent);
         }
 
         component.Colliding.Clear();

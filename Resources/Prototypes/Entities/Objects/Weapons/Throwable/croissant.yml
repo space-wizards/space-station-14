@@ -3,7 +3,7 @@
   id: WeaponCroissant
   suffix: Weapon
   components:
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape: !type:PhysShapeCircle

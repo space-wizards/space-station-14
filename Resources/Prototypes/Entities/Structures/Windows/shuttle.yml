@@ -74,7 +74,7 @@
   - type: Icon
     sprite: Structures/Windows/shuttle_window_diagonal.rsi
     state: state0
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

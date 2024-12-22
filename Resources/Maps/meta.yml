@@ -472,8 +472,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier
@@ -8674,8 +8672,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -75483,49 +75479,49 @@ entities:
     - type: Transform
       pos: 6.5,2.5
       parent: 5350
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 3157
     components:
     - type: Transform
       pos: 35.5,-16.5
       parent: 5350
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 5342
     components:
     - type: Transform
       pos: -16.5,-44.5
       parent: 5350
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 7100
     components:
     - type: Transform
       pos: -14.5,57.5
       parent: 5350
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 9500
     components:
     - type: Transform
       pos: -26.5,27.5
       parent: 5350
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 10401
     components:
     - type: Transform
       pos: -17.5,-24.5
       parent: 5350
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 12708
     components:
     - type: Transform
       pos: 28.5,34.5
       parent: 5350
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
 - proto: FloorTileItemEighties
   entities:

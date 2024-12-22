@@ -38,7 +38,6 @@
       map: ["enum.ElectrifiedLayers.HUD"]
   - type: AnimationPlayer
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -190,7 +189,7 @@
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/glass.rsi
   - type: AnimationPlayer
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

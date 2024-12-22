@@ -23,6 +23,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -472,25 +473,25 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         if (!ResolveStorage(uid, ref component))
             return;
 
-        if (!component.IsCollidableWhenOpen && TryComp<FixturesComponent>(uid, out var fixtures) &&
-            fixtures.Fixtures.Count > 0)
+        if (!component.IsCollidableWhenOpen && TryComp<PhysicsComponent>(uid, out var body) &&
+            body.Fixtures.Count > 0)
         {
             // currently only works for single-fixture entities. If they have more than one fixture, then
             // RemovedMasks needs to be tracked separately for each fixture, using a fixture Id Dictionary. Also the
             // fixture IDs probably cant be automatically generated without causing issues, unless there is some
             // guarantee that they will get deserialized with the same auto-generated ID when saving+loading the map.
-            var fixture = fixtures.Fixtures.First();
+            var fixture = body.Fixtures.First();
 
             if (component.Open)
             {
                 component.RemovedMasks = fixture.Value.CollisionLayer & component.MasksToRemove;
                 _physics.SetCollisionLayer(uid, fixture.Key, fixture.Value, fixture.Value.CollisionLayer & ~component.MasksToRemove,
-                    manager: fixtures);
+                    body: body);
             }
             else
             {
                 _physics.SetCollisionLayer(uid, fixture.Key, fixture.Value, fixture.Value.CollisionLayer | component.RemovedMasks,
-                    manager: fixtures);
+                    body: body);
                 component.RemovedMasks = 0;
             }
         }

@@ -489,8 +489,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: BecomesStation
       id: Bagel
@@ -9484,8 +9482,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: Shuttle
@@ -49150,7 +49146,6 @@ entities:
       parent: 60
     - type: Physics
       canCollide: False
-    - type: Fixtures
       fixtures: {}
   - uid: 3725
     components:
@@ -49177,7 +49172,6 @@ entities:
       parent: 60
     - type: Physics
       canCollide: False
-    - type: Fixtures
       fixtures: {}
   - uid: 15732
     components:
@@ -49186,7 +49180,6 @@ entities:
       parent: 60
     - type: Physics
       canCollide: False
-    - type: Fixtures
       fixtures: {}
   - uid: 15733
     components:
@@ -49195,7 +49188,6 @@ entities:
       parent: 60
     - type: Physics
       canCollide: False
-    - type: Fixtures
       fixtures: {}
   - uid: 16345
     components:
@@ -49205,7 +49197,6 @@ entities:
       parent: 60
     - type: Physics
       canCollide: False
-    - type: Fixtures
       fixtures: {}
   - uid: 17936
     components:
@@ -72842,63 +72833,63 @@ entities:
     - type: Transform
       pos: 24.5,-27.5
       parent: 60
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 9044
     components:
     - type: Transform
       pos: -6.5,-27.5
       parent: 60
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 12634
     components:
     - type: Transform
       pos: 39.5,-28.5
       parent: 60
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 13492
     components:
     - type: Transform
       pos: 20.5,14.5
       parent: 60
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 13567
     components:
     - type: Transform
       pos: -10.5,-20.5
       parent: 60
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 18254
     components:
     - type: Transform
       pos: -2.5,-11.5
       parent: 60
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 19872
     components:
     - type: Transform
       pos: 40.5,-5.5
       parent: 60
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 19874
     components:
     - type: Transform
       pos: -3.5,-26.5
       parent: 60
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 24158
     components:
     - type: Transform
       pos: -41.5,-1.5
       parent: 60
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
 - proto: FloorTileItemArcadeBlue
   entities:

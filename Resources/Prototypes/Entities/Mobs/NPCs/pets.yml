@@ -175,7 +175,7 @@
   parent: MobCatCaracal
   description: He out here.
   components:
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -224,7 +224,6 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: bingus
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -281,7 +280,6 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: mcgriff
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -374,7 +372,6 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: walter
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:

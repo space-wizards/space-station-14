@@ -19,7 +19,7 @@
     sprite: Structures/Furniture/furniture.rsi
     state: rack
     snapCardinals: true
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

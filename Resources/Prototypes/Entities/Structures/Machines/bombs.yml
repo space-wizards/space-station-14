@@ -32,7 +32,7 @@
       beepSound: /Audio/Machines/timer.ogg
     - type: Anchorable
       delay: 5
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           shape:

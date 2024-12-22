@@ -130,7 +130,7 @@
     stateBaseClosed: decursed
     stateDoorOpen: decursed_open
     stateDoorClosed: decursed_door
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

@@ -178,7 +178,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
                 continue;
 
             // See TODO above
-            if (_physicsQuery.TryComp(entity, out var otherBody) && !_physics.IsHardCollidable((uid, null, body), (entity, null, otherBody)))
+            if (_physicsQuery.TryComp(entity, out var otherBody) && !_physics.IsHardCollidable((uid, body), (entity, otherBody)))
                 continue;
 
             AttemptConsumeEntity(uid, entity, eventHorizon);

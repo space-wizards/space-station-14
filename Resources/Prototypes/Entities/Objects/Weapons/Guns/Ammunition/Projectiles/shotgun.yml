@@ -165,7 +165,7 @@
     fixedRotation: false
   - type: EmbeddableProjectile
     deleteOnRemove: true
-  - type: Fixtures
+  - type: Physics
     fixtures:
       projectile:
         shape:

@@ -7,7 +7,7 @@
     size: Small
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape: !type:PhysShapeCircle

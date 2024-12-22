@@ -43,7 +43,7 @@ public sealed partial class DockingSystem
         TransformComponent gridDockXform,
         Box2 shuttleAABB,
         Angle targetGridRotation,
-        FixturesComponent shuttleFixtures,
+        PhysicsComponent shuttleFixtures,
         Entity<MapGridComponent> gridEntity,
         bool isMap,
         out Matrix3x2 matty,
@@ -160,7 +160,7 @@ public sealed partial class DockingSystem
         var targetGridGrid = _gridQuery.GetComponent(targetGrid);
         var targetGridXform = _xformQuery.GetComponent(targetGrid);
         var targetGridAngle = _transform.GetWorldRotation(targetGridXform).Reduced();
-        var shuttleFixturesComp = Comp<FixturesComponent>(shuttleUid);
+        var shuttleBodyComp = Comp<PhysicsComponent>(shuttleUid);
         var shuttleAABB = _gridQuery.GetComponent(shuttleUid).LocalAABB;
 
         var isMap = HasComp<MapComponent>(targetGrid);
@@ -182,7 +182,7 @@ public sealed partial class DockingSystem
                             gridDock, gridXform,
                             shuttleAABB,
                             targetGridAngle,
-                            shuttleFixturesComp,
+                            shuttleBodyComp,
                             (targetGrid, targetGridGrid),
                             isMap,
                             out var matty,
@@ -235,7 +235,7 @@ public sealed partial class DockingSystem
                                     _xformQuery.GetComponent(otherGridUid),
                                     shuttleAABB,
                                     targetGridAngle,
-                                    shuttleFixturesComp,
+                                    shuttleBodyComp,
                                     (targetGrid, targetGridGrid),
                                     isMap,
                                     out _,
@@ -309,12 +309,12 @@ public sealed partial class DockingSystem
     /// <summary>
     /// Checks whether the shuttle can warp to the specified position.
     /// </summary>
-    private bool ValidSpawn(Entity<MapGridComponent> gridEntity, Matrix3x2 matty, Angle angle, FixturesComponent shuttleFixturesComp, bool isMap)
+    private bool ValidSpawn(Entity<MapGridComponent> gridEntity, Matrix3x2 matty, Angle angle, PhysicsComponent shuttleBodyComp, bool isMap)
     {
         var transform = new Transform(Vector2.Transform(Vector2.Zero, matty), angle);
 
         // Because some docking bounds are tight af need to check each chunk individually
-        foreach (var fix in shuttleFixturesComp.Fixtures.Values)
+        foreach (var fix in shuttleBodyComp.Fixtures.Values)
         {
             var polyShape = (PolygonShape)fix.Shape;
             var aabb = polyShape.ComputeAABB(transform, 0);

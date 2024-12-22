@@ -17,7 +17,6 @@
     tags: [ Carpet ]
   - type: Physics
     canCollide: false
-  - type: Fixtures
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -351,7 +350,6 @@
     tags: [ Carpet ]
   - type: Physics
     canCollide: false
-  - type: Fixtures
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible

@@ -11,7 +11,7 @@
     ports:
       - DoorStatus
       - DockStatus
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -76,7 +76,7 @@
     group: ShuttleGlass
   - type: Door
     occludes: false
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         layer:     #removed opaque from the layer, allowing lasers to pass through glass airlocks

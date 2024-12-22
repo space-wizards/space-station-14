@@ -417,7 +417,7 @@
   - type: SolutionInjectOnEmbed
     transferAmount: 2
     solution: injector
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape: !type:PhysShapeCircle
@@ -589,7 +589,7 @@
     areaInsertRadius: 1
     storageInsertSound: /Audio/Effects/pill_insert.ogg
     storageRemoveSound: /Audio/Effects/pill_remove.ogg
-    whitelist: 
+    whitelist:
       tags:
       - Pill
   - type: Dumpable

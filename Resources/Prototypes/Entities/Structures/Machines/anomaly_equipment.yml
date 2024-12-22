@@ -140,7 +140,7 @@
       map: ["enum.LockVisualLayers.Lock"]
   - type: Transform
     noRot: false
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -257,8 +257,6 @@
     volume: -6
     sound:
       path: /Audio/Ambience/Objects/anomaly_generator.ogg
-  - type: Physics
-    bodyType: Static
   - type: AnomalyGenerator
     generatingSound:
       path: /Audio/Machines/anomaly_generate.ogg
@@ -270,7 +268,8 @@
         - Sheet
     materialWhiteList:
     - Plasma
-  - type: Fixtures
+  - type: Physics
+    bodyType: Static
     fixtures:
       fix1:
         shape:

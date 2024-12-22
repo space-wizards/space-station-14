@@ -12,7 +12,7 @@
   - type: Tag
     tags:
     - Spear
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape: !type:PolygonShape

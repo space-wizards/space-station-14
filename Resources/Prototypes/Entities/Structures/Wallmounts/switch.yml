@@ -25,7 +25,6 @@
   - type: Construction
     graph: SignalSwitchGraph
     node: SignalSwitchNode
-  - type: Fixtures
   - type: DeviceNetwork
     deviceNetId: Wireless
   - type: WirelessNetworkConnection
@@ -71,7 +70,6 @@
   - type: Construction
     graph: SignalButtonGraph
     node: SignalButtonNode
-  - type: Fixtures
   - type: DeviceNetwork
     deviceNetId: Wireless
   - type: WirelessNetworkConnection
@@ -136,7 +134,6 @@
     - type: Construction
       graph: LightSwitchGraph
       node: LightSwitchNode
-    - type: Fixtures
     - type: Tag
       tags:
       - Structure
@@ -516,7 +513,6 @@
     sprite: Structures/Wallmounts/switch_frame.rsi
     state: grey
   - type: Rotatable
-  - type: Fixtures
 
 - type: entity
   id: ButtonFrameGrey

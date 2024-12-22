@@ -124,7 +124,7 @@
   - type: Icon
     sprite: Structures/Windows/uranium_window_diagonal.rsi
     state: state0
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

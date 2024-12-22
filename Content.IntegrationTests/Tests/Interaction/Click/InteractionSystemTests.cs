@@ -25,7 +25,6 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
   components:
   - type: Physics
     bodyType: Dynamic
-  - type: Fixtures
     fixtures:
       fix1:
         shape:

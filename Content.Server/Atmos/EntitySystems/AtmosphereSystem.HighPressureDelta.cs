@@ -56,11 +56,11 @@ namespace Content.Server.Atmos.EntitySystems
                     _physics.SetBodyStatus(uid, body, BodyStatus.OnGround);
                 }
 
-                if (TryComp<FixturesComponent>(uid, out var fixtures))
+                if (TryComp<PhysicsComponent>(uid, out var fixtures))
                 {
                     foreach (var (id, fixture) in fixtures.Fixtures)
                     {
-                        _physics.AddCollisionMask(uid, id, fixture, (int) CollisionGroup.TableLayer, manager: fixtures);
+                        _physics.AddCollisionMask(uid, id, fixture, (int) CollisionGroup.TableLayer, body: fixtures);
                     }
                 }
             }
@@ -73,14 +73,11 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void AddMobMovedByPressure(EntityUid uid, MovedByPressureComponent component, PhysicsComponent body)
         {
-            if (!TryComp<FixturesComponent>(uid, out var fixtures))
-                return;
-
             _physics.SetBodyStatus(uid, body, BodyStatus.InAir);
 
-            foreach (var (id, fixture) in fixtures.Fixtures)
+            foreach (var (id, fixture) in body.Fixtures)
             {
-                _physics.RemoveCollisionMask(uid, id, fixture, (int) CollisionGroup.TableLayer, manager: fixtures);
+                _physics.RemoveCollisionMask(uid, id, fixture, (int) CollisionGroup.TableLayer, body: body);
             }
 
             // TODO: Make them dynamic type? Ehh but they still want movement so uhh make it non-predicted like weightless?

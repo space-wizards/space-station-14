@@ -8,7 +8,7 @@
   - type: Physics
     bodyType: Dynamic
     fixedRotation: false
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

@@ -357,8 +357,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -11740,8 +11738,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -75919,7 +75915,7 @@ entities:
     - type: Transform
       pos: 37.5,-22.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 1073
     components:
@@ -75927,28 +75923,28 @@ entities:
       rot: 3.141592653589793 rad
       pos: -14.5,-23.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 1074
     components:
     - type: Transform
       pos: -34.5,-17.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 4769
     components:
     - type: Transform
       pos: -43.5,16.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 5276
     components:
     - type: Transform
       pos: -0.5,50.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 5287
     components:
@@ -75956,7 +75952,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: -4.5,40.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 5288
     components:
@@ -75964,7 +75960,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 1.5,40.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 6801
     components:
@@ -75972,42 +75968,42 @@ entities:
       rot: 3.141592653589793 rad
       pos: 52.5,-9.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 6927
     components:
     - type: Transform
       pos: 59.5,17.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 8241
     components:
     - type: Transform
       pos: 14.5,26.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 15990
     components:
     - type: Transform
       pos: -16.5,13.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 16473
     components:
     - type: Transform
       pos: -55.5,-35.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 16619
     components:
     - type: Transform
       pos: 64.5,-25.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 17482
     components:
@@ -76015,14 +76011,14 @@ entities:
       rot: 1.5707963267948966 rad
       pos: 43.5,14.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 17589
     components:
     - type: Transform
       pos: 45.5,-30.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
 - proto: FloorTileItemCarpetClown
   entities:
@@ -106161,11 +106157,11 @@ entities:
         After several simulations where Superconducting Magnetic Energy Storage units were drained from the main system from [italic]a variety[/italic] of user errors and other shenanigans, it has been determined that the Singularity should be put on its own power loop, disconnected from the main station. The upsides of this include but are not limited to:
 
 
-        [bold]1.[/bold] Limited external forces from the containments power. 
+        [bold]1.[/bold] Limited external forces from the containments power.
 
-        [bold]2.[/bold] An "early warning" system, if you see JUST the PA room run out of power, you know there is an issue. 
+        [bold]2.[/bold] An "early warning" system, if you see JUST the PA room run out of power, you know there is an issue.
 
-        [bold]3.[/bold] Due to being on its own small loop, its much easier to spot faults in the system. 
+        [bold]3.[/bold] Due to being on its own small loop, its much easier to spot faults in the system.
 
 
         [italic]While we have listed the upsides we also acknowledge the downside,[/italic] for it being on its own loop you will need an external force if the system "runs out of juice". Our recommendation for this is simply attaching a generator to said SMES and letting it get to full charge before continuing operations but as said from another of our technicians... "just attach it to the main grid for like, a hot moment, and kickstart the thing!"
@@ -106177,7 +106173,7 @@ entities:
       solutions: null
       containers:
       - food
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           shape: !type:PolygonShape
@@ -106248,7 +106244,7 @@ entities:
       solutions: null
       containers:
       - food
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           shape: !type:PolygonShape

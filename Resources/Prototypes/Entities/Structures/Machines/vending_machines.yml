@@ -19,11 +19,10 @@
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/empty.rsi
     snapCardinals: true
-  - type: Physics
-    bodyType: Static
   - type: Transform
     noRot: true
-  - type: Fixtures
+  - type: Physics
+    bodyType: Static
     fixtures:
       fix1:
         shape:
@@ -117,7 +116,7 @@
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

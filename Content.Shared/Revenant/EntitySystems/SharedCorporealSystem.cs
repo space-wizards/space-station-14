@@ -3,6 +3,7 @@ using Robust.Shared.Physics;
 using System.Linq;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Revenant.Components;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Revenant.EntitySystems;
@@ -36,7 +37,7 @@ public abstract class SharedCorporealSystem : EntitySystem
     {
         _appearance.SetData(uid, RevenantVisuals.Corporeal, true);
 
-        if (TryComp<FixturesComponent>(uid, out var fixtures) && fixtures.FixtureCount >= 1)
+        if (TryComp<PhysicsComponent>(uid, out var fixtures) && fixtures.Fixtures.Count >= 1)
         {
             var fixture = fixtures.Fixtures.First();
 
@@ -50,7 +51,7 @@ public abstract class SharedCorporealSystem : EntitySystem
     {
         _appearance.SetData(uid, RevenantVisuals.Corporeal, false);
 
-        if (TryComp<FixturesComponent>(uid, out var fixtures) && fixtures.FixtureCount >= 1)
+        if (TryComp<PhysicsComponent>(uid, out var fixtures) && fixtures.Fixtures.Count >= 1)
         {
             var fixture = fixtures.Fixtures.First();
 

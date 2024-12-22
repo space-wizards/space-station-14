@@ -47,7 +47,6 @@
       enum.MicrowaveUiKey.Key:
         type: MicrowaveBoundUserInterface
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:

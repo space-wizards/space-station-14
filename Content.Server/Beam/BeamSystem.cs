@@ -16,7 +16,6 @@ namespace Content.Server.Beam;
 
 public sealed class BeamSystem : SharedBeamSystem
 {
-    [Dependency] private readonly FixtureSystem _fixture = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
@@ -83,20 +82,18 @@ public sealed class BeamSystem : SharedBeamSystem
         if (!TryComp<PhysicsComponent>(ent, out var physics) || !TryComp<BeamComponent>(ent, out var beam))
             return;
 
-        FixturesComponent? manager = null;
-        _fixture.TryCreateFixture(
+        _physics.TryCreateFixture(
             ent,
             shape,
             "BeamBody",
             hard: false,
             collisionMask: (int)CollisionGroup.ItemMask,
             collisionLayer: (int)CollisionGroup.MobLayer,
-            manager: manager,
             body: physics);
 
-        _physics.SetBodyType(ent, BodyType.Dynamic, manager: manager, body: physics);
-        _physics.SetCanCollide(ent, true, manager: manager, body: physics);
-        _broadphase.RegenerateContacts(ent, physics, manager);
+        _physics.SetBodyType(ent, BodyType.Dynamic, body: physics);
+        _physics.SetCanCollide(ent, true, body: physics);
+        _broadphase.RegenerateContacts(ent, physics);
 
         var distanceLength = distanceCorrection.Length();
 

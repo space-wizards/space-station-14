@@ -11,8 +11,6 @@
     # Basic properties
     - type: Transform
       anchored: False
-    - type: Physics
-      bodyType: Dynamic
     - type: StaticPrice
       price: 500
     - type: AmbientSound
@@ -21,7 +19,8 @@
       sound:
         path: /Audio/Ambience/Objects/engine_hum.ogg
       enabled: false
-    - type: Fixtures
+    - type: Physics
+      bodyType: Dynamic
       fixtures:
         fix1:
           shape:
@@ -256,7 +255,7 @@
       range: 4
       volume: -8
 
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           shape:

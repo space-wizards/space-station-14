@@ -53,7 +53,7 @@
     interfaces:
       enum.InstrumentUiKey.Key:
         type: InstrumentBoundUserInterface
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

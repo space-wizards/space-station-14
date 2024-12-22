@@ -33,11 +33,10 @@
           base:
             Armed: { state: mousetraparmed }
             Unarmed: { state: mousetrap }
-    - type: Physics
-      bodyType: Dynamic
     - type: CollisionWake
       enabled: false
-    - type: Fixtures
+    - type: Physics
+      bodyType: Dynamic
       fixtures:
         slips:
           shape:

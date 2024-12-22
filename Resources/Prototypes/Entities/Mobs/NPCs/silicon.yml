@@ -11,7 +11,8 @@
   - type: Damageable
     damageContainer: Inorganic
   - type: InteractionOutline
-  - type: Fixtures
+  - type: Physics
+    bodyType: KinematicController
     fixtures:
       fix1:
         shape:
@@ -44,8 +45,6 @@
     - Shock
     locPrefix: silicon
   - type: MovedByPressure
-  - type: Physics
-    bodyType: KinematicController # Same for all inheritors
   - type: StatusEffects
     allowed:
     - Stun
@@ -180,7 +179,7 @@
     speechVerb: Cluwne
   - type: StepTrigger
     intersectRatio: 0.2
-  - type: Fixtures
+  - type: Physics
     fixtures:
       slips:
         shape:

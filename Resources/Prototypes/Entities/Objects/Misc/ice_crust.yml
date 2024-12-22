@@ -23,7 +23,7 @@
     - type: Tag
       tags: [ Ice ]
     - type: Physics
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           hard: false

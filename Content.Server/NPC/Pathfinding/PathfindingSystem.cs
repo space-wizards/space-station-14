@@ -16,6 +16,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -47,7 +48,6 @@ namespace Content.Server.NPC.Pathfinding
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly DestructibleSystem _destructible = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
-        [Dependency] private readonly FixtureSystem _fixtures = default!;
         [Dependency] private readonly NPCSystem _npc = default!;
         [Dependency] private readonly SharedMapSystem _maps = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
@@ -72,8 +72,8 @@ namespace Content.Server.NPC.Pathfinding
         private EntityQuery<DestructibleComponent> _destructibleQuery;
         private EntityQuery<DoorComponent> _doorQuery;
         private EntityQuery<ClimbableComponent> _climbableQuery;
-        private EntityQuery<FixturesComponent> _fixturesQuery;
         private EntityQuery<MapGridComponent> _gridQuery;
+        private EntityQuery<PhysicsComponent> _physicsQuery;
         private EntityQuery<TransformComponent> _xformQuery;
 
         public override void Initialize()
@@ -84,7 +84,7 @@ namespace Content.Server.NPC.Pathfinding
             _destructibleQuery = GetEntityQuery<DestructibleComponent>();
             _doorQuery = GetEntityQuery<DoorComponent>();
             _climbableQuery = GetEntityQuery<ClimbableComponent>();
-            _fixturesQuery = GetEntityQuery<FixturesComponent>();
+            _physicsQuery = GetEntityQuery<PhysicsComponent>();
             _gridQuery = GetEntityQuery<MapGridComponent>();
             _xformQuery = GetEntityQuery<TransformComponent>();
 
@@ -270,9 +270,9 @@ namespace Content.Server.NPC.Pathfinding
             var layer = 0;
             var mask = 0;
 
-            if (TryComp<FixturesComponent>(entity, out var fixtures))
+            if (TryComp<PhysicsComponent>(entity, out var body))
             {
-                (layer, mask) = _physics.GetHardCollision(entity, fixtures);
+                (layer, mask) = _physics.GetHardCollision(entity, body);
             }
 
             var request = new BFSPathRequest(maxRange, limit, start.Coordinates, flags, layer, mask, cancelToken);
@@ -430,9 +430,9 @@ namespace Content.Server.NPC.Pathfinding
             var layer = 0;
             var mask = 0;
 
-            if (TryComp<FixturesComponent>(entity, out var fixtures))
+            if (TryComp<PhysicsComponent>(entity, out var body))
             {
-                (layer, mask) = _physics.GetHardCollision(entity, fixtures);
+                (layer, mask) = _physics.GetHardCollision(entity, body);
             }
 
             return new AStarPathRequest(start, end, flags, range, layer, mask, cancelToken);

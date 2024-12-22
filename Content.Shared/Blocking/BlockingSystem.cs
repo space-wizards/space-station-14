@@ -29,7 +29,6 @@ public sealed partial class BlockingSystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-    [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
@@ -206,7 +205,7 @@ public sealed partial class BlockingSystem : EntitySystem
 
         if (TryComp<PhysicsComponent>(user, out var physicsComponent))
         {
-            _fixtureSystem.TryCreateFixture(user,
+            _physics.TryCreateFixture(user,
                 component.Shape,
                 BlockingComponent.BlockFixtureID,
                 hard: true,
@@ -262,7 +261,7 @@ public sealed partial class BlockingSystem : EntitySystem
                 _transformSystem.Unanchor(user, xform);
 
             _actionsSystem.SetToggled(component.BlockingToggleActionEntity, false);
-            _fixtureSystem.DestroyFixture(user, BlockingComponent.BlockFixtureID, body: physicsComponent);
+            _physics.DestroyFixture(user, BlockingComponent.BlockFixtureID, body: physicsComponent);
             _physics.SetBodyType(user, blockingUserComponent.OriginalBodyType, body: physicsComponent);
             if (_gameTiming.IsFirstTimePredicted)
             {

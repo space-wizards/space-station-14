@@ -63,7 +63,6 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly ElectrocutionSystem _electrocutionSystem = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorageSystem = default!;
     [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
-    [Dependency] private readonly FixtureSystem _fixtures = default!;
     [Dependency] private readonly FlammableSystem _flammableSystem = default!;
     [Dependency] private readonly GhostKickManager _ghostKickManager = default!;
     [Dependency] private readonly SharedGodmodeSystem _sharedGodmodeSystem = default!;
@@ -420,24 +419,23 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     var xform = Transform(args.Target);
-                    var fixtures = Comp<FixturesComponent>(args.Target);
                     xform.Anchored = false; // Just in case.
-                    _physics.SetBodyType(args.Target, BodyType.Dynamic, manager: fixtures, body: physics);
+                    _physics.SetBodyType(args.Target, BodyType.Dynamic, body: physics);
                     _physics.SetBodyStatus(args.Target, physics, BodyStatus.InAir);
-                    _physics.WakeBody(args.Target, manager: fixtures, body: physics);
+                    _physics.WakeBody(args.Target, body: physics);
 
-                    foreach (var fixture in fixtures.Fixtures.Values)
+                    foreach (var fixture in physics.Fixtures.Values)
                     {
                         if (!fixture.Hard)
                             continue;
 
-                        _physics.SetRestitution(args.Target, fixture, 1.1f, false, fixtures);
+                        _physics.SetRestitution(args.Target, fixture, 1.1f, false, physics);
                     }
 
-                    _fixtures.FixtureUpdate(args.Target, manager: fixtures, body: physics);
+                    _physics.FixtureUpdate(args.Target, body: physics);
 
-                    _physics.SetLinearVelocity(args.Target, _random.NextVector2(1.5f, 1.5f), manager: fixtures, body: physics);
-                    _physics.SetAngularVelocity(args.Target, MathF.PI * 12, manager: fixtures, body: physics);
+                    _physics.SetLinearVelocity(args.Target, _random.NextVector2(1.5f, 1.5f), body: physics);
+                    _physics.SetAngularVelocity(args.Target, MathF.PI * 12, body: physics);
                     _physics.SetLinearDamping(args.Target, physics, 0f);
                     _physics.SetAngularDamping(args.Target, physics, 0f);
                 },
@@ -455,20 +453,19 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     var xform = Transform(args.Target);
-                    var fixtures = Comp<FixturesComponent>(args.Target);
                     xform.Anchored = false; // Just in case.
 
                     _physics.SetBodyType(args.Target, BodyType.Dynamic, body: physics);
                     _physics.SetBodyStatus(args.Target, physics, BodyStatus.InAir);
-                    _physics.WakeBody(args.Target, manager: fixtures, body: physics);
+                    _physics.WakeBody(args.Target, body: physics);
 
-                    foreach (var fixture in fixtures.Fixtures.Values)
+                    foreach (var fixture in physics.Fixtures.Values)
                     {
-                        _physics.SetHard(args.Target, fixture, false, manager: fixtures);
+                        _physics.SetHard(args.Target, fixture, false, body: physics);
                     }
 
-                    _physics.SetLinearVelocity(args.Target, _random.NextVector2(8.0f, 8.0f), manager: fixtures, body: physics);
-                    _physics.SetAngularVelocity(args.Target, MathF.PI * 12, manager: fixtures, body: physics);
+                    _physics.SetLinearVelocity(args.Target, _random.NextVector2(8.0f, 8.0f), body: physics);
+                    _physics.SetAngularVelocity(args.Target, MathF.PI * 12, body: physics);
                     _physics.SetLinearDamping(args.Target, physics, 0f);
                     _physics.SetAngularDamping(args.Target, physics, 0f);
                 },

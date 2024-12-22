@@ -49,8 +49,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier
@@ -1677,7 +1675,6 @@ entities:
       parent: 1
     - type: Physics
       canCollide: False
-    - type: Fixtures
       fixtures: {}
 - proto: CarpetBlack
   entities:

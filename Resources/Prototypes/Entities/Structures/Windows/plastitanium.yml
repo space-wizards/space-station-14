@@ -51,7 +51,7 @@
     key: windows
     base: ptwindow
   - type: Airtight
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -128,7 +128,7 @@
     mode: Diagonal
     key: windows
     base: state
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

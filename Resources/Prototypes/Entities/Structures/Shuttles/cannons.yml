@@ -13,14 +13,13 @@
   - type: Anchorable
   - type: Pullable
   - type: Rotatable
-  - type: Physics
-    bodyType: Static
   - type: ContainerContainer
   - type: Gun
     selectedMode: SemiAuto
     availableModes:
       - SemiAuto
-  - type: Fixtures
+  - type: Physics
+    bodyType: Static
     fixtures:
       fix1:
         shape:

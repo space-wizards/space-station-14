@@ -128,7 +128,7 @@
     blacklist:
       tags:
       - Goliath
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix:
         shape:

@@ -20,7 +20,6 @@
   - type: Physics
     bodyType: Static
     bodyStatus: InAir
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -283,7 +282,7 @@
     castShadows: false
   - type: BluespaceAnomaly
   - type: Portal
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -670,7 +669,6 @@
     anchored: true
   - type: Physics
     bodyType: Static
-  - type: Fixtures
     fixtures:
       fix1:
         shape:

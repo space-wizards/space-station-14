@@ -20,7 +20,6 @@ namespace Content.Shared.Throwing
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
-        [Dependency] private readonly FixtureSystem _fixtures = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly SharedGravitySystem _gravity = default!;
 
@@ -45,16 +44,15 @@ namespace Content.Shared.Throwing
 
         private void ThrowItem(EntityUid uid, ThrownItemComponent component, ref ThrownEvent @event)
         {
-            if (!EntityManager.TryGetComponent(uid, out FixturesComponent? fixturesComponent) ||
-                fixturesComponent.Fixtures.Count != 1 ||
-                !TryComp<PhysicsComponent>(uid, out var body))
+            if (!EntityManager.TryGetComponent(uid, out PhysicsComponent? body) ||
+                body.Fixtures.Count != 1)
             {
                 return;
             }
 
-            var fixture = fixturesComponent.Fixtures.Values.First();
+            var fixture = body.Fixtures.Values.First();
             var shape = fixture.Shape;
-            _fixtures.TryCreateFixture(uid, shape, ThrowingFixture, hard: false, collisionMask: (int) CollisionGroup.ThrownItem, manager: fixturesComponent, body: body);
+            _physics.TryCreateFixture(uid, shape, ThrowingFixture, hard: false, collisionMask: (int) CollisionGroup.ThrownItem, body: body);
         }
 
         private void HandleCollision(EntityUid uid, ThrownItemComponent component, ref StartCollideEvent args)
@@ -98,14 +96,11 @@ namespace Content.Shared.Throwing
                     _broadphase.RegenerateContacts(uid, physics);
             }
 
-            if (EntityManager.TryGetComponent(uid, out FixturesComponent? manager))
-            {
-                var fixture = _fixtures.GetFixtureOrNull(uid, ThrowingFixture, manager: manager);
+            var fixture = _physics.GetFixtureOrNull(uid, ThrowingFixture, body: physics);
 
-                if (fixture != null)
-                {
-                    _fixtures.DestroyFixture(uid, ThrowingFixture, fixture, manager: manager);
-                }
+            if (fixture != null)
+            {
+                _physics.DestroyFixture(uid, ThrowingFixture, fixture, body: physics);
             }
 
             EntityManager.EventBus.RaiseLocalEvent(uid, new StopThrowEvent { User = thrownItemComponent.Thrower }, true);

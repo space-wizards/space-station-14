@@ -132,7 +132,7 @@
   - type: Icon
     sprite: Structures/Windows/reinforced_plasma_diagonal.rsi
     state: state0
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

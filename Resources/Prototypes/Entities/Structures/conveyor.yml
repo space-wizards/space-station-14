@@ -19,7 +19,6 @@
   - type: ExtensionCableReceiver
   - type: Physics
     bodyType: Static
-  - type: Fixtures
     fixtures:
       conveyor:
         shape: !type:PolygonShape

@@ -37,7 +37,7 @@
     - MobMonkey
   - type: CollisionWake
     enabled: false
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -184,7 +184,6 @@
     enabled: false
   - type: Physics
     bodyType: KinematicController
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -258,7 +257,7 @@
     - MobTick
   - type: CollisionWake
     enabled: false
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

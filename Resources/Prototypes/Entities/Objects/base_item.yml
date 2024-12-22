@@ -26,7 +26,6 @@
   - type: Physics
     bodyType: Dynamic
     fixedRotation: false
-  - type: Fixtures
     fixtures:
       fix1:
         shape:

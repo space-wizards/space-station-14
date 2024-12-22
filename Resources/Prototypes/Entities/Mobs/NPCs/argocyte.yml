@@ -104,7 +104,7 @@
     thresholds:
       0: Alive
       30: Dead
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -140,7 +140,7 @@
     thresholds:
       0: Alive
       30: Dead
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -356,7 +356,7 @@
         Base: founder
       Dead:
         Base: founder_dead
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -397,7 +397,7 @@
         Base: leviathing
       Dead:
         Base: leviathing_dead
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

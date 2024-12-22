@@ -37,7 +37,7 @@
     - Chemist
   - type: StealTarget
     stealGroup: ChemDispenser
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

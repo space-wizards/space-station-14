@@ -274,8 +274,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier
@@ -40517,7 +40515,7 @@ entities:
     - type: Transform
       pos: -15.5,27.5
       parent: 4812
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 2491
     components:
@@ -40525,56 +40523,56 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 10.5,30.5
       parent: 4812
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 3383
     components:
     - type: Transform
       pos: -21.5,-8.5
       parent: 4812
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 3465
     components:
     - type: Transform
       pos: 5.5,-6.5
       parent: 4812
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 4458
     components:
     - type: Transform
       pos: 16.5,6.5
       parent: 4812
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 7383
     components:
     - type: Transform
       pos: -10.5,-16.5
       parent: 4812
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 7446
     components:
     - type: Transform
       pos: -19.5,-17.5
       parent: 4812
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 8245
     components:
     - type: Transform
       pos: -19.5,29.5
       parent: 4812
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 13785
     components:
     - type: Transform
       pos: 19.5,36.5
       parent: 4812
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
 - proto: FloorTileItemGold
   entities:

@@ -14,15 +14,14 @@
       map: [ "enum.ArtifactsVisualLayers.Effect" ]
       visible: false
   - type: Damageable
-  - type: Physics
-    bodyType: Dynamic
   - type: CollisionWake
     enabled: false
   - type: InteractionOutline
   - type: Reactive
     groups:
       Acidic: [Touch]
-  - type: Fixtures
+  - type: Physics
+    bodyType: Dynamic
     fixtures:
       fix1:
         shape:

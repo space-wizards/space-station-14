@@ -59,7 +59,6 @@
     - type: InteractionOutline
     - type: Physics
       bodyType: KinematicController
-    - type: Fixtures
       fixtures:
         fix1:
           shape:

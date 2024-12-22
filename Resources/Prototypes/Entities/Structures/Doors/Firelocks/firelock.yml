@@ -50,7 +50,8 @@
         - state: panel_open
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
     - type: AnimationPlayer
-    - type: Fixtures
+    - type: Physics
+      canCollide: false
       fixtures:
         fix1:
           shape:
@@ -92,8 +93,6 @@
       interfaces:
         enum.WiresUiKey.Key:
           type: WiresBoundUserInterface
-    - type: Physics
-      canCollide: false
     - type: Airtight
       airBlocked: false
       noAirWhenFullyAirBlocked: true
@@ -144,7 +143,7 @@
       sprite: Structures/Doors/Airlocks/Glass/firelock.rsi
     - type: Occluder
       enabled: false
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           shape:
@@ -174,7 +173,8 @@
       noAirWhenFullyAirBlocked: false
       airBlockedDirection:
         - South
-    - type: Fixtures
+    - type: Physics
+      canCollide: false
       fixtures:
         fix1:
           shape:
@@ -189,8 +189,6 @@
       enabled: false
     - type: Door
       occludes: false
-    - type: Physics
-      canCollide: false
     - type: StaticPrice
       price: 100
     - type: Construction

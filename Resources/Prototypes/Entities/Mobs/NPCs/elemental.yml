@@ -10,7 +10,8 @@
   - type: Damageable
     damageContainer: Inorganic
   - type: InteractionOutline
-  - type: Fixtures
+  - type: Physics
+    bodyType: KinematicController # Same for all inheritors
     fixtures:
       fix1:
         shape:
@@ -31,8 +32,6 @@
     factions:
     - SimpleNeutral
   - type: MovedByPressure
-  - type: Physics
-    bodyType: KinematicController # Same for all inheritors
   - type: StatusEffects
     allowed:
     - Stun

@@ -12,7 +12,7 @@
     damageContainer: StructuralInorganic
     damageModifierSet: Wood
   - type: PlaceableSurface
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

@@ -353,7 +353,6 @@
         acts: [ "Destruction" ]
   - type: Physics
     bodyType: Dynamic
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -405,12 +404,11 @@
             max: 2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Physics
-    bodyType: Dynamic
   - type: EntityStorage
     capacity: 1
     airtight: false
-  - type: Fixtures
+  - type: Physics
+    bodyType: Dynamic
     fixtures:
       fix1:
         shape:

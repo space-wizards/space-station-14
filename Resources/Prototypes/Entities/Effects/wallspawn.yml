@@ -5,12 +5,11 @@
   - type: Transform
     anchored: True
   - type: InteractionOutline
-  - type: Physics
-    bodyType: Static
   - type: Sprite
     sprite: /Textures/Effects/rockspawn.rsi
     state: asteroid
-  - type: Fixtures
+  - type: Physics
+    bodyType: Static
     fixtures:
       portalFixture:
         shape:

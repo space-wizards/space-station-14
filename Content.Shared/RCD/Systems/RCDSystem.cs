@@ -25,6 +25,7 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Shared.RCD.Systems;
 
@@ -419,9 +420,9 @@ public class RCDSystem : EntitySystem
                 return false;
             }
 
-            if (component.CachedPrototype.CollisionMask != CollisionGroup.None && TryComp<FixturesComponent>(ent, out var fixtures))
+            if (component.CachedPrototype.CollisionMask != CollisionGroup.None && TryComp<PhysicsComponent>(ent, out var body))
             {
-                foreach (var fixture in fixtures.Fixtures.Values)
+                foreach (var fixture in body.Fixtures.Values)
                 {
                     // Continue if no collision is possible
                     if (!fixture.Hard || fixture.CollisionLayer <= 0 || (fixture.CollisionLayer & (int) component.CachedPrototype.CollisionMask) == 0)

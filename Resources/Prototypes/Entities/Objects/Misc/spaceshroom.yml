@@ -12,7 +12,6 @@
       anchored: true
     - type: Physics
       bodyType: Static
-    - type: Fixtures
       fixtures:
         fix1:
           shape:
@@ -76,7 +75,7 @@
     weightedRandomId: RandomFillSpaceshroom
   - type: StaticPrice
     price: 20
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

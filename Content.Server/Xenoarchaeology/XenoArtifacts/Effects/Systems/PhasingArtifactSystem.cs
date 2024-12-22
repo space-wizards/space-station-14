@@ -25,12 +25,12 @@ public sealed class PhasingArtifactSystem : EntitySystem
 
     private void OnActivate(EntityUid uid, PhasingArtifactComponent component, ArtifactActivatedEvent args)
     {
-        if (!TryComp<FixturesComponent>(uid, out var fixtures))
+        if (!TryComp<PhysicsComponent>(uid, out var body))
             return;
 
-        foreach (var fixture in fixtures.Fixtures.Values)
+        foreach (var fixture in body.Fixtures.Values)
         {
-            _physics.SetHard(uid, fixture, false, fixtures);
+            _physics.SetHard(uid, fixture, false, body);
         }
     }
 }

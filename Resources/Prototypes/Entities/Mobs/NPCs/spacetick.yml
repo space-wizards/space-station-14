@@ -19,11 +19,10 @@
       state: alive
       sprite: Mobs/Aliens/Xenos/spacetick.rsi
       scale: 0.8, 0.8
-  - type: Physics
   - type: MovementSpeedModifier
     baseWalkSpeed : 4
     baseSprintSpeed : 6
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

@@ -12,7 +12,7 @@
   - type: Tag
     tags:
     - Ore
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

@@ -50,7 +50,6 @@
           YoureFucked: { state: nuclearbomb_exploding }
   - type: Physics
     bodyType: Static
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -158,7 +157,6 @@
           pride: { visible: true }
   - type: Physics
     bodyType: Dynamic
-  - type: Fixtures
     fixtures:
       fix1:
         shape:

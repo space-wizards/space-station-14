@@ -52,7 +52,7 @@
     - Corporeal
     - Electrocution
     - StaminaModifier
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

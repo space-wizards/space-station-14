@@ -13,7 +13,6 @@
   - type: Physics
     bodyType: Static
     canCollide: false
-  - type: Fixtures
     fixtures:
       fix1:
         shape:

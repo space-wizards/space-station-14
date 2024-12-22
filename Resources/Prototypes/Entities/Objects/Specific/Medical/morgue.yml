@@ -28,11 +28,10 @@
   - type: Clickable
   - type: InteractionOutline
   - type: MovedByPressure
-  - type: Physics
-    bodyType: Dynamic
   - type: Transform
     noRot: true
-  - type: Fixtures
+  - type: Physics
+    bodyType: Dynamic
     fixtures:
       fix1:
         shape:

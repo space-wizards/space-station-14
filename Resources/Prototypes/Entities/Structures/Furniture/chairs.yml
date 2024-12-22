@@ -10,7 +10,6 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Dynamic
-  - type: Fixtures
     fixtures:
       fix1:
         shape:

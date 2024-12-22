@@ -4,7 +4,7 @@
   name: containment field generator
   description: A machine that generates a containment field when powered by an emitter. Keeps the Singularity docile.
   components:
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -79,7 +79,6 @@
   - type: Clickable
   - type: Physics
     bodyType: Static
-  - type: Fixtures
     fixtures:
       fix1:
         shape:

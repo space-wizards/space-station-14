@@ -129,8 +129,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: Gravity
       gravityShakeSound: !type:SoundPathSpecifier
@@ -10493,21 +10491,21 @@ entities:
     - type: Transform
       pos: -4.5,-2.5
       parent: 104
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 2438
     components:
     - type: Transform
       pos: 10.5,-3.5
       parent: 104
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 2443
     components:
     - type: Transform
       pos: 4.5,-11.5
       parent: 104
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
 - proto: FloraRockSolid01
   entities:

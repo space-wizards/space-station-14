@@ -20,7 +20,6 @@
         types:
           Radiation: 25
     - type: Physics
-    - type: Fixtures
       fixtures:
         projectile:
           shape:

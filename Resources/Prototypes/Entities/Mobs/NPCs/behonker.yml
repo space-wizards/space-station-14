@@ -61,7 +61,6 @@
           Base: dead
     - type: Physics
       bodyType: KinematicController
-    - type: Fixtures
       fixtures:
         fix1:
           shape:

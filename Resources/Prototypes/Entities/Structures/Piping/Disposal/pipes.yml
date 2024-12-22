@@ -17,7 +17,6 @@
   - type: Physics
     bodyType: Static
     canCollide: false
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -173,7 +172,7 @@
         pipe:
           Free: { state: conpipe-t }
           Anchored: { state: pipe-t }
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -221,7 +220,7 @@
     interfaces:
       enum.DisposalRouterUiKey.Key:
         type: DisposalRouterBoundUserInterface
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -263,7 +262,7 @@
           Anchored: { state: pipe-j2s }
   - type: Flippable
     mirrorEntity: DisposalRouter
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -305,7 +304,7 @@
           Anchored: { state: pipe-j1 }
   - type: Flippable
     mirrorEntity: DisposalJunctionFlipped
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -347,7 +346,7 @@
           Anchored: { state: pipe-j2 }
   - type: Flippable
     mirrorEntity: DisposalJunction
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -386,7 +385,7 @@
         pipe:
           Free: { state: conpipe-y }
           Anchored: { state: pipe-y }
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -422,7 +421,7 @@
         pipe:
           Free: { state: conpipe-c }
           Anchored: { state: pipe-c }
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

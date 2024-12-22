@@ -139,7 +139,6 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
         }
 
         var xformQuery = EntManager.GetEntityQuery<TransformComponent>();
-        var fixturesQuery = EntManager.GetEntityQuery<FixturesComponent>();
         var bodyQuery = EntManager.GetEntityQuery<PhysicsComponent>();
 
         if (!xformQuery.TryGetComponent(_coordinates.Value.EntityId, out var xform)
@@ -158,8 +157,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
 
         // Draw our grid in detail
         var ourGridId = xform.GridUid;
-        if (EntManager.TryGetComponent<MapGridComponent>(ourGridId, out var ourGrid) &&
-            fixturesQuery.HasComponent(ourGridId.Value))
+        if (EntManager.TryGetComponent<MapGridComponent>(ourGridId, out var ourGrid))
         {
             var ourGridToWorld = _transform.GetWorldMatrix(ourGridId.Value);
             var ourGridToShuttle = Matrix3x2.Multiply(ourGridToWorld, worldToShuttle);
@@ -193,7 +191,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
         foreach (var grid in _grids)
         {
             var gUid = grid.Owner;
-            if (gUid == ourGridId || !fixturesQuery.HasComponent(gUid))
+            if (gUid == ourGridId || !bodyQuery.HasComponent(gUid))
                 continue;
 
             var gridBody = bodyQuery.GetComponent(gUid);

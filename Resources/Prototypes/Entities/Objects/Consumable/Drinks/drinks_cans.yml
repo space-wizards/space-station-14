@@ -169,7 +169,7 @@
     sprite: Objects/Consumable/Drinks/lemon-lime-cranberry.rsi
   - type: Item
     sprite: Objects/Consumable/Drinks/lemon-lime-cranberry.rsi
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape: !type:PhysShapeCircle

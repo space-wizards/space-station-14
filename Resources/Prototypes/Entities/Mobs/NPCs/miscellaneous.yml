@@ -16,7 +16,7 @@
       layers:
         - map: [ "enum.DamageStateVisualLayers.Base" ]
           state: laser_raptor
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           shape:
@@ -176,7 +176,7 @@
     thresholds:
       0: Alive
       35: Dead
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

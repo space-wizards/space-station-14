@@ -9,7 +9,7 @@
     state: memorial
   - type: Transform
     noRot: true
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

@@ -5,10 +5,9 @@
   components:
   - type: Transform
     anchored: true
+  - type: InteractionOutline
   - type: Physics
     bodyType: Static
-  - type: InteractionOutline
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -43,7 +42,7 @@
     - state: locked
       shader: unshaded
       map: ["enum.LockVisualLayers.Lock"]
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

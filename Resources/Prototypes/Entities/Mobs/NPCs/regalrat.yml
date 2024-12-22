@@ -31,7 +31,6 @@
       shader: unshaded
   - type: Physics
     bodyType: KinematicController
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -209,7 +208,7 @@
         state: rat
   - type: Physics
     bodyType: KinematicController
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

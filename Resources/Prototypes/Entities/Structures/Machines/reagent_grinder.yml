@@ -22,7 +22,6 @@
           True: {state: "juicer1"}
           False: {state: "juicer0"}
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:

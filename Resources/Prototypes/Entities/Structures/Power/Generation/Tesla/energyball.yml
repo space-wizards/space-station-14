@@ -38,7 +38,7 @@
   name: ball lightning
   description: A giant ball of pure energy. The space around it is humming and melting.
   components:
-  - type: Fixtures
+  - type: Physics
     fixtures:
       EventHorizonCollider:
         shape:
@@ -120,7 +120,7 @@
     maxSpeed: 3
     chasingComponent:
     - type: TeslaEnergyBall
-  - type: Fixtures
+  - type: Physics
     fixtures:
       TeslaCollider:
         shape:

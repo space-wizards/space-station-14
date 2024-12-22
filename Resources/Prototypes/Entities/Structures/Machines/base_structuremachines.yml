@@ -6,11 +6,10 @@
   - type: InteractionOutline
   - type: Anchorable
     delay: 2
-  - type: Physics
-    bodyType: Static
   - type: Transform
     noRot: true
-  - type: Fixtures
+  - type: Physics
+    bodyType: Static
     fixtures:
       fix1:
         shape:

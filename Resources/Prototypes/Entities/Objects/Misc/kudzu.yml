@@ -33,7 +33,7 @@
       drawdepth: Overdoors
     - type: KudzuVisuals
     - type: Clickable
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           hard: false
@@ -181,7 +181,7 @@
       drawdepth: Overdoors
     - type: KudzuVisuals
     - type: Clickable
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           hard: false

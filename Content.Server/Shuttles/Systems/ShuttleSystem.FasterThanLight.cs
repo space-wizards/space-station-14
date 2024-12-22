@@ -956,9 +956,9 @@ public sealed partial class ShuttleSystem
     /// <summary>
     /// Flattens / deletes everything under the grid upon FTL.
     /// </summary>
-    private void Smimsh(EntityUid uid, FixturesComponent? manager = null, MapGridComponent? grid = null, TransformComponent? xform = null)
+    private void Smimsh(EntityUid uid, PhysicsComponent? body = null, MapGridComponent? grid = null, TransformComponent? xform = null)
     {
-        if (!Resolve(uid, ref manager, ref grid, ref xform) || xform.MapUid == null)
+        if (!Resolve(uid, ref body, ref grid, ref xform) || xform.MapUid == null)
             return;
 
         if (!TryComp(xform.MapUid, out BroadphaseComponent? lookup))
@@ -966,10 +966,10 @@ public sealed partial class ShuttleSystem
 
         // Flatten anything not parented to a grid.
         var transform = _physics.GetRelativePhysicsTransform((uid, xform), xform.MapUid.Value);
-        var aabbs = new List<Box2>(manager.Fixtures.Count);
+        var aabbs = new List<Box2>(body.Fixtures.Count);
         var tileSet = new List<(Vector2i, Tile)>();
 
-        foreach (var fixture in manager.Fixtures.Values)
+        foreach (var fixture in body.Fixtures.Values)
         {
             if (!fixture.Hard)
                 continue;

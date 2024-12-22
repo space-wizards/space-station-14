@@ -5,7 +5,7 @@
   - type: Physics
     bodyType: Dynamic
     sleepingAllowed: false
-  - type: Fixtures
+  - type: Physics
     fixtures:
       tether:
         shape:

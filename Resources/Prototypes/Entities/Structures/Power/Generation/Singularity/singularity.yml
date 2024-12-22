@@ -21,7 +21,7 @@
   - type: GravityWell # To make the singularity attract things.
     baseRadialAcceleration: 10
     maxRange: 4
-  - type: Fixtures
+  - type: Physics
     fixtures:
       EventHorizonCollider:
         shape:

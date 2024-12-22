@@ -157,8 +157,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: BecomesStation
       id: centcomm
@@ -21248,35 +21246,35 @@ entities:
     - type: Transform
       pos: -20.5,15.5
       parent: 1668
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 6622
     components:
     - type: Transform
       pos: 12.5,-16.5
       parent: 1668
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 6623
     components:
     - type: Transform
       pos: -16.5,-33.5
       parent: 1668
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 6718
     components:
     - type: Transform
       pos: -8.5,-22.5
       parent: 1668
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 6876
     components:
     - type: Transform
       pos: 20.5,-25.5
       parent: 1668
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
 - proto: FoodBoxDonkpocketPizza
   entities:

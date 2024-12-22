@@ -335,8 +335,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: OccluderTree
     - type: SpreaderGrid
@@ -49377,28 +49375,28 @@ entities:
     - type: Transform
       pos: -37.5,31.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 7433
     components:
     - type: Transform
       pos: -59.5,31.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 7634
     components:
     - type: Transform
       pos: -48.5,51.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 9696
     components:
     - type: Transform
       pos: -34.5,67.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
 - proto: FloraTreeChristmas01
   entities:

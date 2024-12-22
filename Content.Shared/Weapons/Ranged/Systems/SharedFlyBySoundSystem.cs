@@ -13,7 +13,7 @@ namespace Content.Shared.Weapons.Ranged.Systems;
 
 public abstract class SharedFlyBySoundSystem : EntitySystem
 {
-    [Dependency] private readonly FixtureSystem _fixtures = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     public const string FlyByFixture = "fly-by";
 
@@ -31,7 +31,7 @@ public abstract class SharedFlyBySoundSystem : EntitySystem
 
         var shape = new PhysShapeCircle(component.Range);
 
-        _fixtures.TryCreateFixture(uid, shape, FlyByFixture, collisionLayer: (int) CollisionGroup.MobMask, hard: false, body: body);
+        _physics.TryCreateFixture(uid, shape, FlyByFixture, collisionLayer: (int) CollisionGroup.MobMask, hard: false, body: body);
     }
 
     private void OnShutdown(EntityUid uid, FlyBySoundComponent component, ComponentShutdown args)
@@ -42,6 +42,6 @@ public abstract class SharedFlyBySoundSystem : EntitySystem
             return;
         }
 
-        _fixtures.DestroyFixture(uid, FlyByFixture, body: body);
+        _physics.DestroyFixture(uid, FlyByFixture, body: body);
     }
 }

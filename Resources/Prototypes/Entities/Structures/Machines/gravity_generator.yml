@@ -29,7 +29,6 @@
   - type: ExtensionCableReceiver
   - type: Physics
     bodyType: Static
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -99,7 +98,7 @@
         map: ["enum.GravityGeneratorVisualLayers.Core"]
         scale: "0.4,0.4"
         offset: "0,0.2"
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

@@ -32,7 +32,6 @@
     damageModifierSet: StructuralMetallic
   - type: Physics
     bodyType: Static
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -564,7 +563,7 @@
     airBlockedDirection:
     - South
     - East
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -821,8 +820,6 @@
   - type: Damageable
     damageContainer: StructuralInorganic
     damageModifierSet: StructuralMetallic
-  - type: Physics
-    bodyType: Static
   - type: Reflect
     reflectProb: 1
   - type: Pullable
@@ -831,7 +828,8 @@
     airBlockedDirection:
     - South
     - East
-  - type: Fixtures
+  - type: Physics
+    bodyType: Static
     fixtures:
       fix1:
         shape:
@@ -1324,7 +1322,6 @@
       - Wall
   - type: Physics
     bodyType: Static
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -1347,7 +1344,7 @@
         - Wall
     - type: Physics
       bodyType: Static
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           shape:

@@ -223,12 +223,12 @@ public sealed class SmokeSystem : EntitySystem
         Dirty(uid, component);
         EnsureComp<ActiveEdgeSpreaderComponent>(uid);
 
-        if (TryComp<PhysicsComponent>(uid, out var body) && TryComp<FixturesComponent>(uid, out var fixtures))
+        if (TryComp<PhysicsComponent>(uid, out var body))
         {
             var xform = Transform(uid);
-            _physics.SetBodyType(uid, BodyType.Dynamic, fixtures, body, xform);
-            _physics.SetCanCollide(uid, true, manager: fixtures, body: body);
-            _broadphase.RegenerateContacts(uid, body, fixtures, xform);
+            _physics.SetBodyType(uid, BodyType.Dynamic, body, xform);
+            _physics.SetCanCollide(uid, true, body: body);
+            _broadphase.RegenerateContacts(uid, body, xform);
         }
 
         var timer = EnsureComp<TimedDespawnComponent>(uid);

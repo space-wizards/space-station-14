@@ -11,7 +11,7 @@
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
       state: blue_adult_slime
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

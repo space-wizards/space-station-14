@@ -58,7 +58,7 @@
     reflectProb: 0.7
     reflects:
       - Energy
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

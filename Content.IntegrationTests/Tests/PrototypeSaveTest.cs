@@ -7,6 +7,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;
@@ -118,7 +119,7 @@ public sealed class PrototypeSaveTest
                         var compName = compFact.GetComponentName(compType);
                         compNames.Add(compName);
 
-                        if (compType == typeof(MetaDataComponent) || compType == typeof(TransformComponent) || compType == typeof(FixturesComponent))
+                        if (compType == typeof(MetaDataComponent) || compType == typeof(TransformComponent) || compType == typeof(PhysicsComponent))
                             continue;
 
                         MappingDataNode compMapping;

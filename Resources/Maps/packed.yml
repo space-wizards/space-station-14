@@ -292,8 +292,6 @@ entities:
       angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
-      bodyType: Dynamic
-    - type: Fixtures
       fixtures: {}
     - type: BecomesStation
       id: Packed
@@ -46751,63 +46749,63 @@ entities:
     - type: Transform
       pos: 30.5,-11.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 1859
     components:
     - type: Transform
       pos: 12.5,12.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 5254
     components:
     - type: Transform
       pos: 78.5,-0.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 8960
     components:
     - type: Transform
       pos: 102.5,-13.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 10447
     components:
     - type: Transform
       pos: 51.5,15.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 11900
     components:
     - type: Transform
       pos: 78.5,10.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 12288
     components:
     - type: Transform
       pos: 51.5,-5.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 12290
     components:
     - type: Transform
       pos: 4.5,-4.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 13606
     components:
     - type: Transform
       pos: 59.5,36.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
   - uid: 15199
     components:
@@ -46815,7 +46813,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: 77.5,10.5
       parent: 2
-    - type: Fixtures
+    - type: Physics
       fixtures: {}
 - proto: FloraTreeChristmas02
   entities:

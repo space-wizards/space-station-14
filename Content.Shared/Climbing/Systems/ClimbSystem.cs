@@ -32,7 +32,6 @@ public sealed partial class ClimbSystem : VirtualController
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containers = default!;
@@ -46,7 +45,7 @@ public sealed partial class ClimbSystem : VirtualController
     private const int ClimbingCollisionGroup = (int) (CollisionGroup.TableLayer | CollisionGroup.LowImpassable);
 
     private EntityQuery<ClimbableComponent> _climbableQuery;
-    private EntityQuery<FixturesComponent> _fixturesQuery;
+    private EntityQuery<PhysicsComponent> _fixturesQuery;
     private EntityQuery<TransformComponent> _xformQuery;
 
     public override void Initialize()
@@ -54,7 +53,7 @@ public sealed partial class ClimbSystem : VirtualController
         base.Initialize();
 
         _climbableQuery = GetEntityQuery<ClimbableComponent>();
-        _fixturesQuery = GetEntityQuery<FixturesComponent>();
+        _fixturesQuery = GetEntityQuery<PhysicsComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
 
         SubscribeLocalEvent<ClimbingComponent, UpdateCanMoveEvent>(OnMoveAttempt);
@@ -113,7 +112,7 @@ public sealed partial class ClimbSystem : VirtualController
     /// <summary>
     /// Returns true if entity currently has a valid vault.
     /// </summary>
-    private bool IsClimbing(EntityUid uid, FixturesComponent? fixturesComp = null)
+    private bool IsClimbing(EntityUid uid, PhysicsComponent? fixturesComp = null)
     {
         if (!_fixturesQuery.Resolve(uid, ref fixturesComp) || !fixturesComp.Fixtures.TryGetValue(ClimbingFixtureName, out var climbFixture))
             return false;
@@ -247,9 +246,9 @@ public sealed partial class ClimbSystem : VirtualController
     }
 
     private void Climb(EntityUid uid, EntityUid user, EntityUid climbable, bool silent = false, ClimbingComponent? climbing = null,
-        PhysicsComponent? physics = null, FixturesComponent? fixtures = null, ClimbableComponent? comp = null)
+        PhysicsComponent? physics = null, ClimbableComponent? comp = null)
     {
-        if (!Resolve(uid, ref climbing, ref physics, ref fixtures, false))
+        if (!Resolve(uid, ref climbing, ref physics, false))
             return;
 
         if (!Resolve(climbable, ref comp, false))
@@ -267,7 +266,7 @@ public sealed partial class ClimbSystem : VirtualController
         if (targetEvent.Cancelled)
             return;
 
-        if (!ReplaceFixtures(uid, climbing, fixtures))
+        if (!ReplaceFixtures(uid, climbing, physics))
             return;
 
         var xform = _xformQuery.GetComponent(uid);
@@ -334,10 +333,10 @@ public sealed partial class ClimbSystem : VirtualController
     /// Replaces the current fixtures with non-climbing collidable versions so that climb end can be detected
     /// </summary>
     /// <returns>Returns whether adding the new fixtures was successful</returns>
-    private bool ReplaceFixtures(EntityUid uid, ClimbingComponent climbingComp, FixturesComponent fixturesComp)
+    private bool ReplaceFixtures(EntityUid uid, ClimbingComponent climbingComp, PhysicsComponent bodyComp)
     {
         // Swap fixtures
-        foreach (var (name, fixture) in fixturesComp.Fixtures)
+        foreach (var (name, fixture) in bodyComp.Fixtures)
         {
             if (climbingComp.DisabledFixtureMasks.ContainsKey(name)
                 || fixture.Hard == false
@@ -347,17 +346,17 @@ public sealed partial class ClimbSystem : VirtualController
             }
 
             climbingComp.DisabledFixtureMasks.Add(name, fixture.CollisionMask & ClimbingCollisionGroup);
-            _physics.SetCollisionMask(uid, name, fixture, fixture.CollisionMask & ~ClimbingCollisionGroup, fixturesComp);
+            _physics.SetCollisionMask(uid, name, fixture, fixture.CollisionMask & ~ClimbingCollisionGroup, bodyComp);
         }
 
-        if (!_fixtureSystem.TryCreateFixture(
+        if (!_physics.TryCreateFixture(
                 uid,
                 new PhysShapeCircle(0.35f),
                 ClimbingFixtureName,
                 collisionLayer: (int) CollisionGroup.None,
                 collisionMask: ClimbingCollisionGroup,
                 hard: false,
-                manager: fixturesComp))
+                body: bodyComp))
         {
             return false;
         }
@@ -408,23 +407,23 @@ public sealed partial class ClimbSystem : VirtualController
         StopClimb(uid, component);
     }
 
-    private void StopClimb(EntityUid uid, ClimbingComponent? climbing = null, FixturesComponent? fixtures = null)
+    private void StopClimb(EntityUid uid, ClimbingComponent? climbing = null, PhysicsComponent? body = null)
     {
-        if (!Resolve(uid, ref climbing, ref fixtures, false))
+        if (!Resolve(uid, ref climbing, ref body, false))
             return;
 
         foreach (var (name, fixtureMask) in climbing.DisabledFixtureMasks)
         {
-            if (!fixtures.Fixtures.TryGetValue(name, out var fixture))
+            if (!body.Fixtures.TryGetValue(name, out var fixture))
             {
                 continue;
             }
 
-            _physics.SetCollisionMask(uid, name, fixture, fixture.CollisionMask | fixtureMask, fixtures);
+            _physics.SetCollisionMask(uid, name, fixture, fixture.CollisionMask | fixtureMask, body);
         }
 
         climbing.DisabledFixtureMasks.Clear();
-        _fixtureSystem.DestroyFixture(uid, ClimbingFixtureName, manager: fixtures);
+        _physics.DestroyFixture(uid, ClimbingFixtureName, body: body);
         climbing.IsClimbing = false;
         climbing.NextTransition = null;
         var ev = new EndClimbEvent();

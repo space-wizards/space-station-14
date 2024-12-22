@@ -10,7 +10,7 @@
       anchored: true
     - type: Physics
       bodyType: Static
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           shape:
@@ -68,7 +68,7 @@
       anchored: true
     - type: Physics
       bodyType: Static
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           shape:

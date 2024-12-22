@@ -9,7 +9,7 @@
       netsync: false
     - type: Rotatable
     - type: InteractionOutline
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           shape:

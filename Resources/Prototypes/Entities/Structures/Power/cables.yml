@@ -15,7 +15,6 @@
   - type: Physics
     bodyType: Static
     canCollide: false
-  - type: Fixtures
   - type: Sprite
     drawdepth: ThinWire
     visible: false

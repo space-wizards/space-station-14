@@ -74,7 +74,6 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly ISharedChatManager _chat = default!;
 
         private EntityQuery<IgnoreUIRangeComponent> _ignoreUiRangeQuery;
-        private EntityQuery<FixturesComponent> _fixtureQuery;
         private EntityQuery<ItemComponent> _itemQuery;
         private EntityQuery<PhysicsComponent> _physicsQuery;
         private EntityQuery<HandsComponent> _handsQuery;
@@ -96,7 +95,6 @@ namespace Content.Shared.Interaction
         public override void Initialize()
         {
             _ignoreUiRangeQuery = GetEntityQuery<IgnoreUIRangeComponent>();
-            _fixtureQuery = GetEntityQuery<FixturesComponent>();
             _itemQuery = GetEntityQuery<ItemComponent>();
             _physicsQuery = GetEntityQuery<PhysicsComponent>();
             _handsQuery = GetEntityQuery<HandsComponent>();
@@ -740,12 +738,12 @@ namespace Content.Shared.Interaction
             // Alternatively we could check centre distances first though
             // that means we wouldn't be able to easily check overlap interactions.
             if (range > 0f &&
-                _fixtureQuery.TryComp(origin, out var fixtureA) &&
+                _physicsQuery.TryComp(origin, out var fixtureA) &&
                 // These fixture counts are stuff that has the component but no fixtures for <reasons> (e.g. buttons).
                 // At least until they get removed.
-                fixtureA.FixtureCount > 0 &&
-                _fixtureQuery.TryComp(other, out var fixtureB) &&
-                fixtureB.FixtureCount > 0 &&
+                fixtureA.Fixtures.Count > 0 &&
+                _physicsQuery.TryComp(other, out var fixtureB) &&
+                fixtureB.Fixtures.Count > 0 &&
                 Resolve(origin, ref origin.Comp))
             {
                 var (worldPosA, worldRotA) = origin.Comp.GetWorldPositionRotation();

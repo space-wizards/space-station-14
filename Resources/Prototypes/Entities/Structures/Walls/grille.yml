@@ -55,7 +55,6 @@
           nodeGroupID: Apc
     - type: Physics
       bodyType: Static
-    - type: Fixtures
       fixtures:
         fix1:
           shape:
@@ -182,7 +181,7 @@
     - type: Icon
       sprite: Structures/Walls/grille.rsi
       state: grille_diagonal
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           shape:
@@ -217,7 +216,7 @@
     - type: Icon
       sprite: Structures/Walls/clockwork_grille.rsi
       state: ratvargrille_diagonal
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           shape:

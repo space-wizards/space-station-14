@@ -4,6 +4,7 @@ using Content.Shared.Rotation;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Standing
@@ -69,15 +70,15 @@ namespace Content.Shared.Standing
             _appearance.SetData(uid, RotationVisuals.RotationState, RotationState.Horizontal, appearance);
 
             // Change collision masks to allow going under certain entities like flaps and tables
-            if (TryComp(uid, out FixturesComponent? fixtureComponent))
+            if (TryComp(uid, out PhysicsComponent? body))
             {
-                foreach (var (key, fixture) in fixtureComponent.Fixtures)
+                foreach (var (key, fixture) in body.Fixtures)
                 {
                     if ((fixture.CollisionMask & StandingCollisionLayer) == 0)
                         continue;
 
                     standingState.ChangedFixtures.Add(key);
-                    _physics.SetCollisionMask(uid, key, fixture, fixture.CollisionMask & ~StandingCollisionLayer, manager: fixtureComponent);
+                    _physics.SetCollisionMask(uid, key, fixture, fixture.CollisionMask & ~StandingCollisionLayer, body: body);
                 }
             }
 
@@ -124,12 +125,12 @@ namespace Content.Shared.Standing
 
             _appearance.SetData(uid, RotationVisuals.RotationState, RotationState.Vertical, appearance);
 
-            if (TryComp(uid, out FixturesComponent? fixtureComponent))
+            if (TryComp(uid, out PhysicsComponent? body))
             {
                 foreach (var key in standingState.ChangedFixtures)
                 {
-                    if (fixtureComponent.Fixtures.TryGetValue(key, out var fixture))
-                        _physics.SetCollisionMask(uid, key, fixture, fixture.CollisionMask | StandingCollisionLayer, fixtureComponent);
+                    if (body.Fixtures.TryGetValue(key, out var fixture))
+                        _physics.SetCollisionMask(uid, key, fixture, fixture.CollisionMask | StandingCollisionLayer, body);
                 }
             }
             standingState.ChangedFixtures.Clear();

@@ -27,7 +27,6 @@
     enabled: false
   - type: Physics
     bodyType: Dynamic
-  - type: Fixtures
     fixtures:
       slips:
         shape:
@@ -158,7 +157,7 @@
     intersectRatio: 0.04
   - type: Item
     heldPrefix: syndie
-  - type: Fixtures
+  - type: Physics
     fixtures:
       slips:
         shape:

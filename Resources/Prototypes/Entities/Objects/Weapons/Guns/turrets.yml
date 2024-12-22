@@ -39,7 +39,7 @@
     - type: Clickable
     - type: InteractionOutline
     - type: Actions
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           shape:

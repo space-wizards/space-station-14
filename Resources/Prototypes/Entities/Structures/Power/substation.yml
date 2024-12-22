@@ -144,7 +144,6 @@
   - type: Physics
     bodyType: Static
     canCollide: false
-  - type: Fixtures
   - type: Transform
     anchored: true
   - type: Sprite # TODO: add sprite for maintenance panel open
@@ -267,7 +266,7 @@
   - type: Physics
     bodyType: Static
     canCollide: false
-  - type: Fixtures
+  - type: Physics
   - type: Transform
     anchored: true
   - type: Sprite

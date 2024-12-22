@@ -26,7 +26,6 @@
     state: full
   - type: Physics
     bodyType: Static
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -152,7 +151,6 @@
     interactSuccessSound:
       path: /Audio/Effects/glass_knock.ogg
   - type: Physics
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -261,7 +259,7 @@
   - type: Icon
     sprite: Structures/Windows/window_diagonal.rsi
     state: state0
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

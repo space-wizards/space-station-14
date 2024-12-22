@@ -16,8 +16,6 @@
       map: [ "enum.ArtifactsVisualLayers.Effect" ]
       visible: false
   - type: Damageable
-  - type: Physics
-    bodyType: Dynamic
   - type: Transform
     noRot: true
   - type: UserInterface #needs to be here for certain effects
@@ -33,7 +31,8 @@
   - type: Reactive
     groups:
       Acidic: [Touch]
-  - type: Fixtures
+  - type: Physics
+    bodyType: Dynamic
     fixtures:
       fix1:
         shape:

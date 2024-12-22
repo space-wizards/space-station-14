@@ -13,16 +13,15 @@
     - state: unshaded
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
-  - type: Physics
-    bodyType: Static
-    canCollide: true
   - type: AmbientSound
     enabled: false
     sound:
       path: /Audio/Machines/scan_loop.ogg
     range: 5
     volume: -8
-  - type: Fixtures
+  - type: Physics
+    bodyType: Static
+    canCollide: true
     fixtures:
       fix1:
         shape:
@@ -112,7 +111,7 @@
     - state: lights
       map: ["enum.PowerDeviceVisualLayers.Powered"]
       shader: unshaded
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

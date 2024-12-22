@@ -24,6 +24,7 @@ using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -51,8 +52,8 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
     [Dependency] private readonly ShuttleSystem _shuttles = default!;
 
     private EntityQuery<BiomeComponent> _biomeQuery;
-    private EntityQuery<FixturesComponent> _fixturesQuery;
     private EntityQuery<GhostComponent> _ghostQuery;
+    private EntityQuery<PhysicsComponent> _physicsQuery;
     private EntityQuery<TransformComponent> _xformQuery;
 
     private readonly HashSet<EntityUid> _handledEntities = new();
@@ -82,7 +83,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
         base.Initialize();
         Log.Level = LogLevel.Debug;
         _biomeQuery = GetEntityQuery<BiomeComponent>();
-        _fixturesQuery = GetEntityQuery<FixturesComponent>();
+        _physicsQuery = GetEntityQuery<PhysicsComponent>();
         _ghostQuery = GetEntityQuery<GhostComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
         SubscribeLocalEvent<BiomeComponent, MapInitEvent>(OnBiomeMapInit);
@@ -135,7 +136,7 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
 
             foreach (var grid in _mapManager.GetAllGrids(mapId))
             {
-                if (!_fixturesQuery.TryGetComponent(grid.Owner, out var fixtures))
+                if (!_physicsQuery.TryGetComponent(grid.Owner, out var fixtures))
                     continue;
 
                 // Don't want shuttles flying around now do we.

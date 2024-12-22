@@ -5,7 +5,7 @@
   components:
   - type: Sprite
     drawdepth: Items
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

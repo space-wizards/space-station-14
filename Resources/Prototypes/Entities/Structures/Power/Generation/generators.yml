@@ -16,7 +16,6 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -111,7 +110,6 @@
     color: "#3db83b"
     castShadows: false
     netsync: false
-  - type: Fixtures
   - type: Transform
     anchored: true
   - type: Physics
@@ -155,7 +153,6 @@
   - type: InteractionOutline
   - type: Physics
     canCollide: false
-  - type: Fixtures
   - type: Transform
     anchored: true
   - type: Sprite

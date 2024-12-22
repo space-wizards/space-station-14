@@ -129,7 +129,7 @@
   - type: Icon
     sprite: Structures/Windows/clockwork_diagonal.rsi
     state: state0
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

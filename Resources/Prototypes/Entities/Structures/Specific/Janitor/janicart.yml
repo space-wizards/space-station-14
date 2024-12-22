@@ -96,7 +96,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: DnaSubstanceTrace
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -216,7 +216,7 @@
             tags:
               - TrashBag
           priority: 3 # Higher than drinking priority
-    - type: Fixtures
+    - type: Physics
       fixtures:
         fix1:
           shape:

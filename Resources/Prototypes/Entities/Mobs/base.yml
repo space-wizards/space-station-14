@@ -10,7 +10,6 @@
     drawdepth: Mobs
   - type: Physics
     bodyType: KinematicController
-  - type: Fixtures
     fixtures:
       fix1:
         shape:

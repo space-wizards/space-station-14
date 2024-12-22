@@ -10,7 +10,6 @@
     state: inflatable_wall
   - type: Physics
     bodyType: Static
-  - type: Fixtures
     fixtures:
       fix1:
         shape:
@@ -52,7 +51,6 @@
     state: closed
   - type: Physics
     bodyType: Static
-  - type: Fixtures
     fixtures:
       fix1:
         shape:

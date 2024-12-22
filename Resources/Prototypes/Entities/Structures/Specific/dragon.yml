@@ -11,7 +11,7 @@
   - type: Physics
     bodyType: Static
     canCollide: false
-  - type: Fixtures
+  - type: Physics
   - type: Sprite
     layers:
     - sprite: Structures/Specific/carp_rift.rsi

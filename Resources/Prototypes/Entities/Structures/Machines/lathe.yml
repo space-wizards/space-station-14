@@ -6,7 +6,7 @@
   components:
   - type: Appearance
   - type: WiresVisuals
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

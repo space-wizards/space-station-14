@@ -33,7 +33,7 @@
       path: /Audio/Machines/scan_loop.ogg
     range: 5
     volume: -8
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -41,7 +41,7 @@
           bounds: "-0.35,-0.35,0.35,0.35"
         density: 100
         mask:
-        - ItemMask 
+        - ItemMask
         hard: True
   - type: Transform
     anchored: true

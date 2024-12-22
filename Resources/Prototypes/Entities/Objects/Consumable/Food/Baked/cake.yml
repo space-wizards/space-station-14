@@ -706,7 +706,7 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: cak
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

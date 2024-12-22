@@ -10,7 +10,6 @@
   - type: Physics
     bodyType: Static
     fixedRotation: true
-  - type: Fixtures
     fixtures:
       slips:
         shape:

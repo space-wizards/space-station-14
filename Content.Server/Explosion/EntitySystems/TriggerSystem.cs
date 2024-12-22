@@ -62,22 +62,24 @@ namespace Content.Server.Explosion.EntitySystems
     [UsedImplicitly]
     public sealed partial class TriggerSystem : EntitySystem
     {
-        [Dependency] private readonly ExplosionSystem _explosions = default!;
-        [Dependency] private readonly FixtureSystem _fixtures = default!;
-        [Dependency] private readonly FlashSystem _flashSystem = default!;
-        [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly SharedContainerSystem _container = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly BodySystem _body = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+        [Dependency] private readonly ElectrocutionSystem _electrocution = default!;
+        [Dependency] private readonly ExplosionSystem _explosions = default!;
+        [Dependency] private readonly FlashSystem _flashSystem = default!;
+        [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly NavMapSystem _navMap = default!;
         [Dependency] private readonly RadioSystem _radioSystem = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
+        [Dependency] private readonly SharedContainerSystem _container = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
-        [Dependency] private readonly InventorySystem _inventory = default!;
-        [Dependency] private readonly ElectrocutionSystem _electrocution = default!;
+        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
         public override void Initialize()
         {

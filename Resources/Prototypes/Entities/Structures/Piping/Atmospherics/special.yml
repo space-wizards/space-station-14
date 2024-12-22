@@ -13,7 +13,7 @@
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/tinyfan.rsi
     state: icon
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:
@@ -40,7 +40,7 @@
   - type: Sprite
     sprite: Structures/Piping/Atmospherics/directionalfan.rsi
     state: icon
-  - type: Fixtures
+  - type: Physics
     fixtures:
       fix1:
         shape:

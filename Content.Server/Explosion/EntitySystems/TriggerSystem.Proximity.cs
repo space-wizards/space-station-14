@@ -9,9 +9,6 @@ namespace Content.Server.Explosion.EntitySystems;
 
 public sealed partial class TriggerSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-
     private void InitializeProximity()
     {
         SubscribeLocalEvent<TriggerOnProximityComponent, StartCollideEvent>(OnProximityStartCollide);
@@ -55,7 +52,7 @@ public sealed partial class TriggerSystem
         if (!TryComp<PhysicsComponent>(uid, out var body))
             return;
 
-        _fixtures.TryCreateFixture(
+        _physics.TryCreateFixture(
             uid,
             component.Shape,
             TriggerOnProximityComponent.FixtureID,

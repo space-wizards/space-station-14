@@ -5,13 +5,12 @@
   description: Beam in the pizzas and dig in.
   components:
   - type: InteractionOutline
-  - type: Physics
-    bodyType: Static
-    canCollide: false
   - type: Transform
     anchored: true
     noRot: true
-  - type: Fixtures
+  - type: Physics
+    bodyType: Static
+    canCollide: false
     fixtures:
       fix1:
         shape:

@@ -3,6 +3,7 @@ using Content.Shared.Physics;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Shared.Maps;
 
@@ -52,10 +53,10 @@ public sealed class TurfSystem : EntitySystem
         tileAabb = tileAabb.Translated(localPos);
 
         var intersectionArea = 0f;
-        var fixtureQuery = GetEntityQuery<FixturesComponent>();
+        var physicsQuery = GetEntityQuery<PhysicsComponent>();
         foreach (var ent in _entityLookup.GetEntitiesIntersecting(gridUid, worldBox, LookupFlags.Dynamic | LookupFlags.Static))
         {
-            if (!fixtureQuery.TryGetComponent(ent, out var fixtures))
+            if (!physicsQuery.TryGetComponent(ent, out var body))
                 continue;
 
             // get grid local coordinates
@@ -65,7 +66,7 @@ public sealed class TurfSystem : EntitySystem
 
             var xform = new Transform(pos, (float) rot.Theta);
 
-            foreach (var fixture in fixtures.Fixtures.Values)
+            foreach (var fixture in body.Fixtures.Values)
             {
                 if (!fixture.Hard)
                     continue;

@@ -17,11 +17,11 @@ namespace Content.Server.Physics.Controllers;
 
 public sealed class ConveyorController : SharedConveyorController
 {
-    [Dependency] private readonly FixtureSystem _fixtures = default!;
     [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
     [Dependency] private readonly MaterialReclaimerSystem _materialReclaimer = default!;
     [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     public override void Initialize()
     {
@@ -45,7 +45,7 @@ public sealed class ConveyorController : SharedConveyorController
             var shape = new PolygonShape();
             shape.SetAsBox(0.55f, 0.55f);
 
-            _fixtures.TryCreateFixture(uid, shape, ConveyorFixture,
+            _physics.TryCreateFixture(uid, shape, ConveyorFixture,
                 collisionLayer: (int) (CollisionGroup.LowImpassable | CollisionGroup.MidImpassable |
                                        CollisionGroup.Impassable), hard: false, body: physics);
 
@@ -60,7 +60,7 @@ public sealed class ConveyorController : SharedConveyorController
         if (!TryComp<PhysicsComponent>(uid, out var physics))
             return;
 
-        _fixtures.DestroyFixture(uid, ConveyorFixture, body: physics);
+        _physics.DestroyFixture(uid, ConveyorFixture, body: physics);
     }
 
     private void OnBreakage(Entity<ConveyorComponent> ent, ref BreakageEventArgs args)
