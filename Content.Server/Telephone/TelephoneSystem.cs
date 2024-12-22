@@ -194,7 +194,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
     private bool TryCallTelephone(Entity<TelephoneComponent> source, Entity<TelephoneComponent> receiver, EntityUid user, TelephoneCallOptions? options = null)
     {
-        if (!IsSourceAbleToReachReceiver(source, receiver))
+        if (!IsSourceAbleToReachReceiver(source, receiver) && options?.IgnoreRange != true)
             return false;
 
         if (IsTelephoneEngaged(receiver) &&
