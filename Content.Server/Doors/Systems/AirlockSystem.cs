@@ -22,74 +22,72 @@ public sealed class AirlockSystem : SharedAirlockSystem
         SubscribeLocalEvent<AirlockComponent, SignalReceivedEvent>(OnSignalReceived);
 
         SubscribeLocalEvent<AirlockComponent, PowerChangedEvent>(OnPowerChanged);
-        SubscribeLocalEvent<AirlockComponent, ActivateInWorldEvent>(OnActivate, before: new[] { typeof(DoorSystem) });
+        SubscribeLocalEvent<AirlockComponent, ActivateInWorldEvent>(OnActivate);
     }
 
-    private void OnAirlockInit(EntityUid uid, AirlockComponent component, ComponentInit args)
+    private void OnAirlockInit(Entity<AirlockComponent> airlock, ref ComponentInit args)
     {
-        if (TryComp<ApcPowerReceiverComponent>(uid, out var receiverComponent))
-        {
-            Appearance.SetData(uid, DoorVisuals.Powered, receiverComponent.Powered);
-        }
+        if (TryComp<ApcPowerReceiverComponent>(airlock, out var receiverComponent))
+            Appearance.SetData(airlock, DoorVisuals.Powered, receiverComponent.Powered);
     }
 
-    private void OnSignalReceived(EntityUid uid, AirlockComponent component, ref SignalReceivedEvent args)
+    private void OnSignalReceived(Entity<AirlockComponent> airlock, ref SignalReceivedEvent args)
     {
-        if (args.Port == component.AutoClosePort && component.AutoClose)
-        {
-            component.AutoClose = false;
-            Dirty(uid, component);
-        }
+        if (args.Port != airlock.Comp.AutoClosePort || !airlock.Comp.AutoClose)
+            return;
+
+        airlock.Comp.AutoClose = false;
+        Dirty(airlock);
     }
 
-    private void OnPowerChanged(EntityUid uid, AirlockComponent component, ref PowerChangedEvent args)
+    private void OnPowerChanged(Entity<AirlockComponent> airlock, ref PowerChangedEvent args)
     {
-        component.Powered = args.Powered;
-        Dirty(uid, component);
+        airlock.Comp.Powered = args.Powered;
+        Dirty(airlock);
 
-        if (TryComp<AppearanceComponent>(uid, out var appearanceComponent))
+        if (TryComp<AppearanceComponent>(airlock, out var appearanceComponent))
         {
-            Appearance.SetData(uid, DoorVisuals.Powered, args.Powered, appearanceComponent);
+            Appearance.SetData(airlock, DoorVisuals.Powered, args.Powered, appearanceComponent);
         }
 
-        if (!TryComp(uid, out DoorComponent? door))
+        if (!TryComp(airlock, out DoorComponent? door))
             return;
 
         if (!args.Powered)
         {
             // stop any scheduled auto-closing
             if (door.State == DoorState.Open)
-                DoorSystem.SetNextStateChange(uid, null);
+                DoorSystem.SetNextStateChange((airlock, door), null);
         }
         else
         {
-            UpdateAutoClose(uid, door: door);
+            UpdateAutoClose(airlock, door: door);
         }
     }
 
-    private void OnActivate(EntityUid uid, AirlockComponent component, ActivateInWorldEvent args)
+    private void OnActivate(Entity<AirlockComponent> airlock, ref ActivateInWorldEvent args)
     {
         if (args.Handled || !args.Complex)
             return;
 
-        if (TryComp<WiresPanelComponent>(uid, out var panel) &&
+        if (TryComp<WiresPanelComponent>(airlock, out var panel) &&
             panel.Open &&
             TryComp<ActorComponent>(args.User, out var actor))
         {
-            if (TryComp<WiresPanelSecurityComponent>(uid, out var wiresPanelSecurity) &&
+            if (TryComp<WiresPanelSecurityComponent>(airlock, out var wiresPanelSecurity) &&
                 !wiresPanelSecurity.WiresAccessible)
                 return;
 
-            _wiresSystem.OpenUserInterface(uid, actor.PlayerSession);
+            _wiresSystem.OpenUserInterface(airlock, actor.PlayerSession);
             args.Handled = true;
             return;
         }
 
-        if (component.KeepOpenIfClicked && component.AutoClose)
-        {
-            // Disable auto close
-            component.AutoClose = false;
-            Dirty(uid, component);
-        }
+        if (!airlock.Comp.KeepOpenIfClicked || !airlock.Comp.AutoClose)
+            return;
+
+        // Disable auto close
+        airlock.Comp.AutoClose = false;
+        Dirty(airlock);
     }
 }

@@ -102,7 +102,7 @@ public sealed class GreytideVirusRule : StationEventSystem<GreytideVirusRuleComp
                 continue;
 
             // open and bolt airlocks
-            _door.TryOpenAndBolt(airlockUid, doorComp, airlockComp);
+            _door.TryOpenAndBolt((airlockUid, doorComp), airlockComp);
         }
     }
 }

@@ -61,7 +61,7 @@ namespace Content.Server.Doors.Systems
             {
                 // only bother to check pressure on doors that are some variation of closed.
                 if (door.State != DoorState.Closed
-                    && door.State != DoorState.Welded
+                    && door.State != DoorState.WeldedClosed
                     && door.State != DoorState.Denying)
                 {
                     continue;
@@ -96,7 +96,7 @@ namespace Content.Server.Doors.Systems
             if (args.AlarmType == AtmosAlarmType.Normal)
             {
                 if (doorComponent.State == DoorState.Closed)
-                    _doorSystem.TryOpen(uid);
+                    _doorSystem.TryOpen((uid, doorComponent));
             }
             else if (args.AlarmType == AtmosAlarmType.Danger)
             {

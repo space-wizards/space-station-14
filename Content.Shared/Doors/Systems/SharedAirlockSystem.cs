@@ -9,12 +9,12 @@ namespace Content.Shared.Doors.Systems;
 
 public abstract class SharedAirlockSystem : EntitySystem
 {
-    [Dependency] private   readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] protected readonly SharedDoorSystem DoorSystem = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
-    [Dependency] private   readonly SharedWiresSystem _wiresSystem = default!;
+    [Dependency] private readonly SharedWiresSystem _wiresSystem = default!;
 
     public override void Initialize()
     {
@@ -29,65 +29,75 @@ public abstract class SharedAirlockSystem : EntitySystem
         SubscribeLocalEvent<AirlockComponent, BeforePryEvent>(OnBeforePry);
     }
 
-    private void OnBeforeDoorClosed(EntityUid uid, AirlockComponent airlock, BeforeDoorClosedEvent args)
+    private void OnBeforeDoorClosed(Entity<AirlockComponent> airlock, ref BeforeDoorClosedEvent args)
     {
         if (args.Cancelled)
             return;
 
-        if (!airlock.Safety)
+        if (!airlock.Comp.Safety)
             args.PerformCollisionCheck = false;
 
         // only block based on bolts / power status when initially closing the door, not when its already
         // mid-transition. Particularly relevant for when the door was pried-closed with a crowbar, which bypasses
         // the initial power-check.
 
-        if (TryComp(uid, out DoorComponent? door)
-            && !door.Partial
-            && !CanChangeState(uid, airlock))
-        {
-            args.Cancel();
-        }
+        if (!TryComp(airlock, out DoorComponent? door)
+            || door.State is DoorState.OpeningInProgress or DoorState.ClosingInProgress
+            || CanChangeState(airlock,
+                door.State is DoorState.AttemptingCloseByPrying or DoorState.AttemptingOpenByPrying))
+            return;
+
+        args.Cancel();
     }
 
-    private void OnStateChanged(EntityUid uid, AirlockComponent component, DoorStateChangedEvent args)
+    private void OnStateChanged(Entity<AirlockComponent> airlock, ref DoorStateChangedEvent args)
     {
         // This is here so we don't accidentally bulldoze state values and mispredict.
         if (_timing.ApplyingState)
             return;
 
         // Only show the maintenance panel if the airlock is closed
-        if (TryComp<WiresPanelComponent>(uid, out var wiresPanel))
+        if (TryComp<WiresPanelComponent>(airlock, out var wiresPanel))
         {
-            _wiresSystem.ChangePanelVisibility(uid, wiresPanel, component.OpenPanelVisible || args.State != DoorState.Open);
+            _wiresSystem.ChangePanelVisibility(airlock,
+                wiresPanel,
+                airlock.Comp.OpenPanelVisible || args.State != DoorState.Open);
         }
+
         // If the door is closed, we should look if the bolt was locked while closing
-        UpdateAutoClose(uid, component);
+        UpdateAutoClose(airlock);
 
         // Make sure the airlock auto closes again next time it is opened
-        if (args.State == DoorState.Closed)
-        {
-            component.AutoClose = true;
-            Dirty(uid, component);
-        }
+        if (args.State != DoorState.Closed)
+            return;
+
+        airlock.Comp.AutoClose = true;
+        Dirty(airlock);
     }
 
-    private void OnBoltsChanged(EntityUid uid, AirlockComponent component, DoorBoltsChangedEvent args)
+    private void OnBoltsChanged(Entity<AirlockComponent> airlock, ref DoorBoltsChangedEvent args)
     {
         // If unbolted, reset the auto close timer
-        if (!args.BoltsDown)
-            UpdateAutoClose(uid, component);
+        if (args.BoltsDown)
+            return;
+
+        UpdateAutoClose(airlock);
     }
 
-    private void OnBeforeDoorOpened(EntityUid uid, AirlockComponent component, BeforeDoorOpenedEvent args)
+    private void OnBeforeDoorOpened(Entity<AirlockComponent> airlock, ref BeforeDoorOpenedEvent args)
     {
-        if (!CanChangeState(uid, component))
-            args.Cancel();
+        if (CanChangeState(airlock))
+            return;
+
+        args.Cancel();
     }
 
-    private void OnBeforeDoorDenied(EntityUid uid, AirlockComponent component, BeforeDoorDeniedEvent args)
+    private void OnBeforeDoorDenied(Entity<AirlockComponent> airlock, ref BeforeDoorDeniedEvent args)
     {
-        if (!CanChangeState(uid, component))
-            args.Cancel();
+        if (CanChangeState(airlock))
+            return;
+
+        args.Cancel();
     }
 
     private void OnGetPryMod(EntityUid uid, AirlockComponent component, ref GetPryTimeModifierEvent args)
@@ -102,26 +112,28 @@ public abstract class SharedAirlockSystem : EntitySystem
     /// <summary>
     /// Updates the auto close timer.
     /// </summary>
-    public void UpdateAutoClose(EntityUid uid, AirlockComponent? airlock = null, DoorComponent? door = null)
+    public void UpdateAutoClose(Entity<AirlockComponent> airlock, DoorComponent? door = null)
     {
-        if (!Resolve(uid, ref airlock, ref door))
+        if (!Resolve(airlock, ref door))
             return;
 
         if (door.State != DoorState.Open)
             return;
 
-        if (!airlock.AutoClose)
+        if (!airlock.Comp.AutoClose)
             return;
 
-        if (!CanChangeState(uid, airlock))
+        if (!CanChangeState(airlock))
             return;
 
-        var autoev = new BeforeDoorAutoCloseEvent();
-        RaiseLocalEvent(uid, autoev);
-        if (autoev.Cancelled)
+        var autoCloseEvent = new BeforeDoorAutoCloseEvent();
+        RaiseLocalEvent(airlock, autoCloseEvent);
+
+        if (autoCloseEvent.Cancelled)
             return;
 
-        DoorSystem.SetNextStateChange(uid, airlock.AutoCloseDelay * airlock.AutoCloseDelayModifier);
+        DoorSystem.SetNextStateChange((airlock, door),
+            airlock.Comp.AutoCloseDelay * airlock.Comp.AutoCloseDelayModifier);
     }
 
     private void OnBeforePry(EntityUid uid, AirlockComponent component, ref BeforePryEvent args)
@@ -142,9 +154,12 @@ public abstract class SharedAirlockSystem : EntitySystem
         Appearance.SetData(uid, DoorVisuals.EmergencyLights, component.EmergencyAccess);
     }
 
-    public void SetEmergencyAccess(Entity<AirlockComponent> ent, bool value, EntityUid? user = null, bool predicted = false)
+    public void SetEmergencyAccess(Entity<AirlockComponent> ent,
+        bool value,
+        EntityUid? user = null,
+        bool predicted = false)
     {
-        if(!ent.Comp.Powered)
+        if (!ent.Comp.Powered)
             return;
 
         if (ent.Comp.EmergencyAccess == value)
@@ -174,8 +189,8 @@ public abstract class SharedAirlockSystem : EntitySystem
         component.Safety = value;
     }
 
-    public bool CanChangeState(EntityUid uid, AirlockComponent component)
+    public bool CanChangeState(Entity<AirlockComponent> airlock, bool isPried = false)
     {
-        return component.Powered && !DoorSystem.IsBolted(uid);
+        return (isPried || airlock.Comp.Powered) && !DoorSystem.IsBolted(airlock);
     }
 }

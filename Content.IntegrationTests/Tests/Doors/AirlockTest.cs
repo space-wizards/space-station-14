@@ -77,7 +77,7 @@ namespace Content.IntegrationTests.Tests.Doors
             await server.WaitAssertion(() =>
             {
                 doors.StartOpening(airlock);
-                Assert.That(doorComponent.State, Is.EqualTo(DoorState.Opening));
+                Assert.That(doorComponent.State, Is.EqualTo(DoorState.AttemptingOpenBySelf));
             });
 
             await server.WaitIdleAsync();
@@ -89,7 +89,7 @@ namespace Content.IntegrationTests.Tests.Doors
             await server.WaitAssertion(() =>
             {
                 doors.TryClose(airlock);
-                Assert.That(doorComponent.State, Is.EqualTo(DoorState.Closing));
+                Assert.That(doorComponent.State, Is.EqualTo(DoorState.AttemptingCloseBySelf));
             });
 
             await PoolManager.WaitUntil(server, () => doorComponent.State == DoorState.Closed);

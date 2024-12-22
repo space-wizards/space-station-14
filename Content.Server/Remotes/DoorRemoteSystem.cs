@@ -48,9 +48,9 @@ namespace Content.Shared.Remotes
             }
 
             if (TryComp<AccessReaderComponent>(args.Target, out var accessComponent)
-                && !_doorSystem.HasAccess(args.Target.Value, args.Used, doorComp, accessComponent))
+                && !_doorSystem.HasAccess((args.Target.Value, doorComp), args.Used, accessComponent))
             {
-                _doorSystem.Deny(args.Target.Value, doorComp, args.User);
+                _doorSystem.Deny((args.Target.Value, doorComp), args.User);
                 Popup.PopupEntity(Loc.GetString("door-remote-denied"), args.User, args.User);
                 return;
             }
@@ -58,7 +58,7 @@ namespace Content.Shared.Remotes
             switch (entity.Comp.Mode)
             {
                 case OperatingMode.OpenClose:
-                    if (_doorSystem.TryToggleDoor(args.Target.Value, doorComp, args.Used))
+                    if (_doorSystem.TryToggleDoor((args.Target.Value, doorComp), args.Used))
                         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)}: {doorComp.State}");
                     break;
                 case OperatingMode.ToggleBolts:

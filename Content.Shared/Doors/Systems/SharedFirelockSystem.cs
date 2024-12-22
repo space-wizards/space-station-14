@@ -42,10 +42,10 @@ public abstract class SharedFirelockSystem : EntitySystem
             && _gameTiming.CurTime < firelock.EmergencyCloseCooldown)
             return false;
 
-        if (!_doorSystem.TryClose(uid, door))
+        if (!_doorSystem.TryClose((uid, door)))
             return false;
 
-        return _doorSystem.OnPartialClose(uid, door);
+        return _doorSystem.OnPartialClose((uid, door));
     }
 
     #region Access/Prying
@@ -116,7 +116,7 @@ public abstract class SharedFirelockSystem : EntitySystem
 
         // only bother to check pressure on doors that are some variation of closed.
         if (door.State != DoorState.Closed
-            && door.State != DoorState.Welded
+            && door.State != DoorState.WeldedClosed
             && door.State != DoorState.Denying)
         {
             _appearance.SetData(uid, DoorVisuals.ClosedLights, false, appearance);

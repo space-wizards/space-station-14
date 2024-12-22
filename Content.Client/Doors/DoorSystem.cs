@@ -18,115 +18,184 @@ public sealed class DoorSystem : SharedDoorSystem
         SubscribeLocalEvent<DoorComponent, AppearanceChangeEvent>(OnAppearanceChange);
     }
 
-    protected override void OnComponentInit(Entity<DoorComponent> ent, ref ComponentInit args)
+    protected override void OnComponentInit(Entity<DoorComponent> door, ref ComponentInit args)
     {
-        var comp = ent.Comp;
-        comp.OpenSpriteStates = new(2);
-        comp.ClosedSpriteStates = new(2);
+        door.Comp.OpenSpriteStates = new List<(DoorVisualLayers, string)>(2);
+        door.Comp.ClosedSpriteStates = new List<(DoorVisualLayers, string)>(2);
 
-        comp.OpenSpriteStates.Add((DoorVisualLayers.Base, comp.OpenSpriteState));
-        comp.ClosedSpriteStates.Add((DoorVisualLayers.Base, comp.ClosedSpriteState));
+        door.Comp.OpenSpriteStates.Add((DoorVisualLayers.Base, door.Comp.OpenSpriteState));
+        door.Comp.ClosedSpriteStates.Add((DoorVisualLayers.Base, door.Comp.ClosedSpriteState));
 
-        comp.OpeningAnimation = new Animation()
+        door.Comp.OpeningAnimation = new Animation()
         {
-            Length = TimeSpan.FromSeconds(comp.OpeningAnimationTime),
+            Length = TimeSpan.FromSeconds(door.Comp.OpeningAnimationTime),
             AnimationTracks =
             {
                 new AnimationTrackSpriteFlick()
                 {
                     LayerKey = DoorVisualLayers.Base,
-                    KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(comp.OpeningSpriteState, 0f) }
+                    KeyFrames = {new AnimationTrackSpriteFlick.KeyFrame(door.Comp.OpeningSpriteState, 0f)}
                 }
             },
         };
 
-        comp.ClosingAnimation = new Animation()
+        door.Comp.ClosingAnimation = new Animation()
         {
-            Length = TimeSpan.FromSeconds(comp.ClosingAnimationTime),
+            Length = TimeSpan.FromSeconds(door.Comp.ClosingAnimationTime),
             AnimationTracks =
             {
                 new AnimationTrackSpriteFlick()
                 {
                     LayerKey = DoorVisualLayers.Base,
-                    KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(comp.ClosingSpriteState, 0f) }
+                    KeyFrames = {new AnimationTrackSpriteFlick.KeyFrame(door.Comp.ClosingSpriteState, 0f)}
                 }
             },
         };
 
-        comp.EmaggingAnimation = new Animation ()
+        door.Comp.EmaggingAnimation = new Animation()
         {
-            Length = TimeSpan.FromSeconds(comp.EmaggingAnimationTime),
+            Length = TimeSpan.FromSeconds(door.Comp.EmaggingAnimationTime),
             AnimationTracks =
             {
                 new AnimationTrackSpriteFlick()
                 {
                     LayerKey = DoorVisualLayers.BaseUnlit,
-                    KeyFrames = { new AnimationTrackSpriteFlick.KeyFrame(comp.EmaggingSpriteState, 0f) }
+                    KeyFrames = {new AnimationTrackSpriteFlick.KeyFrame(door.Comp.EmaggingSpriteState, 0f)}
                 }
             },
         };
     }
 
-    private void OnAppearanceChange(EntityUid uid, DoorComponent comp, ref AppearanceChangeEvent args)
+    private void OnAppearanceChange(Entity<DoorComponent> door, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
-        if(!AppearanceSystem.TryGetData<DoorState>(uid, DoorVisuals.State, out var state, args.Component))
+        if (!AppearanceSystem.TryGetData<DoorState>(door, DoorVisuals.State, out var state, args.Component))
             state = DoorState.Closed;
 
-        if (AppearanceSystem.TryGetData<string>(uid, DoorVisuals.BaseRSI, out var baseRsi, args.Component))
+        if (AppearanceSystem.TryGetData<string>(door, DoorVisuals.BaseRSI, out var baseRsi, args.Component))
         {
-            if (!_resourceCache.TryGetResource<RSIResource>(SpriteSpecifierSerializer.TextureRoot / baseRsi, out var res))
+            if (!_resourceCache.TryGetResource<RSIResource>(SpriteSpecifierSerializer.TextureRoot / baseRsi,
+                    out var res))
             {
                 Log.Error("Unable to load RSI '{0}'. Trace:\n{1}", baseRsi, Environment.StackTrace);
             }
+
             foreach (var layer in args.Sprite.AllLayers)
             {
                 layer.Rsi = res?.RSI;
             }
         }
 
-        TryComp<AnimationPlayerComponent>(uid, out var animPlayer);
-        if (_animationSystem.HasRunningAnimation(uid, animPlayer, DoorComponent.AnimationKey))
-            _animationSystem.Stop(uid, animPlayer, DoorComponent.AnimationKey); // Halt all running anomations.
+        if (!TryComp<AnimationPlayerComponent>(door, out var animPlayer))
+        {
+            return;
+        }
 
-        args.Sprite.DrawDepth = comp.ClosedDrawDepth;
-        switch(state)
+        args.Sprite.DrawDepth = door.Comp.ClosedDrawDepth;
+
+        switch (state)
         {
             case DoorState.Open:
-                args.Sprite.DrawDepth = comp.OpenDrawDepth;
-                foreach(var (layer, layerState) in comp.OpenSpriteStates)
+                args.Sprite.DrawDepth = door.Comp.OpenDrawDepth;
+                foreach (var (layer, layerState) in door.Comp.OpenSpriteStates)
                 {
                     args.Sprite.LayerSetState(layer, layerState);
                 }
-                break;
+
+                return;
             case DoorState.Closed:
-                foreach(var (layer, layerState) in comp.ClosedSpriteStates)
+                foreach (var (layer, layerState) in door.Comp.ClosedSpriteStates)
                 {
                     args.Sprite.LayerSetState(layer, layerState);
                 }
-                break;
-            case DoorState.Opening:
-                if (animPlayer != null && comp.OpeningAnimationTime != 0.0)
-                    _animationSystem.Play((uid, animPlayer), (Animation)comp.OpeningAnimation, DoorComponent.AnimationKey);
-                break;
-            case DoorState.Closing:
-                if (animPlayer != null && comp.ClosingAnimationTime != 0.0 && comp.CurrentlyCrushing.Count == 0)
-                    _animationSystem.Play((uid, animPlayer), (Animation)comp.ClosingAnimation, DoorComponent.AnimationKey);
-                break;
+
+                return;
+            case DoorState.AttemptingOpenBySelf:
+            case DoorState.AttemptingOpenByPrying:
+                EndOtherDoorAnimations((door, animPlayer), DoorComponent.AnimationKeyOpen);
+
+                if (door.Comp.OpeningAnimationTime == 0.0 ||
+                    _animationSystem.HasRunningAnimation(door, DoorComponent.AnimationKeyOpen))
+                    return;
+
+                _animationSystem.Play((door, animPlayer),
+                    (Animation)door.Comp.OpeningAnimation,
+                    DoorComponent.AnimationKeyOpen);
+
+                return;
+            case DoorState.AttemptingCloseBySelf:
+            case DoorState.AttemptingCloseByPrying:
+                EndOtherDoorAnimations((door, animPlayer), DoorComponent.AnimationKeyClose);
+
+                if (door.Comp.ClosingAnimationTime == 0.0 || door.Comp.CurrentlyCrushing.Count != 0 ||
+                    _animationSystem.HasRunningAnimation(door, DoorComponent.AnimationKeyClose))
+                    return;
+
+                _animationSystem.Play((door, animPlayer),
+                    (Animation)door.Comp.ClosingAnimation,
+                    DoorComponent.AnimationKeyClose);
+
+                return;
             case DoorState.Denying:
-                if (animPlayer != null)
-                    _animationSystem.Play((uid, animPlayer), (Animation)comp.DenyingAnimation, DoorComponent.AnimationKey);
-                break;
-            case DoorState.Welded:
-                break;
+                EndOtherDoorAnimations((door, animPlayer), DoorComponent.AnimationKeyDeny);
+
+                if (_animationSystem.HasRunningAnimation(door, DoorComponent.AnimationKeyDeny))
+                    return;
+
+                _animationSystem.Play((door, animPlayer),
+                    (Animation)door.Comp.DenyingAnimation,
+                    DoorComponent.AnimationKeyDeny);
+
+                return;
             case DoorState.Emagging:
-                if (animPlayer != null)
-                    _animationSystem.Play((uid, animPlayer), (Animation)comp.EmaggingAnimation, DoorComponent.AnimationKey);
-                break;
+                EndOtherDoorAnimations((door, animPlayer), DoorComponent.AnimationKeyEmag);
+
+                if (_animationSystem.HasRunningAnimation(door, DoorComponent.AnimationKeyEmag))
+                    return;
+
+                _animationSystem.Play((door, animPlayer),
+                    (Animation)door.Comp.EmaggingAnimation,
+                    DoorComponent.AnimationKeyEmag);
+
+                return;
+            case DoorState.ClosingInProgress:
+            case DoorState.OpeningInProgress:
+            case DoorState.WeldedClosed:
             default:
-                throw new ArgumentOutOfRangeException($"Invalid door visual state {state}");
+                return;
+        }
+    }
+
+    private void EndOtherDoorAnimations(Entity<AnimationPlayerComponent?> door, string key)
+    {
+        switch (key)
+        {
+            case DoorComponent.AnimationKeyOpen:
+                _animationSystem.Stop(door, DoorComponent.AnimationKeyClose);
+                _animationSystem.Stop(door, DoorComponent.AnimationKeyDeny);
+                _animationSystem.Stop(door, DoorComponent.AnimationKeyEmag);
+
+                return;
+            case DoorComponent.AnimationKeyClose:
+                _animationSystem.Stop(door, DoorComponent.AnimationKeyOpen);
+                _animationSystem.Stop(door, DoorComponent.AnimationKeyDeny);
+                _animationSystem.Stop(door, DoorComponent.AnimationKeyEmag);
+
+                return;
+            case DoorComponent.AnimationKeyDeny:
+                _animationSystem.Stop(door, DoorComponent.AnimationKeyOpen);
+                _animationSystem.Stop(door, DoorComponent.AnimationKeyClose);
+                _animationSystem.Stop(door, DoorComponent.AnimationKeyEmag);
+
+                return;
+            case DoorComponent.AnimationKeyEmag:
+                _animationSystem.Stop(door, DoorComponent.AnimationKeyClose);
+                _animationSystem.Stop(door, DoorComponent.AnimationKeyOpen);
+                _animationSystem.Stop(door, DoorComponent.AnimationKeyDeny);
+
+                return;
         }
     }
 }

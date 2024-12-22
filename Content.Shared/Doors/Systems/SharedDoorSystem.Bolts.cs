@@ -16,12 +16,12 @@ public abstract partial class SharedDoorSystem
         SubscribeLocalEvent<DoorBoltComponent, DoorStateChangedEvent>(OnStateChanged);
     }
 
-    private void OnDoorPry(EntityUid uid, DoorBoltComponent component, ref BeforePryEvent args)
+    private static void OnDoorPry(Entity<DoorBoltComponent> door, ref BeforePryEvent args)
     {
         if (args.Cancelled)
             return;
 
-        if (!component.BoltsDown || args.Force)
+        if (!door.Comp.BoltsDown || args.Force)
             return;
 
         args.Message = "airlock-component-cannot-pry-is-bolted-message";
@@ -29,82 +29,81 @@ public abstract partial class SharedDoorSystem
         args.Cancelled = true;
     }
 
-    private void OnBeforeDoorOpened(EntityUid uid, DoorBoltComponent component, BeforeDoorOpenedEvent args)
+    private static void OnBeforeDoorOpened(Entity<DoorBoltComponent> door, ref BeforeDoorOpenedEvent args)
     {
-        if (component.BoltsDown)
+        if (door.Comp.BoltsDown)
             args.Cancel();
     }
 
-    private void OnBeforeDoorClosed(EntityUid uid, DoorBoltComponent component, BeforeDoorClosedEvent args)
+    private static void OnBeforeDoorClosed(Entity<DoorBoltComponent> door, ref BeforeDoorClosedEvent args)
     {
-        if (component.BoltsDown)
+        if (door.Comp.BoltsDown)
             args.Cancel();
     }
 
-    private void OnBeforeDoorDenied(EntityUid uid, DoorBoltComponent component, BeforeDoorDeniedEvent args)
+    private static void OnBeforeDoorDenied(Entity<DoorBoltComponent> door, ref BeforeDoorDeniedEvent args)
     {
-        if (component.BoltsDown)
+        if (door.Comp.BoltsDown)
             args.Cancel();
     }
 
-    public void SetBoltWireCut(Entity<DoorBoltComponent> ent, bool value)
+    public void SetBoltWireCut(Entity<DoorBoltComponent> door, bool value)
     {
-        ent.Comp.BoltWireCut = value;
-        Dirty(ent, ent.Comp);
+        door.Comp.BoltWireCut = value;
+        Dirty(door, door.Comp);
     }
 
-    public void UpdateBoltLightStatus(Entity<DoorBoltComponent> ent)
+    protected void UpdateBoltLightStatus(Entity<DoorBoltComponent> door)
     {
-        AppearanceSystem.SetData(ent, DoorVisuals.BoltLights, GetBoltLightsVisible(ent));
+        AppearanceSystem.SetData(door, DoorVisuals.BoltLights, GetBoltLightsVisible(door));
     }
 
-    public bool GetBoltLightsVisible(Entity<DoorBoltComponent> ent)
+    public static bool GetBoltLightsVisible(Entity<DoorBoltComponent> door)
     {
-        return ent.Comp.BoltLightsEnabled &&
-               ent.Comp.BoltsDown &&
-               ent.Comp.Powered;
+        return door.Comp is {BoltLightsEnabled: true, BoltsDown: true, Powered: true};
     }
 
-    public void SetBoltLightsEnabled(Entity<DoorBoltComponent> ent, bool value)
+    public void SetBoltLightsEnabled(Entity<DoorBoltComponent> door, bool value)
     {
-        if (ent.Comp.BoltLightsEnabled == value)
+        if (door.Comp.BoltLightsEnabled == value)
             return;
 
-        ent.Comp.BoltLightsEnabled = value;
-        Dirty(ent, ent.Comp);
-        UpdateBoltLightStatus(ent);
+        door.Comp.BoltLightsEnabled = value;
+        Dirty(door, door.Comp);
+        UpdateBoltLightStatus(door);
     }
 
-    public void SetBoltsDown(Entity<DoorBoltComponent> ent, bool value, EntityUid? user = null, bool predicted = false)
+    public void SetBoltsDown(Entity<DoorBoltComponent> door, bool value, EntityUid? user = null, bool predicted = false)
     {
-        TrySetBoltDown(ent, value, user, predicted);
+        TrySetBoltDown(door, value, user, predicted);
     }
 
     public bool TrySetBoltDown(
-        Entity<DoorBoltComponent> ent,
+        Entity<DoorBoltComponent> door,
         bool value,
         EntityUid? user = null,
         bool predicted = false
     )
     {
-        if (!_powerReceiver.IsPowered(ent.Owner))
+        if (!_powerReceiver.IsPowered(door.Owner))
             return false;
-        if (ent.Comp.BoltsDown == value)
+        if (door.Comp.BoltsDown == value)
             return false;
 
-        ent.Comp.BoltsDown = value;
-        Dirty(ent, ent.Comp);
-        UpdateBoltLightStatus(ent);
+        door.Comp.BoltsDown = value;
+        Dirty(door, door.Comp);
+        UpdateBoltLightStatus(door);
 
         // used to reset the auto-close timer after unbolting
         var ev = new DoorBoltsChangedEvent(value);
-        RaiseLocalEvent(ent.Owner, ev);
+        RaiseLocalEvent(door.Owner, ev);
 
-        var sound = value ? ent.Comp.BoltDownSound : ent.Comp.BoltUpSound;
+        var sound = value ? door.Comp.BoltDownSound : door.Comp.BoltUpSound;
         if (predicted)
-            Audio.PlayPredicted(sound, ent, user: user);
+            Audio.PlayPredicted(sound, door, user: user);
         else
-            Audio.PlayPvs(sound, ent);
+            Audio.PlayPvs(sound, door);
+
         return true;
     }
 
@@ -116,11 +115,6 @@ public abstract partial class SharedDoorSystem
 
     public bool IsBolted(EntityUid uid, DoorBoltComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
-        {
-            return false;
-        }
-
-        return component.BoltsDown;
+        return Resolve(uid, ref component) && component.BoltsDown;
     }
 }

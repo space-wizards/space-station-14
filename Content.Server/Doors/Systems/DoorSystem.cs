@@ -19,23 +19,18 @@ public sealed class DoorSystem : SharedDoorSystem
         SubscribeLocalEvent<DoorBoltComponent, PowerChangedEvent>(OnBoltPowerChanged);
     }
 
-    protected override void SetCollidable(
-        EntityUid uid,
+    protected override void SetCollidable(Entity<DoorComponent> door,
         bool collidable,
-        DoorComponent? door = null,
         PhysicsComponent? physics = null,
         OccluderComponent? occluder = null)
     {
-        if (!Resolve(uid, ref door))
-            return;
-
-        if (door.ChangeAirtight && TryComp(uid, out AirtightComponent? airtight))
-            _airtightSystem.SetAirblocked((uid, airtight), collidable);
+        if (door.Comp.ChangeAirtight && TryComp(door, out AirtightComponent? airtight))
+            _airtightSystem.SetAirblocked((door, airtight), collidable);
 
         // Pathfinding / AI stuff.
-        RaiseLocalEvent(new AccessReaderChangeEvent(uid, collidable));
+        RaiseLocalEvent(new AccessReaderChangeEvent(door, collidable));
 
-        base.SetCollidable(uid, collidable, door, physics, occluder);
+        base.SetCollidable(door, collidable, physics, occluder);
     }
 
     private void OnBoltPowerChanged(Entity<DoorBoltComponent> ent, ref PowerChangedEvent args)
