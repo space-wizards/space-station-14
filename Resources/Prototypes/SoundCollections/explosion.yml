@@ -1,5 +1,6 @@
 - type: soundCollection
   id: Explosion
+  caption: caption-explosion
   files:
   - /Audio/Effects/explosion1.ogg
   - /Audio/Effects/explosion2.ogg
@@ -10,6 +11,7 @@
 
 - type: soundCollection
   id: ExplosionSmall
+  caption: caption-explosion-small
   files:
   - /Audio/Effects/explosion_small1.ogg
   - /Audio/Effects/explosion_small2.ogg
@@ -17,10 +19,12 @@
 
 - type: soundCollection
   id: ExplosionFar
+  caption: caption-explosion-far
   files:
   - /Audio/Effects/explosionfar.ogg
 
 - type: soundCollection
   id: ExplosionSmallFar
+  caption: caption-explosion-small-far
   files:
   - /Audio/Effects/explosionsmallfar.ogg

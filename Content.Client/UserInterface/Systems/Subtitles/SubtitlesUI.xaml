@@ -1,0 +1,6 @@
+<widgets:SubtitlesUI xmlns="https://spacestation14.io"
+                     xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Subtitles"
+                     MinSize="200 200"
+                     HorizontalAlignment="Right">
+    <BoxContainer Name="Subtitles" Access="Public" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+</widgets:SubtitlesUI>
