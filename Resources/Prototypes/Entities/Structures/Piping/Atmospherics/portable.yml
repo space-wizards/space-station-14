@@ -6,11 +6,10 @@
   components:
   - type: Transform
     anchored: false
-  - type: Physics
-    bodyType: Dynamic
   - type: AtmosDevice
     joinSystem: true
   - type: Physics
+    bodyType: Dynamic
     fixtures:
       fix1:
         shape:

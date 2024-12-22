@@ -128,7 +128,6 @@
       graph: Grille
       node: grilleBroken
       deconstructionTarget: start
-    - type: Fixtures # overwrite BaseStructure parent.
     - type: Physics
       bodyType: Static
       canCollide: false

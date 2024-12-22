@@ -556,14 +556,13 @@
   - type: Icon
     sprite: Structures/Walls/plastitanium_diagonal.rsi
     state: state0
-  - type: Physics
-    bodyType: Static
   - type: Airtight
     noAirWhenFullyAirBlocked: false
     airBlockedDirection:
     - South
     - East
   - type: Physics
+    bodyType: Static
     fixtures:
       fix1:
         shape:
@@ -1344,7 +1343,6 @@
         - Wall
     - type: Physics
       bodyType: Static
-    - type: Physics
       fixtures:
         fix1:
           shape:

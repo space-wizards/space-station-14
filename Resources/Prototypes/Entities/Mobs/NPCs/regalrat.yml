@@ -208,7 +208,6 @@
         state: rat
   - type: Physics
     bodyType: KinematicController
-  - type: Physics
     fixtures:
       fix1:
         shape:

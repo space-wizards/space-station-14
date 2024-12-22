@@ -266,7 +266,6 @@
   - type: Physics
     bodyType: Static
     canCollide: false
-  - type: Physics
   - type: Transform
     anchored: true
   - type: Sprite

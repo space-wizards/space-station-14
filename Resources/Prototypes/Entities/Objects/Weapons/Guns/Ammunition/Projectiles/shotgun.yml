@@ -160,12 +160,11 @@
   name: pellet (.50 flare)
   categories: [ HideSpawnMenu ]
   components:
-  - type: Physics
-    bodyType: Dynamic
-    fixedRotation: false
   - type: EmbeddableProjectile
     deleteOnRemove: true
   - type: Physics
+    bodyType: Dynamic
+    fixedRotation: false
     fixtures:
       projectile:
         shape:

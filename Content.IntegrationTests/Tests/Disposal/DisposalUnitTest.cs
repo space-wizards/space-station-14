@@ -89,7 +89,6 @@ namespace Content.IntegrationTests.Tests.Disposal
     damageContainer: Biological
   - type: Physics
     bodyType: KinematicController
-  - type: Physics
     fixtures:
       fix1:
         shape:

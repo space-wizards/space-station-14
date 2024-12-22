@@ -806,10 +806,6 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: Clickable
-  - type: Physics
-    bodyType: Dynamic
-    linearDamping: 0
-    angularDamping: 0
   - type: TimedDespawn
     lifetime: 10
   - type: Projectile
@@ -828,6 +824,9 @@
       vapor:
         maxVol: 50
   - type: Physics
+    bodyType: Dynamic
+    linearDamping: 0
+    angularDamping: 0
     fixtures:
       projectile:
         shape:
@@ -878,16 +877,15 @@
       sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
       layers:
         - state: hook
-    - type: Physics
-      bodyType: Dynamic
-      linearDamping: 0
-      angularDamping: 0
     - type: Projectile
       deleteOnCollide: false
       damage:
         types:
           Blunt: 0
     - type: Physics
+      bodyType: Dynamic
+      linearDamping: 0
+      angularDamping: 0
       fixtures:
         projectile:
           shape:
