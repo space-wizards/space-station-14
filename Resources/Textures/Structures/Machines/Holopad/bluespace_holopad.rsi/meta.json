@@ -20,9 +20,6 @@
       "name": "blank"
     },
 	{
-      "name": "icon_in_call"
-    },
-	{
       "name": "lights_calling",
       "delays": [
         [
@@ -95,6 +92,6 @@
 		  99
         ]
       ]
-    }	
+    }
   ]
 }

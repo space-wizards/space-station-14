@@ -166,7 +166,7 @@
   - type: TypingIndicator
     proto: robot
   - type: HolopadHologram
-    rsiPath: Structures/Machines/holopad.rsi
+    rsiPath: Structures/Machines/Holopad/basic_holopad.rsi
     rsiState: icon_in_call
     shaderName: Hologram
     color1: "#65b8e2"
