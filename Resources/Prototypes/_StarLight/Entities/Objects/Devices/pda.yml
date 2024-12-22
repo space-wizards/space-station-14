@@ -44,7 +44,7 @@
   components:
   - type: Pda
     id: NanoTrasenRepresentativeIDCard
-    state: pda-captain
+    state: pda-ntrep
     penSlot:
       startingItem: Pen
       priority: -1
@@ -54,7 +54,7 @@
   - type: PdaBorderColor
     borderColor: "#7C5D00"
   - type: Icon
-    state: pda-captain
+    state: pda-ntrep
     
 - type: entity
   parent: BasePDA
