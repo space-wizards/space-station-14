@@ -72,6 +72,9 @@
       path: /Audio/Ambience/Objects/gas_hiss.ogg
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasFlowRegulator
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawJunction
 
 - type: entity
   parent: GasFilter
@@ -100,7 +103,9 @@
           False: { state: gasFilterF }
   - type: Construction
     node: filterflipped
-
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawJunction
   - type: PipeColorVisuals
   - type: NodeContainer
     nodes:
@@ -162,6 +167,9 @@
       path: /Audio/Ambience/Objects/gas_hiss.ogg
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasFlowRegulator
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawJunction
 
 - type: entity
   parent: GasMixer
@@ -205,6 +213,9 @@
         pipeDirection: North
   - type: Construction
     node: mixerflipped
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawJunction
 
 - type: entity
   parent: GasPipeBase
@@ -263,3 +274,6 @@
     node: pneumaticvalve
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasFlowRegulator
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawJunction

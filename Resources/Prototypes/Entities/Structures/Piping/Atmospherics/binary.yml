@@ -133,6 +133,9 @@
   - type: WiredNetworkConnection
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasFlowRegulator
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawTransit
 
 - type: entity
   parent: GasBinaryBase
@@ -164,6 +167,9 @@
       path: /Audio/Ambience/Objects/gas_hiss.ogg
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasValve
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawTransit
 
 - type: entity
   parent: GasBinaryBase
@@ -214,6 +220,9 @@
       path: /Audio/Ambience/Objects/gas_hiss.ogg
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasValve
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawTransit
 
 - type: entity
   parent: GasBinaryBase
@@ -275,6 +284,9 @@
       path: /Audio/Ambience/Objects/gas_hiss.ogg
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasValve
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawTransit
 
 - type: entity
   parent: GasBinaryBase
@@ -306,6 +318,9 @@
     node: port
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasVentOpening
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawTransit
 
 - type: entity
   parent: GasVentPump
@@ -364,6 +379,9 @@
     enabled: true
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasVentOpening
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawTransit
 
 - type: entity
   parent: [ BaseMachine, ConstructibleMachine ]

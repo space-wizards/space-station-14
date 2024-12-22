@@ -70,6 +70,9 @@
   - type: Weldable
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasVentOpening
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawEntry
 
 - type: entity
   parent: GasUnaryBase
@@ -96,6 +99,9 @@
     node: passivevent
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasVentOpening
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawEntry
 
 - type: entity
   parent: [GasUnaryBase, AirSensorBase]
@@ -147,6 +153,9 @@
   - type: Weldable
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasVentScrubber
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawEntry
 
 - type: entity
   parent: GasUnaryBase
@@ -188,6 +197,9 @@
     - enum.LightLayers.Unshaded
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasVentOpening
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawEntry
 
 - type: entity
   parent: [ BaseMachinePowered, ConstructibleMachine ]
