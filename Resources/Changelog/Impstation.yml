@@ -1,21 +1,6 @@
 ﻿Entries:
 - author: Sha-Seng
   changes:
-  - message: Command gets unique oxygen and nitrogen tanks to match new cosmetic gear
-    type: Add
-  - message: Command tank harness for vox command style
-    type: Add
-  - message: Vox in jobs with outerwear now spawn with a harness in their bag instead
-      of leaving the coat on the floor
-    type: Tweak
-  - message: Tank harnesses are now small items for portability since choosing winter
-      coats can kill them otherwise
-    type: Tweak
-  id: 289
-  time: '2024-10-01T02:29:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/377
-- author: Sha-Seng
-  changes:
   - message: Added a harmonica trinket if you've played 10h as musician
     type: Add
   id: 290
@@ -4524,3 +4509,10 @@
   id: 788
   time: '2024-12-22T14:20:32.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1098
+- author: widgetbeck
+  changes:
+  - message: Salvage borgs now have always-active magboots.
+    type: Add
+  id: 789
+  time: '2024-12-22T14:25:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1101
