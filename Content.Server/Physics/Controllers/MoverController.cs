@@ -67,9 +67,6 @@ public sealed class MoverController : SharedMoverController
         {
             var physicsUid = uid;
 
-            if (RelayQuery.HasComponent(uid))
-                continue;
-
             if (!XformQuery.TryGetComponent(uid, out var xform))
             {
                 continue;
