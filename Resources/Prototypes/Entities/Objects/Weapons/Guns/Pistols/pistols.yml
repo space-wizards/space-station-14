@@ -209,7 +209,7 @@
 
 - type: entity
   name: N1984
-  parent: [BaseWeaponPistol, BaseRestrictedContraband]
+  parent: [BaseWeaponPistol, BaseCentcommSecurityContraband]
   id: WeaponPistolN1984 # the spaces in description are for formatting.
   description: The sidearm of any self respecting officer.     Comes in .45 magnum, the lord's caliber.
   components:
