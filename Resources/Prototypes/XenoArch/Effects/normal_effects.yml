@@ -1074,7 +1074,7 @@
   id: EffectAnimateSingle
   targetDepth: 4
   effectHint: artifact-effect-hint-sentience
-  effectProb: 10000
+  effectProb: 0.5
   components:
   - type: AnimateArtifact
     range: 6
