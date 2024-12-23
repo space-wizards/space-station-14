@@ -1,0 +1,39 @@
+[game]
+hostname = "[EN][MRP] Impstation"
+soft_max_players = 80
+desc = "Unofficial server for fans of RTVS featuring custom content. Come and see him."
+# seconds
+# default 150
+lobbyduration = 300
+
+[server]
+# rules_file = "ImpstationRuleset" # TODO
+uptime_restart_minutes = 240
+
+[chat]
+# Message Of The Day
+motd = "Be sure to fill out the Impstation rules survey, found in the impstation #status channel in the Discord server! Your feedback is appreciated!!"
+
+[ic]
+flavor_text = true
+restricted_names = false # allows for use of nonalphanumeric characters in names. immediately going off if people get stupid with it.
+
+[interaction]
+# defaults
+# rate_limit_count = 5
+# rate_limit_period = 0.5
+# rate_limit_announce_admins_delay = 120
+rate_limit_count = 20
+
+[infolinks]
+discord = "https://discord.gg/mirakurutaimu"
+github = "https://github.com/impstation/imp-station-14"
+website = "https://impstation.gay"
+# wiki = ""
+bug_report = "https://github.com/impstation/imp-station-14/issues"
+
+[shuttle]
+emergency_early_launch_allowed = true # allows for early shuttle launch with approval of 3 heads
+
+[ghost]
+role_time = 10 # sets time before ghost role buttons enable, so people hopefully Actually Read

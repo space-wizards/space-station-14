@@ -146,6 +146,7 @@
   loadouts:
   - CaptainHead
   - CaptainCap
+  - CaptainBeret # imp
   - CaptainCrusherCap #imp
 
 - type: loadoutGroup

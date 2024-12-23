@@ -58,6 +58,7 @@
   - type: ImmovableRod
     minSpeed: 0.25
     maxSpeed: 0.25
+    eviscerationPopup: immovable-rod-penetrated-mob-gondal
   - type: TimedDespawn
     lifetime: 141.0
   - type: EmitSoundOnSpawn
@@ -90,6 +91,7 @@
       params:
         volume: 20
         variation: 0.125
+    eviscerationPopup: immovable-rod-penetrated-mob-hollowbarrel
   - type: PointLight
     radius: 3
     color: red
