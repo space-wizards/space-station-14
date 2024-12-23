@@ -98,6 +98,12 @@ public sealed class MoverController : SharedMoverController
                 frameTime);
         }
 
+        var movementRelayTargetEnumerator = AllEntityQuery<MovementRelayTargetComponent, InputMoverComponent>();
+        while (movementRelayTargetEnumerator.MoveNext(out var uid, out var relay, out var mover))
+        {
+            HandleRelayMovement((uid, relay, mover));
+        }
+
         HandleShuttleMovement(frameTime);
     }
 
