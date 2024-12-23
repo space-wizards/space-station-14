@@ -5,6 +5,11 @@ using Content.Shared.Toggleable;
 
 namespace Content.Shared.Armable;
 
+/// <summary>
+/// When used together with ItemToggle this will make the ItemToggle one way which is then used to represent an armed
+/// state. If ItemComponent.Activated is true then the item is considered to be armed and should be able to be
+/// triggered.
+/// </summary>
 public sealed class ArmableSystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -14,16 +19,12 @@ public sealed class ArmableSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ArmableComponent, ExaminedEvent>(OnExamine);
-        SubscribeLocalEvent<ArmableComponent, ItemToggleActivateAttemptEvent>(TryArming);
         SubscribeLocalEvent<ArmableComponent, ItemToggledEvent>(ArmingDone);
     }
 
-    private void TryArming(Entity<ArmableComponent> entity, ref ItemToggleActivateAttemptEvent args)
-    {
-        if (TryComp<ItemToggleComponent>(entity, out var comp))
-            comp.Activated = true;
-    }
-
+    /// <summary>
+    /// Shows the status of the armable entity on examination.
+    /// </summary>
     private void OnExamine(EntityUid uid, ArmableComponent comp, ExaminedEvent args)
     {
         if (!args.IsInDetailsRange || !comp.ShowStatusOnExamination || !TryComp<ItemToggleComponent>(uid, out var itemToggle))
@@ -42,7 +43,7 @@ public sealed class ArmableSystem : EntitySystem
     }
 
     /// <summary>
-    /// Changes the appearance and disables the ItemToggleComponent.
+    /// Changes the appearance and disables the ItemToggleComponent as to not show the deactivate verb.
     /// Whatever is armed should probably not be trivially disarmed.
     /// </summary>
     private void ArmingDone(Entity<ArmableComponent> entity, ref ItemToggledEvent args)
@@ -50,9 +51,10 @@ public sealed class ArmableSystem : EntitySystem
         if (!TryComp<ItemToggleComponent>(entity, out var comp))
             return;
 
+        comp.Activated = true;
+        comp.OnActivate = false;
+
         if (TryComp<AppearanceComponent>(entity, out var appearance))
             _appearance.SetData(entity, ToggleVisuals.Toggled, comp.Activated, appearance);
-
-        comp.OnActivate = false;
     }
 }
