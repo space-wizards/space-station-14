@@ -18,6 +18,7 @@ using Robust.Shared.Prototypes;
 using Content.Shared.Station.Components;
 using Robust.Shared.EntitySerialization;
 using Robust.Shared.EntitySerialization.Systems;
+using Robust.Shared.IoC;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
@@ -157,27 +158,52 @@ namespace Content.IntegrationTests.Tests
             var deps = server.ResolveDependency<IEntitySystemManager>().DependencyCollection;
             foreach (var map in v7Maps)
             {
-                if (!loader.TryReadFile(map, out var data))
-                {
-                    Assert.Fail($"Failed to read {map}");
-                    continue;
-                }
-
-                var reader = new EntityDeserializer(deps, data, DeserializationOptions.Default);
-                if (!reader.TryProcessData())
-                {
-                    Assert.Fail($"Failed to process {map}");
-                    continue;
-                }
-
-                foreach (var mapId in reader.MapYamlIds)
-                {
-                    var mapData = reader.YamlEntities[mapId];
-                    Assert.That(!mapData.PostInit, $"Map {map.Filename} contains a postmapinit map with yaml id: {mapId}");
-                }
+                Assert.That(IsPreInit(map, loader, deps));
             }
 
+            // Check that the test actually does manage to catch post-init maps and isn't just blindly passing everything.
+            // To that end, create a new post-init map and try verify it.
+            var mapSys = server.System<SharedMapSystem>();
+            MapId id = default;
+            await server.WaitPost(() => mapSys.CreateMap(out id, runMapInit: false));
+            await server.WaitPost(() => server.EntMan.Spawn(null, new MapCoordinates(0, 0, id)));
+
+            // First check that a pre-init version passes
+            var path = new ResPath($"{nameof(NoSavedPostMapInitTest)}.yml");
+            loader.SaveMap(id, path);
+            Assert.That(IsPreInit(path, loader, deps));
+
+            // and the post-init version fails.
+            await server.WaitPost(() => mapSys.InitializeMap(id));
+            loader.SaveMap(id, path);
+            Assert.That(IsPreInit(path, loader, deps), Is.False);
+
             await pair.CleanReturnAsync();
+        }
+
+        private bool IsPreInit(ResPath map, MapLoaderSystem loader, IDependencyCollection deps)
+        {
+            if (!loader.TryReadFile(map, out var data))
+            {
+                Assert.Fail($"Failed to read {map}");
+                return false;
+            }
+
+            var reader = new EntityDeserializer(deps, data, DeserializationOptions.Default);
+            if (!reader.TryProcessData())
+            {
+                Assert.Fail($"Failed to process {map}");
+                return false;
+            }
+
+            foreach (var mapId in reader.MapYamlIds)
+            {
+                var mapData = reader.YamlEntities[mapId];
+                if (mapData.PostInit)
+                    return false;
+            }
+
+            return true;
         }
 
         [Test, TestCaseSource(nameof(GameMaps))]
