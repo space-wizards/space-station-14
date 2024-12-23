@@ -133,7 +133,7 @@ namespace Content.Server.RatKing
                     continue;
 
                 // Remove ineligable targets
-                if (!HasComp<DamageableComponent>(ent) || !HasComp<BodyComponent>(ent) || !_container.IsEntityInContainer(ent))
+                if (!HasComp<DamageableComponent>(ent) || !HasComp<BodyComponent>(ent) || _container.IsEntityInContainer(ent))
                     continue;
 
                 if (HasComp<SubFloorHideComponent>(ent) || HasComp<RatKingServantComponent>(ent))
