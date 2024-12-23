@@ -32,6 +32,9 @@
   - Visitor
   - Zookeeper
   - ServiceWorker
+  - CentralCommandOfficial
+  - ERTChaplain
+  - ERTJanitor
 
 - type: department
   id: CentralCommand
@@ -50,6 +53,7 @@
   - DeathSquad
   editorHidden: true
   weight: 120
+  primary: false
 
 - type: department
   id: Command
@@ -101,7 +105,6 @@
   - Psychologist
   - Paramedic
   - ERTMedical
-  - CBURN
 
 - type: department
   id: Security
