@@ -29,10 +29,16 @@ public sealed class ArmableSystem : EntitySystem
         if (!args.IsInDetailsRange || !comp.ShowStatusOnExamination || !TryComp<ItemToggleComponent>(uid, out var itemToggle))
             return;
 
-        if(itemToggle.Activated)
-            args.PushMarkup(Loc.GetString("examine-armed", ("name", uid)));
+        if (itemToggle.Activated)
+        {
+            if (!string.IsNullOrEmpty(comp.ExamineTextArmed))
+                args.PushMarkup(Loc.GetString(comp.ExamineTextArmed, ("name", uid)));
+        }
         else
-            args.PushMarkup(Loc.GetString("examine-not-armed", ("name", uid)));
+        {
+            if (!string.IsNullOrEmpty(comp.ExamineTextNotArmed))
+                args.PushMarkup(Loc.GetString(comp.ExamineTextNotArmed,("name", uid)));
+        }
     }
 
     /// <summary>
