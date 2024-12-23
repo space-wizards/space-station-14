@@ -9,13 +9,14 @@ using Content.IntegrationTests.Pair;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Doors.Components;
 using Content.Shared.Item;
-using Robust.Server.GameObjects;
 using Robust.Shared;
 using Robust.Shared.Analyzers;
+using Robust.Shared.EntitySerialization;
+using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Benchmarks;
 
@@ -32,7 +33,6 @@ public class ComponentQueryBenchmark
 
     private TestPair _pair = default!;
     private IEntityManager _entMan = default!;
-    private MapId _mapId = new(10);
     private EntityQuery<ItemComponent> _itemQuery;
     private EntityQuery<ClothingComponent> _clothingQuery;
     private EntityQuery<MapComponent> _mapQuery;
@@ -54,10 +54,10 @@ public class ComponentQueryBenchmark
         _pair.Server.ResolveDependency<IRobustRandom>().SetSeed(42);
         _pair.Server.WaitPost(() =>
         {
-            var success = _entMan.System<MapLoaderSystem>().TryLoad(_mapId, Map, out _);
-            if (!success)
+            var map = new ResPath(Map);
+            var opts = DeserializationOptions.Default with {InitializeMaps = true};
+            if (!_entMan.System<MapLoaderSystem>().TryLoadMap(map, out _, out _, opts))
                 throw new Exception("Map load failed");
-            _pair.Server.MapMan.DoMapInitialize(_mapId);
         }).GetAwaiter().GetResult();
 
         _items = new EntityUid[_entMan.Count<ItemComponent>()];
