@@ -197,11 +197,11 @@ public sealed partial class AntagSelectionSystem : GameRuleSystem<AntagSelection
 
         if (component.SelectionsComplete)
         {
-            if(QueuedAntags.Count != 0)
+            if (QueuedAntags.Count != 0)
             {
                 foreach ((var _, var antagData) in QueuedAntags)
                 {
-                    if(antagData.Item3.Comp == component)
+                    if (antagData.Item3.Comp == component)
                         MakeAntag(antagData.Item3, antagData.Item1, antagData.Item2);
                 }
             }
