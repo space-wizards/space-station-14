@@ -1071,6 +1071,17 @@
     range: 15
 
 - type: artifactEffect
+  id: EffectAnimateSingle
+  targetDepth: 4
+  effectHint: artifact-effect-hint-sentience
+  effectProb: 10000
+  components:
+  - type: AnimateArtifact
+    range: 6
+    duration: 10
+    count: 1
+
+- type: artifactEffect
   id: EffectSingulo
   targetDepth: 10
   effectHint: artifact-effect-hint-destruction
