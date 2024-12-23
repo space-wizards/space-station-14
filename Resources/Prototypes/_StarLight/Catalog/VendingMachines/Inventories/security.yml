@@ -23,30 +23,6 @@
   - !type:BuyerAccessCondition
 
 - type: listing
-  id: WeaponPistolN1987
-  productEntity: WeaponPistolN1987
-  cost:
-    NTCredit: 600
-  categories:
-  - SLSecurity
-  conditions:
-  - !type:ListingLimitedStockCondition
-    stock: 3
-  - !type:BuyerAccessCondition
-  
-- type: listing
-  id: MagazineMagnumPractice
-  productEntity: MagazineMagnumPractice
-  cost:
-    NTCredit: 100
-  categories:
-  - SLSecurity
-  conditions:
-  - !type:ListingLimitedStockCondition
-    stock: 6
-  - !type:BuyerAccessCondition
-
-- type: listing
   id: ClothingHandsGlovesCombat
   productEntity: ClothingHandsGlovesCombat
   cost:
