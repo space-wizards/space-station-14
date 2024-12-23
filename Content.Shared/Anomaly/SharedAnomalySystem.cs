@@ -33,8 +33,8 @@ public abstract class SharedAnomalySystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
 
     public override void Initialize()
     {
@@ -359,8 +359,11 @@ public abstract class SharedAnomalySystem : EntitySystem
         var amount = (int) (MathHelper.Lerp(settings.MinAmount, settings.MaxAmount, severity * stability * powerModifier) + 0.5f);
 
         var localpos = xform.Coordinates.Position;
-        var tilerefs = grid.GetLocalTilesIntersecting(
-            new Box2(localpos + new Vector2(-settings.MaxRange, -settings.MaxRange), localpos + new Vector2(settings.MaxRange, settings.MaxRange))).ToList();
+        var tilerefs = _map.GetLocalTilesIntersecting(
+            xform.GridUid.Value,
+            grid,
+            new Box2(localpos + new Vector2(-settings.MaxRange, -settings.MaxRange), localpos + new Vector2(settings.MaxRange, settings.MaxRange)))
+            .ToList();
 
         if (tilerefs.Count == 0)
             return null;
@@ -372,7 +375,7 @@ public abstract class SharedAnomalySystem : EntitySystem
             if (tilerefs.Count == 0)
                 break;
 
-            var tileref = _random.Pick(tilerefs);
+            var tileref = Random.Pick(tilerefs);
             var distance = MathF.Sqrt(MathF.Pow(tileref.X - xform.LocalPosition.X, 2) + MathF.Pow(tileref.Y - xform.LocalPosition.Y, 2));
 
             //cut outer & inner circle

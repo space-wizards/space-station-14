@@ -51,6 +51,7 @@ station-beacon-telecoms = Telecoms
 station-beacon-atmos = Atmos
 station-beacon-teg = TEG
 station-beacon-tech-vault = Tech Vault
+station-beacon-anchor = Anchor
 
 station-beacon-service = Service
 station-beacon-kitchen = Kitchen
@@ -73,3 +74,4 @@ station-beacon-tools = Tools
 station-beacon-disposals = Disposals
 station-beacon-cryosleep = Cryosleep
 station-beacon-escape-pod = Escape Pod
+station-beacon-vox = Vox Break Room

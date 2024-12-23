@@ -22,6 +22,8 @@ log-probe-label-number = #
 
 astro-nav-program-name = AstroNav
 
+med-tek-program-name = MedTek
+
 # Wanted list cartridge
 wanted-list-program-name = Wanted list
 wanted-list-label-no-records = It's all right, cowboy
