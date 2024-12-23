@@ -1082,8 +1082,29 @@
       - CarpetPurple
       - CarpetCyan
       - CarpetWhite
+      # Bedsheets
+      - BedsheetBlack
+      - BedsheetBlue
+      - BedsheetBrown
+      - BedsheetGreen
+      - BedsheetGrey
+      - BedsheetOrange
+      - BedsheetPurple
+      - BedsheetRed
+      - BedsheetWhite
+      - BedsheetYellow
+      - BedsheetClown
+      - BedsheetCosmos
+      - BedsheetIan
+      - BedsheetMedical
+      - BedsheetMime
+      - BedsheetNT
+      - BedsheetRainbow
+      - BedsheetBrigmedic
+      - BedsheetUSA
   - type: EmagLatheRecipes
     emagStaticRecipes:
+      # Clothing
       - ClothingHeadHatCentcomcap
       - ClothingHeadHatCentcom
       - ClothingUniformJumpsuitCentcomAgent
@@ -1106,6 +1127,8 @@
       - ClothingOuterWinterCentcom
       - ClothingOuterWinterSyndie
       - ClothingOuterWinterSyndieCap
+      # Bedsheet
+      - BedsheetSyndie
   - type: MaterialStorage
     whitelist:
       tags:
