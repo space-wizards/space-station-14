@@ -1,18 +1,4 @@
 ﻿Entries:
-- author: DieselMohawk
-  changes:
-  - message: Added Armband to back of Security Jumpsuit
-    type: Fix
-  id: 7249
-  time: '2024-08-30T01:46:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31635
-- author: Winkarst-cpu
-  changes:
-  - message: Potted plants now fade their sprites, just like trees.
-    type: Tweak
-  id: 7250
-  time: '2024-08-30T10:34:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31628
 - author: AutoOtter
   changes:
   - message: Greatly reduced meteorite wall health for easier cleanup and repair.
@@ -3937,3 +3923,17 @@
   id: 7748
   time: '2024-12-23T19:54:18.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/32964
+- author: Booblesnoot42
+  changes:
+  - message: On Cog, an unnecessary protolathe was removed from cargo.
+    type: Remove
+  id: 7749
+  time: '2024-12-23T23:24:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34026
+- author: Booblesnoot42
+  changes:
+  - message: On Amber, an unnecessary protolathe was removed from cargo.
+    type: Remove
+  id: 7750
+  time: '2024-12-23T23:24:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34027
