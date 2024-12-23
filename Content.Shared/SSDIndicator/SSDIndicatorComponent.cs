@@ -1,4 +1,4 @@
-﻿using Content.Shared.StatusIcon;
+using Content.Shared.StatusIcon;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -19,4 +19,10 @@ public sealed partial class SSDIndicatorComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField]
     public ProtoId<SsdIconPrototype> Icon = "SSDIcon";
+
+    /// <summary>
+    ///     When the entity should fall asleep
+    /// </summary>
+    [DataField, Access(typeof(SSDIndicatorSystem))]
+    public TimeSpan FallAsleepTime = TimeSpan.Zero;
 }
