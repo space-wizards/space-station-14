@@ -253,7 +253,7 @@ public abstract partial class SharedMoverController : VirtualController
             }
 
             if (!weightless && MobMoverQuery.TryGetComponent(uid, out var mobMover) &&
-                TryGetSound(weightless, uid, mover, mobMover, xform, out var sound, tileDef: tileDef))
+                TryGetSound(weightless, uid, mover, mobMover, xform, out var sound, tileDef: tileDef) && sound is not null)
             {
                 var soundModifier = mover.Sprinting ? 3.5f : 1.5f;
 
@@ -396,7 +396,7 @@ public abstract partial class SharedMoverController : VirtualController
         InputMoverComponent mover,
         MobMoverComponent mobMover,
         TransformComponent xform,
-        [NotNullWhen(true)] out SoundSpecifier? sound,
+        out SoundSpecifier? sound,
         ContentTileDefinition? tileDef = null)
     {
         sound = null;
@@ -456,7 +456,7 @@ public abstract partial class SharedMoverController : VirtualController
         EntityUid uid,
         TransformComponent xform,
         bool haveShoes,
-        [NotNullWhen(true)] out SoundSpecifier? sound,
+        out SoundSpecifier? sound,
         ContentTileDefinition? tileDef = null)
     {
         sound = null;

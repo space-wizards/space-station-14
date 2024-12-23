@@ -10,5 +10,5 @@ namespace Content.Shared.Movement.Components;
 public sealed partial class FootstepModifierComponent : Component
 {
     [DataField(required: true), AutoNetworkedField]
-    public SoundSpecifier FootstepSoundCollection = default!;
+    public SoundSpecifier? FootstepSoundCollection;
 }
