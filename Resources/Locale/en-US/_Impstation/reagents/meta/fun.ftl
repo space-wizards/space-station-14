@@ -12,3 +12,6 @@ reagent-desc-ungh-juice = The glucose and citric acid seem to have neutralized t
 
 reagent-name-holium = holium
 reagent-desc-holium = An impossibly compressed liquid. It feels as though it could tear through any surface.
+
+reagent-name-medium = medium
+reagent-desc-medium = An alchemical medium to the afterlife.

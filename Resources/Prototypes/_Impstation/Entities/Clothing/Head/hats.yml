@@ -19,6 +19,22 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadHatBeretCaptain
+  name: captain's beret
+  description: A regal blue beret with a commander's rank emblem. For captains that are more inclined towards style.
+  components:
+  - type: Sprite
+    sprite: _Impstation/Clothing/Head/Hats/beret_captain.rsi
+  - type: Clothing
+    sprite: _Impstation/Clothing/Head/Hats/beret_captain.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - HamsterWearable
+    - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatWebHat
   name: web hat
   description: A roughly woven wide-brim hat made of spider silk! Some strands drift in the air.
