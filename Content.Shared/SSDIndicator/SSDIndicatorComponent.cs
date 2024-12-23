@@ -9,7 +9,7 @@ namespace Content.Shared.SSDIndicator;
 ///     Shows status icon when player in SSD
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-[AutoGenerateComponentState]
+[AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class SSDIndicatorComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
@@ -23,6 +23,13 @@ public sealed partial class SSDIndicatorComponent : Component
     /// <summary>
     ///     When the entity should fall asleep
     /// </summary>
-    [DataField, Access(typeof(SSDIndicatorSystem))]
+    [DataField, AutoPausedField, Access(typeof(SSDIndicatorSystem))]
     public TimeSpan FallAsleepTime = TimeSpan.Zero;
+
+    /// <summary>
+    ///     Required to don't remove forced sleep from other sources
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
+    public bool ForcedSleepAdded = false;
 }
