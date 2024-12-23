@@ -277,48 +277,36 @@ namespace Content.IntegrationTests.Tests
                 // If the entity deleted itself, check that it didn't spawn other entities
                 if (!server.EntMan.EntityExists(uid))
                 {
-                    if (server.EntMan.EntityCount != count)
+                    Assert.Multiple(() =>
                     {
-                        Assert.Fail($"Server prototype {protoId} failed on deleting itself");
-                    }
-
-                    if (client.EntMan.EntityCount != clientCount)
-                    {
-                        Assert.Fail($"Client prototype {protoId} failed on deleting itself\n" +
-                                    $"Expected {clientCount} and found {client.EntMan.EntityCount}.\n" +
-                                    $"Server was {count}.");
-                    }
+                        Assert.That(server.EntMan.EntityCount, Is.EqualTo(count), $"Server prototype {protoId} failed on deleting itself");
+                        Assert.That(client.EntMan.EntityCount, Is.EqualTo(clientCount), $"Client prototype {protoId} failed on deleting itself\n" +
+                                        $"Expected {clientCount} and found {client.EntMan.EntityCount}.\n" +
+                                        $"Server count was {count}.");
+                    });
                     continue;
                 }
 
-                // Check that the number of entities has increased.
-                if (server.EntMan.EntityCount <= count)
+                Assert.Multiple(() =>
                 {
-                    Assert.Fail($"Server prototype {protoId} failed on spawning as entity count didn't increase");
-                }
-
-                if (client.EntMan.EntityCount <= clientCount)
-                {
-                    Assert.Fail($"Client prototype {protoId} failed on spawning as entity count didn't increase" +
-                                $"Expected at least {clientCount} and found {client.EntMan.EntityCount}. " +
-                                $"Server was {count}");
-                }
+                    // Check that the number of entities has increased.
+                    Assert.That(server.EntMan.EntityCount, Is.GreaterThan(count), $"Server prototype {protoId} failed on spawning as entity count didn't increase");
+                    Assert.That(client.EntMan.EntityCount, Is.GreaterThan(clientCount), $"Client prototype {protoId} failed on spawning as entity count didn't increase\n" +
+                                    $"Expected at least {clientCount} and found {client.EntMan.EntityCount}. " +
+                                    $"Server count was {count}");
+                });
 
                 await server.WaitPost(() => server.EntMan.DeleteEntity(uid));
                 await pair.RunTicksSync(3);
 
-                // Check that the number of entities has gone back to the original value.
-                if (server.EntMan.EntityCount != count)
+                Assert.Multiple(() =>
                 {
-                    Assert.Fail($"Server prototype {protoId} failed on deletion count didn't reset properly");
-                }
-
-                if (client.EntMan.EntityCount != clientCount)
-                {
-                    Assert.Fail($"Client prototype {protoId} failed on deletion count didn't reset properly:\n" +
-                                $"Expected {clientCount} and found {client.EntMan.EntityCount}.\n" +
-                                $"Server was {count}.");
-                }
+                    // Check that the number of entities has gone back to the original value.
+                    Assert.That(server.EntMan.EntityCount, Is.EqualTo(count), $"Server prototype {protoId} failed on deletion: count didn't reset properly");
+                    Assert.That(client.EntMan.EntityCount, Is.EqualTo(clientCount), $"Client prototype {protoId} failed on deletion: count didn't reset properly:\n" +
+                                    $"Expected {clientCount} and found {client.EntMan.EntityCount}.\n" +
+                                    $"Server count was {count}.");
+                });
             }
 
             await pair.CleanReturnAsync();
