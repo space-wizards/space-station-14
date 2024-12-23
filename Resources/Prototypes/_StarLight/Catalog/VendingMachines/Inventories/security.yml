@@ -21,3 +21,15 @@
   - !type:ListingLimitedStockCondition
     stock: 4
   - !type:BuyerAccessCondition
+
+- type: listing
+  id: ClothingHandsGlovesCombat
+  productEntity: ClothingHandsGlovesCombat
+  cost:
+    NTCredit: 399
+  categories:
+  - SLSecurity
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 2
+  - !type:BuyerAccessCondition

@@ -8,6 +8,7 @@
   - ScientistShoes
   - Survival
   - Trinkets
+  - GroupSpeciesBreathTool
   
 - type: roleLoadout
   id: JobMagistrate
@@ -15,6 +16,7 @@
   - CommonBackpack
   - Survival
   - Trinkets
+  - GroupSpeciesBreathTool
   
 - type: roleLoadout
   id: JobNanoTrasenRepresentative
