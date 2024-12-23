@@ -44,9 +44,11 @@ public sealed partial class CargoBountyMenu : FancyWindow
         else
         {
             NoHistoryLabel.Visible = false;
-            foreach (var h in history)
+
+            // Show the history in reverse, so last entry is first in the list
+            for (var i = history.Count - 1; i >= 0; i--)
             {
-                BountyHistoryContainer.AddChild(new BountyHistoryEntry(h));
+                BountyHistoryContainer.AddChild(new BountyHistoryEntry(history[i]));
             }
         }
     }
