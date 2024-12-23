@@ -154,7 +154,7 @@
 
 - type: entity
   id: LockerWallMedical
-  parent: BaseWallLocker
+  parent: [BaseWallLocker, BaseMedicalContraband]
   name: medical wall locker
   components:
   - type: Appearance

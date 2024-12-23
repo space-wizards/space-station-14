@@ -1,6 +1,6 @@
 - type: entity
   name: handcuff box
-  parent: BoxCardboard
+  parent: [BoxCardboard, BaseSecurityCommandContraband]
   id: BoxHandcuff
   description: A box full of handcuffs.
   components:
@@ -15,7 +15,7 @@
 
 - type: entity
   name: flashbang box
-  parent: BoxCardboard
+  parent: [BoxCardboard, BaseRestrictedContraband]
   id: BoxFlashbang
   description: 'WARNING: These devices are extremely dangerous and can cause blindness or deafness in repeated use.'
   components:
@@ -30,7 +30,7 @@
 
 - type: entity
   name: sechud box
-  parent: BoxCardboard
+  parent: [BoxCardboard, BaseRestrictedContraband]
   id: BoxSechud
   description: A box of security glasses.
   components:
@@ -45,7 +45,7 @@
 
 - type: entity
   name: ziptie box
-  parent: BoxCardboard
+  parent: [BoxCardboard, BaseSecurityCommandContraband]
   id: BoxZiptie
   description: A box full of zipties.
   components:

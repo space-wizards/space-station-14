@@ -189,6 +189,14 @@
   - type: Contraband
     allowedDepartments: [ Security, CentralCommand ]
 
+- type: entity
+  id: BaseEngineeringScienceMedicalContraband
+  parent: BaseRestrictedContraband
+  abstract: true
+  components:
+  - type: Contraband
+    allowedDepartments: [ Engineering, Science, Medical ]
+
 # for ~objective items
 - type: entity
   id: BaseGrandTheftContraband
@@ -196,4 +204,13 @@
   components:
   - type: Contraband
     severity: GrandTheft
+    allowedDepartments: [ Command ]
+
+- type: entity
+  parent: BaseGrandTheftContraband
+  id: BaseGrandTheftContrabandSpiderClan
+  abstract: true
+  components:
+  - type: Contraband
+    severity: GrandTheftSpiderClan
     allowedDepartments: [ Command ]

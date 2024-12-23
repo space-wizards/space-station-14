@@ -39,7 +39,7 @@
     currentLabel: reagent-name-nitrogen
 
 - type: entity
-  parent: BoxCardboard
+  parent: [BoxCardboard, BaseEngineeringContraband]
   id: BoxSurvivalEngineering
   name: extended-capacity survival box
   description: It's a box with basic internals inside. This one is labelled to contain an extended-capacity tank.
@@ -80,7 +80,7 @@
 
 - type: entity
 
-  parent: BoxCardboard
+  parent: [BoxCardboard, BaseRestrictedContraband]
   id: BoxSurvivalSecurity
   name: survival box
   description: It's a box with basic internals inside.
@@ -121,7 +121,7 @@
 
 - type: entity
 
-  parent: BoxCardboard
+  parent: [BoxCardboard, BaseMedicalContraband]
   id: BoxSurvivalMedical
   name: survival box
   description: It's a box with basic internals inside.
@@ -202,7 +202,7 @@
     currentLabel: reagent-name-nitrogen
 
 - type: entity
-  parent: BoxSurvival
+  parent: [BoxSurvival, BaseCivilianContraband]
   id: BoxMime
   suffix: Mime, Emergency
   components:
@@ -216,7 +216,7 @@
     - id: DrinkWaterBottleFull
 
 - type: entity
-  parent: BoxSurvivalNitrogen
+  parent: [BoxSurvivalNitrogen, BaseCivilianContraband]
   id: BoxMimeNitrogen
   suffix: Mime, Emergency N2
   components:
@@ -236,7 +236,7 @@
     currentLabel: reagent-name-nitrogen
 
 - type: entity
-  parent: BoxCardboard
+  parent: [BoxCardboard, BaseSyndicateContraband]
   id: BoxSurvivalSyndicate
   name: extended-capacity survival box
   description: It's a box with basic internals inside. This one is labelled to contain an extended-capacity tank.
