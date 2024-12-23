@@ -254,3 +254,20 @@
   components:
     - type: Implanter
       implant: MindShieldImplant
+
+# CentComm implanters
+- type: entity
+  id: DeathAcidifierImplanterCentcomm
+  suffix: death acidifier
+  parent: [BaseImplantOnlyImplanter, BaseCentcommContraband]
+  components:
+  - type: Implanter
+    implant: DeathAcidifierImplant
+
+- type: entity
+  id: FreedomImplanterCentcomm
+  suffix: freedom
+  parent: [BaseImplantOnlyImplanter, BaseCentcommContraband]
+  components:
+  - type: Implanter
+    implant: FreedomImplant
