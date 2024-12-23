@@ -16,6 +16,7 @@
     enable: false
   - type: Transform
     anchored: false
+  - type: AnchorableStorage
   - type: Clothing
     quickEquip: false
     slots:
