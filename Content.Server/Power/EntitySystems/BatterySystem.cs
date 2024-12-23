@@ -212,14 +212,14 @@ namespace Content.Server.Power.EntitySystems
         }
 
         /// <summary>
-        /// Returns whether the battery is at least 99% charged, basically full.
+        /// Returns whether the battery is full.
         /// </summary>
         public bool IsFull(EntityUid uid, BatteryComponent? battery = null)
         {
             if (!Resolve(uid, ref battery))
                 return false;
 
-            return battery.CurrentCharge / battery.MaxCharge >= 0.99f;
+            return battery.CurrentCharge >= battery.MaxCharge;
         }
     }
 }
