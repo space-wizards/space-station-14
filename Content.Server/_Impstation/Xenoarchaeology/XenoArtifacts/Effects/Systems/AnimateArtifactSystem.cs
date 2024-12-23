@@ -26,7 +26,8 @@ public sealed class AnimateArtifactSystem : EntitySystem
     {
         // Get a list of all nearby objects in range
 
-        HashSet<EntityUid> entsHash = _lookup.GetEntitiesInRange(uid, component.Range);
+        var entsHash = _lookup.GetEntitiesInRange(uid, component.Range);
+        entsHash.Add(uid);
         var numSuccessfulAnimates = 0;
 
         var unshuffledEnts = entsHash.ToList();
