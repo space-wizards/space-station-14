@@ -71,3 +71,18 @@
       - state: idiaa
     - type: PresetIdCard
       job: IAA
+      
+- type: entity
+  parent: IDCardStandard
+  id: BlueShieldIDCard
+  name: blueshield officer's ID card
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Misc/id_cards.rsi
+    layers:
+    - state: silver
+    - state: idblueshield
+  - type: Item
+    heldPrefix: silver
+  - type: PresetIdCard
+    job: BlueShield

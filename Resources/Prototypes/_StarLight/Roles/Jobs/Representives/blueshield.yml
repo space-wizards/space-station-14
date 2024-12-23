@@ -1,0 +1,57 @@
+- type: job
+  id: BlueShield
+  name: Officer "Blue Shield"
+  description: Your primary job is to protect the heads. Remember, you are not a security officer.
+  playTimeTracker: JobBlueShield
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 62000 # 20 hrs
+    - !type:DepartmentTimeRequirement
+      department: Command
+      time: 62000 # 20 hrs
+  startingGear: BlueShieldGear
+  icon: JobIconBlueShield
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  access:
+    - Command
+    - Bar
+    - Service
+    - Maintenance
+    - Janitor
+    - Theatre
+    - Kitchen
+    - Chapel
+    - Hydroponics
+    - External
+    - Chemistry
+    - Engineering
+    - Research
+    - Detective
+    - Salvage
+    - Security
+    - Brig
+    - Cargo
+    - Atmospherics
+    - Cargo
+    - Medical
+  special:
+    - !type:AddImplantSpecial
+      implants: [MindShieldImplant]
+
+- type: startingGear
+  id: BlueShieldGear
+  equipment:
+    shoes: ClothingShoesBootsCombatFilled
+    eyes: ClothingEyesGlassesBlueShield
+    head: ClothingHeadHatBeretBlueShield
+    outerClothing: ClothingOuterArmorBlueShield
+    id: BlueShieldPDA
+    ears: ClothingHeadsetAltCommand
+    belt: ClothingBeltBlueShieldWebbingFilled
+    gloves: ClothingHandsGlovesCombat
+  storage:
+    back:
+    - BoxSurvivalSecurity
+    - Flash
