@@ -111,12 +111,15 @@ namespace Content.IntegrationTests.Tests
             var server = pair.Server;
 
             var resourceManager = server.ResolveDependency<IResourceManager>();
+            var loader = server.System<MapLoaderSystem>();
+
             var mapFolder = new ResPath("/Maps");
             var maps = resourceManager
                 .ContentFindFiles(mapFolder)
                 .Where(filePath => filePath.Extension == "yml" && !filePath.Filename.StartsWith(".", StringComparison.Ordinal))
                 .ToArray();
 
+            var v7Maps = new List<ResPath>();
             foreach (var map in maps)
             {
                 var rootedPath = map.ToRootedPath();
@@ -139,10 +142,41 @@ namespace Content.IntegrationTests.Tests
 
                 var root = yamlStream.Documents[0].RootNode;
                 var meta = root["meta"];
-                var postMapInit = meta["postmapinit"].AsBool();
+                var version = meta["format"].AsInt();
 
+                if (version >= 7)
+                {
+                    v7Maps.Add(map);
+                    continue;
+                }
+
+                var postMapInit = meta["postmapinit"].AsBool();
                 Assert.That(postMapInit, Is.False, $"Map {map.Filename} was saved postmapinit");
             }
+
+            var deps = server.ResolveDependency<IEntitySystemManager>().DependencyCollection;
+            foreach (var map in v7Maps)
+            {
+                if (!loader.TryReadFile(map, out var data))
+                {
+                    Assert.Fail($"Failed to read {map}");
+                    continue;
+                }
+
+                var reader = new EntityDeserializer(deps, data, DeserializationOptions.Default);
+                if (!reader.TryProcessData())
+                {
+                    Assert.Fail($"Failed to process {map}");
+                    continue;
+                }
+
+                foreach (var mapId in reader.MapYamlIds)
+                {
+                    var mapData = reader.YamlEntities[mapId];
+                    Assert.That(!mapData.PostInit, $"Map {map.Filename} contains a postmapinit map with yaml id: {mapId}");
+                }
+            }
+
             await pair.CleanReturnAsync();
         }
 
