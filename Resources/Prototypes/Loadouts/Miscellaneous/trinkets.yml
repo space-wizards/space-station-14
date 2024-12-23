@@ -42,13 +42,13 @@
     - PlushieSpaceLizard
 
 - type: loadout
-  id: ThreeDarts
-  dummyEntity: LoadoutDummyDarts
+  id: ThreeCandles
+  dummyEntity: LoadoutDummyCandles
   storage:
     back:
-    - Dart
-    - DartBlue
-    - DartYellow
+    - CandleRed
+    - CandleBlue
+    - CandleGreenSmall
 
 # Smokeables
 - type: loadout
