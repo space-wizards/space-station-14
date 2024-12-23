@@ -8,6 +8,8 @@ using Content.Shared.Stacks;
 using Content.Shared.Starlight.Antags.Abductor;
 using Content.Shared.Starlight.Medical.Surgery.Effects.Step;
 using Content.Shared.UserInterface;
+using Content.Shared.Silicons.Borgs.Components;
+using Content.Shared.Silicons.StationAi;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Prototypes;
@@ -62,6 +64,9 @@ public sealed partial class ATMSystem : SharedATMSystem
 
     private void OnBeforeActivatableUIOpen(Entity<ATMComponent> ent, ref BeforeActivatableUIOpenEvent args)
     {
+        if (HasComp<StationAiHeldComponent>(args.User))
+            return
+
         var playerData = _playerRolesManager.GetPlayerData(args.User);
 
         _uiSystem.SetUiState(ent.Owner, ATMUIKey.Key, new ATMBuiState() { Balance = playerData?.Balance ?? 0 });
