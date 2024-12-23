@@ -34,12 +34,3 @@
   modifierBudget: 1
   color: "#EFB34196"
   recommendedPlayers: 4
-
-- type: salvageDifficulty
-  id: Impossible
-  lootPrototype: "SalvageLootImpossible"
-  lootBudget: 675
-  mobBudget: 463
-  modifierBudget: 1
-  color: "#DE3A3A96"
-  recommendedPlayers: 6
