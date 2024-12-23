@@ -460,7 +460,7 @@ public sealed partial class CargoSystem
         {
             if (ent.Comp.Bounties[i].Id == data.Id)
             {
-                string? actorName = default;
+                string? actorName = null;
                 if (actor != null)
                 {
                     var getIdentityEvent = new TryGetIdentityShortInfoEvent(ent.Owner, actor.Value);
