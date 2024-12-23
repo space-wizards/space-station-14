@@ -2,7 +2,7 @@
   id: Plasma
   mapName: 'Plasma'
   mapPath: /Maps/plasma.yml
-  minPlayers: 70
+  minPlayers: 30
   stations:
     Plasma:
       stationProto: StandardNanotrasenStation
@@ -51,7 +51,7 @@
             SecurityOfficer: [ 8, 8 ]
             Detective: [ 2, 2 ]
             SecurityCadet: [ 4, 4 ]
-            Lawyer: [ 3, 3 ]
+            Lawyer: [ 2, 2 ]
             #supply
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 4, 4 ]
