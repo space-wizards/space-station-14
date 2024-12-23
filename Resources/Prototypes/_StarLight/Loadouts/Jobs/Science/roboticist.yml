@@ -15,14 +15,14 @@
 - type: loadout
   id: RoboticistBackpack
   equipment: 
-    head: ClothingBackpackRoboticist
+    back: ClothingBackpackRoboticist
     
 - type: loadout
   id: RoboticistSatchel
   equipment: 
-    head: ClothingBackpackSatchelRoboticist
+    back: ClothingBackpackSatchelRoboticist
     
 - type: loadout
   id: RoboticistDuffel
   equipment: 
-    head: ClothingBackpackDuffelRoboticist
+    back: ClothingBackpackDuffelRoboticist
