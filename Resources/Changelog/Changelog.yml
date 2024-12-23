@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed energy shield visuals.
-    type: Fix
-  id: 7248
-  time: '2024-08-30T01:43:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31619
 - author: DieselMohawk
   changes:
   - message: Added Armband to back of Security Jumpsuit
@@ -3937,3 +3930,10 @@
   id: 7747
   time: '2024-12-23T14:24:10.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33280
+- author: amatwiedle
+  changes:
+  - message: Borgs can no longer drink from tools provided by modules.
+    type: Fix
+  id: 7748
+  time: '2024-12-23T19:54:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32964
