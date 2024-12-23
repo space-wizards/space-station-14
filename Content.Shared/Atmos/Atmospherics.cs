@@ -148,6 +148,22 @@ namespace Content.Shared.Atmos
         #region Excited Groups
 
         /// <summary>
+        ///     Dictionary of chemical abbreviations for <see cref="Gas"/>
+        /// </summary>
+        public static Dictionary<Gas, string> GasAbbreviations = new Dictionary<Gas, string>()
+        {
+            [Gas.Ammonia] = Loc.GetString("gas-ammonia-abbreviation"),
+            [Gas.CarbonDioxide] = Loc.GetString("gas-carbon-dioxide-abbreviation"),
+            [Gas.Frezon] = Loc.GetString("gas-frezon-abbreviation"),
+            [Gas.Nitrogen] = Loc.GetString("gas-nitrogen-abbreviation"),
+            [Gas.NitrousOxide] = Loc.GetString("gas-nitrous-oxide-abbreviation"),
+            [Gas.Oxygen] = Loc.GetString("gas-oxygen-abbreviation"),
+            [Gas.Plasma] = Loc.GetString("gas-plasma-abbreviation"),
+            [Gas.Tritium] = Loc.GetString("gas-tritium-abbreviation"),
+            [Gas.WaterVapor] = Loc.GetString("gas-water-vapor-abbreviation"),
+        };
+
+        /// <summary>
         ///     Number of full atmos updates ticks before an excited group breaks down (averages gas contents across turfs)
         /// </summary>
         public const int ExcitedGroupBreakdownCycles = 4;

@@ -1,0 +1,171 @@
+- type: entity
+  parent: BaseWall
+  id: WallCosmicCult
+  name: malign wall
+  description: A strange-looking wall. Staring at it for too long instills a sense of discomfort.
+  components:
+  # - type: CosmicItem
+  - type: Tag
+    tags:
+      - Wall
+  - type: Sprite
+    sprite: _Impstation/CosmicCult/Tileset/cosmicwall.rsi
+  - type: Icon
+    sprite: _Impstation/CosmicCult/Tileset/cosmicwall.rsi
+  - type: RCDDeconstructable
+    deconstructable: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: walls
+    base: cult
+
+
+
+- type: entity
+  parent: WallCosmicCult
+  id: WallCosmicCultTrimmed
+  name: malign wall
+  suffix: Trimmed
+  components:
+  - type: Icon
+    sprite: _Impstation/CosmicCult/Tileset/cosmicwall.rsi
+    state: full
+  - type: Sprite
+    sprite: _Impstation/CosmicCult/Tileset/cosmicwall.rsi
+    layers:
+      - state: full
+      - map: [ "enum.EdgeLayer.South" ]
+        state: trim_south
+      - map: [ "enum.EdgeLayer.East" ]
+        state: trim_east
+      - map: [ "enum.EdgeLayer.North" ]
+        state: trim_north
+      - map: [ "enum.EdgeLayer.West" ]
+        state: trim_west
+  - type: IconSmooth
+    key: walls
+    base: cult
+  - type: SmoothEdge
+
+- type: entity
+  id: WindowCosmicCult
+  name: malign pane
+  description: An odd-looking window. Something about it unnerves you.
+  parent: WindowRCDResistant
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: _Impstation/CosmicCult/Tileset/cosmicwindow.rsi
+  - type: Icon
+    sprite: _Impstation/CosmicCult/Tileset/cosmicwindow.rsi
+    state: full
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Glass
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WindowShatter
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    base: coswindow
+  - type: Appearance
+  - type: DamageVisuals
+    thresholds: [5, 10, 20]
+    damageDivisor: 3
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Windows/cracks.rsi
+  - type: RadiationBlocker
+    resistance: 5
+
+- type: entity
+  id: WindowCosmicCultDark
+  name: malign pane
+  suffix: Tinted
+  parent: WindowCosmicCult
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: _Impstation/CosmicCult/Tileset/cosmicwindow_dark.rsi
+  - type: Icon
+    sprite: _Impstation/CosmicCult/Tileset/cosmicwindow_dark.rsi
+    state: full
+  - type: IconSmooth
+    base: cosDwindow
+
+- type: entity
+  parent: WallShuttleDiagonal
+  description: An odd-looking window. Something about it unnerves you.
+  id: WindowCosmicCultDiagonal
+  name: malign pane
+  suffix: Diagonal
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: RCDDeconstructable
+    deconstructable: false
+  # - type: CosmicItem
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: _Impstation/CosmicCult/Tileset/cosmicwindow_diagonal.rsi
+    state: coswindow0
+  - type: IconSmooth
+    mode: Diagonal
+    key: windows
+    base: coswindow
+  - type: Icon
+    sprite: _Impstation/CosmicCult/Tileset/cosmicwindow_diagonal.rsi
+    state: coswindow0
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: WindowCosmicCultDiagonal
+  id: WindowCosmicCultDiagonalDark
+  name: malign pane
+  suffix: Diagonal, Tinted
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  # - type: CosmicItem
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: _Impstation/CosmicCult/Tileset/cosmicwindow_dark_diagonal.rsi
+    state: cosDwindow0
+  - type: IconSmooth
+    mode: Diagonal
+    key: windows
+    base: cosDwindow
+  - type: Icon
+    sprite: _Impstation/CosmicCult/Tileset/cosmicwindow_dark_diagonal.rsi
+    state: cosDwindow0

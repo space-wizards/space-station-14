@@ -123,3 +123,18 @@
     entity: FloorChasmEntity
     maxOnTileWhitelist:
       tags: [ FloorChasmEntity ]
+  
+- type: reagent
+  id: Medium
+  name: reagent-name-medium
+  desc: reagent-desc-medium
+  physicalDesc: reagent-physical-desc-reflective
+  flavor: medium
+  color: "#DC89E0"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:Medium
+        conditions:
+        - !type:ReagentThreshold
+          min: 20

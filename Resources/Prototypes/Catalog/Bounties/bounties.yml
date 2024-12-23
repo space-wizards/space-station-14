@@ -784,7 +784,7 @@
   description: bounty-description-regenerative-mesh
   entries:
   - name: bounty-item-regenerative-mesh
-    amount: 60
+    amount: 30
     whitelist:
       tags:
       - RegenerativeMesh
@@ -828,7 +828,7 @@
   description: bounty-description-aloe-cream
   entries:
   - name: bounty-item-aloe-cream
-    amount: 6
+    amount: 30
     whitelist:
       tags:
       - Aloe
@@ -879,3 +879,41 @@
     blacklist:
       tags:
       - Slice #no cheating!
+
+- type: cargoBounty
+  id: BountyCrystal
+  reward: 10000
+  description: bounty-description-crystal
+  entries:
+  - name: bounty-item-crystal
+    amount: 12
+    whitelist:
+      tags:
+      - CrystalRed
+      - CrystalPink
+      - CrystalOrange
+      - CrystalGreen
+      - CrystalCyan
+      - CrystalBlue
+
+- type: cargoBounty
+  id: BountyMimeHardsuit
+  reward: 13000
+  description: bounty-description-mime-hardsuit
+  entries:
+  - name: bounty-item-mime-hardsuit
+    amount: 1
+    whitelist:
+      tags:
+      - MimeHardsuit
+
+- type: cargoBounty
+  id: BountySpiderMeat
+  reward: 7000
+  description: bounty-description-spider-meat
+  entries:
+  - name: bounty-item-spider-meat
+    amount: 3
+    whitelist:
+      tags:
+      - SpiderMeat

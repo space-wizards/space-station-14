@@ -12,6 +12,7 @@ using Content.Shared.CartridgeLoader;
 using Content.Shared.Database;
 using Content.Shared.PDA;
 using Content.Shared.Radio.Components;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -239,7 +240,7 @@ public sealed class NanoChatCartridgeSystem : EntitySystem
 
         // Log message attempt
         var recipientsText = recipients.Count > 0
-            ? string.Join(", ", recipients.Select(r => ToPrettyString(r)))
+            ? string.Join(", ", recipients.Select((Entity<NanoChatCardComponent> r) => ToPrettyString(r)))
             : $"#{msg.RecipientNumber:D4}";
 
         _adminLogger.Add(LogType.Chat,
@@ -312,21 +313,18 @@ public sealed class NanoChatCartridgeSystem : EntitySystem
                 if (receiverCart.Card != recipient.Owner)
                     continue;
 
-                // Check if devices are on same station/map
-                var recipientStation = _station.GetOwningStation(receiverUid);
-                var senderStation = _station.GetOwningStation(sender);
+                // Check if devices are on same map
+                var recipientMap = Transform(receiverUid).MapID;
+                var senderMap = Transform(sender).MapID;
+                // Must be on the same map/station unless long-range is allowed
+                if (!channel.LongRange && recipientMap != senderMap)
+                {
+                    break;
+                }
 
-                // Both entities must be on a station
-                if (recipientStation == null || senderStation == null)
-                    continue;
-
-                // Must be on same map/station unless long range allowed
-                if (!channel.LongRange && recipientStation != senderStation)
-                    continue;
-
-                // Needs telecomms
-                if (!HasActiveServer(senderStation.Value) || !HasActiveServer(recipientStation.Value))
-                    continue;
+                /* Must have an active common server
+                if (HasActiveServer(senderMap))
+                    continue;*/
 
                 // Check if recipient can receive
                 var receiveAttemptEv = new RadioReceiveAttemptEvent(channel, sender, receiverUid);
@@ -343,10 +341,7 @@ public sealed class NanoChatCartridgeSystem : EntitySystem
         return (deliverableRecipients.Count == 0, deliverableRecipients);
     }
 
-    /// <summary>
-    ///     Checks if there are any active telecomms servers on the given station
-    /// </summary>
-    private bool HasActiveServer(EntityUid station)
+    private bool HasActiveServer(MapId mapId)
     {
         // I have no idea why this isn't public in the RadioSystem
         var query =
@@ -354,7 +349,7 @@ public sealed class NanoChatCartridgeSystem : EntitySystem
 
         while (query.MoveNext(out var uid, out _, out _, out var power))
         {
-            if (_station.GetOwningStation(uid) == station && power.Powered)
+            if (Transform(uid).MapID == mapId && power.Powered)
                 return true;
         }
 

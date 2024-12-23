@@ -8,6 +8,32 @@
       department: Command
       time: 36000 # 10 hours
 
+# Back
+- type: loadout
+  id: CommandVeteranBackpack
+  equipment:
+    back: ClothingBackpackCommandveteran
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranCommand
+
+- type: loadout
+  id: CommandVeteranSatchel
+  equipment:
+    back: ClothingBackpackSatchelCommandveteran
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranCommand
+
+- type: loadout
+  id: CommandVeteranDuffel
+  equipment:
+    back: ClothingBackpackDuffelCommandveteran
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranCommand
+
+# Shoes
 - type: loadout
   id: BlackCommandHeels
   effects:
@@ -23,3 +49,12 @@
     proto: Command10Hr
   equipment:
     shoes: ClothingShoesHeelsCommandBlue
+
+# Headset
+- type: loadout
+  id: CommandVeteranHeadset
+  equipment:
+    ears: ClothingHeadsetCommandveteran
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranCommand

@@ -540,6 +540,7 @@
       - MassMediaCircuitboard
       - ReagentGrinderIndustrialMachineCircuitboard
       - JukeboxCircuitBoard
+      - SMESAdvancedMachineCircuitboard
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - ShuttleGunDusterCircuitboard
@@ -728,6 +729,8 @@
       - MagazineBoxLightRiflePractice
       - MagazineBoxMagnum
       - MagazineBoxMagnumPractice
+      - MagazineBoxLPistol
+      - MagazineBoxLPistolPractice
       - MagazineBoxPistol
       - MagazineBoxPistolPractice
       - MagazineBoxRifle
@@ -736,6 +739,9 @@
       - MagazineDMREmpty
       - MagazineLightRifle
       - MagazineLightRifleEmpty
+      - MagazineLPistol
+      - MagazineLPistolEmpty
+      - MagazineLPistolPractice
       - MagazinePistol
       - MagazinePistolEmpty
       - MagazinePistolSubMachineGun
@@ -774,9 +780,7 @@
       - HyperBurstConversionKit
       - MagazineBoxLightRifleIncendiary
       - MagazineBoxLightRifleUranium
-      - MagazineBoxLPistol
       - MagazineBoxLPistolIncendiary
-      - MagazineBoxLPistolPractice
       - MagazineBoxLPistolUranium
       - MagazineBoxMagnumIncendiary
       - MagazineBoxMagnumUranium
@@ -789,10 +793,7 @@
       - MagazineGrenadeEmpty
       - MagazineLightRifleIncendiary
       - MagazineLightRifleUranium
-      - MagazineLPistol
-      - MagazineLPistolEmpty
       - MagazineLPistolIncendiary
-      - MagazineLPistolPractice
       - MagazineLPistolUranium
       - MagazinePistolIncendiary
       - MagazinePistolUranium
@@ -991,6 +992,7 @@
       - ClothingUniformJumpskirtBartender
       - ClothingHeadHatCapcap
       - ClothingHeadHatCaptain
+      - ClothingHeadHatBeretCaptain # imp
       - ClothingUniformJumpsuitCaptain
       - ClothingUniformJumpskirtCaptain
       - ClothingUniformJumpsuitCapFormal

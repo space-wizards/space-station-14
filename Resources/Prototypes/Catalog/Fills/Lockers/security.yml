@@ -175,14 +175,18 @@
 - type: entity
   parent: [GunSafe, BaseRestrictedContraband]
   id: GunSafePistolMk58
-  name: mk58 safe
+  name: pistol safe
   components:
   - type: StorageFill
     contents:
     - id: WeaponPistolMk58
       amount: 4
+    - id: FullAutoConversionKit
+    - id: HyperBurstConversionKit
     - id: MagazinePistol
       amount: 8
+    - id: MagazineLPistol
+      amount: 4
 
 - type: entity
   parent: [GunSafe, BaseRestrictedContraband]

@@ -1,0 +1,9 @@
+- files: 
+  - hollow_plastic1.ogg
+  - hollow_plastic2.ogg
+  - hollow_plastic3.ogg
+  - hollow_plastic4.ogg
+  - hollow_plastic5.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Foley by DinnerCalzone"
+  source: "https://github.com/impstation/imp-station-14/pull/1071"
