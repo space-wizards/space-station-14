@@ -87,8 +87,8 @@ namespace Content.Server.Power.EntitySystems
             var query = EntityQueryEnumerator<BatterySelfRechargerComponent, BatteryComponent>();
             while (query.MoveNext(out var uid, out var comp, out var batt))
             {
-                if (!comp.AutoRecharge) continue;
-                if (batt.IsFullyCharged) continue;
+                if (!comp.AutoRecharge || IsFull(uid, batt))
+                    continue;
 
                 if (comp.AutoRechargePause)
                 {
