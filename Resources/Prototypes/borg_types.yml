@@ -88,6 +88,9 @@
   - Supply
   - Science
 
+  addComponents:
+  - type: Magboots
+
   # Visual
   inventoryTemplateId: borgTall
   spriteBodyState: miner

@@ -70,6 +70,9 @@
   - type: Weldable
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasVentOpening
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawEntry
 
 - type: entity
   parent: GasUnaryBase
@@ -96,6 +99,9 @@
     node: passivevent
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasVentOpening
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawEntry
 
 - type: entity
   parent: [GasUnaryBase, AirSensorBase]
@@ -147,6 +153,9 @@
   - type: Weldable
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasVentScrubber
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawEntry
 
 - type: entity
   parent: GasUnaryBase
@@ -188,6 +197,9 @@
     - enum.LightLayers.Unshaded
   - type: AtmosMonitoringConsoleDevice
     navMapBlip: GasVentOpening
+  - type: VentCrawTube
+    containerId: VentCrawTube
+  - type: VentCrawEntry
 
 - type: entity
   parent: [ BaseMachinePowered, ConstructibleMachine ]
@@ -198,7 +210,7 @@
     mode: SnapgridCenter
   components:
   - type: Sprite
-    sprite: Structures/Piping/Atmospherics/thermomachine.rsi
+    sprite: _Impstation/Structures/Piping/Atmospherics/thermomachine.rsi
     snapCardinals: true
   - type: Appearance
   - type: PipeColorVisuals
@@ -247,19 +259,26 @@
   - type: Sprite
     granularLayersRendering: true
     layers:
-    - state: freezerOff
-      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
-    - state: freezerPanelOpen
-      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
-    - state: pipe
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-      renderingStrategy: Default
+      - state: freezerOff
+      - state: freezerOn
+        map: ["enum.PowerDeviceVisualLayers.Powered"]
+      - state: freezer-Unshaded
+        shader: unshaded
+        map: ["freezing"]
+      - state: freezerPanelOpen
+        map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      - state: pipe
+        map: [ "enum.PipeVisualLayers.Pipe" ]
+        renderingStrategy: Default
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
-          True: { state: freezerOn }
-          False: { state: freezerOff }
+          True: { visible: true }
+          False: { visible: false }
+        Freezing:
+          True: { visible: true }
+          False: { visible: false }
   - type: GasThermoMachine
     coefficientOfPerformance: -3.9
   - type: ApcPowerReceiver
@@ -292,19 +311,26 @@
   - type: Sprite
     granularLayersRendering : true
     layers:
-    - state: heaterOff
-      map: [ "enum.PowerDeviceVisualLayers.Powered" ]
-    - state: heaterPanelOpen
-      map: ["enum.WiresVisualLayers.MaintenancePanel"]
-    - state: pipe
-      map: [ "enum.PipeVisualLayers.Pipe" ]
-      renderingStrategy: Default
+      - state: heaterOff
+      - state: heaterOn
+        map: ["enum.PowerDeviceVisualLayers.Powered"]
+      - state: heater-Unshaded
+        shader: unshaded
+        map: ["heating"]
+      - state: heaterPanelOpen
+        map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      - state: pipe
+        map: [ "enum.PipeVisualLayers.Pipe" ]
+        renderingStrategy: Default
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
-          True: { state: heaterOn }
-          False: { state: heaterOff }
+          True: { visible: true }
+          False: { visible: false }
+        heating:
+          True: { visible: true }
+          False: { visible: false }
   - type: GasThermoMachine
     coefficientOfPerformance: 0.95
   - type: ApcPowerReceiver
@@ -332,7 +358,7 @@
   description: An advanced machine that cools gas in connected pipes. Has the side effect of chilling the surrounding area. Cold as Hell!
   components:
   - type: Sprite
-    sprite: Structures/Piping/Atmospherics/hellfirethermomachine.rsi
+    sprite: _Impstation/Structures/Piping/Atmospherics/hellfirethermomachine.rsi
   - type: GasThermoMachine
     minTemperature: 23.15
     heatCapacity: 40000
@@ -347,7 +373,7 @@
   description: An advanced machine that heats gas in connected pipes. Has the side effect of leaking heat into the surrounding area. Hot as Hell!
   components:
   - type: Sprite
-    sprite: Structures/Piping/Atmospherics/hellfirethermomachine.rsi
+    sprite: _Impstation/Structures/Piping/Atmospherics/hellfirethermomachine.rsi
   - type: GasThermoMachine
     maxTemperature: 1193.15
     heatCapacity: 40000

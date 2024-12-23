@@ -931,6 +931,9 @@
   id: MimeHappyHonk
 
 - type: Tag
+  id: MimeHardsuit
+
+- type: Tag
   id: MindShield
 
 - type: Tag
@@ -1254,6 +1257,9 @@
 
 - type: Tag
   id: SpiderCraft
+
+- type: Tag
+  id: SpiderMeat
 
 - type: Tag
   id: SpookyFog

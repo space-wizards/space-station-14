@@ -1,121 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: More items can be put in the candy bowl.
-    type: Tweak
-  id: 278
-  time: '2024-09-28T00:12:40.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/359
-- author: Darkmajia
-  changes:
-  - message: Brigmedics now spawn with a survival box.
-    type: Fix
-  id: 279
-  time: '2024-09-28T00:12:16.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/357
-- author: AirFryerBuyOneGetOneFree
-  changes:
-  - message: A new type of mouse has been added.
-    type: Add
-  id: 280
-  time: '2024-09-28T00:14:41.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/360
-- author: Darkmajia
-  changes:
-  - message: Brigmedics now have their own winter coat and boots.
-    type: Add
-  - message: Security and medical winter boots have been removed from the Brigmedic
-      loadout.
-    type: Remove
-  id: 281
-  time: '2024-09-28T00:13:06.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/362
-- author: TheGrimbeeper
-  changes:
-  - message: Artifacts can now spawn non-random books (e.g Book of Nar'sie, Parker's
-      TEG guide, etc)
-    type: Add
-  - message: Added some parts of The Great Gatsby by F. Scott Fitzgerald, which is
-      under public domain. By sections, I mean Added the entirety of The Great Gatsby
-      by F. Scott Fitzgerald, which is under public domain.
-    type: Add
-  id: 282
-  time: '2024-09-28T00:13:26.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/354
-- author: Sha-Seng
-  changes:
-  - message: A new prestige neck item for quartermasters
-    type: Add
-  - message: Some veteran captain sprite adjustments
-    type: Tweak
-  id: 283
-  time: '2024-09-28T00:47:17.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/364
-- author: formlessnameless
-  changes:
-  - message: Made the upstream Frezon and N2O nerfs around half as harsh. If it's
-      still wild, we'll revisit it later.
-    type: Tweak
-  - message: Fixed variable name after VoiceMask refactor
-    type: Fix
-  - message: Made SVS less common, matching revs and zombies
-    type: Tweak
-  id: 284
-  time: '2024-09-28T01:04:02.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/365
-- author: Darkmajia
-  changes:
-  - message: Fixed Saltern.
-    type: Fix
-  id: 285
-  time: '2024-09-29T15:42:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/370
-- author: Sha-Seng
-  changes:
-  - message: Updated captain prestige set flavor text to help you visualize the real
-      object...
-    type: Tweak
-  id: 286
-  time: '2024-10-01T02:29:59.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/371
-- author: starlighthowls
-  changes:
-  - message: some tiny spooky whale fixes
-    type: Fix
-  id: 287
-  time: '2024-10-01T02:30:30.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/368
-- author: AftrLite
-  changes:
-  - message: You can now unlock a special golden personal AI trinket. This requires
-      10 hours Silicon playtime and 420 hours overall playtime. Good luck. It's very
-      shiny.
-    type: Add
-  id: 288
-  time: '2024-10-01T02:31:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/366
-- author: Sha-Seng
-  changes:
-  - message: Command gets unique oxygen and nitrogen tanks to match new cosmetic gear
-    type: Add
-  - message: Command tank harness for vox command style
-    type: Add
-  - message: Vox in jobs with outerwear now spawn with a harness in their bag instead
-      of leaving the coat on the floor
-    type: Tweak
-  - message: Tank harnesses are now small items for portability since choosing winter
-      coats can kill them otherwise
-    type: Tweak
-  id: 289
-  time: '2024-10-01T02:29:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/377
-- author: Sha-Seng
-  changes:
-  - message: Added a harmonica trinket if you've played 10h as musician
-    type: Add
-  id: 290
-  time: '2024-10-01T02:30:15.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/372
 - author: Darkmajia
   changes:
   - message: Changed the appearance of the space ninja's equipment.
@@ -4523,3 +4406,113 @@
   id: 777
   time: '2024-12-20T16:54:25.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1087
+- author: AftrLite
+  changes:
+  - message: Ongoing respriting efforts. Keep an eye out!
+    type: Tweak
+  - message: Fixed the InHands for Chaplain's Null Rod quiver's arrow.
+    type: Fix
+  id: 778
+  time: '2024-12-21T11:31:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1085
+- author: honeyed-lemons
+  changes:
+  - message: Various holopad fixes
+    type: Fix
+  id: 779
+  time: '2024-12-21T11:37:30.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1091
+- author: Sha-Seng
+  changes:
+  - message: Slime hair is now 75% opacity (up from 65%)
+    type: Tweak
+  - message: Gathered Low hairstyle touchups (more body in profile, clearer silhouette,
+      etc)
+    type: Tweak
+  id: 780
+  time: '2024-12-21T11:37:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1090
+- author: Sha-Seng
+  changes:
+  - message: Removed security breath mask from HoS loadout options since it's already
+      in the locker lol
+    type: Remove
+  - message: HoS Mantle is now 10 hours to account for the 90 hour unlock requirement
+      of the job
+    type: Tweak
+  - message: HoS prestige coat, armor, and headset are now 25 hours
+    type: Tweak
+  id: 781
+  time: '2024-12-21T11:41:49.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1089
+- author: AftrLite
+  changes:
+  - message: Fixed Freezer/Heater sprites, which got accidentally reverted.
+    type: Fix
+  id: 782
+  time: '2024-12-21T15:08:45.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1095
+- author: kipdotnet
+  changes:
+  - message: Added the Mini Television for mapping.
+    type: Add
+  - message: Added the handheld quantum camera for mapping.
+    type: Add
+  - message: Updated banana.
+    type: Tweak
+  id: 783
+  time: '2024-12-21T15:09:21.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1092
+- author: Darkmajia
+  changes:
+  - message: Beer is no longer 5x as alcoholic as it was meant to be.
+    type: Fix
+  id: 784
+  time: '2024-12-21T15:12:02.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1094
+- author: honeyed-lemons
+  changes:
+  - message: Fixes Ventcrawling
+    type: Fix
+  id: 785
+  time: '2024-12-22T10:40:19.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1099
+- author: Saeko-44
+  changes:
+  - message: Medium, a new chemical that allows one to see ghosts
+    type: Add
+  id: 786
+  time: '2024-12-22T10:44:48.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1037
+- author: honeyed-lemons
+  changes:
+  - message: Bodyhair for Humans, Dwarves, and Thaven!
+    type: Add
+  - message: Tweaked male human body texture side views to match front facing texture
+      better
+    type: Tweak
+  id: 787
+  time: '2024-12-22T14:19:15.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1096
+- author: EpicToast
+  changes:
+  - message: Updates to Core, Packed, Meta, Barratry, Reach, and Union (holopads,
+      pipe sensors, and other changes). See PR for full changelog.
+    type: Add
+  id: 788
+  time: '2024-12-22T14:20:32.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1098
+- author: widgetbeck
+  changes:
+  - message: Salvage borgs now have always-active magboots.
+    type: Add
+  id: 789
+  time: '2024-12-22T14:25:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1101
+- author: ultramario1998
+  changes:
+  - message: Added three new bounties.
+    type: Add
+  id: 790
+  time: '2024-12-22T15:17:27.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1081
