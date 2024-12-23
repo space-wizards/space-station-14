@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Examine;
-using Content.Shared.Toggleable;
 using Content.Shared.Item.ItemToggle.Components;
+using Content.Shared.Toggleable;
+
 
 namespace Content.Shared.Armable;
 
@@ -11,6 +12,7 @@ public sealed class ArmableSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<ArmableComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<ArmableComponent, ItemToggleActivateAttemptEvent>(TryArming);
         SubscribeLocalEvent<ArmableComponent, ItemToggledEvent>(ArmingDone);

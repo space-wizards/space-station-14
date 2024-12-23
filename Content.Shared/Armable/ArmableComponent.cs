@@ -1,6 +1,7 @@
 ﻿using Robust.Shared.GameStates;
 
 namespace Content.Shared.Armable;
+
 /// <summary>
 /// Makes an item armable, needs ItemToggleComponent to work.
 /// </summary>
