@@ -6381,7 +6381,7 @@ entities:
             0: 61423
           8,-1:
             0: 12320
-            2: 34944
+            4: 34944
           -8,-4:
             0: 30583
           -8,-5:
@@ -6732,7 +6732,7 @@ entities:
             0: 30583
           6,-12:
             1: 4369
-            4: 204
+            2: 204
             3: 49152
           6,-11:
             1: 61713
@@ -6741,10 +6741,10 @@ entities:
             0: 29424
           6,-13:
             1: 4369
-            4: 49152
+            2: 49152
             3: 204
           7,-12:
-            4: 17
+            2: 17
             3: 4096
             1: 17476
           7,-11:
@@ -6753,7 +6753,7 @@ entities:
           7,-10:
             0: 61680
           7,-13:
-            4: 4096
+            2: 4096
             1: 17476
             3: 17
           8,-12:
@@ -6791,7 +6791,7 @@ entities:
             1: 8704
           8,0:
             0: 63523
-            2: 8
+            4: 8
           8,1:
             0: 61440
           8,2:
@@ -7071,24 +7071,24 @@ entities:
             1: 35064
             0: 771
           9,0:
-            2: 15
+            4: 15
             0: 65296
           9,1:
             0: 47232
           9,2:
             0: 48955
           9,-1:
-            2: 65520
+            4: 65520
             0: 1
           10,0:
-            2: 1
+            4: 1
             0: 65292
           10,1:
             0: 56789
           10,2:
             0: 64961
           10,-1:
-            2: 4368
+            4: 4368
             0: 57548
           11,0:
             0: 30543
@@ -8925,42 +8925,42 @@ entities:
           - 0
           - 0
         - volume: 2500
-          temperature: 235
-          moles:
-          - 21.824879
-          - 82.10312
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
           temperature: 293.15
           moles:
           - 0
           - 0
           - 0
           - 6666.982
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 235
+          moles:
+          - 21.824879
+          - 82.10312
+          - 0
+          - 0
           - 0
           - 0
           - 0
@@ -11922,7 +11922,7 @@ entities:
       pos: 24.5,16.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -32560.857
+      secondsUntilStateChange: -35533.973
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -85219,7 +85219,7 @@ entities:
       pos: -34.5,-14.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -26749.395
+      secondsUntilStateChange: -29722.51
       state: Closing
   - uid: 15010
     components:
@@ -85712,7 +85712,7 @@ entities:
       pos: -4.5,-71.5
       parent: 8364
     - type: Door
-      secondsUntilStateChange: -18497.125
+      secondsUntilStateChange: -21470.24
       state: Closing
 - proto: Fireplace
   entities:
@@ -121993,681 +121993,494 @@ entities:
     - type: Transform
       pos: 10.513089,-49.606483
       parent: 8364
-- proto: Holopad
+- proto: HolopadAiBackupPower
   entities:
-  - uid: 4228
-    components:
-    - type: MetaData
-      name: holopad (Library Meeting)
-    - type: Transform
-      pos: 56.5,2.5
-      parent: 8364
-    - type: Label
-      currentLabel: Library Meeting
-    - type: NameModifier
-      baseName: holopad
-  - uid: 19029
-    components:
-    - type: MetaData
-      name: holopad (Brig)
-    - type: Transform
-      pos: -1.5,27.5
-      parent: 8364
-    - type: Label
-      currentLabel: Brig
-    - type: NameModifier
-      baseName: holopad
-  - uid: 19060
-    components:
-    - type: MetaData
-      name: holopad (Captain's Office)
-    - type: Transform
-      pos: 9.5,-14.5
-      parent: 8364
-    - type: Label
-      currentLabel: Captain's Office
-    - type: NameModifier
-      baseName: holopad
-  - uid: 19079
-    components:
-    - type: MetaData
-      name: holopad (AI Upload)
-    - type: Transform
-      pos: -0.5,-13.5
-      parent: 8364
-    - type: Label
-      currentLabel: AI Upload
-    - type: NameModifier
-      baseName: holopad
-  - uid: 22740
-    components:
-    - type: MetaData
-      name: holopad (Bridge)
-    - type: Transform
-      pos: -1.5,-7.5
-      parent: 8364
-    - type: Label
-      currentLabel: Bridge
-    - type: NameModifier
-      baseName: holopad
-  - uid: 23046
-    components:
-    - type: MetaData
-      name: holopad (Command Conference)
-    - type: Transform
-      pos: -10.5,-14.5
-      parent: 8364
-    - type: Label
-      currentLabel: Command Conference
-    - type: NameModifier
-      baseName: holopad
-  - uid: 23250
-    components:
-    - type: MetaData
-      name: holopad (HoP's Office)
-    - type: Transform
-      pos: -9.5,-23.5
-      parent: 8364
-    - type: Label
-      currentLabel: HoP's Office
-    - type: NameModifier
-      baseName: holopad
-  - uid: 23260
-    components:
-    - type: MetaData
-      name: holopad (Cargo)
-    - type: Transform
-      pos: -26.5,-23.5
-      parent: 8364
-    - type: Label
-      currentLabel: Cargo
-    - type: NameModifier
-      baseName: holopad
-  - uid: 25350
-    components:
-    - type: MetaData
-      name: holopad (QM's Office)
-    - type: Transform
-      pos: -32.5,-29.5
-      parent: 8364
-    - type: Label
-      currentLabel: QM's Office
-    - type: NameModifier
-      baseName: holopad
-  - uid: 26071
-    components:
-    - type: MetaData
-      name: holopad (Cargo Loading Dock)
-    - type: Transform
-      pos: -38.5,-29.5
-      parent: 8364
-    - type: Label
-      currentLabel: Cargo Loading Dock
-    - type: NameModifier
-      baseName: holopad
-  - uid: 27921
-    components:
-    - type: MetaData
-      name: holopad (Salvage)
-    - type: Transform
-      pos: -26.5,-34.5
-      parent: 8364
-    - type: Label
-      currentLabel: Salvage
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28084
-    components:
-    - type: MetaData
-      name: holopad (CE's Office)
-    - type: Transform
-      pos: -3.5,-64.5
-      parent: 8364
-    - type: Label
-      currentLabel: CE's Office
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28085
-    components:
-    - type: MetaData
-      name: holopad (Engineering Proper)
-    - type: Transform
-      pos: 2.5,-68.5
-      parent: 8364
-    - type: Label
-      currentLabel: Engineering Proper
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28086
-    components:
-    - type: MetaData
-      name: holopad (Engineering Locker Room)
-    - type: Transform
-      pos: 3.5,-62.5
-      parent: 8364
-    - type: Label
-      currentLabel: Engineering Locker Room
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28087
-    components:
-    - type: MetaData
-      name: holopad (Engineering Break Room)
-    - type: Transform
-      pos: 6.5,-53.5
-      parent: 8364
-    - type: Label
-      currentLabel: Engineering Break Room
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28090
-    components:
-    - type: MetaData
-      name: holopad (Engineering Front Desk)
-    - type: Transform
-      pos: 5.5,-42.5
-      parent: 8364
-    - type: Label
-      currentLabel: Engineering Front Desk
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28091
-    components:
-    - type: MetaData
-      name: holopad (Atmospherics)
-    - type: Transform
-      pos: 16.5,-56.5
-      parent: 8364
-    - type: Label
-      currentLabel: Atmospherics
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28092
-    components:
-    - type: MetaData
-      name: holopad (TEG)
-    - type: Transform
-      pos: 15.5,-73.5
-      parent: 8364
-    - type: Label
-      currentLabel: TEG
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28093
-    components:
-    - type: MetaData
-      name: holopad (Warden's Office)
-    - type: Transform
-      pos: 1.5,32.5
-      parent: 8364
-    - type: Label
-      currentLabel: Warden's Office
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28094
-    components:
-    - type: MetaData
-      name: holopad (Security Break Room)
-    - type: Transform
-      pos: 14.5,33.5
-      parent: 8364
-    - type: Label
-      currentLabel: Security Break Room
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28095
-    components:
-    - type: MetaData
-      name: holopad (HoS's Office)
-    - type: Transform
-      pos: 14.5,38.5
-      parent: 8364
-    - type: Label
-      currentLabel: HoS's Office
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28096
-    components:
-    - type: MetaData
-      name: holopad (Courtroom)
-    - type: Transform
-      pos: 15.5,25.5
-      parent: 8364
-    - type: Label
-      currentLabel: Courtroom
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28097
-    components:
-    - type: MetaData
-      name: holopad (Interrogation)
-    - type: Transform
-      pos: -14.5,32.5
-      parent: 8364
-    - type: Label
-      currentLabel: Interrogation
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28098
-    components:
-    - type: MetaData
-      name: holopad (Detective's Office)
-    - type: Transform
-      pos: -4.5,15.5
-      parent: 8364
-    - type: Label
-      currentLabel: Detective's Office
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28099
-    components:
-    - type: MetaData
-      name: holopad (Lawyer's Office)
-    - type: Transform
-      pos: -12.5,15.5
-      parent: 8364
-    - type: Label
-      currentLabel: Lawyer's Office
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28100
-    components:
-    - type: MetaData
-      name: holopad (EVA)
-    - type: Transform
-      pos: -11.5,4.5
-      parent: 8364
-    - type: Label
-      currentLabel: EVA
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28101
-    components:
-    - type: MetaData
-      name: holopad (Showroom)
-    - type: Transform
-      pos: 9.5,-26.5
-      parent: 8364
-    - type: Label
-      currentLabel: Showroom
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28102
-    components:
-    - type: MetaData
-      name: holopad (Chemistry)
-    - type: Transform
-      pos: 20.5,-19.5
-      parent: 8364
-    - type: Label
-      currentLabel: Chemistry
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28103
-    components:
-    - type: MetaData
-      name: holopad (Medical Front Desk)
-    - type: Transform
-      pos: 30.5,-20.5
-      parent: 8364
-    - type: Label
-      currentLabel: Medical Front Desk
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28104
-    components:
-    - type: MetaData
-      name: holopad (Medical Examination)
-    - type: Transform
-      pos: 31.5,-28.5
-      parent: 8364
-    - type: Label
-      currentLabel: Medical Examination
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28105
-    components:
-    - type: MetaData
-      name: holopad (Medical Cryogenics)
-    - type: Transform
-      pos: 31.5,-34.5
-      parent: 8364
-    - type: Label
-      currentLabel: Medical Cryogenics
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28106
-    components:
-    - type: MetaData
-      name: holopad (CMO's Office)
-    - type: Transform
-      pos: 35.5,-42.5
-      parent: 8364
-    - type: Label
-      currentLabel: CMO's Office
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28107
-    components:
-    - type: MetaData
-      name: holopad (Virology)
-    - type: Transform
-      pos: 42.5,-56.5
-      parent: 8364
-    - type: Label
-      currentLabel: Virology
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28108
-    components:
-    - type: MetaData
-      name: holopad (Bar)
-    - type: Transform
-      pos: 30.5,-5.5
-      parent: 8364
-    - type: Label
-      currentLabel: Bar
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28109
-    components:
-    - type: MetaData
-      name: holopad (Theatre)
-    - type: Transform
-      pos: 21.5,4.5
-      parent: 8364
-    - type: Label
-      currentLabel: Theatre
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28110
-    components:
-    - type: MetaData
-      name: holopad (Botany)
-    - type: Transform
-      pos: 46.5,-7.5
-      parent: 8364
-    - type: Label
-      currentLabel: Botany
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28112
-    components:
-    - type: MetaData
-      name: holopad (Library)
-    - type: Transform
-      pos: 59.5,-9.5
-      parent: 8364
-    - type: Label
-      currentLabel: Library
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28113
-    components:
-    - type: MetaData
-      name: holopad (Chapel)
-    - type: Transform
-      pos: 69.5,-6.5
-      parent: 8364
-    - type: Label
-      currentLabel: Chapel
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28114
-    components:
-    - type: MetaData
-      name: holopad (R&D)
-    - type: Transform
-      pos: 71.5,-22.5
-      parent: 8364
-    - type: Label
-      currentLabel: R&D
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28115
-    components:
-    - type: MetaData
-      name: holopad (Robotics)
-    - type: Transform
-      pos: 60.5,-21.5
-      parent: 8364
-    - type: Label
-      currentLabel: Robotics
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28116
-    components:
-    - type: MetaData
-      name: holopad (RD's Office)
-    - type: Transform
-      pos: 71.5,-36.5
-      parent: 8364
-    - type: Label
-      currentLabel: RD's Office
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28117
-    components:
-    - type: MetaData
-      name: holopad (North Artifacts)
-    - type: Transform
-      pos: 79.5,-24.5
-      parent: 8364
-    - type: Label
-      currentLabel: North Artifacts
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28118
-    components:
-    - type: MetaData
-      name: holopad (South Artifacts)
-    - type: Transform
-      pos: 75.5,-45.5
-      parent: 8364
-    - type: Label
-      currentLabel: South Artifacts
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28119
-    components:
-    - type: MetaData
-      name: holopad (Anomaly Lab)
-    - type: Transform
-      pos: 71.5,-51.5
-      parent: 8364
-    - type: Label
-      currentLabel: Anomaly Lab
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28120
-    components:
-    - type: MetaData
-      name: holopad (Kitchen)
-    - type: Transform
-      pos: 36.5,-8.5
-      parent: 8364
-    - type: Label
-      currentLabel: Kitchen
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28121
-    components:
-    - type: MetaData
-      name: holopad (Mailroom)
-    - type: Transform
-      pos: -21.5,-17.5
-      parent: 8364
-    - type: Label
-      currentLabel: Mailroom
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28122
-    components:
-    - type: MetaData
-      name: holopad (Morgue)
-    - type: Transform
-      pos: 44.5,-19.5
-      parent: 8364
-    - type: Label
-      currentLabel: Morgue
-    - type: NameModifier
-      baseName: holopad
   - uid: 28123
     components:
-    - type: MetaData
-      name: holopad (Perma)
     - type: Transform
-      pos: -7.5,49.5
+      pos: 33.5,-91.5
       parent: 8364
-    - type: Label
-      currentLabel: Perma
-    - type: NameModifier
-      baseName: holopad
+- proto: HolopadAiCore
+  entities:
   - uid: 28124
     components:
-    - type: MetaData
-      name: holopad (AI Sat Airlock)
-    - type: Transform
-      pos: 28.5,-80.5
-      parent: 8364
-    - type: Label
-      currentLabel: AI Sat Airlock
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28125
-    components:
-    - type: MetaData
-      name: holopad (AI Sat Lobby)
-    - type: Transform
-      pos: 28.5,-85.5
-      parent: 8364
-    - type: Label
-      currentLabel: AI Sat Lobby
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28126
-    components:
-    - type: MetaData
-      name: holopad (AI Core)
     - type: Transform
       pos: 28.5,-108.5
       parent: 8364
-    - type: Label
-      currentLabel: AI Core
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28127
-    components:
-    - type: MetaData
-      name: holopad (Tools)
-    - type: Transform
-      pos: -42.5,3.5
-      parent: 8364
-    - type: Label
-      currentLabel: Tools
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28128
-    components:
-    - type: MetaData
-      name: holopad (Security Arrivals Checkpoint)
-    - type: Transform
-      pos: -59.5,4.5
-      parent: 8364
-    - type: Label
-      currentLabel: Security Arrivals Checkpoint
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28129
-    components:
-    - type: MetaData
-      name: holopad (Vault)
-    - type: Transform
-      pos: -31.5,4.5
-      parent: 8364
-    - type: Label
-      currentLabel: Vault
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28130
-    components:
-    - type: MetaData
-      name: holopad (Janitor)
-    - type: Transform
-      pos: 4.5,-34.5
-      parent: 8364
-    - type: Label
-      currentLabel: Janitor
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28131
-    components:
-    - type: MetaData
-      name: holopad (Tech Vault)
-    - type: Transform
-      pos: -6.5,-36.5
-      parent: 8364
-    - type: Label
-      currentLabel: Tech Vault
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28134
-    components:
-    - type: MetaData
-      name: holopad (Telecoms)
-    - type: Transform
-      pos: -13.5,-53.5
-      parent: 8364
-    - type: Label
-      currentLabel: Telecoms
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28135
-    components:
-    - type: MetaData
-      name: holopad (Security Evac)
-    - type: Transform
-      pos: 79.5,-2.5
-      parent: 8364
-    - type: Label
-      currentLabel: Security Evac
-    - type: NameModifier
-      baseName: holopad
-  - uid: 28136
-    components:
-    - type: MetaData
-      name: holopad (Surgery)
-    - type: Transform
-      pos: 20.5,-35.5
-      parent: 8364
-    - type: Label
-      currentLabel: Surgery
-    - type: NameModifier
-      baseName: holopad
-- proto: HolopadLongRange
+- proto: HolopadAiEntrance
   entities:
-  - uid: 28088
+  - uid: 28122
     components:
-    - type: MetaData
-      name: long-range holopad (Cargo Loading Dock)
+    - type: Transform
+      pos: 28.5,-80.5
+      parent: 8364
+- proto: HolopadAiMain
+  entities:
+  - uid: 28099
+    components:
+    - type: Transform
+      pos: 28.5,-85.5
+      parent: 8364
+- proto: HolopadAiUpload
+  entities:
+  - uid: 19079
+    components:
+    - type: Transform
+      pos: -0.5,-13.5
+      parent: 8364
+- proto: HolopadCargoBay
+  entities:
+  - uid: 26071
+    components:
     - type: Transform
       pos: -38.5,-25.5
       parent: 8364
-    - type: Label
-      currentLabel: Cargo Loading Dock
-    - type: NameModifier
-      baseName: long-range holopad
-  - uid: 28089
+- proto: HolopadCargoBayLongRange
+  entities:
+  - uid: 28134
     components:
-    - type: MetaData
-      name: long-range holopad (Bridge)
+    - type: Transform
+      pos: -38.5,-29.5
+      parent: 8364
+- proto: HolopadCargoFront
+  entities:
+  - uid: 23260
+    components:
+    - type: Transform
+      pos: -26.5,-23.5
+      parent: 8364
+- proto: HolopadCargoMailroom
+  entities:
+  - uid: 28119
+    components:
+    - type: Transform
+      pos: -21.5,-17.5
+      parent: 8364
+- proto: HolopadCargoSalvageBay
+  entities:
+  - uid: 27921
+    components:
+    - type: Transform
+      pos: -26.5,-34.5
+      parent: 8364
+- proto: HolopadCommandBridge
+  entities:
+  - uid: 28135
+    components:
+    - type: Transform
+      pos: -1.5,-7.5
+      parent: 8364
+- proto: HolopadCommandBridgeLongRange
+  entities:
+  - uid: 22740
+    components:
     - type: Transform
       pos: 0.5,-7.5
       parent: 8364
-    - type: Label
-      currentLabel: Bridge
-    - type: NameModifier
-      baseName: long-range holopad
+- proto: HolopadCommandCaptain
+  entities:
+  - uid: 19060
+    components:
+    - type: Transform
+      pos: 9.5,-14.5
+      parent: 8364
+- proto: HolopadCommandCe
+  entities:
+  - uid: 28084
+    components:
+    - type: Transform
+      pos: -3.5,-64.5
+      parent: 8364
+- proto: HolopadCommandCmo
+  entities:
+  - uid: 28104
+    components:
+    - type: Transform
+      pos: 35.5,-42.5
+      parent: 8364
+- proto: HolopadCommandHop
+  entities:
+  - uid: 23250
+    components:
+    - type: Transform
+      pos: -9.5,-23.5
+      parent: 8364
+- proto: HolopadCommandHos
+  entities:
+  - uid: 28085
+    components:
+    - type: Transform
+      pos: 14.5,38.5
+      parent: 8364
+- proto: HolopadCommandMeetingRoom
+  entities:
+  - uid: 23046
+    components:
+    - type: Transform
+      pos: -10.5,-14.5
+      parent: 8364
+- proto: HolopadCommandQm
+  entities:
+  - uid: 25350
+    components:
+    - type: Transform
+      pos: -32.5,-29.5
+      parent: 8364
+- proto: HolopadCommandRd
+  entities:
+  - uid: 28114
+    components:
+    - type: Transform
+      pos: 71.5,-36.5
+      parent: 8364
+- proto: HolopadCommandVault
+  entities:
+  - uid: 28126
+    components:
+    - type: Transform
+      pos: -31.5,4.5
+      parent: 8364
+- proto: HolopadEngineeringAtmosMain
+  entities:
+  - uid: 28089
+    components:
+    - type: Transform
+      pos: 16.5,-56.5
+      parent: 8364
+- proto: HolopadEngineeringAtmosTeg
+  entities:
+  - uid: 28090
+    components:
+    - type: Transform
+      pos: 15.5,-73.5
+      parent: 8364
+- proto: HolopadEngineeringBreakroom
+  entities:
+  - uid: 28086
+    components:
+    - type: Transform
+      pos: 3.5,-62.5
+      parent: 8364
+  - uid: 28087
+    components:
+    - type: Transform
+      pos: 6.5,-53.5
+      parent: 8364
+- proto: HolopadEngineeringFront
+  entities:
+  - uid: 28088
+    components:
+    - type: Transform
+      pos: 5.5,-42.5
+      parent: 8364
+- proto: HolopadEngineeringMain
+  entities:
+  - uid: 28143
+    components:
+    - type: Transform
+      pos: -2.5,-69.5
+      parent: 8364
+- proto: HolopadEngineeringPower
+  entities:
+  - uid: 28142
+    components:
+    - type: Transform
+      pos: -24.5,-67.5
+      parent: 8364
+- proto: HolopadEngineeringStorage
+  entities:
+  - uid: 28141
+    components:
+    - type: Transform
+      pos: -11.5,-63.5
+      parent: 8364
+- proto: HolopadEngineeringTechVault
+  entities:
+  - uid: 28128
+    components:
+    - type: Transform
+      pos: -6.5,-36.5
+      parent: 8364
+- proto: HolopadEngineeringTelecoms
+  entities:
+  - uid: 28129
+    components:
+    - type: Transform
+      pos: -13.5,-53.5
+      parent: 8364
+- proto: HolopadGeneralCryosleep
+  entities:
+  - uid: 28106
+    components:
+    - type: Transform
+      pos: 24.5,18.5
+      parent: 8364
+- proto: HolopadGeneralDisposals
+  entities:
+  - uid: 28097
+    components:
+    - type: Transform
+      pos: -58.5,-18.5
+      parent: 8364
+- proto: HolopadGeneralEvac
+  entities:
+  - uid: 28145
+    components:
+    - type: Transform
+      pos: 81.5,-8.5
+      parent: 8364
+- proto: HolopadGeneralEVAStorage
+  entities:
+  - uid: 28144
+    components:
+    - type: Transform
+      pos: -11.5,7.5
+      parent: 8364
+- proto: HolopadGeneralLounge
+  entities:
+  - uid: 28146
+    components:
+    - type: Transform
+      pos: 12.5,9.5
+      parent: 8364
+- proto: HolopadGeneralTools
+  entities:
+  - uid: 28125
+    components:
+    - type: Transform
+      pos: -42.5,3.5
+      parent: 8364
+- proto: HolopadMedicalChemistry
+  entities:
+  - uid: 28100
+    components:
+    - type: Transform
+      pos: 20.5,-19.5
+      parent: 8364
+- proto: HolopadMedicalCryopods
+  entities:
+  - uid: 28103
+    components:
+    - type: Transform
+      pos: 31.5,-34.5
+      parent: 8364
+- proto: HolopadMedicalFront
+  entities:
+  - uid: 28101
+    components:
+    - type: Transform
+      pos: 30.5,-20.5
+      parent: 8364
+- proto: HolopadMedicalMedbay
+  entities:
+  - uid: 28102
+    components:
+    - type: Transform
+      pos: 31.5,-28.5
+      parent: 8364
+- proto: HolopadMedicalMorgue
+  entities:
+  - uid: 28120
+    components:
+    - type: Transform
+      pos: 44.5,-19.5
+      parent: 8364
+- proto: HolopadMedicalSurgery
+  entities:
+  - uid: 28131
+    components:
+    - type: Transform
+      pos: 20.5,-35.5
+      parent: 8364
+- proto: HolopadMedicalVirology
+  entities:
+  - uid: 28105
+    components:
+    - type: Transform
+      pos: 42.5,-56.5
+      parent: 8364
+- proto: HolopadScienceAnomaly
+  entities:
+  - uid: 28117
+    components:
+    - type: Transform
+      pos: 71.5,-51.5
+      parent: 8364
+- proto: HolopadScienceArtifactNorth
+  entities:
+  - uid: 28115
+    components:
+    - type: Transform
+      pos: 79.5,-24.5
+      parent: 8364
+- proto: HolopadScienceArtifactSouth
+  entities:
+  - uid: 28116
+    components:
+    - type: Transform
+      pos: 75.5,-45.5
+      parent: 8364
+- proto: HolopadScienceFront
+  entities:
+  - uid: 28112
+    components:
+    - type: Transform
+      pos: 72.5,-20.5
+      parent: 8364
+- proto: HolopadScienceRobotics
+  entities:
+  - uid: 28113
+    components:
+    - type: Transform
+      pos: 60.5,-21.5
+      parent: 8364
+- proto: HolopadSecurityArmory
+  entities:
+  - uid: 28138
+    components:
+    - type: Transform
+      pos: 1.5,38.5
+      parent: 8364
+- proto: HolopadSecurityArrivalsCheckpoint
+  entities:
+  - uid: 28130
+    components:
+    - type: Transform
+      pos: -59.5,4.5
+      parent: 8364
+- proto: HolopadSecurityBreakroom
+  entities:
+  - uid: 28092
+    components:
+    - type: Transform
+      pos: 14.5,33.5
+      parent: 8364
+- proto: HolopadSecurityBrig
+  entities:
+  - uid: 19029
+    components:
+    - type: Transform
+      pos: -1.5,27.5
+      parent: 8364
+- proto: HolopadSecurityBrigMed
+  entities:
+  - uid: 28139
+    components:
+    - type: Transform
+      pos: -8.5,31.5
+      parent: 8364
+- proto: HolopadSecurityCourtroom
+  entities:
+  - uid: 28094
+    components:
+    - type: Transform
+      pos: 15.5,25.5
+      parent: 8364
+- proto: HolopadSecurityDetective
+  entities:
+  - uid: 28098
+    components:
+    - type: Transform
+      pos: -4.5,15.5
+      parent: 8364
+- proto: HolopadSecurityEvacCheckpoint
+  entities:
+  - uid: 28136
+    components:
+    - type: Transform
+      pos: 79.5,-2.5
+      parent: 8364
+- proto: HolopadSecurityFront
+  entities:
+  - uid: 28093
+    components:
+    - type: Transform
+      pos: 1.5,23.5
+      parent: 8364
+- proto: HolopadSecurityInterrogation
+  entities:
+  - uid: 28095
+    components:
+    - type: Transform
+      pos: -14.5,32.5
+      parent: 8364
+- proto: HolopadSecurityLawyer
+  entities:
+  - uid: 28096
+    components:
+    - type: Transform
+      pos: -12.5,15.5
+      parent: 8364
+- proto: HolopadSecurityPerma
+  entities:
+  - uid: 28121
+    components:
+    - type: Transform
+      pos: -7.5,49.5
+      parent: 8364
+- proto: HolopadSecurityWarden
+  entities:
+  - uid: 28091
+    components:
+    - type: Transform
+      pos: 1.5,32.5
+      parent: 8364
+- proto: HolopadServiceBar
+  entities:
+  - uid: 28147
+    components:
+    - type: Transform
+      pos: 30.5,-5.5
+      parent: 8364
+- proto: HolopadServiceBotany
+  entities:
+  - uid: 28108
+    components:
+    - type: Transform
+      pos: 46.5,-7.5
+      parent: 8364
+- proto: HolopadServiceChapel
+  entities:
+  - uid: 28110
+    components:
+    - type: Transform
+      pos: 69.5,-5.5
+      parent: 8364
+- proto: HolopadServiceClownMime
+  entities:
+  - uid: 28107
+    components:
+    - type: Transform
+      pos: 21.5,4.5
+      parent: 8364
+- proto: HolopadServiceGameRoom
+  entities:
+  - uid: 4228
+    components:
+    - type: Transform
+      pos: 57.5,2.5
+      parent: 8364
+- proto: HolopadServiceJanitor
+  entities:
+  - uid: 28127
+    components:
+    - type: Transform
+      pos: 4.5,-34.5
+      parent: 8364
+- proto: HolopadServiceKitchen
+  entities:
+  - uid: 28118
+    components:
+    - type: Transform
+      pos: 36.5,-8.5
+      parent: 8364
+- proto: HolopadServiceLibrary
+  entities:
+  - uid: 28109
+    components:
+    - type: Transform
+      pos: 59.5,-8.5
+      parent: 8364
 - proto: HospitalCurtainsOpen
   entities:
   - uid: 2213
