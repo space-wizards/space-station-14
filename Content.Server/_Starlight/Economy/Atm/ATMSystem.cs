@@ -65,7 +65,7 @@ public sealed partial class ATMSystem : SharedATMSystem
     private void OnBeforeActivatableUIOpen(Entity<ATMComponent> ent, ref BeforeActivatableUIOpenEvent args)
     {
         if (HasComp<StationAiHeldComponent>(args.User))
-            return
+            return;
 
         var playerData = _playerRolesManager.GetPlayerData(args.User);
 
