@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: MisterMecky
-  changes:
-  - message: Changed strange pill possible reagents. They are no longer mostly composed
-      of amatoxin and space mirage.
-    type: Tweak
-  id: 7247
-  time: '2024-08-29T13:21:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30524
 - author: slarticodefast
   changes:
   - message: Fixed energy shield visuals.
@@ -3938,3 +3930,10 @@
   id: 7746
   time: '2024-12-21T06:45:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33598
+- author: muburu
+  changes:
+  - message: Space Ninjas now have silent footsteps.
+    type: Tweak
+  id: 7747
+  time: '2024-12-23T14:24:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33280
