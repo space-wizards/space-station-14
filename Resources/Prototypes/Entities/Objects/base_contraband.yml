@@ -8,6 +8,16 @@
     # no one should be carrying this around visibly!
     allowedDepartments: null
 
+# non-stealth spider clan stuff
+- type: entity
+  id: BaseSpiderclanContraband
+  abstract: true
+  components:
+  - type: Contraband
+    severity: SpiderClan
+    # no one should be carrying this around visibly!
+    allowedDepartments: null
+
 # minor contraband not departmentally restricted -- improvised weapons etc
 - type: entity
   id: BaseMinorContraband
