@@ -41,10 +41,10 @@ namespace Content.IntegrationTests.Tests
                 mapSystem.CreateMap(out var mapId0);
                 var grid0 = mapManager.CreateGridEntity(mapId0);
                 entManager.RunMapInit(grid0.Owner, entManager.GetComponent<MetaDataComponent>(grid0));
-                mapLoader.SaveGrid(grid0.Owner, rp1);
+                Assert.That(mapLoader.TrySaveGrid(grid0.Owner, rp1));
                 mapSystem.CreateMap(out var mapId1);
                 Assert.That(mapLoader.TryLoadGrid(mapId1, rp1, out var grid1));
-                mapLoader.SaveGrid(grid1!.Value, rp2);
+                Assert.That(mapLoader.TrySaveGrid(grid1!.Value, rp2));
             });
 
             await server.WaitIdleAsync();
@@ -116,7 +116,7 @@ namespace Content.IntegrationTests.Tests
                 var path = new ResPath(TestMap);
                 Assert.That(mapLoader.TryLoadMap(path, out var map, out _), $"Failed to load test map {TestMap}");
                 mapId = map!.Value.Comp.MapId;
-                mapLoader.SaveMap(mapId, rp1);
+                Assert.That(mapLoader.TrySaveMap(mapId, rp1));
             });
 
             // Run 5 ticks.
@@ -124,7 +124,7 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitPost(() =>
             {
-                mapLoader.SaveMap(mapId, rp2);
+                Assert.That(mapLoader.TrySaveMap(mapId, rp2));
             });
 
             await server.WaitIdleAsync();
@@ -196,8 +196,8 @@ namespace Content.IntegrationTests.Tests
 
             MapId mapId1 = default;
             MapId mapId2 = default;
-            const string fileA = "/load tick load a.yml";
-            const string fileB = "/load tick load b.yml";
+            var fileA = new ResPath("/load tick load a.yml");
+            var fileB = new ResPath("/load tick load b.yml");
             string yamlA;
             string yamlB;
 
@@ -207,11 +207,11 @@ namespace Content.IntegrationTests.Tests
                 var path = new ResPath(TestMap);
                 Assert.That(mapLoader.TryLoadMap(path, out var map, out _), $"Failed to load test map {TestMap}");
                 mapId1 = map!.Value.Comp.MapId;
-                mapLoader.SaveMap(mapId1, fileA);
+                Assert.That(mapLoader.TrySaveMap(mapId1, fileA));
             });
 
             await server.WaitIdleAsync();
-            await using (var stream = userData.Open(new ResPath(fileA), FileMode.Open))
+            await using (var stream = userData.Open(fileA, FileMode.Open))
             using (var reader = new StreamReader(stream))
             {
                 yamlA = await reader.ReadToEndAsync();
@@ -225,12 +225,12 @@ namespace Content.IntegrationTests.Tests
                 var path = new ResPath(TestMap);
                 Assert.That(mapLoader.TryLoadMap(path, out var map, out _), $"Failed to load test map {TestMap}");
                 mapId2 = map!.Value.Comp.MapId;
-                mapLoader.SaveMap(mapId2, fileB);
+                Assert.That(mapLoader.TrySaveMap(mapId2, fileB));
             });
 
             await server.WaitIdleAsync();
 
-            await using (var stream = userData.Open(new ResPath(fileB), FileMode.Open))
+            await using (var stream = userData.Open(fileB, FileMode.Open))
             using (var reader = new StreamReader(stream))
             {
                 yamlB = await reader.ReadToEndAsync();
@@ -253,10 +253,10 @@ namespace Content.IntegrationTests.Tests
             public bool Enabled;
             public override void Initialize()
             {
-                SubscribeLocalEvent<AfterSaveEvent>(OnAfterSave);
+                SubscribeLocalEvent<AfterSerializationEvent>(OnAfterSave);
             }
 
-            private void OnAfterSave(AfterSaveEvent ev)
+            private void OnAfterSave(AfterSerializationEvent ev)
             {
                 if (!Enabled)
                     return;

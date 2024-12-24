@@ -170,12 +170,12 @@ namespace Content.IntegrationTests.Tests
 
             // First check that a pre-init version passes
             var path = new ResPath($"{nameof(NoSavedPostMapInitTest)}.yml");
-            loader.SaveMap(id, path);
+            Assert.That(loader.TrySaveMap(id, path));
             Assert.That(IsPreInit(path, loader, deps));
 
             // and the post-init version fails.
             await server.WaitPost(() => mapSys.InitializeMap(id));
-            loader.SaveMap(id, path);
+            Assert.That(loader.TrySaveMap(id, path));
             Assert.That(IsPreInit(path, loader, deps), Is.False);
 
             await pair.CleanReturnAsync();

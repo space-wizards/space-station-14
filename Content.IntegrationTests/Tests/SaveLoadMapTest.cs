@@ -48,8 +48,8 @@ namespace Content.IntegrationTests.Tests
                     mapSystem.SetTile(mapGrid, new Vector2i(0, 0), new Tile(2, (TileRenderFlag) 1, 254));
                 }
 
-                Assert.Multiple(() => mapLoader.SaveMap(mapId, mapPath));
-                Assert.Multiple(() => mapSystem.DeleteMap(mapId));
+                Assert.That(mapLoader.TrySaveMap(mapId, mapPath));
+                mapSystem.DeleteMap(mapId);
             });
 
             await server.WaitIdleAsync();

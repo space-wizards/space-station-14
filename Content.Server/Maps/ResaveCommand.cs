@@ -62,11 +62,11 @@ public sealed class ResaveCommand : LocalizedCommands
 
             if (_entManager.HasComponent<LoadedMapComponent>(map))
             {
-                loader.SaveMap(map.Comp.MapId, fn);
+                loader.TrySaveMap(map.Comp.MapId, fn);
             }
             else if (result.Grids.Count == 1)
             {
-                loader.SaveGrid(result.Grids.First(), fn);
+                loader.TrySaveGrid(result.Grids.First(), fn);
             }
             else
             {

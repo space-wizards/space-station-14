@@ -67,10 +67,10 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 
         SubscribeLocalEvent<DeviceListComponent, ComponentRemove>(OnComponentRemoved);
 
-        SubscribeLocalEvent<BeforeSaveEvent>(OnMapSave);
+        SubscribeLocalEvent<BeforeSerializationEvent>(OnMapSave);
     }
 
-    private void OnMapSave(BeforeSaveEvent ev)
+    private void OnMapSave(BeforeSerializationEvent ev)
     {
         var enumerator = AllEntityQuery<NetworkConfiguratorComponent>();
         while (enumerator.MoveNext(out var uid, out var conf))

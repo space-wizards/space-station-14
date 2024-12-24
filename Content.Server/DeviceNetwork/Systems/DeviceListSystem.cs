@@ -20,7 +20,7 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
         SubscribeLocalEvent<DeviceListComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<DeviceListComponent, BeforeBroadcastAttemptEvent>(OnBeforeBroadcast);
         SubscribeLocalEvent<DeviceListComponent, BeforePacketSentEvent>(OnBeforePacketSent);
-        SubscribeLocalEvent<BeforeSaveEvent>(OnMapSave);
+        SubscribeLocalEvent<BeforeSerializationEvent>(OnMapSave);
     }
 
     private void OnShutdown(EntityUid uid, DeviceListComponent component, ComponentShutdown args)
@@ -124,7 +124,7 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
         Dirty(list);
     }
 
-    private void OnMapSave(BeforeSaveEvent ev)
+    private void OnMapSave(BeforeSerializationEvent ev)
     {
         List<EntityUid> toRemove = new();
         var query = GetEntityQuery<TransformComponent>();

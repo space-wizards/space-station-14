@@ -78,7 +78,7 @@ public sealed class MappingSystem : EntitySystem
             var path = Path.Combine(saveDir, $"{DateTime.Now.ToString("yyyy-M-dd_HH.mm.ss")}-AUTO.yml");
             _currentlyAutosaving[map] = (CalculateNextTime(), name);
             Log.Info($"Autosaving map {name} ({map}) to {path}. Next save in {ReadableTimeLeft(map)} seconds.");
-            _loader.SaveMap(map, path);
+            _loader.TrySaveMap(map, new ResPath(path));
         }
     }
 
