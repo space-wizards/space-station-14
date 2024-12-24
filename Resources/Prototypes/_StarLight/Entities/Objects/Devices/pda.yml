@@ -8,8 +8,8 @@
     id: RoboticistIDCard
     state: pda-roboticist
   - type: PdaBorderColor
-    borderColor: "#d7d7d0"
-    accentVColor: "#8900c9"
+    borderColor: "#363636"
+    accentVColor: "#d33725"
   - type: Icon
     state: pda-roboticist
   - type: HealthAnalyzer
@@ -52,7 +52,8 @@
         tags:
         - Write
   - type: PdaBorderColor
-    borderColor: "#7C5D00"
+    borderColor: "#1c1c1c"
+    accentHColor: "#ffce5b"
   - type: Icon
     state: pda-ntrep
     
