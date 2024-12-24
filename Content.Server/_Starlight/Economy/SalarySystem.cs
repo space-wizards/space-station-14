@@ -13,6 +13,8 @@ using Content.Shared.Chat;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Content.Shared.Mind;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Pinpointer;
 using Content.Shared.Roles;
 using Content.Shared.Stacks;
@@ -31,6 +33,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Starlight.Economy;
 public sealed partial class SalarySystem : SharedSalarySystem
 {
+    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPlayerRolesManager _playerRolesManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IGameTiming _time = default!;
@@ -65,6 +68,10 @@ public sealed partial class SalarySystem : SharedSalarySystem
                     _lastSalary.Add(query.Current.Session, _time.CurTime);
                     continue;
                 }
+                if (!_entityManager.TryGetComponent<MobStateComponent>(query.Current.Session.AttachedEntity, out var state) 
+                    || state.CurrentState == MobState.Critical 
+                    || state.CurrentState == MobState.Dead)
+                    continue;
                 if (_time.CurTime - lastTime > TimeSpan.FromMinutes(15)
                     && _mind.TryGetMind(query.Current.Session.UserId, out var mind))
                 {
