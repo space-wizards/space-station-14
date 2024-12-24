@@ -68,12 +68,13 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
         }
 
         // Remove name not allowed.
-        if (!roleProto.CanCustomiseName)
+        if (!roleProto.CanCustomizeName)
         {
             EntityName = null;
         }
 
         // Validate name length
+        // TODO: Probably allow regex to be supplied?
         if (EntityName != null)
         {
             var name = EntityName.Trim();
@@ -81,6 +82,11 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
             if (name.Length > HumanoidCharacterProfile.MaxNameLength)
             {
                 EntityName = name[..HumanoidCharacterProfile.MaxNameLength];
+            }
+
+            if (name.Length == 0)
+            {
+                EntityName = null;
             }
         }
 

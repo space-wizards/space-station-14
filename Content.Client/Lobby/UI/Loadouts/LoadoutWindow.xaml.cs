@@ -29,7 +29,7 @@ public sealed partial class LoadoutWindow : FancyWindow
         RoleNameEdit.IsValid = text => text.Length <= HumanoidCharacterProfile.MaxLoadoutNameLength;
 
         // Hide if we can't edit the name.
-        if (!proto.CanCustomiseName)
+        if (!proto.CanCustomizeName)
         {
             RoleNameBox.Visible = false;
         }

@@ -27,8 +27,14 @@
 
 # Silicons
 - type: roleLoadout
+  id: JobBorg
+  nameDataset: names_borg
+  canCustomizeName: true
+
+- type: roleLoadout
   id: JobStationAi
   nameDataset: NamesAI
+  canCustomizeName: true
 
 # Civilian
 - type: roleLoadout

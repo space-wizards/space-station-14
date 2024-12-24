@@ -68,7 +68,7 @@ public abstract class SharedStationSpawningSystem : EntitySystem
     {
         string? name = null;
 
-        if (roleProto.CanCustomiseName)
+        if (roleProto.CanCustomizeName)
         {
             name = loadout.EntityName;
         }
