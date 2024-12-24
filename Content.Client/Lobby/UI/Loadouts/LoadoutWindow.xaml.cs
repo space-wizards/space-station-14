@@ -41,7 +41,7 @@ public sealed partial class LoadoutWindow : FancyWindow
             var random = collection.Resolve<IRobustRandom>();
 
             // Pick a random name if we use a dataset.
-            if (name == null && protoManager.TryIndex(proto.NameDataset, out var nameData))
+            if (string.IsNullOrEmpty(name) && protoManager.TryIndex(proto.NameDataset, out var nameData))
             {
                 RoleNameEdit.PlaceHolder = random.Pick(nameData);
             }
