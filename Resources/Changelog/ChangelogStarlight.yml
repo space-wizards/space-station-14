@@ -1353,4 +1353,32 @@ Entries:
   id: 192
   time: '2024-12-22T07:58:15.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/182
+- author: Clone0401
+  changes:
+  - message: Cyborgs now have a law 0 requiring them to follow AI orders
+    type: Tweak
+  id: 193
+  time: '2024-12-24T09:05:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/178
+- author: Rinary
+  changes:
+  - message: Now zero law can't be said.
+    type: Tweak
+  id: 194
+  time: '2024-12-24T09:30:14.524039+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Now emagged law replaces zero law.
+    type: Tweak
+  id: 195
+  time: '2024-12-24T09:30:36.056046+00:00'
+  url: 'null'
+- author: PubliclyExecutedPig
+  changes:
+  - message: Temporarily removed syndicate expeditions from salvage
+    type: Remove
+  id: 196
+  time: '2024-12-24T10:51:02.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/186
 

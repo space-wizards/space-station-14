@@ -24,6 +24,7 @@ using Content.Server.ServerInfo;
 using Content.Server.ServerUpdates;
 using Content.Server.Starlight.TextToSpeech;
 using Content.Server.Voting.Managers;
+using Content.Server.Holiday;
 using Content.Shared.CCVar;
 using Content.Shared.Kitchen;
 using Content.Shared.Localizations;
@@ -116,6 +117,7 @@ namespace Content.Server.Entry
 
                 //🌟Starlight🌟
                 IoCManager.Resolve<ITTSManager>().Initialize();
+                IoCManager.Resolve<HolidaySystem>().Initialize();
             }
         }
 

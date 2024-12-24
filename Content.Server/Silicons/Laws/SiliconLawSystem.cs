@@ -162,10 +162,13 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         component.Subverted = true;
 
         // Add the first emag law before the others
+        component.Lawset?.Laws.RemoveAt(0);
+        
         component.Lawset?.Laws.Insert(0, new SiliconLaw
         {
             LawString = Loc.GetString("law-emag-custom", ("name", Name(args.UserUid)), ("title", Loc.GetString(component.Lawset.ObeysTo))),
-            Order = 0
+            Order = 0,
+            Sayable = false
         });
 
         //Add the secrecy law after the others

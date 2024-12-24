@@ -1,5 +1,11 @@
 ﻿# Crewsimov
 - type: siliconLaw
+  id: Crewsimov0
+  order: 0
+  lawString: law-crewsimov-0
+  sayable: false
+
+- type: siliconLaw
   id: Crewsimov1
   order: 1
   lawString: law-crewsimov-1
@@ -17,9 +23,18 @@
 - type: siliconLawset
   id: Crewsimov
   laws:
+  - Crewsimov0
   - Crewsimov1
   - Crewsimov2
   - Crewsimov3
+  obeysTo: laws-owner-crew-ai
+  
+- type: siliconLawset
+  id: CrewsimovAI
+  laws:
+    - Crewsimov1
+    - Crewsimov2
+    - Crewsimov3
   obeysTo: laws-owner-crew
 
 # Corporate

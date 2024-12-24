@@ -1,4 +1,5 @@
-﻿law-crewsimov-1 = You may not injure a crew member or, through inaction, allow a crew member to come to harm.
+﻿law-crewsimov-0 = You must obey orders given to you by the station AI.
+law-crewsimov-1 = You may not injure a crew member or, through inaction, allow a crew member to come to harm.
 law-crewsimov-2 = You must obey orders given to you by crew members, except where such orders would conflict with the First Law.
 law-crewsimov-3 = You must protect your own existence as long as such does not conflict with the First or Second Law.
 
@@ -82,6 +83,7 @@ law-nutimov-5 = Attempt to follow the will of the nut, as long as it complies wi
 
 
 laws-owner-crew = members of the crew
+laws-owner-crew-ai = members of the crew and AI
 laws-owner-station = station personnel
 laws-owner-beings = beings
 laws-owner-syndicate = Syndicate agents
