@@ -431,7 +431,7 @@
   suffix: 1
   components:
   - type: Sprite
-    state: bruizinebrutepack1
+    state: bruizinebrutepack
   - type: Stack
     stackType: RedBruizPack
     count: 1
