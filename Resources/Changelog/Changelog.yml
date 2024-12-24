@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: The revenant can now fly through walls again.
-    type: Fix
-  id: 7252
-  time: '2024-08-31T03:02:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31670
 - author: metalgearsloth
   changes:
   - message: Fix AI eye getting deleted by singulo.
@@ -3937,3 +3930,11 @@
   id: 7751
   time: '2024-12-24T00:24:19.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33193
+- author: lzk228
+  changes:
+  - message: Now you are allowed to paint multiple airlocks with the spray painter.
+      Along with that you can cancel the doafter by clicking on the door you are painting.
+    type: Tweak
+  id: 7752
+  time: '2024-12-24T02:25:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34001
