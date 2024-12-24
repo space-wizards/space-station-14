@@ -7,7 +7,8 @@ desc = "Unofficial server for fans of RTVS featuring custom content. Come and se
 lobbyduration = 300
 
 [server]
-# rules_file = "ImpstationRuleset" # TODO
+# TODO
+# rules_file = "ImpstationRuleset"
 uptime_restart_minutes = 240
 
 [chat]
@@ -16,7 +17,9 @@ motd = "Be sure to fill out the Impstation rules survey, found in the impstation
 
 [ic]
 flavor_text = true
-restricted_names = false # allows for use of nonalphanumeric characters in names. immediately going off if people get stupid with it.
+# allows for use of nonalphanumeric characters in names.
+# immediately going off if people get stupid with it.
+restricted_names = false
 
 [interaction]
 # defaults
@@ -33,7 +36,9 @@ website = "https://impstation.gay"
 bug_report = "https://github.com/impstation/imp-station-14/issues"
 
 [shuttle]
-emergency_early_launch_allowed = true # allows for early shuttle launch with approval of 3 heads
+# allows for early shuttle launch with approval of 3 heads
+emergency_early_launch_allowed = true
 
 [ghost]
-role_time = 10 # sets time before ghost role buttons enable, so people hopefully Actually Read
+# sets time before ghost role buttons enable, so people hopefully Actually Read
+role_time = 10
