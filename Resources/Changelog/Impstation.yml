@@ -1,77 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Changed the appearance of the space ninja's equipment.
-    type: Tweak
-  id: 291
-  time: '2024-10-01T02:26:46.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/380
-- author: TheGrimbeeper
-  changes:
-  - message: can no longer trigger a depth 4+ artifact by wrenching (forced to wrench
-      off scanner, and unwrench to put back on scanner - so had to potentially trigger
-      the next node -> tesloose on core)
-    type: Remove
-  - message: added two other copies of lower triggers that are less (potentially)
-      unavoidably destructive
-    type: Add
-  id: 292
-  time: '2024-10-01T02:27:26.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/379
-- author: hivehum
-  changes:
-  - message: Oculine requires blood again.
-    type: Tweak
-  id: 293
-  time: '2024-10-01T02:28:50.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/374
-- author: hivehum
-  changes:
-  - message: FUUUUUUUUUCCCCCCCCCCCCCCCCKKKKKKKKKKK AHHHHHHHHHHHHHHHHHHHHHHHHHHHH AAAAAAAAAAAAAAAAAAAAAAAAA
-    type: Tweak
-  id: 294
-  time: '2024-10-01T02:28:48.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/376
-- author: hivehum
-  changes:
-  - message: Added a use for hormones.
-    type: Add
-  id: 295
-  time: '2024-10-01T02:27:55.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/378
-- author: sususuyo
-  changes:
-  - message: Added new nuke tracks and a couple new lobby tracks!
-    type: Add
-  - message: Extended a certain nuke track slightly longer
-    type: Tweak
-  id: 296
-  time: '2024-10-01T02:30:41.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/373
-- author: formlessnameless
-  changes:
-  - message: Bumped Frezon sell price up a bit more after some playtesting has occurred
-    type: Tweak
-  id: 297
-  time: '2024-10-01T02:41:47.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/381
-- author: crekulon
-  changes:
-  - message: new arachnid silk craftables including gloves, hats, dresses, scarves,
-      loungewear, and a web bookcases!
-    type: Add
-  id: 298
-  time: '2024-10-01T03:30:38.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/382
-- author: Pinkbat5
-  changes:
-  - message: Most species can now wear undergarments as markings.
-    type: Add
-  - message: Slimes can now have tattoos.
-    type: Add
-  id: 299
-  time: '2024-10-01T06:29:09.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/384
 - author: Pinkbat5, AirFryerBuyOneGetOneFree
   changes:
   - message: You can now tie jumpsuits around your waist, slut style.
@@ -4516,3 +4443,76 @@
   id: 790
   time: '2024-12-22T15:17:27.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1081
+- author: kipdotnet
+  changes:
+  - message: Added the artistic borg module. Please be nice with this so I dont have
+      to nerf it
+    type: Add
+  id: 791
+  time: '2024-12-24T09:38:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1100
+- author: kipdotnet
+  changes:
+  - message: Added A new derelict!
+    type: Add
+  - message: Roundstart derelicts now spawn a range of 3-4, instead of just a flat
+      2.
+    type: Tweak
+  id: 792
+  time: '2024-12-24T09:41:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1103
+- author: honeyed-lemons
+  changes:
+  - message: Listening Post and Box mapping changes
+    type: Tweak
+  - message: Listening Post Operatives spawn with an Agent ID
+    type: Tweak
+  id: 793
+  time: '2024-12-24T09:42:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1104
+- author: TheGrimbeeper
+  changes:
+  - message: Rat Servants will no longer be smart enough to understand that pointing
+      near a locker means attack the person IN the locker.
+    type: Fix
+  id: 794
+  time: '2024-12-24T09:43:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1105
+- author: widgetbeck
+  changes:
+  - message: Reduced the event weight of mass hallucinations.
+    type: Tweak
+  id: 795
+  time: '2024-12-24T09:48:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1109
+- author: EpicToast
+  changes:
+  - message: Updates to Atlas, Cluster, Saltern and Train. See PR for full changelog.
+    type: Add
+  id: 796
+  time: '2024-12-24T09:49:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1110
+- author: DinnerCalzone
+  changes:
+  - message: Bagel, Cog, Hummingbird, Marathon, Omega, and Origin have been updated
+      to include recent mapping content updates.
+    type: Add
+  id: 797
+  time: '2024-12-24T09:47:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1108
+- author: TheGrimbeeper
+  changes:
+  - message: new artifact effect, learned from spooky ghosties
+    type: Add
+  id: 798
+  time: '2024-12-24T09:46:40.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1106
+- author: AftrLite
+  changes:
+  - message: Medkit & Seclite sprite adjustments based on feedback.
+    type: Tweak
+  - message: Atmospheric Gases now have new animation sprites!
+    type: Tweak
+  id: 799
+  time: '2024-12-24T09:50:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1111
