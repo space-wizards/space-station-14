@@ -741,7 +741,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 6
+        maxVol: 18
         reagents:
         - ReagentId: Protein
           Quantity: 9
@@ -789,7 +789,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 5
+        maxVol: 8
         reagents:
         - ReagentId: Nutriment
           Quantity: 2

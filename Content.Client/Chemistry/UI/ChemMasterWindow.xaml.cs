@@ -152,12 +152,11 @@ namespace Content.Client.Chemistry.UI
 
             UpdateDosageFields(castState);
         }
-
         //assign default values for pill and bottle fields.
         private void UpdateDosageFields(ChemMasterBoundUserInterfaceState castState)
         {
             var output = castState.OutputContainerInfo;
-            var remainingCapacity = output is null ? 0 : (output.MaxVolume - output.CurrentVolume).Int();
+            var remainingCapacity = output is null ?    0 : (output.MaxVolume - output.CurrentVolume).Int();
             var holdsReagents = output?.Reagents != null;
             var pillNumberMax = holdsReagents ? 0 : remainingCapacity;
             var bottleAmountMax = holdsReagents ? remainingCapacity : 0;
@@ -303,7 +302,7 @@ namespace Content.Client.Chemistry.UI
             }
         }
         /// <summary>
-        /// Take reagent/entity data and present rows, labels, and buttons appropriately.
+        /// Take reagent/entity data and present rows, labels, and buttons appropriately. todo sprites?
         /// </summary>
         private Control BuildReagentRow(Color reagentColor, int rowCount, string name, ReagentId reagent, FixedPoint2 quantity, bool isBuffer, bool addReagentButtons)
         {
