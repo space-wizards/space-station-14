@@ -146,7 +146,7 @@
   description: Uses a special blend of pyrazine and aloe to treat severe burns. Does nothing for caustic.
   parent: BaseHealingItem
   id: RedOintment
-  suffix: Full
+  suffix: 20
   components:
   - type: Tag
     tags:
@@ -169,4 +169,30 @@
       path: "/Audio/Items/Medical/ointment_end.ogg"
   - type: Stack
     stackType: Ointment
+    count: 20
+
+- type: entity
+  name: red ointment
+  description: Uses a special blend of pyrazine and aloe to treat severe burns. Does nothing for caustic. Partially used..
+  parent: RedOintment
+  id: RedOintment10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: blueointment2
+  - type: Stack
+    stackType: Blueointment
     count: 10
+
+- type: entity
+  name: red ointment
+  description: Uses a special blend of pyrazine and aloe to treat severe burns. Does nothing for caustic. Gotta really squeeze for that last bit.
+  parent: RedOintment
+  id: RedOintment1
+  suffix: 1
+  components:
+  - type: Sprite
+    state: blueointment
+  - type: Stack
+    stackType: Blueointment
+    count: 1
