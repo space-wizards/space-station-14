@@ -25,6 +25,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Mobs;
 using Robust.Shared.Timing;
+using Content.Shared.Construction.Components;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -176,7 +177,8 @@ public sealed partial class RevenantAnimatedSystem : EntitySystem
 
     public bool CanAnimateObject(EntityUid target)
     {
-        return !(HasComp<MindContainerComponent>(target) || HasComp<HTNComponent>(target) || HasComp<RevenantAnimatedComponent>(target));
+        return !(HasComp<AnchorableComponent>(target) || HasComp<MindContainerComponent>(target)
+            || HasComp<HTNComponent>(target) || HasComp<RevenantAnimatedComponent>(target));
     }
 
     public bool TryAnimateObject(EntityUid target, TimeSpan? duration = null, Entity<RevenantComponent>? revenant = null)
