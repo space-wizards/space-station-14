@@ -152,7 +152,7 @@
     tags:
     - Ointment
   - type: Sprite
-    state: ointment
+    state: redointment3
   - type: Item
     heldPrefix: ointment
   - type: Healing
@@ -179,9 +179,9 @@
   suffix: 10
   components:
   - type: Sprite
-    state: blueointment2
+    state: redointment2
   - type: Stack
-    stackType: Blueointment
+    stackType: RedOintment
     count: 10
 
 - type: entity
@@ -192,7 +192,7 @@
   suffix: 1
   components:
   - type: Sprite
-    state: blueointment
+    state: redointment
   - type: Stack
-    stackType: Blueointment
+    stackType: RedOintment
     count: 1
