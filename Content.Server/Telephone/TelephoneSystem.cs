@@ -214,7 +214,8 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         source.Comp.LinkedTelephones.Add(receiver);
         source.Comp.Muted = options?.MuteSource == true;
 
-        receiver.Comp.LastCallerId = GetNameAndJobOfCallingEntity(user, source); // This will be networked when the state changes
+        var callerInfo = GetNameAndJobOfCallingEntity(user);
+        receiver.Comp.LastCallerId = (callerInfo.Item1, callerInfo.Item2, Name(source)); // This will be networked when the state changes
         receiver.Comp.LinkedTelephones.Add(source);
         receiver.Comp.Muted = options?.MuteReceiver == true;
 
@@ -401,7 +402,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         }
     }
 
-    private (string?, string?, string) GetNameAndJobOfCallingEntity(EntityUid uid, EntityUid source)
+    private (string?, string?) GetNameAndJobOfCallingEntity(EntityUid uid)
     {
         string? presumedName = null;
         string? presumedJob = null;
@@ -409,7 +410,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         if (HasComp<StationAiHeldComponent>(uid) || HasComp<BorgChassisComponent>(uid))
         {
             presumedName = Name(uid);
-            return (presumedName, presumedJob, Name(source));
+            return (presumedName, presumedJob);
         }
 
         if (_idCardSystem.TryFindIdCard(uid, out var idCard))
@@ -418,7 +419,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
             presumedJob = idCard.Comp.LocalizedJobTitle;
         }
 
-        return (presumedName, presumedJob, Name(source));
+        return (presumedName, presumedJob);
     }
 
     public bool IsSourceAbleToReachReceiver(Entity<TelephoneComponent> source, Entity<TelephoneComponent> receiver)
