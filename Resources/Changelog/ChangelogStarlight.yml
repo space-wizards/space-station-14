@@ -1381,4 +1381,52 @@ Entries:
   id: 196
   time: '2024-12-24T10:51:02.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/186
-
+- author: Rinary
+  changes:
+  - message: Fixed christmas map pool, now it working correct.
+    type: Fix
+  id: 197
+  time: '2024-12-24T16:11:12.335557+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed ai atm using.
+    type: Fix
+  id: 198
+  time: '2024-12-24T16:11:25.359142+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed bible spamming on vampires.
+    type: Fix
+  id: 199
+  time: '2024-12-24T16:11:37.894731+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed salary paid after cryo, death.
+    type: Fix
+  id: 200
+  time: '2024-12-24T16:12:14.660142+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed iaa salary.
+    type: Fix
+  id: 201
+  time: '2024-12-24T16:12:33.822981+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed boneshard texture
+    type: Fix
+  id: 202
+  time: '2024-12-24T16:12:46.283271+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Fixed roboticist bag.
+    type: Fix
+  id: 203
+  time: '2024-12-24T16:13:03.516882+00:00'
+  url: 'null'

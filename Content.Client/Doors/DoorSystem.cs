@@ -1,8 +1,10 @@
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
+using Content.Shared.Electrocution;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
+using Robust.Shared.Utility;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Client.Doors;
@@ -65,6 +67,19 @@ public sealed class DoorSystem : SharedDoorSystem
                 }
             },
         };
+        
+        if (!TryComp<SpriteComponent>(ent, out var sprite))
+            return;
+            
+        if (sprite.BaseRSI?.TryGetState("electrified", out var state) ?? true)
+            return;
+            
+        var index = sprite.LayerMapReserveBlank("electrified");
+
+        sprite.LayerSetRSI(index, "/Textures/Interface/Misc/ai_hud.rsi");
+        sprite.LayerSetState(index, "electrified");
+        sprite.LayerSetVisible(index, false);
+        sprite.LayerMapSet(ElectrifiedLayers.HUD, index);
     }
 
     private void OnAppearanceChange(EntityUid uid, DoorComponent comp, ref AppearanceChangeEvent args)
