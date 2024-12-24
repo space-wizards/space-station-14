@@ -276,7 +276,7 @@
     tags:
     - Brutepack
   - type: Sprite
-    state: puncturaseredbrutepack
+    state: puncturaseredbrutepack3
   - type: Item
     heldPrefix: puncturaseredbrutepack
   - type: Healing
@@ -292,6 +292,32 @@
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
     healingEndSound:
       path: "/Audio/Items/Medical/brutepack_end.ogg"
+  - type: Stack
+    stackType: RedPunctPack
+    count: 20
+
+- type: entity
+  name: red punct-laced brute pack
+  description: Specalized mixture of Puncturase and Security-Quality Red Goo. Best used for bullet-wounds, as it is much less effective on other types of damage.
+  parent: RedPunctPack
+  id: RedPunctPack1
+  suffix: 1
+  components:
+  - type: Sprite
+    state: puncturaseredbrutepack1
+  - type: Stack
+    stackType: RedPunctPack
+    count: 1
+
+- type: entity
+  name: red punct-laced brute pack
+  description: Specalized mixture of Puncturase and Security-Quality Red Goo. Best used for bullet-wounds, as it is much less effective on other types of damage.
+  parent: RedPunctPack
+  id: RedPunctPack10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: puncturaseredbrutepack2
   - type: Stack
     stackType: RedPunctPack
     count: 10
@@ -314,7 +340,7 @@
     tags:
     - Brutepack
   - type: Sprite
-    state: lacerinolbrutepack
+    state: lacerinolbrutepack3
   - type: Item
     heldPrefix: lacerinolbrutepack
   - type: Healing
@@ -332,6 +358,32 @@
       path: "/Audio/Items/Medical/brutepack_end.ogg"
   - type: Stack
     stackType: RedLacePack
+    count: 20
+
+- type: entity
+  name: red lace-laced brute pack
+  description: Specalized mixture of Lacerinol and Security-Quality Red Goo. Best used for stab-wounds, as it is much less effective on other types of damage.
+  parent: RedLacePack
+  id: RedLacePack1
+  suffix: 1
+  components:
+  - type: Sprite
+    state: lacerinolbrutepack1
+  - type: Stack
+    stackType: RedLacePack
+    count: 1
+
+- type: entity
+  name: red lace-laced brute pack
+  description: Specalized mixture of Lacerinol and Security-Quality Red Goo. Best used for stab-wounds, as it is much less effective on other types of damage.
+  parent: RedLacePack
+  id: RedLacePack10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: lacerinolbrutepack2
+  - type: Stack
+    stackType: RedLacePack
     count: 10
 
 - type: stack
@@ -339,7 +391,7 @@
   name: redlacepack
   icon: { sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: lacerinolbrutepack }
   spawn: RedLacePack1
-  maxCount: 10
+  maxCount: 20
 
 - type: entity
   name: red bruiz-laced brute pack
@@ -352,7 +404,7 @@
     tags:
     - Brutepack
   - type: Sprite
-    state: bruizinebrutepack
+    state: bruizinebrutepack3
   - type: Item
     heldPrefix: bruizinebrutepack
   - type: Healing
@@ -369,6 +421,32 @@
       path: "/Audio/Items/Medical/brutepack_end.ogg"
   - type: Stack
     stackType: RedBruizPack
+    count: 20
+
+- type: entity
+  name: red bruiz-laced brute pack
+  description: Specalized mixture of Bruizine and Security-Quality Red Goo. Best used for blunt-force trauma, as it is much less effective on other types of damage.
+  parent: RedBruizPack
+  id: RedBruizPack1
+  suffix: 1
+  components:
+  - type: Sprite
+    state: bruizinebrutepack1
+  - type: Stack
+    stackType: RedBruizPack
+    count: 1
+
+- type: entity
+  name: red bruiz-laced brute pack
+  description: Specalized mixture of Bruizine and Security-Quality Red Goo. Best used for blunt-force trauma, as it is much less effective on other types of damage.
+  parent: RedBruizPack
+  id: RedBruizPack10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: bruizinebrutepack2
+  - type: Stack
+    stackType: RedBruizPack
     count: 10
 
 - type: stack
@@ -376,4 +454,4 @@
   name: redbruizpack
   icon: { sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: bruizinebrutepack }
   spawn: RedBruizPack1
-  maxCount: 10
+  maxCount: 20
