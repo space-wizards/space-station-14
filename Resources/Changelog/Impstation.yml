@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Pinkbat5, AirFryerBuyOneGetOneFree
-  changes:
-  - message: You can now tie jumpsuits around your waist, slut style.
-    type: Add
-  id: 300
-  time: '2024-10-01T06:29:19.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/375
 - author: KingMudkipIII
   changes:
   - message: A new medicine, Caramexinin. It counteracts poisoning from Theobromine.
@@ -4516,3 +4509,13 @@
   id: 799
   time: '2024-12-24T09:50:54.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1111
+- author: kipdotnet
+  changes:
+  - message: The tck'tck now has engineering access, externals access and a law preventing
+      them from griefing with it.
+    type: Tweak
+  - message: Replaced the tck'tck's mini wrench with a mini drill.
+    type: Tweak
+  id: 800
+  time: '2024-12-24T10:06:46.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1112
