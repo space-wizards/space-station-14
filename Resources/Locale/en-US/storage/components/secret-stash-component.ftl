@@ -22,3 +22,4 @@ comp-secret-stash-verb-open = Open
 ### Stash names
 secret-stash-plant = plant
 secret-stash-toilet = toilet cistern
+secret-stash-plushie = plushie
