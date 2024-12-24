@@ -6,7 +6,7 @@
 - type: soundCollection
   id: ChangelingDevourWindup
   files:
-  - /Audio/Items/Toys/weh.ogg
+  - /Audio/Effects/Changeling/devour_windup.ogg
 
 - type: soundCollection
   id: ChangelingTransformAttempt
