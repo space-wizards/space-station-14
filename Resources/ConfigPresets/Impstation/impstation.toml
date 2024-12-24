@@ -13,7 +13,7 @@ uptime_restart_minutes = 240
 
 [chat]
 # Message Of The Day
-motd = "Be sure to fill out the Impstation rules survey, found in the impstation #status channel in the Discord server! Your feedback is appreciated!!"
+# motd = "Be sure to fill out the Impstation rules survey, found in the impstation #status channel in the Discord server! Your feedback is appreciated!!"
 
 [ic]
 flavor_text = true
