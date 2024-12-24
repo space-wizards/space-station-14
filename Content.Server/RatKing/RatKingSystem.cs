@@ -13,6 +13,7 @@ using Content.Shared.Pointing;
 using Content.Shared.RatKing;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
+using Robust.Shared.Containers;
 using Content.Shared.Damage;
 using Content.Shared.SubFloor;
 using Content.Shared.Body;
@@ -30,6 +31,8 @@ namespace Content.Server.RatKing
         [Dependency] private readonly NPCSystem _npc = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
+
+        [Dependency] private readonly SharedContainerSystem _container = default!;
 
         public override void Initialize()
         {
@@ -130,10 +133,10 @@ namespace Content.Server.RatKing
                     continue;
 
                 // Remove ineligable targets
-                if (!TryComp<DamageableComponent>(ent, out var _1) || !TryComp<BodyComponent>(ent, out var _2))
+                if (!HasComp<DamageableComponent>(ent) || !HasComp<BodyComponent>(ent) || _container.IsEntityInContainer(ent))
                     continue;
 
-                if (TryComp<SubFloorHideComponent>(ent, out var _3) || TryComp<RatKingServantComponent>(ent, out var _4))
+                if (HasComp<SubFloorHideComponent>(ent) || HasComp<RatKingServantComponent>(ent))
                     continue;
 
                 if (!arrowXform.Coordinates.TryDistance(EntityManager, Transform(ent).Coordinates, out var distance))
