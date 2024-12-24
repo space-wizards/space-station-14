@@ -34,4 +34,11 @@ public sealed partial class XAECreatePuddleComponent : Component
     /// and are picked from <see cref="PossibleChemicals"/>.
     /// </summary>
     public List<ProtoId<ReagentPrototype>>? SelectedChemicals;
+
+    /// <summary>
+    /// Marker, if entity where this component is placed should have description replaced with selected chemicals
+    /// on component init.
+    /// </summary>
+    [DataField]
+    public bool ReplaceDescription;
 }

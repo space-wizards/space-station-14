@@ -2,8 +2,10 @@ using Content.Server.Fluids.EntitySystems;
 using Content.Server.Xenoarchaeology.Artifact.XAE.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Xenoarchaeology.Artifact;
 using Content.Shared.Xenoarchaeology.Artifact.XAE;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Xenoarchaeology.Artifact.XAE;
@@ -12,6 +14,8 @@ public sealed class XAEFoamSystem : BaseXAESystem<XAEFoamComponent>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SmokeSystem _smoke = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager= default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     /// <inheritdoc />
     public override void Initialize()
@@ -30,6 +34,13 @@ public sealed class XAEFoamSystem : BaseXAESystem<XAEFoamComponent>
             return;
 
         component.SelectedReagent = _random.Pick(component.Reagents);
+
+        if (component.ReplaceDescription)
+        {
+            var reagent = _prototypeManager.Index<ReagentPrototype>(component.SelectedReagent);
+            var newEntityDescription = Loc.GetString("xenoarch-effect-foam", ("reagent", reagent.LocalizedName));
+            _metaData.SetEntityDescription(uid, newEntityDescription);
+        }
     }
 
     /// <inheritdoc />

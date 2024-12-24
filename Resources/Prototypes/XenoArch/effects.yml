@@ -520,6 +520,7 @@
   description: Produces puddle of chemical mixture # todo: make description say what exact chemical is produced, maybe add mixes into possible chemicals
   components:
   - type: XAECreatePuddle
+    replaceDescription: true
     chemicalSolution:
       maxVol: 500
       canReact: false
@@ -575,6 +576,7 @@
   description: Produces chemical foam # todo: separate in 1 for each chemical for description? actually sounds like a very good idea
   components:
   - type: XAEFoam
+    replaceDescription: true
     reagents:
     - Oxygen
     - Plasma
@@ -835,6 +837,7 @@
   description: Creates wave of helpful foam
   components:
   - type: XAEFoam
+    replaceDescription: true
     reagents:
     - Dermaline
     - Arithrazine
@@ -852,6 +855,7 @@
   - type: XAEFoam
     minFoamAmount: 20
     maxFoamAmount: 30
+    replaceDescription: true
     reagents:
     - Tritium
     - Plasma
@@ -871,6 +875,7 @@
   description: Creates puddle of helpful chemicals
   components:
   - type: XAECreatePuddle
+    replaceDescription: true
     chemicalSolution:
       maxVol: 500
       canReact: false
