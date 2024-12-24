@@ -24,6 +24,7 @@ using Content.Server.ServerInfo;
 using Content.Server.ServerUpdates;
 using Content.Server.Starlight.TextToSpeech;
 using Content.Server.Voting.Managers;
+using Content.Server.Holiday;
 using Content.Server.Worldgen.Tools;
 using Content.Shared.Starlight;
 using Content.Shared.Administration.Logs;
@@ -55,6 +56,9 @@ namespace Content.Server.IoC
             IoCManager.Register<IVoteManager, VoteManager>();
             IoCManager.Register<IPlayerLocator, PlayerLocator>();
             IoCManager.Register<IAfkManager, AfkManager>();
+            
+            IoCManager.Register<HolidaySystem>();
+            
             IoCManager.Register<IGameMapManager, GameMapManager>();
             IoCManager.Register<RulesManager, RulesManager>();
             IoCManager.Register<IBanManager, BanManager>();
