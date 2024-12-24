@@ -126,6 +126,8 @@
   parent: Holopad
   id: HolopadUnlimitedRange
   components:
+  - type: Sprite
+    sprite: Structures/Machines/Holopad/quantum_entangling_holopad.rsi
   - type: Telephone
     transmissionRange: Unlimited
     compatibleRanges:
@@ -140,6 +142,8 @@
   id: HolopadBluespace
   suffix: Unrestricted range
   components:
+  - type: Sprite
+    sprite: Structures/Machines/Holopad/bluespace_holopad.rsi
   - type: Telephone
     unlistedNumber: true
     transmissionRange: Unlimited
