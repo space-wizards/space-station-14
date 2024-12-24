@@ -35,6 +35,10 @@ website = "https://impstation.gay"
 # wiki = ""
 bug_report = "https://github.com/impstation/imp-station-14/issues"
 
+[looc]
+# people abused the privilege, so off it goes
+# enabled_dead = true
+
 [shuttle]
 # allows for early shuttle launch with approval of 3 heads
 emergency_early_launch_allowed = true
@@ -42,3 +46,7 @@ emergency_early_launch_allowed = true
 [ghost]
 # sets time before ghost role buttons enable, so people hopefully Actually Read
 role_time = 10
+
+[tips]
+# this doesn't actually propagate to the client right now
+login_dataset = "LoginTips"
