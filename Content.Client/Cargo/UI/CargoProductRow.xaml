@@ -1,6 +1,5 @@
-﻿<BoxContainer xmlns="https://spacestation14.io"
+<BoxContainer xmlns="https://spacestation14.io"
     HorizontalExpand="True">
-                
     <PanelContainer HorizontalExpand="True">
         <!-- Btn position hardcoded (args.Button.Parent?.Parent type) in CargoConsoleBUI 71 line -->
         <Button Name="MainButton"
