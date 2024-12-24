@@ -61,7 +61,7 @@
   result: BedsheetWhite
 
 - type: latheRecipe
-  parent: BaseSpecifiedBedsheetRecipe
+  parent: BaseBedsheetRecipe
   id: BedsheetYellow
   result: BedsheetYellow
 
@@ -106,11 +106,6 @@
   parent: BaseSpecifiedBedsheetRecipe
   id: BedsheetBrigmedic
   result: BedsheetBrigmedic
-
-- type: latheRecipe
-  parent: BaseSpecifiedBedsheetRecipe
-  id: BedsheetUSA
-  result: BedsheetUSA
 
 - type: latheRecipe
   parent: BaseSpecifiedBedsheetRecipe

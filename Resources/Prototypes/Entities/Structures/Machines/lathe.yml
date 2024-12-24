@@ -1101,7 +1101,6 @@
       - BedsheetNT
       - BedsheetRainbow
       - BedsheetBrigmedic
-      - BedsheetUSA
   - type: EmagLatheRecipes
     emagStaticRecipes:
       # Clothing
@@ -1127,7 +1126,7 @@
       - ClothingOuterWinterCentcom
       - ClothingOuterWinterSyndie
       - ClothingOuterWinterSyndieCap
-      # Bedsheet
+      # Bedsheets
       - BedsheetSyndie
   - type: MaterialStorage
     whitelist:
