@@ -202,7 +202,7 @@
     currentLabel: reagent-name-nitrogen
 
 - type: entity
-  parent: BoxCardboard
+  parent: BoxSurvival
   id: BoxMime
   suffix: Mime, Emergency
   components:
@@ -216,7 +216,7 @@
     - id: DrinkWaterBottleFull
 
 - type: entity
-  parent: BoxCardboard
+  parent: BoxSurvivalNitrogen
   id: BoxMimeNitrogen
   suffix: Mime, Emergency N2
   components:
