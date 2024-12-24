@@ -1,4 +1,4 @@
-﻿<PanelContainer
+<PanelContainer
     xmlns="https://spacestation14.io"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     HorizontalExpand="True"
@@ -6,18 +6,18 @@
 
     <!-- Main Container -->
     <BoxContainer Orientation="Vertical"
-        HorizontalExpand="True"
-        SeparationOverride="6"
-        Margin="-4">
+                  HorizontalExpand="True"
+                  SeparationOverride="6"
+                  Margin="-4">
 
         <Control Margin="-6">
             <PanelContainer StyleClasses="WindowHeadingBackground" />
 
             <BoxContainer Margin="6 2">
                 <Label Name="Title"
-                    Access="Public"
-                    MaxHeight="28"
-                    StyleClasses="LabelKeyText"/>
+                       Access="Public"
+                       MaxHeight="28"
+                       StyleClasses="LabelKeyText"/>
             </BoxContainer>
         </Control>
 
@@ -26,32 +26,32 @@
         <!-- Info -->
         <BoxContainer>
             <TextureRect Name="Icon"
-                Access="Public"
-                MinSize="32 32"
-                Margin="4"
-                Stretch="KeepAspectCentered"
-                RectClipContent="True"
-                VerticalAlignment="Center"/>
+                         Access="Public"
+                         MinSize="32 32"
+                         Margin="4"
+                         Stretch="KeepAspectCentered"
+                         RectClipContent="True"
+                         VerticalAlignment="Center"/>
 
             <PanelContainer StyleClasses="LowDivider" Margin="4 0"/>
 
             <BoxContainer Orientation="Vertical"
-                HorizontalExpand="True"
-                VerticalExpand="True">
+                          HorizontalExpand="True"
+                          VerticalExpand="True">
 
                 <Label Name="ProductName"
-                    Access="Public"
-                    HorizontalExpand="True"
-                    VerticalExpand="True"
-                    StyleClasses="LabelSubText"
-                    ClipText="True" />
+                       Access="Public"
+                       HorizontalExpand="True"
+                       VerticalExpand="True"
+                       StyleClasses="LabelSubText"
+                       ClipText="True" />
 
                 <Label Name="Description"
-                    Access="Public"
-                    HorizontalExpand="True"
-                    VerticalExpand="True"
-                    StyleClasses="LabelSubText"
-                    ClipText="True" />                  
+                       Access="Public"
+                       HorizontalExpand="True"
+                       VerticalExpand="True"
+                       StyleClasses="LabelSubText"
+                       ClipText="True" />
             </BoxContainer>
         </BoxContainer>
 
@@ -61,16 +61,16 @@
         <!-- Btn's position hardcoded (args.Button.Parent?.Parent?.Parent type) in CargoConsoleBUI 158 & 166 line -->
         <BoxContainer>
             <Button Name="Approve"
-                Access="Public"
-                Text="{Loc 'cargo-console-menu-order-row-button-approve'}"
-                StyleClasses="OpenRight"
-                HorizontalExpand="True"/>
+                    Access="Public"
+                    Text="{Loc 'cargo-console-menu-order-row-button-approve'}"
+                    StyleClasses="OpenRight"
+                    HorizontalExpand="True"/>
 
             <Button Name="Cancel"
-                Access="Public"
-                Text="{Loc 'cargo-console-menu-order-row-button-cancel'}"
-                StyleClasses="OpenLeft"
-                HorizontalExpand="True" />
+                    Access="Public"
+                    Text="{Loc 'cargo-console-menu-order-row-button-cancel'}"
+                    StyleClasses="OpenLeft"
+                    HorizontalExpand="True" />
         </BoxContainer>
     </BoxContainer>
 </PanelContainer>
