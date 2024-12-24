@@ -8,7 +8,10 @@
   },
   "states": [
     {
-      "name": "icon"
+      "name": "icon_bolt"
+    },
+    {
+      "name": "icon_pry"
     },
     {
       "name": "inhand-left",
@@ -21,9 +24,6 @@
     {
       "name": "equipped-BELT",
       "directions": 4
-    },
-    {
-      "name": "storage"
     }
   ]
 }
