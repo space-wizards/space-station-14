@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Store;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
@@ -14,6 +15,9 @@ namespace Content.Server.Store.Conditions;
 /// </summary>
 public sealed partial class BuyerAccessCondition : ListingCondition
 {
+    [DataField("access", required: false)]
+    public string? access = null;
+    
     public override bool Condition(ListingConditionArgs args)
     {
         var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
@@ -26,9 +30,16 @@ public sealed partial class BuyerAccessCondition : ListingCondition
             || !ent.TryGetComponent<AccessReaderComponent>(args.StoreEntity, out var accessReader))
             return true;
         
-        if (_accessReader.IsAllowed(args.Buyer, args.StoreEntity.Value, accessReader) 
-            || ent.HasComponent<EmaggedComponent>(args.StoreEntity.Value))
-            return true;
+        if (access != null)
+        {
+            var accesses = _accessReader.FindAccessTags(args.Buyer);
+            if (accesses.Any(a => a.ToString() == access))
+                return true;
+        }
+            
+        else if (_accessReader.IsAllowed(args.Buyer, args.StoreEntity.Value, accessReader) 
+                || ent.HasComponent<EmaggedComponent>(args.StoreEntity.Value))
+                return true;
         
         return false;
     }
