@@ -2353,7 +2353,7 @@
       - ReagentId: Mechanotoxin
         Quantity: 1
   - type: MeleeChemicalInjector
-    transferAmount: 0.75
+    transferAmount: 3
     solution: melee
   - type: ReplacementAccent
     accent: xeno
