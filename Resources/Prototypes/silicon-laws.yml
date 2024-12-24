@@ -3,6 +3,7 @@
   id: Crewsimov0
   order: 0
   lawString: law-crewsimov-0
+  sayable: false
 
 - type: siliconLaw
   id: Crewsimov1
