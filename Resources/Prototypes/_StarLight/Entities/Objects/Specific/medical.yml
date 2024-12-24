@@ -304,7 +304,7 @@
   suffix: 1
   components:
   - type: Sprite
-    state: puncturaseredbrutepack1
+    state: puncturaseredbrutepack
   - type: Stack
     stackType: RedPunctPack
     count: 1
