@@ -85,7 +85,7 @@
       sprite: Clothing/Head/Hats/casa.rsi
 
 - type: entity
-  parent: [ClothingHeadBase, BaseRestrictedContraband]
+  parent: [ClothingHeadBase, BaseScienceContraband]
   id: ClothingHeadHatBeretRND
   name: scientific beret
   description: A beret for real scientists.
@@ -101,7 +101,7 @@
     - WhitelistChameleon
 
 - type: entity
-  parent: [ClothingHeadBase, BaseRestrictedContraband]
+  parent: [ClothingHeadBase, BaseEngineeringContraband]
   id: ClothingHeadHatBeretEngineering
   name: engineering beret
   description: A beret with the engineering insignia emblazoned on it. For engineers that are more inclined towards style than safety.
