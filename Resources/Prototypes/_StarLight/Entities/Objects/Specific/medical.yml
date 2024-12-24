@@ -140,3 +140,33 @@
     pack: MedibotAds
   - type: Inventory
     templateId: medibot
+
+- type: entity
+  name: red ointment
+  description: Uses a special blend of pyrazine and aloe to treat severe burns. Does nothing for caustic.
+  parent: BaseHealingItem
+  id: RedOintment
+  suffix: Full
+  components:
+  - type: Tag
+    tags:
+    - Ointment
+  - type: Sprite
+    state: ointment
+  - type: Item
+    heldPrefix: ointment
+  - type: Healing
+    damageContainers:
+      - Biological
+    damage:
+      types:
+        Heat: -6
+        Cold: -6
+        Shock: -6
+    healingBeginSound:
+      path: "/Audio/Items/Medical/ointment_begin.ogg"
+    healingEndSound:
+      path: "/Audio/Items/Medical/ointment_end.ogg"
+  - type: Stack
+    stackType: Ointment
+    count: 10
