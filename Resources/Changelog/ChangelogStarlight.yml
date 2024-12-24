@@ -1353,4 +1353,11 @@ Entries:
   id: 192
   time: '2024-12-22T07:58:15.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/182
+- author: Clone0401
+  changes:
+  - message: Cyborgs now have a law 0 requiring them to follow AI orders
+    type: Tweak
+  id: 193
+  time: '2024-12-24T09:05:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/178
 
