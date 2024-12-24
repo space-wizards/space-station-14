@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: KingMudkipIII
-  changes:
-  - message: A new medicine, Caramexinin. It counteracts poisoning from Theobromine.
-    type: Add
-  id: 301
-  time: '2024-10-01T10:48:01.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/385
 - author: formlessnameless
   changes:
   - message: Modified threshold for lings getting the shakes and bleeding all over
@@ -4519,3 +4512,11 @@
   id: 800
   time: '2024-12-24T10:06:46.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1112
+- author: DinnerCalzone
+  changes:
+  - message: Undershirt markings are now available for unisex characters for species
+      that support them.
+    type: Fix
+  id: 801
+  time: '2024-12-24T19:43:24.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1115
