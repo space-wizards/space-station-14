@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Changed the appearance of the space ninja's equipment.
-    type: Tweak
-  id: 291
-  time: '2024-10-01T02:26:46.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/380
 - author: TheGrimbeeper
   changes:
   - message: can no longer trigger a depth 4+ artifact by wrenching (forced to wrench
@@ -4516,3 +4509,11 @@
   id: 790
   time: '2024-12-22T15:17:27.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1081
+- author: kipdotnet
+  changes:
+  - message: Added the artistic borg module. Please be nice with this so I dont have
+      to nerf it
+    type: Add
+  id: 791
+  time: '2024-12-24T09:38:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1100
