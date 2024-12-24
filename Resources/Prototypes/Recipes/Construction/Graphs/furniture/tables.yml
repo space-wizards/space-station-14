@@ -145,10 +145,10 @@
               prototype: SheetPlasteel1
               amount: 1
           steps:
-            - tool: Anchoring
-              doAfter: 1
             - tool: Welding
               doAfter: 3
+            - tool: Anchoring
+              doAfter: 1
 
     - node: TableGlass
       entity: TableGlass
