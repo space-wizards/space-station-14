@@ -151,7 +151,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
                     break;
 
-                // Try to hang up if their has been no recent in-call activity 
+                // Try to hang up if there has been no recent in-call activity
                 case TelephoneState.InCall:
                     if (_timing.CurTime > telephone.StateStartTime + TimeSpan.FromSeconds(telephone.IdlingTimeout))
                         EndTelephoneCalls(entity);
@@ -214,7 +214,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         source.Comp.LinkedTelephones.Add(receiver);
         source.Comp.Muted = options?.MuteSource == true;
 
-        receiver.Comp.LastCallerId = GetNameAndJobOfCallingEntity(user); // This will be networked when the state changes
+        receiver.Comp.LastCallerId = GetNameAndJobOfCallingEntity(user, source); // This will be networked when the state changes
         receiver.Comp.LinkedTelephones.Add(source);
         receiver.Comp.Muted = options?.MuteReceiver == true;
 
@@ -401,7 +401,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         }
     }
 
-    private (string?, string?) GetNameAndJobOfCallingEntity(EntityUid uid)
+    private (string?, string?, string) GetNameAndJobOfCallingEntity(EntityUid uid, EntityUid source)
     {
         string? presumedName = null;
         string? presumedJob = null;
@@ -409,7 +409,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
         if (HasComp<StationAiHeldComponent>(uid) || HasComp<BorgChassisComponent>(uid))
         {
             presumedName = Name(uid);
-            return (presumedName, presumedJob);
+            return (presumedName, presumedJob, Name(source));
         }
 
         if (_idCardSystem.TryFindIdCard(uid, out var idCard))
@@ -418,7 +418,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
             presumedJob = idCard.Comp.LocalizedJobTitle;
         }
 
-        return (presumedName, presumedJob);
+        return (presumedName, presumedJob, Name(source));
     }
 
     public bool IsSourceAbleToReachReceiver(Entity<TelephoneComponent> source, Entity<TelephoneComponent> receiver)
