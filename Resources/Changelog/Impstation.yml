@@ -1,13 +1,6 @@
 ﻿Entries:
 - author: hivehum
   changes:
-  - message: FUUUUUUUUUCCCCCCCCCCCCCCCCKKKKKKKKKKK AHHHHHHHHHHHHHHHHHHHHHHHHHHHH AAAAAAAAAAAAAAAAAAAAAAAAA
-    type: Tweak
-  id: 294
-  time: '2024-10-01T02:28:48.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/376
-- author: hivehum
-  changes:
   - message: Added a use for hormones.
     type: Add
   id: 295
@@ -4517,3 +4510,11 @@
   id: 793
   time: '2024-12-24T09:42:13.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1104
+- author: TheGrimbeeper
+  changes:
+  - message: Rat Servants will no longer be smart enough to understand that pointing
+      near a locker means attack the person IN the locker.
+    type: Fix
+  id: 794
+  time: '2024-12-24T09:43:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1105
