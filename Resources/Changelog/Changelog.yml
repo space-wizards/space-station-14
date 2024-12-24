@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: AutoOtter
-  changes:
-  - message: Greatly reduced meteorite wall health for easier cleanup and repair.
-    type: Tweak
-  id: 7251
-  time: '2024-08-30T23:24:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31651
 - author: slarticodefast
   changes:
   - message: The revenant can now fly through walls again.
@@ -3937,3 +3930,10 @@
   id: 7750
   time: '2024-12-23T23:24:54.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34027
+- author: TheShuEd
+  changes:
+  - message: You can now select candles in trinkets loadout
+    type: Add
+  id: 7751
+  time: '2024-12-24T00:24:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33193
