@@ -1,23 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: can no longer trigger a depth 4+ artifact by wrenching (forced to wrench
-      off scanner, and unwrench to put back on scanner - so had to potentially trigger
-      the next node -> tesloose on core)
-    type: Remove
-  - message: added two other copies of lower triggers that are less (potentially)
-      unavoidably destructive
-    type: Add
-  id: 292
-  time: '2024-10-01T02:27:26.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/379
-- author: hivehum
-  changes:
-  - message: Oculine requires blood again.
-    type: Tweak
-  id: 293
-  time: '2024-10-01T02:28:50.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/374
 - author: hivehum
   changes:
   - message: FUUUUUUUUUCCCCCCCCCCCCCCCCKKKKKKKKKKK AHHHHHHHHHHHHHHHHHHHHHHHHHHHH AAAAAAAAAAAAAAAAAAAAAAAAA
@@ -4517,3 +4498,22 @@
   id: 791
   time: '2024-12-24T09:38:47.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1100
+- author: kipdotnet
+  changes:
+  - message: Added A new derelict!
+    type: Add
+  - message: Roundstart derelicts now spawn a range of 3-4, instead of just a flat
+      2.
+    type: Tweak
+  id: 792
+  time: '2024-12-24T09:41:20.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1103
+- author: honeyed-lemons
+  changes:
+  - message: Listening Post and Box mapping changes
+    type: Tweak
+  - message: Listening Post Operatives spawn with an Agent ID
+    type: Tweak
+  id: 793
+  time: '2024-12-24T09:42:13.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1104
