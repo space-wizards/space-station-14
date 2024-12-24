@@ -368,7 +368,7 @@
   suffix: 1
   components:
   - type: Sprite
-    state: lacerinolbrutepack1
+    state: lacerinolbrutepack
   - type: Stack
     stackType: RedLacePack
     count: 1
