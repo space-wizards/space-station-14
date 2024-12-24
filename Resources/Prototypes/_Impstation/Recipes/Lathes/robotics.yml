@@ -1,0 +1,4 @@
+- type: latheRecipe
+  parent: BaseBorgModuleRecipe
+  id: BorgModuleArtistic
+  result: BorgModuleArtistic
