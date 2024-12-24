@@ -1,17 +1,4 @@
-﻿# Kill
-- type: entity
-  parent: [BaseTraitorObjective, BaseTeachLessonObjective]
-  id: TeachLessonRandomPersonObjective
-  description: Kill them, and show everyone we mean business. They only need to die once.
-  components:
-  - type: Objective
-    difficulty: 1.75
-    unique: false
-  - type: TargetObjective
-    title: objective-condition-teach-person-title
-  - type: PickRandomPerson
-  - type: TeachLessonCondition
-# Base
+﻿# Base
 # teach lesson
 - type: entity
   abstract: true
@@ -29,3 +16,16 @@
     blacklist:
       components:
       - SocialObjective
+
+# Kill
+- type: entity
+  parent: [BaseTraitorObjective, BaseTeachLessonObjective]
+  id: TeachLessonRandomPersonObjective
+  description: Kill them, and show everyone we mean business. They only need to die once.
+  components:
+  - type: Objective
+    difficulty: 1.75
+    unique: false
+  - type: TargetObjective
+    title: objective-condition-teach-person-title
+  - type: PickRandomPerson
