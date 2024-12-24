@@ -426,7 +426,7 @@ namespace Content.IntegrationTests.Tests
                     {
                         try
                         {
-                            Assert.That(mapLoader.TryLoadEntities(path, out maps, out _, opts));
+                            Assert.That(mapLoader.TryLoadGeneric(path, out maps, out _, opts));
                         }
                         catch (Exception ex)
                         {

@@ -54,7 +54,8 @@ public sealed class MappingManager : IPostInjectInit
                 return;
             }
 
-            var data = _systems.GetEntitySystem<MapLoaderSystem>().SerializeEntityRecursive(mapUid).Node;
+            var sys = _systems.GetEntitySystem<MapLoaderSystem>();
+            var data = sys.SerializeEntitiesRecursive([mapUid]).Node;
             var document = new YamlDocument(data.ToYaml());
             var stream = new YamlStream { document };
             var writer = new StringWriter();

@@ -182,7 +182,7 @@ public sealed partial class DungeonSystem : SharedDungeonSystem
             ExpectedCategory = FileCategory.Map
         };
 
-        if (!_loader.TryLoadEntities(proto.AtlasPath, out var res, opts) || !res.Maps.TryFirstOrNull(out var map))
+        if (!_loader.TryLoadGeneric(proto.AtlasPath, out var res, opts) || !res.Maps.TryFirstOrNull(out var map))
             throw new Exception($"Failed to load dungeon template.");
 
         comp = AddComp<DungeonAtlasTemplateComponent>(map.Value.Owner);

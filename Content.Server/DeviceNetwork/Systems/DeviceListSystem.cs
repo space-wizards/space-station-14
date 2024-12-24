@@ -131,7 +131,7 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
         var enumerator = AllEntityQuery<DeviceListComponent, TransformComponent>();
         while (enumerator.MoveNext(out var uid, out var device, out var xform))
         {
-            if (xform.MapUid != ev.Map)
+            if (!ev.MapIds.Contains(xform.MapID))
                 continue;
 
             foreach (var ent in device.Devices)
@@ -144,7 +144,10 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
                     continue;
                 }
 
-                if (linkedXform.MapUid == ev.Map)
+                // This is assuming that **all** of the map is getting saved.
+                // Which is not necessarily true.
+                // AAAAAAAAAAAAAA
+                if (ev.MapIds.Contains(linkedXform.MapID))
                     continue;
 
                 toRemove.Add(ent);

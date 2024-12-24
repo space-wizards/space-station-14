@@ -44,7 +44,7 @@ public sealed class ResaveCommand : LocalizedCommands
             var fn = files[i];
             log.Info($"Re-saving file {i}/{files.Count} : {fn}");
 
-            if (!loader.TryLoadEntities(fn, out var result, opts))
+            if (!loader.TryLoadGeneric(fn, out var result, opts))
                 continue;
 
             if (result.Maps.Count != 1)
