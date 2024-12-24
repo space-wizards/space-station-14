@@ -62,7 +62,7 @@
   id: RedPunctPack
   productEntity: RedPunctPack
   cost:
-    NTCredit: 48
+    NTCredit: 102
   categories:
   - SLBrigmedic
   conditions:
@@ -74,7 +74,7 @@
   id: RedLacePack
   productEntity: RedLacePack
   cost:
-    NTCredit: 48
+    NTCredit: 102
   categories:
   - SLBrigmedic
   conditions:
@@ -86,7 +86,7 @@
   id: RedBruizPack
   productEntity: RedBruizPack
   cost:
-    NTCredit: 48
+    NTCredit: 102
   categories:
   - SLBrigmedic
   conditions:
