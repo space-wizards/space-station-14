@@ -22,6 +22,24 @@
 			"name": "bluebrutepack3"
 		},
 		{
+			"name": "redbrutepack"
+		},
+		{
+			"name": "redbrutepack2"
+		},
+		{
+			"name": "redbrutepack3"
+		},
+		{
+			"name": "puncturaseredbrutepack"
+		},
+		{
+			"name": "lacerinolbrutepack"
+		},
+		{
+			"name": "bruizinebrutepack"
+		},
+		{
 			"name": "brutepack-inhand-left",
 			"directions": 4
 		},
@@ -52,6 +70,15 @@
 		},
 		{
 			"name": "blueointment3"
+		},
+		{
+			"name": "redointment"
+		},
+		{
+			"name": "redointment2"
+		},
+		{
+			"name": "redointment3"
 		},
 		{
 			"name": "ointment-inhand-left",
