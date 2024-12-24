@@ -13,6 +13,21 @@
     - BasicRoundstartVariation
 
 - type: gamePreset
+  id: KesslerSyndrome
+  alias:
+    - kessler
+    - junk
+    - meteorhell
+  name: kessler-syndrome-title
+  showInVote: false # secret
+  description: kessler-syndrome-description
+  rules:
+    - KesslerSyndromeScheduler
+    - RampingStationEventScheduler
+    - SpaceTrafficControlEventScheduler
+    - BasicRoundstartVariation
+
+- type: gamePreset
   id: AllAtOnce
   alias:
   - all
@@ -201,5 +216,21 @@
   - Zombie
   - BasicStationEventScheduler
   - MeteorSwarmScheduler
+  - SpaceTrafficControlEventScheduler
+  - BasicRoundstartVariation
+
+- type: gamePreset
+  id: Zombieteors
+  alias:
+  - zombieteors
+  - zombombies
+  - meteombies
+  name: zombieteors-title
+  description: zombieteors-description
+  showInVote: false
+  rules:
+  - Zombie
+  - BasicStationEventScheduler
+  - KesslerSyndromeScheduler
   - SpaceTrafficControlEventScheduler
   - BasicRoundstartVariation
