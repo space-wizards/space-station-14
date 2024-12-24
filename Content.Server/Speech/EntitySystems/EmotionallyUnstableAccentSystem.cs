@@ -27,9 +27,9 @@ public sealed class EmotionallyUnstableAccentSystem : EntitySystem
         // This condition determines whether we will modify the message or not.
         if (_random.Prob(entity.Comp.ChangeMessageChance))
         {
-            // This condition determines the replacement characters: with a 50% chance,
+            // This condition determines the replacement characters: with a certain chance specified in the component,
             // the sentence will either become exclamatory or contemplative (exclamation marks will be replaced with ellipses).
-            if (_random.Prob(0.5f))
+            if (_random.Prob(entity.Comp.ExclamatorySentenceChance))
             {
                 // . => !
                 message = message.Replace(".", "!");
@@ -58,18 +58,14 @@ public sealed class EmotionallyUnstableAccentSystem : EntitySystem
 
         args.Message = message;
 
-        // If the HashSet "Emotes" is empty, exit this system.
         if (entity.Comp.Emotes.Count == 0)
             return;
 
         // This condition determines whether the emotion will be played after the phrase.
         if (_random.Prob(entity.Comp.TriggerEmotionChance))
         {
-            // Select a random emotion from the HashSet "Emotes".
-            var emote = _random.Pick(entity.Comp.Emotes);
-
-            // Play the emotion recorded in "emote".
-            _chat.TryEmoteWithChat(entity, emote, ignoreActionBlocker: false);
+            // Play the emotion by random index.
+            _chat.TryEmoteWithChat(entity, entity.Comp.Emotes[_random.Next(0, entity.Comp.Emotes.Count)], ignoreActionBlocker: false);
         }
     }
 }

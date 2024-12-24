@@ -1,7 +1,7 @@
-namespace Content.Server.Traits.Assorted;
-
-using Robust.Shared.Random;
 using Content.Server.Chat.Systems;
+using Robust.Shared.Random;
+
+namespace Content.Server.Traits.Assorted;
 
 /// <summary>
 /// This system allows triggering any emotion at random intervals.
@@ -28,7 +28,6 @@ public sealed class EmotionLoopSystem : EntitySystem
         var query = EntityQueryEnumerator<EmotionLoopComponent>();
         while (query.MoveNext(out var uid, out var emotionLoop))
         {
-            // If the HashSet "Emotes" is empty, exit this system.
             if (emotionLoop.Emotes.Count == 0)
                 return;
 
@@ -40,11 +39,8 @@ public sealed class EmotionLoopSystem : EntitySystem
             // Set the updated time.
             emotionLoop.NextIncidentTime += _random.Next(emotionLoop.MinTimeBetweenEmotions, emotionLoop.MaxTimeBetweenEmotions);
 
-            // Select a random emotion from the HashSet "Emotes".
-            var emote = _random.Pick(emotionLoop.Emotes);
-
-            // Play the emotion recorded in "emote".
-            _chat.TryEmoteWithChat(uid, emote, ignoreActionBlocker: false);
+            // Play the emotion by random index.
+            _chat.TryEmoteWithChat(uid, emotionLoop.Emotes[_random.Next(0, emotionLoop.Emotes.Count)], ignoreActionBlocker: false);
         }
     }
 }
