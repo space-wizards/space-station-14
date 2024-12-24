@@ -107,7 +107,10 @@ public sealed class GameMapManager : IGameMapManager
                    _configurationManager.GetCVar(CCVars.GameMapPool);
         
         if (_holiday.IsCurrentlyHoliday("NewYear"))
+        {
+            Logger.Debug("[Rinary] Map pool changed to christmas! Have a good Christmas!");
             poolPrototype = "ChristmasStarlightMapPool";
+        }
 
         if (_prototypeManager.TryIndex<GameMapPoolPrototype>(poolPrototype, out var pool))
         {
