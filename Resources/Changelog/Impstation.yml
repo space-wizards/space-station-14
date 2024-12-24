@@ -1,35 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Added a use for hormones.
-    type: Add
-  id: 295
-  time: '2024-10-01T02:27:55.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/378
-- author: sususuyo
-  changes:
-  - message: Added new nuke tracks and a couple new lobby tracks!
-    type: Add
-  - message: Extended a certain nuke track slightly longer
-    type: Tweak
-  id: 296
-  time: '2024-10-01T02:30:41.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/373
-- author: formlessnameless
-  changes:
-  - message: Bumped Frezon sell price up a bit more after some playtesting has occurred
-    type: Tweak
-  id: 297
-  time: '2024-10-01T02:41:47.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/381
-- author: crekulon
-  changes:
-  - message: new arachnid silk craftables including gloves, hats, dresses, scarves,
-      loungewear, and a web bookcases!
-    type: Add
-  id: 298
-  time: '2024-10-01T03:30:38.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/382
 - author: Pinkbat5
   changes:
   - message: Most species can now wear undergarments as markings.
@@ -4518,3 +4487,32 @@
   id: 794
   time: '2024-12-24T09:43:47.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1105
+- author: widgetbeck
+  changes:
+  - message: Reduced the event weight of mass hallucinations.
+    type: Tweak
+  id: 795
+  time: '2024-12-24T09:48:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1109
+- author: EpicToast
+  changes:
+  - message: Updates to Atlas, Cluster, Saltern and Train. See PR for full changelog.
+    type: Add
+  id: 796
+  time: '2024-12-24T09:49:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1110
+- author: DinnerCalzone
+  changes:
+  - message: Bagel, Cog, Hummingbird, Marathon, Omega, and Origin have been updated
+      to include recent mapping content updates.
+    type: Add
+  id: 797
+  time: '2024-12-24T09:47:39.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1108
+- author: TheGrimbeeper
+  changes:
+  - message: new artifact effect, learned from spooky ghosties
+    type: Add
+  id: 798
+  time: '2024-12-24T09:46:40.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1106
