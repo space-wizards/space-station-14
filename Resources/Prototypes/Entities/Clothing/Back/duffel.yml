@@ -16,7 +16,7 @@
   - type: HeldSpeedModifier
 
 - type: entity
-  parent: [ClothingBackpackDuffel, BaseEngineeringContraband]
+  parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelEngineering
   name: engineering duffel bag
   description: A large duffel bag for holding extra tools and supplies.
@@ -25,7 +25,7 @@
     sprite: Clothing/Back/Duffels/engineering.rsi
 
 - type: entity
-  parent: [ClothingBackpackDuffel, BaseEngineeringContraband]
+  parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelAtmospherics
   name: atmospherics duffel bag
   description: A large duffel bag made of fire resistant fibers. Smells like plasma.
@@ -34,7 +34,7 @@
     sprite: Clothing/Back/Duffels/atmospherics.rsi
 
 - type: entity
-  parent: [ClothingBackpackDuffel, BaseMedicalContraband]
+  parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelMedical
   name: medical duffel bag
   description: A large duffel bag for holding extra medical supplies.
@@ -52,7 +52,7 @@
     sprite: Clothing/Back/Duffels/captain.rsi
 
 - type: entity
-  parent: [ClothingBackpackDuffel, BaseCivilianContraband]
+  parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelClown
   name: clown duffel bag
   description: A large duffel bag for holding extra honk goods.
@@ -82,7 +82,7 @@
     sprite: Clothing/Back/Duffels/brigmedic.rsi
 
 - type: entity
-  parent: [ClothingBackpackDuffel, BaseMedicalContraband]
+  parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelChemistry
   name: chemistry duffel bag
   description: A large duffel bag for holding extra beakers and test tubes.
@@ -91,7 +91,7 @@
     sprite: Clothing/Back/Duffels/chemistry.rsi
 
 - type: entity
-  parent: [ClothingBackpackDuffel, BaseMedicalContraband]
+  parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelVirology
   name: virology duffel bag
   description: A large duffel bag made of hypo-allergenic fibers. It's designed to help prevent the spread of disease. Smells like monkey.
@@ -100,7 +100,7 @@
     sprite: Clothing/Back/Duffels/virology.rsi
 
 - type: entity
-  parent: [ClothingBackpackDuffel, BaseMedicalContraband]
+  parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelGenetics
   name: genetics duffel bag
   description: A large duffel bag for holding extra genetic mutations.
@@ -109,7 +109,7 @@
     sprite: Clothing/Back/Duffels/genetics.rsi
 
 - type: entity
-  parent: [ClothingBackpackDuffel, BaseCivilianContraband]
+  parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelMime
   name: mime duffel bag
   description: A large duffel bag for holding... mime... stuff.
@@ -122,7 +122,7 @@
       collection: null
 
 - type: entity
-  parent: [ClothingBackpackDuffel, BaseScienceContraband]
+  parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelScience
   name: science duffel bag
   description: A large duffel bag for holding extra science related goods.
@@ -131,7 +131,7 @@
     sprite: Clothing/Back/Duffels/science.rsi
 
 - type: entity
-  parent: [ClothingBackpackDuffel, BaseCivilianContraband]
+  parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelHydroponics
   name: hydroponics duffel bag
   description: A large duffel bag for holding extra gardening tools.
@@ -140,7 +140,7 @@
       sprite: Clothing/Back/Duffels/hydroponics.rsi
 
 - type: entity
-  parent: [ClothingBackpackDuffel, BaseCargoContraband]
+  parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelCargo
   name: cargo duffel bag
   description: A large duffel bag for stealing cargo's precious loot.
@@ -149,7 +149,7 @@
       sprite: Clothing/Back/Duffels/cargo.rsi
 
 - type: entity
-  parent: [ClothingBackpackDuffel, BaseCargoContraband]
+  parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelSalvage
   name: salvage duffel bag
   description: A large duffel bag for holding extra exotic treasures.

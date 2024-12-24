@@ -127,7 +127,7 @@
     stealGroup: HeadCloak
 
 - type: entity
-  parent: [ClothingNeckBase, BaseCargoContraband]
+  parent: ClothingNeckBase
   id: ClothingNeckCloakMiner
   name: miner's cloak
   description: Worn by the most skilled miners, for one who has moved mountains and filled valleys.
@@ -272,7 +272,7 @@
     sprite: Clothing/Neck/Cloaks/enby.rsi
 
 - type: entity
-  parent: [ClothingNeckBase, BaseCivilianContraband]
+  parent: ClothingNeckBase
   id: ClothingNeckCloakPan
   name: chef's cloak
   description: Meant to be worn alongside a frying pan.

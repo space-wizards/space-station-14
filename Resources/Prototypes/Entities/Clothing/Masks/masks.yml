@@ -120,7 +120,7 @@
         Heat: 0.95
 
 - type: entity
-  parent: [ClothingMaskPullableBase, BaseMedicalScienceContraband]
+  parent: ClothingMaskPullableBase
   id: ClothingMaskBreathMedical
   name: medical mask
   description: A close-fitting sterile mask that can be connected to an air supply.

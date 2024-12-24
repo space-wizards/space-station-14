@@ -32,7 +32,7 @@
     damageCoefficient: 0.9
 
 - type: entity
-  parent: [ClothingBackpack, BaseCivilianContraband]
+  parent: ClothingBackpack
   id: ClothingBackpackClown
   name: giggles von honkerton
   description: It's a backpack made by Honk! Co.
@@ -74,7 +74,7 @@
     sprite: Clothing/Back/Backpacks/brigmedic.rsi
 
 - type: entity
-  parent: [ClothingBackpack, BaseEngineeringContraband]
+  parent: ClothingBackpack
   id: ClothingBackpackEngineering
   name: engineering backpack
   description: It's a tough backpack for the daily grind of station life.
@@ -83,7 +83,7 @@
     sprite: Clothing/Back/Backpacks/engineering.rsi
 
 - type: entity
-  parent: [ClothingBackpack, BaseEngineeringContraband]
+  parent: ClothingBackpack
   id: ClothingBackpackAtmospherics
   name: atmospherics backpack
   description: It's a backpack made of fire resistant fibers. Smells like plasma.
@@ -92,7 +92,7 @@
     sprite: Clothing/Back/Backpacks/atmospherics.rsi
 
 - type: entity
-  parent: [ClothingBackpack, BaseMedicalContraband]
+  parent: ClothingBackpack
   id: ClothingBackpackMedical
   name: medical backpack
   description: It's a backpack especially designed for use in a sterile environment.
@@ -110,7 +110,7 @@
     sprite: Clothing/Back/Backpacks/captain.rsi
 
 - type: entity
-  parent: [ClothingBackpack, BaseCivilianContraband]
+  parent: ClothingBackpack
   id: ClothingBackpackMime
   name: mime backpack
   description: A silent backpack made for those silent workers. Silence Co.
@@ -119,7 +119,7 @@
     sprite: Clothing/Back/Backpacks/mime.rsi
 
 - type: entity
-  parent: [ClothingBackpack, BaseMedicalContraband]
+  parent: ClothingBackpack
   id: ClothingBackpackChemistry
   name: chemistry backpack
   description: A backpack specially designed to repel stains and hazardous liquids.
@@ -128,7 +128,7 @@
     sprite: Clothing/Back/Backpacks/chemistry.rsi
 
 - type: entity
-  parent: [ClothingBackpack, BaseCivilianContraband]
+  parent: ClothingBackpack
   id: ClothingBackpackHydroponics
   name: hydroponics backpack
   description: It's a backpack made of all-natural fibers.
@@ -137,7 +137,7 @@
     sprite: Clothing/Back/Backpacks/hydroponics.rsi
 
 - type: entity
-  parent: [ClothingBackpack, BaseScienceContraband]
+  parent: ClothingBackpack
   id: ClothingBackpackScience
   name: science backpack
   description: A backpack specially designed to repel stains and hazardous liquids.
@@ -146,7 +146,7 @@
     sprite: Clothing/Back/Backpacks/science.rsi
 
 - type: entity
-  parent: [ClothingBackpack, BaseMedicalContraband]
+  parent: ClothingBackpack
   id: ClothingBackpackVirology
   name: virology backpack
   description: A backpack made of hypo-allergenic fibers. It's designed to help prevent the spread of disease. Smells like monkey.
@@ -155,7 +155,7 @@
     sprite: Clothing/Back/Backpacks/virology.rsi
 
 - type: entity
-  parent: [ClothingBackpack, BaseMedicalContraband]
+  parent: ClothingBackpack
   id: ClothingBackpackGenetics
   name: genetics backpack
   description: A backpack designed to be super tough, just in case someone hulks out on you.
@@ -164,7 +164,7 @@
     sprite: Clothing/Back/Backpacks/genetics.rsi
 
 - type: entity
-  parent: [ClothingBackpack, BaseCargoContraband]
+  parent: ClothingBackpack
   id: ClothingBackpackCargo
   name: cargo backpack
   description: A robust backpack for stealing cargo's loot.
@@ -173,7 +173,7 @@
       sprite: Clothing/Back/Backpacks/cargo.rsi
 
 - type: entity
-  parent: [ClothingBackpack, BaseCargoContraband]
+  parent: ClothingBackpack
   id: ClothingBackpackSalvage
   name: salvage bag
   description: A robust backpack for stashing your loot.

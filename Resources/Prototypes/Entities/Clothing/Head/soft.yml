@@ -57,7 +57,7 @@
   name: blue cap
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlippable, BaseCargoContraband]
+  parent: ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatCargosoft
   name: cargo cap
   description: "It's a baseball hat painted in Cargo colours."
@@ -164,7 +164,7 @@
   name: grey cap
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlippable, BaseCivilianContraband]
+  parent: ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatMimesoft
   name: mime cap
   description: "It's a baseball hat in a tasteless white colour."
@@ -287,7 +287,7 @@
   name: troublemaker's cap
 
 - type: entity
-  parent: [ClothingHeadHeadHatBaseFlippable, BaseMedicalContraband]
+  parent: ClothingHeadHeadHatBaseFlippable
   id: ClothingHeadHatParamedicsoft
   name: paramedic cap
   description: "It's a paramedic's baseball hat with a medical logo."

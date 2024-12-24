@@ -31,7 +31,7 @@
     sprite: Clothing/Back/Satchels/engineering.rsi
 
 - type: entity
-  parent: [ClothingBackpackSatchel, BaseEngineeringContraband]
+  parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelAtmospherics
   name: atmospherics satchel
   description: A tough satchel made of fire resistant fibers. Smells like plasma.
@@ -40,7 +40,7 @@
     sprite: Clothing/Back/Satchels/atmospherics.rsi
 
 - type: entity
-  parent: [ClothingBackpackSatchel, BaseCivilianContraband]
+  parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelClown
   name: clown satchel
   description: For fast running from security.
@@ -52,7 +52,7 @@
       collection: BikeHorn
 
 - type: entity
-  parent: [ClothingBackpackSatchel, BaseCivilianContraband]
+  parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelMime
   name: mime satchel
   description: A satchel designed for the silent and expressive art of miming.
@@ -61,7 +61,7 @@
     sprite: Clothing/Back/Satchels/mime.rsi
 
 - type: entity
-  parent: [ClothingBackpackSatchel, BaseMedicalContraband]
+  parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelMedical
   name: medical satchel
   description: A sterile satchel used in medical departments.
@@ -70,7 +70,7 @@
     sprite: Clothing/Back/Satchels/medical.rsi
 
 - type: entity
-  parent: [ClothingBackpackSatchel, BaseMedicalContraband]
+  parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelChemistry
   name: chemistry satchel
   description: A sterile satchel with chemist colours.
@@ -79,7 +79,7 @@
     sprite: Clothing/Back/Satchels/chemistry.rsi
 
 - type: entity
-  parent: [ClothingBackpackSatchel, BaseMedicalContraband]
+  parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelVirology
   name: virology satchel
   description: A satchel made of hypo-allergenic fibers. It's designed to help prevent the spread of disease. Smells like monkey.
@@ -88,7 +88,7 @@
     sprite: Clothing/Back/Satchels/virology.rsi
 
 - type: entity
-  parent: [ClothingBackpackSatchel, BaseMedicalContraband]
+  parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelGenetics
   name: genetics satchel
   description: A sterile satchel with geneticist colours.
@@ -97,7 +97,7 @@
     sprite: Clothing/Back/Satchels/genetics.rsi
 
 - type: entity
-  parent: [ClothingBackpackSatchel, BaseScienceContraband]
+  parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelScience
   name: science satchel
   description: Useful for holding research materials.
@@ -133,7 +133,7 @@
     sprite: Clothing/Back/Satchels/captain.rsi
 
 - type: entity
-  parent: [ClothingBackpackSatchel, BaseCivilianContraband]
+  parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelHydroponics
   name: hydroponics satchel
   description: A satchel made of all natural fibers.
@@ -142,7 +142,7 @@
     sprite: Clothing/Back/Satchels/hydroponics.rsi
 
 - type: entity
-  parent: [ClothingBackpackSatchel, BaseCargoContraband]
+  parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelCargo
   name: cargo satchel
   description: A robust satchel for stealing cargo's loot.
@@ -151,7 +151,7 @@
       sprite: Clothing/Back/Satchels/cargo.rsi
 
 - type: entity
-  parent: [ClothingBackpackSatchel, BaseCargoContraband]
+  parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelSalvage
   name: salvage satchel
   description: A robust satchel for stashing your loot.

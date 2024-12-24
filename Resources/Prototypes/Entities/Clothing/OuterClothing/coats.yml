@@ -365,7 +365,7 @@
         Piercing: 0.85
 
 - type: entity
-  parent: [ClothingOuterStorageBase, BaseMedicalContraband]
+  parent: ClothingOuterStorageBase
   id: ClothingOuterCoatParamedicWB
   name: paramedic windbreaker
   description: A paramedic's trusty windbreaker, for all the space wind.

@@ -51,7 +51,7 @@
         ents: []
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseEngineeringContraband]
+  parent: ClothingOuterWinterCoatToggleable
   id: ClothingOuterWinterAtmos
   name: atmospherics winter coat
   components:
@@ -74,7 +74,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterEngineer
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseCivilianContraband]
+  parent: ClothingOuterWinterCoatToggleable
   id: ClothingOuterWinterBar
   name: bartender winter coat
   components:
@@ -120,7 +120,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterCaptain
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseCargoContraband]
+  parent: ClothingOuterWinterCoatToggleable
   id: ClothingOuterWinterCargo
   name: cargo winter coat
   components:
@@ -189,7 +189,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterCentcom
 
 - type: entity
-  parent: [ClothingOuterWinterCoat, BaseCivilianContraband]
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterChef
   name: chef's freezer coat
   description: A coat specifically designed for work inside cold storage, sorely needed by cold-blooded lizard chefs.
@@ -271,7 +271,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterCMO
 
 - type: entity
-  parent: [ClothingOuterWinterCoat, BaseCivilianContraband]
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterClown
   name: clown winter coat
   components:
@@ -281,7 +281,7 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatclown.rsi
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseEngineeringContraband]
+  parent: ClothingOuterWinterCoatToggleable
   id: ClothingOuterWinterEngi
   name: engineering winter coat
   components:
@@ -397,7 +397,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterHOS
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseCivilianContraband]
+  parent: ClothingOuterWinterCoatToggleable
   id: ClothingOuterWinterHydro
   name: hydroponics winter coat
   components:
@@ -480,7 +480,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterMed
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseCivilianContraband]
+  parent: ClothingOuterWinterCoatToggleable
   id: ClothingOuterWinterMime
   name: mime winter coat
   components:
@@ -503,7 +503,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterMime
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseCargoContraband]
+  parent: ClothingOuterWinterCoatToggleable
   id: ClothingOuterWinterMiner
   name: mining winter coat
   components:
@@ -610,7 +610,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterRD
 
 - type: entity
-  parent: [ClothingOuterWinterCoatToggleable, BaseScienceContraband]
+  parent: ClothingOuterWinterCoatToggleable
   id: ClothingOuterWinterRobo
   name: robotics winter coat
   components:
@@ -819,7 +819,7 @@
     clothingPrototype: ClothingHeadHatHoodWinterSyndie
 
 - type: entity
-  parent: [ClothingOuterWinterCoat, BaseCivilianContraband]
+  parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterMusician
   name: musician's winter coat
   description: An oversized, plasticine space tuxedo that'll have people asking "do you know me?"

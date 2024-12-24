@@ -26,7 +26,7 @@
     sprite: Clothing/Neck/Ties/dettie.rsi
 
 - type: entity
-  parent: [ClothingNeckBase, BaseScienceContraband]
+  parent: ClothingNeckBase
   id: ClothingNeckTieSci
   name: scientist's tie
   description: Why do we all have to wear these ridiculous ties?

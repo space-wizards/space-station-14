@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ClothingShoesBaseButcherable, BaseCivilianContraband]
+  parent: ClothingShoesBaseButcherable
   id: ClothingShoesChef
   name: chef shoes
   description: Sturdy shoes that minimize injury from falling objects or knives.
