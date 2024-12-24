@@ -96,3 +96,4 @@
   - !type:ListingLimitedStockCondition
     stock: 4
   - !type:BuyerAccessCondition
+    access: Brigmedic
