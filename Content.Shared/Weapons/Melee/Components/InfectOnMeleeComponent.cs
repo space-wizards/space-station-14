@@ -11,7 +11,7 @@ public sealed partial class InfectOnMeleeComponent : Component
     /// infection chance determines the % chance that target will be infected.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public float InfectionChance = 0.15f;
+    public float InfectionChance = 0.05f;
 
     /// <summary>
     /// If this is true then target will be cluwned.
