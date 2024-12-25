@@ -64,7 +64,7 @@ public sealed class SSDIndicatorSystem : EntitySystem
             if(ssd.IsSSD &&
                 ssd.FallAsleepTime <= _timing.CurTime &&
                 !TerminatingOrDeleted(uid) &&
-                !TryComp<ForcedSleepingComponent>(uid, out _)) // Don't add the component if the entity has it from another sources
+                !HasComp<ForcedSleepingComponent>(uid)) // Don't add the component if the entity has it from another sources
             {
                 EnsureComp<ForcedSleepingComponent>(uid);
                 ssd.ForcedSleepAdded = true;
