@@ -38,6 +38,19 @@
     softness: 1
     offset: "0, 0.35"
   - type: RotatingLight
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,0.5,0.2,0.35"
+        density: 190
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
