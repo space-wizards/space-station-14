@@ -911,7 +911,7 @@
   name: reagent-name-eggnog
   parent: BaseAlcohol
   desc: reagent-desc-eggnog
-  physicalDesc: reagent-physical-desc-fizzy-and-creamy
+  physicalDesc: reagent-physical-desc-creamy
   flavor: eggnog
   color: "#e6d6bc"
   metamorphicSprite:
@@ -919,8 +919,7 @@
     state: icon_empty
   metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
-  metamorphicChangeColor: true
-  fizziness: 0.25
+  metamorphicChangeColor: false
 
 - type: reagent
   id: ErikaSurprise
