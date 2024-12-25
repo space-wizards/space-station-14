@@ -65,5 +65,11 @@ namespace Content.Shared.Chemistry.Components
         /// </summary>
         [DataField]
         public int EquippedMaxFillLevels = 0;
+
+        /// <summary>
+        /// Optional visuals based on inserted item. 
+        /// </summary>
+        [DataField]
+        public string? InsertedItemSlotIDFillBaseName = null;
     }
 }

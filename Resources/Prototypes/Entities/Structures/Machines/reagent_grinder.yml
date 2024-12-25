@@ -19,8 +19,8 @@
     visuals:
       enum.ReagentGrinderVisualState.BeakerAttached:
         grinder:
-          True: {state: "juicer1"}
-          False: {state: "juicer0"}
+          True: {state: "juicer"}
+          False: {state: "juicer_empty"}
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -38,8 +38,15 @@
     snapCardinals: true
     offset: "0.0,0.4"
     layers:
-    - map: [ "grinder" ]
-      state: "juicer0"
+      - state: "juicer"
+        map: [ "grinder" ]
+      - state: juicer-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: juicer
+    InsertedItemSlotIDFillBaseName: beakerSlot
   - type: ApcPowerReceiver
     powerLoad: 300
   - type: ItemSlots
