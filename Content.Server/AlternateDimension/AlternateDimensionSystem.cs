@@ -1,6 +1,4 @@
 using System.Threading;
-using Content.Server.Station.Components;
-using Content.Server.Station.Events;
 using Content.Server.Station.Systems;
 using Content.Shared.Maps;
 using Content.Shared.AlternateDimension;
@@ -13,7 +11,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.AlternateDimension;
 
-public sealed class AlternateDimensionSystem : SharedAlternateDimensionSystem
+public sealed partial class AlternateDimensionSystem : SharedAlternateDimensionSystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -33,8 +31,8 @@ public sealed class AlternateDimensionSystem : SharedAlternateDimensionSystem
     public override void Initialize()
     {
         base.Initialize();
-
-        SubscribeLocalEvent<StationAlternateDimensionGeneratorComponent, StationPostInitEvent>(OnStationInit);
+        InitializePortal();
+        InitializeStation();
     }
 
     public override void Update(float frameTime)
@@ -51,25 +49,6 @@ public sealed class AlternateDimensionSystem : SharedAlternateDimensionSystem
                     break;
             }
         }
-    }
-
-    private void OnStationInit(Entity<StationAlternateDimensionGeneratorComponent> ent, ref StationPostInitEvent args)
-    {
-        if (!TryComp<StationDataComponent>(ent, out var stationData))
-            return;
-
-        var alterParams = new AlternateDimensionParams
-        {
-            Seed = _random.Next(),
-            Dimension = _random.Pick(ent.Comp.Dimensions),
-        };
-
-        var stationGrid = _stationSystem.GetLargestGrid(stationData);
-
-        if (stationGrid is null)
-            return;
-
-        MakeAlternativeRealityGrid(stationGrid.Value, alterParams);
     }
 
     /// <summary>
@@ -118,8 +97,8 @@ public sealed class AlternateDimensionSystem : SharedAlternateDimensionSystem
         _jobs.Add((job, cancelToken));
         _jobQueue.EnqueueJob(job);
 
-        return
-            true; //TODO: Job can fail for various reasons, in which case you need to handle and delete setuped components separately.
+        //TODO: Job can fail for various reasons, in which case you need to handle and delete setuped components separately.
+        return true;
     }
 
     /// <summary>
@@ -138,58 +117,5 @@ public sealed class AlternateDimensionSystem : SharedAlternateDimensionSystem
         realDimension.AlternativeGrids.Remove(type);
         QueueDel(Transform(alternativeGrid).MapUid);
         return true;
-    }
-
-    /// <summary>
-    /// Finds and returns an alternate version of a grid of the specified type.
-    /// </summary>
-    public EntityUid? GetAlternateRealityGrid(EntityUid originalGrid, ProtoId<AlternateDimensionPrototype> type)
-    {
-        if (!TryComp<RealDimensionGridComponent>(originalGrid, out var realDimension))
-            return null;
-
-        if (!realDimension.AlternativeGrids.TryGetValue(type, out var alternativeGrid))
-            return null;
-
-        return alternativeGrid;
-    }
-
-    /// <summary>
-    /// Tries to find an alternate dimension of the grid the entity is on, and get the same coordinates
-    /// in the alternate dimension that the entity is in in the real world at the current moment.
-    /// </summary>
-    public EntityCoordinates? GetAlternateRealityCoordinates(EntityUid entity,
-        ProtoId<AlternateDimensionPrototype> type)
-    {
-        var xform = Transform(entity);
-        if (!TryComp<RealDimensionGridComponent>(xform.GridUid, out var realDimension))
-            return null;
-
-        if (!realDimension.AlternativeGrids.TryGetValue(type, out var alternativeGrid))
-            return null;
-
-        var alternativeMap = Transform(alternativeGrid).MapUid;
-        if (alternativeMap is null)
-            return null;
-
-        return new EntityCoordinates(alternativeMap.Value, xform.Coordinates.Position);
-    }
-
-    /// <summary>
-    /// If the entity is in an alternate grid dimension, returns coordinates in the real world relative to the entity's current position in the alternate dimension.
-    /// </summary>
-    /// <param name="entity"></param>
-    /// <returns></returns>
-    public EntityCoordinates? GetOriginalRealityCoordinates(EntityUid entity)
-    {
-        var xform = Transform(entity);
-
-        if (!TryComp<AlternateDimensionGridComponent>(xform.GridUid, out var alternateComp))
-            return null;
-
-        if (alternateComp.RealDimensionGrid is null)
-            return null;
-
-        return new EntityCoordinates(alternateComp.RealDimensionGrid.Value, xform.Coordinates.Position);
     }
 }
