@@ -165,7 +165,7 @@ namespace Content.Client.Cargo.UI
                         :
                             Loc.GetString(
                                 "cargo-console-menu-order-row-title",
-                                ("orderRequester", Loc.GetString("cargo-console-menu-order-row-alerts-requester-unknow")))
+                                ("orderRequester", Loc.GetString("cargo-console-menu-order-row-alerts-requester-unknown")))
                     },
 
                     Icon = { Texture = _spriteSystem.Frame0(product) },
