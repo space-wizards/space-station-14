@@ -136,13 +136,8 @@
   parent: BasePortal
   description: You're out of this portal, but you can't go back in. You can't even see it, ha!
   components:
-  - type: Portal
-    arrivalSound: /Audio/Items/hiss.ogg
-    departureSound: /Audio/Items/hiss.ogg
-  - type: Fixtures
-    fixtures:
-      portalFixture:
-        hard: false
   - type: Tag
     tags:
     - HideContextMenu
+  - type: Portal
+    enable: false
