@@ -60,8 +60,7 @@ namespace Content.Client.Lobby
                 : lobbyNameCvar;
 
             var width = _cfg.GetCVar(CCVars.ServerLobbyRightPanelWidth);
-            Lobby.RightSide.MinWidth = width;
-            Lobby.RightSide.MaxWidth = width;
+            Lobby.RightSide.SetWidth = width;
 
             UpdateLobbyUi();
 
