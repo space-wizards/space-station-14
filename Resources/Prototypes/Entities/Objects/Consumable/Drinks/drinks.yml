@@ -786,7 +786,7 @@
         - ReagentId: Eggnog
           Quantity: 30
   - type: Icon
-    sprite: Objects/Consumable/Drinks/erikasurprise.rsi
+    sprite: Objects/Consumable/Drinks/eggnogglass.rsi
     state: icon
 
 - type: entity
