@@ -2,8 +2,8 @@
   id: Loop
   mapName: 'Loop Station'
   mapPath: /Maps/loop.yml
-  minPlayers: 30
-  maxPlayers: 70
+  minPlayers: 25
+  maxPlayers: 65
   stations:
     Loop:
       stationProto: StandardNanotrasenStation
