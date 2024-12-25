@@ -17,18 +17,4 @@ public sealed partial class ScrambleDNAArtifactComponent : Component
     /// </summary>
     [DataField("count"), ViewVariables(VVAccess.ReadWrite)]
     public int Count = 1;
-
-    /// <summary>
-    /// Force scrambling to respect initial species
-    /// </summary>
-    [DataField("withinSpecies"), ViewVariables(VVAccess.ReadWrite)]
-    public bool WithinSpecies = true;
-
-    /// <summary>
-    /// if WithinSpecies is false, what species cannot be rolled
-    /// </summary>
-    [DataField("excludedSpecies"), ViewVariables(VVAccess.ReadWrite)]
-    public HashSet<string>? ExcludedSpecies = null;
-
-
 }

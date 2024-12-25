@@ -59,7 +59,7 @@ public sealed class ScrambleDNAArtifactSystem : EntitySystem
     {
         if (TryComp<HumanoidAppearanceComponent>(target, out var humanoid))
         {
-            var newProfile = (component.WithinSpecies ? HumanoidCharacterProfile.RandomWithSpecies(humanoid.Species) : HumanoidCharacterProfile.Random(component.ExcludedSpecies));
+            var newProfile = (HumanoidCharacterProfile.RandomWithSpecies(humanoid.Species));
             _humanoidAppearance.LoadProfile(target, newProfile, humanoid);
             _metaData.SetEntityName(target, newProfile.Name);
             if (TryComp<DnaComponent>(target, out var dna))

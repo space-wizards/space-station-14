@@ -1089,7 +1089,6 @@
   components:
   - type: ScrambleDNAArtifact
     range: 4
-    withinSpecies: true
     count: 1
 
 - type: artifactEffect
