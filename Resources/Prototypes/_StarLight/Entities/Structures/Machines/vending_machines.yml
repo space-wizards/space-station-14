@@ -247,6 +247,7 @@
     name: vendor-security-dispenser
     categories:
     - SLSecurity
+    - SLBrigmedic
     currencyWhitelist:
     - NTCredit
   - type: Fixtures

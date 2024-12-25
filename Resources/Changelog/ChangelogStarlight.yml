@@ -1430,3 +1430,27 @@ Entries:
   id: 203
   time: '2024-12-24T16:13:03.516882+00:00'
   url: 'null'
+- author: KillerTheFaraon
+  changes:
+  - message: Added advanced brute themed topicals to security credit vending machine
+      (lace, punct, bruiz) being specialized topicals.
+    type: Add
+  id: 204
+  time: '2024-12-25T16:30:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/189
+- author: KillerTheFaraon
+  changes:
+  - message: Added security general topicals, red brute and ointment.
+    type: Add
+  id: 205
+  time: '2024-12-25T16:30:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/189
+- author: KillerTheFaraon
+  changes:
+  - message: Added security medical category restricted to brigmedic only in security
+      credit vending machine holding the new topicals.
+    type: Add
+  id: 206
+  time: '2024-12-25T16:30:13.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/189
+
