@@ -61,7 +61,7 @@ public sealed class AlternateDimensionSystem : SharedAlternateDimensionSystem
         var alterParams = new AlternateDimensionParams
         {
             Seed = _random.Next(),
-            Dimension = ent.Comp.Dimension,
+            Dimension = _random.Pick(ent.Comp.Dimensions),
         };
 
         var stationGrid = _stationSystem.GetLargestGrid(stationData);

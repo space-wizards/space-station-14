@@ -137,4 +137,5 @@
   abstract: true
   components:
     - type: StationAlternateDimensionGenerator
-      dimension: Shadowlands
+      dimensions: 
+      - Shadowlands
