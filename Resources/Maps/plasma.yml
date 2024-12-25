@@ -10976,7 +10976,7 @@ entities:
       pos: -125.5,-74.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -157374.05
+      secondsUntilStateChange: -158383.94
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -19409,6 +19409,11 @@ entities:
     components:
     - type: Transform
       pos: -68.5,-36.5
+      parent: 2
+  - uid: 15808
+    components:
+    - type: Transform
+      pos: -13.5,-55.5
       parent: 2
   - uid: 15921
     components:
@@ -30348,11 +30353,6 @@ entities:
     - type: Transform
       pos: -75.5,-13.5
       parent: 2
-  - uid: 15808
-    components:
-    - type: Transform
-      pos: -42.5,-14.5
-      parent: 2
   - uid: 15809
     components:
     - type: Transform
@@ -30491,22 +30491,7 @@ entities:
   - uid: 15836
     components:
     - type: Transform
-      pos: -42.5,-13.5
-      parent: 2
-  - uid: 15837
-    components:
-    - type: Transform
-      pos: -42.5,-11.5
-      parent: 2
-  - uid: 15838
-    components:
-    - type: Transform
-      pos: -42.5,-12.5
-      parent: 2
-  - uid: 15839
-    components:
-    - type: Transform
-      pos: -42.5,-15.5
+      pos: -43.5,-13.5
       parent: 2
   - uid: 15840
     components:
@@ -30721,7 +30706,7 @@ entities:
   - uid: 16793
     components:
     - type: Transform
-      pos: -105.5,-45.5
+      pos: -104.5,-35.5
       parent: 2
   - uid: 16818
     components:
@@ -30747,11 +30732,6 @@ entities:
     components:
     - type: Transform
       pos: -15.5,-3.5
-      parent: 2
-  - uid: 16860
-    components:
-    - type: Transform
-      pos: -92.5,-58.5
       parent: 2
   - uid: 16947
     components:
@@ -35893,11 +35873,6 @@ entities:
     - type: Transform
       pos: -77.5,-56.5
       parent: 2
-  - uid: 22878
-    components:
-    - type: Transform
-      pos: -92.5,-57.5
-      parent: 2
   - uid: 22922
     components:
     - type: Transform
@@ -37981,7 +37956,7 @@ entities:
   - uid: 24435
     components:
     - type: Transform
-      pos: -98.5,-1.5
+      pos: -92.5,-62.5
       parent: 2
   - uid: 24436
     components:
@@ -38067,6 +38042,146 @@ entities:
     components:
     - type: Transform
       pos: -97.5,-2.5
+      parent: 2
+  - uid: 24607
+    components:
+    - type: Transform
+      pos: -91.5,-60.5
+      parent: 2
+  - uid: 24608
+    components:
+    - type: Transform
+      pos: -92.5,-60.5
+      parent: 2
+  - uid: 24609
+    components:
+    - type: Transform
+      pos: -92.5,-61.5
+      parent: 2
+  - uid: 24610
+    components:
+    - type: Transform
+      pos: -92.5,-59.5
+      parent: 2
+  - uid: 24611
+    components:
+    - type: Transform
+      pos: -92.5,-58.5
+      parent: 2
+  - uid: 24612
+    components:
+    - type: Transform
+      pos: -98.5,-2.5
+      parent: 2
+  - uid: 24613
+    components:
+    - type: Transform
+      pos: -99.5,-2.5
+      parent: 2
+  - uid: 24614
+    components:
+    - type: Transform
+      pos: -93.5,-62.5
+      parent: 2
+  - uid: 24615
+    components:
+    - type: Transform
+      pos: -93.5,-63.5
+      parent: 2
+  - uid: 24616
+    components:
+    - type: Transform
+      pos: -94.5,-63.5
+      parent: 2
+  - uid: 24617
+    components:
+    - type: Transform
+      pos: -94.5,-64.5
+      parent: 2
+  - uid: 24618
+    components:
+    - type: Transform
+      pos: -94.5,-65.5
+      parent: 2
+  - uid: 24619
+    components:
+    - type: Transform
+      pos: -93.5,-65.5
+      parent: 2
+  - uid: 24620
+    components:
+    - type: Transform
+      pos: -93.5,-66.5
+      parent: 2
+  - uid: 24621
+    components:
+    - type: Transform
+      pos: -92.5,-66.5
+      parent: 2
+  - uid: 24622
+    components:
+    - type: Transform
+      pos: -91.5,-66.5
+      parent: 2
+  - uid: 24623
+    components:
+    - type: Transform
+      pos: -91.5,-65.5
+      parent: 2
+  - uid: 24624
+    components:
+    - type: Transform
+      pos: -90.5,-65.5
+      parent: 2
+  - uid: 24625
+    components:
+    - type: Transform
+      pos: -90.5,-64.5
+      parent: 2
+  - uid: 24626
+    components:
+    - type: Transform
+      pos: -90.5,-63.5
+      parent: 2
+  - uid: 24627
+    components:
+    - type: Transform
+      pos: -91.5,-63.5
+      parent: 2
+  - uid: 24628
+    components:
+    - type: Transform
+      pos: -91.5,-62.5
+      parent: 2
+  - uid: 24629
+    components:
+    - type: Transform
+      pos: -104.5,-34.5
+      parent: 2
+  - uid: 24630
+    components:
+    - type: Transform
+      pos: -16.5,-13.5
+      parent: 2
+  - uid: 24631
+    components:
+    - type: Transform
+      pos: -17.5,-13.5
+      parent: 2
+  - uid: 24632
+    components:
+    - type: Transform
+      pos: -18.5,-13.5
+      parent: 2
+  - uid: 24633
+    components:
+    - type: Transform
+      pos: -19.5,-13.5
+      parent: 2
+  - uid: 24634
+    components:
+    - type: Transform
+      pos: -20.5,-13.5
       parent: 2
 - proto: CableApcStack
   entities:
@@ -49272,6 +49387,11 @@ entities:
     - type: Transform
       pos: -45.5,-44.5
       parent: 2
+  - uid: 16860
+    components:
+    - type: Transform
+      pos: -76.5,-56.5
+      parent: 2
   - uid: 16914
     components:
     - type: Transform
@@ -51287,6 +51407,11 @@ entities:
     - type: Transform
       pos: -133.5,20.5
       parent: 2
+  - uid: 22878
+    components:
+    - type: Transform
+      pos: -75.5,-56.5
+      parent: 2
   - uid: 22892
     components:
     - type: Transform
@@ -51711,6 +51836,111 @@ entities:
     components:
     - type: Transform
       pos: -118.5,-10.5
+      parent: 2
+  - uid: 24586
+    components:
+    - type: Transform
+      pos: -77.5,-56.5
+      parent: 2
+  - uid: 24587
+    components:
+    - type: Transform
+      pos: -78.5,-56.5
+      parent: 2
+  - uid: 24588
+    components:
+    - type: Transform
+      pos: -80.5,-56.5
+      parent: 2
+  - uid: 24589
+    components:
+    - type: Transform
+      pos: -81.5,-56.5
+      parent: 2
+  - uid: 24590
+    components:
+    - type: Transform
+      pos: -82.5,-56.5
+      parent: 2
+  - uid: 24591
+    components:
+    - type: Transform
+      pos: -83.5,-56.5
+      parent: 2
+  - uid: 24592
+    components:
+    - type: Transform
+      pos: -79.5,-56.5
+      parent: 2
+  - uid: 24593
+    components:
+    - type: Transform
+      pos: -84.5,-56.5
+      parent: 2
+  - uid: 24594
+    components:
+    - type: Transform
+      pos: -86.5,-56.5
+      parent: 2
+  - uid: 24595
+    components:
+    - type: Transform
+      pos: -85.5,-56.5
+      parent: 2
+  - uid: 24596
+    components:
+    - type: Transform
+      pos: -87.5,-56.5
+      parent: 2
+  - uid: 24597
+    components:
+    - type: Transform
+      pos: -88.5,-56.5
+      parent: 2
+  - uid: 24598
+    components:
+    - type: Transform
+      pos: -89.5,-56.5
+      parent: 2
+  - uid: 24599
+    components:
+    - type: Transform
+      pos: -90.5,-56.5
+      parent: 2
+  - uid: 24600
+    components:
+    - type: Transform
+      pos: -91.5,-56.5
+      parent: 2
+  - uid: 24601
+    components:
+    - type: Transform
+      pos: -92.5,-56.5
+      parent: 2
+  - uid: 24602
+    components:
+    - type: Transform
+      pos: -92.5,-57.5
+      parent: 2
+  - uid: 24603
+    components:
+    - type: Transform
+      pos: -92.5,-58.5
+      parent: 2
+  - uid: 24604
+    components:
+    - type: Transform
+      pos: -92.5,-59.5
+      parent: 2
+  - uid: 24605
+    components:
+    - type: Transform
+      pos: -92.5,-60.5
+      parent: 2
+  - uid: 24606
+    components:
+    - type: Transform
+      pos: -91.5,-60.5
       parent: 2
 - proto: CableMVStack
   entities:
@@ -73215,25 +73445,23 @@ entities:
   - uid: 3012
     components:
     - type: MetaData
-      name: long range fax machine (Head of Personel)
+      name: long range fax machine
     - type: Transform
       pos: -53.5,-7.5
       parent: 2
+    - type: FaxMachine
+      name: Head of Personel
     - type: Label
-      currentLabel: Head of Personel
-    - type: NameModifier
-      baseName: long range fax machine
   - uid: 3863
     components:
     - type: MetaData
-      name: long range fax machine (Library)
+      name: long range fax machine
     - type: Transform
       pos: -48.5,-54.5
       parent: 2
+    - type: FaxMachine
+      name: Library
     - type: Label
-      currentLabel: Library
-    - type: NameModifier
-      baseName: long range fax machine
   - uid: 5738
     components:
     - type: MetaData
@@ -73241,6 +73469,8 @@ entities:
     - type: Transform
       pos: -115.5,-6.5
       parent: 2
+    - type: FaxMachine
+      name: Atmospherics
     - type: Label
       currentLabel: Atmospherics
     - type: NameModifier
@@ -73248,14 +73478,13 @@ entities:
   - uid: 6701
     components:
     - type: MetaData
-      name: long range fax machine (Detective)
+      name: long range fax machine
     - type: Transform
       pos: -100.5,-37.5
       parent: 2
+    - type: FaxMachine
+      name: Detective
     - type: Label
-      currentLabel: Detective
-    - type: NameModifier
-      baseName: long range fax machine
   - uid: 6829
     components:
     - type: MetaData
@@ -73263,6 +73492,8 @@ entities:
     - type: Transform
       pos: -68.5,7.5
       parent: 2
+    - type: FaxMachine
+      name: Bridge
     - type: Label
       currentLabel: Bridge
     - type: NameModifier
@@ -73270,47 +73501,43 @@ entities:
   - uid: 7559
     components:
     - type: MetaData
-      name: long range fax machine (Medical)
+      name: long range fax machine
     - type: Transform
       pos: -34.5,-21.5
       parent: 2
+    - type: FaxMachine
+      name: Medical
     - type: Label
-      currentLabel: Medical
-    - type: NameModifier
-      baseName: long range fax machine
   - uid: 10175
     components:
     - type: MetaData
-      name: long range fax machine (Warden)
+      name: long range fax machine
     - type: Transform
       pos: -90.5,-17.5
       parent: 2
+    - type: FaxMachine
+      name: Warden
     - type: Label
-      currentLabel: Warden
-    - type: NameModifier
-      baseName: long range fax machine
   - uid: 13583
     components:
     - type: MetaData
-      name: long range fax machine (Lawyer)
+      name: long range fax machine
     - type: Transform
       pos: -97.5,-45.5
       parent: 2
+    - type: FaxMachine
+      name: Lawyer
     - type: Label
-      currentLabel: Lawyer
-    - type: NameModifier
-      baseName: long range fax machine
   - uid: 14277
     components:
     - type: MetaData
-      name: long range fax machine (Telecommunications)
+      name: long range fax machine
     - type: Transform
       pos: -86.5,-9.5
       parent: 2
+    - type: FaxMachine
+      name: Telecommunications
     - type: Label
-      currentLabel: Telecommunications
-    - type: NameModifier
-      baseName: long range fax machine
   - uid: 16028
     components:
     - type: Transform
@@ -73319,102 +73546,93 @@ entities:
   - uid: 16180
     components:
     - type: MetaData
-      name: long range fax machine (Bar)
+      name: long range fax machine
     - type: Transform
       pos: -67.5,-34.5
       parent: 2
+    - type: FaxMachine
+      name: Bar
     - type: Label
-      currentLabel: Bar
-    - type: NameModifier
-      baseName: long range fax machine
   - uid: 17807
     components:
     - type: MetaData
-      name: long range fax machine (Security)
+      name: long range fax machine
     - type: Transform
       pos: -90.5,-32.5
       parent: 2
+    - type: FaxMachine
+      name: Security
     - type: Label
-      currentLabel: Security
-    - type: NameModifier
-      baseName: long range fax machine
   - uid: 18776
     components:
     - type: MetaData
-      name: long range fax machine (Engineering)
+      name: long range fax machine
     - type: Transform
       pos: -116.5,-18.5
       parent: 2
+    - type: FaxMachine
+      name: Engineering
     - type: Label
-      currentLabel: Engineering
-    - type: NameModifier
-      baseName: long range fax machine
   - uid: 21752
     components:
     - type: MetaData
-      name: long range fax machine (TEG Control Room)
+      name: long range fax machine
     - type: Transform
       pos: -141.5,-7.5
       parent: 2
+    - type: FaxMachine
+      name: TEG
     - type: Label
-      currentLabel: TEG Control Room
-    - type: NameModifier
-      baseName: long range fax machine
   - uid: 22299
     components:
     - type: MetaData
-      name: long range fax machine (Chemistry)
+      name: long range fax machine
     - type: Transform
       pos: -36.5,-21.5
       parent: 2
+    - type: FaxMachine
+      name: Chemistry
     - type: Label
-      currentLabel: Chemistry
-    - type: NameModifier
-      baseName: long range fax machine
   - uid: 22303
     components:
     - type: MetaData
-      name: long range fax machine (Botany)
+      name: long range fax machine
     - type: Transform
       pos: -45.5,-24.5
       parent: 2
+    - type: FaxMachine
+      name: Botany
     - type: Label
-      currentLabel: Botany
-    - type: NameModifier
-      baseName: long range fax machine
   - uid: 22304
     components:
     - type: MetaData
-      name: long range fax machine (Kitchen)
+      name: long range fax machine
     - type: Transform
       pos: -51.5,-33.5
       parent: 2
+    - type: FaxMachine
+      name: Kitchen
     - type: Label
-      currentLabel: Kitchen
-    - type: NameModifier
-      baseName: long range fax machine
   - uid: 22339
     components:
     - type: MetaData
-      name: long range fax machine (Science)
+      name: long range fax machine
     - type: Transform
       pos: -118.5,-40.5
       parent: 2
+    - type: FaxMachine
+      name: Science
     - type: Label
-      currentLabel: Science
-    - type: NameModifier
-      baseName: long range fax machine
   - uid: 22340
     components:
     - type: MetaData
-      name: long range fax machine (Robotics)
+      name: long range fax machine
     - type: Transform
       pos: -122.5,-49.5
       parent: 2
+    - type: FaxMachine
+      name: Robotics
     - type: Label
-      currentLabel: Robotics
-    - type: NameModifier
-      baseName: long range fax machine
   - uid: 22831
     components:
     - type: MetaData
@@ -73429,25 +73647,23 @@ entities:
   - uid: 23251
     components:
     - type: MetaData
-      name: long range fax machine (Psychology)
+      name: long range fax machine
     - type: Transform
       pos: -17.5,-18.5
       parent: 2
+    - type: FaxMachine
+      name: Psychology
     - type: Label
-      currentLabel: Psychology
-    - type: NameModifier
-      baseName: long range fax machine
   - uid: 23948
     components:
     - type: MetaData
-      name: long range fax machine (Cargo)
+      name: long range fax machine
     - type: Transform
       pos: -98.5,14.5
       parent: 2
+    - type: FaxMachine
+      name: Cargo
     - type: Label
-      currentLabel: Cargo
-    - type: NameModifier
-      baseName: long range fax machine
 - proto: FaxMachineCaptain
   entities:
   - uid: 2865
@@ -73457,6 +73673,8 @@ entities:
     - type: Transform
       pos: -48.5,2.5
       parent: 2
+    - type: FaxMachine
+      name: Captain
     - type: Label
       currentLabel: Captain
     - type: NameModifier
@@ -73464,14 +73682,13 @@ entities:
   - uid: 22305
     components:
     - type: MetaData
-      name: captain long range fax machine (Boardroom)
+      name: captain long range fax machine
     - type: Transform
       pos: -62.5,-1.5
       parent: 2
+    - type: FaxMachine
+      name: Boardroom
     - type: Label
-      currentLabel: Boardroom
-    - type: NameModifier
-      baseName: captain long range fax machine
 - proto: filingCabinetDrawerRandom
   entities:
   - uid: 3001
@@ -77369,6 +77586,15 @@ entities:
       parent: 2
     missingComponents:
     - GasMiner
+  - uid: 24581
+    components:
+    - type: Transform
+      pos: -92.5,-64.5
+      parent: 2
+    - type: GasMiner
+      spawnAmount: 10
+      spawnTemperature: 120
+      maxExternalPressure: 50
 - proto: GasMixer
   entities:
   - uid: 21726
@@ -118949,6 +119175,11 @@ entities:
     - type: Transform
       pos: -32.5,6.5
       parent: 2
+  - uid: 15838
+    components:
+    - type: Transform
+      pos: -14.5,-18.5
+      parent: 2
   - uid: 20307
     components:
     - type: Transform
@@ -119182,6 +119413,11 @@ entities:
     - type: Transform
       pos: -32.5,7.5
       parent: 2
+  - uid: 15837
+    components:
+    - type: Transform
+      pos: -14.5,-17.5
+      parent: 2
   - uid: 20347
     components:
     - type: Transform
@@ -119231,7 +119467,7 @@ entities:
         ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
 
-        [bold]Full Name:[/bold]
+        [bold]Full Name:[/bold] 
 
         [bold]Current Job:[/bold]
 
@@ -130308,6 +130544,26 @@ entities:
     - type: Transform
       pos: -39.5,-70.5
       parent: 2
+  - uid: 24582
+    components:
+    - type: Transform
+      pos: -93.5,-63.5
+      parent: 2
+  - uid: 24583
+    components:
+    - type: Transform
+      pos: -93.5,-65.5
+      parent: 2
+  - uid: 24584
+    components:
+    - type: Transform
+      pos: -91.5,-65.5
+      parent: 2
+  - uid: 24585
+    components:
+    - type: Transform
+      pos: -91.5,-63.5
+      parent: 2
 - proto: SignSecureSmall
   entities:
   - uid: 15910
@@ -132797,6 +133053,11 @@ entities:
     - type: Transform
       pos: -66.5,-54.5
       parent: 2
+  - uid: 15839
+    components:
+    - type: Transform
+      pos: -36.49396,-47.495525
+      parent: 2
   - uid: 15931
     components:
     - type: Transform
@@ -132807,6 +133068,11 @@ entities:
     components:
     - type: Transform
       pos: -21.5,-36.5
+      parent: 2
+  - uid: 24635
+    components:
+    - type: Transform
+      pos: -37.085976,-30.474735
       parent: 2
 - proto: StairDark
   entities:
@@ -155032,7 +155298,7 @@ entities:
       lastSignals:
         DoorStatus: True
     - type: Door
-      secondsUntilStateChange: -86435.43
+      secondsUntilStateChange: -87445.32
       state: Opening
     - type: Airlock
       autoClose: False
