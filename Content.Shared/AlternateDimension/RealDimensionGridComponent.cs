@@ -8,6 +8,9 @@ namespace Content.Shared.AlternateDimension;
 [RegisterComponent]
 public sealed partial class RealDimensionGridComponent : Component
 {
+    /// <summary>
+    /// Stores references to all alternate reality grids generated from this grid.
+    /// </summary>
     [DataField]
-    public Dictionary<ProtoId<AlternateDimensionPrototype>, EntityUid> Alternatives = new();
+    public Dictionary<ProtoId<AlternateDimensionPrototype>, EntityUid> AlternativeGrids = new();
 }
