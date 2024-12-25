@@ -1,40 +1,40 @@
-- type: salvageFaction
-  id: Syndicate
-  desc: salvage-faction-syndicate
-  entries:
-    - proto: MobSyndicateFootsoldierFireAxe
-      cost: 6
-    #shotgun
-    - proto: MobSyndicateFootsoldierSawn
-      cost: 10
-    #pistol
-    - proto: MobSyndicateFootsoldierViper
-      cost: 18
-    - proto: MobSyndicateFootsoldierCobra 
-      cost: 22
-      prob: 0.9
-    #rifle
-    - proto: MobSyndicateFootsoldierAk 
-      cost: 42
-      prob: 0.7
-    #grenade
-    - proto: MobSyndicateFootsoldierChina 
-      cost: 80
-      prob: 0.2
-    #laser
-    - proto: MobSyndicateFootsoldierLaserCarbine 
-      cost: 20
-      prob: 0.8
-    - proto: MobSyndicateFootsoldierMakeshiftLaser 
-      cost: 16
-    #boss
-    - proto: MobSyndicateFootsoldierBoss
-      cost: 100
-      prob: 0.2
-  difficulties: 
-    - Impossible
-  configs:
-    DefenseStructure: WeaponTurretDungeonSyndicate
+#- type: salvageFaction
+#  id: Syndicate
+#  desc: salvage-faction-syndicate
+#  entries:
+#    - proto: MobSyndicateFootsoldierFireAxe
+#      cost: 6
+#    #shotgun
+#    - proto: MobSyndicateFootsoldierSawn
+#      cost: 10
+#    #pistol
+#    - proto: MobSyndicateFootsoldierViper
+#      cost: 18
+#    - proto: MobSyndicateFootsoldierCobra 
+#      cost: 22
+#      prob: 0.9
+#    #rifle
+#    - proto: MobSyndicateFootsoldierAk 
+#      cost: 42
+#      prob: 0.7
+#    #grenade
+#    - proto: MobSyndicateFootsoldierChina 
+#      cost: 80
+#      prob: 0.2
+#    #laser
+#    - proto: MobSyndicateFootsoldierLaserCarbine 
+#      cost: 20
+#      prob: 0.8
+#    - proto: MobSyndicateFootsoldierMakeshiftLaser 
+#      cost: 16
+#    #boss
+#    - proto: MobSyndicateFootsoldierBoss
+#      cost: 100
+#      prob: 0.2
+#  difficulties: 
+#    - Impossible
+#  configs:
+#    DefenseStructure: WeaponTurretDungeonSyndicate
 
 - type: salvageFaction
   id: Soviet
