@@ -652,8 +652,6 @@ entities:
       pos: 1.5,-6.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 145
 - proto: GasVentScrubber
@@ -665,8 +663,6 @@ entities:
       pos: 1.5,-0.5
       parent: 2
     - type: DeviceNetwork
-      configurators:
-      - invalid
       deviceLists:
       - 145
 - proto: GeneratorBasic15kW
