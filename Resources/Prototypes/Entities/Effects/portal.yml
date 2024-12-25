@@ -106,7 +106,7 @@
     canTeleportToOtherMaps: true
 
 - type: entity
-  id: ShadowPortal
+  id: PortalShadow
   name: shadow rift
   description: Looks unstable.
   parent: [ BasePortal, BaseShadow ]

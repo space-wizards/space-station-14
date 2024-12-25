@@ -17,7 +17,7 @@
       - id: ShadowTree
       - id: ShadowKudzuWeak
       - id: CrystalPink
-      - id: ShadowPortal
+      - id: PortalShadow
         weight: 0.5
 
 - type: entity
