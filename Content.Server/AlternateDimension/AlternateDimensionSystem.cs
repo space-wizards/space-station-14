@@ -174,4 +174,22 @@ public sealed class AlternateDimensionSystem : SharedAlternateDimensionSystem
 
         return new EntityCoordinates(alternativeMap.Value, xform.Coordinates.Position);
     }
+
+    /// <summary>
+    /// If the entity is in an alternate grid dimension, returns coordinates in the real world relative to the entity's current position in the alternate dimension.
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    public EntityCoordinates? GetOriginalRealityCoordinates(EntityUid entity)
+    {
+        var xform = Transform(entity);
+
+        if (!TryComp<AlternateDimensionGridComponent>(xform.GridUid, out var alternateComp))
+            return null;
+
+        if (alternateComp.RealDimensionGrid is null)
+            return null;
+
+        return new EntityCoordinates(alternateComp.RealDimensionGrid.Value, xform.Coordinates.Position);
+    }
 }
