@@ -1,9 +1,5 @@
-using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.Station.Components;
-using Content.Server.Station.Systems;
-using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Maps;
 using Content.Shared.AlternateDimension;
 using Content.Shared.Tag;
@@ -11,7 +7,6 @@ using Robust.Shared.CPUJob.JobQueues;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.Server.AlternateDimension;
 
@@ -20,96 +15,81 @@ public sealed class SpawnAlternateDimensionJob : Job<bool>
     private readonly IEntityManager _entManager;
     private readonly IMapManager _mapManager;
     private readonly IPrototypeManager _prototypeManager;
-    private readonly MetaDataSystem _metaData;
-    private readonly StationSystem _stationSystem;
-    private readonly SharedMapSystem _map;
+    private readonly SharedMapSystem _mapSystem;
     private readonly ITileDefinitionManager _tileDefManager;
     private readonly TileSystem _tileSystem;
     private readonly EntityLookupSystem _lookup;
     private readonly TagSystem _tag;
 
-    public readonly EntityUid Station;
-    private readonly AlternateDimensionParams _alternateParams;
+    private readonly MapId _alternateMapId;
 
-    private readonly ISawmill _sawmill;
+    private readonly EntityUid _alternateGrid;
+    private readonly EntityUid _originalGrid;
+    private readonly AlternateDimensionParams _alternateParams;
 
     public SpawnAlternateDimensionJob(
         double maxTime,
         IEntityManager entManager,
-        ILogManager logManager,
         IMapManager mapManager,
         IPrototypeManager protoManager,
-        MetaDataSystem metaData,
-        StationSystem stationSystem,
         SharedMapSystem map,
         ITileDefinitionManager tileDefManager,
         TileSystem tileSystem,
         EntityLookupSystem lookup,
         TagSystem tagSystem,
-        EntityUid station,
+        MapId alternateMapId,
+        EntityUid alternateGrid,
+        EntityUid originalGrid,
         AlternateDimensionParams alternateParams,
         CancellationToken cancellation = default) : base(maxTime, cancellation)
     {
         _entManager = entManager;
         _mapManager = mapManager;
         _prototypeManager = protoManager;
-        _metaData = metaData;
-        _stationSystem = stationSystem;
-        _map = map;
+        _mapSystem = map;
         _tileDefManager = tileDefManager;
         _tileSystem = tileSystem;
         _lookup = lookup;
         _tag = tagSystem;
-        Station = station;
+        _originalGrid = originalGrid;
+        _alternateGrid = alternateGrid;
+        _alternateMapId = alternateMapId;
         _alternateParams = alternateParams;
-        _sawmill = logManager.GetSawmill("shadow_dimension_job");
     }
 
     protected override async Task<bool> Process()
     {
-        if (!_entManager.TryGetComponent<StationDataComponent>(Station, out var stationData))
+        if (!_entManager.TryGetComponent<MapGridComponent>(_originalGrid, out var stationGridComp))
             return false;
-
-        var stationGrid = _stationSystem.GetLargestGrid(stationData);
-
-        if (!_entManager.TryGetComponent<MapGridComponent>(stationGrid, out var stationGridComp))
+        if (!_entManager.TryGetComponent<MapGridComponent>(_alternateGrid, out var alternateGridComp))
             return false;
 
         if (!_prototypeManager.TryIndex(_alternateParams.Dimension, out var indexedDimension))
             return false;
 
-        //Create new map and set name
-        var shadowMapUid = _map.CreateMap(out var shadowMapId, runMapInit: false);
-        var stationMetaData = _entManager.EnsureComponent<MetaDataComponent>(Station);
-        _metaData.SetEntityName(
-            shadowMapUid,
-            $"Shadow side of {stationMetaData.EntityName}"); //TODO: Localize it
-
-        _sawmill.Debug("shadow_dimension", $"Spawning station {stationMetaData.EntityName} shadow side with seed {_alternateParams.Seed}");
         var random = new Random(_alternateParams.Seed);
 
         //Add map components
         if (indexedDimension.MapComponents is not null)
-            _entManager.AddComponents(shadowMapUid, indexedDimension.MapComponents);
+            _entManager.AddComponents(_mapSystem.GetMap(_alternateMapId), indexedDimension.MapComponents);
 
-        //Set Station grid silhouette tiles
-        var shadowGrid = _mapManager.CreateGridEntity(shadowMapId);
-        var stationTiles = _map.GetAllTilesEnumerator(stationGrid.Value, stationGridComp);
-        var shadowTiles = new List<(Vector2i Index, Tile Tile)>();
+        //silhouette tiles
+        var stationTiles = _mapSystem.GetAllTilesEnumerator(_originalGrid, stationGridComp);
+        var alternateTiles = new List<(Vector2i Index, Tile Tile)>();
         var tileDef = _tileDefManager[indexedDimension.DefaultTile];
         while (stationTiles.MoveNext(out var tileRef))
         {
-            shadowTiles.Add((tileRef.Value.GridIndices, new Tile(tileDef.TileId, variant: _tileSystem.PickVariant((ContentTileDefinition) tileDef, random))));
+            alternateTiles.Add((tileRef.Value.GridIndices, new Tile(tileDef.TileId, variant: _tileSystem.PickVariant((ContentTileDefinition) tileDef, random))));
         }
-        _map.SetTiles(shadowGrid, shadowTiles);
+        _mapSystem.SetTiles((_alternateGrid, alternateGridComp), alternateTiles);
 
         //Add grid components
         if (indexedDimension.GridComponents is not null)
-            _entManager.AddComponents(shadowGrid, indexedDimension.GridComponents);
+            _entManager.AddComponents(_alternateGrid, indexedDimension.GridComponents);
 
-        //Set shadow dimension entities
+        //Set alternate dimension entities
         HashSet<Entity<TagComponent, TransformComponent>> taggedEntities = new();
-        _lookup.GetChildEntities(stationGrid.Value, taggedEntities);
+        _lookup.GetChildEntities(_originalGrid, taggedEntities);
 
         foreach (var tagged in taggedEntities)
         {
@@ -117,15 +97,15 @@ public sealed class SpawnAlternateDimensionJob : Job<bool>
             {
                 if (!_tag.HasTag(tagged.Owner, replacement.Key))
                     continue;
-                var coord = new EntityCoordinates(shadowMapUid, tagged.Comp2.Coordinates.Position);
+                var coord = new EntityCoordinates(_mapSystem.GetMap(_alternateMapId), tagged.Comp2.Coordinates.Position);
                 _entManager.SpawnEntity(replacement.Value, coord);
                 break;
             }
         }
 
         //Final
-        _mapManager.DoMapInitialize(shadowMapId);
-        _mapManager.SetMapPaused(shadowMapId, false);
+        _mapManager.DoMapInitialize(_alternateMapId);
+        _mapManager.SetMapPaused(_alternateMapId, false);
 
         return true;
     }

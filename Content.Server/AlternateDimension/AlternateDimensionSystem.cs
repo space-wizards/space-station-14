@@ -1,13 +1,14 @@
 using System.Threading;
+using Content.Server.Station.Components;
 using Content.Server.Station.Events;
 using Content.Server.Station.Systems;
-using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Maps;
 using Content.Shared.AlternateDimension;
 using Content.Shared.Tag;
 using Robust.Shared.CPUJob.JobQueues;
 using Robust.Shared.CPUJob.JobQueues.Queues;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -37,14 +38,12 @@ public sealed partial class AlternateDimensionSystem : SharedAlternateDimensionS
     {
         base.Initialize();
 
-        SubscribeLocalEvent<StationAlternateDimensionComponent, StationPostInitEvent>(OnStationInit);
+        SubscribeLocalEvent<StationAlternateDimensionGeneratorComponent, StationPostInitEvent>(OnStationInit);
     }
 
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-
-        var currentTime = _timing.CurTime;
         _jobQueue.Process();
 
         foreach (var (job, cancelToken) in _jobs.ToArray())
@@ -58,34 +57,61 @@ public sealed partial class AlternateDimensionSystem : SharedAlternateDimensionS
         }
     }
 
-    private void OnStationInit(Entity<StationAlternateDimensionComponent> ent, ref StationPostInitEvent args)
+    private void OnStationInit(Entity<StationAlternateDimensionGeneratorComponent> ent, ref StationPostInitEvent args)
     {
-        var testParams = new AlternateDimensionParams
+        if (!TryComp<StationDataComponent>(ent, out var stationData))
+            return;
+
+        var alterParams = new AlternateDimensionParams
         {
             Seed = _random.Next(),
             Dimension = ent.Comp.Dimension
         };
 
-        SpawnStationAlternateDimension(ent, testParams);
+        var stationGrid = _stationSystem.GetLargestGrid(stationData);
+
+        if (stationGrid is null)
+            return;
+
+        MakeAlternativeRealityGrid(stationGrid.Value, alterParams);
     }
 
-    private void SpawnStationAlternateDimension(EntityUid station, AlternateDimensionParams args)
+    public void MakeAlternativeRealityGrid(EntityUid originalGrid, AlternateDimensionParams args)
     {
+        //Block alternative dimensions generation of the same type
+        var realGridComp = EnsureComp<RealDimensionGridComponent>(originalGrid);
+        if (realGridComp.Alternatives.ContainsKey(args.Dimension))
+            return;
+
+        //Create and setup map
+        var alternateMap = _mapSystem.CreateMap(out var alternateMapId, false);
+        var gridMetaData = EntityManager.EnsureComponent<MetaDataComponent>(originalGrid);
+
+        //Create and setup grid
+        var alternateGrid = _mapManager.CreateGridEntity(alternateMapId);
+        var dimenComp = EnsureComp<AlternateDimensionGridComponent>(alternateGrid);
+        dimenComp.DimensionType = args.Dimension;
+        dimenComp.RealDimensionGrid = originalGrid;
+        _metaData.SetEntityName(
+            alternateGrid,
+            $"{gridMetaData.EntityName} ({args.Dimension})");
+
+        realGridComp.Alternatives.Add(args.Dimension, alternateGrid);
+
         var cancelToken = new CancellationTokenSource();
         var job = new SpawnAlternateDimensionJob(
             JobTime,
             EntityManager,
-            _logManager,
             _mapManager,
             _prototypeManager,
-            _metaData,
-            _stationSystem,
             _mapSystem,
             _tileManager,
             _tileSystem,
             _lookup,
             _tag,
-            station,
+            alternateMapId,
+            alternateGrid,
+            originalGrid,
             args,
             cancelToken.Token);
 
