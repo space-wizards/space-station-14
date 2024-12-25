@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Text;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
@@ -261,55 +262,77 @@ namespace Content.IntegrationTests.Tests
 
             await pair.RunTicksSync(3);
 
-            foreach (var protoId in protoIds)
+            await Assert.MultipleAsync(async () =>
             {
-                // TODO fix ninja
-                // Currently ninja fails to equip their own loadout.
-                if (protoId == "MobHumanSpaceNinja")
-                    continue;
-
-                var count = server.EntMan.EntityCount;
-                var clientCount = client.EntMan.EntityCount;
-                EntityUid uid = default;
-                await server.WaitPost(() => uid = server.EntMan.SpawnEntity(protoId, coords));
-                await pair.RunTicksSync(3);
-
-                // If the entity deleted itself, check that it didn't spawn other entities
-                if (!server.EntMan.EntityExists(uid))
+                foreach (var protoId in protoIds)
                 {
-                    Assert.Multiple(() =>
+                    // TODO fix ninja
+                    // Currently ninja fails to equip their own loadout.
+                    if (protoId == "MobHumanSpaceNinja")
+                        continue;
+
+                    var count = server.EntMan.EntityCount;
+                    var clientCount = client.EntMan.EntityCount;
+                    var serverEntities = new HashSet<EntityUid>(server.EntMan.GetEntities());
+                    var clientEntities = new HashSet<EntityUid>(client.EntMan.GetEntities());
+                    EntityUid uid = default;
+                    await server.WaitPost(() => uid = server.EntMan.SpawnEntity(protoId, coords));
+                    await pair.RunTicksSync(3);
+
+                    // If the entity deleted itself, check that it didn't spawn other entities
+                    if (!server.EntMan.EntityExists(uid))
                     {
-                        Assert.That(server.EntMan.EntityCount, Is.EqualTo(count), $"Server prototype {protoId} failed on deleting itself");
+                        Assert.That(server.EntMan.EntityCount, Is.EqualTo(count), $"Server prototype {protoId} failed on deleting itself\n" +
+                            BuildDiffString(serverEntities, server.EntMan.GetEntities(), server.EntMan));
                         Assert.That(client.EntMan.EntityCount, Is.EqualTo(clientCount), $"Client prototype {protoId} failed on deleting itself\n" +
-                                        $"Expected {clientCount} and found {client.EntMan.EntityCount}.\n" +
-                                        $"Server count was {count}.");
-                    });
-                    continue;
-                }
+                            $"Expected {clientCount} and found {client.EntMan.EntityCount}.\n" +
+                            $"Server count was {count}.\n" +
+                            BuildDiffString(clientEntities, client.EntMan.GetEntities(), client.EntMan));
+                        continue;
+                    }
 
-                Assert.Multiple(() =>
-                {
                     // Check that the number of entities has increased.
-                    Assert.That(server.EntMan.EntityCount, Is.GreaterThan(count), $"Server prototype {protoId} failed on spawning as entity count didn't increase");
+                    Assert.That(server.EntMan.EntityCount, Is.GreaterThan(count), $"Server prototype {protoId} failed on spawning as entity count didn't increase\n" +
+                        BuildDiffString(serverEntities, server.EntMan.GetEntities(), server.EntMan));
                     Assert.That(client.EntMan.EntityCount, Is.GreaterThan(clientCount), $"Client prototype {protoId} failed on spawning as entity count didn't increase\n" +
-                                    $"Expected at least {clientCount} and found {client.EntMan.EntityCount}. " +
-                                    $"Server count was {count}");
-                });
+                        $"Expected at least {clientCount} and found {client.EntMan.EntityCount}. " +
+                        $"Server count was {count}." +
+                        BuildDiffString(clientEntities, client.EntMan.GetEntities(), client.EntMan));
 
-                await server.WaitPost(() => server.EntMan.DeleteEntity(uid));
-                await pair.RunTicksSync(3);
+                    await server.WaitPost(() => server.EntMan.DeleteEntity(uid));
+                    await pair.RunTicksSync(3);
 
-                Assert.Multiple(() =>
-                {
                     // Check that the number of entities has gone back to the original value.
-                    Assert.That(server.EntMan.EntityCount, Is.EqualTo(count), $"Server prototype {protoId} failed on deletion: count didn't reset properly");
+                    Assert.That(server.EntMan.EntityCount, Is.EqualTo(count), $"Server prototype {protoId} failed on deletion: count didn't reset properly\n" +
+                        BuildDiffString(serverEntities, server.EntMan.GetEntities(), server.EntMan));
                     Assert.That(client.EntMan.EntityCount, Is.EqualTo(clientCount), $"Client prototype {protoId} failed on deletion: count didn't reset properly:\n" +
-                                    $"Expected {clientCount} and found {client.EntMan.EntityCount}.\n" +
-                                    $"Server count was {count}.");
-                });
-            }
+                        $"Expected {clientCount} and found {client.EntMan.EntityCount}.\n" +
+                        $"Server count was {count}.\n" +
+                        BuildDiffString(clientEntities, client.EntMan.GetEntities(), client.EntMan));
+                }
+            });
 
             await pair.CleanReturnAsync();
+        }
+
+        private static string BuildDiffString(IEnumerable<EntityUid> oldEnts, IEnumerable<EntityUid> newEnts, IEntityManager entMan)
+        {
+            var sb = new StringBuilder();
+            var addedEnts = newEnts.Except(oldEnts);
+            var removedEnts = oldEnts.Except(newEnts);
+            if (addedEnts.Any())
+                sb.AppendLine("Listing new entities:");
+            foreach (var addedEnt in addedEnts)
+            {
+                sb.AppendLine(entMan.ToPrettyString(addedEnt));
+            }
+            if (removedEnts.Any())
+                sb.AppendLine("Listing removed entities:");
+            foreach (var removedEnt in removedEnts)
+            {
+                sb.AppendLine("\t" + entMan.ToPrettyString(removedEnt));
+            }
+            return sb.ToString();
         }
 
         [Test]
