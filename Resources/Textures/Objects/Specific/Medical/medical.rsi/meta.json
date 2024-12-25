@@ -22,6 +22,42 @@
 			"name": "bluebrutepack3"
 		},
 		{
+			"name": "redbrutepack"
+		},
+		{
+			"name": "redbrutepack2"
+		},
+		{
+			"name": "redbrutepack3"
+		},
+		{
+			"name": "puncturaseredbrutepack"
+		},
+		{
+			"name": "puncturaseredbrutepack2"
+		},
+		{
+			"name": "puncturaseredbrutepack3"
+		},
+		{
+			"name": "lacerinolbrutepack"
+		},
+		{
+			"name": "lacerinolbrutepack2"
+		},
+		{
+			"name": "lacerinolbrutepack3"
+		},
+		{
+			"name": "bruizinebrutepack"
+		},
+		{
+			"name": "bruizinebrutepack2"
+		},
+		{
+			"name": "bruizinebrutepack3"
+		},
+		{
 			"name": "brutepack-inhand-left",
 			"directions": 4
 		},
@@ -52,6 +88,15 @@
 		},
 		{
 			"name": "blueointment3"
+		},
+		{
+			"name": "redointment"
+		},
+		{
+			"name": "redointment2"
+		},
+		{
+			"name": "redointment3"
 		},
 		{
 			"name": "ointment-inhand-left",
