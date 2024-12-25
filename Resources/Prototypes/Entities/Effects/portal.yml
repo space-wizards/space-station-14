@@ -84,6 +84,8 @@
     radius: 3
     energy: 1
     netsync: false
+  - type: Portal
+    canTeleportToOtherMaps: true
 
 - type: entity
   id: PortalGatewayOrange
@@ -100,6 +102,8 @@
     radius: 3
     energy: 1
     netsync: false
+  - type: Portal
+    canTeleportToOtherMaps: true
 
 - type: entity
   id: ShadowPortal
@@ -123,3 +127,22 @@
     volume: -3
     sound:
       path: /Audio/Ambience/anomaly_scary.ogg
+  - type: AlternateDimensionAutoPortal
+    otherSidePortal: InvisiblePortal
+    targetDimension: Shadowlands
+
+- type: entity
+  id: InvisiblePortal
+  parent: BasePortal
+  description: You're out of this portal, but you can't go back in. You can't even see it, ha!
+  components:
+  - type: Portal
+    arrivalSound: /Audio/Items/hiss.ogg
+    departureSound: /Audio/Items/hiss.ogg
+  - type: Fixtures
+    fixtures:
+      portalFixture:
+        hard: false
+  - type: Tag
+    tags:
+    - HideContextMenu

@@ -30,3 +30,19 @@
   - type: HandTeleporter
     firstPortalPrototype: PortalGatewayBlue
     secondPortalPrototype: PortalGatewayOrange
+
+- type: entity
+  id: HandTeleporterAdmemeOneSide
+  suffix: Admeme
+  parent: BaseItem
+  name: interdimensional one-side teleporter
+  description: allows you to open stable one-way portal gates that are not limited by distance
+  components:
+  - type: Sprite
+    sprite: /Textures/Objects/Devices/hand_teleporter.rsi
+    layers:
+    - state: icon
+      color: red
+  - type: HandTeleporter
+    firstPortalPrototype: PortalGatewayBlue
+    secondPortalPrototype: InvisiblePortal
