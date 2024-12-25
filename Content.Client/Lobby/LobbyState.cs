@@ -14,7 +14,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
 
-
 namespace Content.Client.Lobby
 {
     public sealed class LobbyState : Robust.Client.State.State
