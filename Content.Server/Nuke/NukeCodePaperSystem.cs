@@ -128,7 +128,7 @@ namespace Content.Server.Nuke
 
                 if (TryComp<NukeCodePaperComponent>(uid, out var nukeCodePaper))
                 {
-                    nukeCodePaper.Nuke = nukeUid;
+                    LinkNuke(uid, nukeUid, nukeCodePaper);
                 }
 
                 codesMessage.PushNewline();
@@ -140,6 +140,7 @@ namespace Content.Server.Nuke
                 nukeCode = Loc.GetString("nuke-codes-message")+codesMessage;
             return !codesMessage.IsEmpty;
         }
+
         private void OnExamined(EntityUid uid, NukeCodePaperComponent paperComp, ExaminedEvent args)
         {
             if (!args.IsInDetailsRange)

@@ -45,12 +45,7 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
     private void OnActivate(EntityUid uid, PinpointerComponent component, ActivateInWorldEvent args)
     {
-        if (args.Handled || !args.Complex)
-            return;
-
         TogglePinpointer(uid, component);
-
-        args.Handled = true;
     }
 
     /// <summary>
@@ -65,13 +60,13 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
         {
             foreach (var storedTarget in component.StoredTargets)
             {
-                if (_tagSystem.HasTag(storedTarget, "FakeDisk") && _tagSystem.HasTag(target.Value, "RealDisk"))
+                if (_tagSystem.HasTag(storedTarget, "FakeNukeDisk") && _tagSystem.HasTag(target.Value, "RealNukeDisk"))
                     target = storedTarget;
             }
         }
 
+        SetTarget(uid, target, component, user,true);
         StoreTarget(target, uid, component, user);
-        SetTarget(uid, target, component, user);
 
     }
 
@@ -271,9 +266,9 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
                 args.Verbs.Add(new Verb()
                 {
                     Text = storedPrefix + " " + Identity.Name(target, EntityManager),
-                    Act = () => SetTarget(uid, target, component, args.User),
+                    Act = () => SetTarget(uid, target, component, args.User, true),
                     Priority = 50,
-                    Category = VerbCategory.SelectTarget
+                    Category = VerbCategory.SelectTarget,
                 });
             }
         }

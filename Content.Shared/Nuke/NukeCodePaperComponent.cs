@@ -7,6 +7,8 @@ namespace Content.Shared.Nuke
     ///     Can be used in mapping or admins spawn.
     /// </summary>
     [RegisterComponent, NetworkedComponent]
+    [AutoGenerateComponentState]
+    [Access(typeof(SharedNukeCodePaperSystem))]
     public sealed partial class NukeCodePaperComponent : Component
     {
         /// <summary>
@@ -20,7 +22,7 @@ namespace Content.Shared.Nuke
         /// <summary>
         /// The nuke that will get primed using the code on the paper.
         /// </summary>
-        [DataField]
+        [ViewVariables, AutoNetworkedField]
         public EntityUid? Nuke;
     }
 }

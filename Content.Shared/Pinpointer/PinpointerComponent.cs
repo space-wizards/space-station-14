@@ -59,7 +59,7 @@ public sealed partial class PinpointerComponent : Component
     /// <summary>
     ///     Name to display of the target being tracked.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public string? TargetName;
 
     /// <summary>
@@ -71,13 +71,13 @@ public sealed partial class PinpointerComponent : Component
     /// <summary>
     ///     Whether or not the target can be reassigned.
     /// </summary>
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool CanRetarget;
 
     /// <summary>
     ///     The current target.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, AutoNetworkedField]
     public EntityUid? Target = null;
 
     /// <summary>

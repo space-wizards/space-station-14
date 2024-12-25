@@ -13,6 +13,15 @@ public abstract class SharedNukeCodePaperSystem : EntitySystem
         SubscribeLocalEvent<NukeCodePaperComponent, GotPinpointerScannedEvent>(GotPinpointerScanned);
     }
 
+    ///<summary>
+    ///     Stores the linked nuke on the paper
+    /// </summary>
+    public void LinkNuke(EntityUid uid, EntityUid nukeUid, NukeCodePaperComponent nukeCodePaper)
+    {
+        nukeCodePaper.Nuke = nukeUid;
+        Dirty(uid, nukeCodePaper);
+    }
+
     /// <summary>
     ///     Sets the target of the pinpointer to the nuke that belongs to the code on the paper.
     /// </summary>
@@ -21,7 +30,7 @@ public abstract class SharedNukeCodePaperSystem : EntitySystem
         if (component.Nuke == null)
             return;
 
-        _pinpointerSystem.SetTarget(args.Pinpointer, component.Nuke);
+        _pinpointerSystem.SetTarget(args.Pinpointer, component.Nuke, args.Component, args.User, true);
         args.Handled = true;
     }
 }

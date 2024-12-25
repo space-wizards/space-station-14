@@ -4,6 +4,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
+using Robust.Shared.Network;
 
 namespace Content.Shared.Pinpointer;
 
@@ -11,6 +12,7 @@ public abstract class SharedPinpointerSystem : EntitySystem
 {
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
+    [Dependency] private readonly INetManager _net = default!;
 
     public override void Initialize()
     {
@@ -33,43 +35,27 @@ public abstract class SharedPinpointerSystem : EntitySystem
 
         if (component.CanRetarget && !component.IsActive || _tagSystem.HasTag(args.Target.Value, "PinpointerScannable"))
         {
-            component.Target = args.Target;
+            SetTarget(uid, args.Target, component, args.User);
         }
         else
         {
-            var pinpointerScanEvent = new GotPinpointerScannedEvent(uid);
+            var pinpointerScanEvent = new GotPinpointerScannedEvent(uid, component, args.User);
             RaiseLocalEvent(args.Target.Value, ref pinpointerScanEvent);
 
             if (component.Target == null || !pinpointerScanEvent.Handled)
                 return;
         }
 
-        if(component.StoredTargets.Contains(component.Target.Value))
-            return;
-
-        if (component.StoredTargets.Count >= component.MaxTargets)
-        {
-            _popup.PopupClient(Loc.GetString("target-pinpointer-full"),args.User,args.User);
-            return;
-        }
-
-        StoreTarget(component.Target.Value, uid, component, args.User);
-
-        _popup.PopupClient(Loc.GetString("target-pinpointer-stored", ("target", component.Target.Value)), args.User, args.User);
-
-        if (component.UpdateTargetName)
-            component.TargetName = component.Target == null ? null : Identity.Name(component.Target.Value, EntityManager);
+        StoreTarget(component.Target, uid, component, args.User);
     }
 
     /// <summary>
     ///     Set pinpointers target to track
     /// </summary>
-    public virtual void SetTarget(EntityUid uid, EntityUid? target, PinpointerComponent? pinpointer = null, EntityUid? user = null)
+    public virtual void SetTarget(EntityUid uid, EntityUid? target, PinpointerComponent pinpointer, EntityUid? user = null, bool toggleOn = false)
     {
-        if (!Resolve(uid, ref pinpointer))
-            return;
 
-        if (pinpointer.Target == target || target == null)
+        if (pinpointer.Target == target)
             return;
 
         pinpointer.Target = target;
@@ -80,22 +66,25 @@ public abstract class SharedPinpointerSystem : EntitySystem
             pinpointer.TargetName = Identity.Name(pinpointer.Target.Value, EntityManager);
         }
 
-        if (user != null && pinpointer.Target != null)
-        {
-            if (pinpointer.TargetName != null)
-            {
-                _popup.PopupEntity(Loc.GetString("targeting-pinpointer-succeeded",
-                    ("target", pinpointer.TargetName)), user.Value, user.Value);
-            }
-
-        }
-
-        //Turns on the pinpointer if the target is changed through the verb menu.
-        if (!pinpointer.IsActive && user != null)
+        //Turns on the pinpointer
+        if (!pinpointer.IsActive && toggleOn)
         {
             TogglePinpointer(uid, pinpointer);
         }
 
+        Dirty(uid, pinpointer);
+
+        if (user != null && pinpointer.Target != null)
+        {
+            if (pinpointer.TargetName != null && toggleOn)
+            {
+                _popup.PopupEntity(Loc.GetString("targeting-pinpointer-succeeded",
+                        ("target", pinpointer.TargetName)),
+                    user.Value,
+                    user.Value);
+            }
+
+        }
         UpdateDirectionToTarget(uid, pinpointer);
     }
 
@@ -138,7 +127,13 @@ public abstract class SharedPinpointerSystem : EntitySystem
     {
         if (target == null)
         {
-            _popup.PopupEntity(Loc.GetString("targeting-pinpointer-failed"), user, user);
+            _popup.PopupClient(Loc.GetString("targeting-pinpointer-failed"), user, user);
+            return;
+        }
+
+        if (component.StoredTargets.Count >= component.MaxTargets)
+        {
+            _popup.PopupClient(Loc.GetString("target-pinpointer-full"),user,user);
             return;
         }
 
@@ -148,7 +143,14 @@ public abstract class SharedPinpointerSystem : EntitySystem
         component.StoredTargets.Add(target.Value);
         EnsureComp<TrackableComponent>(target.Value, out var trackable);
         trackable.TrackedBy.Add(pinpointer);
+
         Dirty(pinpointer, component);
+
+        if (_net.IsServer && !component.IsActive)
+        {
+            _popup.PopupEntity(Loc.GetString("target-pinpointer-stored", ("target", target)), user, user);
+        }
+
     }
 
     /// <summary>
@@ -219,4 +221,4 @@ public abstract class SharedPinpointerSystem : EntitySystem
 ///     Gets raised when the pinpointer is used on another entity.
 /// </summary>
 [ByRefEvent]
-public record struct GotPinpointerScannedEvent(EntityUid Pinpointer, bool Handled = false);
+public record struct GotPinpointerScannedEvent(EntityUid Pinpointer, PinpointerComponent Component, EntityUid User,  bool Handled = false);
