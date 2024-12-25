@@ -23,6 +23,11 @@ public sealed class XAECreatePuddleSystem: BaseXAESystem<XAECreatePuddleComponen
 
     private void OnInit(EntityUid uid, XAECreatePuddleComponent component, MapInitEvent _)
     {
+        if (component.PossibleChemicals == null || component.PossibleChemicals.Count == 0)
+        {
+            return;
+        }
+
         if (component.SelectedChemicals == null)
         {
             var chemicalList = new List<ProtoId<ReagentPrototype>>();
