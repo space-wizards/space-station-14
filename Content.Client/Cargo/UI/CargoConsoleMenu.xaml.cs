@@ -151,6 +151,8 @@ namespace Content.Client.Cargo.UI
             {
                 var product = _protoManager.Index<EntityPrototype>(order.ProductId);
                 var productName = product.Name;
+                var requester = !string.IsNullOrEmpty(order.Requester) ?
+                    order.Requester : Loc.GetString("cargo-console-menu-order-row-alerts-requester-unknown");
 
                 var row = new CargoOrderRow
                 {
@@ -158,14 +160,9 @@ namespace Content.Client.Cargo.UI
 
                     Title =
                     {
-                        Text = !string.IsNullOrEmpty(order.Requester) ?
-                            Loc.GetString(
-                                "cargo-console-menu-order-row-title",
-                                ("orderRequester", order.Requester))
-                        :
-                            Loc.GetString(
-                                "cargo-console-menu-order-row-title",
-                                ("orderRequester", Loc.GetString("cargo-console-menu-order-row-alerts-requester-unknown")))
+                        Text = Loc.GetString(
+                            "cargo-console-menu-order-row-title",
+                            ("orderRequester", requester))
                     },
 
                     Icon = { Texture = _spriteSystem.Frame0(product) },
