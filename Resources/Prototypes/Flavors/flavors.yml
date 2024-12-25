@@ -994,11 +994,10 @@
   flavorType: Complex
   description: flavor-complex-driest-martini
 
-  type: flavor
+-  type: flavor
   id: eggnog
   flavorType: Complex
   description: flavor-complex-eggnog
-
 
 - type: flavor
   id: erikasurprise
