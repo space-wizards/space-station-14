@@ -917,7 +917,7 @@
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/eggnogglass.rsi
     state: icon_empty
-  metamorphicMaxFillLevels: 2
+  metamorphicMaxFillLevels: 4
   metamorphicFillBaseName: fill-
   metamorphicChangeColor: true
   fizziness: 0.25
