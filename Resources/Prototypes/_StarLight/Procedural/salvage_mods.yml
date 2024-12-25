@@ -6,17 +6,17 @@
     - Challenging   
  #   - Difficult
 
-- type: salvageDungeonMod
-  id: SyndieStronghold
-  desc: salvage-dungeon-mod-syndie-stronghold
-  proto: SyndieDungeon
-  biomes:
-    - Lava
-    - Grasslands
-    - Caves
-    - Snow
-  difficulties: 
-    - Impossible
+#- type: salvageDungeonMod
+#  id: SyndieStronghold
+#  desc: salvage-dungeon-mod-syndie-stronghold
+#  proto: SyndieDungeon
+#  biomes:
+#    - Lava
+#    - Grasslands
+#    - Caves
+#    - Snow
+#  difficulties: 
+#    - Impossible
   
 - type: salvageDungeonMod
   id: ShipWreck
