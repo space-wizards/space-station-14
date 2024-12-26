@@ -64,9 +64,7 @@
       allowedTiles:
         - FloorAbyss2
       entities:
-        - FloraRockSolid01
-        - FloraRockSolid02
-        - FloraRockSolid03
+        - FloraRockSolid
         - AbyssOne
         - AbyssTwo
         - AbyssThree

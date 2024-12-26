@@ -73,7 +73,7 @@
     transferName: true
     transferHumanoidAppearance: true
     inventory: Transfer
-    revertOnDeath: true
+    revertOnDeath: false
 
 - type: polymorph
   id: ForcedCluwneBeast
