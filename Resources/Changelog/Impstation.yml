@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Added "No Contractions" accent, which replaces (most) contractions with
-      their long forms, e.g. "can't" becomes "can not,"
-    type: Add
-  id: 311
-  time: '2024-10-02T20:40:42.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/396
 - author: TheGrimbeeper
   changes:
   - message: two new utility effects for large artifacts
@@ -4501,3 +4493,10 @@
   id: 810
   time: '2024-12-26T11:40:54.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1132
+- author: Darkmajia
+  changes:
+  - message: Unknown shuttles will now announce properly.
+    type: Fix
+  id: 811
+  time: '2024-12-26T21:45:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1116
