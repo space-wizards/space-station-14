@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: joelsgp
-  changes:
-  - message: Serbian Parliament has applied for associate membership in the Association
-      of Southeast Asian Nations' Inter-Parliamentary Assembly (AIPA).
-    type: Add
-  id: 313
-  time: '2024-10-03T23:41:54.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/296
 - author: hivehum
   changes:
   - message: Added over a dozen new slimes to herd and milk.
@@ -4502,3 +4494,10 @@
   id: 812
   time: '2024-12-26T21:46:11.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1117
+- author: RosySaturniidae
+  changes:
+  - message: resprited the chemvend variant on the nukie planet, the syndiejuice
+    type: Tweak
+  id: 813
+  time: '2024-12-26T21:47:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1097
