@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: metalgearsloth
-  changes:
-  - message: Fix AI eye getting deleted by singulo.
-    type: Fix
-  id: 7253
-  time: '2024-08-31T08:24:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31556
 - author: slarticodefast
   changes:
   - message: Fixed toggleable pointlights for the toy sword, lighters, welders and
@@ -3938,3 +3931,10 @@
   id: 7752
   time: '2024-12-24T02:25:04.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34001
+- author: ArtisticRoomba
+  changes:
+  - message: Reinforced tables now require welding to construct and deconstruct.
+    type: Tweak
+  id: 7753
+  time: '2024-12-26T22:47:23.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33992
