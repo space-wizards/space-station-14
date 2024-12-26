@@ -2229,7 +2229,7 @@
     denyState: deny
     ejectDelay: 2
   - type: Sprite
-    sprite: Structures/Machines/VendingMachines/syndiejuice.rsi
+    sprite: _Impstation/Structures/Machines/VendingMachines/syndiejuice.rsi
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
