@@ -96,7 +96,7 @@ public sealed class AmeControllerSystem : EntitySystem
         if (TryComp<AmeFuelContainerComponent>(controller.FuelSlot.Item, out var fuelContainer))
         {
             // if the jar is empty shut down the AME
-            if (fuelContainer.FuelAmount <= 0)
+            if (fuelContainer.FuelAmount <= -100)
             {
                 SetInjecting(uid, false, null, controller);
             }
@@ -313,7 +313,7 @@ public sealed class AmeControllerSystem : EntitySystem
 
         var ameControllerState = stability switch
         {
-            < 10 => AmeControllerState.Fuck,
+            < 20 => AmeControllerState.Fuck,
             < 50 => AmeControllerState.Critical,
             < 80 => AmeControllerState.Warning,
             _ => AmeControllerState.On,

@@ -17,7 +17,7 @@ public sealed partial class StationCargoOrderDatabaseComponent : Component
     /// Maximum amount of orders a station is allowed, approved or not.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("capacity")]
-    public int Capacity = 20;
+    public int Capacity = 40;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("orders")]
     public List<CargoOrderData> Orders = new();
