@@ -7,11 +7,6 @@ namespace Content.Shared.Mindshield.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class FakeMindShieldComponent : Component
 {
-    [DataField]
-    public EntProtoId Action = "FakeMindShieldToggleAction";
-
-    [DataField]
-    public EntityUid? ActionEntity;
 
     [DataField, AutoNetworkedField]
     public bool IsEnabled { get; set; }

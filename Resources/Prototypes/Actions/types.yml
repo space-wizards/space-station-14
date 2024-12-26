@@ -335,8 +335,8 @@
   description: action-description-toggle-fake-mindshield
   components:
   - type: InstantAction
-    icon: { sprite: Interface/Actions/actions_fakeMindshield.rsi, state: icon }
-    iconOn: { sprite: Interface/Actions/actions_fakeMindshield.rsi, state: icon-on }
+    icon: { sprite: Interface/Actions/actions_fakemindshield.rsi, state: icon }
+    iconOn: { sprite: Interface/Actions/actions_fakemindshield.rsi, state: icon-on }
     itemIconStyle: NoItem
     useDelay: 1
     event: !type:FakeMindShieldToggleEvent

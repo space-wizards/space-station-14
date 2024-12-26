@@ -1,9 +1,5 @@
 ﻿using Content.Shared.Actions;
-using Content.Shared.Implants;
-using Content.Shared.Implants.Components;
 using Content.Shared.Mindshield.Components;
-using Content.Shared.Tag;
-using Content.Shared.Toggleable;
 
 namespace Content.Shared.Mindshield.FakeMindShield;
 
