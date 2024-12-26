@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: two new utility effects for large artifacts
-    type: Add
-  id: 312
-  time: '2024-10-03T23:42:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/400
 - author: joelsgp
   changes:
   - message: Serbian Parliament has applied for associate membership in the Association
@@ -4500,3 +4493,12 @@
   id: 811
   time: '2024-12-26T21:45:10.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1116
+- author: widgetbeck
+  changes:
+  - message: Decapoids can no longer be injected with needles.
+    type: Add
+  - message: Decapoid Vaporizers no longer block ingestion.
+    type: Tweak
+  id: 812
+  time: '2024-12-26T21:46:11.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1117
