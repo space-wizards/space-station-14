@@ -1,0 +1,25 @@
+- type: constructionGraph
+  id: GlassesSecHUD
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: glassesSec
+          steps:
+            - tag: Sunglasses
+              name: sun glasses
+              icon:
+                sprite: Clothing/Eyes/Glasses/sunglasses.rsi
+                state: icon
+              doAfter: 5
+            - tag: HudSecurity
+              name: security hud
+              icon:
+                sprite: Clothing/Eyes/Hud/sec.rsi
+                state: icon
+              doAfter: 5
+            - material: Cable
+              amount: 5
+              doAfter: 5
+    - node: glassesSec
+      entity: ClothingEyesGlassesSecurity

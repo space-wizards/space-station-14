@@ -1,0 +1,363 @@
+# Timers
+- type: loadoutEffectGroup
+  id: Command
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Command
+      time: 3600 # 1 hour
+
+# Flowers
+- type: loadout
+  id: FlowerWreath
+  storage:
+    back:
+    - ClothingHeadHatFlowerWreath
+
+- type: loadout
+  id: Hairflower
+  storage:
+    back:
+    - ClothingHeadHatHairflower
+
+# Headphones
+- type: loadout
+  id: Headphones
+  storage:
+    back:
+    - ClothingNeckHeadphones
+
+# Toys
+- type: loadout
+  id: PlushieLizard
+  storage:
+    back:
+    - PlushieLizard
+
+- type: loadout
+  id: PlushieSpaceLizard
+  storage:
+    back:
+    - PlushieSpaceLizard
+
+- type: loadout
+  id: ThreeCandles
+  dummyEntity: LoadoutDummyCandles
+  storage:
+    back:
+    - CandleRed
+    - CandleBlue
+    - CandleGreenSmall
+
+# Smokeables
+- type: loadout
+  id: Lighter
+  storage:
+    back:
+    - Lighter
+
+- type: loadout
+  id: CigPackGreen
+  storage:
+    back:
+    - CigPackGreen
+
+- type: loadout
+  id: CigPackRed
+  storage:
+    back:
+    - CigPackRed
+
+- type: loadout
+  id: CigPackBlue
+  storage:
+    back:
+    - CigPackBlue
+
+- type: loadout
+  id: CigPackBlack
+  storage:
+    back:
+    - CigPackBlack
+
+- type: loadout
+  id: CigarCase
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Command
+  storage:
+    back:
+    - CigarCase
+
+- type: loadout
+  id: CigarGold
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: Command
+  storage:
+    back:
+    - CigarGold
+
+# Pins
+- type: loadout
+  id: ClothingNeckLGBTPin
+  storage:
+    back:
+    - ClothingNeckLGBTPin
+
+- type: loadout
+  id: ClothingNeckAromanticPin
+  storage:
+    back:
+    - ClothingNeckAromanticPin
+
+- type: loadout
+  id: ClothingNeckAsexualPin
+  storage:
+    back:
+    - ClothingNeckAsexualPin
+
+- type: loadout
+  id: ClothingNeckBisexualPin
+  storage:
+    back:
+    - ClothingNeckBisexualPin
+
+- type: loadout
+  id: ClothingNeckGayPin
+  storage:
+    back:
+    - ClothingNeckGayPin
+
+- type: loadout
+  id: ClothingNeckIntersexPin
+  storage:
+    back:
+    - ClothingNeckIntersexPin
+
+- type: loadout
+  id: ClothingNeckLesbianPin
+  storage:
+    back:
+    - ClothingNeckLesbianPin
+
+- type: loadout
+  id: ClothingNeckNonBinaryPin
+  storage:
+    back:
+    - ClothingNeckNonBinaryPin
+
+- type: loadout
+  id: ClothingNeckPansexualPin
+  storage:
+    back:
+    - ClothingNeckPansexualPin
+
+- type: loadout
+  id: ClothingNeckTransPin
+  storage:
+    back:
+    - ClothingNeckTransPin
+
+- type: loadout
+  id: ClothingNeckAutismPin
+  storage:
+    back:
+    - ClothingNeckAutismPin
+
+- type: loadout
+  id: ClothingNeckGoldAutismPin
+  storage:
+    back:
+    - ClothingNeckGoldAutismPin
+
+# Towels
+- type: loadout
+  id: TowelColorWhite
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:OverallPlaytimeRequirement
+      time: 36000 # 10hr
+  storage:
+    back:
+    - TowelColorWhite
+
+- type: loadout
+  id: TowelColorSilver
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:OverallPlaytimeRequirement
+      time: 1800000 # 500hr
+  storage:
+    back:
+    - TowelColorSilver
+
+- type: loadout
+  id: TowelColorGold
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:OverallPlaytimeRequirement
+      time: 3600000 # 1000hr
+  storage:
+    back:
+    - TowelColorGold
+
+- type: loadout
+  id: TowelColorLightBrown
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Cargo
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorLightBrown
+
+- type: loadout
+  id: TowelColorGreen
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Civilian
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorGreen
+
+- type: loadout
+  id: TowelColorDarkBlue
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Command
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorDarkBlue
+
+- type: loadout
+  id: TowelColorOrange
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Engineering
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorOrange
+
+- type: loadout
+  id: TowelColorLightBlue
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Medical
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorLightBlue
+
+- type: loadout
+  id: TowelColorPurple
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Science
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorPurple
+
+- type: loadout
+  id: TowelColorRed
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:DepartmentTimeRequirement
+      department: Security
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorRed
+
+- type: loadout
+  id: TowelColorGray
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobPassenger
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorGray
+
+- type: loadout
+  id: TowelColorBlack
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobChaplain
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorBlack
+
+- type: loadout
+  id: TowelColorDarkGreen
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobLibrarian
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorDarkGreen
+
+- type: loadout
+  id: TowelColorMaroon
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobLawyer
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorMaroon
+
+- type: loadout
+  id: TowelColorYellow
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobClown
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorYellow
+
+- type: loadout
+  id: TowelColorMime
+  effects:
+  - !type:JobRequirementLoadoutEffect
+    requirement:
+      !type:RoleTimeRequirement
+      role: JobMime
+      time: 360000 # 100hr
+  storage:
+    back:
+    - TowelColorMime

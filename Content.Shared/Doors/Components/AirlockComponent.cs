@@ -1,5 +1,6 @@
 using Content.Shared.DeviceLinking;
 using Content.Shared.Doors.Systems;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -12,14 +13,29 @@ namespace Content.Shared.Doors.Components;
 [Access(typeof(SharedAirlockSystem), Friend = AccessPermissions.ReadWriteExecute, Other = AccessPermissions.Read)]
 public sealed partial class AirlockComponent : Component
 {
+    [DataField, AutoNetworkedField]
+    public bool Powered;
+
     // Need to network airlock safety state to avoid mis-predicts when a door auto-closes as the client walks through the door.
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField, AutoNetworkedField]
     public bool Safety = true;
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField]
+    [DataField, AutoNetworkedField]
     public bool EmergencyAccess = false;
+	
+    /// <summary>
+    /// Sound to play when the airlock emergency access is turned on.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier EmergencyOnSound = new SoundPathSpecifier("/Audio/Machines/airlock_emergencyon.ogg");
+
+    /// <summary>
+    /// Sound to play when the airlock emergency access is turned off.
+    /// </summary>
+    [DataField]
+    public SoundSpecifier EmergencyOffSound = new SoundPathSpecifier("/Audio/Machines/airlock_emergencyoff.ogg");
 
     /// <summary>
     /// Pry modifier for a powered airlock.
@@ -45,7 +61,7 @@ public sealed partial class AirlockComponent : Component
     /// <summary>
     /// Whether the airlock should auto close. This value is reset every time the airlock closes.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField, AutoNetworkedField]
     public bool AutoClose = true;
 
     /// <summary>

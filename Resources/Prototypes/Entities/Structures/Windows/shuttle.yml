@@ -1,7 +1,7 @@
 - type: entity
   id: ShuttleWindow
   name: shuttle window
-  parent: Window
+  parent: WindowRCDResistant
   components:
   - type: Sprite
     drawdepth: WallTops
@@ -46,13 +46,13 @@
     node: shuttleWindow
   - type: Appearance
   - type: DamageVisuals
-    thresholds: [4, 8, 12]
-    damageDivisor: 28
+    thresholds: [5, 10, 20]
+    damageDivisor: 20
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks.rsi
   - type: StaticPrice
-    price: 100
+    price: 150
 
 - type: entity
   parent: ShuttleWindow
@@ -87,6 +87,11 @@
         - FullTileMask
         layer:
         - GlassLayer
+  - type: Airtight
+    noAirWhenFullyAirBlocked: false
+    airBlockedDirection:
+    - South
+    - East
   - type: DamageVisuals
     damageOverlay:
       sprite: Structures/Windows/cracks_diagonal.rsi

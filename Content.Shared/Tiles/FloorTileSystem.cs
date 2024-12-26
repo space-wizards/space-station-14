@@ -36,6 +36,7 @@ public sealed class FloorTileSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly TileSystem _tile = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
 
     private static readonly Vector2 CheckRange = new(1f, 1f);
 
@@ -116,7 +117,7 @@ public sealed class FloorTileSystem : EntitySystem
                 }
             }
         }
-        _mapManager.TryGetGrid(location.EntityId, out var mapGrid);
+        TryComp<MapGridComponent>(location.EntityId, out var mapGrid);
 
         foreach (var currentTile in component.OutputTiles)
         {
@@ -124,7 +125,7 @@ public sealed class FloorTileSystem : EntitySystem
 
             if (mapGrid != null)
             {
-                var gridUid = mapGrid.Owner;
+                var gridUid = location.EntityId;
 
                 if (!CanPlaceTile(gridUid, mapGrid, out var reason))
                 {
@@ -132,7 +133,7 @@ public sealed class FloorTileSystem : EntitySystem
                     return;
                 }
 
-                var tile = mapGrid.GetTileRef(location);
+                var tile = _map.GetTileRef(gridUid, mapGrid, location);
                 var baseTurf = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
 
                 if (HasBaseTurf(currentTileDefinition, baseTurf.ID))
@@ -154,12 +155,11 @@ public sealed class FloorTileSystem : EntitySystem
                 if (_netManager.IsClient)
                     return;
 
-                mapGrid = _mapManager.CreateGrid(locationMap.MapId);
-                var gridUid = mapGrid.Owner;
-                var gridXform = Transform(gridUid);
-                _transform.SetWorldPosition(gridXform, locationMap.Position);
-                location = new EntityCoordinates(gridUid, Vector2.Zero);
-                PlaceAt(args.User, gridUid, mapGrid, location, _tileDefinitionManager[component.OutputTiles[0]].TileId, component.PlaceTileSound, mapGrid.TileSize / 2f);
+                var grid = _mapManager.CreateGridEntity(locationMap.MapId);
+                var gridXform = Transform(grid);
+                _transform.SetWorldPosition((grid, gridXform), locationMap.Position);
+                location = new EntityCoordinates(grid, Vector2.Zero);
+                PlaceAt(args.User, grid, grid.Comp, location, _tileDefinitionManager[component.OutputTiles[0]].TileId, component.PlaceTileSound, grid.Comp.TileSize / 2f);
                 return;
             }
         }
@@ -177,7 +177,7 @@ public sealed class FloorTileSystem : EntitySystem
 
         var random = new System.Random((int) _timing.CurTick.Value);
         var variant = _tile.PickVariant((ContentTileDefinition) _tileDefinitionManager[tileId], random);
-        mapGrid.SetTile(location.Offset(new Vector2(offset, offset)), new Tile(tileId, 0, variant));
+        _map.SetTile(gridUid, mapGrid,location.Offset(new Vector2(offset, offset)), new Tile(tileId, 0, variant));
 
         _audio.PlayPredicted(placeSound, location, user);
     }

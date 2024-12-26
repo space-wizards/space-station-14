@@ -10,7 +10,8 @@
     solutions:
       drink:
         maxVol: 20
-        canMix: true
+  - type: MixableSolution
+    solution: drink
   - type: FitsInDispenser
     solution: drink
   - type: DrawableSolution
@@ -24,8 +25,8 @@
     maxTransferAmount: 10
   - type: UserInterface
     interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
+      enum.TransferAmountUiKey.Key:
+        type: TransferAmountBoundUserInterface
   - type: Drink
   - type: Sprite
     state: icon
@@ -37,6 +38,10 @@
     damage:
       types:
         Blunt: 0
+  - type: DnaSubstanceTrace
+  - type: Tag
+    tags:
+    - DrinkCup
 
 - type: entity
   parent: DrinkBaseCup
@@ -46,6 +51,8 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/golden_cup.rsi
+  - type: StaticPrice
+    price: 125
 
 - type: entity
   parent: DrinkBaseCup
@@ -184,6 +191,9 @@
         reagents:
         - ReagentId: HotCocoa
           Quantity: 20
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/hot_coco.rsi
+    state: icon-vend
   - type: Sprite
     sprite: Objects/Consumable/Drinks/hot_coco.rsi
     layers:
@@ -209,6 +219,9 @@
         reagents:
         - ReagentId: Coffee
           Quantity: 20
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/hot_coffee.rsi
+    state: icon-vend
   - type: Sprite
     sprite: Objects/Consumable/Drinks/hot_coffee.rsi
     layers:
@@ -236,7 +249,15 @@
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cafe_latte.rsi
+    layers:
+      - state: icon_empty
+      - state: fill-1
+        map: ["enum.SolutionContainerLayers.Fill"]
   - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    fillBaseName: fill-
+    changeColor: false
   - type: TrashOnSolutionEmpty
     solution: drink
 
@@ -252,6 +273,9 @@
         reagents:
         - ReagentId: Tea
           Quantity: 20
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/teacup.rsi
+    state: icon-vend-tea
   - type: Sprite
     sprite: Objects/Consumable/Drinks/teacup.rsi
     layers:
@@ -277,6 +301,9 @@
         reagents:
         - ReagentId: GreenTea
           Quantity: 20
+  - type: Icon
+    sprite: Objects/Consumable/Drinks/teacup.rsi
+    state: icon-vend-green-tea
   - type: Sprite
     sprite: Objects/Consumable/Drinks/teacup.rsi
     layers:
@@ -293,7 +320,7 @@
 - type: entity
   parent: DrinkBaseCup
   id: DrinkLean
-  name: grape Juice
+  name: grape juice
   description: Damn, no fun allowed.
   components:
   - type: SolutionContainerManager
@@ -330,7 +357,6 @@
   - type: Tag
     tags:
     - Trash
-    - DroneUsable
     - WhitelistChameleon
   - type: TrashOnSolutionEmpty
     solution: drink

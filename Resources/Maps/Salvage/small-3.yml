@@ -926,176 +926,132 @@ entities:
       rot: 3.141592653589793 rad
       pos: 1.5,-10.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 4
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -6.5,5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 6
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 0.5,6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 7
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -5.5,8.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 14
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -0.5,6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 17
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 3.5,6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 24
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 3.5,5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 25
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 3.5,7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 26
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 1.5,7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 29
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -4.5,5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 30
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -7.5,6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 31
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 2.5,7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 37
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 4.5,8.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 38
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 0.5,7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 44
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -3.5,6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 48
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -3.5,7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 49
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -6.5,6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 50
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -5.5,5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 51
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -7.5,4.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 52
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -7.5,5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 53
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -7.5,4.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 66
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -2.5,7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 75
     components:
     - type: Transform
@@ -1108,8 +1064,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -2.5,5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 78
     components:
     - type: Transform
@@ -1122,144 +1076,108 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -3.5,5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 80
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 3.5,7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 97
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -6.5,7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 101
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -7.5,7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 105
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -0.5,6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 106
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -2.5,6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 107
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 1.5,6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 108
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -1.5,8.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 110
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -2.5,7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 112
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -5.5,7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 115
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -3.5,8.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 116
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -4.5,7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 117
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -4.5,6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 118
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -0.5,7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 119
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -7.5,7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 120
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 1.5,6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 121
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 0.5,5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 122
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 0.5,5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 123
     components:
     - type: Transform
@@ -1278,48 +1196,36 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -1.5,5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 126
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -1.5,6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 127
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -6.5,3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 128
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -5.5,3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 129
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -4.5,3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 130
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -3.5,3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 131
     components:
     - type: Transform
@@ -1332,88 +1238,66 @@ entities:
       rot: 3.141592653589793 rad
       pos: -1.5,3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 133
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -2.5,3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 134
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -0.5,3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 135
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -0.5,2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 136
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -0.5,2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 137
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -0.5,1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 138
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 0.5,2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 139
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 1.5,2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 140
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 0.5,3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 141
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 1.5,3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 142
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 2.5,3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 143
     components:
     - type: Transform
@@ -1444,40 +1328,30 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 2.5,5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 148
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 2.5,2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 149
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 3.5,2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 150
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 4.5,3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 151
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 4.5,3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 152
     components:
     - type: Transform
@@ -1490,112 +1364,84 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 5.5,5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 154
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 4.5,5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 155
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 4.5,6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 156
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 4.5,6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 157
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 5.5,7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 158
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 5.5,7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 159
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 6.5,7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 160
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 8.5,8.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 161
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 8.5,7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 162
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 7.5,6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 163
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 6.5,6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 164
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 6.5,6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 165
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 6.5,5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 166
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 6.5,5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 167
     components:
     - type: Transform
@@ -1614,56 +1460,42 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 8.5,5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 170
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 8.5,6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 171
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 9.5,7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 172
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 10.5,6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 173
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 10.5,7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 174
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 9.5,6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 175
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 9.5,7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 176
     components:
     - type: Transform
@@ -1676,8 +1508,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 9.5,5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 178
     components:
     - type: Transform
@@ -1690,1104 +1520,828 @@ entities:
       rot: 3.141592653589793 rad
       pos: 9.5,3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 180
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 10.5,3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 181
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 8.5,3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 182
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 7.5,3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 183
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 6.5,3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 184
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 10.5,1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 185
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 9.5,1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 186
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 9.5,2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 187
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 8.5,2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 188
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 7.5,3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 189
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 7.5,2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 190
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 7.5,1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 191
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 7.5,1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 192
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 7.5,0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 193
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 10.5,0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 194
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 10.5,-0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 195
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 10.5,-1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 196
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 10.5,-2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 197
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 9.5,-1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 198
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 9.5,-0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 199
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 9.5,0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 200
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 8.5,-2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 201
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 8.5,0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 202
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 8.5,-0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 203
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 7.5,-1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 204
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 8.5,0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 205
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 6.5,-1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 206
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 7.5,-1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 207
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 6.5,-0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 208
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 6.5,0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 209
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 6.5,1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 210
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 6.5,2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 211
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 6.5,3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 212
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 5.5,2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 213
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 5.5,0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 214
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 4.5,1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 215
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 4.5,1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 216
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 4.5,0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 217
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 4.5,-0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 218
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 5.5,-0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 219
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 5.5,-1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 220
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 5.5,-2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 221
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 6.5,-2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 222
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 6.5,-3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 223
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 7.5,-3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 224
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 8.5,-3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 225
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 9.5,-3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 226
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -8.5,2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 227
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -7.5,2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 228
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -6.5,2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 229
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -5.5,2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 230
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -4.5,2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 231
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -4.5,1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 232
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -4.5,0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 233
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -4.5,0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 234
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -3.5,0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 235
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -2.5,1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 236
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -2.5,0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 237
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -3.5,2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 238
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -3.5,2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 239
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -2.5,2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 240
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -1.5,2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 241
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -1.5,1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 242
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -1.5,0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 243
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -1.5,-0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 244
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -2.5,-1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 245
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -3.5,-1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 246
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -3.5,-0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 247
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -4.5,-0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 248
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -0.5,0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 249
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -0.5,0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 250
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -0.5,-0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 251
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -0.5,-1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 252
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -1.5,-2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 253
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -1.5,-1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 254
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -7.5,1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 255
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -6.5,1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 256
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -5.5,1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 257
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -6.5,0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 258
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -6.5,0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 259
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -7.5,-0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 260
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -7.5,-0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 261
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -8.5,0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 262
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -7.5,-1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 263
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -7.5,-2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 264
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -7.5,-3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 265
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -5.5,-0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 266
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -5.5,-0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 267
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -5.5,-1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 268
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -6.5,-2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 269
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -6.5,-1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 270
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -7.5,-3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 271
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -6.5,-3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 272
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -5.5,-3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 273
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -4.5,-2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 274
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -4.5,-1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 275
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -4.5,-2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 276
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -3.5,-2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 277
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -2.5,-2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 278
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -3.5,-3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 279
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -2.5,-3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 280
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -1.5,-3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 281
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -0.5,-2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 282
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 0.5,-2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 283
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 0.5,-2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 284
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 0.5,-3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 285
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -0.5,-4.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 286
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 0.5,-0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 287
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 0.5,-1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 288
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 1.5,-0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 289
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 1.5,0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 290
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 1.5,1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 291
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 1.5,2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 292
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 2.5,0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 293
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 2.5,1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 294
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 2.5,-0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 295
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 3.5,-0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 296
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 3.5,1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 297
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 3.5,2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 298
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 1.5,-1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 299
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 2.5,-1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 300
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 2.5,-2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 301
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 1.5,-3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 302
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 1.5,-3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 303
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 1.5,-4.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 304
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 2.5,-4.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 305
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 3.5,-4.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 306
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 3.5,-3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 307
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 3.5,-2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 308
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 3.5,-1.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 309
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 3.5,-0.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 310
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 3.5,-5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 311
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 4.5,-5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 312
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 5.5,-5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 313
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 5.5,-5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 314
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 4.5,-4.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 315
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 4.5,-3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 316
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 4.5,-2.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 317
     components:
     - type: Transform
@@ -2800,982 +2354,736 @@ entities:
       rot: 3.141592653589793 rad
       pos: 4.5,-3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 319
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 5.5,-3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 320
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 6.5,-4.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 321
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 6.5,-4.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 322
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 7.5,-4.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 323
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 8.5,-4.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 324
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 9.5,-4.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 325
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 10.5,-5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 326
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 9.5,-4.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 327
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 9.5,-5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 328
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 9.5,-6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 329
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 8.5,-6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 330
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 8.5,-6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 331
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 8.5,-7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 332
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 8.5,-8.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 333
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 9.5,-7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 334
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 9.5,-7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 335
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 10.5,-7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 336
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 10.5,-8.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 337
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 9.5,-9.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 338
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 8.5,-9.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 339
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 8.5,-9.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 340
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 10.5,-10.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 341
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 9.5,-10.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 342
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 7.5,-10.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 343
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 7.5,-9.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 344
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 6.5,-9.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 345
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 6.5,-9.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 346
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 5.5,-10.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 347
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 4.5,-10.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 348
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 3.5,-10.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 349
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 3.5,-10.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 350
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 1.5,-10.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 351
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 2.5,-9.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 352
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 2.5,-9.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 353
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 3.5,-9.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 354
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 4.5,-9.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 355
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 5.5,-8.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 356
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 5.5,-8.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 357
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 6.5,-8.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 358
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 7.5,-7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 359
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 7.5,-6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 360
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 7.5,-5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 361
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 7.5,-5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 362
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 6.5,-6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 363
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 6.5,-6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 364
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 5.5,-7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 365
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 4.5,-7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 366
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 4.5,-7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 367
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 3.5,-8.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 368
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 2.5,-8.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 369
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 2.5,-7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 370
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 2.5,-7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 371
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 4.5,-6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 372
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 3.5,-6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 373
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 2.5,-6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 374
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 2.5,-5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 375
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 1.5,-5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 376
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 0.5,-5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 377
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -0.5,-5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 378
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -0.5,-5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 379
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 0.5,-6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 380
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 1.5,-6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 381
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 1.5,-7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 382
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 1.5,-8.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 383
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 1.5,-9.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 384
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -8.5,-10.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 385
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -7.5,-10.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 386
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -7.5,-8.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 387
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -7.5,-9.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 388
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -6.5,-9.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 389
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -5.5,-10.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 390
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -5.5,-9.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 391
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -5.5,-8.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 392
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -6.5,-7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 393
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -7.5,-7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 394
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -6.5,-7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 395
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -5.5,-7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 396
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -4.5,-7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 397
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -4.5,-8.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 398
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -4.5,-10.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 399
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -3.5,-10.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 400
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -2.5,-10.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 401
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -3.5,-9.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 402
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -5.5,-6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 403
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -6.5,-6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 404
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -7.5,-6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 405
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -8.5,-6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 406
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -6.5,-5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 407
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -7.5,-5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 408
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -7.5,-4.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 409
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -6.5,-4.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 410
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -5.5,-4.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 411
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -5.5,-5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 412
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -4.5,-5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 413
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -4.5,-5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 414
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -3.5,-5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 415
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -2.5,-5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 416
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -2.5,-6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 417
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -1.5,-6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 418
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -1.5,-7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 419
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -0.5,-7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 420
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -4.5,-6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 421
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -3.5,-6.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 422
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -3.5,-7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 423
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -3.5,-8.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 424
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -2.5,-8.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 425
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -2.5,-7.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 426
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -4.5,-3.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 427
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -4.5,-4.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 428
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -3.5,-4.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 429
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -2.5,-4.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 430
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -1.5,-4.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 431
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -1.5,-5.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 432
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 0.5,-9.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 433
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 0.5,-8.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 434
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -0.5,-8.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 435
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -1.5,-8.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 436
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -2.5,-8.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 437
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -0.5,-10.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 438
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -0.5,-9.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 439
     components:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: -1.5,-9.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
   - uid: 440
     components:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -2.5,-9.5
       parent: 10
-    - type: Godmode
-      oldDamage: {}
 ...

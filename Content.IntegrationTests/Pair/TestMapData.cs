@@ -10,9 +10,8 @@ namespace Content.IntegrationTests.Pair;
 public sealed class TestMapData
 {
     public EntityUid MapUid { get; set; }
-    public EntityUid GridUid { get; set; }
-    public MapId MapId { get; set; }
-    public MapGridComponent MapGrid { get; set; } = default!;
+    public Entity<MapGridComponent> Grid;
+    public MapId MapId;
     public EntityCoordinates GridCoords { get; set; }
     public MapCoordinates MapCoords { get; set; }
     public TileRef Tile { get; set; }

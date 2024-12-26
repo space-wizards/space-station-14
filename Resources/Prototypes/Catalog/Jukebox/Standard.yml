@@ -1,0 +1,41 @@
+- type: jukebox
+  id: FlipFlap
+  name: X-CEED - Flip Flap
+  path:
+    path: /Audio/Jukebox/flip-flap.ogg
+
+- type: jukebox
+  id: Tintin
+  name: Jeroen Tel - Tintin on the Moon
+  path:
+    path: /Audio/Jukebox/title3.ogg
+
+- type: jukebox
+  id: Thunderdome
+  name: MashedByMachines - Sector 11
+  path:
+    path: /Audio/Jukebox/sector11.ogg
+
+- type: jukebox
+  id: Constellations
+  name: Qwertyquerty - Constellations
+  path:
+    path: /Audio/Jukebox/constellations.ogg
+
+- type: jukebox
+  id: Drifting
+  name: Qwertyquerty - Drifting
+  path:
+    path: /Audio/Jukebox/drifting.ogg
+
+- type: jukebox
+  id: starlight
+  name: Qwertyquerty - Starlight
+  path:
+    path: /Audio/Jukebox/starlight.ogg
+
+- type: jukebox
+  id: sunset
+  name: PigeonBeans - Sunset
+  path:
+    path: /Audio/Jukebox/sunset.ogg

@@ -13,7 +13,7 @@
     - type: DeviceNetworkRequiresPower
     - type: UserInterface
       interfaces:
-        - key: enum.SurveillanceCameraSetupUiKey.Router
+        enum.SurveillanceCameraSetupUiKey.Router:
           type: SurveillanceCameraSetupBoundUi
     - type: Machine
       board: SurveillanceCameraRouterCircuitboard
@@ -22,6 +22,12 @@
       snapCardinals: true
       layers:
         - state: server
+    - type: AmbientOnPowered
+    - type: AmbientSound
+      volume: -9
+      range: 5
+      sound:
+        path: /Audio/Ambience/Objects/server_fans.ogg
 
 - type: entity
   parent: SurveillanceCameraRouterBase
@@ -42,6 +48,7 @@
 - type: entity
   parent: SurveillanceCameraRouterBase
   id: SurveillanceCameraRouterEngineering
+  name: engineering camera router
   suffix: Engineering
   components:
     - type: SurveillanceCameraRouter
@@ -50,6 +57,7 @@
 - type: entity
   parent: SurveillanceCameraRouterBase
   id: SurveillanceCameraRouterSecurity
+  name: security camera router
   suffix: Security
   components:
     - type: SurveillanceCameraRouter
@@ -58,6 +66,7 @@
 - type: entity
   parent: SurveillanceCameraRouterBase
   id: SurveillanceCameraRouterScience
+  name: science camera router
   suffix: Science
   components:
     - type: SurveillanceCameraRouter
@@ -66,6 +75,7 @@
 - type: entity
   parent: SurveillanceCameraRouterBase
   id: SurveillanceCameraRouterSupply
+  name: supply camera router
   suffix: Supply
   components:
     - type: SurveillanceCameraRouter
@@ -74,6 +84,7 @@
 - type: entity
   parent: SurveillanceCameraRouterBase
   id: SurveillanceCameraRouterCommand
+  name: command camera router
   suffix: Command
   components:
     - type: SurveillanceCameraRouter
@@ -82,6 +93,7 @@
 - type: entity
   parent: SurveillanceCameraRouterBase
   id: SurveillanceCameraRouterService
+  name: service camera router
   suffix: Service
   components:
     - type: SurveillanceCameraRouter
@@ -90,6 +102,7 @@
 - type: entity
   parent: SurveillanceCameraRouterBase
   id: SurveillanceCameraRouterMedical
+  name: medical camera router
   suffix: Medical
   components:
     - type: SurveillanceCameraRouter
@@ -98,12 +111,14 @@
 - type: entity
   parent: SurveillanceCameraRouterBase
   id: SurveillanceCameraRouterGeneral
+  name: general camera router
   suffix: General
   components:
     - type: SurveillanceCameraRouter
       subnetFrequency: SurveillanceCameraGeneral
 
 - type: entity
+  abstract: true
   parent: [ BaseMachinePowered, ConstructibleMachine ]
   id: SurveillanceCameraWirelessRouterBase
   name: wireless camera router
@@ -118,7 +133,7 @@
     - type: DeviceNetworkRequiresPower
     - type: UserInterface
       interfaces:
-        - key: enum.SurveillanceCameraSetupUiKey.Router
+        enum.SurveillanceCameraSetupUiKey.Router:
           type: SurveillanceCameraSetupBoundUi
     - type: Machine
       board: SurveillanceCameraWirelessRouterCircuitboard
@@ -126,6 +141,12 @@
       sprite: Structures/Machines/server.rsi
       layers:
         - state: server
+    - type: AmbientOnPowered
+    - type: AmbientSound
+      volume: -9
+      range: 5
+      sound:
+        path: /Audio/Ambience/Objects/server_fans.ogg
 
 - type: entity
   parent: SurveillanceCameraWirelessRouterBase
@@ -139,6 +160,7 @@
 - type: entity
   parent: SurveillanceCameraWirelessRouterBase
   id: SurveillanceCameraWirelessRouterEntertainment
+  name: entertainment camera router
   suffix: Entertainment
   components:
     - type: SurveillanceCameraRouter

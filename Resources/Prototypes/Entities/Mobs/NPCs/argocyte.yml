@@ -23,7 +23,7 @@
     bloodlossDamage:
       types:
         Bloodloss:
-          1
+          0.5
     bloodlossHealDamage:
       types:
         Bloodloss:
@@ -48,7 +48,6 @@
     sprite: Mobs/Effects/onfire.rsi
     normalState: Generic_mob_burning
   - type: Climbing
-  - type: Flashable
   - type: NameIdentifier
     group: GenericNumber
 

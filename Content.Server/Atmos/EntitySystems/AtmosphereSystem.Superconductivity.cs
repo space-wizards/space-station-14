@@ -1,5 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -12,9 +13,10 @@ namespace Content.Server.Atmos.EntitySystems
             for(var i = 0; i < Atmospherics.Directions; i++)
             {
                 var direction = (AtmosDirection) (1 << i);
-                if (!directions.IsFlagSet(direction)) continue;
+                if (!directions.IsFlagSet(direction))
+                    continue;
 
-                var adjacent = tile.AdjacentTiles[direction.ToIndex()];
+                var adjacent = tile.AdjacentTiles[i];
 
                 // TODO ATMOS handle adjacent being null.
                 if (adjacent == null || adjacent.ThermalConductivity == 0f)
@@ -92,7 +94,9 @@ namespace Content.Server.Atmos.EntitySystems
         {
             if (tile.Air == null)
             {
-                if (other.Tile != null)
+                // TODO ATMOS: why does this need to check if a tile exists if it doesn't use the tile?
+                if (TryComp<MapGridComponent>(other.GridIndex, out var grid)
+                    && _mapSystem.TryGetTileRef(other.GridIndex, grid, other.GridIndices, out var _))
                 {
                     TemperatureShareOpenToSolid(other, tile);
                 }
@@ -127,7 +131,10 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void TemperatureShareMutualSolid(TileAtmosphere tile, TileAtmosphere other, float conductionCoefficient)
         {
-            var deltaTemperature = (tile.TemperatureArchived - other.TemperatureArchived);
+            if (tile.AirArchived == null || other.AirArchived == null)
+                return;
+
+            var deltaTemperature = (tile.AirArchived.Temperature - other.AirArchived.Temperature);
             if (MathF.Abs(deltaTemperature) > Atmospherics.MinimumTemperatureDeltaToConsider
                 && tile.HeatCapacity != 0f && other.HeatCapacity != 0f)
             {
@@ -141,11 +148,14 @@ namespace Content.Server.Atmos.EntitySystems
 
         public void RadiateToSpace(TileAtmosphere tile)
         {
+            if (tile.AirArchived == null)
+                return;
+
             // Considering 0ºC as the break even point for radiation in and out.
             if (tile.Temperature > Atmospherics.T0C)
             {
                 // Hardcoded space temperature.
-                var deltaTemperature = (tile.TemperatureArchived - Atmospherics.TCMB);
+                var deltaTemperature = (tile.AirArchived.Temperature - Atmospherics.TCMB);
                 if ((tile.HeatCapacity > 0) && (MathF.Abs(deltaTemperature) > Atmospherics.MinimumTemperatureDeltaToConsider))
                 {
                     var heat = tile.ThermalConductivity * deltaTemperature * (tile.HeatCapacity *

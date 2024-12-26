@@ -10,9 +10,11 @@ marking-used = {$marking-name}
 marking-used-forced = {$marking-name} (Forced)
 marking-slot-add = Add
 marking-slot-remove = Remove
+marking-slot = Slot {$number}
 
 # Categories
 
+markings-category-Special = Special
 markings-category-Hair = Hair
 markings-category-FacialHair = Facial Hair
 markings-category-Head = Head

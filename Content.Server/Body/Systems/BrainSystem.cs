@@ -16,8 +16,8 @@ namespace Content.Server.Body.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<BrainComponent, AddedToPartInBodyEvent>((uid, _, args) => HandleMind(args.Body, uid));
-            SubscribeLocalEvent<BrainComponent, RemovedFromPartInBodyEvent>((uid, _, args) => HandleMind(uid, args.OldBody));
+            SubscribeLocalEvent<BrainComponent, OrganAddedToBodyEvent>((uid, _, args) => HandleMind(args.Body, uid));
+            SubscribeLocalEvent<BrainComponent, OrganRemovedFromBodyEvent>((uid, _, args) => HandleMind(uid, args.OldBody));
             SubscribeLocalEvent<BrainComponent, PointAttemptEvent>(OnPointAttempt);
         }
 
@@ -39,7 +39,7 @@ namespace Content.Server.Body.Systems
             _mindSystem.TransferTo(mindId, newEntity, mind: mind);
         }
 
-        private void OnPointAttempt(EntityUid uid, BrainComponent component, PointAttemptEvent args)
+        private void OnPointAttempt(Entity<BrainComponent> ent, ref PointAttemptEvent args)
         {
             args.Cancel();
         }

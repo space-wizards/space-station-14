@@ -10,7 +10,7 @@ namespace Content.Shared.Weapons.Melee;
 /// <summary>
 /// When given to a mob lets them do unarmed attacks, or when given to an item lets someone wield it to do attacks.
 /// </summary>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, AutoGenerateComponentPause]
 public sealed partial class MeleeWeaponComponent : Component
 {
     // TODO: This is becoming bloated as shit.
@@ -18,7 +18,7 @@ public sealed partial class MeleeWeaponComponent : Component
     /// <summary>
     /// Does this entity do a disarm on alt attack.
     /// </summary>
-    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public bool AltDisarm = true;
 
     /// <summary>
@@ -33,6 +33,7 @@ public sealed partial class MeleeWeaponComponent : Component
     /// </summary>
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoNetworkedField]
     [ViewVariables(VVAccess.ReadWrite)]
+    [AutoPausedField]
     public TimeSpan NextAttack;
 
     /// <summary>
@@ -66,6 +67,12 @@ public sealed partial class MeleeWeaponComponent : Component
     [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public bool AutoAttack;
 
+    /// <summary>
+    /// If true, attacks will bypass armor resistances.
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    public bool ResistanceBypass = false;
+    
     /// <summary>
     /// Base damage for this weapon. Can be modified via heavy damage or other means.
     /// </summary>
@@ -139,6 +146,14 @@ public sealed partial class MeleeWeaponComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("soundNoDamage"), AutoNetworkedField]
     public SoundSpecifier NoDamageSound { get; set; } = new SoundCollectionSpecifier("WeakHit");
+
+    /// <summary>
+    /// If true, the weapon must be equipped for it to be used.
+    /// E.g boxing gloves must be equipped to your gloves,
+    /// not just held in your hand to be used.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public bool MustBeEquippedToUse = false;
 }
 
 /// <summary>

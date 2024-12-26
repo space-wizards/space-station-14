@@ -65,6 +65,7 @@
   - AME
   - Singularity
   - TEG
+  - RTG
 
 - type: guideEntry
   id: AME
@@ -80,6 +81,11 @@
   id: TEG
   name: guide-entry-teg
   text: "/ServerInfo/Guidebook/Engineering/TEG.xml"
+
+- type: guideEntry
+  id: RTG
+  name: guide-entry-rtg
+  text: "/ServerInfo/Guidebook/Engineering/RTG.xml"
 
 - type: guideEntry
   id: PortableGenerator

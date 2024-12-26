@@ -2,6 +2,7 @@
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.KillTracking;
 using Content.Shared.Chat;
+using Content.Shared.GameTicking.Components;
 using Robust.Server.Player;
 using Robust.Shared.Player;
 using Robust.Shared.Random;

@@ -32,6 +32,14 @@
       collection: MaleCry
     Whistle:
       collection: Whistles
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Gasp:
+      collection: MaleGasp
+    DefaultDeathgasp:
+      collection: MaleDeathGasp
 
 - type: emoteSounds
   id: FemaleHuman
@@ -66,9 +74,17 @@
       collection: FemaleCry
     Whistle:
       collection: Whistles
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Gasp:
+      collection: FemaleGasp
+    DefaultDeathgasp:
+      collection: FemaleDeathGasp
 
 - type: emoteSounds
-  id: UnisexReptilian
+  id: MaleReptilian
   params:
     variation: 0.125
   sounds:
@@ -82,6 +98,38 @@
       collection: Whistles
     Crying:
       collection: MaleCry
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Gasp:
+      collection: MaleGasp
+    DefaultDeathgasp:
+      collection: DeathGasp
+
+- type: emoteSounds
+  id: FemaleReptilian
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
+    Laugh:
+      path: /Audio/Animals/lizard_happy.ogg
+    Honk:
+      collection: BikeHorn
+    Whistle:
+      collection: Whistles
+    Crying:
+      collection: FemaleCry
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Gasp:
+      collection: FemaleGasp
+    DefaultDeathgasp:
+      collection: FemaleDeathGasp
 
 - type: emoteSounds
   id: MaleSlime
@@ -116,6 +164,14 @@
       collection: MaleCry
     Whistle:
       collection: Whistles
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Gasp:
+      collection: MaleGasp
+    DefaultDeathgasp:
+      collection: MaleDeathGasp
   params:
     variation: 0.125
 
@@ -152,6 +208,14 @@
       collection: FemaleCry
     Whistle:
       collection: Whistles
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Gasp:
+      collection: FemaleGasp
+    DefaultDeathgasp:
+      collection: FemaleDeathGasp
   params:
     variation: 0.125
 
@@ -173,11 +237,20 @@
       path: /Audio/Voice/Diona/diona_scream.ogg
     Laugh:
       collection: DionaLaugh
+    Chirp:
+      path: /Audio/Animals/nymph_chirp.ogg
     Honk:
       collection: BikeHorn
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Gasp:
+      collection: MaleGasp
+    DefaultDeathgasp:
+      collection: DeathGasp
   params:
     variation: 0.125
-
 
 - type: emoteSounds
   id: UnisexArachnid
@@ -192,6 +265,14 @@
       path: /Audio/Voice/Arachnid/arachnid_chitter.ogg
     Click:
       path: /Audio/Voice/Arachnid/arachnid_click.ogg
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Gasp:
+      collection: MaleGasp
+    DefaultDeathgasp:
+      collection: DeathGasp
 
 - type: emoteSounds
   id: UnisexDwarf
@@ -224,6 +305,14 @@
       collection: MaleCry
     Whistle:
       collection: Whistles
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Gasp:
+      collection: MaleGasp
+    DefaultDeathgasp:
+      collection: MaleDeathGasp
   params:
     variation: 0.125
     pitch: 0.75
@@ -259,6 +348,14 @@
       collection: FemaleCry
     Whistle:
       collection: Whistles
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Gasp:
+      collection: FemaleGasp
+    DefaultDeathgasp:
+      collection: FemaleDeathGasp
   params:
     variation: 0.125
     pitch: 0.75
@@ -278,6 +375,52 @@
       path: /Audio/Voice/Moth/moth_chitter.ogg
     Squeak:
       path: /Audio/Voice/Moth/moth_squeak.ogg
+    Weh:
+      collection: Weh
+    Hew:
+      collection: Hew
+    Gasp:
+      collection: MaleGasp
+    DefaultDeathgasp:
+      collection: MothDeathGasp
+
+- type: emoteSounds
+  id: UnisexSilicon
+  params:
+    variation: 0.05
+  sounds:
+    Beep:
+      path: /Audio/Machines/twobeep.ogg
+    Chime:
+      path: /Audio/Machines/chime.ogg
+    Buzz:
+      path: /Audio/Machines/buzz-sigh.ogg
+    Buzz-Two:
+      path: /Audio/Machines/buzz-two.ogg
+    Honk:
+      path: /Audio/Items/bikehorn.ogg
+    Ping:
+      path: /Audio/Effects/Cargo/ping.ogg
+
+- type: emoteSounds
+  id: UnisexSiliconSyndicate
+  params:
+    variation: 0.05
+  sounds:
+    Laugh:
+      path: /Audio/Voice/Silicon/syndieborg_laugh.ogg
+    Beep:
+      path: /Audio/Machines/twobeep.ogg
+    Chime:
+      path: /Audio/Machines/chime.ogg
+    Buzz:
+      path: /Audio/Machines/buzz-sigh.ogg
+    Buzz-Two:
+      path: /Audio/Machines/buzz-two.ogg
+    Honk:
+      path: /Audio/Items/bikehorn.ogg
+    Ping:
+      path: /Audio/Effects/Cargo/ping.ogg
 
 # body emotes
 - type: emoteSounds
@@ -305,6 +448,22 @@
       path: /Audio/Voice/Diona/diona_salute.ogg
       params:
        volume: -5
+
+- type: emoteSounds
+  id: ReptilianBodyEmotes
+  sounds:
+    Thump:
+      path: /Audio/Voice/Reptilian/reptilian_tailthump.ogg
+      params:
+        variation: 0.125
+    Clap:
+      collection: Claps
+    Snap:
+      collection: Snaps
+      params:
+        volume: -6
+    Salute:
+      collection: Salutes
 
 # mobs
 - type: emoteSounds
@@ -353,5 +512,18 @@
   id: Kangaroo
   sound:
     path: /Audio/Animals/kangaroo_grunt.ogg
+    params:
+      variation: 0.125
+
+- type: emoteSounds
+  id: Nymph
+  sounds:
+    Chirp:
+      path: /Audio/Animals/nymph_chirp.ogg
+
+- type: emoteSounds
+  id: Parrot
+  sound:
+    path: /Audio/Animals/parrot_raught.ogg
     params:
       variation: 0.125

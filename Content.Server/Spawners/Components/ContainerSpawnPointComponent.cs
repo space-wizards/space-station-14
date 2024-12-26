@@ -1,4 +1,6 @@
 using Content.Server.Spawners.EntitySystems;
+using Content.Shared.Roles;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Spawners.Components;
 
@@ -8,7 +10,7 @@ namespace Content.Server.Spawners.Components;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(ContainerSpawnPointSystem))]
-public sealed partial class ContainerSpawnPointComponent : Component
+public sealed partial class ContainerSpawnPointComponent : Component, ISpawnPoint
 {
     /// <summary>
     /// The ID of the container that this entity will spawn players into
@@ -20,11 +22,11 @@ public sealed partial class ContainerSpawnPointComponent : Component
     /// An optional job specifier
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public string? Job;
+    public ProtoId<JobPrototype>? Job;
 
     /// <summary>
     /// The type of spawn point
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public SpawnPointType SpawnType = SpawnPointType.Unset;
+    public SpawnPointType SpawnType { get; set; } = SpawnPointType.Unset;
 }

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e. Reptilian edit by Nairod(Github)",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e. Reptilian edit by Nairod(Github). equipped-MASK-vox state taken from /vg/station at commit https://github.com/vgstation-coders/vgstation13/commit/4638130fab5ff0e9faa220688811349d3297a33e and slightly modified to fix an error",
   "size": {
     "x": 32,
     "y": 32
@@ -30,6 +30,16 @@
     },
     {
         "name": "equipped-MASK-reptilian",
+        "directions": 4,
+        "delays": [
+            [ 0.5, 0.5, 0.5 ],
+            [ 0.5, 0.5, 0.5 ],
+            [ 0.5, 0.5, 0.5 ],
+            [ 0.5, 0.5, 0.5 ]
+        ]
+    },
+    {
+        "name": "equipped-MASK-vox",
         "directions": 4,
         "delays": [
             [ 0.5, 0.5, 0.5 ],

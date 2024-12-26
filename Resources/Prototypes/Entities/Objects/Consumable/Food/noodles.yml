@@ -7,6 +7,8 @@
   abstract: true
   description: Now that's a nice pasta!
   components:
+  - type: Item
+    storedRotation: -90
   - type: Sprite
     sprite: Objects/Consumable/Food/noodles.rsi
   - type: SolutionContainerManager

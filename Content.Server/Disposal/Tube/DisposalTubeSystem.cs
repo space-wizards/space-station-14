@@ -6,20 +6,16 @@ using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.Disposal.Unit.EntitySystems;
 using Content.Server.Popups;
-using Content.Server.UserInterface;
 using Content.Shared.Destructible;
 using Content.Shared.Disposal.Components;
-using Content.Shared.Hands.Components;
-using Content.Shared.Movement.Events;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 using static Content.Shared.Disposal.Components.SharedDisposalRouterComponent;
 using static Content.Shared.Disposal.Components.SharedDisposalTaggerComponent;
 
@@ -27,8 +23,6 @@ namespace Content.Server.Disposal.Tube
 {
     public sealed class DisposalTubeSystem : EntitySystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
         [Dependency] private readonly PopupSystem _popups = default!;
@@ -37,6 +31,9 @@ namespace Content.Server.Disposal.Tube
         [Dependency] private readonly DisposableSystem _disposableSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
+        [Dependency] private readonly TransformSystem _transform = default!;
+        [Dependency] private readonly SharedMapSystem _map = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -107,8 +104,9 @@ namespace Content.Server.Disposal.Tube
         /// <param name="msg">A user interface message from the client.</param>
         private void OnUiAction(EntityUid uid, DisposalRouterComponent router, SharedDisposalRouterComponent.UiActionMessage msg)
         {
-            if (!EntityManager.EntityExists(msg.Session.AttachedEntity))
+            if (!EntityManager.EntityExists(msg.Actor))
                 return;
+
             if (TryComp<PhysicsComponent>(uid, out var physBody) && physBody.BodyType != BodyType.Static)
                 return;
 
@@ -122,7 +120,7 @@ namespace Content.Server.Disposal.Tube
                     if (trimmed == "")
                         continue;
 
-                    router.Tags.Add(tag.Trim());
+                    router.Tags.Add(trimmed);
                 }
 
                 _audioSystem.PlayPvs(router.ClickSound, uid, AudioParams.Default.WithVolume(-2f));
@@ -285,9 +283,9 @@ namespace Content.Server.Disposal.Tube
 
         private void OnOpenTaggerUI(EntityUid uid, DisposalTaggerComponent tagger, BoundUIOpenedEvent args)
         {
-            if (_uiSystem.TryGetUi(uid, DisposalTaggerUiKey.Key, out var bui))
+            if (_uiSystem.HasUi(uid, DisposalTaggerUiKey.Key))
             {
-                _uiSystem.SetUiState(bui,
+                _uiSystem.SetUiState(uid, DisposalTaggerUiKey.Key,
                     new DisposalTaggerUserInterfaceState(tagger.Tag));
             }
         }
@@ -298,13 +296,9 @@ namespace Content.Server.Disposal.Tube
         /// <returns>Returns a <see cref="SharedDisposalRouterComponent.DisposalRouterUserInterfaceState"/></returns>
         private void UpdateRouterUserInterface(EntityUid uid, DisposalRouterComponent router)
         {
-            var bui = _uiSystem.GetUiOrNull(uid, DisposalRouterUiKey.Key);
-            if (bui == null)
-                return;
-
             if (router.Tags.Count <= 0)
             {
-                _uiSystem.SetUiState(bui, new DisposalRouterUserInterfaceState(""));
+                _uiSystem.SetUiState(uid, DisposalRouterUiKey.Key, new DisposalRouterUserInterfaceState(""));
                 return;
             }
 
@@ -318,7 +312,7 @@ namespace Content.Server.Disposal.Tube
 
             taglist.Remove(taglist.Length - 2, 2);
 
-            _uiSystem.SetUiState(bui, new DisposalRouterUserInterfaceState(taglist.ToString()));
+            _uiSystem.SetUiState(uid, DisposalRouterUiKey.Key, new DisposalRouterUserInterfaceState(taglist.ToString()));
         }
 
         private void OnAnchorChange(EntityUid uid, DisposalTubeComponent component, ref AnchorStateChangedEvent args)
@@ -349,11 +343,11 @@ namespace Content.Server.Disposal.Tube
             var oppositeDirection = nextDirection.GetOpposite();
 
             var xform = Transform(target);
-            if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
+            if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
                 return null;
 
             var position = xform.Coordinates;
-            foreach (var entity in grid.GetInDir(position, nextDirection))
+            foreach (var entity in _map.GetInDir(xform.GridUid.Value, grid, position, nextDirection))
             {
                 if (!TryComp(entity, out DisposalTubeComponent? tube))
                 {
@@ -431,7 +425,7 @@ namespace Content.Server.Disposal.Tube
                 return false;
 
             var xform = Transform(uid);
-            var holder = Spawn(DisposalEntryComponent.HolderPrototypeId, xform.MapPosition);
+            var holder = Spawn(DisposalEntryComponent.HolderPrototypeId, _transform.GetMapCoordinates(uid, xform: xform));
             var holderComponent = Comp<DisposalHolderComponent>(holder);
 
             foreach (var entity in from.Container.ContainedEntities.ToArray())

@@ -1,6 +1,6 @@
-using Content.Shared.Flash;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Flash.Components
 {
@@ -11,6 +11,13 @@ namespace Content.Shared.Flash.Components
         [DataField("duration")]
         [ViewVariables(VVAccess.ReadWrite)]
         public int FlashDuration { get; set; } = 5000;
+
+        /// <summary>
+        /// How long a target is stunned when a melee flash is used.
+        /// If null, melee flashes will not stun at all
+        /// </summary>
+        [DataField]
+        public TimeSpan? MeleeStunDuration = TimeSpan.FromSeconds(1.5);
 
         [DataField("range")]
         [ViewVariables(VVAccess.ReadWrite)]
@@ -32,5 +39,17 @@ namespace Content.Shared.Flash.Components
         };
 
         public bool Flashing;
+
+        [DataField]
+        public float Probability = 1f;
+    }
+
+    [Serializable, NetSerializable]
+    public enum FlashVisuals : byte
+    {
+        BaseLayer,
+        LightLayer,
+        Burnt,
+        Flashing,
     }
 }

@@ -24,7 +24,11 @@ using Robust.Client.Replays.Playback;
 using Robust.Client.State;
 using Robust.Client.Timing;
 using Robust.Client.UserInterface;
+using Robust.Shared;
+using Robust.Shared.Configuration;
+using Robust.Shared.ContentPack;
 using Robust.Shared.Serialization.Markdown.Mapping;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Replay;
 
@@ -41,6 +45,8 @@ public sealed class ContentReplayPlaybackManager
     [Dependency] private readonly IClientAdminManager _adminMan = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IBaseClient _client = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly IResourceManager _resMan = default!;
 
     /// <summary>
     /// UI state to return to when stopping a replay or loading fails.
@@ -50,6 +56,13 @@ public sealed class ContentReplayPlaybackManager
     public bool IsScreenshotMode = false;
 
     private bool _initialized;
+
+    /// <summary>
+    /// Most recently loaded file, for re-attempting the load with error tolerance.
+    /// Required because the zip reader auto-disposes and I'm too lazy to change it so that
+    /// <see cref="ReplayFileReaderZip"/> can re-open it.
+    /// </summary>
+    public (ResPath? Zip, ResPath Folder)? LastLoad;
 
     public void Initialize()
     {
@@ -73,11 +86,44 @@ public sealed class ContentReplayPlaybackManager
 
     private void OnFinishedLoading(Exception? exception)
     {
-        if (exception != null)
+        if (exception == null)
         {
-            ReturnToDefaultState();
-            _uiMan.Popup(Loc.GetString("replay-loading-failed", ("reason", exception)));
+            LastLoad = null;
+            return;
         }
+
+        if (_client.RunLevel == ClientRunLevel.SinglePlayerGame)
+            _client.StopSinglePlayer();
+
+        Action? retryAction = null;
+        Action? cancelAction = null;
+
+        if (!_cfg.GetCVar(CVars.ReplayIgnoreErrors) && LastLoad is { } last)
+        {
+            retryAction = () =>
+            {
+                _cfg.SetCVar(CVars.ReplayIgnoreErrors, true);
+
+                IReplayFileReader reader = last.Zip == null
+                    ? new ReplayFileReaderResources(_resMan, last.Folder)
+                    : new ReplayFileReaderZip(new(_resMan.UserData.OpenRead(last.Zip.Value)), last.Folder);
+
+                _loadMan.LoadAndStartReplay(reader);
+            };
+        }
+
+        // If we have an explicit menu to get back to (e.g. replay browser UI), show a cancel button.
+        if (DefaultState != null)
+        {
+            cancelAction = () =>
+            {
+                _stateMan.RequestStateChange(DefaultState);
+            };
+        }
+
+        // Switch to a new game state to present the error and cancel/retry options.
+        var state = _stateMan.RequestStateChange<ReplayLoadingFailed>();
+        state.SetData(exception, cancelAction, retryAction);
     }
 
     public void ReturnToDefaultState()

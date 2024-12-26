@@ -47,6 +47,7 @@ namespace Content.Benchmarks
 
             var componentFactory = new Mock<IComponentFactory>();
             componentFactory.Setup(p => p.GetComponent<DummyComponent>()).Returns(new DummyComponent());
+            componentFactory.Setup(m => m.GetIndex(typeof(DummyComponent))).Returns(CompIdx.Index<DummyComponent>());
             componentFactory.Setup(p => p.GetRegistration(It.IsAny<DummyComponent>())).Returns(dummyReg);
             componentFactory.Setup(p => p.GetAllRegistrations()).Returns(new[] { dummyReg });
             componentFactory.Setup(p => p.GetAllRefTypes()).Returns(new[] { CompIdx.Index<DummyComponent>() });

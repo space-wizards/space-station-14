@@ -38,6 +38,7 @@ public sealed class DrugOverlaySystem : EntitySystem
     private void OnPlayerDetached(EntityUid uid, SeeingRainbowsComponent component, LocalPlayerDetachedEvent args)
     {
         _overlay.Intoxication = 0;
+        _overlay.TimeTicker = 0;
         _overlayMan.RemoveOverlay(_overlay);
     }
 
@@ -52,6 +53,7 @@ public sealed class DrugOverlaySystem : EntitySystem
         if (_player.LocalEntity == uid)
         {
             _overlay.Intoxication = 0;
+            _overlay.TimeTicker = 0;
             _overlayMan.RemoveOverlay(_overlay);
         }
     }

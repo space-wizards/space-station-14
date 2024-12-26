@@ -1,4 +1,5 @@
 using Content.Shared.Salvage.Expeditions.Modifiers;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -30,7 +31,11 @@ public sealed class SalvageExpeditionConsoleState : BoundUserInterfaceState
 [RegisterComponent, NetworkedComponent]
 public sealed partial class SalvageExpeditionConsoleComponent : Component
 {
-
+    /// <summary>
+    /// The sound made when spawning a coordinates disk
+    /// </summary>
+    [DataField]
+    public SoundSpecifier PrintSound = new SoundPathSpecifier("/Audio/Machines/terminal_insert_disc.ogg");
 }
 
 [Serializable, NetSerializable]
@@ -42,7 +47,7 @@ public sealed class ClaimSalvageMessage : BoundUserInterfaceMessage
 /// <summary>
 /// Added per station to store data on their available salvage missions.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class SalvageExpeditionDataComponent : Component
 {
     /// <summary>
@@ -61,6 +66,7 @@ public sealed partial class SalvageExpeditionDataComponent : Component
     /// Nexy time salvage missions are offered.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("nextOffer", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [AutoPausedField]
     public TimeSpan NextOffer;
 
     [ViewVariables]

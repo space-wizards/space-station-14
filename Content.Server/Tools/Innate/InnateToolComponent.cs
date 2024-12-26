@@ -7,5 +7,6 @@ namespace Content.Server.Tools.Innate
     {
         [DataField("tools")] public List<EntitySpawnEntry> Tools = new();
         public List<EntityUid> ToolUids = new();
+        public List<string> ToSpawn = new();
     }
 }

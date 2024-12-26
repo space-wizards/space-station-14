@@ -12,11 +12,12 @@
   - type: Tag
     tags:
     - SuitEVA
+    - MonkeyWearable
     - WhitelistChameleon
 
 #Syndicate EVA
 - type: entity
-  parent: ClothingOuterEVASuitBase
+  parent: [ ClothingOuterEVASuitBase, BaseSyndicateContraband ]
   id: ClothingOuterHardsuitSyndicate # TODO: rename to ClothingOuterEVASuitSyndicate
   name: syndicate EVA suit
   description: "Has a tag on the back that reads: 'Totally not property of an enemy corporation, honest!'"
@@ -28,6 +29,7 @@
   - type: Tag
     tags:
     - SuitEVA
+    - MonkeyWearable
     - WhitelistChameleon
 
 #Emergency EVA
@@ -35,7 +37,7 @@
   parent: ClothingOuterEVASuitBase
   id: ClothingOuterSuitEmergency
   name: emergency EVA suit
-  description: An emergency EVA suit with a built-in helmet. It's horribly slow and lacking in temperature protection, but enough to bide you time from the harsh vaccuum of space.
+  description: An emergency EVA suit with a built-in helmet. It's horribly slow and lacking in temperature protection, but enough to buy you time from the harsh vacuum of space.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/eva_emergency.rsi
@@ -46,7 +48,8 @@
     sprintModifier: 0.7
   - type: HeldSpeedModifier
   - type: TemperatureProtection
-    coefficient: 0.5
+    heatingCoefficient: 0.75
+    coolingCoefficient: 0.5
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetEVALarge
     slot: head
@@ -68,6 +71,7 @@
   - type: Tag
     tags:
     - SuitEVA
+    - MonkeyWearable
     - WhitelistChameleon
 
 #NTSRA Voidsuit / Ancient Voidsuit
@@ -75,7 +79,7 @@
   parent: ClothingOuterEVASuitBase
   id: ClothingOuterHardsuitAncientEVA
   name: NTSRA voidsuit #Nanotrasen Space Research Association
-  description: An ancient space suit, designed by the NTSRA branch of CentCom. It is very finely crafted, allowing for greater mobility than most modern space suits.
+  description: An ancient space suit, designed by the NTSRA branch of CentComm. It is very finely crafted, allowing for greater mobility than most modern space suits.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/ancient_voidsuit.rsi
@@ -106,7 +110,8 @@
     sprintModifier: 0.9
   - type: HeldSpeedModifier
   - type: TemperatureProtection
-    coefficient: 0.1
+    heatingCoefficient: 0.1
+    coolingCoefficient: 0.1
   - type: Armor
     modifiers:
       coefficients:

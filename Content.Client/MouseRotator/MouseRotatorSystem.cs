@@ -37,7 +37,7 @@ public sealed class MouseRotatorSystem : SharedMouseRotatorSystem
         if (mapPos.MapId == MapId.Nullspace)
             return;
 
-        var angle = (mapPos.Position - xform.MapPosition.Position).ToWorldAngle();
+        var angle = (mapPos.Position - _transform.GetMapCoordinates(player.Value, xform: xform).Position).ToWorldAngle();
 
         var curRot = _transform.GetWorldRotation(xform);
 
@@ -45,13 +45,19 @@ public sealed class MouseRotatorSystem : SharedMouseRotatorSystem
         // only raise event if the cardinal direction has changed
         if (rotator.Simple4DirMode)
         {
-            var angleDir = angle.GetCardinalDir();
-            if (angleDir == curRot.GetCardinalDir())
+            var eyeRot = _eye.CurrentEye.Rotation; // camera rotation
+            var angleDir = (angle + eyeRot).GetCardinalDir(); // apply GetCardinalDir in the camera frame, not in the world frame
+            if (angleDir == (curRot + eyeRot).GetCardinalDir())
                 return;
 
-            RaisePredictiveEvent(new  RequestMouseRotatorRotationSimpleEvent()
+            var rotation = angleDir.ToAngle() - eyeRot; // convert back to world frame
+            if (rotation >= Math.PI) // convert to [-PI, +PI)
+                rotation -= 2 * Math.PI;
+            else if (rotation < -Math.PI)
+                rotation += 2 * Math.PI;
+            RaisePredictiveEvent(new RequestMouseRotatorRotationEvent
             {
-                Direction = angleDir,
+                Rotation = rotation
             });
 
             return;

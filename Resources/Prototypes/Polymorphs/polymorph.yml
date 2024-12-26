@@ -109,7 +109,7 @@
 - type: polymorph
   id: TreeMorph
   configuration:
-    entity: FloraTree01
+    entity: FloraTree
     forced: true
     transferName: true
     revertOnDeath: true
@@ -164,3 +164,41 @@
     revertOnDeath: true
     revertOnCrit: true
     duration: 20
+
+# Polymorphs for Wizards polymorph self spell
+- type: polymorph
+  id: WizardSpider
+  configuration:
+    entity: MobGiantSpiderWizard #Not angry so ghosts can't just take over the wizard
+    transferName: true
+    inventory: None
+    revertOnDeath: true
+    revertOnCrit: true
+
+- type: polymorph
+  id: WizardRod
+  configuration:
+    entity: ImmovableRodWizard #CLANG
+    transferName: true
+    transferDamage: false
+    inventory: None
+    duration: 1
+    forced: true
+    revertOnCrit: false
+    revertOnDeath: false
+
+# Temporary Jaunt
+# Don't make permanent jaunts until action system can be reworked to allow do afters and cooldown pausing
+- type: polymorph
+  id: Jaunt
+  configuration:
+    entity: EtherealJaunt
+    transferName: true
+    inventory: None
+    forced: true
+    revertOnDeath: true
+    revertOnCrit: true
+    allowRepeatedMorphs: false
+    polymorphSound: /Audio/Magic/ethereal_enter.ogg
+    exitPolymorphSound: /Audio/Magic/ethereal_exit.ogg
+    duration: 3

@@ -51,7 +51,7 @@ public sealed partial class ChannelsMenu : DefaultWindow
         }
     }
 
-    public void Populate()
+    public void Populate(InstrumentComponent? instrument)
     {
         ChannelList.Clear();
 
@@ -60,7 +60,8 @@ public sealed partial class ChannelsMenu : DefaultWindow
             var item = ChannelList.AddItem(_owner.Loc.GetString("instrument-component-channel-name",
                 ("number", i)), null, true, i);
 
-            item.Selected = !_owner.Instrument?.FilteredChannels[i] ?? false;
+
+            item.Selected = !instrument?.FilteredChannels[i] ?? false;
         }
     }
 }

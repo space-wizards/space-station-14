@@ -59,7 +59,7 @@
     size: Small
   - type: Prayable
     sentMessage: prayer-popup-notify-centcom-sent
-    notifiactionPrefix: prayer-chat-notify-centcom
+    notificationPrefix: prayer-chat-notify-centcom
     verb: prayer-verbs-call
     verbImage: null
 
@@ -74,7 +74,7 @@
     state: icon
   - type: Prayable
     sentMessage: prayer-popup-notify-syndicate-sent
-    notifiactionPrefix: prayer-chat-notify-syndicate
+    notificationPrefix: prayer-chat-notify-syndicate
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -89,6 +89,7 @@
     program: 125
   - type: Item
     size: Small
+    storedRotation: -90
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -118,6 +119,7 @@
   - type: Item
     size: Small
     sprite: Objects/Fun/Instruments/gunpet.rsi
+    storedRotation: -90
   - type: Tag
     tags:
     - Sidearm
@@ -141,6 +143,7 @@
   - type: Item
     sprite: Objects/Fun/Instruments/bike_horn.rsi
     size: Small
+    storedRotation: -90
   - type: Clothing
     sprite: Objects/Fun/Instruments/bike_horn.rsi
     slots: [Belt]
@@ -159,8 +162,6 @@
     sound:
        path: /Audio/Items/bikehorn.ogg
   - type: Slippery
-    paralyzeTime: 4
-    launchForwardsMultiplier: 1.5
   - type: StepTrigger
   - type: CollisionWake
     enabled: false
@@ -182,6 +183,6 @@
         - ItemMask
   - type: Prayable
     sentMessage: prayer-popup-notify-honkmother-sent
-    notifiactionPrefix: prayer-chat-notify-honkmother
+    notificationPrefix: prayer-chat-notify-honkmother
     verb: prayer-verbs-call
     verbImage: null

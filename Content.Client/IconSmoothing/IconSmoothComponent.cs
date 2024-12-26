@@ -30,7 +30,7 @@ namespace Content.Client.IconSmoothing
         ///     Prepended to the RSI state.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite), DataField("base")]
-        public string StateBase { get; private set; } = string.Empty;
+        public string StateBase { get; set; } = string.Empty;
 
         [DataField("shader", customTypeSerializer:typeof(PrototypeIdSerializer<ShaderPrototype>))]
         public string? Shader;

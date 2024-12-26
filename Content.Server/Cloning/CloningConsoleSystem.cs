@@ -15,6 +15,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Mind;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Power;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -135,17 +136,17 @@ namespace Content.Server.Cloning
 
         public void UpdateUserInterface(EntityUid consoleUid, CloningConsoleComponent consoleComponent)
         {
-            if (!_uiSystem.TryGetUi(consoleUid, CloningConsoleUiKey.Key, out var ui))
+            if (!_uiSystem.HasUi(consoleUid, CloningConsoleUiKey.Key))
                 return;
 
             if (!_powerReceiverSystem.IsPowered(consoleUid))
             {
-                _uiSystem.CloseAll(ui);
+                _uiSystem.CloseUis(consoleUid);
                 return;
             }
 
             var newState = GetUserInterfaceState(consoleComponent);
-            _uiSystem.SetUiState(ui, newState);
+            _uiSystem.SetUiState(consoleUid, CloningConsoleUiKey.Key, newState);
         }
 
         public void TryClone(EntityUid uid, EntityUid cloningPodUid, EntityUid scannerUid, CloningPodComponent? cloningPod = null, MedicalScannerComponent? scannerComp = null, CloningConsoleComponent? consoleComponent = null)

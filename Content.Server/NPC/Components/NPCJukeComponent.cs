@@ -3,7 +3,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.NPC.Components;
 
-[RegisterComponent]
+[RegisterComponent, AutoGenerateComponentPause]
 public sealed partial class NPCJukeComponent : Component
 {
     [DataField("jukeType")]
@@ -13,6 +13,7 @@ public sealed partial class NPCJukeComponent : Component
     public float JukeDuration = 0.5f;
 
     [DataField("nextJuke", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [AutoPausedField]
     public TimeSpan NextJuke;
 
     [DataField("targetTile")]

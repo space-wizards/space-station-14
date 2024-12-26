@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Construction.Components;
 using Content.Server.Temperature.Components;
-using Content.Server.Temperature.Systems;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Components;
 using Content.Shared.Construction.EntitySystems;
@@ -11,10 +10,9 @@ using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Prying.Systems;
 using Content.Shared.Radio.EntitySystems;
-using Content.Shared.Tools.Components;
+using Content.Shared.Temperature;
 using Content.Shared.Tools.Systems;
 using Robust.Shared.Containers;
-using Robust.Shared.Map;
 using Robust.Shared.Utility;
 #if EXCEPTION_TOLERANCE
 // ReSharper disable once RedundantUsingDirective
@@ -288,9 +286,8 @@ namespace Content.Server.Construction
                         var doAfterEventArgs = new DoAfterArgs(EntityManager, interactUsing.User, step.DoAfter, doAfterEv, uid, uid, interactUsing.Used)
                         {
                             BreakOnDamage = false,
-                            BreakOnTargetMove = true,
-                            BreakOnUserMove = true,
-                            NeedHand = true
+                            BreakOnMove = true,
+                            NeedHand = true,
                         };
 
                         var started  = _doAfterSystem.TryStartDoAfter(doAfterEventArgs);
@@ -370,7 +367,8 @@ namespace Content.Server.Construction
                         TimeSpan.FromSeconds(toolInsertStep.DoAfter),
                         new [] { toolInsertStep.Tool },
                         new ConstructionInteractDoAfterEvent(EntityManager, interactUsing),
-                        out var doAfter);
+                        out var doAfter,
+                        toolInsertStep.Fuel);
 
                     return result && doAfter != null ? HandleResult.DoAfter : HandleResult.False;
                 }

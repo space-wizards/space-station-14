@@ -33,7 +33,6 @@
     maxIntensity: 10
     intensitySlope: 3
     totalIntensity: 120 # about a ~4 tile radius
-    flashRange: 7
   - type: ExplodeOnTrigger
   - type: Destructible
     thresholds:

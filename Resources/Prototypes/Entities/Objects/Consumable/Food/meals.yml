@@ -10,6 +10,8 @@
   abstract: true
   description: A delicious meal, cooked with love.
   components:
+  - type: Item
+    storedRotation: -90
   - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/meals.rsi
@@ -96,11 +98,25 @@
   id: FoodMealNachos
   description: Chips from Space Mexico.
   components:
+  - type: Food
+    trash:
+    - FoodPlateSmall
   - type: FlavorProfile
     flavors:
       - nachos
   - type: Sprite
     state: nachos
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 11
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 1
+        - ReagentId: TableSalt
+          Quantity: 1
 # Tastes like nachos.
 
 - type: entity
@@ -109,6 +125,9 @@
   id: FoodMealNachosCheesy
   description: The delicious combination of nachos and melting cheese.
   components:
+  - type: Food
+    trash:
+    - FoodPlateSmall
   - type: FlavorProfile
     flavors:
       - nachos
@@ -134,24 +153,27 @@
   id: FoodMealNachosCuban
   description: That's some dangerously spicy nachos.
   components:
+  - type: Food
+    trash:
+    - FoodPlateSmall
   - type: FlavorProfile
     flavors:
       - nachos
-      - cheesy
+      - tomato
       - spicy
   - type: Sprite
     state: nachos-cuban
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
-          Quantity: 7
-        - ReagentId: CapsaicinOil
           Quantity: 8
+        - ReagentId: CapsaicinOil
+          Quantity: 7
         - ReagentId: Vitamin
-          Quantity: 4
+          Quantity: 5
 # Tastes like nachos, hot pepper.
 
 - type: entity
@@ -328,7 +350,8 @@
   description: BBQ ribs, slathered in a healthy coating of BBQ sauce. The least vegan thing to ever exist.
   components:
   - type: Food
-    trash: FoodKebabSkewer
+    trash: 
+    - FoodKebabSkewer
   - type: FlavorProfile
     flavors:
       - meaty
@@ -459,7 +482,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 15
+        maxVol: 20
         reagents:
         - ReagentId: Nutriment
           Quantity: 10
@@ -515,7 +538,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 18
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
           Quantity: 6
@@ -540,7 +563,7 @@
     - type: SolutionContainerManager
       solutions:
         food:
-          maxVol: 10
+          maxVol: 15
           reagents:
           - ReagentId: Nutriment
             Quantity: 8
@@ -589,7 +612,8 @@
   description: Buttery.
   components:
   - type: Food
-    trash: FoodPlate
+    trash: 
+    - FoodPlate
   - type: FlavorProfile
     flavors:
       - corn

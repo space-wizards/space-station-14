@@ -51,7 +51,7 @@
       machine_board: !type:Container
       machine_parts: !type:Container
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: StrongMetallic
   - type: Destructible
     thresholds:
@@ -69,9 +69,6 @@
   - type: Machine
     board: MedicalScannerMachineCircuitboard
   - type: WiresPanel
-  - type: Wires
-    boardName: wires-board-name-medicalscanner
-    layoutId: MedicalScanner
   - type: Appearance
   - type: Climbable
   - type: ApcPowerReceiver

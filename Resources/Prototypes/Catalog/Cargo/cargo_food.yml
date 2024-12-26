@@ -5,7 +5,7 @@
     state: margherita-slice
   product: CrateFoodPizza
   cost: 450
-  category: Food
+  category: cargoproduct-category-name-food
   group: market
 
 - type: cargoProduct
@@ -15,7 +15,7 @@
     state: margherita
   product: CrateFoodPizzaLarge
   cost: 1800
-  category: Food
+  category: cargoproduct-category-name-food
   group: market
 
 - type: cargoProduct
@@ -25,7 +25,7 @@
     state: nutribrick
   product: CrateFoodMRE
   cost: 1000
-  category: Food
+  category: cargoproduct-category-name-food
   group: market
 
 - type: cargoProduct
@@ -35,7 +35,7 @@
     state: flour-big
   product: CrateFoodCooking
   cost: 750
-  category: Food
+  category: cargoproduct-category-name-food
   group: market
 
 - type: cargoProduct
@@ -45,7 +45,7 @@
     state: tin
   product: CrateFoodDinnerware
   cost: 750
-  category: Food
+  category: cargoproduct-category-name-food
   group: market
 
 - type: cargoProduct
@@ -55,7 +55,7 @@
     state: icon
   product: CrateFoodBarSupply
   cost: 750
-  category: Food
+  category: cargoproduct-category-name-food
   group: market
 
 - type: cargoProduct
@@ -65,7 +65,7 @@
     state: icon
   product: CrateFoodSoftdrinks
   cost: 1200
-  category: Food
+  category: cargoproduct-category-name-food
   group: market
 
 - type: cargoProduct
@@ -75,5 +75,5 @@
     state: icon
   product: CrateFoodSoftdrinksLarge
   cost: 2400
-  category: Food
+  category: cargoproduct-category-name-food
   group: market

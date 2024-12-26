@@ -23,23 +23,27 @@ namespace Content.Client.Medical.CrewMonitoring;
 [GenerateTypedNameReferences]
 public sealed partial class CrewMonitoringWindow : FancyWindow
 {
-    private List<Control> _rowsContent = new();
-    private readonly IEntityManager _entManager;
-    private readonly IPrototypeManager _prototypeManager;
+    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     private readonly SpriteSystem _spriteSystem;
 
     private NetEntity? _trackedEntity;
     private bool _tryToScrollToListFocus;
     private Texture? _blipTexture;
 
-    public CrewMonitoringWindow(string stationName, EntityUid? mapUid)
+    public CrewMonitoringWindow()
     {
         RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
 
-        _entManager = IoCManager.Resolve<IEntityManager>();
-        _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
         _spriteSystem = _entManager.System<SpriteSystem>();
 
+        NavMap.TrackedEntitySelectedAction += SetTrackedEntityFromNavMap;
+
+    }
+
+    public void Set(string stationName, EntityUid? mapUid)
+    {
         _blipTexture = _spriteSystem.Frame0(new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/NavMap/beveled_circle.png")));
 
         if (_entManager.TryGetComponent<TransformComponent>(mapUid, out var xform))
@@ -50,8 +54,6 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
 
         StationName.AddStyleClass("LabelBig");
         StationName.Text = stationName;
-
-        NavMap.TrackedEntitySelectedAction += SetTrackedEntityFromNavMap;
         NavMap.ForceNavMapUpdate();
     }
 
@@ -100,7 +102,6 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
                 };
 
                 SensorsTable.AddChild(spacer);
-                _rowsContent.Add(spacer);
             }
 
             var deparmentLabel = new RichTextLabel()
@@ -113,7 +114,6 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             deparmentLabel.StyleClasses.Add(StyleNano.StyleClassTooltipActionDescription);
 
             SensorsTable.AddChild(deparmentLabel);
-            _rowsContent.Add(deparmentLabel);
 
             PopulateDepartmentList(departmentSensors);
         }
@@ -129,7 +129,6 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             };
 
             SensorsTable.AddChild(spacer);
-            _rowsContent.Add(spacer);
 
             var deparmentLabel = new RichTextLabel()
             {
@@ -141,7 +140,6 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             deparmentLabel.StyleClasses.Add(StyleNano.StyleClassTooltipActionDescription);
 
             SensorsTable.AddChild(deparmentLabel);
-            _rowsContent.Add(deparmentLabel);
 
             PopulateDepartmentList(remainingSensors);
         }
@@ -158,6 +156,11 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
         // Populate departments
         foreach (var sensor in departmentSensors)
         {
+            if (!string.IsNullOrEmpty(SearchLineEdit.Text)
+                && !sensor.Name.Contains(SearchLineEdit.Text, StringComparison.CurrentCultureIgnoreCase)
+                && !sensor.Job.Contains(SearchLineEdit.Text, StringComparison.CurrentCultureIgnoreCase))
+                continue;
+
             var coordinates = _entManager.GetCoordinates(sensor.Coordinates);
 
             // Add a button that will hold a username and other details
@@ -175,7 +178,6 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
                 sensorButton.AddStyleClass(StyleNano.StyleClassButtonColorGreen);
 
             SensorsTable.AddChild(sensorButton);
-            _rowsContent.Add(sensorButton);
 
             // Primary container to hold the button UI elements
             var mainContainer = new BoxContainer()
@@ -216,9 +218,9 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
                 specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Alerts/human_crew_monitoring.rsi"), "dead");
             }
 
-            else if (sensor.TotalDamage != null)
+            else if (sensor.DamagePercentage != null)
             {
-                var index = MathF.Round(4f * (sensor.TotalDamage.Value / 100f));
+                var index = MathF.Round(4f * sensor.DamagePercentage.Value);
 
                 if (index >= 5)
                     specifier = new SpriteSpecifier.Rsi(new ResPath("Interface/Alerts/human_crew_monitoring.rsi"), "critical");
@@ -260,12 +262,12 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             mainContainer.AddChild(jobContainer);
 
             // Job icon
-            if (_prototypeManager.TryIndex<StatusIconPrototype>(sensor.JobIcon, out var proto))
+            if (_prototypeManager.TryIndex<JobIconPrototype>(sensor.JobIcon, out var proto))
             {
                 var jobIcon = new TextureRect()
                 {
                     TextureScale = new Vector2(2f, 2f),
-                    Stretch = TextureRect.StretchMode.KeepCentered,
+                    VerticalAlignment = VAlignment.Center,
                     Texture = _spriteSystem.Frame0(proto.Icon),
                     Margin = new Thickness(5, 0, 5, 0),
                 };
@@ -422,7 +424,6 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
     private void ClearOutDatedData()
     {
         SensorsTable.RemoveAllChildren();
-        _rowsContent.Clear();
         NavMap.TrackedCoordinates.Clear();
         NavMap.TrackedEntities.Clear();
         NavMap.LocalizedNames.Clear();

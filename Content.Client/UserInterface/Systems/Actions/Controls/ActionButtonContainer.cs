@@ -28,43 +28,42 @@ public class ActionButtonContainer : GridContainer
         get => (ActionButton) GetChild(index);
     }
 
-    private void BuildActionButtons(int count)
+    public void SetActionData(ActionsSystem system, params EntityUid?[] actionTypes)
     {
+        var uniqueCount = Math.Min(system.GetClientActions().Count(), actionTypes.Length + 1);
         var keys = ContentKeyFunctions.GetHotbarBoundKeys();
 
-        Children.Clear();
-        for (var index = 0; index < count; index++)
+        for (var i = 0; i < uniqueCount; i++)
         {
-            Children.Add(MakeButton(index));
+            if (i >= ChildCount)
+            {
+                AddChild(MakeButton(i));
+            }
+
+            if (!actionTypes.TryGetValue(i, out var action))
+                action = null;
+            ((ActionButton) GetChild(i)).UpdateData(action, system);
+        }
+
+        for (var i = ChildCount - 1; i >= uniqueCount; i--)
+        {
+            RemoveChild(GetChild(i));
         }
 
         ActionButton MakeButton(int index)
         {
             var button = new ActionButton(_entity);
 
-            if (keys.TryGetValue(index, out var boundKey))
-            {
-                button.KeyBind = boundKey;
+            if (!keys.TryGetValue(index, out var boundKey))
+                return button;
 
-                var binding = _input.GetKeyBinding(boundKey);
+            button.KeyBind = boundKey;
+            if (_input.TryGetKeyBinding(boundKey, out var binding))
+            {
                 button.Label.Text = binding.GetKeyString();
             }
 
             return button;
-        }
-    }
-
-    public void SetActionData(ActionsSystem system, params EntityUid?[] actionTypes)
-    {
-        var uniqueCount = Math.Min(system.GetClientActions().Count(), actionTypes.Length + 1);
-        if (ChildCount != uniqueCount)
-            BuildActionButtons(uniqueCount);
-
-        for (var i = 0; i < uniqueCount; i++)
-        {
-            if (!actionTypes.TryGetValue(i, out var action))
-                action = null;
-            ((ActionButton) GetChild(i)).UpdateData(action, system);
         }
     }
 
@@ -117,10 +116,5 @@ public class ActionButtonContainer : GridContainer
             if (control is ActionButton button)
                 yield return button;
         }
-    }
-
-    ~ActionButtonContainer()
-    {
-        UserInterfaceManager.GetUIController<ActionUIController>().RemoveActionContainer();
     }
 }

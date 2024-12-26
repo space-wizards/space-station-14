@@ -120,9 +120,8 @@
         - ItemMask
   - type: StepTrigger
     intersectRatio: 0.2
-    requiredTriggeredSpeed: 0
   - type: TriggerOnStepTrigger
-  - type: ShoesRequiredStepTrigger
+  - type: PreventableStepTrigger
   - type: Slippery
     slipSound:
       path: /Audio/Effects/glass_step.ogg

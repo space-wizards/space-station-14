@@ -1,5 +1,6 @@
 using Content.Shared.Gravity;
 using Content.Shared.StepTrigger.Components;
+using Content.Shared.Whitelist;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
@@ -11,6 +12,8 @@ public sealed class StepTriggerSystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
+    [Dependency] private readonly SharedMapSystem _map = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
 
     public override void Initialize()
     {
@@ -40,7 +43,9 @@ public sealed class StepTriggerSystem : EntitySystem
         while (enumerator.MoveNext(out var uid, out var active, out var trigger, out var transform))
         {
             if (!Update(uid, trigger, transform, query))
+            {
                 continue;
+            }
 
             RemCompDeferred(uid, active);
         }
@@ -56,14 +61,15 @@ public sealed class StepTriggerSystem : EntitySystem
 
         if (component.Blacklist != null && TryComp<MapGridComponent>(transform.GridUid, out var grid))
         {
-            var anch = grid.GetAnchoredEntitiesEnumerator(grid.LocalToTile(transform.Coordinates));
+            var positon = _map.LocalToTile(transform.GridUid.Value, grid, transform.Coordinates);
+            var anch = _map.GetAnchoredEntitiesEnumerator(uid, grid, positon);
 
             while (anch.MoveNext(out var ent))
             {
                 if (ent == uid)
                     continue;
 
-                if (component.Blacklist.IsValid(ent.Value, EntityManager) == true)
+                if (_whitelistSystem.IsBlacklistPass(component.Blacklist, ent.Value))
                 {
                     return false;
                 }
@@ -109,8 +115,16 @@ public sealed class StepTriggerSystem : EntitySystem
             return;
         }
 
-        var ev = new StepTriggeredEvent { Source = uid, Tripper = otherUid };
-        RaiseLocalEvent(uid, ref ev, true);
+        if (component.StepOn)
+        {
+            var evStep = new StepTriggeredOnEvent(uid, otherUid);
+            RaiseLocalEvent(uid, ref evStep);
+        }
+        else
+        {
+            var evStep = new StepTriggeredOffEvent(uid, otherUid);
+            RaiseLocalEvent(uid, ref evStep);
+        }
 
         component.CurrentlySteppedOn.Add(otherUid);
         Dirty(uid, component);
@@ -130,7 +144,7 @@ public sealed class StepTriggerSystem : EntitySystem
 
         var msg = new StepTriggerAttemptEvent { Source = uid, Tripper = otherUid };
 
-        RaiseLocalEvent(uid, ref msg, true);
+        RaiseLocalEvent(uid, ref msg);
 
         return msg.Continue && !msg.Cancelled;
     }
@@ -162,6 +176,12 @@ public sealed class StepTriggerSystem : EntitySystem
 
         component.CurrentlySteppedOn.Remove(otherUid);
         Dirty(uid, component);
+
+        if (component.StepOn)
+        {
+            var evStepOff = new StepTriggeredOffEvent(uid, otherUid);
+            RaiseLocalEvent(uid, ref evStepOff);
+        }
 
         if (component.Colliding.Count == 0)
         {
@@ -230,9 +250,14 @@ public struct StepTriggerAttemptEvent
     public bool Cancelled;
 }
 
+/// <summary>
+/// Raised when an entity stands on a steptrigger initially (assuming it has both on and off states).
+/// </summary>
 [ByRefEvent]
-public struct StepTriggeredEvent
-{
-    public EntityUid Source;
-    public EntityUid Tripper;
-}
+public readonly record struct StepTriggeredOnEvent(EntityUid Source, EntityUid Tripper);
+
+/// <summary>
+/// Raised when an entity leaves a steptrigger if it has on and off states OR when an entity intersects a steptrigger.
+/// </summary>
+[ByRefEvent]
+public readonly record struct StepTriggeredOffEvent(EntityUid Source, EntityUid Tripper);

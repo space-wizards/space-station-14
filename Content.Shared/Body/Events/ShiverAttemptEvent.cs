@@ -1,12 +1,8 @@
-﻿namespace Content.Shared.Body.Events
-{
-    public sealed class ShiverAttemptEvent : CancellableEntityEventArgs
-    {
-        public ShiverAttemptEvent(EntityUid uid)
-        {
-            Uid = uid;
-        }
+namespace Content.Shared.Body.Events;
 
-        public EntityUid Uid { get; }
-    }
+[ByRefEvent]
+public record struct ShiverAttemptEvent(EntityUid Uid)
+{
+    public readonly EntityUid Uid = Uid;
+    public bool Cancelled = false;
 }

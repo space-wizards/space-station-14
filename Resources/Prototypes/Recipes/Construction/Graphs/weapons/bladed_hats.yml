@@ -1,0 +1,43 @@
+﻿- type: constructionGraph
+  id: BladedFlatcapGrey
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: icon
+      steps:
+      - tag: GlassShard
+        name: a glass shard
+        icon:
+          sprite: Objects/Materials/Shards/shard.rsi
+          state: shard1
+        doAfter: 1
+      - tag: BrimFlatcapGrey
+        name: a grey flatcap
+        icon:
+          sprite: Clothing/Head/Hats/greyflatcap.rsi
+          state: icon
+  - node: icon
+    entity: BladedFlatcapGrey
+
+- type: constructionGraph
+  id: BladedFlatcapBrown
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: icon
+      steps:
+      - tag: GlassShard
+        name: a glass shard
+        icon:
+          sprite: Objects/Materials/Shards/shard.rsi
+          state: shard1
+        doAfter: 1
+      - tag: BrimFlatcapBrown
+        name: a brown flatcap
+        icon:
+          sprite: Clothing/Head/Hats/brownflatcap.rsi
+          state: icon
+  - node: icon
+    entity: BladedFlatcapBrown

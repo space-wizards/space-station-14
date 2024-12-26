@@ -32,7 +32,6 @@ public sealed class GatewaySystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<GatewayComponent, EntityUnpausedEvent>(OnGatewayUnpaused);
         SubscribeLocalEvent<GatewayComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<GatewayComponent, ActivatableUIOpenAttemptEvent>(OnGatewayOpenAttempt);
         SubscribeLocalEvent<GatewayComponent, BoundUIOpenedEvent>(UpdateUserInterface);
@@ -46,11 +45,6 @@ public sealed class GatewaySystem : EntitySystem
 
         component.Enabled = value;
         UpdateAllGateways();
-    }
-
-    private void OnGatewayUnpaused(EntityUid uid, GatewayComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextReady += args.PausedTime;
     }
 
     private void OnStartup(EntityUid uid, GatewayComponent comp, ComponentStartup args)
@@ -135,7 +129,7 @@ public sealed class GatewaySystem : EntitySystem
             unlockTime
         );
 
-        _ui.TrySetUiState(uid, GatewayUiKey.Key, state);
+        _ui.SetUiState(uid, GatewayUiKey.Key, state);
     }
 
     private void UpdateAppearance(EntityUid uid)
@@ -145,12 +139,14 @@ public sealed class GatewaySystem : EntitySystem
 
     private void OnOpenPortal(EntityUid uid, GatewayComponent comp, GatewayOpenPortalMessage args)
     {
-        if (args.Session.AttachedEntity == null || GetNetEntity(uid) == args.Destination ||
+        if (GetNetEntity(uid) == args.Destination ||
             !comp.Enabled || !comp.Interactable)
+        {
             return;
+        }
 
         // if the gateway has an access reader check it before allowing opening
-        var user = args.Session.AttachedEntity.Value;
+        var user = args.Actor;
         if (CheckAccess(user, uid, comp))
             return;
 

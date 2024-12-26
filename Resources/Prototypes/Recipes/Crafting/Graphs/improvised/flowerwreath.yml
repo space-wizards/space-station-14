@@ -23,4 +23,4 @@
                 state: produce
               doAfter: 10
     - node: flowerwreath
-      entity: ClothingNeckFlowerWreath
+      entity: ClothingHeadHatFlowerWreath

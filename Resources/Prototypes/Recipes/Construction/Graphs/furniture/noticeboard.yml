@@ -1,0 +1,26 @@
+- type: constructionGraph
+  id: NoticeBoard
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DestroyEntity {}
+      edges:
+        - to: noticeBoard
+          completed:
+            - !type:SnapToGrid { }
+          steps:
+            - material: WoodPlank
+              amount: 3
+              doAfter: 2
+    - node: noticeBoard
+      entity: NoticeBoard
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: MaterialWoodPlank
+              amount: 3
+          steps:
+            - tool: Prying
+              doAfter: 3

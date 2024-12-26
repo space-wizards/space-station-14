@@ -1,0 +1,24 @@
+﻿- type: entity
+  id: OptionsVisualizerTest
+  suffix: DEBUG
+  components:
+  - type: Tag
+    tags:
+    - Debug
+  - type: Sprite
+    sprite: Effects/optionsvisualizertest.rsi
+    layers:
+    - state: none
+      map: [ "layer" ]
+  - type: OptionsVisualizer
+    visuals:
+      layer:
+      - options: Default
+        data: { state: none }
+      - options: Test
+        data: { state: test }
+      - options: ReducedMotion
+        data: { state: motion }
+      - options: [Test, ReducedMotion]
+        data: { state: both }
+

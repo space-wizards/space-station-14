@@ -51,7 +51,7 @@ public abstract partial class SharedGunSystem
     /// </summary>
     private void OnChamberActivate(EntityUid uid, ChamberMagazineAmmoProviderComponent component, ActivateInWorldEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !args.Complex)
             return;
 
         args.Handled = true;
@@ -67,7 +67,10 @@ public abstract partial class SharedGunSystem
             return;
 
         args.Handled = true;
-        UseChambered(uid, component, args.User);
+        if (component.CanRack)
+            UseChambered(uid, component, args.User);
+        else
+            ToggleBolt(uid, component, args.User);
     }
 
     /// <summary>
@@ -75,7 +78,7 @@ public abstract partial class SharedGunSystem
     /// </summary>
     private void OnChamberActivationVerb(EntityUid uid, ChamberMagazineAmmoProviderComponent component, GetVerbsEvent<ActivationVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || component.BoltClosed == null)
+        if (!args.CanAccess || !args.CanInteract || component.BoltClosed == null || !component.CanRack)
             return;
 
         args.Verbs.Add(new ActivationVerb()
@@ -108,11 +111,14 @@ public abstract partial class SharedGunSystem
             else
             {
                 // Similar to below just due to prediction.
-                TransformSystem.DetachParentToNull(chamberEnt.Value, Transform(chamberEnt.Value));
+                TransformSystem.DetachEntity(chamberEnt.Value, Transform(chamberEnt.Value));
             }
         }
 
-        CycleCartridge(uid, component, user);
+        if (!CycleCartridge(uid, component, user))
+        {
+            UpdateAmmoCount(uid);
+        }
 
         if (component.BoltClosed != false)
         {
@@ -202,11 +208,12 @@ public abstract partial class SharedGunSystem
     /// <summary>
     /// Tries to take ammo from the magazine and insert into the chamber.
     /// </summary>
-    private void CycleCartridge(EntityUid uid, ChamberMagazineAmmoProviderComponent component, EntityUid? user = null, AppearanceComponent? appearance = null)
+    private bool CycleCartridge(EntityUid uid, ChamberMagazineAmmoProviderComponent component, EntityUid? user = null, AppearanceComponent? appearance = null)
     {
         // Try to put a new round in if possible.
         var magEnt = GetMagazineEntity(uid);
         var chambered = GetChamberEntity(uid);
+        var result = false;
 
         // Similar to what takeammo does though that uses an optimised version where
         // multiple bullets may be fired in a single tick.
@@ -243,7 +250,11 @@ public abstract partial class SharedGunSystem
             {
                 UpdateAmmoCount(uid);
             }
+
+            result = true;
         }
+
+        return result;
     }
 
     /// <summary>

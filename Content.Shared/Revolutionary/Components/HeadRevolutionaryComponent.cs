@@ -9,13 +9,13 @@ namespace Content.Shared.Revolutionary.Components;
 /// Component used for marking a Head Rev for conversion and winning/losing.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedRevolutionarySystem))]
-public sealed partial class HeadRevolutionaryComponent : Component, IAntagStatusIconComponent
+public sealed partial class HeadRevolutionaryComponent : Component
 {
     /// <summary>
     /// The status icon corresponding to the head revolutionary.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public ProtoId<StatusIconPrototype> StatusIcon { get; set; } = "HeadRevolutionaryFaction";
+    public ProtoId<FactionIconPrototype> StatusIcon { get; set; } = "HeadRevolutionaryFaction";
 
     /// <summary>
     /// How long the stun will last after the user is converted.
@@ -24,7 +24,4 @@ public sealed partial class HeadRevolutionaryComponent : Component, IAntagStatus
     public TimeSpan StunTime = TimeSpan.FromSeconds(3);
 
     public override bool SessionSpecific => true;
-
-    [DataField]
-    public bool IconVisibleToGhost { get; set; } = true;
 }

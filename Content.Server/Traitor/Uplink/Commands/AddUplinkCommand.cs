@@ -12,7 +12,6 @@ namespace Content.Server.Traitor.Uplink.Commands
     [AdminCommand(AdminFlags.Admin)]
     public sealed class AddUplinkCommand : IConsoleCommand
     {
-        [Dependency] private readonly IConfigurationManager _cfgManager = default!;
         [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
@@ -29,13 +28,14 @@ namespace Content.Server.Traitor.Uplink.Commands
             {
                 1 => CompletionResult.FromHintOptions(CompletionHelper.SessionNames(), Loc.GetString("add-uplink-command-completion-1")),
                 2 => CompletionResult.FromHint(Loc.GetString("add-uplink-command-completion-2")),
+                3 => CompletionResult.FromHint(Loc.GetString("add-uplink-command-completion-3")),
                 _ => CompletionResult.Empty
             };
         }
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (args.Length > 2)
+            if (args.Length > 3)
             {
                 shell.WriteError(Loc.GetString("shell-wrong-arguments-number"));
                 return;
@@ -83,12 +83,19 @@ namespace Content.Server.Traitor.Uplink.Commands
                 uplinkEntity = eUid;
             }
 
-            // Get TC count
-            var tcCount = _cfgManager.GetCVar(CCVars.TraitorStartingBalance);
-            Logger.Debug(_entManager.ToPrettyString(user));
+            bool isDiscounted = false;
+            if (args.Length >= 3)
+            {
+                if (!bool.TryParse(args[2], out isDiscounted))
+                {
+                    shell.WriteLine(Loc.GetString("shell-invalid-bool"));
+                    return;
+                }
+            }
+
             // Finally add uplink
             var uplinkSys = _entManager.System<UplinkSystem>();
-            if (!uplinkSys.AddUplink(user, FixedPoint2.New(tcCount), uplinkEntity: uplinkEntity))
+            if (!uplinkSys.AddUplink(user, 20, uplinkEntity: uplinkEntity, giveDiscounts: isDiscounted))
             {
                 shell.WriteLine(Loc.GetString("add-uplink-command-error-2"));
             }

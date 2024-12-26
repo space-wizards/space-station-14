@@ -9,6 +9,7 @@
     ClothingHeadHatBeretSecurity: 3
     ClothingHeadHatSecsoft: 3
     ClothingHeadBandRed: 3
+    ClothingMaskNeckGaiterRed: 3
     ClothingHandsGlovesColorBlack: 3
     ClothingHandsGlovesFingerless: 3
     ClothingUniformJumpskirtSec: 3
@@ -19,9 +20,10 @@
     ClothingOuterWinterSec: 2
     ClothingOuterArmorBasic: 2
     ClothingNeckScarfStripedRed: 3
-    ClothingOuterArmorBasicSlim: 2 
+    ClothingOuterArmorBasicSlim: 2
     ClothingEyesBlindfold: 1
     ClothingShoesBootsCombat: 1
     ClothingShoesBootsWinterSec: 2
-    ClothingShoesBootsCowboyBlack: 1
-    ClothingHeadHatCowboyBlack: 1
+    ClothingHeadHelmetJustice: 1
+  contrabandInventory:
+    ClothingMaskClownSecurity: 1

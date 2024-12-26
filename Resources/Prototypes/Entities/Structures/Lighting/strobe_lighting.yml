@@ -1,0 +1,150 @@
+- type: entity
+  id: AlwaysPoweredStrobeLight
+  name: strobe
+  description: "UH?! Sorry, all I can hear is WEE-OOO-WEE-OOO!"
+  suffix: Always powered
+  components:
+  - type: AmbientSound
+    volume: -15
+    range: 2
+    sound:
+      path: /Audio/Ambience/Objects/light_hum.ogg
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        collection: GlassSmash
+  - type: Transform
+    anchored: true
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Construction
+    graph: LightFixture
+    node: bulbLight
+  - type: Sprite
+    sprite: Structures/Wallmounts/Lighting/strobe_light.rsi
+    drawdepth: WallMountedItems
+    layers:
+    - map: ["enum.PoweredLightLayers.Base"]
+      state: base
+    - map: ["enum.PoweredLightLayers.Glow"]
+      state: glow
+      shader: unshaded
+    state: base
+  - type: PointLight
+    mask: /Textures/Effects/LightMasks/double_cone.png
+    color: "#FFE4CE"
+    energy: 5
+    radius: 10
+    softness: 1
+    offset: "0, 0.35"
+  - type: RotatingLight
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors: #excess damage, don't spawn entities.
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 25
+      behaviors:
+      - !type:EmptyAllContainersBehaviour
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
+
+- type: entity
+  name: strobe
+  description: "UH?! Sorry, all I can hear is WEE-OOO-WEE-OOO!"
+  id: PoweredStrobeLightEmpty
+  suffix: Empty
+  parent: AlwaysPoweredStrobeLight
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/Lighting/strobe_light.rsi
+    state: empty
+  - type: AmbientSound
+    enabled: false
+  - type: PointLight
+    enabled: false
+    offset: "0, 0.35"
+  - type: ContainerContainer
+    containers:
+      light_bulb: !type:ContainerSlot
+  - type: PoweredLight
+    bulb: Bulb
+    on: false
+  - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: SmartLight
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: Appearance
+  - type: PoweredLightVisuals
+    spriteStateMap:
+      empty: empty
+      broken: broken
+      burned: broken
+      off: base
+      on: base
+  - type: DeviceLinkSink
+    ports:
+      - On
+      - Off
+      - Toggle
+  - type: Construction
+    graph: LightFixture
+    node: strobeLight
+  - type: DamageOnInteract
+    damage:
+      types:
+        Heat: 2
+    popupText: powered-light-component-burn-hand
+
+- type: entity
+  id: PoweredStrobeLightPolice
+  suffix: "Empty, police"
+  parent: PoweredStrobeLightEmpty
+  components:
+  - type: AmbientSound
+    volume: 0
+    range: 10
+    sound:
+      path: "/Audio/Effects/Lightning/strobe.ogg"
+
+- type: entity
+  id: PoweredStrobeLightSiren
+  suffix: "Empty, siren"
+  parent: PoweredStrobeLightEmpty
+  components:
+  - type: AmbientSound
+    volume: 0
+    range: 10
+    sound:
+      path: "/Audio/Misc/gamma.ogg"
+
+- type: entity
+  id: PoweredStrobeLightEpsilon
+  suffix: "Empty, epsilon"
+  parent: PoweredStrobeLightEmpty
+  components:
+  - type: AmbientSound
+    volume: 0
+    range: 10
+    sound:
+      path: "/Audio/Effects/Lightning/strobeepsilon.ogg"

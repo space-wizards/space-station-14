@@ -1,4 +1,4 @@
-﻿- type: constructionGraph
+- type: constructionGraph
   id: Shutters
   start: start
   graph:
@@ -44,8 +44,8 @@
             - !type:EntityAnchored
               anchored: true
           steps:
-            - tag: DoorElectronics
-              name: Door Electronics
+            - component: DoorElectronics
+              name: door electronics
               icon:
                 sprite: "Objects/Misc/module.rsi"
                 state: "door_electronics"

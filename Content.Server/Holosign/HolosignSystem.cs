@@ -3,6 +3,7 @@ using Content.Shared.Coordinates.Helpers;
 using Content.Server.Power.Components;
 using Content.Server.PowerCell;
 using Content.Shared.Interaction;
+using Content.Shared.Storage;
 
 namespace Content.Server.Holosign;
 
@@ -43,7 +44,8 @@ public sealed class HolosignSystem : EntitySystem
 
         if (args.Handled
             || !args.CanReach // prevent placing out of range
-            || !_powerCell.TryUseCharge(uid, component.ChargeUse) // if no battery or no charge, doesn't work
+            || HasComp<StorageComponent>(args.Target) // if it's a storage component like a bag, we ignore usage so it can be stored
+            || !_powerCell.TryUseCharge(uid, component.ChargeUse, user: args.User) // if no battery or no charge, doesn't work
             )
             return;
 

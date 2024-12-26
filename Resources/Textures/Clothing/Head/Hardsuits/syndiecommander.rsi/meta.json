@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from vg at commit https://github.com/vgstation-coders/vgstation13/commit/a16e41020a93479e9a7e2af343b1b74f7f2a61bd",
+  "copyright": "Taken from vg at commit https://github.com/vgstation-coders/vgstation13/commit/a16e41020a93479e9a7e2af343b1b74f7f2a61bd. Vox states by Flareguy for Space Station 14",
 
   "size": {
     "x": 32,
@@ -19,23 +19,15 @@
       "directions": 4
     },
     {
-      "name": "off-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "off-inhand-right",
-      "directions": 4
-    },
-    {
       "name": "on-equipped-HELMET",
       "directions": 4
     },
     {
-      "name": "on-inhand-left",
+      "name": "off-equipped-HELMET-vox",
       "directions": 4
     },
     {
-      "name": "on-inhand-right",
+      "name": "on-equipped-HELMET-vox",
       "directions": 4
     }
   ]

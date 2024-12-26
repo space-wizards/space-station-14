@@ -62,6 +62,8 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
 
         SubscribeLocalEvent<TextScreenVisualsComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<TextScreenTimerComponent, ComponentInit>(OnTimerInit);
+
+        UpdatesOutsidePrediction = true;
     }
 
     private void OnInit(EntityUid uid, TextScreenVisualsComponent component, ComponentInit args)
@@ -110,17 +112,11 @@ public sealed class TextScreenSystem : VisualizerSystem<TextScreenVisualsCompone
         if (args.AppearanceData.TryGetValue(TextScreenVisuals.Color, out var color) && color is Color)
             component.Color = (Color) color;
 
-        // DefaultText: broadcast updates from comms consoles
-        // ScreenText: the text accompanying shuttle timers e.g. "ETA"
+        // DefaultText: fallback text e.g. broadcast updates from comms consoles
         if (args.AppearanceData.TryGetValue(TextScreenVisuals.DefaultText, out var newDefault) && newDefault is string)
-        {
-            string?[] defaultText = SegmentText((string) newDefault, component);
-            component.Text = defaultText;
-            component.TextToDraw = defaultText;
-            ResetText(uid, component);
-            BuildTextLayers(uid, component, args.Sprite);
-            DrawLayers(uid, component.LayerStatesToDraw);
-        }
+            component.Text = SegmentText((string) newDefault, component);
+
+        // ScreenText: currently rendered text e.g. the "ETA" accompanying shuttle timers
         if (args.AppearanceData.TryGetValue(TextScreenVisuals.ScreenText, out var text) && text is string)
         {
             component.TextToDraw = SegmentText((string) text, component);

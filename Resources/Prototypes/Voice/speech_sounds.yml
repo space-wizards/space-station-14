@@ -53,6 +53,24 @@
     path: /Audio/Machines/vending_jingle.ogg
 
 - type: speechSounds
+  id: Borg
+  saySound:
+    path: /Audio/Voice/Talk/Silicon/borg.ogg
+  askSound:
+    path: /Audio/Voice/Talk/Silicon/borg_ask.ogg
+  exclaimSound:
+    path: /Audio/Voice/Talk/Silicon/borg_exclaim.ogg
+
+- type: speechSounds
+  id: SyndieBorg
+  saySound:
+    path: /Audio/Voice/Talk/Silicon/syndieborg.ogg
+  askSound:
+    path: /Audio/Voice/Talk/Silicon/syndieborg_ask.ogg
+  exclaimSound:
+    path: /Audio/Voice/Talk/Silicon/syndieborg_exclaim.ogg
+
+- type: speechSounds
   id: Pai
   saySound:
     path: /Audio/Voice/Talk/pai.ogg
@@ -69,6 +87,15 @@
     path: /Audio/Animals/monkey_scream.ogg
   exclaimSound:
     path: /Audio/Animals/monkey_scream.ogg
+
+- type: speechSounds
+  id: Parrot
+  saySound:
+    path: /Audio/Animals/parrot_raught.ogg
+  askSound:
+    path: /Audio/Animals/parrot_raught.ogg
+  exclaimSound:
+    path: /Audio/Animals/parrot_raught.ogg
 
 - type: speechSounds
   id: Lizard
@@ -123,3 +150,12 @@
     path: /Audio/Animals/dog_bark3.ogg
   exclaimSound:
     path: /Audio/Animals/dog_bark2.ogg
+
+- type: speechSounds
+  id: Cluck
+  saySound:
+    path: /Audio/Animals/chicken_cluck_happy.ogg
+  askSound:
+    path: /Audio/Animals/chicken_cluck_happy.ogg
+  exclaimSound:
+    path: /Audio/Animals/chicken_cluck_happy.ogg

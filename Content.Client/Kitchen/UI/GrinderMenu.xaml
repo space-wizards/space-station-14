@@ -3,10 +3,12 @@
             xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
             Title="{Loc grinder-menu-title}" MinSize="768 256">
     <BoxContainer Orientation="Horizontal">
-        <BoxContainer Orientation="Vertical" VerticalAlignment="Top" Margin="8">
-            <Button Name="GrindButton" Text="{Loc grinder-menu-grind-button}" TextAlign="Center" MinSize="64 48"/>
-            <Control MinSize="0 16"/>
-            <Button Name="JuiceButton" Text="{Loc grinder-menu-juice-button}" TextAlign="Center" MinSize="64 48"/>
+        <BoxContainer Orientation="Vertical" VerticalAlignment="Top" Margin="8" MinWidth="100">
+            <Label Text="{Loc grinder-menu-auto-label}" HorizontalAlignment="Center"/>
+            <Button Name="AutoModeButton" Text="{Loc grinder-menu-auto-button}" TextAlign="Center" MinSize="64 48" Margin="0 0 0 16" />
+            <Label Text="{Loc grinder-menu-manual-label}" HorizontalAlignment="Center"/>
+            <Button Name="GrindButton" Text="{Loc grinder-menu-grind-button}" TextAlign="Center" MinSize="64 48" Margin="0 0 0 16" />
+            <Button Name="JuiceButton" Text="{Loc grinder-menu-juice-button}" TextAlign="Center" MinSize="64 48" />
         </BoxContainer>
 
         <ui:LabelledContentBox Name="ChamberContentBox" LabelText="{Loc grinder-menu-chamber-content-box-label}" ButtonText="{Loc grinder-menu-chamber-content-box-button}" VerticalExpand="True" HorizontalExpand="True" Margin="8" SizeFlagsStretchRatio="2"/>

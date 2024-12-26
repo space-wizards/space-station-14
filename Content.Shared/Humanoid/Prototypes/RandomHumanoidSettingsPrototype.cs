@@ -15,6 +15,7 @@ public sealed partial class RandomHumanoidSettingsPrototype : IPrototype, IInher
     public string[]? Parents { get; }
 
     [AbstractDataField]
+    [NeverPushInheritance]
     public bool Abstract { get; }
 
     /// <summary>
@@ -32,6 +33,7 @@ public sealed partial class RandomHumanoidSettingsPrototype : IPrototype, IInher
     /// <summary>
     ///     Extra components to add to this entity.
     /// </summary>
-    [DataField("components")]
+    [DataField]
+    [AlwaysPushInheritance]
     public ComponentRegistry? Components { get; private set; }
 }

@@ -42,6 +42,16 @@ namespace Content.Server.Administration.Managers
         void ReAdmin(ICommonSession session);
 
         /// <summary>
+        ///     Make admin hidden from adminwho.
+        /// </summary>
+        void Stealth(ICommonSession session);
+
+        /// <summary>
+        ///     Unhide admin from adminwho.
+        /// </summary>
+        void UnStealth(ICommonSession session);
+
+        /// <summary>
         ///     Re-loads the permissions of an player in case their admin data changed DB-side.
         /// </summary>
         /// <seealso cref="ReloadAdminsWithRank"/>

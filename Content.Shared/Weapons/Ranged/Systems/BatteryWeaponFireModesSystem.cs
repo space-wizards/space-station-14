@@ -5,6 +5,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
@@ -75,6 +76,9 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
 
     private void OnInteractHandEvent(EntityUid uid, BatteryWeaponFireModesComponent component, ActivateInWorldEvent args)
     {
+        if (!args.Complex)
+            return;
+
         if (component.FireModes.Count < 2)
             return;
 
@@ -96,13 +100,21 @@ public sealed class BatteryWeaponFireModesSystem : EntitySystem
         component.CurrentFireMode = index;
         Dirty(uid, component);
 
-        if (TryComp(uid, out ProjectileBatteryAmmoProviderComponent? projectileBatteryAmmoProvider))
+        if (TryComp(uid, out ProjectileBatteryAmmoProviderComponent? projectileBatteryAmmoProviderComponent))
         {
             if (!_prototypeManager.TryIndex<EntityPrototype>(fireMode.Prototype, out var prototype))
                 return;
 
-            projectileBatteryAmmoProvider.Prototype = fireMode.Prototype;
-            projectileBatteryAmmoProvider.FireCost = fireMode.FireCost;
+            // TODO: Have this get the info directly from the batteryComponent when power is moved to shared.
+            var OldFireCost = projectileBatteryAmmoProviderComponent.FireCost;
+            projectileBatteryAmmoProviderComponent.Prototype = fireMode.Prototype;
+            projectileBatteryAmmoProviderComponent.FireCost = fireMode.FireCost;
+            float FireCostDiff = (float)fireMode.FireCost / (float)OldFireCost;
+            projectileBatteryAmmoProviderComponent.Shots = (int)Math.Round(projectileBatteryAmmoProviderComponent.Shots/FireCostDiff);
+            projectileBatteryAmmoProviderComponent.Capacity = (int)Math.Round(projectileBatteryAmmoProviderComponent.Capacity/FireCostDiff);
+            Dirty(uid, projectileBatteryAmmoProviderComponent);
+            var updateClientAmmoEvent = new UpdateClientAmmoEvent();
+            RaiseLocalEvent(uid, ref updateClientAmmoEvent);
 
             if (user != null)
             {

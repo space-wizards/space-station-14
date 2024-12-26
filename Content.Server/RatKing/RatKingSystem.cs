@@ -11,7 +11,6 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Pointing;
 using Content.Shared.RatKing;
-using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 
@@ -26,7 +25,6 @@ namespace Content.Server.RatKing
         [Dependency] private readonly HungerSystem _hunger = default!;
         [Dependency] private readonly NPCSystem _npc = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
-        [Dependency] private readonly TransformSystem _xform = default!;
 
         public override void Initialize()
         {
@@ -49,7 +47,7 @@ namespace Content.Server.RatKing
                 return;
 
             //make sure the hunger doesn't go into the negatives
-            if (hunger.CurrentHunger < component.HungerPerArmyUse)
+            if (_hunger.GetHunger(hunger) < component.HungerPerArmyUse)
             {
                 _popup.PopupEntity(Loc.GetString("rat-king-too-hungry"), uid, uid);
                 return;
@@ -79,7 +77,7 @@ namespace Content.Server.RatKing
                 return;
 
             //make sure the hunger doesn't go into the negatives
-            if (hunger.CurrentHunger < component.HungerPerDomainUse)
+            if (_hunger.GetHunger(hunger) < component.HungerPerDomainUse)
             {
                 _popup.PopupEntity(Loc.GetString("rat-king-too-hungry"), uid, uid);
                 return;

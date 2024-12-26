@@ -1,15 +1,29 @@
-﻿<Document>
-# Fires & Space
+<Document>
+  # Fires & Space
 
-Fires and spacings are an inevitability due to the highly flammable plasma gas and endless vacuum of space present in and around the station, so it's important to know how to manage them.
+  Fires and spacings are an inevitability due to the highly flammable plasma gas and the endless vacuum of space present in and around the station, so it's important to know how to manage them.
 
-## Spacing
-Space is arguably the easier of the two to handle.
-While it does render an area uninhabitable, it can be trivially solved by simply sealing the hole that resulted in the vacuum. After that, assuming distro vents and pipes have not been destroyed in some unfortunate accident, the room will slowly begin to repressurize.
-Be aware, that active spacings will slowly siphon the air out of the station's air reserves. If you find it impossible to fix structural damage due to some other hazard - make sure to limit the airflow to that room.
+  ## Spacing
+  Space is arguably the easier of the two to handle. Be aware; active spacings will slowly siphon the air out of the station's air reserves. If you find it impossible to fix structural damage due to some other hazard, make sure to limit the airflow to that room. (Currently only half-valid due to the Gas Miners infinitely replenishing most of the useful gases)
 
-## Fires
-Fires can be dealt with through a multitude of ways, but some of the most effective methods include:
-  - Spacing the enflamed area if possible. This will destroy all of the gasses in the room, which may be a problem if you're already straining life support.
-  - Dumping a Frezon canister into the enflamed area. This will ice over the flames and halt any ongoing reaction, provided you use enough Frezon. Additionally does not result in destruction of material, so you can simply scrub the room afterwards.
+  While it does render an area uninhabitable, it can be trivially solved by simply following a two step process. Step one is to seal the hole that caused the vacuum.
+
+  Step two is to repressurize the affected area. Note that the affected area will NOT fill from the station's distro network by default. Some atmospheric devices, specifically air vents, have built-in safeguards that cause the device to be disabled if pressure in a room drops too low. This features prevents spacings from venting the distro network unintentionally.
+
+  As a result, there are three main options to repressurize the affected area:
+
+  1. Assuming distro vents and pipes have not been destroyed in some unfortunate accident, you may set surrounding air alarms to the "Fill" setting. This will cause connected air vents to override their safeguards and begin repressurizing the area.
+    - Be aware this setting also allows vents to OVERpressurize a room, so this process must be monitored at all times.
+
+  2. Another option is to open any firelocks that were engaged in response to the original spacing. This will cause the pressure to equalize between both areas.
+    - This option generally causes more firelocks to engage in the surrounding area, potentially causing disruptions or making the second area unsafe for station crew.
+
+  3. The final option is to bring a canister into the spaced area and open its release valve. An air canister at 4500kpa can fully repressurize around 20-30 tiles before running out of gas.
+    - This option requires the canister be brought in from outside (generally atmos), which can be slow and time consuming depending on the situation.
+
+
+  ## Fires
+  Fires can be dealt with through a multitude of ways, but some of the most effective methods include:
+    - Spacing the enflamed area if possible. This will destroy all of the gasses in the room, which may be a problem if you're already straining life support.
+    - Dumping a Frezon canister into the enflamed area. This will ice over the flames and halt any ongoing reaction, provided you use enough Frezon. Additionally, this does not result in destruction of material, so you can simply scrub the room afterwards.
 </Document>

@@ -31,7 +31,7 @@ artifact-trigger-hint-physical = Physical trauma
 artifact-trigger-hint-tool = Tool usage
 artifact-trigger-hint-music = Sonic vibrations
 artifact-trigger-hint-water = Hydro-reactive
-artifact-trigger-hint-blood = Reaction with hemoglobin
+artifact-trigger-hint-blood = Reaction with hematological fluid
 artifact-trigger-hint-magnet = Magnetic waves
 artifact-trigger-hint-death = Life essence
 artifact-trigger-hint-radiation = Radiation
@@ -40,3 +40,5 @@ artifact-trigger-hint-regular-gases = Standard atmospheric gases
 artifact-trigger-hint-plasma = Gaseous plasma
 artifact-trigger-hint-land = Active deceleration
 artifact-trigger-hint-examine = Examination
+artifact-trigger-hint-medical = Therapeutic chemicals
+

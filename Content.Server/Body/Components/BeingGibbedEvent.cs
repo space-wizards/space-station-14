@@ -1,11 +1,7 @@
 namespace Content.Server.Body.Components;
 
-public sealed class BeingGibbedEvent : EntityEventArgs
-{
-    public readonly HashSet<EntityUid> GibbedParts;
-
-    public BeingGibbedEvent(HashSet<EntityUid> gibbedParts)
-    {
-        GibbedParts = gibbedParts;
-    }
-}
+/// <summary>
+/// Raised when a body gets gibbed, before it is deleted.
+/// </summary>
+[ByRefEvent]
+public readonly record struct BeingGibbedEvent(HashSet<EntityUid> GibbedParts);

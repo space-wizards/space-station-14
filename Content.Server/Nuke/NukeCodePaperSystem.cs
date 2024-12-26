@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Chat.Systems;
 using Content.Server.Fax;
-using Content.Server.Paper;
+using Content.Shared.Fax.Components;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Examine;
@@ -40,7 +40,8 @@ namespace Content.Server.Nuke
 
             if (TryGetRelativeNukeCode(uid, out var paperContent, station, onlyCurrentStation: component.AllNukesAvailable))
             {
-                _paper.SetContent(uid, paperContent);
+                if (TryComp<PaperComponent>(uid, out var paperComp))
+                    _paper.SetContent((uid, paperComp), paperContent);
             }
         }
 
@@ -67,6 +68,7 @@ namespace Content.Server.Nuke
                 var printout = new FaxPrintout(
                     paperContent,
                     Loc.GetString("nuke-codes-fax-paper-name"),
+                    null,
                     null,
                     "paper_stamp-centcom",
                     new List<StampDisplayInfo>
@@ -130,7 +132,7 @@ namespace Content.Server.Nuke
                 }
 
                 codesMessage.PushNewline();
-                codesMessage.AddMarkup(Loc.GetString("nuke-codes-list", ("name", MetaData(nukeUid).EntityName), ("code", nuke.Code)));
+                codesMessage.AddMarkupOrThrow(Loc.GetString("nuke-codes-list", ("name", MetaData(nukeUid).EntityName), ("code", nuke.Code)));
                 break;
             }
 

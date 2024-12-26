@@ -31,12 +31,12 @@
             <BoxContainer Orientation="Horizontal" Margin="2">
                 <Label Text="{Loc admin-ui-panic-bunker-min-account-age}" MinWidth="175" />
                 <LineEdit Name="MinAccountAge" MinWidth="50" Margin="0 0 5 0" />
-                <Label Text="{Loc generic-hours}" />
+                <Label Text="{Loc generic-minutes}" />
             </BoxContainer>
             <BoxContainer Orientation="Horizontal" Margin="2">
-                <Label Text="{Loc admin-ui-panic-bunker-min-overall-hours}" MinWidth="175" />
-                <LineEdit Name="MinOverallHours" MinWidth="50" Margin="0 0 5 0" />
-                <Label Text="{Loc generic-hours}" />
+                <Label Text="{Loc admin-ui-panic-bunker-min-overall-minutes}" MinWidth="175" />
+                <LineEdit Name="MinOverallMinutes" MinWidth="50" Margin="0 0 5 0" />
+                <Label Text="{Loc generic-minutes}" />
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>

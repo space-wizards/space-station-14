@@ -20,7 +20,7 @@
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/pistol.rsi
   - type: MagazineVisuals
     magState: mag
-    steps: 2
+    steps: 3
     zeroVisible: false
   - type: Appearance
 
@@ -53,21 +53,6 @@
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
     - state: practice
-
-- type: entity
-  parent: BaseMagazineBoxPistol
-  id: MagazineBoxPistolRubber
-  name: ammunition box (.35 auto rubber)
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgePistolRubber
-  - type: Sprite
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-    - state: rubber
 
 - type: entity
   id: MagazineBoxPistolIncendiary

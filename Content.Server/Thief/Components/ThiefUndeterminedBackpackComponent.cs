@@ -23,4 +23,10 @@ public sealed partial class ThiefUndeterminedBackpackComponent : Component
 
     [DataField]
     public SoundSpecifier ApproveSound = new SoundPathSpecifier("/Audio/Effects/rustle1.ogg");
+
+    /// <summary>
+    /// Max number of sets you can select.
+    /// </summary>
+    [DataField]
+    public int MaxSelectedSets = 2;
 }

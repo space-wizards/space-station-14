@@ -120,7 +120,7 @@
       context: "human"
 
 - type: entity
-  parent: BaseWeaponTurret
+  parent: [BaseWeaponTurret, BaseSyndicateContraband]
   id: WeaponTurretSyndicate
   suffix: Syndicate
   components:
@@ -196,8 +196,17 @@
     - SimpleHostile
 
 - type: entity
+  parent: BaseWeaponTurret
+  id: WeaponTurretAllHostile
+  suffix: All hostile
+  components:
+  - type: NpcFactionMember
+    factions:
+    - AllHostile
+
+- type: entity
   name: xeno turret
-  description: Shoots 9mm acid projectiles
+  description: Shoots 9mm acid projectiles.
   parent: BaseWeaponTurret
   id: WeaponTurretXeno
   suffix: Xeno

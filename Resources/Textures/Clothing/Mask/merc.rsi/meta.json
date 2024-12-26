@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "modified sprite from Jackal298 based on the sprite from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e. Reptilian edit by Nairod(Github)",
+  "copyright": "modified sprite from Jackal298 based on the sprite from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e. Reptilian edit by Nairod(Github), equipped-MASK-vox state taken from /vg/station at commit https://github.com/vgstation-coders/vgstation13/commit/4638130fab5ff0e9faa220688811349d3297a33e and modified to look like mercenary gas mask by Flareguy",
   "size": {
     "x": 32,
     "y": 32
@@ -15,15 +15,19 @@
       "directions": 4
     },
     {
+      "name": "equipped-MASK-reptilian",
+      "directions": 4
+    },
+    {
+      "name": "equipped-MASK-vox",
+      "directions": 4
+    },
+    {
       "name": "inhand-left",
       "directions": 4
     },
     {
       "name": "inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "equipped-MASK-reptilian",
       "directions": 4
     }
   ]

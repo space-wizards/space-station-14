@@ -1,7 +1,7 @@
 - type: entity
   id: ReinforcedUraniumWindow
   name: reinforced uranium window
-  parent: Window
+  parent: WindowRCDResistant
   components:
   - type: Sprite
     drawdepth: WallTops
@@ -15,13 +15,13 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 200
+        damage: 300
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
-        damage: 100
+        damage: 150
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -43,15 +43,71 @@
     node: reinforcedUraniumWindow
   - type: Appearance
   - type: DamageVisuals
-    thresholds: [4, 8, 12]
+    thresholds: [5, 10, 20]
     damageDivisor: 6
     trackAllDamage: true
     damageOverlay:
       sprite: Structures/Windows/cracks.rsi
   - type: StaticPrice
-    price: 140
+    price: 215
   - type: RadiationBlocker
     resistance: 5
+
+- type: entity
+  id: UraniumReinforcedWindowDirectional
+  parent: WindowDirectional
+  name: directional reinforced uranium window
+  description: Don't smudge up the glass down there.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Window
+  components:
+  - type: Sprite
+    sprite: Structures/Windows/directional.rsi
+    state: uranium_reinforced_window
+  - type: Icon
+    sprite: Structures/Windows/directional.rsi
+    state: uranium_reinforced_window
+  - type: Construction
+    graph: WindowDirectional
+    node: uraniumReinforcedWindowDirectional
+  - type: Appearance
+  - type: DamageVisuals
+    thresholds: [5, 10, 20]
+    damageDivisor: 3
+    trackAllDamage: true
+    damageOverlay:
+      sprite: Structures/Windows/cracks_directional.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WindowShatter
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassUranium:
+            min: 1
+            max: 2
+          PartRodMetal:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: StaticPrice
+    price: 110
+  - type: RadiationBlocker
+    resistance: 2.5
 
 - type: entity
   parent: ReinforcedUraniumWindow
@@ -86,6 +142,11 @@
         - FullTileMask
         layer:
         - GlassLayer
+  - type: Airtight
+    noAirWhenFullyAirBlocked: false
+    airBlockedDirection:
+    - South
+    - East
   - type: DamageVisuals
     damageOverlay:
       sprite: Structures/Windows/cracks_diagonal.rsi

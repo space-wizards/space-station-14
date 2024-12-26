@@ -56,6 +56,8 @@
   parent: BlastDoor
   suffix: Autolink, Bridge
   components:
+    - type: AccessReader
+      access: [["Command"]]
     - type: AutoLinkReceiver
       channel: Bridge
 
@@ -64,8 +66,50 @@
   parent: BlastDoorOpen
   suffix: Open, Autolink, Bridge
   components:
+    - type: AccessReader
+      access: [["Command"]]
     - type: AutoLinkReceiver
       channel: Bridge
+
+- type: entity
+  id: BlastDoorEngineering
+  parent: BlastDoor
+  suffix: Autolink, Engineering
+  components:
+  - type: AccessReader
+    access: [["Command"], ["Engineering"]]
+  - type: AutoLinkReceiver
+    channel: Engineering
+
+- type: entity
+  id: BlastDoorEngineeringOpen
+  parent: BlastDoorOpen
+  suffix: Open, Autolink, Engineering
+  components:
+  - type: AccessReader
+    access: [["Command"], ["Engineering"]]
+  - type: AutoLinkReceiver
+    channel: Engineering
+
+- type: entity
+  id: BlastDoorScience
+  parent: BlastDoor
+  suffix: Autolink, Science
+  components:
+  - type: AccessReader
+    access: [["Command"], ["Research"]]
+  - type: AutoLinkReceiver
+    channel: Research
+
+- type: entity
+  id: BlastDoorScienceOpen
+  parent: BlastDoorOpen
+  suffix: Open, Autolink, Science
+  components:
+  - type: AccessReader
+    access: [["Command"], ["Research"]]
+  - type: AutoLinkReceiver
+    channel: Research
 
 - type: entity
   id: BlastDoorWindows

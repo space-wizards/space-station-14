@@ -24,15 +24,12 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnPassiveVentUpdated(EntityUid uid, GasPassiveVentComponent vent, ref AtmosDeviceUpdateEvent args)
         {
-            var environment = _atmosphereSystem.GetContainingMixture(uid, true, true);
+            var environment = _atmosphereSystem.GetContainingMixture(uid, args.Grid, args.Map, true, true);
 
             if (environment == null)
                 return;
 
-            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
-                return;
-
-            if (!_nodeContainer.TryGetNode(nodeContainer, vent.InletName, out PipeNode? inlet))
+            if (!_nodeContainer.TryGetNode(uid, vent.InletName, out PipeNode? inlet))
                 return;
 
             var inletAir = inlet.Air.RemoveRatio(1f);

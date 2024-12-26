@@ -33,7 +33,7 @@ public abstract class SharedFloatingVisualizerSystem : EntitySystem
             return false;
 
         component.CanFloat = GravitySystem.IsWeightless(uid, xform: transform);
-        Dirty(component);
+        Dirty(uid, component);
         return component.CanFloat;
     }
 

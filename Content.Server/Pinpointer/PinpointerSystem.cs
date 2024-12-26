@@ -45,7 +45,12 @@ public sealed class PinpointerSystem : SharedPinpointerSystem
 
     private void OnActivate(EntityUid uid, PinpointerComponent component, ActivateInWorldEvent args)
     {
+        if (args.Handled || !args.Complex)
+            return;
+
         TogglePinpointer(uid, component);
+
+        args.Handled = true;
     }
 
     /// <summary>

@@ -49,3 +49,8 @@
 - files: ["core.yml"]
   authors: Ubaser
 
+- files: ["oasis.yml"]
+  authors: CptJeanLuc
+
+- files: ["cog.yml"]
+  authors: Spacemann

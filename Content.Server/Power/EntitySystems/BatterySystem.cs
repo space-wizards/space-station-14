@@ -3,14 +3,18 @@ using Content.Server.Emp;
 using Content.Server.Power.Components;
 using Content.Shared.Examine;
 using Content.Shared.Rejuvenate;
+using Content.Shared.Timing;
 using JetBrains.Annotations;
 using Robust.Shared.Utility;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Power.EntitySystems
 {
     [UsedImplicitly]
     public sealed class BatterySystem : EntitySystem
     {
+        [Dependency] protected readonly IGameTiming Timing = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -62,9 +66,9 @@ namespace Content.Server.Power.EntitySystems
             var enumerator = AllEntityQuery<PowerNetworkBatteryComponent, BatteryComponent>();
             while (enumerator.MoveNext(out var netBat, out var bat))
             {
-                DebugTools.Assert(bat.Charge <= bat.MaxCharge && bat.Charge >= 0);
+                DebugTools.Assert(bat.CurrentCharge <= bat.MaxCharge && bat.CurrentCharge >= 0);
                 netBat.NetworkBattery.Capacity = bat.MaxCharge;
-                netBat.NetworkBattery.CurrentStorage = bat.Charge;
+                netBat.NetworkBattery.CurrentStorage = bat.CurrentCharge;
             }
         }
 
@@ -85,6 +89,13 @@ namespace Content.Server.Power.EntitySystems
             {
                 if (!comp.AutoRecharge) continue;
                 if (batt.IsFullyCharged) continue;
+
+                if (comp.AutoRechargePause)
+                {
+                    if (comp.NextAutoRecharge > Timing.CurTime)
+                        continue;
+                }
+
                 SetCharge(uid, batt.CurrentCharge + comp.AutoRechargeRate * frameTime, batt);
             }
         }
@@ -101,6 +112,8 @@ namespace Content.Server.Power.EntitySystems
         {
             args.Affected = true;
             UseCharge(uid, args.EnergyConsumption, component);
+            // Apply a cooldown to the entity's self recharge if needed to avoid it immediately self recharging after an EMP.
+            TrySetChargeCooldown(uid);
         }
 
         public float UseCharge(EntityUid uid, float value, BatteryComponent? battery = null)
@@ -108,10 +121,14 @@ namespace Content.Server.Power.EntitySystems
             if (value <= 0 ||  !Resolve(uid, ref battery) || battery.CurrentCharge == 0)
                 return 0;
 
-            var newValue = Math.Clamp(0, battery.CurrentCharge - value, battery._maxCharge);
-            var delta = newValue - battery.Charge;
-            battery.Charge = newValue;
-            var ev = new ChargeChangedEvent(battery.CurrentCharge, battery._maxCharge);
+            var newValue = Math.Clamp(0, battery.CurrentCharge - value, battery.MaxCharge);
+            var delta = newValue - battery.CurrentCharge;
+            battery.CurrentCharge = newValue;
+
+            // Apply a cooldown to the entity's self recharge if needed.
+            TrySetChargeCooldown(uid);
+
+            var ev = new ChargeChangedEvent(battery.CurrentCharge, battery.MaxCharge);
             RaiseLocalEvent(uid, ref ev);
             return delta;
         }
@@ -121,13 +138,13 @@ namespace Content.Server.Power.EntitySystems
             if (!Resolve(uid, ref battery))
                 return;
 
-            var old = battery._maxCharge;
-            battery._maxCharge = Math.Max(value, 0);
-            battery.Charge = Math.Min(battery.Charge, battery._maxCharge);
-            if (MathHelper.CloseTo(battery._maxCharge, old))
+            var old = battery.MaxCharge;
+            battery.MaxCharge = Math.Max(value, 0);
+            battery.CurrentCharge = Math.Min(battery.CurrentCharge, battery.MaxCharge);
+            if (MathHelper.CloseTo(battery.MaxCharge, old))
                 return;
 
-            var ev = new ChargeChangedEvent(battery.CurrentCharge, battery._maxCharge);
+            var ev = new ChargeChangedEvent(battery.CurrentCharge, battery.MaxCharge);
             RaiseLocalEvent(uid, ref ev);
         }
 
@@ -136,13 +153,50 @@ namespace Content.Server.Power.EntitySystems
             if (!Resolve(uid, ref battery))
                 return;
 
-            var old = battery.Charge;
-            battery.Charge = MathHelper.Clamp(value, 0, battery._maxCharge);
-            if (MathHelper.CloseTo(battery.Charge, old))
+            var old = battery.CurrentCharge;
+            battery.CurrentCharge = MathHelper.Clamp(value, 0, battery.MaxCharge);
+            if (MathHelper.CloseTo(battery.CurrentCharge, old) &&
+                !(old != battery.CurrentCharge && battery.CurrentCharge == battery.MaxCharge))
+            {
+                return;
+            }
+
+            var ev = new ChargeChangedEvent(battery.CurrentCharge, battery.MaxCharge);
+            RaiseLocalEvent(uid, ref ev);
+        }
+        /// <summary>
+        /// Checks if the entity has a self recharge and puts it on cooldown if applicable.
+        /// </summary>
+        public void TrySetChargeCooldown(EntityUid uid, float value = -1)
+        {
+            if (!TryComp<BatterySelfRechargerComponent>(uid, out var batteryself))
                 return;
 
-            var ev = new ChargeChangedEvent(battery.CurrentCharge, battery._maxCharge);
-            RaiseLocalEvent(uid, ref ev);
+            if (!batteryself.AutoRechargePause)
+                return;
+
+            // If no answer or a negative is given for value, use the default from AutoRechargePauseTime.
+            if (value < 0)
+                value = batteryself.AutoRechargePauseTime;
+
+            if (Timing.CurTime + TimeSpan.FromSeconds(value) <= batteryself.NextAutoRecharge)
+                return;
+
+            SetChargeCooldown(uid, batteryself.AutoRechargePauseTime, batteryself);
+        }
+
+        /// <summary>
+        /// Puts the entity's self recharge on cooldown for the specified time.
+        /// </summary>
+        public void SetChargeCooldown(EntityUid uid, float value, BatterySelfRechargerComponent? batteryself = null)
+        {
+            if (!Resolve(uid, ref batteryself))
+                return;
+
+            if (value >= 0)
+                batteryself.NextAutoRecharge = Timing.CurTime + TimeSpan.FromSeconds(value);
+            else
+                batteryself.NextAutoRecharge = Timing.CurTime;
         }
 
         /// <summary>
@@ -150,7 +204,7 @@ namespace Content.Server.Power.EntitySystems
         /// </summary>
         public bool TryUseCharge(EntityUid uid, float value, BatteryComponent? battery = null)
         {
-            if (!Resolve(uid, ref battery, false) || value > battery.Charge)
+            if (!Resolve(uid, ref battery, false) || value > battery.CurrentCharge)
                 return false;
 
             UseCharge(uid, value, battery);

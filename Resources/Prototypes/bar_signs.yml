@@ -1,154 +1,183 @@
 - type: barSign
   id: Harmbaton
   name: barsign-prototype-name-harmbaton
-  icon: "theharmbaton"
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: theharmbaton
   description: barsign-prototype-description-harmbaton
 
 - type: barSign
   id: TheSingulo
   name: barsign-prototype-name-singulo
-  icon: "thesingulo"
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: thesingulo
   description: barsign-prototype-description-singulo
 
 - type: barSign
   id: TheDrunkCarp
   name: barsign-prototype-name-drunk-carp
-  icon: "thedrunkcarp"
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: thedrunkcarp
   description: barsign-prototype-description-drunk-carp
 
 - type: barSign
   id: OfficerBeersky
   name: barsign-prototype-name-officer-beersky
-  icon: "officerbeersky"
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: officerbeersky
   description: barsign-prototype-description-officer-beersky
 
 - type: barSign
   id: TheOuterSpess
   name: barsign-prototype-name-outer-spess
-  icon: "theouterspess"
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: theouterspess
   description: barsign-prototype-description-outer-spess
 
 - type: barSign
   id: TheCoderbus
   name: barsign-prototype-name-coderbus
-  icon: "thecoderbus"
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: thecoderbus
   description: barsign-prototype-description-coderbus
 
 - type: barSign
   id: RobustaCafe
   name: barsign-prototype-name-robusta-cafe
-  icon: "robustacafe"
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: robustacafe
   description: barsign-prototype-description-robusta-cafe
 
 - type: barSign
   id: EmergencyRumParty
   name: barsign-prototype-name-emergency-rum-party
-  icon: "emergencyrumparty"
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: emergencyrumparty
   description: barsign-prototype-description-emergency-rum-party
 
 - type: barSign
   id: ComboCafe
   name: barsign-prototype-name-combo-cafe
-  icon: "combocafe"
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: combocafe
   description: barsign-prototype-description-combo-cafe
 
 - type: barSign
   id: TheAleNath
   name: barsign-prototype-name-ale-nath
-  icon: "thealenath"
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: thealenath
   description: barsign-prototype-description-ale-nath
 
 - type: barSign
   id: TheNet
   name: barsign-prototype-name-the-net
-  icon: "thenet"
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: thenet
   description: barsign-prototype-description-the-net
 
 - type: barSign
   id: MaidCafe
   name: barsign-prototype-name-maid-cafe
-  icon: "maidcafe"
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: maidcafe
   description: barsign-prototype-description-maid-cafe
 
 - type: barSign
   id: MalteseFalcon
   name: barsign-prototype-name-maltese-falcon
-  icon: "maltesefalcon"
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: maltesefalcon
   description: barsign-prototype-description-maltese-falcon
 
 - type: barSign
   id: TheSun
   name: barsign-prototype-name-the-sun
-  icon: "thesun"
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: thesun
   description: barsign-prototype-description-the-sun
 
 - type: barSign
   id: TheBirdCage
   name: barsign-prototype-name-the-birdcage
-  icon: "birdcage"
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: birdcage
   description: barsign-prototype-description-the-birdcage
 
 - type: barSign
   id: Zocalo
   name: barsign-prototype-name-zocalo
-  icon: "zocalo"
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: zocalo
   description: barsign-prototype-description-zocalo
 
 - type: barSign
   id: LV426
   name: barsign-prototype-name-lv426
-  icon: "lv426"
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: lv426
   description: barsign-prototype-description-lv426
 
 - type: barSign
   id: WiggleRoom
   name: barsign-prototype-name-wiggle-room
-  icon: "thewiggleroom"
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: thewiggleroom
   description: barsign-prototype-description-wiggle-room
 
 - type: barSign
   id: TheLightbulb
   name: barsign-prototype-name-the-lightbulb
-  icon: "the_lightbulb"
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: the_lightbulb
   description: barsign-prototype-description-the-lightbulb
 
 - type: barSign
   id: Goose
   name: barsign-prototype-name-goose
-  icon: "goose"
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: goose
   description: barsign-prototype-description-goose
 
 - type: barSign
   id: EngineChange
   name: barsign-prototype-name-enginechange
-  icon: "enginechange"
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: enginechange
   description: barsign-prototype-description-enginechange
 
 - type: barSign
   id: Emprah
   name: barsign-prototype-name-emprah
-  icon: "emprah"
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: emprah
   description: barsign-prototype-description-emprah
 
 - type: barSign
   id: Spacebucks
   name: barsign-prototype-name-spacebucks
-  icon: "spacebucks"
+  icon:
+    sprite: Structures/Wallmounts/barsign.rsi
+    state: spacebucks
   description: barsign-prototype-description-spacebucks
-
-# Hidden signs list below this point
-- type: barSign
-  id: EmpBarSign
-  name: ""
-  icon: "empbarsign"
-  description: barsign-prototype-description-empbarsign
-  renameArea: false
-  hidden: true
-
-- type: barSign
-  id: SignOff
-  name: ""
-  icon: "empty"
-  description: barsign-prototype-description-sign-off
-  renameArea: false
-  hidden: true

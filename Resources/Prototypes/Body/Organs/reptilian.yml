@@ -1,12 +1,13 @@
 ﻿- type: entity
   id: OrganReptilianStomach
   parent: OrganAnimalStomach
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Stomach
     specialDigestible:
       tags:
       - Fruit
+      - ReptilianFood
       - Meat
       - Pill
       - Crayon

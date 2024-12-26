@@ -21,6 +21,28 @@
   description: "Four pieces of wooden station flooring."
   icon: { sprite: Objects/Tiles/tile.rsi, state: wood }
   objectType: Item
+  
+- type: construction
+  name: filled brass plate
+  id: TileBrassFilled
+  graph: TilesBrass
+  startNode: start
+  targetNode: filledPlate
+  category: construction-category-tiles
+  description: "Four pieces of brass station flooring, only compatible with brass plating."
+  icon: { sprite: Objects/Tiles/tile.rsi, state: brass-filled }
+  objectType: Item
+  
+- type: construction
+  name: smooth brass plate
+  id: TileBrassReebe
+  graph: TilesBrass
+  startNode: start
+  targetNode: reebe
+  category: construction-category-tiles
+  description: "Four pieces of smooth brass station flooring, only compatible with brass plating."
+  icon: { sprite: Objects/Tiles/tile.rsi, state: reebe }
+  objectType: Item
 
 - type: construction
   name: white tile
@@ -164,3 +186,14 @@
 #   description: "A dirty station tile."
 #   icon: { sprite: Objects/Tiles/tile.rsi, state: dirty }
 #   objectType: Item
+
+- type: construction
+  name: large wood floor
+  id: TileWoodLarge
+  graph: TileWoodLarge
+  startNode: start
+  targetNode: woodtilelarge
+  category: construction-category-tiles
+  description: "Four pieces of wooden station flooring."
+  icon: { sprite: Objects/Tiles/tile.rsi, state: wood-large }
+  objectType: Item

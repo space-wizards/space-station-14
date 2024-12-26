@@ -1,4 +1,5 @@
-﻿<DefaultWindow xmlns="https://spacestation14.io"
+﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+               xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                Title="{Loc 'war-declarator-ui-header'}">
     <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="440">
@@ -7,12 +8,16 @@
                   MinHeight="200"
                   Access="Public" />
         <Button Name="WarButton"
-                Text="{Loc 'war-declarator-ui-war-button'}"
+                Text="{Loc 'war-declarator-ui-try-war-button'}"
                 StyleClasses="Caution"
                 Access="Public"/>
-        <Label Name="StatusLabel"
-               Access="Public"/>
-        <Label Name="InfoLabel"
-               Access="Public"/>
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+            <Label Name="StatusLabel"
+                   Align="Center"
+                   Access="Public"/>
+            <Label Name="InfoLabel"
+                   Align="Center"
+                   Access="Public"/>
+        </BoxContainer>
     </BoxContainer>
-</DefaultWindow>
+</controls:FancyWindow>

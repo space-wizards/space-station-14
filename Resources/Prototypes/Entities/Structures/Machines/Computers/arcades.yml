@@ -7,35 +7,124 @@
   components:
   - type: ApcPowerReceiver
     powerLoad: 350
-    priority: Low
   - type: ExtensionCableReceiver
   - type: PointLight
-    radius: 1.5
+    radius: 1.8
     energy: 1.6
     color: "#3db83b"
+  - type: LitOnPowered
   - type: Sprite
     sprite: Structures/Machines/arcade.rsi
     layers:
     - map: ["computerLayerBody"]
       state: arcade
     - map: ["computerLayerScreen"]
-      state: invaders
+      state: screen_invaders
+    - map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      state: panel
+      visible: false
   - type: Icon
     sprite: Structures/Machines/arcade.rsi
     state: arcade
+  - type: WiresPanel
+  - type: Wires
+    layoutId: Arcade
+    boardName: wires-board-name-arcade
+  - type: WiresVisuals
+  - type: TypingIndicator
+    proto: robot
+  - type: Speech
+    speechVerb: Robotic
+    speechSounds: Vending
   - type: Anchorable
   - type: Pullable
   - type: StaticPrice
     price: 300
+  - type: SpamEmitSoundRequirePower
+  - type: SpamEmitSound
+    minInterval: 30
+    maxInterval: 90
+    sound:
+      collection: ArcadeNoise
+      params:
+        volume: -8
+        maxDistance: 10
+        variation: 0.05
 
 - type: entity
   id: SpaceVillainArcade
   name: space villain arcade
   parent: ArcadeBase
   components:
+  - type: Sprite
+    sprite: Structures/Machines/arcade.rsi
+    layers:
+    - map: ["computerLayerBody"]
+      state: arcade
+    - map: ["computerLayerScreen"]
+      state: screen_spacevillain
+    - map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      state: panel
+      visible: false
+  - type: PointLight
+    color: "#e3a136"
   - type: SpaceVillainArcade
-    rewardAmount: 0
+    rewardMinAmount: 0
+    rewardMaxAmount: 0
     possibleRewards:
+    - Basketball
+    - BalloonNT
+    - BalloonCorgi
+    - BoxDonkSoftBox
+    - BoxCartridgeCap
+    - BeachBall
+    - CandyBucket
+    - CrayonBox
+    - ClothingHeadHatCowboyRed
+    - FoamCrossbow
+    - FoamBlade
+    - FoamCutlass
+    - Football
+    - GlowstickBase #green
+    - GlowstickBlue
+    - GlowstickYellow
+    - GlowstickPurple
+    - GlowstickRed
+    - HarmonicaInstrument
+    - OcarinaInstrument
+    - RecorderInstrument
+    - GunpetInstrument
+    - BirdToyInstrument
+    - MysteryFigureBox
+    - PlushieHampter
+    - PlushieLizard
+    - PlushieRainbowLizard
+    - PlushieAtmosian
+    - PlushieSpaceLizard
+    - PlushieNuke
+    - PlushieCarp
+    - PlushieMagicarp
+    - PlushieHolocarp
+    - PlushieRainbowCarp
+    - PlushieRatvar
+    - PlushieNar
+    - PlushieSnake
+    - PlushieArachind
+    - PlushieMoth
+    - PlushieHampter
+    - PlushiePenguin
+    - PlushieHuman
+    - PlushieRouny
+    - PlushieBee
+    - PlushieSlime
+    - PlushieGhost
+    - PlushieDiona
+    - PlushieSharkBlue
+    - PlushieVox
+    - PlushieXeno
+    - PlasticBanana
+    - RevolverCapGun
+    - SnapPopBox
     - ToyMouse
     - ToyAi
     - ToyNuke
@@ -55,40 +144,13 @@
     - ToySeraph
     - ToyDurand
     - ToySkeleton
-    - FoamCrossbow
-    - RevolverCapGun
-    - PlushieHampter
-    - PlushieLizard
-    - PlushieAtmosian
-    - PlushieSpaceLizard
-    - PlushieNuke
-    - PlushieCarp
-    - PlushieRatvar
-    - PlushieNar
-    - PlushieSnake
-    - PlushieArachind
-    - Basketball
-    - Football
-    - PlushieRouny
-    - PlushieBee
-    - PlushieSlime
-    - BalloonCorgi
     - ToySword
-    - CrayonBox
-    - BoxDonkSoftBox
-    - BoxCartridgeCap
-    - HarmonicaInstrument
-    - OcarinaInstrument
-    - RecorderInstrument
-    - GunpetInstrument
-    - BirdToyInstrument
-    - PlushieXeno
-    - BeachBall
-    - PlushieMoth
-    - PlushieHampter
-    - PlushiePenguin
-    - PlushieHuman
-    - ClothingHeadHatCowboyRed
+    - ToyAmongPequeno
+    - ToyRubberDuck
+    - ToyHammer
+    - WeaponWaterPistol
+    - WhoopieCushion
+    - Whistle
   - type: WiresPanel
   - type: Wires
     layoutId: Arcade
@@ -96,14 +158,21 @@
   - type: ActivatableUI
     key: enum.SpaceVillainArcadeUiKey.Key
   - type: ActivatableUIRequiresPower
+  - type: StationAiWhitelist
   - type: UserInterface
     interfaces:
-      - key: enum.SpaceVillainArcadeUiKey.Key
+      enum.SpaceVillainArcadeUiKey.Key:
         type: SpaceVillainArcadeBoundUserInterface
-      - key: enum.WiresUiKey.Key
+      enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: Computer
     board: SpaceVillainArcadeComputerCircuitboard
+  - type: Advertise
+    pack: SpaceVillainAds
+    minimumWait: 60 # Arcades are noisy
+    maximumWait: 240
+  - type: SpeakOnUIClosed
+    pack: SpaceVillainGoodbyes
 
 - type: entity
   id: SpaceVillainArcadeFilled
@@ -126,20 +195,26 @@
     - map: ["computerLayerBody"]
       state: arcade
     - map: ["computerLayerScreen"]
-      state: blockgame
+      state: screen_blockgame
+    - map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      state: panel
+      visible: false
   - type: BlockGameArcade
   - type: ActivatableUI
     key: enum.BlockGameUiKey.Key
   - type: ActivatableUIRequiresPower
-  - type: WiresPanel
-  - type: Wires
-    layoutId: Arcade
-    boardName: wires-board-name-arcade
+  - type: StationAiWhitelist
   - type: UserInterface
     interfaces:
-      - key: enum.BlockGameUiKey.Key
+      enum.BlockGameUiKey.Key:
         type: BlockGameBoundUserInterface
-      - key: enum.WiresUiKey.Key
+      enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
   - type: Computer
     board: BlockGameArcadeComputerCircuitboard
+  - type: Advertise
+    pack: BlockGameAds
+    minimumWait: 60 # Arcades are noisy
+    maximumWait: 240
+  - type: SpeakOnUIClosed
+    pack: BlockGameGoodbyes

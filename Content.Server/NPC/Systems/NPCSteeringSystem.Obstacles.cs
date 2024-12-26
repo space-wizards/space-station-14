@@ -6,6 +6,7 @@ using Content.Shared.CombatMode;
 using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
 using Content.Shared.NPC;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Utility;
@@ -201,12 +202,12 @@ public sealed partial class NPCSteeringSystem
     private void GetObstacleEntities(PathPoly poly, int mask, int layer, List<EntityUid> ents)
     {
         // TODO: Can probably re-use this from pathfinding or something
-        if (!_mapManager.TryGetGrid(poly.GraphUid, out var grid))
+        if (!TryComp<MapGridComponent>(poly.GraphUid, out var grid))
         {
             return;
         }
 
-        foreach (var ent in grid.GetLocalAnchoredEntities(poly.Box))
+        foreach (var ent in _mapSystem.GetLocalAnchoredEntities(poly.GraphUid, grid, poly.Box))
         {
             if (!_physicsQuery.TryGetComponent(ent, out var body) ||
                 !body.Hard ||

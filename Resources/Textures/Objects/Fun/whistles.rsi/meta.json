@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "sec and whistle made by Foleps (discord), trench by Firewatchin (discord)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+
+  "states": [
+    {
+      "name": "equipped-NECK",
+      "directions": 4
+    },
+    {
+      "name": "whistle"
+    },
+    {
+      "name": "sec-equipped-NECK",
+      "directions": 4
+    },
+    {
+      "name": "sec"
+    },
+    {
+      "name": "trench-equipped-NECK",
+      "directions": 4
+    },
+    {
+      "name": "trench"
+    }
+  ]
+}

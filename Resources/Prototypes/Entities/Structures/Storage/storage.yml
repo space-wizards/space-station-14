@@ -27,11 +27,11 @@
           bounds: "-0.3,-0.3,0.3,0.3"
         density: 140
         mask:
-        - MachineMask
+        - TableMask
         layer:
-        - MachineLayer
+        - TableLayer
   - type: Damageable
-    damageContainer: Inorganic
+    damageContainer: StructuralInorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
@@ -59,4 +59,4 @@
         acts: [ "Destruction" ]
   - type: Climbable
   - type: StaticPrice
-    price: 22
+    price: 30

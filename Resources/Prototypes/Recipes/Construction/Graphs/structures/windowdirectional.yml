@@ -4,15 +4,22 @@
   graph:
     - node: start
       edges:
-        - to: plasmaWindowDirectional
+
+        - to: windowDirectional
           steps:
-            - material: PlasmaGlass
+            - material: Glass
               amount: 1
               doAfter: 2
 
         - to: windowReinforcedDirectional
           steps:
             - material: ReinforcedGlass
+              amount: 1
+              doAfter: 3
+
+        - to: plasmaWindowDirectional
+          steps:
+            - material: PlasmaGlass
               amount: 1
               doAfter: 2
 
@@ -21,10 +28,21 @@
             - material: ReinforcedPlasmaGlass
               amount: 1
               doAfter: 3
-
-        - to: windowDirectional
+        - to: uraniumWindowDirectional
           steps:
-            - material: Glass
+            - material: UraniumGlass
+              amount: 1
+              doAfter: 2
+
+        - to: uraniumReinforcedWindowDirectional
+          steps:
+            - material: ReinforcedUraniumGlass
+              amount: 1
+              doAfter: 3
+
+        - to: windowClockworkDirectional
+          steps:
+            - material: ClockworkGlass
               amount: 1
               doAfter: 3
 
@@ -81,6 +99,25 @@
             - tool: Anchoring
               doAfter: 3
 
+    - node: windowClockworkDirectional
+      entity: WindowClockworkDirectional
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetClockworkGlass1
+              amount: 1
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 2
+            - tool: Prying
+              doAfter: 3
+            - tool: Screwing
+              doAfter: 2
+            - tool: Anchoring
+              doAfter: 3
+
     - node: plasmaReinforcedWindowDirectional
       entity: PlasmaReinforcedWindowDirectional
       edges:
@@ -88,6 +125,43 @@
           completed:
             - !type:SpawnPrototype
               prototype: SheetRPGlass1
+              amount: 1
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 2
+            - tool: Prying
+              doAfter: 3
+            - tool: Screwing
+              doAfter: 2
+            - tool: Anchoring
+              doAfter: 3
+    - node: uraniumWindowDirectional
+      entity: UraniumWindowDirectional
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetUGlass1
+              amount: 1
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 2
+            - tool: Prying
+              doAfter: 3
+            - tool: Screwing
+              doAfter: 2
+            - tool: Anchoring
+              doAfter: 3
+
+    - node: uraniumReinforcedWindowDirectional
+      entity: UraniumReinforcedWindowDirectional
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetRUGlass1
               amount: 1
             - !type:DeleteEntity {}
           steps:

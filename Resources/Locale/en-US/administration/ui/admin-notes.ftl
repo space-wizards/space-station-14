@@ -23,8 +23,11 @@ admin-notes-hide = Hide
 admin-notes-delete-confirm = Confirm delete
 admin-notes-edited = Last edit by {$author} on {$date}
 admin-notes-unbanned = Unbanned by {$admin} on {$date}
-admin-notes-message-window-title = Alert!
-admin-notes-message-admin = New message from {$admin}, added on {$date}
+admin-notes-message-desc = [color=white]You have received { $count ->
+    [1] an administrative message
+    *[other] administrative messages
+} since the last time you played on this server.[/color]
+admin-notes-message-admin = From [bold]{ $admin }[/bold], written on { TOSTRING($date, "f") }:
 admin-notes-message-wait = The accept button will be enabled after {$time} seconds.
 admin-notes-message-accept = Dismiss permanently
 admin-notes-message-dismiss = Dismiss for now
@@ -32,7 +35,6 @@ admin-notes-message-seen = Seen
 admin-notes-banned-from = Banned from
 admin-notes-the-server = the server
 admin-notes-permanently = permanently
-admin-notes-for = for {$player}
 admin-notes-days = {$days} days
 admin-notes-hours = {$hours} hours
 admin-notes-minutes = {$minutes} minutes
@@ -55,12 +57,22 @@ admin-note-editor-severity-medium = Medium
 admin-note-editor-severity-high = High
 admin-note-editor-expiry-checkbox = Permanent?
 admin-note-editor-expiry-checkbox-tooltip = Check this to make it expire
-admin-note-editor-expiry-label = Expires on:
+admin-note-editor-expiry-label = Expires in:
 admin-note-editor-expiry-label-params = Expires on: {$date} (in {$expiresIn})
 admin-note-editor-expiry-label-expired = Expired
-admin-note-editor-expiry-placeholder = Enter expiration date (yyyy-MM-dd HH:mm:ss)
+admin-note-editor-expiry-placeholder = Enter expiration time (integer).
 admin-note-editor-submit = Submit
 admin-note-editor-submit-confirm = Are you sure?
+
+# Time
+admin-note-button-minutes = Minutes
+admin-note-button-hours = Hours
+admin-note-button-days = Days
+admin-note-button-weeks = Weeks
+admin-note-button-months = Months
+admin-note-button-years = Years
+admin-note-button-centuries = Centuries
+
 
 # Verb
 admin-notes-verb-text = Open Admin Notes
@@ -68,6 +80,7 @@ admin-notes-verb-text = Open Admin Notes
 # Watchlist and message login
 admin-notes-watchlist = Watchlist for {$player}: {$message}
 admin-notes-new-message = You've received an admin message from {$admin}: {$message}
+admin-notes-fallback-admin-name = [System]
 
 # Admin remarks
 admin-remarks-command-description = Opens the admin remarks page

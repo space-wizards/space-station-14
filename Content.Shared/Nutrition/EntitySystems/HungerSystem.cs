@@ -1,17 +1,23 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Rejuvenate;
+using Content.Shared.StatusIcon;
+using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Nutrition.EntitySystems;
 
 public sealed class HungerSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
@@ -19,20 +25,23 @@ public sealed class HungerSystem : EntitySystem
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly SharedJetpackSystem _jetpack = default!;
 
+    [ValidatePrototypeId<SatiationIconPrototype>]
+    private const string HungerIconOverfedId = "HungerIconOverfed";
+
+    [ValidatePrototypeId<SatiationIconPrototype>]
+    private const string HungerIconPeckishId = "HungerIconPeckish";
+
+    [ValidatePrototypeId<SatiationIconPrototype>]
+    private const string HungerIconStarvingId = "HungerIconStarving";
+
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HungerComponent, EntityUnpausedEvent>(OnUnpaused);
         SubscribeLocalEvent<HungerComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<HungerComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<HungerComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
         SubscribeLocalEvent<HungerComponent, RejuvenateEvent>(OnRejuvenate);
-    }
-
-    private void OnUnpaused(EntityUid uid, HungerComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextUpdateTime += args.PausedTime;
     }
 
     private void OnMapInit(EntityUid uid, HungerComponent component, MapInitEvent args)
@@ -45,7 +54,7 @@ public sealed class HungerSystem : EntitySystem
 
     private void OnShutdown(EntityUid uid, HungerComponent component, ComponentShutdown args)
     {
-        _alerts.ClearAlertCategory(uid, AlertCategory.Hunger);
+        _alerts.ClearAlertCategory(uid, component.HungerAlertCategory);
     }
 
     private void OnRefreshMovespeed(EntityUid uid, HungerComponent component, RefreshMovementSpeedModifiersEvent args)
@@ -65,6 +74,16 @@ public sealed class HungerSystem : EntitySystem
     }
 
     /// <summary>
+    /// Gets the current hunger value of the given <see cref="HungerComponent"/>.
+    /// </summary>
+    public float GetHunger(HungerComponent component)
+    {
+        var dt = _timing.CurTime - component.LastAuthoritativeHungerChangeTime;
+        var value = component.LastAuthoritativeHungerValue - (float)dt.TotalSeconds * component.ActualDecayRate;
+        return ClampHungerWithinThresholds(component, value);
+    }
+
+    /// <summary>
     /// Adds to the current hunger of an entity by the specified value
     /// </summary>
     /// <param name="uid"></param>
@@ -74,7 +93,7 @@ public sealed class HungerSystem : EntitySystem
     {
         if (!Resolve(uid, ref component))
             return;
-        SetHunger(uid, component.CurrentHunger + amount, component);
+        SetHunger(uid, GetHunger(component) + amount, component);
     }
 
     /// <summary>
@@ -87,11 +106,23 @@ public sealed class HungerSystem : EntitySystem
     {
         if (!Resolve(uid, ref component))
             return;
-        component.CurrentHunger = Math.Clamp(amount,
-            component.Thresholds[HungerThreshold.Dead],
-            component.Thresholds[HungerThreshold.Overfed]);
+
+        SetAuthoritativeHungerValue((uid, component), amount);
         UpdateCurrentThreshold(uid, component);
-        Dirty(component);
+    }
+
+    /// <summary>
+    /// Sets <see cref="HungerComponent.LastAuthoritativeHungerValue"/> and
+    /// <see cref="HungerComponent.LastAuthoritativeHungerChangeTime"/>, and dirties this entity. This "resets" the
+    /// starting point for <see cref="GetHunger"/>'s calculation.
+    /// </summary>
+    /// <param name="entity">The entity whose hunger will be set.</param>
+    /// <param name="value">The value to set the entity's hunger to.</param>
+    private void SetAuthoritativeHungerValue(Entity<HungerComponent> entity, float value)
+    {
+        entity.Comp.LastAuthoritativeHungerChangeTime = _timing.CurTime;
+        entity.Comp.LastAuthoritativeHungerValue = ClampHungerWithinThresholds(entity.Comp, value);
+        DirtyField(entity.Owner, entity.Comp, nameof(HungerComponent.LastAuthoritativeHungerChangeTime));
     }
 
     private void UpdateCurrentThreshold(EntityUid uid, HungerComponent? component = null)
@@ -102,9 +133,9 @@ public sealed class HungerSystem : EntitySystem
         var calculatedHungerThreshold = GetHungerThreshold(component);
         if (calculatedHungerThreshold == component.CurrentThreshold)
             return;
+
         component.CurrentThreshold = calculatedHungerThreshold;
         DoHungerThresholdEffects(uid, component);
-        Dirty(component);
     }
 
     private void DoHungerThresholdEffects(EntityUid uid, HungerComponent? component = null, bool force = false)
@@ -126,12 +157,13 @@ public sealed class HungerSystem : EntitySystem
         }
         else
         {
-            _alerts.ClearAlertCategory(uid, AlertCategory.Hunger);
+            _alerts.ClearAlertCategory(uid, component.HungerAlertCategory);
         }
 
         if (component.HungerThresholdDecayModifiers.TryGetValue(component.CurrentThreshold, out var modifier))
         {
             component.ActualDecayRate = component.BaseDecayRate * modifier;
+            SetAuthoritativeHungerValue((uid, component), GetHunger(component));
         }
 
         component.LastThreshold = component.CurrentThreshold;
@@ -159,7 +191,7 @@ public sealed class HungerSystem : EntitySystem
     /// <returns></returns>
     public HungerThreshold GetHungerThreshold(HungerComponent component, float? food = null)
     {
-        food ??= component.CurrentHunger;
+        food ??= GetHunger(component);
         var result = HungerThreshold.Dead;
         var value = component.Thresholds[HungerThreshold.Overfed];
         foreach (var threshold in component.Thresholds)
@@ -170,6 +202,7 @@ public sealed class HungerSystem : EntitySystem
                 value = threshold.Value;
             }
         }
+
         return result;
     }
 
@@ -200,6 +233,34 @@ public sealed class HungerSystem : EntitySystem
         }
     }
 
+    public bool TryGetStatusIconPrototype(HungerComponent component, [NotNullWhen(true)] out SatiationIconPrototype? prototype)
+    {
+        switch (component.CurrentThreshold)
+        {
+            case HungerThreshold.Overfed:
+                _prototype.TryIndex(HungerIconOverfedId, out prototype);
+                break;
+            case HungerThreshold.Peckish:
+                _prototype.TryIndex(HungerIconPeckishId, out prototype);
+                break;
+            case HungerThreshold.Starving:
+                _prototype.TryIndex(HungerIconStarvingId, out prototype);
+                break;
+            default:
+                prototype = null;
+                break;
+        }
+
+        return prototype != null;
+    }
+
+    private static float ClampHungerWithinThresholds(HungerComponent component, float hungerValue)
+    {
+        return Math.Clamp(hungerValue,
+            component.Thresholds[HungerThreshold.Dead],
+            component.Thresholds[HungerThreshold.Overfed]);
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -207,13 +268,12 @@ public sealed class HungerSystem : EntitySystem
         var query = EntityQueryEnumerator<HungerComponent>();
         while (query.MoveNext(out var uid, out var hunger))
         {
-            if (_timing.CurTime < hunger.NextUpdateTime)
+            if (_timing.CurTime < hunger.NextThresholdUpdateTime)
                 continue;
-            hunger.NextUpdateTime = _timing.CurTime + hunger.UpdateRate;
+            hunger.NextThresholdUpdateTime = _timing.CurTime + hunger.ThresholdUpdateRate;
 
-            ModifyHunger(uid, -hunger.ActualDecayRate, hunger);
+            UpdateCurrentThreshold(uid, hunger);
             DoContinuousHungerEffects(uid, hunger);
         }
     }
 }
-

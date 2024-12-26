@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Disposal.Tube;
 using Content.Server.Disposal.Tube.Components;
@@ -12,14 +11,12 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Random;
 
 namespace Content.Server.Disposal.Unit.EntitySystems
 {
     public sealed class DisposableSystem : EntitySystem
     {
         [Dependency] private readonly ThrowingSystem _throwing = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly DisposalUnitSystem _disposalUnitSystem = default!;
@@ -138,12 +135,13 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 else
                 {
                     _xformSystem.AttachToGridOrMap(entity, xform);
+                    var direction = holder.CurrentDirection == Direction.Invalid ? holder.PreviousDirection : holder.CurrentDirection;
 
-                    if (holder.PreviousDirection != Direction.Invalid && _xformQuery.TryGetComponent(xform.ParentUid, out var parentXform))
+                    if (direction != Direction.Invalid && _xformQuery.TryGetComponent(gridUid, out var gridXform))
                     {
-                        var direction = holder.PreviousDirection.ToAngle();
-                        direction += _xformSystem.GetWorldRotation(parentXform);
-                        _throwing.TryThrow(entity, direction.ToWorldVec() * 3f, 10f);
+                        var directionAngle = direction.ToAngle();
+                        directionAngle += _xformSystem.GetWorldRotation(gridXform);
+                        _throwing.TryThrow(entity, directionAngle.ToWorldVec() * 3f, 10f);
                     }
                 }
             }

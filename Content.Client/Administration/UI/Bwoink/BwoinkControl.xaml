@@ -7,6 +7,8 @@
             <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="2">
                 <BoxContainer Access="Public" Name="BwoinkArea" VerticalExpand="True" />
                 <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <CheckBox Visible="True" Name="PlaySound" Access="Public" Text="{Loc 'admin-bwoink-play-sound'}" Pressed="True" />
+                    <Control HorizontalExpand="True" MinWidth="5" />
                     <Button Visible="True" Name="PopOut" Access="Public" Text="{Loc 'admin-logs-pop-out'}" StyleClasses="OpenBoth" HorizontalAlignment="Left" />
                     <Control HorizontalExpand="True" />
                     <Button Visible="False" Name="Bans" Text="{Loc 'admin-player-actions-bans'}" StyleClasses="OpenRight" />

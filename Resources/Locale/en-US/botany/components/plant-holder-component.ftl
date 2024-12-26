@@ -8,8 +8,6 @@ plant-holder-component-no-weeds-message = This plot is devoid of weeds! It doesn
 plant-holder-component-remove-plant-message = You remove the plant from the {$name}.
 plant-holder-component-remove-plant-others-message = {$name} removes the plant.
 plant-holder-component-no-plant-message = There is no plant to remove.
-plant-holder-component-empty-message = {$owner} is empty!
-plant-holder-component-spray-message = You spray {$owner}.
 plant-holder-component-transfer-message = You transfer {$amount}u to {$owner}.
 plant-holder-component-nothing-to-sample-message = There is nothing to take a sample of!
 plant-holder-component-already-sampled-message = This plant has already been sampled.
@@ -32,4 +30,5 @@ plant-holder-component-light-improper-warning = The [color=yellow]improper light
 plant-holder-component-heat-improper-warning = The [color=orange]improper temperature level alert[/color] is blinking.
 plant-holder-component-pressure-improper-warning = The [color=lightblue]improper environment pressure alert[/color] is blinking.
 plant-holder-component-gas-missing-warning = The [color=cyan]improper gas environment alert[/color] is blinking.
-plant-holder-component-early-sample = It is not ready to sample, but you cut a bit of the plant anyway.
+plant-holder-component-early-sample-message = The plant hasn't grown enough to take a sample yet.
+plant-holder-component-ligneous-cant-harvest-message = The plant is too tough to harvest with your bare hands.

@@ -1,6 +1,6 @@
 - type: entity
   id: BulletImpactEffect
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: TimedDespawn
     lifetime: 0.25
@@ -18,7 +18,7 @@
 
 - type: entity
   id: BulletImpactEffectDisabler
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
     - type: TimedDespawn
       lifetime: 0.2
@@ -36,7 +36,7 @@
 
 - type: entity
   id: BulletImpactEffectOrangeDisabler
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: TimedDespawn
     lifetime: 0.2
@@ -55,7 +55,7 @@
 
 - type: entity
   id: BulletImpactEffectKinetic
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: TimedDespawn
     lifetime: 0.2

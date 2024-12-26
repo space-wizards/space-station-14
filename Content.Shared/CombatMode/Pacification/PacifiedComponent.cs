@@ -1,4 +1,6 @@
+using Content.Shared.Alert;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.CombatMode.Pacification;
 
@@ -11,7 +13,7 @@ namespace Content.Shared.CombatMode.Pacification;
 ///
 /// If you want full-pacifism (no combat mode at all), you can simply set <see cref="DisallowAllCombat"/> before adding.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentPause]
 [Access(typeof(PacificationSystem))]
 public sealed partial class PacifiedComponent : Component
 {
@@ -33,6 +35,7 @@ public sealed partial class PacifiedComponent : Component
     public TimeSpan PopupCooldown = TimeSpan.FromSeconds(3.0);
 
     [DataField]
+    [AutoPausedField]
     public TimeSpan? NextPopupTime = null;
 
     /// <summary>
@@ -41,4 +44,6 @@ public sealed partial class PacifiedComponent : Component
     [DataField]
     public EntityUid? LastAttackedEntity = null;
 
+    [DataField]
+    public ProtoId<AlertPrototype> PacifiedAlert = "Pacified";
 }

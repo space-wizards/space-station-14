@@ -70,24 +70,27 @@
 - type: entity
   id: ActionStethoscope
   name: Listen with stethoscope
-  noSpawn: true
   components:
   - type: EntityTargetAction
-    icon: Clothing/Neck/Misc/stethoscope.rsi/icon.png
+    icon:
+      sprite: Clothing/Neck/Misc/stethoscope.rsi
+      state: icon
     event: !type:StethoscopeActionEvent
     checkCanInteract: false
     priority: -1
 
 - type: entity
   parent: ClothingNeckBase
-  id: ClothingNeckFlowerWreath
-  name: flower wreath
-  description: A wreath of colourful flowers.
+  id: Dinkystar
+  name: star sticker
+  description: A dinky lil star for only the hardest working security officers! It's not even sticky anymore.
   components:
   - type: Sprite
-    sprite: Clothing/Neck/Misc/flower-wreath.rsi
-  - type: Clothing
-    sprite: Clothing/Neck/Misc/flower-wreath.rsi
-  - type: Construction
-    graph: flowerwreath
-    node: flowerwreath
+    sprite: Clothing/Neck/Misc/dinkystar.rsi
+    state: icon
+  - type: Item
+    size: Tiny
+  - type: Tag
+    tags:
+    - Trash
+    - WhitelistChameleon

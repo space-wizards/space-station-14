@@ -13,18 +13,24 @@ public sealed partial class RespawnTrackerComponent : Component
     /// A list of the people that should be respawned.
     /// Used to make sure that we don't respawn aghosts or observers.
     /// </summary>
-    [DataField("players")]
+    [DataField]
     public HashSet<NetUserId> Players = new();
 
     /// <summary>
     /// The delay between dying and respawning.
     /// </summary>
-    [DataField("respawnDelay")]
+    [DataField]
     public TimeSpan RespawnDelay = TimeSpan.Zero;
 
     /// <summary>
     /// A dictionary of player netuserids and when they will respawn.
     /// </summary>
-    [DataField("respawnQueue")]
+    [DataField]
     public Dictionary<NetUserId, TimeSpan> RespawnQueue = new();
+
+    /// <summary>
+    /// Whether or not to delete the original body when respawning
+    /// </summary>
+    [DataField]
+    public bool DeleteBody = true;
 }

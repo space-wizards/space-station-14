@@ -1,0 +1,11 @@
+<tips:TippyUI xmlns="https://spacestation14.io"
+               xmlns:tips="clr-namespace:Content.Client.Tips"
+               MinSize="64 64"
+               Visible="False">
+    <PanelContainer Name="LabelPanel" Access="Public" Visible="False" MaxWidth="300" MaxHeight="200">
+        <ScrollContainer Name="ScrollingContents" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="False" ReturnMeasure="True">
+            <RichTextLabel Name="Label" Access="Public"/>
+        </ScrollContainer>
+    </PanelContainer>
+    <SpriteView Name="Entity" Access="Public" MinSize="128 128"/>
+</tips:TippyUI>

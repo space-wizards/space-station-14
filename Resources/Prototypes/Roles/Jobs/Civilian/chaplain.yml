@@ -17,11 +17,10 @@
 - type: startingGear
   id: ChaplainGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitChaplain
-    back: ClothingBackpackChaplainFilled
     shoes: ClothingShoesColorBlack
     id: ChaplainPDA
     ears: ClothingHeadsetService
-  innerClothingSkirt: ClothingUniformJumpskirtChaplain
-  satchel: ClothingBackpackSatchelChaplainFilled
-  duffelbag: ClothingBackpackDuffelChaplainFilled
+  storage:
+    back:
+    - Bible
+    - RubberStampChaplain

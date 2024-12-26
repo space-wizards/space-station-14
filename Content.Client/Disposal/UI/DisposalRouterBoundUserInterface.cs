@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.UserInterface;
 using static Content.Shared.Disposal.Components.SharedDisposalRouterComponent;
 
 namespace Content.Client.Disposal.UI
@@ -21,20 +22,16 @@ namespace Content.Client.Disposal.UI
         {
             base.Open();
 
-            _window = new DisposalRouterWindow();
-
-            _window.OpenCentered();
-            _window.OnClose += Close;
+            _window = this.CreateWindow<DisposalRouterWindow>();
 
             _window.Confirm.OnPressed += _ => ButtonPressed(UiAction.Ok, _window.TagInput.Text);
             _window.TagInput.OnTextEntered += args => ButtonPressed(UiAction.Ok, args.Text);
-
         }
 
         private void ButtonPressed(UiAction action, string tag)
         {
             SendMessage(new UiActionMessage(action, tag));
-            _window?.Close();
+            Close();
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -48,18 +45,5 @@ namespace Content.Client.Disposal.UI
 
             _window?.UpdateState(cast);
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-
-            if (disposing)
-            {
-                _window?.Dispose();
-            }
-        }
-
-
     }
-
 }

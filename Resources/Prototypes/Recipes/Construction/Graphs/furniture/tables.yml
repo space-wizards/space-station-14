@@ -73,6 +73,12 @@
             - material: PlasmaGlass
               amount: 1
               doAfter: 1
+        
+        - to: TableBrass
+          steps:
+            - material: Brass
+              amount: 1
+              doAfter: 1
 
         - to: TableWood
           steps:
@@ -176,6 +182,18 @@
             - tool: Anchoring
               doAfter: 1
 
+    - node: TableBrass
+      entity: TableBrass
+      edges:
+        - to: TableFrame
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetBrass1
+              amount: 1
+          steps:
+            - tool: Prying
+              doAfter: 1
+
     - node: TableWood
       entity: TableWood
       edges:
@@ -193,6 +211,78 @@
             - material: Cloth
               amount: 1
               doAfter: 1
+              
+        - to: TableFancyBlack
+          steps: 
+            - tag: CarpetBlack
+              name: black carpet
+              icon:
+                sprite: Objects/Tiles/tile.rsi
+                state: carpet-black
+              
+        - to: TableFancyBlue
+          steps: 
+            - tag: CarpetBlue
+              name: blue carpet
+              icon:
+                sprite: Objects/Tiles/tile.rsi
+                state: carpet-blue
+              
+        - to: TableFancyCyan
+          steps: 
+            - tag: CarpetCyan
+              name: cyan carpet
+              icon:
+                sprite: Objects/Tiles/tile.rsi
+                state: carpet-cyan
+              
+        - to: TableFancyGreen
+          steps: 
+            - tag: CarpetGreen
+              name: green carpet
+              icon:
+                sprite: Objects/Tiles/tile.rsi
+                state: carpet-green
+              
+        - to: TableFancyOrange
+          steps: 
+            - tag: CarpetOrange
+              name: orange carpet
+              icon:
+                sprite: Objects/Tiles/tile.rsi
+                state: carpet-orange
+              
+        - to: TableFancyPurple
+          steps: 
+            - tag: CarpetPurple
+              name: purple carpet
+              icon:
+                sprite: Objects/Tiles/tile.rsi
+                state: carpet-purple
+                
+        - to: TableFancyPink
+          steps: 
+            - tag: CarpetPink
+              name: pink carpet
+              icon:
+                sprite: Objects/Tiles/tile.rsi
+                state: carpet-pink
+              
+        - to: TableFancyRed
+          steps: 
+            - tag: CarpetRed
+              name: red carpet
+              icon:
+                sprite: Objects/Tiles/tile.rsi
+                state: carpet-red
+              
+        - to: TableFancyWhite
+          steps: 
+            - tag: CarpetWhite
+              name: white carpet
+              icon:
+                sprite: Objects/Tiles/tile.rsi
+                state: carpet-white
 
     - node: TableCarpet
       entity: TableCarpet
@@ -201,6 +291,114 @@
           completed:
             - !type:SpawnPrototype
               prototype: MaterialCloth1
+              amount: 1
+          steps:
+            - tool: Prying
+              doAfter: 1
+              
+    - node: TableFancyBlack
+      entity: TableFancyBlack
+      edges:
+        - to: TableWood
+          completed:
+            - !type:SpawnPrototype
+              prototype: FloorCarpetItemBlack
+              amount: 1
+          steps:
+            - tool: Prying
+              doAfter: 1
+              
+    - node: TableFancyBlue
+      entity: TableFancyBlue
+      edges:
+        - to: TableWood
+          completed:
+            - !type:SpawnPrototype
+              prototype: FloorCarpetItemBlue
+              amount: 1
+          steps:
+            - tool: Prying
+              doAfter: 1
+              
+    - node: TableFancyCyan
+      entity: TableFancyCyan
+      edges:
+        - to: TableWood
+          completed:
+            - !type:SpawnPrototype
+              prototype: FloorCarpetItemCyan
+              amount: 1
+          steps:
+            - tool: Prying
+              doAfter: 1
+
+    - node: TableFancyGreen
+      entity: TableFancyGreen
+      edges:
+        - to: TableWood
+          completed:
+            - !type:SpawnPrototype
+              prototype: FloorCarpetItemGreen
+              amount: 1
+          steps:
+            - tool: Prying
+              doAfter: 1
+
+    - node: TableFancyOrange
+      entity: TableFancyOrange
+      edges:
+        - to: TableWood
+          completed:
+            - !type:SpawnPrototype
+              prototype: FloorCarpetItemOrange
+              amount: 1
+          steps:
+            - tool: Prying
+              doAfter: 1
+
+    - node: TableFancyPurple
+      entity: TableFancyPurple
+      edges:
+        - to: TableWood
+          completed:
+            - !type:SpawnPrototype
+              prototype: FloorCarpetItemPurple
+              amount: 1
+          steps:
+            - tool: Prying
+              doAfter: 1
+
+    - node: TableFancyPink
+      entity: TableFancyPink
+      edges:
+        - to: TableWood
+          completed:
+            - !type:SpawnPrototype
+              prototype: FloorCarpetItemPink
+              amount: 1
+          steps:
+            - tool: Prying
+              doAfter: 1
+
+    - node: TableFancyRed
+      entity: TableFancyRed
+      edges:
+        - to: TableWood
+          completed:
+            - !type:SpawnPrototype
+              prototype: FloorCarpetItemRed
+              amount: 1
+          steps:
+            - tool: Prying
+              doAfter: 1
+
+    - node: TableFancyWhite
+      entity: TableFancyWhite
+      edges:
+        - to: TableWood
+          completed:
+            - !type:SpawnPrototype
+              prototype: FloorCarpetItemWhite
               amount: 1
           steps:
             - tool: Prying

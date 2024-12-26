@@ -27,7 +27,7 @@ public sealed partial class SensorMonitoringConsoleComponent : Component
     public TimeSpan RetentionTime = TimeSpan.FromMinutes(1);
 
     // UI update tracking stuff.
-    public HashSet<ICommonSession> InitialUIStateSent = new();
+    public HashSet<EntityUid> InitialUIStateSent = new();
     public TimeSpan LastUIUpdate;
     public ValueList<int> RemovedSensors;
 

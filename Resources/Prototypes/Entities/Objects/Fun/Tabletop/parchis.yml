@@ -20,7 +20,7 @@
   id: ParchisBoardTabletop
   name: parchís
   parent: BaseBoardTabletop
-  noSpawn: true
+  categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/parchis_tabletop.rsi

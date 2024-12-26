@@ -45,7 +45,7 @@ namespace Content.Server.Engineering.EntitySystems
             {
                 var doAfterArgs = new DoAfterArgs(EntityManager, user, component.DoAfterTime, new AwaitedDoAfterEvent(), null)
                 {
-                    BreakOnUserMove = true,
+                    BreakOnMove = true,
                 };
                 var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
 
@@ -56,7 +56,7 @@ namespace Content.Server.Engineering.EntitySystems
             if (component.Deleted || Deleted(uid))
                 return;
 
-            if (!TryComp<TransformComponent>(uid, out var transformComp))
+            if (!TryComp(uid, out TransformComponent? transformComp))
                 return;
 
             var entity = EntityManager.SpawnEntity(component.Prototype, transformComp.Coordinates);

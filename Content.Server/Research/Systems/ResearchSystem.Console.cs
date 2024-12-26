@@ -2,6 +2,8 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Research.Components;
 using Content.Shared.UserInterface;
 using Content.Shared.Access.Components;
+using Content.Shared.Emag.Components;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
 
@@ -20,8 +22,7 @@ public sealed partial class ResearchSystem
 
     private void OnConsoleUnlock(EntityUid uid, ResearchConsoleComponent component, ConsoleUnlockTechnologyMessage args)
     {
-        if (args.Session.AttachedEntity is not { } ent)
-            return;
+        var act = args.Actor;
 
         if (!this.IsPowered(uid, EntityManager))
             return;
@@ -29,19 +30,29 @@ public sealed partial class ResearchSystem
         if (!PrototypeManager.TryIndex<TechnologyPrototype>(args.Id, out var technologyPrototype))
             return;
 
-        if (TryComp<AccessReaderComponent>(uid, out var access) && !_accessReader.IsAllowed(ent, uid, access))
+        if (TryComp<AccessReaderComponent>(uid, out var access) && !_accessReader.IsAllowed(act, uid, access))
         {
-            _popup.PopupEntity(Loc.GetString("research-console-no-access-popup"), ent);
+            _popup.PopupEntity(Loc.GetString("research-console-no-access-popup"), act);
             return;
         }
 
-        if (!UnlockTechnology(uid, args.Id, ent))
+        if (!UnlockTechnology(uid, args.Id, act))
             return;
 
-        var message = Loc.GetString("research-console-unlock-technology-radio-broadcast",
-            ("technology", Loc.GetString(technologyPrototype.Name)),
-            ("amount", technologyPrototype.Cost));
-        _radio.SendRadioMessage(uid, message, component.AnnouncementChannel, uid, escapeMarkup: false);
+        if (!HasComp<EmaggedComponent>(uid))
+        {
+            var getIdentityEvent = new TryGetIdentityShortInfoEvent(uid, act);
+            RaiseLocalEvent(getIdentityEvent);
+
+            var message = Loc.GetString(
+                "research-console-unlock-technology-radio-broadcast",
+                ("technology", Loc.GetString(technologyPrototype.Name)),
+                ("amount", technologyPrototype.Cost),
+                ("approver", getIdentityEvent.Title ?? string.Empty)
+            );
+            _radio.SendRadioMessage(uid, message, component.AnnouncementChannel, uid, escapeMarkup: false);
+        }
+       
         SyncClientWithServer(uid);
         UpdateConsoleInterface(uid, component);
     }
@@ -68,7 +79,7 @@ public sealed partial class ResearchSystem
             state = new ResearchConsoleBoundInterfaceState(default);
         }
 
-        _uiSystem.TrySetUiState(uid, ResearchConsoleUiKey.Key, state);
+        _uiSystem.SetUiState(uid, ResearchConsoleUiKey.Key, state);
     }
 
     private void OnPointsChanged(EntityUid uid, ResearchConsoleComponent component, ref ResearchServerPointsChangedEvent args)
@@ -88,4 +99,5 @@ public sealed partial class ResearchSystem
     {
         UpdateConsoleInterface(uid, component);
     }
+
 }

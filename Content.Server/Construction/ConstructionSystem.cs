@@ -16,7 +16,6 @@ namespace Content.Server.Construction
     [UsedImplicitly]
     public sealed partial class ConstructionSystem : SharedConstructionSystem
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly ContainerSystem _container = default!;
