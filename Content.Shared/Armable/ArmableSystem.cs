@@ -54,7 +54,6 @@ public sealed class ArmableSystem : EntitySystem
         comp.Activated = true;
         comp.OnActivate = false;
 
-        if (TryComp<AppearanceComponent>(entity, out var appearance))
-            _appearance.SetData(entity, ToggleVisuals.Toggled, comp.Activated, appearance);
+        _appearance.SetData(entity, ToggleVisuals.Toggled, comp.Activated);
     }
 }
