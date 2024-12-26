@@ -47,6 +47,8 @@ public sealed class BluespaceLockerRule : StationEventSystem<BluespaceLockerRule
 
             Sawmill.Info($"Converted {ToPrettyString(potentialLink)} to bluespace locker");
 
+            EnsureComp<ArrivalsBlacklistComponent>(potentialLink); // To stop people getting to arrivals terminal
+
             return;
         }
     }
