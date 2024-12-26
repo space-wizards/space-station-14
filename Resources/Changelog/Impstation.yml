@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Modified threshold for lings getting the shakes and bleeding all over
-    type: Tweak
-  - message: Lings will no longer always be shaking when dead
-    type: Fix
-  - message: Midround lings show up in end screen
-    type: Fix
-  id: 302
-  time: '2024-10-01T10:47:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/387
 - author: Darkmajia
   changes:
   - message: Command air tanks now spawn in lockers and suit storage, rather than
@@ -4520,3 +4509,11 @@
   id: 801
   time: '2024-12-24T19:43:24.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1115
+- author: DinnerCalzone
+  changes:
+  - message: Amber station has been updated and its evac shuttle now properly displays
+      its ETA time.
+    type: Tweak
+  id: 802
+  time: '2024-12-26T11:25:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1118
