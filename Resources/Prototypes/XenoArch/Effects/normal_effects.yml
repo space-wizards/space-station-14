@@ -1082,6 +1082,16 @@
     count: 1
 
 - type: artifactEffect
+  id: EffectScrambleSingleRare
+  targetDepth: 4
+  effectHint: artifact-effect-hint-polymorph
+  effectProb: 0.01
+  components:
+  - type: ScrambleDNAArtifact
+    range: 4
+    count: 1
+
+- type: artifactEffect
   id: EffectSingulo
   targetDepth: 10
   effectHint: artifact-effect-hint-destruction
