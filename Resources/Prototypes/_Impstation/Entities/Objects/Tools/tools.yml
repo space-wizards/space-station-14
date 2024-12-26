@@ -77,7 +77,7 @@
           sprite: _Impstation/Objects/Tools/tckdrill.rsi
           state: icon_bolt
         useSound:
-          path: /Audio/Items/ratchet.ogg #its too low powered to use the real sound
+          path: /Audio/_Impstation/Items/minidrill.ogg #its too low powered to use the real sound
         changeSound:
           path: /Audio/Items/change_drill.ogg
       - behavior: Prying
