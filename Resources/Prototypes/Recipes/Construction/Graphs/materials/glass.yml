@@ -19,7 +19,7 @@
               amount: 1
           steps:
             - material: Glass
-              amount: 1
+              amount: 2
             - material: Plasma
               amount: 1
         - to: SheetRPGlass
@@ -85,12 +85,12 @@
         - to: SheetRUGlass0
           completed:
             - !type:SetStackCount
-              amount: 1
+              amount: 3
           steps:
             - material: UraniumGlass
               amount: 1
             - material: MetalRod
-              amount: 1
+              amount: 2
 
         - to: SheetRUGlass1
           completed:

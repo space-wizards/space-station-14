@@ -34,7 +34,8 @@
       color: Red
       emergencyLightColor: Red
       forceEnableEmergencyLights: true
-      shuttleTime: 600 #No reduction in time as we don't have swiping for red alert like in /tg/. Shuttle times are intended to create friction, so having a way to brainlessly bypass that would be dumb.
+      shuttleTime: 500 #No reduction in time as we don't have swiping for red alert like in /tg/. Shuttle times are intended to create friction, so having a way to brainlessly bypass that would be dumb.
+      #well i dont fucking care have -100 seconds
     gamma:
       announcement: alert-level-gamma-announcement
       selectable: false
@@ -81,7 +82,7 @@
       color: Red
       emergencyLightColor: Red
       forceEnableEmergencyLights: true
-      shuttleTime: 1000
+      shuttleTime: 500
     varso:
       announcement: alert-level-varso-announcement
       selectable: false
@@ -94,3 +95,14 @@
       emergencyLightColor: White
       forceEnableEmergencyLights: true
       shuttleTime: 2500
+    sos:
+      announcement: alert-level-sos-announcement
+      selectable: true
+      sound:
+        path: /Audio/Misc/notice2
+        params:
+          volume: 5
+      disableSelection: true
+      color: Black
+      emergencyLightColor: White
+      forceEnableEmergencyLights: true
