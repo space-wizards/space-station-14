@@ -6,7 +6,6 @@ using Content.Shared.Access.Components;
 using Content.Shared.Station.Components;
 ﻿using Content.Shared.GameTicking.Components;
 using Content.Shared.Coordinates;
-using Content.Server.Shuttles.Components;
 
 namespace Content.Server.StationEvents.Events;
 
@@ -45,8 +44,6 @@ public sealed class BluespaceLockerRule : StationEventSystem<BluespaceLockerRule
             comp.AutoLinkProperties.BluespaceEffectOnTeleportSource = true;
             _bluespaceLocker.GetTarget(potentialLink, comp, true);
             _bluespaceLocker.BluespaceEffect(potentialLink, comp, comp, true);
-
-            EnsureComp<ArrivalsBlacklistComponent>(potentialLink); // To stop people getting to arrivals terminal
 
             Sawmill.Info($"Converted {ToPrettyString(potentialLink)} to bluespace locker");
 
