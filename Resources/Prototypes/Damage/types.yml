@@ -14,13 +14,13 @@
   id: Bloodloss
   name: damage-type-bloodloss
   armorCoefficientPrice: 5
-  armorFlatPrice: 50
+  armorFlatPrice: 51
 
 - type: damageType
   id: Blunt
   name: damage-type-blunt
   armorCoefficientPrice: 2
-  armorFlatPrice: 10
+  armorFlatPrice: 11
 
 - type: damageType
   id: Cellular
@@ -75,7 +75,7 @@
   id: Slash
   name: damage-type-slash
   armorCoefficientPrice: 2
-  armorFlatPrice: 10
+  armorFlatPrice: 9
 
 # Damage represent structures internal integrity.
 # Exclusive for structures such as walls, airlocks and others.

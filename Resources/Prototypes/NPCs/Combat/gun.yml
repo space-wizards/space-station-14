@@ -87,7 +87,7 @@
   branches:
     - preconditions:
         - !type:GunAmmoPrecondition
-          minPercent: 0.001
+          minPercent: 0.002
       tasks:
         - !type:HTNCompoundTask
           task: GunCombatCompound
@@ -99,7 +99,7 @@
     # Move to target and shoot them if ammo
     - preconditions:
         - !type:GunAmmoPrecondition
-          minPercent: 0.001
+          minPercent: 0.002
       tasks:
         - !type:HTNCompoundTask
           task: GunCombatCompound

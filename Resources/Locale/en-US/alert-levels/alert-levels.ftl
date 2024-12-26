@@ -42,3 +42,7 @@ alert-level-orwell-instructions = 1984.
 alert-level-varso = Varso
 alert-level-varso-announcement = Central Command has ordered the Varso security level on the station. You are in immediate danger of loosing your freedoms. Security is to arm up, Command is to be secured to a safe location and space law is terminated. Do whatever you can to defend yourself until Central Command arrive.
 alert-level-varso-instructions = Good luck.
+
+alert-level-sos = SOS
+alert-level-sos-announcement = Under discression of command the SOS security alert has been issued. This acts as an SOS beacon to all friendlies in the sector. Follow red alert proccedures durring this time and listen to what command has to say. The beacon can only be lifted by CC.
+alert-level-sos-instructions = The SOS beacon can not be lifted.

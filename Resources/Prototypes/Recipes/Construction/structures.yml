@@ -77,7 +77,7 @@
   startNode: start
   targetNode: reinforcedWall
   category: construction-category-structures
-  description: Keeps the air in and the greytide out.
+  description: A slightly stronger way of keeping the air in and the greytide out.
   icon:
     sprite: Structures/Walls/solid.rsi
     state: rgeneric

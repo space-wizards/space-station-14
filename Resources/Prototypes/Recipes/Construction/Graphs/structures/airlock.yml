@@ -25,7 +25,7 @@
       steps:
       - material: Cable
         amount: 5
-        doAfter: 2.5
+        doAfter: 2.1
     - to: start
       conditions:
       - !type:EntityAnchored
@@ -33,11 +33,11 @@
       completed:
       - !type:SpawnPrototype
         prototype: SheetSteel1
-        amount: 4
+        amount: 3
       - !type:DeleteEntity {}
       steps:
       - tool: Welding
-        doAfter: 3
+        doAfter: 2
 
   - node: wired
     entity: AirlockAssembly
