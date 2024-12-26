@@ -22,7 +22,20 @@
         - state: idbrigmedic
     - type: PresetIdCard
       job: Brigmedic
-      
+
+- type: entity
+  parent: IDCardStandard
+  id: CentcomIDCardOperator
+  name: centcomm operator ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: centcom
+  - type: Item
+    heldPrefix: blue
+  - type: PresetIdCard
+    job: CentralCommandOperator
+
 - type: entity
   parent: IDCardStandard
   id: RoboticistIDCard

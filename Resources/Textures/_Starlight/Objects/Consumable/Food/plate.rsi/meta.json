@@ -1,0 +1,17 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from https://github.com/ss220-space/Paradise/commit/b2681ba958473e3fdd878a69cc5e14c91d3ed725, adapted by Lomovar",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "plate"
+        },
+        {
+            "name": "baked_vulpkanin"
+        }
+    ]
+}
