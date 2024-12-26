@@ -16,10 +16,13 @@
             "delays": [ [ 1.0 ] ]
         },
   	    {
-            "name": "juicer1"
+            "name": "beakerSlot1"
    	    },
   	    {
-            "name": "juicer2"
+            "name": "beakerSlot2"
+   	    },
+  	    {
+            "name": "beakerSlot3"
    	    }
     ]
 }

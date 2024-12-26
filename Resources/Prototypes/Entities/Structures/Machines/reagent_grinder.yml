@@ -40,13 +40,13 @@
     layers:
       - state: "juicer"
         map: [ "grinder" ]
-      - state: juicer-1
+      - state: beakerSlot1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: SolutionContainerVisuals
-    maxFillLevels: 2
-    fillBaseName: juicer
-    InsertedItemSlotIDFillBaseName: beakerSlot
+    maxFillLevels: 3
+    insertedItemSlotIDFillBaseName: beakerSlot
+    fillBaseName: beakerSlot
   - type: ApcPowerReceiver
     powerLoad: 300
   - type: ItemSlots
