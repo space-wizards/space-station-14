@@ -18,6 +18,7 @@ public sealed class SSDIndicatorSystem : EntitySystem
     {
         SubscribeLocalEvent<SSDIndicatorComponent, PlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<SSDIndicatorComponent, PlayerDetachedEvent>(OnPlayerDetached);
+        SubscribeLocalEvent<SSDIndicatorComponent, MapInitEvent>(OnMapInit);
     }
 
     private void OnPlayerAttached(EntityUid uid, SSDIndicatorComponent component, PlayerAttachedEvent args)
@@ -47,6 +48,17 @@ public sealed class SSDIndicatorSystem : EntitySystem
             component.FallAsleepTime = _timing.CurTime + TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.ICSSDSleepTime));
         }
         Dirty(uid, component);
+    }
+
+    // Prevents mapped mobs to go to sleep immediately
+    private void OnMapInit(EntityUid uid, SSDIndicatorComponent component, MapInitEvent args)
+    {
+        if (_cfg.GetCVar(CCVars.ICSSDSleep) &&
+            component.IsSSD &&
+            component.FallAsleepTime == TimeSpan.Zero)
+        {
+            component.FallAsleepTime = _timing.CurTime + TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.ICSSDSleepTime));
+        }
     }
 
     public override void Update(float frameTime)
