@@ -609,3 +609,13 @@
   parent: BaseCircuitboardRecipe
   id: CutterMachineCircuitboard
   result: CutterMachineCircuitboard
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: AlertsComputerCircuitboard
+  result: AlertsComputerCircuitboard
+
+- type: latheRecipe
+  parent: BaseCircuitboardRecipe
+  id: AtmosMonitoringComputerCircuitboard
+  result: AtmosMonitoringComputerCircuitboard
