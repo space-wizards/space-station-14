@@ -975,7 +975,7 @@ entities:
             1: 32944
           -1,2:
             1: 59528
-            4: 273
+            2: 273
             0: 1092
           0,3:
             1: 15
@@ -1033,7 +1033,7 @@ entities:
             0: 45038
           -2,-1:
             0: 61440
-            2: 1632
+            4: 1632
           -2,0:
             0: 3839
           -2,-3:
@@ -1070,7 +1070,7 @@ entities:
             0: 36863
           -2,2:
             0: 823
-            4: 2184
+            2: 2184
           -2,3:
             1: 994
           -8,0:
@@ -1247,40 +1247,40 @@ entities:
           - 0
           - 0
         - volume: 2500
-          temperature: 293.15
-          moles:
-          - 0
-          - 103.92799
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 103.92799
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
           temperature: 235
           moles:
           - 21.824879
           - 82.10312
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 103.92799
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
+          - 103.92799
           - 0
           - 0
           - 0
@@ -8575,7 +8575,7 @@ entities:
       pos: 6.5,-3.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -64939.613
+      secondsUntilStateChange: -65010.984
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -15832,12 +15832,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: -7.5,-4.5
-      parent: 2
-  - uid: 2037
-    components:
-    - type: Transform
-      rot: 3.141592653589793 rad
-      pos: -14.5,-1.5
       parent: 2
 - proto: SignDoors
   entities:
