@@ -12177,7 +12177,7 @@ entities:
       pos: 47.5,5.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -149810.48
+      secondsUntilStateChange: -149941.16
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12492,12 +12492,6 @@ entities:
     - type: Transform
       pos: -16.5,13.5
       parent: 2
-    - type: Door
-      secondsUntilStateChange: -168322.28
-      state: Opening
-    - type: DeviceLinkSource
-      lastSignals:
-        DoorStatus: True
 - proto: AirlockResearchDirectorLocked
   entities:
   - uid: 5071
@@ -31713,31 +31707,6 @@ entities:
     components:
     - type: Transform
       pos: 7.5,-16.5
-      parent: 2
-  - uid: 5942
-    components:
-    - type: Transform
-      pos: 9.5,-27.5
-      parent: 2
-  - uid: 5943
-    components:
-    - type: Transform
-      pos: 9.5,-26.5
-      parent: 2
-  - uid: 5944
-    components:
-    - type: Transform
-      pos: 10.5,-26.5
-      parent: 2
-  - uid: 5945
-    components:
-    - type: Transform
-      pos: 11.5,-26.5
-      parent: 2
-  - uid: 5946
-    components:
-    - type: Transform
-      pos: 12.5,-26.5
       parent: 2
   - uid: 5947
     components:
