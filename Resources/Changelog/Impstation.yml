@@ -1,15 +1,4 @@
 ﻿Entries:
-- author: Darkmajia
-  changes:
-  - message: Command air tanks now spawn in lockers and suit storage, rather than
-      in command's bags.
-    type: Tweak
-  - message: Fixed a loadout priority issue that could cause survival boxes to drop
-      at your feet.
-    type: Fix
-  id: 303
-  time: '2024-10-01T10:47:31.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/386
 - author: TGRCDev
   changes:
   - message: Some round presets now have cooldowns to prevent them from rolling back-to-back.
@@ -4517,3 +4506,11 @@
   id: 802
   time: '2024-12-26T11:25:28.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1118
+- author: DinnerCalzone
+  changes:
+  - message: The body hair marking for dwarves and humans may now be used by unisex
+      characters.
+    type: Tweak
+  id: 803
+  time: '2024-12-26T11:26:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1119
