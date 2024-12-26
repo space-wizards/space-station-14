@@ -13,7 +13,7 @@
             !type:NanotrasenNameGenerator
             prefixCreator: '14'
         - type: StationEmergencyShuttle
-          emergencyShuttlePath: /Maps/Shuttles/emergency_courser.yml
+          emergencyShuttlePath: /Maps/_Impstation/Shuttles/emergency_courser_hummingbird.yml
         - type: StationJobs
           availableJobs:
             #service

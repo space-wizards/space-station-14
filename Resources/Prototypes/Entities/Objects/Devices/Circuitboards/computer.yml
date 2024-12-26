@@ -36,8 +36,8 @@
   name: atmospheric network monitor board
   description: A computer printed circuit board for an atmospheric network monitor.
   components:
-  - type: ComputerBoard
-    prototype: ComputerAtmosMonitoring
+    - type: ComputerBoard
+      prototype: ComputerAtmosMonitoring
 
 - type: entity
   parent: BaseComputerCircuitboard

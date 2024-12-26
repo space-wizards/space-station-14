@@ -145,8 +145,6 @@ namespace Content.Shared.Atmos
         /// </summary>
         public const float SpaceHeatCapacity = 7000f;
 
-        #region Excited Groups
-
         /// <summary>
         ///     Dictionary of chemical abbreviations for <see cref="Gas"/>
         /// </summary>
@@ -163,6 +161,7 @@ namespace Content.Shared.Atmos
             [Gas.WaterVapor] = Loc.GetString("gas-water-vapor-abbreviation"),
         };
 
+        #region Excited Groups
         /// <summary>
         ///     Number of full atmos updates ticks before an excited group breaks down (averages gas contents across turfs)
         /// </summary>

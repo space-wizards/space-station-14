@@ -21,6 +21,7 @@ using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
@@ -28,6 +29,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Silicons.StationAi;
 
@@ -374,6 +376,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     {
         if (_net.IsClient)
             return false;
+
         if (ent.Comp.RemoteEntity != null)
             return false;
 
@@ -398,6 +401,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
     {
         if (_net.IsClient)
             return;
+
         QueueDel(ent.Comp.RemoteEntity);
         ent.Comp.RemoteEntity = null;
         Dirty(ent);
@@ -472,6 +476,7 @@ public abstract partial class SharedStationAiSystem : EntitySystem
             _eye.SetDrawFov(args.Entity, true, eyeComp);
             _eye.SetTarget(args.Entity, null, eyeComp);
         }
+
         ClearEye(ent);
     }
 

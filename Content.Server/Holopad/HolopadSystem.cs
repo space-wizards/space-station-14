@@ -119,7 +119,6 @@ public sealed class HolopadSystem : SharedHolopadSystem
             var source = GetLinkedHolopads(receiver).FirstOrNull();
 
             if (source != null)
-
             {
                 // Close any AI request windows
                 if (_stationAiSystem.TryGetStationAiCore(args.Actor, out var stationAiCore) && stationAiCore != null)
@@ -128,16 +127,15 @@ public sealed class HolopadSystem : SharedHolopadSystem
                 // Try to warn the AI if the source of the call is out of its range
                 if (TryComp<TelephoneComponent>(stationAiCore, out var stationAiTelephone) &&
                     TryComp<TelephoneComponent>(source, out var sourceTelephone) &&
-                    !_telephoneSystem.IsSourceInRangeOfReceiver((stationAiCore.Value.Owner, stationAiTelephone),
-                        (source.Value.Owner, sourceTelephone)))
+                    !_telephoneSystem.IsSourceInRangeOfReceiver((stationAiCore.Value.Owner, stationAiTelephone), (source.Value.Owner, sourceTelephone)))
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("holopad-ai-is-unable-to-reach-holopad"),
-                        receiver,
-                        args.Actor);
+                    _popupSystem.PopupEntity(Loc.GetString("holopad-ai-is-unable-to-reach-holopad"), receiver, args.Actor);
                     return;
                 }
+
                 ActivateProjector(source.Value, args.Actor);
             }
+
             return;
         }
 
@@ -153,7 +151,8 @@ public sealed class HolopadSystem : SharedHolopadSystem
         if (IsHolopadControlLocked(entity, args.Actor))
             return;
 
-        _telephoneSystem.EndTelephoneCalls((entity, entityTelephone));
+        if (entityTelephone.CurrentState != TelephoneState.EndingCall && entityTelephone.CurrentState != TelephoneState.Idle)
+            _telephoneSystem.EndTelephoneCalls((entity, entityTelephone));
 
         // If the user is an AI, end all calls originating from its
         // associated core to ensure that any broadcasts will end
@@ -613,7 +612,6 @@ public sealed class HolopadSystem : SharedHolopadSystem
         if (TryComp<StationAiCoreComponent>(entity, out var stationAiCore))
         {
             _stationAiSystem.SwitchRemoteEntityMode((entity.Owner, stationAiCore), true);
-
 
             if (TryComp<TelephoneComponent>(entity, out var stationAiCoreTelphone) &&
                 stationAiCoreTelphone.CurrentState != TelephoneState.EndingCall && stationAiCoreTelphone.CurrentState != TelephoneState.Idle)

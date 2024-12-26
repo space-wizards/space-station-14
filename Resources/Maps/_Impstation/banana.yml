@@ -961,7 +961,7 @@ entities:
             1: 32944
           -1,2:
             1: 59528
-            4: 273
+            2: 273
             0: 1092
           0,3:
             1: 15
@@ -1019,7 +1019,7 @@ entities:
             0: 45038
           -2,-1:
             0: 61440
-            2: 1632
+            4: 1632
           -2,0:
             0: 3839
           -2,-3:
@@ -1056,7 +1056,7 @@ entities:
             0: 36863
           -2,2:
             0: 823
-            4: 2184
+            2: 2184
           -2,3:
             1: 994
           -8,0:
@@ -1233,40 +1233,40 @@ entities:
           - 0
           - 0
         - volume: 2500
-          temperature: 293.15
-          moles:
-          - 0
-          - 103.92799
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
-          temperature: 293.15
-          moles:
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 103.92799
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-          - 0
-        - volume: 2500
           temperature: 235
           moles:
           - 21.824879
           - 82.10312
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 103.92799
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+          - 0
+        - volume: 2500
+          temperature: 293.15
+          moles:
+          - 0
+          - 103.92799
           - 0
           - 0
           - 0
@@ -2177,11 +2177,10 @@ entities:
       parent: 2
 - proto: ArrivalsShuttleTimer
   entities:
-  - uid: 93
+  - uid: 1068
     components:
     - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: 4.5,3.5
+      pos: 5.5,4.5
       parent: 2
 - proto: Ashtray
   entities:
@@ -8044,68 +8043,6 @@ entities:
     - type: Transform
       pos: -11.619232,5.685272
       parent: 2
-- proto: DrinkGlass
-  entities:
-  - uid: 1065
-    components:
-    - type: Transform
-      parent: 1064
-    - type: Physics
-      canCollide: False
-  - uid: 1066
-    components:
-    - type: Transform
-      parent: 1064
-    - type: Physics
-      canCollide: False
-  - uid: 1067
-    components:
-    - type: Transform
-      parent: 1064
-    - type: Physics
-      canCollide: False
-  - uid: 1068
-    components:
-    - type: Transform
-      parent: 1064
-    - type: Physics
-      canCollide: False
-  - uid: 1069
-    components:
-    - type: Transform
-      parent: 1064
-    - type: Physics
-      canCollide: False
-  - uid: 1070
-    components:
-    - type: Transform
-      parent: 1064
-    - type: Physics
-      canCollide: False
-  - uid: 1071
-    components:
-    - type: Transform
-      parent: 1064
-    - type: Physics
-      canCollide: False
-  - uid: 1072
-    components:
-    - type: Transform
-      parent: 1064
-    - type: Physics
-      canCollide: False
-  - uid: 1073
-    components:
-    - type: Transform
-      parent: 1064
-    - type: Physics
-      canCollide: False
-  - uid: 1074
-    components:
-    - type: Transform
-      parent: 1064
-    - type: Physics
-      canCollide: False
 - proto: DrinkHotCoffee
   entities:
   - uid: 2108
@@ -8606,7 +8543,7 @@ entities:
       pos: 6.5,-3.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -61227.023
+      secondsUntilStateChange: -62219.598
       state: Closing
     - type: DeviceNetwork
       deviceLists:
@@ -13289,13 +13226,6 @@ entities:
       currentLabel: Evac
     - type: NameModifier
       baseName: holopad
-- proto: HolopadMachineCircuitboard
-  entities:
-  - uid: 2785
-    components:
-    - type: Transform
-      pos: -12.39566,-9.589447
-      parent: 2
 - proto: HolopadMedicalChemistry
   entities:
   - uid: 2776
@@ -15306,61 +15236,6 @@ entities:
     - type: Transform
       pos: -24.262817,-5.3251038
       parent: 2
-- proto: ShelfBar
-  entities:
-  - uid: 1064
-    components:
-    - type: Transform
-      pos: -0.5,7.5
-      parent: 2
-    - type: Storage
-      storedItems:
-        1065:
-          position: 0,0
-          _rotation: South
-        1066:
-          position: 1,0
-          _rotation: South
-        1067:
-          position: 2,0
-          _rotation: South
-        1068:
-          position: 3,0
-          _rotation: South
-        1069:
-          position: 4,0
-          _rotation: South
-        1070:
-          position: 5,0
-          _rotation: South
-        1071:
-          position: 0,3
-          _rotation: South
-        1072:
-          position: 1,3
-          _rotation: South
-        1073:
-          position: 2,3
-          _rotation: South
-        1074:
-          position: 3,3
-          _rotation: South
-    - type: ContainerContainer
-      containers:
-        storagebase: !type:Container
-          showEnts: False
-          occludes: True
-          ents:
-          - 1065
-          - 1066
-          - 1067
-          - 1068
-          - 1069
-          - 1070
-          - 1071
-          - 1072
-          - 1073
-          - 1074
 - proto: ShelfKitchen
   entities:
   - uid: 1176
@@ -15736,10 +15611,10 @@ entities:
       parent: 2
 - proto: SignBar
   entities:
-  - uid: 2027
+  - uid: 93
     components:
     - type: Transform
-      pos: -1.5,3.5
+      pos: 4.5,3.5
       parent: 2
 - proto: SignBridge
   entities:
@@ -16571,16 +16446,28 @@ entities:
   entities:
   - uid: 2143
     components:
+    - type: MetaData
+      name: camera router (General)
     - type: Transform
       pos: -28.5,-21.5
       parent: 2
+    - type: Label
+      currentLabel: General
+    - type: NameModifier
+      baseName: camera router
 - proto: SurveillanceCameraRouterSecurity
   entities:
   - uid: 2144
     components:
+    - type: MetaData
+      name: camera router (Security)
     - type: Transform
       pos: -27.5,-21.5
       parent: 2
+    - type: Label
+      currentLabel: Security
+    - type: NameModifier
+      baseName: camera router
 - proto: SurveillanceCameraSecurity
   entities:
   - uid: 2145
@@ -16640,6 +16527,43 @@ entities:
       - SurveillanceCameraService
       nameSet: True
       id: Bar
+- proto: SurveillanceCameraWirelessRouterEntertainment
+  entities:
+  - uid: 1067
+    components:
+    - type: MetaData
+      name: wireless camera router (Entertainment)
+    - type: Transform
+      pos: -28.5,-20.5
+      parent: 2
+    - type: Label
+      currentLabel: Entertainment
+    - type: NameModifier
+      baseName: wireless camera router
+- proto: SurveillanceWirelessCameraPocket
+  entities:
+  - uid: 1065
+    components:
+    - type: MetaData
+      name: handheld quantum camera (Shuttle Bay)
+    - type: Transform
+      pos: -12.3628845,-9.523865
+      parent: 2
+    - type: Label
+      currentLabel: Shuttle Bay
+    - type: NameModifier
+      baseName: handheld quantum camera
+  - uid: 1066
+    components:
+    - type: MetaData
+      name: handheld quantum camera (Salvage)
+    - type: Transform
+      pos: -4.2048645,-4.4974365
+      parent: 2
+    - type: Label
+      currentLabel: Salvage
+    - type: NameModifier
+      baseName: handheld quantum camera
 - proto: Table
   entities:
   - uid: 1839
@@ -17157,6 +17081,31 @@ entities:
     components:
     - type: Transform
       pos: -0.12158203,6.3308105
+      parent: 2
+- proto: WallmountTelevisionMini
+  entities:
+  - uid: 1064
+    components:
+    - type: Transform
+      pos: -1.5,3.5
+      parent: 2
+  - uid: 1069
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: -16.5,-4.5
+      parent: 2
+  - uid: 1070
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -21.5,11.5
+      parent: 2
+  - uid: 1071
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -24.5,-19.5
       parent: 2
 - proto: WallShuttleDiagonal
   entities:

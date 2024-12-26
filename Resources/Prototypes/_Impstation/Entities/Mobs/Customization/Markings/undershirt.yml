@@ -411,3 +411,140 @@
   sprites:
   - sprite: Mobs/Customization/undershirt.rsi
     state: strapless
+
+#Unisex versions, as sexRestriction seems to not support more than one sex. Unisex body uses same body as male.
+
+- type: marking
+  id: UndershirtDefaultU
+  bodyPart: Undershirt
+  markingCategory: Undershirt
+  speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
+  sexRestriction: [Unsexed]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/undershirt.rsi
+    state: undershirt
+
+- type: marking
+  id: UndershirtRolledU
+  bodyPart: Undershirt
+  markingCategory: Undershirt
+  speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
+  sexRestriction: [Unsexed]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/undershirt.rsi
+    state: rolled_undershirt
+
+- type: marking
+  id: UndershirtSleevelessU
+  bodyPart: Undershirt
+  markingCategory: Undershirt
+  speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
+  sexRestriction: [Unsexed]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/undershirt.rsi
+    state: sleeveless
+
+- type: marking
+  id: UndershirtRolledSleevelessU
+  bodyPart: Undershirt
+  markingCategory: Undershirt
+  speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
+  sexRestriction: [Unsexed]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/undershirt.rsi
+    state: rolled_undershirt_sleeveless
+
+- type: marking
+  id: UndershirtGrossSleevelessU
+  bodyPart: Undershirt
+  markingCategory: Undershirt
+  speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
+  sexRestriction: [Unsexed]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/undershirt.rsi
+    state: gross_sleeveless
+
+- type: marking
+  id: UndershirtNanotrasenU
+  bodyPart: Undershirt
+  markingCategory: Undershirt
+  speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
+  sexRestriction: [Unsexed]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/undershirt.rsi
+    state: nanotrasen
+
+- type: marking
+  id: UndershirtBinderU
+  bodyPart: Undershirt
+  markingCategory: Undershirt
+  speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
+  sexRestriction: [Unsexed]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/undershirt.rsi
+    state: binder
+
+- type: marking
+  id: UndershirtBraSportsU
+  bodyPart: Undershirt
+  markingCategory: Undershirt
+  speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
+  sexRestriction: [Unsexed]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/undershirt.rsi
+    state: sports
+
+- type: marking
+  id: UndershirtBraStraplessU
+  bodyPart: Undershirt
+  markingCategory: Undershirt
+  speciesRestriction: [Dwarf, Human, Reptilian, SlimePerson, Diona, Moth]
+  sexRestriction: [Unsexed]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/undershirt.rsi
+    state: strapless

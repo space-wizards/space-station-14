@@ -596,6 +596,7 @@
     - BorgModuleTool
     - BorgModuleBartender
     - BorgModulePaper
+    - BorgModuleArtistic #imp special
     - CyborgEndoskeleton
     - LeftArmBorg
     - RightArmBorg
@@ -1274,7 +1275,7 @@
       staticRecipes:
         - SheetSteel
         - SheetGlass1
-        - SheetRGlass
+        - SheetRGlassRaw
         - SheetPlasma1
         - SheetPGlass1
         - SheetRPGlass1
@@ -1300,7 +1301,7 @@
     staticRecipes:
       - SheetSteel
       - SheetGlass1
-      - SheetRGlass
+      - SheetRGlassRaw
       - SheetPlasma1
       - SheetPGlass1
       - SheetRPGlass1

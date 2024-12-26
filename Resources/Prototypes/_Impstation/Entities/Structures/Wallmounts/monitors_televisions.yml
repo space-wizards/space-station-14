@@ -1,0 +1,30 @@
+- type: entity #this one is a little fucked up but I needed a teeny screen for mapping
+  parent: WallmountTelevision
+  id: WallmountTelevisionMini
+  suffix: entertainment
+  name: mini television
+  description: Finally, some decent reception around here...
+  components:
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: Structures/Machines/computers.rsi
+    layers:
+      - map: ["computerLayerBody"]
+        state: telescreen_frame
+      - map: ["computerLayerScreen"]
+        state: telescreen
+  - type: Fixtures #this whole bit is so that you can open it way easier
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.75,-0.75,0.75,0.75"
+        density: 250
+        mask:
+          - FullTileMask
+        layer:
+          - WallLayer
+  - type: WallMount
+    arc: 360
+  - type: Physics
+    canCollide: false

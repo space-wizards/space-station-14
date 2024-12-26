@@ -1,10 +1,6 @@
 using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Shared.Buckle.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
-using Content.Shared.Maps;
-using Content.Shared.Throwing;
-using Robust.Server.GameObjects;
-using Robust.Shared.Random;
 using Content.Shared.StatusEffect;
 using Content.Server.Stunnable;
 
@@ -47,8 +43,6 @@ public sealed class KnockdownArtifactSystem : EntitySystem
 
                 _stuns.TryParalyze(child, TimeSpan.FromSeconds(component.KnockdownTime), true, status);
             }
-
-
 
         }
         else // knock over only people in range
