@@ -2228,7 +2228,7 @@
     normalState: normal
     denyState: deny
     ejectDelay: 2
-  - type: Sprite
+  - type: Sprite # imp
     sprite: _Impstation/Structures/Machines/VendingMachines/syndiejuice.rsi
     layers:
     - state: "off"
