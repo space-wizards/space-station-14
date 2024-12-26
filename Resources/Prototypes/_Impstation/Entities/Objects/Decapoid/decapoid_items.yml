@@ -75,7 +75,7 @@
 
 - type: entity
   name: vaporizer
-  parent: ClothingMaskGas
+  parent: ClothingMaskPullableBase
   id: DecapoidBreathingApparatus
   description: 'A neck-mounted breathing apparatus for Decapoids. Moistens your gills, if you have them. Also functions as a brain-to-voice translator.'
   components:
@@ -86,6 +86,8 @@
     tags:
       - Vaporizer
       - BreathMask
+      - WhitelistChameleon
+      - GasMask
   - type: Clothing
     quickEquip: true
     slots:
@@ -100,6 +102,7 @@
   - type: HideLayerClothing
     slots:
     - Snout
+    hideOnToggle: true
   - type: SpeechSound
     speechSounds: Decapoid
     speechVerb: Robotic
