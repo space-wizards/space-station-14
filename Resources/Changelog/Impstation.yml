@@ -1,46 +1,4 @@
 ﻿Entries:
-- author: Kandiyaki
-  changes:
-  - message: Added Subjuzine, an alteration of Cognizine that bends the newly-sentient
-      creature to the injector's will. It can be bought in the traitor uplink as part
-      of the 6TC Animal Friends Kit, or created by mixing Cognizine and Vestine.)
-    type: Add
-  id: 307
-  time: '2024-10-01T23:31:50.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/390
-- author: Pinkbat5
-  changes:
-  - message: Fixed a clipping issue with undergarments on the female sex. Be sure
-      to re-select undershirts on your characters.
-    type: Fix
-  id: 308
-  time: '2024-10-02T20:41:22.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/392
-- author: hivehum
-  changes:
-  - message: A zombie infection progresses significantly faster and more dangerously
-      than before.
-    type: Tweak
-  - message: The initial infected greeting is a little more direct that you are an
-      antagonist.
-    type: Tweak
-  - message: Rat King is now officially considered an antagonist.
-    type: Tweak
-  - message: The thieving beacon has had its name and description changed to be less
-      obvious what it is.
-    type: Tweak
-  - message: The ninja can now contact two new beings.
-    type: Add
-  id: 309
-  time: '2024-10-02T20:40:58.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/393
-- author: Darkmajia
-  changes:
-  - message: Vox space ninjas now have a form-fitting helmet.
-    type: Add
-  id: 310
-  time: '2024-10-02T20:41:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/397
 - author: widgetbeck
   changes:
   - message: Added "No Contractions" accent, which replaces (most) contractions with
@@ -4515,3 +4473,31 @@
   id: 806
   time: '2024-12-26T11:33:41.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1127
+- author: AvianMaiden
+  changes:
+  - message: One new space ambient track for our wonderful stargazers! Wawa.
+    type: Add
+  id: 807
+  time: '2024-12-26T11:40:00.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1131
+- author: DinnerCalzone
+  changes:
+  - message: The footstep sounds for high-heel shoes has been changed.
+    type: Tweak
+  id: 808
+  time: '2024-12-26T11:39:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1129
+- author: honeyed-lemons
+  changes:
+  - message: Listening Post op has a unique ID with the correct accesses
+    type: Fix
+  id: 809
+  time: '2024-12-26T11:40:11.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1128
+- author: kipdotnet
+  changes:
+  - message: Banana update
+    type: Tweak
+  id: 810
+  time: '2024-12-26T11:40:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1132
