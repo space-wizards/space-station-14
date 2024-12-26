@@ -113,7 +113,7 @@
   startNode: start
   targetNode: woodWall
   category: construction-category-structures
-  description: Keeps the air in and the greytide out.
+  description: A basic building block for society.
   icon:
     sprite: Structures/Walls/wood.rsi
     state: full

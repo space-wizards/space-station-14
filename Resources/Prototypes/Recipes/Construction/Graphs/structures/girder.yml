@@ -10,8 +10,8 @@
               southRotation: true
           steps:
             - material: Steel
-              amount: 2
-              doAfter: 1
+              amount: 1
+              doAfter: 0.5
 
     - node: girder
       entity: Girder
@@ -37,8 +37,8 @@
             - !type:EntityAnchored {}
           steps:
             - material: Steel
-              amount: 2
-              doAfter: 2
+              amount: 3
+              doAfter: 1
 
         - to: reinforcedGirder
           completed:
@@ -49,7 +49,7 @@
           steps:
             - material: Plasteel
               amount: 2
-              doAfter: 1
+              doAfter: 2
 
         - to: woodWall
           completed:
@@ -59,8 +59,8 @@
             - !type:EntityAnchored {}
           steps:
             - material: WoodPlank
-              amount: 2
-              doAfter: 2
+              amount: 3
+              doAfter: 1
 
         - to: uraniumWall
           completed:
@@ -70,9 +70,9 @@
             - !type:EntityAnchored {}
           steps:
             - material: Uranium
-              amount: 2
+              amount: 3
             - tool: Welding
-              doAfter: 10
+              doAfter: 5
 
         - to: silverWall
           completed:
@@ -168,7 +168,7 @@
           completed:
             - !type:GivePrototype
               prototype: SheetSteel1
-              amount: 2
+              amount: 3
           steps:
             - tool: Welding
               doAfter: 10
@@ -180,10 +180,10 @@
           completed:
             - !type:GivePrototype
               prototype: MaterialWoodPlank1
-              amount: 2
+              amount: 1
           steps:
             - tool: Prying
-              doAfter: 10
+              doAfter: 8
 
     - node: uraniumWall
       entity: WallUranium
@@ -192,7 +192,7 @@
           completed:
             - !type:GivePrototype
               prototype: SheetUranium1
-              amount: 2
+              amount: 3
           steps:
             - tool: Welding
               doAfter: 10
