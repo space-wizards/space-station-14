@@ -25,7 +25,7 @@ namespace Content.Server.Cargo.Systems
         /// <summary>
         /// How much time to wait (in seconds) before increasing bank accounts balance.
         /// </summary>
-        private const int Delay = 10;
+        private const int Delay = 1;
 
         /// <summary>
         /// Keeps track of how much time has elapsed since last balance increase.
@@ -420,7 +420,7 @@ namespace Content.Server.Cargo.Systems
             DebugTools.Assert(_protoMan.HasIndex<EntityPrototype>(spawnId));
             // Make an order
             var id = GenerateOrderId(component);
-            var order = new CargoOrderData(id, spawnId, name, cost, qty, sender, description);
+            var order = new CargoOrderData(id, spawnId, name, cost, qty, sender, description, ":P");
 
             // Approve it now
             order.SetApproverData(dest, sender);

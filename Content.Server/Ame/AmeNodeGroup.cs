@@ -158,7 +158,7 @@ public sealed class AmeNodeGroup : BaseNodeGroup
 
         // Admin alert
         if (integrityCheck != 100 && _masterController.HasValue)
-            _chat.SendAdminAlert($"AME overloading: {_entMan.ToPrettyString(_masterController.Value)}");
+            _chat.SendAdminAlert($"AME overloading: {_entMan.ToPrettyString(_masterController.Value)}, destroy that motherfucker");
 
         return powerOutput;
     }

@@ -113,7 +113,9 @@
   startNode: start
   targetNode: woodWall
   category: construction-category-structures
+  description: A basic building block for society.
   description: The best chance of a colony thriving starts with this.
+
   icon:
     sprite: Structures/Walls/wood.rsi
     state: full

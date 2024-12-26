@@ -15,19 +15,19 @@ public sealed partial class LightningArcShooterComponent : Component
     /// the tesla will have a chance to shoot into something important and break.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public int MaxLightningArc = 1;
+    public int MaxLightningArc = 3;
 
     /// <summary>
     /// Minimum interval between shooting.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float ShootMinInterval = 0.5f;
+    public float ShootMinInterval = 0f;
 
     /// <summary>
     /// Maximum interval between shooting.
     /// </summary>
     [DataField, ViewVariables(VVAccess.ReadWrite)]
-    public float ShootMaxInterval = 8.0f;
+    public float ShootMaxInterval = 4.0f;
 
     /// <summary>
     /// the target selection radius for lightning bolts.

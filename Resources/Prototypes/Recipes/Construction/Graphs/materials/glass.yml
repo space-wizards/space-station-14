@@ -32,7 +32,7 @@
             - material: Plasma
               amount: 1
             - material: MetalRod
-              amount: 1
+              amount: 2
         - to: SheetRPGlass0
           completed:
             - !type:SetStackCount
