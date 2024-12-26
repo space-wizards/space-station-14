@@ -18,6 +18,7 @@
   - highheels2.ogg
   - highheels3.ogg
   - highheels4.ogg
-  license: "Custom"
-  copyright: "Ripped from the video game Thief Gold (1998), distributed by Eidos Interactive Corp."
-  source: "NA"
+  - highheels5.ogg
+  license: "CC-BY-3.0"
+  copyright: "Original audio from Allen2001 on freesound.org, modified by DinnerCalzone (github)"
+  source: "https://freesound.org/people/Allen2001/sounds/595107/"
