@@ -70,3 +70,27 @@
       emergencyLightColor: DarkViolet
       forceEnableEmergencyLights: true
       shuttleTime: 1200
+    orwell:
+      announcement: alert-level-orwell-announcement
+      selectable: false
+      sound:
+        path: /Audio/Lobby/ninteeneightyfour.mp3
+        params:
+          volume: 2
+      disableSelection: true
+      color: Red
+      emergencyLightColor: Red
+      forceEnableEmergencyLights: true
+      shuttleTime: 1000
+    varso:
+      announcement: alert-level-varso-announcement
+      selectable: false
+      sound:
+        path: /Audio/Lobby/Varso_Declaration
+        params:
+          volume: 2
+      disableSelection: true
+      color: Violet
+      emergencyLightColor: White
+      forceEnableEmergencyLights: true
+      shuttleTime: 2500

@@ -34,3 +34,11 @@ alert-level-delta-instructions = Crewmembers are advised to listen to heads of s
 alert-level-epsilon = Epsilon
 alert-level-epsilon-announcement = Central Command has ordered the Epsilon security level on the station. Consider all contracts terminated.
 alert-level-epsilon-instructions = Consider all contracts terminated.
+
+alert-level-orwell = Orwell
+alert-level-orwell-announcement = The station has turned into the fictional book, 1984. Big brother is watching. Security may choose to follow space law or terminate threats deemed bad for society.
+alert-level-orwell-instructions = 1984.
+
+alert-level-varso = Varso
+alert-level-varso-announcement = Central Command has ordered the Varso security level on the station. You are in immediate danger of loosing your freedoms. Security is to arm up, Command is to be secured to a safe location and space law is terminated. Do whatever you can to defend yourself until Central Command arrive.
+alert-level-varso-instructions = Good luck.
