@@ -31,6 +31,7 @@ public abstract class SharedNukeCodePaperSystem : EntitySystem
             return;
 
         _pinpointerSystem.SetTarget(args.Pinpointer, component.Nuke, args.Component, args.User, true);
+        _pinpointerSystem.StoreTarget(component.Nuke, args.Pinpointer, args.Component, args.User);
         args.Handled = true;
     }
 }

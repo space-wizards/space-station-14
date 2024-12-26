@@ -42,7 +42,7 @@ public abstract class SharedPinpointerSystem : EntitySystem
             var pinpointerScanEvent = new GotPinpointerScannedEvent(uid, component, args.User);
             RaiseLocalEvent(args.Target.Value, ref pinpointerScanEvent);
 
-            if (component.Target == null || !pinpointerScanEvent.Handled)
+            if (!pinpointerScanEvent.Handled)
                 return;
         }
 
@@ -85,6 +85,11 @@ public abstract class SharedPinpointerSystem : EntitySystem
             }
 
         }
+        else
+        {
+            TogglePinpointer(uid, pinpointer);
+        }
+
         UpdateDirectionToTarget(uid, pinpointer);
     }
 
@@ -127,7 +132,7 @@ public abstract class SharedPinpointerSystem : EntitySystem
     {
         if (target == null)
         {
-            _popup.PopupClient(Loc.GetString("targeting-pinpointer-failed"), user, user);
+            _popup.PopupEntity(Loc.GetString("targeting-pinpointer-failed"), user, user);
             return;
         }
 
