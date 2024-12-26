@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: AftrLite
-  changes:
-  - message: Adds a new rare announcer with sinister vibes, featuring over 80 unique
-      audio lines. Why? Because we can.
-    type: Add
-  id: 305
-  time: '2024-10-01T23:21:16.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/388
 - author: Kandiyaki
   changes:
   - message: Added a recipe to activate subjuzine using radium so greys can use it.
@@ -4515,3 +4507,10 @@
   id: 804
   time: '2024-12-26T11:29:08.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1121
+- author: DinnerCalzone
+  changes:
+  - message: The grappling gun projectile now plays a sound when colliding with walls.
+    type: Add
+  id: 805
+  time: '2024-12-26T11:30:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1124
