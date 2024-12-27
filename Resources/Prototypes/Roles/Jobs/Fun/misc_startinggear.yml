@@ -35,13 +35,24 @@
   equipment:
     mask: ClothingMaskGasVoiceChameleon
     ears: ClothingHeadsetAltSyndicateCommunication
+    belt: SyndiPDA
     id: AgentIDCard
+    pocket1: BoxFolderClipboard # for the important papers
   storage:
+    pocket1:
+    - TraitorCodePaper # one of the codewords
+    - Paper # make the hop do paperwork
+    - PaperCargoInvoice # fun
+    - PaperCargoBountyManifest # extra fun
+    - DiagnosisReportPaper # screw with medbay
     back:
-    - MicroBombImplant
-    - CameraBug
+    # can't do paperwork without it
     - RubberStampSyndicate
-    - SyndiPDA
+    # deniability
+    - MicroBombImplant
+    # i know when cap is sleeping
+    - CameraBug
+    # a fax machine for sending messages
     - FaxMachineFlatpack
     - Multitool
 
