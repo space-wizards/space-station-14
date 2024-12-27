@@ -28,6 +28,22 @@
     id: SyndiPDA
     ears: ClothingHeadsetAltSyndicate
 
+# Syndicate Communication Agent Gear
+- type: startingGear
+  id: SyndicateCommunicationAgentGear
+  parent: SyndicateOperativeGearCivilian
+  equipment:
+    mask: ClothingMaskGasVoiceChameleon
+    ears: ClothingHeadsetAltSyndicateCommunication
+    id: AgentIDCard
+  storage:
+    back:
+    - MicroBombImplant
+    - CameraBug
+    - RubberStampSyndicate
+    - SyndiPDA
+    - FaxMachineFlatpack
+
 # Syndicate Footsoldier Gear - No Headset
 - type: startingGear
   id: SyndicateFootsoldierGearRuin
