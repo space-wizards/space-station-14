@@ -12,10 +12,10 @@
     - type: RadiationSource
       intensity: .75
     - type: Icon
-      sprite: Supermatter/supermatter_sliver.rsi
+      sprite: _EinsteinEngines/Structures/Power/Generation/Supermatter/supermatter_sliver.rsi
       state: icon
     - type: Sprite
-      sprite: Supermatter/supermatter_sliver.rsi
+      sprite: _EinsteinEngines/Structures/Power/Generation/Supermatter/supermatter_sliver.rsi
       state: icon
     - type: StealTarget
       stealGroup: SupermatterSliver
