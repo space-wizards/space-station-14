@@ -179,6 +179,7 @@
         - DiscreteHealthAnalyzer
         - SurgeryTool
         - Dropper
+        - Medkit
       components:
         - Stunbaton
         - FlashOnTrigger
@@ -191,4 +192,5 @@
         - Injector
         - Pill
         - HandLabeler
+        - SecurityMedkit
   - type: Appearance
