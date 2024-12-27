@@ -28,19 +28,9 @@ namespace Content.Client.Power.APC.UI
         {
             var castState = (ApcBoundInterfaceState) state;
 
-            if (BreakerButton != null)
+            if (!BreakerButton.Disabled)
             {
-                if (castState.HasAccess == false)
-                {
-                    BreakerButton.Disabled = true;
-                    BreakerButton.ToolTip = Loc.GetString("apc-component-insufficient-access");
-                }
-                else
-                {
-                    BreakerButton.Disabled = false;
-                    BreakerButton.ToolTip = null;
-                    BreakerButton.Pressed = castState.MainBreaker;
-                }
+                BreakerButton.Pressed = castState.MainBreaker;
             }
 
             if (PowerLabel != null)
@@ -77,6 +67,20 @@ namespace Content.Client.Power.APC.UI
                 var chargePercentage = (castState.Charge / ChargeBar.MaxValue);
                 ChargePercentage.Text =
                     Loc.GetString("apc-menu-charge-label", ("percent", chargePercentage.ToString("P0")));
+            }
+        }
+
+        public void SetAccessEnabled(bool hasAccess)
+        {
+            if(hasAccess)
+            {
+                BreakerButton.Disabled = false;
+                BreakerButton.ToolTip = null;
+            }
+            else
+            {
+                BreakerButton.Disabled = true;
+                BreakerButton.ToolTip = Loc.GetString("apc-component-insufficient-access");
             }
         }
 

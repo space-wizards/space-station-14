@@ -184,7 +184,7 @@
 - type: entity
   parent: ClothingBackpack
   id: ClothingBackpackMerc
-  name: merc bag
+  name: mercenary bag
   description: A backpack that has been in many dangerous places, a reliable combat backpack.
   components:
     - type: Sprite

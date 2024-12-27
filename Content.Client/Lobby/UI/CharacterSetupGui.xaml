@@ -2,6 +2,7 @@
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
          xmlns:style="clr-namespace:Content.Client.Stylesheets"
+         xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
          VerticalExpand="True">
     <Control>
         <PanelContainer Name="BackgroundPanel" />
@@ -10,10 +11,15 @@
                 <Label Text="{Loc 'character-setup-gui-character-setup-label'}"
                        Margin="8 0 0 0" VAlign="Center"
                        StyleClasses="LabelHeadingBigger" />
+
                 <Button Name="StatsButton" HorizontalExpand="True"
                         Text="{Loc 'character-setup-gui-character-setup-stats-button'}"
                         StyleClasses="ButtonBig"
                         HorizontalAlignment="Right" />
+                <cc:CommandButton Name="AdminRemarksButton"
+                                  Command="adminremarks"
+                                  Text="{Loc 'character-setup-gui-character-setup-adminremarks-button'}"
+                                  StyleClasses="ButtonBig" />
                 <Button Name="RulesButton"
                         Text="{Loc 'character-setup-gui-character-setup-rules-button'}"
                         StyleClasses="ButtonBig"/>

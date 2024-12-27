@@ -4,10 +4,14 @@ using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
+using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.EntitySystems;
+using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
+using Content.Shared.Atmos.Piping.Components;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.Power;
 using Content.Shared.Tag;
@@ -25,6 +29,7 @@ public sealed class AtmosMonitorSystem : EntitySystem
     [Dependency] private readonly AtmosDeviceSystem _atmosDeviceSystem = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly NodeContainerSystem _nodeContainerSystem = default!;
 
     // Commands
     public const string AtmosMonitorSetThresholdCmd = "atmos_monitor_set_threshold";
@@ -56,8 +61,15 @@ public sealed class AtmosMonitorSystem : EntitySystem
 
     private void OnAtmosDeviceEnterAtmosphere(EntityUid uid, AtmosMonitorComponent atmosMonitor, ref AtmosDeviceEnabledEvent args)
     {
+        if (atmosMonitor.MonitorsPipeNet && _nodeContainerSystem.TryGetNode<PipeNode>(uid, atmosMonitor.NodeNameMonitoredPipe, out var pipeNode))
+        {
+            atmosMonitor.TileGas = pipeNode.Air;
+            return;
+        }
+
         atmosMonitor.TileGas = _atmosphereSystem.GetContainingMixture(uid, true);
     }
+
     private void OnMapInit(EntityUid uid, AtmosMonitorComponent component, MapInitEvent args)
     {
         if (component.TemperatureThresholdId != null)
@@ -206,7 +218,7 @@ public sealed class AtmosMonitorSystem : EntitySystem
         if (!this.IsPowered(uid, EntityManager))
             return;
 
-        if (args.Grid  == null)
+        if (args.Grid == null)
             return;
 
         // if we're not monitoring atmos, don't bother
@@ -214,6 +226,10 @@ public sealed class AtmosMonitorSystem : EntitySystem
             && component.PressureThreshold == null
             && component.GasThresholds == null)
             return;
+
+        // If monitoring a pipe network, get its most recent gas mixture
+        if (component.MonitorsPipeNet && _nodeContainerSystem.TryGetNode<PipeNode>(uid, component.NodeNameMonitoredPipe, out var pipeNode))
+            component.TileGas = pipeNode.Air;
 
         UpdateState(uid, component.TileGas, component);
     }

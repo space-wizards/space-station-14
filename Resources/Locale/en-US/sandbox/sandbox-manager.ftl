@@ -1,4 +1,9 @@
 sandbox-window-title = Sandbox Panel
+
+sandbox-window-map-editing-label = Editing
+sandbox-window-visibility-label = Visibility
+sandbox-window-your-character-label = Your Character
+
 sandbox-window-ai-overlay-button = AI Overlay
 sandbox-window-respawn-button = Respawn
 sandbox-window-spawn-entities-button = Spawn Entities
@@ -11,7 +16,6 @@ sandbox-window-toggle-fov-button = Toggle FOV
 sandbox-window-toggle-shadows-button = Toggle Shadows
 sandbox-window-toggle-subfloor-button = Toggle Subfloor
 sandbox-window-toggle-suicide-button = Suicide
-sandbox-window-show-spawns-button = Shows Spawns
+sandbox-window-show-spawns-button = Show Spawns
 sandbox-window-show-bb-button = Show BB
 sandbox-window-show-npc-button = Show NPC
-sandbox-window-link-machines-button = Link machines

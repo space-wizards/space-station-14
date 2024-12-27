@@ -58,7 +58,7 @@ public sealed partial class AirAlarmWindow : FancyWindow
                 AirAlarmMode.Fill => "air-alarm-ui-mode-fill",
                 AirAlarmMode.Panic => "air-alarm-ui-mode-panic",
                 AirAlarmMode.None => "air-alarm-ui-mode-none",
-                _ => "error"
+                _ => "error",
             };
             _modes.AddItem(Loc.GetString(text));
         }
@@ -69,7 +69,7 @@ public sealed partial class AirAlarmWindow : FancyWindow
             AirAlarmModeChanged!.Invoke((AirAlarmMode) args.Id);
         };
 
-        _autoMode.OnToggled += args =>
+        _autoMode.OnToggled += _ =>
         {
             AutoModeChanged!.Invoke(_autoMode.Pressed);
         };
@@ -178,7 +178,7 @@ public sealed partial class AirAlarmWindow : FancyWindow
 
     public static Color ColorForThreshold(float amount, AtmosAlarmThreshold threshold)
     {
-        threshold.CheckThreshold(amount, out AtmosAlarmType curAlarm);
+        threshold.CheckThreshold(amount, out var curAlarm);
         return ColorForAlarm(curAlarm);
     }
 
@@ -186,9 +186,9 @@ public sealed partial class AirAlarmWindow : FancyWindow
     {
         return curAlarm switch
         {
-            AtmosAlarmType.Danger => Palettes.Status.GetStatusColor(0.0f),
-            AtmosAlarmType.Warning => Palettes.Status.GetStatusColor(0.5f),
-            _ => Palettes.Status.GetStatusColor(1.0f),
+            AtmosAlarmType.Danger => Palettes.Status.Critical,
+            AtmosAlarmType.Warning => Palettes.Status.Warning,
+            _ => Palettes.Status.Good,
         };
     }
 }

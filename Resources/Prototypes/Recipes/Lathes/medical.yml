@@ -1,51 +1,46 @@
+# Base prototypes
+
 - type: latheRecipe
+  abstract: true
+  parent: BaseToolRecipe
+  id: BaseSurgicalRecipe
+  materials:
+    Steel: 200
+
+# Recipes
+
+- type: latheRecipe
+  parent: BaseSurgicalRecipe
   id: Scalpel
   result: Scalpel
-  category: Tools
-  completetime: 2
-  materials:
-    Steel: 200
 
 - type: latheRecipe
+  parent: BaseSurgicalRecipe
   id: Retractor
   result: Retractor
-  category: Tools
-  completetime: 2
-  materials:
-    Steel: 200
 
 - type: latheRecipe
+  parent: BaseSurgicalRecipe
   id: Cautery
   result: Cautery
-  category: Tools
-  completetime: 2
-  materials:
-    Steel: 200
 
 - type: latheRecipe
+  parent: BaseToolRecipe
   id: Drill
   result: Drill
-  category: Tools
-  completetime: 2
   materials:
     Steel: 200
     Plastic: 100
 
 - type: latheRecipe
+  parent: BaseSurgicalRecipe
   id: Saw
   result: Saw
-  category: Tools
-  completetime: 2
-  materials:
-    Steel: 200
 
 - type: latheRecipe
+  parent: BaseSurgicalRecipe
   id: Hemostat
   result: Hemostat
-  category: Tools
-  completetime: 2
-  materials:
-    Steel: 200
 
 - type: latheRecipe
   id: BodyBag
@@ -75,7 +70,7 @@
   result: Gauze1
   completetime: 1
   materials:
-    Cloth: 200
+    Cloth: 100 # lathe more efficient than handcrafting
 
 - type: latheRecipe
   id: HandheldHealthAnalyzer
@@ -140,66 +135,51 @@
     Plastic: 300
 
 - type: latheRecipe
+  parent: Medkit
   id: MedkitBurn
   result: MedkitBurn
   name: lathe-recipe-MedkitBurn-name
-  completetime: 2
-  materials:
-    Plastic: 300
 
 - type: latheRecipe
+  parent: Medkit
   id: MedkitToxin
   result: MedkitToxin
   name: lathe-recipe-MedkitToxin-name
-  completetime: 2
-  materials:
-    Plastic: 300
 
 - type: latheRecipe
+  parent: Medkit
   id: MedkitO2
   result: MedkitO2
   name: lathe-recipe-MedkitO2-name
-  completetime: 2
-  materials:
-    Plastic: 300
 
 - type: latheRecipe
+  parent: Medkit
   id: MedkitBrute
   result: MedkitBrute
   name: lathe-recipe-MedkitBrute-name
-  completetime: 2
-  materials:
-    Plastic: 300
 
 - type: latheRecipe
+  parent: Medkit
   id: MedkitAdvanced
   result: MedkitAdvanced
   name: lathe-recipe-MedkitAdvanced-name
-  completetime: 2
-  materials:
-    Plastic: 300
 
 - type: latheRecipe
+  parent: Medkit
   id: MedkitRadiation
   result: MedkitRadiation
   name: lathe-recipe-MedkitRadiation-name
-  completetime: 2
-  materials:
-    Plastic: 300
 
 - type: latheRecipe
+  parent: Medkit
   id: MedkitCombat
   result: MedkitCombat
   name: lathe-recipe-MedkitCombat-name
-  completetime: 2
-  materials:
-    Plastic: 300
 
 - type: latheRecipe
+  parent: BaseToolRecipe
   id: HandLabeler
   result: HandLabeler
-  category: Tools
-  completetime: 2
   materials:
     Plastic: 100
 
@@ -219,20 +199,14 @@
     Plastic: 300
 
 - type: latheRecipe
+  parent: RollerBedSpawnFolded
   id: CheapRollerBedSpawnFolded
   result: CheapRollerBedSpawnFolded
-  completetime: 1
-  materials:
-    Steel: 600
-    Plastic: 300
 
 - type: latheRecipe
+  parent: RollerBedSpawnFolded
   id: EmergencyRollerBedSpawnFolded
   result: EmergencyRollerBedSpawnFolded
-  completetime: 1
-  materials:
-    Steel: 600
-    Plastic: 300
 
 - type: latheRecipe
   id: WhiteCane
