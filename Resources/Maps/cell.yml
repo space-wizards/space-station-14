@@ -10769,7 +10769,7 @@ entities:
       pos: 29.5,20.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -4692.0977
+      secondsUntilStateChange: -4719.637
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -12414,7 +12414,7 @@ entities:
       pos: 47.5,5.5
       parent: 2
     - type: Door
-      secondsUntilStateChange: -166943.38
+      secondsUntilStateChange: -166970.92
       state: Opening
     - type: DeviceLinkSource
       lastSignals:
@@ -86176,6 +86176,13 @@ entities:
     components:
     - type: Transform
       pos: 13.5,21.5
+      parent: 2
+- proto: SpawnPointPsychologist
+  entities:
+  - uid: 15800
+    components:
+    - type: Transform
+      pos: 1.5,19.5
       parent: 2
 - proto: SpawnPointQuartermaster
   entities:
