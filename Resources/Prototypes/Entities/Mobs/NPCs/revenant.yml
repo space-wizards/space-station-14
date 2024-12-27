@@ -21,7 +21,8 @@
     - Stun
     - Corporeal
   - type: Damageable
-    damageContainer: Biological
+    damageContainer: ManifestedSpirit
+    damageModifierSet: ManifestedSpirit
   - type: NoSlip
   - type: Eye
     drawFov: false
@@ -78,3 +79,6 @@
     - RevenantTheme
   - type: Speech
     speechVerb: Ghost
+  - type: Reactive
+    groups:
+      Acidic: [Touch]

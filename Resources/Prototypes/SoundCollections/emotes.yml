@@ -92,3 +92,8 @@
   id: Weh
   files:
   - /Audio/Items/Toys/weh.ogg
+
+- type: soundCollection
+  id: Hew
+  files:
+  - /Audio/Items/Toys/hew.ogg
