@@ -711,17 +711,15 @@
   - type: Sprite
     state: baguette-cotton
   - type: SliceableFood
-    count: 12
     slice: FoodBreadBaguetteCottonSlice
   - type: Food
     requiresSpecialDigestion: true
   - type: Tag
     tags:
+    - Bread
     - ClothMade
   - type: Clothing
-    slots: [ BELT ]
     equippedPrefix: baguette-cotton
-    quickEquip: false
   - type: Item
     inhandVisuals:
       left:
@@ -778,6 +776,8 @@
     requiresSpecialDigestion: true
   - type: Tag
     tags:
+    - Bread
+    - Slice
     - ClothMade
   - type: SolutionContainerManager
     solutions:

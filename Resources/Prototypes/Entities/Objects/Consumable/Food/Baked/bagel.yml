@@ -56,15 +56,15 @@
   components:
   - type: FlavorProfile
     flavors:
-      - bread
-      - cotton
+    - bread
+    - cotton
   - type: Sprite
     state: bagel-cottondough
   - type: Food
     requiresSpecialDigestion: true
   - type: Tag
     tags:
-      - ClothMade
+    - ClothMade
   - type: SolutionContainerManager
     solutions:
       food:
