@@ -1,4 +1,4 @@
-- type: stack
+﻿- type: stack
   id: FloorTileDark
   name: dark tile
   spawn: FloorTileItemDark
@@ -639,4 +639,16 @@
   id: FloorTileXeno
   name: xeno floor
   spawn: FloorTileItemXeno
+  maxCount: 30
+
+- type: stack
+  id: FloorTileDarkSquiggly
+  name: dark squiggly floor
+  spawn: FloorTileItemDarkSquiggly
+  maxCount: 30
+
+- type: stack
+  id: FloorTileDarkSquigglyVertical
+  name: dark squiggly vertical floor
+  spawn: FloorTileItemDarkSquigglyVertical
   maxCount: 30

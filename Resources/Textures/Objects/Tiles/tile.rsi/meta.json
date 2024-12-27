@@ -555,6 +555,12 @@
     },
     {
       "name": "xenofloor"
+    },
+    {
+      "name": "dark-squiggly"
+    },
+    {
+      "name": "dark-squiggly-vertical"
     }
   ]
 }

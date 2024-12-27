@@ -370,3 +370,57 @@
     count: 5
   - type: Machine
     board: ShuttleGunKineticCircuitboard
+
+- type: entity
+  id: ShuttleGunKineticOld
+  parent: ShuttleGunBase
+  name: Legacy PTK-150 "Matter Deconstructor"
+  description: An ancient prototype of the PTK-800 "Matter Dematerializer". The design has long since been abandoned due to its inferior charging and fire speed.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Shuttles/kinetic.rsi
+    layers:
+    - state: ptk-150
+    - state: mag-7
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Gun
+    projectileSpeed: 20
+    fireRate: 0.2
+    selectedMode: SemiAuto
+    angleDecay: 45
+    minAngle: 5
+    maxAngle: 15
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
+      params:
+        variation: 0.12
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 25
+    rechargeSound:
+      path: /Audio/Weapons/Guns/Bolt/lmg_bolt_closed.ogg
+      params:
+        pitch: 1.2
+        variation: 0.08
+  - type: BasicEntityAmmoProvider
+    proto: BulletKineticShuttle
+    capacity: 3
+    count: 3
+  - type: DeviceLinkSink
+    ports:
+    - Trigger
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 1800

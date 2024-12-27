@@ -306,3 +306,19 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/centcomm.rsi
+
+- type: entity
+  parent: Airlock
+  id: AirlockXeno
+  suffix: Xeno
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/xeno.rsi
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockGlassXeno
+  suffix: Xeno
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/xeno.rsi

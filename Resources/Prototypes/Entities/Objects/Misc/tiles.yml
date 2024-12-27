@@ -1598,3 +1598,31 @@
     - FloorXeno
   - type: Stack
     stackType: FloorTileXeno
+
+- type: entity
+  parent: FloorTileItemDark
+  id: FloorTileItemDarkSquiggly
+  name: dark steel squiggly tile
+  components:
+  - type: Sprite
+    state: dark-squiggly
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorDarkSquiggly
+  - type: Stack
+    stackType: FloorTileDarkSquiggly
+
+- type: entity
+  parent: FloorTileItemDark
+  id: FloorTileItemDarkSquigglyVertical
+  name: dark steel squiggly vertical tile
+  components:
+  - type: Sprite
+    state: dark-squiggly-vertical
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorDarkSquigglyVertical
+  - type: Stack
+    stackType: FloorTileDarkSquigglyVertical

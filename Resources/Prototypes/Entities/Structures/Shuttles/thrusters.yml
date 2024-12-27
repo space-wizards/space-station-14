@@ -239,7 +239,7 @@
   id: RustedThruster
   parent: BaseStructureDynamic
   name: rusted thruster
-  description: An unrepairable thruster, broken down from wear and tear. Practically useless.
+  description: An unrepairable thruster, broken down from wear and tear. Only useful for scrapping.
   components:
     - type: Fixtures
       fixtures:
@@ -277,6 +277,6 @@
               collection: MetalBreak
     - type: StaticPrice
       price: 100
-  placement:
-    mode: SnapgridCenter
-
+    - type: PhysicalComposition
+      materialComposition:
+        Steel: 1200 # 12 sheets

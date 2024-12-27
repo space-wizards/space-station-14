@@ -489,9 +489,6 @@
   - type: Hands
   - type: ComplexInteraction
   - type: MobState
-    allowedStates:
-    - Alive
-    - Dead
   - type: Stamina
     critThreshold: 200
   - type: Bloodstream
@@ -505,7 +502,7 @@
     animation: WeaponArcBite
     damage:
      groups:
-       Brute: 4
+       Brute: 5
   - type: DamageStateVisuals
     rotate: true
     states:
@@ -542,7 +539,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      200: Dead
+      250: Dead
   - type: SlowOnDamage
     speedModifierThresholds:
       120: 0.7

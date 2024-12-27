@@ -131,3 +131,5 @@ tiles-astro-ice = astro-ice
 tiles-astro-snow = astro-snow
 tiles-wood-large = large wood
 tiles-xeno-floor = xeno floor
+tiles-dark-squiggly = dark steel squiggly tile
+tiles-dark-squiggly-vertical = dark steel vertical squiggly tile
