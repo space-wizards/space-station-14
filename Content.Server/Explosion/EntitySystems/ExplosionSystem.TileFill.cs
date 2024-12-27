@@ -55,7 +55,10 @@ public sealed partial class ExplosionSystem
         else if (referenceGrid != null)
         {
             // reference grid defines coordinate system that the explosion in space will use
-            initialTile = Comp<MapGridComponent>(referenceGrid.Value).WorldToTile(epicenter.Position);
+            initialTile = _map.WorldToTile(
+                referenceGrid.Value,
+                Comp<MapGridComponent>(referenceGrid.Value),
+                epicenter.Position);
         }
         else
         {
