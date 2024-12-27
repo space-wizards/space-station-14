@@ -457,22 +457,33 @@
   maxCount: 20
 
 - type: entity
-  name: first aid kit test
-  description: It's an emergency medical kit for those serious boo-boos.
+  name: BrigKit
+  description: A heavy-duty first aid kit with slots and hooks for medical supplies, but nothing else.
   parent: BaseStorageItem
-  id: Medkits
+  id: SecurityMedkit
   components:
   - type: Sprite
     sprite: Objects/Specific/Medical/firstaidkits.rsi
-    state: firstaid
+    state: BrigKube
   - type: Storage
-    maxItemSize: Small
+    whitelist:
+      tags:
+        - Bottle
+        - Brutepack
+        - Bloodpack
+        - Gauze
+        - Ointment
+        - PillCanister
+      components:
+        - Hypospray
+        - Injector
+        - Pill
     grid:
-    - 0,0,3,1
+    - 0,0,3,2
   - type: Item
-    size: Large
+    size: Normal
     sprite: Objects/Specific/Medical/firstaidkits.rsi
-    heldPrefix: firstaid
+    heldPrefix: BrigKube
   - type: PhysicalComposition
     materialComposition:
       Plastic: 150
