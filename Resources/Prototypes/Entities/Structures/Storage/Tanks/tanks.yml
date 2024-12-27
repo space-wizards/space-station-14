@@ -159,6 +159,8 @@
       - Trash
   - type: ExaminableSolution
     solution: tank
+  - type: DumpableSolution
+    solution: tank
   - type: StaticPrice
     price: 500
 
@@ -215,4 +217,6 @@
       maxFillLevels: 5
       fillBaseName: watertank-2-
     - type: ExaminableSolution
+      solution: tank
+    - type: DumpableSolution
       solution: tank
