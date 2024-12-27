@@ -34,7 +34,10 @@ public sealed class ColorPalette(string hex = "#000000")
         if (PressedElement == default)
             PressedElement = Shift(Element, -1); //     Shift(Base, -2)
         if (DisabledElement == default)
-            DisabledElement = Shift(Element, -3); //    Shift(Base, -4)
+        {
+            DisabledElement = Shift(Element, -2); //    Shift(Base, -3)
+            DisabledElement = DisabledElement.NudgeChroma(-ChromaShift * 2);
+        }
 
         if (Background == default)
             Background = Shift(Base, -3); //            Shift(Base, -3)

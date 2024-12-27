@@ -55,6 +55,9 @@ public sealed class ButtonSheetlet<T> : Sheetlet<T> where T : PalettedStylesheet
                 // ReSharper disable once AccessToStaticMemberViaDerivedType
                 .Class(Button.StyleClassButton)
                 .AlignMode(Label.AlignMode.Center),
+
+            // Have disabled button's text be faded
+            CButton().PseudoDisabled().ParentOf(E<Label>()).FontColor(Color.FromHex("#E5E5E581")),
         };
         // Texture button modulation
         MakeButtonRules<TextureButton>(rules, Palettes.AlphaModulate, null);
