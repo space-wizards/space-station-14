@@ -1,0 +1,4 @@
+- type: preloadedGrid
+  id: ShuttleChemLab
+  path: /Maps/_Harmony/Shuttles/ShuttleEvent/chemlab.yml
+  copies: 1

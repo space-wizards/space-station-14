@@ -20,6 +20,7 @@
     - id: UnknownShuttleMeatZone
     - id: UnknownShuttleMicroshuttle
     - id: UnknownShuttleSpacebus
+    - id: UnknownShuttleChemLab # Harmony
 
 - type: entityTable
   id: UnknownShuttlesFreelanceTable

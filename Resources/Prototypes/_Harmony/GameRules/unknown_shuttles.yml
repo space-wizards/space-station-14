@@ -1,0 +1,8 @@
+- type: entity
+  id: UnknownShuttleChemLab
+  parent: BaseUnknownShuttleRule
+  components:
+  - type: StationEvent
+    startAnnouncement: station-event-unknown-shuttle-incoming #!!
+  - type: LoadMapRule
+    preloadedGrid: ShuttleChemLab
