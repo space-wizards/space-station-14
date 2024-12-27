@@ -305,7 +305,6 @@
     owner: objective-condition-steal-station
 
 - type: entity
-  noSpawn: true
   parent: BaseTraitorStealObjective
   id: StealSupermatterSliverObjective
   components:

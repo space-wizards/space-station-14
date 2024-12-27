@@ -11,7 +11,7 @@
       range: 5
       volume: 0
       sound:
-        path: _EinsteinEngines/Audio/Supermatter/calm.ogg
+        path: /Audio/_EinsteinEngines/Supermatter/calm.ogg
     - type: Physics
     - type: Speech
       speechSounds: Pai
