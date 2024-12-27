@@ -99,8 +99,6 @@
   recipeUnlocks:
   - ThermomachineFreezerMachineCircuitBoard
   - GasRecyclerMachineCircuitboard
-  - AlertsComputerCircuitboard
-  - AtmosMonitoringComputerCircuitboard
 
 - type: technology
   id: RipleyAPLU
