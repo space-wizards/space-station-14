@@ -316,7 +316,6 @@ namespace Content.Server.GameTicking
 
             if (!_loader.TryMergeMap(targetMap,
                     ev.GameMap.MapPath,
-                    out var map,
                     out var grids,
                     ev.Options,
                     ev.Offset,
