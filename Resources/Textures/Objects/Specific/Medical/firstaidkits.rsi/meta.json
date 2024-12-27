@@ -99,11 +99,11 @@
 			"name": "BrigKube"
 		},
 		{
-      "name": "BrigKubeRight",
+      "name": "BrigKube-inhand-right",
       "directions": 4
     },
     {
-      "name": "BrigKubeLeft",
+      "name": "BrigKube-inhand-left",
       "directions": 4
     },
     {
