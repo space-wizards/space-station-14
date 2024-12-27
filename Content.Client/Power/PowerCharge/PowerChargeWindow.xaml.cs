@@ -44,8 +44,8 @@ public sealed partial class PowerChargeWindow : FancyWindow
             ("max", state.PowerDrawMax));
 
         PowerLabel.FontColorOverride = MathHelper.CloseTo(state.PowerDraw, state.PowerDrawMax)
-            ? Palettes.Status.GetStatusColor(1.0f)
-            : Palettes.Status.GetStatusColor(0.5f);
+            ? Palettes.Status.Good
+            : Palettes.Status.Warning;
         // TODO: blend with status colors instead of setting hard values
 
         ChargeBar.Value = state.Charge;
@@ -61,10 +61,10 @@ public sealed partial class PowerChargeWindow : FancyWindow
 
         StatusLabel.FontColorOverride = (state.PowerStatus switch
         {
-            PowerChargePowerStatus.Off => Palettes.Status.GetStatusColor(0.0f),
-            PowerChargePowerStatus.Discharging => Palettes.Status.GetStatusColor(0.5f),
-            PowerChargePowerStatus.Charging => Palettes.Status.GetStatusColor(0.5f),
-            PowerChargePowerStatus.FullyCharged => Palettes.Status.GetStatusColor(1.0f),
+            PowerChargePowerStatus.Off => Palettes.Status.Critical,
+            PowerChargePowerStatus.Discharging => Palettes.Status.Warning,
+            PowerChargePowerStatus.Charging => Palettes.Status.Warning,
+            PowerChargePowerStatus.FullyCharged => Palettes.Status.Good,
             _ => throw new ArgumentOutOfRangeException()
         });
 

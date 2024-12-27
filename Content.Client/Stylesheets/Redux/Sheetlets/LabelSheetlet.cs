@@ -1,4 +1,5 @@
 using Content.Client.Stylesheets.Redux.Fonts;
+using Content.Client.Stylesheets.Redux.Palette;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
@@ -31,6 +32,7 @@ public sealed class LabelSheetlet : Sheetlet<PalettedStylesheet>
             E<Label>()
                 .Class(StyleClass.LabelWeak)
                 .FontColor(Color.DarkGray), // TODO: you know the drill by now
+
             E<Label>()
                 .Class(StyleClass.Positive)
                 .FontColor(sheet.PositivePalette.Text),
@@ -40,6 +42,22 @@ public sealed class LabelSheetlet : Sheetlet<PalettedStylesheet>
             E<Label>()
                 .Class(StyleClass.Highlight)
                 .FontColor(sheet.HighlightPalette.Text),
+
+            E<Label>()
+                .Class(StyleClass.StatusGood)
+                .FontColor(Palettes.Status.Good),
+            E<Label>()
+                .Class(StyleClass.StatusOkay)
+                .FontColor(Palettes.Status.Okay),
+            E<Label>()
+                .Class(StyleClass.StatusWarning)
+                .FontColor(Palettes.Status.Warning),
+            E<Label>()
+                .Class(StyleClass.StatusBad)
+                .FontColor(Palettes.Status.Bad),
+            E<Label>()
+                .Class(StyleClass.StatusCritical)
+                .FontColor(Palettes.Status.Critical),
         ];
     }
 }

@@ -17,6 +17,12 @@ public static class StyleClass
     public const string Negative = "negative";
     public const string Highlight = "highlight";
 
+    public const string StatusGood = "status-good"; //          Status.GetStatusColor(1.0f)
+    public const string StatusOkay = "status-okay"; //          Status.GetStatusColor(0.75f)
+    public const string StatusWarning = "status-warning"; //    Status.GetStatusColor(0.5f)
+    public const string StatusBad = "status-bad"; //            Status.GetStatusColor(0.25f)
+    public const string StatusCritical = "status-critical"; //  Status.GetStatusColor(0.0f)
+
     public const string FontLarge = "font-large";
     public const string FontSmall = "font-small";
     public const string Italic = "italic";
