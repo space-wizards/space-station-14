@@ -326,6 +326,15 @@
 
 - type: entity
   parent: BaseSign
+  id: SignBath
+  name: bathroom sign
+  description: A sign indicating the bathroom.
+  components:
+  - type: Sprite
+    state: bath
+
+- type: entity
+  parent: BaseSign
   id: SignKitchen
   name: kitchen sign
   description: The heart of the home. And disease.

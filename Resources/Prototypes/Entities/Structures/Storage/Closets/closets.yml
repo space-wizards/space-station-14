@@ -171,6 +171,7 @@
   parent: ClosetMaintenance
   description: It's a storage unit... right?
   components:
+    - type: ArrivalsBlacklist
     - type: BluespaceLocker
       pickLinksFromSameMap: true
       minBluespaceLinks: 1
@@ -189,6 +190,7 @@
   parent: ClosetMaintenance
   description: It's a storage unit... right?
   components:
+    - type: ArrivalsBlacklist
     - type: BluespaceLocker
       pickLinksFromSameMap: true
       minBluespaceLinks: 1
