@@ -45,7 +45,7 @@ namespace Content.Server.Singularity.EntitySystems
 
             SubscribeLocalEvent<EmitterComponent, PowerConsumerReceivedChanged>(ReceivedChanged);
             SubscribeLocalEvent<EmitterComponent, PowerChangedEvent>(OnApcChanged);
-            SubscribeLocalEvent<EmitterComponent, InteractHandEvent>(OnInteractHand);
+            SubscribeLocalEvent<EmitterComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<EmitterComponent, GetVerbsEvent<Verb>>(OnGetVerb);
             SubscribeLocalEvent<EmitterComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<EmitterComponent, AnchorStateChangedEvent>(OnAnchorStateChanged);
@@ -60,7 +60,7 @@ namespace Content.Server.Singularity.EntitySystems
             SwitchOff(uid, component);
         }
 
-        private void OnInteractHand(EntityUid uid, EmitterComponent component, InteractHandEvent args)
+        private void OnActivate(EntityUid uid, EmitterComponent component, ActivateInWorldEvent args)
         {
             if (args.Handled)
                 return;

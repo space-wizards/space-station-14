@@ -385,7 +385,7 @@
         Heat: 0.95
 
 - type: entity
-  parent: [ ClothingMaskGas, BaseRestrictedContraband ]
+  parent: [ ClothingMaskGas, BaseSecurityCargoContraband ]
   id: ClothingMaskGasMerc
   name: mercenary gas mask
   description: Slightly outdated, but reliable military-style gas mask.
