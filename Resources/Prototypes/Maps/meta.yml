@@ -30,13 +30,13 @@
             #engineering
             ChiefEngineer: [ 1, 1 ]
             AtmosphericTechnician: [ 3, 3 ]
-            StationEngineer: [ 5, 7 ]
-            TechnicalAssistant: [ 3, 6 ]
+            StationEngineer: [ 6, 8 ]
+            TechnicalAssistant: [ 6, 8 ]
             #medical
             ChiefMedicalOfficer: [ 1, 1 ]
-            Chemist: [ 2, 2 ]
-            MedicalDoctor: [ 5, 5 ]
-            MedicalIntern: [ 3, 6 ]
+            Chemist: [ 2, 3 ]
+            MedicalDoctor: [ 4, 6 ]
+            MedicalIntern: [ 4, 6 ]
             Paramedic: [ 1, 2 ]
             #science
             ResearchDirector: [ 1, 1 ]
