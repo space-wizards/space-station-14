@@ -47,12 +47,10 @@ public sealed partial class ExplosionSystem
         var (localGrids, referenceGrid, maxDistance) = GetLocalGrids(epicenter, totalIntensity, slope, maxIntensity);
 
         // get the epicenter tile indices
-        if (_mapManager.TryFindGridAt(epicenter, out var gridUid, out var candidateGrid) &&
-            candidateGrid.TryGetTileRef(candidateGrid.WorldToTile(epicenter.Position), out var tileRef) &&
-            !tileRef.Tile.IsEmpty)
+        if (FindInitialTile(epicenter, out var foundTile, out var foundGrid))
         {
-            epicentreGrid = gridUid;
-            initialTile = tileRef.GridIndices;
+            epicentreGrid = foundGrid;
+            initialTile = foundTile;
         }
         else if (referenceGrid != null)
         {
@@ -249,6 +247,33 @@ public sealed partial class ExplosionSystem
         spaceData?.CleanUp();
 
         return (totalTiles, iterationIntensity, spaceData, gridData, spaceMatrix);
+    }
+
+    private bool FindInitialTile(MapCoordinates epicenter, out Vector2i initialTile, out EntityUid? epicentreGrid)
+    {
+        initialTile = new Vector2i();
+        epicentreGrid = null;
+
+        if (!_mapManager.TryFindGridAt(epicenter, out var gridUid, out var candidateGrid))
+        {
+            return false;
+        }
+
+        var tilePos = _map.WorldToTile(gridUid, candidateGrid, epicenter.Position);
+        if (!_map.TryGetTileRef(gridUid, candidateGrid, tilePos, out var tileRef))
+        {
+            return false;
+        }
+
+        if (tileRef.Tile.IsEmpty)
+        {
+            return false;
+        }
+
+        epicentreGrid = gridUid;
+        initialTile = tileRef.GridIndices;
+
+        return true;
     }
 
     /// <summary>
