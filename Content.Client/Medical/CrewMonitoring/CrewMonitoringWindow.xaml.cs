@@ -112,6 +112,7 @@ public sealed partial class CrewMonitoringWindow : FancyWindow
             };
 
             deparmentLabel.SetMessage(department);
+            deparmentLabel.StyleClasses.Add("font-large");
 
             SensorsTable.AddChild(deparmentLabel);
 
