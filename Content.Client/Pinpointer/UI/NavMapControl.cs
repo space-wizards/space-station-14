@@ -19,7 +19,6 @@ using JetBrains.Annotations;
 using Content.Shared.Atmos;
 using System.Linq;
 using Content.Client.Stylesheets.Redux;
-using Content.Client.Stylesheets.Redux.Sheetlets.Hud;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Pinpointer.UI;

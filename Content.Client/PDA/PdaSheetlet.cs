@@ -1,12 +1,14 @@
 using Content.Client.PDA;
+using Content.Client.Stylesheets;
 using Content.Client.Stylesheets.Redux;
-using Content.Client.Stylesheets.Redux.SheetletConfigs;
 using Content.Client.Stylesheets.Redux.Sheetlets;
-using Content.Client.Stylesheets.Redux.Stylesheets;
+using Content.Client.Stylesheets.SheetletConfigs;
+using Content.Client.Stylesheets.Sheetlets;
+using Content.Client.Stylesheets.Stylesheets;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
+using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.PDA;
 

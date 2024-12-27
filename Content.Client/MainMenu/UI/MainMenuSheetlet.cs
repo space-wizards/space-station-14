@@ -1,9 +1,10 @@
+using Content.Client.Stylesheets;
+using Content.Client.Stylesheets.Fonts;
 using Content.Client.Stylesheets.Redux;
-using Content.Client.Stylesheets.Redux.Fonts;
-using Content.Client.Stylesheets.Redux.Stylesheets;
+using Content.Client.Stylesheets.Stylesheets;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
+using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.MainMenu.UI;
 

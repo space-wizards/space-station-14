@@ -1,6 +1,6 @@
 using Content.Client.Atmos.Monitor.UI.Widgets;
 using Content.Client.Message;
-using Content.Client.Stylesheets.Redux.Palette;
+using Content.Client.Stylesheets.Palette;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;

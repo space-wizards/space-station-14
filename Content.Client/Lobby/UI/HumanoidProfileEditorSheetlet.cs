@@ -1,8 +1,9 @@
 using Content.Client.Resources;
+using Content.Client.Stylesheets;
 using Content.Client.Stylesheets.Redux;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using static Content.Client.Stylesheets.Redux.StylesheetHelpers;
+using static Content.Client.Stylesheets.StylesheetHelpers;
 
 namespace Content.Client.Lobby.UI;
 
