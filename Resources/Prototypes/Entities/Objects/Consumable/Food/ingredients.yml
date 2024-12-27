@@ -315,6 +315,13 @@
   - type: Construction
     graph: DoughRope
     node: start
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
 
 - type: entity
   name: dough rope
@@ -330,6 +337,13 @@
   - type: Construction
     graph: DoughRope
     node: rolled
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
 
 - type: entity
   name: cornmeal dough
@@ -467,12 +481,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 18
+        maxVol: 6
         reagents:
         - ReagentId: Nutriment
-          Quantity: 7.5
+          Quantity: 1.5
         - ReagentId: Fiber
-          Quantity: 7.5
+          Quantity: 3.5
 
 - type: entity
   name: dough rope
@@ -492,12 +506,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 18
+        maxVol: 6
         reagents:
         - ReagentId: Nutriment
-          Quantity: 7.5
+          Quantity: 1.5
         - ReagentId: Fiber
-          Quantity: 7.5
+          Quantity: 3.5
 
 - type: entity
   name: raw pastry base
