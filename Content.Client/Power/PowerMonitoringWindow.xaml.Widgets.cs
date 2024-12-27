@@ -7,7 +7,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
 using Vector4 = Robust.Shared.Maths.Vector4;
-using Content.Client.Stylesheets.Redux;
 
 namespace Content.Client.Power;
 

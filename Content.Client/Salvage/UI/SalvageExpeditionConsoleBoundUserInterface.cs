@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Client.Stylesheets;
-using Content.Client.Stylesheets.Redux;
 using Content.Shared.CCVar;
 using Content.Shared.Procedural;
 using Content.Shared.Salvage.Expeditions;

@@ -1,6 +1,5 @@
 using Content.Client.Message;
 using Content.Client.Stylesheets;
-using Content.Client.Stylesheets.Redux;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Implants.Components;
 using Robust.Client.UserInterface;

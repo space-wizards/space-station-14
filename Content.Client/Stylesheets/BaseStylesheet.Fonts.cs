@@ -27,7 +27,7 @@ public abstract partial class BaseStylesheet : IStyleResources
     /// <param name="stack">Font stack to use</param>
     /// <param name="sizes">A set of styleclasses and the associated size of font to use.</param>
     /// <returns>A rules list containing all combinations.</returns>
-    /// <remarks>Use <see cref="M:Content.Client.Stylesheets.Redux.BaseStylesheet.GetFontClass(Content.Client.Stylesheets.Redux.Fonts.FontStack.FontKind,System.String)"/> to get the appropriate styleclass for a font choice.</remarks>
+    /// <remarks>Use <see cref="M:Content.Client.Stylesheets.BaseStylesheet.GetFontClass(Content.Client.Stylesheets.Redux.Fonts.FontStack.FontKind,System.String)"/> to get the appropriate styleclass for a font choice.</remarks>
     // god xmldoc refs are long ^^^
     // lmao
     protected StyleRule[] GetRulesForFont(string? prefix, NotoFontFamilyStack stack, List<(string?, int)> sizes) // TODO: NotoFontFamilyStack is temporary

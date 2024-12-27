@@ -3,7 +3,6 @@ using Content.Client.IoC;
 using Content.Client.Items;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
-using Content.Client.Stylesheets.Redux;
 using Content.Client.Weapons.Ranged.Components;
 using Content.Client.Weapons.Ranged.ItemStatus;
 using Robust.Client.Animations;

@@ -4,7 +4,6 @@ using System.Numerics;
 using Content.Client.Administration.Managers;
 using Content.Client.Eui;
 using Content.Client.Stylesheets;
-using Content.Client.Stylesheets.Redux;
 using Content.Shared.Administration;
 using Content.Shared.Eui;
 using JetBrains.Annotations;

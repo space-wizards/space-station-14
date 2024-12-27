@@ -1,6 +1,5 @@
 ﻿using Content.Client.Resources;
 using Content.Client.Stylesheets;
-using Content.Client.Stylesheets.Redux;
 using Content.Client.Stylesheets.SheetletConfigs;
 using Content.Client.Stylesheets.Stylesheets;
 using Robust.Client.Graphics;

@@ -1,6 +1,6 @@
 ﻿using Robust.Client.UserInterface;
 
-namespace Content.Client.Stylesheets.Redux;
+namespace Content.Client.Stylesheets;
 
 public abstract partial class BaseStylesheet
 {

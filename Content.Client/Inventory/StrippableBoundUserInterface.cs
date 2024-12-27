@@ -3,7 +3,6 @@ using System.Numerics;
 using Content.Client.Examine;
 using Content.Client.Strip;
 using Content.Client.Stylesheets;
-using Content.Client.Stylesheets.Redux;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Hands.Controls;
 using Content.Client.Verbs.UI;

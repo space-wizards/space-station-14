@@ -2,7 +2,6 @@ using System.Numerics;
 using Content.Client.Message;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
-using Content.Client.Stylesheets.Redux;
 using Content.Shared.Atmos.Components;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;

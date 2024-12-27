@@ -2,7 +2,6 @@ using System.Numerics;
 using Content.Client.Examine;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
-using Content.Client.Stylesheets.Redux;
 using Content.Shared.Wires;
 using Robust.Client.Animations;
 using Robust.Client.Graphics;

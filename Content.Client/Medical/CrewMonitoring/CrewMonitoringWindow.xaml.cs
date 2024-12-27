@@ -3,7 +3,6 @@ using System.Linq;
 using System.Numerics;
 using Content.Client.Pinpointer.UI;
 using Content.Client.Stylesheets;
-using Content.Client.Stylesheets.Redux;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Medical.SuitSensor;
 using Content.Shared.StatusIcon;

@@ -1,7 +1,6 @@
 using Content.Client.Items;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
-using Content.Client.Stylesheets.Redux;
 using Content.Shared.Crayon;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;

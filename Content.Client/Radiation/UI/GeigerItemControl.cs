@@ -1,6 +1,5 @@
 using Content.Client.Message;
 using Content.Client.Stylesheets;
-using Content.Client.Stylesheets.Redux;
 using Content.Shared.Radiation.Components;
 using Content.Shared.Radiation.Systems;
 using Robust.Client.UserInterface;

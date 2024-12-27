@@ -3,8 +3,6 @@ using Content.Client.Launcher;
 using Content.Client.MainMenu;
 using Content.Client.Replay.Spectator;
 using Content.Client.Replay.UI.Loading;
-using Content.Client.Stylesheets;
-using Content.Client.Stylesheets.Redux;
 using Content.Client.UserInterface.Systems.Chat;
 using Content.Shared.Chat;
 using Content.Shared.Effects;

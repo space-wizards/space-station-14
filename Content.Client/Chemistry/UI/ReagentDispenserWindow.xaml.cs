@@ -1,5 +1,4 @@
 using Content.Client.Stylesheets;
-using Content.Client.Stylesheets.Redux;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;

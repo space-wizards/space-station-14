@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Client.Computer;
 using Content.Client.Stylesheets;
-using Content.Client.Stylesheets.Redux;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.CCVar;
 using Content.Shared.Parallax.Biomes;

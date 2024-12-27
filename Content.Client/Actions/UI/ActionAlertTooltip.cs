@@ -2,8 +2,6 @@ using Content.Client.Stylesheets;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Content.Client.Stylesheets.Redux;
-using Robust.Client.UserInterface;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Actions.UI

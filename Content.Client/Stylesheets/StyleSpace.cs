@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Content.Client.Resources;
-using Content.Client.Stylesheets.Redux;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;

@@ -6,7 +6,6 @@
            xmlns:xe="clr-namespace:Content.Client.UserInterface.XamlExtensions"
            xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
            xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.MenuBar.Widgets"
-           xmlns:redux="clr-namespace:Content.Client.Stylesheets.Redux"
            Name = "MenuButtons"
            VerticalExpand="False"
            Orientation="Horizontal"

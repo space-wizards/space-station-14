@@ -1,6 +1,4 @@
-﻿using Content.Client.Stylesheets;
-using Content.Client.Stylesheets.Redux;
-using Content.Shared.Chat;
+﻿using Content.Shared.Chat;
 using Content.Shared.Input;
 using Robust.Client.UserInterface.Controls;
 

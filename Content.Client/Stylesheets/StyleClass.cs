@@ -8,7 +8,7 @@
 /// <remarks>
 ///     It is named `StyleClass` as opposed to `StyleClasses` because `StyleClasses` is a field on `Control` so it made
 ///     it a pain to reference this class from a `Control`. (Weird name is worth typing `StyleClass.OpenBoth` vs.
-///     `Stylesheets.Redux.Styleclasses.OpenBoth`)
+///     `Stylesheets.Styleclasses.OpenBoth`)
 /// </remarks>
 public static class StyleClass
 {

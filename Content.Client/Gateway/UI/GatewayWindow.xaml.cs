@@ -1,7 +1,6 @@
 using System.Numerics;
 using Content.Client.Computer;
 using Content.Client.Stylesheets;
-using Content.Client.Stylesheets.Redux;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Gateway;
 using Content.Shared.Shuttles.BUIStates;

@@ -1,5 +1,4 @@
 ﻿using Content.Client.Stylesheets;
-using Content.Client.Stylesheets.Redux;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Changelog

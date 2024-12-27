@@ -1,4 +1,4 @@
-﻿namespace Content.Client.Stylesheets.Redux;
+﻿namespace Content.Client.Stylesheets;
 
 public sealed class StyleProperties
 {
