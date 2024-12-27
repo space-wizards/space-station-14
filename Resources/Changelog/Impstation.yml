@@ -1,20 +1,6 @@
 ﻿Entries:
 - author: hivehum
   changes:
-  - message: Added over a dozen new slimes to herd and milk.
-    type: Add
-  id: 314
-  time: '2024-10-03T23:41:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/402
-- author: Sha-Seng
-  changes:
-  - message: Added Kaasi art to lobby screen rotation
-    type: Add
-  id: 315
-  time: '2024-10-03T23:41:43.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/401
-- author: hivehum
-  changes:
   - message: Gondal is here.
     type: Add
   id: 316
@@ -4501,3 +4487,17 @@
   id: 813
   time: '2024-12-26T21:47:59.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1097
+- author: TheGrimbeeper
+  changes:
+  - message: artifact trigger beverage has one slightly less obtuse hint
+    type: Tweak
+  id: 814
+  time: '2024-12-27T06:50:38.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1135
+- author: TheGrimbeeper
+  changes:
+  - message: latest community books can now spawn from the artifact normal book effect
+    type: Add
+  id: 815
+  time: '2024-12-27T06:51:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1136
