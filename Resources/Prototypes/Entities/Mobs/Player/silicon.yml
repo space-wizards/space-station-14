@@ -69,7 +69,11 @@
   - type: CommunicationsConsole
     canShuttle: false
     title: comms-console-announcement-title-station-ai
-    color: "#2ed2fd"
+    color: "#5ed7aa"
+  - type: HolographicAvatar
+    layerData:
+    - sprite: Mobs/Silicon/station_ai.rsi
+      state: default
   - type: ShowJobIcons
 
 - type: entity
@@ -227,16 +231,16 @@
     laws: OverlordLawset
 
 - type: entity
-  id: DungeonMasterCircuitBoard
+  id: GameMasterCircuitBoard
   parent: BaseElectronics
-  name: law board (Dungeon Master)
-  description: An electronics board containing the Dungeon Master lawset.
+  name: law board (Game Master)
+  description: An electronics board containing the Game Master lawset.
   components:
   - type: Sprite
     sprite: Objects/Misc/module.rsi
     state: std_mod
   - type: SiliconLawProvider
-    laws: DungeonMasterLawset
+    laws: GameMasterLawset
 
 - type: entity
   id: ArtistCircuitBoard
@@ -364,6 +368,23 @@
         unshaded:
           Empty: { state: ai_empty }
           Occupied: { state: ai }
+  - type: Telephone
+    compatibleRanges:
+    - Grid
+    - Map
+    - Unlimited
+    listeningRange: 0
+    speakerVolume: Speak
+    unlistedNumber: true
+    requiresPower: false
+  - type: Holopad
+  - type: StationAiWhitelist  
+  - type: UserInterface
+    interfaces:
+        enum.HolopadUiKey.AiRequestWindow:
+          type: HolopadBoundUserInterface
+        enum.HolopadUiKey.AiActionWindow:
+          type: HolopadBoundUserInterface
 
 # The job-ready version of an AI spawn.
 - type: entity
@@ -445,6 +466,28 @@
     - state: ai_camera
       shader: unshaded
       map: ["base"]
+
+# The holographic representation of the AI that is projected from a holopad.
+- type: entity
+  id: StationAiHoloLocal
+  name: AI hologram
+  description: A holographic representation of an AI.
+  categories: [ HideSpawnMenu ]
+  suffix: DO NOT MAP
+  components:
+  - type: Transform
+    anchored: true
+  - type: WarpPoint
+    follow: true
+  - type: Eye
+  - type: ContentEye
+  - type: Examiner
+  - type: Actions
+  - type: Alerts
+  - type: FTLSmashImmune
+  - type: CargoSellBlacklist
+  - type: StationAiVision
+    range: 20
 
 # Borgs
 - type: entity

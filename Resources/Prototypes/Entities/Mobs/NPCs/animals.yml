@@ -1686,7 +1686,6 @@
       Dead: 0
     baseDecayRate: 0.04
   - type: Hunger
-    currentHunger: 25   # spawn with Okay hunger state
     thresholds:
       Overfed: 35
       Okay: 25
@@ -2284,24 +2283,10 @@
 # Code unique spider prototypes or combine them all into one spider and get a
 # random sprite state when you spawn it.
 - type: entity
-  name: tarantula
   parent: [ SimpleMobBase, MobCombat ]
-  id: MobGiantSpider
-  description: Widely recognized to be the literal worst thing in existence.
+  id: MobSpiderBase
+  abstract: true
   components:
-  - type: Sprite
-    drawdepth: Mobs
-    layers:
-    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
-      state: tarantula
-      sprite: Mobs/Animals/spider.rsi
-  - type: SpriteMovement
-    movementLayers:
-      movement:
-        state: tarantula-moving
-    noMovementLayers:
-      movement:
-        state: tarantula
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -2314,14 +2299,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: DamageStateVisuals
-    states:
-      Alive:
-        Base: tarantula
-      Critical:
-        Base: tarantula_dead
-      Dead:
-        Base: tarantula_dead
   - type: Butcherable
     spawned:
     - id: FoodMeatSpider
@@ -2333,15 +2310,6 @@
     thresholds:
       0: Alive
       90: Dead
-  - type: MeleeWeapon
-    altDisarm: false
-    angle: 0
-    animation: WeaponArcBite
-    soundHit:
-      path: /Audio/Effects/bite.ogg
-    damage:
-      types:
-        Piercing: 6
   - type: SolutionContainerManager
     solutions:
       melee:
@@ -2403,31 +2371,73 @@
         Burn: -0.07
 
 - type: entity
-  name: tarantula
-  parent: MobGiantSpider
-  id: MobGiantSpiderAngry
-  suffix: Angry
+  parent: MobSpiderBase
+  id: MobSpiderAngryBase
+  abstract: true
   components:
-    - type: NpcFactionMember
-      factions:
-        - Xeno
-    - type: InputMover
-    - type: MobMover
-    - type: HTN
-      rootTask:
-        task: SimpleHostileCompound
-    - type: GhostRole
-      makeSentient: true
-      name: ghost-role-information-giant-spider-name
-      description: ghost-role-information-giant-spider-description
-      rules: ghost-role-information-giant-spider-rules
-      raffle:
-        settings: short
-    - type: GhostTakeoverAvailable
+  - type: NpcFactionMember
+    factions:
+      - Xeno
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-giant-spider-name
+    description: ghost-role-information-giant-spider-description
+    rules: ghost-role-information-giant-spider-rules
+    raffle:
+      settings: short
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  name: tarantula
+  parent: MobSpiderBase
+  id: MobGiantSpider
+  description: Widely recognized to be the literal worst thing in existence.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base", "movement"]
+      state: tarantula
+      sprite: Mobs/Animals/spider.rsi
+  - type: SpriteMovement
+    movementLayers:
+      movement:
+        state: tarantula-moving
+    noMovementLayers:
+      movement:
+        state: tarantula
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: tarantula
+      Critical:
+        Base: tarantula_dead
+      Dead:
+        Base: tarantula_dead
+  - type: MeleeWeapon
+    altDisarm: false
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 6
+
+- type: entity
+  parent:
+  - MobGiantSpider
+  - MobSpiderAngryBase
+  id: MobGiantSpiderAngry
 
 - type: entity
   name: clown spider
-  parent: MobGiantSpiderAngry
+  parent: MobSpiderAngryBase
   id: MobClownSpider
   description: Combines the two most terrifying things in existence, spiders and clowns.
   components:
@@ -2796,7 +2806,7 @@
   - type: Bloodstream
     bloodReagent: DemonsBlood
   - type: Damageable
-    damageContainer: Biological
+    damageContainer: BiologicalMetaphysical
     damageModifierSet: Infernal
   - type: Temperature
     heatDamageThreshold: 4000 #They come from hell, so..
@@ -3448,6 +3458,13 @@
       gender: epicene
   - type: Speech
     speechVerb: Plant
+    speechSounds: Alto
+    allowedEmotes: ['Chirp']
+  - type: Vocal
+    sounds:
+      Male: UnisexDiona
+      Female: UnisexDiona
+      Unsexed: UnisexDiona
   - type: Tag
     tags:
     - DoorBumpOpener
