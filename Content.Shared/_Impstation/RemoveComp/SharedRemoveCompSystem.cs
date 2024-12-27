@@ -34,7 +34,7 @@ public sealed class RemoveCompSystem : EntitySystem
             Debug.Assert(comp.UnwantedComponents.RequireAll, $"Removecomp on {ToPrettyString(Identity.Entity(uid, EntityManager))} only supports RequireAll = true!");
 
             // if there are no components in the list, log an error.
-            Debug.Assert(comp.UnwantedComponents.Components != null, $"RemoveComp ");
+            Debug.Assert(comp.UnwantedComponents.Components != null, $"RemoveComp on {ToPrettyString(Identity.Entity(uid, EntityManager))} has no components defined!");
 
             return;
         }
