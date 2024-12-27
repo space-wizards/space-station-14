@@ -14,13 +14,13 @@ public sealed partial class EmotionLoopComponent : Component
     /// A minimum interval between emotions.
     /// </summary>
     [DataField(required: true)]
-    public TimeSpan MinTimeBetweenEmotions { get; private set; }
+    public TimeSpan MinTimeBetweenEmotions = TimeSpan.FromSeconds(60);
 
     /// <summary>
     /// A maximum interval between emotions.
     /// </summary>
     [DataField(required: true)]
-    public TimeSpan MaxTimeBetweenEmotions { get; private set; }
+    public TimeSpan MaxTimeBetweenEmotions = TimeSpan.FromSeconds(90);
 
     /// <summary> 
     /// A set of emotes that will be randomly picked from.
