@@ -1,8 +1,7 @@
 using Content.Shared.Whitelist;
 using Content.Shared.IdentityManagement;
 using Robust.Shared.Timing;
-using Content.Shared.GameTicking;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
 
 namespace Content.Shared._Impstation.RemoveComp;
 
@@ -28,25 +27,16 @@ public sealed class RemoveCompSystem : EntitySystem
     /// <exception cref="ArgumentException"></exception>
     private void OnMapInit(EntityUid uid, RemoveCompComponent comp, ref MapInitEvent args)
     {
-        // log a message and quit if RequireAll is false.
-        if (!comp.UnwantedComponents.RequireAll)
+        // check for various things that could go wrong with the way the component is defined. if any of them are, complain, and then don't run the component.
+        if (!comp.UnwantedComponents.RequireAll || comp.UnwantedComponents.Components == null)
         {
-            Log.Error("RemoveComp only supports RequireAll = true!");
+            // if the component has RequireAll set to false, log an error.
+            Debug.Assert(comp.UnwantedComponents.RequireAll, $"Removecomp on {ToPrettyString(Identity.Entity(uid, EntityManager))} only supports RequireAll = true!");
+
+            // if there are no components in the list, log an error.
+            Debug.Assert(comp.UnwantedComponents.Components != null, $"RemoveComp on {ToPrettyString(Identity.Entity(uid, EntityManager))} has no components defined!");
+
             return;
-        }
-
-        // if there are no components listed, throw an "improperly defined" error.
-        if (comp.UnwantedComponents.Components == null)
-        {
-            Log.Error($"RemoveComp on {ToPrettyString(Identity.Entity(uid, EntityManager))} must use at least 1 component as a filter in UnwantedComponents!");
-            throw new ArgumentException($"RemoveComp on {ToPrettyString(Identity.Entity(uid, EntityManager))} must use at least 1 component as a filter in UnwantedComponents!");
-        }
-
-        // if the blacklist contains a component that the entity does not possess, throw an error.
-        if (_whitelist.IsBlacklistFail(comp.UnwantedComponents, uid))
-        {
-            Log.Error($"RemoveComp on {ToPrettyString(Identity.Entity(uid, EntityManager))} is trying to remove a component that does not exist.");
-            throw new ArgumentException($"RemoveComp on {ToPrettyString(Identity.Entity(uid, EntityManager))} is trying to remove a component that does not exist.");
         }
 
         // if no errors are detected, run RemoveComponents() and then delete yourself.
@@ -65,18 +55,18 @@ public sealed class RemoveCompSystem : EntitySystem
     /// <param name="comp"></param>
     private void RemoveComponents(EntityUid uid, RemoveCompComponent comp)
     {
-        // if the entity has any of the components on the list,
-        if (_whitelist.IsBlacklistPass(comp.UnwantedComponents, uid))
+        // loop through each component in the list,
+        foreach (var component in comp.UnwantedComponents.Components!)
         {
-            // loop through each component in the list,
-            for (var i = 0; i < comp.UnwantedComponents.Components!.Length; i++)
-            {
-                // set a variable to return the type of each component, and...
-                var compType = EntityManager.ComponentFactory.GetRegistration(comp.UnwantedComponents.Components[i]).Type;
+            // set a variable to return the type of each component, and...
+            var compType = EntityManager.ComponentFactory.GetRegistration(component).Type;
 
-                // remove the offending components.
-                EntityManager.RemoveComponent(uid, compType);
-            }
+            // set a variable to the return value of EntityManager.RemoveComponent.
+            // note to self - methods can be booleans, and will be run in variable declarations. that's damn handy.
+            var success = EntityManager.RemoveComponent(uid, compType);
+
+            // assert that var success will return true. if it doesn't, complain about it
+            Debug.Assert(success, $"RemoveComp on {ToPrettyString(Identity.Entity(uid, EntityManager))} tried to remove component that wasn't present.");
         }
     }
 }
