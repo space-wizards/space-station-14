@@ -793,3 +793,10 @@ Entries:
     changes:
     - type: Add
       message: New visiting shuttle event "ChemLab."
+  - id: 240
+    author: Ermucat
+    time: '2024-12-27T22:04:46.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/240
+    changes:
+    - type: Add
+      message: Added poquito, the new station pet.
