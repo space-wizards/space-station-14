@@ -56,7 +56,15 @@
     accentHColor: "#ffce5b"
   - type: Icon
     state: pda-ntrep
-    
+
+- type: entity
+  parent: CentcomPDA
+  id: CentCommOperatorPDA
+  suffix: CentComm Operator
+  components:
+  - type: Pda
+    id: CentcomIDCardOperator
+
 - type: entity
   parent: BasePDA
   id: IAAPDA
