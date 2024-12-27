@@ -1,113 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Modified threshold for lings getting the shakes and bleeding all over
-    type: Tweak
-  - message: Lings will no longer always be shaking when dead
-    type: Fix
-  - message: Midround lings show up in end screen
-    type: Fix
-  id: 302
-  time: '2024-10-01T10:47:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/387
-- author: Darkmajia
-  changes:
-  - message: Command air tanks now spawn in lockers and suit storage, rather than
-      in command's bags.
-    type: Tweak
-  - message: Fixed a loadout priority issue that could cause survival boxes to drop
-      at your feet.
-    type: Fix
-  id: 303
-  time: '2024-10-01T10:47:31.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/386
-- author: TGRCDev
-  changes:
-  - message: Some round presets now have cooldowns to prevent them from rolling back-to-back.
-    type: Tweak
-  id: 304
-  time: '2024-10-01T23:21:26.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/389
-- author: AftrLite
-  changes:
-  - message: Adds a new rare announcer with sinister vibes, featuring over 80 unique
-      audio lines. Why? Because we can.
-    type: Add
-  id: 305
-  time: '2024-10-01T23:21:16.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/388
-- author: Kandiyaki
-  changes:
-  - message: Added a recipe to activate subjuzine using radium so greys can use it.
-    type: Add
-  id: 306
-  time: '2024-10-01T23:32:06.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/391
-- author: Kandiyaki
-  changes:
-  - message: Added Subjuzine, an alteration of Cognizine that bends the newly-sentient
-      creature to the injector's will. It can be bought in the traitor uplink as part
-      of the 6TC Animal Friends Kit, or created by mixing Cognizine and Vestine.)
-    type: Add
-  id: 307
-  time: '2024-10-01T23:31:50.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/390
-- author: Pinkbat5
-  changes:
-  - message: Fixed a clipping issue with undergarments on the female sex. Be sure
-      to re-select undershirts on your characters.
-    type: Fix
-  id: 308
-  time: '2024-10-02T20:41:22.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/392
-- author: hivehum
-  changes:
-  - message: A zombie infection progresses significantly faster and more dangerously
-      than before.
-    type: Tweak
-  - message: The initial infected greeting is a little more direct that you are an
-      antagonist.
-    type: Tweak
-  - message: Rat King is now officially considered an antagonist.
-    type: Tweak
-  - message: The thieving beacon has had its name and description changed to be less
-      obvious what it is.
-    type: Tweak
-  - message: The ninja can now contact two new beings.
-    type: Add
-  id: 309
-  time: '2024-10-02T20:40:58.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/393
-- author: Darkmajia
-  changes:
-  - message: Vox space ninjas now have a form-fitting helmet.
-    type: Add
-  id: 310
-  time: '2024-10-02T20:41:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/397
-- author: widgetbeck
-  changes:
-  - message: Added "No Contractions" accent, which replaces (most) contractions with
-      their long forms, e.g. "can't" becomes "can not,"
-    type: Add
-  id: 311
-  time: '2024-10-02T20:40:42.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/396
-- author: TheGrimbeeper
-  changes:
-  - message: two new utility effects for large artifacts
-    type: Add
-  id: 312
-  time: '2024-10-03T23:42:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/400
-- author: joelsgp
-  changes:
-  - message: Serbian Parliament has applied for associate membership in the Association
-      of Southeast Asian Nations' Inter-Parliamentary Assembly (AIPA).
-    type: Add
-  id: 313
-  time: '2024-10-03T23:41:54.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/296
 - author: hivehum
   changes:
   - message: Added over a dozen new slimes to herd and milk.
@@ -4520,3 +4411,93 @@
   id: 801
   time: '2024-12-24T19:43:24.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1115
+- author: DinnerCalzone
+  changes:
+  - message: Amber station has been updated and its evac shuttle now properly displays
+      its ETA time.
+    type: Tweak
+  id: 802
+  time: '2024-12-26T11:25:28.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1118
+- author: DinnerCalzone
+  changes:
+  - message: The body hair marking for dwarves and humans may now be used by unisex
+      characters.
+    type: Tweak
+  id: 803
+  time: '2024-12-26T11:26:47.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1119
+- author: TheGrimbeeper
+  changes:
+  - message: new absurdly rare artifact effect that will have you saying "that's not
+      my doll!"
+    type: Add
+  id: 804
+  time: '2024-12-26T11:29:08.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1121
+- author: DinnerCalzone
+  changes:
+  - message: The grappling gun projectile now plays a sound when colliding with walls.
+    type: Add
+  id: 805
+  time: '2024-12-26T11:30:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1124
+- author: DinnerCalzone
+  changes:
+  - message: The Intern announcer line about burgers has been edited to remove the
+      retching sound.
+    type: Tweak
+  id: 806
+  time: '2024-12-26T11:33:41.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1127
+- author: AvianMaiden
+  changes:
+  - message: One new space ambient track for our wonderful stargazers! Wawa.
+    type: Add
+  id: 807
+  time: '2024-12-26T11:40:00.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1131
+- author: DinnerCalzone
+  changes:
+  - message: The footstep sounds for high-heel shoes has been changed.
+    type: Tweak
+  id: 808
+  time: '2024-12-26T11:39:22.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1129
+- author: honeyed-lemons
+  changes:
+  - message: Listening Post op has a unique ID with the correct accesses
+    type: Fix
+  id: 809
+  time: '2024-12-26T11:40:11.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1128
+- author: kipdotnet
+  changes:
+  - message: Banana update
+    type: Tweak
+  id: 810
+  time: '2024-12-26T11:40:54.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1132
+- author: Darkmajia
+  changes:
+  - message: Unknown shuttles will now announce properly.
+    type: Fix
+  id: 811
+  time: '2024-12-26T21:45:10.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1116
+- author: widgetbeck
+  changes:
+  - message: Decapoids can no longer be injected with needles.
+    type: Add
+  - message: Decapoid Vaporizers no longer block ingestion.
+    type: Tweak
+  id: 812
+  time: '2024-12-26T21:46:11.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1117
+- author: RosySaturniidae
+  changes:
+  - message: resprited the chemvend variant on the nukie planet, the syndiejuice
+    type: Tweak
+  id: 813
+  time: '2024-12-26T21:47:59.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1097

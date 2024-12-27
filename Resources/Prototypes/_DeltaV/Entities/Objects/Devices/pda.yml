@@ -3,7 +3,7 @@
   id: SyndiListeningPostPDA
   components:
   - type: Pda
-    id: AgentIDCard
+    id: IDCardPostOpCard
     penSlot:
       startingItem: CyberPen
       whitelist:

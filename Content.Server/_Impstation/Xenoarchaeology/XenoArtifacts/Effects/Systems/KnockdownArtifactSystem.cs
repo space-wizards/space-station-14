@@ -44,8 +44,6 @@ public sealed class KnockdownArtifactSystem : EntitySystem
                 _stuns.TryParalyze(child, TimeSpan.FromSeconds(component.KnockdownTime), true, status);
             }
 
-
-
         }
         else // knock over only people in range
         {

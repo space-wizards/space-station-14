@@ -46898,27 +46898,27 @@ entities:
   - uid: 6923
     components:
     - type: Transform
-      pos: -2.5,23.5
+      pos: -1.5,24.5
       parent: 2
   - uid: 6924
     components:
     - type: Transform
-      pos: -1.5,23.5
+      pos: 1.5,24.5
       parent: 2
   - uid: 6925
     components:
     - type: Transform
-      pos: -0.5,23.5
+      pos: 0.5,24.5
       parent: 2
   - uid: 6926
     components:
     - type: Transform
-      pos: 0.5,23.5
+      pos: 2.5,24.5
       parent: 2
   - uid: 6927
     components:
     - type: Transform
-      pos: 1.5,23.5
+      pos: -0.5,24.5
       parent: 2
   - uid: 6928
     components:
@@ -69539,13 +69539,6 @@ entities:
     - type: Transform
       pos: 38.540165,-32.2804
       parent: 2
-- proto: DungeonMasterCircuitBoard
-  entities:
-  - uid: 10702
-    components:
-    - type: Transform
-      pos: -112.672066,8.495071
-      parent: 2
 - proto: ElectricGuitarInstrument
   entities:
   - uid: 10703
@@ -74301,6 +74294,13 @@ entities:
     components:
     - type: Transform
       pos: -56.367672,-21.840908
+      parent: 2
+- proto: GameMasterCircuitBoard
+  entities:
+  - uid: 10702
+    components:
+    - type: Transform
+      pos: -112.672066,8.495071
       parent: 2
 - proto: GasCanisterBrokenBase
   entities:
