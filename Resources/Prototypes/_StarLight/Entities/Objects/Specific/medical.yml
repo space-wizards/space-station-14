@@ -455,3 +455,27 @@
   icon: { sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: bruizinebrutepack }
   spawn: RedBruizPack1
   maxCount: 20
+
+- type: entity
+  name: first aid kit test
+  description: It's an emergency medical kit for those serious boo-boos.
+  parent: BaseStorageItem
+  id: Medkits
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    state: firstaid
+  - type: Storage
+    maxItemSize: Small
+    grid:
+    - 0,0,3,1
+  - type: Item
+    size: Large
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    heldPrefix: firstaid
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 150
+  - type: Tag
+    tags:
+    - Medkit
