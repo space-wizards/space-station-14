@@ -39,13 +39,6 @@ public sealed class RemoveCompSystem : EntitySystem
             return;
         }
 
-        // if there are no components listed, throw an "improperly defined" error.
-        if (comp.UnwantedComponents.Components == null)
-        {
-            Log.Error($"RemoveComp on {ToPrettyString(Identity.Entity(uid, EntityManager))} must use at least 1 component as a filter in UnwantedComponents!");
-            throw new ArgumentException($"RemoveComp on {ToPrettyString(Identity.Entity(uid, EntityManager))} must use at least 1 component as a filter in UnwantedComponents!");
-        }
-
         // if no errors are detected, run RemoveComponents() and then delete yourself.
         else
         {
