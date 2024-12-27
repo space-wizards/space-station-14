@@ -15,7 +15,8 @@ namespace Content.Server.Database.Migrations.Sqlite
                 table: "profile_role_loadout",
                 type: "TEXT",
                 maxLength: 256,
-                nullable: false);
+                nullable: false,
+                defaultValue: "");
         }
 
         /// <inheritdoc />
