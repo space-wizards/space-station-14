@@ -916,6 +916,18 @@
     - id: BookRandomStory
       prob: 0.5
       orGroup: book
+    - id: BookKeelBayWorn
+      prob: 0.1
+      orGroup: book
+    - id: BookKeelBay
+      prob: 0.4
+      orGroup: book
+    - id: BookCosmicCult
+      prob: 0.5
+      orGroup: book
+    - id: BookTenebraeConspiracy
+      prob: 0.5
+      orGroup: book
     - id: BookGatsby
       prob: 0.05
       orGroup: book
