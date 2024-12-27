@@ -16,10 +16,10 @@ namespace Content.Client.Stylesheets
         [Dependency] private readonly IReflectionManager _reflection = default!;
         [Dependency] private readonly IResourceCache _resCache = default!; // TODO: REMOVE (obsolete; used to construct StyleNano/StyleSpace)
 
-        public Stylesheet SheetNanotransen { get; private set; } = default!;
+        public Stylesheet SheetNanotrasen { get; private set; } = default!;
         public Stylesheet SheetSystem { get; private set; } = default!;
 
-        [Obsolete("Update to use SheetNanotransen instead")]
+        [Obsolete("Update to use SheetNanotrasen instead")]
         public Stylesheet SheetNano { get; private set; } = default!;
         [Obsolete("Update to use SheetSystem instead")]
         public Stylesheet SheetSpace { get; private set; } = default!;
@@ -42,12 +42,12 @@ namespace Content.Client.Stylesheets
             UnusedSheetlets = [..tys];
 
             Stylesheets = new Dictionary<string, Stylesheet>();
-            SheetNanotransen = Init("Nanotransen", new NanotrasenStylesheet(new BaseStylesheet.NoConfig(), this));
+            SheetNanotrasen = Init("Nanotrasen", new NanotrasenStylesheet(new BaseStylesheet.NoConfig(), this));
             SheetSystem = Init("Interface", new SystemStylesheet(new BaseStylesheet.NoConfig(), this));
             SheetNano = new StyleNano(_resCache).Stylesheet; // TODO: REMOVE (obsolete)
             SheetSpace = new StyleSpace(_resCache).Stylesheet; // TODO: REMOVE (obsolete)
 
-            _userInterfaceManager.Stylesheet = SheetNanotransen;
+            _userInterfaceManager.Stylesheet = SheetNanotrasen;
 
             // warn about unused sheetlets
             if (UnusedSheetlets.Count > 0)
