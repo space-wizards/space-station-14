@@ -1,0 +1,56 @@
+{
+	"version": 1,
+	"license": "CC-BY-SA-3.0",
+    "copyright": "Starlight",
+	"size": {
+		"x": 32,
+		"y": 32
+	},
+	"states": [
+		{
+			"name": "redbrutepack"
+		},
+		{
+			"name": "redbrutepack2"
+		},
+		{
+			"name": "redbrutepack3"
+		},
+		{
+			"name": "puncturaseredbrutepack"
+		},
+		{
+			"name": "puncturaseredbrutepack2"
+		},
+		{
+			"name": "puncturaseredbrutepack3"
+		},
+		{
+			"name": "lacerinolbrutepack"
+		},
+		{
+			"name": "lacerinolbrutepack2"
+		},
+		{
+			"name": "lacerinolbrutepack3"
+		},
+		{
+			"name": "bruizinebrutepack"
+		},
+		{
+			"name": "bruizinebrutepack2"
+		},
+		{
+			"name": "bruizinebrutepack3"
+		},
+		{
+			"name": "redointment"
+		},
+		{
+			"name": "redointment2"
+		},
+		{
+			"name": "redointment3"
+		}
+    ]
+}
