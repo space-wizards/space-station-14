@@ -21,7 +21,6 @@
         - to: jointRainbow
           steps:
             - material: PaperRolling
-            - material: CigaretteFilter
             - material: GroundCannabisRainbow
               doAfter: 2
     - node: jointRainbow
