@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Shared.Actions;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
@@ -7,19 +7,26 @@ using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Humanoid;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Lock;
 using Content.Shared.Magic.Components;
 using Content.Shared.Magic.Events;
 using Content.Shared.Maps;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Speech.Muting;
 using Content.Shared.Storage;
+using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
@@ -53,6 +60,10 @@ public abstract class SharedMagicSystem : EntitySystem
     [Dependency] private readonly LockSystem _lock = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly SharedStunSystem _stun = default!;
 
     public override void Initialize()
     {
@@ -67,6 +78,8 @@ public abstract class SharedMagicSystem : EntitySystem
         SubscribeLocalEvent<SmiteSpellEvent>(OnSmiteSpell);
         SubscribeLocalEvent<KnockSpellEvent>(OnKnockSpell);
         SubscribeLocalEvent<ChargeSpellEvent>(OnChargeSpell);
+        SubscribeLocalEvent<RandomGlobalSpawnSpellEvent>(OnRandomGlobalSpawnSpell);
+        SubscribeLocalEvent<MindSwapSpellEvent>(OnMindSwapSpell);
 
         // Spell wishlist
         //  A wishlish of spells that I'd like to implement or planning on implementing in a future PR
@@ -501,6 +514,68 @@ public abstract class SharedMagicSystem : EntitySystem
         _gunSystem.UpdateBasicEntityAmmoCount(wand.Value, basicAmmoComp.Count.Value + ev.Charge, basicAmmoComp);
     }
     // End Charge Spells
+    #endregion
+    #region Global Spells
+
+    private void OnRandomGlobalSpawnSpell(RandomGlobalSpawnSpellEvent ev)
+    {
+        if (!_net.IsServer || ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer) || ev.Spawns is not { } spawns)
+            return;
+
+        ev.Handled = true;
+        Speak(ev);
+
+        var allHumans = _mind.GetAliveHumans();
+
+        foreach (var human in allHumans)
+        {
+            if (!human.Comp.OwnedEntity.HasValue)
+                continue;
+
+            var ent = human.Comp.OwnedEntity.Value;
+
+            var mapCoords = _transform.GetMapCoordinates(ent);
+            foreach (var spawn in EntitySpawnCollection.GetSpawns(spawns, _random))
+            {
+                var spawned = Spawn(spawn, mapCoords);
+                _hands.PickupOrDrop(ent, spawned);
+            }
+        }
+
+        _audio.PlayGlobal(ev.Sound, ev.Performer);
+    }
+
+    #endregion
+    #region Mindswap Spells
+
+    private void OnMindSwapSpell(MindSwapSpellEvent ev)
+    {
+        if (ev.Handled || !PassesSpellPrerequisites(ev.Action, ev.Performer))
+            return;
+
+        ev.Handled = true;
+        Speak(ev);
+
+        // Need performer mind, but target mind is unnecessary, such as taking over a NPC
+        // Need to get target mind before putting performer mind into their body if they have one
+        // Thus, assign bool before first transfer, then check afterwards
+
+        if (!_mind.TryGetMind(ev.Performer, out var perMind, out var perMindComp))
+            return;
+
+        var tarHasMind = _mind.TryGetMind(ev.Target, out var tarMind, out var tarMindComp);
+
+        _mind.TransferTo(perMind, ev.Target);
+
+        if (tarHasMind)
+        {
+            _mind.TransferTo(tarMind, ev.Performer);
+        }
+
+        _stun.TryParalyze(ev.Target, ev.TargetStunDuration, true);
+        _stun.TryParalyze(ev.Performer, ev.PerformerStunDuration, true);
+    }
+
     #endregion
     // End Spells
     #endregion
