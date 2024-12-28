@@ -830,7 +830,7 @@
 - type: artifactEffect
   id: EffectPolyRod
   targetDepth: 4
-  effectProb: 0.15
+  effectProb: 0.05
   effectHint: artifact-effect-hint-polymorph
   components:
   - type: PolyOthersArtifact
