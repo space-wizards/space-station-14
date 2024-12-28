@@ -41,3 +41,8 @@ alert.min_players_sharing_connection = 2
 
 [atmos]
 max_explosion_range = 5
+
+[status]
+privacy_policy_link = "https://account.spacestation14.com/Home/Privacy"
+privacy_policy_identifier = "wizden"
+privacy_policy_version = "2024-12-22"
