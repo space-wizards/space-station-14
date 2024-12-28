@@ -28,7 +28,7 @@ public sealed class RemoveCompSystem : EntitySystem
     private void OnMapInit(EntityUid uid, RemoveCompComponent comp, ref MapInitEvent args)
     {
         // if the component has RequireAll set to false, log an error and cancel.
-        if (!comp.UnwantedComponents.RequireAll || comp.UnwantedComponents.Components == null)
+        if (!comp.UnwantedComponents.RequireAll)
         {
             Log.Error($"Removecomp on {ToPrettyString(Identity.Entity(uid, EntityManager))} only supports RequireAll = true!");
             return;
