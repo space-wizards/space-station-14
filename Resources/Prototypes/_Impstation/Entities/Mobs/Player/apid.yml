@@ -1,0 +1,240 @@
+- type: entity
+  name: apid
+  id: MobApid
+  parent: [SimpleMobBase, StripableInventoryBase, FlyingMobBase]
+  description: Delightfully sweet, these cute little balls of fuzz are distant relatives to moth people.
+  components:
+  - type: CombatMode
+  - type: Inventory
+    templateId: apid
+    displacements:
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
+            state: jumpsuit
+      head:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
+            state: head
+      eyes:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
+            state: glasses
+      ears:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
+            state: ears
+      mask:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
+            state: mask
+      neck:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
+            state: neck
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
+            state: outerClothing
+      gloves:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
+            state: hands
+      shoes:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
+            state: feet
+      belt:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
+            state: belt
+      back:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
+            state: back
+      suitstorage:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
+            state: suitstorage
+    femaleDisplacements: # piskun HumanoidAppearance
+      jumpsuit:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
+            state: jumpsuit
+      head:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
+            state: head
+      eyes:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
+            state: glasses
+      ears:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
+            state: ears
+      mask:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
+            state: mask
+      outerClothing:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
+            state: outerClothing
+      belt:
+        sizeMaps:
+          32:
+            sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
+            state: belt
+  - type: Deathgasp
+    prototype: MonkeyDeathgasp
+  - type: Blindable
+  - type: Cuffable
+  - type: RotationVisuals
+    defaultRotation: 90
+    horizontalRotation: 90
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 80
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: Stripping
+  - type: Hands
+  - type: ComplexInteraction
+  - type: GenericVisualizer
+    visuals:
+      enum.CreamPiedVisuals.Creamed:
+        clownedon:
+          True: {visible: true}
+          False: {visible: false}
+  - type: Body
+    prototype: Primate
+    requiredLegs: 1 # TODO: More than 1 leg
+  - type: CreamPied
+  - type: FireVisuals
+    sprite: Mobs/Effects/onfire.rsi
+    normalState: Monkey_burning
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessString: petting-success-monkey
+    interactFailureString: petting-failure-monkey
+    interactSuccessSpawn: EffectHearts
+    interactSuccessSound:
+      path: /Audio/Animals/ferret_happy.ogg
+    interactFailureSound:
+      path: /Audio/Items/wirecutter.ogg
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeat
+      amount: 3
+  - type: Puller
+    needsHands: true
+  - type: FactionException
+  - type: NpcFactionMember
+    factions:
+      - Passive
+  - type: IdExaminable
+  - type: Tag
+    tags:
+    - VimPilot
+    - DoorBumpOpener
+    - AnomalyHost
+    - CanPilot
+  - type: Reactive
+    groups:
+      Flammable: [ Touch ]
+      Extinguish: [ Touch ]
+    reactions:
+    - reagents: [ Water, SpaceCleaner ]
+      methods: [ Touch ]
+      effects:
+      - !type:WashCreamPieReaction
+  - type: NameIdentifier
+    group: Kobold
+  - type: Speech
+    speechVerb: Moth
+    allowedEmotes: ['Chitter', 'Squeak']
+  - type: Vocal
+    sounds:
+      Male: MaleMoth
+      Female: FemaleMoth
+      Unsexed: UnisexMoth
+  - type: TypingIndicator
+    proto: moth
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      60: Critical
+      125: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3.5
+    baseSprintSpeed: 5
+    weightlessAcceleration: 1.5 # Move around more easily in space.
+    weightlessFriction: 1
+    weightlessModifier: 1
+  - type: MeleeWeapon
+    soundHit:
+      collection: AlienClaw
+    angle: 30
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 5
+        Piercing: 4
+  - type: Temperature
+    heatDamageThreshold: 360
+    coldDamageThreshold: 285
+    currentTemperature: 310.15
+    specificHeat: 42
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      sprite: _Impstation/Mobs/Animals/Apid/apid.rsi
+      state: apid
+    - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+      color: "#ffffff"
+      sprite: Objects/Misc/handcuffs.rsi
+      state: body-overlay-2
+      visible: false
+    - map: [ "ears" ]
+    - map: [ "id" ]
+    - map: [ "mask" ]
+    - map: [ "head" ]
+    - map: [ "clownedon" ]
+      sprite: "Effects/creampie.rsi"
+      state: "creampie_human"
+      visible: false
+  - type: GhostTakeoverAvailable
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-kobold-name
+    description: ghost-role-information-kobold-description
+    rules: ghost-role-information-nonantagonist-rules
+  - type: AntiGravityClothing
+  
