@@ -275,8 +275,6 @@
           - !type:PlaySoundBehavior
             sound:
               collection: MetalBreak
-    - type: StaticPrice
-      price: 100
     - type: PhysicalComposition
       materialComposition:
         Steel: 1200 # 12 sheets
