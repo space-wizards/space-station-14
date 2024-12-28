@@ -169,7 +169,7 @@
     prototype: ComputerSurveillanceCameraMonitor
   - type: Tag
     tags:
-      - SurveillanceCameraMonitorCircuitboard
+    - SurveillanceCameraMonitorCircuitboard
 
 - type: entity
   parent: BaseComputerCircuitboard
