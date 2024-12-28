@@ -1,0 +1,65 @@
+<Document>
+
+  <GuideEntityEmbed Entity="Supermatter" Caption="" Margin="0"/>
+
+  # The Supermatter Engine
+
+  So you've decided to take on the challenge and set up the Supermatter Engine? First, let's give you a short overview of the main Supermatter crystal beforehand.
+
+  Its primary features are emitting electrical arcs that are harnessed to power the station through tesla coils.
+
+  Side effects include radiation emission, releasing hot oxygen and plasma, heating the air around, and exploding, transforming into a black hole or an energy ball and eating the entire station if you screw up hard enough.
+
+  It begins inert but being hit by an object or a projectile will activate it and it'll start exhibiting nearly all of the aforementioned properties.
+
+  ## Words of Warning
+
+  1. The Supermatter crystal is [color=red]VERY DANGEROUS[/color]. Activating the crystal should be the last step in setting up any form of Supermatter based power!
+
+  2. [color=red]PUT YOUR RADIATION SUIT ON[/color].
+
+  3. Most the Supermatter setup involves a gas loop that is designed to cool down the Supermatter chamber. Please have at least some knowledge of gases and their atmospheric properties.
+
+  4. Anything that bumps into the Supermatter is [color=red]fundamentally annihilated[/color]. [color=red]Do not touch it[/color]. This means weld and bolt the door to the chamber.
+
+  ## Gas Interactions
+
+  Here's a list of all gases from least dangerous to most dangerous.
+
+  1. [color=#bffffe]Frezon[/color]. Aside from cooling down the Supermatter, it basically stops power and waste production, which may come handy if the Supermatter is close to delaminating and you need to shut it down fast.
+
+  2. [color=#c20000]Nitrogen[/color]. N2 is the basic gas most Supermatter setups will run exclusively, being very simple to set up for. It dampens the power generation from heat, and reduces the amount of plasma the SM belches out, making it good for when you aren't trying to do something silly.
+
+  3. [color=#b16d6d]Nitrous oxide[/color]. Reinforces the heat resistance of the crystal, allowing for much hotter setups than usual. However, at high temperatures it will decompose into Nitrogen and Oxygen. While N2 is good, O2 certainly is not. This O2 will also react with the Plasma to create Tritium and then a Tritium fire.
+
+  4. [color=#62d5ca]Oxygen[/color]. Provides a boost to power transmission without actively increasing the waste gas amount or temperature. Pretty risky to use, as any disruption of the cooling loop will soon cause a plasma fire in the crystal chamber. Even just a high concentration of O2 will activate and continuously power the crystal.
+
+  5. [color=#19b348]Ammonia[/color]. Increases the power generation slightly at a minor cost to the heat penalty.
+
+  6. [color=#979797]Carbon Dioxide[/color]. In low concentrations, it will increase the crystal's power generation. In high concentrations it will raise the crystal's energy to extremely high levels. With poor management and insufficient or downright bad preparation, it will eventually exceed safe energy levels and begin a charge delamination, producing electric arcs and anomalies until it eventually explodes into a Tesla ball.
+
+  [color=red]7[/color]. [color=#ff9d00]Plasma[/color]. Very similar to Oxygen but provides a higher power boost as well as a much higher waste and heat penalty. The extreme pressures and volumes of gas produced by this gas are very likely to clog pipes and overheat the chamber.
+
+  [color=red]8[/color]. [color=#08a800]Tritium[/color]. Increases the power production of the Supermatter by up to 3 times, there is one slight issue with it. It is dangerous. It is very dangerous. Tritium is a horrifyingly irritable and jumpy gas. While it isn't as harmful to the heat level as Plasma is (just barely), it also has the second worst heat capacity of all gasses while Plasma has the second highest. This means that Plasma can be kept happy with enough cooling, whereas Tritium eagerly goes from a safe space loop into a burning hellfire. Add to this the byproduct of large amounts of Oxygen production (not exclusive to Tritium, an issue in a Plasma engine too), and you have a tritium fire and a very hot crystal. Do not use this gas unless you have a very strong understanding of atmospherics and the Supermatter, and are willing to get creative.
+
+  ## Practical guide to the Supermatter
+
+  Now, forget about everything you've just read and get to setting up the most basic loop there is: the Nitrogen loop.
+
+  The atmospheric setup in its' most basic form should look like this:
+
+  (We did not have enough budget for images, here is a text representation)
+
+  1. Nitrogen gets pumped into the chamber by passive vents from one side
+
+  2. Every gas gets pumped out of the chamber by using scrubbers set on Siphon on the other side.
+
+  3. The output gets filtered, cooled down, and excess nitrogen gets either routed into space or rerouted into the input.
+
+  That's basically it. I hope you understand at least something in this example. Now get to it!
+
+  ## Experiment
+
+  You're not a real engineer if you haven't figured out the most efficient way to produce electricity using the Supermatter crystal, are you?
+
+</Document>

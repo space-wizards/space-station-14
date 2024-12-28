@@ -51,7 +51,7 @@
   - type: StaticPrice
     price: 100
   - type: RadiationBlocker
-    resistance: 2
+    resistance: 4
 
 - type: entity
   id: PlasmaWindowDirectional

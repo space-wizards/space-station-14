@@ -99,6 +99,7 @@
       noAirWhenFullyAirBlocked: true
     - type: RadiationBlocker
       enabled: false
+      resistance: 1
     - type: Occluder
       enabled: false
     - type: WallMount
