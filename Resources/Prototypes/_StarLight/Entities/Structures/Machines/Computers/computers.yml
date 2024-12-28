@@ -23,6 +23,18 @@
     color: "#FC0097"
 
 - type: entity
+  parent: ComputerComms
+  id: CentCommSectoralConsole
+  name: centcomm sectoral console
+  description: Use this to annoy captains of all stations at once.
+  components:
+    - type: AccessReader
+      access: [[ "Command" ]]
+    - type: CommunicationsConsole
+      title: comms-console-announcement-title-centcom
+      global: true
+
+- type: entity
   parent: BaseComputer
   id: AbductorHumanObservationConsole
   name: human observation console

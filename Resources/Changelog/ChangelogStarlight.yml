@@ -1474,3 +1474,25 @@ Entries:
   id: 209
   time: '2024-12-25T21:16:06.283909+00:00'
   url: 'null'
+- author: Miracula
+  changes:
+  - message: Added baked vulpkanin recipe (admin only for now)
+    type: Add
+  id: 210
+  time: '2024-12-27T09:25:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/190
+- author: Miracula
+  changes:
+  - message: Added CentComm sectoral console (admin only for now)
+    type: Add
+  id: 211
+  time: '2024-12-27T09:25:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/190
+- author: Miracula
+  changes:
+  - message: Added CentComm Operator role (admin only for now)
+    type: Add
+  id: 212
+  time: '2024-12-27T09:25:44.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/190
+
