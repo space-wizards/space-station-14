@@ -179,7 +179,6 @@
         - DiscreteHealthAnalyzer
         - SurgeryTool
         - Dropper
-        - Medkit
       components:
         - Stunbaton
         - FlashOnTrigger
