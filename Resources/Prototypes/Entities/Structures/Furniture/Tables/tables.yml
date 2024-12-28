@@ -558,6 +558,16 @@
       collection: FootstepFloor
 
 - type: entity
+  id: TableStoneChromite
+  parent: TableStone
+  name: chromite stone table
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/stone_chromite.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Tables/stone_chromite.rsi
+
+- type: entity
   id: TableWeb
   parent: TableBase
   name: web table

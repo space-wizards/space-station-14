@@ -12,6 +12,7 @@
     Wall: ShadowDimensionBarrierSpawner
     Window: ShadowDimensionFillSpawner
     Pipe: ShadowDimensionFillSpawner
+    Table: TableStoneChromite
     # Loot zone
     ShadowSideLoot: ShadowDimensionLootSpawner
     ShadowSideLootEpic: ShadowDimensionEpicLootSpawner

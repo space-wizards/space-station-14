@@ -1235,6 +1235,9 @@
   id: Spellbook
 
 - type: Tag
+  id: Table
+
+- type: Tag
   id: TabletopBoard
 
 - type: Tag
