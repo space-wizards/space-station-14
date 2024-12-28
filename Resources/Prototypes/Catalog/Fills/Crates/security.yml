@@ -2,7 +2,7 @@
   id: CrateSecurityArmor
   parent: CrateSecgear
   name: armor crate
-  description: Three vests of well-rounded, decently-protective armor. Requires Security access to open.
+  description: Contains three bulletproof vests. Requires Security access to open.
   components:
   - type: StorageFill
     contents:
@@ -24,7 +24,7 @@
   id: CrateSecurityNonlethal
   parent: CrateSecgear
   name: nonlethals crate
-  description: Disabler weapons. Requires Security access to open.
+  description: Contains a mix of disablers, stun batons, and flashes. Requires Security access to open.
   components:
   - type: StorageFill
     contents:

@@ -461,6 +461,12 @@ namespace Content.Shared.Cuffs
             if (!_interaction.InRangeUnobstructed(handcuff, target))
                 return false;
 
+            // if the amount of hands the target has is equal to or less than the amount of hands that are cuffed
+            // don't apply the new set of cuffs
+            // (how would you even end up with more cuffed hands than actual hands? either way accounting for it)
+            if (TryComp<HandsComponent>(target, out var hands) && hands.Count <= component.CuffedHandCount)
+                return false;
+
             // Success!
             _hands.TryDrop(user, handcuff);
 
@@ -528,7 +534,7 @@ namespace Content.Shared.Cuffs
             {
                 _popup.PopupClient(Loc.GetString("handcuff-component-start-cuffing-target-message",
                     ("targetName", Identity.Name(target, EntityManager, user))), user, user);
-                _popup.PopupClient(Loc.GetString("handcuff-component-start-cuffing-by-other-message",
+                _popup.PopupEntity(Loc.GetString("handcuff-component-start-cuffing-by-other-message",
                     ("otherName", Identity.Name(user, EntityManager, target))), target, target);
             }
 
@@ -636,10 +642,14 @@ namespace Content.Shared.Cuffs
 
             _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user)} is trying to uncuff {ToPrettyString(target)}");
 
-            _popup.PopupEntity(Loc.GetString("cuffable-component-start-uncuffing-observer",
-                    ("user", Identity.Name(user, EntityManager)), ("target", Identity.Name(target, EntityManager))),
-                target, Filter.Pvs(target, entityManager: EntityManager)
-                    .RemoveWhere(e => e.AttachedEntity == target || e.AttachedEntity == user), true);
+            _popup.PopupEntity(
+                Loc.GetString("cuffable-component-start-uncuffing-observer",
+                    ("user", Identity.Name(user, EntityManager)),
+                    ("target", Identity.Name(target, EntityManager))),
+                target,
+                Filter.Pvs(target, entityManager: EntityManager)
+                    .RemoveWhere(e => e.AttachedEntity == target || e.AttachedEntity == user),
+                true);
 
             if (target == user)
             {
@@ -648,9 +658,13 @@ namespace Content.Shared.Cuffs
             else
             {
                 _popup.PopupClient(Loc.GetString("cuffable-component-start-uncuffing-target-message",
-                    ("targetName", Identity.Name(target, EntityManager, user))), user, user);
-                _popup.PopupClient(Loc.GetString("cuffable-component-start-uncuffing-by-other-message",
-                    ("otherName", Identity.Name(user, EntityManager, target))), target, target);
+                    ("targetName", Identity.Name(target, EntityManager, user))),
+                    user,
+                    user);
+                _popup.PopupEntity(Loc.GetString("cuffable-component-start-uncuffing-by-other-message",
+                    ("otherName", Identity.Name(user, EntityManager, target))),
+                    target,
+                    target);
             }
 
             _audio.PlayPredicted(isOwner ? cuff.StartBreakoutSound : cuff.StartUncuffSound, target, user);

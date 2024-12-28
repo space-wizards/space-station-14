@@ -206,8 +206,7 @@ namespace Content.Client.Wires.UI
                             (_statusContainer = new GridContainer
                             {
                                 Margin = new Thickness(8, 4),
-                                // TODO: automatically change columns count.
-                                Columns = 3
+                                Rows = 2
                             })
                         }
                     }
@@ -227,7 +226,8 @@ namespace Content.Client.Wires.UI
                 PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#525252ff")}
             });
             CloseButton.OnPressed += _ => Close();
-            SetSize = new Vector2(320, 200);
+            SetHeight = 200;
+            MinWidth = 320;
         }
 
 
@@ -503,6 +503,8 @@ namespace Content.Client.Wires.UI
 
             public StatusLight(StatusLightData data, IResourceCache resourceCache)
             {
+                HorizontalAlignment = HAlignment.Right;
+
                 var hsv = Color.ToHsv(data.Color);
                 hsv.Z /= 2;
                 var dimColor = Color.FromHsv(hsv);

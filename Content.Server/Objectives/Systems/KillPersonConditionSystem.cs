@@ -9,6 +9,7 @@ using Content.Shared.Roles.Jobs;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using System.Linq;
 
 namespace Content.Server.Objectives.Systems;
 
@@ -70,6 +71,15 @@ public sealed class KillPersonConditionSystem : EntitySystem
                 _role.MindHasRole<JobRoleComponent>((mindId.Owner, mindId.Comp), out var role) &&
                 role?.Comp1.JobPrototype is {} jobId &&
                 _proto.Index(jobId).SetPreference));
+        }
+
+        // Can't have multiple objectives to kill the same person
+        foreach (var objective in args.Mind.Objectives)
+        {
+            if (HasComp<KillPersonConditionComponent>(objective) && TryComp<TargetObjectiveComponent>(objective, out var kill))
+            {
+                allHumans.RemoveWhere(x => x.Owner == kill.Target);
+            }
         }
 
         // no other humans to kill
