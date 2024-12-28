@@ -1,5 +1,7 @@
 {
 	"version": 1,
+	"license": "CC-BY-SA-3.0",
+    "copyright": "Original Combat Medkit Sprite taken from tgstation at https://github.com/tgstation/tgstation/tree/727eb0a445bccbdc2d472e158e96b87fc0e997a1.",
 	"size": {
 		"x": 32,
 		"y": 32
