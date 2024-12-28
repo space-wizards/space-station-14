@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: Gondal is here.
-    type: Add
-  id: 316
-  time: '2024-10-03T23:42:18.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/399
 - author: ruddygreat
   changes:
   - message: Added the Cleaner lake, a grenade launcher that has been modified to
@@ -4501,3 +4494,14 @@
   id: 815
   time: '2024-12-27T06:51:10.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1136
+- author: honeyed-lemons
+  changes:
+  - message: added the Supermatter Engine
+    type: Add
+  - message: Radiation shielding adjustments.
+    type: Tweak
+  - message: Radiation no longer prevents doafters
+    type: Tweak
+  id: 816
+  time: '2024-12-28T00:31:01.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1138

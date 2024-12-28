@@ -343,6 +343,9 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineeringWhite
+  - type: ClothingGrantComponent
+    component:
+    - type: SupermatterImmune
 
 #Chief Medical Officer's Hardsuit
 - type: entity
