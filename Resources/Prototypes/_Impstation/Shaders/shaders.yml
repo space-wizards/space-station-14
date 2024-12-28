@@ -1,4 +1,4 @@
 - type: shader
-  id: AccesibleFullStealth
+  id: AccessibleFullStealth
   kind: source
-  path: "/Textures/_Impstation/Shaders/accesible_full_stealth.swsl"
+  path: "/Textures/_Impstation/Shaders/accessible_full_stealth.swsl"
