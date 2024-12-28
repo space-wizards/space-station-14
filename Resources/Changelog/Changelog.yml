@@ -1,24 +1,6 @@
 ﻿Entries:
 - author: Moomoobeef
   changes:
-  - message: medibelts are found in the medidrobe instead of in lockers.
-    type: Tweak
-  id: 7256
-  time: '2024-08-31T23:22:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31470
-- author: EmoGarbage404
-  changes:
-  - message: Removed the reclaimer shuttle.
-    type: Remove
-  - message: Removed fultons and fulton beacons from the autolathe
-    type: Remove
-  - message: Adjusted equipment inside salvage lockers and vendors.
-    type: Tweak
-  id: 7257
-  time: '2024-08-31T23:39:32.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31333
-- author: Moomoobeef
-  changes:
   - message: Added flavors to an array of previously indescribable things.
     type: Add
   id: 7258
@@ -3937,3 +3919,19 @@
   id: 7755
   time: '2024-12-27T13:34:32.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33639
+- author: Alpaccalypse
+  changes:
+  - message: Power monitoring computer boards can no longer be researched or printed,
+      as originally intended.
+    type: Remove
+  id: 7756
+  time: '2024-12-28T10:13:13.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34078
+- author: psykana
+  changes:
+  - message: Traitor can no longer get multiple objectives to save/help/kill the same
+      person
+    type: Fix
+  id: 7757
+  time: '2024-12-28T14:49:03.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33704
