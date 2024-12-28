@@ -9,7 +9,7 @@ public sealed partial class FakeMindShieldComponent : Component
 {
 
     [DataField, AutoNetworkedField]
-    public bool IsEnabled { get; set; }
+    public bool IsEnabled { get; set; } = false;
 
     [DataField, AutoNetworkedField]
     public ProtoId<SecurityIconPrototype> MindShieldStatusIcon = "MindShieldIcon";

@@ -3,7 +3,7 @@ using Content.Shared.Mindshield.Components;
 
 namespace Content.Shared.Mindshield.FakeMindShield;
 
-public abstract class SharedFakeMindShieldSystem : EntitySystem
+public sealed class SharedFakeMindShieldSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -12,11 +12,11 @@ public abstract class SharedFakeMindShieldSystem : EntitySystem
     }
 
 
-    public void OnToggleMindshield(EntityUid uid, FakeMindShieldComponent comp, FakeMindShieldToggleEvent toggleEvent)
+    private void OnToggleMindshield(EntityUid uid, FakeMindShieldComponent comp, FakeMindShieldToggleEvent toggleEvent)
     {
         comp.IsEnabled = !comp.IsEnabled;
         Dirty(uid, comp);
     }
 }
 
-public sealed partial class FakeMindShieldToggleEvent : InstantActionEvent { }
+public sealed partial class FakeMindShieldToggleEvent : InstantActionEvent;
