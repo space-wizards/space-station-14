@@ -13,6 +13,6 @@ public sealed partial class PriceGunComponent : Component
     /// The sound that plays when the price gun appraises an object.
     /// </summary>
     [DataField]
-    public SoundSpecifier AppraisalSound  = new SoundPathSpecifier("/Audio/Machines/chime.ogg");
+    public SoundSpecifier AppraisalSound  = new SoundPathSpecifier("/Audio/Items/appraiser.ogg");
 }
 
