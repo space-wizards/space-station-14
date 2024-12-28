@@ -8,6 +8,7 @@
   gridComponents:
   - type: Gravity
     enabled: true
+    inherent: true
   replacements:
     Wall: ShadowDimensionBarrierSpawner
     Window: ShadowDimensionFillSpawner
