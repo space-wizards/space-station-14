@@ -1,0 +1,10 @@
+﻿<Document>
+  # Atmospheric Network Monitor
+  The Atmospheric Network Monitor is a computer that shows information on monitored pipe networks across the station.
+
+  <Box>
+    <GuideEntityEmbed Entity="ComputerAtmosMonitoring"/>
+  </Box>
+
+  It is a useful tool for quickly
+</Document>

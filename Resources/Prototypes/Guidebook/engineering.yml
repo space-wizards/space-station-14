@@ -187,6 +187,25 @@
   id: DeviceMonitoringAndControl
   name: guide-entry-devicemonitoringandcontrol
   text: "/ServerInfo/Guidebook/Engineering/DeviceMonitoringAndControl.xml"
+  children:
+  - AirAlarms
+  - AtmosphericAlertsComputer
+  - AtmosphericNetworkMonitor
+
+- type: guideEntry
+  id: AirAlarms
+  name: guide-entry-airalarms
+  text: "/ServerInfo/Guidebook/Engineering/AirAlarms.xml"
+
+- type: guideEntry
+  id: AtmosphericAlertsComputer
+  name: guide-entry-atmosphericalertscomputer
+  text: "/ServerInfo/Guidebook/Engineering/AtmosphericAlertsComputer.xml"
+
+- type: guideEntry
+  id: AtmosphericNetworkMonitor
+  name: guide-entry-atmosphericnetworkmonitor
+  text: "/ServerInfo/Guidebook/Engineering/AtmosphericNetworkMonitor.xml"
 
 - type: guideEntry
   id: FireAndGasControl
