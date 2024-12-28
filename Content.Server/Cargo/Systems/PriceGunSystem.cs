@@ -1,7 +1,9 @@
 using Content.Server.Popups;
+using Content.Shared.Cargo.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Timing;
 using Content.Shared.Cargo.Systems;
+using Robust.Shared.Audio.Systems;
 
 namespace Content.Server.Cargo.Systems;
 
@@ -11,7 +13,7 @@ public sealed class PriceGunSystem : SharedPriceGunSystem
     [Dependency] private readonly PricingSystem _pricingSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly CargoSystem _bountySystem = default!;
-
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     protected override bool GetPriceOrBounty(EntityUid priceGunUid, EntityUid target, EntityUid user)
     {
         if (!TryComp(priceGunUid, out UseDelayComponent? useDelay) || _useDelay.IsDelayed((priceGunUid, useDelay)))
@@ -28,6 +30,10 @@ public sealed class PriceGunSystem : SharedPriceGunSystem
             _popupSystem.PopupEntity(Loc.GetString("price-gun-pricing-result", ("object", Identity.Entity(target, EntityManager)), ("price", $"{price:F2}")), user, user);
         }
 
+        if (TryComp<PriceGunComponent>(priceGunUid, out var priceGunComp))
+        {
+            _audio.PlayPvs(priceGunComp.AppraisalSound, priceGunUid);
+        }
         _useDelay.TryResetDelay((priceGunUid, useDelay));
         return true;
     }
