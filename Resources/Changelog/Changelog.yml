@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: slarticodefast
-  changes:
-  - message: Fixed toggleable pointlights for the toy sword, lighters, welders and
-      arabian lamp.
-    type: Fix
-  id: 7254
-  time: '2024-08-31T08:28:36.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31655
-- author: juliangiebel
-  changes:
-  - message: Adds the station anchor. It anchors stations in space and prevents them
-      from moving.
-    type: Add
-  id: 7255
-  time: '2024-08-31T14:40:28.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/26098
 - author: Moomoobeef
   changes:
   - message: medibelts are found in the medidrobe instead of in lockers.
@@ -3938,3 +3922,18 @@
   id: 7753
   time: '2024-12-26T22:47:23.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33992
+- author: crazybrain
+  changes:
+  - message: Bluespace lockers and quantum spin inverters can no longer go on the
+      arrivals shuttle.
+    type: Tweak
+  id: 7754
+  time: '2024-12-27T12:34:31.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34072
+- author: Plykiya
+  changes:
+  - message: You now see a popup when being cuffed or uncuffed again.
+    type: Fix
+  id: 7755
+  time: '2024-12-27T13:34:32.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33639
