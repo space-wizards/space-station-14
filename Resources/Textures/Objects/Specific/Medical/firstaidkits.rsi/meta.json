@@ -96,17 +96,6 @@
       "directions": 4
     },
     {
-			"name": "BrigKube"
-		},
-		{
-      "name": "BrigKube-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "BrigKube-inhand-left",
-      "directions": 4
-    },
-    {
 			"name": "advkit"
 		},
 		{
