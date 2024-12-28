@@ -2,3 +2,8 @@
   id: ShuttleChemLab
   path: /Maps/_Harmony/Shuttles/ShuttleEvent/chemlab.yml
   copies: 1
+
+- type: preloadedGrid
+  id: ShuttleSyndicateReinforcement
+  path: /Maps/_Harmony/Shuttles/ShuttleEvent/syndicatereinforcement.yml
+  copies: 1
