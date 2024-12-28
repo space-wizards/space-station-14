@@ -200,7 +200,7 @@
 - type: stack
   id: RedOintment
   name: redointment
-  icon: { sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: redointment }
+  icon: { sprite: "/Textures/_Starlight/Objects/Specific/Medical/medical.rsi", state: redointment }
   spawn: RedOintment1
   maxCount: 20
 
@@ -261,7 +261,7 @@
 - type: stack
   id: RedBrutePack
   name: redbrutepack
-  icon: { sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: redbrutepack }
+  icon: { sprite: "/Textures/_Starlight/Objects/Specific/Medical/medical.rsi", state: redbrutepack }
   spawn: RedBrutePack1
   maxCount: 20
 
@@ -325,7 +325,7 @@
 - type: stack
   id: RedPunctPack
   name: redpunctpack
-  icon: { sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: puncturaseredbrutepack }
+  icon: { sprite: "/Textures/_Starlight/Objects/Specific/Medical/medical.rsi", state: puncturaseredbrutepack }
   spawn: RedPunctPack1
   maxCount: 20
 
@@ -389,7 +389,7 @@
 - type: stack
   id: RedLacePack
   name: redlacepack
-  icon: { sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: lacerinolbrutepack }
+  icon: { sprite: "/Textures/_Starlight/Objects/Specific/Medical/medical.rsi", state: lacerinolbrutepack }
   spawn: RedLacePack1
   maxCount: 20
 
@@ -452,6 +452,6 @@
 - type: stack
   id: RedBruizPack
   name: redbruizpack
-  icon: { sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: bruizinebrutepack }
+  icon: { sprite: "/Textures/_Starlight/Objects/Specific/Medical/medical.rsi", state: bruizinebrutepack }
   spawn: RedBruizPack1
   maxCount: 20
