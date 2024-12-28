@@ -14,6 +14,7 @@ public sealed class PriceGunSystem : SharedPriceGunSystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly CargoSystem _bountySystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+
     protected override bool GetPriceOrBounty(EntityUid priceGunUid, EntityUid target, EntityUid user)
     {
         if (!TryComp(priceGunUid, out UseDelayComponent? useDelay) || _useDelay.IsDelayed((priceGunUid, useDelay)))
@@ -34,6 +35,7 @@ public sealed class PriceGunSystem : SharedPriceGunSystem
         {
             _audio.PlayPvs(priceGunComp.AppraisalSound, priceGunUid);
         }
+        
         _useDelay.TryResetDelay((priceGunUid, useDelay));
         return true;
     }
