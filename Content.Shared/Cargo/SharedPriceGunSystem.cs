@@ -18,7 +18,6 @@ public abstract class SharedPriceGunSystem : EntitySystem
     }
 
     private void OnUtilityVerb(EntityUid uid, PriceGunComponent component, GetVerbsEvent<UtilityVerb> args)
-
     {
         if (!args.CanAccess || !args.CanInteract || args.Using == null)
             return;
