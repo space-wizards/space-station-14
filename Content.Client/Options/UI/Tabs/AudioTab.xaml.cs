@@ -1,5 +1,5 @@
 using Content.Client.Audio;
-using Content.Shared._EinsteinEngine.CCVar;
+using Content.Shared._EinsteinEngines.CCVar;
 using Content.Shared._Impstation.CCVar;
 using Content.Shared.CCVar;
 using Robust.Client.Audio;
