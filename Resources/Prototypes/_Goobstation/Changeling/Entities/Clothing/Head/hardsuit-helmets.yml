@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingHeadHardsuitBase
+  parent: [ClothingHeadHardsuitBase, TierXContraband]
   id: ChangelingClothingHeadHelmetHardsuit
   name: organic space helmet
   description: A spaceworthy biomass of pressure and temperature resistant tissue.
