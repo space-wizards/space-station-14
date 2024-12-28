@@ -1,9 +1,11 @@
+using Content.Client.Administration.Managers;
 using Content.Client.Interactable.Components;
-using Content.Client.StatusIcon;
+using Content.Shared.Ghost;
 using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Client.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Stealth;
@@ -12,6 +14,8 @@ public sealed class StealthSystem : SharedStealthSystem
 {
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IClientAdminManager _adminManager = default!;
 
     private ShaderInstance _shader = default!;
 
@@ -19,7 +23,7 @@ public sealed class StealthSystem : SharedStealthSystem
     {
         base.Initialize();
 
-        _shader = _protoMan.Index<ShaderPrototype>("Stealth").InstanceUnique();
+        _shader = _protoMan.Index<ShaderPrototype>("AccesibleFullStealth").InstanceUnique();
 
         SubscribeLocalEvent<StealthComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<StealthComponent, ComponentStartup>(OnStartup);
@@ -85,6 +89,33 @@ public sealed class StealthSystem : SharedStealthSystem
         var reference = args.Viewport.WorldToLocal(_transformSystem.GetWorldPosition(parentXform));
         reference.X = -reference.X;
         var visibility = GetVisibility(uid, component);
+
+        //imp special - show an outline for people that should see it, goes along with complete invisibility
+        //includes the entity with the component, any admins & any ghosts
+        //todo want this to check for if the player's entity is inside a container as well
+        _shader.SetParameter("ShowOutline", false); //make sure it's always false by default
+
+        bool isAdmin = false;
+        bool isCorrectSession = false;
+        bool isGhost = false;
+        bool isInContainer = false;
+
+        if (_playerManager.LocalSession != null)
+        {
+            if (_playerManager.TryGetSessionByEntity(uid, out var playerSession))
+            {
+                isCorrectSession = playerSession.UserId == _playerManager.LocalSession.UserId;
+            }
+
+            isAdmin = _adminManager.IsAdmin();
+            isGhost = HasComp<GhostComponent>(_playerManager.LocalSession.AttachedEntity);
+        }
+
+        if (isAdmin || isCorrectSession || isGhost || isInContainer)
+        {
+            _shader.SetParameter("ShowOutline", true);
+        }
+        //imp special end
 
         // actual visual visibility effect is limited to +/- 1.
         visibility = Math.Clamp(visibility, -1f, 1f);
