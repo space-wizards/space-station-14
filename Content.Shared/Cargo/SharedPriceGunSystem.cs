@@ -2,7 +2,6 @@ using Content.Shared.Cargo.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Verbs;
-using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Cargo.Systems;
 
@@ -11,7 +10,6 @@ namespace Content.Shared.Cargo.Systems;
 /// </summary>
 public abstract class SharedPriceGunSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = null!;
     public override void Initialize()
     {
         base.Initialize();
@@ -42,7 +40,6 @@ public abstract class SharedPriceGunSystem : EntitySystem
         if (!args.CanReach || args.Target == null || args.Handled)
             return;
 
-        _audio.PlayPredicted(entity.Comp.AppraisalSound, entity.Owner, args.User);
         args.Handled |= GetPriceOrBounty(entity, args.Target.Value, args.User);
     }
 
