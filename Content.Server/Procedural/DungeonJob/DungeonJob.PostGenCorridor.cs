@@ -108,7 +108,7 @@ public sealed partial class DungeonJob
             setTiles.Add((tile, _tile.GetVariantTile(tileDef, random)));
         }
 
-        _maps.SetTiles(_gridUid, _grid, setTiles);
+        AddLoadedTile(setTiles);
         dungeon.CorridorTiles.UnionWith(corridorTiles);
         dungeon.RefreshAllTiles();
         BuildCorridorExterior(dungeon);

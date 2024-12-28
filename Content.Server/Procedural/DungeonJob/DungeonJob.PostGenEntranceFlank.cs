@@ -47,12 +47,12 @@ public sealed partial class DungeonJob
             }
         }
 
-        _maps.SetTiles(_gridUid, _grid, tiles);
+        AddLoadedTile(tiles);
         var entGroup = _prototype.Index(flankProto);
 
         foreach (var entrance in spawnPositions)
         {
-            _entManager.SpawnEntities(_maps.GridTileToLocal(_gridUid, _grid, entrance), EntitySpawnCollection.GetSpawns(entGroup.Entries, random));
+            AddLoadedEntity(EntitySpawnCollection.GetSpawns(entGroup.Entries, random), _maps.GridTileToLocal(_gridUid, _grid, entrance));
         }
     }
 }

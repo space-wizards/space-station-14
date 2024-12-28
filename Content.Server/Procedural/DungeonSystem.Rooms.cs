@@ -2,7 +2,6 @@ using System.Numerics;
 using Content.Shared.Decals;
 using Content.Shared.Maps;
 using Content.Shared.Procedural;
-using Content.Shared.Random.Helpers;
 using Content.Shared.Whitelist;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -58,6 +57,9 @@ public sealed partial class DungeonSystem
         return room;
     }
 
+    /// <summary>
+    /// <see cref="SpawnRoom(Robust.Shared.GameObjects.EntityUid,Robust.Shared.Map.Components.MapGridComponent,Robust.Shared.Maths.Vector2i,Content.Shared.Procedural.DungeonRoomPrototype,System.Random,System.Collections.Generic.HashSet{Robust.Shared.Maths.Vector2i}?,bool,bool)"/>
+    /// </summary>
     public void SpawnRoom(
         EntityUid gridUid,
         MapGridComponent grid,
@@ -99,13 +101,20 @@ public sealed partial class DungeonSystem
         return roomRotation;
     }
 
+    /// <summary>
+    /// Spawns a <see cref="DungeonRoomPrototype"/> with the specified data.
+    /// </summary>
+    /// <param name="reservedTiles">Any tiles to be ignored</param>
+    /// <param name="clearExisting">Clears existing entities / decals out of the way</param>
+    /// <param name="loaded">Dungeon data that we should append what was loaded onto</param>
     public void SpawnRoom(
         EntityUid gridUid,
         MapGridComponent grid,
         Matrix3x2 roomTransform,
         DungeonRoomPrototype room,
         HashSet<Vector2i>? reservedTiles = null,
-        bool clearExisting = false)
+        bool clearExisting = false,
+        DungeonLoadedData? loaded = null)
     {
         // Ensure the underlying template exists.
         var roomMap = GetOrCreateTemplate(room);
@@ -157,6 +166,7 @@ public sealed partial class DungeonSystem
                     continue;
 
                 _tiles.Add((rounded, tileRef.Tile));
+                loaded?.Tiles.Add(rounded, tileRef);
             }
         }
 
@@ -190,6 +200,9 @@ public sealed partial class DungeonSystem
                 _transform.AnchorEntity((ent, childXform), (gridUid, grid));
             else if (!anchored && childXform.Anchored)
                 _transform.Unanchor(ent, childXform);
+
+            // Use localpos in case the entity is moved via anchoring.
+            loaded?.Entities.Add(childXform.LocalPosition, templateEnt);
         }
 
         // Load decals
@@ -256,6 +269,7 @@ public sealed partial class DungeonSystem
                     decal.ZIndex,
                     decal.Cleanable);
 
+                loaded?.Decals.Add(position, decal);
                 DebugTools.Assert(result);
             }
         }

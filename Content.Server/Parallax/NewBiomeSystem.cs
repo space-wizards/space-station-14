@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Procedural;
 using Content.Shared.CCVar;
+using Content.Shared.Ghost;
 using Content.Shared.Parallax.Biomes;
 using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
@@ -11,6 +12,7 @@ using Robust.Shared.CPUJob.JobQueues.Queues;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Map.Enumerators;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Box2i = Robust.Shared.Maths.Box2i;
@@ -37,11 +39,13 @@ public sealed partial class NewBiomeSystem : EntitySystem
     private float _loadRange = 1f;
     private float _loadTime;
 
+    private EntityQuery<GhostComponent> _ghostQuery;
     private EntityQuery<NewBiomeComponent> _biomeQuery;
 
     public override void Initialize()
     {
         base.Initialize();
+        _ghostQuery = GetEntityQuery<GhostComponent>();
         _biomeQuery = GetEntityQuery<NewBiomeComponent>();
 
         Subs.CVar(_cfgManager, CCVars.BiomeLoadRange, OnLoadRange);
@@ -88,7 +92,6 @@ public sealed partial class NewBiomeSystem : EntitySystem
                 TryAddBiomeBounds(player.AttachedEntity.Value);
             }
 
-            // If not relevant then discard.
             foreach (var viewer in player.ViewSubscriptions)
             {
                 TryAddBiomeBounds(viewer);
@@ -115,8 +118,8 @@ public sealed partial class NewBiomeSystem : EntitySystem
         {
             // Work out chunks not in range and unload.
             UnloadChunks();
-            // Don't care about eating the remainder here.
-            _checkUnloadTime = 0f;
+
+            _checkUnloadTime -= _checkUnloadAccumulator;
         }
 
         // Process jobs.
@@ -141,10 +144,6 @@ public sealed partial class NewBiomeSystem : EntitySystem
                 // Go through each loaded chunk and check if they can be unloaded by checking if any players are in range.
                 foreach (var chunk in loadedLayer.Keys)
                 {
-                    // If it's pending then don't interrupt the loading
-                    if (biome.PendingData.TryGetValue(layerId, out var pending) && pending.Contains(chunk))
-                        continue;
-
                     var chunkBounds = new Box2i(chunk, chunk + layer.Size);
                     var canUnload = true;
 
@@ -201,8 +200,15 @@ public sealed partial class NewBiomeSystem : EntitySystem
         return bounds;
     }
 
+    /// <summary>
+    /// Tries to add the viewer bounds of this entity for loading.
+    /// </summary>
     private void TryAddBiomeBounds(EntityUid uid)
     {
+        // Ghosts can't load in.
+        if (_ghostQuery.HasComp(uid))
+            return;
+
         var xform = Transform(uid);
 
         // No biome to load
@@ -298,29 +304,30 @@ public sealed partial class NewBiomeSystem : EntitySystem
                     continue;
                 }
 
-                var layerPending = Biome.PendingData.GetOrNew(layerId);
-                DebugTools.Assert(!layerPending.Contains(chunk.Value));
-
-                layerPending.Add(chunk.Value);
-
                 // Start loading here.
                 var loadedData = new BiomeLoadedData()
                 {
 
                 };
 
+                int seedOffset;
+
                 unchecked
                 {
-                    var seedOffset = chunk.Value.X * 256 + chunk.Value.Y + Biome.Seed;
+                    seedOffset = chunk.Value.X * 256 + chunk.Value.Y + Biome.Seed;
+                }
 
-                    // Load dungeon here async await and all that jaz.
-                    await IoCManager.Resolve<IEntityManager>()
-                        .System<DungeonSystem>()
-                        .GenerateDungeonAsync(layer.Dungeon, Grid.Owner, Grid.Comp, chunk.Value, seedOffset);
+                // Load dungeon here async await and all that jaz.
+                var dungeons = await IoCManager.Resolve<IEntityManager>()
+                    .System<DungeonSystem>()
+                    .GenerateDungeonAsync(IoCManager.Resolve<IPrototypeManager>().Index(layer.Dungeon), Grid.Owner, Grid.Comp, chunk.Value, seedOffset);
+
+                foreach (var dungeon in dungeons)
+                {
+                    // TODO: Add dungeon loaded data structure to it.
                 }
 
                 // Cleanup loading
-                layerPending.Remove(chunk.Value);
                 layerLoaded.Add(chunk.Value, loadedData);
             }
         }
@@ -338,8 +345,10 @@ public sealed partial class NewBiomeSystem : EntitySystem
         {
         }
 
-        protected override Task<bool> Process()
+        protected override async Task<bool> Process()
         {
             //
+
+            return true;
         }
     }

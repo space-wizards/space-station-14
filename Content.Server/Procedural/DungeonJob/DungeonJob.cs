@@ -1,11 +1,12 @@
+using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Decals;
-using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN;
 using Content.Server.NPC.Systems;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Construction.EntitySystems;
+using Content.Shared.Decals;
 using Content.Shared.Maps;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonGenerators;
@@ -20,12 +21,14 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Utility;
 using IDunGenLayer = Content.Shared.Procedural.IDunGenLayer;
 
 namespace Content.Server.Procedural.DungeonJob;
 
-public sealed partial class DungeonJob : Job<List<Dungeon>>
+/// <summary>
+/// CPUJob wrapper around dungeons. Dungeons are layered procedurally generated configs for loading data.
+/// </summary>
+public sealed partial class DungeonJob : Job<DungeonLoadedData>
 {
     public bool TimeSlice = true;
 
@@ -55,6 +58,9 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
     private readonly EntityCoordinates? _targetCoordinates;
 
     private readonly ISawmill _sawmill;
+
+    private DungeonLoadedData _dungeonLoadedData = new();
+
 
     public DungeonJob(
         ISawmill sawmill,
@@ -104,7 +110,6 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
     /// <summary>
     /// Gets the relevant dungeon, running recursively as relevant.
     /// </summary>
-    /// <param name="reserve">Should we reserve tiles even if the config doesn't specify.</param>
     private async Task<List<Dungeon>> GetDungeons(
         Vector2i position,
         DungeonConfig config,
@@ -142,7 +147,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
         return dungeons;
     }
 
-    protected override async Task<List<Dungeon>?> Process()
+    protected override async Task<DungeonLoadedData?> Process()
     {
         _sawmill.Info($"Generating dungeon {_gen} with seed {_seed} on {_entManager.ToPrettyString(_gridUid)}");
         _grid.CanSplit = false;
@@ -152,7 +157,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
         // Tiles we can no longer generate on due to being reserved elsewhere.
         var reservedTiles = new HashSet<Vector2i>();
 
-        var dungeons = await GetDungeons(position, _gen, _gen.Data, _gen.Layers, reservedTiles, _seed, random);
+        await GetDungeons(position, _gen, _gen.Data, _gen.Layers, reservedTiles, _seed, random);
         // To make it slightly more deterministic treat this RNG as separate ig.
 
         // Post-processing after finishing loading.
@@ -176,7 +181,7 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
             npcSystem.WakeNPC(npc.Owner, npc.Comp);
         }
 
-        return dungeons;
+        return _dungeonLoadedData;
     }
 
     private async Task RunLayer(
@@ -320,4 +325,29 @@ public sealed partial class DungeonJob : Job<List<Dungeon>>
 
         await SuspendIfOutOfTime();
     }
+
+    #region Loaded Data
+
+    private void AddLoadedDecal(Vector2 localPosition, uint id)
+    {
+        // TODO: Load it here.
+
+        _dungeonLoadedData.Decals.Add(localPosition, id);
+    }
+
+    private EntityUid AddLoadedEntity(EntProtoId proto, Vector2 localPosition)
+    {
+        // TODO: Load it here.
+
+        _dungeonLoadedData.Entities.Add(localPosition, entity);
+    }
+
+    private void AddLoadedTile(Vector2i localTile, Tile tile)
+    {
+        // TODO: Load it here.
+
+        _dungeonLoadedData.Tiles.Add(localTile, tile);
+    }
+
+    #endregion
 }

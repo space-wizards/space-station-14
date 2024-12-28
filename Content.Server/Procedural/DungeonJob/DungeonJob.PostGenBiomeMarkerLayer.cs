@@ -90,7 +90,7 @@ public sealed partial class DungeonJob
                     proto = markerTemplate.Prototype;
                 }
 
-                var ent = _entManager.SpawnAtPosition(proto, new EntityCoordinates(_gridUid, node + _grid.TileSizeHalfVector));
+                var ent = AddLoadedEntity(proto, node);
                 var xform = xformQuery.Get(ent);
 
                 if (!xform.Comp.Anchored)

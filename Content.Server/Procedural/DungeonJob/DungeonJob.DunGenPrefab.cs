@@ -2,7 +2,6 @@ using System.Numerics;
 using System.Threading.Tasks;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.DungeonGenerators;
-using Content.Shared.Whitelist;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -202,7 +201,8 @@ public sealed partial class DungeonJob
                             }
                         }
 
-                        _maps.SetTiles(_gridUid, _grid, tiles);
+                        AddLoadedTile(tiles);
+
                         tiles.Clear();
                         _sawmill.Error($"Unable to find room variant for {roomDimensions}, leaving empty.");
                         continue;
@@ -230,7 +230,7 @@ public sealed partial class DungeonJob
                 var dungeonMatty = Matrix3x2.Multiply(matty, dungeonTransform);
 
                 // The expensive bit yippy.
-                _dungeon.SpawnRoom(_gridUid, _grid, dungeonMatty, room, reservedTiles);
+                _dungeon.SpawnRoom(_gridUid, _grid, dungeonMatty, room, reservedTiles, loaded: _dungeonLoadedData);
 
                 var roomCenter = (room.Offset + room.Size / 2f) * _grid.TileSize;
                 var roomTiles = new HashSet<Vector2i>(room.Size.X * room.Size.Y);

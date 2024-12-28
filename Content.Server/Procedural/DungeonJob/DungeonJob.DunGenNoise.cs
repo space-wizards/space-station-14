@@ -128,7 +128,8 @@ public sealed partial class DungeonJob
                 }
 
                 await SuspendIfOutOfTime();
-                ValidateResume();
+                if (!ValidateResume())
+                    return Dungeon.Empty;
             }
 
             var center = Vector2.Zero;
@@ -141,10 +142,12 @@ public sealed partial class DungeonJob
             center /= roomTiles.Count;
             rooms.Add(new DungeonRoom(roomTiles, center, roomArea, new HashSet<Vector2i>()));
             await SuspendIfOutOfTime();
-            ValidateResume();
+            if (!ValidateResume())
+                return Dungeon.Empty;
         }
 
-        _maps.SetTiles(_gridUid, _grid, tiles);
+        AddLoadedTile(tiles);
+
         var dungeon = new Dungeon(rooms);
         return dungeon;
     }

@@ -131,7 +131,8 @@ public sealed partial class DungeonJob
                     }
 
                     // Tile valid salad so add it.
-                    _entManager.SpawnAtPosition(prototype, _maps.GridTileToLocal(_gridUid, _grid, node));
+                    var coords = _maps.GridTileToLocal(_gridUid, _grid, node);
+                    AddLoadedEntity(prototype, coords);
 
                     groupSize--;
                 }

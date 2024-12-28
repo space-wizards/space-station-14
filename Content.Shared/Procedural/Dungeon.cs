@@ -7,6 +7,8 @@ public sealed class Dungeon
 {
     public static Dungeon Empty = new Dungeon();
 
+    public DungeonLoadedData LoadedData = new();
+
     private List<DungeonRoom> _rooms;
     private HashSet<Vector2i> _allTiles = new();
 

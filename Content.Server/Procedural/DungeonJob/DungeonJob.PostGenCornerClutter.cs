@@ -46,7 +46,7 @@ public sealed partial class DungeonJob
                 {
                     var coords = _maps.GridTileToLocal(_gridUid, _grid, tile);
                     var protos = EntitySpawnCollection.GetSpawns(_prototype.Index(corner).Entries, random);
-                    _entManager.SpawnEntities(coords, protos);
+                    AddLoadedEntity(coords, protos);
                 }
 
                 break;

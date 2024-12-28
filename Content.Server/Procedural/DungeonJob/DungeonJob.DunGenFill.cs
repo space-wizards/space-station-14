@@ -36,7 +36,7 @@ public sealed partial class DungeonJob
                 continue;
 
             var gridPos = _maps.GridTileToLocal(_gridUid, _grid, tile);
-            _entManager.SpawnEntity(fillEnt, gridPos);
+            AddLoadedEntity(fillEnt, gridPos);
 
             roomTiles.Add(tile);
 

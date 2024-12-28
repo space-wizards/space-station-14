@@ -119,7 +119,7 @@ public sealed partial class DungeonJob
             }
         }
 
-        _maps.SetTiles(_gridUid, _grid, tiles);
+        AddLoadedTile(tiles);
         index = 0;
         var spawnEntry = _prototype.Index(windowGroup);
 
@@ -128,7 +128,7 @@ public sealed partial class DungeonJob
             var gridPos = _maps.GridTileToLocal(_gridUid, _grid, tile.Item1);
 
             index += spawnEntry.Entries.Count;
-            _entManager.SpawnEntities(gridPos, EntitySpawnCollection.GetSpawns(spawnEntry.Entries, random));
+            AddLoadedEntity(EntitySpawnCollection.GetSpawns(spawnEntry.Entries, random), gridPos);
             await SuspendDungeon();
 
             if (!ValidateResume())

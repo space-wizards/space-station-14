@@ -32,20 +32,22 @@ public sealed partial class DungeonJob
             // Need to set per-tile to override data.
             if (biomeSystem.TryGetTile(node, biomeComp.Layers, seed, _grid, out var tile))
             {
-                _maps.SetTile(_gridUid, _grid, node, tile.Value);
+                AddLoadedTile(node, tile.Value);
             }
 
             if (biomeSystem.TryGetDecals(node, biomeComp.Layers, seed, _grid, out var decals))
             {
                 foreach (var decal in decals)
                 {
-                    _decals.TryAddDecal(decal.ID, new EntityCoordinates(_gridUid, decal.Position), out _);
+                    _decals.TryAddDecal(decal.ID, new EntityCoordinates(_gridUid, decal.Position), out var did);
+                    AddLoadedDecal(decal.Position, did);
                 }
             }
 
             if (biomeSystem.TryGetEntity(node, biomeComp, _grid, out var entityProto))
             {
-                var ent = _entManager.SpawnEntity(entityProto, new EntityCoordinates(_gridUid, node + _grid.TileSizeHalfVector));
+                // TODO: Centralise
+                var ent = AddLoadedEntity(entityProto, node);
                 var xform = xformQuery.Get(ent);
 
                 if (!xform.Comp.Anchored)

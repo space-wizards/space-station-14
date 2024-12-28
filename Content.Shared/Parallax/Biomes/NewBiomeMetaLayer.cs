@@ -59,11 +59,6 @@ public sealed partial class NewBiomeComponent : Component
     /// Bounds loaded by players for this tick.
     /// </summary>
     public List<Box2i> LoadedBounds = new();
-
-    /// <summary>
-    /// Data that is currently being loaded.
-    /// </summary>
-    public Dictionary<string, HashSet<Vector2i>> PendingData = new();
 }
 
 [DataDefinition]

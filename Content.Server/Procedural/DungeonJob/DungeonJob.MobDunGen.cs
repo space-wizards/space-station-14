@@ -40,7 +40,9 @@ public sealed partial class DungeonJob
 
                 foreach (var ent in entities)
                 {
-                    var uid = _entManager.SpawnAtPosition(ent, _maps.GridTileToLocal(_gridUid, _grid, tile));
+                    var coords = _maps.GridTileToLocal(_gridUid, _grid, tile);
+                    var uid = AddLoadedEntity(ent, coords);
+
                     _entManager.RemoveComponent<GhostRoleComponent>(uid);
                     _entManager.RemoveComponent<GhostTakeoverAvailableComponent>(uid);
                     npcs.SleepNPC(uid);

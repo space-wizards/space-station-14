@@ -60,7 +60,7 @@ public sealed partial class DungeonJob
             tiles.Add((index, _tile.GetVariantTile((ContentTileDefinition)tileDef, random)));
         }
 
-        _maps.SetTiles(_gridUid, _grid, tiles);
+        AddLoadedTile(tiles);
 
         // Double iteration coz we bulk set tiles for speed.
         for (var i = 0; i < tiles.Count; i++)
@@ -96,10 +96,14 @@ public sealed partial class DungeonJob
             }
 
             if (isCorner)
-                _entManager.SpawnEntity(cornerWall, _maps.GridTileToLocal(_gridUid, _grid, index.Index));
+            {
+                AddLoadedEntity(cornerWall, index.Index);
+            }
 
             if (!isCorner)
-                _entManager.SpawnEntity(wall, _maps.GridTileToLocal(_gridUid, _grid, index.Index));
+            {
+                AddLoadedEntity(wall, index.Index);
+            }
 
             if (i % 20 == 0)
             {

@@ -54,7 +54,7 @@ public sealed partial class DungeonJob
         _maps.SetTiles(_gridUid, _grid, replacements);
         return new Dungeon(new List<DungeonRoom>()
         {
-            new DungeonRoom(reserved, _position, Box2i.Empty, new HashSet<Vector2i>()),
+            new(reserved, _position, Box2i.Empty, new HashSet<Vector2i>()),
         });
     }
 }

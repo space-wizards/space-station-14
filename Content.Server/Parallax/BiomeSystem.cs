@@ -373,9 +373,9 @@ public sealed partial class BiomeSystem : SharedBiomeSystem
                 continue;
 
             // Load new chunks
-            LoadChunks(biome, gridUid, grid, biome.Seed);
+            //LoadChunks(biome, gridUid, grid, biome.Seed);
             // Unload old chunks
-            UnloadChunks(biome, gridUid, grid, biome.Seed);
+            //UnloadChunks(biome, gridUid, grid, biome.Seed);
         }
 
         _handledEntities.Clear();
