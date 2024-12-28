@@ -6,7 +6,6 @@ using Robust.Shared.Audio.Systems;
 
 namespace Content.Shared.Cargo.Systems;
 
-
 /// <summary>
 ///     The price gun system! If this component is on an entity, you can scan objects (Click or use verb) to see their price.
 /// </summary>
@@ -40,7 +39,6 @@ public abstract class SharedPriceGunSystem : EntitySystem
 
     private void OnAfterInteract(Entity<PriceGunComponent> entity, ref AfterInteractEvent args)
     {
-
         if (!args.CanReach || args.Target == null || args.Handled)
             return;
 

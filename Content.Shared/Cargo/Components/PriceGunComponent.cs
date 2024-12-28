@@ -15,3 +15,4 @@ public sealed partial class PriceGunComponent : Component
     [DataField]
     public SoundSpecifier AppraisalSound  = new SoundPathSpecifier("/Audio/Machines/chime.ogg");
 }
+
