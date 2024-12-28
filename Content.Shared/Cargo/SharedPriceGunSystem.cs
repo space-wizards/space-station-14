@@ -18,6 +18,7 @@ public abstract class SharedPriceGunSystem : EntitySystem
     }
 
     private void OnUtilityVerb(EntityUid uid, PriceGunComponent component, GetVerbsEvent<UtilityVerb> args)
+
     {
         if (!args.CanAccess || !args.CanInteract || args.Using == null)
             return;
@@ -26,7 +27,7 @@ public abstract class SharedPriceGunSystem : EntitySystem
         {
             Act = () =>
             {
-                GetPriceOrBounty(uid, args.Target, args.User);
+                GetPriceOrBounty((uid, component), args.Target, args.User);
             },
             Text = Loc.GetString("price-gun-verb-text"),
             Message = Loc.GetString("price-gun-verb-message", ("object", Identity.Entity(args.Target, EntityManager)))
@@ -51,5 +52,5 @@ public abstract class SharedPriceGunSystem : EntitySystem
     ///     This is abstract for prediction. When the bounty system / cargo systems that are necessary are moved to shared,
     ///     combine all the server, client, and shared stuff into one non abstract file.
     /// </remarks>
-    protected abstract bool GetPriceOrBounty(EntityUid priceGunUid, EntityUid target, EntityUid user);
+    protected abstract bool GetPriceOrBounty(Entity<PriceGunComponent> entity, EntityUid target, EntityUid user);
 }

@@ -15,11 +15,10 @@ public sealed class PriceGunSystem : SharedPriceGunSystem
     [Dependency] private readonly CargoSystem _bountySystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
-    protected override bool GetPriceOrBounty(EntityUid priceGunUid, EntityUid target, EntityUid user)
+    protected override bool GetPriceOrBounty(Entity<PriceGunComponent> entity, EntityUid target, EntityUid user)
     {
-        if (!TryComp(priceGunUid, out UseDelayComponent? useDelay) || _useDelay.IsDelayed((priceGunUid, useDelay)))
+        if (!TryComp(entity.Owner, out UseDelayComponent? useDelay) || _useDelay.IsDelayed((entity.Owner, useDelay)))
             return false;
-
         // Check if we're scanning a bounty crate
         if (_bountySystem.IsBountyComplete(target, out _))
         {
@@ -28,15 +27,15 @@ public sealed class PriceGunSystem : SharedPriceGunSystem
         else // Otherwise appraise the price
         {
             var price = _pricingSystem.GetPrice(target);
-            _popupSystem.PopupEntity(Loc.GetString("price-gun-pricing-result", ("object", Identity.Entity(target, EntityManager)), ("price", $"{price:F2}")), user, user);
+            _popupSystem.PopupEntity(Loc.GetString("price-gun-pricing-result",
+                    ("object", Identity.Entity(target, EntityManager)),
+                    ("price", $"{price:F2}")),
+                user,
+                user);
         }
 
-        if (TryComp<PriceGunComponent>(priceGunUid, out var priceGunComp))
-        {
-            _audio.PlayPvs(priceGunComp.AppraisalSound, priceGunUid);
-        }
-        
-        _useDelay.TryResetDelay((priceGunUid, useDelay));
+        _audio.PlayPvs(entity.Comp.AppraisalSound, target);
+        _useDelay.TryResetDelay((entity.Owner, useDelay));
         return true;
     }
 }
