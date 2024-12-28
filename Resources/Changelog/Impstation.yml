@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Listings that you can't purchase now show up at the bottom of their category
-      as Unavailable
-    type: Add
-  id: 318
-  time: '2024-10-04T04:23:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/406
 - author: starlighthowls
   changes:
   - message: Impstation has been taken by a fae mood
@@ -4501,3 +4493,10 @@
   id: 817
   time: '2024-12-28T15:48:47.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1141
+- author: Darkmajia
+  changes:
+  - message: Heretic can no longer be rolled.
+    type: Remove
+  id: 818
+  time: '2024-12-28T21:52:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1149
