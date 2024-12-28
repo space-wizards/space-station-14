@@ -27,24 +27,23 @@ public sealed class RemoveCompSystem : EntitySystem
     /// <exception cref="ArgumentException"></exception>
     private void OnMapInit(EntityUid uid, RemoveCompComponent comp, ref MapInitEvent args)
     {
-        // check for various things that could go wrong with the way the component is defined. if any of them are, complain, and then don't run the component.
+        // if the component has RequireAll set to false, log an error and cancel.
         if (!comp.UnwantedComponents.RequireAll || comp.UnwantedComponents.Components == null)
         {
-            // if the component has RequireAll set to false, log an error.
-            Debug.Assert(comp.UnwantedComponents.RequireAll, $"Removecomp on {ToPrettyString(Identity.Entity(uid, EntityManager))} only supports RequireAll = true!");
+            Log.Error($"Removecomp on {ToPrettyString(Identity.Entity(uid, EntityManager))} only supports RequireAll = true!");
+            return;
+        }
 
-            // if there are no components in the list, log an error.
-            Debug.Assert(comp.UnwantedComponents.Components != null, $"RemoveComp on {ToPrettyString(Identity.Entity(uid, EntityManager))} has no components defined!");
-
+        // if there are no components in the list, log an error and cancel.
+        if (comp.UnwantedComponents.Components == null)
+        {
+            Log.Error($"RemoveComp on {ToPrettyString(Identity.Entity(uid, EntityManager))} has no components defined!");
             return;
         }
 
         // if no errors are detected, run RemoveComponents() and then delete yourself.
-        else
-        {
-            RemoveComponents(uid, comp);
-            EntityManager.RemoveComponent<RemoveCompComponent>(uid);
-        }
+        RemoveComponents(uid, comp);
+        EntityManager.RemoveComponent<RemoveCompComponent>(uid);
     }
 
     // This is unfortunately something I have to do because we do not have a team big enough to refactor stuff. Don't be like me.
@@ -66,7 +65,10 @@ public sealed class RemoveCompSystem : EntitySystem
             var success = EntityManager.RemoveComponent(uid, compType);
 
             // assert that var success will return true. if it doesn't, complain about it
-            Debug.Assert(success, $"RemoveComp on {ToPrettyString(Identity.Entity(uid, EntityManager))} tried to remove component that wasn't present.");
+            if (!success)
+            {
+                Log.Error($"RemoveComp on {ToPrettyString(Identity.Entity(uid, EntityManager))} tried to remove component that wasn't present.");
+            }
         }
     }
 }
