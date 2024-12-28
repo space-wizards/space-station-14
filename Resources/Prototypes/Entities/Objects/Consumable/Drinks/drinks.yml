@@ -1115,8 +1115,8 @@
 
 - type: entity
   parent: DrinkGlass
-  id: DrinkIrishCarBomb
-  suffix: irish car bomb
+  id: DrinkIrishSlammer
+  suffix: irish slammer
   components:
   - type: SolutionContainerManager
     solutions:
