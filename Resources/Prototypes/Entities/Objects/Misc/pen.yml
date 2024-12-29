@@ -36,6 +36,7 @@
         Piercing: 3
   - type: ThrowingAngle
     angle: 315
+  - type: LandAtCursor
   # end imp edits #
 
 - type: entity
@@ -48,7 +49,6 @@
     removalTime: 0.0
   - type: ThrowingAngle
     angle: 315
-  - type: LandAtCursor
   - type: DamageOtherOnHit
     damage:
       types:
