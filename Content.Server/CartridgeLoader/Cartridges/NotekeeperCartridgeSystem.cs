@@ -9,6 +9,7 @@ public sealed class NotekeeperCartridgeSystem : EntitySystem
 {
     [Dependency] private readonly CartridgeLoaderSystem? _cartridgeLoaderSystem = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -50,7 +51,6 @@ public sealed class NotekeeperCartridgeSystem : EntitySystem
 
         UpdateUiState(uid, GetEntity(args.LoaderUid), component);
     }
-
 
     private void UpdateUiState(EntityUid uid, EntityUid loaderUid, NotekeeperCartridgeComponent? component)
     {
