@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: Ilya246
-  changes:
-  - message: Fixed tip 26 being misinformation about the tesla. It now displays truthful
-      information.
-    type: Fix
-  id: 7259
-  time: '2024-09-01T11:03:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31705
 - author: yuitop
   changes:
   - message: space dragon fire breath ability now has cursor indicator
@@ -3937,3 +3929,10 @@
   id: 7758
   time: '2024-12-28T23:33:16.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34055
+- author: zHonys
+  changes:
+  - message: Smile can now use hats
+    type: Add
+  id: 7759
+  time: '2024-12-29T01:49:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33924
