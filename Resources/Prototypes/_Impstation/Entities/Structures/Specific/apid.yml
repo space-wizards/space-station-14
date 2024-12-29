@@ -1,9 +1,9 @@
 - type: entity
-  id: ApidCryopod
+  id: ApidCryopodBotanist
   parent: BaseStructureDynamic
-  name: apid cryopod
-  suffix: Ghost role
-  description: An ancient marble statue. The subject is depicted with a floor-length braid and is wielding a red toolbox.
+  name: apid botanist cryopod
+  suffix: Ghost role, Botanist
+  description: A small, hexagonal cryopod containing a Beefolk botanist. They might take a little bit to wake up.
   components:
   - type: Sprite
     noRot: true

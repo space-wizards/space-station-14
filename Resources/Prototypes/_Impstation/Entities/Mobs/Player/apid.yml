@@ -1,8 +1,9 @@
 - type: entity
   name: apid
   id: MobApid
-  parent: [SimpleMobBase, StripableInventoryBase, FlyingMobBase]
+  parent: [BaseSimpleMob, StripableInventoryBase, FlyingMobBase, MobRespirator, MobFlammable, MobBloodstream]
   description: Enthusiastic workers, these cute little balls of fuzz are distant relatives to moth people.
+  suffix: Ghost role
   components:
   - type: CombatMode
   - type: Inventory
@@ -105,7 +106,7 @@
             sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
             state: belt
   - type: Deathgasp
-    prototype: MonkeyDeathgasp
+    prototype: MothDeathGasp
   - type: Blindable
   - type: Cuffable
   - type: RotationVisuals
@@ -139,20 +140,16 @@
     sprite: Mobs/Effects/onfire.rsi
     normalState: Monkey_burning
   - type: InteractionPopup
-    successChance: 1
-    interactSuccessString: petting-success-monkey
-    interactFailureString: petting-failure-monkey
+    successChance: 0.9
+    interactSuccessString: petting-success-apid
+    interactFailureString: petting-failure-apid
     interactSuccessSpawn: EffectHearts
     interactSuccessSound:
-      path: /Audio/Animals/ferret_happy.ogg
+      path: /Audio/Animals/mouse_squeak.ogg
     interactFailureSound:
-      path: /Audio/Items/wirecutter.ogg
+      path: /Audio/Effects/tesla_consume.ogg
   - type: Puller
     needsHands: true
-  - type: FactionException
-  - type: NpcFactionMember
-    factions:
-      - Passive
   - type: IdExaminable
   - type: Tag
     tags:
@@ -184,10 +181,19 @@
       0: Alive
       60: Critical
       125: Dead
+  - type: PassiveDamage # Slight passive regen. Assuming one damage type, comes out to about 4 damage a minute.
+    allowedStates:
+    - Alive
+    damageCap: 20
+    damage:
+      types:
+        Heat: -0.07
+      groups:
+        Brute: -0.07
   - type: MovementSpeedModifier
     baseWalkSpeed: 3.5
     baseSprintSpeed: 5
-    weightlessAcceleration: 1.5 # Move around more easily in space.
+    weightlessAcceleration: 1.5 # zoom
     weightlessFriction: 1
     weightlessModifier: 1
   - type: MeleeWeapon
@@ -229,12 +235,13 @@
     rules: ghost-role-information-nonantagonist-rules
   - type: MovementIgnoreGravity #wheee
     gravityState: true
+  - type: Climbing
 
 - type: entity
   name: apid botanist
   id: MobApidBotanist
   parent: MobApid
-  description: Delightfully sweet, these cute little balls of fuzz are distant relatives to moth people.
+  description: Enthusiastic workers, these cute little balls of fuzz are distant relatives to moth people.
   components:
   - type: Loadout
     prototypes:

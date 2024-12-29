@@ -18,3 +18,12 @@
   category: cargoproduct-category-name-service
   group: market
   
+- type: cargoProduct
+  id: ServiceApidBotanist
+  icon:
+    sprite: _Impstation/Structures/apidcryopod.rsi
+    state: icon
+  product: ApidCryopodBotanist
+  cost: 5000
+  category: cargoproduct-category-name-service
+  group: market
