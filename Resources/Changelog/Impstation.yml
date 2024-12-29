@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Listings that you can't purchase now show up at the bottom of their category
-      as Unavailable
-    type: Add
-  id: 318
-  time: '2024-10-04T04:23:32.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/406
-- author: starlighthowls
-  changes:
-  - message: Impstation has been taken by a fae mood
-    type: Add
-  - message: derotated cruise while i do some reworks
-    type: Remove
-  - message: fangs and piercings to lizard markings
-    type: Add
-  - message: Changed the Pneumatic cannon noise :)
-    type: Add
-  id: 319
-  time: '2024-10-05T06:43:36.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/410
 - author: hivehum
   changes:
   - message: One (1) new hairstyle for humans, dwarves, and slimes, sprited by Kazne.
@@ -4501,3 +4480,18 @@
   id: 817
   time: '2024-12-28T15:48:47.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1141
+- author: Darkmajia
+  changes:
+  - message: Heretic can no longer be rolled.
+    type: Remove
+  id: 818
+  time: '2024-12-28T21:52:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1149
+- author: Honeyed_Lemons_, Darkmajia
+  changes:
+  - message: adds The Supermatter for dummies, a guide for setting up the supermatter
+      engine
+    type: Add
+  id: 819
+  time: '2024-12-29T11:46:09.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1144
