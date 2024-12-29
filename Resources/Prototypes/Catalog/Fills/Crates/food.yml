@@ -192,19 +192,6 @@
       amount: 2
 
 - type: entity
-  id: CrateFoodPizzaMoth
-  parent: CratePlastic
-  name: moth pizza delivery
-  description: Help feed your station's hungry moths with some tasty cotton pizzas! Includes 4 pizzas.
-  components:
-  - type: StorageFill
-    contents:
-    - id: FoodBoxPizzaFilledMoth
-      amount: 4
-    - id: LidSalami
-      prob: 0.01
-
-- type: entity
   id: CrateFoodSurprise
   parent: CratePlastic
   name: personnel surprise crate

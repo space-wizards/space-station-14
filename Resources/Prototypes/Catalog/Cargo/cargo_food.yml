@@ -89,16 +89,6 @@
   group: market
 
 - type: cargoProduct
-  id: FoodPizzaMoth
-  icon:
-    sprite: Objects/Consumable/Food/Baked/pizza.rsi
-    state: cotton-slice
-  product: CrateFoodPizzaMoth
-  cost: 450
-  category: cargoproduct-category-name-food
-  group: market
-
-- type: cargoProduct
   id: FoodSurprise
   icon:
     sprite: Objects/Consumable/Food/burger.rsi
