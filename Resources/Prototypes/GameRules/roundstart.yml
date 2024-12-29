@@ -292,10 +292,10 @@
     children:
       - !type:NestedSelector
         tableId: UnknownShuttlesFriendlyTable
-      - !type:NestedSelector
-        tableId: UnknownShuttlesFreelanceTable
-      #- !type:NestedSelector - Removed from GreyStation
-        #tableId: UnknownShuttlesHostileTable
+#      - !type:NestedSelector - Removed from GreyStation
+#        tableId: UnknownShuttlesFreelanceTable
+#      - !type:NestedSelector - Removed from GreyStation
+#        tableId: UnknownShuttlesHostileTable
 
 - type: entity
   id: BasicStationEventScheduler
