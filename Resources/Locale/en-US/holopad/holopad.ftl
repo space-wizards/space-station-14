@@ -6,6 +6,7 @@ holopad-window-options = [color=darkgray][font size=10][italic]Please select an 
 # Call status
 holopad-window-no-calls-in-progress = No holo-calls in progress
 holopad-window-incoming-call = Incoming holo-call from:
+holopad-window-relay-label = Originating at:
 holopad-window-outgoing-call = Attempting to establish a connection...
 holopad-window-call-in-progress = Holo-call in progress
 holopad-window-call-ending = Disconnecting...
@@ -28,6 +29,7 @@ holopad-window-access-denied = Access denied
 holopad-window-select-contact-from-list = Select a contact to initiate a holo-call
 holopad-window-fetching-contacts-list = No holopads are currently contactable
 holopad-window-contact-label = {CAPITALIZE($label)}
+holopad-window-filter-line-placeholder = Search for a contact
 
 # Flavor
 holopad-window-flavor-left = ⚠ Do not enter while projector is active
