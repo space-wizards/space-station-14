@@ -28,9 +28,7 @@
       types:
         Slash: 5
         Piercing: 7
-  - type: StaminaDamageOnCollide
-    damage: 45
   - type: StaminaDamageOnEmbed
-    damage: 10
+    damage: 45
   - type: TimedDespawn
     lifetime: 30

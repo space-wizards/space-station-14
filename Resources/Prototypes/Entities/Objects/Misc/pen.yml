@@ -110,6 +110,10 @@
     state: pen_centcom
   - type: Item
     heldPrefix: pen_centcom
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Piercing: 8
 
 - type: entity
   name: captain's fountain pen
@@ -119,6 +123,10 @@
   components:
   - type: Sprite
     state: pen_cap
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Piercing: 8
 
 - type: entity
   name: hop's fountain pen
@@ -128,3 +136,7 @@
   components:
   - type: Sprite
     state: pen_hop
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Piercing: 8

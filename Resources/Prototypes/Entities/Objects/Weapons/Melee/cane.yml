@@ -52,6 +52,12 @@
     tags:
       - CaneBlade
   - type: DisarmMalus
+  - type: DamageOtherOnHit # imp
+    staminaCost: 5
+  - type: EmbeddableProjectile
+  - type: EmbedPassiveDamage
+  - type: ThrowingAngle
+    angle: 45
 
 - type: entity
   parent: Cane

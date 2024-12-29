@@ -172,7 +172,7 @@
   - type: DamageOtherOnHit
     staminaCost: 5
   - type: ThrowingAngle
-    angle: 315
+    angle: 90
   - type: EmbeddableProjectile
   - type: EmbedPassiveDamage
 
@@ -200,7 +200,7 @@
   - type: EmbeddableProjectile
   - type: EmbedPassiveDamage
   - type: ThrowingAngle
-    angle: 35
+    angle: 90
         
 
   # - type: entity
@@ -232,6 +232,8 @@
     qualities:
       - Sawing
   - type: MeleeWeapon # imp
+    wideAnimationRotation: 90
+    swingLeft: true
     attackRate: 0.75
     damage:
       types:
@@ -291,7 +293,7 @@
     speedModifier: 1.5
   - type: DamageOtherOnHit # imp
     damage:
-      types:
+      groups:
         Brute: 10
     staminaCost: 14
   - type: ThrowingAngle

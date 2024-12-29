@@ -25,6 +25,7 @@ public sealed class ItemToggleSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedProjectileSystem _projectile = default!;
 
     private EntityQuery<ItemToggleComponent> _query;
 
@@ -362,7 +363,12 @@ public sealed class ItemToggleSystem : EntitySystem
 
             component.DeactivatedEmbedOnThrow ??= embeddable.EmbedOnThrow;
             if (component.ActivatedEmbedOnThrow is { } activatedEmbedOnThrow)
+            {
                 embeddable.EmbedOnThrow = activatedEmbedOnThrow;
+
+                if (embeddable.Target != null && activatedEmbedOnThrow == false)
+                    _projectile.RemoveEmbed(uid, embeddable);
+            }
 
             component.DeactivatedSound ??= embeddable.Sound;
             if (component.ActivatedSound is { } activatedSound)
@@ -377,7 +383,12 @@ public sealed class ItemToggleSystem : EntitySystem
                 embeddable.Offset = deactivatedOffset;
 
             if (component.DeactivatedEmbedOnThrow is { } deactivatedEmbedOnThrow)
+            {
                 embeddable.EmbedOnThrow = deactivatedEmbedOnThrow;
+
+                if (embeddable.Target != null && deactivatedEmbedOnThrow == false)
+                    _projectile.RemoveEmbed(uid, embeddable);
+            }
 
             if (component.DeactivatedSound is { } deactivatedSound)
                 embeddable.Sound = deactivatedSound;

@@ -54,6 +54,8 @@
         Piercing: 5
   - type: DamageOtherOnHit # imp
     staminaCost: 2.5
+    soundHit:
+      path: /Audio/Weapons/star_hit.ogg
   - type: EmbeddableProjectile
     removalTime: 0.5
     autoRemoveDuration: 10

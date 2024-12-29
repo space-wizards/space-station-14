@@ -165,6 +165,8 @@
     energy: 1.5
     color: white
     netsync: false
+  - type: ItemToggleThrowingAngle # imp
+    activatedAngle: 135
 
 - type: entity
   name: pen

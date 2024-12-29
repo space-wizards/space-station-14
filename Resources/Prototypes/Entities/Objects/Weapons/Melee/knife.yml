@@ -84,7 +84,7 @@
   - type: DamageOtherOnHit # imp
     staminaCost: 7.5
   - type: ThrowingAngle
-    angle: 245
+    angle: 315
 
 - type: entity
   name: combat knife

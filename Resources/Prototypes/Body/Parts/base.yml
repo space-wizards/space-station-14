@@ -33,6 +33,8 @@
       types:
         Blunt: 11
     staminaCost: 12
+    soundHit:
+      collection: GenericHit
 
 - type: entity
   id: BaseHead
@@ -53,6 +55,8 @@
       types:
         Blunt: 5
     staminaCost: 5
+    soundHit:
+      collection: GenericHit
 
 - type: entity
   id: BaseLeftArm
@@ -68,6 +72,8 @@
       types:
         Blunt: 7
     staminaCost: 7
+    soundHit:
+      collection: GenericHit
 
 - type: entity
   id: BaseRightArm
@@ -83,6 +89,8 @@
       types:
         Blunt: 7
     staminaCost: 7
+    soundHit:
+      collection: GenericHit
 
 - type: entity
   id: BaseLeftHand
@@ -97,6 +105,8 @@
     damage:
       types:
         Blunt: 3
+    soundHit:
+      collection: Punch
 
 - type: entity
   id: BaseRightHand
@@ -111,6 +121,8 @@
     damage:
       types:
         Blunt: 3
+    soundHit:
+      collection: Punch
 
 - type: entity
   id: BaseLeftLeg
@@ -127,6 +139,8 @@
       types:
         Blunt: 8
     staminaCost: 9
+    soundHit:
+      collection: GenericHit
 
 - type: entity
   id: BaseRightLeg
@@ -143,6 +157,8 @@
       types:
         Blunt: 8
     staminaCost: 9
+    soundHit:
+      collection: GenericHit
 
 - type: entity
   id: BaseLeftFoot
@@ -157,6 +173,8 @@
     damage:
       types:
         Blunt: 4
+    soundHit:
+      collection: GenericHit
 
 - type: entity
   id: BaseRightFoot
@@ -171,3 +189,5 @@
     damage:
       types:
         Blunt: 4
+    soundHit:
+      collection: GenericHit

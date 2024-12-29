@@ -32,6 +32,7 @@ namespace Content.Shared.Damage.Systems
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly MeleeSoundSystem _meleeSound = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
+        [Dependency] private readonly StaminaSystem _stamina = default!;
 
         public override void Initialize()
         {
@@ -92,6 +93,9 @@ namespace Content.Shared.Damage.Systems
 
         private void OnDoHit(EntityUid uid, DamageOtherOnHitComponent component, ThrowDoHitEvent args)
         {
+            if (HasComp<DamageOtherOnHitImmuneComponent>(args.Target))
+                return;
+
             if (HasComp<PacifiedComponent>(args.Component.Thrower)
                 && HasComp<MobStateComponent>(args.Target)
                 && component.Damage.AnyPositive())
@@ -115,6 +119,9 @@ namespace Content.Shared.Damage.Systems
 
             if (modifiedDamage is { Empty: false })
                 _color.RaiseEffect(Color.Red, new List<EntityUid>() { args.Target }, Filter.Pvs(args.Target, entityManager: EntityManager));
+
+            if (HasComp<StaminaComponent>(args.Target) && TryComp<StaminaDamageOnHitComponent>(uid, out var stamina))
+                _stamina.TakeStaminaDamage(args.Target, stamina.Damage, source: uid, sound: stamina.Sound);
 
             if (TryComp<PhysicsComponent>(uid, out var body) && body.LinearVelocity.LengthSquared() > 0f)
             {

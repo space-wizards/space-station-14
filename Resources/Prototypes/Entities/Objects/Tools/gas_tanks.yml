@@ -143,6 +143,8 @@
   - type: Tag # goob edit
     tags:
       - EmergencyOxygenTank
+  - type: DamageOtherOnHit # imp
+    staminaCost: 3.5
 
 - type: entity
   parent: EmergencyOxygenTank
@@ -159,8 +161,6 @@
   - type: Tag # goob edit
     tags:
       - EmergencyNitrogenTank
-  - type: DamageOtherOnHit # imp
-    staminaCost: 3.5
 
 - type: entity
   parent: EmergencyOxygenTank

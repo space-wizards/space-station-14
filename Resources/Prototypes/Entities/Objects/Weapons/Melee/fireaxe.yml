@@ -54,6 +54,8 @@
     staminaCost: 18
   - type: EmbeddableProjectile
   - type: EmbedPassiveDamage
+  - type: ThrowingAngle
+    angle: 45
 
 - type: entity
   id: FireAxeFlaming
