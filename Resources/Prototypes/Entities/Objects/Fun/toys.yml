@@ -372,7 +372,8 @@
   - type: Item
     size: Small
   - type: Sprite
-    state: plushie_lizard_mirrored
+    state: plushie_lizard
+    scale: -1, 1
 
 - type: entity
   parent: BasePlushie

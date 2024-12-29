@@ -52,10 +52,27 @@ public sealed partial class TelephoneComponent : Component
     public TelephoneVolume SpeakerVolume = TelephoneVolume.Whisper;
 
     /// <summary>
-    /// The range at which the telephone can connect to another
+    /// The maximum range at which the telephone initiate a call with another
     /// </summary>
     [DataField]
     public TelephoneRange TransmissionRange = TelephoneRange.Grid;
+
+    /// <summary>
+    /// This telephone will ignore devices that share the same grid as it
+    /// </summary>
+    /// <remarks>
+    /// This bool will be ignored if the <see cref="TransmissionRange"/> is
+    /// set to <see cref="TelephoneRange.Grid"/>
+    /// </remarks>
+    [DataField]
+    public bool IgnoreTelephonesOnSameGrid = false;
+
+    /// <summary>
+    /// The telephone can only connect with other telephones which have a
+    /// <see cref="TransmissionRange"/> present in this list
+    /// </summary>
+    [DataField]
+    public List<TelephoneRange> CompatibleRanges = new List<TelephoneRange>() { TelephoneRange.Grid };
 
     /// <summary>
     /// The range at which the telephone picks up voices
@@ -70,7 +87,7 @@ public sealed partial class TelephoneComponent : Component
     public bool RequiresPower = true;
 
     /// <summary>
-    /// This telephone does not appear on public telephone directories
+    /// This telephone should not appear on public telephone directories
     /// </summary>
     [DataField]
     public bool UnlistedNumber = false;
@@ -110,9 +127,10 @@ public sealed partial class TelephoneComponent : Component
 
     /// <summary>
     /// The presumed name and/or job of the last person to call this telephone
+    /// and the name of the device that they used to do so
     /// </summary>
     [ViewVariables, AutoNetworkedField]
-    public (string?, string?) LastCallerId;
+    public (string?, string?, string?) LastCallerId;
 }
 
 #region: Telephone events
@@ -164,6 +182,7 @@ public readonly record struct TelephoneMessageReceivedEvent(string Message, MsgC
 [Serializable, NetSerializable]
 public struct TelephoneCallOptions
 {
+    public bool IgnoreRange;    // The source can always reach its target
     public bool ForceConnect;   // The source immediately starts a call with the receiver, potentially interrupting a call that is already in progress 
     public bool ForceJoin;      // The source smoothly joins a call in progress, or starts a normal call with the receiver if there is none
     public bool MuteSource;     // Chatter from the source is not transmitted - could be used for eavesdropping when combined with 'ForceJoin'
@@ -196,8 +215,7 @@ public enum TelephoneVolume : byte
 [Serializable, NetSerializable]
 public enum TelephoneRange : byte
 {
-    Grid,       // Can call grid/map range telephones that are on the same grid 
-    Map,        // Can call grid/map range telephones that are on the same map 
-    Long,       // Can only long range telephones that are on a different map
-    Unlimited   // Can call any telephone
+    Grid,       // Can only reach telephones that are on the same grid 
+    Map,        // Can reach any telephone that is on the same map
+    Unlimited,  // Can reach any telephone, across any distance
 }
