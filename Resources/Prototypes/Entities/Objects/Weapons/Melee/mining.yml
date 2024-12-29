@@ -64,10 +64,12 @@
         Brute: 3
       types:
         Structural: 15
-  - type: DamageOtherOnHit # imp
+  # imp edits #
+  - type: DamageOtherOnHit
     staminaCost: 8
   - type: ThrowingAngle
     angle: 270
+  # end imp edits #
 
 - type: entity
   name: diamond tipped mining drill
@@ -165,7 +167,8 @@
     sprite: Objects/Weapons/Melee/crusher-inhands.rsi
   - type: DisarmMalus
   - type: Prying
-  - type: Clothing # Imp
+  # imp edits #
+  - type: Clothing
     sprite: Objects/Weapons/Melee/crusher.rsi
     quickEquip: false
     slots:
@@ -173,6 +176,7 @@
     - suitStorage
   - type: DamageOtherOnHit
     staminaCost: 8
+  # end imp edits #
 
 - type: entity
   parent: [ BaseWeaponCrusher, BaseSecurityCargoContraband]
@@ -196,12 +200,14 @@
     tags:
     - Knife
     - Crusher
-  - type: DamageOtherOnHit # imp
+  # imp edits #
+  - type: DamageOtherOnHit
     staminaCost: 5
   - type: EmbeddableProjectile
   - type: EmbedPassiveDamage
   - type: ThrowingAngle
     angle: 225
+  # end imp edits #
 
 # Like a crusher... but better
 - type: entity
@@ -232,7 +238,9 @@
     slots:
     - Back
     - suitStorage
-  - type: EmbeddableProjectile # imp
+  # imp edits #
+  - type: EmbeddableProjectile
   - type: EmbedPassiveDamage
   - type: ThrowingAngle
     angle: 225
+  # end imp edits #

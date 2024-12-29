@@ -26,7 +26,8 @@
         maxDistance: 2
   - type: UseDelay
     delay: 1.5
-  - type: EmbeddableProjectile # imp
+  # imp edits #
+  - type: EmbeddableProjectile
     offset: 0.3,0.0
     removalTime: 0.0
   - type: DamageOtherOnHit
@@ -35,6 +36,7 @@
         Piercing: 3
   - type: ThrowingAngle
     angle: 315
+  # end imp edits #
 
 - type: entity
   parent: Pen

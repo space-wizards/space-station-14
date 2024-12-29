@@ -34,13 +34,15 @@
   - type: Tag
     tags:
     - WhitelistChameleon
-  - type: DamageOtherOnHit # imp
+  # imp edits #
+  - type: DamageOtherOnHit
     damage:
       types:
         Blunt: 9
     staminaCost: 11.5
     soundHit:
       path: /Audio/Weapons/smash.ogg
+  # end imp edits #
 
 - type: entity
   parent: [ClothingShoesBootsMagBase]

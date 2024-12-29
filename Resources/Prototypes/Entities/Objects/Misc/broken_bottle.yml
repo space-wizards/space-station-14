@@ -31,6 +31,8 @@
   - type: ToolRefinable
     refineResult:
     - id: SheetGlass1
-  - type: EmbeddableProjectile # imp
+  # imp edits #
+  - type: EmbeddableProjectile
   - type: EmbedPassiveDamage
   - type: ThrowingAngle
+  # end imp edits #

@@ -88,8 +88,10 @@
     guides:
     - Security
     - Antagonists
-  - type: ItemToggleDamageOtherOnHit # imp
+  # imp edits #
+  - type: ItemToggleDamageOtherOnHit
   - type: DamageOtherOnHit
+  # end imp edits #
 
 - type: entity
   name: truncheon
@@ -175,7 +177,7 @@
       guides:
       - Security
       - Antagonists
-    - type: DamageOtherOnHit
+    - type: DamageOtherOnHit # imp
       damage:
         types:
           Blunt: 0

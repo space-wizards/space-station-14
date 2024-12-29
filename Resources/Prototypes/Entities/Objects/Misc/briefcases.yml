@@ -16,7 +16,7 @@
     damage:
       types:
         Blunt: 8
-    soundHit:
+    soundHit: # imp
       collection: GenericHit
   - type: DamageOtherOnHit # imp
     staminaCost: 5

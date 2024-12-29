@@ -57,8 +57,6 @@
         Blunt: 10
     soundHit:
       path: /Audio/Weapons/smash.ogg
-  - type: DamageOtherOnHit # imp
-    staminaCost: 9
   - type: Tool
     qualities:
     - Rolling
@@ -76,6 +74,8 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 100
+  - type: DamageOtherOnHit # imp
+    staminaCost: 9
 
 - type: entity
   name: extinguisher spray

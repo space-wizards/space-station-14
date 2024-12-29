@@ -108,7 +108,8 @@
   - type: Tag
     tags:
     - DroneUsable
-  - type: ItemToggleDamageOtherOnHit # imp
+  # imp edits #
+  - type: ItemToggleDamageOtherOnHit
     activatedDamage:
       types:
         Heat: 4
@@ -118,6 +119,7 @@
       types:
         Blunt: 8
     staminaCost: 7.5
+  # end imp edits #
 
 - type: entity
   name: industrial welding tool
