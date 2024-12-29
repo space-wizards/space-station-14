@@ -3,7 +3,7 @@
 namespace Content.Shared.Roles;
 
 /// <summary>
-///     Event raised on player entities to indicate that a role was removed from their mind.
+///     Raised on mind entities when a mind role is removed from them.
 /// </summary>
 /// <param name="MindId">The mind id associated with the player.</param>
 /// <param name="Mind">The mind component associated with the mind id.</param>

@@ -3,7 +3,7 @@
 namespace Content.Shared.Roles;
 
 /// <summary>
-///     Base event raised on player entities to indicate that something changed about one of their roles.
+///     Base event raised on mind entities to indicate that a mind role was either added or removed.
 /// </summary>
 /// <param name="MindId">The mind id associated with the player.</param>
 /// <param name="Mind">The mind component associated with the mind id.</param>

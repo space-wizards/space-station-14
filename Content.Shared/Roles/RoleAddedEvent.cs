@@ -3,8 +3,7 @@
 namespace Content.Shared.Roles;
 
 /// <summary>
-///     Raised on player entities when a role is added to them.
-///     <see cref="RoleAddedEvent"/> for the one raised on mind entities.
+///     Raised on mind entities when a mind role is added to them.
 /// </summary>
 /// <param name="MindId">The mind id associated with the player.</param>
 /// <param name="Mind">The mind component associated with the mind id.</param>
