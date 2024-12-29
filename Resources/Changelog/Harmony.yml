@@ -772,3 +772,31 @@ Entries:
     changes:
     - type: Add
       message: Added Smuggler's Satchel, a stealthy syndicate item
+  - id: 232
+    author: Ermucat
+    time: '2024-12-25T22:23:45.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/232
+    changes:
+    - type: Add
+      message: Added new syndicate objective, Teach someone a lesson
+  - id: 248
+    author: Ermucat
+    time: '2024-12-27T22:01:51.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/248
+    changes:
+    - type: Add
+      message: Added the smugglers satchel to the theifs smugglers kit
+  - id: 249
+    author: spanky-spanky
+    time: '2024-12-27T22:03:17.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/249
+    changes:
+    - type: Add
+      message: New visiting shuttle event "ChemLab."
+  - id: 240
+    author: Ermucat
+    time: '2024-12-27T22:04:46.0000000+00:00'
+    url: https://github.com/ss14-harmony/space-station-14/pull/240
+    changes:
+    - type: Add
+      message: Added poquito, the new station pet.
