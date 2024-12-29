@@ -10,6 +10,11 @@
     - !type:DepartmentTimeRequirement
       department: Security
       time: 36000 # 10h
+    - !type:AnyFlagsRequirement
+      flags:
+      - Staff
+      - Mentor
+      - Retiree
   startingGear: MagistrateGear
   icon: "JobIconMagistrate"
   supervisors: job-supervisors-centcom
