@@ -21,6 +21,7 @@
     size: Normal
     sprite: _Goobstation/Heretic/Blades/blade_blade-inhand.rsi
   - type: ItemToggle
+  - type: DamageOtherOnHit
 
 - type: entity
   parent: HereticBladeBase

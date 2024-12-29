@@ -34,6 +34,8 @@ namespace Content.Shared.Damage.Systems
 
         public override void Initialize()
         {
+            base.Initialize();
+
             SubscribeLocalEvent<DamageOtherOnHitComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<DamageOtherOnHitComponent, ThrowDoHitEvent>(OnDoHit);
             SubscribeLocalEvent<DamageOtherOnHitComponent, ThrownEvent>(OnThrown);
@@ -48,7 +50,10 @@ namespace Content.Shared.Damage.Systems
         private void OnMapInit(EntityUid uid, DamageOtherOnHitComponent component, MapInitEvent args)
         {
             if (!TryComp<MeleeWeaponComponent>(uid, out var melee))
+            {
+                RaiseLocalEvent(uid, new DamageOtherOnHitStartupEvent((uid, component)));
                 return;
+            }
 
             if (component.Damage.Empty)
                 component.Damage = melee.Damage * component.MeleeDamageMultiplier;

@@ -25,6 +25,7 @@
         Blunt: 3
   - type: UseDelay
     delay: 1
+  - type: DamageOtherOnHit
 
 - type: entity
   name: cane blade

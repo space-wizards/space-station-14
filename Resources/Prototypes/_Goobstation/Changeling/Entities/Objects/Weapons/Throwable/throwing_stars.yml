@@ -21,12 +21,13 @@
         friction: 0.2
   - type: EmbeddableProjectile
     sound: /Audio/Weapons/star_hit.ogg
+  - type: EmbedPassiveDamage
   - type: LandAtCursor
   - type: DamageOtherOnHit
     damage:
       types:
-        Slash: 8
-        Piercing: 10
+        Slash: 5
+        Piercing: 7
   - type: StaminaDamageOnCollide
     damage: 45
   - type: StaminaDamageOnEmbed

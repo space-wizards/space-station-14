@@ -45,9 +45,12 @@
         mask:
         - ItemMask
   - type: DamageOtherOnHit
-    damage:
-      types:
-        Slash: 2
+    meleeDamageMultiplier: 2
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/bladeslice.ogg
+    removalTime: 2.5
+    autoRemoveDuration: 30
+  - type: EmbedPassiveDamage
   - type: Tag
     tags:
     - Trash

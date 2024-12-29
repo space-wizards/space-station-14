@@ -50,7 +50,7 @@ public sealed partial class DamageOtherOnHitComponent : Component
     ///   The sound to play when this entity hits on a throw.
     ///   If null, attempts to retrieve the HitSound from MeleeWeaponComponent.
     /// </summary>
-    [DataField, AutoNetworkedField]
+    [DataField("soundHit"), AutoNetworkedField]
     public SoundSpecifier? HitSound;
 
     /// <summary>

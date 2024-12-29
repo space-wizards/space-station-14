@@ -21,6 +21,7 @@
     slots:
     - back
   - type: DisarmMalus
+  - type: DamageOtherOnHit # imp
 
 - type: entity
   name: eldritch blade
@@ -45,6 +46,8 @@
     slots:
     - back
   - type: DisarmMalus
+  - type: DamageOtherOnHit # imp
+    staminaCost: 5
 
 - type: entity
   name: unholy halberd
@@ -85,3 +88,8 @@
     - back
   - type: UseDelay
     delay: 1
+  - type: DamageOtherOnHit # imp
+    staminaCost: 9
+  - type: EmbeddableProjectile
+  - type: ThrowingAngle
+    angle: 225

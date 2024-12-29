@@ -39,6 +39,7 @@
     damage:
       types:
         Blunt: 0
+  - type: DamageOtherOnHit # imp
   - type: Tool
     qualities:
     - Honking

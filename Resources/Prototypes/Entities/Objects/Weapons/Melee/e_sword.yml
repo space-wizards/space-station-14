@@ -71,6 +71,18 @@
   - type: Reflect
   - type: IgnitionSource
     temperature: 700
+  - type: ItemToggleDamageOtherOnHit # imp
+    activatedStaminaCost: 6
+  - type: ItemToggleEmbedPassiveDamage
+  - type: ItemToggleEmbeddableProjectile
+    activatedEmbedOnThrow: true
+  - type: ItemToggleThrowingAngle
+    activatedAngle: 225
+    deleteOnDeactivate: true
+  - type: DamageOtherOnHit
+  - type: EmbeddableProjectile
+    embedOnThrow: false
+  - type: EmbedPassiveDamage
 
 - type: entity
   name: energy sword
@@ -223,6 +235,27 @@
   - type: Tag
     tags:
     - Write
+  - type: ItemToggleEmbeddableProjectile # imp
+    activatedOffset: 0.0,0.0
+    activatedRemovalTime: 3
+  - type: ItemToggleThrowingAngle
+    activatedAngle: 135
+    deleteOnDeactivate: false
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 3
+    staminaCost: 3.5
+  - type: EmbeddableProjectile
+    offset: 0.3,0.0
+    removalTime: 0.0
+    embedOnThrow: true
+  - type: EmbedPassiveDamage
+    damage:
+      types:
+        Blunt: 0
+  - type: ThrowingAngle
+    angle: 315
 
 - type: entity
   parent: [BaseItem, BaseSyndicateContraband]

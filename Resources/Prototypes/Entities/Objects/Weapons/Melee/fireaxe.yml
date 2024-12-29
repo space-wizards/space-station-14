@@ -49,6 +49,11 @@
     stealGroup: FireAxe
   - type: IgniteOnMeleeHit
     fireStacks: -4
+  - type: DamageOtherOnHit # imp
+    meleeDamageMultiplier: 1.5
+    staminaCost: 18
+  - type: EmbeddableProjectile
+  - type: EmbedPassiveDamage
 
 - type: entity
   id: FireAxeFlaming

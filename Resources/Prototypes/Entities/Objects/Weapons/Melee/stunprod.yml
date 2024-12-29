@@ -71,3 +71,5 @@
   - type: Construction
     graph: makeshiftstunprod
     node: msstunprod
+  - type: ItemToggleDamageOtherOnHit # imp
+  - type: DamageOtherOnHit

@@ -35,6 +35,8 @@
     sprite: Objects/Weapons/Melee/pickaxe.rsi
     storedRotation: -45
   - type: UseDelay
+  - type: DamageOtherOnHit # Imp
+    staminaCost: 5
 
 - type: entity
   name: mining drill
@@ -62,6 +64,10 @@
         Brute: 3
       types:
         Structural: 15
+  - type: DamageOtherOnHit # imp
+    staminaCost: 8
+  - type: ThrowingAngle
+    angle: 270
 
 - type: entity
   name: diamond tipped mining drill
@@ -165,6 +171,8 @@
     slots:
     - Back
     - suitStorage
+  - type: DamageOtherOnHit
+    staminaCost: 8
 
 - type: entity
   parent: [ BaseWeaponCrusher, BaseSecurityCargoContraband]
@@ -188,6 +196,12 @@
     tags:
     - Knife
     - Crusher
+  - type: DamageOtherOnHit # imp
+    staminaCost: 5
+  - type: EmbeddableProjectile
+  - type: EmbedPassiveDamage
+  - type: ThrowingAngle
+    angle: 225
 
 # Like a crusher... but better
 - type: entity
@@ -218,3 +232,7 @@
     slots:
     - Back
     - suitStorage
+  - type: EmbeddableProjectile # imp
+  - type: EmbedPassiveDamage
+  - type: ThrowingAngle
+    angle: 225

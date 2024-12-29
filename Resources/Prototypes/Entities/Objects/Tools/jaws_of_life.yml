@@ -49,6 +49,10 @@
         Blunt: 10
     soundHit:
       collection: MetalThud
+  - type: DamageOtherOnHit # imp
+    staminaCost: 7
+  - type: ThrowingAngle
+    angle: 90
 
 - type: entity
   name: syndicate jaws of life

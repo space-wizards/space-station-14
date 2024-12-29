@@ -97,6 +97,8 @@
       types:
         Blunt: 4
         Slash: 2
+  - type: DamageOtherOnHit # imp
+    staminaCost: 8
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -157,6 +159,8 @@
     damage:
       types:
         Blunt: 15
+  - type: DamageOtherOnHit # imp
+    staminaCost: 8
 
 - type: entity
   parent: BaseHandheldInstrument

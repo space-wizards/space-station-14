@@ -57,6 +57,8 @@
         Blunt: 10
     soundHit:
       path: /Audio/Weapons/smash.ogg
+  - type: DamageOtherOnHit # imp
+    staminaCost: 9
   - type: Tool
     qualities:
     - Rolling

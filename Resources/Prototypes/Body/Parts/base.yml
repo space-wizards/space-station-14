@@ -28,6 +28,11 @@
   components:
   - type: BodyPart
     partType: Torso
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 11
+    staminaCost: 12
 
 - type: entity
   id: BaseHead
@@ -43,6 +48,11 @@
   - type: Tag
     tags:
       - Head
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 5
+    staminaCost: 5
 
 - type: entity
   id: BaseLeftArm
@@ -53,6 +63,11 @@
   - type: BodyPart
     partType: Arm
     symmetry: Left
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 7
+    staminaCost: 7
 
 - type: entity
   id: BaseRightArm
@@ -63,6 +78,11 @@
   - type: BodyPart
     partType: Arm
     symmetry: Right
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 7
+    staminaCost: 7
 
 - type: entity
   id: BaseLeftHand
@@ -73,6 +93,10 @@
   - type: BodyPart
     partType: Hand
     symmetry: Left
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 3
 
 - type: entity
   id: BaseRightHand
@@ -83,6 +107,10 @@
   - type: BodyPart
     partType: Hand
     symmetry: Right
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 3
 
 - type: entity
   id: BaseLeftLeg
@@ -94,6 +122,11 @@
     partType: Leg
     symmetry: Left
   - type: MovementBodyPart
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 8
+    staminaCost: 9
 
 - type: entity
   id: BaseRightLeg
@@ -105,6 +138,11 @@
     partType: Leg
     symmetry: Right
   - type: MovementBodyPart
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 8
+    staminaCost: 9
 
 - type: entity
   id: BaseLeftFoot
@@ -115,6 +153,10 @@
   - type: BodyPart
     partType: Foot
     symmetry: Left
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 4
 
 - type: entity
   id: BaseRightFoot
@@ -125,3 +167,7 @@
   - type: BodyPart
     partType: Foot
     symmetry: Right
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 4

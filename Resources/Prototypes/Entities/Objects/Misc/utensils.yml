@@ -28,6 +28,8 @@
     damage:
       types:
         Blunt: 0
+  - type: DamageOtherOnHit # imp
+    staminaCost: 2.5
 
 - type: entity
   parent: UtensilBase
@@ -50,6 +52,14 @@
     damage:
       types:
         Piercing: 5
+  - type: DamageOtherOnHit # imp
+    staminaCost: 2.5
+  - type: EmbeddableProjectile
+    removalTime: 0.5
+    autoRemoveDuration: 10
+  - type: EmbedPassiveDamage
+  - type: ThrowingAngle # imp
+    angle: 180
 
 - type: entity
   parent: UtensilBasePlastic
@@ -85,6 +95,9 @@
     damage:
       types:
         Blunt: 1
+  - type: DamageOtherOnHit # imp
+  - type: ThrowingAngle # imp
+    angle: 180
   - type: Shovel
     speedModifier: 0.1 # you can try
   - type: ReactionMixer
@@ -158,5 +171,8 @@
     damage:
       types:
         Blunt: 2
+  - type: DamageOtherOnHit # imp
+  - type: ThrowingAngle # imp
+    angle: 180
   - type: Shovel
     speedModifier: 0.05 # nah

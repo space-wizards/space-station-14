@@ -48,6 +48,12 @@
     weight: 0.0002 # 5,000 times less likely than 1 regular animal
   - type: PirateAccent
     # not putting a BlockMovement component here cause that's funny.
+  - type: DamageOtherOnHit # imp
+    staminaCost: 5
+  - type: EmbeddableProjectile
+  - type: EmbedPassiveDamage
+  - type: ThrowingAngle
+    angle: 225
 
 - type: entity
   name: katana
@@ -69,6 +75,12 @@
   - type: Item
     sprite: Objects/Weapons/Melee/katana.rsi
   - type: DisarmMalus
+  - type: DamageOtherOnHit # imp
+    staminaCost: 10
+  - type: EmbeddableProjectile
+  - type: EmbedPassiveDamage
+  - type: ThrowingAngle
+    angle: 225
 
 - type: entity
   name: energy katana
@@ -98,6 +110,8 @@
     - Back
     - Belt
   - type: Reflect
+  - type: ThrowingAngle # imp
+    angle: 300
 
 - type: entity
   name: machete
@@ -119,6 +133,12 @@
   - type: Item
     sprite: Objects/Weapons/Melee/machete.rsi
   - type: DisarmMalus
+  - type: DamageOtherOnHit # imp
+    staminaCost: 5
+  - type: EmbeddableProjectile
+  - type: EmbedPassiveDamage
+  - type: ThrowingAngle
+    angle: 225
 
 - type: entity
   name: claymore
@@ -141,6 +161,12 @@
     slots:
     - back
   - type: DisarmMalus
+  - type: DamageOtherOnHit # imp
+    staminaCost: 18
+  - type: EmbeddableProjectile
+  - type: EmbedPassiveDamage
+  - type: ThrowingAngle
+    angle: 225
 
 - type: entity
   name: cutlass
@@ -162,6 +188,12 @@
   - type: Item
     sprite: Objects/Weapons/Melee/cutlass.rsi
   - type: DisarmMalus
+  - type: DamageOtherOnHit # imp
+    staminaCost: 5
+  - type: EmbeddableProjectile
+  - type: EmbedPassiveDamage
+  - type: ThrowingAngle
+    angle: 225
 
 - type: entity
   name: throngler
@@ -193,3 +225,4 @@
     - type: Grammar
       attributes:
         proper: true
+    - type: DamageOtherOnHit # imp
