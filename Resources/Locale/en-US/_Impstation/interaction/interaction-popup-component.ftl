@@ -23,5 +23,5 @@ petting-success-cargo-cyborg = You pet {THE($target)} on {POSS-ADJ($target)} scr
 
 ## Apids
 
-petting-success-apid = You pet {$target} on its fuzzy little head.
+petting-success-apid = You pet {$target} on their fuzzy little head.
 petting-failure-apid = You try to pet {$target}, but your fingers are shocked by static electricity!
