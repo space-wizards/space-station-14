@@ -43,6 +43,7 @@ public sealed class CryoTeleportationSystem : EntitySystem
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnCompleteSpawn);
         SubscribeLocalEvent<TargetCryoTeleportationComponent, PlayerDetachedEvent>(OnPlayerDetached);
         SubscribeLocalEvent<TargetCryoTeleportationComponent, PlayerAttachedEvent>(OnPlayerAttached);
+        _playerMan.PlayerStatusChanged += OnSessionStatus;
     }
 
     public override void Update(float delay)
@@ -118,6 +119,19 @@ public sealed class CryoTeleportationSystem : EntitySystem
             comp.ExitTime = null;
         if (_mind.TryGetMind(uid, out var mindId, out var mind))
             comp.UserId = mind.UserId;
+    }
+    
+    private void OnSessionStatus(object? sender, SessionStatusEventArgs args)
+    {
+        if (!TryComp<TargetCryoTeleportationComponent>(args.Session.AttachedEntity, out var comp))
+            return;
+
+        if (args.Session.Status == SessionStatus.Disconnected && comp.ExitTime == null)
+            comp.ExitTime = _timing.CurTime;
+        else if (args.Session.Status == SessionStatus.Connected && comp.ExitTime != null)
+            comp.ExitTime = null;
+
+        comp.UserId = args.Session.UserId;
     }
 
     private EntityUid? FindCryoStorage(TransformComponent stationGridTransform)
