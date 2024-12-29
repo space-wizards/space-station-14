@@ -16,6 +16,7 @@ public sealed class StealthSystem : SharedStealthSystem
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IClientAdminManager _adminManager = default!;
+    [Dependency] private readonly ContainerSystem _containerSystem = default!;
 
     private ShaderInstance _shader = default!;
 
@@ -92,7 +93,6 @@ public sealed class StealthSystem : SharedStealthSystem
 
         //imp special - show an outline for people that should see it, goes along with complete invisibility
         //includes the entity with the component, any admins & any ghosts
-        //todo want this to check for if the player's entity is inside a container as well
         _shader.SetParameter("ShowOutline", false); //make sure it's always false by default
 
         bool isAdmin = false;
@@ -109,6 +109,11 @@ public sealed class StealthSystem : SharedStealthSystem
 
             isAdmin = _adminManager.IsAdmin();
             isGhost = HasComp<GhostComponent>(_playerManager.LocalSession.AttachedEntity);
+
+            if (_playerManager.LocalSession.AttachedEntity is { } entity)
+            {
+                isInContainer = _containerSystem.ContainsEntity(uid, entity);
+            }
         }
 
         if (isAdmin || isCorrectSession || isGhost || isInContainer)
