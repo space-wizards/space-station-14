@@ -1,0 +1,19 @@
+- type: entity
+  id: ApidCryopod
+  parent: BaseStructureDynamic
+  name: apid cryopod
+  suffix: Ghost role
+  description: An ancient marble statue. The subject is depicted with a floor-length braid and is wielding a red toolbox.
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: _Impstation/Structures/apidcryopod.rsi
+    state: icon
+  - type: GhostRole
+    name: ghost-role-information-apid-botanist-name
+    description: ghost-role-information-apid-botanist-description
+    rules: ghost-role-information-crewmember-rules
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: MobApidBotanist

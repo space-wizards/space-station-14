@@ -251,3 +251,15 @@
   - HoPShoesWhite
   - BlackCommandHeels
   - BlueCommandHeels
+
+- type: startingGear #the starting gear for the apid botanist. they dont have a backslot and whatever so ive gotta do it bespoke
+  id: StartingGearApidBotanist
+  equipment:
+    jumpsuit: ClothingUniformOveralls
+    id: BotanistPDA
+    belt: ClothingBeltPlantFilled
+    outerClothing: ClothingOuterApronBotanist
+    head: ClothingHeadHatTrucker
+    pocket1: EmergencyOxygenTank
+    pocket2: ClothingMaskBreath
+    ears: ClothingHeadsetService

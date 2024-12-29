@@ -2,7 +2,7 @@
   name: apid
   id: MobApid
   parent: [SimpleMobBase, StripableInventoryBase, FlyingMobBase]
-  description: Delightfully sweet, these cute little balls of fuzz are distant relatives to moth people.
+  description: Enthusiastic workers, these cute little balls of fuzz are distant relatives to moth people.
   components:
   - type: CombatMode
   - type: Inventory
@@ -147,11 +147,6 @@
       path: /Audio/Animals/ferret_happy.ogg
     interactFailureSound:
       path: /Audio/Items/wirecutter.ogg
-  - type: Butcherable
-    butcheringType: Spike
-    spawned:
-    - id: FoodMeat
-      amount: 3
   - type: Puller
     needsHands: true
   - type: FactionException
@@ -174,8 +169,6 @@
       methods: [ Touch ]
       effects:
       - !type:WashCreamPieReaction
-  - type: NameIdentifier
-    group: Kobold
   - type: Speech
     speechVerb: Moth
     allowedEmotes: ['Chitter', 'Squeak']
@@ -198,14 +191,12 @@
     weightlessFriction: 1
     weightlessModifier: 1
   - type: MeleeWeapon
+    hidden: true
     soundHit:
-      collection: AlienClaw
-    angle: 30
-    animation: WeaponArcClaw
+      collection: MetalThud
     damage:
-      types:
-        Slash: 5
-        Piercing: 4
+      groups:
+        Brute: 5
   - type: Temperature
     heatDamageThreshold: 360
     coldDamageThreshold: 285
@@ -233,8 +224,26 @@
   - type: GhostTakeoverAvailable
   - type: GhostRole
     makeSentient: true
-    name: ghost-role-information-kobold-name
-    description: ghost-role-information-kobold-description
+    name: ghost-role-information-apid-name
+    description: ghost-role-information-apid-description
     rules: ghost-role-information-nonantagonist-rules
-  - type: AntiGravityClothing
-  
+  - type: MovementIgnoreGravity #wheee
+    gravityState: true
+
+- type: entity
+  name: apid botanist
+  id: MobApidBotanist
+  parent: MobApid
+  description: Delightfully sweet, these cute little balls of fuzz are distant relatives to moth people.
+  components:
+  - type: Loadout
+    prototypes:
+      - StartingGearApidBotanist
+  - type: RandomMetadata
+    nameSegments: [names_apid]
+  - type: GhostRole
+    name: ghost-role-information-apid-botanist-name
+    description: ghost-role-information-apid-botanist-description
+    rules: ghost-role-information-crewmember-rules
+    raffle:
+      settings: default

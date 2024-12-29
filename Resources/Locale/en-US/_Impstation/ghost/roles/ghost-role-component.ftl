@@ -46,3 +46,10 @@ ghost-role-information-goblin-castaway-description = A goblin banished from Gobh
 
 ghost-role-information-dino-name = Dinosaur
 ghost-role-information-dino-description = A paleozoic soldier, ready to live or die for the Dino Wars.
+
+ghost-role-information-crewmember-rules = You are a [color=green][bold]Crew member[/bold][/color]. All normal rules elating to crew apply.
+
+                                             You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
+
+ghost-role-information-apid-botanist-name = Apid Botanist
+ghost-role-information-apid-botanist-description = A beefolk botanist, called in as backup to help a crew in need.
