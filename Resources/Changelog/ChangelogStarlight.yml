@@ -1517,4 +1517,18 @@ Entries:
   id: 215
   time: '2024-12-29T12:44:05.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/196
+- author: landosaur
+  changes:
+  - message: Added Abductor guidebook entry.
+    type: Add
+  id: 216
+  time: '2024-12-29T21:23:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/198
+- author: landosaur
+  changes:
+  - message: Antagonists guidebook page now includes new antagonists.
+    type: Tweak
+  id: 217
+  time: '2024-12-29T21:23:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/198
 
