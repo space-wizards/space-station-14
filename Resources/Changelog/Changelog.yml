@@ -1,16 +1,4 @@
 ﻿Entries:
-- author: EmoGarbage404
-  changes:
-  - message: The grappling gun is now available inside the salvage vendor. Additional
-      ones can be scavenged in space.
-    type: Add
-  - message: Removed the grappling gun from science research and lathes.
-    type: Remove
-  - message: Fixed issue that made the rope from the grappling gun not appear.
-    type: Fix
-  id: 7261
-  time: '2024-09-02T04:33:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31737
 - author: yuitop
   changes:
   - message: added in-hand sprite for Smile the Slime
@@ -3936,3 +3924,17 @@
   id: 7760
   time: '2024-12-29T01:50:49.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33997
+- author: ArtisticRoomba, JuneSzalkowska
+  changes:
+  - message: New cotton dough slices and cotton dough rolls.
+    type: Add
+  - message: New cotton baguette, cotton crostini, cotton chevre-chaud, cotton bagel,
+      and cotton croissant recipes. You can make them by following the recipes for
+      regular baguettes, bagels, etc, but use cotton dough instead.
+    type: Add
+  - message: Slicing dough into thirds now divides the nutriment value into thirds.
+      Previously you could slice dough to triple your nutriment.
+    type: Fix
+  id: 7761
+  time: '2024-12-29T02:02:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33508
