@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: yuitop
-  changes:
-  - message: space dragon fire breath ability now has cursor indicator
-    type: Tweak
-  id: 7260
-  time: '2024-09-01T19:28:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31725
 - author: EmoGarbage404
   changes:
   - message: The grappling gun is now available inside the salvage vendor. Additional
@@ -3936,3 +3929,10 @@
   id: 7759
   time: '2024-12-29T01:49:05.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33924
+- author: ewokswagger
+  changes:
+  - message: Pizza deliveries are now guaranteed to have at least one cotton pizza.
+    type: Tweak
+  id: 7760
+  time: '2024-12-29T01:50:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33997
