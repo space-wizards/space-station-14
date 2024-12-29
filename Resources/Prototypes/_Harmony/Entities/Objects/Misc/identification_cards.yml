@@ -1,0 +1,13 @@
+﻿# Harmony Poquito ID card
+- type: entity
+  parent: IDCardStandard
+  id: PoquitoIDcard
+  name: poquito id card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idcook
+  - type: PresetIdCard
+    job: Chef
+    name: Poquito
