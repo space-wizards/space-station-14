@@ -7,7 +7,7 @@
   - type: Stamp
     stampedName: Magistrate
     stampedColor: "#FF5297"
-    stampState: "paper_stamp-magistrat"
+    stampState: "paper_stamp-magistrate"
   - type: Sprite
     sprite: _Starlight/Objects/Misc/stamps.rsi
     state: stamp-magistrate
