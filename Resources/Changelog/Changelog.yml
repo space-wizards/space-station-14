@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: yuitop
-  changes:
-  - message: added in-hand sprite for Smile the Slime
-    type: Add
-  id: 7262
-  time: '2024-09-02T04:36:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31731
 - author: EmoGarbage404
   changes:
   - message: Space Carp and Sharkminnows are a bit weaker overall.
@@ -3938,3 +3931,10 @@
   id: 7761
   time: '2024-12-29T02:02:25.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33508
+- author: Velcroboy
+  changes:
+  - message: Rolling joints no longer requires a cigarette filter.
+    type: Tweak
+  id: 7762
+  time: '2024-12-29T03:25:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34106
