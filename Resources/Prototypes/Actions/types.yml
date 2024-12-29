@@ -319,8 +319,8 @@
 
 - type: entity
   id: ActionToggleWagging
-  name: action-name-toggle-wagging
-  description: action-description-toggle-wagging
+  name: Wagging Tail
+  description: Start or stop wagging your tail.
   components:
     - type: InstantAction
       icon: { sprite: Mobs/Customization/reptilian_parts.rsi, state: tail_smooth_behind }
