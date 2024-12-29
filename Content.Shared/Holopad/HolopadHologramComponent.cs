@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 using System.Numerics;
 
 namespace Content.Shared.Holopad;
@@ -64,8 +65,22 @@ public sealed partial class HolopadHologramComponent : Component
     public Vector2 Offset = new Vector2();
 
     /// <summary>
-    /// A user that are linked to this hologram
+    /// An entity that is linked to this hologram
     /// </summary>
     [ViewVariables]
-    public Entity<HolopadComponent>? LinkedHolopad;
+    public EntityUid? LinkedEntity = EntityUid.Invalid;
+}
+
+/// <summary>
+/// Contatins state data relating to the holopd holopad
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class HolopadHologramComponentState : ComponentState
+{
+    public NetEntity? Target;
+
+    public HolopadHologramComponentState(NetEntity? target = null)
+    {
+        Target = target;
+    }
 }

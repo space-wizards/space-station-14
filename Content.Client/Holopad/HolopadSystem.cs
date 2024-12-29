@@ -3,6 +3,7 @@ using Content.Shared.Holopad;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using System.Linq;
@@ -20,15 +21,19 @@ public sealed class HolopadSystem : SharedHolopadSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<HolopadHologramComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<HolopadHologramComponent, ComponentHandleState>(HandleHolopadHologramState);
         SubscribeLocalEvent<HolopadHologramComponent, BeforePostShaderRenderEvent>(OnShaderRender);
         SubscribeAllEvent<TypingChangedEvent>(OnTypingChanged);
-        SubscribeNetworkEvent<HolopadHologramVisualsUpdateEvent>(OnVisualsUpdate);
     }
 
-    private void OnComponentInit(EntityUid uid, HolopadHologramComponent component, ComponentInit ev)
+    private void HandleHolopadHologramState(Entity<HolopadHologramComponent> entity, ref ComponentHandleState args)
     {
-        UpdateHologramSprite(uid, null);
+        if (args.Current is not HolopadHologramComponentState state)
+            return;
+
+        entity.Comp.LinkedEntity = GetEntity(state.Target);
+
+        UpdateHologramSprite(entity, entity.Comp.LinkedEntity);
     }
 
     private void OnShaderRender(EntityUid uid, HolopadHologramComponent component, BeforePostShaderRenderEvent ev)
@@ -53,11 +58,6 @@ public sealed class HolopadSystem : SharedHolopadSystem
         RaiseNetworkEvent(netEv);
     }
 
-    private void OnVisualsUpdate(HolopadHologramVisualsUpdateEvent ev)
-    {
-        UpdateHologramSprite(GetEntity(ev.Hologram), GetEntity(ev.Target));
-    }
-
     private void UpdateHologramSprite(EntityUid hologram, EntityUid? target)
     {
         // Get required components
@@ -77,8 +77,6 @@ public sealed class HolopadSystem : SharedHolopadSystem
                 for (int i = 0; i < targetAvatar.LayerData.Length; i++)
                 {
                     var layer = targetAvatar.LayerData[i];
-                    layer.Shader = "unshaded";
-
                     hologramSprite.AddLayer(targetAvatar.LayerData[i], i);
                 }
             }
@@ -99,7 +97,6 @@ public sealed class HolopadSystem : SharedHolopadSystem
             var layer = new PrototypeLayerData();
             layer.RsiPath = holopadhologram.RsiPath;
             layer.State = holopadhologram.RsiState;
-            layer.Shader = "unshaded";
 
             hologramSprite.AddLayer(layer);
         }
@@ -107,15 +104,17 @@ public sealed class HolopadSystem : SharedHolopadSystem
         // Override specific values
         hologramSprite.Color = Color.White;
         hologramSprite.Offset = holopadhologram.Offset;
-        hologramSprite.Scale = default;
         hologramSprite.DrawDepth = (int)DrawDepth.Mobs;
         hologramSprite.NoRotation = true;
         hologramSprite.DirectionOverride = Direction.South;
         hologramSprite.EnableDirectionOverride = true;
 
-        // Remove shading from all layers
+        // Remove shading from all layers (except displacement maps)
         for (int i = 0; i < hologramSprite.AllLayers.Count(); i++)
-            hologramSprite.LayerSetShader(i, "unshaded");
+        {
+            if (hologramSprite.TryGetLayer(i, out var layer) && layer.ShaderPrototype != "DisplacedStencilDraw")
+                hologramSprite.LayerSetShader(i, "unshaded");
+        }
 
         UpdateHologramShader(hologram, hologramSprite, holopadhologram);
     }

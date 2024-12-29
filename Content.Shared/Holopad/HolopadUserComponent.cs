@@ -24,29 +24,6 @@ public sealed partial class HolopadUserComponent : Component
 /// A networked event raised when the visual state of a hologram is being updated
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class HolopadHologramVisualsUpdateEvent : EntityEventArgs
-{
-    /// <summary>
-    /// The hologram being updated
-    /// </summary>
-    public readonly NetEntity Hologram;
-
-    /// <summary>
-    /// The target the hologram is copying
-    /// </summary>
-    public readonly NetEntity? Target;
-
-    public HolopadHologramVisualsUpdateEvent(NetEntity hologram, NetEntity? target = null)
-    {
-        Hologram = hologram;
-        Target = target;
-    }
-}
-
-/// <summary>
-/// A networked event raised when the visual state of a hologram is being updated
-/// </summary>
-[Serializable, NetSerializable]
 public sealed class HolopadUserTypingChangedEvent : EntityEventArgs
 {
     /// <summary>

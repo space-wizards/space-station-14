@@ -17,6 +17,7 @@ using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Server.GameStates;
 using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Linq;
@@ -63,6 +64,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
         // Networked events
         SubscribeNetworkEvent<HolopadUserTypingChangedEvent>(OnTypingChanged);
         SubscribeLocalEvent<ExpandPvsEvent>(OnExpandPvs);
+        SubscribeLocalEvent<HolopadHologramComponent, ComponentGetState>(GetHolopadHologramState);
 
         // Component start/shutdown events
         SubscribeLocalEvent<HolopadComponent, ComponentInit>(OnHolopadInit);
@@ -258,16 +260,12 @@ public sealed class HolopadSystem : SharedHolopadSystem
         if (source.Comp.Hologram == null)
             GenerateHologram(source);
 
-        // Receiver holopad holograms have to be generated now instead of waiting for their own event
-        // to fire because holographic avatars get synced immediately
         if (TryComp<HolopadComponent>(args.Receiver, out var receivingHolopad) && receivingHolopad.Hologram == null)
             GenerateHologram((args.Receiver, receivingHolopad));
 
+        // Re-link the user to refresh the sprite data
         if (source.Comp.User != null)
-        {
-            // Re-link the user to refresh the sprite data
             LinkHolopadToUser(source, source.Comp.User.Value);
-        }
     }
 
     private void OnHoloCallEnded(Entity<HolopadComponent> entity, ref TelephoneCallEndedEvent args)
@@ -327,6 +325,13 @@ public sealed class HolopadSystem : SharedHolopadSystem
             foreach (var item in _inventorySystem.GetHandOrInventoryEntities(ent))
                 args.Entities.Add(item);
         }
+    }
+
+    private void GetHolopadHologramState(Entity<HolopadHologramComponent> entity, ref ComponentGetState args)
+    {
+        var netTarget = GetNetEntity(entity.Comp.LinkedEntity);
+
+        args.State = new HolopadHologramComponentState(netTarget);
     }
 
     #endregion
@@ -561,8 +566,8 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
         var netUser = GetNetEntity(user);
 
-        var ev = new HolopadHologramVisualsUpdateEvent(netHologram.Value, netUser);
-        RaiseNetworkEvent(ev);
+        entity.Comp.Hologram!.Value.Comp.LinkedEntity = user?.Owner;
+        Dirty(entity.Comp.Hologram.Value);
     }
 
     private void UnlinkHolopadFromUser(Entity<HolopadComponent> entity, Entity<HolopadUserComponent>? user)
@@ -577,7 +582,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
             if (linkedHolopad.Comp.Hologram != null)
             {
                 _appearanceSystem.SetData(linkedHolopad.Comp.Hologram.Value.Owner, TypingIndicatorVisuals.IsTyping, false);
-                SyncHolopadHologramAppearanceWithTarget(entity, null);
+                SyncHolopadHologramAppearanceWithTarget(linkedHolopad, null);
             }
         }
 
