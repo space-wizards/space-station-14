@@ -166,7 +166,7 @@
       - !type:SnapToGrid { }
       steps:
       - material: WoodPlank
-        amount: 3
+        amount: 10
         doAfter: 2
   - node: bonfirenode
     entity: Bonfire
