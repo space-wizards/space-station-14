@@ -52,6 +52,7 @@ holopad-general-lounge = General - Lounge
 holopad-general-arcade = General - Arcade
 holopad-general-evac = General - Evac
 holopad-general-arrivals = General - Arrivals
+holopad-general-park = General - Park
 
 # Command
 holopad-command-bridge = Command - Bridge
@@ -66,6 +67,7 @@ holopad-command-qm = Command - QM
 holopad-command-ce = Command - CE
 holopad-command-rd = Command - RD
 holopad-command-hos = Command - HoS
+holopad-command-evac = Command - Evac
 
 # Science
 holopad-science-anomaly = Science - Anomaly
@@ -87,6 +89,8 @@ holopad-medical-paramedic = Medical - Paramedic
 holopad-medical-virology = Medical - Virology
 holopad-medical-front = Medical - Front
 holopad-medical-breakroom = Medical - Breakroom
+holopad-medical-psychologist = Medical - Psychologist
+holopad-medical-outpost = Medical - Outpost
 
 # Cargo
 holopad-cargo-front = Cargo - Front
@@ -109,6 +113,7 @@ holopad-engineering-tech-vault = Engineering - Tech Vault
 holopad-engineering-ame = Engineering - AME
 holopad-engineering-power = Engineering - Power
 holopad-engineering-main = Engineering - Main
+holopad-engineering-pa-control = Engineering - PA Control
 
 # Security
 holopad-security-front = Security - Front
@@ -123,6 +128,7 @@ holopad-security-lawyer = Security - Lawyer
 holopad-security-armory = Security - Armory
 holopad-security-locker-room = Security - Locker Room
 holopad-security-brig-med = Security - Brig Med
+holopad-security-checkpoint = Security - Checkpoint
 holopad-security-evac-checkpoint = Security - Evac Checkpoint
 holopad-security-arrivals-checkpoint = Security - Arrivals Checkpoint
 
@@ -141,6 +147,8 @@ holopad-service-musician = Service - Musician
 holopad-service-mime = Service - Mime
 holopad-service-clown-mime = Service - Clown/Mime
 holopad-service-gameroom = Service - Game Room
+holopad-service-breakroom = Service - Breakroom
+holopad-service-toolroom = Service - Toolroom
 
 # AI
 holopad-ai-core = AI - Core

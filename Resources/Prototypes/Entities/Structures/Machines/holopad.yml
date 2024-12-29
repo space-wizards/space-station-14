@@ -104,7 +104,7 @@
         node: machineFrame
       - !type:DoActsBehavior
         acts: ["Destruction"]
- 
+
 - type: entity
   name: long-range holopad
   description: "A floor-mounted device for projecting holographic images to similar devices that are far away."
@@ -117,7 +117,7 @@
     - Map
     - Unlimited
     ignoreTelephonesOnSameGrid: true
-    
+
 - type: entity
   name: quantum entangling holopad
   description: "An floor-mounted device for projecting holographic images to similar devices at extreme distances."
@@ -236,6 +236,14 @@
 
 - type: entity
   parent: Holopad
+  id: HolopadGeneralPark
+  suffix: Park
+  components:
+  - type: Label
+    currentLabel: holopad-general-park
+
+- type: entity
+  parent: Holopad
   id: HolopadGeneralEvac
   suffix: Evac
   components:
@@ -290,6 +298,14 @@
   components:
   - type: Label
     currentLabel: holopad-command-lounge
+
+- type: entity
+  parent: Holopad
+  id: HolopadCommandEvac
+  suffix: Command Evac
+  components:
+  - type: Label
+    currentLabel: holopad-command-evac
 
 - type: entity
   parent: Holopad
@@ -423,6 +439,14 @@
 
 - type: entity
   parent: Holopad
+  id: HolopadMedicalOutpost
+  suffix: Outpost
+  components:
+  - type: Label
+    currentLabel: holopad-medical-outpost
+
+- type: entity
+  parent: Holopad
   id: HolopadMedicalChemistry
   suffix: Chemistry
   components:
@@ -460,6 +484,14 @@
   components:
   - type: Label
     currentLabel: holopad-medical-paramedic
+
+- type: entity
+  parent: Holopad
+  id: HolopadMedicalPsychologist
+  suffix: Psychologist
+  components:
+  - type: Label
+    currentLabel: holopad-medical-psychologist
 
 - type: entity
   parent: Holopad
@@ -550,6 +582,14 @@
   components:
   - type: Label
     currentLabel: holopad-engineering-atmos-teg
+
+- type: entity
+  parent: Holopad
+  id: HolopadEngineeringParticleAccelerator
+  suffix: PA Control
+  components:
+  - type: Label
+    currentLabel: holopad-engineering-pa-control
 
 - type: entity
   parent: Holopad
@@ -714,6 +754,14 @@
 
 - type: entity
   parent: Holopad
+  id: HolopadSecurityCheckpoint
+  suffix: Sec Checkpoint
+  components:
+  - type: Label
+    currentLabel: holopad-security-checkpoint
+
+- type: entity
+  parent: Holopad
   id: HolopadSecurityEvacCheckpoint
   suffix: Sec Evac Checkpoint
   components:
@@ -776,6 +824,22 @@
   components:
   - type: Label
     currentLabel: holopad-service-library
+
+- type: entity
+  parent: Holopad
+  id: HolopadServiceBreakroom
+  suffix: Service Breakroom
+  components:
+  - type: Label
+    currentLabel: holopad-service-breakroom
+
+- type: entity
+  parent: Holopad
+  id: HolopadServiceToolroom
+  suffix: Service Toolroom
+  components:
+  - type: Label
+    currentLabel: holopad-service-toolroom
 
 - type: entity
   parent: Holopad
