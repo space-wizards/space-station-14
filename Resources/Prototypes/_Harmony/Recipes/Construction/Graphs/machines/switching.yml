@@ -150,3 +150,32 @@
             - !type:EmptyAllContainers
               pickup: true
               emptyAtUser: true
+
+# Bonfire?
+
+- type: constructionGraph
+  id: BonfireGraph
+  start: start
+  graph:
+  - node: start
+    actions:
+    - !type:DestroyEntity {}
+    edges:
+    - to: bonfirenode
+      completed:
+      - !type:SnapToGrid { }
+      steps:
+      - material: WoodPlank
+        amount: 3
+        doAfter: 2
+  - node: bonfirenode
+    entity: Bonfire
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialWoodPlank
+        amount: 3
+      steps:
+      - tool: Prying
+        doAfter: 3

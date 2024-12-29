@@ -47,6 +47,9 @@
   - type: IgniteOnCollide
     fireStacks: 2
     count: -1
+  - type: Construction
+    graph: BonfireGraph
+    node: bonfirenode
 
 - type: entity
   id: LegionnaireBonfire
