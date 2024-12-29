@@ -50,6 +50,7 @@
           type: WiresBoundUserInterface
   - type: GuideHelp
     guides:
+    - AtmosphericAlertsComputer
     - DeviceMonitoringAndControl
 
 - type: entity
@@ -84,6 +85,10 @@
         type: AtmosMonitoringConsoleBoundUserInterface
       enum.WiresUiKey.Key:
         type: WiresBoundUserInterface
+  - type: GuideHelp
+    guides:
+    - AtmosphericNetworkMonitor
+    - DeviceMonitoringAndControl
 
 - type: entity
   parent: BaseComputer
