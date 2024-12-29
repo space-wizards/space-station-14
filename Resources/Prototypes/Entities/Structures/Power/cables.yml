@@ -30,6 +30,9 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
+  - type: Tag
+    tags:
+      - Cable
   - type: SubFloorHide
   - type: CollideOnAnchor
   - type: Appearance
@@ -212,3 +215,4 @@
   components:
   - type: Cable
     cuttingQuality: null
+

@@ -184,6 +184,9 @@
   id: BypassInteractionRangeChecks
 
 - type: Tag
+  id: Cable
+
+- type: Tag
   id: CableCoil
 
 - type: Tag
@@ -445,6 +448,9 @@
 
 - type: Tag
   id: DiscreteHealthAnalyzer #So construction recipes don't eat medical PDAs
+
+- type: Tag
+  id: Disposal
 
 - type: Tag
   id: DNASolutionScannable
@@ -1370,3 +1376,4 @@
   id: WriteIgnoreStamps
 
 # ALPHABETICAL
+

@@ -112,6 +112,7 @@ public sealed class MappingState : GameplayStateBase
         Screen.EntityReplaceButton.OnToggled += OnEntityReplacePressed;
         Screen.EntityPlacementMode.OnItemSelected += OnEntityPlacementSelected;
         Screen.EraseEntityButton.OnToggled += OnEraseEntityPressed;
+        Screen.EraseTileButton.OnToggled += OnEraseTilePressed;
         Screen.EraseDecalButton.OnToggled += OnEraseDecalPressed;
         _placement.PlacementChanged += OnPlacementChanged;
 
@@ -171,6 +172,7 @@ public sealed class MappingState : GameplayStateBase
         Screen.EntityReplaceButton.OnToggled -= OnEntityReplacePressed;
         Screen.EntityPlacementMode.OnItemSelected -= OnEntityPlacementSelected;
         Screen.EraseEntityButton.OnToggled -= OnEraseEntityPressed;
+        Screen.EraseTileButton.OnToggled -= OnEraseTilePressed;
         Screen.EraseDecalButton.OnToggled -= OnEraseDecalPressed;
         _placement.PlacementChanged -= OnPlacementChanged;
         _prototypeManager.PrototypesReloaded -= OnPrototypesReloaded;
@@ -677,11 +679,34 @@ public sealed class MappingState : GameplayStateBase
             DisableEraser();
     }
 
+    private void OnEraseTilePressed(ButtonEventArgs args)
+    {
+        _placement.Clear();
+        Deselect();
+
+        if (!args.Button.Pressed)
+            return;
+
+        _placement.BeginPlacing(new PlacementInformation
+        {
+            PlacementOption = "AlignTileAny",
+            TileType = 0,
+            Range = 400,
+            IsTile = true,
+        });
+
+        _updatePlacement = true;
+        _updateEraseDecal = false;
+        Screen.EraseEntityButton.Pressed = false;
+        Screen.EraseDecalButton.Pressed = false;
+    }
+
     private void OnEraseDecalPressed(ButtonToggledEventArgs args)
     {
         _placement.Clear();
         Deselect();
         Screen.EraseEntityButton.Pressed = false;
+        Screen.EraseTileButton.Pressed = false;
         _updatePlacement = true;
         _updateEraseDecal = args.Pressed;
     }
@@ -695,6 +720,7 @@ public sealed class MappingState : GameplayStateBase
         _placement.ToggleEraser();
         Screen.EntityPlacementMode.Disabled = true;
         Screen.EraseDecalButton.Pressed = false;
+        Screen.EraseTileButton.Pressed = false;
         Deselect();
     }
 
