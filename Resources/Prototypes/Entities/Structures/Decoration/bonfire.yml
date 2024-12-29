@@ -31,6 +31,22 @@
     sound:
       path: /Audio/Ambience/Objects/fireplace.ogg
   - type: AlwaysHot
+  - type: TriggerOnCollide
+    fixtureID: ignition
+  - type: Fixtures
+    fixtures:
+      ignition:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        hard: false
+        mask:
+        - ItemMask
+        layer:
+        - SlipLayer
+  - type: IgniteOnCollide
+    fireStacks: 2
+    count: -1
 
 - type: entity
   id: LegionnaireBonfire
