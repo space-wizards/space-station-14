@@ -11,6 +11,7 @@ using Content.Shared.Administration;
 using Content.Shared.Decals;
 using Content.Shared.Input;
 using Content.Shared.Maps;
+using Robust.Client.Console;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -19,8 +20,10 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Enums;
+using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Markdown.Sequence;
@@ -49,6 +52,8 @@ public sealed class MappingState : GameplayStateBase
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IResourceCache _resources = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
+    [Dependency] private readonly IEyeManager _eyeManager = default!;
 
     private EntityMenuUIController _entityMenuController = default!;
 
@@ -114,6 +119,8 @@ public sealed class MappingState : GameplayStateBase
         Screen.EraseEntityButton.OnToggled += OnEraseEntityPressed;
         Screen.EraseTileButton.OnToggled += OnEraseTilePressed;
         Screen.EraseDecalButton.OnToggled += OnEraseDecalPressed;
+        Screen.FixGridAtmos.OnPressed += OnFixGridAtmosPressed;
+        Screen.RemoveGrid.OnPressed += OnRemoveGridPressed;
         _placement.PlacementChanged += OnPlacementChanged;
 
         CommandBinds.Builder
@@ -125,6 +132,7 @@ public sealed class MappingState : GameplayStateBase
             .Bind(ContentKeyFunctions.MappingRemoveDecal, new PointerInputCmdHandler(HandleEditorCancelPlace, outsidePrediction: true))
             .Bind(ContentKeyFunctions.MappingCancelEraseDecal, new PointerInputCmdHandler(HandleCancelEraseDecal, outsidePrediction: true))
             .Bind(ContentKeyFunctions.MappingOpenContextMenu, new PointerInputCmdHandler(HandleOpenContextMenu, outsidePrediction: true))
+            .Bind(EngineKeyFunctions.Use, new PointerInputCmdHandler(HandleOnUse, outsidePrediction: true))
             .Register<MappingState>();
 
         _overlays.AddOverlay(new MappingOverlay(this));
@@ -174,6 +182,8 @@ public sealed class MappingState : GameplayStateBase
         Screen.EraseEntityButton.OnToggled -= OnEraseEntityPressed;
         Screen.EraseTileButton.OnToggled -= OnEraseTilePressed;
         Screen.EraseDecalButton.OnToggled -= OnEraseDecalPressed;
+        Screen.FixGridAtmos.OnPressed -= OnFixGridAtmosPressed;
+        Screen.RemoveGrid.OnPressed -= OnRemoveGridPressed;
         _placement.PlacementChanged -= OnPlacementChanged;
         _prototypeManager.PrototypesReloaded -= OnPrototypesReloaded;
 
@@ -711,6 +721,16 @@ public sealed class MappingState : GameplayStateBase
         _updateEraseDecal = args.Pressed;
     }
 
+    private void OnFixGridAtmosPressed(ButtonEventArgs args)
+    {
+        State = args.Button.Pressed ? CursorState.GridGreen : CursorState.None;
+    }
+
+    private void OnRemoveGridPressed(ButtonEventArgs args)
+    {
+        State = args.Button.Pressed ? CursorState.GridRed : CursorState.None;
+    }
+
     private void EnableEraser()
     {
         if (_placement.Eraser)
@@ -866,6 +886,35 @@ public sealed class MappingState : GameplayStateBase
         return true;
     }
 
+    private bool HandleOnUse(in PointerInputCmdArgs args)
+    {
+        if (Screen.FixGridAtmos.Pressed)
+        {
+            Screen.FixGridAtmos.Pressed = false;
+            State = CursorState.None;
+            if (GetHoveredGrid() is { } grid)
+            {
+                _consoleHost.ExecuteCommand($"fixgridatmos {_entityManager.GetNetEntity(grid.Owner).Id}");
+            }
+
+            return true;
+        }
+
+        if (Screen.RemoveGrid.Pressed)
+        {
+            Screen.RemoveGrid.Pressed = false;
+            State = CursorState.None;
+            if (GetHoveredGrid() is { } grid)
+            {
+                _consoleHost.ExecuteCommand($"rmgrid {_entityManager.GetNetEntity(grid.Owner).Id}");
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
     private async void SaveMap()
     {
         await _mapping.SaveMap();
@@ -923,6 +972,23 @@ public sealed class MappingState : GameplayStateBase
         return GetClickedEntity(mapPos);
     }
 
+    public Entity<MapGridComponent>? GetHoveredGrid()
+    {
+        if (UserInterfaceManager.CurrentlyHovered is not IViewportControl viewport ||
+            _input.MouseScreenPosition is not { IsValid: true } position)
+        {
+            return null;
+        }
+
+        var mapPos = _eyeManager.PixelToMap(position);
+        if (_mapMan.TryFindGridAt(mapPos, out var gridUid, out var grid))
+        {
+            return new Entity<MapGridComponent>(gridUid, grid);
+        }
+
+        return null;
+    }
+
     public override void FrameUpdate(FrameEventArgs e)
     {
         if (_updatePlacement)
@@ -957,6 +1023,8 @@ public sealed class MappingState : GameplayStateBase
     {
         None,
         Pick,
-        Delete
+        Delete,
+        GridGreen,
+        GridRed,
     }
 }

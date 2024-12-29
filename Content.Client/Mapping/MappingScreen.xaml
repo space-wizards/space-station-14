@@ -78,11 +78,15 @@
                     <mapping:MappingActionsButton Name="Move" Access="Public"
                                                   ToolTip="" Visible="False" />
                     <mapping:MappingActionsButton Name="Pick" Access="Public"
-                                                  ToolTip="Pick (Hold 5)" />
+                                                  ToolTip="{Loc 'mapping-pick-tooltip'}" />
                     <mapping:MappingActionsButton Name="Delete" Access="Public"
-                                                  ToolTip="Delete (Hold 6)" />
-                    <mapping:MappingActionsButton Name="Flip" Access="Public" ToggleMode="False"/>
-                    <mapping:MappingActionsButton Name="Layers" Access="Public" ToggleMode="False"/>
+                                                  ToolTip="{Loc 'mapping-delete-tooltip'}" />
+                    <mapping:MappingActionsButton Name="Flip" Access="Public" ToggleMode="False" />
+                    <mapping:MappingActionsButton Name="Layers" Access="Public" ToggleMode="False" />
+                    <mapping:MappingActionsButton Name="FixGridAtmos" Access="Public"
+                                                  ToolTip="{Loc 'mapping-fixgridatmos-tooltip'}" />
+                    <mapping:MappingActionsButton Name="RemoveGrid" Access="Public"
+                                                  ToolTip="{Loc 'mapping-remove-grid-tooltip'}" />
                 </BoxContainer>
             </PanelContainer>
         </LayoutContainer>

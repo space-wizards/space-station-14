@@ -1,9 +1,9 @@
-﻿using Robust.Client.GameObjects;
+﻿using System.Numerics;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Client.Input;
 using Robust.Client.Player;
-using Robust.Client.UserInterface;
 using Robust.Shared.Enums;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using static Content.Client.Mapping.MappingState;
 
@@ -77,8 +77,43 @@ public sealed class MappingOverlay : Overlay
 
                 break;
             }
+            case CursorState.GridGreen:
+            {
+                DrawGridOverlay(args, new Color(0f, 225f, 0f).WithAlpha(0.05f));
+                break;
+            }
+            case CursorState.GridRed:
+            {
+                DrawGridOverlay(args, new Color(225f, 0f, 0f).WithAlpha(0.05f));
+                break;
+            }
         }
 
         handle.UseShader(null);
+    }
+
+    public void DrawGridOverlay(in OverlayDrawArgs args, Color color)
+    {
+        if (args.MapId == MapId.Nullspace || _state.GetHoveredGrid() is not { } grid)
+            return;
+
+        var mapSystem = _entities.System<SharedMapSystem>();
+        var xformSystem = _entities.System<SharedTransformSystem>();
+
+        var tileSize = grid.Comp.TileSize;
+        var tileDimensions = new Vector2(tileSize, tileSize);
+        var (_, _, worldMatrix, invMatrix) = xformSystem.GetWorldPositionRotationMatrixWithInv(grid.Owner);
+        args.WorldHandle.SetTransform(worldMatrix);
+        var bounds = args.WorldBounds;
+        bounds = new Box2Rotated(bounds.Box.Enlarged(1), bounds.Rotation, bounds.Origin);
+        var localAABB = invMatrix.TransformBox(bounds);
+
+        var enumerator = mapSystem.GetLocalTilesEnumerator(grid.Owner, grid, localAABB);
+
+        while (enumerator.MoveNext(out var tileRef))
+        {
+            var box = Box2.FromDimensions(tileRef.GridIndices, tileDimensions);
+            args.WorldHandle.DrawRect(box, color);
+        }
     }
 }
