@@ -98,7 +98,6 @@ public sealed partial class MappingScreen : InGameScreen
         }
 
         Pick.Texture.TexturePath = "/Textures/Interface/eyedropper.svg.png";
-        Delete.Texture.TexturePath = "/Textures/Interface/eraser.svg.png";
         Flip.Texture.TexturePath = "/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png";
         Flip.OnPressed += args => FlipSides();
         Layers.Texture.TexturePath = "/Textures/Interface/hamburger.svg.192dpi.png";
@@ -107,11 +106,13 @@ public sealed partial class MappingScreen : InGameScreen
             layersUIController.ToggleWindow();
         };
         FixGridAtmos.Texture.TexturePath = "/Textures/Interface/VerbIcons/light.svg.192dpi.png"; // TODO change this
-        RemoveGrid.Texture.TexturePath = "/Textures/Interface/VerbIcons/light.svg.192dpi.png"; // TODO change this
+        RemoveGrid.Texture.TexturePath = "/Textures/Interface/VerbIcons/eraser.svg.png";
 
         var mappingActionsGroup = new ButtonGroup();
+        EraseEntityButton.Group = mappingActionsGroup;
+        EraseDecalButton.Group = mappingActionsGroup;
+        EraseTileButton.Group = mappingActionsGroup;
         Pick.Group = mappingActionsGroup;
-        Delete.Group = mappingActionsGroup;
         FixGridAtmos.Group = mappingActionsGroup;
         RemoveGrid.Group = mappingActionsGroup;
     }
@@ -223,7 +224,6 @@ public sealed partial class MappingScreen : InGameScreen
         Grab.Pressed = Grab == except;
         Move.Pressed = Move == except;
         Pick.Pressed = Pick == except;
-        Delete.Pressed = Delete == except;
         Layers.Pressed = Layers == except;
     }
 }

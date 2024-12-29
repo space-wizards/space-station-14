@@ -50,7 +50,8 @@
             <BoxContainer Orientation="Horizontal">
                 <Button Name="EraseEntityButton" Access="Public" HorizontalExpand="True"
                         SetHeight="48"
-                        ToggleMode="True" Text="{Loc 'mapping-erase-entity'}" StyleClasses="ButtonSquare" />
+                        ToggleMode="True" Text="{Loc 'mapping-erase-entity'}" StyleClasses="ButtonSquare"
+                        ToolTip="{Loc 'mapping-erase-entity-tooltip'}" />
                 <Button Name="EraseTileButton" Access="Public" HorizontalExpand="True"
                         SetHeight="48"
                         ToggleMode="True" Text="{Loc 'mapping-erase-tile'}" StyleClasses="ButtonSquare" />
@@ -79,8 +80,6 @@
                                                   ToolTip="" Visible="False" />
                     <mapping:MappingActionsButton Name="Pick" Access="Public"
                                                   ToolTip="{Loc 'mapping-pick-tooltip'}" />
-                    <mapping:MappingActionsButton Name="Delete" Access="Public"
-                                                  ToolTip="{Loc 'mapping-delete-tooltip'}" />
                     <mapping:MappingActionsButton Name="Flip" Access="Public" ToggleMode="False" />
                     <mapping:MappingActionsButton Name="Layers" Access="Public" ToggleMode="False" />
                     <mapping:MappingActionsButton Name="FixGridAtmos" Access="Public"

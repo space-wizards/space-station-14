@@ -66,7 +66,7 @@ public sealed class MappingOverlay : Overlay
 
                 break;
             }
-            case CursorState.Delete:
+            case CursorState.DeleteEntity:
             {
                 if (_state.GetHoveredEntity() is { } entity &&
                     _entities.TryGetComponent(entity, out SpriteComponent? sprite))

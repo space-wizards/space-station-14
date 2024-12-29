@@ -113,7 +113,6 @@ public sealed class MappingState : GameplayStateBase
         Screen.Prototypes.SelectionChanged += OnSelected;
         Screen.Prototypes.CollapseToggled += OnCollapseToggled;
         Screen.Pick.OnPressed += OnPickPressed;
-        Screen.Delete.OnPressed += OnDeletePressed;
         Screen.EntityReplaceButton.OnToggled += OnEntityReplacePressed;
         Screen.EntityPlacementMode.OnItemSelected += OnEntityPlacementSelected;
         Screen.EraseEntityButton.OnToggled += OnEraseEntityPressed;
@@ -176,7 +175,6 @@ public sealed class MappingState : GameplayStateBase
         Screen.Prototypes.SelectionChanged -= OnSelected;
         Screen.Prototypes.CollapseToggled -= OnCollapseToggled;
         Screen.Pick.OnPressed -= OnPickPressed;
-        Screen.Delete.OnPressed -= OnDeletePressed;
         Screen.EntityReplaceButton.OnToggled -= OnEntityReplacePressed;
         Screen.EntityPlacementMode.OnItemSelected -= OnEntityPlacementSelected;
         Screen.EraseEntityButton.OnToggled -= OnEraseEntityPressed;
@@ -200,6 +198,7 @@ public sealed class MappingState : GameplayStateBase
         context.RemoveFunction(ContentKeyFunctions.MappingRemoveDecal);
         context.RemoveFunction(ContentKeyFunctions.MappingCancelEraseDecal);
         context.RemoveFunction(ContentKeyFunctions.MappingOpenContextMenu);
+        context.RemoveFunction(EngineKeyFunctions.Use);
 
         _overlays.RemoveOverlay<MappingOverlay>();
 
@@ -646,14 +645,6 @@ public sealed class MappingState : GameplayStateBase
             DisablePick();
     }
 
-    private void OnDeletePressed(ButtonEventArgs obj)
-    {
-        if (obj.Button.Pressed)
-            EnableDelete();
-        else
-            DisableDelete();
-    }
-
     private void OnEntityReplacePressed(ButtonToggledEventArgs args)
     {
         _placement.Replacement = args.Pressed;
@@ -693,9 +684,13 @@ public sealed class MappingState : GameplayStateBase
     {
         _placement.Clear();
         Deselect();
+        State = CursorState.None;
 
         if (!args.Button.Pressed)
+        {
+            Screen.EntityPlacementMode.Disabled = false;
             return;
+        }
 
         _placement.BeginPlacing(new PlacementInformation
         {
@@ -707,16 +702,14 @@ public sealed class MappingState : GameplayStateBase
 
         _updatePlacement = true;
         _updateEraseDecal = false;
-        Screen.EraseEntityButton.Pressed = false;
-        Screen.EraseDecalButton.Pressed = false;
+        Screen.EntityPlacementMode.Disabled = true;
     }
 
     private void OnEraseDecalPressed(ButtonToggledEventArgs args)
     {
         _placement.Clear();
         Deselect();
-        Screen.EraseEntityButton.Pressed = false;
-        Screen.EraseTileButton.Pressed = false;
+        State = CursorState.None;
         _updatePlacement = true;
         _updateEraseDecal = args.Pressed;
     }
@@ -738,9 +731,8 @@ public sealed class MappingState : GameplayStateBase
 
         _placement.Clear();
         _placement.ToggleEraser();
+        State = CursorState.DeleteEntity;
         Screen.EntityPlacementMode.Disabled = true;
-        Screen.EraseDecalButton.Pressed = false;
-        Screen.EraseTileButton.Pressed = false;
         Deselect();
     }
 
@@ -750,6 +742,7 @@ public sealed class MappingState : GameplayStateBase
             return;
 
         _placement.ToggleEraser();
+        State = CursorState.None;
         Screen.EntityPlacementMode.Disabled = false;
     }
 
@@ -763,20 +756,6 @@ public sealed class MappingState : GameplayStateBase
     {
         Screen.Pick.Pressed = false;
         State = CursorState.None;
-    }
-
-    private void EnableDelete()
-    {
-        Screen.UnPressActionsExcept(Screen.Delete);
-        State = CursorState.Delete;
-        EnableEraser();
-    }
-
-    private void DisableDelete()
-    {
-        Screen.Delete.Pressed = false;
-        State = CursorState.None;
-        DisableEraser();
     }
 
     private bool HandleMappingUnselect(in PointerInputCmdArgs args)
@@ -814,13 +793,15 @@ public sealed class MappingState : GameplayStateBase
 
     private bool HandleEnableDelete(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
     {
-        EnableDelete();
+        Screen.EntityPlacementMode.Pressed = true;
+        EnableEraser();
         return true;
     }
 
     private bool HandleDisableDelete(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
     {
-        DisableDelete();
+        Screen.EntityPlacementMode.Pressed = false;
+        DisableEraser();
         return true;
     }
 
@@ -1023,7 +1004,7 @@ public sealed class MappingState : GameplayStateBase
     {
         None,
         Pick,
-        Delete,
+        DeleteEntity,
         GridGreen,
         GridRed,
     }
