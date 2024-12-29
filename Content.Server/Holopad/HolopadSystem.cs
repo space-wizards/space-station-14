@@ -782,7 +782,6 @@ public sealed class HolopadSystem : SharedHolopadSystem
             return;
 
         var sourceTelephoneEntity = new Entity<TelephoneComponent>(source, sourceTelephone);
-        var cooldown = source.Comp.ControlLockoutStartTime;
 
         var query = AllEntityQuery<HolopadComponent, TelephoneComponent>();
         while (query.MoveNext(out var receiver, out var receiverHolopad, out var receiverTelephone))
@@ -793,10 +792,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
                 continue;
 
             if (receiverHolopad.ControlLockoutStartTime > source.Comp.ControlLockoutStartTime)
-            {
                 source.Comp.ControlLockoutStartTime = receiverHolopad.ControlLockoutStartTime;
-                source.Comp.ControlLockoutOwner = receiverHolopad.ControlLockoutOwner;
-            }
         }
 
         Dirty(source);
