@@ -1,3 +1,17 @@
+# BaseHealingItem
+
+- type: entity
+  parent: BaseHealingItem
+  id: BaseStarlightHealingItem
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/medical.rsi
+  - type: Item
+    size: Small
+    sprite: _Starlight/Objects/Specific/Medical/medical.rsi
+    heldPrefix: ointment
+
 - type: entity
   name: blue bruise pack
   description: A therapeutic gel pack and bandages designed to treat blunt-force trauma.
@@ -144,7 +158,7 @@
 - type: entity
   name: red ointment
   description: Uses a special blend of pyrazine and aloe to treat severe burns. Does nothing for caustic.
-  parent: BaseHealingItem
+  parent: BaseStarlightHealingItem
   id: RedOintment
   suffix: 20
   components:
@@ -207,7 +221,7 @@
 - type: entity
   name: red bruise pack
   description: Security-Graded Bruise Packs for all your harmbaton needs!
-  parent: BaseHealingItem
+  parent: BaseStarlightHealingItem
   id: RedBrutePack
   suffix: 20
   components:
@@ -268,7 +282,7 @@
 - type: entity
   name: red punct-laced brute pack
   description: Specalized mixture of Puncturase and Security-Quality Red Goo. Best used for bullet-wounds, as it is much less effective on other types of damage.
-  parent: BaseHealingItem
+  parent: BaseStarlightHealingItem
   id: RedPunctPack
   suffix:
   components:
@@ -332,7 +346,7 @@
 - type: entity
   name: red lace-laced brute pack
   description: Specalized mixture of Lacerinol and Security-Quality Red Goo. Best used for stab-wounds, as it is much less effective on other types of damage.
-  parent: BaseHealingItem
+  parent: BaseStarlightHealingItem
   id: RedLacePack
   suffix: 10
   components:
@@ -396,7 +410,7 @@
 - type: entity
   name: red bruiz-laced brute pack
   description: Specalized mixture of Bruizine and Security-Quality Red Goo. Best used for blunt-force trauma, as it is much less effective on other types of damage.
-  parent: BaseHealingItem
+  parent: BaseStarlightHealingItem
   id: RedBruizPack
   suffix: 10
   components:
