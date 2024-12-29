@@ -154,7 +154,7 @@ public abstract class SharedRoleSystem : EntitySystem
 
         mind.MindRoles.Add(mindRoleId);
 
-        var update = MindRolesUpdate(mindId);
+        var update = MindRolesUpdate((mindId, mind));
 
         // RoleType refresh, Role time tracking, Update Admin playerlist
         if (mind.OwnedEntity != null)
@@ -187,18 +187,19 @@ public abstract class SharedRoleSystem : EntitySystem
     /// <returns>
     ///     True if this changed the mind's role type
     /// </returns>>
-    private bool MindRolesUpdate(EntityUid mindId)
+    private bool MindRolesUpdate(Entity<MindComponent?> ent)
     {
+        if(!Resolve(ent.Owner, ref ent.Comp))
+            return false;
+
         //get the most important/latest mind role
-        var roleType = GetRoleTypeByTime(mindId);
+        var roleType = GetRoleTypeByTime(ent.Owner);
 
-        if (Comp<MindComponent>(mindId).RoleType != roleType)
-        {
-            SetRoleType(mindId, roleType);
-            return true;
-        }
+        if (ent.Comp.RoleType == roleType)
+            return false;
 
-        return false;
+        SetRoleType(ent.Owner, roleType);
+        return true;
     }
 
     private ProtoId<RoleTypePrototype> GetRoleTypeByTime(EntityUid mindId)
