@@ -31,6 +31,9 @@ public sealed partial class MappingPrototypeList : Control
 
         ScrollContainer.OnScrolled += UpdateSearch;
         OnResized += UpdateSearch;
+
+        CollapseAllButton.Texture.TexturePath = "/Textures/Interface/VerbIcons/collapse.svg.192dpi.png";
+        ClearSearchButton.Texture.TexturePath = "/Textures/Interface/VerbIcons/cross.svg.192dpi.png";
     }
 
     public void UpdateVisible(List<MappingPrototype> prototypes)

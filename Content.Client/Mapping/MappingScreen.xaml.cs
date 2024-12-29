@@ -105,7 +105,7 @@ public sealed partial class MappingScreen : InGameScreen
         {
             layersUIController.ToggleWindow();
         };
-        FixGridAtmos.Texture.TexturePath = "/Textures/Interface/VerbIcons/light.svg.192dpi.png"; // TODO change this
+        FixGridAtmos.Texture.TexturePath = "/Textures/Interface/VerbIcons/oxygen.svg.192dpi.png";
         RemoveGrid.Texture.TexturePath = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
 
         var mappingActionsGroup = new ButtonGroup();
