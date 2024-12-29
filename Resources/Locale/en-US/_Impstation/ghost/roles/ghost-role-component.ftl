@@ -52,7 +52,7 @@ ghost-role-information-crewmember-rules = You are a [color=green][bold]Crew memb
                                              You don't remember any of your previous life, and you don't remember anything you learned as a ghost.
 
 ghost-role-information-apid-botanist-name = Apid Botanist
-ghost-role-information-apid-botanist-description = A beefolk botanist, called in as backup to help a crew in need.
+ghost-role-information-apid-botanist-description = A Beefolk botanist, called in as backup to help a crew in need.
 
 ghost-role-information-apid-name = Apid
-ghost-role-information-apid-description = A beefolk worker, called in as backup to help a crew in need.
+ghost-role-information-apid-description = A Beefolk worker, called in as backup to help a crew in need.
