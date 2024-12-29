@@ -106,7 +106,6 @@
             sprite: _Impstation/Mobs/Animals/Apid/displacement.rsi
             state: belt
   - type: Deathgasp
-    prototype: MothDeathGasp
   - type: Blindable
   - type: Cuffable
   - type: RotationVisuals
@@ -176,6 +175,8 @@
       Unsexed: UnisexMoth
   - type: TypingIndicator
     proto: moth
+  - type: Bloodstream
+    bloodReagent: InsectBlood
   - type: MobThresholds
     thresholds:
       0: Alive
