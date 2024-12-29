@@ -1,6 +1,6 @@
 - type: gameMap
   id: Hotel
-  mapName: 'StarlightHotel'
+  mapName: 'Hotel'
   mapPath: /Maps/_Starlight/Stations/Hotel.yml
   minPlayers: 35
   maxPlayers: 70
