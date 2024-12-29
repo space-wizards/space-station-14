@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Administration;
 using Robust.Shared.Player;
 
@@ -19,5 +20,15 @@ public interface ISharedPlayersRoleManager
     {
         var data = GetPlayerData(player);
         return data != null && data.HasFlag(flag);
+    }
+    bool HasAnyPlayerFlags(EntityUid player, List<PlayerFlags> flags)
+    {
+        var data = GetPlayerData(player);
+        return data != null && flags.Any(data.HasFlag);
+    }
+    bool HasAnyPlayerFlags(ICommonSession player, List<PlayerFlags> flags)
+    {
+        var data = GetPlayerData(player);
+        return data != null && flags.Any(data.HasFlag);
     }
 }
