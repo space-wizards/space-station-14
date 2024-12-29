@@ -13,11 +13,11 @@
 
   2. Repressurize the area.
 
-  - [textlink="Air vents" link="AirVent"] enter pressure lockout when a room is spaced, so you'll need to override the vents to repressurize the area. You can do this by setting the connected [textlink="air alarm" link="DeviceMonitoringAndControl"] to fill, or by using a screwdriver on a vent to manually override it temporarily.
+  - [textlink="Air vents" link="AirVent"] enter pressure lockout when a room is spaced, so you'll need to override the vents to repressurize the area. You can do this by setting the connected [textlink="air alarm" link="AirAlarms"] to fill, or by using a screwdriver on a vent to manually override it temporarily.
 
   ## Things to Avoid
-  - Keep in mind that while you have an infinite supply of [textlink="mined gas" link="GasMiningAndStorage"], it is not quick enough to fill up multiple rooms at once. Setting [textlink="air alarms" link="DeviceMonitoringAndControl"] to fill first [italic]before[/italic] fixing the root problem will often lead to wasted time and gas.
+  - Keep in mind that while you have an infinite supply of [textlink="mined gas" link="GasMiningAndStorage"], it is not quick enough to fill up multiple rooms at once. Setting [textlink="air alarms" link="AirAlarms"] to fill first [italic]before[/italic] fixing the root problem will often lead to wasted time and gas.
 
-  - Leaving [textlink="air alarms" link="DeviceMonitoringAndControl"] on the Fill mode unsupervised may lead to overpressuring a room, which can potentially harm crew if it gets out of hand.
+  - Leaving [textlink="air alarms" link="AirAlarms"] on the Fill mode unsupervised may lead to overpressuring a room, which can potentially harm crew if it gets out of hand.
 
 </Document>
