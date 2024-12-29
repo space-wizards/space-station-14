@@ -106,7 +106,7 @@ public sealed partial class MappingScreen : InGameScreen
             layersUIController.ToggleWindow();
         };
         FixGridAtmos.Texture.TexturePath = "/Textures/Interface/VerbIcons/light.svg.192dpi.png"; // TODO change this
-        RemoveGrid.Texture.TexturePath = "/Textures/Interface/VerbIcons/eraser.svg.png";
+        RemoveGrid.Texture.TexturePath = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
 
         var mappingActionsGroup = new ButtonGroup();
         EraseEntityButton.Group = mappingActionsGroup;
