@@ -9,6 +9,7 @@ using Content.Shared.Chat.TypingIndicator;
 using Content.Shared.Holopad;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Labels.Components;
+using Content.Shared.Power;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.Telephone;
 using Content.Shared.UserInterface;
@@ -81,6 +82,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
         SubscribeLocalEvent<HolopadComponent, GetVerbsEvent<AlternativeVerb>>(AddToggleProjectorVerb);
         SubscribeLocalEvent<HolopadComponent, EntRemovedFromContainerMessage>(OnAiRemove);
         SubscribeLocalEvent<HolopadComponent, EntParentChangedMessage>(OnParentChanged);
+        SubscribeLocalEvent<HolopadComponent, PowerChangedEvent>(OnPowerChanged);
     }
 
     #region: Holopad UI bound user interface messages
@@ -456,6 +458,12 @@ public sealed class HolopadSystem : SharedHolopadSystem
     private void OnParentChanged(Entity<HolopadComponent> entity, ref EntParentChangedMessage args)
     {
         UpdateHolopadControlLockoutStartTime(entity);
+    }
+
+    private void OnPowerChanged(Entity<HolopadComponent> entity, ref PowerChangedEvent args)
+    {
+        if (args.Powered)
+            UpdateHolopadControlLockoutStartTime(entity);
     }
 
     #endregion
