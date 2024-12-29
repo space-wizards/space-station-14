@@ -381,7 +381,10 @@ public sealed class HolopadSystem : SharedHolopadSystem
             if (TryComp<TelephoneComponent>(linkedHolopad, out var linkedHolopadTelephone) && linkedHolopadTelephone.Muted)
                 continue;
 
-            foreach (var receiver in GetLinkedHolopads(linkedHolopad))
+            var receivingHolopads = GetLinkedHolopads(linkedHolopad);
+            var range = receivingHolopads.Count > 1 ? ChatTransmitRange.HideChat : ChatTransmitRange.GhostRangeLimit;
+
+            foreach (var receiver in receivingHolopads)
             {
                 if (receiver.Comp.Hologram == null)
                     continue;
@@ -391,7 +394,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
                 var name = Loc.GetString("holopad-hologram-name", ("name", ent));
 
                 // Force the emote, because if the user can do it, the hologram can too
-                _chatSystem.TryEmoteWithChat(receiver.Comp.Hologram.Value, args.Emote, ChatTransmitRange.Normal, false, name, true, true);
+                _chatSystem.TryEmoteWithChat(receiver.Comp.Hologram.Value, args.Emote, range, false, name, true, true);
             }
         }
     }
