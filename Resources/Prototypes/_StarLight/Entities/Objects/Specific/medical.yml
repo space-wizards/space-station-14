@@ -504,3 +504,39 @@
   - type: Tag
     tags:
     - Medkit
+
+- type: entity
+  id: DefibrillatorBrigmedical
+  parent: DefibrillatorCompact
+  name: Brigmedic Defibrillator
+  description: Hand-held device that can save lives, and act as a weapon in a pinch.
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/defibbrig.rsi
+    layers:
+      - state: icon
+      - state: screen
+        map: [ "enum.ToggleVisuals.Layer" ]
+        visible: false
+        shader: unshaded
+      - state: ready
+        map: ["enum.PowerDeviceVisualLayers.Powered"]
+        shader: unshaded
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 4
+  - type: ItemToggleMeleeWeapon
+    activatedSoundOnHit:
+      path: /Audio/Items/Defib/defib_zap.ogg
+      params:
+        variation: 0.250
+    activatedSoundOnHitNoDamage:
+      path: /Audio/Items/Defib/defib_zap.ogg
+      params:
+        variation: 0.250
+        volume: -10
+    activatedDamage:
+      types:
+        Blunt: 4
+        Shock: 7
