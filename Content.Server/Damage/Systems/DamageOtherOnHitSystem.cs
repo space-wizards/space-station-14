@@ -29,7 +29,6 @@ namespace Content.Server.Damage.Systems
         [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
         [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
-        [Dependency] private readonly StaminaSystem _stamina = default!;
 
         public override void Initialize()
         {
@@ -37,7 +36,6 @@ namespace Content.Server.Damage.Systems
 
             SubscribeLocalEvent<StaminaComponent, BeforeThrowEvent>(OnBeforeThrow);
             SubscribeLocalEvent<DamageOtherOnHitComponent, DamageExamineEvent>(OnDamageExamine);
-            SubscribeLocalEvent<DamageOtherOnHitComponent, AttemptPacifiedThrowEvent>(OnAttemptPacifiedThrow);
         }
 
         private void OnBeforeThrow(EntityUid uid, StaminaComponent component, ref BeforeThrowEvent args)
@@ -51,8 +49,6 @@ namespace Content.Server.Damage.Systems
                 _popup.PopupEntity(Loc.GetString("throw-no-stamina", ("item", args.ItemUid)), uid, uid);
                 return;
             }
-
-            _stamina.TakeStaminaDamage(uid, damage.StaminaCost, component, visual: false);
         }
 
         private void OnDamageExamine(EntityUid uid, DamageOtherOnHitComponent component, ref DamageExamineEvent args)
@@ -67,14 +63,6 @@ namespace Content.Server.Damage.Systems
                 ("type", Loc.GetString("damage-throw")), ("cost", component.StaminaCost)));
             args.Message.PushNewline();
             args.Message.AddMessage(staminaCostMarkup);
-        }
-
-        /// <summary>
-        /// Prevent players with the Pacified status effect from throwing things that deal damage.
-        /// </summary>
-        private void OnAttemptPacifiedThrow(Entity<DamageOtherOnHitComponent> ent, ref AttemptPacifiedThrowEvent args)
-        {
-            args.Cancel("pacified-cannot-throw");
         }
     }
 }

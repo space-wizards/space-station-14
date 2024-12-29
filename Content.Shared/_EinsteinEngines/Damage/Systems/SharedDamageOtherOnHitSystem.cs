@@ -18,6 +18,7 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Content.Shared.CombatMode.Pacification;
 
 namespace Content.Shared.Damage.Systems
 {
@@ -91,6 +92,11 @@ namespace Content.Shared.Damage.Systems
 
         private void OnDoHit(EntityUid uid, DamageOtherOnHitComponent component, ThrowDoHitEvent args)
         {
+            if (HasComp<PacifiedComponent>(args.Component.Thrower)
+                && HasComp<MobStateComponent>(args.Target)
+                && component.Damage.AnyPositive())
+                return;
+
             if (component.HitQuantity >= component.MaxHitQuantity)
                 return;
 

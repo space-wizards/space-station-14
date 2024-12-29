@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Shared.Body.Systems;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
@@ -147,6 +148,11 @@ public abstract partial class SharedProjectileSystem : EntitySystem
 
     private void OnEmbedThrowDoHit(EntityUid uid, EmbeddableProjectileComponent component, ThrowDoHitEvent args)
     {
+        if (HasComp<PacifiedComponent>(args.Component.Thrower)
+            && HasComp<MobStateComponent>(args.Target)
+            && (TryComp<DamageOtherOnHitComponent>(uid, out var damage) && damage.Damage.AnyPositive()))
+            return;
+
         if (!component.EmbedOnThrow ||
             HasComp<ThrownItemImmuneComponent>(args.Target))
             return;
