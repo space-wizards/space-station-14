@@ -27,7 +27,11 @@
                 <!-- Header text -->
                 <BoxContainer MinHeight="60" Orientation="Vertical" VerticalAlignment="Center">
                     <Label Name="CallStatusText" Margin="10 5 10 0" ReservesSpace="False"/>
-                    <RichTextLabel Name="CallerIdText" HorizontalAlignment="Center" Margin="0 0 0 0" ReservesSpace="False"/>
+                    <BoxContainer Name="CallerIdContainer" Orientation="Vertical" ReservesSpace="False">
+                        <RichTextLabel Name="CallerIdText" HorizontalAlignment="Center" Margin="0 0 0 0"/>
+                        <Label Text="{Loc 'holopad-window-relay-label'}" Margin="10 5 10 0" ReservesSpace="False"/>
+                        <RichTextLabel Name="HolopadIdText" HorizontalAlignment="Center" Margin="0 0 0 10"/>
+                    </BoxContainer>
                 </BoxContainer>
 
                 <!-- Controls (the answer call button is absent when the phone is not ringing) -->
@@ -68,18 +72,25 @@
                     <PanelContainer Name="HolopadContactListHeaderPanel">
                         <Label Text="{Loc 'holopad-window-select-contact-from-list'}" HorizontalAlignment="Center" Margin="0 3 0 3"/>
                     </PanelContainer>
-                
+
                     <PanelContainer Name="HolopadContactListPanel">
-                        <ScrollContainer HorizontalExpand="True" VerticalExpand="True" Margin="8, 8, 8, 8" MinHeight="256">
+                        <BoxContainer Orientation="Vertical">
 
-                            <!-- If there is no data yet, this will be displayed -->
-                            <BoxContainer Name="FetchingAvailableHolopadsContainer" HorizontalAlignment="Center" HorizontalExpand="True" VerticalExpand="True" ReservesSpace="False">
-                                <Label Text="{Loc 'holopad-window-fetching-contacts-list'}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </BoxContainer>
+                            <!-- Contact filter -->
+                            <LineEdit Name="SearchLineEdit" HorizontalExpand="True" Margin="4, 4, 4, 0"
+                                      PlaceHolder="{Loc holopad-window-filter-line-placeholder}" />
 
-                            <!-- Container for the contacts -->
-                            <BoxContainer Name="ContactsList" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Margin="10 0 10 0"/>
-                        </ScrollContainer>
+                            <ScrollContainer HorizontalExpand="True" VerticalExpand="True" Margin="8, 8, 8, 8" MinHeight="256">
+
+                                <!-- If there is no data yet, this will be displayed -->
+                                <BoxContainer Name="FetchingAvailableHolopadsContainer" HorizontalAlignment="Center" HorizontalExpand="True" VerticalExpand="True" ReservesSpace="False">
+                                    <Label Text="{Loc 'holopad-window-fetching-contacts-list'}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </BoxContainer>
+
+                                <!-- Container for the contacts -->
+                                <BoxContainer Name="ContactsList" Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" Margin="10 0 10 0"/>
+                            </ScrollContainer>
+                        </BoxContainer>
                     </PanelContainer>
                 </BoxContainer>
 
