@@ -50,6 +50,9 @@
   - type: Construction
     graph: BonfireGraph
     node: bonfirenode
+  - type: IgnitionSource
+    ignited: true
+    temperature: 900
 
 - type: entity
   id: LegionnaireBonfire
