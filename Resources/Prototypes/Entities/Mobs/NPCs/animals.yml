@@ -2938,7 +2938,7 @@
 - type: entity
   name: syndicat
   id: MobCatSyndy
-  parent: MobCatSpace
+  parent: [MobCatSpace, BaseSyndicateContraband]
   description: Explosive kitten.
   components:
   - type: Sprite
