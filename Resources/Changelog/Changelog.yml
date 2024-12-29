@@ -1,45 +1,4 @@
 ﻿Entries:
-- author: Moomoobeef
-  changes:
-  - message: Added flavors to an array of previously indescribable things.
-    type: Add
-  id: 7258
-  time: '2024-09-01T00:03:30.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31685
-- author: Ilya246
-  changes:
-  - message: Fixed tip 26 being misinformation about the tesla. It now displays truthful
-      information.
-    type: Fix
-  id: 7259
-  time: '2024-09-01T11:03:23.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31705
-- author: yuitop
-  changes:
-  - message: space dragon fire breath ability now has cursor indicator
-    type: Tweak
-  id: 7260
-  time: '2024-09-01T19:28:12.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31725
-- author: EmoGarbage404
-  changes:
-  - message: The grappling gun is now available inside the salvage vendor. Additional
-      ones can be scavenged in space.
-    type: Add
-  - message: Removed the grappling gun from science research and lathes.
-    type: Remove
-  - message: Fixed issue that made the rope from the grappling gun not appear.
-    type: Fix
-  id: 7261
-  time: '2024-09-02T04:33:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31737
-- author: yuitop
-  changes:
-  - message: added in-hand sprite for Smile the Slime
-    type: Add
-  id: 7262
-  time: '2024-09-02T04:36:05.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31731
 - author: EmoGarbage404
   changes:
   - message: Space Carp and Sharkminnows are a bit weaker overall.
@@ -3935,3 +3894,47 @@
   id: 7757
   time: '2024-12-28T14:49:03.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33704
+- author: chromiumboy
+  changes:
+  - message: The holoapd UI has been updated to include a text-based filter for the
+      contacts list, and also to specify the name of the holopad that incoming calls
+      originate from
+    type: Tweak
+  id: 7758
+  time: '2024-12-28T23:33:16.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34055
+- author: zHonys
+  changes:
+  - message: Smile can now use hats
+    type: Add
+  id: 7759
+  time: '2024-12-29T01:49:05.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33924
+- author: ewokswagger
+  changes:
+  - message: Pizza deliveries are now guaranteed to have at least one cotton pizza.
+    type: Tweak
+  id: 7760
+  time: '2024-12-29T01:50:49.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33997
+- author: ArtisticRoomba, JuneSzalkowska
+  changes:
+  - message: New cotton dough slices and cotton dough rolls.
+    type: Add
+  - message: New cotton baguette, cotton crostini, cotton chevre-chaud, cotton bagel,
+      and cotton croissant recipes. You can make them by following the recipes for
+      regular baguettes, bagels, etc, but use cotton dough instead.
+    type: Add
+  - message: Slicing dough into thirds now divides the nutriment value into thirds.
+      Previously you could slice dough to triple your nutriment.
+    type: Fix
+  id: 7761
+  time: '2024-12-29T02:02:25.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33508
+- author: Velcroboy
+  changes:
+  - message: Rolling joints no longer requires a cigarette filter.
+    type: Tweak
+  id: 7762
+  time: '2024-12-29T03:25:40.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34106
