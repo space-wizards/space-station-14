@@ -259,7 +259,7 @@
     id: BotanistPDA
     belt: ClothingBeltPlantFilled
     outerClothing: ClothingOuterApronBotanist
-    head: ClothingHeadHatTrucker
+    head: ClothingHeadBandBotany
     pocket1: EmergencyOxygenTank
     pocket2: ClothingMaskBreath
     ears: ClothingHeadsetService
