@@ -17,3 +17,23 @@
       settings: default
   - type: GhostRoleMobSpawner
     prototype: MobApidBotanist
+
+- type: entity
+  id: ApidCryopodDoctor
+  parent: BaseStructureDynamic
+  name: apid medical doctor cryopod
+  suffix: Ghost role, Medical
+  description: A small, hexagonal cryopod containing a Beefolk medical doctor. They might take a little bit to wake up.
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: _Impstation/Structures/apidcryopod.rsi
+    state: icon
+  - type: GhostRole
+    name: ghost-role-information-apid-doctor-name
+    description: ghost-role-information-apid-doctor-description
+    rules: ghost-role-information-crewmember-rules
+    raffle:
+      settings: default
+  - type: GhostRoleMobSpawner
+    prototype: MobApidDoctor

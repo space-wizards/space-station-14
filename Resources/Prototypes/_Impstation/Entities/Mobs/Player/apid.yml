@@ -255,3 +255,21 @@
     rules: ghost-role-information-crewmember-rules
     raffle:
       settings: default
+
+- type: entity
+  name: apid doctor
+  id: MobApidDoctor
+  parent: MobApid
+  description: Enthusiastic workers, these cute little balls of fuzz are distant relatives to moth people.
+  components:
+  - type: Loadout
+    prototypes:
+      - StartingGearApidDoctor
+  - type: RandomMetadata
+    nameSegments: [names_apid]
+  - type: GhostRole
+    name: ghost-role-information-apid-doctor-name
+    description: ghost-role-information-apid-doctor-description
+    rules: ghost-role-information-crewmember-rules
+    raffle:
+      settings: default

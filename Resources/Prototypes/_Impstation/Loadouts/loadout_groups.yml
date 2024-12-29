@@ -263,3 +263,17 @@
     pocket1: EmergencyOxygenTank
     pocket2: ClothingMaskBreath
     ears: ClothingHeadsetService
+
+- type: startingGear #the doctor too
+  id: StartingGearApidDoctor
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitMedicalDoctor
+    id: MedicalPDA
+    belt: ClothingBeltMedicalFilled
+    outerClothing: ClothingOuterWinterMed
+    #head: 
+    pocket1: EmergencyOxygenTank
+    pocket2: ClothingMaskBreath
+    ears: ClothingHeadsetMedical
+    eyes: ClothingEyesGlassesHudMedical
+
