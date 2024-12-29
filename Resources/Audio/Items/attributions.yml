@@ -139,3 +139,8 @@
   license: "CC0-1.0"
   copyright: "Created by dslrguide, converted to ogg and mono by Themias"
   source: "https://freesound.org/people/dslrguide/sounds/321484"
+
+- files: [ "appraiser.ogg" ]
+  license: "CC0-1.0"
+  copyright: "Original sound by vestibule-door on freesound.org, processed by DylanWhittingham"
+  source: "https://freesound.org/people/vestibule-door/sounds/668985/"
