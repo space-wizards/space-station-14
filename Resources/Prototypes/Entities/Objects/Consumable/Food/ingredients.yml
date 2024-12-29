@@ -315,6 +315,13 @@
   - type: Construction
     graph: DoughRope
     node: start
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
 
 - type: entity
   name: dough rope
@@ -330,6 +337,13 @@
   - type: Construction
     graph: DoughRope
     node: rolled
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
 
 - type: entity
   name: cornmeal dough
@@ -426,9 +440,9 @@
     - cotton
   - type: Sprite
     state: cotton-dough
-  # - type: SliceableFood # TODO add it
-  #   count: 3
-  #   slice: FoodDoughCottonSlice
+  - type: SliceableFood
+    count: 3
+    slice: FoodDoughCottonSlice
   - type: Construction
     graph: CottonPizza
     node: start
@@ -445,6 +459,59 @@
           Quantity: 5
         - ReagentId: Fiber
           Quantity: 10
+
+- type: entity
+  name: cotton dough slice
+  parent: FoodBakingBase
+  id: FoodDoughCottonSlice
+  description: A slice of cotton dough.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - dough
+    - cotton
+  - type: Sprite
+    state: cotton-dough-slice
+  - type: Tag
+    tags:
+    - Slice
+  - type: Construction
+    graph: DoughRopeCotton
+    node: start
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 1.5
+        - ReagentId: Fiber
+          Quantity: 3.5
+
+- type: entity
+  name: dough rope
+  parent: FoodBakingBase
+  id: FoodDoughCottonRope
+  description: A thin noodle of cotton dough. Can be cooked into a cotton bagel.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - dough
+    - cotton
+  - type: Sprite
+    state: cotton-dough-rope
+  - type: Construction
+    graph: DoughRopeCotton
+    node: rolled
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 1.5
+        - ReagentId: Fiber
+          Quantity: 3.5
 
 - type: entity
   name: raw pastry base
@@ -499,6 +566,9 @@
   - type: Construction
     graph: CottonPizza
     node: flat
+  - type: SliceableFood
+    count: 3
+    slice: FoodCroissantRawCotton
 
 - type: entity
   name: pizza bread
@@ -818,3 +888,16 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 3
+
+- type: entity
+  name: raw cotton croissant
+  parent: FoodCroissantRaw
+  id: FoodCroissantRawCotton
+  description: Buttery, flaky, fibery goodness waiting to happen.
+  components:
+  - type: FlavorProfile
+    flavors:
+    - dough
+    - cotton
+  - type: Sprite
+    state: croissant-raw-cotton
