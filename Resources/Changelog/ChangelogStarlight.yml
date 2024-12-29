@@ -1495,4 +1495,26 @@ Entries:
   id: 212
   time: '2024-12-27T09:25:44.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/190
+- author: Rinary
+  changes:
+  - message: Added automatic cryo system, now SSD/Disconnected player's sends in empty
+      cryo storage after 5 minutes.
+    type: Add
+  id: 213
+  time: '2024-12-29T11:51:25.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/195
+- author: Killer Tamashi
+  changes:
+  - message: Added BrigKit to roundstart Brigmedics.
+    type: Add
+  id: 214
+  time: '2024-12-29T12:11:48.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/194
+- author: STARLIGHT TEAM
+  changes:
+  - message: Now ntrep and magistrate, only staff roles.
+    type: Tweak
+  id: 215
+  time: '2024-12-29T12:44:05.000000+00:00'
+  url: https://github.com/ss14Starlight/space-station-14/pull/196
 

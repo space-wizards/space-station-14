@@ -469,3 +469,38 @@
   icon: { sprite: "/Textures/_Starlight/Objects/Specific/Medical/medical.rsi", state: bruizinebrutepack }
   spawn: RedBruizPack1
   maxCount: 20
+
+- type: entity
+  name: BrigKit
+  description: A heavy-duty first aid kit with slots and hooks for medical supplies, but nothing else.
+  parent: BaseStorageItem
+  id: SecurityMedkit
+  components:
+  - type: Sprite
+    sprite: _Starlight/Objects/Specific/Medical/firstaidkits.rsi
+    state: BrigKube
+  - type: Storage
+    whitelist:
+      tags:
+        - Bottle
+        - Brutepack
+        - Bloodpack
+        - Gauze
+        - Ointment
+        - PillCanister
+      components:
+        - Hypospray
+        - Injector
+        - Pill
+    grid:
+    - 0,0,3,2
+  - type: Item
+    size: Normal
+    sprite: _Starlight/Objects/Specific/Medical/firstaidkits.rsi
+    heldPrefix: BrigKube
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 150
+  - type: Tag
+    tags:
+    - Medkit
