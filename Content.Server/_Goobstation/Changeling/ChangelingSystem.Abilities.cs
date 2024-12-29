@@ -595,7 +595,6 @@ public sealed partial class ChangelingSystem : EntitySystem
         EnsureComp<StealthComponent>(uid);
         _stealth.SetUseAltShader(uid, true);
         _stealth.SetMinVisibility(uid, 0);
-        _stealth.SetEnabled(uid, true);
 
         var stealthOnMove = EnsureComp<StealthOnMoveComponent>(uid);
         stealthOnMove.MovementVisibilityRate = 1;
