@@ -2,7 +2,6 @@ using Content.Server.DeviceLinking.Events;
 using Content.Server.Power.Components;
 using Content.Server.Wires;
 using Content.Shared.Doors.Components;
-using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Power;
 using Content.Shared.Wires;
@@ -10,17 +9,14 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Doors.Systems;
 
-public sealed class AirlockSystem : SharedAirlockSystem
+public sealed partial class DoorSystem
 {
     [Dependency] private readonly WiresSystem _wiresSystem = default!;
 
-    public override void Initialize()
+    private void InitializeAirlock()
     {
-        base.Initialize();
-
         SubscribeLocalEvent<AirlockComponent, ComponentInit>(OnAirlockInit);
         SubscribeLocalEvent<AirlockComponent, SignalReceivedEvent>(OnSignalReceived);
-
         SubscribeLocalEvent<AirlockComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<AirlockComponent, ActivateInWorldEvent>(OnActivate);
     }
@@ -28,7 +24,7 @@ public sealed class AirlockSystem : SharedAirlockSystem
     private void OnAirlockInit(Entity<AirlockComponent> airlock, ref ComponentInit args)
     {
         if (TryComp<ApcPowerReceiverComponent>(airlock, out var receiverComponent))
-            Appearance.SetData(airlock, DoorVisuals.Powered, receiverComponent.Powered);
+            _appearance.SetData(airlock, DoorVisuals.Powered, receiverComponent.Powered);
     }
 
     private void OnSignalReceived(Entity<AirlockComponent> airlock, ref SignalReceivedEvent args)
@@ -46,23 +42,15 @@ public sealed class AirlockSystem : SharedAirlockSystem
         Dirty(airlock);
 
         if (TryComp<AppearanceComponent>(airlock, out var appearanceComponent))
-        {
-            Appearance.SetData(airlock, DoorVisuals.Powered, args.Powered, appearanceComponent);
-        }
+            _appearance.SetData(airlock, DoorVisuals.Powered, args.Powered, appearanceComponent);
 
         if (!TryComp(airlock, out DoorComponent? door))
             return;
 
-        if (!args.Powered)
-        {
-            // stop any scheduled auto-closing
-            if (door.State == DoorState.Open)
-                DoorSystem.SetNextStateChange((airlock, door), null);
-        }
-        else
-        {
+        if (args.Powered)
             UpdateAutoClose(airlock, door: door);
-        }
+        else if (door.State == DoorState.Open)
+            DoorSystem.SetNextStateChange((airlock, door), null);
     }
 
     private void OnActivate(Entity<AirlockComponent> airlock, ref ActivateInWorldEvent args)
@@ -80,6 +68,7 @@ public sealed class AirlockSystem : SharedAirlockSystem
 
             _wiresSystem.OpenUserInterface(airlock, actor.PlayerSession);
             args.Handled = true;
+
             return;
         }
 

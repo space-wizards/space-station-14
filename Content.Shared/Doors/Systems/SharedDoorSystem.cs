@@ -28,15 +28,15 @@ namespace Content.Shared.Doors.Systems;
 public abstract partial class SharedDoorSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
-    [Dependency] protected readonly IGameTiming GameTiming = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly INetManager _net = default!;
-    [Dependency] protected readonly SharedPhysicsSystem PhysicsSystem = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
-    [Dependency] protected readonly TagSystem Tags = default!;
-    [Dependency] protected readonly SharedAudioSystem Audio = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly OccluderSystem _occluder = default!;
     [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
     [Dependency] private readonly PryingSystem _pryingSystem = default!;
@@ -72,6 +72,8 @@ public abstract partial class SharedDoorSystem : EntitySystem
         SubscribeLocalEvent<DoorComponent, GotEmaggedEvent>(OnEmagged);
 
         InitializeBolts();
+        InitializeAirlock();
+        InitializeFirelock();
     }
 
     protected virtual void OnComponentInit(Entity<DoorComponent> door, ref ComponentInit args)
@@ -86,14 +88,12 @@ public abstract partial class SharedDoorSystem : EntitySystem
                 case DoorState.OpeningInProgress:
                     // force to open.
                     door.Comp.State = DoorState.Open;
-                    // door.Partial = false;
                     break;
                 case DoorState.AttemptingCloseBySelf:
                 case DoorState.AttemptingCloseByPrying:
                 case DoorState.ClosingInProgress:
                     // force to closed.
                     door.Comp.State = DoorState.Closed;
-                    // door.Partial = false;
                     break;
                 case DoorState.Closed:
                 case DoorState.Open:
@@ -108,7 +108,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
             _activeDoors.Add(door);
 
         SetCollidable(door, IsDoorCollidable(door));
-        AppearanceSystem.SetData(door, DoorVisuals.State, door.Comp.State);
+        _appearance.SetData(door, DoorVisuals.State, door.Comp.State);
     }
 
     /// <summary>
@@ -156,7 +156,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (!SetState(door, DoorState.Emagging))
             return;
 
-        Audio.PlayPredicted(door.Comp.SparkSound, door, args.UserUid, AudioParams.Default.WithVolume(8));
+        _audio.PlayPredicted(door.Comp.SparkSound, door, args.UserUid, AudioParams.Default.WithVolume(8));
         args.Handled = true;
     }
 
@@ -184,23 +184,23 @@ public abstract partial class SharedDoorSystem : EntitySystem
             case DoorState.AttemptingOpenBySelf:
             case DoorState.AttemptingOpenByPrying:
                 _activeDoors.Add((door, door));
-                door.Comp.NextStateChange = GameTiming.CurTime + door.Comp.OpenTimeOne;
+                door.Comp.NextStateChange = _gameTiming.CurTime + door.Comp.OpenTimeOne;
 
                 break;
             case DoorState.AttemptingCloseBySelf:
             case DoorState.AttemptingCloseByPrying:
                 _activeDoors.Add((door, door));
-                door.Comp.NextStateChange = GameTiming.CurTime + door.Comp.CloseTimeOne;
+                door.Comp.NextStateChange = _gameTiming.CurTime + door.Comp.CloseTimeOne;
 
                 break;
             case DoorState.Denying:
                 _activeDoors.Add((door, door));
-                door.Comp.NextStateChange = GameTiming.CurTime + door.Comp.DenyDuration;
+                door.Comp.NextStateChange = _gameTiming.CurTime + door.Comp.DenyDuration;
 
                 break;
             case DoorState.Emagging:
                 _activeDoors.Add((door, door));
-                door.Comp.NextStateChange = GameTiming.CurTime + door.Comp.EmagDuration;
+                door.Comp.NextStateChange = _gameTiming.CurTime + door.Comp.EmagDuration;
 
                 break;
             case DoorState.Open:
@@ -220,7 +220,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         Dirty(door);
         RaiseLocalEvent(door, new DoorStateChangedEvent(state));
 
-        AppearanceSystem.SetData(door, DoorVisuals.State, door.Comp.State);
+        _appearance.SetData(door, DoorVisuals.State, door.Comp.State);
 
         return true;
     }
@@ -342,9 +342,9 @@ public abstract partial class SharedDoorSystem : EntitySystem
         // TODO: Review if coping with prediction should be in Shared, this feels more like a Client/Server distinction.
         // One to discuss with @metalgearsloth
         if (predicted)
-            Audio.PlayPredicted(door.Comp.DenySound, door, user, AudioParams.Default.WithVolume(-3));
+            _audio.PlayPredicted(door.Comp.DenySound, door, user, AudioParams.Default.WithVolume(-3));
         else if (_net.IsServer)
-            Audio.PlayPvs(door.Comp.DenySound, door, AudioParams.Default.WithVolume(-3));
+            _audio.PlayPvs(door.Comp.DenySound, door, AudioParams.Default.WithVolume(-3));
     }
 
     public bool TryToggleDoor(Entity<DoorComponent> door, EntityUid? user = null, bool predicted = false)
@@ -426,9 +426,9 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
         // TODO: Review if prediction code should logically be here and not in Client/Server.
         if (predicted)
-            Audio.PlayPredicted(door.Comp.OpenSound, door, user, AudioParams.Default.WithVolume(-5));
+            _audio.PlayPredicted(door.Comp.OpenSound, door, user, AudioParams.Default.WithVolume(-5));
         else if (_net.IsServer)
-            Audio.PlayPvs(door.Comp.OpenSound, door, AudioParams.Default.WithVolume(-5));
+            _audio.PlayPvs(door.Comp.OpenSound, door, AudioParams.Default.WithVolume(-5));
 
         if (lastState == DoorState.Emagging && TryComp<DoorBoltComponent>(door, out var doorBoltComponent))
             SetBoltsDown((door, doorBoltComponent), !doorBoltComponent.BoltsDown, user, true);
@@ -441,7 +441,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
     {
         SetCollidable(door, false);
         SetState(door, DoorState.OpeningInProgress);
-        door.Comp.NextStateChange = GameTiming.CurTime + door.Comp.OpenTimeTwo;
+        door.Comp.NextStateChange = _gameTiming.CurTime + door.Comp.OpenTimeTwo;
         _activeDoors.Add((door, door));
         Dirty(door);
     }
@@ -504,9 +504,9 @@ public abstract partial class SharedDoorSystem : EntitySystem
             return;
 
         if (predicted)
-            Audio.PlayPredicted(door.Comp.CloseSound, door, user, AudioParams.Default.WithVolume(-5));
+            _audio.PlayPredicted(door.Comp.CloseSound, door, user, AudioParams.Default.WithVolume(-5));
         else if (_net.IsServer)
-            Audio.PlayPvs(door.Comp.CloseSound, door, AudioParams.Default.WithVolume(-5));
+            _audio.PlayPvs(door.Comp.CloseSound, door, AudioParams.Default.WithVolume(-5));
     }
 
     /// <summary>
@@ -521,9 +521,9 @@ public abstract partial class SharedDoorSystem : EntitySystem
         // Make sure no entity walked into the airlock when it started closing.
         if (!CanClose(door, door))
         {
-            door.Comp.NextStateChange = GameTiming.CurTime + door.Comp.OpenTimeTwo;
+            door.Comp.NextStateChange = _gameTiming.CurTime + door.Comp.OpenTimeTwo;
             door.Comp.State = DoorState.Open;
-            AppearanceSystem.SetData(door, DoorVisuals.State, DoorState.Open);
+            _appearance.SetData(door, DoorVisuals.State, DoorState.Open);
             Dirty(door);
 
             return false;
@@ -531,7 +531,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
         SetState(door, DoorState.ClosingInProgress);
         SetCollidable(door, true, physics);
-        door.Comp.NextStateChange = GameTiming.CurTime + door.Comp.CloseTimeTwo;
+        door.Comp.NextStateChange = _gameTiming.CurTime + door.Comp.CloseTimeTwo;
         Dirty(door);
         _activeDoors.Add((door, door));
 
@@ -552,7 +552,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
         OccluderComponent? occluder = null)
     {
         if (Resolve(door, ref physics, false))
-            PhysicsSystem.SetCanCollide(door, collidable, body: physics);
+            _physics.SetCanCollide(door, collidable, body: physics);
 
         if (!collidable)
             door.Comp.CurrentlyCrushing.Clear();
@@ -584,7 +584,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
             return;
 
         // queue the door to open so that the player is no longer stunned once it has FINISHED opening.
-        door.Comp.NextStateChange = GameTiming.CurTime + door.Comp.DoorStunTime;
+        door.Comp.NextStateChange = _gameTiming.CurTime + door.Comp.DoorStunTime;
 
         switch (door.Comp.State)
         {
@@ -691,7 +691,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
         var otherUid = args.OtherEntity;
 
-        if (Tags.HasTag(otherUid, DoorBumpTag))
+        if (_tag.HasTag(otherUid, DoorBumpTag))
             TryOpen(door, otherUid, quiet: door.Comp.State == DoorState.Denying, predicted: true);
     }
 
@@ -714,10 +714,12 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (TryComp<AirlockComponent>(door, out var airlock) && airlock.EmergencyAccess)
             return true;
 
-        // Anyone can click to open firelocks
-        if (door.Comp.State == DoorState.Closed &&
-            TryComp<FirelockComponent>(door, out _))
-            return true;
+        // TODO: Pretty sure this is broken.
+
+        // // Anyone can click to open firelocks
+        // if (door.Comp.State == DoorState.Closed &&
+        //     TryComp<FirelockComponent>(door, out _))
+        //     return true;
 
         if (!Resolve(door, ref access, false))
             return true;
@@ -787,7 +789,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
             return;
         }
 
-        door.Comp.NextStateChange = GameTiming.CurTime + delay.Value;
+        door.Comp.NextStateChange = _gameTiming.CurTime + delay.Value;
         Dirty(door);
 
         _activeDoors.Add((door, door));
@@ -799,9 +801,9 @@ public abstract partial class SharedDoorSystem : EntitySystem
         if (!door.BumpOpen)
             return;
 
-        foreach (var other in PhysicsSystem.GetContactingEntities(uid, physics))
+        foreach (var other in _physics.GetContactingEntities(uid, physics))
         {
-            if (Tags.HasTag(other, DoorBumpTag) && TryOpen(ent, other, quiet: true))
+            if (_tag.HasTag(other, DoorBumpTag) && TryOpen(ent, other, quiet: true))
                 break;
         }
     }
@@ -811,7 +813,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
     /// </summary>
     public override void Update(float frameTime)
     {
-        var time = GameTiming.CurTime;
+        var time = _gameTiming.CurTime;
 
         foreach (var door in _activeDoors.ToList())
         {

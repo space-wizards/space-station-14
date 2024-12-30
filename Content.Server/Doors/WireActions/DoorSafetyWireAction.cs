@@ -23,19 +23,19 @@ public sealed partial class DoorSafetyWireAction : ComponentWireAction<AirlockCo
     public override bool Cut(EntityUid user, Wire wire, AirlockComponent door)
     {
         WiresSystem.TryCancelWireAction(wire.Owner, PulseTimeoutKey.Key);
-        EntityManager.System<SharedAirlockSystem>().SetSafety(door, false);
+        EntityManager.System<SharedDoorSystem>().SetSafety(door, false);
         return true;
     }
 
     public override bool Mend(EntityUid user, Wire wire, AirlockComponent door)
     {
-        EntityManager.System<SharedAirlockSystem>().SetSafety(door, true);
+        EntityManager.System<SharedDoorSystem>().SetSafety(door, true);
         return true;
     }
 
     public override void Pulse(EntityUid user, Wire wire, AirlockComponent door)
     {
-        EntityManager.System<SharedAirlockSystem>().SetSafety(door, false);
+        EntityManager.System<SharedDoorSystem>().SetSafety(door, false);
         WiresSystem.StartWireAction(wire.Owner, _timeout, PulseTimeoutKey.Key, new TimedWireEvent(AwaitSafetyTimerFinish, wire));
     }
 
@@ -53,7 +53,7 @@ public sealed partial class DoorSafetyWireAction : ComponentWireAction<AirlockCo
         {
             if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
             {
-                EntityManager.System<SharedAirlockSystem>().SetSafety(door, true);
+                EntityManager.System<SharedDoorSystem>().SetSafety(door, true);
             }
         }
     }

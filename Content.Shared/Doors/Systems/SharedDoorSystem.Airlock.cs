@@ -1,25 +1,18 @@
 using Content.Shared.Doors.Components;
-using Robust.Shared.Audio.Systems;
-using Content.Shared.Popups;
 using Content.Shared.Prying.Components;
 using Content.Shared.Wires;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Doors.Systems;
 
-public abstract class SharedAirlockSystem : EntitySystem
+public abstract partial class SharedDoorSystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
-    [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] protected readonly SharedDoorSystem DoorSystem = default!;
-    [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] private readonly SharedWiresSystem _wiresSystem = default!;
 
-    public override void Initialize()
+    private void InitializeAirlock()
     {
-        base.Initialize();
-
         SubscribeLocalEvent<AirlockComponent, BeforeDoorClosedEvent>(OnBeforeDoorClosed);
         SubscribeLocalEvent<AirlockComponent, DoorStateChangedEvent>(OnStateChanged);
         SubscribeLocalEvent<AirlockComponent, DoorBoltsChangedEvent>(OnBoltsChanged);
@@ -52,7 +45,7 @@ public abstract class SharedAirlockSystem : EntitySystem
 
     private void OnStateChanged(Entity<AirlockComponent> airlock, ref DoorStateChangedEvent args)
     {
-        // This is here so we don't accidentally bulldoze state values and mispredict.
+        // This is here, so we don't accidentally bulldoze state values and mis-predict.
         if (_timing.ApplyingState)
             return;
 
@@ -151,29 +144,29 @@ public abstract class SharedAirlockSystem : EntitySystem
 
     public void UpdateEmergencyLightStatus(EntityUid uid, AirlockComponent component)
     {
-        Appearance.SetData(uid, DoorVisuals.EmergencyLights, component.EmergencyAccess);
+        _appearance.SetData(uid, DoorVisuals.EmergencyLights, component.EmergencyAccess);
     }
 
-    public void SetEmergencyAccess(Entity<AirlockComponent> ent,
+    public void SetEmergencyAccess(Entity<AirlockComponent> airlock,
         bool value,
         EntityUid? user = null,
         bool predicted = false)
     {
-        if (!ent.Comp.Powered)
+        if (!airlock.Comp.Powered)
             return;
 
-        if (ent.Comp.EmergencyAccess == value)
+        if (airlock.Comp.EmergencyAccess == value)
             return;
 
-        ent.Comp.EmergencyAccess = value;
-        Dirty(ent, ent.Comp); // This only runs on the server apparently so we need this.
-        UpdateEmergencyLightStatus(ent, ent.Comp);
+        airlock.Comp.EmergencyAccess = value;
+        Dirty(airlock, airlock.Comp); // This only runs on the server apparently, so we need this.
+        UpdateEmergencyLightStatus(airlock, airlock.Comp);
 
-        var sound = ent.Comp.EmergencyAccess ? ent.Comp.EmergencyOnSound : ent.Comp.EmergencyOffSound;
+        var sound = airlock.Comp.EmergencyAccess ? airlock.Comp.EmergencyOnSound : airlock.Comp.EmergencyOffSound;
         if (predicted)
-            Audio.PlayPredicted(sound, ent, user: user);
+            _audio.PlayPredicted(sound, airlock, user: user);
         else
-            Audio.PlayPvs(sound, ent);
+            _audio.PlayPvs(sound, airlock);
     }
 
     public void SetAutoCloseDelayModifier(AirlockComponent component, float value)

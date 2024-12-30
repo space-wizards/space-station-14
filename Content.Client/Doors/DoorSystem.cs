@@ -7,15 +7,20 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Client.Doors;
 
-public sealed class DoorSystem : SharedDoorSystem
+public sealed partial class DoorSystem : SharedDoorSystem
 {
     [Dependency] private readonly AnimationPlayerSystem _animationSystem = default!;
     [Dependency] private readonly IResourceCache _resourceCache = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<DoorComponent, AppearanceChangeEvent>(OnAppearanceChange);
+
+        InitializeClientAirlock();
+        InitializeClientFirelock();
     }
 
     protected override void OnComponentInit(Entity<DoorComponent> door, ref ComponentInit args)
@@ -71,10 +76,10 @@ public sealed class DoorSystem : SharedDoorSystem
         if (args.Sprite == null)
             return;
 
-        if (!AppearanceSystem.TryGetData<DoorState>(door, DoorVisuals.State, out var state, args.Component))
+        if (!_appearance.TryGetData<DoorState>(door, DoorVisuals.State, out var state, args.Component))
             state = DoorState.Closed;
 
-        if (AppearanceSystem.TryGetData<string>(door, DoorVisuals.BaseRSI, out var baseRsi, args.Component))
+        if (_appearance.TryGetData<string>(door, DoorVisuals.BaseRSI, out var baseRsi, args.Component))
         {
             if (!_resourceCache.TryGetResource<RSIResource>(SpriteSpecifierSerializer.TextureRoot / baseRsi,
                     out var res))

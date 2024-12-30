@@ -14,7 +14,7 @@ namespace Content.Server.Atmos.EntitySystems
 {
     public sealed partial class AtmosphereSystem
     {
-        [Dependency] private readonly FirelockSystem _firelockSystem = default!;
+        [Dependency] private readonly DoorSystem _door = default!;
 
         private readonly TileAtmosphereComparer _monstermosComparer = new();
 
@@ -573,6 +573,12 @@ namespace Content.Server.Atmos.EntitySystems
             Array.Clear(_depressurizeProgressionOrder, 0, Atmospherics.MonstermosHardTileLimit * 2);
         }
 
+        /// <summary>
+        /// The first in a hit series of science fiction novels by noted Spessman Iain "Urist" McBanks.
+        /// </summary>
+        /// <remarks>
+        /// Firelocks are directly instructed to close by Monstermos because otherwise they'd react too slowly.
+        /// </remarks>
         private void ConsiderFirelocks(
             Entity<GridAtmosphereComponent, GasTileOverlayComponent, MapGridComponent, TransformComponent> ent,
             TileAtmosphere tile,
@@ -583,14 +589,14 @@ namespace Content.Server.Atmos.EntitySystems
             var mapGrid = ent.Comp3;
             foreach (var entity in _map.GetAnchoredEntities(ent.Owner, mapGrid, tile.GridIndices))
             {
-                if (_firelockQuery.TryGetComponent(entity, out var firelock))
-                    reconsiderAdjacent |= _firelockSystem.EmergencyPressureStop(entity, firelock);
+                if (_firelockQuery.TryGetComponent(entity, out var firelock) && _doorQuery.TryGetComponent(entity, out var door))
+                    reconsiderAdjacent |= _door.EmergencyPressureStop((entity, firelock, door));
             }
 
             foreach (var entity in _map.GetAnchoredEntities(ent.Owner, mapGrid, other.GridIndices))
             {
-                if (_firelockQuery.TryGetComponent(entity, out var firelock))
-                    reconsiderAdjacent |= _firelockSystem.EmergencyPressureStop(entity, firelock);
+                if (_firelockQuery.TryGetComponent(entity, out var firelock) && _doorQuery.TryGetComponent(entity, out var door))
+                    reconsiderAdjacent |= _door.EmergencyPressureStop((entity, firelock, door));
             }
 
             if (!reconsiderAdjacent)

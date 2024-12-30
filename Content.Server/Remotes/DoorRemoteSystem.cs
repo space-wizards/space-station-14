@@ -14,8 +14,7 @@ namespace Content.Shared.Remotes
     public sealed class DoorRemoteSystem : SharedDoorRemoteSystem
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly AirlockSystem _airlock = default!;
-        [Dependency] private readonly DoorSystem _doorSystem = default!;
+        [Dependency] private readonly DoorSystem _door = default!;
         [Dependency] private readonly ExamineSystemShared _examine = default!;
         public override void Initialize()
         {
@@ -48,9 +47,9 @@ namespace Content.Shared.Remotes
             }
 
             if (TryComp<AccessReaderComponent>(args.Target, out var accessComponent)
-                && !_doorSystem.HasAccess((args.Target.Value, doorComp), args.Used, accessComponent))
+                && !_door.HasAccess((args.Target.Value, doorComp), args.Used, accessComponent))
             {
-                _doorSystem.Deny((args.Target.Value, doorComp), args.User);
+                _door.Deny((args.Target.Value, doorComp), args.User);
                 Popup.PopupEntity(Loc.GetString("door-remote-denied"), args.User, args.User);
                 return;
             }
@@ -58,7 +57,7 @@ namespace Content.Shared.Remotes
             switch (entity.Comp.Mode)
             {
                 case OperatingMode.OpenClose:
-                    if (_doorSystem.TryToggleDoor((args.Target.Value, doorComp), args.Used))
+                    if (_door.TryToggleDoor((args.Target.Value, doorComp), args.Used))
                         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)}: {doorComp.State}");
                     break;
                 case OperatingMode.ToggleBolts:
@@ -66,7 +65,7 @@ namespace Content.Shared.Remotes
                     {
                         if (!boltsComp.BoltWireCut)
                         {
-                            _doorSystem.SetBoltsDown((args.Target.Value, boltsComp), !boltsComp.BoltsDown, args.Used);
+                            _door.SetBoltsDown((args.Target.Value, boltsComp), !boltsComp.BoltsDown, args.Used);
                             _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to {(boltsComp.BoltsDown ? "" : "un")}bolt it");
                         }
                     }
@@ -74,7 +73,7 @@ namespace Content.Shared.Remotes
                 case OperatingMode.ToggleEmergencyAccess:
                     if (airlockComp != null)
                     {
-                        _airlock.SetEmergencyAccess((args.Target.Value, airlockComp), !airlockComp.EmergencyAccess);
+                        _door.SetEmergencyAccess((args.Target.Value, airlockComp), !airlockComp.EmergencyAccess);
                         _adminLogger.Add(LogType.Action, LogImpact.Medium,
                             $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to set emergency access {(airlockComp.EmergencyAccess ? "on" : "off")}");
                     }

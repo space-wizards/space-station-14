@@ -7,8 +7,6 @@ public abstract partial class SharedDoorSystem
 {
     public void InitializeBolts()
     {
-        base.Initialize();
-
         SubscribeLocalEvent<DoorBoltComponent, BeforeDoorOpenedEvent>(OnBeforeDoorOpened);
         SubscribeLocalEvent<DoorBoltComponent, BeforeDoorClosedEvent>(OnBeforeDoorClosed);
         SubscribeLocalEvent<DoorBoltComponent, BeforeDoorDeniedEvent>(OnBeforeDoorDenied);
@@ -55,7 +53,7 @@ public abstract partial class SharedDoorSystem
 
     protected void UpdateBoltLightStatus(Entity<DoorBoltComponent> door)
     {
-        AppearanceSystem.SetData(door, DoorVisuals.BoltLights, GetBoltLightsVisible(door));
+        _appearance.SetData(door, DoorVisuals.BoltLights, GetBoltLightsVisible(door));
     }
 
     public static bool GetBoltLightsVisible(Entity<DoorBoltComponent> door)
@@ -100,9 +98,9 @@ public abstract partial class SharedDoorSystem
 
         var sound = value ? door.Comp.BoltDownSound : door.Comp.BoltUpSound;
         if (predicted)
-            Audio.PlayPredicted(sound, door, user: user);
+            _audio.PlayPredicted(sound, door, user: user);
         else
-            Audio.PlayPvs(sound, door);
+            _audio.PlayPvs(sound, door);
 
         return true;
     }
