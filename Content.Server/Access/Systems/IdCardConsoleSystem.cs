@@ -153,7 +153,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
 
         // I hate that C# doesn't have an option for this and don't desire to write this out the hard way.
         // var difference = newAccessList.Difference(oldTags);
-        var difference = newAccessList.Union(oldTags).Except(newAccessList.Intersect(oldTags)).ToHashSet();
+        var difference = newAccessList.Except(newAccessList.Intersect(oldTags)).ToHashSet();
         // NULL SAFETY: PrivilegedIdIsAuthorized checked this earlier.
         var privilegedPerms = _accessReader.FindAccessTags(privilegedId!.Value).ToHashSet();
         if (!difference.IsSubsetOf(privilegedPerms))
