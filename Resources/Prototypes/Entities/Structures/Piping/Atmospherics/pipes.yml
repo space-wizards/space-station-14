@@ -81,6 +81,13 @@
     layers:
       - state: pipeHalf
         map: [ "enum.PipeVisualLayers.Pipe" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AnchorVisuals.Anchored:
+        pipeBendAnchored:
+          False: { state: pipeHalf }
+          True: { state: pipeHalfAnchored }
   - type: Construction
     graph: GasPipe
     node: half
@@ -90,6 +97,7 @@
   id: GasPipeStraight
   suffix: Straight
   components:
+  - type: Transform
   - type: NodeContainer
     nodes:
       pipe:
@@ -97,9 +105,17 @@
         nodeGroupID: Pipe
         pipeDirection: Longitudinal
   - type: Sprite
+    sprite: Structures/Piping/Atmospherics/pipe.rsi
     layers:
       - state: pipeStraight
         map: [ "enum.PipeVisualLayers.Pipe" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AnchorVisuals.Anchored:
+        pipeBendAnchored:
+          False: { state: pipeStraight }
+          True: { state: pipeStraightAnchored }
   - type: Construction
     graph: GasPipe
     node: straight
@@ -133,6 +149,13 @@
     layers:
       - state: pipeBend
         map: [ "enum.PipeVisualLayers.Pipe" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AnchorVisuals.Anchored:
+        pipeBendAnchored:
+          False: { state: pipeBend }
+          True: { state: pipeBendAnchored }
   - type: Construction
     graph: GasPipe
     node: bend
@@ -173,6 +196,13 @@
     layers:
       - state: pipeTJunction
         map: [ "enum.PipeVisualLayers.Pipe" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AnchorVisuals.Anchored:
+        pipeBendAnchored:
+          False: { state: pipeTJunction }
+          True: { state: pipeTJunctionAnchored }
   - type: Construction
     graph: GasPipe
     node: tjunction
@@ -211,6 +241,13 @@
     layers:
       - state: pipeFourway
         map: [ "enum.PipeVisualLayers.Pipe" ]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AnchorVisuals.Anchored:
+        pipeBendAnchored:
+          False: { state: pipeFourway }
+          True: { state: pipeFourwayAnchored }
   - type: Construction
     graph: GasPipe
     node: fourway
