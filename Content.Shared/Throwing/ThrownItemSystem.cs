@@ -133,11 +133,13 @@ namespace Content.Shared.Throwing
         /// </summary>
         public void ThrowCollideInteraction(ThrownItemComponent component, EntityUid thrown, EntityUid target)
         {
-            if (component.Thrower is not null)
-                _adminLogger.Add(LogType.ThrowHit, LogImpact.Low,
-                    $"{ToPrettyString(thrown):thrown} thrown by {ToPrettyString(component.Thrower.Value):thrower} hit {ToPrettyString(target):target}.");
+            if (HasComp<ThrownItemImmuneComponent>(target))
+                return;
 
-            RaiseLocalEvent(target, new ThrowHitByEvent(thrown, target, component), true);
+            if (component.Thrower is not null)
+                RaiseLocalEvent(target, new ThrowHitByEvent(component.Thrower.Value, thrown, target, component), true);
+            else
+                RaiseLocalEvent(target, new ThrowHitByEvent(null, thrown, target, component), true);
             RaiseLocalEvent(thrown, new ThrowDoHitEvent(thrown, target, component), true);
         }
 

@@ -42,6 +42,8 @@
     size: Normal
     shape:
     - 0,0,0,1
+  - type: DamageOtherOnHit # imp
+    staminaCost: 6
 
 # Standard (grey) Crowbar
 - type: entity

@@ -1,12 +1,12 @@
 using Robust.Shared;
 using Robust.Shared.Configuration;
 
-namespace Content.Shared._EinsteinEngine.CCVar;
+namespace Content.Shared._EinsteinEngines.CCVar;
 
 [CVarDefs]
 public sealed partial class EinsteinCCVars : CVars
 {
-    // TODO: Move the rest of the announcer code to _EinsteinEngine
+    // TODO: Move the rest of the announcer code to _EinsteinEngines
 
     /*
         * Announcers

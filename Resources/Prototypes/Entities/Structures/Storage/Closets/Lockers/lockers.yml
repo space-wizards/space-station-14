@@ -29,6 +29,11 @@
     stateBaseClosed: secure
     stateDoorOpen: secure_open
     stateDoorClosed: secure_door
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 15
+    staminaCost: 50
 
 # Cargo
 - type: entity

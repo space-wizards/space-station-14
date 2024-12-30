@@ -14,6 +14,8 @@
     damage:
       types:
         Slash: 12
+    soundHit: # imp
+        path: /Audio/Weapons/bladeslice.ogg
   - type: Item
     size: Normal
   - type: Clothing
@@ -21,6 +23,13 @@
     slots:
     - back
   - type: DisarmMalus
+  # imp edits #
+  - type: DamageOtherOnHit
+  - type: EmbeddableProjectile
+  - type: EmbedPassiveDamage
+  - type: ThrowingAngle
+    angle: 225
+  # end imp edits #
 
 - type: entity
   name: eldritch blade
@@ -38,6 +47,8 @@
     damage:
       types:
         Slash: 16
+    soundHit: # imp
+        path: /Audio/Weapons/bladeslice.ogg
   - type: Item
     size: Normal
   - type: Clothing
@@ -45,6 +56,14 @@
     slots:
     - back
   - type: DisarmMalus
+  # imp edits #
+  - type: DamageOtherOnHit
+    staminaCost: 5
+  - type: EmbeddableProjectile
+  - type: EmbedPassiveDamage
+  - type: ThrowingAngle
+    angle: 225
+  # end imp edits #
 
 - type: entity
   name: unholy halberd
@@ -85,3 +104,10 @@
     - back
   - type: UseDelay
     delay: 1
+  # imp edits #
+  - type: DamageOtherOnHit
+    staminaCost: 9
+  - type: EmbeddableProjectile
+  - type: ThrowingAngle
+    angle: 225
+  # end imp edits #

@@ -58,6 +58,7 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 1
     fillBaseName: solution
+  - type: EmbedPassiveDamage # imp
 
 
 - type: entity
