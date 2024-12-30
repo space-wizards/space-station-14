@@ -1,47 +1,4 @@
 ﻿Entries:
-- author: MisterMecky
-  changes:
-  - message: Changed strange pill possible reagents. They are no longer mostly composed
-      of amatoxin and space mirage.
-    type: Tweak
-  id: 7247
-  time: '2024-08-29T13:21:06.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/30524
-- author: slarticodefast
-  changes:
-  - message: Fixed energy shield visuals.
-    type: Fix
-  id: 7248
-  time: '2024-08-30T01:43:34.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31619
-- author: DieselMohawk
-  changes:
-  - message: Added Armband to back of Security Jumpsuit
-    type: Fix
-  id: 7249
-  time: '2024-08-30T01:46:46.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31635
-- author: Winkarst-cpu
-  changes:
-  - message: Potted plants now fade their sprites, just like trees.
-    type: Tweak
-  id: 7250
-  time: '2024-08-30T10:34:25.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31628
-- author: AutoOtter
-  changes:
-  - message: Greatly reduced meteorite wall health for easier cleanup and repair.
-    type: Tweak
-  id: 7251
-  time: '2024-08-30T23:24:13.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31651
-- author: slarticodefast
-  changes:
-  - message: The revenant can now fly through walls again.
-    type: Fix
-  id: 7252
-  time: '2024-08-31T03:02:58.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31670
 - author: metalgearsloth
   changes:
   - message: Fix AI eye getting deleted by singulo.
@@ -3938,3 +3895,46 @@
   id: 7746
   time: '2024-12-21T06:45:48.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/33598
+- author: muburu
+  changes:
+  - message: Space Ninjas now have silent footsteps.
+    type: Tweak
+  id: 7747
+  time: '2024-12-23T14:24:10.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33280
+- author: amatwiedle
+  changes:
+  - message: Borgs can no longer drink from tools provided by modules.
+    type: Fix
+  id: 7748
+  time: '2024-12-23T19:54:18.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/32964
+- author: Booblesnoot42
+  changes:
+  - message: On Cog, an unnecessary protolathe was removed from cargo.
+    type: Remove
+  id: 7749
+  time: '2024-12-23T23:24:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34026
+- author: Booblesnoot42
+  changes:
+  - message: On Amber, an unnecessary protolathe was removed from cargo.
+    type: Remove
+  id: 7750
+  time: '2024-12-23T23:24:54.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34027
+- author: TheShuEd
+  changes:
+  - message: You can now select candles in trinkets loadout
+    type: Add
+  id: 7751
+  time: '2024-12-24T00:24:19.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/33193
+- author: lzk228
+  changes:
+  - message: Now you are allowed to paint multiple airlocks with the spray painter.
+      Along with that you can cancel the doafter by clicking on the door you are painting.
+    type: Tweak
+  id: 7752
+  time: '2024-12-24T02:25:04.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34001
