@@ -25,7 +25,8 @@ namespace Content.Shared.Remotes
 
         private void OnBeforeInteract(Entity<DoorRemoteComponent> entity, ref BeforeRangedInteractEvent args)
         {
-            bool isAirlock = TryComp<AirlockComponent>(args.Target, out var airlockComp);
+            if (!TryComp<AirlockComponent>(args.Target, out var airlockComp))
+                return;
 
             if (args.Handled
                 || args.Target == null

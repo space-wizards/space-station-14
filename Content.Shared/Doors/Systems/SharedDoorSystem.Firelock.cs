@@ -51,7 +51,7 @@ public abstract partial class SharedDoorSystem
         // Give the Door remote the ability to force a firelock open even if it is holding back dangerous gas
         var overrideAccess = (args.User != null) && _accessReaderSystem.IsAllowed(args.User.Value, firelock);
 
-        if (!firelock.Comp.Powered || (!overrideAccess && firelock.Comp.IsLocked))
+        if (!firelock.Comp.Powered || !overrideAccess && firelock.Comp.IsLocked)
             args.Cancel();
         else if (args.User != null)
             WarnPlayer(firelock, args.User.Value);

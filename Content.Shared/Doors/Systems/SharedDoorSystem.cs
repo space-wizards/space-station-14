@@ -476,7 +476,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
     /// Immediately start closing a door
     /// </summary>
     /// <param name="door"> The doorcomponent of the door</param>
-    /// <param name="user"> The user (if any) opening the door</param>
+    /// <param name="user"> The user (if any) closing the door</param>
     public bool CanClose(Entity<DoorComponent> door, EntityUid? user = null)
     {
         // since both closing/closed and welded are door states, we need to prevent 'closing'
@@ -519,7 +519,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
             return false;
 
         // Make sure no entity walked into the airlock when it started closing.
-        if (!CanClose(door, door))
+        if (!CanClose(door))
         {
             door.Comp.NextStateChange = _gameTiming.CurTime + door.Comp.OpenTimeTwo;
             door.Comp.State = DoorState.Open;
