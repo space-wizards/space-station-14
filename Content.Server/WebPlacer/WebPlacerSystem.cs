@@ -45,14 +45,11 @@ public sealed class WebPlacerSystem : SharedWebPlacerSystem
             return;
         }
 
-        // Get the spawn locations.
-        List<EntityCoordinates> spawnPos = new();
-        foreach (var vect in webPlacer.Comp.OffsetVectors)
-            spawnPos.Add(xform.Coordinates.Offset(vect));
-
+        // Get coordinates and spawn Comp.WebPrototype if the coordinates are valid.
         bool success = false;
-        foreach (var pos in spawnPos)
+        foreach (var vect in webPlacer.Comp.OffsetVectors)
         {
+            var pos = xform.Coordinates.Offset(vect);
             if (!IsValidTile(pos, webPlacer.Comp.DestinationWhitelist, webPlacer.Comp.DestinationBlacklist, (grid.Value, gridComp)))
                 continue;
 
