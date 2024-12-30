@@ -9,7 +9,7 @@ public abstract partial class SharedHandsSystem
     private void InitializeRelay()
     {
         SubscribeLocalEvent<HandsComponent, RefreshMovementSpeedModifiersEvent>(RelayEvent);
-        SubscribeLocalEvent<HandsComponent, CheckMagicItemEvent>(RelayEvent); # imp
+        SubscribeLocalEvent<HandsComponent, CheckMagicItemEvent>(RelayEvent); // imp
     }
 
     private void RelayEvent<T>(Entity<HandsComponent> entity, ref T args) where T : EntityEventArgs
