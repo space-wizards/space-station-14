@@ -849,6 +849,8 @@
   - type: ProtectedFromStepTriggers
   - type: InputMover
   - type: MobMover
+  - type: ContentEye
+    maxZoom: 1.2, 1.2
   - type: Tag
     tags:
       - CannotSuicide

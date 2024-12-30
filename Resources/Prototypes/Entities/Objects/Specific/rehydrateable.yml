@@ -156,7 +156,7 @@
     - MobAbomination
 
 - type: entity
-  parent: [PlushieCarp, BaseSyndicateContraband]
+  parent: [PlushieCarp, Tier2Contraband]
   id: DehydratedSpaceCarp
   name: dehydrated space carp
   description: Looks like a plush toy carp, but just add water and it becomes a real-life space carp!
