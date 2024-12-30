@@ -70,8 +70,9 @@
                     <graphics:StyleBoxFlat BackgroundColor="#222222AA" />
                 </PanelContainer.PanelOverride>
                 <BoxContainer Orientation="Horizontal" Margin="15 10">
-                    <mapping:MappingActionsButton
-                        Name="Add" Access="Public" Disabled="True" ToolTip="" Visible="False" />
+                    <mapping:MappingActionsButton Name="Add" Access="Public"
+                                                  Disabled="True" ToolTip=""
+                                                  Visible="False" />
                     <mapping:MappingActionsButton Name="Fill" Access="Public"
                                                   ToolTip="" Visible="False" />
                     <mapping:MappingActionsButton Name="Grab" Access="Public"
@@ -86,6 +87,8 @@
                                                   ToolTip="{Loc 'mapping-fixgridatmos-tooltip'}" />
                     <mapping:MappingActionsButton Name="RemoveGrid" Access="Public"
                                                   ToolTip="{Loc 'mapping-remove-grid-tooltip'}" />
+                    <mapping:MappingActionsButton Name="MoveGrid" Access="Public"
+                                                  ToolTip="{Loc 'mapping-move-grid-tooltip'}" />
                 </BoxContainer>
             </PanelContainer>
         </LayoutContainer>

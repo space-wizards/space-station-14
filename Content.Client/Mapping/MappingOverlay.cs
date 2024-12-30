@@ -66,7 +66,7 @@ public sealed class MappingOverlay : Overlay
 
                 break;
             }
-            case CursorState.DeleteEntity:
+            case CursorState.Delete:
             {
                 if (_state.GetHoveredEntity() is { } entity &&
                     _entities.TryGetComponent(entity, out SpriteComponent? sprite))
@@ -92,7 +92,7 @@ public sealed class MappingOverlay : Overlay
         handle.UseShader(null);
     }
 
-    public void DrawGridOverlay(in OverlayDrawArgs args, Color color)
+    private void DrawGridOverlay(in OverlayDrawArgs args, Color color)
     {
         if (args.MapId == MapId.Nullspace || _state.GetHoveredGrid() is not { } grid)
             return;

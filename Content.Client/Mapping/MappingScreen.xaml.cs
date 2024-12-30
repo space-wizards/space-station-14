@@ -107,14 +107,7 @@ public sealed partial class MappingScreen : InGameScreen
         };
         FixGridAtmos.Texture.TexturePath = "/Textures/Interface/VerbIcons/oxygen.svg.192dpi.png";
         RemoveGrid.Texture.TexturePath = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
-
-        var mappingActionsGroup = new ButtonGroup();
-        EraseEntityButton.Group = mappingActionsGroup;
-        EraseDecalButton.Group = mappingActionsGroup;
-        EraseTileButton.Group = mappingActionsGroup;
-        Pick.Group = mappingActionsGroup;
-        FixGridAtmos.Group = mappingActionsGroup;
-        RemoveGrid.Group = mappingActionsGroup;
+        MoveGrid.Texture.TexturePath = "/Textures/Interface/VerbIcons/point.svg.192dpi.png";
     }
 
     public void FlipSides()
@@ -225,5 +218,12 @@ public sealed partial class MappingScreen : InGameScreen
         Move.Pressed = Move == except;
         Pick.Pressed = Pick == except;
         Layers.Pressed = Layers == except;
+        FixGridAtmos.Pressed = FixGridAtmos == except;
+        RemoveGrid.Pressed = RemoveGrid == except;
+        MoveGrid.Pressed = MoveGrid == except;
+
+        EraseEntityButton.Pressed = EraseEntityButton == except;
+        EraseDecalButton.Pressed = EraseDecalButton == except;
+        EraseTileButton.Pressed = EraseTileButton == except;
     }
 }
