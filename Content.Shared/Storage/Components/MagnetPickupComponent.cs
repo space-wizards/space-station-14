@@ -1,14 +1,13 @@
 using Content.Shared.Inventory;
 using Robust.Shared.GameStates;
 
-// namespace Content.Server.Storage.Components;
-namespace Content.Shared.Storage.Components;    // Frontier
+namespace Content.Shared.Storage.Components;    
 
 /// <summary>
 /// Applies an ongoing pickup area around the attached entity.
 /// </summary>
 [RegisterComponent, AutoGenerateComponentPause]
-[NetworkedComponent, AutoGenerateComponentState] // Frontier
+[NetworkedComponent, AutoGenerateComponentState] 
 public sealed partial class MagnetPickupComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("nextScan")]
@@ -23,8 +22,6 @@ public sealed partial class MagnetPickupComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("slotFlags")]
     public SlotFlags SlotFlags = SlotFlags.BELT;
-
-    // Everything below this line is from Frontier
 
     /// <summary>
     /// Is the magnet currently enabled?
