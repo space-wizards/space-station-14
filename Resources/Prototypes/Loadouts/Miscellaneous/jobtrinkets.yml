@@ -22,7 +22,7 @@
       time: 72000 # 20hr
   storage:
     back:
-      - PlushieLizardJobHeadOfPersonnel
+      - PlushieLizardJobHeadofpersonnel
 
 - type: loadout
   id: LizardPlushiePassenger
@@ -250,7 +250,7 @@
       time: 72000 # 20hr
   storage:
     back:
-    - PlushieLizardJobAtmosphericTechnician
+    - PlushieLizardJobAtmospherictechnician
 
 - type: loadout
   id: LizardPlushieResearchDirector
@@ -431,6 +431,18 @@
   storage:
     back:
     - PlushieLizardJobPsychologist
+
+- type: loadout
+  id: LizardPlushieBoxer
+  effects:
+    - !type:JobRequirementLoadoutEffect
+      requirement:
+        !type:RoleTimeRequirement
+        role: JobBoxer
+        time: 72000 # 20hr
+  storage:
+    back:
+      - PlushieLizardJobBoxer
 
 - type: loadout
   id: LizardPlushieZookeeper
