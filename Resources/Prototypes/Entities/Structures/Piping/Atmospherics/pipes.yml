@@ -97,7 +97,6 @@
   id: GasPipeStraight
   suffix: Straight
   components:
-  - type: Transform
   - type: NodeContainer
     nodes:
       pipe:
@@ -105,7 +104,6 @@
         nodeGroupID: Pipe
         pipeDirection: Longitudinal
   - type: Sprite
-    sprite: Structures/Piping/Atmospherics/pipe.rsi
     layers:
       - state: pipeStraight
         map: [ "enum.PipeVisualLayers.Pipe" ]
