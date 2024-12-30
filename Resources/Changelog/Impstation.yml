@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: widgetbeck
-  changes:
-  - message: Fixed bad interaction between the No Contractions accent and the French
-      accent.
-    type: Fix
-  id: 322
-  time: '2024-10-05T06:43:10.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/409
 - author: TheGrimbeeper
   changes:
   - message: backend change to artifacts - triggers and effects can now have individual
@@ -4493,3 +4485,12 @@
   id: 821
   time: '2024-12-30T05:14:26.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1148
+- author: AftrLite
+  changes:
+  - message: Radiation collectors now have new sprites!
+    type: Add
+  - message: Steel storage crates now have ridged lids!
+    type: Tweak
+  id: 822
+  time: '2024-12-30T05:16:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1151
