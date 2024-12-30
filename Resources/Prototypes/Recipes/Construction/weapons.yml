@@ -116,7 +116,7 @@
   targetNode: bola
   category: construction-category-weapons
   description: A simple weapon for tripping someone at a distance.
-  icon: { sprite: Objects/Weapons/Throwable/bola.rsi, state: icon }
+  icon: { sprite: _Harmony/Objects/Weapons/Throwable/bola.rsi, state: icon } #Harmony Change: Sprite pathway changed.
   objectType: Item
 
 - type: construction
