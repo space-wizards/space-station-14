@@ -2247,11 +2247,6 @@ entities:
       parent: 4
 - proto: ClothingHeadsetAltSyndicateListening
   entities:
-  - uid: 1033
-    components:
-    - type: Transform
-      pos: 0.6291845,11.592264
-      parent: 4
   - uid: 1256
     components:
     - type: Transform
@@ -2315,6 +2310,13 @@ entities:
       rot: 1.5707963267948966 rad
       pos: -10.5,0.5
       parent: 4
+- proto: ComputerRadar
+  entities:
+  - uid: 579
+    components:
+    - type: Transform
+      pos: -1.5,16.5
+      parent: 4
 - proto: ComputerStationRecords
   entities:
   - uid: 654
@@ -2329,13 +2331,6 @@ entities:
     components:
     - type: Transform
       pos: -3.5,16.5
-      parent: 4
-- proto: ComputerSurveillanceWirelessCameraMonitor
-  entities:
-  - uid: 579
-    components:
-    - type: Transform
-      pos: -1.5,16.5
       parent: 4
 - proto: Crowbar
   entities:
@@ -3671,9 +3666,6 @@ entities:
       rot: 3.141592653589793 rad
       pos: -2.5,-0.5
       parent: 4
-    - type: DeviceNetwork
-      configurators:
-      - invalid
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 873
@@ -3681,9 +3673,6 @@ entities:
     - type: Transform
       pos: -7.5,1.5
       parent: 4
-    - type: DeviceNetwork
-      configurators:
-      - invalid
     - type: AtmosPipeColor
       color: '#990000FF'
   - uid: 1034
@@ -3715,9 +3704,6 @@ entities:
       rot: -1.5707963267948966 rad
       pos: 5.5,-4.5
       parent: 4
-    - type: DeviceNetwork
-      configurators:
-      - invalid
     - type: AtmosPipeColor
       color: '#990000FF'
 - proto: GeneratorRTGDamaged
@@ -3965,6 +3951,18 @@ entities:
     components:
     - type: Transform
       pos: 7.5,3.5
+      parent: 4
+- proto: NukieAgentIDCard
+  entities:
+  - uid: 601
+    components:
+    - type: Transform
+      pos: 0.5359893,8.556053
+      parent: 4
+  - uid: 1033
+    components:
+    - type: Transform
+      pos: 0.42140603,8.774955
       parent: 4
 - proto: Paper
   entities:
@@ -5293,18 +5291,6 @@ entities:
     components:
     - type: Transform
       pos: -6.5,-1.5
-      parent: 4
-- proto: SyndiListeningPostPDA
-  entities:
-  - uid: 601
-    components:
-    - type: Transform
-      pos: 0.61876774,8.517211
-      parent: 4
-  - uid: 1259
-    components:
-    - type: Transform
-      pos: 0.46251774,8.694418
       parent: 4
 - proto: Table
   entities:
