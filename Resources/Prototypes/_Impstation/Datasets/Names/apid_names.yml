@@ -1,23 +1,48 @@
+- type: dataset
+  id: apid_worker
+  values:
+  - Worker
+
+- type: dataset
+  id: apid_botanist
+  values:
+  - Worker
+  - Forager
+
+- type: dataset
+  id: apid_doctor
+  values:
+  - Mender
+  - Nurse
+
+- type: dataset
+  id: apid_engineer
+  values:
+  - Builder
+  - Carpenter
+  - Mason
+  - Leafcutter
+
 - type: dataset #ANGRY BEE NOISES
   id: names_apid
   values:
-  - Worker B'zrz
-  - Worker Zzb'rz
-  - Worker Zzr'z
-  - Worker Zz'zrz
-  - Worker Z'bzz
-  - Worker R'zzb'z
-  - Worker zz'bzz'z
-  - Worker B'zz'zzb
-  - Worker R'bzz'zz
-  - Worker Zzrz'rzz
-  - Worker Zz'zsz
-  - Worker B'zzb'z
-  - Worker R'zz'bzzbzz
-  - Worker Zs'bzz'zz
-  - Worker Zz'bzr'z
-  - Worker Zs'bzsz'z
-  - Worker Zzzz'bz
-  - Worker B'bzz'bzz
-  - Worker Zrzz'sbzz
-  - Worker B'bzzz
+  - B'zrz
+  - Zzb'rz
+  - Zzr'z
+  - Zz'zrz
+  - Z'bzz
+  - R'zzb'z
+  - zz'bzz'z
+  - B'zz'zzb
+  - R'bzz'zz
+  - Zzrz'rzz
+  - Zz'zsz
+  - B'zzb'z
+  - R'zz'bzzbzz
+  - Zs'bzz'zz
+  - Zz'bzr'z
+  - Zs'bzsz'z
+  - Zzzz'bz
+  - B'bzz'bzz
+  - Zrzz'sbzz
+  - B'bzzz

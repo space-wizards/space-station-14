@@ -277,3 +277,15 @@
     ears: ClothingHeadsetMedical
     eyes: ClothingEyesGlassesHudMedical
 
+- type: startingGear #the engineer!
+  id: StartingGearApidEngineer
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitEngineering
+    id: EngineerPDA
+    belt: ClothingBeltUtilityEngineering
+    outerClothing: ClothingOuterHardsuitEngineering
+    head: ClothingHeadHatHardhatYellow
+    pocket1: DoubleEmergencyOxygenTank
+    pocket2: ClothingMaskBreath
+    ears: ClothingHeadsetEngineering
+    eyes: ClothingEyesGlassesMeson

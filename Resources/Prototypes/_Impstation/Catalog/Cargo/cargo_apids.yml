@@ -1,5 +1,5 @@
 - type: cargoProduct
-  id: ServiceApidBotanist
+  id: ApidBotanist
   icon:
     sprite: _Impstation/Structures/apidcryopod.rsi
     state: icon
@@ -9,11 +9,21 @@
   group: market
 
 - type: cargoProduct
-  id: ServiceApidDoctor
+  id: ApidDoctor
   icon:
     sprite: _Impstation/Structures/apidcryopod.rsi
     state: icon
   product: ApidCryopodDoctor
   cost: 5000
   category: cargoproduct-category-name-medical
+  group: market
+
+- type: cargoProduct
+  id: ApidEngineer
+  icon:
+    sprite: _Impstation/Structures/apidcryopod.rsi
+    state: icon
+  product: ApidCryopodEngineer
+  cost: 5000
+  category: cargoproduct-category-name-engineering
   group: market

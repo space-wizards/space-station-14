@@ -57,5 +57,8 @@ ghost-role-information-apid-botanist-description = A Beefolk botanist, called in
 ghost-role-information-apid-doctor-name = Apid Medical Doctor
 ghost-role-information-apid-doctor-description = A Beefolk medical doctor, called in as backup to help a crew in need.
 
+ghost-role-information-apid-engineer-name = Apid Engineer
+ghost-role-information-apid-engineer-description = A Beefolk engineer, called in as backup to help a crew in need.
+
 ghost-role-information-apid-name = Apid
 ghost-role-information-apid-description = A Beefolk worker, called in as backup to help a crew in need.
