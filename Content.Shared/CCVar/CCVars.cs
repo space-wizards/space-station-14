@@ -67,7 +67,7 @@ public sealed partial class CCVars : CVars
     ///     Directly multiplies the amount of rads put out by the supermatter. Be VERY conservative with this.
     /// </summary>
     public static readonly CVarDef<float> SupermatterRadsModifier =
-        CVarDef.Create("supermatter.rads_modifier", 2f, CVar.SERVER);
+        CVarDef.Create("supermatter.rads_modifier", 1f, CVar.SERVER);
 
     #endregion
     /// <summary>
