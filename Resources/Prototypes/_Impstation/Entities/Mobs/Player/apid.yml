@@ -244,6 +244,7 @@
   - type: Grammar
     attributes:
       proper: true
+  - type: MothAccent
 
 - type: entity
   name: apid botanist
