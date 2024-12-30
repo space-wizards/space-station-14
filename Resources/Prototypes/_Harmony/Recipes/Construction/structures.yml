@@ -1,0 +1,17 @@
+﻿# Bonfire
+- type: construction
+  name: Bonfire
+  id: BonfireRecipe
+  graph: BonfireGraph
+  startNode: start
+  targetNode: bonfirenode
+  description: Its a campfire!
+  category: construction-category-misc
+  icon:
+    sprite: Structures/Decoration/bonfire.rsi
+    state: bonfire
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked

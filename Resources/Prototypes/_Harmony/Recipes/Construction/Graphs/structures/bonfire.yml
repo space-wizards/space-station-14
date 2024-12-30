@@ -1,0 +1,27 @@
+﻿# Bonfire
+- type: constructionGraph
+  id: BonfireGraph
+  start: start
+  graph:
+  - node: start
+    actions:
+    - !type:DestroyEntity {}
+    edges:
+    - to: bonfirenode
+      completed:
+      - !type:SnapToGrid { }
+      steps:
+      - material: WoodPlank
+        amount: 10
+        doAfter: 2
+  - node: bonfirenode
+    entity: Bonfire
+    edges:
+    - to: start
+      completed:
+      - !type:SpawnPrototype
+        prototype: MaterialWoodPlank
+        amount: 10
+      steps:
+      - tool: Prying
+        doAfter: 3
