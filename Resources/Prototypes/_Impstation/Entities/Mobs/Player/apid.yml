@@ -241,6 +241,9 @@
     nameSegments:
     - apid_worker
     - names_apid
+  - type: Grammar
+    attributes:
+      proper: true
 
 - type: entity
   name: apid botanist
