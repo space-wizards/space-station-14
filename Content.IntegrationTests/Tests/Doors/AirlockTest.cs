@@ -76,7 +76,7 @@ namespace Content.IntegrationTests.Tests.Doors
 
             await server.WaitAssertion(() =>
             {
-                doors.StartOpening(airlock);
+                doors.StartOpening((airlock, doorComponent));
                 Assert.That(doorComponent.State, Is.EqualTo(DoorState.AttemptingOpenBySelf));
             });
 
@@ -88,7 +88,7 @@ namespace Content.IntegrationTests.Tests.Doors
 
             await server.WaitAssertion(() =>
             {
-                doors.TryClose(airlock);
+                doors.TryClose((airlock, doorComponent));
                 Assert.That(doorComponent.State, Is.EqualTo(DoorState.AttemptingCloseBySelf));
             });
 
