@@ -1,7 +1,9 @@
 using Content.Shared.Atmos;
 using Content.Shared.DoAfter;
+using Content.Shared.Radio;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared._EinsteinEngines.Supermatter.Components;
@@ -15,7 +17,7 @@ public sealed partial class SupermatterComponent : Component
     ///     The SM will only cycle if activated.
     /// </summary>
     [DataField]
-    public bool Activated = false;
+    public bool Activated = true;
 
     [DataField]
     public string SliverPrototype = "SupermatterSliver";
@@ -29,10 +31,9 @@ public sealed partial class SupermatterComponent : Component
 
     public string[] LightningPrototypes =
     {
-        "Lightning",
-        "ChargedLightning",
-        "SuperchargedLightning",
-        "HyperchargedLightning"
+        "SupermatterLightning",
+        "SupermatterLightningCharged",
+        "SupermatterLightningSupercharged"
     };
 
     [DataField]
@@ -51,7 +52,7 @@ public sealed partial class SupermatterComponent : Component
     public string CollisionResultPrototype = "Ash";
 
     [DataField]
-    public SoundSpecifier DustSound = new SoundPathSpecifier("/Audio/Effects/Grenades/Supermatter/supermatter_start.ogg");
+    public SoundSpecifier DustSound = new SoundPathSpecifier("/Audio/_EinsteinEngines/Supermatter/supermatter.ogg");
 
     [DataField]
     public SoundSpecifier CalmSound = new SoundPathSpecifier("/Audio/_EinsteinEngines/Supermatter/calm.ogg");
@@ -159,7 +160,7 @@ public sealed partial class SupermatterComponent : Component
     ///     Time until delam
     /// </summary>
     [DataField]
-    public float DelamTimer = 120f;
+    public float DelamTimer = 30f;
 
     /// <summary>
     ///     The message timer
@@ -298,13 +299,13 @@ public sealed partial class SupermatterComponent : Component
     #region Announcements
 
     [DataField]
-    public string AlertCodeYellowId = "yellow";
-
-    [DataField]
-    public string AlertCodeDeltaId = "delta";
-
-    [DataField]
     public bool DelamAnnounced = false;
+
+    [DataField]
+    public ProtoId<RadioChannelPrototype> Channel = "Engineering";
+
+    [DataField]
+    public ProtoId<RadioChannelPrototype> ChannelGlobal = "Common";
 
     #endregion
 

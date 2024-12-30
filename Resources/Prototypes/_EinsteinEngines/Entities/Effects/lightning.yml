@@ -1,0 +1,75 @@
+- type: entity
+  name: supermatter arc
+  id: SupermatterLightning
+  parent: BaseLightning
+  components:
+  - type: Sprite
+    sprite: /Textures/Effects/lightning.rsi
+    drawdepth: Effects
+    layers:
+    - state: "yellow_lightning"
+      shader: unshaded
+  - type: PointLight
+    enabled: true
+    color: "#FFFFEC"
+    radius: 3.5
+    softness: 1
+    autoRot: true
+    castShadows: false
+  - type: Lightning
+    canArc: true
+    lightningPrototype: SupermatterLightning
+  - type: Beam
+    sound: /Audio/_EinsteinEngines/Supermatter/lightning.ogg
+  - type: TimedDespawn
+    lifetime: 1
+
+- type: entity
+  name: charged supermatter arc
+  id: SupermatterLightningCharged
+  parent: SupermatterLightning
+  components:
+  - type: Sprite
+    sprite: /Textures/Effects/lightning.rsi
+    drawdepth: Effects
+    layers:
+    - state: "blue_lightning"
+      shader: unshaded
+  - type: Electrified
+    requirePower: false
+    shockDamage: 50
+  - type: PointLight
+    enabled: true
+    color: "#ECF2FF"
+    radius: 3.5
+    softness: 1
+    autoRot: true
+    castShadows: false
+  - type: Lightning
+    canArc: true
+    lightningPrototype: SupermatterLightningCharged
+
+- type: entity
+  name: supercharged supermatter arc
+  id: SupermatterLightningSupercharged
+  parent: SupermatterLightningCharged
+  components:
+  - type: Sprite
+    sprite: /Textures/Effects/lightning.rsi
+    drawdepth: Effects
+    layers:
+    - state: "red_lightning"
+      shader: unshaded
+  - type: Electrified
+    requirePower: false
+    shockDamage: 60
+  - type: PointLight
+    enabled: true
+    color: "#FFECED"
+    radius: 3.5
+    softness: 1
+    autoRot: true
+    castShadows: false
+  - type: Lightning
+    canArc: true
+    lightningPrototype: SupermatterLightningSupercharged

@@ -1,19 +1,24 @@
 using Content.Server.AlertLevel;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Systems;
+using Content.Server.Decals;
 using Content.Server.DoAfter;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Kitchen.Components;
 using Content.Server.Lightning;
+using Content.Server.Lightning.Components;
 using Content.Server.Popups;
+using Content.Server.Radio.EntitySystems;
 using Content.Server.Station.Systems;
 using Content.Shared._EinsteinEngines.Supermatter.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Audio;
+using Content.Shared.Body.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
@@ -28,6 +33,7 @@ public sealed partial class SupermatterSystem : EntitySystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly RadioSystem _radio = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly ExplosionSystem _explosion = default!;
     [Dependency] private readonly TransformSystem _xform = default!;
@@ -36,6 +42,7 @@ public sealed partial class SupermatterSystem : EntitySystem
     [Dependency] private readonly LightningSystem _lightning = default!;
     [Dependency] private readonly AlertLevelSystem _alert = default!;
     [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly MapSystem _map = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
@@ -127,12 +134,26 @@ public sealed partial class SupermatterSystem : EntitySystem
 
         if (!HasComp<ProjectileComponent>(target))
         {
-            EntityManager.SpawnEntity(sm.CollisionResultPrototype, Transform(target).Coordinates);
-            _audio.PlayPvs(sm.DustSound, uid);
+            var popup = "supermatter-collide";
+
+            if (HasComp<MobStateComponent>(target))
+            {
+                popup = "supermatter-collide-mob";
+                EntityManager.SpawnEntity(sm.CollisionResultPrototype, Transform(target).Coordinates);
+            }
+
+            var targetProto = MetaData(target).EntityPrototype;
+            if (targetProto != null && targetProto.ID != sm.CollisionResultPrototype)
+            {
+                _popup.PopupEntity(Loc.GetString(popup, ("sm", uid), ("target", target)), uid, PopupType.LargeCaution);
+                _audio.PlayPvs(sm.DustSound, uid);
+            }
+
             sm.Power += args.OtherBody.Mass;
         }
 
         EntityManager.QueueDeleteEntity(target);
+        AddComp<SupermatterImmuneComponent>(target); // prevent spam or excess power production
 
         if (TryComp<SupermatterFoodComponent>(target, out var food))
             sm.Power += food.Energy;
@@ -194,7 +215,7 @@ public sealed partial class SupermatterSystem : EntitySystem
         sm.Damage += sm.DamageDelaminationPoint / 10;
 
         var integrity = GetIntegrity(sm).ToString("0.00");
-        SendSupermatterAnnouncement(uid, Loc.GetString("supermatter-announcement-cc-tamper", ("integrity", integrity)), true, "Central Command");
+        SendSupermatterAnnouncement(uid, sm, Loc.GetString("supermatter-announcement-cc-tamper", ("integrity", integrity)));
 
         Spawn(sm.SliverPrototype, _transform.GetMapCoordinates(args.User));
         _popup.PopupClient(Loc.GetString("supermatter-tamper-end"), uid, args.User);
