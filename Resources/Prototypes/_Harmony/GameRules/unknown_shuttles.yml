@@ -1,3 +1,5 @@
+# Harmony Friendly Shuttles
+
 - type: entity
   id: UnknownShuttleChemLab
   parent: BaseUnknownShuttleRule
@@ -6,6 +8,8 @@
     startAnnouncement: station-event-unknown-shuttle-incoming #!!
   - type: LoadMapRule
     preloadedGrid: ShuttleChemLab
+
+# Harmony Hostile Shuttles
 
 - type: entity
   id: UnknownShuttleSyndicateReinforcement
