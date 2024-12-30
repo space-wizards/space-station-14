@@ -1,23 +1,4 @@
 ﻿Entries:
-- author: hivehum
-  changes:
-  - message: One (1) new hairstyle for humans, dwarves, and slimes, sprited by Kazne.
-    type: Add
-  id: 320
-  time: '2024-10-05T06:43:56.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/413
-- author: ruddygreat
-  changes:
-  - message: renamed the cleaner lake to the shining spring (suggested by flanburgr)
-    type: Tweak
-  - message: the shining spring is now civilian (service department) contraband
-    type: Tweak
-  - message: the shining spring now just uses normal cleanades as ammo (idk why I
-      didn't do this to begin with)
-    type: Tweak
-  id: 321
-  time: '2024-10-05T06:43:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/412
 - author: widgetbeck
   changes:
   - message: Fixed bad interaction between the No Contractions accent and the French
@@ -4495,3 +4476,20 @@
   id: 819
   time: '2024-12-29T11:46:09.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1144
+- author: mqole
+  changes:
+  - message: Syndicate/paranormal contraband is now divided into 4 tiers, with different
+      levels of sentencing outlined by space law.
+    type: Tweak
+  - message: The metashield page in the guidebook looks less shit.
+    type: Tweak
+  id: 820
+  time: '2024-12-30T05:14:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1145
+- author: Darkmajia
+  changes:
+  - message: Double thief is no longer possible during lowpop.
+    type: Remove
+  id: 821
+  time: '2024-12-30T05:14:26.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1148
