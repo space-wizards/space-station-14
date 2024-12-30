@@ -257,7 +257,7 @@
           Quantity: 3
         - ReagentId: Vitamin
           Quantity: 5
-        - ReagentID: CapsaicinOil
+        - ReagentId: CapsaicinOil
           Quantity: 4
   - type: Tag
     tags:
