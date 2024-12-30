@@ -123,14 +123,6 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         });
     }
 
-    private void OnEmbedRemove(EntityUid uid, EmbeddableProjectileComponent component, RemoveEmbeddedProjectileEvent args)
-    {
-        if (args.Cancelled)
-            return;
-
-        RemoveEmbed(uid, component, args.User);
-    }
-
     public void RemoveEmbed(EntityUid uid, EmbeddableProjectileComponent component, EntityUid? remover = null)
     {
         component.AutoRemoveTime = null;
@@ -174,6 +166,14 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             _hands.TryPickupAnyHand(removerUid, uid);
     }
 
+    private void OnEmbedRemove(EntityUid uid, EmbeddableProjectileComponent component, RemoveEmbeddedProjectileEvent args)
+    {
+        // Whacky prediction issues.
+        if (args.Cancelled || _netManager.IsClient)
+            return;
+
+        RemoveEmbed(uid, component, args.User);
+    }
     private void OnEmbedThrowDoHit(EntityUid uid, EmbeddableProjectileComponent component, ThrowDoHitEvent args)
     {
         if (HasComp<PacifiedComponent>(args.Component.Thrower)
