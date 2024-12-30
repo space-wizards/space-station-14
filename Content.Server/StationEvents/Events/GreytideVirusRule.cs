@@ -89,6 +89,9 @@ public sealed class GreytideVirusRule : StationEventSystem<GreytideVirusRuleComp
             if (firelockQuery.HasComp(airlockUid))
                 continue;
 
+            if (HasComp<ExternalAccessMarkerComponent>(airlockUid))
+                continue;
+
             // make sure not to hit CentCom or other maps
             if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != chosenStation)
                 continue;
