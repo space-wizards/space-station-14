@@ -114,6 +114,15 @@
   components:
   - type: Sprite
     state: clown
+  - type: EmitSoundOnUse
+    sound:
+      collection: BikeHorn
+  - type: EmitSoundOnActivate
+    sound:
+      collection: BikeHorn
+  - type: EmitSoundOnTrigger
+    sound:
+      collection: BikeHorn
 
 - type: entity
   parent: BasePlushieLizardJob
@@ -195,6 +204,17 @@
   components:
   - type: Sprite
     state: mime
+  - type: EmitSoundOnUse
+    sound: null # mime is silent...
+  - type: EmitSoundOnLand
+    sound: null
+  - type: EmitSoundOnActivate
+    sound: null
+  - type: EmitSoundOnTrigger
+    sound: null
+  - type: MeleeWeapon
+    wideAnimationRotation: 180
+    soundHit: null
 
 - type: entity
   parent: BasePlushieLizardJob
