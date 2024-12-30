@@ -108,7 +108,7 @@
       - id: PlushieLizardJobQuartermaster
       - id: PlushieLizardJobReporter
       - id: PlushieLizardJobResearchdirector
-      - id: PlushieLizardJobSalvager
+      - id: PlushieLizardJobSalvagespecialist
       - id: PlushieLizardJobScientist
       - id: PlushieLizardJobSecuritycadet
       - id: PlushieLizardJobSecurityofficer
