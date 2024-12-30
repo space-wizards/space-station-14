@@ -57,7 +57,6 @@ loadout-group-bartender-neck = Bartender neck
 loadout-group-bartender-outerclothing = Bartender outer clothing
 loadout-group-bartender-shoes = Bartender shoes
 loadout-group-bartender-id = Bartender ID
-loadout-group-bartender-mixologist = Mixologist Qualification
 
 loadout-group-chef-head = Chef head
 loadout-group-chef-mask = Chef mask
