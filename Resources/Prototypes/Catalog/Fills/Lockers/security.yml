@@ -237,7 +237,7 @@
       amount: 4
 
 - type: entity
-  parent: GunSafeBaseSecure
+  parent: [GunSafeBaseSecure, BaseRestrictedContraband]
   id: GunSafeLaserCarbine
   name: laser safe
   components:
