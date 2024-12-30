@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: KingMudkipIII
-  changes:
-  - message: Added the Greatwrench, which spawns rarely in tool closets.
-    type: Add
-  id: 327
-  time: '2024-10-05T14:10:10.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/415
 - author: formlessnameless
   changes:
   - message: Spelves are strippable now. Steal their stuff!
@@ -4506,3 +4499,11 @@
   id: 826
   time: '2024-12-30T22:46:20.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1157
+- author: ruddygreat
+  changes:
+  - message: Invisibility is now fully invisible! an outline can be seen by the invisible
+      entity, anything inside the entity & ghosts.
+    type: Tweak
+  id: 827
+  time: '2024-12-30T22:56:05.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1150
