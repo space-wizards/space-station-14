@@ -137,6 +137,7 @@ public sealed class MappingState : GameplayStateBase
             .Bind(ContentKeyFunctions.MappingCancelEraseDecal, new PointerInputCmdHandler(HandleCancelEraseDecal, outsidePrediction: true))
             .Bind(ContentKeyFunctions.MappingOpenContextMenu, new PointerInputCmdHandler(HandleOpenContextMenu, outsidePrediction: true))
             .Bind(EngineKeyFunctions.Use, new PointerInputCmdHandler(HandleOnUse, outsidePrediction: true))
+            .Bind(EngineKeyFunctions.UseSecondary, new PointerInputCmdHandler(HandleOnUseSecondary, outsidePrediction: true))
             .Register<MappingState>();
 
         _overlays.AddOverlay(new MappingOverlay(this));
@@ -204,7 +205,6 @@ public sealed class MappingState : GameplayStateBase
         context.RemoveFunction(ContentKeyFunctions.MappingRemoveDecal);
         context.RemoveFunction(ContentKeyFunctions.MappingCancelEraseDecal);
         context.RemoveFunction(ContentKeyFunctions.MappingOpenContextMenu);
-        context.RemoveFunction(EngineKeyFunctions.Use);
 
         _overlays.RemoveOverlay<MappingOverlay>();
 
@@ -931,6 +931,24 @@ public sealed class MappingState : GameplayStateBase
 
             return true;
         }
+
+        return false;
+    }
+
+    private bool HandleOnUseSecondary(in PointerInputCmdArgs args)
+    {
+        if (Screen.MoveGrid.Pressed)
+        {
+            var gridDrag = _entityManager.System<GridDraggingSystem>();
+            if (gridDrag.Enabled)
+                _consoleHost.ExecuteCommand("griddrag");
+        }
+
+        if (_placement.Eraser)
+            _placement.ToggleEraser();
+
+        Screen.UnPressActionsExcept(new Control());
+        State = CursorState.None;
 
         return false;
     }
