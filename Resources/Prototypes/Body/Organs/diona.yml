@@ -211,6 +211,15 @@
   components:
   - type: IsDeadIC
   - type: Body
+  - type: Item
+    size: Small
+    heldPrefix: 0
+  - type: Clothing
+    quickEquip: false
+    sprite: Mobs/Animals/nymph.rsi
+    equippedPrefix: 0
+    slots:
+    - HEAD
     prototype: AnimalNymphBrain
 
 - type: entity
@@ -223,6 +232,15 @@
   components:
   - type: IsDeadIC
   - type: Body
+  - type: Item
+    size: Small
+    heldPrefix: 0
+  - type: Clothing
+    quickEquip: false
+    sprite: Mobs/Animals/nymph.rsi
+    equippedPrefix: 0
+    slots:
+    - HEAD
     prototype: AnimalNymphStomach
 
 - type: entity
@@ -235,4 +253,13 @@
   components:
   - type: IsDeadIC
   - type: Body
+  - type: Item
+    size: Small
+    heldPrefix: 0
+  - type: Clothing
+    quickEquip: false
+    sprite: Mobs/Animals/nymph.rsi
+    equippedPrefix: 0
+    slots:
+    - HEAD
     prototype: AnimalNymphLungs
