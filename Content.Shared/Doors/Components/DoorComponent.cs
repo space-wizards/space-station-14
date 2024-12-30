@@ -344,7 +344,7 @@ public enum DoorState : byte
     /// The door is currently in the process of closing.
     /// </summary>
     /// <remarks>Transitions to Closed.</remarks>
-    ClosingInProgress,
+    Closing,
 
     /// <summary>
     /// The door is currently open, ajar, agape, etc.
@@ -368,7 +368,7 @@ public enum DoorState : byte
     /// The door is currently in the process of opening.
     /// </summary>
     /// <remarks>Transitions to Open.</remarks>
-    OpeningInProgress,
+    Opening,
 
     /// <summary>
     /// The door is welded shut. Door stuck. Please, I'm begging you.

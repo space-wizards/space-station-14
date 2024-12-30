@@ -85,13 +85,13 @@ public abstract partial class SharedDoorSystem : EntitySystem
                 // Make sure doors are not perpetually stuck opening or closing.
                 case DoorState.AttemptingOpenBySelf:
                 case DoorState.AttemptingOpenByPrying:
-                case DoorState.OpeningInProgress:
+                case DoorState.Opening:
                     // force to open.
                     door.Comp.State = DoorState.Open;
                     break;
                 case DoorState.AttemptingCloseBySelf:
                 case DoorState.AttemptingCloseByPrying:
-                case DoorState.ClosingInProgress:
+                case DoorState.Closing:
                     // force to closed.
                     door.Comp.State = DoorState.Closed;
                     break;
@@ -123,7 +123,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
             case DoorState.Closed:
             case DoorState.AttemptingOpenBySelf:
             case DoorState.AttemptingOpenByPrying:
-            case DoorState.ClosingInProgress:
+            case DoorState.Closing:
             case DoorState.WeldedClosed:
             case DoorState.Denying:
             case DoorState.Emagging:
@@ -131,7 +131,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
             case DoorState.AttemptingCloseBySelf:
             case DoorState.AttemptingCloseByPrying:
             case DoorState.Open:
-            case DoorState.OpeningInProgress:
+            case DoorState.Opening:
             default:
                 return false;
         }
@@ -209,8 +209,8 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
                 break;
             case DoorState.Closed:
-            case DoorState.ClosingInProgress:
-            case DoorState.OpeningInProgress:
+            case DoorState.Closing:
+            case DoorState.Opening:
             case DoorState.WeldedClosed:
             default:
                 break;
@@ -278,9 +278,9 @@ public abstract partial class SharedDoorSystem : EntitySystem
             case DoorState.Denying:
             case DoorState.Emagging:
             case DoorState.AttemptingCloseByPrying:
-            case DoorState.ClosingInProgress:
+            case DoorState.Closing:
             case DoorState.AttemptingOpenByPrying:
-            case DoorState.OpeningInProgress:
+            case DoorState.Opening:
             default:
                 return;
         }
@@ -309,11 +309,11 @@ public abstract partial class SharedDoorSystem : EntitySystem
                 return;
             case DoorState.AttemptingCloseBySelf:
             case DoorState.AttemptingCloseByPrying:
-            case DoorState.ClosingInProgress:
+            case DoorState.Closing:
             case DoorState.Open:
             case DoorState.AttemptingOpenBySelf:
             case DoorState.AttemptingOpenByPrying:
-            case DoorState.OpeningInProgress:
+            case DoorState.Opening:
             case DoorState.Denying:
             case DoorState.Emagging:
             default:
@@ -358,10 +358,10 @@ public abstract partial class SharedDoorSystem : EntitySystem
                 return TryClose(door, user, predicted);
             case DoorState.AttemptingCloseBySelf:
             case DoorState.AttemptingCloseByPrying:
-            case DoorState.ClosingInProgress:
+            case DoorState.Closing:
             case DoorState.AttemptingOpenBySelf:
             case DoorState.AttemptingOpenByPrying:
-            case DoorState.OpeningInProgress:
+            case DoorState.Opening:
             case DoorState.WeldedClosed:
             case DoorState.Emagging:
             default:
@@ -440,7 +440,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
     public void OnPartialOpen(Entity<DoorComponent> door)
     {
         SetCollidable(door, false);
-        SetState(door, DoorState.OpeningInProgress);
+        SetState(door, DoorState.Opening);
         door.Comp.NextStateChange = _gameTiming.CurTime + door.Comp.OpenTimeTwo;
         _activeDoors.Add((door, door));
         Dirty(door);
@@ -529,7 +529,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
             return false;
         }
 
-        SetState(door, DoorState.ClosingInProgress);
+        SetState(door, DoorState.Closing);
         SetCollidable(door, true, physics);
         door.Comp.NextStateChange = _gameTiming.CurTime + door.Comp.CloseTimeTwo;
         Dirty(door);
@@ -588,11 +588,11 @@ public abstract partial class SharedDoorSystem : EntitySystem
 
         switch (door.Comp.State)
         {
-            case DoorState.ClosingInProgress:
+            case DoorState.Closing:
                 SetState(door, DoorState.Open);
 
                 break;
-            case DoorState.OpeningInProgress:
+            case DoorState.Opening:
                 SetState(door, DoorState.Closed);
 
                 break;
@@ -858,7 +858,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
                 OnPartialOpen(door);
 
                 return;
-            case DoorState.OpeningInProgress:
+            case DoorState.Opening:
                 SetState(door, DoorState.Open);
 
                 return;
@@ -867,7 +867,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
                 OnPartialClose(door);
 
                 return;
-            case DoorState.ClosingInProgress:
+            case DoorState.Closing:
             case DoorState.Denying:
                 SetState(door, DoorState.Closed);
 

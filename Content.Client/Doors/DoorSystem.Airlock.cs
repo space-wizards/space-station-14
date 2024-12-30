@@ -138,10 +138,10 @@ public sealed partial class DoorSystem
                 break;
             case DoorState.AttemptingCloseBySelf:
             case DoorState.AttemptingCloseByPrying:
-            case DoorState.ClosingInProgress:
+            case DoorState.Closing:
             case DoorState.AttemptingOpenBySelf:
             case DoorState.AttemptingOpenByPrying:
-            case DoorState.OpeningInProgress:
+            case DoorState.Opening:
             case DoorState.WeldedClosed:
             case DoorState.Denying:
             case DoorState.Emagging:

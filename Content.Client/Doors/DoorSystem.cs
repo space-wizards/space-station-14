@@ -165,8 +165,8 @@ public sealed partial class DoorSystem : SharedDoorSystem
                     DoorComponent.AnimationKeyEmag);
 
                 return;
-            case DoorState.ClosingInProgress:
-            case DoorState.OpeningInProgress:
+            case DoorState.Closing:
+            case DoorState.Opening:
             case DoorState.WeldedClosed:
             default:
                 return;
