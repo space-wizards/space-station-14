@@ -98,7 +98,7 @@ public abstract class SharedStealthSystem : EntitySystem
 
     private void OnStealthGetState(EntityUid uid, StealthComponent component, ref ComponentGetState args)
     {
-        args.State = new StealthComponentState(component.LastVisibility, component.LastUpdated, component.Enabled);
+        args.State = new StealthComponentState(component.LastVisibility, component.LastUpdated, component.Enabled, component.UseAltShader, component.MinVisibility);
     }
 
     private void OnStealthHandleState(EntityUid uid, StealthComponent component, ref ComponentHandleState args)
@@ -109,6 +109,8 @@ public abstract class SharedStealthSystem : EntitySystem
         SetEnabled(uid, cast.Enabled, component);
         component.LastVisibility = cast.Visibility;
         component.LastUpdated = cast.LastUpdated;
+        component.UseAltShader = cast.UseAltShader;
+        component.MinVisibility = cast.MinVisibility;
     }
 
     private void OnMove(EntityUid uid, StealthOnMoveComponent component, ref MoveEvent args)
@@ -219,6 +221,19 @@ public abstract class SharedStealthSystem : EntitySystem
             return;
 
         component.MinVisibility = value;
+
+        Dirty(uid, component);
+    }
+
+    /// <summary>
+    /// Sets whether the alternate full invis shader should be used
+    /// </summary>
+    public void SetUseAltShader(EntityUid uid, bool value, StealthComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        component.UseAltShader = value;
 
         Dirty(uid, component);
     }

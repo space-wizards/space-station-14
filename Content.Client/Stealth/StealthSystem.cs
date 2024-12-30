@@ -1,9 +1,11 @@
+using Content.Client.Administration.Managers;
 using Content.Client.Interactable.Components;
-using Content.Client.StatusIcon;
+using Content.Shared.Ghost;
 using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Client.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Stealth;
@@ -12,18 +14,44 @@ public sealed class StealthSystem : SharedStealthSystem
 {
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IClientAdminManager _adminManager = default!;
+    [Dependency] private readonly ContainerSystem _containerSystem = default!;
 
     private ShaderInstance _shader = default!;
+    private ShaderInstance _altShader = default!;
+
+    private float timer = 0;
 
     public override void Initialize()
     {
         base.Initialize();
 
         _shader = _protoMan.Index<ShaderPrototype>("Stealth").InstanceUnique();
+        _altShader = _protoMan.Index<ShaderPrototype>("AccessibleFullStealth").InstanceUnique();
 
         SubscribeLocalEvent<StealthComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<StealthComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<StealthComponent, BeforePostShaderRenderEvent>(OnShaderRender);
+    }
+
+    //don't like doing this but it's the only good way to have the shader update as far as I can tell
+    //though there's probably a better way, been staring at this for a while and kinda just want to be done with it
+    //it works well, but it's not a very elegant solution
+    public override void Update(float frameTime)
+    {
+
+        //don't do this every frame at least
+        timer += frameTime;
+        if (timer < 0.1f)
+            return;
+        timer = 0;
+
+        var query = EntityQueryEnumerator<StealthComponent>();
+        while (query.MoveNext(out var ent, out var component))
+        {
+            SetShader(ent, component.Enabled);
+        }
     }
 
     public override void SetEnabled(EntityUid uid, bool value, StealthComponent? component = null)
@@ -41,7 +69,10 @@ public sealed class StealthSystem : SharedStealthSystem
             return;
 
         sprite.Color = Color.White;
-        sprite.PostShader = enabled ? _shader : null;
+        //imp special - use the alternative full-invis shader if we're set to
+        var shaderToUse = component.UseAltShader ? _altShader : _shader;
+        sprite.PostShader = enabled ? shaderToUse : null;
+        //imp special end
         sprite.GetScreenTexture = enabled;
         sprite.RaiseShaderEvent = enabled;
 
@@ -86,11 +117,41 @@ public sealed class StealthSystem : SharedStealthSystem
         reference.X = -reference.X;
         var visibility = GetVisibility(uid, component);
 
+        //imp special - show an outline for people that should see it, goes along with complete invisibility
+        //includes the entity with the component, any admins & any ghosts
+        var shaderToUse = component.UseAltShader ? _altShader : _shader;
+        shaderToUse.SetParameter("ShowOutline", false); //make sure it's always false by default
+
+        bool isCorrectSession = false;
+        bool isGhost = false;
+        bool isInContainer = false;
+
+        if (_playerManager.LocalSession != null)
+        {
+            if (_playerManager.TryGetSessionByEntity(uid, out var playerSession))
+            {
+                isCorrectSession = playerSession.UserId == _playerManager.LocalSession.UserId;
+            }
+
+            isGhost = HasComp<GhostComponent>(_playerManager.LocalSession.AttachedEntity);
+
+            if (_playerManager.LocalSession.AttachedEntity is { } entity) //why can you not just use a normal nullcheck for this I hate c#
+            {
+                isInContainer = _containerSystem.ContainsEntity(uid, entity);
+            }
+        }
+
+        if (isCorrectSession || isGhost || isInContainer)
+        {
+            shaderToUse.SetParameter("ShowOutline", true);
+        }
+        //imp special end
+
         // actual visual visibility effect is limited to +/- 1.
         visibility = Math.Clamp(visibility, -1f, 1f);
 
-        _shader.SetParameter("reference", reference);
-        _shader.SetParameter("visibility", visibility);
+        shaderToUse.SetParameter("reference", reference);
+        shaderToUse.SetParameter("visibility", visibility);
 
         visibility = MathF.Max(0, visibility);
         args.Sprite.Color = new Color(visibility, visibility, 1, 1);
