@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: sususuyo
-  changes:
-  - message: Added new lobby art by ghostphasemoon! yay
-    type: Add
-  id: 325
-  time: '2024-10-05T06:43:45.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/411
 - author: widgetbeck
   changes:
   - message: Impstation is taken by a fey mood!
@@ -4489,3 +4482,10 @@
   id: 824
   time: '2024-12-30T05:18:00.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1161
+- author: honeyed-lemons
+  changes:
+  - message: Some minor and major changes to Box, smoother supermattering
+    type: Fix
+  id: 825
+  time: '2024-12-30T11:27:17.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1165
