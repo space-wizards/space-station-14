@@ -348,3 +348,12 @@
   components:
   - type: Sprite
     state: zookeeper
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobMultiweh
+  name: multiweh lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as every job! It's a plushie of many talents. You can hear a HoP crying in the distance.
+  components:
+  - type: Sprite
+    state: multiweh

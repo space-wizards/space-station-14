@@ -117,6 +117,9 @@
       - id: PlushieLizardJobTechnicalassistant
       - id: PlushieLizardJobWarden
       - id: PlushieLizardJobZookeeper
+      - id: PlushieLizardJobMultiweh # the exceedingly rare multiweh!
+        prob: 0.01
+        orGroup: Plushies
 
 - type: entity
   id: CrateFunInstrumentsVariety
