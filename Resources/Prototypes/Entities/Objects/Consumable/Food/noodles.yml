@@ -52,9 +52,7 @@
         maxVol: 40
         reagents:
         - ReagentId: Nutriment
-          Quantity: 30
-        - ReagentId: TomatoSauce
-          Quantity: 5
+          Quantity: 35
   - type: Tag
     tags:
     - Fruit
@@ -77,9 +75,7 @@
         maxVol: 80
         reagents:
         - ReagentId: Nutriment
-          Quantity: 60
-        - ReagentId: TomatoSauce
-          Quantity: 15
+          Quantity: 70
 # Tastes like pasta, bad humor.
 
 - type: entity
