@@ -1531,4 +1531,17 @@ Entries:
   id: 217
   time: '2024-12-29T21:23:05.000000+00:00'
   url: https://github.com/ss14Starlight/space-station-14/pull/198
-
+- author: Rinary
+  changes:
+  - message: Edited automatic cryo system time from 5 minutes to 7.
+    type: Tweak
+  id: 218
+  time: '2024-12-30T23:32:30.515350+00:00'
+  url: 'null'
+- author: Rinary
+  changes:
+  - message: Now borgs don't automatically teleport to the cryo-pods.
+    type: Tweak
+  id: 219
+  time: '2024-12-30T23:33:29.710493+00:00'
+  url: 'null'

@@ -8,6 +8,7 @@ using Content.Shared.Bed.Cryostorage;
 using Content.Shared.GameTicking;
 using Content.Shared.Starlight.CryoTeleportation;
 using Content.Shared.Starlight.CCVar;
+using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Mind;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -59,6 +60,7 @@ public sealed class CryoTeleportationSystem : EntitySystem
             if (comp.Station == null 
                 || !TryComp<StationCryoTeleportationComponent>(comp.Station, out var stationComp)
                 || !TryComp<StationDataComponent>(comp.Station, out var stationData)
+                || HasComp<BorgChassisComponent>(uid)
                 || mobStateComponent.CurrentState != MobState.Alive
                 || comp.ExitTime == null
                 || _timing.CurTime - comp.ExitTime < stationComp.TransferDelay
