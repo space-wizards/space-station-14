@@ -211,16 +211,10 @@
   components:
   - type: IsDeadIC
   - type: Body
+    prototype: AnimalNymphBrain
   - type: Item
     size: Small
     heldPrefix: 0
-  - type: Clothing
-    quickEquip: false
-    sprite: Mobs/Animals/nymph.rsi
-    equippedPrefix: 0
-    slots:
-    - HEAD
-    prototype: AnimalNymphBrain
 
 - type: entity
   id: OrganDionaNymphStomach
@@ -232,16 +226,10 @@
   components:
   - type: IsDeadIC
   - type: Body
+    prototype: AnimalNymphStomach
   - type: Item
     size: Small
     heldPrefix: 0
-  - type: Clothing
-    quickEquip: false
-    sprite: Mobs/Animals/nymph.rsi
-    equippedPrefix: 0
-    slots:
-    - HEAD
-    prototype: AnimalNymphStomach
 
 - type: entity
   id: OrganDionaNymphLungs
@@ -253,13 +241,7 @@
   components:
   - type: IsDeadIC
   - type: Body
+    prototype: AnimalNymphLungs
   - type: Item
     size: Small
     heldPrefix: 0
-  - type: Clothing
-    quickEquip: false
-    sprite: Mobs/Animals/nymph.rsi
-    equippedPrefix: 0
-    slots:
-    - HEAD
-    prototype: AnimalNymphLungs

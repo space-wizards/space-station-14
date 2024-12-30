@@ -3552,6 +3552,8 @@
     quickEquip: false
     sprite: Mobs/Animals/nymph.rsi
     equippedPrefix: 0
+    slots:
+      - HEAD
 
 - type: entity
   parent: MobDionaNymph
