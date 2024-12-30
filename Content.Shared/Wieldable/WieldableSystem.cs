@@ -310,7 +310,7 @@ public sealed class WieldableSystem : EntitySystem
                 _audio.PlayPredicted(component.UnwieldSound, uid, user);
 
             var selfMessage = Loc.GetString("wieldable-component-failed-wield", ("item", uid));
-            var othersMessage = Loc.GetString("wieldable-component-failed-wield-other", ("user", Identity.Entity(args.User.Value, EntityManager)), ("item", uid));
+            var othersMessage = Loc.GetString("wieldable-component-failed-wield-other", ("user", Identity.Entity(args.User, EntityManager)), ("item", uid));
             _popup.PopupPredicted(selfMessage, othersMessage, user, user);
         }
     }
