@@ -21,6 +21,8 @@
     size: Normal
     sprite: _Goobstation/Heretic/Blades/blade_blade-inhand.rsi
   - type: ItemToggle
+  - type: DamageOtherOnHit
+    staminaCost: 7
 
 - type: entity
   parent: HereticBladeBase

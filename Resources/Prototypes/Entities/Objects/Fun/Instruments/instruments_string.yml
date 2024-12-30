@@ -26,6 +26,17 @@
   - type: Tag
     tags:
     - StringInstrument
+  # imp edits #
+  - type: MeleeWeapon
+    wideAnimationRotation: 45
+    damage:
+      types:
+        Blunt: 6
+    soundHit:
+      path: /Audio/_EinsteinEngines/Weapons/electricguitarhit.ogg
+  - type: DamageOtherOnHit
+    staminaCost: 8
+  # end imp edits #
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -56,6 +67,17 @@
   - type: Tag
     tags:
     - StringInstrument
+  # imp edits #
+  - type: MeleeWeapon
+    wideAnimationRotation: 45
+    damage:
+      types:
+        Blunt: 6
+    soundHit:
+      path: /Audio/_EinsteinEngines/Weapons/electricguitarhit.ogg
+  - type: DamageOtherOnHit
+    staminaCost: 8
+  # end imp edits #
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -91,12 +113,16 @@
       types:
         Blunt: 6
         Slash: 2
+    soundHit:
+      path: /Audio/_EinsteinEngines/Weapons/electricguitarhit.ogg # imp
   - type: Wieldable
   - type: IncreaseDamageOnWield #they don't call it an axe for nothing
     damage:
       types:
         Blunt: 4
         Slash: 2
+  - type: DamageOtherOnHit # imp
+    staminaCost: 8
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -157,6 +183,17 @@
     damage:
       types:
         Blunt: 15
+  # imp edits #
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 20
+    staminaCost: 8
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 20
+  # end imp edits #
 
 - type: entity
   parent: BaseHandheldInstrument

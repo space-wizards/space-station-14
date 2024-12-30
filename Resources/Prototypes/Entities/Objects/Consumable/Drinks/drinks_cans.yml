@@ -53,6 +53,10 @@
     damage:
       types:
         Blunt: 0
+  - type: DamageOtherOnHit # imp
+    damage:
+      types:
+        Blunt: 3
   - type: Tool
     qualities:
     - Rolling
