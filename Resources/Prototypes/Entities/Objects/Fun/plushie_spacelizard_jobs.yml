@@ -90,6 +90,24 @@
 
 - type: entity
   parent: BasePlushieLizardJob
+  id: PlushieLizardJobChiefengineer
+  name: chief engineer lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as the chief engineer. It's covered in metal shavings and welding splatter.
+  components:
+  - type: Sprite
+    state: chiefengineer
+
+- type: entity
+  parent: BasePlushieLizardJob
+  id: PlushieLizardJobChiefmedicalofficer
+  name: chief medical officer lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as the chief medical officer. The plushie's tail has been sewn off and on again, probably from practicing surgery.
+  components:
+  - type: Sprite
+    state: chiefmedicalofficer
+
+- type: entity
+  parent: BasePlushieLizardJob
   id: PlushieLizardJobClown
   name: clown lizard plushie
   description: An adorable stuffed toy that resembles a lizardperson as a clown. Its nose squeaks when you press it.
@@ -218,7 +236,7 @@
   parent: BasePlushieLizardJob
   id: PlushieLizardJobQuartermaster
   name: quartermaster lizard plushie
-  description: An adorable stuffed toy that resembles a lizardperson as a quartermaster. Its covered in sticky residue left behind from thousands of shipment invoices.
+  description: An adorable stuffed toy that resembles a lizardperson as the quartermaster. Its covered in sticky residue left behind from thousands of shipment invoices.
   components:
   - type: Sprite
     state: quartermaster
@@ -245,16 +263,16 @@
   parent: BasePlushieLizardJob
   id: PlushieLizardJobResearchdirector
   name: research director lizard plushie
-  description: An adorable stuffed toy that resembles a lizardperson as a research director. There's a few burn marks on the plushie.
+  description: An adorable stuffed toy that resembles a lizardperson as the research director. There's a few burn marks on the plushie.
   components:
   - type: Sprite
     state: researchdirector
 
 - type: entity
   parent: BasePlushieLizardJob
-  id: PlushieLizardJobSalvager
-  name: salvager lizard plushie
-  description: An adorable stuffed toy that resembles a lizardperson as a salvager. Seems like it's seen the coldness of space for a while.
+  id: PlushieLizardJobSalvagespecialist
+  name: salvage specialist lizard plushie
+  description: An adorable stuffed toy that resembles a lizardperson as a salvage specialist. Seems like it's seen the coldness of space for a while.
   components:
   - type: Sprite
     state: salvager

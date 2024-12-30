@@ -90,6 +90,8 @@
       - id: PlushieLizardJobChef
       - id: PlushieLizardJobChemist
       - id: PlushieLizardJobClown
+      - id: PlushieLizardJobChiefengineer
+      - id: PlushieLizardJobChiefmedicalofficer
       - id: PlushieLizardJobDetective
       - id: PlushieLizardJobHeadofpersonnel
       - id: PlushieLizardJobHeadofsecurity
