@@ -21,6 +21,7 @@
     department: null
   - type: Wires
     layoutId: AirlockExternal
+  - type: ExternalAccessMarker
 
 - type: entity
   parent: AirlockExternal
