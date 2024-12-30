@@ -83,7 +83,7 @@
 
 - type: entity
   id: MachineArtifactCrusher
-  parent: [ ConstructibleMachine, BaseMachinePowered ]
+  parent: [ ConstructibleMachine, BaseMachinePowered, BaseScienceContraband ]
   name: artifact crusher
   description: Best not to let your fingers get stuck...
   components:
