@@ -212,9 +212,6 @@
   - type: IsDeadIC
   - type: Body
     prototype: AnimalNymphBrain
-  - type: Item
-    size: Small
-    heldPrefix: 0
 
 - type: entity
   id: OrganDionaNymphStomach
@@ -227,9 +224,6 @@
   - type: IsDeadIC
   - type: Body
     prototype: AnimalNymphStomach
-  - type: Item
-    size: Small
-    heldPrefix: 0
 
 - type: entity
   id: OrganDionaNymphLungs
@@ -242,6 +236,3 @@
   - type: IsDeadIC
   - type: Body
     prototype: AnimalNymphLungs
-  - type: Item
-    size: Small
-    heldPrefix: 0
