@@ -1,19 +1,4 @@
 ﻿Entries:
-- author: Sha-Seng
-  changes:
-  - message: Driller Cape for 100 hr salvagers
-    type: Add
-  - message: Mecha Gar Glasses (black) to loot pools
-    type: Add
-  - message: 100 hr salvagers can now spawn with Gar Glasses
-    type: Add
-  - message: Added in-hand sprites for Giga Gar Glasses
-    type: Tweak
-  - message: Normalized damage values amongst Gar Glasses
-    type: Tweak
-  id: 331
-  time: '2024-10-06T03:33:23.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/425
 - author: starlighthowls
   changes:
   - message: Thaven now have survival boxes
@@ -4510,3 +4495,10 @@
   id: 830
   time: '2024-12-30T23:12:22.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1170
+- author: Kandiyaki
+  changes:
+  - message: the codex cicatrix now works as a focus when opened.
+    type: Fix
+  id: 831
+  time: '2024-12-30T23:25:33.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1164
