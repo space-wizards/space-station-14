@@ -1,25 +1,4 @@
 ﻿Entries:
-- author: TheGrimbeeper
-  changes:
-  - message: backend change to artifacts - triggers and effects can now have individual
-      probability weights.
-    type: Add
-  - message: very rare new artifact-caused transformation
-    type: Add
-  - message: used this to reduce likelyhood of science zombies.
-    type: Tweak
-  id: 323
-  time: '2024-10-05T06:42:56.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/408
-- author: hivehum
-  changes:
-  - message: After significant backlash, Gondal has now been severely nerfed. We apologize
-      for the inconvenience and in the future will keep LRP gaming in mind for future
-      Gondal updates.
-    type: Tweak
-  id: 324
-  time: '2024-10-05T06:42:44.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/407
 - author: sususuyo
   changes:
   - message: Added new lobby art by ghostphasemoon! yay
@@ -4494,3 +4473,19 @@
   id: 822
   time: '2024-12-30T05:16:26.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1151
+- author: honeyed-lemons
+  changes:
+  - message: Changes Boxes main engine to the Supermatter Engine
+    type: Tweak
+  - message: Radiation provided by the supermatter engine has been increased
+    type: Tweak
+  id: 823
+  time: '2024-12-30T05:18:45.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1152
+- author: widgetbeck
+  changes:
+  - message: Gave drones the ability to zoom their camera
+    type: Add
+  id: 824
+  time: '2024-12-30T05:18:00.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1161
