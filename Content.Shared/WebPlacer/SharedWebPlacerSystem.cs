@@ -3,8 +3,10 @@ using Content.Shared.Actions;
 namespace Content.Shared.WebPlacer;
 
 /// <summary>
-/// Gives the component owner (probably a spider) an action to spawn entites around itself. Spawning handled by <see cref="WebPlacerSystem"/>.
+/// Gives the component owner (probably a spider) an action to spawn entites around itself.
+/// Spawning is handled by <see cref="WebPlacerSystem"/>.
 /// </summary>
+/// <seealso cref="WebPlacerComponent"/>
 public abstract class SharedWebPlacerSystem : EntitySystem
 {
     [Dependency] private readonly SharedActionsSystem _action = default!;
@@ -16,8 +18,8 @@ public abstract class SharedWebPlacerSystem : EntitySystem
         SubscribeLocalEvent<WebPlacerComponent, MapInitEvent>(OnInit);
     }
 
-    private void OnInit(EntityUid uid, WebPlacerComponent component, MapInitEvent args)
+    private void OnInit(Entity<WebPlacerComponent> webPlacer, ref MapInitEvent args)
     {
-        _action.AddAction(uid, ref component.ActionEntity, component.SpawnWebAction, uid);
+        _action.AddAction(webPlacer.Owner, ref webPlacer.Comp.ActionEntity, webPlacer.Comp.SpawnWebAction, webPlacer.Owner);
     }
 }

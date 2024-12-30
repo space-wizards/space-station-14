@@ -1,4 +1,3 @@
-# Default prototype used by WebPlacerComponent
 - type: entity
   id: SpiderWeb
   name: spider web

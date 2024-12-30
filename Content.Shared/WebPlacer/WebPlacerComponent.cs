@@ -7,8 +7,10 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.WebPlacer;
 
 /// <summary>
-/// Gives the entity (probably a spider) an ability to spawn entites (probably webs) around itself.
+/// Gives the entity (probably a spider) an action to spawn entities (probably webs) around itself.
 /// </summary>
+/// <seealso cref="SharedWebPlacerSystem"/>
+/// <seealso cref="WebPlacerSystem"/>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedWebPlacerSystem))]
 public sealed partial class WebPlacerComponent : Component
@@ -22,14 +24,13 @@ public sealed partial class WebPlacerComponent : Component
     /// <summary>
     /// Id of the action that will be given.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
     [DataField]
     public EntProtoId SpawnWebAction = "ActionSpiderWeb";
 
     /// <summary>
     /// Action given to the player.
     /// </summary>
-    //[ViewVariables]
+    [ViewVariables]
     public EntityUid? ActionEntity;
 
     /// <summary>
@@ -67,13 +68,25 @@ public sealed partial class WebPlacerComponent : Component
         Vector2i.Right,
     };
 
-    // Localization files for popup text.
+    #region Localization
+    /// <summary>
+    /// Webs cannot be placed because the component owner is not on a valid grid (e.g. in space).
+    /// </summary>
     [DataField]
-    public LocId MessageOffGrid = "spider-web-action-nogrid";
+    public LocId MessageOffGrid = "spider-web-action-off-grid";
+
+    /// <summary>
+    /// At least one web was placed.
+    /// </summary>
     [DataField]
     public LocId MessageSuccess = "spider-web-action-success";
+
+    /// <summary>
+    /// Webs failed to be placed (e.g. no valid spawn destination).
+    /// </summary>
     [DataField]
-    public LocId MessageFail = "spider-web-action-fail";
+    public LocId MessageNoSpawn = "spider-web-action-no-spawn";
+    #endregion
 }
 
 public sealed partial class SpiderWebActionEvent : InstantActionEvent
