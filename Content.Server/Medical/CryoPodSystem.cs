@@ -70,6 +70,23 @@ public sealed partial class CryoPodSystem : SharedCryoPodSystem
         SubscribeLocalEvent<CryoPodComponent, ActivatableUIOpenAttemptEvent>(OnActivateUIAttempt);
         SubscribeLocalEvent<CryoPodComponent, AfterActivatableUIOpenEvent>(OnActivateUI);
         SubscribeLocalEvent<CryoPodComponent, EntRemovedFromContainerMessage>(OnEjected);
+        SubscribeLocalEvent<CryoPodComponent, EntInsertedIntoContainerMessage>(OnInsertedItemChanged);
+        SubscribeLocalEvent<CryoPodComponent, EntRemovedFromContainerMessage>(OnInsertedItemChanged);
+    }
+
+    private void OnInsertedItemChanged(Entity<CryoPodComponent> ent, ref EntRemovedFromContainerMessage args)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void OnInsertedItemChanged(Entity<CryoPodComponent> ent, ref EntInsertedIntoContainerMessage args)
+    {
+        throw new NotImplementedException();
+    }
+
+    private UpdateColors()
+    {
+
     }
 
     public override void Update(float frameTime)
