@@ -282,4 +282,4 @@
   components:
   - type: Loadout
     prototypes:
-      - StartingGearApidBotanist
+      - StartingGearDecapoidVaporizer
