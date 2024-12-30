@@ -73,6 +73,50 @@
             value: 3
 
 - type: entity
+  id: CrateFunLizardPlushieJobBulk
+  parent: CrateGenericSteel
+  name: bulk job lizard plushie crate
+  description: A buncha soft lizard plushies, dressed up as each station job! This one might be slightly more explainable to NT.
+  components:
+  - type: StorageFill
+    contents:
+      - id: PlushieLizardJobAtmospherictechnician
+      - id: PlushieLizardJobBartender
+      - id: PlushieLizardJobBotanist
+      - id: PlushieLizardJobBoxer
+      - id: PlushieLizardJobCaptain
+      - id: PlushieLizardJobCargotechnician
+      - id: PlushieLizardJobChaplain
+      - id: PlushieLizardJobChef
+      - id: PlushieLizardJobChemist
+      - id: PlushieLizardJobClown
+      - id: PlushieLizardJobDetective
+      - id: PlushieLizardJobHeadofpersonnel
+      - id: PlushieLizardJobHeadofsecurity
+      - id: PlushieLizardJobJanitor
+      - id: PlushieLizardJobLawyer
+      - id: PlushieLizardJobLibrarian
+      - id: PlushieLizardJobMedicaldoctor
+      - id: PlushieLizardJobMedicalintern
+      - id: PlushieLizardJobMime
+      - id: PlushieLizardJobMusician
+      - id: PlushieLizardJobParamedic
+      - id: PlushieLizardJobPassenger
+      - id: PlushieLizardJobPsychologist
+      - id: PlushieLizardJobQuartermaster
+      - id: PlushieLizardJobReporter
+      - id: PlushieLizardJobResearchdirector
+      - id: PlushieLizardJobSalvager
+      - id: PlushieLizardJobScientist
+      - id: PlushieLizardJobSecuritycadet
+      - id: PlushieLizardJobSecurityofficer
+      - id: PlushieLizardJobServiceworker
+      - id: PlushieLizardJobStationengineer
+      - id: PlushieLizardJobTechnicalassistant
+      - id: PlushieLizardJobWarden
+      - id: PlushieLizardJobZookeeper
+
+- type: entity
   id: CrateFunInstrumentsVariety
   parent: CrateGenericSteel
   name: variety instrument collection
