@@ -16,6 +16,11 @@ namespace Content.Server.Doors.Systems
         private const int UpdateInterval = 30;
         private int _accumulatedTicks;
 
+        private EntityQuery<AirtightComponent> _airtightQuery;
+        private EntityQuery<AppearanceComponent> _appearanceQuery;
+        private EntityQuery<TransformComponent> _xformQuery;
+        private EntityQuery<PointLightComponent> _pointLightQuery;
+
         private void InitializeFirelock()
         {
             SubscribeLocalEvent<FirelockComponent, AtmosAlarmEvent>(OnAtmosAlarm);
@@ -40,35 +45,31 @@ namespace Content.Server.Doors.Systems
 
             _accumulatedTicks = 0;
 
-            var airtightQuery = GetEntityQuery<AirtightComponent>();
-            var appearanceQuery = GetEntityQuery<AppearanceComponent>();
-            var xformQuery = GetEntityQuery<TransformComponent>();
-            var pointLightQuery = GetEntityQuery<PointLightComponent>();
+            _airtightQuery = GetEntityQuery<AirtightComponent>();
+            _appearanceQuery = GetEntityQuery<AppearanceComponent>();
+            _xformQuery = GetEntityQuery<TransformComponent>();
+            _pointLightQuery = GetEntityQuery<PointLightComponent>();
 
-            var query = EntityQueryEnumerator<FirelockComponent, DoorComponent>();
-            while (query.MoveNext(out var uid, out var firelock, out var door))
+            var doorQuery = EntityQueryEnumerator<FirelockComponent, DoorComponent>();
+            while (doorQuery.MoveNext(out var uid, out var firelock, out var door))
             {
                 // only bother to check pressure on doors that are some variation of closed.
-                if (door.State != DoorState.Closed
-                    && door.State != DoorState.WeldedClosed
-                    && door.State != DoorState.Denying)
-                {
-                    continue;
-                }
-
-                if (!airtightQuery.TryGetComponent(uid, out var airtight)
-                    || !xformQuery.TryGetComponent(uid, out var xform)
-                    || !appearanceQuery.TryGetComponent(uid, out var appearance))
+                if (
+                    door.State is not (DoorState.Closed or DoorState.WeldedClosed or DoorState.Denying) ||
+                    !_airtightQuery.TryGetComponent(uid, out var airtight) ||
+                    !_xformQuery.TryGetComponent(uid, out var xform) ||
+                    !_appearanceQuery.TryGetComponent(uid, out var appearance)
+                )
                     continue;
 
-                var (pressure, fire) = CheckPressureAndFire((uid, firelock), xform, airtight, airtightQuery);
-                _appearance.SetData(uid, DoorVisuals.ClosedLights, fire || pressure, appearance);
-                firelock.Temperature = fire;
-                firelock.Pressure = pressure;
+                (firelock.Pressure, firelock.Temperature) =
+                    CheckPressureAndFire((uid, firelock), xform, airtight, _airtightQuery);
+                _appearance.SetData(uid, DoorVisuals.ClosedLights, firelock.IsLocked, appearance);
+
                 Dirty(uid, firelock);
 
-                if (pointLightQuery.TryComp(uid, out var pointLight))
-                    _pointLight.SetEnabled(uid, fire | pressure, pointLight);
+                if (_pointLightQuery.TryComp(uid, out var pointLight))
+                    _pointLight.SetEnabled(uid, firelock.IsLocked, pointLight);
             }
         }
 
