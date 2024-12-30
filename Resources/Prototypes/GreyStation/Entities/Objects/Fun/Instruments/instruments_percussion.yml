@@ -1,0 +1,32 @@
+﻿- type: entity
+  parent: BasePlaceableInstrument
+  id: DrumkitInstrument
+  name: drum kit
+  description: Ba-dum tss.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Instrument
+    program: 117
+    allowPercussion: true
+  - type: SwappableInstrument
+    instrumentList:
+      "Timpani": {47: 0}
+      "Rims": {115: 0}
+      "Taiko": {116: 0}
+      "Toms": {117: 0}
+      "Electronic Drum Pad": {118: 0}
+      "Reverse Cymbals": {119: 0}
+  - type: Sprite
+    drawDepth: OverMobs
+    sprite: GreyStation/Objects/Fun/Instruments/structureinstruments.rsi
+    state: drumkit
+    noRot: true
+  - type: Rotatable
+    rotateWhileAnchored: true
+  - type: Strap
+    position: Stand
+  - type: Climbable
+  - type: Tag
+    tags:
+    - PercussionInstrument
