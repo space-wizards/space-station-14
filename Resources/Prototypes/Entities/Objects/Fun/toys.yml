@@ -364,6 +364,15 @@
       head:
       - state: lizard-equipped-HELMET
         shader: unshaded
+  - type: Item
+    heldPrefix: rainbowlizardplush
+    inhandVisuals:
+      left:
+      - state: rainbowlizardplush-inhand-left
+        shader: unshaded
+      right:
+      - state: rainbowlizardplush-inhand-right
+        shader: unshaded
 
 - type: entity
   parent: PlushieLizard

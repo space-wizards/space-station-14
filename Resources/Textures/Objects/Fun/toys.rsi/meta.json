@@ -77,6 +77,17 @@
       "directions": 4
     },
     {
+      "name": "rainbowlizardplush"
+    },
+    {
+      "name": "rainbowlizardplush-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "rainbowlizardplush-inhand-right",
+      "directions": 4
+    },
+    {
       "name": "narplush"
     },
     {
