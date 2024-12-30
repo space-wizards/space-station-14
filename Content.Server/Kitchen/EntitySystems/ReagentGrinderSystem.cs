@@ -160,6 +160,8 @@ namespace Content.Server.Kitchen.EntitySystems
 
         private void OnContainerModified(EntityUid uid, ReagentGrinderComponent reagentGrinder, ContainerModifiedMessage args)
         {
+            UpdateUiState(uid);
+
             var outputContainer = _itemSlotsSystem.GetItemOrNull(uid, SharedReagentGrinder.BeakerSlotId);
             _appearanceSystem.SetData(uid, ReagentGrinderVisualState.BeakerAttached, outputContainer.HasValue);
 
@@ -170,13 +172,11 @@ namespace Content.Server.Kitchen.EntitySystems
                 _appearanceSystem.TryGetData(outputContainer.Value, SolutionContainerVisuals.Color, out var color);
                 _appearanceSystem.TryGetData(outputContainer.Value, SolutionContainerVisuals.FillFraction, out var fraction);
 
-                if (color == null || fraction == null)
-                    return;
-
-                _appearanceSystem.SetData(uid, ReagentGrinderVisualState.Color, color);//solution.GetColor(PrototypeManager));
-                _appearanceSystem.SetData(uid, ReagentGrinderVisualState.FillFraction, fraction);
+                if (color != null)
+                    _appearanceSystem.SetData(uid, ReagentGrinderVisualState.Color, color);
+                if (fraction != null)
+                    _appearanceSystem.SetData(uid, ReagentGrinderVisualState.FillFraction, fraction);
             }
-            UpdateUiState(uid);
 
             if (reagentGrinder.AutoMode != GrinderAutoMode.Off && !HasComp<ActiveReagentGrinderComponent>(uid) && this.IsPowered(uid, EntityManager))
             {
