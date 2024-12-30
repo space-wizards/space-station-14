@@ -82,13 +82,12 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         });
     }
 
-    private void OnEmbedRemove(EntityUid uid, EmbeddableProjectileComponent component, RemoveEmbeddedProjectileEvent args)
+    public void Unembed(EntityUid uid, EmbeddableProjectileComponent? comp = null, EntityUid? user = null)
     {
-        // Whacky prediction issues.
-        if (args.Cancelled || _netManager.IsClient)
+        if (!Resolve(uid, ref comp))
             return;
 
-        if (component.DeleteOnRemove)
+        if (comp.DeleteOnRemove)
         {
             QueueDel(uid);
             return;
@@ -98,8 +97,8 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         TryComp<PhysicsComponent>(uid, out var physics);
         _physics.SetBodyType(uid, BodyType.Dynamic, body: physics, xform: xform);
         _transform.AttachToGridOrMap(uid, xform);
-        component.EmbeddedIntoUid = null;
-        Dirty(uid, component);
+        comp.EmbeddedIntoUid = null;
+        Dirty(uid, comp);
 
         // Reset whether the projectile has damaged anything if it successfully was removed
         if (TryComp<ProjectileComponent>(uid, out var projectile))
@@ -110,12 +109,22 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         }
 
         // Land it just coz uhhh yeah
-        var landEv = new LandEvent(args.User, true);
+        var landEv = new LandEvent(user, true);
         RaiseLocalEvent(uid, ref landEv);
         _physics.WakeBody(uid, body: physics);
 
         // try place it in the user's hand
-        _hands.TryPickupAnyHand(args.User, uid);
+        if (user != null)
+            _hands.TryPickupAnyHand(user.Value, uid);
+    }
+
+    private void OnEmbedRemove(EntityUid uid, EmbeddableProjectileComponent component, RemoveEmbeddedProjectileEvent args)
+    {
+        // Whacky prediction issues.
+        if (args.Cancelled || _netManager.IsClient)
+            return;
+
+        Unembed(uid, component, args.User);
     }
 
     private void OnEmbedThrowDoHit(EntityUid uid, EmbeddableProjectileComponent component, ThrowDoHitEvent args)
