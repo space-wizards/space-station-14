@@ -217,7 +217,7 @@ public sealed class TelephoneSystem : SharedTelephoneSystem
 
         var callerInfo = GetNameAndJobOfCallingEntity(user);
 
-        // Get the name of the device - if labelled, just use that instead
+        // Base the name of the device on its label
         string? deviceName = null;
 
         if (TryComp<LabelComponent>(source, out var label))
