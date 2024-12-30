@@ -48,11 +48,11 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
 
         EntityUid? insertedUid = null;
         float fraction = 0;
-        if (component.InsertedItemSlotIDFillBaseName != null)
+        if (component.InsertedItemSlotID != null)
         {
             if (!_entityManager.TryGetComponent(uid, out ItemSlotsComponent? itemSlotsComponent))
                 return;
-            var slot = itemSlotsComponent.Slots[component.InsertedItemSlotIDFillBaseName];
+            var slot = itemSlotsComponent.Slots[component.InsertedItemSlotID];
             insertedUid = slot.Item;
 
             if (insertedUid != null && !AppearanceSystem.TryGetData<float>(insertedUid.Value, SolutionContainerVisuals.FillFraction, out fraction))

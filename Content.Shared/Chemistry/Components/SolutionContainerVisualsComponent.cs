@@ -67,9 +67,9 @@ namespace Content.Shared.Chemistry.Components
         public int EquippedMaxFillLevels = 0;
 
         /// <summary>
-        /// Optional visuals based on inserted item. 
+        /// Optional, visuals will be calculated based on item inserted into insertedItemSlotID instead of item itself
         /// </summary>
         [DataField]
-        public string? InsertedItemSlotIDFillBaseName = null;
+        public string? InsertedItemSlotID = null;
     }
 }

@@ -20,8 +20,11 @@ public sealed partial class StorageContainerVisualsComponent : Component
     [DataField("fillBaseName")]
     public string? FillBaseName;
 
-    [DataField("insertedItemSlotIDFillBaseName")]
-    public string? InsertedItemSlotIDFillBaseName;
+    /// <summary>
+    ///     Optional: visuals will be calculated based on item inserted into insertedItemSlotID instead of item itself
+    /// </summary>
+    [DataField("insertedItemSlotID")]
+    public string? InsertedItemSlotID;
 
     [DataField("layer")]
     public StorageContainerVisualLayers FillLayer = StorageContainerVisualLayers.Fill;
