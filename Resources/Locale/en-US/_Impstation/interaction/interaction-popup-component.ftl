@@ -20,3 +20,8 @@ petting-success-ray = You pet {$target}, it wiggles glowing pincers at you happi
 ## Petting silicons
 
 petting-success-cargo-cyborg = You pet {THE($target)} on {POSS-ADJ($target)} scratched metal head.
+
+## Apids
+
+petting-success-apid = You pet {$target} on their fuzzy little head.
+petting-failure-apid = You try to pet {$target}, but your fingers are shocked by static electricity!
