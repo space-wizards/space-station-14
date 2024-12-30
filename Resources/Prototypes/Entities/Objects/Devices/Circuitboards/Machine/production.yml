@@ -29,10 +29,12 @@
 
 - type: entity
   id: ProtolatheMachineCircuitboard
-  parent: BaseMachineCircuitboard
+  parent: [ BaseMachineCircuitboard, BaseScienceContraband ]
   name: protolathe machine board
   description: A machine printed circuit board for a protolathe.
   components:
+    - type: Sprite
+      state: science
     - type: MachineBoard
       prototype: Protolathe
       stackRequirements:
@@ -44,22 +46,24 @@
           defaultPrototype: Beaker
 
 - type: entity
-  parent: BaseMachineCircuitboard
+  parent: [ BaseMachineCircuitboard, BaseScienceContraband ]
   id: ProtolatheHyperConvectionMachineCircuitboard
   name: hyper convection protolathe machine board
   description: A machine printed circuit board for a hyper convection protolathe.
   components:
-  - type: MachineBoard
-    prototype: ProtolatheHyperConvection
-    stackRequirements:
-      MatterBin: 2
-    tagRequirements:
-      GlassBeaker:
-        amount: 2
-        defaultPrototype: Beaker
-      Igniter:
-        amount: 1
-        defaultPrototype: Igniter
+    - type: Sprite
+      state: science
+    - type: MachineBoard
+      prototype: ProtolatheHyperConvection
+      stackRequirements:
+        MatterBin: 2
+      tagRequirements:
+        GlassBeaker:
+          amount: 2
+          defaultPrototype: Beaker
+        Igniter:
+          amount: 1
+          defaultPrototype: Igniter
 
 - type: entity
   id: BiofabricatorMachineCircuitboard
