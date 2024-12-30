@@ -269,7 +269,7 @@
 
 #Syndicate
 - type: entity
-  parent: [ClothingBackpack, BaseSyndicateContraband]
+  parent: [ClothingBackpack, Tier1Contraband]
   id: ClothingBackpackSyndicate
   name: syndicate backpack
   description:

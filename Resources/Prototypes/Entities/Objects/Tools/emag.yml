@@ -1,5 +1,5 @@
 - type: entity
-  parent: [BaseItem, BaseSyndicateContraband]
+  parent: [BaseItem, Tier2Contraband]
   id: EmagUnlimited
   suffix: Unlimited
   name: cryptographic sequencer

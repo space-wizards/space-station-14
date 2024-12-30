@@ -106,7 +106,7 @@
 
 - type: entity
   name: M-90gl
-  parent: [BaseWeaponRifle, BaseSyndicateContraband]
+  parent: [BaseWeaponRifle, Tier3Contraband]
   id: WeaponRifleM90GrenadeLauncher
   description: An older bullpup-carbine model with an attached underbarrel grenade launcher. Uses .20 rifle ammo.
   components:
