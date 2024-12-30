@@ -1,11 +1,4 @@
 ﻿Entries:
-- author: formlessnameless
-  changes:
-  - message: Spelves are strippable now. Steal their stuff!
-    type: Fix
-  id: 328
-  time: '2024-10-05T16:58:52.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/417
 - author: mqole
   changes:
   - message: Various additional roles have been given the option for senior PDAs.
@@ -4507,3 +4500,11 @@
   id: 827
   time: '2024-12-30T22:56:05.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1150
+- author: kipdotnet
+  changes:
+  - message: Apids, a Beefolk ghostrole that cargo can order in to help botany and
+      medical.
+    type: Add
+  id: 828
+  time: '2024-12-30T22:57:53.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1147
