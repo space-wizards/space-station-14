@@ -50,7 +50,6 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         SubscribeLocalEvent<EmbeddableProjectileComponent, ProjectileHitEvent>(OnEmbedProjectileHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ThrowDoHitEvent>(OnEmbedThrowDoHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ActivateInWorldEvent>(OnEmbedActivate, before: [typeof(ItemToggleSystem)]);
-        SubscribeLocalEvent<EmbeddableProjectileComponent, ActivateInWorldEvent>(OnEmbedActivate);
         SubscribeLocalEvent<EmbeddableProjectileComponent, GetVerbsEvent<InteractionVerb>>(AddPullOutVerb);
         SubscribeLocalEvent<EmbeddableProjectileComponent, RemoveEmbeddedProjectileEvent>(OnEmbedRemove);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ExaminedEvent>(OnExamined);
