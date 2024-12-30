@@ -122,7 +122,6 @@ public sealed class StealthSystem : SharedStealthSystem
         var shaderToUse = component.UseAltShader ? _altShader : _shader;
         shaderToUse.SetParameter("ShowOutline", false); //make sure it's always false by default
 
-        bool isAdmin = false;
         bool isCorrectSession = false;
         bool isGhost = false;
         bool isInContainer = false;
@@ -134,7 +133,6 @@ public sealed class StealthSystem : SharedStealthSystem
                 isCorrectSession = playerSession.UserId == _playerManager.LocalSession.UserId;
             }
 
-            isAdmin = _adminManager.IsAdmin();
             isGhost = HasComp<GhostComponent>(_playerManager.LocalSession.AttachedEntity);
 
             if (_playerManager.LocalSession.AttachedEntity is { } entity) //why can you not just use a normal nullcheck for this I hate c#
@@ -143,7 +141,7 @@ public sealed class StealthSystem : SharedStealthSystem
             }
         }
 
-        if (isAdmin || isCorrectSession || isGhost || isInContainer)
+        if (isCorrectSession || isGhost || isInContainer)
         {
             shaderToUse.SetParameter("ShowOutline", true);
         }

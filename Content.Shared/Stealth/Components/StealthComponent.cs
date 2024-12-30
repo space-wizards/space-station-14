@@ -88,12 +88,14 @@ public sealed class StealthComponentState : ComponentState
     public readonly TimeSpan? LastUpdated;
     public readonly bool Enabled;
     public readonly bool UseAltShader;
+    public readonly float MinVisibility;
 
-    public StealthComponentState(float stealthLevel, TimeSpan? lastUpdated, bool enabled, bool useAltShader)
+    public StealthComponentState(float stealthLevel, TimeSpan? lastUpdated, bool enabled, bool useAltShader, float minVisibility)
     {
         Visibility = stealthLevel;
         LastUpdated = lastUpdated;
         Enabled = enabled;
         UseAltShader = useAltShader;
+        MinVisibility = minVisibility;
     }
 }

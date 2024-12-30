@@ -98,7 +98,7 @@ public abstract class SharedStealthSystem : EntitySystem
 
     private void OnStealthGetState(EntityUid uid, StealthComponent component, ref ComponentGetState args)
     {
-        args.State = new StealthComponentState(component.LastVisibility, component.LastUpdated, component.Enabled, component.UseAltShader);
+        args.State = new StealthComponentState(component.LastVisibility, component.LastUpdated, component.Enabled, component.UseAltShader, component.MinVisibility);
     }
 
     private void OnStealthHandleState(EntityUid uid, StealthComponent component, ref ComponentHandleState args)
@@ -110,6 +110,7 @@ public abstract class SharedStealthSystem : EntitySystem
         component.LastVisibility = cast.Visibility;
         component.LastUpdated = cast.LastUpdated;
         component.UseAltShader = cast.UseAltShader;
+        component.MinVisibility = cast.MinVisibility;
     }
 
     private void OnMove(EntityUid uid, StealthOnMoveComponent component, ref MoveEvent args)
