@@ -618,6 +618,14 @@
 
 - type: entity
   parent: DefaultStationBeacon
+  id: DefaultStationBeaconDockingArm
+  suffix: Docking Arm
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-docking-arm
+
+- type: entity
+  parent: DefaultStationBeacon
   id: DefaultStationBeaconEVAStorage
   suffix: EVA Storage
   components:

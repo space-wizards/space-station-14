@@ -70,6 +70,7 @@ station-beacon-ai-power = AI Power
 
 station-beacon-arrivals = Arrivals
 station-beacon-evac = Evac
+station-beacon-docking-arm = Docking Arm
 station-beacon-eva-storage = EVA Storage
 station-beacon-chapel = Chapel
 station-beacon-library = Library
