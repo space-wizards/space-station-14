@@ -11,4 +11,6 @@ mapping-pick-tooltip = Pick (Hold 5)
 mapping-erase-entity-tooltip = Hold 6
 mapping-fixgridatmos-tooltip = Add atmosphere to the grid
 mapping-remove-grid-tooltip = Remove grid
+mapping-collapse-all-tooltip = Collapse All
+mapping-clear-search-tooltip = Clear search
 

@@ -1,6 +1,5 @@
 using Content.Client.Decals;
 using Content.Client.Markers;
-using Content.Client.Movement.Systems;
 using Content.Client.SubFloor;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Doors.Components;
@@ -157,28 +156,5 @@ public sealed class MappingLayersUIController : UIController
             }
 
         }
-    }
-}
-
-public sealed class LayersButton : Button
-{
-    public LayersButton()
-    {
-        HorizontalExpand = true;
-        SetHeight = 50;
-        ToggleMode = true;
-        StyleIdentifier = "OpenRight";
-        Margin = new Thickness(0, 3, 0, 0);
-    }
-}
-
-public sealed class SubLayersButton : Button
-{
-    public SubLayersButton()
-    {
-        HorizontalExpand = true;
-        SetHeight = 40;
-        ToggleMode = true;
-        Margin = new Thickness(10, 0, 0, 0);
     }
 }

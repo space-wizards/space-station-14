@@ -5,16 +5,16 @@
     Resizable="False"
     MinWidth="250">
     <GridContainer Columns="1">
-        <mapping:LayersButton Name="Light" Text="{Loc 'mapping-layers-light'}" Access="Public"/>
-        <mapping:SubLayersButton Name="Fov" Text="{Loc 'mapping-layers-fov'}" Access="Public"/>
-        <mapping:LayersButton Name="Entities" Text="{Loc 'mapping-layers-entities'}" Access="Public"/>
-        <mapping:SubLayersButton Name="Markers" Text="{Loc 'mapping-layers-markers'}" Access="Public"/>
-        <mapping:SubLayersButton Name="Walls" Text="{Loc 'mapping-layers-walls'}" Access="Public"/>
-        <mapping:SubLayersButton Name="Airlocks" Text="{Loc 'mapping-layers-airlocks'}" Access="Public"/>
-        <mapping:LayersButton Name="Decals" Text="{Loc 'mapping-layers-decals'}" Access="Public"/>
-        <mapping:LayersButton Name="SubFloor" Text="{Loc 'mapping-layers-subfloor'}" Access="Public"/>
-        <mapping:SubLayersButton Name="Cables" Text="{Loc 'mapping-layers-cables'}" Access="Public"/>
-        <mapping:SubLayersButton Name="Disposal" Text="{Loc 'mapping-layers-disposal'}" Access="Public"/>
-        <mapping:SubLayersButton Name="Atmos" Text="{Loc 'mapping-layers-atmos'}" Access="Public"/>
+        <mapping:MappingLayerButton Name="Light" Text="{Loc 'mapping-layers-light'}" Access="Public"/>
+        <mapping:MappingSubLayerButton Name="Fov" Text="{Loc 'mapping-layers-fov'}" Access="Public"/>
+        <mapping:MappingLayerButton Name="Entities" Text="{Loc 'mapping-layers-entities'}" Access="Public"/>
+        <mapping:MappingSubLayerButton Name="Markers" Text="{Loc 'mapping-layers-markers'}" Access="Public"/>
+        <mapping:MappingSubLayerButton Name="Walls" Text="{Loc 'mapping-layers-walls'}" Access="Public"/>
+        <mapping:MappingSubLayerButton Name="Airlocks" Text="{Loc 'mapping-layers-airlocks'}" Access="Public"/>
+        <mapping:MappingLayerButton Name="Decals" Text="{Loc 'mapping-layers-decals'}" Access="Public"/>
+        <mapping:MappingLayerButton Name="SubFloor" Text="{Loc 'mapping-layers-subfloor'}" Access="Public"/>
+        <mapping:MappingSubLayerButton Name="Cables" Text="{Loc 'mapping-layers-cables'}" Access="Public"/>
+        <mapping:MappingSubLayerButton Name="Disposal" Text="{Loc 'mapping-layers-disposal'}" Access="Public"/>
+        <mapping:MappingSubLayerButton Name="Atmos" Text="{Loc 'mapping-layers-atmos'}" Access="Public"/>
     </GridContainer>
 </DefaultWindow>

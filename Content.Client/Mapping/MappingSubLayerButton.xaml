@@ -1,0 +1,5 @@
+<mapping:MappingSubLayerButton
+    xmlns="https://spacestation14.io"
+    xmlns:mapping="clr-namespace:Content.Client.Mapping"
+    HorizontalExpand="True" SetHeight="40" ToggleMode="True"
+    Margin="10 0 0 0" />

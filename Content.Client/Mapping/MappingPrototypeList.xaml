@@ -4,9 +4,12 @@
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
             <mapping:MappingActionsButton Name="CollapseAllButton" Access="Public"
-                                          ToolTip="Collapse All" TooltipDelay="0" />
+                                          ToolTip="{Loc 'mapping-collapse-all-button'}"
+                                          TooltipDelay="0" ToggleMode="False" />
             <LineEdit Name="SearchBar" SetHeight="48" HorizontalExpand="True" Access="Public" />
-            <mapping:MappingActionsButton Name="ClearSearchButton" Access="Public" />
+            <mapping:MappingActionsButton Name="ClearSearchButton" Access="Public"
+                                          ToolTip="{Loc 'mapping-clear-search-tooltip'}"
+                                          TooltipDelay="0" ToggleMode="False" />
         </BoxContainer>
         <ScrollContainer Name="ScrollContainer" Access="Public" VerticalExpand="True"
                          ReserveScrollbarSpace="True">
