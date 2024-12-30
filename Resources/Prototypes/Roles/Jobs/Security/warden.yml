@@ -9,7 +9,6 @@
       time: 10800 # 30 hrs
   startingGear: WardenGear
   icon: "JobIconWarden"
-  requireAdminNotify: true
   supervisors: job-supervisors-hos
   canBeAntag: false
   access:
@@ -31,8 +30,9 @@
     eyes: ClothingEyesGlassesSecurity
     id: WardenPDA
     ears: ClothingHeadsetSecurity
-    pocket1: WeaponPistolMk58
+    pocket1: WeaponDisabler
   storage:
     back:
     - Flash
     - MagazinePistol
+    - WeaponPistolMk58

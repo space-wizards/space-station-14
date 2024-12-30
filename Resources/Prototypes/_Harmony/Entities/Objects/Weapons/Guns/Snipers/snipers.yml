@@ -1,16 +1,57 @@
 - type: entity
   name: RSC Modèle 1917
-  parent: [BaseWeaponSniper, BaseGunWieldable, BaseMajorContraband]
+  parent: [BaseItem, BaseGunWieldable, BaseMajorContraband]
   id: WeaponSniperRSC
   description: Refurbished great war trophy. It used to bear a french name, now it bears Nanotrasen stamp of approval. Uses .30 rifle ammo.
+  abstract: false
   components:
+  - type: Item
+    size: Huge
   - type: Sprite
     sprite: _Harmony/Objects/Weapons/Guns/Snipers/rsc-m1917.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
   - type: Clothing
     sprite: _Harmony/Objects/Weapons/Guns/Snipers/rsc-m1917.rsi
     quickEquip: false
     slots:
     - Back
     - suitStorage
+  - type: AmmoCounter
+  - type: Gun
+    fireRate: 0.75
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
+  - type: ChamberMagazineAmmoProvider
+    autoEject: true
+    soundAutoEject: /Audio/_Harmony/Weapons/Guns/MagOut/garand-ping-rattle.wav
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
+  - type: ItemSlots
+    slots:
+      gun_magazine:
+        name: Magazine
+        insertSound: /Audio/_Harmony/Weapons/Guns/MagIn/Clip Insertion.wav
+        ejectSound: /Audio/_Harmony/Weapons/Guns/MagOut/garand-ping-short.wav
+        priority: 2
+        whitelist:
+          tags:
+            - SpeedLoaderRifle
+        whitelistFailPopup: gun-magazine-whitelist-fail
+      gun_chamber:
+        name: Chamber
+        priority: 1
+        whitelist:
+          tags:
+            - CartridgeLightRifle
+  - type: ContainerContainer
+    containers:
+      gun_magazine: !type:ContainerSlot
+      gun_chamber: !type:ContainerSlot
+  - type: Appearance
   - type: StaticPrice
     price: 400

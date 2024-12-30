@@ -29,6 +29,12 @@
   equipment:
     jumpsuit: ClothingUniformJumpskirtCapFormalDress
 
+
+- type: loadout # Harmony
+  id: CaptainHawaiianHarmony
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCaptainHawaiianHarmony
+
 # Head
 - type: loadout
   id: CaptainHead
@@ -39,6 +45,11 @@
   id: CaptainCap
   equipment:
     head: ClothingHeadHatCapcap
+
+- type: loadout # Harmony
+  id: BeretCaptainHarmony
+  equipment:
+    head: ClothingHeadHatBeretCaptainHarmony
 
 # Neck
 - type: loadout

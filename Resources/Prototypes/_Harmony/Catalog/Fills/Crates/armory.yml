@@ -4,6 +4,10 @@
   name: bolt-action rifle crate
   description:  Contains several high-powered, bolt-action rifles with sufficient ammunition. Packaging is questionable, your mileage will vary. Requires Armory, Security or Supply access to open.
   components:
+  - type: Icon
+    sprite: _Harmony/Structures/Storage/Crates/old_wooden_crate.rsi
+  - type: Sprite
+    sprite: _Harmony/Structures/Storage/Crates/old_wooden_crate.rsi
   - type: EntityStorage
     capacity: 50
   - type: AccessReader

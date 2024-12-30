@@ -334,17 +334,28 @@
   name: chat-emote-name-weh
   category: Vocal
   icon: Interface/Emotes/weh.png
-  chatMessages: [Wehs!]
+  chatMessages: ["chat-emote-msg-weh"]
+
+- type: emote
+  id: Hew
+  name: chat-emote-name-hew
+  category: Vocal
+  icon: Interface/Emotes/hew.png
+  chatMessages: ["chat-emote-msg-hew"]
 
 - type: emote
   id: Chirp
   name: chat-emote-name-chirp
   category: Vocal
+  available: false
   icon: Interface/Emotes/chirp.png
   whitelist:
-    requireAll: true
     components:
     - Nymph
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
   chatMessages: ["chat-emote-msg-chirp"]
   chatTriggers:
     - chirp

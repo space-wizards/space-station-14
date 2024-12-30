@@ -1,0 +1,10 @@
+- type: entity
+  parent: [ClothingOuterCoatDetectiveLoadout]
+  id: ClothingOuterCoatDetectiveLoadoutBlueHarmony
+  name: blue trenchcoat
+  description: A classy spin on an old style, how could you not love it?
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/OuterClothing/Coats/detective_blue.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/OuterClothing/Coats/detective_blue.rsi

@@ -10,7 +10,39 @@
     sprite: _Harmony/Clothing/Mask/voxcorpsepaint.rsi
   - type: BreathMask
   - type: IdentityBlocker
+  - type: HideLayerClothing
+    slots:
+    - Snout
+
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskVoxSpecial
+  name: specialized vox gasmask
+  description: A Nanotrasen standard issue vox gasmask made to fit on a beak.
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Mask/specvoxmask.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Mask/specvoxmask.rsi
+  - type: BreathMask
+  - type: IdentityBlocker
+  - type: HideLayerClothing
+    slots:
+    - Snout
+
+- type: entity
+  parent: [ClothingMaskGasSecurity, BaseRestrictedContraband]
+  id: ClothingMaskNTEnforcer
+  name: nanotrasen enforcer gasmask
+  description: The mask of the dreaded Shoal Enforcers now in Nanotrasen blue
+  components:
+  - type: Sprite
+    sprite: _Harmony/Clothing/Mask/NTenforcer.rsi
+  - type: Clothing
+    sprite: _Harmony/Clothing/Mask/NTenforcer.rsi
   - type: Tag
+    tags:
+    - WhitelistChameleon
   - type: HideLayerClothing
     slots:
     - Snout

@@ -267,7 +267,6 @@
 
   ## Minor Crimes
   - Warnings should be issued for a first offense.
-  - If multiple minor crimes have been committed or it is a repeat offense, 5 minutes per minor crime is the maximum.
   <Table Columns="4">
     <ColorBox>
       <Box>
@@ -422,7 +421,7 @@
   </Table>
 
   ## Moderate Crimes
-  - The maximum sentence per moderate crime is 5 minutes.
+  - The maximum sentence for a moderate crime is 5 minutes.
   - Depending on the situation you may want to issue a warning instead of a detaining.
   <Table Columns="4">
     <ColorBox>
@@ -530,8 +529,7 @@
   </Table>
 
   ## Major Crimes
-  - The maximum sentence per major crime is 10 minutes.
-  - Assault and Manslaughter are linked crimes, and cannot be stacked against a suspect.
+  - The maximum sentence for a major crime is 10 minutes.
   - It is recommended to not use maximum sentences for those being compliant.
   <Table Columns="4">
     <ColorBox>
@@ -722,9 +720,8 @@
   </Table>
 
   ## Extreme Crimes
-  - The maximum sentence per extreme crime is 15 minutes.
+  - The maximum sentence for an extreme crime is 15 minutes.
   - Particularly violent offenders may be placed in perma. (Attacking officers in an attempt to escape prison)
-  - Attempted murder and murder are linked crimes and cannot be stacked together.
   - Attempted murderers should be granted a more lenient sentence than a murderer.
   <Table Columns="4">
     <ColorBox>

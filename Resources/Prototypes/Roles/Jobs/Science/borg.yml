@@ -11,6 +11,7 @@
   icon: JobIconStationAi
   supervisors: job-supervisors-rd
   jobEntity: StationAiBrain
+  jobPreviewEntity: PlayerStationAiPreview
   applyTraits: false
 
 - type: job
@@ -24,5 +25,5 @@
   canBeAntag: false
   icon: JobIconBorg
   supervisors: job-supervisors-rd
-  jobEntity: PlayerBorgGeneric
+  jobEntity: PlayerBorgBattery
   applyTraits: false

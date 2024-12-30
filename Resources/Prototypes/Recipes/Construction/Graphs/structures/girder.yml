@@ -51,17 +51,6 @@
               amount: 2
               doAfter: 1
 
-        - to: woodWall
-          completed:
-            - !type:SnapToGrid
-              southRotation: true
-          conditions:
-            - !type:EntityAnchored {}
-          steps:
-            - material: WoodPlank
-              amount: 2
-              doAfter: 2
-
         - to: uraniumWall
           completed:
             - !type:SnapToGrid

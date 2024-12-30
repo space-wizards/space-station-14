@@ -20,6 +20,7 @@
       - id: Plunger
         amount: 2
       - id: BoxCleanerGrenades
+      - id: ToyRubberDuck # Harmony change. More ways to spawn duckies
 
 - type: entity
   id: CrateServiceReplacementLights
@@ -31,6 +32,17 @@
     contents:
       - id: BoxLighttube
       - id: BoxLightbulb
+
+- type: entity
+  id: CrateServiceHolidayLights
+  parent: CrateGenericSteel
+  name: holiday lights crate
+  description: Deck the halls with these festive holiday lights!
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxLighttubeHoliday
+      - id: BoxLighttubeHoliday
 
 - type: entity
   id: CrateMousetrapBoxes
@@ -130,6 +142,7 @@
     - id: BoxFolderYellow
     - id: NewtonCradle
     - id: BoxEnvelope
+    - id: BrbSign
 
 - type: entity
   id: CrateServiceFaxMachine

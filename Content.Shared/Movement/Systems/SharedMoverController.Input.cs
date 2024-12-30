@@ -57,8 +57,6 @@ namespace Content.Shared.Movement.Systems
             SubscribeLocalEvent<InputMoverComponent, ComponentHandleState>(OnMoverHandleState);
             SubscribeLocalEvent<InputMoverComponent, EntParentChangedMessage>(OnInputParentChange);
 
-            SubscribeLocalEvent<AutoOrientComponent, EntParentChangedMessage>(OnAutoParentChange);
-
             SubscribeLocalEvent<FollowedComponent, EntParentChangedMessage>(OnFollowedParentChange);
 
             Subs.CVar(_configManager, CCVars.CameraRotationLocked, obj => CameraRotationLocked = obj, true);
@@ -98,6 +96,9 @@ namespace Content.Shared.Movement.Systems
             entity.Comp.HeldMoveButtons = buttons;
             RaiseLocalEvent(entity, ref moveEvent);
             Dirty(entity, entity.Comp);
+
+            var ev = new SpriteMoveEvent(entity.Comp.HeldMoveButtons != MoveButtons.None);
+            RaiseLocalEvent(entity, ref ev);
         }
 
         private void OnMoverHandleState(Entity<InputMoverComponent> entity, ref ComponentHandleState args)
@@ -121,6 +122,9 @@ namespace Content.Shared.Movement.Systems
                 var moveEvent = new MoveInputEvent(entity, entity.Comp.HeldMoveButtons);
                 entity.Comp.HeldMoveButtons = state.HeldMoveButtons;
                 RaiseLocalEvent(entity.Owner, ref moveEvent);
+
+                var ev = new SpriteMoveEvent(entity.Comp.HeldMoveButtons != MoveButtons.None);
+                RaiseLocalEvent(entity, ref ev);
             }
         }
 
@@ -145,11 +149,6 @@ namespace Content.Shared.Movement.Systems
         public bool DiagonalMovementEnabled { get; private set; }
 
         protected virtual void HandleShuttleInput(EntityUid uid, ShuttleButtons button, ushort subTick, bool state) {}
-
-        private void OnAutoParentChange(Entity<AutoOrientComponent> entity, ref EntParentChangedMessage args)
-        {
-            ResetCamera(entity.Owner);
-        }
 
         public void RotateCamera(EntityUid uid, Angle angle)
         {
