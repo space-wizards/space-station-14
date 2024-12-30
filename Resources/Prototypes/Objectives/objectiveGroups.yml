@@ -28,6 +28,7 @@
   weights:
     KillRandomPersonObjective: 1
     KillRandomHeadObjective: 0.25
+    TeachLessonRandomPersonObjective: 1 #Harmony objective
 
 - type: weightedRandom
   id: TraitorObjectiveGroupState

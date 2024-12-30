@@ -1,0 +1,40 @@
+﻿#Harmony pet
+- type: entity
+  name: Poquito
+  parent: MobBaseKobold
+  id: MobKoboldPoquito
+  description: Famous Privateer, Entrepreneur, Goober, and Chef
+  components:
+  - type: GhostRole
+    prob: 1
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-Poquito-name
+    description: ghost-role-information-Poquito-name
+    rules: ghost-role-information-nonantagonist-rules
+  - type: GhostTakeoverAvailable
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeat
+      amount: 3
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - DoorBumpOpener
+    - VimPilot
+    - AnomalyHost
+  - type: Loadout
+    prototypes: [ MobPoquitoGear ]
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+  - type: RandomSprite
+    getAllGroups: true
+    available:
+    - enum.DamageStateVisualLayers.Base:
+        kobold: PoquitoColors
+    - horns:
+        horns_ram: KoboldHornColors

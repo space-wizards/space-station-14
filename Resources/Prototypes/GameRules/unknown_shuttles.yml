@@ -20,6 +20,7 @@
     - id: UnknownShuttleMeatZone
     - id: UnknownShuttleMicroshuttle
     - id: UnknownShuttleSpacebus
+    - id: UnknownShuttleChemLab # Harmony
 
 - type: entityTable
   id: UnknownShuttlesFreelanceTable
@@ -31,7 +32,8 @@
   id: UnknownShuttlesHostileTable
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
-    - id: UnknownShuttleInstigator
+    #- id: UnknownShuttleInstigator
+    - id: UnknownShuttleSyndicateReinforcement # Harmony
 
 # Shuttle Game Rules
 

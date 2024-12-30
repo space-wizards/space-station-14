@@ -31,6 +31,7 @@
     sound:
       path: /Audio/Ambience/Objects/fireplace.ogg
   - type: AlwaysHot
+  # Harmony. Bonfire improvements below
   - type: TriggerOnCollide
     fixtureID: ignition
   - type: Fixtures
