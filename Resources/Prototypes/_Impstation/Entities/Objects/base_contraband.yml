@@ -23,3 +23,43 @@
     severity: DecapoidEmpire
     # no dept is authorized to have
     allowedDepartments: null
+
+# tier 1 contraband: syndicate pajamas, flags, duffels, etc
+- type: entity
+  id: Tier1Contraband
+  abstract: true
+  components:
+  - type: Contraband
+    severity: Tier1Contraband
+    # no dept is authorized to have
+    allowedDepartments: null
+
+# tier 2 contraband: espionage/sabotage items a la emag, cham projector, cybersun pen, etc
+- type: entity
+  id: Tier2Contraband
+  abstract: true
+  components:
+  - type: Contraband
+    severity: Tier2Contraband
+    # no dept is authorized to have
+    allowedDepartments: null
+
+# tier 3 contraband: military-level equipment a la blood-red hardsuit, china lake, etc
+- type: entity
+  id: Tier3Contraband
+  abstract: true
+  components:
+  - type: Contraband
+    severity: Tier3Contraband
+    # no dept is authorized to have
+    allowedDepartments: null
+
+# tier X contraband: paranormal/extraordinary equipment, a la heretic blade, changeling armblade, etc
+- type: entity
+  id: TierXContraband
+  abstract: true
+  components:
+  - type: Contraband
+    severity: TierXContraband
+    # no dept is authorized to have
+    allowedDepartments: null

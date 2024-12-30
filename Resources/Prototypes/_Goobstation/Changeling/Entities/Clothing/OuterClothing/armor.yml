@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingOuterBaseLarge
+  parent: [ClothingOuterBaseLarge, TierXContraband]
   id: ChangelingClothingOuterArmor
   name: chitinous armor
   description: An all-consuming chitinous mass of armor.

@@ -1,6 +1,6 @@
 #Web vest
 - type: entity
-  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, BaseSyndicateContraband]
+  parent: [ClothingOuterStorageBase, AllowSuitStorageClothing, Tier3Contraband]
   id: ClothingOuterVestWeb
   name: web vest
   description: A synthetic armor vest. This one has added webbing and ballistic plates.

@@ -1,0 +1,7 @@
+- type: entity
+  parent: DefaultStationBeacon
+  id: DefaultStationBeaconSMEngine
+  suffix: Supermatter Engine
+  components:
+  - type: NavMapBeacon
+    defaultText: station-beacon-smengine

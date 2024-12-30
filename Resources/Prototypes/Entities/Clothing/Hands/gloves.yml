@@ -380,7 +380,7 @@
   - type: Unremoveable
 
 - type: entity
-  parent: [ClothingHandsButcherable, BaseSyndicateContraband]
+  parent: [ClothingHandsButcherable, Tier3Contraband]
   id: ClothingHandsGlovesNorthStar
   name: gloves of the north star
   description: These gloves allow you to punch incredibly fast.

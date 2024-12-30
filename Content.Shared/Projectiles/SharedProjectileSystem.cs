@@ -13,6 +13,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Microsoft.Extensions.Logging.Abstractions;
+using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -23,6 +24,7 @@ using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Projectiles;
 
@@ -48,6 +50,8 @@ public abstract partial class SharedProjectileSystem : EntitySystem
         SubscribeLocalEvent<EmbeddableProjectileComponent, ProjectileHitEvent>(OnEmbedProjectileHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ThrowDoHitEvent>(OnEmbedThrowDoHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ActivateInWorldEvent>(OnEmbedActivate, before: [typeof(ItemToggleSystem)]);
+        SubscribeLocalEvent<EmbeddableProjectileComponent, ActivateInWorldEvent>(OnEmbedActivate);
+        SubscribeLocalEvent<EmbeddableProjectileComponent, GetVerbsEvent<InteractionVerb>>(AddPullOutVerb);
         SubscribeLocalEvent<EmbeddableProjectileComponent, RemoveEmbeddedProjectileEvent>(OnEmbedRemove);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ExaminedEvent>(OnExamined);
     }
@@ -93,6 +97,30 @@ public abstract partial class SharedProjectileSystem : EntitySystem
             DistanceThreshold = SharedInteractionSystem.InteractionRange,
             BreakOnMove = true,
             NeedHand = true,
+        });
+    }
+
+    private void AddPullOutVerb(EntityUid uid, EmbeddableProjectileComponent component, GetVerbsEvent<InteractionVerb> args)
+    {
+        // As above so below
+        if (component.RemovalTime == null)
+            return;
+
+        if (!args.CanAccess ||
+            !args.CanComplexInteract ||
+            !TryComp<PhysicsComponent>(uid, out var physics) ||
+            physics.BodyType != BodyType.Static)
+            return;
+
+        args.Verbs.Add(new()
+        {
+            Act = () =>
+            {
+                _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, component.RemovalTime.Value,
+                    new RemoveEmbeddedProjectileEvent(), eventTarget: uid, target: uid));
+            },
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/pickup.svg.192dpi.png")),
+            Text = Loc.GetString("pull-out-verb-get-data-text"),
         });
     }
 
