@@ -376,7 +376,6 @@
   - type: ConditionalSpawner
     prototypes:
       - MobAlexander
-      - MobKoboldPoquito # Harmony Pet
 
 - type: entity
   name: Shiva Spawner
