@@ -150,9 +150,7 @@
             - !type:EmptyAllContainers
               pickup: true
               emptyAtUser: true
-
-# Bonfire?
-
+# Bonfire
 - type: constructionGraph
   id: BonfireGraph
   start: start
