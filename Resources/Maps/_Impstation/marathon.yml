@@ -44367,6 +44367,11 @@ entities:
     - type: Transform
       pos: 2.6220274,21.009964
       parent: 2
+  - uid: 23088
+    components:
+    - type: Transform
+      pos: -11.446999,18.456968
+      parent: 2
 - proto: CarbonDioxideCanister
   entities:
   - uid: 6895
@@ -51002,6 +51007,13 @@ entities:
     components:
     - type: Transform
       pos: -5.5,-6.5
+      parent: 2
+- proto: ChemMasterMachineCircuitboard
+  entities:
+  - uid: 23087
+    components:
+    - type: Transform
+      pos: -11.509499,18.691343
       parent: 2
 - proto: ChessBoard
   entities:
@@ -66118,7 +66130,7 @@ entities:
   - uid: 10381
     components:
     - type: Transform
-      pos: -11.54011,18.632044
+      pos: -11.525124,19.191343
       parent: 2
 - proto: FoodCakeChristmas
   entities:
@@ -111408,7 +111420,7 @@ entities:
   - uid: 16861
     components:
     - type: Transform
-      pos: -11.584989,19.223238
+      pos: -11.618874,19.456968
       parent: 2
   - uid: 16862
     components:
