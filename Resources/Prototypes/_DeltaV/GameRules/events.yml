@@ -16,7 +16,7 @@
     duration: null
   - type: RuleGrids
   - type: LoadFarGridRule
-    path: /Maps/Shuttles/_DeltaV/listening_post.yml
+    path: /Maps/_Harmony/Nonstations/listening-outpost.yml
     distanceModifier: 13
   - type: DebrisSpawnerRule
     count: 4
