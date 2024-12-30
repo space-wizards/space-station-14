@@ -18,7 +18,7 @@
       "Electronic Drum Pad": {118: 0}
       "Reverse Cymbals": {119: 0}
   - type: Sprite
-    drawDepth: OverMobs
+    drawdepth: Mobs
     sprite: GreyStation/Objects/Fun/Instruments/structureinstruments.rsi
     state: drumkit
     noRot: true
@@ -26,7 +26,15 @@
     rotateWhileAnchored: true
   - type: Strap
     position: Stand
-  - type: Climbable
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 100
+        mask:
+        - TableMask
   - type: Tag
     tags:
     - PercussionInstrument
