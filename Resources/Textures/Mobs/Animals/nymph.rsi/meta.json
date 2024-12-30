@@ -57,6 +57,10 @@
       "directions": 4
     },
     {
+    "name": "0-equipped-HELMET",
+    "directions": 4
+    },
+    {
       "name": "icon"
     }
   ]
