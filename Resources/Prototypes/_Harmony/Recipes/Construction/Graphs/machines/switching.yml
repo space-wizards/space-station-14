@@ -150,4 +150,3 @@
             - !type:EmptyAllContainers
               pickup: true
               emptyAtUser: true
-
