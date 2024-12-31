@@ -109,7 +109,8 @@ public sealed class CryoTeleportationSystem : EntitySystem
 
     private void OnPlayerDetached(EntityUid uid, TargetCryoTeleportationComponent comp, PlayerDetachedEvent ev)
     {
-        if (!TryComp<MobStateComponent>(uid, out var mobStateComponent) || mobStateComponent.CurrentState != MobState.Alive)
+        if (!TryComp<MobStateComponent>(uid, out var mobStateComponent) 
+            || mobStateComponent.CurrentState != MobState.Alive)
             return;
         if (comp.ExitTime == null)
             comp.ExitTime = _timing.CurTime;
