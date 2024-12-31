@@ -1,20 +1,4 @@
 ﻿Entries:
-- author: starlighthowls
-  changes:
-  - message: Thaven now have survival boxes
-    type: Fix
-  id: 332
-  time: '2024-10-06T03:32:54.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/418
-- author: widgetbeck
-  changes:
-  - message: Fixed some Thaven hairstyles not having names
-    type: Fix
-  - message: Made Thaven slightly shorter, and adjusted their emote sounds.
-    type: Tweak
-  id: 333
-  time: '2024-10-06T03:33:12.0000000+00:00'
-  url: https://github.com/impstation/imp-station-14/pull/424
 - author: crekulon
   changes:
   - message: New web structures. Arachnids can build small decorative cobwebs, poster-like
@@ -4502,3 +4486,22 @@
   id: 831
   time: '2024-12-30T23:25:33.0000000+00:00'
   url: https://github.com/impstation/imp-station-14/pull/1164
+- author: kipdotnet
+  changes:
+  - message: Apid cryopod's hitbox has been fixed so they can be moved through 1 wide
+      gaps and under plastic flaps.
+    type: Fix
+  - message: Apid's oxygen tanks no longer spawn empty.
+    type: Fix
+  - message: Apids can no longer fly in space.
+    type: Fix
+  id: 832
+  time: '2024-12-31T21:33:16.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1174
+- author: honeyed-lemons
+  changes:
+  - message: Multiple Listening Post issues
+    type: Fix
+  id: 833
+  time: '2024-12-31T21:33:40.0000000+00:00'
+  url: https://github.com/impstation/imp-station-14/pull/1175
