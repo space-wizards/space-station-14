@@ -127,9 +127,10 @@ public sealed partial class TelephoneComponent : Component
 
     /// <summary>
     /// The presumed name and/or job of the last person to call this telephone
+    /// and the name of the device that they used to do so
     /// </summary>
     [ViewVariables, AutoNetworkedField]
-    public (string?, string?) LastCallerId;
+    public (string?, string?, string?) LastCallerId;
 }
 
 #region: Telephone events
