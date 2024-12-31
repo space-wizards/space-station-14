@@ -1049,7 +1049,7 @@
 
 - type: entity
   id: SyndicateMicrowaveMachineCircuitboard
-  parent: [ BaseMachineCircuitboard, BaseSyndicateContraband ]
+  parent: [ BaseMachineCircuitboard, Tier1Contraband ]
   name: donk co. microwave machine board
   components:
     - type: Sprite
