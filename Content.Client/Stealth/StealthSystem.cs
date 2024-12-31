@@ -38,6 +38,8 @@ public sealed class StealthSystem : SharedStealthSystem
     //don't like doing this but it's the only good way to have the shader update as far as I can tell
     //though there's probably a better way, been staring at this for a while and kinda just want to be done with it
     //it works well, but it's not a very elegant solution
+    //I actually have no idea why this works come to think of it
+    //todo attack this with a debugger for a few hours
     public override void Update(float frameTime)
     {
 
