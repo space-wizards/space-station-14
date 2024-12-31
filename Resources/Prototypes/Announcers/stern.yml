@@ -46,6 +46,8 @@
       path: alerts/epsilon.ogg
     - id: alertPink # Please don't form a union
       path: alerts/pink.ogg
+    - id: alertAmber # It's Dino Wars
+      path: alerts/amber.ogg
 
 
     # Events
