@@ -1,12 +1,4 @@
 ﻿Entries:
-- author: poeMota
-  changes:
-  - message: Now the time played on ERT roles and midround borgs will be saved to
-      the player's stats
-    type: Tweak
-  id: 7265
-  time: '2024-09-02T05:32:49.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31629
 - author: themias
   changes:
   - message: The Donk Co. microwave can cook baguette swords and throwing croissants.
@@ -3935,3 +3927,10 @@
   id: 7764
   time: '2024-12-31T10:52:08.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34114
+- author: PopGamer46
+  changes:
+  - message: Fixed borgs not being able to check their laws in crit
+    type: Fix
+  id: 7765
+  time: '2024-12-31T11:10:46.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34133
