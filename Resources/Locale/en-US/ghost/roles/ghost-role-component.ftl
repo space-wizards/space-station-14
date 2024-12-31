@@ -64,7 +64,7 @@ ghost-role-information-angry-slimes-description = Everyone around you irritates 
 ghost-role-information-angry-slimes-rules = You are a [color=red][bold]Team Antagonist[/bold][/color] with all other angry slimes.
 
 ghost-role-information-smile-name = Smile the Slime
-ghost-role-information-smile-description = The sweetest creature in the world. Smile Slime!
+ghost-role-information-smile-description = The sweetest creature in the world. Smile slime!
 
 ghost-role-information-punpun-name = Pun Pun
 ghost-role-information-punpun-description = An honorable member of the monkey society in charge of the bar and helping the bartenders in any way he can.
@@ -99,7 +99,7 @@ ghost-role-information-sentient-carp-name = Sentient Carp
 ghost-role-information-sentient-carp-description = Help the dragon flood the station with carps!
 
 ghost-role-information-willow-name = Willow the Kangaroo
-ghost-role-information-willow-description = You're a kangaroo named willow! Willow likes to box.
+ghost-role-information-willow-description = You're a kangaroo named Willow! Willow likes to box.
 
 ghost-role-information-honkbot-name = Honkbot
 ghost-role-information-honkbot-description = An artificial being of pure evil.
