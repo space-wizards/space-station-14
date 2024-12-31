@@ -85,7 +85,7 @@
   name: improvised grappling gun
   parent: WeaponGrapplingGun
   id: WeaponGrapplingGunImprovised
-  description: A makeshift pneumatic cannon modified into a grappling gun using a plunger, a lot of wire, and a lot of hope.
+  description: An improvised pneumatic cannon modified into a grappling gun using a plunger, a lot of wire, and a lot of hope.
   components:
     - type: GrapplingGun
       reelRate: 1.25

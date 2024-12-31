@@ -5,7 +5,7 @@
   startNode: start
   targetNode: improvisedgrapple
   category: construction-category-tools
-  description: A makeshift pneumatic cannon modified into a grappling gun using a plunger, a lot of wire, and a lot of hope.
+  description: An improvised pneumatic cannon modified into a grappling gun using a plunger, a lot of wire, and a lot of hope.
   icon:
     sprite: _Impstation/Objects/Weapons/Guns/Launchers/grappling_gun_improvised.rsi
     state: icon
