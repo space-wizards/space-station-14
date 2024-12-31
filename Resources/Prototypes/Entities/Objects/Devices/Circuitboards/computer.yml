@@ -196,7 +196,7 @@
         - DroneUsable
 
 - type: entity
-  parent: [ BaseComputerCircuitboard, BaseCommandContraband ]
+  parent: [ BaseComputerCircuitboard, BaseScienceContraband ]
   id: ResearchComputerCircuitboard
   name: R&D computer board
   description: A computer printed circuit board for a R&D console.

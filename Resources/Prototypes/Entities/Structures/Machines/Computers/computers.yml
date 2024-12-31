@@ -458,7 +458,7 @@
     range: 1200
 
 - type: entity
-  parent: [ BaseComputerAiAccess, BaseCommandContraband ]
+  parent: [ BaseComputerAiAccess, BaseScienceContraband ]
   id: ComputerResearchAndDevelopment
   name: R&D computer
   description: A computer used to interface with R&D tools.
