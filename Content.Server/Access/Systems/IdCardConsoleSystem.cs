@@ -44,7 +44,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         if (args.Actor is not { Valid: true } player)
             return;
 
-        TryWriteToTargetId(uid, args.FullName, args.JobTitle, args.AccessList, args.JobPrototype, player, component);
+        TryWriteToTargetId(uid, args.FullName, args.JobTitle, args.AccessList, args.JobPrototype, player, args.HiddenAccess, component);
 
         UpdateUserInterface(uid, component, args);
     }
@@ -117,6 +117,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         List<ProtoId<AccessLevelPrototype>> newAccessList,
         ProtoId<AccessLevelPrototype> newJobProto,
         EntityUid player,
+        List<ProtoId<AccessLevelPrototype>> hiddenAccess,
         IdCardConsoleComponent? component = null)
     {
         if (!Resolve(uid, ref component))
