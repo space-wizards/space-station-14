@@ -9,6 +9,17 @@
     noRot: true
     sprite: _Impstation/Structures/apidcryopod.rsi
     state: icon
+  - type: Fixtures #this is copied from crates so they should hopefully handle the same
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        density: 50
+        mask:
+        - CrateMask #this is so they can go under plastic flaps
+        layer:
+        - MachineLayer
   - type: GhostRole
     name: ghost-role-information-apid-botanist-name
     description: ghost-role-information-apid-botanist-description

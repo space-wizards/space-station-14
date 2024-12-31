@@ -1,7 +1,7 @@
 - type: entity
   name: apid
   id: MobApid
-  parent: [BaseSimpleMob, StripableInventoryBase, FlyingMobBase, MobRespirator, MobFlammable, MobBloodstream]
+  parent: [BaseSimpleMob, StripableInventoryBase, MobRespirator, MobFlammable, MobBloodstream]
   description: Enthusiastic workers, these cute little balls of fuzz are distant relatives to moth people.
   suffix: Ghost role
   components:
@@ -245,6 +245,10 @@
     attributes:
       proper: true
   - type: MothAccent
+  - type: Physics
+    bodyStatus: InAir
+  - type: NoSlip
+  - type: CanMoveInAir
 
 - type: entity
   name: apid botanist
