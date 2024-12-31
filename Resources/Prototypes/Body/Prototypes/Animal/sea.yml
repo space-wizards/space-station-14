@@ -1,7 +1,7 @@
 - type: body
   id: SeaCreature
   name: "seacreature"
-  root: organs
+  root: torso
   slots:
     torso:
       part: TorsoAnimal
