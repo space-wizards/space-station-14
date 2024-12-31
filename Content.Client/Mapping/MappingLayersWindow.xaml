@@ -7,6 +7,7 @@
     <GridContainer Columns="1">
         <mapping:MappingLayerButton Name="Light" Text="{Loc 'mapping-layers-light'}" Access="Public"/>
         <mapping:MappingSubLayerButton Name="Fov" Text="{Loc 'mapping-layers-fov'}" Access="Public"/>
+        <mapping:MappingSubLayerButton Name="Shadows" Text="{Loc 'mapping-layers-shadows'}" Access="Public"/>
         <mapping:MappingLayerButton Name="Entities" Text="{Loc 'mapping-layers-entities'}" Access="Public"/>
         <mapping:MappingSubLayerButton Name="Markers" Text="{Loc 'mapping-layers-markers'}" Access="Public"/>
         <mapping:MappingSubLayerButton Name="Walls" Text="{Loc 'mapping-layers-walls'}" Access="Public"/>

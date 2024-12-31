@@ -51,13 +51,13 @@ public sealed class MappingLayersUIController : UIController
         _window = UIManager.CreateWindow<MappingLayersWindow>();
 
         _window.Light.Pressed = _lightManager.Enabled;
-        _window.Light.OnPressed += args =>
-        {
-            _lightManager.Enabled = args.Button.Pressed;
-        };
+        _window.Light.OnPressed += args => _lightManager.Enabled = args.Button.Pressed;
 
         _window.Fov.Pressed = _eyeManager.CurrentEye.DrawFov;
         _window.Fov.OnPressed += args => _eyeManager.CurrentEye.DrawFov = args.Button.Pressed;
+
+        _window.Shadows.Pressed = _lightManager.DrawShadows;
+        _window.Shadows.OnPressed += args => _lightManager.DrawShadows = args.Button.Pressed;
 
         _window.Entities.Pressed = true;
         _window.Entities.OnPressed += OnToggleEntitiesPressed;

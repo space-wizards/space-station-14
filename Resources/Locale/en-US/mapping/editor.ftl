@@ -7,8 +7,10 @@ mapping-erase-entity = Erase Entity
 mapping-erase-tile = Erase Tile
 mapping-erase-decal = Erase Decal
 
-mapping-pick-tooltip = Pick (Hold 5)
 mapping-erase-entity-tooltip = Hold 6
+
+mapping-pick-tooltip = Pick (Hold 5)
+mapping-layers-tooltip = Visibility
 mapping-fixgridatmos-tooltip = Add atmosphere to the grid
 mapping-remove-grid-tooltip = Remove grid
 mapping-move-grid-tooltip = Move grid

@@ -1,6 +1,7 @@
-mapping-layers-window-title = Layers
+mapping-layers-window-title = Visibility
 mapping-layers-light = Light
 mapping-layers-fov = Fov
+mapping-layers-shadows = Shadows
 mapping-layers-entities = Entities
 mapping-layers-markers = Markers
 mapping-layers-walls = Walls
