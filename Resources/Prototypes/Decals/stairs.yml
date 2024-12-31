@@ -2,169 +2,202 @@
 #Please do not make any of these into the new entity stairs unless you want to make new sprites for them.
 
 - type: decal
+  id: Deprecated
+  abstract: true
+
+- type: decal
   id: StairsMaterialE
+  parent: Deprecated
   sprite:
     sprite: deprecated.rsi
     state: deprecated
 
 - type: decal
   id: StairsMaterialN
+  parent: Deprecated
   sprite:
     sprite: deprecated.rsi
     state: deprecated
 
 - type: decal
   id: StairsMaterialS
+  parent: Deprecated
   sprite:
     sprite: deprecated.rsi
     state: deprecated
 
 - type: decal
   id: StairsMaterialW
+  parent: Deprecated
   sprite:
     sprite: deprecated.rsi
     state: deprecated
 
 - type: decal
   id: StairsE
+  parent: Deprecated
   sprite:
     sprite: deprecated.rsi
     state: deprecated
 
 - type: decal
   id: StairsN
+  parent: Deprecated
   sprite:
     sprite: deprecated.rsi
     state: deprecated
 
 - type: decal
   id: StairsS
+  parent: Deprecated
   sprite:
     sprite: deprecated.rsi
     state: deprecated
 
 - type: decal
   id: StairsW
+  parent: Deprecated
   sprite:
     sprite: deprecated.rsi
     state: deprecated
 
 - type: decal
   id: StairsLE
+  parent: Deprecated
   sprite:
     sprite: deprecated.rsi
     state: deprecated
 
 - type: decal
   id: StairsLN
+  parent: Deprecated
   sprite:
     sprite: deprecated.rsi
     state: deprecated
 
 - type: decal
   id: StairsLS
+  parent: Deprecated
   sprite:
     sprite: deprecated.rsi
     state: deprecated
 
 - type: decal
   id: StairsLW
+  parent: Deprecated
   sprite:
     sprite: deprecated.rsi
     state: deprecated
 
 - type: decal
   id: StairsME
+  parent: Deprecated
   sprite:
     sprite: deprecated.rsi
     state: deprecated
 
 - type: decal
   id: StairsMN
+  parent: Deprecated
   sprite:
     sprite: deprecated.rsi
     state: deprecated
 
 - type: decal
   id: StairsMS
+  parent: Deprecated
   sprite:
     sprite: deprecated.rsi
     state: deprecated
 
 - type: decal
   id: StairsMW
+  parent: Deprecated
   sprite:
     sprite: deprecated.rsi
     state: deprecated
 
 - type: decal
   id: StairsRE
+  parent: Deprecated
   sprite:
     sprite: deprecated.rsi
     state: deprecated
 
 - type: decal
   id: StairsRN
+  parent: Deprecated
   sprite:
     sprite: deprecated.rsi
     state: deprecated
 
 - type: decal
   id: StairsRS
+  parent: Deprecated
   sprite:
     sprite: deprecated.rsi
     state: deprecated
 
 - type: decal
   id: StairsRW
+  parent: Deprecated
   sprite:
     sprite: deprecated.rsi
     state: deprecated
 
 - type: decal
   id: StairsStoneE
+  parent: Deprecated
   sprite:
     sprite: deprecated.rsi
     state: deprecated
 
 - type: decal
   id: StairsStoneN
+  parent: Deprecated
   sprite:
     sprite: deprecated.rsi
     state: deprecated
 
 - type: decal
   id: StairsStoneS
+  parent: Deprecated
   sprite:
     sprite: deprecated.rsi
     state: deprecated
 
 - type: decal
   id: StairsStoneW
+  parent: Deprecated
   sprite:
     sprite: deprecated.rsi
     state: deprecated
 
 - type: decal
   id: StairsWoodE
+  parent: Deprecated
   sprite:
     sprite: deprecated.rsi
     state: deprecated
 
 - type: decal
   id: StairsWoodN
+  parent: Deprecated
   sprite:
     sprite: deprecated.rsi
     state: deprecated
 
 - type: decal
   id: StairsWoodS
+  parent: Deprecated
   sprite:
     sprite: deprecated.rsi
     state: deprecated
 
 - type: decal
   id: StairsWoodW
+  parent: Deprecated
   sprite:
     sprite: deprecated.rsi
     state: deprecated
+

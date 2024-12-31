@@ -125,6 +125,7 @@ public sealed class MappingState : GameplayStateBase
         Screen.FixGridAtmos.OnPressed += OnFixGridAtmosPressed;
         Screen.RemoveGrid.OnPressed += OnRemoveGridPressed;
         Screen.MoveGrid.OnPressed += OnMoveGridPressed;
+        Screen.GridVV.OnPressed += OnGridVVPressed;
         _placement.PlacementChanged += OnPlacementChanged;
 
         CommandBinds.Builder
@@ -189,6 +190,7 @@ public sealed class MappingState : GameplayStateBase
         Screen.FixGridAtmos.OnPressed -= OnFixGridAtmosPressed;
         Screen.RemoveGrid.OnPressed -= OnRemoveGridPressed;
         Screen.MoveGrid.OnPressed -= OnMoveGridPressed;
+        Screen.GridVV.OnPressed -= OnGridVVPressed;
         _placement.PlacementChanged -= OnPlacementChanged;
         _prototypeManager.PrototypesReloaded -= OnPrototypesReloaded;
 
@@ -257,7 +259,8 @@ public sealed class MappingState : GameplayStateBase
 
         foreach (var decal in _prototypeManager.EnumeratePrototypes<DecalPrototype>())
         {
-            Register(decal, decal.ID, decals);
+            if (decal.ShowMenu)
+                Register(decal, decal.ID, decals);
         }
 
         Sort(mappings, decals);
@@ -743,9 +746,7 @@ public sealed class MappingState : GameplayStateBase
         State = args.Button.Pressed ? CursorState.GridRed : CursorState.None;
 
         if (args.Button.Pressed)
-        {
             Screen.UnPressActionsExcept(Screen.RemoveGrid);
-        }
     }
 
     private void OnMoveGridPressed(ButtonEventArgs args)
@@ -760,6 +761,14 @@ public sealed class MappingState : GameplayStateBase
         {
             _consoleHost.ExecuteCommand("griddrag");
         }
+    }
+
+    private void OnGridVVPressed(ButtonEventArgs args)
+    {
+        State = args.Button.Pressed ? CursorState.GridGreen : CursorState.None;
+
+        if (args.Button.Pressed)
+            Screen.UnPressActionsExcept(Screen.GridVV);
     }
 
     private void EnableEntityEraser()
@@ -913,9 +922,7 @@ public sealed class MappingState : GameplayStateBase
             Screen.FixGridAtmos.Pressed = false;
             State = CursorState.None;
             if (GetHoveredGrid() is { } grid)
-            {
                 _consoleHost.ExecuteCommand($"fixgridatmos {_entityManager.GetNetEntity(grid.Owner).Id}");
-            }
 
             return true;
         }
@@ -925,11 +932,17 @@ public sealed class MappingState : GameplayStateBase
             Screen.RemoveGrid.Pressed = false;
             State = CursorState.None;
             if (GetHoveredGrid() is { } grid)
-            {
                 _consoleHost.ExecuteCommand($"rmgrid {_entityManager.GetNetEntity(grid.Owner).Id}");
-            }
 
             return true;
+        }
+
+        if (Screen.GridVV.Pressed)
+        {
+            Screen.GridVV.Pressed = false;
+            State = CursorState.None;
+            if (GetHoveredGrid() is { } grid)
+                _consoleHost.ExecuteCommand($"vv {_entityManager.GetNetEntity(grid.Owner).Id}");
         }
 
         return false;

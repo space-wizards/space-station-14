@@ -108,6 +108,7 @@ public sealed partial class MappingScreen : InGameScreen
         FixGridAtmos.Texture.TexturePath = "/Textures/Interface/VerbIcons/oxygen.svg.192dpi.png";
         RemoveGrid.Texture.TexturePath = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
         MoveGrid.Texture.TexturePath = "/Textures/Interface/VerbIcons/point.svg.192dpi.png";
+        GridVV.Texture.TexturePath = "/Textures/Interface/VerbIcons/vv.svg.192dpi.png";
     }
 
     public void FlipSides()
@@ -221,6 +222,7 @@ public sealed partial class MappingScreen : InGameScreen
         FixGridAtmos.Pressed = FixGridAtmos == except;
         RemoveGrid.Pressed = RemoveGrid == except;
         MoveGrid.Pressed = MoveGrid == except;
+        GridVV.Pressed = GridVV == except;
 
         EraseEntityButton.Pressed = EraseEntityButton == except;
         EraseDecalButton.Pressed = EraseDecalButton == except;

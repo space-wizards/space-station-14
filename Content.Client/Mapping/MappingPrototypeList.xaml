@@ -2,9 +2,9 @@
     xmlns="https://spacestation14.io"
     xmlns:mapping="clr-namespace:Content.Client.Mapping">
     <BoxContainer Orientation="Vertical">
-        <BoxContainer Orientation="Horizontal">
+        <BoxContainer Orientation="Horizontal" Margin="2 1 1 5">
             <mapping:MappingActionsButton Name="CollapseAllButton" Access="Public"
-                                          ToolTip="{Loc 'mapping-collapse-all-button'}"
+                                          ToolTip="{Loc 'mapping-collapse-all-tooltip'}"
                                           TooltipDelay="0" ToggleMode="False" />
             <LineEdit Name="SearchBar" SetHeight="48" HorizontalExpand="True" Access="Public" />
             <mapping:MappingActionsButton Name="ClearSearchButton" Access="Public"
