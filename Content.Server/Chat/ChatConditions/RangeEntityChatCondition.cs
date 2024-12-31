@@ -42,7 +42,10 @@ public sealed partial class RangeEntityChatCondition : EntityChatCondition
                     if (transform.MapID != sourceTransform.MapID)
                         continue;
 
-                    // even if they are a ghost hearer, in some situations we still need the range
+                    // If you wanted to do something like a hard-of-hearing trait, our hearing extension component,
+                    // this is probably where you'd check for it.
+
+                    // Even if they are a ghost hearer, in some situations we still need the range
                     if (sourceTransform.Coordinates.TryDistance(_entityManager, transform.Coordinates, out var distance) &&
                         distance < MaximumRange &&
                         distance >= MinimumRange)
