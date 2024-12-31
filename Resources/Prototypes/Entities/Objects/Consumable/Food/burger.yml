@@ -844,7 +844,9 @@
         maxVol: 20
         reagents:
         - ReagentId: Nutriment
-          Quantity: 18
+          Quantity: 13
+        - ReagentId: Vitamin
+          Quantity: 5
 # Tastes like bun, redditors.
 
 - type: entity
