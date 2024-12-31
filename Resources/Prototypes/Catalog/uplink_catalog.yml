@@ -714,6 +714,8 @@
       blacklist:
         components:
           - SurplusBundle
+    - !type:ListingLimitedStockCondition
+      stock: 1
 
 # Deception
 
