@@ -44,7 +44,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         if (args.Actor is not { Valid: true } player)
             return;
 
-        TryWriteToTargetId(uid, args.FullName, args.JobTitle, args.AccessList, args.JobPrototype, player, args.HiddenAccess, component);
+        TryWriteToTargetId(uid, args.FullName, args.JobTitle, args.AccessList, args.JobPrototype, player, component);
 
         UpdateUserInterface(uid, component, args);
     }
@@ -117,7 +117,6 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         List<ProtoId<AccessLevelPrototype>> newAccessList,
         ProtoId<AccessLevelPrototype> newJobProto,
         EntityUid player,
-        List<ProtoId<AccessLevelPrototype>> hiddenAccess,
         IdCardConsoleComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -157,7 +156,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         var addedTags = newAccessList.Except(oldTags).Select(tag => tag).ToHashSet();
         var removedTags = oldTags.Except(newAccessList).Select(tag => tag).ToHashSet();
 
-        //Probably there is a cleaner way to do this, vissible difference is the difference between the new access and the old access the user of the computer could see
+        //Probably there is a cleaner way to do this, visible difference is the difference between the new access and the old access the user of the computer could see
         var difference = addedTags.Union(removedTags).ToHashSet();
         var visibleDifference = difference.Intersect(ableToModify).ToHashSet();
         var hiddenAccess = difference.Except(visibleDifference).ToList();
