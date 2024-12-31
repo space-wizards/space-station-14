@@ -1,14 +1,4 @@
 ﻿Entries:
-- author: themias
-  changes:
-  - message: The Donk Co. microwave can cook baguette swords and throwing croissants.
-    type: Tweak
-  - message: The Combat Bakery Kit now has a Donk Co. microwave board and costs 6
-      TC.
-    type: Tweak
-  id: 7266
-  time: '2024-09-02T13:49:01.0000000+00:00'
-  url: https://github.com/space-wizards/space-station-14/pull/31239
 - author: yuitop
   changes:
   - message: actions bar now resize dynamically
@@ -3934,3 +3924,10 @@
   id: 7765
   time: '2024-12-31T11:10:46.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/34133
+- author: amatwiedle
+  changes:
+  - message: The A/V Communication technology now unlocks holopad circuit boards.
+    type: Add
+  id: 7766
+  time: '2024-12-31T13:20:07.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/34150
