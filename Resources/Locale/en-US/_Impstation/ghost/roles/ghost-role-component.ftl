@@ -43,6 +43,3 @@ ghost-role-information-goblin-knight-description = You are Sir Gollylad, the mos
 
 ghost-role-information-goblin-castaway-name = Goblin Castaway
 ghost-role-information-goblin-castaway-description = A goblin banished from Gobhome, never to return. You and your fellows must start anew.
-
-ghost-role-information-dino-name = Dinosaur
-ghost-role-information-dino-description = A paleozoic soldier, ready to live or die for the Dino Wars.
