@@ -1,0 +1,32 @@
+﻿- type: entity
+  parent: BaseItem
+  id: fishingRod
+  name: Fishing Rod
+  description: An old fishing rod, see what you can catch!
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/crowbar.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Tools/crowbar.rsi
+    size: Small
+    storedSprite:
+      sprite: Objects/Tools/crowbar.rsi
+      state: storage
+  - type: SpawnItemsOnUse
+    items:
+      - id: FoodApple
+        prob: 1
+        orGroup: MainDrop
+      - id: FoodBanana
+        prob: 1
+        orGroup: MainDrop
+      - id: MobChicken1
+        prob: 0.05
+        orGroup: MainDrop
+      - id: fishingRod
+        prob: 0.05
+      - id: ClosetMaintenanceFilledRandom
+        prob: 0.05
+        orGroup: MainDrop
+    uses: 3
